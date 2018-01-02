@@ -4,18 +4,20 @@ import fossilsarcheology.server.item.FAItemRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
+import net.minecraft.inventory.ItemStackHelper;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nullable;
 
 public class TileEntityTimeMachine extends TileEntity implements IInventory, ISidedInventory, ITickable  {
 
-    public static ItemStack insideStack;
+    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(1, ItemStack.EMPTY);
     private static final int[] slot = new int[]{0};// fuel
     public int clockCounter;
     public float clockTo;
@@ -48,27 +50,32 @@ public class TileEntityTimeMachine extends TileEntity implements IInventory, ISi
         return 64;
     }
 
+    @Override
+    public boolean isEmpty() {
+        return false;
+    }
+
     @Nullable
     @Override
     public ItemStack getStackInSlot(int index) {
-        return insideStack;
+        return this.stacks.get(index);
     }
 
     @Nullable
     @Override
     public ItemStack decrStackSize(int index, int count) {
-        if (this.insideStack != null) {
+        if (this.stacks.get(index) != ItemStack.EMPTY) {
             ItemStack var3;
 
-            if (this.insideStack.stackSize <= count) {
-                var3 = this.insideStack;
-                this.insideStack = null;
+            if (this.stacks.get(index).getCount() <= count) {
+                var3 = this.stacks.get(index);
+                this.stacks.set(index, ItemStack.EMPTY);
                 return var3;
             } else {
-                var3 = this.insideStack.splitStack(count);
+                var3 = this.stacks.get(index).splitStack(count);
 
-                if (this.insideStack.stackSize == 0) {
-                    this.insideStack = null;
+                if (this.stacks.get(index).getCount() == 0) {
+                    this.stacks.set(index, ItemStack.EMPTY);
                 }
 
                 return var3;
@@ -81,24 +88,15 @@ public class TileEntityTimeMachine extends TileEntity implements IInventory, ISi
     @Nullable
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        if (index == 0)
-        {
-            ItemStack itemstack = insideStack;
-            insideStack = null;
-            return itemstack;
-        }
-        else
-        {
-            return null;
-        }
+        return ItemStackHelper.getAndRemove(this.stacks, index);
     }
 
     @Override
     public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-        this.insideStack = stack;
+        this.stacks.set(index, stack);
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+        if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
     }
 
@@ -107,12 +105,8 @@ public class TileEntityTimeMachine extends TileEntity implements IInventory, ISi
         super.readFromNBT(var1);
         NBTTagList var2 = var1.getTagList("Items", 10);
         this.chargeLevel = var1.getShort("chargeLevel");
-
-        for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
-            NBTTagCompound var4 = var2.getCompoundTagAt(var3);
-            byte var5 = var4.getByte("Slot");
-                this.insideStack = ItemStack.loadItemStackFromNBT(var4);
-            }
+        this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(var1, this.stacks);
     }
 
     @Override
@@ -120,13 +114,7 @@ public class TileEntityTimeMachine extends TileEntity implements IInventory, ISi
         super.writeToNBT(var1);
         NBTTagList var2 = new NBTTagList();
         var1.setShort("chargeLevel", (short) this.chargeLevel);
-        if (this.insideStack != null) {
-                NBTTagCompound var4 = new NBTTagCompound();
-                var4.setByte("Slot", (byte) 0);
-                this.insideStack.writeToNBT(var4);
-                var2.appendTag(var4);
-         }
-        var1.setTag("Items", var2);
+        ItemStackHelper.saveAllItems(var1, this.stacks);
         return var1;
     }
 
@@ -171,7 +159,7 @@ public class TileEntityTimeMachine extends TileEntity implements IInventory, ISi
 
     @Override
     public void clear() {
-        insideStack = null;
+        this.stacks.clear();
     }
 
     @Override
@@ -263,13 +251,6 @@ public class TileEntityTimeMachine extends TileEntity implements IInventory, ISi
     }
 
     public boolean isClockInPlace() {
-        if (this.insideStack != null) {
-            if (this.insideStack.getItem() != null) {
-                if (this.insideStack.getItem() == FAItemRegistry.ANCIENT_CLOCK) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return stacks.get(0).getItem() == FAItemRegistry.ANCIENT_CLOCK;
     }
 }

@@ -66,8 +66,8 @@ public class EntityToyTetheredLog extends EntityToyBase implements IAnimatedEnti
     }
 
     public boolean attackEntityFrom(DamageSource dmg, float f) {
-	if (dmg.getEntity() != null)
-	    this.rotationYaw = dmg.getEntity().rotationYaw;
+	if (dmg.getTrueSource() != null)
+	    this.rotationYaw = dmg.getTrueSource().rotationYaw;
 	if (this.getAnimation() == NO_ANIMATION && !world.isRemote) {
 	    this.setAnimation(KNOCKBACK_ANIMATION);
 	}

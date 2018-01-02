@@ -8,10 +8,7 @@ import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.SoundCategory;
+import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
@@ -31,20 +28,23 @@ public class FossilSeedsItem extends Item {
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs creativeTabs, List list) {
-        for (int i = 0; i < fossilSeeds.length; ++i) {
-            list.add(new ItemStack(item, 1, i));
+    public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> list) {
+        if(creativeTabs == FATabRegistry.ITEMS){
+            for (int i = 0; i < fossilSeeds.length; ++i) {
+                list.add(new ItemStack(this, 1, i));
+            }
         }
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+        ItemStack stack = player.getHeldItem(hand);
         if (!isFossil && player.canPlayerEdit(pos, facing, stack) && player.canPlayerEdit(pos.up(), facing, stack)) {
             if (canPlant(world.getBlockState(pos)) && world.isAirBlock(pos.up()) && (world.getBlockState(pos).getBlock() != FABlockRegistry.WELWITSCHIA_FLOWER)) {
                 if(this.placePlantBlock(stack, world, pos.getX(), pos.getY(), pos.getZ(), new Random())){
                     world.playSound(player, pos, FABlockRegistry.DILLHOFFIA_FLOWER.getSoundType().getBreakSound(), SoundCategory.BLOCKS, 1F, new Random().nextFloat() * 0.1F + 0.8F);
                 }
-                --stack.stackSize;
+                stack.shrink(1);
                 return EnumActionResult.SUCCESS;
             } else {
                 return EnumActionResult.PASS;

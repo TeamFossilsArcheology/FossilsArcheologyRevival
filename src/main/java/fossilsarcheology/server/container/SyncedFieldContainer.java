@@ -25,7 +25,7 @@ public abstract class SyncedFieldContainer extends Container {
             for (int fieldIndex = 0; fieldIndex < this.fields.length; fieldIndex++) {
                 int field = this.inventory.getField(fieldIndex);
                 if (field != this.fields[fieldIndex]) {
-                    listener.sendProgressBarUpdate(this, fieldIndex, field);
+                    listener.sendWindowProperty(this, fieldIndex, field);
                 }
             }
         }
@@ -55,7 +55,7 @@ public abstract class SyncedFieldContainer extends Container {
             } else if (!this.mergeItemStack(current, 0, otherSlots, false)) {
                 return null;
             }
-            if (current.stackSize == 0) {
+            if (current.getCount() == 0) {
                 slot.putStack(null);
             } else {
                 slot.onSlotChanged();

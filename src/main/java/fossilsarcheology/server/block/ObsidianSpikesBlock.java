@@ -78,7 +78,7 @@ public class ObsidianSpikesBlock extends Block implements DefaultRenderedItem {
                 double var4 = pos.getX() - entity.posX;
                 double var5 = pos.getZ() - entity.posZ;
 
-                entity.attackEntityFrom(DamageSource.generic, 1.0F);
+                entity.attackEntityFrom(DamageSource.CACTUS, 1.0F);
                 if ((entity instanceof EntityPlayer) && !((EntityPlayer) entity).capabilities.isCreativeMode) {
                     ((EntityLivingBase) entity).knockBack(entity, 0, var4 * 5.0D, var5 * 5.0D);
                 }

@@ -2,10 +2,10 @@ package fossilsarcheology.client.render.entity;
 
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.entity.StoneTabletEntity;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.OpenGlHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -37,7 +37,7 @@ public class StoneTabletRenderer extends Render<StoneTabletEntity> {
                 float minTexY = (textureV + height - blockZ * 16) / 256.0F;
                 float maxTexY = (textureV + height - (blockZ + 1) * 16) / 256.0F;
                 Tessellator tessellator = Tessellator.getInstance();
-                VertexBuffer builder = tessellator.getBuffer();
+                BufferBuilder builder = tessellator.getBuffer();
                 builder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX_NORMAL);
                 builder.pos(maxX, minY, -0.5).tex(maxTexX, minTexY).normal(0.0F, 0.0F, -1.0F).endVertex();
                 builder.pos(minX, minY, -0.5).tex(minTexX, minTexY).normal(0.0F, 0.0F, -1.0F).endVertex();

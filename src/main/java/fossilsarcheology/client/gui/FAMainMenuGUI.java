@@ -2,10 +2,11 @@ package fossilsarcheology.client.gui;
 
 import com.mojang.realmsclient.gui.ChatFormatting;
 import fossilsarcheology.Revival;
+import net.ilexiconn.llibrary.LLibrary;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.*;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
@@ -107,7 +108,7 @@ public class FAMainMenuGUI extends GuiMainMenu {
             GL11.glEnable(GL11.GL_BLEND);
         }
 
-        this.fontRendererObj.drawStringWithShadow("Fossils & Archeology Revival " + ChatFormatting.RED + Revival.RELEASE_TYPE.getBranding(), 2, this.height - 10, 0xFFFFFFFF);
+        this.fontRenderer.drawStringWithShadow("Fossils & Archeology Revival " + ChatFormatting.RED + Revival.RELEASE_TYPE.getBranding(), 2, this.height - 10, 0xFFFFFFFF);
 
         GL11.glPushMatrix();
         GL11.glTranslatef(0.0F, MathHelper.sin(((float) this.layerTick + partialTicks) / 16.0F) * 4.0F, 0.0F);
@@ -118,17 +119,17 @@ public class FAMainMenuGUI extends GuiMainMenu {
         GL11.glTranslatef((float)(this.width / 2 + 90), 70.0F, 0.0F);
         GL11.glRotatef(-20.0F, 0.0F, 0.0F, 1.0F);
         float f1 = 1.8F - MathHelper.abs(MathHelper.sin((float)(Minecraft.getSystemTime() % 1000L) / 1000.0F * (float)Math.PI * 2.0F) * 0.1F);
-        f1 = f1 * 100.0F / (float)(this.fontRendererObj.getStringWidth(this.splashText) + 32);
+        f1 = f1 * 100.0F / (float)(this.fontRenderer.getStringWidth(this.splashText) + 32);
         GL11.glScalef(f1, f1, f1);
-        this.drawCenteredString(this.fontRendererObj, this.splashText, 0, -8, 0xFFFFFF);
+        this.drawCenteredString(this.fontRenderer, this.splashText, 0, -8, 0xFFFFFF);
         GL11.glPopMatrix();
 
-        ForgeHooksClient.renderMainMenu(this, this.fontRendererObj, this.width, this.height, "");
+        ForgeHooksClient.renderMainMenu(this, this.fontRenderer, this.width, this.height, "");
         String s1 = "Copyright Mojang AB. Do not distribute!";
-        this.drawString(this.fontRendererObj, s1, this.width - this.fontRendererObj.getStringWidth(s1) - 2, this.height - 10, 0xFFFFFFFF);
+        this.drawString(this.fontRenderer, s1, this.width - this.fontRenderer.getStringWidth(s1) - 2, this.height - 10, 0xFFFFFFFF);
 
         for (Object button : this.buttonList) {
-            ((GuiButton) button).drawButton(this.mc, mouseX, mouseY);
+            ((GuiButton) button).drawButton(this.mc, mouseX, mouseY, LLibrary.PROXY.getPartialTicks());
         }
 
         for (Object label : this.labelList) {
@@ -140,7 +141,7 @@ public class FAMainMenuGUI extends GuiMainMenu {
         float f = 1.0F / (float)textureWidth;
         float f1 = 1.0F / (float)textureHeight;
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer vertexbuffer = tessellator.getBuffer();
+        BufferBuilder vertexbuffer = tessellator.getBuffer();
         vertexbuffer.begin(7, DefaultVertexFormats.POSITION_TEX);
         vertexbuffer.pos((double)x, (double)(y + height), zLevel).tex((double)(u * f), (double)((v + (float)height) * f1)).endVertex();
         vertexbuffer.pos((double)(x + width), (double)(y + height), zLevel).tex((double)((u + (float)width) * f), (double)((v + (float)height) * f1)).endVertex();

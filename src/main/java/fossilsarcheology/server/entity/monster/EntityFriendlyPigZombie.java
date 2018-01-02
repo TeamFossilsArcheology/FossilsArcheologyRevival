@@ -64,7 +64,7 @@ public class EntityFriendlyPigZombie extends EntityTameable {
         if (this.isEntityInvulnerable(damage)) {
             return false;
         } else {
-            Entity entity = damage.getEntity();
+            Entity entity = damage.getTrueSource();
             this.aiSit.setSitting(false);
 
             if (entity != null && !(entity instanceof EntityPlayer) && !(entity instanceof EntityArrow)) {
@@ -110,7 +110,7 @@ public class EntityFriendlyPigZombie extends EntityTameable {
 
     public void sendMessageToOwner(String words) {
         if (this.getOwner() instanceof EntityPlayer) {
-            ((EntityPlayer) this.getOwner()).sendStatusMessage(new TextComponentString(I18n.format(words)));
+            ((EntityPlayer) this.getOwner()).sendStatusMessage(new TextComponentString(I18n.format(words)), false);
         }
     }
 
@@ -145,7 +145,7 @@ public class EntityFriendlyPigZombie extends EntityTameable {
         return SoundEvents.ENTITY_ZOMBIE_PIG_AMBIENT;
     }
 
-    protected SoundEvent getHurtSound()
+    protected SoundEvent getHurtSound(DamageSource soucre)
     {
         return SoundEvents.ENTITY_ZOMBIE_PIG_HURT;
     }
@@ -156,11 +156,11 @@ public class EntityFriendlyPigZombie extends EntityTameable {
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack){
+    public boolean processInteract(EntityPlayer player, EnumHand hand){
         if (this.isOwner(player) && !this.world.isRemote) {
             this.aiSit.setSitting(!this.isSitting());
             this.isJumping = false;
-            this.getNavigator().clearPathEntity();
+            this.getNavigator().clearPath();
             this.setAttackTarget(null);
             this.setAttackTarget(null);
             sendMessageToOwner("pigman.sit");

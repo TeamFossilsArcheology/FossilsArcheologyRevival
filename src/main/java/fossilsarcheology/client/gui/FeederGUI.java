@@ -24,8 +24,8 @@ public class FeederGUI extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int par1, int par2) {
         String customName = this.FeederInventory.hasCustomName() ? this.FeederInventory.getName() : I18n.format(this.FeederInventory.getName());
-        this.fontRendererObj.drawString(customName, this.xSize / 6 - this.fontRendererObj.getStringWidth(customName) / 2, 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
+        this.fontRenderer.drawString(customName, this.xSize / 6 - this.fontRenderer.getStringWidth(customName) / 2, 6, 4210752);
+        this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
     /**
@@ -58,13 +58,13 @@ public class FeederGUI extends GuiContainer {
             this.zLevel = 200.0F;
             itemRender.zLevel = 200.0F;
             itemRender.renderItemAndEffectIntoGUI(this.mc.player, playerInventory.getItemStack(), mouseX - left - 8, mouseY - top - 8);
-            itemRender.renderItemOverlayIntoGUI(this.fontRendererObj, playerInventory.getItemStack(), mouseX - left - 8, mouseY - top - 8, "");
+            itemRender.renderItemOverlayIntoGUI(this.fontRenderer, playerInventory.getItemStack(), mouseX - left - 8, mouseY - top - 8, "");
             this.zLevel = 0.0F;
             itemRender.zLevel = 0.0F;
         }
 
-        this.fontRendererObj.drawString("" + this.FeederInventory.getCurrentMeat(), 23, 32, 16711680);
-        this.fontRendererObj.drawString("" + this.FeederInventory.getCurrentPlant(), 120, 32, 243459);
+        this.fontRenderer.drawString("" + this.FeederInventory.getCurrentMeat(), 23, 32, 16711680);
+        this.fontRenderer.drawString("" + this.FeederInventory.getCurrentPlant(), 120, 32, 243459);
         GL11.glPopMatrix();
         GL11.glEnable(GL11.GL_LIGHTING);
         GL11.glEnable(GL11.GL_DEPTH_TEST);

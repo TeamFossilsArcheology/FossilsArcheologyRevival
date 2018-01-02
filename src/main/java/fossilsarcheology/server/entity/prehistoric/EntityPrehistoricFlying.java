@@ -25,7 +25,7 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric {
     }
 
     public boolean isDirectPathBetweenPoints(Vec3d vec1, Vec3d vec2) {
-        RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec1, new Vec3d(vec2.xCoord, vec2.yCoord + (double) this.height * 0.5D, vec2.zCoord), false);
+        RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec1, new Vec3d(vec2.x, vec2.y + (double) this.height * 0.5D, vec2.z), false);
         return movingobjectposition == null || movingobjectposition.typeOfHit != RayTraceResult.Type.BLOCK;
     }
 
@@ -145,9 +145,9 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric {
     }
 
     public float getDistanceSquared(Vec3d vec) {
-        float f = (float) (this.posX - vec.xCoord);
-        float f1 = (float) (this.posY - vec.yCoord);
-        float f2 = (float) (this.posZ - vec.zCoord);
+        float f = (float) (this.posX - vec.x);
+        float f1 = (float) (this.posY - vec.y);
+        float f2 = (float) (this.posZ - vec.z);
         return f * f + f1 * f1 + f2 * f2;
     }
 

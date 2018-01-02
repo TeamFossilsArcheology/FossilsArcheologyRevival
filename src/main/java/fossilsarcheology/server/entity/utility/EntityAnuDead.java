@@ -29,7 +29,7 @@ public class EntityAnuDead extends EntityLiving {
     }
 
     @Override
-    public void moveEntityWithHeading(float par1, float par2) {
+    public void travel(float par1, float par2, float vertical) {
         this.motionX *= 0.0D;
         this.motionY *= 0.0D;
         this.motionZ *= 0.0D;
@@ -47,7 +47,7 @@ public class EntityAnuDead extends EntityLiving {
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack){
+    public boolean processInteract(EntityPlayer player, EnumHand hand){
         if (player instanceof EntityPlayerMP) {
             EntityPlayerMP thePlayer = (EntityPlayerMP) player;
 

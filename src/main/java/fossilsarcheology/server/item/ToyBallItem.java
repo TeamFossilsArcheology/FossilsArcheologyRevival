@@ -1,6 +1,7 @@
 package fossilsarcheology.server.item;
 
 import fossilsarcheology.server.entity.utility.EntityToyBall;
+import fossilsarcheology.server.item.variant.DinosaurBoneType;
 import fossilsarcheology.server.tab.FATabRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -10,6 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,16 +40,16 @@ public class ToyBallItem extends Item {
         ball.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0, 0);
         if (!worldIn.isRemote)
             worldIn.spawnEntity(ball);
-        --stack.stackSize;
+        stack.shrink(1);
         return EnumActionResult.SUCCESS;
     }
 
-    @SideOnly(Side.CLIENT)
-    public void getSubItems(Item itemIn, CreativeTabs tab, List<ItemStack> subItems) {
-        for (int i = 0; i < 16; ++i)
-        {
-            subItems.add(new ItemStack(itemIn, 1, i));
+    @Override
+    public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> list) {
+        if(creativeTabs == FATabRegistry.ITEMS){
+            for (int i = 0; i < 16; ++i) {
+                list.add(new ItemStack(this, 1, i));
+            }
         }
     }
-
 }

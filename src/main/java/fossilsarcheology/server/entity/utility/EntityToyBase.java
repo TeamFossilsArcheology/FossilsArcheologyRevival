@@ -30,22 +30,22 @@ public abstract class EntityToyBase extends EntityLiving {
     }
 
     public boolean attackEntityFrom(DamageSource dmg, float f) {
-        if (dmg.getEntity() != null) {
-            if (dmg.getEntity() instanceof EntityPlayer) {
+        if (dmg.getTrueSource() != null) {
+            if (dmg.getTrueSource() instanceof EntityPlayer) {
                 this.playSound(getAttackNoise(), 1, this.getSoundPitch());
                 if (!this.world.isRemote)
                     this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem()));
                 this.setDead();
                 return true;
             }
-            if (dmg.getEntity() instanceof EntityPrehistoric) {
-                ((EntityPrehistoric) dmg.getEntity()).doPlayBonus(toyBonus);
+            if (dmg.getTrueSource() instanceof EntityPrehistoric) {
+                ((EntityPrehistoric) dmg.getTrueSource()).doPlayBonus(toyBonus);
                 if (getAttackNoise() != null) {
                     this.playSound(getAttackNoise(), 1, this.getSoundPitch());
                 }
             }
         }
-        return dmg != DamageSource.outOfWorld;
+        return dmg != DamageSource.OUT_OF_WORLD;
     }
 
     public boolean canBreatheUnderwater() {

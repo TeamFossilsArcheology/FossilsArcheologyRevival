@@ -17,7 +17,7 @@ public class RenderSentryPigman extends RenderBiped {
     private static final ResourceLocation skeletonTextures = new ResourceLocation("fossil:textures/model/sentryPigman.png");
 
     public RenderSentryPigman(RenderManager renderManagerIn) {
-        super(renderManagerIn, new ModelZombie(),  0.5F, 1.0F);
+        super(renderManagerIn, new ModelZombie(),  0.5F);
         this.addLayer(new LayerHeldItem(this));
         this.addLayer(new LayerBipedArmor(this)
         {

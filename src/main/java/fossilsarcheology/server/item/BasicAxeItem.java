@@ -17,15 +17,15 @@ public class BasicAxeItem extends ItemTool implements DefaultRenderedItem {
 
     public BasicAxeItem(ToolMaterial toolmaterial, String name) {
         super(toolmaterial, EFFECTIVE_ON);
-        this.damageVsEntity = toolmaterial.getDamageVsEntity();
+        this.attackDamage = toolmaterial.getAttackDamage();
         this.attackSpeed = -3;
         this.setUnlocalizedName(name);
         this.setCreativeTab(FATabRegistry.ITEMS);
     }
 
     @Override
-    public float getStrVsBlock(ItemStack stack, IBlockState state) {
+    public float getDestroySpeed(ItemStack stack, IBlockState state) {
         Material material = state.getMaterial();
-        return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getStrVsBlock(stack, state) : this.efficiencyOnProperMaterial;
+        return material != Material.WOOD && material != Material.PLANTS && material != Material.VINE ? super.getDestroySpeed(stack, state) : this.efficiency;
     }
 }

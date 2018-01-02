@@ -67,7 +67,7 @@ public class AncientChestBlock extends BlockContainer implements DefaultRendered
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, @Nullable ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ){
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ){
         TileEntityAncientChest tile = (TileEntityAncientChest) world.getTileEntity(pos);
         if (tile.chestState == 0) {
             if (player.getHeldItem(hand) != null) {
@@ -75,10 +75,10 @@ public class AncientChestBlock extends BlockContainer implements DefaultRendered
                     if (player.getHeldItem(hand).getItem() == FAItemRegistry.ANCIENT_KEY) {
                         tile.chestState = 1;
                         if (!player.capabilities.isCreativeMode) {
-                            --player.getHeldItem(hand).stackSize;
+                            player.getHeldItem(hand).shrink(1);
                         }
 
-                        if (player.getHeldItem(hand).stackSize <= 0) {
+                        if (player.getHeldItem(hand).getCount() <= 0) {
                             player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
                         }
 

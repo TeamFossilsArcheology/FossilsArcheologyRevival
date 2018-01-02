@@ -10,8 +10,8 @@ import net.minecraft.block.material.Material;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
-import net.minecraft.world.chunk.IChunkGenerator;
 import net.minecraft.world.chunk.IChunkProvider;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.fml.common.IWorldGenerator;
@@ -46,7 +46,7 @@ public class FAWorldGenerator implements IWorldGenerator {
             int x = chunkX * 16 + random.nextInt(16);
             int z = chunkZ * 16 + random.nextInt(16);
 
-            if(BiomeDictionary.isBiomeOfType(world.getBiome(new BlockPos(x, 0, z)), BiomeDictionary.Type.SWAMP)) {
+            if(BiomeDictionary.hasType(world.getBiome(new BlockPos(x, 0, z)), BiomeDictionary.Type.SWAMP)) {
                 if(Revival.CONFIG.generateTarSites){
                     for (int k = 0; k < 10; k++) {
                         int y = random.nextInt(128);
@@ -71,9 +71,8 @@ public class FAWorldGenerator implements IWorldGenerator {
             if (random.nextInt(100) == 0) {
                 int x = chunkX * 16 + random.nextInt(16);
                 int z = chunkZ * 16 + random.nextInt(16);
-                int y = 32;
                 if (world.getBlockState(new BlockPos(x, 31, z)).getMaterial() == Material.LAVA) {
-                    new HellBoatWorldGen().generate(world, random, new BlockPos(x, y, z));
+                    new HellBoatWorldGen().generate(world, random, new BlockPos(x, 32, z));
                 }
             }
         }

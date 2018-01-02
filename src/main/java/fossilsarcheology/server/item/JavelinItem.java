@@ -56,7 +56,7 @@ public class JavelinItem extends Item implements DefaultRenderedItem {
             } else {
                 javelin = new AncientJavelinEntity(world, damage, player);
             }
-            javelin.setAim(player, player.rotationPitch, player.rotationYaw, 0.0F, speed * 2.0F, 1.0F);
+            javelin.shoot(player, player.rotationPitch, player.rotationYaw, 0.0F, speed * 2.0F, 1.0F);
             if (speed >= 1.0F) {
                 javelin.setIsCritical(true);
             }
@@ -73,10 +73,7 @@ public class JavelinItem extends Item implements DefaultRenderedItem {
             }
             world.playSound(player.posX, player.posY, player.posZ, SoundEvents.ENTITY_ARROW_SHOOT, SoundCategory.NEUTRAL, 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 1.2F) + speed * 0.5F, false);
             if (!infinite) {
-                stack.stackSize--;
-                if (stack.stackSize <= 0) {
-                    player.inventory.deleteStack(stack);
-                }
+                stack.shrink(1);
             } else {
                 javelin.pickupStatus = EntityArrow.PickupStatus.ALLOWED;
             }
@@ -97,7 +94,8 @@ public class JavelinItem extends Item implements DefaultRenderedItem {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.getHeldItem(hand);
         if (player.capabilities.isCreativeMode || player.inventory.hasItemStack(stack)) {
             player.setActiveHand(hand);
             return ActionResult.newResult(EnumActionResult.SUCCESS, stack);

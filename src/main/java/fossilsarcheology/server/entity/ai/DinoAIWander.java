@@ -23,7 +23,7 @@ public class DinoAIWander extends EntityAIBase {
         if (this.prehistoric.isMovementBlocked()) {
             return false;
         }
-        if (this.prehistoric.getAge() >= 100) {
+        if (this.prehistoric.getAgeInTicks() <= 100) {
             return false;
         } else if (this.prehistoric.getRNG().nextInt(120) != 0) {
             return false;
@@ -34,9 +34,9 @@ public class DinoAIWander extends EntityAIBase {
             if (vec3 == null) {
                 return false;
             } else {
-                this.xPosition = vec3.xCoord;
-                this.yPosition = vec3.yCoord;
-                this.zPosition = vec3.zCoord;
+                this.xPosition = vec3.x;
+                this.yPosition = vec3.y;
+                this.zPosition = vec3.z;
                 return true;
             }
         }

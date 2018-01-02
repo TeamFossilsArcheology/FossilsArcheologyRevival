@@ -19,10 +19,10 @@ public class DinoEggItem extends PrehistoricEntityItem implements DefaultRendere
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         boolean success = this.spawnEgg(world, this.type, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5F);
         if (success && !player.capabilities.isCreativeMode) {
-            --stack.stackSize;
+            player.getHeldItem(hand).shrink(1);
         }
         return success ? EnumActionResult.SUCCESS : EnumActionResult.FAIL;
     }

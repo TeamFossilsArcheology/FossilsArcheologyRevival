@@ -3,6 +3,7 @@ package fossilsarcheology.server.entity.prehistoric;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
+import net.minecraft.entity.MoverType;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
@@ -31,7 +32,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric{
     }
 
     public boolean isDirectPathBetweenPoints(Vec3d vec1, Vec3d vec2) {
-        RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec1, new Vec3d(vec2.xCoord, vec2.yCoord + (double) this.height * 0.5D, vec2.zCoord), false, true, false);
+        RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec1, new Vec3d(vec2.x, vec2.y + (double) this.height * 0.5D, vec2.z), false, true, false);
         return movingobjectposition == null || movingobjectposition.typeOfHit != RayTraceResult.Type.BLOCK;
     }
 
@@ -65,13 +66,14 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric{
         return super.isInWater() || this.isInsideOfMaterial(Material.WATER) || this.isInsideOfMaterial(Material.CORAL);
     }
 
+
     @Override
-    public void moveEntityWithHeading(float strafe, float forward) {
+    public void travel(float strafe, float forward, float vertical) {
         if (this.isServerWorld()) {
             float f4;
             float f5;
             if (this.isInWater()) {
-                this.moveRelative(strafe, forward, 0.1F);
+                this.moveRelative(strafe, vertical, forward, 0.1F);
                 f4 = 0.8F;
                 float d0 = (float) EnchantmentHelper.getDepthStriderModifier(this);
                 if (d0 > 3.0F) {
@@ -83,14 +85,14 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric{
                 if (d0 > 0.0F) {
                     f4 += (0.54600006F - f4) * d0 / 3.0F;
                 }
-                this.move(this.motionX, this.motionY, this.motionZ);
+                this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
                 this.motionX *= (double) f4;
                 this.motionX *= 0.900000011920929D;
                 this.motionY *= 0.900000011920929D;
                 this.motionZ *= 0.900000011920929D;
                 this.motionZ *= (double) f4;
             } else {
-                super.moveEntityWithHeading(strafe, forward);
+                super.travel(strafe, forward, vertical);
             }
         }
         this.prevLimbSwingAmount = this.limbSwingAmount;

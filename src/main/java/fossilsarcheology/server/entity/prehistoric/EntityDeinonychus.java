@@ -194,8 +194,8 @@ public class EntityDeinonychus extends EntityPrehistoric {
     @Override
     public boolean attackEntityFrom(DamageSource dmg, float i) {
         if (this.getRidingEntity() != null) {
-            if (this.getLastAttacker() != null) {
-                if (this.getLastAttacker() == this.getRidingEntity()) {
+            if (this.getLastAttackedEntity() != null) {
+                if (this.getLastAttackedEntity() == this.getRidingEntity()) {
                     if (this.getRNG().nextInt(2) == 0) {
                         this.startRiding(null);
                     }
@@ -220,7 +220,7 @@ public class EntityDeinonychus extends EntityPrehistoric {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.DEINONYCHUS_HURT;
     }
 

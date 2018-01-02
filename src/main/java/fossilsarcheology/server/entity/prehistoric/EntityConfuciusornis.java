@@ -8,6 +8,7 @@ import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import fossilsarcheology.server.entity.ai.DinoAIEatBlocks;
@@ -148,7 +149,7 @@ public class EntityConfuciusornis extends EntityPrehistoricFlying {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.CONFUSCIUSORNIS_HURT;
     }
 

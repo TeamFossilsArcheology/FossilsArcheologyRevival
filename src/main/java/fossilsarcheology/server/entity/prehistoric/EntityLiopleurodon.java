@@ -150,7 +150,7 @@ public class EntityLiopleurodon extends EntityPrehistoricSwimming {
     public void onLivingUpdate() {
         super.onLivingUpdate();
         if (this.getAttackTarget() != null) {
-            if (getAttackBounds().intersectsWith(this.getAttackTarget().getEntityBoundingBox())) {
+            if (getAttackBounds().intersects(this.getAttackTarget().getEntityBoundingBox())) {
                 if (!this.isEntitySmallerThan(this.getAttackTarget(), 1.6F * (this.getAgeScale() / this.maxSize))) {
                     if (this.getAnimation() != ATTACK_ANIMATION) {
                         this.setAnimation(ATTACK_ANIMATION);
@@ -221,7 +221,7 @@ public class EntityLiopleurodon extends EntityPrehistoricSwimming {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.LIOPLEURODON_HURT;
     }
 

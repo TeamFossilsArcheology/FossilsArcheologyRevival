@@ -23,7 +23,7 @@ public class TileEntitySarcophagusRender extends TileEntitySpecialRenderer<TileE
     public TileEntitySarcophagusRender() {
     }
 
-    public void renderTileEntityAt(TileEntitySarcophagus chest, double x, double y, double z, float f, int destroy) {
+    public void render(TileEntitySarcophagus chest, double x, double y, double z, float f, int destroy, float alpha) {
         short short1 = 0;
         int i = 0;
         if (chest != null && chest.hasWorld()) {

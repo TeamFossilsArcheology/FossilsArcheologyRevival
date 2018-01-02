@@ -37,11 +37,11 @@ public class WhipItem extends ItemCarrotOnAStick implements DefaultRenderedItem 
 
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack itemstack, World worldIn, EntityPlayer player, EnumHand hand){
+    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer player, EnumHand hand){
         if (player.isRiding() && player.getRidingEntity() instanceof EntityPrehistoric) {
             EntityPrehistoric dinosaur = (EntityPrehistoric) player.getRidingEntity();
             // dinosaur.onWhipRightClick();
-            itemstack.damageItem(1, player);
+            player.getHeldItem(hand).damageItem(1, player);
             player.swingArm(hand);
             //player.getRidingEntity().playSound("fossil:whip", 1.0F, 1.0F); TODO
         } else {
@@ -53,7 +53,7 @@ public class WhipItem extends ItemCarrotOnAStick implements DefaultRenderedItem 
             //worldIn.playSoundAtEntity(player, "fossil:whip", 1.0F, 1.0F / (itemRand.nextFloat() * 0.4F + 0.8F));
         }
 
-        return ActionResult.newResult(EnumActionResult.SUCCESS, itemstack);
+        return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
 
     }
 

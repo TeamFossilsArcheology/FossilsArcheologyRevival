@@ -6,9 +6,9 @@ import fossilsarcheology.Revival;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.util.ReleaseType;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentString;
@@ -23,7 +23,7 @@ public class FossilTarOverlayEvent {
             e.setCanceled(true);
             Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation("fossil:textures/blocks/tar.png"));
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer vertexbuffer = tessellator.getBuffer();
+            BufferBuilder vertexbuffer = tessellator.getBuffer();
             float f = 1;
             GlStateManager.color(f, f, f, 0.5F);
             GlStateManager.enableBlend();
@@ -52,7 +52,7 @@ public class FossilTarOverlayEvent {
     @SubscribeEvent
     public void onJoinWorld(EntityJoinWorldEvent event) {
         if (Revival.RELEASE_TYPE == ReleaseType.DEVELOP && event.getEntity() == Minecraft.getMinecraft().player) {
-            Minecraft.getMinecraft().player.sendStatusMessage(new TextComponentString(ChatFormatting.BOLD.toString() + ChatFormatting.RED.toString() + "You're running a development build of F/A: Revival"));
+            Minecraft.getMinecraft().player.sendStatusMessage(new TextComponentString(ChatFormatting.BOLD.toString() + ChatFormatting.RED.toString() + "You're running a development build of F/A: Revival"), false);
         }
     }
 }

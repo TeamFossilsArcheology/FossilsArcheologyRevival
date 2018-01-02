@@ -230,7 +230,7 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming {
             this.setSleeping(false);
         }
         if (this.getAttackTarget() != null) {
-            if (getAttackBounds().intersectsWith(this.getAttackTarget().getEntityBoundingBox())) {
+            if (getAttackBounds().intersects(this.getAttackTarget().getEntityBoundingBox())) {
                 this.attackEntityAsMob(this.getAttackTarget());
                 if (!this.isEntitySmallerThan(this.getAttackTarget(), 2F * (this.getAgeScale() / this.maxSize))) {
                     if (this.getAnimation() != ATTACK_ANIMATION) {
@@ -315,7 +315,7 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.SPINOSAURUS_HURT;
     }
 

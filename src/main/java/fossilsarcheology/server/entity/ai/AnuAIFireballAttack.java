@@ -100,7 +100,7 @@ public class AnuAIFireballAttack extends EntityAIBase
 
         if (d0 <= (double)this.field_82642_h && this.field_75318_f >= 20)
         {
-            this.entityHost.getNavigator().clearPathEntity();
+            this.entityHost.getNavigator().clearPath();
         }
         else
         {

@@ -8,10 +8,7 @@ import fossilsarcheology.server.item.FAItemRegistry;
 import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
 import net.minecraft.block.material.Material;
 import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAILookIdle;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityMoveHelper;
@@ -154,8 +151,8 @@ public abstract class EntityFishBase extends EntityTameable {
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack) {
-
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
+        ItemStack stack = player.inventory.getCurrentItem();
         if (stack != null && FMLCommonHandler.instance().getSide().isClient() && stack.getItem() == FAItemRegistry.DINOPEDIA) {
             this.setPedia();
             player.openGui(Revival.INSTANCE, 6, this.world, (int) this.posX, (int) this.posY, (int) this.posZ);
@@ -183,7 +180,7 @@ public abstract class EntityFishBase extends EntityTameable {
             }
         }
 
-        return super.processInteract(player, hand, stack);
+        return super.processInteract(player, hand);
     }
 
     public boolean canBreatheUnderwater() {
@@ -216,7 +213,7 @@ public abstract class EntityFishBase extends EntityTameable {
 
                 if (this.getAir() == -20) {
                     this.setAir(0);
-                    this.attackEntityFrom(DamageSource.drown, 2.0F);
+                    this.attackEntityFrom(DamageSource.DROWN, 2.0F);
                 }
             } else {
                 this.setAir(300);
@@ -240,7 +237,7 @@ public abstract class EntityFishBase extends EntityTameable {
     }
 
     public boolean isDirectPathBetweenPoints(Vec3d vec1, Vec3d vec2) {
-        RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec1, new Vec3d(vec2.xCoord, vec2.yCoord + (double) this.height * 0.5D, vec2.zCoord), false, true, false);
+        RayTraceResult movingobjectposition = this.world.rayTraceBlocks(vec1, new Vec3d(vec2.x, vec2.y + (double) this.height * 0.5D, vec2.z), false, true, false);
         return movingobjectposition == null || movingobjectposition.typeOfHit != RayTraceResult.Type.BLOCK;
     }
 
@@ -250,12 +247,12 @@ public abstract class EntityFishBase extends EntityTameable {
     }
 
     @Override
-    public void moveEntityWithHeading(float strafe, float forward) {
+    public void travel(float strafe, float forward, float vertical) {
         if (this.isServerWorld()) {
             float f4;
             float f5;
             if (this.isInWater()) {
-                this.moveRelative(strafe, forward, 0.1F);
+                this.moveRelative(strafe, vertical, forward, 0.1F);
                 f4 = 0.8F;
                 float d0 = (float) EnchantmentHelper.getDepthStriderModifier(this);
                 if (d0 > 3.0F) {
@@ -267,7 +264,7 @@ public abstract class EntityFishBase extends EntityTameable {
                 if (d0 > 0.0F) {
                     f4 += (0.54600006F - f4) * d0 / 3.0F;
                 }
-                this.move(this.motionX, this.motionY, this.motionZ);
+                this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
                 this.motionX *= (double) f4;
                 this.motionX *= 0.900000011920929D;
                 this.motionY *= 0.900000011920929D;
@@ -287,7 +284,7 @@ public abstract class EntityFishBase extends EntityTameable {
                 } else {
                     f4 = this.jumpMovementFactor;
                 }
-                this.move(strafe, forward, f4);
+                this.move(MoverType.SELF, strafe, forward, f4);
                 f2 = 0.91F;
                 if (this.onGround) {
                     f2 = this.world.getBlockState(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.getEntityBoundingBox().minY) - 1, MathHelper.floor(this.posZ))).getBlock().slipperiness * 0.91F;
@@ -301,8 +298,8 @@ public abstract class EntityFishBase extends EntityTameable {
                             this.motionY = -0.15D;
                         }
                     }
-                    this.move(this.isInsideNautilusShell()? 0 : this.motionX, this.motionY, this.motionZ);
-                    if (this.isCollidedHorizontally && this.isOnLadder()) {
+                    this.move(MoverType.SELF, this.isInsideNautilusShell() ? 0 : this.motionX, this.isInsideNautilusShell() ? 0 : this.motionY, this.isInsideNautilusShell() ? 0 : this.motionZ);
+                    if (this.collidedHorizontally && this.isOnLadder()) {
                         this.motionY = 0.2D;
                     }
                     if (this.world.isRemote && (!this.world.isBlockLoaded(new BlockPos((int) this.posX, 0, (int) this.posZ)) || !this.world.getChunkFromBlockCoords(new BlockPos((int) this.posX, 0, (int) this.posZ)).isLoaded())) {

@@ -7,7 +7,8 @@ import net.minecraft.block.SoundType;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+    import net.minecraftforge.event.RegistryEvent;
+    import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -98,49 +99,12 @@ public class FABlockRegistry {
     public static final ShortFlowerBlock EPENDRA_FLOWER = new ShortFlowerBlock("ependra");
 
 
-
-    public static void register() {
-        try {
-            for (Field f : FABlockRegistry.class.getDeclaredFields()) {
-                Object obj = f.get(null);
-                if (obj instanceof Block) {
-                    FABlockRegistry.registerBlock((Block) obj);
-                } else if (obj instanceof Block[]) {
-                    for (Block block : (Block[]) obj) {
-                        FABlockRegistry.registerBlock(block);
-                    }
-                }
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static void registerBlock(Block block) {
+    public static void registerBlock(RegistryEvent.Register<Block> event, Block block) {
         String name = block.getUnlocalizedName().substring("tile.".length());
         ResourceLocation identifier = new ResourceLocation(Revival.MODID, name);
-        GameRegistry.register(block, identifier);
-        if(block instanceof IBlockItem){
-            ItemBlock itemBlock = new ItemBlock(block);
-            if (IBlockItem.class.isAssignableFrom(((IBlockItem)block).getItemBlockClass())) {
-                try {
-                    itemBlock = ((IBlockItem)block).getItemBlockClass().getDeclaredConstructor(World.class).newInstance(block);
-                } catch (ReflectiveOperationException e) {
-                    e.printStackTrace();
-                }
-            }
-            GameRegistry.register(itemBlock, identifier);
-
-        }else if(block instanceof ISlabItem){
-            ItemBlock itemBlock = ((ISlabItem)block).getItemBlock();
-            GameRegistry.register(itemBlock, identifier);
-        }
-        else{
-            GameRegistry.register(new ItemBlock(block), identifier);
-        }
+        block.setRegistryName(identifier);
+        event.getRegistry().register(block);
         BLOCKS.add(block);
-        if (block instanceof BlockEntity) {
-            GameRegistry.registerTileEntity(((BlockEntity) block).getEntity(), Revival.MODID + "." + name);
-        }
+
     }
 }

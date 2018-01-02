@@ -189,7 +189,7 @@ public class EntityVelociraptor extends EntityPrehistoric {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.VELOCIRAPTOR_HURT;
     }
 

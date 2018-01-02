@@ -701,7 +701,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
         if (!this.world.isRemote) {
             if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD) {
-                this.setBesideClimbableBlock(this.isCollidedHorizontally);
+                this.setBesideClimbableBlock(this.collidedHorizontally);
             } else {
                 this.setBesideClimbableBlock(false);
             }
@@ -905,11 +905,11 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public void sendStatusMessage(SituationType var1) {
-        if (this.getOwner() != null && this.getDistanceToEntity(this.getOwner()) < 50.0F) {
+        if (this.getOwner() != null && this.getDistance(this.getOwner()) < 50.0F) {
             String Status1 = I18n.format(("status." + var1.toString() + ".head"));
             String Dino = this.type.toString();
             String Status2 = I18n.format("status." + var1.toString());
-            ((EntityPlayer) this.getOwner()).sendStatusMessage(new TextComponentString(Status1 + Dino + Status2));
+            ((EntityPlayer) this.getOwner()).sendStatusMessage(new TextComponentString(Status1 + Dino + Status2), false);
         }
     }
 
@@ -997,7 +997,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public boolean attackEntityFrom(DamageSource dmg, float i) {
 
         if (i > 0 && this.isSkeleton()) {
-            if (dmg == DamageSource.inWall) {
+            if (dmg == DamageSource.IN_WALL) {
                 return false;
             } else {
                 this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_SKELETON_HURT, SoundCategory.NEUTRAL, this.getSoundVolume(), this.getSoundPitch());
@@ -1013,8 +1013,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 return false;
             }
         }
-        if (this.getLastAttacker() instanceof EntityPlayer) {
-            if (this.getOwner() == this.getLastAttacker()) {
+        if (this.getLastAttackedEntity() instanceof EntityPlayer) {
+            if (this.getOwner() == this.getLastAttackedEntity()) {
                 this.setTamed(false);
                 this.setMood(this.getMood() - 15);
                 this.sendStatusMessage(SituationType.Betrayed);
@@ -1025,10 +1025,10 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setSitting(false);
             this.setSleeping(false);
         }
-        if (dmg.getEntity() != null) {
+        if (dmg.getTrueSource() != null) {
             this.setMood(this.getMood() - 5);
         }
-        if (this.getHurtSound() != null) {
+        if (this.getHurtSound(DamageSource.GENERIC) != null) {
             if (this.getAnimation() != null) {
                 if (this.getAnimation() == NO_ANIMATION && world.isRemote) {
                     this.setAnimation(SPEAK_ANIMATION);
@@ -1075,7 +1075,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack) {
+    public boolean processInteract(EntityPlayer player, EnumHand hand) {
         ItemStack itemstack = player.inventory.getCurrentItem();
         if (this.isSkeleton()) {
             if (itemstack == null) {
@@ -1089,13 +1089,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                     this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_SKELETON_AMBIENT, SoundCategory.NEUTRAL, 0.8F, 1);
                     this.setAgeInDays(this.getAgeInDays() + 1);
                     if (!player.capabilities.isCreativeMode) {
-                        --itemstack.stackSize;
+                        itemstack.shrink(1);
                     }
-
-                    if (itemstack.stackSize <= 0) {
-                        player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-                    }
-
                     return true;
                 }
             }
@@ -1111,13 +1106,10 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                             this.setMood(100);
                             this.increaseHunger(500);
                             this.setTamed(true);
-                            this.getNavigator().clearPathEntity();
+                            this.getNavigator().clearPath();
                             setAttackTarget(null);
                             this.func_152115_b(player.getDisplayName().toString());
-                            --itemstack.stackSize;
-                            if (itemstack.stackSize <= 0) {
-                                player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-                            }
+                            itemstack.shrink(1);
                             return true;
                         }
                     }
@@ -1128,14 +1120,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 if (itemstack.getItem() == FAItemRegistry.CHICKEN_ESSENCE && !player.world.isRemote) {
                     if (this.getAgeInDays() < this.getAdultAge() && this.getHunger() > 0) {
                         if (this.getHunger() > 0) {
-                            if (!player.capabilities.isCreativeMode) {
-                                --itemstack.stackSize;
-                            }
-
-                            if (itemstack.stackSize <= 0) {
-                                player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-                            }
-
+                            itemstack.shrink(1);
                             if (!player.capabilities.isCreativeMode) {
                                 player.inventory.addItemStackToInventory(new ItemStack(Items.GLASS_BOTTLE, 1));
                             }
@@ -1148,7 +1133,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                     }
 
                     if (!this.world.isRemote) {
-                        player.sendStatusMessage(new TextComponentString(I18n.format(Localizations.STATUS_ESSENCE_FAIL)));
+                        player.sendStatusMessage(new TextComponentString(I18n.format(Localizations.STATUS_ESSENCE_FAIL)), false);
                     }
 
                     return false;
@@ -1172,7 +1157,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
                             }
 
-                            --itemstack.stackSize;
+                            itemstack.shrink(1);
                             if (this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
                                 if (!this.isTamed() && this.type.isTameable() && (new Random()).nextInt(10) == 1) {
                                     this.setTamed(true);
@@ -1194,8 +1179,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
                     if (itemstack.getItem() == Items.LEAD && this.isTamed()) {
                         if (func_152114_e(player)) {
-                            this.setLeashedToEntity(player, true);
-                            --itemstack.stackSize;
+                            this.setLeashHolder(player, true);
+                            itemstack.shrink(1);
                             return true;
                         }
                     }
@@ -1223,7 +1208,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                             this.setMood(this.getMood() - 1);
                             Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
                             if (getRNG().nextInt(5) == 0) {
-                                player.sendStatusMessage(new TextComponentString(I18n.format("prehistoric.autotame") + this.getDisplayName().toString() + I18n.format("prehistoric.period")));
+                                player.sendStatusMessage(new TextComponentString(I18n.format("prehistoric.autotame") + this.getDisplayName().toString() + I18n.format("prehistoric.period")), false);
                                 this.setMood(this.getMood() - 25);
                                 this.setTamed(true);
                                 Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(Items.GOLD_INGOT)));
@@ -1239,7 +1224,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                     if (this.getOrderItem() != null && itemstack.getItem() == this.getOrderItem() && this.isTamed() && this.getOwnerDisplayName().equals(player.getDisplayName().toString()) && !player.isRiding()) {
                         if (!this.world.isRemote) {
                             this.isJumping = false;
-                            this.getNavigator().clearPathEntity();
+                            this.getNavigator().clearPath();
                             this.currentOrder = OrderType.values()[(this.currentOrder.ordinal() + 1) % 3];
                             this.sendOrderMessage(this.currentOrder);
                         }
@@ -1248,7 +1233,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 }
             }
         }
-        return super.processInteract(player, hand, stack);
+        return super.processInteract(player, hand);
     }
 
     public abstract Item getOrderItem();
@@ -1267,8 +1252,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     private void sendOrderMessage(OrderType var1) {
-        String S = I18n.format("order.head") + I18n.format("order." + var1.toString().toLowerCase());
-        this.world.getPlayerEntityByName(this.getOwnerDisplayName()).sendStatusMessage(new TextComponentString(S));
+        String s = I18n.format("order.head") + I18n.format("order." + var1.toString().toLowerCase());
+        this.world.getPlayerEntityByName(this.getOwnerDisplayName()).sendStatusMessage(new TextComponentString(s), false);
     }
 
     public void nudgeEntity(EntityPlayer player) {
@@ -1579,7 +1564,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             float f1 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) + this.getEntityBoundingBox().minY);
             float f2 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) + this.getEntityBoundingBox().minZ);
             if (itemBlock && item instanceof ItemBlock) {
-                Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(this.getEntityId(), Block.getIdFromBlock(((ItemBlock) item).block)));
+                Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(this.getEntityId(), Block.getIdFromBlock(((ItemBlock) item).getBlock())));
             } else {
                 Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(this.getEntityId(), Item.getIdFromItem(item)));
             }
@@ -1609,13 +1594,13 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public void eatItem(ItemStack stack) {
-        if (stack != null && stack.stackSize > 0 && stack.getItem() != null) {
+        if (stack != null && stack.getItem() != null) {
             if (FoodMappings.INSTANCE.getItemFoodAmount(stack, type.diet) != 0) {
                 this.setMood(this.getMood() + 5);
                 doFoodEffect(stack.getItem());
                 Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(stack.getItem())));
                 this.setHunger(this.getHunger() + FoodMappings.INSTANCE.getItemFoodAmount(stack, type.diet));
-                stack.stackSize--;
+                stack.shrink(1);
             }
         }
     }
@@ -1725,7 +1710,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return null; //"fossil:" + this.type.name().toLowerCase() + "_hurt";
     }
 

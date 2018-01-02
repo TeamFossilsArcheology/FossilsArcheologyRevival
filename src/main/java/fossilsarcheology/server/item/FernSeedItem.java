@@ -27,13 +27,14 @@ public class FernSeedItem extends Item implements DefaultRenderedItem{
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ){
+        ItemStack stack = player.getHeldItem(hand);
         if (player.canPlayerEdit(pos, facing, stack) && player.canPlayerEdit(pos.up(), facing, stack)) {
             if (canPlant(world.getBlockState(pos)) && world.isAirBlock(pos.up()) && FernsBlock.checkUnderTree(world, pos)) {
                 if(this.placePlantBlock(stack, world, pos.getX(), pos.getY(), pos.getZ(), new Random())){
                     world.playSound(player, pos, FABlockRegistry.DILLHOFFIA_FLOWER.getSoundType().getBreakSound(), SoundCategory.BLOCKS, 1F, new Random().nextFloat() * 0.1F + 0.8F);
                 }
-                --stack.stackSize;
+                stack.shrink(1);
                 return EnumActionResult.SUCCESS;
             } else {
                 return EnumActionResult.PASS;

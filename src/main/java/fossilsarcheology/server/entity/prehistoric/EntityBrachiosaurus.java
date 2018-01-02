@@ -159,7 +159,7 @@ public class EntityBrachiosaurus extends EntityPrehistoric {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() > 19 && this.getAttackTarget() != null && this.getAttackBounds().intersectsWith(this.getAttackTarget().getEntityBoundingBox())) {
+        if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() > 19 && this.getAttackTarget() != null && this.getAttackBounds().intersects(this.getAttackTarget().getEntityBoundingBox())) {
             this.attackEntityAsMob(this.getAttackTarget());
         }
     }
@@ -200,7 +200,7 @@ public class EntityBrachiosaurus extends EntityPrehistoric {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.BRACHIOSAURUS_HURT;
     }
 

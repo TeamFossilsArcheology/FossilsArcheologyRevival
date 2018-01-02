@@ -1,10 +1,10 @@
 package fossilsarcheology.client.render.entity.layer;
 
 import fossilsarcheology.server.entity.utility.EntityAnuEffect;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.RenderHelper;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraftforge.fml.relauncher.Side;
@@ -20,7 +20,7 @@ public class LayerAnuEffect implements LayerRenderer<EntityAnuEffect>
         if (entitylivingbaseIn.deathTicks > 0)
         {
             Tessellator tessellator = Tessellator.getInstance();
-            VertexBuffer vertexbuffer = tessellator.getBuffer();
+            BufferBuilder vertexbuffer = tessellator.getBuffer();
             RenderHelper.disableStandardItemLighting();
             float f = ((float)entitylivingbaseIn.deathTicks + partialTicks) / 200.0F;
             float f1 = 0.0F;

@@ -20,16 +20,16 @@ public class StoneTabletItem extends Item implements DefaultRenderedItem {
     }
 
     @Override
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer player, World world, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         BlockPos placePos = pos.offset(facing);
-        if (facing != EnumFacing.DOWN && facing != EnumFacing.UP && player.canPlayerEdit(placePos, facing, stack)) {
+        if (facing != EnumFacing.DOWN && facing != EnumFacing.UP && player.canPlayerEdit(placePos, facing, player.getHeldItem(hand))) {
             StoneTabletEntity entity = new StoneTabletEntity(world, placePos, facing);
             if (entity.onValidSurface()) {
                 if (!world.isRemote) {
                     entity.playPlaceSound();
                     world.spawnEntity(entity);
                 }
-                --stack.stackSize;
+                player.getHeldItem(hand).shrink(1);
             }
             return EnumActionResult.SUCCESS;
         }

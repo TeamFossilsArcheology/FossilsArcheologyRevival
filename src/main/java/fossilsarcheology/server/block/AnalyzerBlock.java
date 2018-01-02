@@ -105,7 +105,7 @@ public class AnalyzerBlock extends BlockContainer implements DefaultRenderedItem
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             player.openGui(Revival.INSTANCE, ServerProxy.GUI_ANALYZER, world, pos.getX(), pos.getY(), pos.getZ());
         }
@@ -134,15 +134,15 @@ public class AnalyzerBlock extends BlockContainer implements DefaultRenderedItem
                         float xOffset = world.rand.nextFloat() * 0.8F + 0.1F;
                         float yOffset = world.rand.nextFloat() * 0.8F + 0.1F;
                         float zOffset = world.rand.nextFloat() * 0.8F + 0.1F;
-                        while (stack.stackSize > 0) {
+                        while (stack.getCount() > 0) {
                             int rand = world.rand.nextInt(21) + 10;
-                            if (rand > stack.stackSize) {
-                                rand = stack.stackSize;
+                            if (rand > stack.getCount()) {
+                                rand = stack.getCount();
                             }
-                            stack.stackSize -= rand;
+                            stack.shrink(rand);
                             EntityItem entity = new EntityItem(world, pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset, new ItemStack(stack.getItem(), rand, stack.getItemDamage()));
                             if (stack.hasTagCompound()) {
-                                entity.getEntityItem().setTagCompound(stack.getTagCompound().copy());
+                                entity.getItem().setTagCompound(stack.getTagCompound().copy());
                             }
                             float offset = 0.05F;
                             entity.motionX = world.rand.nextGaussian() * offset;

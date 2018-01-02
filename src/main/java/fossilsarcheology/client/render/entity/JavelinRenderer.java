@@ -3,9 +3,9 @@ package fossilsarcheology.client.render.entity;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.entity.projectile.AncientJavelinEntity;
 import fossilsarcheology.server.entity.projectile.JavelinEntity;
+import net.minecraft.client.renderer.BufferBuilder;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.Tessellator;
-import net.minecraft.client.renderer.VertexBuffer;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
@@ -34,7 +34,7 @@ public class JavelinRenderer extends Render<JavelinEntity> {
         GlStateManager.rotate(entity.prevRotationYaw + (entity.rotationYaw - entity.prevRotationYaw) * partialTicks - 90.0F, 0.0F, 1.0F, 0.0F);
         GlStateManager.rotate(entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks, 0.0F, 0.0F, 1.0F);
         Tessellator tessellator = Tessellator.getInstance();
-        VertexBuffer buffer = tessellator.getBuffer();
+        BufferBuilder buffer = tessellator.getBuffer();
         GlStateManager.enableRescaleNormal();
         float shake = (float) entity.arrowShake - partialTicks;
         if (shake > 0.0F) {

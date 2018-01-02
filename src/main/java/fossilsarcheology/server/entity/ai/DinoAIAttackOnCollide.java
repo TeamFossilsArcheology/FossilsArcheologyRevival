@@ -49,7 +49,7 @@ public class DinoAIAttackOnCollide extends EntityAIBase {
     }
 
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         EntityLivingBase entitylivingbase = this.dino.getAttackTarget();
         return entitylivingbase != null && (entitylivingbase.isEntityAlive() && (!this.field_75437_f ? !this.dino.getNavigator().noPath() : this.dino.isWithinHomeDistanceFromPosition(new BlockPos(entitylivingbase))));
     }
@@ -63,7 +63,7 @@ public class DinoAIAttackOnCollide extends EntityAIBase {
 
     @Override
     public void resetTask() {
-        this.dino.getNavigator().clearPathEntity();
+        this.dino.getNavigator().clearPath();
     }
 
     @Override
@@ -80,7 +80,7 @@ public class DinoAIAttackOnCollide extends EntityAIBase {
         if (this.dino.getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < this.dino.width * 2.0F * this.dino.width * 2.0F + target.width) {
             this.dino.swingArm(EnumHand.MAIN_HAND);
             attackTick = 20;
-            this.dino.getNavigator().clearPathEntity();
+            this.dino.getNavigator().clearPath();
             this.dino.attackEntityAsMob(target);
         } else {
             this.dino.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);

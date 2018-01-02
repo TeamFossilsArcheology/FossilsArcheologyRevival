@@ -8,17 +8,17 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DimensionType;
 import net.minecraft.world.WorldProvider;
 import net.minecraft.world.biome.BiomeProviderSingle;
-import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class WorldProviderAnu extends WorldProvider {
 
     @Override
-    public void createBiomeProvider() {
+    public void init() {
         this.biomeProvider = new BiomeProviderSingle(FAWorldRegistry.ANU_BIOME);
         this.doesWaterVaporize = true;
-        this.hasNoSky = true;
+        this.nether = true;
 
     }
 
@@ -62,11 +62,6 @@ public class WorldProviderAnu extends WorldProvider {
     @SideOnly(Side.CLIENT)
     public float[] calcSunriseSunsetColors(float p_76560_1_, float p_76560_2_) {
         return null;
-    }
-
-    @Override
-    public String getWelcomeMessage() {
-        return "Entering the Land of Darkness";
     }
 
     @Override

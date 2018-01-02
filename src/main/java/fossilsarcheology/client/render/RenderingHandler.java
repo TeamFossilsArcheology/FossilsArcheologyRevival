@@ -50,61 +50,7 @@ public class RenderingHandler {
     private static final Minecraft MINECRAFT = Minecraft.getMinecraft();
 
 
-    public void onPreInit() {
-
-        this.registerItemRenderer(FAItemRegistry.TAR_BUCKET, "tar_bucket", "inventory");
-
-        for(int i = 0; i < 16; i++){
-            this.registerItemRenderer(FAItemRegistry.TOY_BALL, i, "toyball_" + EnumDyeColor.byDyeDamage(i).getName(), "inventory");
-        }
-
-        for(int i = 0; i < 16; i++){
-            this.registerItemRenderer(Item.getItemFromBlock(FABlockRegistry.FIGURINE), i, "figurine_" + i, "inventory");
-        }
-
-        for(int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++){
-            this.registerItemRenderer(FAItemRegistry.FOSSIL_SEED, i, "fossilseed_" + FossilSeedsItem.fossilSeeds[i], "inventory");
-            this.registerItemRenderer(FAItemRegistry.SEED, i, "seed_" + FossilSeedsItem.fossilSeeds[i], "inventory");
-        }
-
-        for(int i = 0; i < 5; i++){
-            this.registerItemRenderer(Item.getItemFromBlock(FABlockRegistry.AMPHORA_VASE), i, "vase_amphora_" + i, "inventory");
-            this.registerItemRenderer(Item.getItemFromBlock(FABlockRegistry.KYLIX_VASE), i, "vase_kylix_" + i, "inventory");
-            this.registerItemRenderer(Item.getItemFromBlock(FABlockRegistry.VOLUTE_VASE), i, "vase_volute_" + i, "inventory");
-
-        }
-
-        for (Block block : FABlockRegistry.BLOCKS) {
-            if (block instanceof IgnoreRenderProperty) {
-                IProperty<?>[] ignoredProperties = ((IgnoreRenderProperty) block).getIgnoredProperties();
-                ModelLoader.setCustomStateMapper(block, new StateMap.Builder().ignore(ignoredProperties).build());
-            }
-        }
-
-        for (Block block : FABlockRegistry.BLOCKS) {
-            if (block instanceof DefaultRenderedItem) {
-                this.registerBlockRenderer(block, ((DefaultRenderedItem) block).getResource(block.getUnlocalizedName().substring("tile.".length())), "inventory");
-            }
-        }
-
-        for (Item item : FAItemRegistry.ITEMS) {
-            String name = item.getUnlocalizedName().substring("item.".length());
-
-            if (item instanceof DefaultRenderedItem) {
-                this.registerItemRenderer(item, ((DefaultRenderedItem) item).getResource(name), "inventory");
-            } else if (item instanceof SubtypeRenderedItem) {
-                SubtypeRenderedItem subtypeItem = (SubtypeRenderedItem) item;
-                int[] subtypes = subtypeItem.getUsedSubtypes();
-                for (int metadata : subtypes) {
-                    this.registerItemRenderer(item, metadata, subtypeItem.getResource(name, metadata), "inventory");
-                }
-            }else if (item instanceof ItemFood){
-                this.registerItemRenderer(item, name, "inventory");
-                this.registerItemRenderer(item, name, "inventory");
-            }
-        }
-
-    }
+    public void onPreInit() {}
 
     public void onInit() {
         RenderingRegistry.registerEntityRenderingHandler(JavelinEntity.class, new JavelinRenderer(MINECRAFT.getRenderManager()));
@@ -177,7 +123,7 @@ public class RenderingHandler {
         }, FABlockRegistry.FERNS);
         Minecraft.getMinecraft().getItemColors().registerItemColorHandler(new IItemColor() {
             @Override
-            public int getColorFromItemstack(ItemStack stack, int tintIndex) {
+            public int colorMultiplier(ItemStack stack, int tintIndex){
                 @SuppressWarnings("deprecation")
                 IBlockState iblockstate = ((ItemBlock) stack.getItem()).getBlock().getStateFromMeta(stack.getMetadata());
                 return Minecraft.getMinecraft().getBlockColors().colorMultiplier(iblockstate, (IBlockAccess)null, (BlockPos)null, tintIndex);

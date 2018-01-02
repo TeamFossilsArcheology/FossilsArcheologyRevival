@@ -49,7 +49,7 @@ public class Flock {
             if (member != null && flockLeader != null && this.flockPathNavigate != null && this.flockPathNavigate.getPath() != null) {
                 if (member.getNavigator().noPath() && member != this.flockLeader) {
                     Path path = this.flockLeader.getNavigator().getPath();
-                    member.getNavigator().setPath(this.flockPathNavigate.getPathToXYZ(path.getFinalPathPoint().xCoord + generateVarience(6, -6), path.getFinalPathPoint().yCoord + generateVarience(6, -6), path.getFinalPathPoint().zCoord + generateVarience(6, -6)), 1);
+                    member.getNavigator().setPath(this.flockPathNavigate.getPathToXYZ(path.getFinalPathPoint().x + generateVarience(6, -6), path.getFinalPathPoint().y + generateVarience(6, -6), path.getFinalPathPoint().z + generateVarience(6, -6)), 1);
                 }
             }
         }
@@ -64,7 +64,7 @@ public class Flock {
                     flockPathNavigate = flockLeader.getNavigator();
                 }
                 if(flockLeader.getNavigator() != null && vec3 != null){
-                    this.flockLeader.getNavigator().setPath(this.flockPathNavigate.getPathToXYZ(vec3.xCoord, vec3.yCoord, vec3.zCoord), 1);
+                    this.flockLeader.getNavigator().setPath(this.flockPathNavigate.getPathToXYZ(vec3.x, vec3.y, vec3.z), 1);
                 }
             }
         }
@@ -79,7 +79,7 @@ public class Flock {
             EntityPrehistoric entity2 = (EntityPrehistoric) list.get(i);
 
             if (entity2 != leader && !this.flockMembers.contains(entity2) && entity2.type == leader.type) {
-                double d1 = leader.getDistanceSqToEntity(entity2);
+                double d1 = leader.getDistanceSq(entity2);
 
                 if (d1 <= d0) {
                     entity1 = entity2;

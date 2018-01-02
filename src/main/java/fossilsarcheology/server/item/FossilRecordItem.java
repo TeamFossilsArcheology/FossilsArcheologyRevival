@@ -11,6 +11,7 @@ public class FossilRecordItem extends ItemRecord implements DefaultRenderedItem 
 
     public final String recordName;
 
+
     public FossilRecordItem(String string, SoundEvent sound, String name) {
         super(name, sound);
         this.recordName = string;
@@ -19,10 +20,4 @@ public class FossilRecordItem extends ItemRecord implements DefaultRenderedItem 
         this.setUnlocalizedName(name);
 
     }
-
-    @Override
-    public ResourceLocation getRecordResource(String name) {
-        return new ResourceLocation(Revival.MODID + ":" + this.recordName);
-    }
-
 }

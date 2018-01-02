@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.chunk.IChunkGenerator;
+import net.minecraft.world.gen.IChunkGenerator;
 import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorSimplex;
 
@@ -159,7 +159,7 @@ public class ChunkProviderAnu implements IChunkGenerator {
         }
     }
 
-    public Chunk provideChunk(int x, int z) {
+    public Chunk generateChunk(int x, int z) {
         this.chunkX = x;
         this.chunkZ = z;
         this.rand.setSeed((long) x * 341873128712L + (long) z * 132897987541L);
@@ -307,10 +307,21 @@ public class ChunkProviderAnu implements IChunkGenerator {
     }
 
     @Nullable
+    @Override
+    public BlockPos getNearestStructurePos(World worldIn, String structureName, BlockPos position, boolean findUnexplored) {
+        return null;
+    }
+
+    @Nullable
     public BlockPos getStrongholdGen(World worldIn, String structureName, BlockPos position) {
         return null;
     }
 
     public void recreateStructures(Chunk chunkIn, int x, int z) {
+    }
+
+    @Override
+    public boolean isInsideStructure(World worldIn, String structureName, BlockPos pos) {
+        return false;
     }
 }

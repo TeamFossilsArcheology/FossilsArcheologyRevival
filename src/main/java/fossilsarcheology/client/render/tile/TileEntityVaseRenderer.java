@@ -39,7 +39,7 @@ public class TileEntityVaseRenderer extends TileEntitySpecialRenderer {
         this.vaseType = vaseType;
     }
 
-    public void renderTileEntityAt(TileEntity te, double x, double y, double z, float scale, int destroyProgress) {
+    public void render(TileEntity te, double x, double y, double z, float scale, int destroyProgress, float alpha) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 1.5F, (float) z + 0.5F);
         GL11.glPushMatrix();

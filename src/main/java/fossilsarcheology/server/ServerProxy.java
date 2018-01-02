@@ -3,9 +3,13 @@ package fossilsarcheology.server;
 import fossilsarcheology.Revival;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.achievement.FossilAchievements;
+import fossilsarcheology.server.api.BlockEntity;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.block.FAFluidRegistry;
+import fossilsarcheology.server.block.IBlockItem;
+import fossilsarcheology.server.block.ISlabItem;
 import fossilsarcheology.server.block.entity.*;
+import fossilsarcheology.server.block.entity.block.TileEntityVolute;
 import fossilsarcheology.server.container.*;
 import fossilsarcheology.server.entity.EntityFishBase;
 import fossilsarcheology.server.entity.FAEntityRegistry;
@@ -24,13 +28,23 @@ import fossilsarcheology.server.world.FAWorldRegistry;
 import net.minecraft.block.Block;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import java.lang.reflect.Field;
+
+@Mod.EventBusSubscriber
 public class ServerProxy implements IGuiHandler {
     public static final int GUI_ANALYZER = 0;
     public static final int GUI_CULTIVATE = 1;
@@ -40,17 +54,128 @@ public class ServerProxy implements IGuiHandler {
     public static final int GUI_TIME_MACHINE = 5;
     public static final int GUI_DINOPEDIA = 6;
 
+    @SubscribeEvent
+    public static void registerBlocks(RegistryEvent.Register<Block> event) {
+        try {
+            for (Field f : FABlockRegistry.class.getDeclaredFields()) {
+                Object obj = f.get(null);
+                if (obj instanceof Block) {
+                    FABlockRegistry.registerBlock(event, (Block) obj);
+                } else if (obj instanceof Block[]) {
+                    for (Block block : (Block[]) obj) {
+                        FABlockRegistry.registerBlock(event, block);
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+        GameRegistry.registerTileEntity(TileEntityCultivate.class, "fossil.cultivate");
+        GameRegistry.registerTileEntity(TileEntityFeeder.class, "fossil.feeder");
+        GameRegistry.registerTileEntity(TileEntityWorktable.class, "fossil.archeology_workbench");
+        GameRegistry.registerTileEntity(AnalyzerBlockEntity.class, "fossil.analyzer");
+        GameRegistry.registerTileEntity(TileEntityAncientChest.class, "fossil.ancient_chest");
+        GameRegistry.registerTileEntity(TileEntityAnubiteStatue.class, "fossil.anubite");
+        GameRegistry.registerTileEntity(TileEntityAnuStatue.class, "fossil.anu_statue");
+        GameRegistry.registerTileEntity(TileEntityFigurine.class, "fossil.figurine");
+        GameRegistry.registerTileEntity(TileEntityKylix.class, "fossil.kylix");
+        GameRegistry.registerTileEntity(TileEntitySarcophagus.class, "fossil.sarcophagus");
+        GameRegistry.registerTileEntity(TileEntitySifter.class, "fossil.sifter");
+        GameRegistry.registerTileEntity(TileEntityAmphora.class, "fossil.amphora");
+        GameRegistry.registerTileEntity(TileEntityTimeMachine.class, "fossil.time_machine");
+        GameRegistry.registerTileEntity(TileEntityVolute.class, "fossil.volute");
+
+
+    }
+
+    @SubscribeEvent
+    public static void registerItems(RegistryEvent.Register<Item> event) {
+        try {
+            for (Field f : FAItemRegistry.class.getDeclaredFields()) {
+                Object obj = f.get(null);
+                if (obj instanceof Item) {
+                    FAItemRegistry.registerItem(event, (Item) obj);
+                } else if (obj instanceof Item[]) {
+                    for (Item item : (Item[]) obj) {
+                        FAItemRegistry.registerItem(event, item);
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        try {
+            for (Field f : FABlockRegistry.class.getDeclaredFields()) {
+                Object obj = f.get(null);
+                if (obj instanceof Block) {
+                    registerItemBlocks((Block)obj, event);
+                } else if (obj instanceof Block[]) {
+                    for (Block block : (Block[]) obj) {
+                        registerItemBlocks(block, event);
+                    }
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+
+        PrehistoricEntityType.register(event);
+
+    }
+
+    private static void registerItemBlocks(Block block, RegistryEvent.Register<Item> event){
+        if(block instanceof IBlockItem){
+            ItemBlock itemBlock = new ItemBlock(block);
+            if (IBlockItem.class.isAssignableFrom(((IBlockItem)block).getItemBlockClass())) {
+                try {
+                    String name = itemBlock.getUnlocalizedName().substring("item.".length());
+                    itemBlock.setRegistryName(new ResourceLocation(Revival.MODID, name));
+                    event.getRegistry().register(itemBlock);
+                    itemBlock = ((IBlockItem)block).getItemBlockClass().getDeclaredConstructor(World.class).newInstance(block);
+                } catch (ReflectiveOperationException e) {
+                    e.printStackTrace();
+                }
+            }
+            String name = itemBlock.getUnlocalizedName().substring("item.".length());
+            itemBlock.setRegistryName(new ResourceLocation(Revival.MODID, name));
+            event.getRegistry().register(itemBlock);
+            event.getRegistry().register(itemBlock);
+        }else if(block instanceof ISlabItem){
+            ItemBlock itemBlock = ((ISlabItem)block).getItemBlock();
+            String name = itemBlock.getUnlocalizedName().substring("item.".length());
+            itemBlock.setRegistryName(new ResourceLocation(Revival.MODID, name));
+            event.getRegistry().register(itemBlock);
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerSoundEvents(RegistryEvent.Register<SoundEvent> event) {
+        try {
+            for (Field f : FASoundRegistry.class.getDeclaredFields()) {
+                Object obj = f.get(null);
+                if (obj instanceof SoundEvent) {
+                    event.getRegistry().register((SoundEvent)obj);
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @SubscribeEvent
+    public static void registerBiome(RegistryEvent.Register<Biome> event) {
+        event.getRegistry().register(FAWorldRegistry.ANU_BIOME.setRegistryName("Lair of Darkness"));
+        event.getRegistry().register(FAWorldRegistry.TREASURE_BIOME.setRegistryName("Treasure"));
+
+    }
+
     public void onPreInit() {
         NetworkRegistry.INSTANCE.registerGuiHandler(Revival.INSTANCE, this);
-        FASoundRegistry.register();
         FAFluidRegistry.register();
-        FABlockRegistry.register();
-        FAItemRegistry.register();
         FAEntityRegistry.register();
         FAOreDictRegistry.register();
-        PrehistoricEntityType.register();
         FossilFoodMappings.register();
-        FossilAchievements.register();
         FAWorldRegistry.register();
 
 
@@ -61,7 +186,6 @@ public class ServerProxy implements IGuiHandler {
         MinecraftForge.EVENT_BUS.register(new FossilPickupItemEvent());
         MinecraftForge.EVENT_BUS.register(new FossilBonemealEvent());
         MinecraftForge.EVENT_BUS.register(new FossilLivingEvent());
-        FARecipeRegistry.register();
         MinecraftForge.TERRAIN_GEN_BUS.register(new FAWorldGenerator());
     }
 

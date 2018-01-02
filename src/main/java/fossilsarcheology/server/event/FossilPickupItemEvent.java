@@ -18,7 +18,7 @@ public class FossilPickupItemEvent {
     public void notifyPickup(PlayerEvent.ItemCraftedEvent event) {
     }
 
-    @SubscribeEvent
+  /*  @SubscribeEvent
     public void notifyPickup(PlayerEvent.ItemSmeltedEvent event) {
 
         // Analyzer Achievements
@@ -57,5 +57,5 @@ public class FossilPickupItemEvent {
         if (event.smelting.getItem() == Item.getItemFromBlock(FABlockRegistry.AMPHORA_VASE) || event.smelting.getItem() == Item.getItemFromBlock(FABlockRegistry.KYLIX_VASE) || event.smelting.getItem() == Item.getItemFromBlock(FABlockRegistry.VOLUTE_VASE)) {
             event.player.addStat(FossilAchievements.FIXED_VASE, 1);
         }
-    }
+    }*/
 }

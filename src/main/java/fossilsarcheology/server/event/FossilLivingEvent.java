@@ -19,7 +19,6 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.player.AchievementEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -32,7 +31,7 @@ public class FossilLivingEvent {
 	public void onBreakBlock(BlockEvent.BreakEvent event) {
 		FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getPlayer(), FossilsPlayerProperties.class);
 		if (event.getWorld().provider.getDimension() == Revival.CONFIG.dimensionIDDarknessLair && event.getState().getBlock() != Blocks.OBSIDIAN && (properties == null || properties.killedAnu)) {
-			event.getPlayer().sendStatusMessage(new TextComponentString(I18n.format("anu.breakblock")));
+			event.getPlayer().sendStatusMessage(new TextComponentString(I18n.format("anu.breakblock")), false);
 			event.setCanceled(true);
 		}
 	}
@@ -45,13 +44,6 @@ public class FossilLivingEvent {
 				Revival.PEDIA_OBJECT = event.getTarget();
 				event.getEntityPlayer().openGui(Revival.INSTANCE, ServerProxy.GUI_DINOPEDIA, event.getWorld(), (int) event.getPos().getX(), (int)  event.getPos().getY(), (int)  event.getPos().getZ());
 			}
-		}
-	}
-
-	@SubscribeEvent
-	public void onAchievementGet(AchievementEvent event) {
-		if (event.getAchievement() == FossilAchievements.FIRST_DINO) {
-			Revival.PROXY.playSound(FASoundRegistry.MUSIC_FIRST_DINOSAUR);
 		}
 	}
 

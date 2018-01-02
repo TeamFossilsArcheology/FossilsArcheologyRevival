@@ -2,6 +2,7 @@ package fossilsarcheology.server.block;
 
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.tab.FATabRegistry;
+import fossilsarcheology.server.world.gen.WorldGenPalm;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -54,7 +55,9 @@ public class PalmSaplingBlock extends BlockBush implements DefaultRenderedItem, 
     }
 
     public void generateTree(World world, BlockPos pos, Random rand) {
-   //TODO
+        WorldGenPalm palmGen = new WorldGenPalm();
+        world.setBlockToAir(pos);
+        palmGen.generate(world, rand, pos);
     }
 
     @Override

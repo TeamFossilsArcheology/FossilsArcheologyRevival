@@ -51,7 +51,7 @@ public class EntityAnuEffect extends EntityLiving {
     }
 
     @Override
-    public void moveEntityWithHeading(float par1, float par2) {
+    public void travel(float par1, float par2, float vertical) {
         this.motionX *= 0.0D;
         this.motionY *= 0.0D;
         this.motionZ *= 0.0D;

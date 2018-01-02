@@ -40,7 +40,6 @@ public class FeederBlock extends BlockContainer implements DefaultRenderedItem {
         this.setUnlocalizedName("feeder");
         this.setCreativeTab(FATabRegistry.BLOCKS);
         this.setHardness(3);
-        GameRegistry.registerTileEntity(TileEntityFeeder.class, "Feeder");
 
     }
 
@@ -50,7 +49,7 @@ public class FeederBlock extends BlockContainer implements DefaultRenderedItem {
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             player.openGui(Revival.INSTANCE, ServerProxy.GUI_FEEDER, world, pos.getX(), pos.getY(), pos.getZ());
         }

@@ -46,7 +46,7 @@ public class DinoAIEatItems extends EntityAIBase {
     }
 
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         if (targetItem == null || !this.targetItem.isEntityAlive()) {
             return false;
         }
@@ -67,7 +67,7 @@ public class DinoAIEatItems extends EntityAIBase {
                 this.prehistoric.getNavigator().tryMoveToXYZ(this.targetItem.posX, this.targetItem.posY, this.targetItem.posZ, 1D);
             if (distance < 2.5D) {
                 if (this.targetItem != null) {
-                    this.prehistoric.eatItem(this.targetItem.getEntityItem());
+                    this.prehistoric.eatItem(this.targetItem.getItem());
                     this.targetItem.setDead();
                 }
             }
@@ -83,8 +83,8 @@ public class DinoAIEatItems extends EntityAIBase {
         while (iterateNearbyItems.hasNext()) {
 
             EntityItem entityItem1 = (EntityItem) iterateNearbyItems.next();
-            if (entityItem1.getEntityItem() != null && entityItem1.getEntityItem().getItem() != null)
-                if ((FoodMappings.INSTANCE.getItemFoodAmount(entityItem1.getEntityItem(), prehistoric.type.diet) != 0) && this.prehistoric.getDistanceSqToEntity(entityItem1) < range) {
+            if (entityItem1.getItem() != null && entityItem1.getItem().getItem() != null)
+                if ((FoodMappings.INSTANCE.getItemFoodAmount(entityItem1.getItem(), prehistoric.type.diet) != 0) && this.prehistoric.getDistanceSq(entityItem1) < range) {
                     entityItem = entityItem1;
                 }
         }
@@ -101,8 +101,8 @@ public class DinoAIEatItems extends EntityAIBase {
         }
 
         public int func_48469_a(Entity var1, Entity var2) {
-            double var3 = this.entity.getDistanceSqToEntity(var1);
-            double var5 = this.entity.getDistanceSqToEntity(var2);
+            double var3 = this.entity.getDistanceSq(var1);
+            double var5 = this.entity.getDistanceSq(var2);
             return var3 < var5 ? -1 : (var3 > var5 ? 1 : 0);
         }
 
