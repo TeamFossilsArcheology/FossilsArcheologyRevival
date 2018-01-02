@@ -17,7 +17,7 @@ public class TileEntityTimeMachineRender extends TileEntitySpecialRenderer<TileE
     private float Hour = 0.0F;
     private float Minute = 0.0F;
 
-    public void renderTileEntityAt(TileEntityTimeMachine var1, double var2, double var4, double var6, float var8, int destroyStage) {
+    public void render(TileEntityTimeMachine var1, double var2, double var4, double var6, float var8, int destroyStage, float alpha) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) var2 + 0.5F, (float) var4 + 0.75F, (float) var6 + 0.5F);
         float var9 = (float) var1.clockCounter + var8;

@@ -34,7 +34,7 @@ public class TileEntityFigurineRender extends TileEntitySpecialRenderer<TileEnti
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityFigurine te, double x, double y, double z, float partialTicks, int destroyStage) {
+    public void render(TileEntityFigurine te, double x, double y, double z, float partialTicks, int destroyStage, float alpha) {
         GL11.glPushMatrix();
         GL11.glTranslatef((float) x + 0.5F, (float) y + 0.75F, (float) z + 0.5F);
         GL11.glPushMatrix();

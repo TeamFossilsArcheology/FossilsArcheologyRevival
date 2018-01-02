@@ -29,14 +29,14 @@ public class TimeMachineGUI extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int x, int y) {
         String chargeLevel = this.timeMachineInstance.getChargeLevel() / 10 + "%";
-        int var3 = (34 - this.fontRendererObj.getStringWidth(chargeLevel)) / 2;
-        this.fontRendererObj.drawString(I18n.format("tile.timeMachine.name"), 70 - I18n.format("tile.timeMachine.name").length(), 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
+        int var3 = (34 - this.fontRenderer.getStringWidth(chargeLevel)) / 2;
+        this.fontRenderer.drawString(I18n.format("tile.timeMachine.name"), 70 - I18n.format("tile.timeMachine.name").length(), 6, 4210752);
+        this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
         if (this.timeMachineInstance.isCharged()) {
             String comingSoon = "Coming Soon...";
             GL11.glPushMatrix();
             GL11.glScalef(1.25F, 1.25F, 1.25F);
-            this.fontRendererObj.drawString(comingSoon, this.xSize / 2 - comingSoon.length() * 4 + 37, this.ySize - 152 + 2, 0XBF0000, false);
+            this.fontRenderer.drawString(comingSoon, this.xSize / 2 - comingSoon.length() * 4 + 37, this.ySize - 152 + 2, 0XBF0000, false);
             GL11.glPopMatrix();
         }
     }

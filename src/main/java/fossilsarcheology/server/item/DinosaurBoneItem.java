@@ -6,6 +6,7 @@ import fossilsarcheology.server.tab.FATabRegistry;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 
 import java.util.List;
@@ -32,9 +33,11 @@ public class DinosaurBoneItem extends Item implements SubtypeRenderedItem {
     }
 
     @Override
-    public void getSubItems(Item item, CreativeTabs tab, List<ItemStack> subItems) {
-        for (int meta = 0; meta < DinosaurBoneType.values().length; meta++) {
-            subItems.add(new ItemStack(item, 1, meta));
+    public void getSubItems(CreativeTabs creativeTabs, NonNullList<ItemStack> list) {
+        if(creativeTabs == FATabRegistry.ITEMS){
+            for (int meta = 0; meta < DinosaurBoneType.values().length; meta++) {
+                list.add(new ItemStack(this, 1, meta));
+            }
         }
     }
 

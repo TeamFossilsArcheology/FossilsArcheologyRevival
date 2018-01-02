@@ -9,7 +9,7 @@ import net.minecraft.util.ResourceLocation;
 public class RenderTarSlime extends RenderSlime {
 
     public RenderTarSlime(RenderManager rendermanager) {
-        super(rendermanager, new ModelSlime(1), 0.3F);
+        super(rendermanager);
     }
 
     @Override

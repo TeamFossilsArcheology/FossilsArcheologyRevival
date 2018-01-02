@@ -13,7 +13,7 @@ public class TileEntityAnubiteStatue extends TileEntity implements ITickable {
     public void update() {
         EntityPlayer player = this.world.getClosestPlayer(pos.getX(), pos.getY(), pos.getZ(), 5, false);
         if (player != null) {
-            player.addStat(FossilAchievements.ANUBITE_ENCOUNTER, 1);
+            //player.addStat(FossilAchievements.ANUBITE_ENCOUNTER, 1);
             if (!player.capabilities.isCreativeMode) {
                 world.newExplosion(null, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5, 5F, true, true);
                 EntityAnubite newMob = new EntityAnubite(world);

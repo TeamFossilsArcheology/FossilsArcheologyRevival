@@ -29,13 +29,13 @@ public class DinoAILeapAtTarget extends EntityAIBase {
         if (this.leapTarget == null) {
             return false;
         } else {
-            double d0 = this.dino.getDistanceSqToEntity(this.leapTarget);
+            double d0 = this.dino.getDistanceSq(this.leapTarget);
             return (d0 <= 16.0D) && (this.dino.onGround && this.dino.getRNG().nextInt(5) == 0) && !dino.isMovementBlocked();
         }
     }
 
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return !this.dino.onGround;
     }
 

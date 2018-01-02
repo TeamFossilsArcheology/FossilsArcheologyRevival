@@ -146,7 +146,7 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
         super.onLivingUpdate();
 
         if (this.getAttackTarget() != null) {
-            if (getAttackBounds().intersectsWith(this.getAttackTarget().getEntityBoundingBox())) {
+            if (getAttackBounds().intersects(this.getAttackTarget().getEntityBoundingBox())) {
                 if (!this.isEntitySmallerThan(this.getAttackTarget(), 2F * (this.getAgeScale() / this.maxSize))) {
                     if (this.getAnimation() != ATTACK_ANIMATION) {
                         this.setAnimation(ATTACK_ANIMATION);
@@ -228,7 +228,7 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.MOSASAURUS_HURT;
     }
 

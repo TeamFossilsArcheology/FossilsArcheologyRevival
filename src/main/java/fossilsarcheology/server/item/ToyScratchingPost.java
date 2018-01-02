@@ -18,7 +18,7 @@ public class ToyScratchingPost extends Item implements DefaultRenderedItem {
         this.setUnlocalizedName("toyscratchingpost");
         this.setCreativeTab(FATabRegistry.ITEMS);
     }
-        public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
             if (facing == EnumFacing.UP && worldIn.isAirBlock(pos.up()) && worldIn.isAirBlock(pos.up(2))) {
                 EntityToyScratchingPost ball = new EntityToyScratchingPost(worldIn);
                 ball.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0, 0);
@@ -26,7 +26,7 @@ public class ToyScratchingPost extends Item implements DefaultRenderedItem {
                     worldIn.spawnEntity(ball);
                 ball.rotationYaw = playerIn.rotationYawHead;
                 if (!playerIn.capabilities.isCreativeMode)
-                    --stack.stackSize;
+                    playerIn.getHeldItem(hand).shrink(1);
             }
         return EnumActionResult.SUCCESS;
     }

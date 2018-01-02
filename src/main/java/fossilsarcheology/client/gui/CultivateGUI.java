@@ -20,9 +20,9 @@ public class CultivateGUI extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String customName = this.cultivateInventory.getName();
-        this.fontRendererObj.drawString(I18n.format(customName), this.xSize / 2 - this.fontRendererObj.getStringWidth(I18n.format(customName)) / 2, 6, 4210752);
+        this.fontRenderer.drawString(I18n.format(customName), this.xSize / 2 - this.fontRenderer.getStringWidth(I18n.format(customName)) / 2, 6, 4210752);
 
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
+        this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
     @Override

@@ -11,6 +11,7 @@ import net.minecraft.entity.ai.EntityAIOwnerHurtTarget;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
@@ -151,7 +152,7 @@ public class EntityHenodus extends EntityPrehistoricSwimming {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.HENODUS_HURT;
     }
 

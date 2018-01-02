@@ -102,21 +102,21 @@ public class GuiPedia extends GuiScreen {
     }
 
     public void addStringLR(String string, boolean left0) {
-        this.fontRendererObj.drawString(string, 30 + (left0 ? 0 : 121), 12 * ((left0 ? this.left++ : this.right++) + 1), 4210752);
+        this.fontRenderer.drawString(string, 30 + (left0 ? 0 : 121), 12 * ((left0 ? this.left++ : this.right++) + 1), 4210752);
     }
 
     public void addStringLR(String string, int marginOffset, boolean left0) {
-        this.fontRendererObj.drawString(string, 30 + (left0 ? marginOffset : 121 + marginOffset), 12 * ((left0 ? this.left++ : this.right++) + 1), 0X9D7E67);
+        this.fontRenderer.drawString(string, 30 + (left0 ? marginOffset : 121 + marginOffset), 12 * ((left0 ? this.left++ : this.right++) + 1), 0X9D7E67);
     }
 
     public void addStringLR(String string, boolean left0, int r, int g, int b) {
         int col = (r << 16) | (g << 8) | b;
-        this.fontRendererObj.drawString(string, 30 + (left0 ? 0 : 121), 12 * ((left0 ? this.left++ : this.right++) + 1), col);
+        this.fontRenderer.drawString(string, 30 + (left0 ? 0 : 121), 12 * ((left0 ? this.left++ : this.right++) + 1), col);
     }
 
     public void printStringXY(String str0, int x0, int y0, int r, int g, int b) {
         int col = (r << 16) | (g << 8) | b;
-        this.fontRendererObj.drawString(str0, x0, y0, col);
+        this.fontRenderer.drawString(str0, x0, y0, col);
     }
 
     public boolean printItemXY(ItemStack item, int x, int y, int zoom) {
@@ -157,7 +157,7 @@ public class GuiPedia extends GuiScreen {
                         List<String> text = new ArrayList<String>();
                         String s1 = item.getDisplayName();
                         text.add(s1);
-                        this.drawHoveringText(text, (-this.fontRendererObj.getStringWidth(s1) / 2) + 280, 222, fontRendererObj);
+                        this.drawHoveringText(text, (-this.fontRenderer.getStringWidth(s1) / 2) + 280, 222, fontRenderer);
                     }
                 }
                 return true;
@@ -217,9 +217,9 @@ public class GuiPedia extends GuiScreen {
                 String s2 = I18n.format("prehistoric.pregnant");
                 int quot = (int) Math.floor(((float) properties.embryoProgress / (float) properties.embryo.growTime * 100.0F));
                 String s3 = I18n.format("prehistoric.pregnantTime") + String.valueOf(quot) + "%";
-                printStringXY(s3, (-this.fontRendererObj.getStringWidth(s3) / 2) + 100, 110, 157, 126, 103);
+                printStringXY(s3, (-this.fontRenderer.getStringWidth(s3) / 2) + 100, 110, 157, 126, 103);
                 GL11.glScalef(1.5F, 1.5F, 1.5F);
-                printStringXY(s2 + I18n.format(entity.getName()), (-this.fontRendererObj.getStringWidth(s2 + s1) / 2) + 65, 60, 66, 48, 36);
+                printStringXY(s2 + I18n.format(entity.getName()), (-this.fontRenderer.getStringWidth(s2 + s1) / 2) + 65, 60, 66, 48, 36);
             }
             if (Revival.PEDIA_OBJECT instanceof EntityLivingBase) {
                 renderFirstPage((EntityLivingBase) Revival.PEDIA_OBJECT);
@@ -310,7 +310,7 @@ public class GuiPedia extends GuiScreen {
             GL11.glPushMatrix();
             String s = I18n.format(entity.getName());
             GL11.glScalef(1.5F, 1.5F, 1.5F);
-            printStringXY(I18n.format(entity.getName()), (-this.fontRendererObj.getStringWidth(s) / 2) + 65, 60, 66, 48, 36);
+            printStringXY(I18n.format(entity.getName()), (-this.fontRenderer.getStringWidth(s) / 2) + 65, 60, 66, 48, 36);
             GL11.glPopMatrix();
             {
                 String s1 = I18n.format("pedia.age") + " " + dino.getAgeInDays();
@@ -334,12 +334,12 @@ public class GuiPedia extends GuiScreen {
                 int x = wordLength / 2;
                 int y = 140;
                 printStringXY(s1, x, y, 157, 126, 103);
-                if (mouseX > x && mouseX < x + this.fontRendererObj.getStringWidth(s1)) {
+                if (mouseX > x && mouseX < x + this.fontRenderer.getStringWidth(s1)) {
                     if (mouseY > y && mouseY < y + 10) {
                         List<String> text = new ArrayList<String>();
                         text.add(I18n.format("pedia.diet." + dino.type.diet.toString().toLowerCase() + ".desc"));
                         GL11.glPushMatrix();
-                        this.drawHoveringText(text, mouseX, mouseY, fontRendererObj);
+                        this.drawHoveringText(text, mouseX, mouseY, fontRenderer);
                         GL11.glPopMatrix();
                     }
                 }
@@ -354,12 +354,12 @@ public class GuiPedia extends GuiScreen {
                 int x = wordLength / 2;
                 int y = 150;
                 printStringXY(s1, x, y, 157, 126, 103);
-                if (mouseX > x && mouseX < x + this.fontRendererObj.getStringWidth(s1)) {
+                if (mouseX > x && mouseX < x + this.fontRenderer.getStringWidth(s1)) {
                     if (mouseY > y && mouseY < y + 10) {
                         List<String> text = new ArrayList<String>();
                         text.add(I18n.format(dino.getTempermentString() + ".desc"));
                         GL11.glPushMatrix();
-                        this.drawHoveringText(text, mouseX, mouseY, fontRendererObj);
+                        this.drawHoveringText(text, mouseX, mouseY, fontRenderer);
                         GL11.glPopMatrix();
                     }
                 }
@@ -384,12 +384,12 @@ public class GuiPedia extends GuiScreen {
                 int x = wordLength / 2;
                 int y = 180;
                 printStringXY(s1, x, y, 157, 126, 103);
-                if (mouseX > x && mouseX < x + this.fontRendererObj.getStringWidth(s1)) {
+                if (mouseX > x && mouseX < x + this.fontRenderer.getStringWidth(s1)) {
                     if (mouseY > y && mouseY < y + 10) {
                         List<String> text = new ArrayList<String>();
                         text.add(I18n.format(I18n.format("pedia.order." + dino.currentOrder.toString().toLowerCase() + ".desc")));
                         GL11.glPushMatrix();
-                        this.drawHoveringText(text, mouseX, mouseY, fontRendererObj);
+                        this.drawHoveringText(text, mouseX, mouseY, fontRenderer);
                         GL11.glPopMatrix();
                     }
                 }
@@ -415,12 +415,12 @@ public class GuiPedia extends GuiScreen {
                 int x = wordLength / 2;
                 int y = 200;
                 printStringXY(s1, x, y, 157, 126, 103);
-                if (mouseX > x && mouseX < x + this.fontRendererObj.getStringWidth(s1)) {
+                if (mouseX > x && mouseX < x + this.fontRenderer.getStringWidth(s1)) {
                     if (mouseY > y && mouseY < y + 10) {
                         List<String> text = new ArrayList<String>();
                         text.add(I18n.format(I18n.format("pedia.activity." + dino.aiActivityType().toString().toLowerCase() + ".desc")));
                         GL11.glPushMatrix();
-                        this.drawHoveringText(text, mouseX, mouseY, fontRendererObj);
+                        this.drawHoveringText(text, mouseX, mouseY, fontRenderer);
                         GL11.glPopMatrix();
                     }
                 }
@@ -431,7 +431,7 @@ public class GuiPedia extends GuiScreen {
             GL11.glPushMatrix();
             String s = I18n.format(egg.selfType.toString() + " " + I18n.format("pedia.egg"));
             GL11.glScalef(1.5F, 1.5F, 1.5F);
-            printStringXY(s, (-this.fontRendererObj.getStringWidth(s) / 2) + 65, 60, 66, 48, 36);
+            printStringXY(s, (-this.fontRenderer.getStringWidth(s) / 2) + 65, 60, 66, 48, 36);
             GL11.glPopMatrix();
             {
                 int time = (int) Math.floor(((float) egg.getBirthTick() / (float) egg.totalHatchTime * 100.0F));
@@ -455,12 +455,12 @@ public class GuiPedia extends GuiScreen {
         if (entity instanceof EntityFishBase) {
             String s1 = I18n.format(entity.getName());
             GL11.glScalef(1.5F, 1.5F, 1.5F);
-            printStringXY(I18n.format(entity.getName()), (-this.fontRendererObj.getStringWidth(s1) / 2) + 65, 60, 66, 48, 36);
+            printStringXY(I18n.format(entity.getName()), (-this.fontRenderer.getStringWidth(s1) / 2) + 65, 60, 66, 48, 36);
         }
         if (entity instanceof EntityQuagga) {
             String s1 = I18n.format(entity.getName());
             GL11.glScalef(1.5F, 1.5F, 1.5F);
-            printStringXY(I18n.format(entity.getName()), (-this.fontRendererObj.getStringWidth(s1) / 2) + 65, 60, 66, 48, 36);
+            printStringXY(I18n.format(entity.getName()), (-this.fontRenderer.getStringWidth(s1) / 2) + 65, 60, 66, 48, 36);
         }
     }
 
@@ -510,7 +510,7 @@ public class GuiPedia extends GuiScreen {
                             List<String> text = new ArrayList<String>();
                             text.add(I18n.format("pedia.moodstatus") + dino.getMoodFace().color + dino.getMood());
                             GL11.glPushMatrix();
-                            this.drawHoveringText(text, mouseX, mouseY, fontRendererObj);
+                            this.drawHoveringText(text, mouseX, mouseY, fontRenderer);
                             GL11.glPopMatrix();
                         }
                     }
@@ -529,7 +529,7 @@ public class GuiPedia extends GuiScreen {
                             text.add(dino.getMoodFace().color + I18n.format(I18n.format("pedia.") + dino.getMoodFace().toString().toLowerCase()));
                             text.add(ChatFormatting.GRAY + I18n.format(I18n.format("pedia.") + dino.getMoodFace().toString().toLowerCase() + I18n.format(".desc")));
                             GL11.glPushMatrix();
-                            this.drawHoveringText(text, mouseX, mouseY, fontRendererObj);
+                            this.drawHoveringText(text, mouseX, mouseY, fontRenderer);
                             GL11.glPopMatrix();
                         }
                     }
@@ -658,7 +658,7 @@ public class GuiPedia extends GuiScreen {
         GL11.glRotatef(-45.0F, 0.0F, 1.0F, -0.1F);
         float partialTicks = LLibrary.PROXY.getPartialTicks();
         GL11.glRotatef(ClientUtils.interpolate(mob.prevRenderYawOffset, mob.renderYawOffset, partialTicks), 0.0F, 1.0F, 0.0F);
-        Minecraft.getMinecraft().getRenderManager().doRenderEntity(mob, 0.0D, 0.0D, 0, 0.0F, partialTicks, false);
+        Minecraft.getMinecraft().getRenderManager().renderEntity(mob, 0.0D, 0.0D, 0, 0.0F, partialTicks, false);
         GL11.glDisable(GL11.GL_DEPTH_TEST);
         GL11.glPopMatrix();
         RenderHelper.disableStandardItemLighting();
@@ -689,7 +689,7 @@ public class GuiPedia extends GuiScreen {
         GL11.glTranslatef(0.0F, (float)mob.getYOffset(), 0.0F);
         GL11.glRotatef(mob.ticksExisted, 0.0F, 1.0F, 0.0F);
         Minecraft.getMinecraft().getRenderManager().playerViewY = 180.0F;
-        Minecraft.getMinecraft().getRenderManager().doRenderEntity(mob, 0.0D, 0.0D, 0.0D, 0.0F, 0F, false);
+        Minecraft.getMinecraft().getRenderManager().renderEntity(mob, 0.0D, 0.0D, 0.0D, 0.0F, 0F, false);
         mob.rotationYaw = f3;
         mob.rotationPitch = f4;
         GL11.glDisable(GL11.GL_DEPTH_TEST);

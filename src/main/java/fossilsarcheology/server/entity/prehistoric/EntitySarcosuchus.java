@@ -169,7 +169,7 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming {
         if (this.getPassengers().get(0) != null && this.getPassengers().get(0) instanceof EntityLivingBase) {
             Entity riddenByEntity = this.getPassengers().get(0);
             if (this.getAnimationTick() % 20 == 0 && riddenByEntity != null) {
-                riddenByEntity.attackEntityFrom(DamageSource.drown, 10);
+                riddenByEntity.attackEntityFrom(DamageSource.DROWN, 10);
 
                 if (riddenByEntity instanceof EntityToyBase) {
                     ((EntityToyBase) riddenByEntity).dismountEntity(this);
@@ -209,7 +209,7 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming {
             this.setSleeping(false);
         }
         if (this.getAttackTarget() != null) {
-            if (getAttackBounds().intersectsWith(this.getAttackTarget().getEntityBoundingBox())) {
+            if (getAttackBounds().intersects(this.getAttackTarget().getEntityBoundingBox())) {
                 if (!this.isInWater()) {
                     if (this.getAnimation() != ATTACK_ANIMATION) {
                         this.setAnimation(ATTACK_ANIMATION);
@@ -291,7 +291,7 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming {
         return this.isChild() ? FASoundRegistry.SARCOSUCHUS_BABY_LIVING : FASoundRegistry.SARCOSUCHUS_LIVING;
     }
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.SARCOSUCHUS_HURT;
     }
 

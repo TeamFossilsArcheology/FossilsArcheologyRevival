@@ -16,6 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -28,13 +29,9 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
     public int currentItemBurnTime = 0;
     public int sifterCookTime = 0;
     private String customName;
-    private ItemStack[] sifterItemStacks;
+    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(6, ItemStack.EMPTY);
     private int RawIndex = -1;
     private int SpaceIndex = -1;
-
-    public TileEntitySifter() {
-        sifterItemStacks = new ItemStack[6];
-    }
 
     private static int getItemBurnTime(ItemStack var1) {
         return 100;
@@ -46,28 +43,37 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
 
     @Override
     public int getSizeInventory() {
-        return this.sifterItemStacks.length;
+        return this.stacks.size();
     }
 
     @Override
+    public boolean isEmpty() {
+        for (ItemStack itemstack : this.stacks) {
+            if (!itemstack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;    }
+
+    @Override
     public ItemStack getStackInSlot(int var1) {
-        return this.sifterItemStacks[var1];
+        return this.stacks.get(var1);
     }
 
     @Override
     public ItemStack decrStackSize(int var1, int var2) {
-        if (this.sifterItemStacks[var1] != null) {
+        if (this.stacks.get(var1) != ItemStack.EMPTY) {
             ItemStack var3;
 
-            if (this.sifterItemStacks[var1].stackSize <= var2) {
-                var3 = this.sifterItemStacks[var1];
-                this.sifterItemStacks[var1] = null;
+            if (this.stacks.get(var1).getCount() <= var2) {
+                var3 = this.stacks.get(var1);
+                this.stacks.set(var1, ItemStack.EMPTY);
                 return var3;
             } else {
-                var3 = this.sifterItemStacks[var1].splitStack(var2);
+                var3 = this.stacks.get(var1).splitStack(var2);
 
-                if (this.sifterItemStacks[var1].stackSize == 0) {
-                    this.sifterItemStacks[var1] = null;
+                if (this.stacks.get(var1).getCount() == 0) {
+                    this.stacks.set(var1, ItemStack.EMPTY);
                 }
 
                 return var3;
@@ -80,15 +86,15 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
     @Nullable
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.sifterItemStacks, index);
+        return ItemStackHelper.getAndRemove(this.stacks, index);
     }
 
     @Override
     public void setInventorySlotContents(int var1, ItemStack var2) {
-        this.sifterItemStacks[var1] = var2;
+        this.stacks.set(var1, var2);
 
-        if (var2 != null && var2.stackSize > this.getInventoryStackLimit()) {
-            var2.stackSize = this.getInventoryStackLimit();
+        if (var2 != null && var2.getCount() > this.getInventoryStackLimit()) {
+            var2.setCount(this.getInventoryStackLimit());
         }
     }
 
@@ -96,17 +102,8 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
     @Override
     public void readFromNBT(NBTTagCompound var1) {
         super.readFromNBT(var1);
-        NBTTagList var2 = var1.getTagList("Items", 10);
-        this.sifterItemStacks = new ItemStack[this.getSizeInventory()];
-
-        for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
-            NBTTagCompound var4 = var2.getCompoundTagAt(var3);
-            byte var5 = var4.getByte("Slot");
-
-            if (var5 >= 0 && var5 < this.sifterItemStacks.length) {
-                this.sifterItemStacks[var5] = ItemStack.loadItemStackFromNBT(var4);
-            }
-        }
+        this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(var1, this.stacks);
 
         this.sifterBurnTime = var1.getShort("BurnTime");
         this.sifterCookTime = var1.getShort("CookTime");
@@ -118,18 +115,7 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
         super.writeToNBT(var1);
         var1.setShort("BurnTime", (short) this.sifterBurnTime);
         var1.setShort("CookTime", (short) this.sifterCookTime);
-        NBTTagList var2 = new NBTTagList();
-
-        for (int var3 = 0; var3 < this.sifterItemStacks.length; ++var3) {
-            if (this.sifterItemStacks[var3] != null) {
-                NBTTagCompound var4 = new NBTTagCompound();
-                var4.setByte("Slot", (byte) var3);
-                this.sifterItemStacks[var3].writeToNBT(var4);
-                var2.appendTag(var4);
-            }
-        }
-
-        var1.setTag("Items", var2);
+        ItemStackHelper.saveAllItems(var1, this.stacks);
         return var1;
     }
 
@@ -214,9 +200,9 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
         this.RawIndex = -1;
         int var1;
         for (var1 = 0; var1 < 1; ++var1) {
-            if (this.sifterItemStacks[var1] != null) {
-                Item input = this.sifterItemStacks[var1].getItem();
-                ItemStack itemstack = this.sifterItemStacks[var1];
+            if (this.stacks.get(var1) != null) {
+                Item input = this.stacks.get(var1).getItem();
+                ItemStack itemstack = this.stacks.get(var1);
                 if ((input == Item.getItemFromBlock(Blocks.SAND)) || (input == Item.getItemFromBlock(Blocks.DIRT)) || (input == Item.getItemFromBlock(Blocks.GRAVEL)) || (input == Item.getItemFromBlock(Blocks.CLAY)) || (input == Item.getItemFromBlock(FABlockRegistry.VOLCANIC_ASH))) {
                     this.RawIndex = var1;
                     break;
@@ -227,7 +213,7 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
             return false;
         } else {
             for (var1 = 5; var1 > 0; --var1) {
-                if (this.sifterItemStacks[var1] == null) {
+                if (this.stacks.get(var1) == null) {
                     this.SpaceIndex = var1;
                     break;
                 }
@@ -243,12 +229,12 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
             double random = (new Random()).nextInt(100);
             int var3;
 
-            if (this.sifterItemStacks[this.RawIndex].getItem() == Item.getItemFromBlock(Blocks.SAND) || this.sifterItemStacks[this.RawIndex].getItem() == Item.getItemFromBlock(Blocks.DIRT) || this.sifterItemStacks[this.RawIndex].getItem() == Item.getItemFromBlock(Blocks.GRAVEL) || this.sifterItemStacks[this.RawIndex].getItem() == Item.getItemFromBlock(Blocks.CLAY) || this.sifterItemStacks[this.RawIndex].getItem() == Item.getItemFromBlock(FABlockRegistry.VOLCANIC_ASH)) {
+            if (this.stacks.get(this.RawIndex).getItem() == Item.getItemFromBlock(Blocks.SAND) || this.stacks.get(this.RawIndex).getItem() == Item.getItemFromBlock(Blocks.DIRT) || this.stacks.get(this.RawIndex).getItem() == Item.getItemFromBlock(Blocks.GRAVEL) || this.stacks.get(this.RawIndex).getItem() == Item.getItemFromBlock(Blocks.CLAY) || this.stacks.get(this.RawIndex).getItem() == Item.getItemFromBlock(FABlockRegistry.VOLCANIC_ASH)) {
                 if (randomloot < 80) {
                     if (random < 75) {
                         result = null;
                     } else {
-                        result = this.sifterItemStacks[this.SpaceIndex];
+                        result = this.stacks.get(this.SpaceIndex);
                     }
                 } else {
                     if (random < 0.4) {
@@ -282,24 +268,20 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
             }
             if (result != null) {
                 for (int slots = 1; slots < 5; slots++) {
-                    ItemStack stackInSlot = this.sifterItemStacks[slots];
+                    ItemStack stackInSlot = this.stacks.get(slots);
                     if (stackInSlot != null) {
-                        if (stackInSlot.isItemEqual(result) && stackInSlot.stackSize + result.stackSize < 64) {
-                            stackInSlot.stackSize += result.stackSize;
-                            if (this.sifterItemStacks[this.RawIndex].stackSize > 1) {
-                                this.sifterItemStacks[this.RawIndex].stackSize--;
+                        if (stackInSlot.isItemEqual(result) && stackInSlot.getCount() + result.getCount() < 64) {
+                            stackInSlot.grow(result.getCount());
+                            if (this.stacks.get(this.RawIndex).getCount() > 1) {
+                                this.stacks.get(this.RawIndex).shrink(1);
                             } else {
-                                this.sifterItemStacks[this.RawIndex] = null;
+                                this.stacks.set(this.RawIndex, ItemStack.EMPTY);
                             }
                             break;
                         }
                     } else if (stackInSlot == null) {
-                        this.sifterItemStacks[slots] = result;
-                        if (this.sifterItemStacks[this.RawIndex].stackSize > 1) {
-                            this.sifterItemStacks[this.RawIndex].stackSize--;
-                        } else {
-                            this.sifterItemStacks[this.RawIndex] = null;
-                        }
+                        this.stacks.set(slots, result);
+                        this.stacks.get(this.RawIndex).shrink(1);
                         break;
                     }
                 }
@@ -351,9 +333,7 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
 
     @Override
     public void clear() {
-        for (int i = 0; i < this.sifterItemStacks.length; i++) {
-            this.sifterItemStacks[0] = null;
-        }
+        this.stacks.clear();
     }
 
     @Override

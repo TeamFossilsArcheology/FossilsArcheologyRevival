@@ -126,7 +126,7 @@ public class EntityNautilus extends EntityFishBase {
 
     @Override
     public boolean attackEntityFrom(DamageSource dmg, float f) {
-        if (f > 0 && this.isInShell() && dmg.getEntity() != null) {
+        if (f > 0 && this.isInShell() && dmg.getTrueSource() != null) {
             this.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1, this.getRNG().nextFloat() + 0.8F);
             if(this.getRidingEntity() != null){
                 return super.attackEntityFrom(dmg, f);

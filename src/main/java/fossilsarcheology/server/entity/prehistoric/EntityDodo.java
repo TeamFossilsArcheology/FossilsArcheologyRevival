@@ -157,7 +157,7 @@ public class EntityDodo extends EntityPrehistoric {
 
     @Override
     public boolean attackEntityAsMob(Entity entity) {
-        if (this.getAttackBounds().intersectsWith(entity.getEntityBoundingBox())) {
+        if (this.getAttackBounds().intersects(entity.getEntityBoundingBox())) {
             if (this.getAnimation() == NO_ANIMATION) {
                 this.setAnimation(ATTACK_ANIMATION);
                 return false;
@@ -182,8 +182,8 @@ public class EntityDodo extends EntityPrehistoric {
     }
 
     public void onDeath(DamageSource source) {
-        if (source.getEntity() != null && source.getEntity() instanceof EntityPlayer) {
-            ((EntityPlayer) source.getEntity()).addStat(FossilAchievements.DEAD_DODO);
+        if (source.getTrueSource() != null && source.getTrueSource() instanceof EntityPlayer) {
+            //((EntityPlayer) source.getTrueSource()).addStat(FossilAchievements.DEAD_DODO);
         }
         super.onDeath(source);
     }
@@ -194,7 +194,7 @@ public class EntityDodo extends EntityPrehistoric {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.DODO_HURT;
     }
 

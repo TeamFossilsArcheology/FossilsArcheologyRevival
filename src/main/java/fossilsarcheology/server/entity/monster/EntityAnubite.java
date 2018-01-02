@@ -59,7 +59,7 @@ public class EntityAnubite extends EntityMob {
     }
 
     private boolean shouldAttackPlayer(EntityPlayer player) {
-        ItemStack itemstack = player.inventory.armorInventory[3];
+        ItemStack itemstack = player.inventory.armorInventory.get(3);
         return !(itemstack != null && itemstack.getItem() == FAItemRegistry.ANCIENT_HELMET);
     }
 
@@ -73,12 +73,12 @@ public class EntityAnubite extends EntityMob {
         if (!this.world.isRemote && this.isEntityAlive()) {
             if (this.getAttackTarget() != null) {
                 if (this.getAttackTarget() instanceof EntityPlayer && this.shouldAttackPlayer((EntityPlayer) this.getAttackTarget())) {
-                    if (this.getAttackTarget().getDistanceSqToEntity(this) < 16.0D) {
+                    if (this.getAttackTarget().getDistanceSq(this) < 16.0D) {
                         this.teleportRandomly();
                     }
 
                     this.teleportDelay = 0;
-                } else if (this.getAttackTarget().getDistanceSqToEntity(this) > 256.0D && this.teleportDelay++ >= 30 && this.teleportToEntity(this.getAttackTarget())) {
+                } else if (this.getAttackTarget().getDistanceSq(this) > 256.0D && this.teleportDelay++ >= 30 && this.teleportToEntity(this.getAttackTarget())) {
                     this.teleportDelay = 0;
                 }
             } else {
@@ -104,9 +104,9 @@ public class EntityAnubite extends EntityMob {
         Vec3d vec3 = new Vec3d(this.posX - entity.posX, this.getEntityBoundingBox().minY + (double) (this.height / 2.0F) - entity.posY + (double) entity.getEyeHeight(), this.posZ - entity.posZ);
         vec3 = vec3.normalize();
         double d0 = 16.0D;
-        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.xCoord * d0;
-        double d2 = this.posY + (double) (this.rand.nextInt(16) - 8) - vec3.yCoord * d0;
-        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.zCoord * d0;
+        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.x * d0;
+        double d2 = this.posY + (double) (this.rand.nextInt(16) - 8) - vec3.y * d0;
+        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3.z * d0;
         return this.teleportTo(d1, d2, d3);
     }
 
@@ -177,7 +177,7 @@ public class EntityAnubite extends EntityMob {
             super.resetTask();
         }
 
-        public boolean continueExecuting() {
+        public boolean shouldContinueExecuting() {
             if (this.player != null) {
                 if (!this.anubite.shouldAttackPlayer(this.player)) {
                     return false;
@@ -188,19 +188,19 @@ public class EntityAnubite extends EntityMob {
                 }
             }
             else {
-                return this.targetEntity != null && ((EntityPlayer)this.targetEntity).isEntityAlive() ? true : super.continueExecuting();
+                return this.targetEntity != null && ((EntityPlayer)this.targetEntity).isEntityAlive() ? true : super.shouldContinueExecuting();
             }
         }
 
         public void updateTask() {
                 if (this.targetEntity != null && this.targetEntity instanceof EntityPlayer) {
                     if (this.anubite.shouldAttackPlayer((EntityPlayer)this.targetEntity)) {
-                        if (((EntityPlayer)this.targetEntity).getDistanceSqToEntity(this.anubite) < 16.0D) {
+                        if (((EntityPlayer)this.targetEntity).getDistanceSq(this.anubite) < 16.0D) {
                             this.anubite.teleportRandomly();
                         }
 
                         this.teleportTime = 0;
-                    } else if (((EntityPlayer)this.targetEntity).getDistanceSqToEntity(this.anubite) > 256.0D && this.teleportTime++ >= 30 && this.anubite.teleportToEntity(this.targetEntity)) {
+                    } else if (((EntityPlayer)this.targetEntity).getDistanceSq(this.anubite) > 256.0D && this.teleportTime++ >= 30 && this.anubite.teleportToEntity(this.targetEntity)) {
                         this.teleportTime = 0;
                     }
                 }

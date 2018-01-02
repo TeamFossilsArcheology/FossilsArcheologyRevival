@@ -157,13 +157,10 @@ public class FASoundRegistry {
     public static final SoundEvent MUSIC_SCARAB = create("music.scarab");
     public static final SoundEvent MUSIC_FIRST_DINOSAUR = create("music.first_dinosaur");
     public static final SoundEvent MUSIC_ANU = create("music.anu");
-    public static final SoundEvent MUSIC_MATING = create("music.mating");;
-
-    public static void register() {
-    }
+    public static final SoundEvent MUSIC_MATING = create("music.mating");
 
     public static SoundEvent create(String resource) {
         ResourceLocation identifier = new ResourceLocation(Revival.MODID, resource);
-        return GameRegistry.register(new SoundEvent(identifier), identifier);
+        return new SoundEvent(identifier).setRegistryName(identifier);
     }
 }

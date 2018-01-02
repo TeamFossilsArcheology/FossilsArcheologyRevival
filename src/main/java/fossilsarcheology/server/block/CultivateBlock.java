@@ -64,8 +64,8 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
             EntityPlayer P = (EntityPlayer) world.playerEntities.get(var7);
 
             if (Math.pow(pos.getX() - P.posX, 2D) + Math.pow(pos.getY() - P.posY, 2D) + Math.pow(pos.getZ() - P.posZ, 2D) < 10000){
-                P.addStat(FossilAchievements.FAILURESAURUS, 1);
-                P.sendStatusMessage(new TextComponentString(var6));
+               // P.addStat(FossilAchievements.FAILURESAURUS, 1);
+                P.sendStatusMessage(new TextComponentString(var6), false);
             }
         }
 
@@ -123,14 +123,14 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
         float offsetY = rand.nextFloat() * 0.8F + 0.1F;
         float offsetZ = rand.nextFloat() * 0.8F + 0.1F;
 
-        while (stack.stackSize > 0) {
+        while (stack.getCount() > 0) {
             int stackDecay = rand.nextInt(21) + 10;
 
-            if (stackDecay > stack.stackSize) {
-                stackDecay = stack.stackSize;
+            if (stackDecay > stack.getCount()) {
+                stackDecay = stack.getCount();
             }
 
-            stack.stackSize -= stackDecay;
+            stack.shrink(stackDecay);
             EntityItem item = new EntityItem(world, (double) ((float) pos.getX() + offsetX), (double) ((float) pos.getY() + offsetY), (double) ((float) pos.getZ() + offsetZ), new ItemStack(stack.getItem(), stackDecay, stack.getItemDamage()));
             float motionMutlipler = 0.05F;
             item.motionX = (double) ((float) rand.nextGaussian() * motionMutlipler);
@@ -150,14 +150,14 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
                 float offsetY = rand.nextFloat() * 0.8F + 0.1F;
                 float offsetZ = rand.nextFloat() * 0.8F + 0.1F;
 
-                while (stack.stackSize > 0) {
+                while (stack.getCount() > 0) {
                     int stackDecay = rand.nextInt(21) + 10;
 
-                    if (stackDecay > stack.stackSize) {
-                        stackDecay = stack.stackSize;
+                    if (stackDecay > stack.getCount()) {
+                        stackDecay = stack.getCount();
                     }
 
-                    stack.stackSize -= stackDecay;
+                    stack.shrink(stackDecay);
                     EntityItem item = new EntityItem(world, (double) ((float) pos.getX() + offsetX), (double) ((float) pos.getY() + offsetY), (double) ((float) pos.getZ() + offsetZ), new ItemStack(stack.getItem(), stackDecay, stack.getItemDamage()));
                     float motionMutlipler = 0.05F;
                     item.motionX = (double) ((float) rand.nextGaussian() * motionMutlipler);
@@ -198,7 +198,7 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
     }
 
     @Override
-    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
         if (!world.isRemote) {
             player.openGui(Revival.INSTANCE, ServerProxy.GUI_CULTIVATE, world, pos.getX(), pos.getY(), pos.getZ());
         }
@@ -226,15 +226,15 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
                         float xOffset = world.rand.nextFloat() * 0.8F + 0.1F;
                         float yOffset = world.rand.nextFloat() * 0.8F + 0.1F;
                         float zOffset = world.rand.nextFloat() * 0.8F + 0.1F;
-                        while (stack.stackSize > 0) {
+                        while (stack.getCount() > 0) {
                             int rand = world.rand.nextInt(21) + 10;
-                            if (rand > stack.stackSize) {
-                                rand = stack.stackSize;
+                            if (rand > stack.getCount()) {
+                                rand = stack.getCount();
                             }
-                            stack.stackSize -= rand;
+                            stack.shrink(rand);
                             EntityItem entity = new EntityItem(world, pos.getX() + xOffset, pos.getY() + yOffset, pos.getZ() + zOffset, new ItemStack(stack.getItem(), rand, stack.getItemDamage()));
                             if (stack.hasTagCompound()) {
-                                entity.getEntityItem().setTagCompound(stack.getTagCompound().copy());
+                                entity.getItem().setTagCompound(stack.getTagCompound().copy());
                             }
                             float offset = 0.05F;
                             entity.motionX = world.rand.nextGaussian() * offset;

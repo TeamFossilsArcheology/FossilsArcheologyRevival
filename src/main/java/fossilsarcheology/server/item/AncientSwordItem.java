@@ -58,7 +58,7 @@ public class AncientSwordItem extends ItemSword implements DefaultRenderedItem {
     }
 
     private boolean checkHelmet(EntityPlayer player) {
-        ItemStack item = player.inventory.armorInventory[3];
+        ItemStack item = player.inventory.armorInventory.get(3);
         if (item != null && item.getItem() != null) {
             if (item.getItem() == FAItemRegistry.ANCIENT_HELMET) {
                 return true;

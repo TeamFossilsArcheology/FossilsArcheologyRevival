@@ -148,8 +148,9 @@ public abstract class FossilSlabBlock extends BlockSlab implements DefaultRender
             return this.singleSlab.getUnlocalizedName(stack.getMetadata());
         }
 
-        public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-            if (stack.stackSize != 0 && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)) {
+        public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+            ItemStack stack = playerIn.getHeldItem(hand);
+            if (stack.getCount() != 0 && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)) {
                 Comparable<?> comparable = this.singleSlab.getTypeForItem(stack);
                 IBlockState iblockstate = worldIn.getBlockState(pos);
                 if (iblockstate.getBlock() == this.singleSlab) {
@@ -160,12 +161,12 @@ public abstract class FossilSlabBlock extends BlockSlab implements DefaultRender
                         if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(pos)) && worldIn.setBlockState(pos, iblockstate1, 11)) {
                             SoundType soundtype = this.doubleSlab.getSoundType(iblockstate1, worldIn, pos, playerIn);
                             worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-                            --stack.stackSize;
+                            stack.shrink(1);
                         }
                         return EnumActionResult.SUCCESS;
                     }
                 }
-                return this.tryPlace(playerIn, stack, worldIn, pos.offset(facing), comparable) ? EnumActionResult.SUCCESS : super.onItemUse(stack, playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+                return this.tryPlace(playerIn, stack, worldIn, pos.offset(facing), comparable) ? EnumActionResult.SUCCESS : super.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
             } else {
                 return EnumActionResult.FAIL;
             }
@@ -195,7 +196,7 @@ public abstract class FossilSlabBlock extends BlockSlab implements DefaultRender
                     if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(pos)) && worldIn.setBlockState(pos, iblockstate1, 11)) {
                         SoundType soundtype = this.doubleSlab.getSoundType(iblockstate1, worldIn, pos, player);
                         worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-                        --stack.stackSize;
+                        stack.shrink(1);
                     }
                     return true;
             }

@@ -104,7 +104,7 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return SoundEvents.ENTITY_ITEM_BREAK;
     }
 
@@ -115,7 +115,7 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
     @Override
     public boolean attackEntityFrom(DamageSource damageSource, float var2) {
-        Entity targetEntity = damageSource.getEntity();
+        Entity targetEntity = damageSource.getTrueSource();
 
         AxisAlignedBB chatDistance = this.getEntityBoundingBox().expand(30.0D, 30.0D, 30.0D);
         List playerList = this.world.getEntitiesWithinAABB(EntityPlayer.class, chatDistance);
@@ -134,7 +134,7 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
                                 if (itemstack.getItem() == FAItemRegistry.ANCIENT_SWORD) {
 
                                     if (!this.world.isRemote) {
-                                        ((EntityPlayer) targetEntity).sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.mySword")));
+                                        ((EntityPlayer) targetEntity).sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.mySword")),false);
                                     }
 
                                     return super.attackEntityFrom(damageSource, var2);
@@ -143,7 +143,7 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
                                 if (itemstack.getItem() != FAItemRegistry.ANCIENT_SWORD && itemstack.getItem() instanceof ItemSword) {
 
                                     if (!this.world.isRemote) {
-                                        ((EntityPlayer) targetEntity).sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.draw")));
+                                        ((EntityPlayer) targetEntity).sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.draw")), false);
                                     }
 
                                     return super.attackEntityFrom(damageSource, var2);
@@ -151,7 +151,7 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
                                 if (damageSource.damageType.equals("arrow")) {
                                     if (!this.world.isRemote) {
-                                        ((EntityPlayer) targetEntity).sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.coward")));
+                                        ((EntityPlayer) targetEntity).sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.coward")), false);
                                     }
 
                                     return super.attackEntityFrom(damageSource, var2);
@@ -183,9 +183,9 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
         if (entityplayer != null && this.canEntityBeSeen(entityplayer)) {
             if (this.getRNG().nextInt(1) == 0) {
-                entityplayer.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.hello")));
+                entityplayer.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.hello")), false);
             } else {
-                entityplayer.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.fewBeaten")));
+                entityplayer.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.fewBeaten")), false);
             }
 
            // super.findPlayerToAttack();
@@ -197,15 +197,15 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
     @Override
     public void onDeath(DamageSource dmg) {
-        if (dmg.getSourceOfDamage() instanceof EntityArrow || dmg.getEntity() instanceof EntityPlayer) {
-            EntityPlayer entityplayer = (EntityPlayer) dmg.getEntity();
+        if (dmg.getImmediateSource() instanceof EntityArrow || dmg.getTrueSource() instanceof EntityPlayer) {
+            EntityPlayer entityplayer = (EntityPlayer) dmg.getTrueSource();
             onKillEntity(entityplayer);
 
             double d0 = entityplayer.posX - this.posX;
             double d1 = entityplayer.posZ - this.posZ;
 
             if (d0 * d0 + d1 * d1 >= 2500.0D) {
-                entityplayer.addStat(FossilAchievements.ANU_DEAD);
+                //entityplayer.addStat(FossilAchievements.ANU_DEAD);
             }
         }
         EntityAnuDead entity = new EntityAnuDead(this.world);
@@ -216,7 +216,7 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
         entity.setHealth(0F);
         EntityPlayer player = this.world.getClosestPlayerToEntity(this, 50);
         if (player != null) {
-            player.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.no")));
+            player.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.no")), false);
         }
         super.onDeath(dmg);
     }
@@ -237,7 +237,6 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
             entity.setLocationAndAngles(this.posX + this.getRNG().nextInt(4), this.posY, this.posZ + this.getRNG().nextInt(4), this.rotationYaw, this.rotationPitch);
             this.world.spawnEntity(entity);
             if (entity instanceof EntitySkeleton) {
-                ((EntitySkeleton) entity).setSkeletonType(SkeletonType.WITHER);
                 this.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
             }
             if (entity instanceof EntitySentryPigman) {
@@ -330,7 +329,7 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
             if (spawnPigmenChoice == 0) {
                 EntityPlayer player = this.world.getClosestPlayerToEntity(this, 50);
                 if (player != null) {
-                    player.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.trans")));
+                    player.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.trans")), false);
                 }
 
                 this.spawnMobs(new EntitySentryPigman(world));
@@ -339,14 +338,14 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
                 this.spawnMobs(new EntitySkeleton(world));
                 EntityPlayer player = this.world.getClosestPlayerToEntity(this, 50);
                 if (player != null) {
-                    player.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.archers")));
+                    player.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.archers")), false);
                 }
             }
             if (spawnBlazeChoice == 0) {
                 this.spawnMobs(new EntityBlaze(world));
                 EntityPlayer player = this.world.getClosestPlayerToEntity(this, 50);
                 if (player != null) {
-                    player.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.blaze")));
+                    player.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.blaze")), false);
                 }
             }
         }
@@ -451,9 +450,9 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
         if (entityplayer != null) {
             if (this.getRNG().nextInt(1) == 0) {
-                entityplayer.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.hello")));
+                entityplayer.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.hello")), false);
             } else {
-                entityplayer.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.fewBeaten")));
+                entityplayer.sendStatusMessage(new TextComponentString(I18n.format("entity.fossil.PigBoss.name") + ": " + I18n.format("anuSpeaker.fewBeaten")), false);
             }
         }
     }
@@ -509,10 +508,15 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
         entitylargefireball.explosionPower = 2;
         double d8 = 4.0D;
         Vec3d vec3 = this.getLook(1.0F);
-        entitylargefireball.posX = this.posX + vec3.xCoord * d8;
+        entitylargefireball.posX = this.posX + vec3.x * d8;
         entitylargefireball.posY = this.posY + (double) (this.height / 2.0F) + 0.5D;
-        entitylargefireball.posZ = this.posZ + vec3.zCoord * d8;
+        entitylargefireball.posZ = this.posZ + vec3.z * d8;
         this.world.spawnEntity(entitylargefireball);
+    }
+
+    @Override
+    public void setSwingingArms(boolean swingingArms) {
+
     }
 
     @Override

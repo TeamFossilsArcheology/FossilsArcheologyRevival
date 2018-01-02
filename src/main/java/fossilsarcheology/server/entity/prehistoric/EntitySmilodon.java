@@ -1,6 +1,7 @@
 package fossilsarcheology.server.entity.prehistoric;
 
 import com.google.common.base.Predicate;
+import fossilsarcheology.client.sound.FASoundRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -13,6 +14,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 import fossilsarcheology.server.entity.ai.DinoAIAttackOnCollide;
 import fossilsarcheology.server.entity.ai.DinoAIEatFeeders;
@@ -59,6 +61,21 @@ public class EntitySmilodon extends EntityPrehistoric {
         developsResistance = true;
         breaksBlocks = false;
         hasBabyTexture = false;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return FASoundRegistry.SMILODON_LIVING;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return FASoundRegistry.SMILODON_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return FASoundRegistry.SMILODON_DEATH;
     }
 
     @Override
@@ -168,7 +185,7 @@ public class EntitySmilodon extends EntityPrehistoric {
 
     @Override
     public boolean attackEntityAsMob(Entity entity) {
-        if (this.getAttackBounds().intersectsWith(entity.getEntityBoundingBox())) {
+        if (this.getAttackBounds().intersects(entity.getEntityBoundingBox())) {
             if (this.getAnimation() == NO_ANIMATION) {
                 this.setAnimation(ATTACK_ANIMATION);
                 return false;

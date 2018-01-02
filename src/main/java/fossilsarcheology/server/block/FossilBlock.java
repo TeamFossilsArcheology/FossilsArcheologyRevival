@@ -115,7 +115,7 @@ public class FossilBlock extends Block implements DefaultRenderedItem {
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity tile, ItemStack stack) {
         super.harvestBlock(world, player, pos, state, tile, stack);
-        player.addStat(FossilAchievements.FIRST_FOSSIL);
+        //player.addStat(FossilAchievements.FIRST_FOSSIL);
     }
 
     @Override

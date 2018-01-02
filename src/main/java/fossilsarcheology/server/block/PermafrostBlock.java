@@ -37,7 +37,7 @@ public class PermafrostBlock extends BlockBreakable implements DefaultRenderedIt
     @Override
     public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity entity, ItemStack stack) {
         super.harvestBlock(world, player, pos, state, entity, stack);
-        player.addStat(FossilAchievements.FIRST_FOSSIL);
+        //player.addStat(FossilAchievements.FIRST_FOSSIL);
     }
 
     @Override

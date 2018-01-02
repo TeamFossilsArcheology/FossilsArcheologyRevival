@@ -21,6 +21,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
 
 import java.util.Random;
@@ -34,13 +35,10 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
     public int currentFuelTime = 100;
     public int analyzeTime = 0;
     private String customName;
-    private ItemStack[] slots;
+    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(13, ItemStack.EMPTY);
     private int rawIndex = -1;
     private int spaceIndex = -1;
 
-    public AnalyzerBlockEntity() {
-        this.slots = new ItemStack[13];
-    }
 
     private static int getFuelTime(ItemStack stack) {
         return 100;
@@ -52,29 +50,39 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 
     @Override
     public int getSizeInventory() {
-        return this.slots.length;
+        return this.stacks.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack itemstack : this.stacks) {
+            if (!itemstack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public ItemStack getStackInSlot(int slot) {
-        return this.slots[slot];
+        return this.stacks.get(slot);
     }
 
     @Override
     public ItemStack decrStackSize(int slot, int amount) {
-        return ItemStackHelper.getAndSplit(this.slots, slot, amount);
+        return ItemStackHelper.getAndSplit(this.stacks, slot, amount);
     }
 
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.slots, index);
+        return ItemStackHelper.getAndRemove(this.stacks, index);
     }
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack) {
-        this.slots[slot] = stack;
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+        this.stacks.set(slot, stack);
+        if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
     }
 
@@ -85,15 +93,8 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
     @Override
     public void readFromNBT(NBTTagCompound compound) {
         super.readFromNBT(compound);
-        NBTTagList itemsList = compound.getTagList("Items", 10);
-        this.slots = new ItemStack[this.getSizeInventory()];
-        for (int i = 0; i < itemsList.tagCount(); ++i) {
-            NBTTagCompound itemTag = itemsList.getCompoundTagAt(i);
-            byte slot = itemTag.getByte("Slot");
-            if (slot >= 0 && slot < this.slots.length) {
-                this.slots[slot] = ItemStack.loadItemStackFromNBT(itemTag);
-            }
-        }
+        this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(compound, this.stacks);
         this.analyzeFuelTime = compound.getShort("FuelTime");
         this.analyzeTime = compound.getShort("AnalyzeTime");
         this.currentFuelTime = 100;
@@ -107,19 +108,10 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
         compound = super.writeToNBT(compound);
         compound.setShort("FuelTime", (short) this.analyzeFuelTime);
         compound.setShort("AnalyzeTime", (short) this.analyzeTime);
-        NBTTagList itemList = new NBTTagList();
-        for (int i = 0; i < this.slots.length; ++i) {
-            if (this.slots[i] != null) {
-                NBTTagCompound itemTag = new NBTTagCompound();
-                itemTag.setByte("Slot", (byte) i);
-                this.slots[i].writeToNBT(itemTag);
-                itemList.appendTag(itemTag);
-            }
-        }
+        ItemStackHelper.saveAllItems(compound, this.stacks);
         if (this.hasCustomName()) {
             compound.setString("CustomName", this.customName);
         }
-        compound.setTag("Items", itemList);
         return compound;
     }
 
@@ -141,10 +133,10 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
         for (EntityPlayer player : this.world.playerEntities) {
             if (this.getDistanceSq(player.posX, player.posY, player.posZ) < 40) {
                 for (int slot = 12; slot > 8; --slot) {
-                    ItemStack stack = this.slots[slot];
+                    ItemStack stack = this.stacks.get(slot);
                     if (stack != null) {
                         if (stack.getItem() == FAItemRegistry.STONE_TABLET) {
-                            player.addStat(FossilAchievements.TABLET, 1);
+                           // player.addStat(FossilAchievements.TABLET, 1);
                         }
                     }
                 }
@@ -184,9 +176,9 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
         this.spaceIndex = -1;
         this.rawIndex = -1;
         for (int slot = 0; slot < 9; ++slot) {
-            if (this.slots[slot] != null) {
-                Item item = this.slots[slot].getItem();
-                if (PrehistoricEntityType.isFoodItem(this.slots[slot].getItem()) || (item instanceof DinosaurBoneItem) || (item == FAItemRegistry.BIOFOSSIL) || (item == FAItemRegistry.TAR_FOSSIL) || /*(item == FAItemRegistry.TAR_DROP) || (item == FAItemRegistry.FAILURESAURUS_FLESH) || */ (item == FAItemRegistry.RELIC_SCRAP) || (item == Items.PORKCHOP) || (item == Items.BEEF) || (item == Items.EGG) || (item == Items.CHICKEN) || (item == Item.getItemFromBlock(Blocks.WOOL)) || /*(item == FAItemRegistry.ICED_MEAT) || */ (item == Items.LEATHER) || (item == FAItemRegistry.PLANT_FOSSIL)) {
+            if (this.stacks.get(slot) != null) {
+                Item item = this.stacks.get(slot).getItem();
+                if (PrehistoricEntityType.isFoodItem(this.stacks.get(slot).getItem()) || (item instanceof DinosaurBoneItem) || (item == FAItemRegistry.BIOFOSSIL) || (item == FAItemRegistry.TAR_FOSSIL) || /*(item == FAItemRegistry.TAR_DROP) || (item == FAItemRegistry.FAILURESAURUS_FLESH) || */ (item == FAItemRegistry.RELIC_SCRAP) || (item == Items.PORKCHOP) || (item == Items.BEEF) || (item == Items.EGG) || (item == Items.CHICKEN) || (item == Item.getItemFromBlock(Blocks.WOOL)) || /*(item == FAItemRegistry.ICED_MEAT) || */ (item == Items.LEATHER) || (item == FAItemRegistry.PLANT_FOSSIL)) {
                     this.rawIndex = slot;
                     break;
                 }
@@ -196,7 +188,7 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
             return false;
         } else {
             for (int slot = 12; slot > 8; --slot) {
-                if (this.slots[slot] == null) {
+                if (this.stacks.get(slot) == null) {
                     this.spaceIndex = slot;
                     break;
                 }
@@ -210,7 +202,7 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
             ItemStack output = null;
             Random random = this.world.rand;
             int rand = random.nextInt(100);
-            Item rawItem = this.slots[this.rawIndex].getItem();
+            Item rawItem = this.stacks.get(rawIndex).getItem();
             if (rawItem instanceof DinosaurBoneItem) {
                 if (!Revival.RELEASE_TYPE.enableDebugging()) {
                     if (rand > -1 && rand <= 30) {
@@ -220,7 +212,7 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
                         output = new ItemStack(Items.BONE, 3);
                     }
                     if (rand > 65) {
-                        output = new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[this.slots[this.rawIndex].getItemDamage()]).dnaItem, 1);
+                        output = new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[this.stacks.get(rawIndex).getItemDamage()]).dnaItem, 1);
                     }
                 } else {
                     output = new ItemStack(PrehistoricEntityType.getRandomTimePeriod(random, TimePeriod.MESOZOIC).dnaItem, 1);
@@ -352,23 +344,23 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
             }*/
             if (output != null) {
                 for (int slot = 9; slot < 13; slot++) {
-                    ItemStack stack = this.slots[slot];
+                    ItemStack stack = this.stacks.get(slot);
                     if (stack != null) {
-                        if (stack.isItemEqual(output) && stack.stackSize + output.stackSize < 64) {
-                            stack.stackSize += output.stackSize;
-                            if (this.slots[this.rawIndex].stackSize > 1) {
-                                this.slots[this.rawIndex].stackSize--;
+                        if (stack.isItemEqual(output) && stack.getCount() + output.getCount() < 64) {
+                            stack.setCount(stack.getCount() + output.getCount());
+                            if (this.stacks.get(this.rawIndex).getCount() > 1) {
+                                this.stacks.get(this.rawIndex).shrink(1);
                             } else {
-                                this.slots[this.rawIndex] = null;
+                                this.stacks.set(this.rawIndex, ItemStack.EMPTY);
                             }
                             break;
                         }
                     } else {
-                        this.slots[slot] = output;
-                        if (this.slots[this.rawIndex].stackSize > 1) {
-                            this.slots[this.rawIndex].stackSize--;
+                        this.stacks.set(slot, output);
+                        if (this.stacks.get(this.rawIndex).getCount() > 1) {
+                            this.stacks.get(this.rawIndex).shrink(1);
                         } else {
-                            this.slots[this.rawIndex] = null;
+                            this.stacks.set(this.rawIndex, ItemStack.EMPTY);
                         }
                         break;
                     }
@@ -423,17 +415,15 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 
     @Override
     public void clear() {
-        for (int i = 0; i < this.slots.length; i++) {
-            this.slots[0] = null;
-        }
+        this.stacks.clear();
     }
 
     @Override
     public void openInventory(EntityPlayer player) {
         for (int slots = 12; slots > 8; --slots) {
-            if (this.slots[slots] != null) {
-                if (this.slots[slots].getItem() == FAItemRegistry.STONE_TABLET) {
-                    player.addStat(FossilAchievements.TABLET, 1);
+            if (this.stacks.get(slots)!= ItemStack.EMPTY) {
+                if (this.stacks.get(slots).getItem() == FAItemRegistry.STONE_TABLET) {
+                    //player.addStat(FossilAchievements.TABLET, 1);
                 }
             }
         }

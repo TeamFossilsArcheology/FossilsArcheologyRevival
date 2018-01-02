@@ -17,7 +17,7 @@ public class TileEntityAnuStatue extends TileEntity implements ITickable {
             EntityPlayer P = (EntityPlayer) world.playerEntities.get(var7);
 
             if (Math.pow(this.pos.getX() - P.posX, 2D) + Math.pow(this.pos.getY() - P.posY, 2D) + Math.pow(this.pos.getZ() - P.posZ, 2D) < 40) {
-                P.addStat(FossilAchievements.FIND_ANU_TOTEM, 1);
+                //P.addStat(FossilAchievements.FIND_ANU_TOTEM, 1);
             }
         }
 
@@ -26,7 +26,7 @@ public class TileEntityAnuStatue extends TileEntity implements ITickable {
                 EntityPlayer P = (EntityPlayer) world.playerEntities.get(var7);
 
                 if (Math.pow(this.pos.getX() - P.posX, 2D) + Math.pow(this.pos.getY() - P.posY, 2D) + Math.pow(this.pos.getZ() - P.posZ, 2D) < 90) {
-                    P.addStat(FossilAchievements.ANU_PORTAL, 1);
+                    //P.addStat(FossilAchievements.ANU_PORTAL, 1);
                 }
             }
             world.newExplosion(null, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5, 5F, true, true);

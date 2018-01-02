@@ -82,30 +82,30 @@ public class EntityToyBall extends EntityToyBase {
     }
 
     public boolean attackEntityFrom(DamageSource dmg, float f) {
-        if (dmg.getEntity() != null) {
-            if (dmg.getEntity() instanceof EntityPlayer) {
+        if (dmg.getTrueSource() != null) {
+            if (dmg.getTrueSource() instanceof EntityPlayer) {
                 this.playSound(getAttackNoise(), 1, this.getSoundPitch());
                 if (!this.world.isRemote)
                     this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem()));
                 this.setDead();
                 return true;
             }
-            if (dmg.getEntity() instanceof JavelinEntity) {
+            if (dmg.getTrueSource() instanceof JavelinEntity) {
                 this.playSound(getAttackNoise(), 1, this.getSoundPitch());
-                this.rotationYaw = dmg.getEntity().rotationYaw;
+                this.rotationYaw = dmg.getTrueSource().rotationYaw;
                 this.addVelocity((double) (-MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F) * 0.5F), 0.1D, (double) (MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F) * 0.5F));
                 return true;
             }
-            if (dmg.getEntity() instanceof EntityPrehistoric) {
-                ((EntityPrehistoric) dmg.getEntity()).doPlayBonus(toyBonus);
+            if (dmg.getTrueSource() instanceof EntityPrehistoric) {
+                ((EntityPrehistoric) dmg.getTrueSource()).doPlayBonus(toyBonus);
                 if (getAttackNoise() != null) {
                     this.playSound(getAttackNoise(), 1, this.getSoundPitch());
-                    this.rotationYaw = dmg.getEntity().rotationYaw;
+                    this.rotationYaw = dmg.getTrueSource().rotationYaw;
                     this.addVelocity((double) (-MathHelper.sin(this.rotationYaw * (float) Math.PI / 180.0F) * 0.5F), 0.1D, (double) (MathHelper.cos(this.rotationYaw * (float) Math.PI / 180.0F) * 0.5F));
                 }
             }
         }
-        return dmg != DamageSource.outOfWorld;
+        return dmg != DamageSource.OUT_OF_WORLD;
     }
 
     @Override

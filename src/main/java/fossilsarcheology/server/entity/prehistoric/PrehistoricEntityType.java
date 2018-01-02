@@ -8,6 +8,7 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.world.World;
+import net.minecraftforge.event.RegistryEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,35 +124,42 @@ public enum PrehistoricEntityType {
         this.friendlyName = this.name().toUpperCase(Locale.ENGLISH).substring(0, 1) + this.resourceName.substring(1);
     }
 
-    public static void register() {
+    public static void register(RegistryEvent.Register<Item> event) {
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             MobType mobType = type.mobType;
             String resourceName = type.resourceName;
             type.dnaItem = new DNAItem(type);
+            FAItemRegistry.registerItem(event, type.dnaItem);
             if (mobType == MobType.FISH) {
                 type.eggItem = new FishItem(type, true);
                 type.fishItem = new FishItem(type, false);
+                FAItemRegistry.registerItem(event, type.eggItem);
+                FAItemRegistry.registerItem(event, type.fishItem);
             } else if (mobType == MobType.DINOSAUR) {
                 type.eggItem = new DinoEggItem(type);
+                FAItemRegistry.registerItem(event, type.eggItem);
             }
             if (mobType == MobType.MAMMAL || mobType == MobType.VANILLA) {
                 type.embryoItem = new MammalEmbryoItem(type);
+                FAItemRegistry.registerItem(event, type.embryoItem);
             }
             if (mobType == MobType.BIRD || mobType == MobType.CHICKEN) {
                 if (mobType == MobType.BIRD) {
                     type.birdEggItem = new BirdEggItem(type, false);
+                    FAItemRegistry.registerItem(event, type.birdEggItem);
                 }
                 type.bestBirdEggItem = new BirdEggItem(type, true);
+                FAItemRegistry.registerItem(event, type.bestBirdEggItem);
             }
             if (type.timePeriod != TimePeriod.CURRENT) {
                 if (type.mobType != MobType.FISH) {
                     type.foodItem = new ItemFood(3, 0.3F, true).setUnlocalizedName(resourceName + "_meat").setCreativeTab(FATabRegistry.ITEMS);
-                    FAItemRegistry.registerItem(type.foodItem);
+                    FAItemRegistry.registerItem(event, type.foodItem);
                 }
                 if (type != NAUTILUS) {
                 type.cookedFoodItem = new ItemFood(8, 0.8F, true).setUnlocalizedName(resourceName + "_cooked").setCreativeTab(FATabRegistry.ITEMS);
-                FAItemRegistry.registerItem(type.cookedFoodItem);
-            }
+                FAItemRegistry.registerItem(event, type.cookedFoodItem);
+                }
             }
         }
     }

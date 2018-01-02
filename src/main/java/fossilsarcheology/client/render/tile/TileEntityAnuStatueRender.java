@@ -16,7 +16,7 @@ public class TileEntityAnuStatueRender extends TileEntitySpecialRenderer<TileEnt
     }
 
     @Override
-    public void renderTileEntityAt(TileEntityAnuStatue tileentity, double x, double y, double z, float f, int destroy) {
+    public void render(TileEntityAnuStatue tileentity, double x, double y, double z, float f, int destroy, float alpha) {
         short short1 = 0;
         if (tileentity != null && tileentity.hasWorld()) {
             int i  = tileentity.getBlockType().getStateFromMeta(tileentity.getBlockMetadata()).getValue(AnuStatueBlock.FACING).getHorizontalIndex();

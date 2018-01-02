@@ -1,6 +1,7 @@
 package fossilsarcheology.server.entity.prehistoric;
 
 import com.google.common.base.Predicate;
+import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.ai.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,6 +24,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.IBlockAccess;
@@ -152,7 +154,7 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
         int i = MathHelper.floor(this.posX);
         int j = MathHelper.floor(this.posY);
         int k = MathHelper.floor(this.posZ);
-        if (!this.isPotionActive(MobEffects.WEAKNESS) && this.world.getBiome(new BlockPos(i, 0, k)).getFloatTemperature(new BlockPos(i, j, k)) > 1.0 && !this.isSheared()) {
+        if (!this.isPotionActive(MobEffects.WEAKNESS) && this.world.getBiome(new BlockPos(i, 0, k)).getTemperature(new BlockPos(i, j, k)) > 1.0 && !this.isSheared()) {
             this.addPotionEffect(BIOME_EFFECT);
         }
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 17 && this.getAttackTarget() != null) {
@@ -238,7 +240,7 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
 
     @Override
     public boolean attackEntityAsMob(Entity entity) {
-        if (this.getAttackBounds().expand(3.0F, 3.0F, 3.0F).intersectsWith(entity.getEntityBoundingBox())) {
+        if (this.getAttackBounds().expand(3.0F, 3.0F, 3.0F).intersects(entity.getEntityBoundingBox())) {
             if (this.getAnimation() == NO_ANIMATION) {
                 this.setAnimation(ATTACK_ANIMATION);
                 return false;
@@ -281,6 +283,21 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
         }
 
         return isSheared;
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return FASoundRegistry.MAMMOTH_LIVING;
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource source) {
+        return FASoundRegistry.MAMMOTH_HURT;
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return FASoundRegistry.MAMMOTH_DEATH;
     }
 
     @Override

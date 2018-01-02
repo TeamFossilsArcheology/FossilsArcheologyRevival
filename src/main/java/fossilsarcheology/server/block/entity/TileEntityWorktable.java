@@ -15,6 +15,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nullable;
 
@@ -25,17 +26,27 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
     public int furnaceBurnTime = 0;
     public int currentItemBurnTime = 0;
     public int furnaceCookTime = 0;
-    private ItemStack[] worktableItemStacks = new ItemStack[3];
+    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
     private String customName;
 
     @Override
     public int getSizeInventory() {
-        return this.worktableItemStacks.length;
+        return this.stacks.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack itemstack : this.stacks) {
+            if (!itemstack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public ItemStack getStackInSlot(int var1) {
-        return this.worktableItemStacks[var1];
+        return this.stacks.get(var1);
     }
 
     @Nullable
@@ -47,21 +58,12 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
     @Override
     public void readFromNBT(NBTTagCompound var1) {
         super.readFromNBT(var1);
-        NBTTagList var2 = var1.getTagList("Items", 10);
-        this.worktableItemStacks = new ItemStack[this.getSizeInventory()];
-
-        for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
-            NBTTagCompound var4 = var2.getCompoundTagAt(var3);
-            byte var5 = var4.getByte("Slot");
-
-            if (var5 >= 0 && var5 < this.worktableItemStacks.length) {
-                this.worktableItemStacks[var5] = ItemStack.loadItemStackFromNBT(var4);
-            }
-        }
+        this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(var1, this.stacks);
 
         this.furnaceBurnTime = var1.getShort("BurnTime");
         this.furnaceCookTime = var1.getShort("CookTime");
-        this.currentItemBurnTime = this.getItemBurnTime(this.worktableItemStacks[1]);
+        this.currentItemBurnTime = this.getItemBurnTime(this.stacks.get(1));
 
         if (var1.hasKey("CustomName")) {
             this.customName = var1.getString("CustomName");
@@ -75,7 +77,7 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
 
     @Override
     public boolean isUsableByPlayer(EntityPlayer player) {
-        return false;
+        return true;
     }
 
     @Override
@@ -128,9 +130,7 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
 
     @Override
     public void clear() {
-        for (int i = 0; i < this.worktableItemStacks.length; i++) {
-            this.worktableItemStacks[0] = null;
-        }
+       this.stacks.clear();
     }
 
     public int getCookProgressScaled(int var1) {
@@ -146,15 +146,15 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
     }
 
     private int timeToSmelt() {
-        if (this.worktableItemStacks[0] == null) {
+        if (this.stacks.get(0) == null) {
             return 3000;
         }
 
-        if (this.worktableItemStacks[0].getItem() == FAItemRegistry.BROKEN_HELMET) {
+        if (this.stacks.get(0).getItem() == FAItemRegistry.BROKEN_HELMET) {
             return 3000;
         }
 
-        if (this.worktableItemStacks[0].getItem() == FAItemRegistry.BROKEN_SWORD) {
+        if (this.stacks.get(0).getItem() == FAItemRegistry.BROKEN_SWORD) {
             return 3000;
         }
 
@@ -172,20 +172,20 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
 
         if (!this.world.isRemote) {
             if (this.furnaceBurnTime == 0 && this.canSmelt()) {
-                this.currentItemBurnTime = this.furnaceBurnTime = this.getItemBurnTime(this.worktableItemStacks[1]);
+                this.currentItemBurnTime = this.furnaceBurnTime = this.getItemBurnTime(this.stacks.get(1));
 
                 if (this.furnaceBurnTime > 0) {
                     var2 = true;
 
-                    if (this.worktableItemStacks[1] != null) {
-                        if (this.worktableItemStacks[1].getItem().hasContainerItem(null)) {
-                            this.worktableItemStacks[1] = new ItemStack(this.worktableItemStacks[1].getItem().getContainerItem());
+                    if (this.stacks.get(1) != null) {
+                        if (this.stacks.get(1).getItem().hasContainerItem(null)) {
+                            this.stacks.set(1, new ItemStack(this.stacks.get(1).getItem().getContainerItem()));
                         } else {
-                            --this.worktableItemStacks[1].stackSize;
+                            this.stacks.get(1).shrink(1);
                         }
 
-                        if (this.worktableItemStacks[1].stackSize == 0) {
-                            this.worktableItemStacks[1] = null;
+                        if (this.stacks.get(1).getCount() == 0) {
+                            this.stacks.set(1, ItemStack.EMPTY);
                         }
                     }
                 }
@@ -311,17 +311,17 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
         }
 
         if (itemstack.getItem() == new ItemStack(FABlockRegistry.KYLIX_VASE).getItem() && itemstack.getItemDamage() == 0) {
-            output = new ItemStack(FABlockRegistry.KYLIX_VASE, itemstack.stackSize, 1);
+            output = new ItemStack(FABlockRegistry.KYLIX_VASE, itemstack.getCount(), 1);
             return output;
         }
 
         if (itemstack.getItem() == new ItemStack(FABlockRegistry.AMPHORA_VASE).getItem() && itemstack.getItemDamage() == 0) {
-            output = new ItemStack(FABlockRegistry.AMPHORA_VASE, itemstack.stackSize, 1);
+            output = new ItemStack(FABlockRegistry.AMPHORA_VASE, itemstack.getCount(), 1);
             return output;
         }
 
         if (itemstack.getItem() == new ItemStack(FABlockRegistry.VOLUTE_VASE).getItem() && itemstack.getItemDamage() == 0) {
-            output = new ItemStack(FABlockRegistry.VOLUTE_VASE, itemstack.stackSize, 1);
+            output = new ItemStack(FABlockRegistry.VOLUTE_VASE, itemstack.getCount(), 1);
             return output;
         }
 
@@ -330,36 +330,36 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
 
     public void smeltItem() {
         if (this.canSmelt()) {
-            ItemStack var1 = this.checkSmelt(this.worktableItemStacks[0]);
+            ItemStack var1 = this.checkSmelt(this.stacks.get(0));
 
-            if (this.worktableItemStacks[2] == null) {
+            if (this.stacks.get(2) == null) {
                 if (var1 != null) {
-                    this.worktableItemStacks[2] = var1.copy();
+                    this.stacks.set(2, var1.copy());
                 }
-            } else if (this.worktableItemStacks[2] == var1) {
-                this.worktableItemStacks[2].stackSize += var1.stackSize;
+            } else if (this.stacks.get(2) == var1) {
+                this.stacks.get(2).grow(var1.getCount());
             }
 
-            if (this.worktableItemStacks[0].getItem().hasContainerItem(null)) {
-                this.worktableItemStacks[0] = new ItemStack(this.worktableItemStacks[0].getItem().getContainerItem());
+            if (this.stacks.get(0).getItem().hasContainerItem(null)) {
+                this.stacks.set(0, new ItemStack(this.stacks.get(0).getItem().getContainerItem()));
             } else {
-                --this.worktableItemStacks[0].stackSize;
+                this.stacks.get(0).shrink(1);
             }
 
-            if (this.worktableItemStacks[0].stackSize <= 0) {
-                this.worktableItemStacks[0] = null;
+            if (this.stacks.get(0).getCount() <= 0) {
+                this.stacks.set(0, ItemStack.EMPTY);
             }
         }
     }
 
     private boolean canSmelt() {
-        if (this.worktableItemStacks[0] == null) {
+        if (this.stacks.get(0) == null) {
             return false;
         } else {
             // ItemStack var1 =
-            // this.CheckSmelt(this.worktableItemStacks[0].getItem());
-            ItemStack var1 = this.checkSmelt(this.worktableItemStacks[0]);
-            return var1 != null && (this.worktableItemStacks[2] == null || (this.worktableItemStacks[2].isItemEqual(var1) && (this.worktableItemStacks[2].stackSize < this.getInventoryStackLimit() && this.worktableItemStacks[2].stackSize < this.worktableItemStacks[2].getMaxStackSize() || this.worktableItemStacks[2].stackSize < var1.getMaxStackSize())));
+            // this.CheckSmelt(this.stacks.get(0).getItem());
+            ItemStack var1 = this.checkSmelt(this.stacks.get(0));
+            return var1 != null && (this.stacks.get(2) == null || (this.stacks.get(2).isItemEqual(var1) && (this.stacks.get(2).getCount() < this.getInventoryStackLimit() && this.stacks.get(2).getCount() < this.stacks.get(2).getMaxStackSize() || this.stacks.get(2).getCount() < var1.getMaxStackSize())));
         }
     }
 
@@ -378,37 +378,27 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
         super.writeToNBT(nbt);
         nbt.setShort("BurnTime", (short) this.furnaceBurnTime);
         nbt.setShort("CookTime", (short) this.furnaceCookTime);
-        NBTTagList var2 = new NBTTagList();
+        ItemStackHelper.saveAllItems(nbt, this.stacks);
 
-        for (int var3 = 0; var3 < this.worktableItemStacks.length; ++var3) {
-            if (this.worktableItemStacks[var3] != null) {
-                NBTTagCompound var4 = new NBTTagCompound();
-                var4.setByte("Slot", (byte) var3);
-                this.worktableItemStacks[var3].writeToNBT(var4);
-                var2.appendTag(var4);
-            }
-        }
 
         if (this.customName != null) {
             nbt.setString("CustomName", this.customName);
         }
-
-        nbt.setTag("Items", var2);
         return nbt;
     }
 
     @Nullable
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.worktableItemStacks, index);
+        return ItemStackHelper.getAndRemove(this.stacks, index);
     }
 
     @Override
     public void setInventorySlotContents(int index, @Nullable ItemStack stack) {
-        this.worktableItemStacks[index] = stack;
+        this.stacks.set(index, stack);
 
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+        if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
     }
 

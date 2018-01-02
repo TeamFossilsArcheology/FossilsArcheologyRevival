@@ -1,16 +1,7 @@
 package fossilsarcheology.server.achievement;
 
-import fossilsarcheology.server.block.FABlockRegistry;
-import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
-import fossilsarcheology.server.item.FAItemRegistry;
-import fossilsarcheology.server.item.variant.DinosaurBoneType;
-import net.minecraft.init.Blocks;
-import net.minecraft.item.ItemStack;
-import net.minecraft.stats.Achievement;
-import net.minecraftforge.common.AchievementPage;
-
 public class FossilAchievements {
-    public static final Achievement FIRST_FOSSIL = new Achievement("achievement.firstFossil", "firstFossil", 0, 0, new ItemStack(FAItemRegistry.BIOFOSSIL), null).registerStat();
+   /* public static final Achievement FIRST_FOSSIL = new Achievement("achievement.firstFossil", "firstFossil", 0, 0, new ItemStack(FAItemRegistry.BIOFOSSIL), null).registerStat();
     public static final Achievement ANALYZER = new Achievement("achievement.analyzer", "analyzer", 0, -2, new ItemStack(FABlockRegistry.ANALYZER_ACTIVE), FIRST_FOSSIL).registerStat();
     public static final Achievement TABLET = new Achievement("achievement.tablet", "tablet", -2, -2, new ItemStack(FAItemRegistry.STONE_TABLET), ANALYZER).registerStat();
     public static final Achievement DINO_DNA = new Achievement("achievement.dinoDna", "dinoDna", 0, -4, new ItemStack(PrehistoricEntityType.TYRANNOSAURUS.dnaItem), ANALYZER).registerStat().setSpecial();
@@ -55,4 +46,5 @@ public class FossilAchievements {
     public static void register() {
         AchievementPage.registerAchievementPage(PAGE);
     }
+    */
 }

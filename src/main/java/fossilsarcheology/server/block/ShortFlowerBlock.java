@@ -59,9 +59,9 @@ public class ShortFlowerBlock extends BlockBush implements DefaultRenderedItem{
                         world.setBlockState(pos, plantBlock.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.LOWER));
                         world.setBlockState(pos.up(), plantBlock.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.UPPER));
                         if (!player.capabilities.isCreativeMode) {
-                            --itemstack.stackSize;
+                            itemstack.shrink(1);
                         }
-                        if (itemstack.stackSize <= 0) {
+                        if (itemstack.getCount() <= 0) {
                             player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
                         }
                     }

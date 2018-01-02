@@ -32,12 +32,9 @@ public class HomePortalBlock extends Block implements DefaultRenderedItem {
     }
 
     @Override
-    public boolean isFullyOpaque(IBlockState state) {
+    public boolean isOpaqueCube(IBlockState state) {
         return false;
     }
-
-    @Override
-    public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn) {}
 
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         return null;
@@ -51,7 +48,7 @@ public class HomePortalBlock extends Block implements DefaultRenderedItem {
                 thePlayer.timeUntilPortal = 10;
             } else if (thePlayer.dimension != 0) {
                 thePlayer.timeUntilPortal = 10;
-                thePlayer.mcServer.getPlayerList().transferPlayerToDimension(thePlayer, 0, new AnuTeleporter(thePlayer.mcServer.worldServerForDimension(0)));
+                thePlayer.mcServer.getPlayerList().transferPlayerToDimension(thePlayer, 0, new AnuTeleporter(thePlayer.mcServer.getWorld(0)));
             }
         }
     }

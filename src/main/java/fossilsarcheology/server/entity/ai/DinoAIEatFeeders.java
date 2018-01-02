@@ -62,7 +62,7 @@ public class DinoAIEatFeeders extends EntityAIBase {
     }
 
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         if (targetBlock == null) {
             return false;
         }

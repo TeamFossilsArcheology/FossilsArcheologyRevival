@@ -134,14 +134,14 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
     }
 
     private void tickHatching() {
-        float brightness = this.getBrightness(1.0F);
+        float brightness = this.getBrightness();
         EntityPlayer player = this.world.getClosestPlayerToEntity(this, 16.0D);
         if ((double) brightness >= 0.5D && !this.inWater) {
             lastBirthTick = this.getBirthTick();
             this.setBirthTick(this.getBirthTick() + 1);
         } else {
             Biome biome = this.world.getBiome(new BlockPos(this));
-            float temperature = biome.getTemperature();
+            float temperature = biome.getTemperature(new BlockPos(this));
             if ((temperature <= 0.15F && brightness < 0.5) || this.inWater) {
                 this.setBirthTick(this.getBirthTick() - 1);
             }
@@ -152,7 +152,7 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
             if (entity != null) {
                 if (entity instanceof EntityPrehistoric) {
                     if (player != null) {
-                        player.addStat(FossilAchievements.FIRST_DINO, 1);
+                        //player.addStat(FossilAchievements.FIRST_DINO, 1);
 
                     }
                     EntityPrehistoric prehistoricEntity = (EntityPrehistoric) entity;
@@ -186,7 +186,7 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
                 }
                 this.world.spawnEntity(entity);
                 if (player != null) {
-                   player.sendStatusMessage(new TextComponentString(I18n.format("dinoegg.hatched")));
+                   player.sendStatusMessage(new TextComponentString(I18n.format("dinoegg.hatched")), false);
             }
                 this.setDead();
 
@@ -221,7 +221,7 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
     }
 
     @Override
-    public boolean processInteract(EntityPlayer player, EnumHand hand, @Nullable ItemStack stack){
+    public boolean processInteract(EntityPlayer player, EnumHand hand){
         ItemStack itemstack = player.inventory.getCurrentItem();
         if (itemstack == null) {
             Item item = this.selfType.eggItem;

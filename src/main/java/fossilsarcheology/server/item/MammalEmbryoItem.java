@@ -30,7 +30,7 @@ public class MammalEmbryoItem extends PrehistoricEntityItem implements DefaultRe
                     properties.embryo = this.type;
                     properties.isPregnant = true;
                     if (!player.capabilities.isCreativeMode) {
-                        stack.stackSize--;
+                        stack.shrink(1);
                     }
                 } else {
                     return false;

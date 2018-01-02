@@ -25,13 +25,13 @@ public class FishAIWaterFindTarget extends EntityAIBase {
         }
         if (this.mob.getRNG().nextFloat() < 0.5F) {
             Path path = this.mob.getNavigator().getPath();
-            if (!this.mob.getNavigator().noPath() && !this.mob.isDirectPathBetweenPoints(this.mob.getPositionVector(), new Vec3d(path.getFinalPathPoint().xCoord, path.getFinalPathPoint().yCoord, path.getFinalPathPoint().zCoord))) {
-                this.mob.getNavigator().clearPathEntity();
+            if (!this.mob.getNavigator().noPath() && !this.mob.isDirectPathBetweenPoints(this.mob.getPositionVector(), new Vec3d(path.getFinalPathPoint().x, path.getFinalPathPoint().y, path.getFinalPathPoint().z))) {
+                this.mob.getNavigator().clearPath();
             }
             if (this.mob.getNavigator().noPath()) {
                 Vec3d vec3 = this.findWaterTarget();
                 if (vec3 != null) {
-                    this.mob.getNavigator().tryMoveToXYZ(vec3.xCoord, vec3.yCoord, vec3.zCoord, 1.0);
+                    this.mob.getNavigator().tryMoveToXYZ(vec3.x, vec3.y, vec3.z, 1.0);
                     return true;
                 }
             }
@@ -40,7 +40,7 @@ public class FishAIWaterFindTarget extends EntityAIBase {
     }
 
     @Override
-    public boolean continueExecuting() {
+    public boolean shouldContinueExecuting() {
         return false;
     }
 

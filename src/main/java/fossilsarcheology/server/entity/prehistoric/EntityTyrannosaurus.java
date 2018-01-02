@@ -82,7 +82,7 @@ public class EntityTyrannosaurus extends EntityPrehistoric {
 
     @Override
     public boolean attackEntityAsMob(Entity entity) {
-        if (getAttackBounds().intersectsWith(entity.getEntityBoundingBox())) {
+        if (getAttackBounds().intersects(entity.getEntityBoundingBox())) {
             if (this.getAnimation() == NO_ANIMATION) {
                 this.setAnimation(ATTACK_ANIMATION);
                 return false;
@@ -198,7 +198,7 @@ public class EntityTyrannosaurus extends EntityPrehistoric {
     }
 
     private void triggerTamingAcheivement(EntityPlayer player) {
-        player.addStat(FossilAchievements.THE_KING);
+       // player.addStat(FossilAchievements.THE_KING);
 
     }
 
@@ -222,8 +222,8 @@ public class EntityTyrannosaurus extends EntityPrehistoric {
     }
 
     public void onDeath(DamageSource source) {
-        if (source.getEntity() != null && source.getEntity() instanceof EntityPlayer) {
-            ((EntityPlayer) source.getEntity()).addStat(FossilAchievements.TREX_KILL);
+        if (source.getTrueSource() != null && source.getTrueSource() instanceof EntityPlayer) {
+            //((EntityPlayer) source.getTrueSource()).addStat(FossilAchievements.TREX_KILL);
         }
         super.onDeath(source);
     }
@@ -234,7 +234,7 @@ public class EntityTyrannosaurus extends EntityPrehistoric {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.TYRANNOSAURUS_HURT;
     }
 

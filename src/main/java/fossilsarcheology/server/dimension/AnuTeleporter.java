@@ -227,7 +227,7 @@ public class AnuTeleporter extends Teleporter {
                     l3 = k5 + (j3 - 1) * l5;
                     i4 = j2 + k3;
                     j4 = k2 + (j3 - 1) * l2;
-                    this.worldServerInstance.notifyNeighborsOfStateChange(new BlockPos(l3, i4, j4), this.worldServerInstance.getBlockState(new BlockPos(l3, i4, j4)).getBlock());
+                    this.worldServerInstance.notifyNeighborsOfStateChange(new BlockPos(l3, i4, j4), this.worldServerInstance.getBlockState(new BlockPos(l3, i4, j4)).getBlock(), true);
                 }
             }
         }

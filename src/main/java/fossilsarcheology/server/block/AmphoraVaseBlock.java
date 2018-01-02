@@ -113,8 +113,8 @@ public class AmphoraVaseBlock extends BlockContainer implements BlockEntity, IBl
         RESTORED_AMPHORA(1, "restored_amphora"),
         REDFIGURE_AMPHORA(2, "redfigure_amphora"),
         BLACKFIGURE_AMPHORA(3, "blackfigure_amphora"),
-        PORCELAIN_AMPHORA(4, "porcelain_amphora");
 
+        PORCELAIN_AMPHORA(4, "porcelain_amphora");
         private static final AmphoraVaseBlock.EnumType[] META_LOOKUP = new AmphoraVaseBlock.EnumType[values().length];
         private final int meta;
         private final String name;

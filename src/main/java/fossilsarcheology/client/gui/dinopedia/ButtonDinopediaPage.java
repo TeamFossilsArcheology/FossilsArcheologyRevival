@@ -22,9 +22,9 @@ public class ButtonDinopediaPage extends GuiButton {
     }
 
     @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY) {
+    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         if (this.enabled) {
-            boolean hovering = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+            boolean hovering = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             mc.renderEngine.bindTexture(BOOK_TEXTURE);
             int width = 0;
@@ -40,7 +40,7 @@ public class ButtonDinopediaPage extends GuiButton {
                 width += 34;
             }
 
-            this.drawTexturedModalRect(this.xPosition, this.yPosition, width, height, 34, 30);
+            this.drawTexturedModalRect(this.x, this.y, width, height, 34, 30);
         }
     }
 }

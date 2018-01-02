@@ -24,7 +24,7 @@ public class SifterGUI extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String inventoryName = I18n.format(sifterInventory.getName());
-        this.fontRendererObj.drawString(inventoryName, this.xSize / 8 - this.fontRendererObj.getStringWidth(inventoryName) / 2, 6, 4210752);
+        this.fontRenderer.drawString(inventoryName, this.xSize / 8 - this.fontRenderer.getStringWidth(inventoryName) / 2, 6, 4210752);
     }
 
     @Override

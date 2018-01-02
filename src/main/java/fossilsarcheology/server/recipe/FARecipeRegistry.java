@@ -4,32 +4,30 @@ import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.entity.prehistoric.MobType;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.item.FAItemRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.minecraftforge.oredict.ShapedOreRecipe;
 import net.minecraftforge.oredict.ShapelessOreRecipe;
+import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public class FARecipeRegistry {
 
     public static String[] dyes = {"Black", "Red", "Green", "Brown", "Blue", "Purple", "Cyan", "LightGray", "Gray", "Pink", "Lime", "Yellow", "LightBlue", "Magenta", "Orange", "White"};
 
-    public static void register() {
+    public static void register(RegistryEvent.Register<IRecipe> event) {
+        /*
         GameRegistry.addRecipe(new ItemStack(FABlockRegistry.SKULL_LANTERN, 1), "X", "Y", 'X', FABlockRegistry.SKULL_BLOCK, 'Y', Blocks.TORCH);
         GameRegistry.addRecipe(new ItemStack(Items.DYE, 5, 15), "X", 'X', FABlockRegistry.SKULL_BLOCK);
         GameRegistry.addRecipe(new ItemStack(Items.DYE, 5, 15), "X", 'X', FABlockRegistry.SKULL_LANTERN);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FABlockRegistry.ANALYZER, 1), "XYX", "XWX", 'X', "ingotIron", 'Y', "artifact", 'W', "fossil"));
         GameRegistry.addRecipe(new ShapelessOreRecipe(new ItemStack(FABlockRegistry.WORKTABLE_IDLE, 1), Items.PAPER, "craftingTableWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FABlockRegistry.WORKTABLE_IDLE, 1), "XYX", "YZY", "YXY", 'X', Items.STRING, 'Y', "plankWood", 'Z', Blocks.IRON_BARS));
-        // GameRegistry.addRecipe(new
-        // ItemStack(FABlockRegistry.INSTANCE.ancientWoodPlate, 3), new
-        // Object[]{"XX", 'X', FABlockRegistry.INSTANCE.ancientWood});
-        // GameRegistry.addRecipe(new ItemStack(Revival.blockcultivateIdle, 1),
-        // new Object[] {"XYX", "XWX", "ZZZ", 'X', Blocks.glass, 'Y', new
-        // ItemStack(Items.dye, 1, 2), 'W', Items.water_bucket, 'Z',
-        // Items.iron_ingot});
         GameRegistry.addRecipe(new ItemStack(FABlockRegistry.TIME_MACHINE, 1), "XYX", "ZUZ", "VXV", 'X', FAItemRegistry.SCARAB_GEM, 'Y', Items.NETHER_STAR, 'Z', Items.GOLD_INGOT, 'U', Items.ENDER_PEARL, 'V', Blocks.OBSIDIAN);
         GameRegistry.addRecipe(new ItemStack(FABlockRegistry.CULTIVATE_IDLE, 1), "XYX", "XWX", "ZZZ", 'X', Blocks.GLASS, 'Y', new ItemStack(Items.DYE, 1, 2), 'W', Items.WATER_BUCKET, 'Z', Items.IRON_INGOT);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(Items.CAKE, 1), "MMM", "SES", "WWW", 'M', Items.MILK_BUCKET, 'S', Items.SUGAR, 'W', Items.WHEAT, 'E', "foodEgg"));
@@ -49,20 +47,7 @@ public class FARecipeRegistry {
         GameRegistry.addShapelessRecipe(new ItemStack(FAItemRegistry.SCARAB_SHOVEL), Items.GOLDEN_SHOVEL, FAItemRegistry.SCARAB_GEM);
         GameRegistry.addShapelessRecipe(new ItemStack(FAItemRegistry.SCARAB_SHOVEL), Items.DIAMOND_SHOVEL, FAItemRegistry.SCARAB_GEM);
         GameRegistry.addShapelessRecipe(new ItemStack(FABlockRegistry.DENSE_SAND, 2), Items.QUARTZ, Blocks.SAND);
-        // GameRegistry.addShapelessRecipe(new
-        // ItemStack(FAItemRegistry.INSTANCE.toothDagger, 1), new Object[]{new
-        // ItemStack(FAItemRegistry.INSTANCE.claw, 1,
-        // EnumDinoType.TRex.ordinal()), Items.stick});
         GameRegistry.addRecipe(new ShapelessOreRecipe(FAItemRegistry.DINOPEDIA, Items.BOOK, "fossil"));
-        // for (int i = 0; i < EnumDinoType.values().length; i++)
-        // GameRegistry.addShapelessRecipe(new
-        // ItemStack(FAItemRegistry.INSTANCE.dinoPedia), new
-        // Object[]{Items.book, EnumDinoType.values()[i].DNAItem});
-        // GameRegistry.addShapelessRecipe(new
-        // ItemStack(FAItemRegistry.INSTANCE.dinoPedia), new
-        // Object[]{Items.book, FAItemRegistry.INSTANCE.dnaCoelacanth});
-        // GameRegistry.addShapelessRecipe(new ItemStack(Revival.archNotebook),
-        // new Object[] {Item.book, Revival.relic});
         GameRegistry.addShapelessRecipe(new ItemStack(FAItemRegistry.TARDROP, 4, 0), FAItemRegistry.TAR_BUCKET);
         GameRegistry.addShapelessRecipe(new ItemStack(FAItemRegistry.RAW_CHICKEN_SOUP, 1, 0), Items.BUCKET, Items.CHICKEN);
         GameRegistry.addRecipe(new ItemStack(FAItemRegistry.CHICKEN_ESSENCE, 8), "XXX", "XYX", "XXX", 'X', Items.GLASS_BOTTLE, 'Y', FAItemRegistry.COOKED_CHICKEN_SOUP);
@@ -75,26 +60,6 @@ public class FARecipeRegistry {
         GameRegistry.addRecipe(new ItemStack(FABlockRegistry.PALM_PLANKS_SINGLESLAB, 6), new Object[] {"PPP", 'P', FABlockRegistry.PALM_PLANKS});
         GameRegistry.addRecipe(new ItemStack(FABlockRegistry.PALM_PLANKS_STAIRS, 4), "P  ", "PP ", "PPP", 'P', FABlockRegistry.PALM_PLANKS);
         GameRegistry.addRecipe(new ItemStack(FABlockRegistry.PALM_PLANKS_STAIRS, 4), "  P", " PP", "PPP", 'P', FABlockRegistry.PALM_PLANKS);
-        // GameRegistry.addRecipe(new ItemStack(Revival.ancientWoodSingleSlab,
-        // 6), new Object[] {"PPP", 'P', Revival.ancientWood});
-        // GameRegistry.addRecipe(new
-        // ItemStack(FABlockRegistry.INSTANCE.ancientWoodStairs, 4), new
-        // Object[]{"P  ", "PP ", "PPP", 'P',
-        // FABlockRegistry.INSTANCE.ancientWood});
-        // GameRegistry.addRecipe(new
-        // ItemStack(FABlockRegistry.INSTANCE.ancientWoodStairs, 4), new
-        // Object[]{"  P", " PP", "PPP", 'P',
-        // FABlockRegistry.INSTANCE.ancientWood});
-        // GameRegistry.addRecipe(new ItemStack(Revival.ancientStoneSingleSlab,
-        // 6), new Object[] {"PPP", 'P', Revival.ancientStone});
-        // GameRegistry.addRecipe(new
-        // ItemStack(FABlockRegistry.INSTANCE.ancientStoneStairs, 4), new
-        // Object[]{"P  ", "PP ", "PPP", 'P',
-        // FABlockRegistry.INSTANCE.ancientStone});
-        // GameRegistry.addRecipe(new
-        // ItemStack(FABlockRegistry.INSTANCE.ancientStoneStairs, 4), new
-        // Object[]{"  P", " PP", "PPP", 'P',
-        // FABlockRegistry.INSTANCE.ancientStone});
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FAItemRegistry.FEET_BOOTS, 1), "* *", "# #", '#', new ItemStack(FAItemRegistry.FOOT, 1, OreDictionary.WILDCARD_VALUE), '*', "dinosaurClaw"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FAItemRegistry.FEET_BOOTS, 1), "   ", "* *", "# #", '#', new ItemStack(FAItemRegistry.FOOT, 1, OreDictionary.WILDCARD_VALUE), '*', "dinosaurClaw"));
         GameRegistry.addRecipe(new ItemStack(FAItemRegistry.SHIN_LEGGINGS, 1), "###", "* *", "# #", '#', Items.BONE, '*', new ItemStack(FAItemRegistry.LEG_BONE, 1, OreDictionary.WILDCARD_VALUE));
@@ -137,11 +102,7 @@ public class FARecipeRegistry {
             if (PrehistoricEntityType.values()[i].fishItem != null && PrehistoricEntityType.values()[i] == PrehistoricEntityType.NAUTILUS) {
                 GameRegistry.addSmelting(PrehistoricEntityType.values()[i].fishItem, new ItemStack(FAItemRegistry.SJL), 3.0F);
             }
-            /*
-			 * if(PrehistoricEntityType.values()[i].type == EnumMobType.FISH){
-			 * GameRegistry.addSmelting(PrehistoricEntityType.values()[i].eggItem, new
-			 * ItemStack(PrehistoricEntityType.values()[i].cookedFoodItem), 3.0F); }
-			 */
+
         }
         GameRegistry.addSmelting(FAItemRegistry.ICED_MEAT, new ItemStack(Items.BEEF), 3.0F);
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FAItemRegistry.TOY_BALL, 1, 15), "XYX", "YZY", "XYX", 'X', Items.STRING, 'Y', Blocks.WOOL, 'Z', "slimeball"));
@@ -151,5 +112,7 @@ public class FARecipeRegistry {
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FAItemRegistry.TOY_TETHERED_LOG), "X", "X", "Y", 'X', Items.STRING, 'Y', "logWood"));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FAItemRegistry.TOY_SCRATCHING_POST), "YYY", "YZY", " X ", 'X', "slabWood", 'Z', "stickWood", 'Y', Blocks.WOOL));
         GameRegistry.addRecipe(new ShapedOreRecipe(new ItemStack(FABlockRegistry.BUBBLE_MACHINE), "XYX", "YZY", "XYX", 'X', "nuggetGold", 'Y', "ingotGold", 'Z', Items.WATER_BUCKET));
+
+    */
     }
 }

@@ -50,8 +50,9 @@ public class BioFossilItem extends Item implements DefaultRenderedItem {
     }
 
     @Override
-    public ActionResult<ItemStack> onItemRightClick(ItemStack stack, World world, EntityPlayer player, EnumHand hand) {
+    public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
         RayTraceResult result = this.rayTrace(world, player, true);
+        ItemStack stack = player.getHeldItem(hand);
         if (result != null && result.typeOfHit == RayTraceResult.Type.BLOCK) {
             BlockPos pos = result.getBlockPos();
             if (world.getBlockState(pos).isSideSolid(world, pos, result.sideHit)) {

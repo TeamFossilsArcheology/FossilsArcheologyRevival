@@ -19,6 +19,7 @@ import net.minecraft.nbt.NBTTagList;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
+import net.minecraft.util.NonNullList;
 
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -31,7 +32,7 @@ public class TileEntityCultivate extends TileEntity implements IInventory, ISide
     public int currentItemBurnTime = 0;
     public int furnaceCookTime = 0;
     public boolean isActive;
-    private ItemStack[] cultivateItemStacks = new ItemStack[3];
+    private NonNullList<ItemStack> stacks = NonNullList.<ItemStack>withSize(3, ItemStack.EMPTY);
     private String customName;
 
     private static int getItemBurnTime(ItemStack itemstack) {
@@ -88,28 +89,38 @@ public class TileEntityCultivate extends TileEntity implements IInventory, ISide
 
     @Override
     public int getSizeInventory() {
-        return this.cultivateItemStacks.length;
+        return this.stacks.size();
+    }
+
+    @Override
+    public boolean isEmpty() {
+        for (ItemStack itemstack : this.stacks) {
+            if (!itemstack.isEmpty()) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override
     public ItemStack getStackInSlot(int i) {
-        return this.cultivateItemStacks[i];
+        return this.stacks.get(i);
     }
 
     @Override
     public ItemStack decrStackSize(int slot, int amount) {
-        if (this.cultivateItemStacks[slot] != null) {
+        if (this.stacks.get(slot) != null) {
             ItemStack var3;
 
-            if (this.cultivateItemStacks[slot].stackSize <= amount) {
-                var3 = this.cultivateItemStacks[slot];
-                this.cultivateItemStacks[slot] = null;
+            if (this.stacks.get(slot).getCount() <= amount) {
+                var3 = this.stacks.get(slot);
+                this.stacks.set(slot, ItemStack.EMPTY);
                 return var3;
             } else {
-                var3 = this.cultivateItemStacks[slot].splitStack(amount);
+                var3 = this.stacks.get(slot).splitStack(amount);
 
-                if (this.cultivateItemStacks[slot].stackSize == 0) {
-                    this.cultivateItemStacks[slot] = null;
+                if (this.stacks.get(slot).getCount() == 0) {
+                    this.stacks.set(slot, ItemStack.EMPTY);
                 }
 
                 return var3;
@@ -122,36 +133,25 @@ public class TileEntityCultivate extends TileEntity implements IInventory, ISide
     @Nullable
     @Override
     public ItemStack removeStackFromSlot(int index) {
-        return ItemStackHelper.getAndRemove(this.cultivateItemStacks, index);
+        return ItemStackHelper.getAndRemove(this.stacks, index);
     }
 
     @Override
     public void setInventorySlotContents(int slot, ItemStack stack) {
-        this.cultivateItemStacks[slot] = stack;
-
-        if (stack != null && stack.stackSize > this.getInventoryStackLimit()) {
-            stack.stackSize = this.getInventoryStackLimit();
+        this.stacks.set(slot, stack);
+        if (stack != null && stack.getCount() > this.getInventoryStackLimit()) {
+            stack.setCount(this.getInventoryStackLimit());
         }
     }
 
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
-        NBTTagList var2 = nbt.getTagList("Items", 10);
-        this.cultivateItemStacks = new ItemStack[this.getSizeInventory()];
-
-        for (int var3 = 0; var3 < var2.tagCount(); ++var3) {
-            NBTTagCompound var4 = var2.getCompoundTagAt(var3);
-            byte var5 = var4.getByte("Slot");
-
-            if (var5 >= 0 && var5 < this.cultivateItemStacks.length) {
-                this.cultivateItemStacks[var5] = ItemStack.loadItemStackFromNBT(var4);
-            }
-        }
-
+        this.stacks = NonNullList.<ItemStack>withSize(this.getSizeInventory(), ItemStack.EMPTY);
+        ItemStackHelper.loadAllItems(nbt, this.stacks);
         this.furnaceBurnTime = nbt.getShort("BurnTime");
         this.furnaceCookTime = nbt.getShort("CookTime");
-        this.currentItemBurnTime = getItemBurnTime(this.cultivateItemStacks[1]);
+        this.currentItemBurnTime = getItemBurnTime(this.stacks.get(1));
 
         if (nbt.hasKey("CustomName")) {
             this.customName = nbt.getString("CustomName");
@@ -163,19 +163,7 @@ public class TileEntityCultivate extends TileEntity implements IInventory, ISide
         super.writeToNBT(nbt);
         nbt.setShort("BurnTime", (short) this.furnaceBurnTime);
         nbt.setShort("CookTime", (short) this.furnaceCookTime);
-        NBTTagList var2 = new NBTTagList();
-
-        for (int var3 = 0; var3 < this.cultivateItemStacks.length; ++var3) {
-            if (this.cultivateItemStacks[var3] != null) {
-                NBTTagCompound var4 = new NBTTagCompound();
-                var4.setByte("Slot", (byte) var3);
-                this.cultivateItemStacks[var3].writeToNBT(var4);
-                var2.appendTag(var4);
-            }
-        }
-
-        nbt.setTag("Items", var2);
-
+        ItemStackHelper.saveAllItems(nbt, this.stacks);
         if (customName != null) {
             nbt.setString("CustomName", this.customName);
         }
@@ -223,20 +211,19 @@ public class TileEntityCultivate extends TileEntity implements IInventory, ISide
 
         if (!this.world.isRemote) {
             if (this.furnaceBurnTime == 0 && this.canSmelt()) {
-                this.currentItemBurnTime = this.furnaceBurnTime = getItemBurnTime(this.cultivateItemStacks[1]);
+                this.currentItemBurnTime = this.furnaceBurnTime = getItemBurnTime(this.stacks.get(1));
 
                 if (this.furnaceBurnTime > 0) {
                     var2 = true;
 
-                    if (this.cultivateItemStacks[1] != null) {
-                        if (this.cultivateItemStacks[1].getItem().hasContainerItem(null)) {
-                            this.cultivateItemStacks[1] = new ItemStack(this.cultivateItemStacks[1].getItem().getContainerItem());
+                    if (this.stacks.get(1) != null) {
+                        if (this.stacks.get(1).getItem().hasContainerItem(null)) {
+                            this.stacks.set(1, new ItemStack(this.stacks.get(1).getItem().getContainerItem()));
                         } else {
-                            --this.cultivateItemStacks[1].stackSize;
+                            this.stacks.get(1).shrink(1);
                         }
-
-                        if (this.cultivateItemStacks[1].stackSize == 0) {
-                            this.cultivateItemStacks[1] = null;
+                        if (this.stacks.get(1).getCount() == 0) {
+                            this.stacks.set(1, ItemStack.EMPTY);
                         }
                     }
                 }
@@ -270,34 +257,34 @@ public class TileEntityCultivate extends TileEntity implements IInventory, ISide
     }
 
     private boolean canSmelt() {
-        if (this.cultivateItemStacks[0] == null) {
+        if (this.stacks.get(0) == null) {
             return false;
         } else {
-            ItemStack var1 = this.checkSmelt(this.cultivateItemStacks[0]);
-            return var1 != null && (this.cultivateItemStacks[2] == null || (this.cultivateItemStacks[2].isItemEqual(var1) && (this.cultivateItemStacks[2].stackSize < this.getInventoryStackLimit() && this.cultivateItemStacks[2].stackSize < this.cultivateItemStacks[2].getMaxStackSize() || this.cultivateItemStacks[2].stackSize < var1.getMaxStackSize())));
+            ItemStack var1 = this.checkSmelt(this.stacks.get(0));
+            return var1 != null && (this.stacks.get(2) == null || (this.stacks.get(2).isItemEqual(var1) && (this.stacks.get(2).getCount() < this.getInventoryStackLimit() && this.stacks.get(2).getCount() < this.stacks.get(2).getMaxStackSize() || this.stacks.get(2).getCount() < var1.getMaxStackSize())));
         }
     }
 
     public void smeltItem() {
         if (this.canSmelt()) {
-            ItemStack var1 = this.checkSmelt(this.cultivateItemStacks[0]);
+            ItemStack var1 = this.checkSmelt(this.stacks.get(0));
 
-            if (this.cultivateItemStacks[2] == null) {
+            if (this.stacks.get(2) == ItemStack.EMPTY) {
                 if (var1 != null) {
-                    this.cultivateItemStacks[2] = var1.copy();
+                    this.stacks.set(2, var1.copy());
                 }
-            } else if (this.cultivateItemStacks[2] == var1) {
-                this.cultivateItemStacks[2].stackSize += var1.stackSize;
+            } else if (this.stacks.get(2) == var1) {
+                this.stacks.get(2).grow(var1.getCount());
             }
 
-            if (this.cultivateItemStacks[0].getItem().hasContainerItem(null)) {
-                this.cultivateItemStacks[0] = new ItemStack(this.cultivateItemStacks[0].getItem().getContainerItem());
+            if (this.stacks.get(0).getItem().hasContainerItem(null)) {
+                this.stacks.set(0, new ItemStack(this.stacks.get(0).getItem().getContainerItem()));
             } else {
-                --this.cultivateItemStacks[0].stackSize;
+                this.stacks.get(0).shrink(1);
             }
 
-            if (this.cultivateItemStacks[0].stackSize <= 0) {
-                this.cultivateItemStacks[0] = null;
+            if (this.stacks.get(0).getCount() <= 0) {
+                this.stacks.set(0, ItemStack.EMPTY);
             }
         }
     }
@@ -378,9 +365,7 @@ public class TileEntityCultivate extends TileEntity implements IInventory, ISide
 
     @Override
     public void clear() {
-        for (int i = 0; i < this.cultivateItemStacks.length; i++) {
-            this.cultivateItemStacks[0] = null;
-        }
+        this.stacks.clear();
     }
 
     @Override

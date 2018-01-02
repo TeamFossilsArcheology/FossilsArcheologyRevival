@@ -42,7 +42,7 @@ public class IcedStoneBlock extends Block implements DefaultRenderedItem {
         else {
             this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
             worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
-            worldIn.notifyBlockOfStateChange(pos, Blocks.STONE);
+            worldIn.notifyNeighborsOfStateChange(pos, Blocks.STONE, true);
         }
     }
 }

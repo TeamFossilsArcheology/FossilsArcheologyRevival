@@ -19,8 +19,8 @@ public class WorktableGUI extends GuiContainer {
 
     protected void drawGuiContainerForegroundLayer() {
         String customName = this.tile.getName();
-        this.fontRendererObj.drawString(I18n.format(customName), 30, 6, 4210752);
-        this.fontRendererObj.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
+        this.fontRenderer.drawString(I18n.format(customName), 30, 6, 4210752);
+        this.fontRenderer.drawString(I18n.format("container.inventory"), 8, this.ySize - 96 + 2, 4210752);
     }
 
     @Override

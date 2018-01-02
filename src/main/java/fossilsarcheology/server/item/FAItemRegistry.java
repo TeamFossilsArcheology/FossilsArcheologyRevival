@@ -12,6 +12,7 @@ import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemBucket;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.lang.reflect.Field;
@@ -91,26 +92,10 @@ public class FAItemRegistry {
     public static final DinosaurBoneItem RIBCAGE = new DinosaurBoneItem("ribcage");
     public static final DinosaurBoneItem VERTEBRAE = new DinosaurBoneItem("vertebrae");
 
-    public static void register() {
-        try {
-            for (Field f : FAItemRegistry.class.getDeclaredFields()) {
-                Object obj = f.get(null);
-                if (obj instanceof Item) {
-                    FAItemRegistry.registerItem((Item) obj);
-                } else if (obj instanceof Item[]) {
-                    for (Item item : (Item[]) obj) {
-                        FAItemRegistry.registerItem(item);
-                    }
-                }
-            }
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public static Item registerItem(Item item) {
+    public static Item registerItem(RegistryEvent.Register<Item> event, Item item) {
         String name = item.getUnlocalizedName().substring("item.".length());
-        GameRegistry.register(item, new ResourceLocation(Revival.MODID, name));
+        item.setRegistryName(new ResourceLocation(Revival.MODID, name));
+        event.getRegistry().register(item);
         ITEMS.add(item);
         return item;
     }

@@ -177,14 +177,14 @@ public class EntityGallimimus extends EntityPrehistoric {
 
     @Override
     public boolean attackEntityAsMob(Entity entity) {
-        if (this.getAttackBounds().intersectsWith(entity.getEntityBoundingBox())) {
+        if (this.getAttackBounds().intersects(entity.getEntityBoundingBox())) {
             if (this.getAnimation() == NO_ANIMATION) {
                 this.setAnimation(ATTACK_ANIMATION);
                 return false;
             }
             if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() >= 10 && this.getAnimationTick() <= 13)) {
                 IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-                boolean flag = entity.attackEntityFrom(DamageSource.generic, (float) iattributeinstance.getAttributeValue());
+                boolean flag = entity.attackEntityFrom(DamageSource.GENERIC, (float) iattributeinstance.getAttributeValue());
                 if (entity.getRidingEntity() != null) {
                     if (entity.getRidingEntity() == this) {
                         entity.startRiding(null);
@@ -215,7 +215,7 @@ public class EntityGallimimus extends EntityPrehistoric {
     }
 
     @Override
-    protected SoundEvent getHurtSound() {
+    protected SoundEvent getHurtSound(DamageSource source) {
         return FASoundRegistry.GALLIMIMUS_HURT;
     }
 

@@ -14,7 +14,7 @@ public class TileEntityAnubiteStatueRender extends TileEntitySpecialRenderer<Til
     public TileEntityAnubiteStatueRender() {
     }
 
-    public void renderTileEntityAt(TileEntityAnubiteStatue tileentity, double x, double y, double z, float f, int destroy) {
+    public void render(TileEntityAnubiteStatue tileentity, double x, double y, double z, float f, int destroy, float alpha) {
         short short1 = 0;
         if (tileentity != null && tileentity.hasWorld()) {
             int i  = tileentity.getBlockType().getStateFromMeta(tileentity.getBlockMetadata()).getValue(AnubiteStatueBlock.FACING).getHorizontalIndex();

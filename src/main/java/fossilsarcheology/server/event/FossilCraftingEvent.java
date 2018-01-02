@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 public class FossilCraftingEvent {
 
-    @SubscribeEvent
+   /* @SubscribeEvent
     public void onCraftEvent(PlayerEvent.ItemCraftedEvent event) {
         EntityPlayer player = event.player;
         if (event.crafting.getItem() == Item.getItemFromBlock(FABlockRegistry.ANALYZER)) {
@@ -41,5 +41,5 @@ public class FossilCraftingEvent {
         if (event.pickedUp.getEntityItem().getItem() == FAItemRegistry.ANCIENT_CLOCK) {
             event.player.addStat(FossilAchievements.CLOCK, 1);
         }
-    }
+    }*/
 }

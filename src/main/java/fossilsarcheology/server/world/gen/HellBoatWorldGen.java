@@ -1032,7 +1032,6 @@ public class HellBoatWorldGen extends WorldGenerator {
     }
 
     public boolean generate_r02_last(World world, Random rand, int x, int y, int z) {
-
         BlockUtils.setBlock(world, x + 2, y + 2, z + 4, Blocks.REDSTONE_TORCH, 1, 3);
         BlockUtils.setBlock(world, x + 2, y + 2, z + 6, Blocks.REDSTONE_TORCH, 1, 3);
         BlockUtils.setBlock(world, x + 14, y + 4, z + 5, Blocks.LADDER, 4, 3);
