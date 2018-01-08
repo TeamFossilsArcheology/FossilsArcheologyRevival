@@ -13,6 +13,7 @@ public class AncientWoodPillarBlock extends BlockRotatedPillar implements Defaul
         this.setSoundType(SoundType.WOOD);
         this.setHardness(1.4F);
         this.setResistance(1.0F);
+
         this.setUnlocalizedName("ancient_wood_pillar");
     }
 }

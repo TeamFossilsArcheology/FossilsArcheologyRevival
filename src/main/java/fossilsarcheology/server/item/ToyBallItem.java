@@ -34,8 +34,9 @@ public class ToyBallItem extends Item {
         return super.getUnlocalizedName() + "." + EnumDyeColor.byDyeDamage(i).getUnlocalizedName();
     }
 
-    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+    public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
         EntityToyBall ball = new EntityToyBall(worldIn);
+        ItemStack stack = playerIn.getHeldItem(hand);
         ball.setColor(stack.getItemDamage());
         ball.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0, 0);
         if (!worldIn.isRemote)

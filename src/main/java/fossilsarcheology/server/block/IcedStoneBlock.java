@@ -22,6 +22,7 @@ public class IcedStoneBlock extends Block implements DefaultRenderedItem {
         this.setResistance(10.0F);
         this.setSoundType(SoundType.GLASS);
         this.setUnlocalizedName("icedStone");
+        this.setRegistryName("icedStone");
         this.setCreativeTab(FATabRegistry.BLOCKS);
     }
 

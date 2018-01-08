@@ -12,6 +12,7 @@ public class FossilStairsBlock extends BlockStairs implements DefaultRenderedIte
         this.setLightOpacity(0);
         this.setCreativeTab(FATabRegistry.BLOCKS);
         this.setUnlocalizedName(name);
+        this.setRegistryName(name);
     }
 
     @Override

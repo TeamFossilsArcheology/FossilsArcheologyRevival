@@ -1,6 +1,8 @@
 package fossilsarcheology.server.item;
 
 import fossilsarcheology.server.api.DefaultRenderedItem;
+import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
+import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.tab.FATabRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -11,6 +13,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+
+import java.util.Random;
 
 public class BioFossilItem extends Item implements DefaultRenderedItem {
     private boolean isTarFossil;
@@ -24,29 +28,19 @@ public class BioFossilItem extends Item implements DefaultRenderedItem {
     }
 
     public boolean tryPlaceIntoWorld(ItemStack stack, EntityPlayer player, World world, BlockPos pos) {
-        if (world.isRemote) {
-            return true;
-        } else {
-            /*Class<EntityPrehistoric> clazz = EnumPrehistoric.getRandomBioFossil(this.isTarFossil).getDinoClass(); TODO
-            EntityPrehistoric entity;
-            try {
-                entity = clazz.getConstructor(new Class[]{World.class}).newInstance(world);
-            } catch (Throwable var14) {
-                var14.printStackTrace();
-                return false;
-            }
-            entity.setLocationAndAngles((double) var4, (double) (var5 + 1), (double) var6, world.rand.nextFloat() * 360.0F, 0.0F);
-            entity.faceEntity(player, 360.0F, 360.0F);
+            EntityPrehistoric entity = (EntityPrehistoric) PrehistoricEntityType.getRandomBioFossil(new Random(), this.isTarFossil).invokeClass(world);
+            entity.prevRotationYaw = 0;
+            entity.setLocationAndAngles((double) pos.getX() + 0.5, (double)pos.getY(), (double) pos.getZ() + 0.5D, player.rotationYaw, player.rotationPitch);
             entity.setSkeleton(true);
-            if (world.checkNoEntityCollision(entity.boundingBox) && world.getCollidingBoundingBoxes(entity, entity.boundingBox).size() == 0) {
-                world.spawnEntityInWorld(entity);
-                --stack.stackSize;
+            if (world.checkNoEntityCollision(entity.getEntityBoundingBox())) {
+                if(!world.isRemote){
+                    world.spawnEntity(entity);
+                }
+                stack.shrink(1);
                 return true;
             } else {
                 return false;
-            }*/
-            return false;
-        }
+            }
     }
 
     @Override

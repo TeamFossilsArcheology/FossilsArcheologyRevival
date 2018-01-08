@@ -1722,4 +1722,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public boolean isAquatic() {
         return this instanceof EntityPrehistoricSwimming;
     }
+
+    public void onWhipRightClick(){
+
+    }
 }

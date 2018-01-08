@@ -119,7 +119,7 @@ public enum FoodMappings {
         switch (diet) {
             case CARNIVORE:
                 if (this.carnivoreItemDiet != null) {
-                    for (Map.Entry<ItemStack, Integer> entry : this.carnivoreEggItemDiet.entrySet()) {
+                    for (Map.Entry<ItemStack, Integer> entry : this.carnivoreItemDiet.entrySet()) {
                         ItemStack compareStack = entry.getKey();
                         if (item.isItemEqual(compareStack)) {
                             return this.carnivoreItemDiet.get(compareStack);
@@ -129,7 +129,7 @@ public enum FoodMappings {
                 break;
             case HERBIVORE:
                 if (this.herbivoreItemDiet != null) {
-                    for (Map.Entry<ItemStack, Integer> entry : this.carnivoreEggItemDiet.entrySet()) {
+                    for (Map.Entry<ItemStack, Integer> entry : this.herbivoreItemDiet.entrySet()) {
                         ItemStack compareStack = entry.getKey();
                         if (item.isItemEqual(compareStack)) {
                             return this.herbivoreItemDiet.get(compareStack);
@@ -139,7 +139,7 @@ public enum FoodMappings {
                 break;
             case OMNIVORE:
                 if (this.omnivoreItemDiet != null) {
-                    for (Map.Entry<ItemStack, Integer> entry : this.carnivoreEggItemDiet.entrySet()) {
+                    for (Map.Entry<ItemStack, Integer> entry : this.omnivoreItemDiet.entrySet()) {
                         ItemStack compareStack = entry.getKey();
                         if (item.isItemEqual(compareStack)) {
                             return this.omnivoreItemDiet.get(compareStack);
@@ -149,7 +149,7 @@ public enum FoodMappings {
                 break;
             case PISCIVORE:
                 if (this.piscivoreItemDiet != null) {
-                    for (Map.Entry<ItemStack, Integer> entry : this.carnivoreEggItemDiet.entrySet()) {
+                    for (Map.Entry<ItemStack, Integer> entry : this.piscivoreItemDiet.entrySet()) {
                         ItemStack compareStack = entry.getKey();
                         if (item.isItemEqual(compareStack)) {
                             return this.piscivoreItemDiet.get(compareStack);
@@ -169,7 +169,7 @@ public enum FoodMappings {
                 break;
             case INSECTIVORE:
                 if (this.insectivoreItemDiet != null) {
-                    for (Map.Entry<ItemStack, Integer> entry : this.carnivoreEggItemDiet.entrySet()) {
+                    for (Map.Entry<ItemStack, Integer> entry : this.insectivoreItemDiet.entrySet()) {
                         ItemStack compareStack = entry.getKey();
                         if (item.isItemEqual(compareStack)) {
                             return this.insectivoreItemDiet.get(compareStack);
@@ -179,7 +179,7 @@ public enum FoodMappings {
                 break;
             case PISCCARNIVORE:
                 if (this.piscivoreItemDiet != null) {
-                    for (Map.Entry<ItemStack, Integer> entry : this.carnivoreEggItemDiet.entrySet()) {
+                    for (Map.Entry<ItemStack, Integer> entry : this.piscivoreItemDiet.entrySet()) {
                         ItemStack compareStack = entry.getKey();
                         if (item.isItemEqual(compareStack)) {
                             return this.piscivoreItemDiet.get(compareStack);

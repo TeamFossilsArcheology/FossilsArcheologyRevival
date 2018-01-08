@@ -1,7 +1,13 @@
 package fossilsarcheology.server.item;
 
+import fossilsarcheology.Revival;
 import fossilsarcheology.server.api.DefaultRenderedItem;
+import fossilsarcheology.server.entity.EntityDinosaurEgg;
+import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
+import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityTypeAI;
+import fossilsarcheology.server.message.MessageUpdateEgg;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -28,12 +34,12 @@ public class DinoEggItem extends PrehistoricEntityItem implements DefaultRendere
     }
 
     private boolean spawnEgg(World world, PrehistoricEntityType type, double x, double y, double z) {
-       /* Entity egg;
+        Entity egg;
         if (!type.isAquatic()) {
             egg = new EntityDinosaurEgg(world, type);
             egg.setLocationAndAngles(x, y + 1.0F, z, world.rand.nextFloat() * 360.0F, 0.0F);
             if (!world.isRemote) {
-                world.spawnEntityInWorld(egg);
+                world.spawnEntity(egg);
             }
             ((EntityDinosaurEgg) egg).selfType = type;
             if (!world.isRemote) {
@@ -45,19 +51,18 @@ public class DinoEggItem extends PrehistoricEntityItem implements DefaultRendere
             if (egg != null) {
                 egg.setLocationAndAngles(x, y + 1, z, world.rand.nextFloat() * 360.0F, 0.0F);
                 if (!world.isRemote) {
-                    world.spawnEntityInWorld(egg);
+                    world.spawnEntity(egg);
                 }
                 if (egg instanceof EntityPrehistoric) {
                     EntityPrehistoric prehistoric = (EntityPrehistoric) egg;
-                    if (prehistoric.getTameType() == PrehistoricAI.Taming.IMPRINTING) {
+                    if (prehistoric.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
                         prehistoric.setTamed(true);
                         prehistoric.setAgeInDays(1);
-                        prehistoric.setOwnerName(world.getClosestPlayerToEntity(prehistoric, 10).getName());
+                        prehistoric.setOwnerDisplayName(world.getClosestPlayerToEntity(prehistoric, 10).getName());
                     }
                 }
             }
         }
-        return egg != null;*/
-        return false;
+        return egg != null;
     }
 }

@@ -1,7 +1,9 @@
 package fossilsarcheology.server.item;
 
 import fossilsarcheology.server.api.DefaultRenderedItem;
+import fossilsarcheology.server.entity.EntityFishBase;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
@@ -22,7 +24,7 @@ public class FishItem extends PrehistoricEntityItem implements DefaultRenderedIt
     }
 
     public boolean spawnFish(World world, double x, double y, double z) {
-        /*Entity egg = prehistoricEnum.invokeClass(world);
+        Entity egg = type.invokeClass(world);
         if (egg != null) {
             egg.setLocationAndAngles(x, y + 1, z, world.rand.nextFloat() * 360.0F, 0.0F);
             if (egg instanceof EntityFishBase) {
@@ -33,12 +35,11 @@ public class FishItem extends PrehistoricEntityItem implements DefaultRenderedIt
                     prehistoric.setGrowingAge(12000);
                 }
                 if (!world.isRemote) {
-                    world.spawnEntityInWorld(egg);
+                    world.spawnEntity(egg);
                 }
             }
         }
-        return egg != null;*/
-        return false;
+        return egg != null;
     }
 
     @Override

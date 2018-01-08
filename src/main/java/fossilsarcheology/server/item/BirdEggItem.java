@@ -2,6 +2,7 @@ package fossilsarcheology.server.item;
 
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
+import fossilsarcheology.server.entity.projectile.EntityBirdEgg;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -26,7 +27,7 @@ public class BirdEggItem extends PrehistoricEntityItem implements DefaultRendere
             stack.shrink(1);
         }
         player.playSound(SoundEvents.ENTITY_ARROW_SHOOT, 0.5F, 0.4F / (itemRand.nextFloat() * 0.4F + 0.8F));
-//        world.spawnEntityInWorld(new BirdEggEntity(world, player, this.creature, this.cultivated, this)); TODO
+        world.spawnEntity(new EntityBirdEgg(world, player, this.type, this.cultivated, this));
         return ActionResult.newResult(EnumActionResult.SUCCESS, stack);
     }
 }

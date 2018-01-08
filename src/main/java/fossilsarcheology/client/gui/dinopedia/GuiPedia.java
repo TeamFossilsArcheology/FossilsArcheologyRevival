@@ -266,7 +266,7 @@ public class GuiPedia extends GuiScreen {
         String translatePath = "assets/fossil/dinopedia/" + Minecraft.getMinecraft().gameSettings.language + "/";
         String bioFile = String.valueOf(mobName) + ".txt";
         if (getClass().getClassLoader().getResourceAsStream(translatePath) == null) {
-            translatePath = "assets/fossil/dinopedia/" + "en_US" + "/";
+            translatePath = "assets/fossil/dinopedia/" + "en_us" + "/";
         }
 
         if (getClass().getClassLoader().getResourceAsStream(translatePath + bioFile) != null) {

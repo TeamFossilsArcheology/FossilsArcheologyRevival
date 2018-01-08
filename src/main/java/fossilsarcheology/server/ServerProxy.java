@@ -146,6 +146,11 @@ public class ServerProxy implements IGuiHandler {
             String name = itemBlock.getUnlocalizedName().substring("item.".length());
             itemBlock.setRegistryName(new ResourceLocation(Revival.MODID, name));
             event.getRegistry().register(itemBlock);
+        }else{
+            ItemBlock itemBlock = new ItemBlock(block);
+            String name = itemBlock.getUnlocalizedName().substring("item.".length());
+            itemBlock.setRegistryName(new ResourceLocation(Revival.MODID, name));
+            event.getRegistry().register(itemBlock);
         }
     }
 

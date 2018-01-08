@@ -63,7 +63,7 @@ tile.permafrost.name=Permafrost
 tile.dense_sand.name=Dense Sand
 
 tile.ancient_stone.name=Ancient Stone
-tile.ancient_stone_brick.name=Ancient Stonebrick
+tile.ancient_stone_brick.name=Ancient Stone Brick
 
 tile.volcanic_ash.name=Volcanic Ash
 tile.volcanic_brick.name=Volcanic Brick
@@ -112,3 +112,219 @@ entity.fossil.titanis.name=Titanis
 entity.fossil.triceratops.name=Triceratops
 entity.fossil.tyrannosaurus.name=Tyrannosaurus
 entity.fossil.velociraptor.name=Velociraptor
+
+#PORT
+tile.skullBlock.name=Skull Block
+tile.skullLantern.name=Skull Lantern
+tile.cultivate.name=Culture Vat
+tile.cultivateActive.name=Culture Vat
+tile.worktable.name=Archeology Workbench
+tile.worktableActive.name=Archeology Workbench
+tile.sifter.name=Sifter
+tile.sifterActive.name=Sifter
+tile.bubble_blower.name=Bubble Blower
+tile.feeder.name=Feeder
+tile.icedStone.name=Iced Stone
+tile.strongGlass.name=Strong Glass
+tile.ancientGlass.name=Ancient Glass
+tile.slimetrail.name=Failuresaurus Trail
+tile.ancientStoneStairs.name=Ancient Stone Stairs
+tile.ancientStoneSlab.name=Ancient Stone Slab
+tile.ancientStoneSlabDouble.name=Ancient Stone Slab
+tile.volcanicStairs.name=Volcanic Stone Stairs
+tile.volcanicSlab.name=Volcanic Stone Slab
+tile.volcanicSlabDouble.name=Volcanic Stone Slab
+tile.anu_statue.name=Anu Totem
+tile.anubite_statue.name=Anubite Statue
+tile.ancient_chest.name=Ancient Treasure Chest
+tile.sarcophagus.name=Mysterious Sarcophagus
+tile.figurine.name=Figurine
+tile.vaseAmphora.name=Amphora
+tile.vaseKylix.name=Kylix
+tile.vaseVolute.name=Volute
+tile.time_machine.name=Time Machine
+tile.drum.name=Drum
+tile.obsidian_spikes.name=Obsidian Spikes
+tile.palm_log.name=Paleographe Log
+tile.palm_leaves.name=Paleographe Leaves
+tile.palm_sapling.name=Paleographe Sapling
+tile.palm_planks.name=Paleographe Planks
+tile.palmPlanksSlab.name=Paleographe Planks Slab
+tile.palmPlanksSlabDouble.name=Paleographe Planks Slab
+tile.ancient_wood.name=Ancient Wood
+tile.ancient_wood_pillar.name=Ancient Wood Pillar
+tile.ancient_wood_plate.name=Ancient Wood Plate
+tile.ancient_wood_stairs.name=Ancient Wood Stairs
+tile.ancientWoodSlab.name=Ancient Wood Slab
+tile.ancientWoodSlabDouble.name=Ancient Wood Slab
+tile.sarracenia.name=Sarracenia
+tile.cephalotaxus.name=Cephalotaxus
+tile.licopodiophyta.name=Licopodiophyta
+tile.paleopanax.name=Paleopanax
+tile.zamites.name=Zamites
+tile.bennettitales_small.name=Bennettitales
+tile.bennettitales_large.name=Tall Bennettitales
+tile.welwitschia.name=Welwitschia
+tile.horsetail_small.name=Horsetail
+tile.horsetail_large.name=Tall Horsetail
+tile.mutant_plant.name=Mutant Plant
+tile.tempskya.name=Tempskya
+tile.vaccinium.name=Vaccinium
+tile.osmunda.name=Osmunda
+tile.crataegus.name=Crataegus
+tile.florissantia.name=Florissantia
+tile.ependra.name=Ependra
+
+item.dinopedia.name=Dinopedia
+item.chicken_essence.name=Chicken Essence
+item.scarab_pickaxe.name=Scarab Pickaxe
+item.scarab_sword.name=Scarab Sword
+item.scarab_hoe.name=Scarab Hoe
+item.scarab_shovel.name=Scarab Shovel
+item.skull_helmet.name=Skull Helmet
+item.skull_chestplate.name=Ribcage Chestplate
+item.shin_leggings.name=Bone Plate Leggings
+item.feet_boots.name=Bone Boots
+item.ancient_key.name=Ancient Key
+item.ancient_clock.name=Ancient Clock
+item.shell.name=Nautilus Shell
+item.sjl.name=Sio-Chiu-Le
+item.magic_conch.name=Magic Conch
+item.raw_chicken_soup.name=Raw Chicken Soup
+item.cooked_chicken_soup.name=Cooked Chicken Soup
+item.cooked_egg.name=Cooked Egg
+item.skull_stick.name=Skull Stick
+item.tooth_dagger.name=Tooth Dagger
+item.whip.name=Whip
+item.dodoWing.name=Raw Dodo Wing
+item.dodoWingCooked.name=Cooked Dodo Wing
+item.rawConfuciornis.name=Raw Confuciusornis
+item.cookedConfuciornis.name=Cooked Confuciusornis
+item.dinoSteak.name=Dino Steak
+item.rawTriceratops.name=Triceratops Meat
+item.rawVelociraptor.name=Velociraptor Meat
+item.rawTyrannosaurus.name=Tyrannosaurus Meat
+item.rawPterosaur.name=Pteranodon Meat
+item.rawPlesiosaur.name=Plesiosaurus Meat
+item.rawMosasaurus.name=Mosasaurus Meat
+item.rawLiopleurodon.name=Liopleurodon Meat
+item.rawStegosaurus.name=Stegosaurus Meat
+item.rawDilophosaurus.name=Dilophosaurus Meat
+item.rawBrachiosaurus.name=Brachiosaurus Meat
+item.rawSpinosaurus.name=Spinosaurus Meat
+item.rawCompsognathus.name=Compsognathus Meat
+item.rawAnkylosaurus.name=Ankylosaurus Meat
+item.rawPachycephalosaurus.name=Pachycephalosaurus Meat
+item.rawDeinonychus.name=Deinonychus Meat
+item.rawGallimimus.name=Gallimimus Meat
+item.rawAllosaurus.name=Allosaurus Meat
+item.rawSarcosuchus.name=Sarcosuchus Meat
+item.rawCeratosaurus.name=Ceratosaurus Meat
+item.eggTriceratops.name=Triceratops Egg
+item.eggVelociraptor.name=Velociraptor Egg
+item.eggTyrannosaurus.name=Tyrannosaurus Egg
+item.eggPterosaur.name=Pteranodon Egg
+item.eggPlesiosaur.name=Plesiosaurus Sac
+item.eggMosasaurus.name=Mosasaurus Sac
+item.eggLiopleurodon.name=Liopleurodon Sac
+item.eggStegosaurus.name=Stegosaurus Egg
+item.eggDilophosaurus.name=Dilophosaurus Egg
+item.eggBrachiosaurus.name=Brachiosaurus Egg
+item.eggSpinosaurus.name=Spinosaurus Egg
+item.eggCompsognathus.name=Compsognathus Egg
+item.eggDodo.name=Dodo Egg
+item.eggCultivatedDodo.name=Cultivated Dodo Egg
+item.eggAnkylosaurus.name=Ankylosaurus Egg
+item.eggPachycephalosaurus.name=Pachycephalosaurus Egg
+item.eggDeinonychus.name=Deinonychus Egg
+item.eggGallimimus.name=Gallimimus Egg
+item.eggAllosaurus.name=Allosaurus Egg
+item.eggSarcosuchus.name=Sarcosuchus Egg
+item.eggCeratosaurus.name=Ceratosaurus Egg
+item.eggTerrorBird.gastornis.name=Gastornis Egg
+item.eggTerrorBird.phorusrhacos.name=Phorusrhacos Egg
+item.eggTerrorBird.titanis.name=Titanis Egg
+item.eggTerrorBird.kelenken.name=Kelenken Egg
+item.eggCultivatedTerrorBird.gastornis.name=Cultivated Gastornis Egg
+item.eggCultivatedTerrorBird.phorusrhacos.name=Cultivated Phorusrhacos Egg
+item.eggCultivatedTerrorBird.titanis.name=Cultivated Titanis Egg
+item.eggCultivatedTerrorBird.kelenken.name=Cultivated Kelenken Egg
+item.eggCultivatedChicken.name=Cultivated Chicken Egg
+item.eggConfuciusornis.name=Confuciusornis Egg
+item.eggCultivatedConfuciusornis.name=Cultivated Confuciusornis Egg
+item.failuresaurusFlesh.name=Failuresaurus Flesh
+item.dnaTriceratops.name=Triceratops DNA
+item.dnaVelociraptor.name=Velociraptor DNA
+item.dnaTyrannosaurus.name=Tyrannosaurus DNA
+item.dnaPterosaur.name=Pteranodon DNA
+item.dnaNautilus.name=Nautilus DNA
+item.dnaPlesiosaur.name=Plesiosaurus DNA
+item.dnaMosasaurus.name=Mosasaurus DNA
+item.dnaLiopleurodon.name=Liopleurodon DNA
+item.dnaStegosaurus.name=Stegosaurus DNA
+item.dnaDilophosaurus.name=Dilophosaurus DNA
+item.dnaBrachiosaurus.name=Brachiosaurus DNA
+item.dnaSpinosaurus.name=Spinosaurus DNA
+item.dnaCompsognathus.name=Compsognathus DNA
+item.dnaAnkylosaurus.name=Ankylosaurus DNA
+item.dnaPachycephalosaurus.name=Pachycephalosaurus DNA
+item.dnaDeinonychus.name=Deinonychus DNA
+item.dnaSarcosuchus.name=Sarcosuchus DNA
+item.dnaCeratosaurus.name=Ceratosaurus DNA
+item.dnaGallimimus.name=Gallimimus DNA
+item.dnaCoelacanth.name=Coelacanth DNA
+item.dnaPig.name=Pig DNA
+item.dnaSheep.name=Sheep DNA
+item.dnaCow.name=Cow DNA
+item.dnaChicken.name=Chicken DNA
+item.dnaSmilodon.name=Smilodon DNA
+item.dnaMammoth.name=Mammoth DNA
+item.dnaDodo.name=Dodo DNA
+item.dnaHorse.name=Horse DNA
+item.dnaQuagga.name=Quagga DNA
+item.dnaTerrorBird.name=Terror Bird DNA
+item.dnaAllosaurus.name=Allosaurus DNA
+item.dnaElasmotherium.name=Elasmotherium DNA
+item.dnaConfuciusornis.name=Confuciusornis DNA
+item.embryoPig.name=Pig Embryo
+item.embryoSheep.name=Sheep Embryo
+item.embryoCow.name=Cow Embryo
+item.embryoChicken.name=Chicken Embryo
+item.embryoSmilodon.name=Smilodon Embryo
+item.embryoMammoth.name=Mammoth Embryo
+item.embryoDodo.name=Dodo Embryo
+item.embryoHorse.name=Horse Embryo
+item.embryoQuagga.name=Quagga Embryo
+item.embryoElasmotherium.name=Elasmotherium Embryo
+item.archNotebook.name=Archaeology Notebook
+item.potteryShard.name=Pottery Shard
+item.terrorBirdMeat.name=Raw Terror Bird Leg
+item.terrorBirdMeatCooked.name=Cooked Terror Bird Leg
+item.quaggaMeat.name=Raw Quagga Meat
+item.quaggaMeatCooked.name=Cooked Quagga Meat
+
+
+item.toyball.black.name	Black Ball
+item.toyball.red.name	Red Ball
+item.toyball.green.name	Green Ball
+item.toyball.brown.name	Brown Ball
+item.toyball.blue.name	Blue Ball
+item.toyball.purple.name	Purple Ball
+item.toyball.cyan.name	Cyan Ball
+item.toyball.silver.name	Light Gray Ball
+item.toyball.gray.name	Gray Ball
+item.toyball.pink.name	Pink Ball
+item.toyball.lime.name	Lime Ball
+item.toyball.yellow.name	Yellow Ball
+item.toyball.lightBlue.name	Light Blue Ball
+item.toyball.magenta.name	Magenta Ball
+item.toyball.orange.name	Orange Ball
+item.toyball.white.name	White Ball
+
+
+
+
+
+
+
+

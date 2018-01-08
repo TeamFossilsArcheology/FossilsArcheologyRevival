@@ -161,11 +161,13 @@ public class EntityDeinonychus extends EntityPrehistoric {
         if (this.getAttackTarget() != null && this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() >= 17 && this.getAnimationTick() <= 20) && this.onGround) {
             double d0 = this.getAttackTarget().posX - this.posX;
             double d1 = this.getAttackTarget().posZ - this.posZ;
+            double d2 = this.getAttackTarget().posY - this.posY + this.getAttackTarget().height;
+
             float f = MathHelper.sqrt(d0 * d0 + d1 * d1);
             this.motionX += d0 / (double) f * 1.4D * 0.800000011920929D + this.motionX * 0.20000000298023224D;
             this.motionZ += d1 / (double) f * 1.4D * 0.800000011920929D + this.motionZ * 0.20000000298023224D;
             this.getLookHelper().setLookPositionWithEntity(this.getAttackTarget(), 10, 12);
-            this.motionY = 0.6;
+            this.motionY += d2 / (double) f * 1.4D * 0.800000011920929D + this.motionY * 0.20000000298023224D;
         }
     }
 

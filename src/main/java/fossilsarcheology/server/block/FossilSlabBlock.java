@@ -37,9 +37,11 @@ public abstract class FossilSlabBlock extends BlockSlab implements DefaultRender
         setSoundType(soundType);
         if (this.isDouble()) {
             setUnlocalizedName(name + "Double");
+            this.setRegistryName(name + "Double");
         } else {
             iblockstate = iblockstate.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
             setUnlocalizedName(name);
+            this.setRegistryName(name);
             setCreativeTab(FATabRegistry.BLOCKS);
         }
     }
