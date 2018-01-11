@@ -14,6 +14,5 @@ public class PrehistoricEntityItem extends Item implements DefaultRenderedItem {
         this.setUnlocalizedName(name + type.friendlyName);
         this.resourceName = type.resourceName + "_" + name;
         this.setCreativeTab(FATabRegistry.ITEMS);
-        System.out.println(this.resourceName);
     }
 }
