@@ -10,6 +10,7 @@ import fossilsarcheology.server.api.SubtypeRenderedItem;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.block.entity.*;
 import fossilsarcheology.server.block.entity.block.TileEntityVolute;
+import fossilsarcheology.server.entity.EntityDinosaurEgg;
 import fossilsarcheology.server.entity.StoneTabletEntity;
 import fossilsarcheology.server.entity.monster.*;
 import fossilsarcheology.server.entity.prehistoric.*;
@@ -67,6 +68,7 @@ public class RenderingHandler {
         RenderingRegistry.registerEntityRenderingHandler(EntitySentryPigman.class, new RenderSentryPigman(MINECRAFT.getRenderManager()));
         RenderingRegistry.registerEntityRenderingHandler(EntityTarSlime.class, new RenderTarSlime(MINECRAFT.getRenderManager()));
         RenderingRegistry.registerEntityRenderingHandler(EntityAnu.class, new RenderPigBoss(MINECRAFT.getRenderManager()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityDinosaurEgg.class, new RenderDinoEgg(MINECRAFT.getRenderManager()));
         RenderingRegistry.registerEntityRenderingHandler(EntityBirdEgg.class, new RenderBirdEgg(MINECRAFT.getRenderManager(), MINECRAFT.getRenderItem()));
         RenderingRegistry.registerEntityRenderingHandler(EntityToyBall.class, new RenderToyBall(MINECRAFT.getRenderManager()));
         RenderingRegistry.registerEntityRenderingHandler(EntityToyScratchingPost.class, new RenderToyScratchingPost(MINECRAFT.getRenderManager()));

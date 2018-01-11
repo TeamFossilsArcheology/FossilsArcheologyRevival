@@ -369,10 +369,10 @@ public class GuiPedia extends GuiScreen {
                 printStringXY(s1, wordLength / 2, 160, 157, 126, 103);
             }
             {
-                String name = dino.getOwnerDisplayName();
+                String name = dino.getOwner() == null ? "" : dino.getOwner().getName();
                 String s1 = I18n.format("pedia.untame");
                 String s2 = I18n.format("pedia.owner") + " " + name;
-                printStringXY(!dino.getOwnerDisplayName().equals("") ? s2 : s1, wordLength / 2, 170, 157, 126, 103);
+                printStringXY(!name.equals("") ? s2 : s1, wordLength / 2, 170, 157, 126, 103);
             }
             {
                 ScaledResolution scaledResolution = new ScaledResolution(mc);
@@ -400,7 +400,7 @@ public class GuiPedia extends GuiScreen {
                 final int height = scaledResolution.getScaledHeight();
                 final int mouseX = (Mouse.getX() * width / mc.displayWidth) - guiLeft;
                 final int mouseY = (height - Mouse.getY() * height / mc.displayHeight - 1) - guiTop;
-                String s1 = I18n.format("pedia.order.item") + new ItemStack(dino.getOrderItem()).getDisplayName();
+                String s1 = I18n.format("pedia.order.item") + ": " + new ItemStack(dino.getOrderItem()).getDisplayName();
                 int x = wordLength / 2;
                 int y = 190;
                 printStringXY(s1, x, y, 157, 126, 103);

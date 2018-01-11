@@ -1,6 +1,7 @@
 package fossilsarcheology.server.entity;
 
 import fossilsarcheology.Revival;
+import fossilsarcheology.server.ServerProxy;
 import fossilsarcheology.server.achievement.FossilAchievements;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.OrderType;
@@ -235,7 +236,7 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
             return true;
         } else if (FMLCommonHandler.instance().getSide().isClient() && itemstack.getItem() == FAItemRegistry.DINOPEDIA) {
             this.setPedia();
-            player.openGui(Revival.INSTANCE, 4, world, (int) posX, (int) posY, (int) posZ);
+            player.openGui(Revival.INSTANCE, ServerProxy.GUI_DINOPEDIA, world, (int) posX, (int) posY, (int) posZ);
             return true;
         }
         return false;

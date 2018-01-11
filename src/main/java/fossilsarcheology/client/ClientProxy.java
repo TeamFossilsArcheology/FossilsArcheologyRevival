@@ -17,6 +17,8 @@ import fossilsarcheology.server.event.FossilMainMenuEvent;
 import fossilsarcheology.server.event.FossilTarOverlayEvent;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.item.FossilSeedsItem;
+import fossilsarcheology.server.item.ItemDinoMeat;
+import fossilsarcheology.server.item.PrehistoricEntityItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.client.Minecraft;
@@ -57,7 +59,7 @@ public class ClientProxy extends ServerProxy {
             }
         }
         for (Item item : FAItemRegistry.ITEMS) {
-            String name = item.getUnlocalizedName().substring("item.".length());
+            String name = item instanceof PrehistoricEntityItem ? ((PrehistoricEntityItem) item).resourceName : item instanceof ItemDinoMeat ? ((ItemDinoMeat) item).resourceName : item.getUnlocalizedName().substring("item.".length());
 
             if (item instanceof DefaultRenderedItem) {
                 RENDER_HANDLER.registerItemRenderer(item, ((DefaultRenderedItem) item).getResource(name), "inventory");

@@ -1076,9 +1076,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
-        ItemStack itemstack = player.inventory.getCurrentItem();
+        ItemStack itemstack = player.getHeldItem(hand);
         if (this.isSkeleton()) {
-            if (itemstack == null) {
+            if (itemstack == ItemStack.EMPTY) {
                 if (player.isSneaking()) {
                     this.nudgeEntity(player);
                 } else {

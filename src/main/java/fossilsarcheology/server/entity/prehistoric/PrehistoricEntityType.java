@@ -129,36 +129,36 @@ public enum PrehistoricEntityType {
             MobType mobType = type.mobType;
             String resourceName = type.resourceName;
             type.dnaItem = new DNAItem(type);
-            FAItemRegistry.registerItem(event, type.dnaItem);
+            FAItemRegistry.registerItem(event, type.dnaItem, ((PrehistoricEntityItem)type.dnaItem).resourceName);
             if (mobType == MobType.FISH) {
                 type.eggItem = new FishItem(type, true);
                 type.fishItem = new FishItem(type, false);
-                FAItemRegistry.registerItem(event, type.eggItem);
-                FAItemRegistry.registerItem(event, type.fishItem);
+                FAItemRegistry.registerItem(event, type.eggItem, ((PrehistoricEntityItem)type.eggItem).resourceName);
+                FAItemRegistry.registerItem(event, type.fishItem, ((PrehistoricEntityItem)type.fishItem).resourceName);
             } else if (mobType == MobType.DINOSAUR) {
                 type.eggItem = new DinoEggItem(type);
-                FAItemRegistry.registerItem(event, type.eggItem);
+                FAItemRegistry.registerItem(event, type.eggItem, ((PrehistoricEntityItem)type.eggItem).resourceName);
             }
             if (mobType == MobType.MAMMAL || mobType == MobType.VANILLA) {
                 type.embryoItem = new MammalEmbryoItem(type);
-                FAItemRegistry.registerItem(event, type.embryoItem);
+                FAItemRegistry.registerItem(event, type.embryoItem, ((PrehistoricEntityItem)type.embryoItem).resourceName);
             }
             if (mobType == MobType.BIRD || mobType == MobType.CHICKEN) {
                 if (mobType == MobType.BIRD) {
                     type.birdEggItem = new BirdEggItem(type, false);
-                    FAItemRegistry.registerItem(event, type.birdEggItem);
+                    FAItemRegistry.registerItem(event, type.birdEggItem, ((PrehistoricEntityItem)type.birdEggItem).resourceName);
                 }
                 type.bestBirdEggItem = new BirdEggItem(type, true);
-                FAItemRegistry.registerItem(event, type.bestBirdEggItem);
+                FAItemRegistry.registerItem(event, type.bestBirdEggItem, ((PrehistoricEntityItem)type.bestBirdEggItem).resourceName);
             }
             if (type.timePeriod != TimePeriod.CURRENT) {
                 if (type.mobType != MobType.FISH) {
-                    type.foodItem = new ItemFood(3, 0.3F, true).setUnlocalizedName(resourceName + "_meat").setCreativeTab(FATabRegistry.ITEMS);
-                    FAItemRegistry.registerItem(event, type.foodItem);
+                    type.foodItem = new ItemDinoMeat(3, 0.3F, true, "meat", type).setUnlocalizedName("raw" + type.friendlyName).setCreativeTab(FATabRegistry.ITEMS);
+                    FAItemRegistry.registerItem(event, type.foodItem, resourceName + "_meat");
                 }
                 if (type != NAUTILUS) {
-                type.cookedFoodItem = new ItemFood(8, 0.8F, true).setUnlocalizedName(resourceName + "_cooked").setCreativeTab(FATabRegistry.ITEMS);
-                FAItemRegistry.registerItem(event, type.cookedFoodItem);
+                type.cookedFoodItem = new ItemDinoMeat(8, 0.8F, true, "cooked", type).setUnlocalizedName("cooked" + type.friendlyName).setCreativeTab(FATabRegistry.ITEMS);
+                FAItemRegistry.registerItem(event, type.cookedFoodItem, resourceName + "_cooked");
                 }
             }
         }

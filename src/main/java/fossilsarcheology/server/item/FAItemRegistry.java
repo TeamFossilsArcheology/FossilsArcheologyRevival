@@ -99,4 +99,11 @@ public class FAItemRegistry {
         ITEMS.add(item);
         return item;
     }
+
+    public static Item registerItem(RegistryEvent.Register<Item> event, Item item, String registryName) {
+        item.setRegistryName(new ResourceLocation(Revival.MODID, registryName));
+        event.getRegistry().register(item);
+        ITEMS.add(item);
+        return item;
+    }
 }
