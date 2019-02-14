@@ -100,9 +100,6 @@ public class AnalyzerRecipes {
             if(type.foodItem != null){
                 list.add(new RecipeAnalyzer(new ItemStack(type.foodItem), new ItemStack(type.dnaItem), 100));
             }
-            if(type.cookedFoodItem != null){
-                list.add(new RecipeAnalyzer(new ItemStack(type.cookedFoodItem), new ItemStack(type.dnaItem), 100));
-            }
             if(type.eggItem != null){
                 list.add(new RecipeAnalyzer(new ItemStack(type.eggItem), new ItemStack(type.dnaItem), 100));
             }
