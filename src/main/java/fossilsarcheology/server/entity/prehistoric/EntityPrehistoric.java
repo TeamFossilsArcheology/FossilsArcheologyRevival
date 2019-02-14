@@ -1919,4 +1919,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public boolean shouldWanderInFlock() {
         return shouldFollowFlock() && this.getAttackTarget() == null;
     }
+
+    protected float getSoundVolume(){
+        return this.isChild() ? super.getSoundVolume() * 0.75F : 1.0F;
+    }
 }
