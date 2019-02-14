@@ -1,5 +1,6 @@
 package fossilsarcheology.server.block;
 
+import fossilsarcheology.Revival;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.monster.EntityTarSlime;
 import net.minecraft.block.Block;
@@ -52,7 +53,7 @@ public class TarBlock extends BlockFluidClassic {
 	@Override
 	public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
 		super.updateTick(world, pos, state, rand);
-		if(rand.nextInt(this.isSourceBlock(world, pos) ? 50 : 250) == 0){
+		if(Revival.CONFIG.tarSlimeSpawnRate > 0 && rand.nextInt(this.isSourceBlock(world, pos) ? Revival.CONFIG.tarSlimeSpawnRate : Revival.CONFIG.tarSlimeSpawnRate * 5) == 0){
 			EntityTarSlime tarSlime = new EntityTarSlime(world);
 			tarSlime.onInitialSpawn(world.getDifficultyForLocation(pos), null);
 			tarSlime.setPositionAndRotation(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0, 0);
