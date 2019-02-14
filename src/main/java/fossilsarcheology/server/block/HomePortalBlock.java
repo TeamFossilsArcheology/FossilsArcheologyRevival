@@ -1,5 +1,6 @@
 package fossilsarcheology.server.block;
 
+import fossilsarcheology.Revival;
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.dimension.AnuTeleporter;
 import net.minecraft.block.Block;
@@ -84,7 +85,7 @@ public class HomePortalBlock extends Block implements DefaultRenderedItem {
                 thePlayer.timeUntilPortal = 10;
             } else if (thePlayer.dimension != 0) {
                 thePlayer.timeUntilPortal = 10;
-                thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, 0, new AnuTeleporter(thePlayer.server.getWorld(0)));
+                thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG.homePortalExitDimension, new AnuTeleporter(thePlayer.server.getWorld(Revival.CONFIG.homePortalExitDimension)));
             }
         }
     }
