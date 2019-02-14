@@ -1,20 +1,22 @@
+# eclipse
+bin
+*.launch
+.settings
 .metadata
-.gradle
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*.properties
-.settings/
-.loadpath
-.idea/
-*.ipr
-*.iml
-*.iws
-out/
-minecraft/
-eclipse/
-build/
 .classpath
 .project
+
+# idea
+out
+*.ipr
+*.iws
+*.iml
+.idea
+
+# gradle
+build
+.gradle
+
+# other
+eclipse
+run
