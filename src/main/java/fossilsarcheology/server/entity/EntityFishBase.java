@@ -259,7 +259,7 @@ public abstract class EntityFishBase extends EntityTameable {
     @Override
     public void travel(float strafe, float vertical, float forward) {
         float f4;
-        if (this.isSitting()) {
+        if (this.isSitting() || this.isInsideNautilusShell()) {
             super.travel(0, 0, 0);
             return;
         }
