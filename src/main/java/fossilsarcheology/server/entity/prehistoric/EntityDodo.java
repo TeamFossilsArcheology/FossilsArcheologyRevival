@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 public class EntityDodo extends EntityPrehistoric {
 
 	public EntityDodo(World world) {
-		super(world, PrehistoricEntityType.DODO, 1, 1, 4, 10, 0.15, 0.2, 0, 0);
+		super(world, PrehistoricEntityType.DODO, 1, 1, 4, 10, 0.15, 0.25, 0, 0);
 		this.teenAge = 3;
 		this.setActualSize(0.8F, 0.7F);
 		this.nearByMobsAllowed = 10;
