@@ -27,10 +27,19 @@ public class StructureUtils {
             settings.setReplacedBlock(Blocks.AIR);
         }
         Template template = templateManager.getTemplate(server, structure);
-        BlockPos center = world.getHeight(pos).offset(facing, template.getSize().getZ() / 2).offset(facing.rotateYCCW(), template.getSize().getX() / 2);
+        BlockPos center = balancePos(pos.offset(facing, template.getSize().getZ() / 2).offset(facing.rotateYCCW(), template.getSize().getX() / 2), template.getSize());
         template.addBlocksToWorldChunk(world, center, settings);
-        world.setBlockState(pos.down(), Blocks.DIAMOND_BLOCK.getDefaultState());
         return true;
+    }
+
+    private static BlockPos balancePos(BlockPos center, BlockPos templateSize){
+        BlockPos heightNE = center.offset(EnumFacing.NORTH, templateSize.getZ() / 2).offset(EnumFacing.EAST, templateSize.getZ() / 2);
+        BlockPos heightNW = center.offset(EnumFacing.NORTH, templateSize.getZ() / 2).offset(EnumFacing.WEST, templateSize.getZ() / 2);
+        BlockPos heightSE = center.offset(EnumFacing.SOUTH, templateSize.getZ() / 2).offset(EnumFacing.EAST, templateSize.getZ() / 2);
+        BlockPos heightSW = center.offset(EnumFacing.SOUTH, templateSize.getZ() / 2).offset(EnumFacing.WEST, templateSize.getZ() / 2);
+        int averageHeight = (heightNE.getY() + heightNW.getY() + heightSE.getY() + heightSW.getY()) / 4 + 1;
+        return new BlockPos(center.getX(), averageHeight, center.getZ());
+
     }
 
     public static Rotation getRotationFromFacing(EnumFacing facing) {
@@ -56,7 +65,7 @@ public class StructureUtils {
             settings.setReplacedBlock(Blocks.AIR);
         }
         Template template = templateManager.getTemplate(server, structure);
-        BlockPos center = world.getHeight(pos).offset(facing, template.getSize().getZ() / 2).offset(facing.rotateYCCW(), template.getSize().getX() / 2);
+        BlockPos center = balancePos(pos.offset(facing, template.getSize().getZ() / 2).offset(facing.rotateYCCW(), template.getSize().getX() / 2), template.getSize());
         template.addBlocksToWorld(world, center, new FABlockProcessorLoot(center, settings, loot), settings, 2);
     }
 
