@@ -14,6 +14,7 @@ import net.minecraft.tileentity.BannerPattern;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.ForgeModContainer;
 import net.minecraftforge.common.util.EnumHelper;
+import net.minecraftforge.fluids.FluidRegistry;
 import net.minecraftforge.fluids.FluidStack;
 import net.minecraftforge.fluids.UniversalBucket;
 import net.minecraftforge.fml.common.registry.GameRegistry;
@@ -28,9 +29,9 @@ public class FARecipeRegistry {
     public static void blocks() {
         UniversalBucket bucket = ForgeModContainer.getInstance().universalBucket;
         ItemStack filledBucket = new ItemStack(bucket);
-        FluidStack fluidContents = new FluidStack(FAFluidRegistry.TAR_FLUID, bucket.getCapacity());
         NBTTagCompound tag = new NBTTagCompound();
-        fluidContents.writeToNBT(tag);
+        tag.setString("FluidName", FAFluidRegistry.TAR_FLUID.getName());
+        tag.setInteger("Amount", bucket.getCapacity());
         filledBucket.setTagCompound(tag);
         GameRegistry.addShapelessRecipe(new ResourceLocation("fossil:tar_drop"), new ResourceLocation("fossil"), new ItemStack(FAItemRegistry.TARDROP, 4), Ingredient.fromStacks(filledBucket));
         FAItemRegistry.ANCIENT_HELMET_MATERIAL.setRepairItem(new ItemStack(FAItemRegistry.SCARAB_GEM));
