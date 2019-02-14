@@ -76,7 +76,7 @@ public class ObsidianSpikesBlock extends Block implements DefaultRenderedItem {
     @Override
     public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
         if (!(entity instanceof EntityAnu)) {
-            entity.attackEntityFrom(DamageSource.CACTUS, 1.0F);
+            entity.attackEntityFrom(DamageSource.CACTUS, 4.0F);
             if (entity instanceof EntityLivingBase && entity.motionX != 0 && entity.motionZ != 0) {
                 ((EntityLivingBase) entity).knockBack(entity, 0.5F, entity.motionX, entity.motionZ);
             }
