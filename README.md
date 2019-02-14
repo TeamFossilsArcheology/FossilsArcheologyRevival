@@ -1,6 +1,15 @@
-#[Fossil and Archeology Revival 1.7](http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-mods/2398119)
+# Fossil and Archeology Revival
+
+For more information and news for this project, join us on Discord adn check us out on social media!
+
+## [Discord](https://discord.gg/zjDNeHC)
+
+[Twitter](https://twitter.com/fossilsrevival)
+
+[Instagram](https://www.instagram.com/f_a_revival/)
+
 ***
-![Banner](http://i.imgur.com/7no8xtV.jpg)
+![Banner](https://i.imgur.com/5QFIoaI.png)
 
 [Imgur album of current and past banners](http://imgur.com/a/hBe0h)
 
