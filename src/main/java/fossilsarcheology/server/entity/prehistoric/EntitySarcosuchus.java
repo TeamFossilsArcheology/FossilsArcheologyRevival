@@ -21,7 +21,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntitySarcosuchus extends EntityPrehistoricSwimming {
+public class EntitySarcosuchus extends EntityPrehistoricSwimming implements IScaryDinosaur{
 
 	private static final DataParameter<Boolean> SWIMMING = EntityDataManager.createKey(EntitySarcosuchus.class, DataSerializers.BOOLEAN);
 	public float swimProgress;

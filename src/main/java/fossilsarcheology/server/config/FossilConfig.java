@@ -87,7 +87,8 @@ public class FossilConfig {
     public int dimensionIDTreasure = -34;
     @ConfigEntry(category = "ids", comment = "The Dimension ID that the Anu Treasure Room portal takes players to")
     public int homePortalExitDimension = 0;
-
     @ConfigEntry(category = "generation")
     public boolean logCascadingWorldGen = false;
+    @ConfigEntry(category = "dinosaurs")
+    public boolean animalsFearDinosaurs = true;
 }

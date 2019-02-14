@@ -17,7 +17,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 
-public class EntityTitanis extends EntityPrehistoric {
+public class EntityTitanis extends EntityPrehistoric implements IScaryDinosaur{
 
 	public EntityTitanis(World world) {
 		super(world, PrehistoricEntityType.TITANIS, 1, 4, 10, 36, 0.25, 0.36,0, 0);

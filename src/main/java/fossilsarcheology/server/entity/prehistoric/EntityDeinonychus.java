@@ -18,7 +18,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntityDeinonychus extends EntityPrehistoric {
+public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosaur{
 
 	public EntityDeinonychus(World world) {
 		super(world, PrehistoricEntityType.DEINONYCHUS, 2, 6, 10, 32, 0.23, 0.35, 0, 2);

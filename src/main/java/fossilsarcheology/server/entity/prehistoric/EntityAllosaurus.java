@@ -15,7 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntityAllosaurus extends EntityPrehistoric {
+public class EntityAllosaurus extends EntityPrehistoric implements IScaryDinosaur{
 
 	public EntityAllosaurus(World world) {
 		super(world, PrehistoricEntityType.ALLOSAURUS, 2, 11, 10, 58, 0.25, 0.5, 0, 4);

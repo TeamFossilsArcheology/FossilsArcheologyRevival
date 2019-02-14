@@ -1,9 +1,11 @@
 package fossilsarcheology.server.event;
 
 
+import com.google.common.base.Predicate;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.ServerProxy;
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.entity.ai.AnimalAIFearDinosaur;
 import fossilsarcheology.server.entity.prehistoric.*;
 import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
@@ -11,6 +13,7 @@ import fossilsarcheology.server.item.FAItemRegistry;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityPolarBear;
@@ -18,14 +21,22 @@ import net.minecraft.entity.passive.*;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
 public class FossilLivingEvent {
+
+    private static final Predicate ANIMAL_FEAR_DINOSAUR = new Predicate<EntityLivingBase>(){
+        public boolean apply(@Nullable EntityLivingBase entity) {
+            return entity != null && entity instanceof IScaryDinosaur;
+        }
+    };
 
     @SubscribeEvent
     public void onBreakBlock(BlockEvent.BreakEvent event) {
@@ -34,6 +45,24 @@ public class FossilLivingEvent {
             event.getPlayer().sendStatusMessage(new TextComponentString(I18n.format("anu.breakblock")), true);
             event.setCanceled(true);
         }
+    }
+
+    @SubscribeEvent
+    public void onEntityJoinWorld(EntityJoinWorldEvent event) {
+        if(event.getEntity() != null && isLivestock(event.getEntity()) && event.getEntity() instanceof EntityCreature && Revival.CONFIG.animalsFearDinosaurs){
+            EntityCreature animal = (EntityCreature)event.getEntity();
+            animal.tasks.addTask(1, new AnimalAIFearDinosaur(animal, EntityLivingBase.class, ANIMAL_FEAR_DINOSAUR, 12.0F, 1.2D, 1.5D));
+        }
+    }
+
+    private boolean isLivestock(Entity entity) {
+        String className = entity.getClass().getSimpleName();
+        return (entity instanceof EntityCow || entity instanceof EntitySheep || entity instanceof EntityPig || entity instanceof EntityChicken
+                || entity instanceof EntityRabbit || entity instanceof AbstractHorse
+                || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig") || className.contains("Chicken")
+                || className.contains("Rabbit") || className.contains("Peacock") || className.contains("Goat") || className.contains("Ferret")
+                || className.contains("Hedgehog") || className.contains("Peahen") || className.contains("Peafowl") || className.contains("Sow")
+                || className.contains("Hog") || className.contains("Hog"));
     }
 
     @SubscribeEvent

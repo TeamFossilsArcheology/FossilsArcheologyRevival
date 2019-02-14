@@ -17,7 +17,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
 
-public class EntityPhorusrhacos extends EntityPrehistoric {
+public class EntityPhorusrhacos extends EntityPrehistoric implements IScaryDinosaur{
 
 	public EntityPhorusrhacos(World world) {
 		super(world, PrehistoricEntityType.PHORUSRHACOS, 1, 5, 10, 38, 0.25, 0.35, 0, 0);

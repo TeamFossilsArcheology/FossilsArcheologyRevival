@@ -16,7 +16,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntityKelenken extends EntityPrehistoric {
+public class EntityKelenken extends EntityPrehistoric implements IScaryDinosaur{
 
 	public EntityKelenken(World world) {
 		super(world, PrehistoricEntityType.KELENKEN, 1, 6, 10, 40, 0.25, 0.35, 0, 2);

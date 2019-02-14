@@ -17,7 +17,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntityTyrannosaurus extends EntityPrehistoric {
+public class EntityTyrannosaurus extends EntityPrehistoric implements IScaryDinosaur {
 
 	public static final Animation ROAR_ANIMATION = Animation.create(100);
 

@@ -21,7 +21,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class EntityMegalania extends EntityPrehistoric {
+public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur{
 
     public static final Animation ANIMATION_FIGHT = Animation.create(40);
     private int ticksSinceLastFight;

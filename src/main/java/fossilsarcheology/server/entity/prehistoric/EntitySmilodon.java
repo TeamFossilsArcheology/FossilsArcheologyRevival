@@ -16,7 +16,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntitySmilodon extends EntityPrehistoric {
+public class EntitySmilodon extends EntityPrehistoric implements IScaryDinosaur{
 
 	public EntitySmilodon(World world) {
 		super(world, PrehistoricEntityType.SMILODON, 1, 5, 8, 34, 0.25, 0.3, 0, 0);

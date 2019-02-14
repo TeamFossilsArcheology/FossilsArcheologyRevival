@@ -21,7 +21,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class EntitySpinosaurus extends EntityPrehistoricSwimming {
+public class EntitySpinosaurus extends EntityPrehistoricSwimming implements IScaryDinosaur {
 	private static final DataParameter<Boolean> SWIMMING = EntityDataManager.createKey(EntitySpinosaurus.class, DataSerializers.BOOLEAN);
 
 	public final Animation SHAKE_ANIMATION = Animation.create(65);

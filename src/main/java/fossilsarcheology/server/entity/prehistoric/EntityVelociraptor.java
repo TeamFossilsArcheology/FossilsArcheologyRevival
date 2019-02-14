@@ -19,7 +19,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 
-public class EntityVelociraptor extends EntityPrehistoric {
+public class EntityVelociraptor extends EntityPrehistoric implements IScaryDinosaur {
 
 	public EntityVelociraptor(World world) {
 		super(world, PrehistoricEntityType.VELOCIRAPTOR, 1, 4, 4, 22, 0.25, 0.3, 0, 0);
