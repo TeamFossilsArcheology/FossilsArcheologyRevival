@@ -1,6 +1,5 @@
 package fossilsarcheology;
 
-import cpw.mods.fml.common.SidedProxy;
 import fossilsarcheology.server.ServerProxy;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.compat.thaumcraft.ThaumcraftCompatBridge;
