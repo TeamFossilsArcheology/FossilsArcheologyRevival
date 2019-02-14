@@ -33,6 +33,7 @@ public class EntityPlesiosaurus extends EntityPrehistoricSwimming {
 	public void initEntityAI() {
 		this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
 		this.tasks.addTask(0, new DinoAIFollowOwner(this, 1, 10, 2));
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIEatBlocks(this));
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
@@ -178,38 +179,22 @@ public class EntityPlesiosaurus extends EntityPrehistoricSwimming {
 		return FASoundRegistry.PLESIOSAURUS_DEATH;
 	}
 
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		if (this.getAttackTarget() != null) {
-			this.attackEntityAsMob(this.getAttackTarget());
-		}
-	}
-
 	public int getAttackLength() {
 		return 10;
 	}
 
 	@Override
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
+			doAttack();
+		}
+	}
+
+	@Override
 	public boolean attackEntityAsMob(Entity entity) {
-		if (this.canReachPrey()) {
-			if (this.getAnimation() == NO_ANIMATION) {
-				this.setAnimation(ATTACK_ANIMATION);
-				return false;
-			}
-			if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() >= 4 && this.getAnimationTick() <= 7) {
-				IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-				boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
-				if (entity.getRidingEntity() != null) {
-					if (entity.getRidingEntity() == this) {
-						entity.startRiding(null);
-					}
-				}
-				if(entity instanceof EntityToyBase){
-					knockBackMob(entity, 0.1F, 0.1F, 0.1F);
-				}
-				return flag;
-			}
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
 		}
 		return false;
 	}

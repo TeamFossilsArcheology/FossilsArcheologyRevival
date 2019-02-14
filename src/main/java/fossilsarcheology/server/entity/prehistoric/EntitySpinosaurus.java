@@ -46,6 +46,7 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming {
 
 	public void initEntityAI() {
 		this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new DinoAIGetInWater(this, 1.0D));
 		this.tasks.addTask(1, new DinoAILeaveWater(this, 1.0D));
 		this.tasks.addTask(1, this.aiSit = new EntityAISit(this));
@@ -54,7 +55,6 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming {
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
 		this.tasks.addTask(3, new DinoAIEatItems(this));
 		this.tasks.addTask(4, new DinoAIRiding(this, 1.5D));
-		this.tasks.addTask(4, new DinoMeleeAttackAI(this, 1.5D, false));
 		this.tasks.addTask(5, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(7, new DinoAILookIdle(this));

@@ -60,6 +60,7 @@ public class EntityMegalograptus extends EntityPrehistoricSwimming {
 
     public void initEntityAI() {
         this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
+        this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
         this.tasks.addTask(1, new DinoAIGetInWater(this, 1.0D));
         this.tasks.addTask(1, new DinoAILeaveWater(this, 1.0D));
         this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
@@ -68,7 +69,6 @@ public class EntityMegalograptus extends EntityPrehistoricSwimming {
         this.tasks.addTask(3, new DinoAIEatFeeders(this));
         this.tasks.addTask(3, new DinoAIEatItems(this));
         this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
-        this.tasks.addTask(4, new DinoMeleeAttackAI(this, 1.5D, false));
         this.tasks.addTask(5, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
         this.tasks.addTask(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(7, new DinoAILookIdle(this));
@@ -177,16 +177,8 @@ public class EntityMegalograptus extends EntityPrehistoricSwimming {
             this.setSitting(false);
             this.setSleeping(false);
         }
-        if (this.getAttackTarget() != null) {
-            if (canReachPrey()) {
-                if (this.getAnimation() != ATTACK_ANIMATION) {
-                    this.setAnimation(ATTACK_ANIMATION);
-                }
-                if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() > 5) {
-                    this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
-                }
-                this.attackEntityAsMob(this.getAttackTarget());
-            }
+        if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 7 && this.getAttackTarget() != null) {
+            doAttack();
         }
         if (this.isInWaterMaterial()) {
             this.setSwimming(true);
@@ -194,6 +186,15 @@ public class EntityMegalograptus extends EntityPrehistoricSwimming {
             this.setSwimming(false);
         }
     }
+
+    @Override
+    public boolean attackEntityAsMob(Entity entity) {
+        if (this.getAnimation() == NO_ANIMATION) {
+            this.setAnimation(ATTACK_ANIMATION);
+        }
+        return false;
+    }
+
 
     @Override
     protected void entityInit() {

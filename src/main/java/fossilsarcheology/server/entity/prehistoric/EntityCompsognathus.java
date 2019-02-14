@@ -34,6 +34,7 @@ public class EntityCompsognathus extends EntityPrehistoric {
 	}
 
 	public void initEntityAI() {
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
@@ -168,6 +169,9 @@ public class EntityCompsognathus extends EntityPrehistoric {
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity) {
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
+		}
 		return false;
 	}
 

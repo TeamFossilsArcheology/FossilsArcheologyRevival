@@ -32,6 +32,7 @@ public class EntityAnkylosaurus extends EntityPrehistoric {
 	}
 
 	public void initEntityAI() {
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
@@ -41,9 +42,7 @@ public class EntityAnkylosaurus extends EntityPrehistoric {
 		this.tasks.addTask(4, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(5, new DinoAILookIdle(this));
 		this.tasks.addTask(6, new DinoAIRiding(this, 1.0F));
-		this.tasks.addTask(6, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(7, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-
 		this.targetTasks.addTask(1, new DinoAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new DinoAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new DinoAIHurtByTarget(this));
@@ -148,24 +147,18 @@ public class EntityAnkylosaurus extends EntityPrehistoric {
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity entity) {
-		if (this.canReachPrey()) {
-			if (this.getAnimation() == NO_ANIMATION) {
-				this.setAnimation(ATTACK_ANIMATION);
-				return false;
-			}
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 20 && this.getAttackTarget() != null) {
+			doAttack();
+			doAttackKnockback(2F);
+		}
+	}
 
-			if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() > 15) {
-				IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-				boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
-				if (entity.getRidingEntity() != null) {
-					if (entity.isRidingOrBeingRiddenBy(this)) {
-						entity.dismountRidingEntity();
-					}
-				}
-				knockbackEntity(entity, 2F, 0.1F);
-				return flag;
-			}
+	@Override
+	public boolean attackEntityAsMob(Entity entity) {
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
 		}
 		return false;
 	}

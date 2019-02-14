@@ -31,6 +31,7 @@ public class EntityAllosaurus extends EntityPrehistoric {
 	}
 
 	public void initEntityAI() {
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
@@ -38,7 +39,6 @@ public class EntityAllosaurus extends EntityPrehistoric {
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
 		this.tasks.addTask(3, new DinoAIEatItems(this));
 		this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
-		this.tasks.addTask(5, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(6, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(7, new DinoAILookIdle(this));
@@ -140,29 +140,15 @@ public class EntityAllosaurus extends EntityPrehistoric {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
-			this.attackEntityAsMob(this.getAttackTarget());
+			doAttack();
+			doAttackKnockback(0.5F);
 		}
 	}
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity) {
-		if (this.canReachPrey()) {
-			if (this.getAnimation() == NO_ANIMATION) {
-				this.setAnimation(ATTACK_ANIMATION);
-				return false;
-			}
-			if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12) {
-				IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-				boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
-				if (entity.getRidingEntity() != null) {
-					if (entity.getRidingEntity() == this) {
-						entity.startRiding(null);
-					}
-				}
-				entity.motionY += 0.1000000059604645D;
-				entity.isAirBorne = false;
-				return flag;
-			}
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
 		}
 		return false;
 	}

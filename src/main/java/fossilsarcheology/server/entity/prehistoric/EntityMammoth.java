@@ -52,6 +52,7 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
 	}
 
 	public void initEntityAI() {
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit  = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
@@ -59,7 +60,6 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
 		this.tasks.addTask(3, new DinoAIEatItems(this));
 		this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
-		this.tasks.addTask(4, new DinoMeleeAttackAI(this, 1.5D, false));
 		this.tasks.addTask(5, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(8, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(8, new DinoAILookIdle(this));
@@ -153,7 +153,8 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
 			this.addPotionEffect(BIOME_EFFECT);
 		}
 		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 17 && this.getAttackTarget() != null) {
-			this.attackEntityAsMob(this.getAttackTarget());
+			doAttack();
+			doAttackKnockback(2F);
 		}
 		super.onLivingUpdate();
 	}
@@ -235,23 +236,8 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity) {
-		if (this.getAttackBounds().expand(3.0F, 3.0F, 3.0F).intersects(entity.getEntityBoundingBox())) {
-			if (this.getAnimation() == NO_ANIMATION) {
-				this.setAnimation(ATTACK_ANIMATION);
-				return false;
-			}
-			if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 17) {
-				IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-				boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
-				if (entity.getRidingEntity() != null) {
-					if (entity.getRidingEntity() == this) {
-						entity.startRiding(null);
-					}
-				}
-				entity.motionY = 0.4;
-				entity.addVelocity((double) (-MathHelper.sin((this.rotationYaw - 180) * (float) Math.PI / 180.0F) * 2 * 0.25F), 0.1D, (MathHelper.cos((this.rotationYaw - 180) * (float) Math.PI / 180.0F) * 2 * 0.25F));
-				return flag;
-			}
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
 		}
 		return false;
 	}

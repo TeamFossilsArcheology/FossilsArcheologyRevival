@@ -31,13 +31,13 @@ public class EntityStegosaurus extends EntityPrehistoric {
 	}
 
 	public void initEntityAI() {
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
 		this.tasks.addTask(3, new DinoAIEatBlocks(this));
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
 		this.tasks.addTask(3, new DinoAIEatItems(this));
-		this.tasks.addTask(4, new DinoMeleeAttackAI(this, 1.5D, false));
 		this.tasks.addTask(4, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(5, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(5, new DinoAILookIdle(this));
@@ -50,14 +50,6 @@ public class EntityStegosaurus extends EntityPrehistoric {
 	@Override
 	public int getAttackLength() {
 		return 30;
-	}
-
-	@Override
-	public void onLivingUpdate() {
-		super.onLivingUpdate();
-		if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() >= 17 && this.getAnimationTick() <= 19) && this.getAttackTarget() != null) {
-			this.attackEntityAsMob(this.getAttackTarget());
-		}
 	}
 
 	@Override
@@ -153,27 +145,22 @@ public class EntityStegosaurus extends EntityPrehistoric {
 	}
 
 	@Override
-	public boolean attackEntityAsMob(Entity entity) {
-		if (this.canReachPrey()) {
-			if (this.getAnimation() == NO_ANIMATION) {
-				this.setAnimation(ATTACK_ANIMATION);
-				return false;
-			}
+	public void onLivingUpdate() {
+		super.onLivingUpdate();
+		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 17 && this.getAttackTarget() != null) {
+			doAttack();
+			doAttackKnockback(1F);
+		}
+	}
 
-			if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() >= 15 && this.getAnimationTick() <= 20)) {
-				IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-				boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
-				if (entity.getRidingEntity() != null) {
-					if (entity.isRidingOrBeingRiddenBy(this)) {
-						entity.dismountRidingEntity();
-					}
-				}
-				knockbackEntity(entity, 1.5F, 0.2F);
-				return flag;
-			}
+	@Override
+	public boolean attackEntityAsMob(Entity entity) {
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
 		}
 		return false;
 	}
+
 
 	@Override
 	public int getMaxHunger() {

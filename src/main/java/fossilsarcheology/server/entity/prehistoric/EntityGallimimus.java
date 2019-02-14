@@ -33,6 +33,7 @@ public class EntityGallimimus extends EntityPrehistoric {
 	}
 
 	public void initEntityAI() {
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
@@ -41,7 +42,6 @@ public class EntityGallimimus extends EntityPrehistoric {
 		this.tasks.addTask(3, new DinoAIEatItems(this));
 		this.tasks.addTask(4, new DinoAIRiding(this, 2F));
 		this.tasks.addTask(5, new EntityAIPanic(this, 1.25D));
-		this.tasks.addTask(6, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(7, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(8, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(8, new DinoAILookIdle(this));
@@ -153,28 +153,16 @@ public class EntityGallimimus extends EntityPrehistoric {
 		if (this.getRidingPlayer() != null) {
 			this.stepHeight = 2;
 		}
-		if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() >= 10 && this.getAnimationTick() <= 13) && this.getAttackTarget() != null) {
-			this.attackEntityAsMob(this.getAttackTarget());
+		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
+			doAttack();
+			doAttackKnockback(0.25F);
 		}
 	}
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity) {
-		if (this.canReachPrey()) {
-			if (this.getAnimation() == NO_ANIMATION) {
-				this.setAnimation(ATTACK_ANIMATION);
-				return false;
-			}
-			if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() >= 10 && this.getAnimationTick() <= 13)) {
-				IAttributeInstance damage = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-				entity.attackEntityFrom(DamageSource.GENERIC, (float) damage.getAttributeValue());
-				if (entity.getRidingEntity() != null) {
-					if (entity.getRidingEntity() == this) {
-						entity.startRiding(null);
-					}
-				}
-				entity.motionY += 0.05;
-			}
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
 		}
 		return false;
 	}

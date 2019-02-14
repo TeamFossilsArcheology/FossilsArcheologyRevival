@@ -26,6 +26,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISit;
+import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -276,7 +277,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public AxisAlignedBB getAttackBounds() {
-        return this.getEntityBoundingBox().grow(2.0F, 2.0F, 2.0F);
+        float size = this.getRenderSizeModifier() * 0.25F;
+        return this.getEntityBoundingBox().grow(1.0F + size, 1.0F + size, 1.0F + size);
     }
 
     @Override
@@ -1922,5 +1924,24 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     protected float getSoundVolume(){
         return this.isChild() ? super.getSoundVolume() * 0.75F : 1.0F;
+    }
+
+    protected void doAttackKnockback(float strength){
+        if(this.getAttackTarget() != null){
+            if (this.getAttackTarget().getRidingEntity() != null) {
+                if (this.getAttackTarget().getRidingEntity() == this) {
+                    this.getAttackTarget().startRiding(null);
+                }
+            }
+            knockbackEntity(this.getAttackTarget(), strength, 0.1F);
+            this.getAttackTarget().isAirBorne = false;
+        }
+    }
+
+    public void doAttack(){
+        IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        if(getAttackTarget() != null) {
+            this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
+        }
     }
 }

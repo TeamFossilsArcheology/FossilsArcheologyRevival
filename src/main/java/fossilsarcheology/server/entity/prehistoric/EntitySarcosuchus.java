@@ -42,6 +42,7 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming {
 	}
 
 	public void initEntityAI() {
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
 		this.tasks.addTask(1, new DinoAIGetInWater(this, 1.0D));
 		this.tasks.addTask(1, new DinoAILeaveWater(this, 1.0D));
@@ -51,7 +52,6 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming {
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
 		this.tasks.addTask(3, new DinoAIEatItems(this));
 		this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
-		this.tasks.addTask(4, new DinoMeleeAttackAI(this, 1.5D, false));
 		this.tasks.addTask(5, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(7, new DinoAILookIdle(this));
@@ -178,20 +178,11 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming {
 			this.setSitting(false);
 			this.setSleeping(false);
 		}
-		if (this.getAttackTarget() != null) {
-			if (canReachPrey()) {
-				this.attackEntityAsMob(this.getAttackTarget());
-				if (!isEntitySmallerThan(this.getAttackTarget(), 2F * (this.getAgeScale() / this.maxSize)) || this.getRNG().nextInt(5) != 0) {
-					if (this.getAnimation() != ATTACK_ANIMATION) {
-						this.setAnimation(ATTACK_ANIMATION);
-					}
-					this.faceEntity(this.getAttackTarget(), 30, 30);
-					if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() == 5 || this.getAnimationTick() == 6)) {
-						this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue());
-						destroyBoat(this.getAttackTarget());
-					}
-				}
-			}
+		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
+			doAttack();
+			doAttackKnockback(0.5F);
+			destroyBoat(this.getAttackTarget());
+
 		}
 		if (this.isInWaterMaterial()) {
 			this.setSwimming(true);
@@ -201,13 +192,17 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming {
 	}
 
 	@Override
-	public int getAttackLength() {
-		return 15;
+	public boolean attackEntityAsMob(Entity entity) {
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
+		}
+		return false;
 	}
 
+
 	@Override
-	public boolean attackEntityAsMob(Entity entityIn) {
-		return !this.isInWater();
+	public int getAttackLength() {
+		return 15;
 	}
 
 	@Override

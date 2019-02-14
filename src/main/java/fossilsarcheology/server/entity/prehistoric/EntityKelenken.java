@@ -33,13 +33,13 @@ public class EntityKelenken extends EntityPrehistoric {
 
 	public void initEntityAI() {
 		this.tasks.addTask(1, new EntityAISwimming(this));
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
 		this.tasks.addTask(3, new DinoAIEatBlocks(this));
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
 		this.tasks.addTask(3, new DinoAIEatItems(this));
 		this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
-		this.tasks.addTask(5,  new DinoMeleeAttackAI(this, 2.0D, false));
 		this.tasks.addTask(4, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(8, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
 		this.tasks.addTask(8, new DinoAILookIdle(this));
@@ -148,27 +148,15 @@ public class EntityKelenken extends EntityPrehistoric {
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 15 && this.getAttackTarget() != null) {
-			this.attackEntityAsMob(this.getAttackTarget());
+			doAttack();
+			doAttackKnockback(0.25F);
 		}
 	}
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity) {
-		if (this.canReachPrey()) {
-			if (this.getAnimation() == NO_ANIMATION) {
-				this.setAnimation(ATTACK_ANIMATION);
-				return false;
-			}
-			if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 15) {
-				IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-				boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
-				if (entity.getRidingEntity() != null) {
-					if (entity.getRidingEntity() == this) {
-						entity.startRiding(null);
-					}
-				}
-				return flag;
-			}
+		if (this.getAnimation() == NO_ANIMATION) {
+			this.setAnimation(ATTACK_ANIMATION);
 		}
 		return false;
 	}

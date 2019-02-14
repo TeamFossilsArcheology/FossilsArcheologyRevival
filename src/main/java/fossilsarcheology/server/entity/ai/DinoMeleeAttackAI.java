@@ -69,7 +69,7 @@ public class DinoMeleeAttackAI extends EntityAIBase {
             this.entity.getNavigator().tryMoveToEntityLiving(target, this.speed);
         }
         this.attackTick = Math.max(this.attackTick - 1, 0);
-        if (this.entity.getDistanceSq(target.posX, target.getEntityBoundingBox().minY, target.posZ) < this.entity.width * 2.0F * this.entity.width * 2.0F + target.width) {
+        if (this.entity.getAttackBounds().intersects(target.getEntityBoundingBox())) {
             this.entity.swingArm(EnumHand.MAIN_HAND);
             this.attackTick = 20;
             this.entity.getNavigator().clearPath();
