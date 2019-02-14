@@ -236,7 +236,7 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
             double random = (new Random()).nextInt(100);
             int var3;
             EnumSiftType siftType = getSiftTypeFromStack(this.stacks.get(this.rawIndex));
-            if (siftType != EnumSiftType.GROUND) {
+            if (siftType != EnumSiftType.NONE) {
                 if (randomloot < 80) {
                     if (random < 75) {
                         result = ItemStack.EMPTY;
