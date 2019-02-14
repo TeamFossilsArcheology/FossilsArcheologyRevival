@@ -83,6 +83,9 @@ public class FossilConfig {
     public int dimensionIDDarknessLair = -23;
     @ConfigEntry(category = "ids")
     public int dimensionIDTreasure = -34;
+    @ConfigEntry(category = "ids", comment = "The Dimension ID that the Anu Treasure Room portal takes players to")
+    public int homePortalExitDimension = 0;
+
     @ConfigEntry(category = "generation")
     public boolean logCascadingWorldGen = false;
 }

@@ -112,12 +112,12 @@ public class FAWorldGenerator implements IWorldGenerator {
 		}
 		int x = (chunkX * 16) + 8;
 		int z = (chunkZ * 16) + 8;
-		BlockPos height = world.getHeight(new BlockPos(x, 0, z));
+		BlockPos height = StructureUtils.getGround(x, z, world);
 		Biome biome = world.getBiome(height);
 		if (Revival.CONFIG.generateTarSites && random.nextInt(Math.max(Revival.CONFIG.generateTarSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS && world.getBlockState(height.down()).getBlock() == Blocks.GRASS) {
 			if(StructureUtils.generateStructureAtWithRandomRotation(TAR_SITE, world, height.down(3), random, true, false)){
 				BlockPos tentPos = random.nextBoolean() ? height.add(10  + random.nextInt(6), 10 + random.nextInt(6) , 10 + random.nextInt(6)) : height.add(-10 - random.nextInt(6), -10 - random.nextInt(6), -10 - random.nextInt(6));
-				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, getActualHeight(tentPos, world), random, false, false);
+				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, StructureUtils.getGround(tentPos, world), random, false, false);
 				EntityVillager villager = new EntityVillager(world);
 				villager.setProfession(FAVillagerRegistry.ARCHEOLOGIST_PROFESSION);
 				villager.setLocationAndAngles(tentPos.getX() - 0.5D, tentPos.getY() - 0.5D, tentPos.getZ() - 0.5D, 0, 0);
@@ -127,7 +127,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 		if (Revival.CONFIG.generateFossilSites && random.nextInt(Math.max(Revival.CONFIG.generateFossilSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS && world.getBlockState(height.down()).getBlock() == Blocks.GRASS) {
 			if(StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE, world, height.down(3), random, true, false)){
 				BlockPos tentPos = random.nextBoolean() ? height.add(10  + random.nextInt(6), 10 + random.nextInt(6) , 10 + random.nextInt(6)) : height.add(-10 - random.nextInt(6), -10 - random.nextInt(6), -10 - random.nextInt(6));
-				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, getActualHeight(tentPos, world), random, false, false);
+				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, StructureUtils.getGround(tentPos, world), random, false, false);
 				EntityVillager villager = new EntityVillager(world);
 				villager.setProfession(FAVillagerRegistry.ARCHEOLOGIST_PROFESSION);
 				villager.setLocationAndAngles(tentPos.getX() - 0.5D, tentPos.getY() - 0.5D, tentPos.getZ() - 0.5D, 0, 0);
@@ -223,9 +223,5 @@ public class FAWorldGenerator implements IWorldGenerator {
 		if(!Revival.CONFIG.logCascadingWorldGen) {
 			net.minecraftforge.common.ForgeModContainer.logCascadingWorldGeneration = prevLogCascadingWorldGen;
 		}
-	}
-
-	public BlockPos getActualHeight(BlockPos pos, World world){
-		return world.getHeight(pos);
 	}
 }
