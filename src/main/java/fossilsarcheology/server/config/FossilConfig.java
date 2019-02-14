@@ -80,19 +80,9 @@ public class FossilConfig {
     @ConfigEntry(category = "dinosaurs")
     public int flyingTargetMaxHeight = 128;
     @ConfigEntry(category = "ids")
-    public int biomeIDDarknessLair = 128;
-    @ConfigEntry(category = "ids")
-    public int biomeIDTreasure = 127;
-    @ConfigEntry(category = "ids")
     public int dimensionIDDarknessLair = -23;
     @ConfigEntry(category = "ids")
     public int dimensionIDTreasure = -34;
-    @ConfigEntry(category = "ids")
-    public int enchantmentIDArcheology = 91;
-    @ConfigEntry(category = "ids")
-    public int enchantmentIDPaleontology = 90;
-    @ConfigEntry(category = "ids")
-    public int villagerId = 303;
     @ConfigEntry(category = "generation")
     public boolean logCascadingWorldGen = false;
 }
