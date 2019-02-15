@@ -891,6 +891,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 }
             }
         }
+        this.heal((float)healthStep);
     }
 
     public void breakBlock(float hardness) {
@@ -1375,17 +1376,15 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public void grow(int ageInDays) {
         this.setAgeInDays(this.getAgeInDays() + ageInDays);
         this.setScaleForAge(false);
-        if (this.getAgeInDays() % 25 == 0) {
-            for (int i = 0; i < this.getAgeScale() * 4; i++) {
-                double motionX = getRNG().nextGaussian() * 0.07D;
-                double motionY = getRNG().nextGaussian() * 0.07D;
-                double motionZ = getRNG().nextGaussian() * 0.07D;
-                float f = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxX - this.getEntityBoundingBox().minX) + this.getEntityBoundingBox().minX);
-                float f1 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) + this.getEntityBoundingBox().minY);
-                float f2 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) + this.getEntityBoundingBox().minZ);
-                if (world.isRemote) {
-                    this.world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, f, f1, f2, motionX, motionY, motionZ, new int[]{});
-                }
+        for (int i = 0; i < this.getAgeScale() * 4; i++) {
+            double motionX = getRNG().nextGaussian() * 0.07D;
+            double motionY = getRNG().nextGaussian() * 0.07D;
+            double motionZ = getRNG().nextGaussian() * 0.07D;
+            float f = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxX - this.getEntityBoundingBox().minX) + this.getEntityBoundingBox().minX);
+            float f1 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) + this.getEntityBoundingBox().minY);
+            float f2 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) + this.getEntityBoundingBox().minZ);
+            if (world.isRemote) {
+                this.world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, f, f1, f2, motionX, motionY, motionZ, new int[]{});
             }
         }
         this.updateAbilities();
