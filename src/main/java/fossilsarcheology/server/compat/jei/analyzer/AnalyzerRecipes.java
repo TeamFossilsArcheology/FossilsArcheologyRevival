@@ -12,7 +12,6 @@ import net.minecraft.item.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-//Fixme: Fix bones and bone blocks, they can't actually be analyzed.
 public class AnalyzerRecipes {
     public static List<RecipeAnalyzer> getRecipes(){
         List<RecipeAnalyzer> list = new ArrayList<>();
@@ -20,12 +19,6 @@ public class AnalyzerRecipes {
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.BIOFOSSIL), new ItemStack(Blocks.SAND), 35));
         for(PrehistoricEntityType type : PrehistoricEntityType.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC)){
             list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.BIOFOSSIL), new ItemStack(type.dnaItem), 15));
-        }
-        for(PrehistoricEntityType type : PrehistoricEntityType.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC, TimePeriod.CENOZOIC)){
-            list.add(new RecipeAnalyzer(new ItemStack(Blocks.BONE_BLOCK), new ItemStack(type.dnaItem), 10));
-        }
-        for(PrehistoricEntityType type : PrehistoricEntityType.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC, TimePeriod.CENOZOIC)){
-            list.add(new RecipeAnalyzer(new ItemStack(Items.BONE), new ItemStack(type.dnaItem), 0));
         }
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Items.SPIDER_EYE), 9));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Items.STRING), 10));
@@ -38,12 +31,6 @@ public class AnalyzerRecipes {
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Items.BEETROOT_SEEDS), 1));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Items.PUMPKIN_SEEDS), 1));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Items.MELON_SEEDS), 1));
-
-        list.add(new RecipeAnalyzer(new ItemStack(Items.BONE), new ItemStack(Items.DYE, 1, 15), 50));
-        list.add(new RecipeAnalyzer(new ItemStack(Blocks.BONE_BLOCK), new ItemStack(Items.DYE, 1, 15), 25));
-        list.add(new RecipeAnalyzer(new ItemStack(Blocks.BONE_BLOCK), new ItemStack(Items.BONE), 25));
-        list.add(new RecipeAnalyzer(new ItemStack(Blocks.BONE_BLOCK), new ItemStack(Blocks.SAND), 20));
-        list.add(new RecipeAnalyzer(new ItemStack(Blocks.BONE_BLOCK), new ItemStack(Blocks.GRAVEL), 20));
         for(DinosaurBoneType type : DinosaurBoneType.values()){
             list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.LEG_BONE, 1, type.ordinal()), new ItemStack(Items.DYE, 1, 15), 30));
             list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.LEG_BONE, 1, type.ordinal()), new ItemStack(Items.BONE), 35));

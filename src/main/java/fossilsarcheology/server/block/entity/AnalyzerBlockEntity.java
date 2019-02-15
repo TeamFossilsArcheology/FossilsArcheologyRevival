@@ -202,8 +202,8 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 				|| (item == FAItemRegistry.TARDROP) || (item == FAItemRegistry.FAILURESAURUS_FLESH) || (item == FAItemRegistry.RELIC_SCRAP) ||
 				(item == Items.PORKCHOP) || (item == Items.BEEF) || (item == Items.EGG) || (item == Items.CHICKEN)
 				|| (item == Item.getItemFromBlock(Blocks.WOOL)) || (item == FAItemRegistry.ICED_MEAT) ||  (item == Items.LEATHER)
-				|| (item == FAItemRegistry.PLANT_FOSSIL) || (item == Items.FISH) || (item == Items.FEATHER) || (item == Items.MUTTON) || (item == Items.BONE)
-				|| (item == Items.RABBIT) || (item == Items.RABBIT_FOOT) || (item == Items.RABBIT_HIDE) || (item == FAItemRegistry.SHELL) || (item == Item.getItemFromBlock(Blocks.BONE_BLOCK)) || item == FAItemRegistry.DOMINICAN_AMBER;
+				|| (item == FAItemRegistry.PLANT_FOSSIL) || (item == Items.FISH) || (item == Items.FEATHER) || (item == Items.MUTTON)
+				|| (item == Items.RABBIT) || (item == Items.RABBIT_FOOT) || (item == Items.RABBIT_HIDE) || (item == FAItemRegistry.SHELL) || item == FAItemRegistry.DOMINICAN_AMBER;
 	}
 
 	public void analyzeItem() {
@@ -245,23 +245,6 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 				if (rand > 75) {
 					output = new ItemStack(PrehistoricEntityType.getRandomTimePeriod(random, TimePeriod.CENOZOIC).dnaItem, 1);
 				}
-			} else if (rawItem == Item.getItemFromBlock(Blocks.BONE_BLOCK)) {
-				if (rand > -1 && rand <= 25) {
-					output = new ItemStack(Items.DYE, 3, 15);
-				}
-				if (rand > 25 && rand <= 50) {
-					output = new ItemStack(Items.BONE, 1, 0);
-				}
-				if (rand > 50 && rand <= 70) {
-					output = new ItemStack(Blocks.SAND, 1 + random.nextInt(2));
-				}
-				if (rand > 70 && rand <= 90) {
-					output = new ItemStack(Blocks.GRAVEL, 1 + random.nextInt(2));
-				}
-				if (rand > 90) {
-					output = new ItemStack(PrehistoricEntityType.getRandomTimePeriod(random, TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC, TimePeriod.CENOZOIC, TimePeriod.CURRENT).dnaItem, 1);
-				}
-
 			} else if (rawItem == FAItemRegistry.TARDROP) {
 				if (rand >= 0 && rand <= 40) {
 					output = new ItemStack(Items.COAL, random.nextInt(2) + 1, random.nextInt(1));
@@ -271,15 +254,6 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 				}
 				if (rand > 85) {
 					output = new ItemStack(FABlockRegistry.VOLCANIC_ROCK, 1);
-				}
-			} else if (rawItem == Items.BONE) {
-				if (rand > -1 && rand <= 50) {
-					output = new ItemStack(Items.DYE, 3, 15);
-				}
-				if (rand > 99) {
-					if(new Random().nextInt(35) == 0){
-						output = new ItemStack(PrehistoricEntityType.getRandomTimePeriod(random, TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC, TimePeriod.CENOZOIC, TimePeriod.CURRENT).dnaItem, 1);
-					}
 				}
 			} else if (rawItem == FAItemRegistry.PLANT_FOSSIL) {
 				if (rand > 0) {
