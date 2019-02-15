@@ -169,7 +169,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 			int counter = 0;
 			counter++;
 			if (counter == 1) {
-				StructureUtils.generateStructureAtWithRotation(TREASURE_ROOM, world, TREASURE_ROOM_POS, random, Rotation.NONE, false, false);
+				StructureUtils.generateStructureAt(TREASURE_ROOM, world, TREASURE_ROOM_POS, false);
 			}
 		}
 

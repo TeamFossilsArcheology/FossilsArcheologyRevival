@@ -32,6 +32,21 @@ public class StructureUtils {
         return true;
     }
 
+    public static boolean generateStructureAt(ResourceLocation structure, World world, BlockPos pos, boolean removeAir) {
+        EnumFacing facing = EnumFacing.NORTH;
+        Rotation rotation = getRotationFromFacing(facing);
+        MinecraftServer server = world.getMinecraftServer();
+        TemplateManager templateManager = world.getSaveHandler().getStructureTemplateManager();
+        PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(Mirror.NONE);
+        if (removeAir) {
+            settings.setReplacedBlock(Blocks.AIR);
+        }
+        Template template = templateManager.getTemplate(server, structure);
+        BlockPos center = pos.offset(facing, template.getSize().getZ() / 2).offset(facing.rotateYCCW(), template.getSize().getX() / 2);
+        template.addBlocksToWorldChunk(world, center, settings);
+        return true;
+    }
+
     private static BlockPos balancePos(BlockPos center, BlockPos templateSize){
         BlockPos heightNE = center.offset(EnumFacing.NORTH, templateSize.getZ() / 2).offset(EnumFacing.EAST, templateSize.getZ() / 2);
         BlockPos heightNW = center.offset(EnumFacing.NORTH, templateSize.getZ() / 2).offset(EnumFacing.WEST, templateSize.getZ() / 2);
