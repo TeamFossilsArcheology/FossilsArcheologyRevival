@@ -119,19 +119,6 @@ public class EntityToyTetheredLog extends EntityToyBase implements IAnimatedEnti
 	}
 
 	@Override
-    protected void collideWithEntity(Entity entity) {
-		if (entity instanceof EntityPrehistoric && ((EntityPrehistoric) entity).ticksTillPlay == 0) {
-			((EntityPrehistoric) entity).doPlayBonus(toyBonus);
-			if (this.getAnimation() != KNOCKBACK_ANIMATION) {
-				this.setAnimation(KNOCKBACK_ANIMATION);
-			}
-			if (getAttackNoise() != null) {
-				this.playSound(getAttackNoise(), 1, this.getSoundPitch());
-			}
-		}
-	}
-
-	@Override
     protected float getSoundPitch() {
 		return super.getSoundPitch() * 0.2F;
 	}

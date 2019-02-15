@@ -75,6 +75,9 @@ public class DinoMeleeAttackAI extends EntityAIBase {
             this.attackTick = 20;
             this.entity.getNavigator().clearPath();
             this.entity.attackEntityAsMob(target);
+            if(target instanceof EntityToyBase && this.entity.ATTACK_ANIMATION != null){
+                this.entity.setAnimation(this.entity.ATTACK_ANIMATION);
+            }
         } else {
             this.entity.getLookHelper().setLookPositionWithEntity(target, 30.0F, 30.0F);
         }

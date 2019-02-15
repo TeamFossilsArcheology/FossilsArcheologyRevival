@@ -639,6 +639,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 this.flockObj.onUpdate();
             }
         }
+        if(this.getAttackTarget() != null){
+            System.out.println(isPreyBlocked(this.getAttackTarget()));
+        }
         if(this.getAttackTarget() != null && this.getAttackTarget() instanceof EntityToyBase && (isPreyBlocked(this.getAttackTarget()) || this.ticksTillPlay > 0)){
             this.setAttackTarget(null);
         }
@@ -1533,6 +1536,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public boolean canDinoHunt(Entity target, boolean hunger) {
+        if(target instanceof EntityToyBase){
+            return true;
+        }
         boolean isAnotherDino = target instanceof EntityPrehistoric;
         if (this.type.diet != Diet.HERBIVORE && this.type.diet != Diet.NONE && canAttackClass(target.getClass())) {
             if (isAnotherDino ? this.getActualWidth() * getTargetScale() >= ((EntityPrehistoric) target).getActualWidth() : this.getActualWidth() * getTargetScale() >= target.width) {
