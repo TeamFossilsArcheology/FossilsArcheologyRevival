@@ -187,7 +187,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public int getAttackLength() {
-        return 20;
+        return 10;
     }
 
     @Override
@@ -281,7 +281,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     public AxisAlignedBB getAttackBounds() {
         float size = this.getRenderSizeModifier() * 0.25F;
-        return this.getEntityBoundingBox().grow(1.0F + size, 1.0F + size, 1.0F + size);
+        return this.getEntityBoundingBox().grow(2.0F + size, 2.0F + size, 2.0F + size);
     }
 
     @Override
@@ -515,9 +515,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.motionX *= 0;
             this.motionY *= 0;
             this.motionZ *= 0;
-        }
-        if(this.getAttackTarget() != null && !canDinoHunt(this.getAttackTarget(), true)){
-            this.setAttackTarget(null);
         }
         if((this.getAttackTarget() != null || this.getRevengeTarget() != null) && this.isSleeping()){
             this.setSleeping(false);

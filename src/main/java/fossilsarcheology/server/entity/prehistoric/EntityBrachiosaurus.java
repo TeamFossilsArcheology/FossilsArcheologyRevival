@@ -30,7 +30,6 @@ public class EntityBrachiosaurus extends EntityPrehistoric {
 		breaksBlocks = true;
 		this.ridingY = 1.5F;
 		this.ridingXZ = -0.2F;
-		ATTACK_ANIMATION = Animation.create(30);
 		this.pediaScale = 35F;
 	}
 
