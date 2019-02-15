@@ -8,6 +8,8 @@ import fossilsarcheology.server.block.entity.TileEntityFeeder;
 import fossilsarcheology.server.entity.EntityDinosaurEgg;
 import fossilsarcheology.server.entity.FoodHelper;
 import fossilsarcheology.server.entity.utility.EntityToyBase;
+import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
+import fossilsarcheology.server.event.FossilLivingEvent;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.item.variant.DinosaurBoneType;
 import fossilsarcheology.server.message.MessageFoodParticles;
@@ -18,6 +20,7 @@ import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
 import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
+import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLiquid;
@@ -1136,7 +1139,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     @Override
     public boolean attackEntityFrom(DamageSource dmg, float i) {
-
         if (i > 0 && this.isSkeleton()) {
             if (dmg == DamageSource.IN_WALL) {
                 return false;
@@ -1150,8 +1152,16 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                     }
                     this.entityDropItem(new ItemStack(Items.BONE, Math.min(this.getAgeInDays(), this.getAdultAge())), 1);
                 }
+                if(dmg.getTrueSource() != null && dmg.getTrueSource() instanceof EntityPlayer){
+                    EntityPlayer player = (EntityPlayer)dmg.getTrueSource();
+                    FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(player, FossilsPlayerProperties.class);
+                    if(properties != null) {
+                        properties.killedBiofossilCooldown = 5;
+                    }
+                }
+
                 this.setDead();
-                return false;
+                return true;
             }
         }
         if (this.getLastAttackedEntity() instanceof EntityPlayer) {

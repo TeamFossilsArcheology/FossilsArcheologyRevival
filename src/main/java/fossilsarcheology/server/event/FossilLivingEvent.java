@@ -18,8 +18,10 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.passive.*;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
@@ -28,6 +30,7 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.Random;
 
 public class FossilLivingEvent {
@@ -43,6 +46,9 @@ public class FossilLivingEvent {
         FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getPlayer(), FossilsPlayerProperties.class);
         if (event.getWorld().provider.getDimension() == Revival.CONFIG.dimensionIDDarknessLair && event.getState().getBlock() != Blocks.OBSIDIAN && event.getState().getBlock() != FABlockRegistry.FAKE_OBSIDIAN && (properties != null && !properties.killedAnu)) {
             event.getPlayer().sendStatusMessage(new TextComponentString(I18n.format("anu.breakblock")), true);
+            event.setCanceled(true);
+        }
+        if(properties != null && properties.killedBiofossilCooldown > 0){
             event.setCanceled(true);
         }
     }
@@ -78,6 +84,12 @@ public class FossilLivingEvent {
 
     @SubscribeEvent
     public void onEntityLiving(LivingEvent.LivingUpdateEvent event) {
+        if(event.getEntityLiving() instanceof EntityPlayer){
+            FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties((EntityPlayer)event.getEntityLiving(), FossilsPlayerProperties.class);
+            if(properties != null && properties.killedBiofossilCooldown > 0) {
+                properties.killedBiofossilCooldown--;
+            }
+        }
         if (PrehistoricEntityType.isMammal(event.getEntityLiving()) && !event.getEntityLiving().isChild()) {
             FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getEntityLiving(), FossilsMammalProperties.class);
             if (properties != null && properties.embryo != null && properties.isPregnant) {
