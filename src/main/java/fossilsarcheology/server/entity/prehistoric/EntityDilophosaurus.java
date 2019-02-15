@@ -150,7 +150,7 @@ public class EntityDilophosaurus extends EntityPrehistoric implements IScaryDino
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity) {
-		if (this.getAnimation() == NO_ANIMATION) {
+		if (this.getAnimation() != ATTACK_ANIMATION) {
 			this.setAnimation(ATTACK_ANIMATION);
 		}
 		return false;

@@ -45,6 +45,7 @@ public abstract class EntityToyBase extends EntityLiving {
 				if (getAttackNoise() != null) {
 					this.playSound(getAttackNoise(), 1, this.getSoundPitch());
 				}
+				return false;
 			}
 		}
 		return dmg != DamageSource.OUT_OF_WORLD;

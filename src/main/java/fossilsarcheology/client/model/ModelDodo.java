@@ -112,9 +112,9 @@ public class ModelDodo extends ModelPrehistoric {
 		ModelUtils.rotate(animator, beakLower, 5, 0, 0);
 		animator.endKeyframe();
 		animator.startKeyframe(5);
-		ModelUtils.rotate(animator, neck, 16, 0, 0);
-		ModelUtils.rotate(animator, head, 14, 0, 0);
-		ModelUtils.rotate(animator, beakLower, -15, 0, 0);
+		ModelUtils.rotate(animator, neck, 30, 0, 0);
+		ModelUtils.rotate(animator, head, -40, 0, 0);
+		ModelUtils.rotate(animator, beakLower, 20, 0, 0);
 		animator.endKeyframe();
 		animator.resetKeyframe(10);
 	}
