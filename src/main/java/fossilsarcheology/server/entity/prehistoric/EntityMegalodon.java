@@ -212,6 +212,7 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
                     if (passenger instanceof EntityLivingBase) {
                         riddenByEntity.attackEntityFrom(DamageSource.causeMobDamage(this), Math.max(((EntityLivingBase) riddenByEntity).getMaxHealth(), 100));
                     }
+                    riddenByEntity.dismountRidingEntity();
                     this.onKillEntity((EntityLivingBase) riddenByEntity);
                 }
             }

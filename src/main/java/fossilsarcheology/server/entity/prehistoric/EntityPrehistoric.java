@@ -636,9 +636,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 this.flockObj.onUpdate();
             }
         }
-        if(this.getAttackTarget() != null){
-            System.out.println(isPreyBlocked(this.getAttackTarget()));
-        }
         if(this.getAttackTarget() != null && this.getAttackTarget() instanceof EntityToyBase && (isPreyBlocked(this.getAttackTarget()) || this.ticksTillPlay > 0)){
             this.setAttackTarget(null);
         }
