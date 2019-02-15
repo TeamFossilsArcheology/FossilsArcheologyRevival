@@ -52,6 +52,15 @@ public class FossilConfig {
     public boolean spawnNautilus = true;
     @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
     public int tarSlimeSpawnRate = 75;
+    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
+    public int nautilusSpawnRate = 6;
+    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
+    public int coelacanthSpawnRate = 4;
+    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
+    public int alligatorGarSpawnRate = 3;
+    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
+    public int sturgeonSpawnRate = 4;
+
     @ConfigEntry
     public boolean healingDinos = true;
     @ConfigEntry

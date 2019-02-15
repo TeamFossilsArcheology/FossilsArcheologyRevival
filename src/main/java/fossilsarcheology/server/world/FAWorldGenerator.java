@@ -173,7 +173,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 			}
 		}
 
-		if(Revival.CONFIG.spawnNautilus && BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) &&  random.nextInt(6) == 0){
+		if(Revival.CONFIG.spawnNautilus && BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) &&  random.nextInt(Math.max(Revival.CONFIG.nautilusSpawnRate, 1)) == 0){
 			for(int i = 0; i < 1 + random.nextInt(3); i++){
 				int ex = chunkX * 16 + random.nextInt(16);
 				int zee = chunkZ * 16 + random.nextInt(16);
@@ -185,7 +185,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				}
 			}
 		}
-		if(Revival.CONFIG.spawnCoelacanth && BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) &&  random.nextInt(4) == 0){
+		if(Revival.CONFIG.spawnCoelacanth && BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) &&  random.nextInt(Math.max(Revival.CONFIG.coelacanthSpawnRate, 1)) == 0){
 			for(int i = 0; i < 1 + random.nextInt(3); i++){
 				int ex = chunkX * 16 + random.nextInt(16);
 				int zee = chunkZ * 16 + random.nextInt(16);
@@ -197,7 +197,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				}
 			}
 		}
-		if(Revival.CONFIG.spawnAlligatorGar && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP) &&  random.nextInt(3) == 0){
+		if(Revival.CONFIG.spawnAlligatorGar && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP) &&  random.nextInt(Math.max(Revival.CONFIG.alligatorGarSpawnRate, 1)) == 0){
 			for(int i = 0; i < 1 + random.nextInt(3); i++){
 				int ex = chunkX * 16 + random.nextInt(16);
 				int zee = chunkZ * 16 + random.nextInt(16);
@@ -209,7 +209,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				}
 			}
 		}
-		if(Revival.CONFIG.spawnSturgeon && BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER) &&  random.nextInt(3) == 0){
+		if(Revival.CONFIG.spawnSturgeon && BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER) &&  random.nextInt(Math.max(Revival.CONFIG.sturgeonSpawnRate, 1)) == 0){
 			for(int i = 0; i < 1 + random.nextInt(3); i++){
 				int ex = chunkX * 16 + random.nextInt(16);
 				int zee = chunkZ * 16 + random.nextInt(16);
