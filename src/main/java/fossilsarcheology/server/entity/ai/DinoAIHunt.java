@@ -25,17 +25,18 @@ public class DinoAIHunt<T extends EntityLivingBase> extends EntityAINearestAttac
 			return false;
 		}
 		if (super.shouldExecute() && this.targetEntity != null && !this.targetEntity.getClass().equals(this.dino.getClass())) {
-			if (this.dino.width * dino.getTargetScale() >= this.targetEntity.width) {
+			if (this.dino.width * dino.getTargetScale() >= this.targetEntity.width || (dino.getMoodFace() == PrehistoricMoodType.ANGRY || dino.getMoodFace() == PrehistoricMoodType.SAD) && this.targetEntity instanceof EntityPlayer) {
 				if (this.taskOwner instanceof EntityPrehistoric && !((EntityPrehistoric) this.taskOwner).isMovementBlocked()) {
 					EntityPrehistoric prehistoric = (EntityPrehistoric) this.taskOwner;
 					if (targetEntity instanceof EntityPlayer && ((EntityPlayer) targetEntity).isCreative()) {
 						return false;
 					}
 					if (targetEntity instanceof EntityPlayer) {
+						System.out.println(targetEntity);
 						if (taskOwner.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
 							return false;
 						}
-						if (prehistoric.getMoodFace() == PrehistoricMoodType.ANGRY) {
+						if (prehistoric.getMoodFace() == PrehistoricMoodType.ANGRY || prehistoric.getMoodFace() == PrehistoricMoodType.SAD && !prehistoric.isOwner(targetEntity)) {
 							return true;
 						} else if (prehistoric.getMood() > 25 && prehistoric.getMoodFace() != PrehistoricMoodType.CALM) {
 							return false;
