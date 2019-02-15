@@ -21,6 +21,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -28,6 +29,7 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IShearable;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 
 public class EntityMammoth extends EntityPrehistoric implements IShearable {
@@ -68,6 +70,12 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
 		this.targetTasks.addTask(3, new DinoAIHurtByTarget(this));
 		this.targetTasks.addTask(4, new DinoAIHunt(this, EntityLivingBase.class, true, (Predicate<Entity>) entity -> entity instanceof EntityLivingBase));
 	}
+
+	@Nullable
+	protected ResourceLocation getLootTable() {
+		return PrehistoricEntityType.MAMMOTH_LOOT;
+	}
+
 
 	protected void entityInit(){
 		super.entityInit();

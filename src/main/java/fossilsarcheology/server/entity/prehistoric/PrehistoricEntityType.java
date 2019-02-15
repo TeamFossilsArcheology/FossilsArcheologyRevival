@@ -115,6 +115,7 @@ public enum PrehistoricEntityType {
 	public static final ResourceLocation DINOSAUR_LOOT = LootTableList.register(new ResourceLocation(Revival.MODID, "prehistoric/dinosaur"));
 	public static final ResourceLocation FISH_LOOT = LootTableList.register(new ResourceLocation(Revival.MODID, "prehistoric/fish"));
 	public static final ResourceLocation BONELESS_LOOT = LootTableList.register(new ResourceLocation(Revival.MODID, "prehistoric/dinosaur_boneless"));
+	public static final ResourceLocation MAMMOTH_LOOT = LootTableList.register(new ResourceLocation(Revival.MODID, "prehistoric/mammoth"));
 	public static final ResourceLocation NAUTILUS_LOOT = LootTableList.register(new ResourceLocation(Revival.MODID, "prehistoric/nautilus"));
 
     PrehistoricEntityType(Class<? extends Entity> entity, MobType mobType, TimePeriod period, Diet diet, int parameters, int primaryEggColor, int secondaryEggColor) {
