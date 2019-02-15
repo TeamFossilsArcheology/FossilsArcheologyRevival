@@ -6,6 +6,7 @@ import fossilsarcheology.server.ServerProxy;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.OrderType;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
+import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityTypeAI;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.item.FAItemRegistry;
 import io.netty.buffer.ByteBuf;
@@ -167,7 +168,7 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
                 if (entity instanceof EntityPrehistoric) {
                     EntityPrehistoric prehistoricEntity = (EntityPrehistoric) entity;
                     if (prehistoricEntity.type.isTameable() && player != null) {
-                        if (prehistoricEntity.type != PrehistoricEntityType.TYRANNOSAURUS && prehistoricEntity.type != PrehistoricEntityType.ALLOSAURUS && prehistoricEntity.type != PrehistoricEntityType.SARCOSUCHUS) {
+                        if (prehistoricEntity.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
                             prehistoricEntity.setTamed(true);
                             prehistoricEntity.setOwnerId(player.getUniqueID());
                             FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(player, FossilsPlayerProperties.class);
