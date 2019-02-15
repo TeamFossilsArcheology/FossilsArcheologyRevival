@@ -1162,6 +1162,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 return true;
             }
         }
+        if (dmg == DamageSource.IN_WALL && this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD) {
+            return false;
+        }
         if (this.getLastAttackedEntity() instanceof EntityPlayer) {
             if (this.getOwner() == this.getLastAttackedEntity()) {
                 this.setTamed(false);
