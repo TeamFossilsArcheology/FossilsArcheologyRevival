@@ -28,10 +28,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
+import org.lwjgl.Sys;
 
 public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditionalSpawnData {
     private static final DataParameter<Integer> HATCHING_INDEX = EntityDataManager.createKey(EntityDinosaurEgg.class, DataSerializers.VARINT);
@@ -135,19 +137,29 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
         this.tickHatching();
     }
 
+    public boolean isCold(){
+        Biome biome = this.world.getBiome(new BlockPos(this));
+        float light = world.getLightBrightness(new BlockPos(this));
+        float temperature = biome.getTemperature(new BlockPos(this));
+        if(temperature <= 0.15F){
+            return light < 0.75F;
+        }else{
+            return light < 0.5F;
+        }
+    }
+
+
     private void tickHatching() {
-        float brightness = this.getBrightness();
         EntityPlayer player = this.world.getClosestPlayerToEntity(this, 16.0D);
-        if ((double) brightness >= 0.5D && !this.inWater) {
-            lastBirthTick = this.getBirthTick();
-            this.setBirthTick(this.getBirthTick() + 1);
-        } else {
-            Biome biome = this.world.getBiome(new BlockPos(this));
-            float temperature = biome.getTemperature(new BlockPos(this));
-            if ((temperature <= 0.15F && brightness < 0.5) || this.inWater) {
+        if(isCold() || this.inWater){
+            if(this.getBirthTick() > 0){
                 this.setBirthTick(this.getBirthTick() - 1);
             }
+        }else{
+            lastBirthTick = this.getBirthTick();
+            this.setBirthTick(this.getBirthTick() + 1);
         }
+
         if (this.getBirthTick() >= this.totalHatchTime) {
 
             Entity entity = this.selfType.invokeClass(this.world);

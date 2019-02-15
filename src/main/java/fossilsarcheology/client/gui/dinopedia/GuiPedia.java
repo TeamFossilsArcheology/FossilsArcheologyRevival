@@ -492,7 +492,7 @@ public class GuiPedia extends GuiScreen {
             GlStateManager.popMatrix();
             {
                 int time = (int) Math.floor(((float) egg.getBirthTick() / (float) egg.totalHatchTime * 100.0F));
-                String s1 = I18n.format("pedia.egg.time") + " " + time + "%";
+                String s1 = I18n.format("pedia.egg.time") + " " + Math.max(time, 0) + "%";
                 printStringXY(s1, wordLength / 2, 120, 157, 126, 103);
             }
             {
@@ -500,7 +500,7 @@ public class GuiPedia extends GuiScreen {
                 if (egg.isInWater()) {
                     s1 = I18n.format("pedia.egg.status" + " " + ChatFormatting.AQUA + I18n.format("pedia.egg.status.wet"));
                 } else {
-                    if ((egg.getBirthTick() >= 0 && egg.getBirthTick() > EntityDinosaurEgg.lastBirthTick) || egg.getBirthTick() >= 100) {
+                    if (!egg.isCold()) {
                         s1 = I18n.format("pedia.egg.status") + " " + ChatFormatting.GOLD + I18n.format("pedia.egg.status.warm");
                     } else {
                         s1 = I18n.format("pedia.egg.status") + " " + ChatFormatting.BLUE + I18n.format("pedia.egg.status.cold");
