@@ -56,7 +56,9 @@ public class PalmSaplingBlock extends BlockBush implements DefaultRenderedItem, 
 		if (state.getValue(STAGE) == 0) {
 			world.setBlockState(pos, state.cycleProperty(STAGE), 4);
 		} else {
-			this.generateTree(world, pos, rand);
+			if(WorldGenPalm.canGenTree(world, pos)){
+				this.generateTree(world, pos, rand);
+			}
 		}
 	}
 
