@@ -39,7 +39,7 @@ public class DinoAIHunt<T extends EntityLivingBase> extends EntityAINearestAttac
 							return true;
 						} else if (prehistoric.getMood() > 25 && prehistoric.getMoodFace() != PrehistoricMoodType.CALM) {
 							return false;
-						} else if (prehistoric.getMoodFace() == PrehistoricMoodType.CALM) {
+						} else {
 							return !prehistoric.isOwner(targetEntity) && prehistoric.canDinoHunt(targetEntity, true);
 						}
 					}
