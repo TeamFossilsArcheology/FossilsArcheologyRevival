@@ -73,7 +73,6 @@ public class WorldGenPalm extends WorldGenerator {
 	public static boolean canGenTree(World world, BlockPos pos){
 		for (int y = 0; y <= 10; y++) {
 			if(!isReplaceable(world, pos.up(y))){
-				System.out.println(	world.getBlockState(pos.up(y)));
 				return false;
 			}
 		}
@@ -85,12 +84,6 @@ public class WorldGenPalm extends WorldGenerator {
 	}
 
 	public void setBlockState(World world, BlockPos pos, IBlockState state){
-		if(keepGenerating){
-			if(isReplaceable(world, pos)){
-				world.setBlockState(pos, state);
-			}else{
-				keepGenerating = false;
-			}
-		}
+		world.setBlockState(pos, state);
 	}
 }

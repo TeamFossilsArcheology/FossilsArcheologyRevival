@@ -28,10 +28,7 @@ public class DinoAIEatBlocks extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if(entity.shouldWander){
-            return false;
-        }
-        if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
+        if (this.entity.getHunger() >= this.entity.getMaxHunger()) {
             return false;
         }
         if (this.entity.isMovementBlocked()) {
