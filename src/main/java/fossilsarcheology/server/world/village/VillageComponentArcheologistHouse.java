@@ -1,7 +1,5 @@
 package fossilsarcheology.server.world.village;
-import net.minecraft.block.BlockFurnace;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -40,14 +38,7 @@ public class VillageComponentArcheologistHouse extends StructureVillagePieces.Vi
             }
             this.boundingBox.offset(0, this.averageGroundLevel - this.boundingBox.maxY + 4, 0);
         }
-        /*for(int i = this.boundingBox.minX; i < this.boundingBox.maxX; i++){
-            for(int j = this.boundingBox.minZ; j < this.boundingBox.maxZ; j++){
-                world.setBlockState(new BlockPos(i, this.getYWithOffset(0) + 16, j), Blocks.GLOWSTONE.getDefaultState());
-            }
-        }*/
         BlockPos blockpos = new BlockPos(this.getXWithOffset(11, -1), this.getYWithOffset(0), this.getZWithOffset(11, -1));
-        //world.setBlockState(blockpos.up(16), Blocks.MAGMA.getDefaultState());
-        //world.setBlockState(blockpos.up(17), Blocks.FURNACE.getDefaultState().withProperty(BlockFurnace.FACING, this.getCoordBaseMode().getOpposite()));
         EnumFacing facing = this.getCoordBaseMode().getOpposite();
         BlockPos genPos = blockpos.up();
         if(facing == EnumFacing.SOUTH){
