@@ -124,7 +124,7 @@ public class AnalyzerRecipes {
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.RELIC_SCRAP), new ItemStack(FAItemRegistry.STONE_TABLET), 30));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.RELIC_SCRAP), new ItemStack(Items.FLINT), 18));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.RELIC_SCRAP), new ItemStack(FAItemRegistry.POTTERY_SHARD), 4));
-        for(int i = 0; i < 5; i++) {
+        for(int i = 0; i <= 5; i++) {
             list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.RELIC_SCRAP), new ItemStack(FABlockRegistry.FIGURINE, 1, 10 + i), 1));
             list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.RELIC_SCRAP), new ItemStack(FABlockRegistry.FIGURINE, 1, 5 + i), 1));
         }

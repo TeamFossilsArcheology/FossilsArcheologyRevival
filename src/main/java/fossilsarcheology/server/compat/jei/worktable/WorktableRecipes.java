@@ -32,7 +32,9 @@ public class WorktableRecipes {
         list.add(new RecipeWorktable(new ItemStack(FABlockRegistry.KYLIX_VASE, 1, 0), new ItemStack(FABlockRegistry.KYLIX_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD)));
         list.add(new RecipeWorktable(new ItemStack(FABlockRegistry.VOLUTE_VASE, 1, 0), new ItemStack(FABlockRegistry.VOLUTE_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD)));
         list.add(new RecipeWorktable(new ItemStack(FABlockRegistry.AMPHORA_VASE, 1, 0), new ItemStack(FABlockRegistry.AMPHORA_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD)));
-
+        for(int i = 5; i <= 14; i++){
+            list.add(new RecipeWorktable(new ItemStack(FABlockRegistry.FIGURINE, 1, i), new ItemStack(FABlockRegistry.FIGURINE, 1, i - 5), new ItemStack(FAItemRegistry.POTTERY_SHARD)));
+        }
         return list;
     }
 

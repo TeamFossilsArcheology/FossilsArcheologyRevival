@@ -1,6 +1,7 @@
 package fossilsarcheology.server.block.entity;
 
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.block.FigurineBlock;
 import fossilsarcheology.server.block.VaseBlock;
 import fossilsarcheology.server.block.WorktableBlock;
 import fossilsarcheology.server.item.FAItemRegistry;
@@ -327,6 +328,12 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
             return output;
         }
 
+        if (itemstack.getItem() == new ItemStack(FABlockRegistry.FIGURINE).getItem() &&  itemstack.getItemDamage() < 15 && itemstack.getItemDamage() >= 5) {
+            int metadata = itemstack.getItemDamage();
+            output = new ItemStack(FABlockRegistry.FIGURINE, 1, metadata - 5);
+            return output;
+        }
+
         return null;
     }
 
@@ -370,7 +377,7 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
             return 0;
         } else {
             Item var2 = itemstack.getItem();
-            if(this.stacks.get(0).getItem() instanceof VaseBlock.VaseItemBlock){
+            if(this.stacks.get(0).getItem() instanceof VaseBlock.VaseItemBlock || this.stacks.get(0).getItem() == Item.getItemFromBlock(FABlockRegistry.FIGURINE)){
                 return var2 == FAItemRegistry.POTTERY_SHARD ? 300 : 0;
             }
             return var2 == FAItemRegistry.RELIC_SCRAP ? 300 : 0;
