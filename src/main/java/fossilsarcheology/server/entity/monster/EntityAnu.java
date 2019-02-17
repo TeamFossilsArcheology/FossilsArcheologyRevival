@@ -31,6 +31,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -353,7 +354,9 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
                 this.spawnMobs(new EntitySentryPigman(world));
             }
             if (spawnWitherChoice == 0) {
-                this.spawnMobs(new EntityWitherSkeleton(world));
+                EntityWitherSkeleton skeleton = new EntityWitherSkeleton(world);
+                skeleton.setItemStackToSlot(EntityEquipmentSlot.MAINHAND, new ItemStack(Items.BOW));
+                this.spawnMobs(skeleton);
                 EntityPlayer player = this.world.getClosestPlayerToEntity(this, 50);
                 if (player != null && world.isRemote) {
 
