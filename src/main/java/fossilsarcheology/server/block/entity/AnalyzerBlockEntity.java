@@ -198,7 +198,7 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 
 	public static boolean isAnalyzable(ItemStack stack){
 		Item item = stack.getItem();
-		return PrehistoricEntityType.isFoodItem(item) || (item instanceof DinosaurBoneItem) || (item == FAItemRegistry.BIOFOSSIL) || (item == FAItemRegistry.TAR_FOSSIL)
+		return PrehistoricEntityType.getDNA(item) != null || (item instanceof DinosaurBoneItem) || (item == FAItemRegistry.BIOFOSSIL) || (item == FAItemRegistry.TAR_FOSSIL)
 				|| (item == FAItemRegistry.TARDROP) || (item == FAItemRegistry.FAILURESAURUS_FLESH) || (item == FAItemRegistry.RELIC_SCRAP) ||
 				(item == Items.PORKCHOP) || (item == Items.BEEF) || (item == Items.EGG) || (item == Items.CHICKEN)
 				|| (item == Item.getItemFromBlock(Blocks.WOOL)) || (item == FAItemRegistry.ICED_MEAT) ||  (item == Items.LEATHER)
@@ -289,8 +289,10 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 				}
 			} else if (PrehistoricEntityType.getDNA(rawItem) != null) {
 				output = new ItemStack(PrehistoricEntityType.getDNA(rawItem), 1);
+			} else if (rawItem == FAItemRegistry.SHELL) {
+				output = new ItemStack(PrehistoricEntityType.NAUTILUS.dnaItem, 1);
 			} else if (rawItem == Items.PORKCHOP) {
-				output = new ItemStack(PrehistoricEntityType.PIG.dnaItem, 2);
+				output = new ItemStack(PrehistoricEntityType.PIG.dnaItem, 1);
 			} else if (rawItem == Items.FISH) {
 				if(random.nextInt(9) == 0) {
 					output = new ItemStack(PrehistoricEntityType.POLARBEAR.dnaItem, 1);
