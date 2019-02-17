@@ -28,7 +28,7 @@ public class EntityElasmotherium extends EntityPrehistoric {
 		teenAge = 4;
 		developsResistance = true;
 		breaksBlocks = true;
-		hasBabyTexture = false;
+		hasBabyTexture = true;
 		this.ridingY = 1.45F;
 	}
 
