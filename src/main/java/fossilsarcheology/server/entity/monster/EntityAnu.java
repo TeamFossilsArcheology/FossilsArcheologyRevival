@@ -30,10 +30,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.SoundEvent;
+import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -45,6 +42,8 @@ import net.minecraft.world.BossInfo;
 import net.minecraft.world.BossInfoServer;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
@@ -206,22 +205,13 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
     @Override
     public void onDeath(DamageSource dmg) {
-        if (dmg.getImmediateSource() instanceof EntityArrow || dmg.getTrueSource() instanceof EntityPlayer) {
-            EntityPlayer entityplayer = (EntityPlayer) dmg.getTrueSource();
-            onKillEntity(entityplayer);
 
-            double d0 = entityplayer.posX - this.posX;
-            double d1 = entityplayer.posZ - this.posZ;
-
-            if (d0 * d0 + d1 * d1 >= 2500.0D) {
-                //entityplayer.addStat(FossilAchievements.ANU_DEAD);
-            }
-        }
         EntityAnuDead entity = new EntityAnuDead(this.world);
         if (!this.world.isRemote) {
             entity.setLocationAndAngles(this.posX + this.getRNG().nextInt(4), this.posY, this.posZ + this.getRNG().nextInt(4), this.rotationYaw, this.rotationPitch);
             this.world.spawnEntity(entity);
         }
+        unlockDimensionAbilities();
         entity.setHealth(0F);
         EntityPlayer player = this.world.getClosestPlayerToEntity(this, 50);
         if (player != null && world.isRemote) {
@@ -551,12 +541,15 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
     }
 
-    @Override
-    public void onKillEntity(EntityLivingBase entity) {
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
-            FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(player, FossilsPlayerProperties.class);
-            properties.killedAnu = true;
+    public void unlockDimensionAbilities(){
+        List<EntityPlayer> players = this.world.getPlayers(EntityPlayer.class, EntitySelectors.NOT_SPECTATING);
+        for(EntityPlayer player : players){
+            if(player.dimension == this.dimension){
+                FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(player, FossilsPlayerProperties.class);
+                if(properties != null){
+                    properties.killedAnu = true;
+                }
+            }
         }
     }
 
