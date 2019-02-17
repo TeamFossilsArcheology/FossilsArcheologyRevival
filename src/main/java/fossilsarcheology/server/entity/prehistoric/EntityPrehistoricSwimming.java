@@ -64,6 +64,10 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
         return this.timeInWater == 0 && timeOnLand > MAX_TIME_ON_LAND;
     }
 
+    protected double getStrongAttackPower(){
+        return this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() * 2;
+    }
+
 
     @Override
     protected void applyEntityAttributes() {

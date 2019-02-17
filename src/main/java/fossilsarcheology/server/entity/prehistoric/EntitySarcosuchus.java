@@ -18,6 +18,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
@@ -42,8 +43,8 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming implements ISca
 	}
 
 	public void initEntityAI() {
-		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
-		this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
+		this.tasks.addTask(0, new DinoMeleeAttackAI(this, 1.0D, false));
+		this.tasks.addTask(1, new DinoAIFindWaterTarget(this, 10, true));
 		this.tasks.addTask(1, new DinoAIGetInWater(this, 1.0D));
 		this.tasks.addTask(1, new DinoAILeaveWater(this, 1.0D));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
@@ -199,6 +200,10 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming implements ISca
 		return false;
 	}
 
+	public AxisAlignedBB getAttackBounds() {
+		float size = this.getRenderSizeModifier() * 0.25F;
+		return this.getEntityBoundingBox().grow(3.0F + size, 3.0F + size, 3.0F + size);
+	}
 
 	@Override
 	public int getAttackLength() {

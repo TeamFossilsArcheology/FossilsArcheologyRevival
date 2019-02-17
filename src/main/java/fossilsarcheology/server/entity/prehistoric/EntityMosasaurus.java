@@ -186,7 +186,7 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
 					return;
 				} else {
 					if (passenger instanceof EntityLivingBase) {
-						riddenByEntity.attackEntityFrom(DamageSource.causeMobDamage(this), Math.max(((EntityLivingBase) riddenByEntity).getMaxHealth(), 100));
+						riddenByEntity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getStrongAttackPower());
 					}
 					this.onKillEntity((EntityLivingBase) riddenByEntity);
 				}

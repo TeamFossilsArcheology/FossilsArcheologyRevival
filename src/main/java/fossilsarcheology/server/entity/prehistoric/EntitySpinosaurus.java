@@ -190,7 +190,7 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming implements ISca
 					return;
 				} else {
 					if (passenger instanceof EntityLivingBase) {
-						riddenByEntity.attackEntityFrom(DamageSource.causeMobDamage(this), Math.max(((EntityLivingBase) riddenByEntity).getMaxHealth(), 100));
+						riddenByEntity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getStrongAttackPower());
 						riddenByEntity.dismountRidingEntity();
 						riddenByEntity.setPosition(posX, posY, posZ);
 					}
