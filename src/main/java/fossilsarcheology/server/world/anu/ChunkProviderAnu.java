@@ -167,12 +167,12 @@ public class ChunkProviderAnu implements IChunkGenerator {
         float f1 = (float) (p_185960_2_ * 2 + p_185960_4_);
         float f2 = 100.0F - MathHelper.sqrt(f * f + f1 * f1) * 8.0F;
 
-        if (f2 > 80.0F) {
-            f2 = 80.0F;
+        if (f2 > 200.0F) {
+            f2 = 200.0F;
         }
 
-        if (f2 < -100.0F) {
-            f2 = -100.0F;
+        if (f2 < -400.0F) {
+            f2 = -400.0F;
         }
 
         for (int i = -12; i <= 12; ++i) {

@@ -17,8 +17,8 @@ public class FADimensionBiome extends Biome {
 		this.spawnableCaveCreatureList.clear();
 
 		if (anu) {
-			this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityPigZombie.class, 200, 1, 8));
-			this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySentryPigman.class, 400, 2, 5));
+			this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityPigZombie.class, 200, 1, 8));
+			this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySentryPigman.class, 600, 2, 8));
 		}
 	}
 }
