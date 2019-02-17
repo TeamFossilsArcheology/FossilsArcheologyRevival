@@ -14,6 +14,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -86,7 +87,7 @@ public class AncientChestBlock extends BlockContainer implements DefaultRendered
 						}
 
 						if (player.getHeldItem(hand).getCount() <= 0) {
-							player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
+							player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
 						}
 
 					}

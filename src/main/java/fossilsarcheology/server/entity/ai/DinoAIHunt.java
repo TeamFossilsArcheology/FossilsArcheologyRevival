@@ -32,7 +32,6 @@ public class DinoAIHunt<T extends EntityLivingBase> extends EntityAINearestAttac
 						return false;
 					}
 					if (targetEntity instanceof EntityPlayer) {
-						System.out.println(targetEntity);
 						if (taskOwner.world.getDifficulty() == EnumDifficulty.PEACEFUL) {
 							return false;
 						}
