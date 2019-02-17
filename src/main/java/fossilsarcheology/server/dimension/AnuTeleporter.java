@@ -2,6 +2,7 @@ package fossilsarcheology.server.dimension;
 
 import fossilsarcheology.Revival;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
@@ -46,8 +47,14 @@ public class AnuTeleporter extends Teleporter {
 				}
 			}
 		}else if(worldServerInstance.provider.getDimension() == 0){
-			BlockPos height = worldServerInstance.getHeight(entity.getPosition());
-			entity.setLocationAndAngles(height.getX() + 0.5D, height.getY() + 4.5D, height.getZ() + 0.5D, entity.rotationYaw, 0.0F);
+			if(entity instanceof EntityPlayer && ((EntityPlayer) entity).getBedLocation() != null){
+				BlockPos bedPos = ((EntityPlayer) entity).getBedLocation();
+				entity.setLocationAndAngles(bedPos.getX() + 0.5D, bedPos.getY() + 1.5D, bedPos.getZ() + 0.5D, 0.0F, 0.0F);
+
+			}else{
+				BlockPos height = worldServerInstance.getHeight(entity.getPosition());
+				entity.setLocationAndAngles(height.getX() + 0.5D, Math.max(height.getY(), 64) + 0.5D, height.getZ() + 0.5D, entity.rotationYaw, 0.0F);
+			}
 
 		}
 		entity.motionX = entity.motionY = entity.motionZ = 0.0D;
