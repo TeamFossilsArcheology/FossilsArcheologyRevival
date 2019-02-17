@@ -928,7 +928,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 block != net.minecraft.init.Blocks.REPEATING_COMMAND_BLOCK &&
                 block != net.minecraft.init.Blocks.CHAIN_COMMAND_BLOCK &&
                 block != net.minecraft.init.Blocks.IRON_BARS &&
-                block != net.minecraft.init.Blocks.END_GATEWAY || block == Blocks.WATERLILY;
+                block != net.minecraft.init.Blocks.END_GATEWAY
+                || block == Blocks.WATERLILY;
     }
 
 
