@@ -76,7 +76,6 @@ public class Revival {
 		LOGGER.info("Not a single one of your fathers died young");
 		LOGGER.info("The handy travelers out of Africa");
 		LOGGER.info("Little Lucy of the Afar");
-		LOGGER.info("Cheese Touch");
 
 	}
 
