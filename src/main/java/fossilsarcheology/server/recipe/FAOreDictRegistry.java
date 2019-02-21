@@ -85,7 +85,7 @@ public class FAOreDictRegistry {
 
         for (PrehistoricEntityType prehistoric : PrehistoricEntityType.values()) {
             if (prehistoric.eggItem != null) {
-                OreDictionary.registerOre("listAllEgg", prehistoric.eggItem);
+                OreDictionary.registerOre("listAllegg", prehistoric.eggItem);
                 OreDictionary.registerOre("objectEgg", prehistoric.eggItem);
                 OreDictionary.registerOre("bakingEgg", prehistoric.eggItem);
                 OreDictionary.registerOre("egg", prehistoric.eggItem);
@@ -97,13 +97,13 @@ public class FAOreDictRegistry {
                 }
             }
             if (prehistoric.foodItem != null) {
-                OreDictionary.registerOre("listAllMeatRaw", prehistoric.foodItem);
+                OreDictionary.registerOre("listAllmeatraw", prehistoric.foodItem);
             }
             if (prehistoric.cookedFoodItem != null) {
-                OreDictionary.registerOre("listAllMeatCooked", prehistoric.cookedFoodItem);
+                OreDictionary.registerOre("listAllmeatcooked", prehistoric.cookedFoodItem);
             }
         }
-        OreDictionary.registerOre("foodCalamariRaw", PrehistoricEntityType.NAUTILUS.fishItem);
-        OreDictionary.registerOre("foodCalamariCooked", FAItemRegistry.SJL);
+        OreDictionary.registerOre("foodCalamariraw", PrehistoricEntityType.NAUTILUS.fishItem);
+        OreDictionary.registerOre("foodCalamaricooked", FAItemRegistry.SJL);
     }
 }
