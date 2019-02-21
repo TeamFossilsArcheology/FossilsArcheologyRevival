@@ -59,6 +59,7 @@ import net.minecraftforge.fluids.IFluidBlock;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.Sys;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -504,8 +505,18 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
     }
 
+    public boolean canWakeUp() {
+        if(this.aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURINAL){
+            return this.isDaytime();
+        }else if(this.aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL){
+            return !this.isDaytime() || this.world.canSeeSky(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.posY + 1), MathHelper.floor(this.posZ)));
+        }else{
+            return false;
+        }
+    }
+
     public boolean isDaytime() {
-        return this.world.getWorldTime() < 13000 || this.world.getWorldTime() > 23000;
+        return this.world.isDaytime();
     }
 
     @Override
@@ -605,11 +616,11 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setSitting(false);
             ticksSitted = 0;
         }
-        if (this.wantsToSleep() && this.getRNG().nextInt(this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH ? 700 : 100) == 1 && !this.isSleeping()){
+        if (!this.world.isRemote && this.wantsToSleep() && this.getRNG().nextInt(this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH ? 700 : 100) == 1 && !this.isSleeping()){
             this.setSitting(false);
             this.setSleeping(true);
         }
-        if (!this.world.isRemote && (!this.wantsToSleep() || !this.canSleep())){
+        if (!this.world.isRemote && (!this.wantsToSleep() || !this.canSleep() || canWakeUp() && this.aiActivityType() != PrehistoricEntityTypeAI.Activity.BOTH)){
             this.setSitting(false);
             this.setSleeping(false);
         }
