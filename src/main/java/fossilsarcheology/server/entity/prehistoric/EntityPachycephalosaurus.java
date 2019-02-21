@@ -23,7 +23,7 @@ public class EntityPachycephalosaurus extends EntityPrehistoric {
 		this.setActualSize(1.0F, 1.5F);
 		this.nearByMobsAllowed = 4;
 		minSize = 0.3F;
-		maxSize = 1.1F;
+		maxSize = 1.3F;
 		teenAge = 4;
 		developsResistance = true;
 		breaksBlocks = false;
