@@ -320,7 +320,7 @@ public class ModelVelociraptor extends ModelPrehistoric {
 			sitAnimationRotationPrev(upperBody, sitProgress, 0.19338248112097173F, 0.22759093446006054F, 0.0F);
 			sitAnimationRotationPrev(leftUpperArm, sitProgress, 1.3203415791337103F, -0.22759093446006054F, 0.4553564018453205F);
 			sitAnimationRotationPrev(rightUpperArm, sitProgress, 1.1383037381507017F, 0.22759093446006054F, -0.4553564018453205F);
-			sitAnimationRotationPrev(head, sitProgress, 1.8668041679331349F, 0.0F, 0.045553093477052F);
+			sitAnimationRotationPrev(head, sitProgress, 1.6668041679331349F, 0.0F, 0.045553093477052F);
 			sitAnimationRotationPrev(tail2, sitProgress, 0.03490658503988659F, -0.36425021489121656F, 0.0F);
 			sitAnimationRotationPrev(leftLeg, sitProgress, 0.136659280431156F, -0.0F, 0.0F);
 			sitAnimationRotationPrev(lowerJaw, sitProgress, -0.22759093446006054F, 0.0F, 0.0F);
