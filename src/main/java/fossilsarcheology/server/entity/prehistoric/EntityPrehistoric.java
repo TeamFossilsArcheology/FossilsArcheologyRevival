@@ -553,7 +553,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             }
             this.doPlayBonus(15);
         }
-        if (ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
+        if (Revival.CONFIG.dinosaurBreeding && ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
             this.mate();
         }
         if (!this.arePlantsNearby(16) && !mood_noplants) {
