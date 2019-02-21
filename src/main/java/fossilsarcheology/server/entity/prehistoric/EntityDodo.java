@@ -21,12 +21,11 @@ public class EntityDodo extends EntityPrehistoric {
 
 	public EntityDodo(World world) {
 		super(world, PrehistoricEntityType.DODO, 1, 1, 4, 10, 0.15, 0.25, 0, 0);
-		this.teenAge = 3;
 		this.setActualSize(0.8F, 0.7F);
 		this.nearByMobsAllowed = 10;
 		minSize = 0.4F;
 		maxSize = 0.9F;
-		teenAge = 2;
+		teenAge = 3;
 		developsResistance = false;
 		breaksBlocks = false;
 		hasTeenTexture = false;
