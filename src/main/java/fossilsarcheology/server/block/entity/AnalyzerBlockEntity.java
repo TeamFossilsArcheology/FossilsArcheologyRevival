@@ -424,20 +424,12 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 					if (!stack.isEmpty()) {
 						if (stack.isItemEqual(output) && stack.getCount() + output.getCount() < 64) {
 							stack.setCount(stack.getCount() + output.getCount());
-							if (this.stacks.get(this.rawIndex).getCount() > 1) {
-								this.stacks.get(this.rawIndex).shrink(1);
-							} else {
-								this.stacks.set(this.rawIndex, ItemStack.EMPTY);
-							}
+							this.stacks.get(this.rawIndex).shrink(1);
 							break;
 						}
 					} else {
 						this.stacks.set(slot, output);
-						if (this.stacks.get(this.rawIndex).getCount() > 1) {
-							this.stacks.get(this.rawIndex).shrink(1);
-						} else {
-							this.stacks.set(this.rawIndex, ItemStack.EMPTY);
-						}
+						this.stacks.get(this.rawIndex).shrink(1);
 						break;
 					}
 				}
