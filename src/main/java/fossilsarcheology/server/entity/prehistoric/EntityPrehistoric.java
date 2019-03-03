@@ -1968,4 +1968,35 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
         }
     }
+
+    @SideOnly(Side.CLIENT)
+    public void handleStatusUpdate(byte id) {
+        if (id == 45) {
+            spawnItemParticle(Items.REEDS);
+            spawnItemParticle(Items.REEDS);
+            spawnItemParticle(Items.REEDS);
+        } else if (id == 46) {
+            spawnItemParticle(Items.BREAD);
+            spawnItemParticle(Items.BREAD);
+            spawnItemParticle(Items.BREAD);
+        } else if (id == 47) {
+            spawnItemParticle(Items.BEEF);
+            spawnItemParticle(Items.BEEF);
+            spawnItemParticle(Items.BEEF);
+        } else {
+            super.handleStatusUpdate(id);
+        }
+    }
+
+    public void spawnItemParticle(Item item) {
+        Random rand = new Random();
+        double motionX = rand.nextGaussian() * 0.07D;
+        double motionY = rand.nextGaussian() * 0.07D;
+        double motionZ = rand.nextGaussian() * 0.07D;
+        float f = (float) (rand.nextFloat() * (this.getEntityBoundingBox().maxX - this.getEntityBoundingBox().minX) + this.getEntityBoundingBox().minX);
+        float f1 = (float) (rand.nextFloat() * (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) + this.getEntityBoundingBox().minY);
+        float f2 = (float) (rand.nextFloat() * (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) + this.getEntityBoundingBox().minZ);
+        this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, f, f1, f2, motionX, motionY, motionZ, Item.getIdFromItem(item));
+    }
+
 }

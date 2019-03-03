@@ -218,10 +218,12 @@ public class TileEntityFeeder extends TileEntity implements IInventory, ISidedIn
         if (!this.isEmpty(mob.type)) {
             if (mob.type.diet == Diet.CARNIVORE || mob.type.diet == Diet.CARNIVORE_EGG || mob.type.diet == Diet.PISCCARNIVORE || mob.type.diet == Diet.PISCIVORE || mob.type.diet == Diet.INSECTIVORE) {
                 this.meat--;
+                this.world.setEntityState(mob, (byte) 47);
                 feedamount++;
             }
             if (mob.type.diet == Diet.HERBIVORE) {
                 this.plant--;
+                this.world.setEntityState(mob, (byte) 45);
                 feedamount++;
             }
             if (mob.type.diet == Diet.OMNIVORE) {
