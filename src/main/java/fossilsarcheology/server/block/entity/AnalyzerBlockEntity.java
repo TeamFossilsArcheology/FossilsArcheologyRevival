@@ -6,6 +6,7 @@ import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.entity.prehistoric.TimePeriod;
 import fossilsarcheology.server.item.DinosaurBoneItem;
 import fossilsarcheology.server.item.FAItemRegistry;
+import fossilsarcheology.server.item.FossilSeedsItem;
 import fossilsarcheology.server.item.variant.DinosaurBoneType;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -269,8 +270,8 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 					output = new ItemStack(Items.DYE, 1, 2);
 				}
 				if (rand > 85) {
-					int meta = random.nextInt(15);
-					if(meta != 15){
+					int meta = random.nextInt(FossilSeedsItem.fossilSeeds.length + 1);
+					if(meta != FossilSeedsItem.fossilSeeds.length + 1){
 						output = new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, meta);
 					}else{
 						output = new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN, 1);

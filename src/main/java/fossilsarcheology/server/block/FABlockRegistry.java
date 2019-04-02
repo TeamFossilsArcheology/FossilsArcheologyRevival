@@ -180,6 +180,8 @@ public class FABlockRegistry {
 	public static final ShortFlowerBlock FLORISSANTIA_FLOWER = new ShortFlowerBlock("florissantia");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":ependra")
 	public static final ShortFlowerBlock EPENDRA_FLOWER = new ShortFlowerBlock("ependra");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":duisbergia")
+	public static final TallFlowerBlock DUISBERGIA_FLOWER = new TallFlowerBlock("duisbergia");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":fake_obsidian")
 	public static final FakeObsidianBlock FAKE_OBSIDIAN = new FakeObsidianBlock();
 

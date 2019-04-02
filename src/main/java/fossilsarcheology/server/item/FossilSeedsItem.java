@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class FossilSeedsItem extends Item {
-	public static final String[] fossilSeeds = new String[]{"dillhoffia", "sarracina", "cephalotaxus", "licopodiophyta", "paleopanax", "zamites", "bennettitales", "welwitschia", "horsetail", "tempskya", "vaccinium", "osmunda", "crataegus", "florissantia", "ephedra"};
+	public static final String[] fossilSeeds = new String[]{"dillhoffia", "sarracina", "cephalotaxus", "licopodiophyta", "paleopanax", "zamites", "bennettitales", "welwitschia", "horsetail", "tempskya", "vaccinium", "osmunda", "crataegus", "florissantia", "ephedra", "duisbergia"};
 	public final boolean isFossil;
 
 	public FossilSeedsItem(boolean isFossil) {
@@ -113,6 +113,10 @@ public class FossilSeedsItem extends Item {
 				return true;
 			case 14:
 				world.setBlockState(new BlockPos(x, y + 1, z), FABlockRegistry.EPENDRA_FLOWER.getDefaultState());
+				return true;
+			case 15:
+				world.setBlockState(new BlockPos(x, y + 1, z), FABlockRegistry.DUISBERGIA_FLOWER.getDefaultState());
+				world.setBlockState(new BlockPos(x, y + 2, z), FABlockRegistry.DUISBERGIA_FLOWER.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.UPPER));
 				return true;
 		}
 		return false;
