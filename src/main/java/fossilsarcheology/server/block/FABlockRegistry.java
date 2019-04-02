@@ -106,18 +106,18 @@ public class FABlockRegistry {
 	@GameRegistry.ObjectHolder(Revival.MODID + ":obsidian_spikes")
 	public static final ObsidianSpikesBlock OBSIDIAN_SPIKES = new ObsidianSpikesBlock();
 
-	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_log")
-	public static final PalmLogBlock PALM_LOG = new PalmLogBlock();
-	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_leaves")
-	public static final PalmLeavesBlock PALM_LEAVES = new PalmLeavesBlock();
 	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_sapling")
-	public static final PalmSaplingBlock PALM_SAPLING = new PalmSaplingBlock();
+	public static final FossilSaplingBlock PALM_SAPLING = new FossilSaplingBlock("palm_sapling");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_log")
+	public static final FossilLogBlock PALM_LOG = new FossilLogBlock("palm_log");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_leaves")
+	public static final FossilLeavesBlock PALM_LEAVES = new FossilLeavesBlock("palm_leaves", PALM_SAPLING);
 	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_planks")
-	public static final PalmPlanksBlock PALM_PLANKS = new PalmPlanksBlock();
+	public static final FossilPlanksBlock PALM_PLANKS = new FossilPlanksBlock("palm_planks");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_planks_double_slab")
-	public static final FossilSlabBlock PALM_PLANKS_DOUBLESLAB = new PalmPlanksSlabBlock.Double("palm_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
+	public static final FossilSlabBlock PALM_PLANKS_DOUBLESLAB = new FossilPlanksSlabBlock.Double(PALM_PLANKS, "palm_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
 	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_planks_slab")
-	public static final FossilSlabBlock PALM_PLANKS_SINGLESLAB = new PalmPlanksSlabBlock.Half("palm_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
+	public static final FossilSlabBlock PALM_PLANKS_SINGLESLAB = new FossilPlanksSlabBlock.Half(PALM_PLANKS, "palm_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
 	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_planks_stairs")
 	public static final FossilStairsBlock PALM_PLANKS_STAIRS = new FossilStairsBlock(PALM_PLANKS.getDefaultState(), "palm_stairs");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_fence")
@@ -128,6 +128,28 @@ public class FABlockRegistry {
 	public static final FossilDoorBlock PALM_DOOR = new FossilDoorBlock(PALM_PLANKS.getDefaultState(), "palm_door");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_trapdoor")
 	public static final FossilTrapdoorBlock PALM_TRAPDOOR = new FossilTrapdoorBlock(PALM_PLANKS.getDefaultState(), "palm_trapdoor");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_sapling")
+	public static final FossilSaplingBlock CALAMITES_SAPLING = new FossilSaplingBlock("calamites_sapling");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_log")
+	public static final FossilLogBlock CALAMITES_LOG = new FossilLogBlock("calamites_log");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_leaves")
+	public static final FossilLeavesBlock CALAMITES_LEAVES = new FossilLeavesBlock("calamites_leaves", CALAMITES_SAPLING);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_planks")
+	public static final FossilPlanksBlock CALAMITES_PLANKS = new FossilPlanksBlock("calamites_planks");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_planks_double_slab")
+	public static final FossilSlabBlock CALAMITES_PLANKS_DOUBLESLAB = new FossilPlanksSlabBlock.Double(CALAMITES_PLANKS, "calamites_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_planks_slab")
+	public static final FossilSlabBlock CALAMITES_PLANKS_SINGLESLAB = new FossilPlanksSlabBlock.Half(CALAMITES_PLANKS, "calamites_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_planks_stairs")
+	public static final FossilStairsBlock CALAMITES_PLANKS_STAIRS = new FossilStairsBlock(CALAMITES_PLANKS.getDefaultState(), "calamites_stairs");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_fence")
+	public static final FossilFenceBlock CALAMITES_FENCE = new FossilFenceBlock(CALAMITES_PLANKS.getDefaultState(), "calamites_fence");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_fence_gate")
+	public static final FossilFenceGateBlock CALAMITES_FENCE_GATE = new FossilFenceGateBlock("calamites_fence_gate");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_door")
+	public static final FossilDoorBlock CALAMITES_DOOR = new FossilDoorBlock(CALAMITES_PLANKS.getDefaultState(), "calamites_door");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_trapdoor")
+	public static final FossilTrapdoorBlock CALAMITES_TRAPDOOR = new FossilTrapdoorBlock(CALAMITES_PLANKS.getDefaultState(), "calamites_trapdoor");
 
 	@GameRegistry.ObjectHolder(Revival.MODID + ":ancient_wood")
 	public static final AncientWoodBlock ANCIENT_WOOD = new AncientWoodBlock();
@@ -141,7 +163,6 @@ public class FABlockRegistry {
 	public static final FossilSlabBlock ANCIENT_WOOD_DOUBLESLAB = new AncientWoodSlabBlock.Double("ancient_wood_slab", 1.4F, 7.5F, SoundType.WOOD);
 	@GameRegistry.ObjectHolder(Revival.MODID + ":ancient_wood_slab")
 	public static final FossilSlabBlock ANCIENT_WOOD_SINGLESLAB = new AncientWoodSlabBlock.Half("ancient_wood_slab", 1.4F, 7.5F, SoundType.WOOD);
-
 	@GameRegistry.ObjectHolder(Revival.MODID + ":ferns")
 	public static final FernsBlock FERNS = new FernsBlock();
 	@GameRegistry.ObjectHolder(Revival.MODID + ":dillhoffia")
@@ -198,6 +219,16 @@ public class FABlockRegistry {
 		Blocks.FIRE.setFireInfo(PALM_PLANKS_STAIRS, 5, 20);
 		Blocks.FIRE.setFireInfo(PALM_FENCE, 5, 20);
 		Blocks.FIRE.setFireInfo(PALM_FENCE_GATE, 5, 20);
+		Blocks.FIRE.setFireInfo(CALAMITES_LOG, 5, 5);
+		Blocks.FIRE.setFireInfo(CALAMITES_SAPLING, 15, 15);
+		Blocks.FIRE.setFireInfo(CALAMITES_LEAVES, 30, 60);
+		Blocks.FIRE.setFireInfo(CALAMITES_PLANKS, 5, 20);
+		Blocks.FIRE.setFireInfo(CALAMITES_PLANKS_SINGLESLAB, 5, 20);
+		Blocks.FIRE.setFireInfo(CALAMITES_PLANKS_DOUBLESLAB, 5, 20);
+		Blocks.FIRE.setFireInfo(CALAMITES_PLANKS_STAIRS, 5, 20);
+		Blocks.FIRE.setFireInfo(CALAMITES_FENCE, 5, 20);
+		Blocks.FIRE.setFireInfo(CALAMITES_FENCE_GATE, 5, 20);
+
 		Blocks.FIRE.setFireInfo(ANCIENT_WOOD, 5, 20);
 		Blocks.FIRE.setFireInfo(ANCIENT_WOOD_PILLAR, 5, 20);
 		Blocks.FIRE.setFireInfo(ANCIENT_WOOD_SINGLESLAB, 5, 20);

@@ -27,6 +27,7 @@ public class AnalyzerRecipes {
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Blocks.SAND), 25));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN), 1));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL), 1));
+        list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL), 1));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Items.WHEAT_SEEDS), 1));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Items.BEETROOT_SEEDS), 1));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), new ItemStack(Items.PUMPKIN_SEEDS), 1));
@@ -66,6 +67,7 @@ public class AnalyzerRecipes {
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.PLANT_FOSSIL), new ItemStack(Blocks.SAND), 35));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.PLANT_FOSSIL), new ItemStack(Items.COAL), 30));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.PLANT_FOSSIL), new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL), 10));
+        list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.PLANT_FOSSIL), new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL), 10));
         list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.PLANT_FOSSIL), new ItemStack(Items.DYE, 1, 2), 10));
         for(int i = 0; i < 14; i++){
             list.add(new RecipeAnalyzer(new ItemStack(FAItemRegistry.PLANT_FOSSIL), new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, i), 15));

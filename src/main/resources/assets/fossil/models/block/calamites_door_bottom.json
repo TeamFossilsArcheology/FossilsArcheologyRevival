@@ -1,0 +1,7 @@
+{
+  "parent": "block/door_bottom",
+  "textures": {
+    "bottom": "fossil:blocks/calamites_door_bottom",
+    "top": "fossil:blocks/calamites_door_top"
+  }
+}

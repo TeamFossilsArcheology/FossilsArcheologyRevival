@@ -49,6 +49,6 @@ public class FossilDoorBlock extends BlockDoor implements DefaultRenderedItem {
     }
 
     public Item getDoorItem(){
-        return FAItemRegistry.PALM_DOOR_ITEM;
+        return this == FABlockRegistry.CALAMITES_DOOR ? FAItemRegistry.CALAMITES_DOOR_ITEM : FAItemRegistry.PALM_DOOR_ITEM;
     }
 }

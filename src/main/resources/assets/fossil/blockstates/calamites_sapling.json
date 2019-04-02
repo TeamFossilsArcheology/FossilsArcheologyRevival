@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "stage=0": {
+      "model": "fossil:calamites_sapling"
+    },
+    "stage=1": {
+      "model": "fossil:calamites_sapling"
+    }
+  }
+}

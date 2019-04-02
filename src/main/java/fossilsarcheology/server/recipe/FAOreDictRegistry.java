@@ -4,6 +4,7 @@ import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.entity.prehistoric.MobType;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.item.FAItemRegistry;
+import fossilsarcheology.server.item.FossilSeedsItem;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;
@@ -12,7 +13,6 @@ public class FAOreDictRegistry {
 
     public static void register() {
         OreDictionary.registerOre("blockWool", new ItemStack(Blocks.WOOL, 1, OreDictionary.WILDCARD_VALUE));
-
         OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.PALM_PLANKS));
         OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD));
         OreDictionary.registerOre("logWood", new ItemStack(FABlockRegistry.PALM_LOG));
@@ -27,7 +27,20 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("treeSapling", new ItemStack(FABlockRegistry.PALM_SAPLING));
         OreDictionary.registerOre("saplingTree", new ItemStack(FABlockRegistry.PALM_SAPLING));
         OreDictionary.registerOre("sapling", new ItemStack(FABlockRegistry.PALM_SAPLING));
-
+        OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.CALAMITES_PLANKS));
+        OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD));
+        OreDictionary.registerOre("logWood", new ItemStack(FABlockRegistry.CALAMITES_LOG));
+        OreDictionary.registerOre("treeLeaves", new ItemStack(FABlockRegistry.CALAMITES_LEAVES));
+        OreDictionary.registerOre("slabWood", new ItemStack(FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB));
+        OreDictionary.registerOre("stairWood", new ItemStack(FABlockRegistry.CALAMITES_PLANKS_STAIRS));
+        OreDictionary.registerOre("doorWood", new ItemStack(FAItemRegistry.CALAMITES_DOOR_ITEM));
+        OreDictionary.registerOre("trapdoorWood", new ItemStack(FABlockRegistry.CALAMITES_TRAPDOOR));
+        OreDictionary.registerOre("fenceWood", new ItemStack(FABlockRegistry.CALAMITES_FENCE));
+        OreDictionary.registerOre("fenceGateWood", new ItemStack(FABlockRegistry.CALAMITES_FENCE_GATE));
+        OreDictionary.registerOre("stairWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD_STAIRS));
+        OreDictionary.registerOre("treeSapling", new ItemStack(FABlockRegistry.CALAMITES_SAPLING));
+        OreDictionary.registerOre("saplingTree", new ItemStack(FABlockRegistry.CALAMITES_SAPLING));
+        OreDictionary.registerOre("sapling", new ItemStack(FABlockRegistry.CALAMITES_SAPLING));
         OreDictionary.registerOre("oreFossil", new ItemStack(FABlockRegistry.FOSSIL));
         OreDictionary.registerOre("oreAmber", new ItemStack(FABlockRegistry.AMBER_ORE));
         OreDictionary.registerOre("stoneBasalt", new ItemStack(FABlockRegistry.VOLCANIC_ROCK));
@@ -59,7 +72,7 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 11));
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 14));
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 15));
-        for(int i = 0; i < 15; i++){
+        for(int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++){
             OreDictionary.registerOre("listAllseed", new ItemStack(FAItemRegistry.SEED, 1, i));
             OreDictionary.registerOre("flowerSeed", new ItemStack(FAItemRegistry.SEED, 1, i));
         }

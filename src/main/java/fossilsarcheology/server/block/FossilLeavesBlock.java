@@ -23,14 +23,16 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class PalmLeavesBlock extends BlockLeaves implements DefaultRenderedItem {
+public class FossilLeavesBlock extends BlockLeaves implements DefaultRenderedItem {
 	private byte[] adjacentTreeBlocks;
+	private Block sapling;
 
-	public PalmLeavesBlock() {
+	public FossilLeavesBlock(String name, Block sapling) {
 		super();
 		this.setCreativeTab(FATabRegistry.BLOCKS);
 		this.setResistance(1.0F);
-		this.setTranslationKey("palm_leaves");
+		this.setTranslationKey(name);
+		this.sapling = sapling;
 	}
 
 	@Override
@@ -141,7 +143,7 @@ public class PalmLeavesBlock extends BlockLeaves implements DefaultRenderedItem 
 					this.dropBlockAsItem(world, pos, world.getBlockState(pos), 0);
 					world.setBlockToAir(pos);
 					if (new Random().nextInt(5) == 0) {
-						spawnAsEntity(world, pos, new ItemStack(FABlockRegistry.PALM_SAPLING));
+						spawnAsEntity(world, pos, new ItemStack(sapling));
 					}
 				}
 			}
@@ -149,7 +151,7 @@ public class PalmLeavesBlock extends BlockLeaves implements DefaultRenderedItem 
 	}
 
 	public Item getItemDropped(IBlockState state, Random rand, int fortune){
-		return Item.getItemFromBlock(FABlockRegistry.PALM_SAPLING);
+		return Item.getItemFromBlock(sapling);
 	}
 
 	@Override

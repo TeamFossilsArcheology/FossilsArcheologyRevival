@@ -9,14 +9,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class PalmPlanksBlock extends Block implements DefaultRenderedItem {
+public class FossilPlanksBlock extends Block implements DefaultRenderedItem {
 
-	public PalmPlanksBlock() {
+	public FossilPlanksBlock(String name) {
 		super(Material.WOOD);
 		setHardness(2.0F);
 		setResistance(5.0F);
 		setSoundType(SoundType.WOOD);
-		setTranslationKey("palm_planks");
+		setTranslationKey(name);
 		this.setCreativeTab(FATabRegistry.BLOCKS);
 	}
 

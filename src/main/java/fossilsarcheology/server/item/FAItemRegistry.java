@@ -72,6 +72,7 @@ public class FAItemRegistry {
 	public static final FossilSeedsItem FOSSIL_SEED = new FossilSeedsItem(true);
 	public static final BasicItem FOSSIL_SEED_FERN = new BasicItem("fossil_seed_fern");
 	public static final BasicItem PALAE_SAPLING_FOSSIL = new BasicItem("fossil_sapling_palae");
+	public static final BasicItem CALAMITES_SAPLING_FOSSIL = new BasicItem("fossil_sapling_calamites");
 	public static final FossilSeedsItem SEED = new FossilSeedsItem(false);
 	public static final FernSeedItem FERN_SEED = new FernSeedItem();
 	//public static final Item TAR_BUCKET = new ItemBucket(FABlockRegistry.TAR).setTranslationKey("tar_bucket").setContainerItem(Items.BUCKET).setCreativeTab(FATabRegistry.ITEMS);
@@ -88,6 +89,7 @@ public class FAItemRegistry {
 	public static final DinosaurBoneItem RIBCAGE = new DinosaurBoneItem("ribcage");
 	public static final DinosaurBoneItem VERTEBRAE = new DinosaurBoneItem("vertebrae");
 	public static final ItemFossilDoor PALM_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.PALM_DOOR, "palm_door_item");
+	public static final ItemFossilDoor CALAMITES_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.CALAMITES_DOOR, "calamites_door_item");
 
 	public static Item registerItem(RegistryEvent.Register<Item> event, Item item) {
 		String name = item.getTranslationKey().substring("item.".length());

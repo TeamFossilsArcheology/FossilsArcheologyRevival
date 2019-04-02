@@ -264,7 +264,7 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 					output = new ItemStack(Items.COAL, 1, 0);
 				}
 				if (rand > 65 && rand <= 75) {
-					output = new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL, 1, 0);
+					output = new ItemStack(random.nextBoolean() ? FAItemRegistry.CALAMITES_SAPLING_FOSSIL : FAItemRegistry.PALAE_SAPLING_FOSSIL, 1, 0);
 				}
 				if (rand > 75 && rand <= 85) {
 					output = new ItemStack(Items.DYE, 1, 2);
@@ -404,7 +404,7 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 					output = new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN, 1);
 				}
 				if (rand == 96) {
-					output = new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL, 1);
+					output = new ItemStack(random.nextBoolean() ? FAItemRegistry.CALAMITES_SAPLING_FOSSIL : FAItemRegistry.PALAE_SAPLING_FOSSIL, 1);
 				}
 				if (rand == 97) {
 					output = new ItemStack(Items.WHEAT_SEEDS, 1);

@@ -2,6 +2,7 @@ package fossilsarcheology.server.event;
 
 
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.world.gen.WorldGenCalamites;
 import fossilsarcheology.server.world.gen.WorldGenPalm;
 import net.minecraftforge.event.entity.player.BonemealEvent;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -14,6 +15,12 @@ public class FossilBonemealEvent {
 		if (event.getBlock().getBlock() == FABlockRegistry.PALM_SAPLING) {
 			if (!event.getWorld().isRemote && WorldGenPalm.canGenTree(event.getWorld(), event.getPos()) && event.getWorld().rand.nextFloat() < 0.45D) {
 				FABlockRegistry.PALM_SAPLING.generateTree(event.getWorld(), event.getPos(), event.getWorld().rand);
+				event.setResult(Event.Result.ALLOW);
+			}
+		}
+		if (event.getBlock().getBlock() == FABlockRegistry.CALAMITES_SAPLING) {
+			if (!event.getWorld().isRemote && WorldGenCalamites.canGenTree(event.getWorld(), event.getPos()) && event.getWorld().rand.nextFloat() < 0.45D) {
+				FABlockRegistry.CALAMITES_SAPLING.generateTree(event.getWorld(), event.getPos(), event.getWorld().rand);
 				event.setResult(Event.Result.ALLOW);
 			}
 		}

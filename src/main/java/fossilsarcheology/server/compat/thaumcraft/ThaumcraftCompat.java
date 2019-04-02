@@ -72,6 +72,7 @@ public class ThaumcraftCompat {
 			evt.register.registerObjectTag(new ItemStack(FAItemRegistry.ARM_BONE, 1, i), new AspectList().add(Aspect.DEATH, 5).add(Aspect.BEAST, 5).add(ThaumcraftCompat.TIME, 5).add(ThaumcraftCompat.FOSSIL, 5));
 		}
 		evt.register.registerObjectTag(new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL), new AspectList().add(Aspect.EARTH, 5).add(Aspect.PLANT, 5).add(ThaumcraftCompat.TIME, 5).add(ThaumcraftCompat.FOSSIL, 5));
+		evt.register.registerObjectTag(new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL), new AspectList().add(Aspect.EARTH, 5).add(Aspect.PLANT, 5).add(ThaumcraftCompat.TIME, 5).add(ThaumcraftCompat.FOSSIL, 5));
 		evt.register.registerObjectTag(new ItemStack(FAItemRegistry.PLANT_FOSSIL), new AspectList().add(Aspect.EARTH, 5).add(Aspect.PLANT, 5).add(ThaumcraftCompat.TIME, 5).add(ThaumcraftCompat.FOSSIL, 7));
 		evt.register.registerObjectTag(new ItemStack(FAItemRegistry.TAR_FOSSIL), new AspectList().add(Aspect.EARTH, 5).add(Aspect.ALCHEMY, 5).add(Aspect.BEAST, 5).add(ThaumcraftCompat.TIME, 5).add(ThaumcraftCompat.FOSSIL, 10));
 		evt.register.registerObjectTag(new ItemStack(FAItemRegistry.TARDROP), new AspectList().add(Aspect.EARTH, 3).add(Aspect.WATER, 3).add(Aspect.DARKNESS, 3).add(Aspect.ALCHEMY, 3).add(Aspect.ENTROPY, 3).add(ThaumcraftCompat.FOSSIL, 4));

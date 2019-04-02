@@ -110,6 +110,9 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
         if (input.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL) {
             return new ItemStack(FABlockRegistry.PALM_SAPLING, 1);
         }
+        if (input.getItem() == FAItemRegistry.CALAMITES_SAPLING_FOSSIL) {
+            return new ItemStack(FABlockRegistry.CALAMITES_SAPLING, 1);
+        }
         if (input.getItem() == FAItemRegistry.FOSSIL_SEED) {
             return new ItemStack(FAItemRegistry.SEED, 1, input.getItemDamage());
         }
@@ -158,7 +161,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     }
 
     private boolean isSeed(ItemStack stack){
-      return stack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || stack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL || stack.getItem() == FAItemRegistry.FOSSIL_SEED;
+      return stack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || stack.getItem() == FAItemRegistry.CALAMITES_SAPLING_FOSSIL || stack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL || stack.getItem() == FAItemRegistry.FOSSIL_SEED;
     }
 
     @Override
@@ -256,7 +259,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
             if (inputStack.getItem() == PrehistoricEntityType.COELACANTH.dnaItem || inputStack.getItem() == PrehistoricEntityType.STURGEON.dnaItem || inputStack.getItem() == PrehistoricEntityType.ALLIGATOR_GAR.dnaItem) {
                 return 1;
             }
-            if (inputStack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || inputStack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.FOSSIL_SEED) {
+            if (inputStack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || inputStack.getItem() == FAItemRegistry.CALAMITES_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.FOSSIL_SEED) {
                 return 2;
             }
         }
