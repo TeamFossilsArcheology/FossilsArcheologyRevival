@@ -11,7 +11,6 @@ import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.item.FAItemRegistry;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,6 +22,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
@@ -45,7 +45,7 @@ public class FossilLivingEvent {
     public void onBreakBlock(BlockEvent.BreakEvent event) {
         FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getPlayer(), FossilsPlayerProperties.class);
         if (event.getWorld().provider.getDimension() == Revival.CONFIG.dimensionIDDarknessLair && event.getState().getBlock() != Blocks.OBSIDIAN && event.getState().getBlock() != FABlockRegistry.FAKE_OBSIDIAN && (properties != null && !properties.killedAnu)) {
-            event.getPlayer().sendStatusMessage(new TextComponentString(I18n.format("anu.breakblock")), true);
+            event.getPlayer().sendStatusMessage(new TextComponentTranslation("anu.breakblock"), true);
             event.setCanceled(true);
         }
         if(properties != null && properties.killedBiofossilCooldown > 0){
