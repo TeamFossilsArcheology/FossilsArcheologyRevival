@@ -27,7 +27,6 @@ public class WorldGenCalamites extends WorldGenerator {
             return false;
         }
         int treeHeight = 15 + rand.nextInt(15);
-        int canopyCount = treeHeight / 2;
         BlockPos canopyCenter = pos.up(rand.nextInt(1) + 1);
         int minWidth = 2;
         int maxWidth = 4;
@@ -38,19 +37,19 @@ public class WorldGenCalamites extends WorldGenerator {
             canopyCenter = canopyCenter.up(4);
             genCircle(world, canopyCenter, canopyWidth - 2, false);
             genCircle(world, canopyCenter.up(), canopyWidth - 1, false);
-            if(difference > 4){
+            if (difference > 4) {
                 genCircle(world, canopyCenter.up(2), canopyWidth, true);
                 genCircle(world, canopyCenter.up(3), canopyWidth + 1, true);
                 setBlockState(world, canopyCenter.north(), LOG.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Z));
                 setBlockState(world, canopyCenter.west(), LOG.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X));
                 setBlockState(world, canopyCenter.east(), LOG.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.X));
                 setBlockState(world, canopyCenter.south(), LOG.withProperty(BlockRotatedPillar.AXIS, EnumFacing.Axis.Z));
-            }else{
+            } else {
                 setBlockState(world, canopyCenter, LOG);
                 setBlockState(world, canopyCenter.up(), LOG);
                 setBlockState(world, canopyCenter.down(), LOG);
             }
-                    }
+        }
         for (int y = (pos.getY() - 1) + 1; y <= pos.getY() + treeHeight; y++) {
             setBlockState(world, new BlockPos(pos.getX(), y, pos.getZ()), LOG);
         }
@@ -63,11 +62,11 @@ public class WorldGenCalamites extends WorldGenerator {
             int distanceX = Math.abs(blockpos.getX() - pos.getX());
             int distanceZ = Math.abs(blockpos.getZ() - pos.getZ());
             boolean corner = blockpos.getX() == pos.getX() || blockpos.getZ() == pos.getZ() || distanceX == distanceZ;
-            if(spikes){
+            if (spikes) {
                 if (corner && blockpos.distanceSq(pos) > (double) (f - 1) * (f - 1) && blockpos.distanceSq(pos) <= (double) (f * f)) {
                     setBlockState(world, blockpos, LEAF);
                 }
-            }else{
+            } else {
                 if (blockpos.distanceSq(pos) <= (double) (f * f)) {
                     setBlockState(world, blockpos, LEAF);
                 }

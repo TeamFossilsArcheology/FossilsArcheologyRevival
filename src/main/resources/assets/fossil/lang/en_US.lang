@@ -68,6 +68,7 @@ item.bone_unique_item.icthyosaurus.name=Ichthyosaurus Sclerotic Ring
 item.bone_unique_item.henodus.name=Henodus Shell
 item.bone_unique_item.megaloceros.name=Megaloceros Antlers
 item.bone_unique_item.megalania.name=Megalania Claw
+item.bone_unique_item.platybelodon.name=Platybelodon Tusk
 
 # Items - DNA
 
@@ -156,6 +157,7 @@ entity.fossil.megaloceros.name=Megaloceros
 entity.fossil.megalania.name=Megalania
 entity.fossil.megalograptus.name=Megalograptus
 entity.fossil.megalodon.name=Megalodon
+entity.fossil.platybelodon.name=Platybelodon
 entity.fossil.javelin.name=Javelin
 entity.fossil.ancient_javelin.name=Ancient Javelin
 entity.fossil.stone_tablet.name=Stone Tablet
@@ -420,6 +422,7 @@ item.dnaMegaloceros.name=Megaloceros DNA
 item.dnaMegalania.name=Megalania DNA
 item.dnaMegalograptus.name=Megalograptus DNA
 item.dnaMegalodon.name=Megalodon DNA
+item.dnaPlatybelodon.name=Platybelodon DNA
 
 item.embryoPig.name=Pig Embryo
 item.embryoSheep.name=Sheep Embryo
@@ -431,6 +434,7 @@ item.embryoDodo.name=Dodo Embryo
 item.embryoHorse.name=Horse Embryo
 item.embryoQuagga.name=Quagga Embryo
 item.embryoElasmotherium.name=Elasmotherium Embryo
+item.embryoPlatybelodon.name=Platybelodon Embryo
 item.embryoRabbit.name=Rabbit Embryo
 item.embryoLlama.name=Llama Embryo
 item.embryoDonkey.name=Donkey Embryo
@@ -505,7 +509,7 @@ item.rawMegaloceros.name=Megaloceros Meat
 item.rawMegalania.name=Megalania Meat
 item.rawMegalograptus.name=Megalograptus Meat
 item.rawMegalodon.name=Megalodon Meat
-
+item.rawPlatybelodon.name=Platybelodon Meat
 item.cookedTriceratops.name=Cooked Triceratops Meat
 item.cookedVelociraptor.name=Cooked Velociraptor Meat
 item.cookedTyrannosaurus.name=Cooked Tyrannosaurus Meat
@@ -540,6 +544,7 @@ item.cookedMegaloceros.name=Cooked Megaloceros Meat
 item.cookedMegalania.name=Cooked Megalania Meat
 item.cookedMegalograptus.name=Cooked Megalograptus Meat
 item.cookedMegalodon.name=Cooked Megalodon Meat
+item.cookedPlatybelodon.name=Cooked Platybelodon Meat
 
 item.fossilseed_dillhoffia.name=Fossilized Dillhoffia Seeds
 item.fossilseed_sarracina.name=Fossilized Sarracenia Seeds
@@ -603,6 +608,7 @@ item.syringeHorse.name=Horse Embryo
 item.syringeQuagga.name=Quagga Embryo
 item.syringeElasmotherium.name=Elasmotherium Embryo
 item.syringeMegaloceros.name=Megaloceros Embryo
+item.syringePlatybelodon.name=Platybelodon Embryo
 item.fishNautilus.name=Nautilus
 item.fishCoelacanth.name=Coelacanth
 item.fishAlligator_gar.name=Alligator Gar
@@ -647,6 +653,7 @@ pedia.embryo.Dodo=Dodo
 pedia.embryo.Horse=Horse
 pedia.embryo.Quagga=Quagga
 pedia.embryo.Elasmotherium=Elasmotherium
+pedia.embryo.Platybelodon=Platybelodon
 pedia.age=Age:
 pedia.health=Health:
 pedia.hunger=Hunger:
