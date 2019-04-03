@@ -62,9 +62,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.Sys;
 
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public abstract class EntityPrehistoric extends EntityTameable implements IPrehistoricAI, IAnimatedEntity {
 
@@ -1608,9 +1606,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 double distance = (double) (this.width * 8.0F * this.width * 8.0F + prehistoric.width);
                 if (this.getDistanceSq(prehistoric.posX, prehistoric.getEntityBoundingBox().minY, prehistoric.posZ) <= distance && prehistoric.onGround && this.onGround && this.isAdult() && prehistoric.isAdult()) {
                     prehistoric.procreate(this);
-                    if(this.getRNG().nextInt(10) == 0){
-                        Revival.PROXY.playSound(FASoundRegistry.MUSIC_MATING);
-                    }
                     this.ticksTillMate = this.rand.nextInt(6000) + 6000;
                     prehistoric.ticksTillMate = this.rand.nextInt(12000) + 24000;
                 }
@@ -1638,10 +1633,10 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             Revival.PROXY.spawnPacketHeartParticles(this.world, (float) (this.posX + (this.rand.nextFloat() * this.width * 2.0F) - this.width), (float) (this.posY + 0.5D + (this.rand.nextFloat() * this.height)), (float) (this.posZ + (this.rand.nextFloat() * this.width * 2.0F) - this.width), dd, dd1, dd2);
             Revival.PROXY.spawnPacketHeartParticles(mob.world, (float) (mob.posX + (mob.rand.nextFloat() * mob.width * 2.0F) - mob.width), (float) (mob.posY + 0.5D + (mob.rand.nextFloat() * mob.height)), (float) (mob.posZ + (mob.rand.nextFloat() * mob.width * 2.0F) - mob.width), dd, dd1, dd2);
         }
-        if (this.rand.nextInt(15) == 0) {
-            //this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_SKELETON_HURT, SoundCategory.NEUTRAL, this.getSoundVolume(), this.getSoundPitch());
-            //TODO
-            //this.playSound("fossil:music.mating", 1, 1);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        if (this.rand.nextInt(100) == 0 || calendar.get(2) + 1 == 4 && calendar.get(5) == 1) {
+            this.playSound(FASoundRegistry.MUSIC_MATING, 1, 1);
         }
         Entity hatchling = this.createEgg(mob);
         if (hatchling != null && !world.isRemote) {
@@ -1954,7 +1949,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if(this.getAttackTarget() != null){
             if (this.getAttackTarget().getRidingEntity() != null) {
                 if (this.getAttackTarget().getRidingEntity() == this) {
-                    this.getAttackTarget().startRiding(null);
+                    this.getAttackTarget().dismountRidingEntity();
                 }
             }
             knockbackEntity(this.getAttackTarget(), strength, 0.1F);
