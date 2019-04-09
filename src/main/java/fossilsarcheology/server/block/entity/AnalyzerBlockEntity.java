@@ -8,6 +8,7 @@ import fossilsarcheology.server.item.DinosaurBoneItem;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.item.FossilSeedsItem;
 import fossilsarcheology.server.item.variant.DinosaurBoneType;
+import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
@@ -198,21 +199,22 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 	}
 
 	public static boolean isAnalyzable(ItemStack stack){
-		Item item = stack.getItem();
-		return PrehistoricEntityType.getDNA(item) != null || (item instanceof DinosaurBoneItem) || (item == FAItemRegistry.BIOFOSSIL) || (item == FAItemRegistry.TAR_FOSSIL)
+		return FAMachineRecipeRegistry.getAnalyzerRecipeForItem(stack) != null;
+		/*PrehistoricEntityType.getDNA(item) != null || (item instanceof DinosaurBoneItem) || (item == FAItemRegistry.BIOFOSSIL) || (item == FAItemRegistry.TAR_FOSSIL)
 				|| (item == FAItemRegistry.TARDROP) || (item == FAItemRegistry.FAILURESAURUS_FLESH) || (item == FAItemRegistry.RELIC_SCRAP) ||
 				(item == Items.PORKCHOP) || (item == Items.BEEF) || (item == Items.EGG) || (item == Items.CHICKEN)
 				|| (item == Item.getItemFromBlock(Blocks.WOOL)) || (item == FAItemRegistry.ICED_MEAT) ||  (item == Items.LEATHER)
 				|| (item == FAItemRegistry.PLANT_FOSSIL) || (item == Items.FISH) || (item == Items.FEATHER) || (item == Items.MUTTON)
 				|| (item == Items.RABBIT) || (item == Items.RABBIT_FOOT) || (item == Items.RABBIT_HIDE) || (item == FAItemRegistry.SHELL) || item == FAItemRegistry.DOMINICAN_AMBER;
-	}
+	*/}
 
 	public void analyzeItem() {
 		if (this.canAnalyze()) {
 			ItemStack output = ItemStack.EMPTY;
 			Random random = this.world.rand;
-			int rand = random.nextInt(100);
-			Item rawItem = this.stacks.get(rawIndex).getItem();
+			ItemStack input = this.stacks.get(rawIndex);
+			output = FAMachineRecipeRegistry.getAnalyzerRecipeForItem(input).generateOutput(random);
+			/*
 			if (rawItem instanceof DinosaurBoneItem) {
 				if (rand > -1 && rand <= 30) {
 					output = new ItemStack(Items.DYE, 3, 15);
@@ -419,6 +421,7 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 					output = new ItemStack(Items.MELON_SEEDS, 1);
 				}
 			}
+			*/
 			if (!output.isEmpty()) {
 				for (int slot = 9; slot < 13; slot++) {
 					ItemStack stack = this.stacks.get(slot);

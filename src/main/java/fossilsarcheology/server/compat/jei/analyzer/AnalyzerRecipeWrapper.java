@@ -6,9 +6,9 @@ import net.minecraft.item.ItemStack;
 
 public class AnalyzerRecipeWrapper implements IRecipeWrapper {
 
-    private RecipeAnalyzer recipeAnalyzer;
+    private JEIRecipeAnalyzer recipeAnalyzer;
 
-    public AnalyzerRecipeWrapper(RecipeAnalyzer recipeAnalyzer){
+    public AnalyzerRecipeWrapper(JEIRecipeAnalyzer recipeAnalyzer){
        this.recipeAnalyzer = recipeAnalyzer;
     }
 
@@ -18,7 +18,7 @@ public class AnalyzerRecipeWrapper implements IRecipeWrapper {
         ingredients.setOutput(ItemStack.class,recipeAnalyzer.getOutput());
     }
 
-    public RecipeAnalyzer getRecipeAnalyzer() {
+    public JEIRecipeAnalyzer getRecipeAnalyzer() {
         return recipeAnalyzer;
     }
 }

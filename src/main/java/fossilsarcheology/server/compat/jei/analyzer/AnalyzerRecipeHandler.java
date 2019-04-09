@@ -9,7 +9,7 @@ public class AnalyzerRecipeHandler implements IRecipeHandler<AnalyzerRecipeWrapp
 
     @Override
     public Class getRecipeClass() {
-        return RecipeAnalyzer.class;
+        return JEIRecipeAnalyzer.class;
     }
 
     @Override

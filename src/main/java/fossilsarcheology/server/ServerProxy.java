@@ -20,6 +20,7 @@ import fossilsarcheology.server.event.FossilCraftingEvent;
 import fossilsarcheology.server.event.FossilLivingEvent;
 import fossilsarcheology.server.event.FossilPickupItemEvent;
 import fossilsarcheology.server.item.FAItemRegistry;
+import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import fossilsarcheology.server.recipe.FAOreDictRegistry;
 import fossilsarcheology.server.util.FossilFoodMappings;
 import fossilsarcheology.server.world.FAWorldGenerator;
@@ -186,6 +187,7 @@ public class ServerProxy implements IGuiHandler {
 
     public void onInit() {
         FAOreDictRegistry.register();
+        FAMachineRecipeRegistry.init();
         MinecraftForge.EVENT_BUS.register(new FossilCraftingEvent());
         MinecraftForge.EVENT_BUS.register(new FossilPickupItemEvent());
         MinecraftForge.EVENT_BUS.register(new FossilBonemealEvent());

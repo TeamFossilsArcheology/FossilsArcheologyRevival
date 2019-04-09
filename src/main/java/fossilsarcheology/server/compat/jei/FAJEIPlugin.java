@@ -30,7 +30,7 @@ public class FAJEIPlugin implements IModPlugin {
     public void register(IModRegistry registry) {
         registry.addRecipes(AnalyzerRecipes.getRecipes(), ANALYZER_UID);
         registry.addRecipeHandlers(new AnalyzerRecipeHandler());
-        registry.handleRecipes(RecipeAnalyzer.class, new AnalyzerFactory(), ANALYZER_UID);
+        registry.handleRecipes(JEIRecipeAnalyzer.class, new AnalyzerFactory(), ANALYZER_UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(FABlockRegistry.ANALYZER), ANALYZER_UID);
         registry.addRecipeClickArea(AnalyzerGUI.class, 79, 21, 23, 11, ANALYZER_UID);
 
@@ -78,9 +78,9 @@ public class FAJEIPlugin implements IModPlugin {
         registry.addRecipeCategories(new SifterRecipeCatagory());
     }
 
-    public class AnalyzerFactory implements IRecipeWrapperFactory<RecipeAnalyzer> {
+    public class AnalyzerFactory implements IRecipeWrapperFactory<JEIRecipeAnalyzer> {
         @Override
-        public IRecipeWrapper getRecipeWrapper(RecipeAnalyzer recipe) {
+        public IRecipeWrapper getRecipeWrapper(JEIRecipeAnalyzer recipe) {
             return new AnalyzerRecipeWrapper(recipe);
         }
     }
