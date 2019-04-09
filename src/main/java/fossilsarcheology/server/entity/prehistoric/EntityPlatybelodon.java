@@ -36,7 +36,7 @@ public class EntityPlatybelodon extends EntityPrehistoric {
 	public EntityPlatybelodon(World world) {
 		super(world, PrehistoricEntityType.PLATYBELODON, 2, 8, 8, 46, 0.25, 0.3, 0, 6);
 		this.setActualSize(1.9F, 2.1F);
-		this.pediaScale = 60F;
+		this.pediaScale = 34F;
 		minSize = 0.5F;
 		maxSize = 1.3F;
 		teenAge = 5;

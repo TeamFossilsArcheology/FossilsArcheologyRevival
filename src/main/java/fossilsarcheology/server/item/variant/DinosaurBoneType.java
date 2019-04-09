@@ -41,7 +41,8 @@ public enum DinosaurBoneType {
 	ELASMOTHERIUM,
 	MEGALOCEROS,
 	MEGALANIA,
-	PLATYBELODON;
+	PLATYBELODON,
+	TIKTAALIK;
 
 	public static DinosaurBoneType get(PrehistoricEntityType prehistoric) {
 		return DinosaurBoneType.valueOf(prehistoric.name().toUpperCase(Locale.ENGLISH));

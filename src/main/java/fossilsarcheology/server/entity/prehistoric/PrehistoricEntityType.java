@@ -76,7 +76,8 @@ public enum PrehistoricEntityType {
 	MEGALOCEROS(EntityMegaloceros.class, MobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE, Parameter.TAME | Parameter.RIDE | Parameter.HERBIVORE, 0X5C2E1A, 0X8E5A3B),
 	MEGALANIA(EntityMegalania.class, MobType.DINOSAUR, TimePeriod.CENOZOIC, Diet.CARNIVORE_EGG, Parameter.TAME | Parameter.RIDE | Parameter.CARNIVORE, 0X6D543D, 0XDCAE73),
 	MEGALODON(EntityMegalodon.class, MobType.DINOSAUR_AQUATIC, TimePeriod.CENOZOIC, Diet.PISCCARNIVORE, Parameter.MODEL | Parameter.CARNIVORE, 0X697B7E, 0XD0D5D5),
-	PLATYBELODON(EntityPlatybelodon.class, MobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE, Parameter.TAME | Parameter.RIDE | Parameter.HERBIVORE, 0X8B6551, 0X62473A);
+	PLATYBELODON(EntityPlatybelodon.class, MobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE, Parameter.TAME | Parameter.RIDE | Parameter.HERBIVORE, 0X8B6551, 0X62473A),
+	TIKTAALIK(EntityTiktaalik.class, MobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCCARNIVORE, Parameter.TAME | Parameter.CARNIVORE | Parameter.MODEL, 0X6A5A1A, 0XD7CF99);
 
 	private final Class<? extends Entity> entity;
 	public final MobType mobType;

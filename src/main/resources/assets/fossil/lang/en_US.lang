@@ -69,6 +69,7 @@ item.bone_unique_item.henodus.name=Henodus Shell
 item.bone_unique_item.megaloceros.name=Megaloceros Antlers
 item.bone_unique_item.megalania.name=Megalania Claw
 item.bone_unique_item.platybelodon.name=Platybelodon Tusk
+item.bone_unique_item.tiktaalik.name=Tiktaalik Wrist
 
 # Items - DNA
 
@@ -158,6 +159,7 @@ entity.fossil.megalania.name=Megalania
 entity.fossil.megalograptus.name=Megalograptus
 entity.fossil.megalodon.name=Megalodon
 entity.fossil.platybelodon.name=Platybelodon
+entity.fossil.tiktaalik.name=Ticktaalik
 entity.fossil.javelin.name=Javelin
 entity.fossil.ancient_javelin.name=Ancient Javelin
 entity.fossil.stone_tablet.name=Stone Tablet
@@ -363,6 +365,7 @@ item.eggPhorusrhacos.name=Phorusrhacos Egg
 item.eggTitanis.name=Titanis Egg
 item.eggKelenken.name=Kelenken Egg
 item.eggMegalania.name=Megalania Egg
+item.eggTiktaalik.name=Tiktaalik Egg
 item.eggMegalodon.name=Megalodon Sac
 item.dnaGastornis.name=Gastornis DNA
 item.dnaPhorusrhacos.name=Phorusrhacos DNA
@@ -423,6 +426,7 @@ item.dnaMegalania.name=Megalania DNA
 item.dnaMegalograptus.name=Megalograptus DNA
 item.dnaMegalodon.name=Megalodon DNA
 item.dnaPlatybelodon.name=Platybelodon DNA
+item.dnaTiktaalik.name=Tiktaalik DNA
 
 item.embryoPig.name=Pig Embryo
 item.embryoSheep.name=Sheep Embryo
@@ -510,6 +514,7 @@ item.rawMegalania.name=Megalania Meat
 item.rawMegalograptus.name=Megalograptus Meat
 item.rawMegalodon.name=Megalodon Meat
 item.rawPlatybelodon.name=Platybelodon Meat
+item.rawTiktaalik.name=Tiktaalik Meat
 item.cookedTriceratops.name=Cooked Triceratops Meat
 item.cookedVelociraptor.name=Cooked Velociraptor Meat
 item.cookedTyrannosaurus.name=Cooked Tyrannosaurus Meat
@@ -545,6 +550,7 @@ item.cookedMegalania.name=Cooked Megalania Meat
 item.cookedMegalograptus.name=Cooked Megalograptus Meat
 item.cookedMegalodon.name=Cooked Megalodon Meat
 item.cookedPlatybelodon.name=Cooked Platybelodon Meat
+item.cookedTiktaalik.name=Cooked Tiktaalik Meat
 
 item.fossilseed_dillhoffia.name=Fossilized Dillhoffia Seeds
 item.fossilseed_sarracina.name=Fossilized Sarracenia Seeds
