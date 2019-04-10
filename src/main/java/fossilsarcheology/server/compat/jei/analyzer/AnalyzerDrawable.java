@@ -34,7 +34,7 @@ public class AnalyzerDrawable implements IDrawable {
         this.drawTexturedModalRect(xOffset, yOffset, 3, 4, 170, 79);
         int progress = minecraft.player.ticksExisted % 22;
         this.drawTexturedModalRect(xOffset + 77, yOffset + 18, 177, 18, progress, 9);
-        String chance_less = chance > 0 ? "" + chance : "< 1";
+        String chance_less = chance > 1 ? "" + chance : "< 1";
         String chance_string = I18n.format("analyzer.chance") + " " + chance_less + "%";
         minecraft.fontRenderer.drawString(chance_string, 90 - minecraft.fontRenderer.getStringWidth(chance_string) / 2, 70, 4210752);
     }

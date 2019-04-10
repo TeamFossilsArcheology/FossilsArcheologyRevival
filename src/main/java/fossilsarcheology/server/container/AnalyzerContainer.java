@@ -1,15 +1,15 @@
 package fossilsarcheology.server.container;
 
-import fossilsarcheology.server.block.entity.AnalyzerBlockEntity;
+import fossilsarcheology.server.block.entity.TileEntityAnalyzer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
 import net.minecraft.inventory.SlotFurnaceOutput;
 
 public class AnalyzerContainer extends SyncedFieldContainer {
-	private final AnalyzerBlockEntity analyzer;
+	private final TileEntityAnalyzer analyzer;
 
-	public AnalyzerContainer(InventoryPlayer playerInventory, AnalyzerBlockEntity tile) {
+	public AnalyzerContainer(InventoryPlayer playerInventory, TileEntityAnalyzer tile) {
 		super(tile);
 		this.analyzer = tile;
 		for (int column = 0; column < 3; ++column) {

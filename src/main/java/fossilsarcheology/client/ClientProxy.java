@@ -177,8 +177,8 @@ public class ClientProxy extends ServerProxy {
     public Object getClientGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         BlockPos pos = new BlockPos(x, y, z);
         TileEntity entity = world.getTileEntity(pos);
-        if (id == GUI_ANALYZER && entity instanceof AnalyzerBlockEntity) {
-            return new AnalyzerGUI(player.inventory, (AnalyzerBlockEntity) entity);
+        if (id == GUI_ANALYZER && entity instanceof TileEntityAnalyzer) {
+            return new AnalyzerGUI(player.inventory, (TileEntityAnalyzer) entity);
         }
         if (id == GUI_CULTIVATE && entity instanceof TileEntityCultivate) {
             return new CultivateGUI((TileEntityCultivate) entity, new CultivateContainer(player.inventory, (TileEntityCultivate) entity));

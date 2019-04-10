@@ -1,7 +1,7 @@
 package fossilsarcheology.client.gui;
 
 import fossilsarcheology.Revival;
-import fossilsarcheology.server.block.entity.AnalyzerBlockEntity;
+import fossilsarcheology.server.block.entity.TileEntityAnalyzer;
 import fossilsarcheology.server.container.AnalyzerContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -11,9 +11,9 @@ import net.minecraft.util.ResourceLocation;
 
 public class AnalyzerGUI extends GuiContainer {
 	public static final ResourceLocation TEXTURE = new ResourceLocation(Revival.MODID, "textures/gui/analyzer.png");
-	private final AnalyzerBlockEntity analyzer;
+	private final TileEntityAnalyzer analyzer;
 
-	public AnalyzerGUI(InventoryPlayer playerInventory, AnalyzerBlockEntity analyzer) {
+	public AnalyzerGUI(InventoryPlayer playerInventory, TileEntityAnalyzer analyzer) {
 		super(new AnalyzerContainer(playerInventory, analyzer));
 		this.analyzer = analyzer;
 	}

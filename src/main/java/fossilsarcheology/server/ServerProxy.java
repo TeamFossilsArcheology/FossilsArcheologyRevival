@@ -20,7 +20,6 @@ import fossilsarcheology.server.event.FossilCraftingEvent;
 import fossilsarcheology.server.event.FossilLivingEvent;
 import fossilsarcheology.server.event.FossilPickupItemEvent;
 import fossilsarcheology.server.item.FAItemRegistry;
-import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import fossilsarcheology.server.recipe.FAOreDictRegistry;
 import fossilsarcheology.server.util.FossilFoodMappings;
 import fossilsarcheology.server.world.FAWorldGenerator;
@@ -88,7 +87,7 @@ public class ServerProxy implements IGuiHandler {
         GameRegistry.registerTileEntity(TileEntityCultivate.class, "fossil:cultivate");
         GameRegistry.registerTileEntity(TileEntityFeeder.class, "fossil:feeder");
         GameRegistry.registerTileEntity(TileEntityWorktable.class, "fossil:archeology_workbench");
-        GameRegistry.registerTileEntity(AnalyzerBlockEntity.class, "fossil:analyzer");
+        GameRegistry.registerTileEntity(TileEntityAnalyzer.class, "fossil:analyzer");
         GameRegistry.registerTileEntity(TileEntityAncientChest.class, "fossil:ancient_chest");
         GameRegistry.registerTileEntity(TileEntityAnubiteStatue.class, "fossil:anubite");
         GameRegistry.registerTileEntity(TileEntityAnuStatue.class, "fossil:anu_statue");
@@ -187,7 +186,6 @@ public class ServerProxy implements IGuiHandler {
 
     public void onInit() {
         FAOreDictRegistry.register();
-        FAMachineRecipeRegistry.init();
         MinecraftForge.EVENT_BUS.register(new FossilCraftingEvent());
         MinecraftForge.EVENT_BUS.register(new FossilPickupItemEvent());
         MinecraftForge.EVENT_BUS.register(new FossilBonemealEvent());
@@ -232,8 +230,8 @@ public class ServerProxy implements IGuiHandler {
     public Object getServerGuiElement(int id, EntityPlayer player, World world, int x, int y, int z) {
         BlockPos pos = new BlockPos(x, y, z);
         TileEntity entity = world.getTileEntity(pos);
-        if (id == GUI_ANALYZER && entity instanceof AnalyzerBlockEntity) {
-            return new AnalyzerContainer(player.inventory, (AnalyzerBlockEntity) entity);
+        if (id == GUI_ANALYZER && entity instanceof TileEntityAnalyzer) {
+            return new AnalyzerContainer(player.inventory, (TileEntityAnalyzer) entity);
         }
         if (id == GUI_CULTIVATE && entity instanceof TileEntityCultivate) {
             return new CultivateContainer(player.inventory, (TileEntityCultivate) entity);

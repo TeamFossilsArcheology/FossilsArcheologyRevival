@@ -28,7 +28,7 @@ public class FAJEIPlugin implements IModPlugin {
 
     @SuppressWarnings("deprecation")
     public void register(IModRegistry registry) {
-        registry.addRecipes(AnalyzerRecipes.getRecipes(), ANALYZER_UID);
+        registry.addRecipes(JEIAnalyzerRecipes.getRecipes(), ANALYZER_UID);
         registry.addRecipeHandlers(new AnalyzerRecipeHandler());
         registry.handleRecipes(JEIRecipeAnalyzer.class, new AnalyzerFactory(), ANALYZER_UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(FABlockRegistry.ANALYZER), ANALYZER_UID);

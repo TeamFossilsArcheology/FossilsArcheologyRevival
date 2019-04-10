@@ -9,6 +9,7 @@ import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.lib.LibDependencies;
 import fossilsarcheology.server.loot.CustomizeToDinosaur;
 import fossilsarcheology.server.message.*;
+import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import fossilsarcheology.server.util.ReleaseType;
 import net.ilexiconn.llibrary.server.config.Config;
 import net.ilexiconn.llibrary.server.network.NetworkWrapper;
@@ -76,6 +77,7 @@ public class Revival {
 		LOGGER.info("Not a single one of your fathers died young");
 		LOGGER.info("The handy travelers out of Africa");
 		LOGGER.info("Little Lucy of the Afar");
+		FAMachineRecipeRegistry.init();
 
 	}
 

@@ -4,7 +4,7 @@ import fossilsarcheology.Revival;
 import fossilsarcheology.server.ServerProxy;
 import fossilsarcheology.server.api.BlockEntity;
 import fossilsarcheology.server.api.DefaultRenderedItem;
-import fossilsarcheology.server.block.entity.AnalyzerBlockEntity;
+import fossilsarcheology.server.block.entity.TileEntityAnalyzer;
 import fossilsarcheology.server.tab.FATabRegistry;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
@@ -115,8 +115,8 @@ public class AnalyzerBlock extends BlockContainer implements DefaultRenderedItem
 		world.setBlockState(pos, state.withProperty(FACING, placer.getHorizontalFacing().getOpposite()), 2);
 		if (stack.hasDisplayName()) {
 			TileEntity tile = world.getTileEntity(pos);
-			if (tile instanceof AnalyzerBlockEntity) {
-				((AnalyzerBlockEntity) tile).setCustomName(stack.getDisplayName());
+			if (tile instanceof TileEntityAnalyzer) {
+				((TileEntityAnalyzer) tile).setCustomName(stack.getDisplayName());
 			}
 		}
 	}
@@ -133,8 +133,8 @@ public class AnalyzerBlock extends BlockContainer implements DefaultRenderedItem
 			if (entity == null) {
 				return;
 			}
-			if (entity instanceof AnalyzerBlockEntity) {
-				AnalyzerBlockEntity analyzer = (AnalyzerBlockEntity)entity;
+			if (entity instanceof TileEntityAnalyzer) {
+				TileEntityAnalyzer analyzer = (TileEntityAnalyzer)entity;
 				for (int i = 0; i < analyzer.getSizeInventory(); i++) {
 					ItemStack stack = analyzer.getStackInSlot(i);
 					if (!stack.isEmpty()) {
@@ -147,7 +147,7 @@ public class AnalyzerBlock extends BlockContainer implements DefaultRenderedItem
 
 	@Override
 	public TileEntity createNewTileEntity(World world, int metadata) {
-		return new AnalyzerBlockEntity();
+		return new TileEntityAnalyzer();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -202,6 +202,6 @@ public class AnalyzerBlock extends BlockContainer implements DefaultRenderedItem
 
 	@Override
 	public Class<? extends TileEntity> getEntity() {
-		return AnalyzerBlockEntity.class;
+		return TileEntityAnalyzer.class;
 	}
 }

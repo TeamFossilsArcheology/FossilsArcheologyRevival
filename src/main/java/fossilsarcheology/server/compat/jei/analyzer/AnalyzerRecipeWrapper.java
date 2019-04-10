@@ -15,7 +15,7 @@ public class AnalyzerRecipeWrapper implements IRecipeWrapper {
     @Override
     public void getIngredients(IIngredients ingredients) {
         ingredients.setInput(ItemStack.class, recipeAnalyzer.getInput());
-        ingredients.setOutput(ItemStack.class,recipeAnalyzer.getOutput());
+        ingredients.setOutput(ItemStack.class, recipeAnalyzer.getOutput());
     }
 
     public JEIRecipeAnalyzer getRecipeAnalyzer() {

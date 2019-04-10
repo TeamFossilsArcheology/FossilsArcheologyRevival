@@ -28,7 +28,7 @@ import net.minecraft.util.text.translation.I18n;
 
 import java.util.Random;
 
-public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISidedInventory, ITickable {
+public class TileEntityAnalyzer extends TileEntity implements IInventory, ISidedInventory, ITickable {
 	private static final int[] SLOTS_TOP = new int[]{};
 	private static final int[] SLOTS_BOTTOM = new int[]{9, 10, 11, 12};
 	private static final int[] SLOTS_SIDES = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -200,13 +200,7 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 
 	public static boolean isAnalyzable(ItemStack stack){
 		return FAMachineRecipeRegistry.getAnalyzerRecipeForItem(stack) != null;
-		/*PrehistoricEntityType.getDNA(item) != null || (item instanceof DinosaurBoneItem) || (item == FAItemRegistry.BIOFOSSIL) || (item == FAItemRegistry.TAR_FOSSIL)
-				|| (item == FAItemRegistry.TARDROP) || (item == FAItemRegistry.FAILURESAURUS_FLESH) || (item == FAItemRegistry.RELIC_SCRAP) ||
-				(item == Items.PORKCHOP) || (item == Items.BEEF) || (item == Items.EGG) || (item == Items.CHICKEN)
-				|| (item == Item.getItemFromBlock(Blocks.WOOL)) || (item == FAItemRegistry.ICED_MEAT) ||  (item == Items.LEATHER)
-				|| (item == FAItemRegistry.PLANT_FOSSIL) || (item == Items.FISH) || (item == Items.FEATHER) || (item == Items.MUTTON)
-				|| (item == Items.RABBIT) || (item == Items.RABBIT_FOOT) || (item == Items.RABBIT_HIDE) || (item == FAItemRegistry.SHELL) || item == FAItemRegistry.DOMINICAN_AMBER;
-	*/}
+		}
 
 	public void analyzeItem() {
 		if (this.canAnalyze()) {
@@ -214,214 +208,10 @@ public class AnalyzerBlockEntity extends TileEntity implements IInventory, ISide
 			Random random = this.world.rand;
 			ItemStack input = this.stacks.get(rawIndex);
 			output = FAMachineRecipeRegistry.getAnalyzerRecipeForItem(input).generateOutput(random);
-			/*
-			if (rawItem instanceof DinosaurBoneItem) {
-				if (rand > -1 && rand <= 30) {
-					output = new ItemStack(Items.DYE, 3, 15);
-				}
-				if (rand > 30 && rand <= 65) {
-					output = new ItemStack(Items.BONE, 3);
-				}
-				if (rand > 65) {
-					output = new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[this.stacks.get(rawIndex).getItemDamage()]).dnaItem, 1);
-				}
-			} else if (rawItem == FAItemRegistry.BIOFOSSIL) {
-				if (rand > -1 && rand <= 50) {
-					output = new ItemStack(Items.DYE, 3, 15);
-				}
-				if (rand > 50 && rand <= 85) {
-					output = new ItemStack(Blocks.SAND, 1 + random.nextInt(2));
-				}
-				if (rand > 85) {
-					output = new ItemStack(PrehistoricEntityType.getRandomTimePeriod(random, TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC).dnaItem, 1);
-				}
-			} else if (rawItem == FAItemRegistry.TAR_FOSSIL) {
-				if (rand > -1 && rand <= 50) {
-					output = new ItemStack(Items.DYE, 3, 15);
-				}
-				if (rand > 50 && rand <= 80) {
-					output = new ItemStack(FABlockRegistry.VOLCANIC_ROCK, 1);
-				}
-				if (rand > 80 && rand <= 75) {
-					output = new ItemStack(Blocks.OBSIDIAN, 1);
-				}
-				if (rand > 75) {
-					output = new ItemStack(PrehistoricEntityType.getRandomTimePeriod(random, TimePeriod.CENOZOIC).dnaItem, 1);
-				}
-			} else if (rawItem == FAItemRegistry.TARDROP) {
-				if (rand >= 0 && rand <= 40) {
-					output = new ItemStack(Items.COAL, random.nextInt(2) + 1, random.nextInt(1));
-				}
-				if (rand > 40 && rand <= 85) {
-					output = new ItemStack(FAItemRegistry.TAR_FOSSIL, 1);
-				}
-				if (rand > 85) {
-					output = new ItemStack(FABlockRegistry.VOLCANIC_ROCK, 1);
-				}
-			} else if (rawItem == FAItemRegistry.PLANT_FOSSIL) {
-				if (rand > 0) {
-					output = new ItemStack(Blocks.SAND, 1 + random.nextInt(1), 0);
-				}
-				if (rand > 35 && rand <= 65) {
-					output = new ItemStack(Items.COAL, 1, 0);
-				}
-				if (rand > 65 && rand <= 75) {
-					output = new ItemStack(random.nextBoolean() ? FAItemRegistry.CALAMITES_SAPLING_FOSSIL : FAItemRegistry.PALAE_SAPLING_FOSSIL, 1, 0);
-				}
-				if (rand > 75 && rand <= 85) {
-					output = new ItemStack(Items.DYE, 1, 2);
-				}
-				if (rand > 85) {
-					int meta = random.nextInt(FossilSeedsItem.fossilSeeds.length + 1);
-					if(meta != FossilSeedsItem.fossilSeeds.length + 1){
-						output = new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, meta);
-					}else{
-						output = new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN, 1);
-
-					}
-				}
-			} else if (rawItem == Item.getItemFromBlock(Blocks.WOOL)) {
-				if ((random).nextInt(50) <= 30) {
-					output = new ItemStack(Items.STRING, 4);
-				} else {
-					if(random.nextInt(2) == 0){
-						output = new ItemStack(PrehistoricEntityType.LLAMA.dnaItem, 1);
-					}else{
-						output = new ItemStack(PrehistoricEntityType.SHEEP.dnaItem, 1);
-					}
-				}
-			} else if (PrehistoricEntityType.getDNA(rawItem) != null) {
-				output = new ItemStack(PrehistoricEntityType.getDNA(rawItem), 1);
-			} else if (rawItem == FAItemRegistry.SHELL) {
-				output = new ItemStack(PrehistoricEntityType.NAUTILUS.dnaItem, 1);
-			} else if (rawItem == Items.PORKCHOP) {
-				output = new ItemStack(PrehistoricEntityType.PIG.dnaItem, 1);
-			} else if (rawItem == Items.FISH) {
-				if(random.nextInt(9) == 0) {
-					output = new ItemStack(PrehistoricEntityType.POLARBEAR.dnaItem, 1);
-				}else{
-					if(random.nextInt(5) == 0) {
-						output = new ItemStack(Items.PRISMARINE_CRYSTALS, 1);
-					}else{
-						output = new ItemStack(Items.DYE, 1, 15);
-					}
-				}
-			} else if (rawItem == Items.BEEF) {
-				output = new ItemStack(PrehistoricEntityType.COW.dnaItem, 2);
-			} else if (rawItem == Items.MUTTON) {
-				output = new ItemStack(PrehistoricEntityType.SHEEP.dnaItem, 2);
-			} else if (rawItem == FAItemRegistry.FAILURESAURUS_FLESH) {
-				int randChoice = random.nextInt(3);
-				if (randChoice == 0) {
-					output = new ItemStack(Items.ROTTEN_FLESH, 1);
-				} else {
-					output = new ItemStack(PrehistoricEntityType.getRandom().dnaItem, 1);
-				}
-			} else if (rawItem == Items.LEATHER) {
-				if (random.nextInt(10) > 4) {
-					output = new ItemStack(PrehistoricEntityType.COW.dnaItem, 1);
-				} else {
-					if(random.nextInt(3) == 0){
-						output = new ItemStack(PrehistoricEntityType.DONKEY.dnaItem, 1);
-					}else{
-						output = new ItemStack(PrehistoricEntityType.HORSE.dnaItem, 1);
-					}
-				}
-			} else if (rawItem == Items.RABBIT || rawItem == Items.RABBIT_FOOT || rawItem == Items.RABBIT_HIDE) {
-				output = new ItemStack(PrehistoricEntityType.RABBIT.dnaItem, 1);
-			} else if (rawItem == Items.EGG) {
-				output = new ItemStack(PrehistoricEntityType.CHICKEN.dnaItem, 1);
-			} else if (rawItem == FAItemRegistry.SHELL) {
-				output = new ItemStack(PrehistoricEntityType.NAUTILUS.dnaItem, 1);
-			} else if (rawItem == Items.CHICKEN) {
-				output = new ItemStack(PrehistoricEntityType.CHICKEN.dnaItem, 1);
-			} else if (rawItem == Items.FEATHER) {
-				if(random.nextInt(3) == 0){
-					output = new ItemStack(PrehistoricEntityType.PARROT.dnaItem, 1);
-				}else{
-					output = new ItemStack(PrehistoricEntityType.CHICKEN.dnaItem, 1);
-				}
-			} else if (rawItem == FAItemRegistry.ICED_MEAT) {
-				if (rand >= 15) {
-					output = new ItemStack(Items.CHICKEN, 1);
-				}
-				if (rand >= 15 && rand < 30) {
-					output = new ItemStack(Items.MUTTON, 1);
-				}
-				if (rand >= 30 && rand < 45) {
-					output = new ItemStack(Items.PORKCHOP, 1);
-				}
-				if (rand >= 45 && rand < 65) {
-					output = new ItemStack(PrehistoricEntityType.getRandomTimePeriod(random, TimePeriod.CENOZOIC).dnaItem);
-				}
-				if (rand >= 65 && rand < 85) {
-					output = new ItemStack(FAItemRegistry.TAR_FOSSIL);
-				}
-				if (output == null) {
-					output = new ItemStack(Items.BEEF);
-				}
-			} else if (rawItem == FAItemRegistry.RELIC_SCRAP) {
-				if (rand <= 40) {
-					output = new ItemStack(Blocks.GRAVEL, 1 + random.nextInt(2));
-				}
-				if (rand > 40 && rand <= 70) {
-					output = new ItemStack(FAItemRegistry.STONE_TABLET, 1);
-				}
-				if (rand > 70 && rand <= 88) {
-					output = new ItemStack(Items.FLINT, 1 + random.nextInt(1));
-				}
-				if (rand > 88 && rand <= 92) {
-					output = new ItemStack(FAItemRegistry.POTTERY_SHARD, 1);
-				}
-				if (rand > 92 && rand <= 96) {
-					if (random.nextFloat() < 0.7) {
-						output = new ItemStack(FABlockRegistry.FIGURINE, 1, random.nextInt(5) + 10);
-					} else {
-						output = new ItemStack(FABlockRegistry.FIGURINE, 1, random.nextInt(5) + 5);
-					}
-				}
-				if (rand > 96) {
-					output = new ItemStack(FAItemRegistry.BROKEN_SWORD, 1);
-				}
-				if (rand > 96) {
-					output = new ItemStack(FAItemRegistry.BROKEN_HELMET, 1);
-				}
-			}else if (rawItem == FAItemRegistry.DOMINICAN_AMBER) {
-				if (rand > -1 && rand <= 25) {
-					output = new ItemStack(Blocks.DIRT, 1 + random.nextInt(2));
-				}
-				if (rand > 25 && rand <= 50) {
-					output = new ItemStack(Blocks.SAND, 1 + random.nextInt(2));
-				}
-				if (rand > 50 && rand <= 75) {
-					output = new ItemStack(Blocks.GRAVEL, 1 + random.nextInt(2));
-				}
-				if (rand > 75 && rand <= 85) {
-					output = new ItemStack(Items.STRING, 1 + random.nextInt(1));
-				}
-				if (rand > 85 && rand <= 94) {
-					output = new ItemStack(Items.SPIDER_EYE, 1);
-				}
-				if (rand == 95) {
-					output = new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN, 1);
-				}
-				if (rand == 96) {
-					output = new ItemStack(random.nextBoolean() ? FAItemRegistry.CALAMITES_SAPLING_FOSSIL : FAItemRegistry.PALAE_SAPLING_FOSSIL, 1);
-				}
-				if (rand == 97) {
-					output = new ItemStack(Items.WHEAT_SEEDS, 1);
-				}
-				if (rand == 98) {
-					output = new ItemStack(Items.BEETROOT_SEEDS, 1);
-				}
-				if (rand == 99) {
-					output = new ItemStack(Items.PUMPKIN_SEEDS, 1);
-				}
-				if (rand == 100) {
-					output = new ItemStack(Items.MELON_SEEDS, 1);
-				}
+			if(output.getCount() > 1){
+				int maxCount = output.getCount() - 1;
+				output.setCount(1 + random.nextInt(maxCount));
 			}
-			*/
 			if (!output.isEmpty()) {
 				for (int slot = 9; slot < 13; slot++) {
 					ItemStack stack = this.stacks.get(slot);
