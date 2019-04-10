@@ -3,7 +3,6 @@ package fossilsarcheology.server.compat.jei.analyzer;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import fossilsarcheology.server.recipe.RecipeAnalyzer;
 import net.minecraft.item.ItemStack;
-import org.lwjgl.Sys;
 
 import java.util.ArrayList;
 import java.util.List;

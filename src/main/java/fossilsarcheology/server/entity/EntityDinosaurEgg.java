@@ -29,12 +29,10 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.world.EnumSkyBlock;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.registry.IEntityAdditionalSpawnData;
-import org.lwjgl.Sys;
 
 public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditionalSpawnData {
     private static final DataParameter<Integer> HATCHING_INDEX = EntityDataManager.createKey(EntityDinosaurEgg.class, DataSerializers.VARINT);

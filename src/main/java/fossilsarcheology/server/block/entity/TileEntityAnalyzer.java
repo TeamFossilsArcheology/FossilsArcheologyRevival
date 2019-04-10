@@ -1,21 +1,12 @@
 package fossilsarcheology.server.block.entity;
 
 import fossilsarcheology.server.block.AnalyzerBlock;
-import fossilsarcheology.server.block.FABlockRegistry;
-import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
-import fossilsarcheology.server.entity.prehistoric.TimePeriod;
-import fossilsarcheology.server.item.DinosaurBoneItem;
 import fossilsarcheology.server.item.FAItemRegistry;
-import fossilsarcheology.server.item.FossilSeedsItem;
-import fossilsarcheology.server.item.variant.DinosaurBoneType;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.ISidedInventory;
 import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;

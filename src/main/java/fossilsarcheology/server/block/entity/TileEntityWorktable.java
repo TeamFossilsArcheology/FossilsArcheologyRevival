@@ -1,7 +1,6 @@
 package fossilsarcheology.server.block.entity;
 
 import fossilsarcheology.server.block.FABlockRegistry;
-import fossilsarcheology.server.block.FigurineBlock;
 import fossilsarcheology.server.block.VaseBlock;
 import fossilsarcheology.server.block.WorktableBlock;
 import fossilsarcheology.server.item.FAItemRegistry;

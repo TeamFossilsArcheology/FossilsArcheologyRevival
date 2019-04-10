@@ -1,11 +1,9 @@
 package fossilsarcheology.client.model;
 
-import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelBase;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.EntityLivingBase;
 
 public class ModelAlligatorGar extends AdvancedModelBase {
 	public final AdvancedModelRenderer Body;

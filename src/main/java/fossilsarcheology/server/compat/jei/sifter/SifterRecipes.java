@@ -1,16 +1,8 @@
 package fossilsarcheology.server.compat.jei.sifter;
 
-import fossilsarcheology.server.block.entity.TileEntitySifter;
-import fossilsarcheology.server.compat.jei.analyzer.JEIRecipeAnalyzer;
-import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import fossilsarcheology.server.recipe.RecipeAnalyzer;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.NonNullList;
 
 import java.util.ArrayList;
 import java.util.List;

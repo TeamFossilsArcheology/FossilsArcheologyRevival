@@ -4,9 +4,6 @@ import fossilsarcheology.Revival;
 import fossilsarcheology.server.item.*;
 import fossilsarcheology.server.tab.FATabRegistry;
 import io.netty.util.internal.ThreadLocalRandom;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.resources.IResource;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.passive.*;
@@ -16,7 +13,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.storage.loot.LootTableList;
 import net.minecraftforge.event.RegistryEvent;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;

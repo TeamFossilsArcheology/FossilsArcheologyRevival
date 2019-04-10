@@ -5,7 +5,6 @@ import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.compat.thaumcraft.ThaumcraftCompatBridge;
 import fossilsarcheology.server.compat.tinkers.TinkersCompatBridge;
 import fossilsarcheology.server.config.FossilConfig;
-import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.lib.LibDependencies;
 import fossilsarcheology.server.loot.CustomizeToDinosaur;
 import fossilsarcheology.server.message.*;

@@ -1,12 +1,11 @@
 package fossilsarcheology.server.entity.ai;
 
-import javax.annotation.Nullable;
-
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
-import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
+
+import javax.annotation.Nullable;
 
 public class DinoAIWander extends EntityAIBase {
     protected final EntityPrehistoric entity;

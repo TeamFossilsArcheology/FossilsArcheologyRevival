@@ -4,9 +4,8 @@ import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
-import net.minecraft.entity.Entity;
 import net.minecraft.client.renderer.GlStateManager;
-import org.lwjgl.opengl.GL11;
+import net.minecraft.entity.Entity;
 
 public class ModelPlatybelodon extends ModelPrehistoric {
     private final ModelAnimator animator;

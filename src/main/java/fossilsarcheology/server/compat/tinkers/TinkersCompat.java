@@ -7,7 +7,6 @@ import fossilsarcheology.server.item.FAItemRegistry;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import slimeknights.mantle.util.RecipeMatch;
 import slimeknights.tconstruct.library.TinkerRegistry;
 import slimeknights.tconstruct.library.materials.*;
@@ -18,6 +17,7 @@ import slimeknights.tconstruct.smeltery.TinkerSmeltery;
 import slimeknights.tconstruct.tools.TinkerMaterials;
 import slimeknights.tconstruct.tools.TinkerTraits;
 import slimeknights.tconstruct.tools.traits.TraitSlimey;
+
 import static slimeknights.tconstruct.library.utils.HarvestLevels.STONE;
 
 public class TinkersCompat {

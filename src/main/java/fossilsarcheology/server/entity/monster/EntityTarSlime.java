@@ -3,7 +3,6 @@ package fossilsarcheology.server.entity.monster;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.item.FAItemRegistry;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;

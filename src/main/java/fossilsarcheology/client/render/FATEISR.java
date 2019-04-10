@@ -1,12 +1,10 @@
 package fossilsarcheology.client.render;
 
-import fossilsarcheology.client.render.entity.RenderAnuStatue;
 import fossilsarcheology.client.render.tile.TileEntityAncientChestRender;
 import fossilsarcheology.client.render.tile.TileEntityAnuStatueRender;
 import fossilsarcheology.client.render.tile.TileEntityAnubiteStatueRender;
 import fossilsarcheology.client.render.tile.TileEntitySarcophagusRender;
 import fossilsarcheology.server.block.FABlockRegistry;
-import fossilsarcheology.server.block.entity.TileEntityAnubiteStatue;
 import net.minecraft.client.renderer.tileentity.TileEntityItemStackRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

@@ -2,7 +2,6 @@ package fossilsarcheology.server.recipe;
 
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.block.entity.TileEntitySifter;
-import fossilsarcheology.server.compat.jei.sifter.RecipeSifter;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.entity.prehistoric.TimePeriod;
 import fossilsarcheology.server.item.FAItemRegistry;

@@ -1,13 +1,12 @@
 package fossilsarcheology.server.recipe;
 
-import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
-import org.apache.commons.lang3.tuple.Pair;
 
-import java.util.*;
+import java.util.NavigableMap;
+import java.util.Random;
+import java.util.TreeMap;
 
 public class RecipeAnalyzer {
 

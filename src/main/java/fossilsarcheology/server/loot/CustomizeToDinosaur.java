@@ -6,7 +6,6 @@ import com.google.gson.JsonSerializationContext;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.item.DinosaurBoneItem;
-import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.item.ItemDinoMeat;
 import fossilsarcheology.server.item.variant.DinosaurBoneType;
 import net.minecraft.item.ItemStack;

@@ -2,10 +2,8 @@ package fossilsarcheology.client.render.entity;
 
 import fossilsarcheology.client.model.ModelQuagga;
 import fossilsarcheology.server.entity.prehistoric.EntityQuagga;
-import net.minecraft.client.renderer.entity.RenderAbstractHorse;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
-import net.minecraft.entity.passive.AbstractHorse;
 import net.minecraft.util.ResourceLocation;
 
 public class RenderQuagga extends RenderLiving<EntityQuagga> {

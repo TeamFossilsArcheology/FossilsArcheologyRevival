@@ -12,8 +12,6 @@ import net.minecraft.util.Mirror;
 import net.minecraft.util.Rotation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.Optional;
-import thaumcraft.api.crafting.IInfusionStabiliser;
 
 public class SkullBlock extends BlockHorizontal implements DefaultRenderedItem {
 

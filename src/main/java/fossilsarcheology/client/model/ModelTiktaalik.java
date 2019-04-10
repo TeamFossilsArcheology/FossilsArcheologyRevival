@@ -1,7 +1,5 @@
 package fossilsarcheology.client.model;
 
-import fossilsarcheology.server.entity.prehistoric.EntityMegalograptus;
-import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.EntityTiktaalik;
 import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
