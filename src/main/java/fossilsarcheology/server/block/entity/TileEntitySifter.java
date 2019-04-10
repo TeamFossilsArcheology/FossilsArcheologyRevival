@@ -2,6 +2,7 @@ package fossilsarcheology.server.block.entity;
 
 import fossilsarcheology.server.block.SifterBlock;
 import fossilsarcheology.server.item.FAItemRegistry;
+import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import net.minecraft.block.BlockConcretePowder;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -204,13 +205,16 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
         }
     }
 
+    public static boolean isAnalyzable(ItemStack stack){
+        return FAMachineRecipeRegistry.getSifterRecipeForItem(stack) != null;
+    }
+
     private boolean canSmelt() {
         this.spaceIndex = -1;
         this.rawIndex = -1;
         for (int var1 = 0; var1 < 1; ++var1) {
             if (!this.stacks.get(var1).isEmpty()) {
-                EnumSiftType siftType = getSiftTypeFromStack(this.stacks.get(var1));
-                if (siftType != EnumSiftType.NONE) {
+                if (isAnalyzable(this.stacks.get(var1))) {
                     this.rawIndex = var1;
                     break;
                 }
@@ -232,39 +236,7 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
     public void smeltItem() {
         if (this.canSmelt()) {
             ItemStack result = ItemStack.EMPTY;
-            int randomloot = (new Random()).nextInt(100);
-            double random = (new Random()).nextInt(100);
-            int var3;
-            EnumSiftType siftType = getSiftTypeFromStack(this.stacks.get(this.rawIndex));
-            if (siftType != EnumSiftType.NONE) {
-                if (randomloot < 80) {
-                    if (random < 75) {
-                        result = ItemStack.EMPTY;
-                    } else {
-                        result = this.stacks.get(this.spaceIndex);
-                    }
-                } else {
-                    if (random < 1) {
-                        result = new ItemStack(FAItemRegistry.DOMINICAN_AMBER, 1);
-                    } else if (random < 15) {
-                        result = new ItemStack(FAItemRegistry.PLANT_FOSSIL, 1);
-                    } else if (random < 30) {
-                        result = new ItemStack(Items.POTATO, 1);
-                    } else if (random < 40) {
-                        result = new ItemStack(Items.CARROT, 1);
-                    } else if (random < 60) {
-                        result = new ItemStack(Items.DYE, 1, 15);
-                    } else if (random < 80) {
-                        result = new ItemStack(Blocks.SAND, 1);
-                    } else if (random < 90) {
-                        result = new ItemStack(FAItemRegistry.FERN_SEED, 2);
-                    } else if (random < 95) {
-                        result = new ItemStack(FAItemRegistry.POTTERY_SHARD, 3);
-                    } else if (random <= 100) {
-                        result = new ItemStack(FAItemRegistry.BIOFOSSIL, 1);
-                    }
-                }
-            }
+            result = FAMachineRecipeRegistry.getSifterRecipeForItem(this.stacks.get(rawIndex)).generateOutput(new Random());
             for (int slots = 1; slots < 5; slots++) {
                 ItemStack stackInSlot = this.stacks.get(slots);
                 if (!stackInSlot.isEmpty()) {

@@ -1,6 +1,8 @@
 package fossilsarcheology.server.recipe;
 
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.block.entity.TileEntitySifter;
+import fossilsarcheology.server.compat.jei.sifter.RecipeSifter;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.entity.prehistoric.TimePeriod;
 import fossilsarcheology.server.item.FAItemRegistry;
@@ -8,7 +10,10 @@ import fossilsarcheology.server.item.FossilSeedsItem;
 import fossilsarcheology.server.item.variant.DinosaurBoneType;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
@@ -16,6 +21,8 @@ import java.util.List;
 
 public class FAMachineRecipeRegistry {
     public static List<RecipeAnalyzer> analyzerRecipes = new ArrayList<>();
+    public static List<RecipeAnalyzer> sifterRecipes = new ArrayList<>();
+
 
     public static void init() {
         RecipeAnalyzer plantFossil = new RecipeAnalyzer(FAItemRegistry.PLANT_FOSSIL)
@@ -169,14 +176,54 @@ public class FAMachineRecipeRegistry {
                 .addOutput(new ItemStack(Items.PUMPKIN_SEEDS), 1)
                 .addOutput(new ItemStack(Items.MELON_SEEDS), 1)
         );
+        List<ItemStack> sediment = new ArrayList<>();
+        for (Item item : Item.REGISTRY) {
+            if (item instanceof ItemBlock && TileEntitySifter.getSiftTypeFromStack(new ItemStack(item)) != TileEntitySifter.EnumSiftType.NONE) {
+                NonNullList<ItemStack> items = NonNullList.create();
+                if (item.getCreativeTab() != null) {
+                    item.getSubItems(item.getCreativeTab(), items);
+                    sediment.addAll(items);
+                }
+            }
+        }
+        for (ItemStack itemstack : sediment) {
+            RecipeAnalyzer sifterRecipe = new RecipeAnalyzer(itemstack);
+            if(itemstack.getItem() == Item.getItemFromBlock(Blocks.SAND)){
+                sifterRecipe.addOutput(new ItemStack(Blocks.SAND), 25);
+            }else{
+                sifterRecipe.addOutput(new ItemStack(Blocks.SAND), 20);
+            }
+            sifterRecipe.addOutput(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), 1);
+            sifterRecipe.addOutput(new ItemStack(FAItemRegistry.PLANT_FOSSIL), 14);
+            sifterRecipe.addOutput(new ItemStack(Items.POTATO), 15);
+            sifterRecipe.addOutput(new ItemStack(Items.CARROT), 10);
+            sifterRecipe.addOutput(new ItemStack(Items.DYE, 1, 15), 20);
+            sifterRecipe.addOutput(new ItemStack(FAItemRegistry.FERN_SEED), 10);
+            sifterRecipe.addOutput(new ItemStack(FAItemRegistry.POTTERY_SHARD), 5);
+            sifterRecipe.addOutput(new ItemStack(FAItemRegistry.BIOFOSSIL), 5);
+            registerSifter(sifterRecipe);
+        }
     }
 
     private static void register(RecipeAnalyzer recipe) {
         analyzerRecipes.add(recipe);
     }
 
+    private static void registerSifter(RecipeAnalyzer recipe) {
+        sifterRecipes.add(recipe);
+    }
+
     public static RecipeAnalyzer getAnalyzerRecipeForItem(ItemStack stack) {
         for (RecipeAnalyzer recipe : analyzerRecipes) {
+            if (OreDictionary.itemMatches(recipe.getInput(), stack, false)) {
+                return recipe;
+            }
+        }
+        return null;
+    }
+
+    public static RecipeAnalyzer getSifterRecipeForItem(ItemStack stack) {
+        for (RecipeAnalyzer recipe : sifterRecipes) {
             if (OreDictionary.itemMatches(recipe.getInput(), stack, false)) {
                 return recipe;
             }
