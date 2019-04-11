@@ -9,7 +9,7 @@ public class WorktableRecipeHandler implements IRecipeHandler<WorktableRecipeWra
 
     @Override
     public Class getRecipeClass() {
-        return RecipeWorktable.class;
+        return JEIRecipeWorktable.class;
     }
 
     @Override

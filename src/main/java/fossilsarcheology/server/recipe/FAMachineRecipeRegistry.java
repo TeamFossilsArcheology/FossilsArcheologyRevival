@@ -1,6 +1,8 @@
 package fossilsarcheology.server.recipe;
 
+import com.google.common.collect.Maps;
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.block.entity.TileEntityCultivate;
 import fossilsarcheology.server.block.entity.TileEntitySifter;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.entity.prehistoric.TimePeriod;
@@ -17,10 +19,13 @@ import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class FAMachineRecipeRegistry {
     public static List<RecipeAnalyzer> analyzerRecipes = new ArrayList<>();
     public static List<RecipeAnalyzer> sifterRecipes = new ArrayList<>();
+    public static Map<ItemStack, ItemStack> cultivateRecipes = Maps.<ItemStack, ItemStack>newHashMap();
+    public static List<RecipeWorktable> worktableRecipes = new ArrayList<>();
 
 
     public static void init() {
@@ -34,7 +39,7 @@ public class FAMachineRecipeRegistry {
         for (int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++) {
             plantFossil.addOutput(new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, i), seedWeight);
         }
-        register(plantFossil);
+        registerAnalyzer(plantFossil);
         RecipeAnalyzer bioFossil = new RecipeAnalyzer(FAItemRegistry.BIOFOSSIL)
                 .addOutput(new ItemStack(Items.DYE, 1, 15), 50F)
                 .addOutput(new ItemStack(Blocks.SAND, 2), 35F);
@@ -43,38 +48,38 @@ public class FAMachineRecipeRegistry {
         for (int i = 0; i < bioFossilEntityList.size(); i++) {
             bioFossil.addOutput(new ItemStack(bioFossilEntityList.get(i).dnaItem), bioFossilDNAChance);
         }
-        register(bioFossil);
+        registerAnalyzer(bioFossil);
         for (DinosaurBoneType type : DinosaurBoneType.values()) {
-            register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.LEG_BONE, 1, type.ordinal()))
+            registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.LEG_BONE, 1, type.ordinal()))
                     .addOutput(new ItemStack(Items.DYE, 1, 15), 30)
                     .addOutput(new ItemStack(Items.BONE), 35)
                     .addOutput(new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[type.ordinal()]).dnaItem), 35));
-            register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, type.ordinal()))
+            registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, type.ordinal()))
                     .addOutput(new ItemStack(Items.DYE, 1, 15), 30)
                     .addOutput(new ItemStack(Items.BONE), 35)
                     .addOutput(new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[type.ordinal()]).dnaItem), 35));
-            register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.FOOT, 1, type.ordinal()))
+            registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.FOOT, 1, type.ordinal()))
                     .addOutput(new ItemStack(Items.DYE, 1, 15), 30)
                     .addOutput(new ItemStack(Items.BONE), 35)
                     .addOutput(new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[type.ordinal()]).dnaItem), 35));
-            register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.SKULL, 1, type.ordinal()))
+            registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.SKULL, 1, type.ordinal()))
                     .addOutput(new ItemStack(Items.DYE, 1, 15), 30)
                     .addOutput(new ItemStack(Items.BONE), 35)
                     .addOutput(new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[type.ordinal()]).dnaItem), 35));
-            register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.ARM_BONE, 1, type.ordinal()))
+            registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.ARM_BONE, 1, type.ordinal()))
                     .addOutput(new ItemStack(Items.DYE, 1, 15), 30)
                     .addOutput(new ItemStack(Items.BONE), 35)
                     .addOutput(new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[type.ordinal()]).dnaItem), 35));
-            register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.RIBCAGE, 1, type.ordinal()))
+            registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.RIBCAGE, 1, type.ordinal()))
                     .addOutput(new ItemStack(Items.DYE, 1, 15), 30)
                     .addOutput(new ItemStack(Items.BONE), 35)
                     .addOutput(new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[type.ordinal()]).dnaItem), 35));
-            register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.VERTEBRAE, 1, type.ordinal()))
+            registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.VERTEBRAE, 1, type.ordinal()))
                     .addOutput(new ItemStack(Items.DYE, 1, 15), 30)
                     .addOutput(new ItemStack(Items.BONE), 35)
                     .addOutput(new ItemStack(DinosaurBoneType.getEntity(DinosaurBoneType.values()[type.ordinal()]).dnaItem), 35));
         }
-        register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.TARDROP))
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.TARDROP))
                 .addOutput(new ItemStack(Items.COAL), 20)
                 .addOutput(new ItemStack(Items.COAL, 1, 1), 20)
                 .addOutput(new ItemStack(FAItemRegistry.TAR_FOSSIL), 45)
@@ -87,23 +92,23 @@ public class FAMachineRecipeRegistry {
         for (PrehistoricEntityType type : tarFossilEntityList) {
             tarFossil.addOutput(new ItemStack(type.dnaItem), tarFossilDNAChance);
         }
-        register(tarFossil);
-        register(new RecipeAnalyzer(new ItemStack(Blocks.WOOL))
+        registerAnalyzer(tarFossil);
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Blocks.WOOL))
                 .addOutput(new ItemStack(Items.STRING, 3), 60)
                 .addOutput(new ItemStack(PrehistoricEntityType.SHEEP.dnaItem), 27)
                 .addOutput(new ItemStack(PrehistoricEntityType.LLAMA.dnaItem), 13));
-        register(new RecipeAnalyzer(new ItemStack(Items.PORKCHOP)).addOutput(new ItemStack(PrehistoricEntityType.PIG.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.BEEF)).addOutput(new ItemStack(PrehistoricEntityType.COW.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.MUTTON)).addOutput(new ItemStack(PrehistoricEntityType.SHEEP.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.CHICKEN)).addOutput(new ItemStack(PrehistoricEntityType.CHICKEN.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.EGG)).addOutput(new ItemStack(PrehistoricEntityType.CHICKEN.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.FEATHER))
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.PORKCHOP)).addOutput(new ItemStack(PrehistoricEntityType.PIG.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.BEEF)).addOutput(new ItemStack(PrehistoricEntityType.COW.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.MUTTON)).addOutput(new ItemStack(PrehistoricEntityType.SHEEP.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.CHICKEN)).addOutput(new ItemStack(PrehistoricEntityType.CHICKEN.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.EGG)).addOutput(new ItemStack(PrehistoricEntityType.CHICKEN.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.FEATHER))
                 .addOutput(new ItemStack(PrehistoricEntityType.CHICKEN.dnaItem), 95)
                 .addOutput(new ItemStack(PrehistoricEntityType.PARROT.dnaItem), 5));
-        register(new RecipeAnalyzer(new ItemStack(Items.RABBIT)).addOutput(new ItemStack(PrehistoricEntityType.RABBIT.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.RABBIT_FOOT)).addOutput(new ItemStack(PrehistoricEntityType.RABBIT.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.RABBIT_HIDE)).addOutput(new ItemStack(PrehistoricEntityType.RABBIT.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.FISH))
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.RABBIT)).addOutput(new ItemStack(PrehistoricEntityType.RABBIT.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.RABBIT_FOOT)).addOutput(new ItemStack(PrehistoricEntityType.RABBIT.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.RABBIT_HIDE)).addOutput(new ItemStack(PrehistoricEntityType.RABBIT.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.FISH))
                 .addOutput(new ItemStack(PrehistoricEntityType.POLARBEAR.dnaItem), 10)
                 .addOutput(new ItemStack(Items.PRISMARINE_CRYSTALS), 15)
                 .addOutput(new ItemStack(Items.DYE, 1, 15), 75));
@@ -112,27 +117,27 @@ public class FAMachineRecipeRegistry {
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             failuresaurusFlesh.addOutput(new ItemStack(type.dnaItem), failuresaurusDNAChance);
             if (type.foodItem != null) {
-                register(new RecipeAnalyzer(new ItemStack(type.foodItem)).addOutput(new ItemStack(type.dnaItem), 100));
+                registerAnalyzer(new RecipeAnalyzer(new ItemStack(type.foodItem)).addOutput(new ItemStack(type.dnaItem), 100));
             }
             if (type.eggItem != null) {
-                register(new RecipeAnalyzer(new ItemStack(type.eggItem)).addOutput(new ItemStack(type.dnaItem), 100));
+                registerAnalyzer(new RecipeAnalyzer(new ItemStack(type.eggItem)).addOutput(new ItemStack(type.dnaItem), 100));
             }
             if (type.birdEggItem != null) {
-                register(new RecipeAnalyzer(new ItemStack(type.birdEggItem)).addOutput(new ItemStack(type.dnaItem), 100));
+                registerAnalyzer(new RecipeAnalyzer(new ItemStack(type.birdEggItem)).addOutput(new ItemStack(type.dnaItem), 100));
             }
             if (type.bestBirdEggItem != null) {
-                register(new RecipeAnalyzer(new ItemStack(type.bestBirdEggItem)).addOutput(new ItemStack(type.dnaItem), 100));
+                registerAnalyzer(new RecipeAnalyzer(new ItemStack(type.bestBirdEggItem)).addOutput(new ItemStack(type.dnaItem), 100));
             }
             if (type.fishItem != null) {
-                register(new RecipeAnalyzer(new ItemStack(type.fishItem)).addOutput(new ItemStack(type.dnaItem), 100));
+                registerAnalyzer(new RecipeAnalyzer(new ItemStack(type.fishItem)).addOutput(new ItemStack(type.dnaItem), 100));
             }
             if (type.embryoItem != null) {
-                register(new RecipeAnalyzer(new ItemStack(type.embryoItem)).addOutput(new ItemStack(type.dnaItem), 100));
+                registerAnalyzer(new RecipeAnalyzer(new ItemStack(type.embryoItem)).addOutput(new ItemStack(type.dnaItem), 100));
             }
         }
-        register(failuresaurusFlesh);
-        register(new RecipeAnalyzer(new ItemStack(FAItemRegistry.SHELL)).addOutput(new ItemStack(PrehistoricEntityType.NAUTILUS.dnaItem), 100));
-        register(new RecipeAnalyzer(new ItemStack(Items.LEATHER))
+        registerAnalyzer(failuresaurusFlesh);
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(FAItemRegistry.SHELL)).addOutput(new ItemStack(PrehistoricEntityType.NAUTILUS.dnaItem), 100));
+        registerAnalyzer(new RecipeAnalyzer(new ItemStack(Items.LEATHER))
                 .addOutput(new ItemStack(PrehistoricEntityType.COW.dnaItem), 60)
                 .addOutput(new ItemStack(PrehistoricEntityType.DONKEY.dnaItem), 10)
                 .addOutput(new ItemStack(PrehistoricEntityType.HORSE.dnaItem), 30));
@@ -145,7 +150,7 @@ public class FAMachineRecipeRegistry {
         for (PrehistoricEntityType type : tarFossilEntityList) {
             icedMeat.addOutput(new ItemStack(type.dnaItem), tarFossilDNAChance);
         }
-        register(icedMeat);
+        registerAnalyzer(icedMeat);
         RecipeAnalyzer relicScrap = new RecipeAnalyzer(FAItemRegistry.RELIC_SCRAP);
         relicScrap.addOutput(new ItemStack(Blocks.GRAVEL), 30);
         relicScrap.addOutput(new ItemStack(FAItemRegistry.STONE_TABLET), 30);
@@ -161,8 +166,8 @@ public class FAMachineRecipeRegistry {
         for (int i = 0; i <= 5; i++) {
             relicScrap.addOutput(new ItemStack(FABlockRegistry.FIGURINE, 1, 10 + i), brokenFigureWeight);
         }
-        register(relicScrap);
-        register(new RecipeAnalyzer(FAItemRegistry.DOMINICAN_AMBER)
+        registerAnalyzer(relicScrap);
+        registerAnalyzer(new RecipeAnalyzer(FAItemRegistry.DOMINICAN_AMBER)
                 .addOutput(new ItemStack(Items.SPIDER_EYE), 9)
                 .addOutput(new ItemStack(Items.STRING), 10)
                 .addOutput(new ItemStack(Blocks.DIRT), 25)
@@ -187,9 +192,9 @@ public class FAMachineRecipeRegistry {
         }
         for (ItemStack itemstack : sediment) {
             RecipeAnalyzer sifterRecipe = new RecipeAnalyzer(itemstack);
-            if(itemstack.getItem() == Item.getItemFromBlock(Blocks.SAND)){
+            if (itemstack.getItem() == Item.getItemFromBlock(Blocks.SAND)) {
                 sifterRecipe.addOutput(new ItemStack(Blocks.SAND), 25);
-            }else{
+            } else {
                 sifterRecipe.addOutput(new ItemStack(Blocks.SAND), 20);
             }
             sifterRecipe.addOutput(new ItemStack(FAItemRegistry.DOMINICAN_AMBER), 1);
@@ -202,15 +207,70 @@ public class FAMachineRecipeRegistry {
             sifterRecipe.addOutput(new ItemStack(FAItemRegistry.BIOFOSSIL), 5);
             registerSifter(sifterRecipe);
         }
+        for(PrehistoricEntityType type : PrehistoricEntityType.values()){
+            registerCultivate(new ItemStack(type.dnaItem), TileEntityCultivate.getCultivationOutput(new ItemStack(type.dnaItem)));
+        }
+        for(int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++){
+            registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, i), new ItemStack(FAItemRegistry.SEED, 1, i));
+        }
+        registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN), new ItemStack(FAItemRegistry.FERN_SEED));
+        registerWorktable(new ItemStack(FAItemRegistry.BROKEN_SWORD), new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.BROKEN_HELMET), new ItemStack(FAItemRegistry.ANCIENT_HELMET), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.ANCIENT_HELMET), new ItemStack(FAItemRegistry.ANCIENT_HELMET), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.SCARAB_AXE), new ItemStack(FAItemRegistry.SCARAB_AXE), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.SCARAB_PICKAXE), new ItemStack(FAItemRegistry.SCARAB_PICKAXE), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.SCARAB_SWORD), new ItemStack(FAItemRegistry.SCARAB_SWORD), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.SCARAB_HOE), new ItemStack(FAItemRegistry.SCARAB_HOE), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.SCARAB_SHOVEL), new ItemStack(FAItemRegistry.SCARAB_SHOVEL), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.WOODEN_JAVELIN), new ItemStack(FAItemRegistry.WOODEN_JAVELIN), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.STONE_JAVELIN), new ItemStack(FAItemRegistry.STONE_JAVELIN), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.IRON_JAVELIN), new ItemStack(FAItemRegistry.IRON_JAVELIN), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.GOLD_JAVELIN), new ItemStack(FAItemRegistry.GOLD_JAVELIN), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.DIAMOND_JAVELIN), new ItemStack(FAItemRegistry.DIAMOND_JAVELIN), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FAItemRegistry.ANCIENT_JAVELIN), new ItemStack(FAItemRegistry.ANCIENT_JAVELIN), new ItemStack(FAItemRegistry.RELIC_SCRAP));
+        registerWorktable(new ItemStack(FABlockRegistry.KYLIX_VASE, 1, 0), new ItemStack(FABlockRegistry.KYLIX_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD));
+        registerWorktable(new ItemStack(FABlockRegistry.VOLUTE_VASE, 1, 0), new ItemStack(FABlockRegistry.VOLUTE_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD));
+        registerWorktable(new ItemStack(FABlockRegistry.AMPHORA_VASE, 1, 0), new ItemStack(FABlockRegistry.AMPHORA_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD));
+        for(int i = 5; i <= 14; i++){
+            registerWorktable(new ItemStack(FABlockRegistry.FIGURINE, 1, i), new ItemStack(FABlockRegistry.FIGURINE, 1, i - 5), new ItemStack(FAItemRegistry.POTTERY_SHARD));
+        }
     }
 
-    private static void register(RecipeAnalyzer recipe) {
+    private static void registerAnalyzer(RecipeAnalyzer recipe) {
         analyzerRecipes.add(recipe);
     }
 
     private static void registerSifter(RecipeAnalyzer recipe) {
         sifterRecipes.add(recipe);
     }
+
+    private static void registerCultivate(ItemStack input, ItemStack output) {
+        cultivateRecipes.put(input, output);
+    }
+
+    private static void registerWorktable(ItemStack input, ItemStack output, ItemStack fuel) {
+        worktableRecipes.add(new RecipeWorktable(input, output, fuel));
+    }
+
+    public static ItemStack getCultivateResult(ItemStack stack) {
+        for (Map.Entry<ItemStack, ItemStack> entry : cultivateRecipes.entrySet()) {
+            if (OreDictionary.itemMatches(stack, entry.getKey(), false)) {
+                return entry.getValue();
+            }
+        }
+        return ItemStack.EMPTY;
+    }
+
+    public static RecipeWorktable getWorktableRecipeForItem(ItemStack stack) {
+        for (RecipeWorktable recipe : worktableRecipes) {
+            if (stack.isItemStackDamageable() && stack.getItem() == recipe.getInput().getItem() || OreDictionary.itemMatches(recipe.getInput(), stack, false)) {
+                return recipe;
+            }
+        }
+        return null;
+    }
+
 
     public static RecipeAnalyzer getAnalyzerRecipeForItem(ItemStack stack) {
         for (RecipeAnalyzer recipe : analyzerRecipes) {

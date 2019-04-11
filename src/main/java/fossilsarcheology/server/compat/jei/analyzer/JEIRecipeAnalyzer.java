@@ -6,9 +6,9 @@ public class JEIRecipeAnalyzer {
 
     private ItemStack input;
     private ItemStack output;
-    private int chance;
+    private float chance;
 
-    public JEIRecipeAnalyzer(ItemStack input, ItemStack output, int chance){
+    public JEIRecipeAnalyzer(ItemStack input, ItemStack output, float chance){
         this.input = input;
         this.output = output;
         this.chance = chance;
@@ -23,6 +23,6 @@ public class JEIRecipeAnalyzer {
     }
 
     public int getOutputChance() {
-        return chance;
+        return (int)Math.floor(chance);
     }
 }

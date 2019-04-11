@@ -4,6 +4,8 @@ import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.block.VaseBlock;
 import fossilsarcheology.server.block.WorktableBlock;
 import fossilsarcheology.server.item.FAItemRegistry;
+import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
+import fossilsarcheology.server.recipe.RecipeWorktable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.inventory.IInventory;
@@ -222,117 +224,10 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
     }
 
     private ItemStack checkSmelt(ItemStack itemstack) {
-        ItemStack output = null;
-
-        if (itemstack.getItem() == FAItemRegistry.BROKEN_SWORD) {
-            return new ItemStack(FAItemRegistry.ANCIENT_SWORD);
+        RecipeWorktable recipeWorktable = FAMachineRecipeRegistry.getWorktableRecipeForItem(itemstack);
+        if(recipeWorktable != null){
+            return recipeWorktable.getOutput();
         }
-
-        if (itemstack.getItem() == FAItemRegistry.BROKEN_HELMET) {
-            return new ItemStack(FAItemRegistry.ANCIENT_HELMET);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.ANCIENT_SWORD) {
-            output = new ItemStack(FAItemRegistry.ANCIENT_SWORD);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.ANCIENT_HELMET) {
-            output = new ItemStack(FAItemRegistry.ANCIENT_HELMET);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.SCARAB_AXE) {
-            output = new ItemStack(FAItemRegistry.SCARAB_AXE);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.SCARAB_PICKAXE) {
-            output = new ItemStack(FAItemRegistry.SCARAB_PICKAXE);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.SCARAB_SWORD) {
-            output = new ItemStack(FAItemRegistry.SCARAB_SWORD);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.SCARAB_HOE) {
-            output = new ItemStack(FAItemRegistry.SCARAB_HOE);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.SCARAB_SHOVEL) {
-            output = new ItemStack(FAItemRegistry.SCARAB_SHOVEL);
-        }
-
-        if (output != null) {
-            if (itemstack.getItemDamage() / itemstack.getMaxDamage() >= 0.1F) {
-                output.setItemDamage(itemstack.getItemDamage() - (int) (0.1 * itemstack.getMaxDamage()));
-            } else {
-                output.setItemDamage(0);
-            }
-
-            return output;
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.WOODEN_JAVELIN) {
-            output = new ItemStack(FAItemRegistry.WOODEN_JAVELIN, 1);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.STONE_JAVELIN) {
-            output = new ItemStack(FAItemRegistry.STONE_JAVELIN, 1);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.IRON_JAVELIN) {
-            output = new ItemStack(FAItemRegistry.IRON_JAVELIN, 1);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.GOLD_JAVELIN) {
-            output = new ItemStack(FAItemRegistry.GOLD_JAVELIN, 1);
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.DIAMOND_JAVELIN) {
-            output = new ItemStack(FAItemRegistry.DIAMOND_JAVELIN, 1);
-        }
-
-        if (output != null) {
-            if (itemstack.getItemDamage() > 5) {
-                output.setItemDamage(itemstack.getItemDamage() - 5);
-            } else {
-                output.setItemDamage(0);
-            }
-
-            return output;
-        }
-
-        if (itemstack.getItem() == FAItemRegistry.ANCIENT_JAVELIN) {
-            output = new ItemStack(FAItemRegistry.ANCIENT_JAVELIN, 1);
-
-            if (itemstack.getItemDamage() > 3) {
-                output.setItemDamage(itemstack.getItemDamage() - 3);
-            } else {
-                output.setItemDamage(0);
-            }
-
-            return output;
-        }
-
-        if (itemstack.getItem() == new ItemStack(FABlockRegistry.KYLIX_VASE).getItem() && itemstack.getItemDamage() == 0) {
-            output = new ItemStack(FABlockRegistry.KYLIX_VASE, 1, 1);
-            return output;
-        }
-
-        if (itemstack.getItem() == new ItemStack(FABlockRegistry.AMPHORA_VASE).getItem() && itemstack.getItemDamage() == 0) {
-            output = new ItemStack(FABlockRegistry.AMPHORA_VASE, 1, 1);
-            return output;
-        }
-
-        if (itemstack.getItem() == new ItemStack(FABlockRegistry.VOLUTE_VASE).getItem() && itemstack.getItemDamage() == 0) {
-            output = new ItemStack(FABlockRegistry.VOLUTE_VASE, 1, 1);
-            return output;
-        }
-
-        if (itemstack.getItem() == new ItemStack(FABlockRegistry.FIGURINE).getItem() &&  itemstack.getItemDamage() < 15 && itemstack.getItemDamage() >= 5) {
-            int metadata = itemstack.getItemDamage();
-            output = new ItemStack(FABlockRegistry.FIGURINE, 1, metadata - 5);
-            return output;
-        }
-
         return null;
     }
 
@@ -364,8 +259,6 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
         if (this.stacks.get(0).isEmpty()) {
             return false;
         } else {
-            // ItemStack var1 =
-            // this.CheckSmelt(this.stacks.get(0).getItem());
             ItemStack var1 = this.checkSmelt(this.stacks.get(0));
             return var1 != null && !var1.isEmpty() && (this.stacks.get(2).isEmpty() || (this.stacks.get(2).isItemEqual(var1) && (this.stacks.get(2).getCount() < this.getInventoryStackLimit() && this.stacks.get(2).getCount() < this.stacks.get(2).getMaxStackSize() || this.stacks.get(2).getCount() < var1.getMaxStackSize())));
         }
@@ -376,10 +269,11 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
             return 0;
         } else {
             Item var2 = itemstack.getItem();
-            if(this.stacks.get(0).getItem() instanceof VaseBlock.VaseItemBlock || this.stacks.get(0).getItem() == Item.getItemFromBlock(FABlockRegistry.FIGURINE)){
-                return var2 == FAItemRegistry.POTTERY_SHARD ? 300 : 0;
+            RecipeWorktable recipeWorktable = FAMachineRecipeRegistry.getWorktableRecipeForItem(this.stacks.get(0));
+            if(recipeWorktable != null){
+                return var2 == recipeWorktable.getFuel().getItem() ? 300 : 0;
             }
-            return var2 == FAItemRegistry.RELIC_SCRAP ? 300 : 0;
+            return 0;
         }
     }
 

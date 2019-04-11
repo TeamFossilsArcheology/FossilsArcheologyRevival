@@ -9,9 +9,9 @@ import java.util.List;
 
 public class WorktableRecipeWrapper implements IRecipeWrapper {
 
-    private RecipeWorktable recipeWorktable;
+    private JEIRecipeWorktable recipeWorktable;
 
-    public WorktableRecipeWrapper(RecipeWorktable recipeWorktable){
+    public WorktableRecipeWrapper(JEIRecipeWorktable recipeWorktable){
        this.recipeWorktable = recipeWorktable;
     }
 
@@ -24,7 +24,7 @@ public class WorktableRecipeWrapper implements IRecipeWrapper {
         ingredients.setOutput(ItemStack.class,recipeWorktable.getOutput());
     }
 
-    public RecipeWorktable getRecipeWorktable() {
+    public JEIRecipeWorktable getRecipeWorktable() {
         return recipeWorktable;
     }
 }

@@ -42,7 +42,7 @@ public class FAJEIPlugin implements IModPlugin {
 
         registry.addRecipes(WorktableRecipes.getRecipes(), WORKTABLE_UID);
         registry.addRecipeHandlers(new WorktableRecipeHandler());
-        registry.handleRecipes(RecipeWorktable.class, new WorktableFactory(), WORKTABLE_UID);
+        registry.handleRecipes(JEIRecipeWorktable.class, new WorktableFactory(), WORKTABLE_UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(FABlockRegistry.WORKTABLE_IDLE), WORKTABLE_UID);
         registry.addRecipeClickArea(WorktableGUI.class, 79, 19, 26, 16, WORKTABLE_UID);
 
@@ -92,9 +92,9 @@ public class FAJEIPlugin implements IModPlugin {
         }
     }
 
-    public class WorktableFactory implements IRecipeWrapperFactory<RecipeWorktable> {
+    public class WorktableFactory implements IRecipeWrapperFactory<JEIRecipeWorktable> {
         @Override
-        public IRecipeWrapper getRecipeWrapper(RecipeWorktable recipe) {
+        public IRecipeWrapper getRecipeWrapper(JEIRecipeWorktable recipe) {
             return new WorktableRecipeWrapper(recipe);
         }
     }
