@@ -340,4 +340,23 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
     public void onDataPacket(NetworkManager netManager, SPacketUpdateTileEntity packet) {
         readFromNBT(packet.getNbtCompound());
     }
+
+    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
+    net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
+    net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @javax.annotation.Nullable
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
+    {
+        if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            if (facing == EnumFacing.DOWN)
+                return (T) handlerBottom;
+            else if (facing == EnumFacing.UP)
+                return (T) handlerTop;
+            else
+                return (T) handlerSide;
+        return super.getCapability(capability, facing);
+    }
 }

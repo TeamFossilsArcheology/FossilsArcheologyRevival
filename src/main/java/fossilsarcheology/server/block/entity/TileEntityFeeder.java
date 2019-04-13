@@ -300,4 +300,15 @@ public class TileEntityFeeder extends TileEntity implements IInventory, ISidedIn
     public int getVegBarScaled(int i) {
         return this.getField(1) * i / 10000;
     }
+
+    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @javax.annotation.Nullable
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
+        if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            return (T) handlerTop;
+        return super.getCapability(capability, facing);
+    }
 }

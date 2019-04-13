@@ -345,4 +345,19 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
         }
         return EnumSiftType.NONE;
     }
+
+    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
+    net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
+
+    @SuppressWarnings("unchecked")
+    @Override
+    @javax.annotation.Nullable
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
+        if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+            if (facing == EnumFacing.DOWN)
+                return (T) handlerBottom;
+            else
+                return (T) handlerTop;
+        return super.getCapability(capability, facing);
+    }
 }
