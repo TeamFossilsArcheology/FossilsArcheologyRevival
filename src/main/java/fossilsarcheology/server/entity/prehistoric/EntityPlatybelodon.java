@@ -159,23 +159,23 @@ public class EntityPlatybelodon extends EntityPrehistoric {
 	}
 
 	@Override
+	public boolean canBeRidden() {
+		return true;
+	}
+
+	@Override
 	protected SoundEvent getAmbientSound() {
-		return FASoundRegistry.MAMMOTH_LIVING;
+		return FASoundRegistry.PLATYBELODON_LIVING;
 	}
 
 	@Override
 	protected SoundEvent getHurtSound(DamageSource source) {
-		return FASoundRegistry.MAMMOTH_HURT;
+		return FASoundRegistry.PLATYBELODON_HURT;
 	}
 
 	@Override
 	protected SoundEvent getDeathSound() {
-		return FASoundRegistry.MAMMOTH_DEATH;
-	}
-
-	@Override
-	public boolean canBeRidden() {
-		return true;
+		return FASoundRegistry.PLATYBELODON_DEATH;
 	}
 
 }

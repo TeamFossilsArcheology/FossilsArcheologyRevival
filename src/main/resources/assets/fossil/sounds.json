@@ -1,4 +1,47 @@
 {
+  "platybelodon_death": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/platybelodon_death1"
+    ]
+  },
+  "platybelodon_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/platybelodon_hurt1"
+    ]
+  },
+  "platybelodon_living": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/platybelodon_living1",
+      "fossil:prehistoric/platybelodon_living2",
+      "fossil:prehistoric/platybelodon_living3"
+    ]
+  },
+  "tiktaalik_death": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/tiktaalik_death1",
+      "fossil:prehistoric/tiktaalik_death2"
+    ]
+  },
+  "tiktaalik_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/tiktaalik_hurt1",
+      "fossil:prehistoric/tiktaalik_hurt2"
+    ]
+  },
+  "tiktaalik_living": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/tiktaalik_living1",
+      "fossil:prehistoric/tiktaalik_living2",
+      "fossil:prehistoric/tiktaalik_living3",
+      "fossil:prehistoric/tiktaalik_living4"
+    ]
+  },
   "confusciusornis_death": {
     "category": "neutral",
     "sounds": [

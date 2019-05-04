@@ -216,17 +216,17 @@ public class EntityTiktaalik extends EntityPrehistoricSwimming {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return FASoundRegistry.SARCOSUCHUS_LIVING;
+        return this.isInWater() ? FASoundRegistry.TIKTAALIK_LIVING : FASoundRegistry.HENODUS_LIVING;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return FASoundRegistry.SARCOSUCHUS_HURT;
+        return FASoundRegistry.TIKTAALIK_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return FASoundRegistry.SARCOSUCHUS_DEATH;
+        return FASoundRegistry.TIKTAALIK_DEATH;
     }
 
     @Override
