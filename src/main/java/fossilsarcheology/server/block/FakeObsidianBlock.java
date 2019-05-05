@@ -30,6 +30,7 @@ public class FakeObsidianBlock extends Block implements DefaultRenderedItem {
         return Item.getItemFromBlock(Blocks.OBSIDIAN);
     }
 
+    @SuppressWarnings("deprecation")
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
         return new ItemStack(Blocks.OBSIDIAN);
     }

@@ -68,6 +68,7 @@ public class AnalyzerBlock extends BlockContainer implements DefaultRenderedItem
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;
@@ -78,6 +79,7 @@ public class AnalyzerBlock extends BlockContainer implements DefaultRenderedItem
 		return Item.getItemFromBlock(FABlockRegistry.ANALYZER);
 	}
 
+	@SuppressWarnings("deprecation")
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}

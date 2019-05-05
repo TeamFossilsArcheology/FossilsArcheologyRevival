@@ -45,6 +45,7 @@ public class AnuPortalBlock extends Block implements DefaultRenderedItem {
 		return false;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Deprecated
 	public void addCollisionBoxToList(IBlockState state, World worldIn, BlockPos pos, AxisAlignedBB entityBox, List<AxisAlignedBB> collidingBoxes, @Nullable Entity entityIn, boolean isActualState) {
 	}

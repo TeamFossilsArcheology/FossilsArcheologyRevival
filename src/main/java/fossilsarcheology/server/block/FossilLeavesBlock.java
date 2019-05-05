@@ -65,6 +65,7 @@ public class FossilLeavesBlock extends BlockLeaves implements DefaultRenderedIte
 		return i;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
 		return this.getDefaultState().withProperty(DECAYABLE, false);
@@ -75,11 +76,13 @@ public class FossilLeavesBlock extends BlockLeaves implements DefaultRenderedIte
 		return new BlockStateContainer(this, DECAYABLE, CHECK_DECAY);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return Blocks.LEAVES.isOpaqueCube(state);
 	}
 
+	@SuppressWarnings("deprecation")
 	@SideOnly(Side.CLIENT)
 	@Override
 	public boolean shouldSideBeRendered(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing side) {

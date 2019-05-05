@@ -43,7 +43,7 @@ public class FigurineBlock extends BlockContainer implements IBlockItem, BlockEn
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumType.FIGURINE_STEVE_PRISTINE));
     }
 
-    @Deprecated
+    @SuppressWarnings("deprecation")
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
@@ -97,6 +97,7 @@ public class FigurineBlock extends BlockContainer implements IBlockItem, BlockEn
         return BlockRenderLayer.CUTOUT;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;

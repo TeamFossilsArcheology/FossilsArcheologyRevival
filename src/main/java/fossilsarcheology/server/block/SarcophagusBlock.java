@@ -81,6 +81,7 @@ public class SarcophagusBlock extends BlockContainer implements DefaultRenderedI
 	}
 
 	@Override
+	@SuppressWarnings("deprecation")
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
 	}
@@ -102,7 +103,7 @@ public class SarcophagusBlock extends BlockContainer implements DefaultRenderedI
 	}
 
 	@Override
-    @Deprecated
+	@SuppressWarnings("deprecation")
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return new AxisAlignedBB(0F, 0.0F, 0F, 1F, 1.9F, 1);
 	}

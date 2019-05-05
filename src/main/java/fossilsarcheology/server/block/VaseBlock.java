@@ -36,7 +36,7 @@ public abstract class VaseBlock extends BlockContainer implements BlockEntity, I
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, VaseVariant.DAMAGED));
     }
 
-    @Deprecated
+    @SuppressWarnings("deprecation")
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }
@@ -95,6 +95,7 @@ public abstract class VaseBlock extends BlockContainer implements BlockEntity, I
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
     }

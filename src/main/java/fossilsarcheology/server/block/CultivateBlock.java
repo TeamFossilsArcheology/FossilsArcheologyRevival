@@ -137,6 +137,7 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
         world.spawnEntity(item);
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;

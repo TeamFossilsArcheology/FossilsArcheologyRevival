@@ -65,6 +65,7 @@ public class SifterBlock extends BlockContainer implements DefaultRenderedItem, 
 		}
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.MODEL;

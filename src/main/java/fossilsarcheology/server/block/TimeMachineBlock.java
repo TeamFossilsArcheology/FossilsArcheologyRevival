@@ -47,6 +47,7 @@ public class TimeMachineBlock extends BlockContainer implements DefaultRenderedI
     }
 
     @Override
+    @SuppressWarnings("deprecation")
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }

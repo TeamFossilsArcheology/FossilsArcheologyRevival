@@ -69,6 +69,7 @@ public class AnubiteStatueBlock extends BlockContainer implements DefaultRendere
 		return BlockRenderLayer.CUTOUT;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public EnumBlockRenderType getRenderType(IBlockState state) {
 		return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;

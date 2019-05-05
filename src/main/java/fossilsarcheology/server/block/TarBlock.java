@@ -33,6 +33,7 @@ public class TarBlock extends BlockFluidClassic {
 		this.setTranslationKey("tar");
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	@SideOnly(Side.CLIENT)
 	public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
@@ -44,6 +45,7 @@ public class TarBlock extends BlockFluidClassic {
 		return 30;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	@Nullable
 	public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
@@ -122,7 +124,7 @@ public class TarBlock extends BlockFluidClassic {
 		}
 	}
 
-	@Deprecated
+	@SuppressWarnings("deprecation")
 	public boolean causesSuffocation(IBlockState state) {
 		return true;
 	}

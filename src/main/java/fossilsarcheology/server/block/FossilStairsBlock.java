@@ -15,6 +15,7 @@ public class FossilStairsBlock extends BlockStairs implements DefaultRenderedIte
 		this.setRegistryName(name);
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public boolean isOpaqueCube(IBlockState state) {
 		return false;

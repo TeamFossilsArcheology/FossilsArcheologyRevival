@@ -33,7 +33,7 @@ public class ObsidianSpikesBlock extends Block implements DefaultRenderedItem {
         this.setTranslationKey("obsidian_spikes");
     }
 
-    @Deprecated
+    @SuppressWarnings("deprecation")
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
     }

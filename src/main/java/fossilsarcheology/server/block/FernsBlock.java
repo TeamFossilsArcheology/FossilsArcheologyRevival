@@ -53,6 +53,7 @@ public class FernsBlock extends BlockBush implements DefaultRenderedItem {
         return false;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
         return FERN_AABB;
@@ -64,6 +65,7 @@ public class FernsBlock extends BlockBush implements DefaultRenderedItem {
         return BlockRenderLayer.CUTOUT;
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public boolean isFullCube(IBlockState state) {
         return false;

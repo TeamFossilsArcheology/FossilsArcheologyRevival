@@ -38,6 +38,7 @@ public class FossilSaplingBlock extends BlockBush implements DefaultRenderedItem
 		return true;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
 		return SAPLING_AABB;
