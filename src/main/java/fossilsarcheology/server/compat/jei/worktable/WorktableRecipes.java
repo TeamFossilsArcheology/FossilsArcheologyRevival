@@ -1,17 +1,12 @@
 package fossilsarcheology.server.compat.jei.worktable;
 
-import fossilsarcheology.server.block.FABlockRegistry;
-import fossilsarcheology.server.compat.jei.analyzer.JEIRecipeAnalyzer;
-import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
-import fossilsarcheology.server.recipe.RecipeAnalyzer;
 import fossilsarcheology.server.recipe.RecipeWorktable;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 public class WorktableRecipes {

@@ -1,7 +1,5 @@
 package fossilsarcheology.server.compat.jei.culture;
 
-import fossilsarcheology.server.block.entity.TileEntityCultivate;
-import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import net.minecraft.init.Items;
