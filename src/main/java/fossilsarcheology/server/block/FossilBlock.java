@@ -94,7 +94,6 @@ public class FossilBlock extends Block implements DefaultRenderedItem {
 			this.randomMeta = 0;
 			return Item.getItemFromBlock(FABlockRegistry.SKULL_BLOCK);
 		} else if (i < 350) {
-
 			this.randomMeta = 0;
 			return FAItemRegistry.BIOFOSSIL;
 		} else if (i < 550) {
