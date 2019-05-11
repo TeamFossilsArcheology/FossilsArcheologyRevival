@@ -84,26 +84,6 @@ public class WorktableBlock extends BlockContainer implements DefaultRenderedIte
 		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
 	}
 
-	private void setDefaultFacing(World world, BlockPos pos, IBlockState state) {
-		if (!world.isRemote) {
-			IBlockState north = world.getBlockState(pos.north());
-			IBlockState south = world.getBlockState(pos.south());
-			IBlockState west = world.getBlockState(pos.west());
-			IBlockState east = world.getBlockState(pos.east());
-			EnumFacing facing = state.getValue(FACING);
-			if (facing == EnumFacing.NORTH && north.isFullBlock() && !south.isFullBlock()) {
-				facing = EnumFacing.SOUTH;
-			} else if (facing == EnumFacing.SOUTH && south.isFullBlock() && !north.isFullBlock()) {
-				facing = EnumFacing.NORTH;
-			} else if (facing == EnumFacing.WEST && west.isFullBlock() && !east.isFullBlock()) {
-				facing = EnumFacing.EAST;
-			} else if (facing == EnumFacing.EAST && east.isFullBlock() && !west.isFullBlock()) {
-				facing = EnumFacing.WEST;
-			}
-			world.setBlockState(pos, state.withProperty(FACING, facing), 2);
-		}
-	}
-
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
 		if (!world.isRemote) {
