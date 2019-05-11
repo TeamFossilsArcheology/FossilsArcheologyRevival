@@ -50,6 +50,8 @@ public class FossilConfig {
     public boolean spawnAlligatorGar = true;
     @ConfigEntry(category = "entity spawning")
     public boolean spawnNautilus = true;
+    @ConfigEntry(category = "entity spawning")
+    public boolean spawnTarSlimes = true;
     @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
     public int tarSlimeSpawnRate = 75;
     @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
