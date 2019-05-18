@@ -10,7 +10,7 @@
   ],
   "effects": [
     "Increases the chance of ancient equipment, relics and scarab gems from Fossil Blocks",
-    "Adding more relic scraps only uses one modifier",
+    "Adding more relic scraps only uses one modifier per rank",
     "Not compatible with Paleontologist"
   ],
   "demoTool": [

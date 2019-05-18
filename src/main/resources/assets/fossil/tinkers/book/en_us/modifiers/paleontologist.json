@@ -10,7 +10,7 @@
   ],
   "effects": [
     "Increases the chance of fossils, skulls and dinosaur bones from Fossil Blocks",
-    "Adding more fossils only uses one modifier",
+    "Adding more fossils only uses one modifier per rank",
     "Not compatible with Archeologist"
   ],
   "demoTool": [
