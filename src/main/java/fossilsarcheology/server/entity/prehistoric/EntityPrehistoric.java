@@ -561,13 +561,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (Revival.CONFIG.dinosaurBreeding && ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
             this.mate();
         }
-        if (!this.arePlantsNearby(16) && !mood_noplants) {
-            boolean inital_mood_noplants = mood_noplants;
-            this.mood_noplants = true;
-            if (mood_noplants != inital_mood_noplants) {
-                this.setMood(this.getMood() - 50);
-            }
-        }
         if (this.arePlantsNearby(16)) {
             boolean inital_mood_noplants = mood_noplants;
             this.mood_noplants = false;
@@ -575,11 +568,10 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 this.setMood(this.getMood() + 50);
             }
         }
-
-        if (this.isThereNearbyTypes() && !mood_nospace) {
-            boolean inital_mood_nospace = mood_nospace;
-            this.mood_nospace = true;
-            if (mood_nospace != inital_mood_nospace) {
+        else if (!mood_noplants) {
+            boolean inital_mood_noplants = mood_noplants;
+            this.mood_noplants = true;
+            if (mood_noplants != inital_mood_noplants) {
                 this.setMood(this.getMood() - 50);
             }
         }
@@ -590,6 +582,14 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 this.setMood(this.getMood() + 50);
             }
         }
+        else if (!mood_nospace) {
+            boolean inital_mood_nospace = mood_nospace;
+            this.mood_nospace = true;
+            if (mood_nospace != inital_mood_nospace) {
+                this.setMood(this.getMood() - 50);
+            }
+        }
+
 
         if (this.isSitting()) {
             ticksSitted++;
