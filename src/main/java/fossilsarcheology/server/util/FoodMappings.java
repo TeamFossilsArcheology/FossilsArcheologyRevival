@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import fossilsarcheology.server.entity.prehistoric.Diet;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityList;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -394,6 +395,13 @@ public enum FoodMappings {
 		return 0;
 	}
 
+	public void addToEntityMappings(String entityName, int food, Diet diet){
+		Class<? extends Entity> entity = EntityList.getClassFromName(entityName);
+		if(entity != null){
+			addToEntityMappings(entity, food, diet);
+		}
+	}
+
 	public void addToEntityMappings(Class<? extends Entity> entity, int food, Diet diet) {
 		switch (diet) {
 			case CARNIVORE:
@@ -578,6 +586,19 @@ public enum FoodMappings {
 	/**
 	 * Adds a item, block, or entity class to all the carnivore mappings.
 	 *
+	 * @param entity The entity name being registered.
+	 * @param food   The amount of food points for the object.
+	 */
+	public void addMeatEntity(String entity, int food) {
+		this.addToEntityMappings(entity, food, Diet.CARNIVORE);
+		this.addToEntityMappings(entity, food, Diet.CARNIVORE_EGG);
+		this.addToEntityMappings(entity, food, Diet.OMNIVORE);
+		this.addToEntityMappings(entity, food, Diet.PISCCARNIVORE);
+	}
+
+	/**
+	 * Adds a item, block, or entity class to all the carnivore mappings.
+	 *
 	 * @param block The block being registered.
 	 * @param food  The amount of food points for the object.
 	 */
@@ -665,6 +686,17 @@ public enum FoodMappings {
 	 * @param food   The amount of food points for the object.
 	 */
 	public void addFish(Class<? extends Entity> entity, int food) {
+		this.addToEntityMappings(entity, food, Diet.PISCCARNIVORE);
+		this.addToEntityMappings(entity, food, Diet.PISCIVORE);
+	}
+
+	/**
+	 * Adds a item, block, or entity class to all the piscivore mappings.
+	 *
+	 * @param entity The entity name being registered.
+	 * @param food   The amount of food points for the object.
+	 */
+	public void addFishEntity(String entity, int food) {
 		this.addToEntityMappings(entity, food, Diet.PISCCARNIVORE);
 		this.addToEntityMappings(entity, food, Diet.PISCIVORE);
 	}
