@@ -66,7 +66,7 @@ public class AnuPortalBlock extends Block implements DefaultRenderedItem {
 				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG_OPTIONS.dimensionIDDarknessLair, new AnuTeleporter(thePlayer.server.getWorld(Revival.CONFIG_OPTIONS.dimensionIDDarknessLair)));
 			} else {
 				thePlayer.timeUntilPortal = 10;
-				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, 0, new AnuTeleporter(thePlayer.server.getWorld(0)));
+				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG_OPTIONS.homePortalExitDimension, new AnuTeleporter(thePlayer.server.getWorld(Revival.CONFIG_OPTIONS.homePortalExitDimension)));
 			}
 		}
 	}

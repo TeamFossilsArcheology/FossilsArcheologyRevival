@@ -44,8 +44,8 @@ public class TinkersCompat {
     static void init() {
         TinkerMaterials.materials.add(ancientMetal);
         TinkerMaterials.materials.add(tarSlime);
-        TinkerRegistry.integrate(ancientMetal);
-        TinkerRegistry.integrate(tarSlime);
+        TinkerRegistry.integrate(ancientMetal).preInit();
+        TinkerRegistry.integrate(tarSlime).preInit();
         ancientMetal.addTrait(lightningTrait);
         ancientMetal.addTrait(TinkerTraits.crude);
         ancientMetal.addItem(FAItemRegistry.BROKEN_SWORD, 1, Material.VALUE_Ingot);

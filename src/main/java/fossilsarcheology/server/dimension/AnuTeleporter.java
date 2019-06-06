@@ -24,7 +24,7 @@ public class AnuTeleporter extends Teleporter {
 	@Override
 	public boolean placeInExistingPortal(Entity entity, float rotationYaw) {
 		this.placeInPortal(entity);
-		return false;
+		return true;
 	}
 
 	public void placeInPortal(Entity entity) {
@@ -46,7 +46,7 @@ public class AnuTeleporter extends Teleporter {
 					}
 				}
 			}
-		}else if(worldServerInstance.provider.getDimension() == 0){
+		}else if(worldServerInstance.provider.getDimension() == Revival.CONFIG_OPTIONS.homePortalExitDimension){
 			if(entity instanceof EntityPlayer && ((EntityPlayer) entity).getBedLocation() != null){
 				BlockPos bedPos = ((EntityPlayer) entity).getBedLocation();
 				entity.setLocationAndAngles(bedPos.getX() + 0.5D, bedPos.getY() + 1.5D, bedPos.getZ() + 0.5D, 0.0F, 0.0F);
