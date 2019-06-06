@@ -28,7 +28,7 @@ public class EntityVelociraptor extends EntityPrehistoric implements IScaryDinos
 		super(world, PrehistoricEntityType.VELOCIRAPTOR, 1, 4, 4, 22, 0.25, 0.3, 0, 0);
 		this.hasFeatherToggle = true;
 		this.pediaScale = 45F;
-		this.featherToggle = Revival.CONFIG.featheredVelociraptor;
+		this.featherToggle = Revival.CONFIG_OPTIONS.featheredVelociraptor;
 		this.setActualSize(1.5F, 1.5F);
 		minSize = 0.2F;
 		maxSize = 0.6F;

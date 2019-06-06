@@ -52,9 +52,9 @@ public class EntityAnuDead extends EntityLiving {
 
 			if (thePlayer.timeUntilPortal > 0) {
 				thePlayer.timeUntilPortal = 10;
-			} else if (thePlayer.dimension != Revival.CONFIG.dimensionIDTreasure) {
+			} else if (thePlayer.dimension != Revival.CONFIG_OPTIONS.dimensionIDTreasure) {
 				thePlayer.timeUntilPortal = 10;
-				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG.dimensionIDTreasure, new TreasureTeleporter(thePlayer.server.getWorld(Revival.CONFIG.dimensionIDTreasure)));
+				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG_OPTIONS.dimensionIDTreasure, new TreasureTeleporter(thePlayer.server.getWorld(Revival.CONFIG_OPTIONS.dimensionIDTreasure)));
 			} else {
 				thePlayer.timeUntilPortal = 10;
 				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, 0, new TreasureTeleporter(thePlayer.server.getWorld(0)));

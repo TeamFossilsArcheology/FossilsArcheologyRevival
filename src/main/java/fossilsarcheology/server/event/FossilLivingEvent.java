@@ -41,7 +41,7 @@ public class FossilLivingEvent {
     @SubscribeEvent
     public void onBreakBlock(BlockEvent.BreakEvent event) {
         FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getPlayer(), FossilsPlayerProperties.class);
-        if (event.getWorld().provider.getDimension() == Revival.CONFIG.dimensionIDDarknessLair && event.getState().getBlock() != Blocks.OBSIDIAN && event.getState().getBlock() != FABlockRegistry.FAKE_OBSIDIAN && (properties != null && !properties.killedAnu)) {
+        if (event.getWorld().provider.getDimension() == Revival.CONFIG_OPTIONS.dimensionIDDarknessLair && event.getState().getBlock() != Blocks.OBSIDIAN && event.getState().getBlock() != FABlockRegistry.FAKE_OBSIDIAN && (properties != null && !properties.killedAnu)) {
             event.getPlayer().sendStatusMessage(new TextComponentTranslation("anu.breakblock"), true);
             event.setCanceled(true);
         }
@@ -52,7 +52,7 @@ public class FossilLivingEvent {
 
     @SubscribeEvent
     public void onEntityJoinWorld(EntityJoinWorldEvent event) {
-        if(event.getEntity() != null && isLivestock(event.getEntity()) && event.getEntity() instanceof EntityCreature && Revival.CONFIG.animalsFearDinosaurs){
+        if(event.getEntity() != null && isLivestock(event.getEntity()) && event.getEntity() instanceof EntityCreature && Revival.CONFIG_OPTIONS.animalsFearDinosaurs){
             EntityCreature animal = (EntityCreature)event.getEntity();
             animal.tasks.addTask(1, new AnimalAIFearDinosaur(animal, EntityLivingBase.class, ANIMAL_FEAR_DINOSAUR, 12.0F, 1.2D, 1.5D));
         }

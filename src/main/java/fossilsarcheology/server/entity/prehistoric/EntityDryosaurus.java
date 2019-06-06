@@ -31,7 +31,7 @@ public class EntityDryosaurus extends EntityPrehistoric {
 		hasTeenTexture = false;
 		pediaScale = 40;
 		hasFeatherToggle = true;
-		featherToggle = Revival.CONFIG.featheredDryosaurus;
+		featherToggle = Revival.CONFIG_OPTIONS.featheredDryosaurus;
 	}
 
 	public void initEntityAI() {

@@ -27,7 +27,7 @@ public class DinoAIFindAirTarget extends EntityAIBase {
 		BlockPos radialPos = new BlockPos(dinosaur.posX + extraX, 0, dinosaur.posZ + extraZ);
 		BlockPos ground = dinosaur.world.getHeight(radialPos);
 		int distFromGround = (int) dinosaur.posY - ground.getY();
-		BlockPos newPos = radialPos.up(distFromGround > 16 ? (int) Math.min(Revival.CONFIG.flyingTargetMaxHeight, dinosaur.posY + dinosaur.getRNG().nextInt(16) - 8) : (int) dinosaur.posY + dinosaur.getRNG().nextInt(16) + 1);
+		BlockPos newPos = radialPos.up(distFromGround > 16 ? (int) Math.min(Revival.CONFIG_OPTIONS.flyingTargetMaxHeight, dinosaur.posY + dinosaur.getRNG().nextInt(16) - 8) : (int) dinosaur.posY + dinosaur.getRNG().nextInt(16) + 1);
         if (!isTargetBlocked(dinosaur, new Vec3d(newPos)) && dinosaur.getDistanceSqToCenter(newPos) > 6) {
 			return newPos;
 		}

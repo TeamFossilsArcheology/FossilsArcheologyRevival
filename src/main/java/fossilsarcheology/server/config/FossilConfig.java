@@ -1,107 +1,108 @@
 package fossilsarcheology.server.config;
 
-import net.ilexiconn.llibrary.server.config.ConfigEntry;
+import net.minecraftforge.common.config.Configuration;
 
-@SuppressWarnings("deprecation")
 public class FossilConfig {
-    @ConfigEntry(category = "generation")
     public boolean generatePalaeoraphe = false;
-    @ConfigEntry(category = "generation")
     public boolean generateHellShips = true;
-    @ConfigEntry(category = "generation")
     public boolean generateAcademy = true;
-    @ConfigEntry(category = "generation")
     public boolean generateTemple = true;
-    @ConfigEntry(category = "generation")
     public boolean generateFossils = true;
-    @ConfigEntry(category = "generation")
     public boolean generatePermafrost = true;
-    @ConfigEntry(category = "generation")
     public boolean generateVolcanicRock = true;
-    @ConfigEntry(category = "generation")
     public boolean generateAztecWeaponShops = true;
-    @ConfigEntry(category = "generation")
     public boolean generateMoai = true;
-    @ConfigEntry(category = "generation")
     public boolean generateTarSites = true;
-    @ConfigEntry(category = "generation")
     public boolean generateFossilSites = true;
-    @ConfigEntry(category = "generation")
     public int[] oreGenerationDimensions = { 0 };
-    @ConfigEntry(category = "generation")
     public int generateHellShipRarity = 100;
-    @ConfigEntry(category = "generation")
     public int generateTarSiteRarity = 700;
-    @ConfigEntry(category = "generation")
     public int generateFossilSiteRarity = 700;
-    @ConfigEntry(category = "generation")
     public int generateMoaiRarity = 400;
-    @ConfigEntry(category = "generation")
     public int generateWeaponShopRarity = 40;
-    @ConfigEntry(category = "generation")
     public int generateTempleRarity = 90;
-    @ConfigEntry(category = "generation")
     public int generateAcademyRarity = 500;
-    @ConfigEntry(category = "entity spawning")
     public boolean spawnCoelacanth = true;
-    @ConfigEntry(category = "entity spawning")
     public boolean spawnSturgeon = true;
-    @ConfigEntry(category = "entity spawning")
     public boolean spawnAlligatorGar = true;
-    @ConfigEntry(category = "entity spawning")
     public boolean spawnNautilus = true;
-    @ConfigEntry(category = "entity spawning")
     public boolean spawnTarSlimes = true;
-    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
     public int tarSlimeSpawnRate = 75;
-    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
     public int nautilusSpawnRate = 6;
-    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
     public int coelacanthSpawnRate = 4;
-    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
     public int alligatorGarSpawnRate = 3;
-    @ConfigEntry(category = "entity spawning", comment = "higher number = less common spawns")
     public int sturgeonSpawnRate = 4;
-
-    @ConfigEntry
     public boolean healingDinos = true;
-    @ConfigEntry
     public boolean starvingDinos = true;
-    @ConfigEntry
     public boolean dinoBlockBreaking = true;
-    @ConfigEntry
     public boolean dinoEatModdedMobs = true;
-    @ConfigEntry(category = "client")
     public boolean customMainMenu = true;
-
-    @ConfigEntry(category = "dinosaurs")
     public boolean featheredDeinonychus = true;
-    @ConfigEntry(category = "dinosaurs")
     public boolean featheredGallimimus = true;
-    @ConfigEntry(category = "dinosaurs")
     public boolean featheredCompsognathus = true;
-    @ConfigEntry(category = "dinosaurs")
     public boolean quilledTriceratops = false;
-    @ConfigEntry(category = "dinosaurs")
     public boolean featheredVelociraptor = true;
-    @ConfigEntry(category = "dinosaurs")
     public boolean featheredTherizinosaurus = true;
-    @ConfigEntry(category = "dinosaurs")
     public boolean featheredDryosaurus = false;
-    @ConfigEntry(category = "dinosaurs")
     public boolean eggsLikeChickens = false;
-    @ConfigEntry(category = "dinosaurs")
     public boolean dinosaurBreeding = true;
-    @ConfigEntry(category = "dinosaurs")
     public int flyingTargetMaxHeight = 128;
-    @ConfigEntry(category = "ids")
     public int dimensionIDDarknessLair = -23;
-    @ConfigEntry(category = "ids")
-    public int dimensionIDTreasure = -34;
-    @ConfigEntry(category = "ids", comment = "The Dimension ID that the Anu Treasure Room portal takes players to")
+    public int dimensionIDTreasure = -24;
     public int homePortalExitDimension = 0;
-    @ConfigEntry(category = "generation")
     public boolean logCascadingWorldGen = false;
-    @ConfigEntry(category = "dinosaurs")
     public boolean animalsFearDinosaurs = true;
+
+    public void init(Configuration config) {
+        this.generatePalaeoraphe = config.getBoolean("Generate Palaeoraphe", "all", false, "True if Palaeoraphe Trees are to generate naturally");
+        this.generateHellShips = config.getBoolean("Generate Hell Ships", "all", true, "True if Hell Ships are to generate naturally");
+        this.generateAcademy = config.getBoolean("Generate Desert Academies", "all", true, "True if Desert Academies are to generate naturally");
+        this.generateTemple = config.getBoolean("Generate Aztec Temple", "all", true, "True if Aztec Temples are to generate naturally");
+        this.generateFossils = config.getBoolean("Generate Fossil Ores", "all", true, "True if Fossil Ores are to generate naturally");
+        this.generatePermafrost = config.getBoolean("Generate Permafrost", "all", true, "True if Permafrost Ore is to generate naturally");
+        this.generateVolcanicRock = config.getBoolean("Generate Volcanic Rock", "all", true, "True if Volcanic Rock is to generate naturally");
+        this.generateAztecWeaponShops = config.getBoolean("Generate Aztec Weapon Shops", "all", true, "True if Aztec Weapon Shops are to generate naturally");
+        this.generateMoai = config.getBoolean("Generate Moai", "all", true, "True if Moai are to generate naturally");
+        this.generateTarSites = config.getBoolean("Generate Tarpit Dig Sites", "all", true, "True if Tarpit Dig Sites are to generate naturally");
+        this.generateFossilSites = config.getBoolean("Generate Fossil Dig Sites", "all", true, "True if Fossil Dig Sites are to generate naturally");
+        this.oreGenerationDimensions = config.get("Ore Generation Dimensions", "all", new int[]{0}, "List of Dimension IDs to spawn Fossil and Permafrost ores in").getIntList();
+        this.generateHellShipRarity = config.getInt("Hell Ship Rarity", "all", 100, 1, 100000000, "Rarity of Hell Ship Structure. Higher number = more rare");
+        this.generateTarSiteRarity = config.getInt("Tarpit Dig Site Rarity", "all", 700, 1, 100000000, "Rarity of Tarpit Dig Site Structure. Higher number = more rare");
+        this.generateFossilSiteRarity = config.getInt("Fossil Dig Site Rarity", "all", 700, 1, 100000000, "Rarity of Fossil Dig Site Structure. Higher number = more rare");
+        this.generateMoaiRarity = config.getInt("Moai Rarity", "all", 400, 1, 100000000, "Rarity of Moai Structure. Higher number = more rare");
+        this.generateWeaponShopRarity = config.getInt("Aztec Weapon Shop Rarity", "all", 40, 1, 100000000, "Rarity of Aztec Weapon Shop Structure. Higher number = more rare");
+        this.generateTempleRarity = config.getInt("Aztec Temple Rarity", "all", 90, 1, 100000000, "Rarity of Aztec Temple Structure. Higher number = more rare");
+        this.generateAcademyRarity = config.getInt("Desert Academy Rarity", "all", 500, 1, 100000000, "Rarity of Desert Academy Structure. Higher number = more rare");
+        this.spawnCoelacanth = config.getBoolean("Spawn Coelacanth", "all", true, "True if Coelacanths are to spawn naturally in oceans");
+        this.spawnSturgeon = config.getBoolean("Spawn Sturgeon", "all", true, "True if Sturgeons are to spawn naturally in rivers");
+        this.spawnAlligatorGar = config.getBoolean("Spawn Alligator Gar", "all", true, "True if Alligator Gars are to spawn naturally in swamps");
+        this.spawnNautilus = config.getBoolean("Spawn Nautilus", "all", true, "True if Nautilus are to spawn naturally in oceans");
+        this.spawnTarSlimes = config.getBoolean("Spawn Tar Slimes", "all", true, "True if Tar Slimes are to spawn naturally in tar pits");
+        this.tarSlimeSpawnRate = config.getInt("Tar Slime Spawn Rarity", "all", 75, 1, 100000000, "Chance of Tar Slimes spawning in a tarpit per tick. Higher number = more rare");
+        this.nautilusSpawnRate = config.getInt("Nautilus Spawn Rarity", "all", 6, 1, 100000000, "Chance of Nautilus spawning in a new chunks. Higher number = more rare");
+        this.coelacanthSpawnRate = config.getInt("Coelacanth Spawn Rarity", "all", 4, 1, 100000000, "Chance of Coelacanth spawning in a new chunks. Higher number = more rare");
+        this.alligatorGarSpawnRate = config.getInt("Alligator Gar Spawn Rarity", "all", 3, 1, 100000000, "Chance of Alligator Gars spawning in a new chunks. Higher number = more rare");
+        this.sturgeonSpawnRate = config.getInt("Sturgeon Spawn Rarity", "all", 4, 1, 100000000, "Chance of Sturgeon spawning in a new chunks. Higher number = more rare");
+        this.healingDinos = config.getBoolean("Healing Dinos", "all", true, "True if Dinosaurs can heal with food");
+        this.starvingDinos = config.getBoolean("Starving Dinos", "all", true, "True if Dinosaurs have hunger");
+        this.dinoBlockBreaking = config.getBoolean("Dino Block Breaking", "all", true, "True if Certain Dinosaurs can break blocks weaker than iron");
+        this.dinoEatModdedMobs = config.getBoolean("Dino Eat Modded Mobs", "all", true, "True if Dinosaurs can eat non-vanilla mobs");
+        this.customMainMenu = config.getBoolean("Custom Main Menu", "all", true, "True if Custom Main Menu is enabled");
+        this.featheredDeinonychus = config.getBoolean("Feathered Deinonychus", "all", true, "True if Deinonychus is accurate to science and not a fake movie monster or a relic of past age of scientific progress");
+        this.featheredGallimimus = config.getBoolean("Feathered Gallimimus", "all", true, "True if Gallimimus is accurate to science and not a fake movie monster or a relic of past age of scientific progress");
+        this.featheredCompsognathus = config.getBoolean("Feathered Compsognathus", "all", true, "True if Compsognathus is accurate to science and not a fake movie monster or a relic of past age of scientific progress");
+        this.quilledTriceratops = config.getBoolean("Quilled Triceratops", "all", false, "True if Triceratops should have quills like some of its ancestors");
+        this.featheredVelociraptor = config.getBoolean("Feathered Velociraptor", "all", true, "True if Velociraptor is accurate to science and not a fake movie monster or a relic of past age of scientific progress");
+        this.featheredTherizinosaurus = config.getBoolean("Feathered Therizinosaurus", "all", true, "True if Therizinosaurus is accurate to science and not a fake movie monster or a relic of past age of scientific progress");
+        this.featheredDryosaurus = config.getBoolean("Feathered Dryosaurus", "all", false, "True if Dryosaurus should be represented with plumage");
+        this.eggsLikeChickens = config.getBoolean("Eggs Like Chickens", "all", false, "True if Dinosaurs should create item eggs instead of entities");
+        this.dinosaurBreeding = config.getBoolean("Dinosaur Breeding", "all", true, "True if Dinosaurs should breed");
+        this.flyingTargetMaxHeight = config.getInt("Flying Target Max Height", "all", 128, 1, 512, "Maximum height that flying creatures should soar too");
+        this.dimensionIDDarknessLair = config.getInt("Lair of Darkness Dimension ID", "all", -23, -1000000, 1000000, "Lair of Darkness Dimension ID");
+        this.dimensionIDTreasure = config.getInt("Treasure Room Dimension ID", "all", -24, -1000000, 1000000, "Treasure Room Dimension ID");
+        this.homePortalExitDimension = config.getInt("Home Portal Exit Dimension ID", "all", 0, -1000000, 1000000, "Dimension ID that home portals should return players too");
+        this.logCascadingWorldGen = config.getBoolean("Log Cascading World Gen", "all", false, "True if you want to spam the console");
+        this.animalsFearDinosaurs = config.getBoolean("Animals Fear Dinosaurs", "all", false, "True if vanilla animals should run away from dinosaurs");
+
+    }
 }

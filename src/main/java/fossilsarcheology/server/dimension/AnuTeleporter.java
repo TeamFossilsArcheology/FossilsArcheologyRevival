@@ -28,7 +28,7 @@ public class AnuTeleporter extends Teleporter {
 	}
 
 	public void placeInPortal(Entity entity) {
-		if (worldServerInstance.provider.getDimension() == Revival.CONFIG.dimensionIDDarknessLair) {
+		if (worldServerInstance.provider.getDimension() == Revival.CONFIG_OPTIONS.dimensionIDDarknessLair) {
 			entity.setLocationAndAngles((double) -74, (double) 63, (double) -115, entity.rotationYaw, 0.0F);
 			int i = MathHelper.floor(entity.posX);
 			int j = MathHelper.floor(entity.posY) - 2;

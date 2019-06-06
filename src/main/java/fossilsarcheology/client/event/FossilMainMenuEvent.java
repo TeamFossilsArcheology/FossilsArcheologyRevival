@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class FossilMainMenuEvent {
 	@SubscribeEvent
 	public void onGuiOpened(GuiOpenEvent event) {
-		if (Revival.CONFIG.customMainMenu && event.getGui() instanceof GuiMainMenu && !(event.getGui() instanceof FAMainMenuGUI)) {
+		if (Revival.CONFIG_OPTIONS.customMainMenu && event.getGui() instanceof GuiMainMenu && !(event.getGui() instanceof FAMainMenuGUI)) {
 			event.setGui(new FAMainMenuGUI());
 		}
 	}

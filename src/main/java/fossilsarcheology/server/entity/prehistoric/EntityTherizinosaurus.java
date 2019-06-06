@@ -27,7 +27,7 @@ public class EntityTherizinosaurus extends EntityPrehistoric {
 		breaksBlocks = true;
 		this.pediaScale = 30F;
 		this.hasFeatherToggle = true;
-		this.featherToggle = Revival.CONFIG.featheredTherizinosaurus;
+		this.featherToggle = Revival.CONFIG_OPTIONS.featheredTherizinosaurus;
 		this.setActualSize(1.1F, 1.6F);
 	}
 

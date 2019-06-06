@@ -50,12 +50,12 @@ public class FAWorldGenerator implements IWorldGenerator {
 	@Override
 	public void generate(Random random, int chunkX, int chunkZ, World world, IChunkGenerator chunkGenerator, IChunkProvider chunkProvider) {
 		boolean prevLogCascadingWorldGen = net.minecraftforge.common.ForgeModContainer.logCascadingWorldGeneration;
-		if(!Revival.CONFIG.logCascadingWorldGen) {
+		if(!Revival.CONFIG_OPTIONS.logCascadingWorldGen) {
 			net.minecraftforge.common.ForgeModContainer.logCascadingWorldGeneration = false;
 		}
-		for (int dimensionID : Revival.CONFIG.oreGenerationDimensions) {
+		for (int dimensionID : Revival.CONFIG_OPTIONS.oreGenerationDimensions) {
 			if (world.provider.getDimension() == dimensionID) {
-				if (Revival.CONFIG.generateFossils) {
+				if (Revival.CONFIG_OPTIONS.generateFossils) {
 					boolean mesa = BiomeDictionary.hasType(world.getBiome(new BlockPos(chunkX * 16 + 8, 0, chunkX * 16 + 8)), BiomeDictionary.Type.MESA);
 					for (int i = 0; i < (mesa ? 60 : 38); i++) {
 						int Xcoord = chunkX * 16 + random.nextInt(16);
@@ -64,7 +64,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 						(new WorldGenMinable(FABlockRegistry.FOSSIL.getDefaultState(), 5 + random.nextInt(6))).generate(world, random, new BlockPos(Xcoord, Ycoord, Zcoord));
 					}
 				}
-				if (Revival.CONFIG.generatePermafrost) {
+				if (Revival.CONFIG_OPTIONS.generatePermafrost) {
 					for (int i = 0; i < (BiomeDictionary.hasType(world.getBiome(new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8)), BiomeDictionary.Type.SNOWY) ? 9 : 4); i++) {
 						int Xcoord = chunkX * 16 + random.nextInt(16);
 						int Ycoord = random.nextInt(30);
@@ -80,28 +80,28 @@ public class FAWorldGenerator implements IWorldGenerator {
 			int z = chunkZ * 16 + random.nextInt(16);
 
 			if (BiomeDictionary.hasType(world.getBiome(new BlockPos(x, 0, z)), BiomeDictionary.Type.SWAMP) && random.nextInt(15) == 0) {
-				if (Revival.CONFIG.generateTarSites) {
+				if (Revival.CONFIG_OPTIONS.generateTarSites) {
 					for (int k = 0; k < 10; k++) {
 						int y = random.nextInt(128);
 						(new WorldGenTarPit(FABlockRegistry.TAR)).generate(world, random, new BlockPos(x, y, z));
 					}
 				}
-				if (Revival.CONFIG.generatePalaeoraphe) {
+				if (Revival.CONFIG_OPTIONS.generatePalaeoraphe) {
 					for (int count = 0; count < 2; count++) {
 						BlockPos pos = world.getHeight(new BlockPos(x, 0, z));
 						new WorldGenPalm().generate(world, random, pos);
 					}
 				}
 			}
-			if (Revival.CONFIG.generateVolcanicRock) {
+			if (Revival.CONFIG_OPTIONS.generateVolcanicRock) {
 				for (int i = 0; i < 10; i++) {
 					int y = random.nextInt(16);
 					(new WorldGenPermafrost(FABlockRegistry.VOLCANIC_ROCK.getDefaultState(), 6 + random.nextInt(3))).generate(world, random, new BlockPos(x, y, z));
 				}
 			}
 		}
-		if (Revival.CONFIG.generateHellShips && world.provider.getDimension() == -1) {
-			if (random.nextInt(Math.max(Revival.CONFIG.generateHellShipRarity, 1)) == 0) {
+		if (Revival.CONFIG_OPTIONS.generateHellShips && world.provider.getDimension() == -1) {
+			if (random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateHellShipRarity, 1)) == 0) {
 				int x = chunkX * 16 + random.nextInt(16);
 				int z = chunkZ * 16 + random.nextInt(16);
 				if (world.getBlockState(new BlockPos(x, 31, z)).getMaterial() == Material.LAVA) {
@@ -113,7 +113,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 		int z = (chunkZ * 16) + 8;
 		BlockPos height = StructureUtils.getGround(x, z, world);
 		Biome biome = world.getBiome(height);
-		if (Revival.CONFIG.generateTarSites && random.nextInt(Math.max(Revival.CONFIG.generateTarSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS) {
+		if (Revival.CONFIG_OPTIONS.generateTarSites && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateTarSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS) {
 			if(StructureUtils.generateStructureAtWithRandomRotation(TAR_SITE, world, height.down(3), random, true, false)){
 				BlockPos tentPos = random.nextBoolean() ? height.add(10  + random.nextInt(6), 10 + random.nextInt(6) , 10 + random.nextInt(6)) : height.add(-10 - random.nextInt(6), -10 - random.nextInt(6), -10 - random.nextInt(6));
 				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, StructureUtils.getGround(tentPos, world), random, false, false);
@@ -124,7 +124,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 			}
 		}
 
-		if (Revival.CONFIG.generateFossilSites && random.nextInt(Math.max(Revival.CONFIG.generateFossilSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS) {
+		if (Revival.CONFIG_OPTIONS.generateFossilSites && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateFossilSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS) {
 			if(StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE, world, height.down(3), random, true, false)){
 				BlockPos tentPos = random.nextBoolean() ? height.add(10  + random.nextInt(6), 10 + random.nextInt(6) , 10 + random.nextInt(6)) : height.add(-10 - random.nextInt(6), -10 - random.nextInt(6), -10 - random.nextInt(6));
 				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, StructureUtils.getGround(tentPos, world), random, false, false);
@@ -134,19 +134,19 @@ public class FAWorldGenerator implements IWorldGenerator {
 				world.spawnEntity(villager);
 			}
 		}
-		if (Revival.CONFIG.generateMoai && random.nextInt(Math.max(Revival.CONFIG.generateMoaiRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.BEACH) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY) && world.getBlockState(height.down()).isOpaqueCube()) {
+		if (Revival.CONFIG_OPTIONS.generateMoai && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateMoaiRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.BEACH) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY) && world.getBlockState(height.down()).isOpaqueCube()) {
 			StructureUtils.generateStructureAtWithRandomRotation(random.nextInt(3) == 0 ? MOAI_WITH_HAT : MOAI, world, height.down(random.nextInt(5)), random, false, true);
 		}
-		if (Revival.CONFIG.generateAztecWeaponShops && random.nextInt(Math.max(Revival.CONFIG.generateWeaponShopRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) {
+		if (Revival.CONFIG_OPTIONS.generateAztecWeaponShops && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateWeaponShopRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) {
 			StructureUtils.generateStructureAtWithRandomRotationWithLoot(AZTEC_WEAPONS_SHOP, AZTEC_WEAPONS_CHEST, world, height.down(2), random, true, false);
 		}
-		if (Revival.CONFIG.generateTemple && random.nextInt(Math.max(Revival.CONFIG.generateTempleRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) {
+		if (Revival.CONFIG_OPTIONS.generateTemple && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateTempleRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) {
 			StructureUtils.generateStructureAtWithRandomRotationWithLoot(AZTEC_TEMPLE, AZTEC_TEMPLE_CHEST, world, height, random, true, false);
 		}
-		if (Revival.CONFIG.generateAcademy && random.nextInt(Math.max(Revival.CONFIG.generateAcademyRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.DRY) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT)) {
+		if (Revival.CONFIG_OPTIONS.generateAcademy && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateAcademyRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.DRY) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT)) {
 			StructureUtils.generateStructureAtWithRandomRotationWithLoot(EGYPTIAN_ACADEMY, EGYPTIAN_ACADEMY_CHEST, world, height.down(), random, true, false);
 		}
-		if (world.getChunk(chunkX, chunkZ) == world.getChunk(ANU_CASTLE_POS) && world.provider.getDimension() == Revival.CONFIG.dimensionIDDarknessLair) {
+		if (world.getChunk(chunkX, chunkZ) == world.getChunk(ANU_CASTLE_POS) && world.provider.getDimension() == Revival.CONFIG_OPTIONS.dimensionIDDarknessLair) {
 			int counter = 0;
 			counter++;
 			if (counter == 1) {
@@ -164,7 +164,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				world.setBlockState(new BlockPos(0, 73, 0), FABlockRegistry.SARCOPHAGUS.getDefaultState());
 			}
 		}
-		if (world.getChunk(chunkX, chunkZ) == world.getChunk(TREASURE_ROOM_POS) && world.provider.getDimension() == Revival.CONFIG.dimensionIDTreasure) {
+		if (world.getChunk(chunkX, chunkZ) == world.getChunk(TREASURE_ROOM_POS) && world.provider.getDimension() == Revival.CONFIG_OPTIONS.dimensionIDTreasure) {
 			int counter = 0;
 			counter++;
 			if (counter == 1) {
@@ -172,7 +172,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 			}
 		}
 
-		if(Revival.CONFIG.spawnNautilus && BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) &&  random.nextInt(Math.max(Revival.CONFIG.nautilusSpawnRate, 1)) == 0){
+		if(Revival.CONFIG_OPTIONS.spawnNautilus && BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) &&  random.nextInt(Math.max(Revival.CONFIG_OPTIONS.nautilusSpawnRate, 1)) == 0){
 			for(int i = 0; i < 1 + random.nextInt(3); i++){
 				int ex = chunkX * 16 + random.nextInt(16);
 				int zee = chunkZ * 16 + random.nextInt(16);
@@ -184,7 +184,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				}
 			}
 		}
-		if(Revival.CONFIG.spawnCoelacanth && BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) &&  random.nextInt(Math.max(Revival.CONFIG.coelacanthSpawnRate, 1)) == 0){
+		if(Revival.CONFIG_OPTIONS.spawnCoelacanth && BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) &&  random.nextInt(Math.max(Revival.CONFIG_OPTIONS.coelacanthSpawnRate, 1)) == 0){
 			for(int i = 0; i < 1 + random.nextInt(3); i++){
 				int ex = chunkX * 16 + random.nextInt(16);
 				int zee = chunkZ * 16 + random.nextInt(16);
@@ -196,7 +196,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				}
 			}
 		}
-		if(Revival.CONFIG.spawnAlligatorGar && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP) &&  random.nextInt(Math.max(Revival.CONFIG.alligatorGarSpawnRate, 1)) == 0){
+		if(Revival.CONFIG_OPTIONS.spawnAlligatorGar && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SWAMP) &&  random.nextInt(Math.max(Revival.CONFIG_OPTIONS.alligatorGarSpawnRate, 1)) == 0){
 			for(int i = 0; i < 1 + random.nextInt(3); i++){
 				int ex = chunkX * 16 + random.nextInt(16);
 				int zee = chunkZ * 16 + random.nextInt(16);
@@ -208,7 +208,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				}
 			}
 		}
-		if(Revival.CONFIG.spawnSturgeon && BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER) &&  random.nextInt(Math.max(Revival.CONFIG.sturgeonSpawnRate, 1)) == 0){
+		if(Revival.CONFIG_OPTIONS.spawnSturgeon && BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER) &&  random.nextInt(Math.max(Revival.CONFIG_OPTIONS.sturgeonSpawnRate, 1)) == 0){
 			for(int i = 0; i < 1 + random.nextInt(3); i++){
 				int ex = chunkX * 16 + random.nextInt(16);
 				int zee = chunkZ * 16 + random.nextInt(16);
@@ -220,7 +220,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				}
 			}
 		}
-		if(!Revival.CONFIG.logCascadingWorldGen) {
+		if(!Revival.CONFIG_OPTIONS.logCascadingWorldGen) {
 			net.minecraftforge.common.ForgeModContainer.logCascadingWorldGeneration = prevLogCascadingWorldGen;
 		}
 	}

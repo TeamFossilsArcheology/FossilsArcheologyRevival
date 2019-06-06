@@ -14,7 +14,7 @@ public class FoodHelper {
     public static int getMobFoodPoints(EntityLivingBase entity, Diet diet){
         int mappingPoints = FoodMappings.INSTANCE.getEntityFoodAmount(entity.getClass(), diet);
         int widthPoints =  Math.round(entity.width * entity.height * 10);
-        if(mappingPoints == 0 && Revival.CONFIG.dinoEatModdedMobs){
+        if(mappingPoints == 0 && Revival.CONFIG_OPTIONS.dinoEatModdedMobs){
             if(entity instanceof EntityAnimal && !isAquaticMob(entity)){
                 if(diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCCARNIVORE){
                     return widthPoints;

@@ -19,7 +19,7 @@ public class TreasureTeleporter extends Teleporter {
 
     @Override
     public boolean placeInExistingPortal(Entity entity, float rotationYaw) {
-        if (worldServerInstance.provider.getDimension() == Revival.CONFIG.dimensionIDTreasure) {
+        if (worldServerInstance.provider.getDimension() == Revival.CONFIG_OPTIONS.dimensionIDTreasure) {
             entity.setPositionAndRotation(0, 60, 0, 0, 0);
         }
         this.placeInPortal(entity);

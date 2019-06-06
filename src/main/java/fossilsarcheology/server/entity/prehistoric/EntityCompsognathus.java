@@ -27,7 +27,7 @@ public class EntityCompsognathus extends EntityPrehistoric {
 		this.setActualSize(1.1F, 1.1F);
 		this.nearByMobsAllowed = 5;
 		this.hasFeatherToggle = true;
-		this.featherToggle = Revival.CONFIG.featheredCompsognathus;
+		this.featherToggle = Revival.CONFIG_OPTIONS.featheredCompsognathus;
 		minSize = 0.2F;
 		maxSize = 0.5F;
 		teenAge = 2;

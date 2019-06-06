@@ -27,7 +27,7 @@ public class EntityTriceratops extends EntityPrehistoric {
 	public EntityTriceratops(World world) {
 		super(world, PrehistoricEntityType.TRICERATOPS, 1, 9, 12, 64, 0.2, 0.35, 5, 15);
 		this.hasFeatherToggle = true;
-		this.featherToggle = Revival.CONFIG.quilledTriceratops;
+		this.featherToggle = Revival.CONFIG_OPTIONS.quilledTriceratops;
 		this.setActualSize(1.1F, 0.6F);
 		this.nearByMobsAllowed = 7;
 		minSize = 0.4F;

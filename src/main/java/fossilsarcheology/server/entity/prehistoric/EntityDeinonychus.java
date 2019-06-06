@@ -27,7 +27,7 @@ public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosa
 		super(world, PrehistoricEntityType.DEINONYCHUS, 2, 6, 10, 32, 0.23, 0.35, 0, 2);
 		this.nearByMobsAllowed = 9;
 		this.hasFeatherToggle = true;
-		this.featherToggle = Revival.CONFIG.featheredDeinonychus;
+		this.featherToggle = Revival.CONFIG_OPTIONS.featheredDeinonychus;
 		this.setActualSize(1.8F, 1.25F);
 		minSize = 0.2F;
 		maxSize = 0.85F;

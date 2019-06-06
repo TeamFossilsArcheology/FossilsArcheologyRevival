@@ -85,7 +85,7 @@ public class HomePortalBlock extends Block implements DefaultRenderedItem {
                 thePlayer.timeUntilPortal = 10;
             } else if (thePlayer.dimension != 0) {
                 thePlayer.timeUntilPortal = 10;
-                thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG.homePortalExitDimension, new AnuTeleporter(thePlayer.server.getWorld(Revival.CONFIG.homePortalExitDimension)));
+                thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG_OPTIONS.homePortalExitDimension, new AnuTeleporter(thePlayer.server.getWorld(Revival.CONFIG_OPTIONS.homePortalExitDimension)));
             }
         }
     }

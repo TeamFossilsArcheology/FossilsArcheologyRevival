@@ -558,7 +558,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             }
             this.doPlayBonus(15);
         }
-        if (Revival.CONFIG.dinosaurBreeding && ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
+        if (Revival.CONFIG_OPTIONS.dinosaurBreeding && ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
             this.mate();
         }
         if (this.arePlantsNearby(16)) {
@@ -750,7 +750,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             if (this.getAgeInTicks() % 24000 == 0) {
                 this.updateAbilities();
             }
-            if (this.getAgeInTicks() % 1200 == 0 && this.getHunger() > 0 && Revival.CONFIG.starvingDinos) {
+            if (this.getAgeInTicks() % 1200 == 0 && this.getHunger() > 0 && Revival.CONFIG_OPTIONS.starvingDinos) {
                 this.setHunger(this.getHunger() - 1);
             }
             if(this.getHealth() > this.getMaxHealth() / 2 && this.getHunger() == 0 && this.getAgeInTicks() % 40 == 0){
@@ -897,7 +897,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public void breakBlock(float hardness) {
-        if (Revival.CONFIG.dinoBlockBreaking) {
+        if (Revival.CONFIG_OPTIONS.dinoBlockBreaking) {
             if (!isSkeleton() && this.isAdult() && this.isHungry()) {
                 for (int a = (int) Math.round(this.getEntityBoundingBox().minX) - 1; a <= (int) Math.round(this.getEntityBoundingBox().maxX) + 1; a++) {
                     for (int b = (int) Math.round(this.getEntityBoundingBox().minY) + 1; (b <= (int) Math.round(this.getEntityBoundingBox().maxY) + 2) && (b <= 127); b++) {
@@ -952,7 +952,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             baby = new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(this.type.birdEggItem));
         }
         if (this.type.mobType == MobType.DINOSAUR || this.type.mobType == MobType.DINOSAUR_AQUATIC) {
-            if (Revival.CONFIG.eggsLikeChickens || this.type.isVivariousAquatic()) {
+            if (Revival.CONFIG_OPTIONS.eggsLikeChickens || this.type.isVivariousAquatic()) {
                 baby = new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(this.type.eggItem));
             } else {
                 baby = new EntityDinosaurEgg(this.world, this.type);
@@ -1283,12 +1283,12 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
                 if (FoodMappings.INSTANCE.getItemFoodAmount(itemstack, this.type.diet) != 0) {
                     if (!player.world.isRemote) {
-                        if (this.getHunger() < this.getMaxHunger() || this.getHealth() < this.getMaxHealth() && Revival.CONFIG.healingDinos || !this.isTamed() && this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
+                        if (this.getHunger() < this.getMaxHunger() || this.getHealth() < this.getMaxHealth() && Revival.CONFIG_OPTIONS.healingDinos || !this.isTamed() && this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
                             this.setHunger(this.getHunger() + FoodMappings.INSTANCE.getItemFoodAmount(itemstack, this.type.diet));
                             if (!world.isRemote) {
                                 this.eatItem(itemstack);
                             }
-                            if (Revival.CONFIG.healingDinos) {
+                            if (Revival.CONFIG_OPTIONS.healingDinos) {
                                 this.heal(3);
                             }
                             if (this.getHunger() >= this.getMaxHunger()) {
