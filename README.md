@@ -9,7 +9,7 @@ For more information and news for this project, join us on Discord adn check us 
 [Instagram](https://www.instagram.com/f_a_revival/)
 
 ***
-![Banner](https://i.imgur.com/5QFIoaI.png)
+![Banner](https://i.imgur.com/DXDgsIo.png)
 
 [Imgur album of current and past banners](http://imgur.com/a/hBe0h)
 
