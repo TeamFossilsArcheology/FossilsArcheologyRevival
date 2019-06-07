@@ -57,6 +57,7 @@ public class Flock {
             if (entity2 != this.flockLeader && !this.flockMembers.contains(entity2) && entity2.type == this.flockLeader.type) {
                 if(entity2.getDistance(this.flockLeader) < 100){
 					this.flockMembers.add(entity2);
+					entity2.flockObj = this;
 				}
             }
         }

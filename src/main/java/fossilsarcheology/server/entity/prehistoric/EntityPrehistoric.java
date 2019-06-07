@@ -629,8 +629,10 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
 
         if (this.doesFlock() && flockObj == null) {
-            if (this.getNearbyFlock() != null) {
-                this.getNearbyFlock().flockMembers.add(this);
+            Flock nearbyFlock = this.getNearbyFlock();
+            if (nearbyFlock != null) {
+                nearbyFlock.flockMembers.add(this);
+                flockObj = nearbyFlock;
             } else {
                 flockObj = new Flock();
                 flockObj.createFlock(this);
