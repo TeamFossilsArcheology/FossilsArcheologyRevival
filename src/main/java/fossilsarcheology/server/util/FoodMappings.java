@@ -589,6 +589,8 @@ public enum FoodMappings {
 	 * @param entity The entity name being registered.
 	 * @param food   The amount of food points for the object.
 	 */
+	
+	//Todo: Can we get something similar, but for fish, eggs, and plants?
 	public void addMeatEntity(String entity, int food) {
 		this.addToEntityMappings(entity, food, Diet.CARNIVORE);
 		this.addToEntityMappings(entity, food, Diet.CARNIVORE_EGG);
