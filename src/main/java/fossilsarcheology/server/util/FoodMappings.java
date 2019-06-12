@@ -783,6 +783,11 @@ public enum FoodMappings {
 		this.addToItemMappings(item, food, Diet.INSECTIVORE);
 		this.addToItemMappings(item, food, Diet.OMNIVORE);
 	}
+	
+	public void addInsect(Class<? extends Entity> entity, int food) {
+		this.addToEntityMappings(entity, food, Diet.INSECTIVORE);
+		this.addToEntityMappings(entity, food, Diet.OMNIVORE);
+	}
 
 	/**
 	 * Adds a item, block, or entity class to all the egg eating mappings.
