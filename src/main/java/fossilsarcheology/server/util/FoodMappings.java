@@ -597,6 +597,16 @@ public enum FoodMappings {
 		this.addToEntityMappings(entity, food, Diet.OMNIVORE);
 		this.addToEntityMappings(entity, food, Diet.PISCCARNIVORE);
 	}
+	
+	public void addEggEntity(String entity, int food) {
+		this.addToEntityMappings(entity, food, Diet.CARNIVORE_EGG);
+		this.addToEntityMappings(entity, food, Diet.OMNIVORE);
+	}
+	
+	public void addInsectEntity(String entity, int food) {
+		this.addToEntityMappings(entity, food, Diet.INSECTIVORE);
+		this.addToEntityMappings(entity, food, Diet.OMNIVORE);
+	}
 
 	/**
 	 * Adds a item, block, or entity class to all the carnivore mappings.

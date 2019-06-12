@@ -37,3 +37,4 @@ eclipse/
 build/
 .classpath
 .project
+*.java___jb_tmp___
