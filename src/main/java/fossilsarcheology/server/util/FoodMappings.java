@@ -767,6 +767,22 @@ public enum FoodMappings {
 		this.addToBlockMappings(block, food, Diet.CARNIVORE_EGG, true);
 		this.addToBlockMappings(block, food, Diet.OMNIVORE, true);
 	}
+	
+	//Todo: Get off my lazy ass and add java docs
+	public void addInsect(String ore_dictionary_name, int food) {
+		this.addOreDictionary(ore_dictionary_name, food, Diet.INSECTIVORE);
+		this.addOreDictionary(ore_dictionary_name, food, Diet.OMNIVORE);
+	}
+	
+	public void addInsect(Block block, int food) {
+		this.addToBlockMappings(block, food, Diet.INSECTIVORE, true);
+		this.addToBlockMappings(block, food, Diet.OMNIVORE, true);
+	}
+	
+	public void addInsect(ItemStack item, int food) {
+		this.addToItemMappings(item, food, Diet.INSECTIVORE);
+		this.addToItemMappings(item, food, Diet.OMNIVORE);
+	}
 
 	/**
 	 * Adds a item, block, or entity class to all the egg eating mappings.
