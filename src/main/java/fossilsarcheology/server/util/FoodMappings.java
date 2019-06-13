@@ -844,8 +844,7 @@ public enum FoodMappings {
      * @param food The amount of food points for the object.
      */
     public void addInsect(ItemStack item, int food) {
-        this.addToItemMappings(item, food, Diet.PISCCARNIVORE);
-        this.addToItemMappings(item, food, Diet.PISCIVORE);
+        this.addToItemMappings(item, food, Diet.INSECTIVORE);
     }
     
     /**
