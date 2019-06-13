@@ -596,8 +596,6 @@ public enum FoodMappings {
      * @param entity The entity name being registered.
      * @param food   The amount of food points for the object.
      */
-
-    //Todo: Can we get something similar, but for fish, eggs, and plants?
     public void addMeatEntity(String entity, int food) {
         this.addToEntityMappings(entity, food, Diet.CARNIVORE);
         this.addToEntityMappings(entity, food, Diet.CARNIVORE_EGG);
@@ -686,6 +684,17 @@ public enum FoodMappings {
     public void addPlant(String ore_dictionary_name, int food) {
         this.addOreDictionary(ore_dictionary_name, food, Diet.HERBIVORE);
         this.addOreDictionary(ore_dictionary_name, food, Diet.OMNIVORE);
+    }
+    
+    /**
+     * Adds a item, block, or entity class to all the herbivore mappings.
+     *
+     * @param entity The entity name being registered.
+     * @param food   The amount of food points for the object.
+     */
+    public void addPlantEntity(String entity, int food) {
+        this.addToEntityMappings(entity, food, Diet.HERBIVORE);
+        this.addToEntityMappings(entity, food, Diet.OMNIVORE);
     }
 
     /**
@@ -785,6 +794,68 @@ public enum FoodMappings {
     public void addEgg(String ore_dictionary_name, int food) {
         this.addOreDictionary(ore_dictionary_name, food, Diet.CARNIVORE_EGG);
         this.addOreDictionary(ore_dictionary_name, food, Diet.OMNIVORE);
+    }
+    
+    /**
+     * Adds a item, block, or entity class to all the egg eating mappings.
+     *
+     * @param entity The entity name being registered.
+     * @param food   The amount of food points for the object.
+     */
+    public void addEggEntity(String entity, int food) {
+        this.addToEntityMappings(entity, food, Diet.CARNIVORE_EGG);
+        this.addToEntityMappings(entity, food, Diet.OMNIVORE);
+    }
+    
+    /**
+     * Adds a item, block, or entity class to all the insectivore mappings.
+     *
+     * @param entity The entity class being registered.
+     * @param food   The amount of food points for the object.
+     */
+    public void addInsect(Class<? extends Entity> entity, int food) {
+        this.addToEntityMappings(entity, food, Diet.INSECTIVORE);
+    }
+    
+    /**
+     * Adds a item, block, or entity class to all the insectivore mappings.
+     *
+     * @param entity The entity name being registered.
+     * @param food   The amount of food points for the object.
+     */
+    public void addInsectEntity(String entity, int food) {
+        this.addToEntityMappings(entity, food, Diet.INSECTIVORE);
+    }
+    
+    /**
+     * Adds a item, block, or entity class to all the insectivore mappings.
+     *
+     * @param block The block being registered.
+     * @param food  The amount of food points for the object.
+     */
+    public void addInsect(Block block, int food) {
+        this.addToBlockMappings(block, food, Diet.INSECTIVORE, true);
+    }
+    
+    /**
+     * Adds a item, block, or entity class to all the insectivore mappings.
+     *
+     * @param item The item being registered.
+     * @param food The amount of food points for the object.
+     */
+    public void addInsect(ItemStack item, int food) {
+        this.addToItemMappings(item, food, Diet.PISCCARNIVORE);
+        this.addToItemMappings(item, food, Diet.PISCIVORE);
+    }
+    
+    /**
+     * Adds all ore dictionary registries to all the insectivore mappings.
+     *
+     * @param ore_dictionary_name The ore dictionary registry name being registered.
+     * @param food                The amount of food points for the object.
+     */
+    public void addInsect(String ore_dictionary_name, int food) {
+        this.addOreDictionary(ore_dictionary_name, food, Diet.INSECTIVORE);
     }
 
     private void addOreDictionary(String dict_name, int food_value, Diet diet) {
