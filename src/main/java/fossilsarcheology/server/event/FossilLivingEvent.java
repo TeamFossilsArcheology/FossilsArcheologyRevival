@@ -212,6 +212,12 @@ public class FossilLivingEvent {
                 double d2 = entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue() + ((EntityQuagga) birthEntity).getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue() + ((EntityQuagga) birthEntity).getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getBaseValue();
                 ((EntityQuagga) birthEntity).getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(d2 / 3.0D);
                 break;
+            case PLATYBELODON:
+                birthEntity = (new EntityPlatybelodon(entity.world));
+                if (entity.world.getClosestPlayerToEntity(entity, 15) != null) {
+                    ((EntityPrehistoric) birthEntity).setTamed(true);
+                    ((EntityPrehistoric) birthEntity).setOwnerId(entity.world.getClosestPlayerToEntity(entity, 15).getUniqueID());
+                }
             default:
                 birthEntity = new EntityPig(entity.world);
         }

@@ -204,7 +204,7 @@ public class FAMachineRecipeRegistry {
             sifterRecipe.addOutput(new ItemStack(Items.DYE, 1, 15), 20);
             sifterRecipe.addOutput(new ItemStack(FAItemRegistry.FERN_SEED), 10);
             sifterRecipe.addOutput(new ItemStack(FAItemRegistry.POTTERY_SHARD), 5);
-            sifterRecipe.addOutput(new ItemStack(FAItemRegistry.BIOFOSSIL), 5);
+            sifterRecipe.addOutput(new ItemStack(FAItemRegistry.BIOFOSSIL), 2);
             registerSifter(sifterRecipe);
         }
         for(PrehistoricEntityType type : PrehistoricEntityType.values()){
