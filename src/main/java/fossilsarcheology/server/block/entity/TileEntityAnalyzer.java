@@ -194,6 +194,7 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 		}
 
 	public void analyzeItem() {
+
 		if (this.canAnalyze()) {
 			ItemStack output = ItemStack.EMPTY;
 			Random random = this.world.rand;

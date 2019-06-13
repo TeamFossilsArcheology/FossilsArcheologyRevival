@@ -84,13 +84,13 @@ public class Revival {
         LOGGER.info("Not a single one of your fathers died young");
         LOGGER.info("The handy travelers out of Africa");
         LOGGER.info("Little Lucy of the Afar");
-        FAMachineRecipeRegistry.init();
 
     }
 
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {
         PROXY.onPostInit();
+        FAMachineRecipeRegistry.init();
         TinkersCompatBridge.loadTinkersPostInitCompat();
     }
 
