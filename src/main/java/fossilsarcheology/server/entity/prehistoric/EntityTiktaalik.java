@@ -28,7 +28,7 @@ public class EntityTiktaalik extends EntityPrehistoricSwimming {
         this.setActualSize(1.45F, 0.5F);
         isAmphibious = true;
         minSize = 0.2F;
-        maxSize = 1F;
+        maxSize = 0.9F;
         teenAge = 3;
         this.hasBabyTexture = true;
         this.pediaScale = 31;
