@@ -214,6 +214,8 @@ public class FAMachineRecipeRegistry {
             registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, i), new ItemStack(FAItemRegistry.SEED, 1, i));
         }
         registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN), new ItemStack(FAItemRegistry.FERN_SEED));
+        registerCultivate(new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL), new ItemStack(FABlockRegistry.PALM_SAPLING));
+        registerCultivate(new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL), new ItemStack(FABlockRegistry.CALAMITES_SAPLING));
         registerWorktable(new ItemStack(FAItemRegistry.BROKEN_SWORD), new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.RELIC_SCRAP));
         registerWorktable(new ItemStack(FAItemRegistry.BROKEN_HELMET), new ItemStack(FAItemRegistry.ANCIENT_HELMET), new ItemStack(FAItemRegistry.RELIC_SCRAP));
         registerWorktable(new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.RELIC_SCRAP));
