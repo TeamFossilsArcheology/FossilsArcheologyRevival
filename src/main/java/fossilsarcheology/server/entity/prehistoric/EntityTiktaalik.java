@@ -24,7 +24,7 @@ public class EntityTiktaalik extends EntityPrehistoricSwimming {
     private boolean isSwimming;
 
     public EntityTiktaalik(World world) {
-        super(world, PrehistoricEntityType.TIKTAALIK, 1, 5, 5, 30, 0.25, 0.25, 1, 2);
+        super(world, PrehistoricEntityType.TIKTAALIK, 1, 4, 5, 30, 0.25, 0.25, 1, 2);
         this.setActualSize(1.45F, 0.5F);
         isAmphibious = true;
         minSize = 0.2F;
@@ -83,7 +83,7 @@ public class EntityTiktaalik extends EntityPrehistoricSwimming {
 
     @Override
     public PrehistoricEntityTypeAI.Following aiFollowType() {
-        return PrehistoricEntityTypeAI.Following.AGRESSIVE;
+        return PrehistoricEntityTypeAI.Following.NORMAL;
     }
 
     @Override
@@ -93,7 +93,7 @@ public class EntityTiktaalik extends EntityPrehistoricSwimming {
 
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return PrehistoricEntityTypeAI.Response.AGRESSIVE;
+        return PrehistoricEntityTypeAI.Response.TERITORIAL;
     }
 
     @Override
