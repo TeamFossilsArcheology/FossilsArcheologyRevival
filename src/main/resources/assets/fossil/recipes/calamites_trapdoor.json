@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "fossil:calamites_planks"
+    }
+  },
+  "result": {
+    "item": "fossil:calamites_trapdoor",
+    "data": 0,
+    "count": 2
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "fossil:calamites_log",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "fossil:calamites_planks",
+    "data": 0,
+    "count": 4
+  }
+}
