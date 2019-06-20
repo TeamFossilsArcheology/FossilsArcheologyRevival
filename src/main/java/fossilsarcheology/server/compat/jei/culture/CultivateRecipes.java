@@ -2,6 +2,7 @@ package fossilsarcheology.server.compat.jei.culture;
 
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +21,7 @@ public class CultivateRecipes {
         return list;
     }
 
-    private static Item[] FUEL = new Item[]{FAItemRegistry.BIOFOSSIL, Items.PORKCHOP, Items.FISH, Items.BEEF, Items.MUTTON, Items.EGG, Items.SLIME_BALL, Items.MILK_BUCKET, Items.RABBIT_FOOT, Items.RABBIT};
+    private static Item[] FUEL = new Item[]{FAItemRegistry.BIOFOSSIL, Items.PORKCHOP, Items.FISH, Items.BEEF, Items.MUTTON, Items.EGG, Items.SLIME_BALL, Items.MILK_BUCKET, Items.RABBIT_FOOT, Items.RABBIT, Item.getItemFromBlock(Blocks.BROWN_MUSHROOM), Item.getItemFromBlock(Blocks.RED_MUSHROOM)};
 
     private static void addRecipe(List<RecipeCultivate> list, ItemStack input, ItemStack output){
         for(Item item : FUEL){
