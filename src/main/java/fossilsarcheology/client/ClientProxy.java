@@ -89,7 +89,6 @@ public class ClientProxy extends ServerProxy {
                 }
             }
         }
-
         Item tar = Item.getItemFromBlock(FABlockRegistry.TAR);
         ModelBakery.registerItemVariants(tar);
         ModelLoader.setCustomMeshDefinition(tar, stack -> BLOCK_TAR_MODEL);

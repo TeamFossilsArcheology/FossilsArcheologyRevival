@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "fossil:items/bone/diplocaulus/unique_item"
+  }
+}

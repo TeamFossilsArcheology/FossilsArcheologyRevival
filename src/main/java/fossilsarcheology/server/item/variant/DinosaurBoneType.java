@@ -42,7 +42,9 @@ public enum DinosaurBoneType {
 	MEGALOCEROS,
 	MEGALANIA,
 	PLATYBELODON,
-	TIKTAALIK;
+	TIKTAALIK,
+	CRASSIGYRINUS,
+	DIPLOCAULUS;
 
 	public static DinosaurBoneType get(PrehistoricEntityType prehistoric) {
 		return DinosaurBoneType.valueOf(prehistoric.name().toUpperCase(Locale.ENGLISH));
