@@ -397,6 +397,9 @@ public enum PrehistoricEntityType {
 				e.printStackTrace();
 			}
 		}
+		if(entity == null){
+			entity = new EntityPig(world);
+		}
 		return entity;
 	}
 

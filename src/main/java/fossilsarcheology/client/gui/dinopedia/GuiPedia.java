@@ -269,7 +269,7 @@ public class GuiPedia extends GuiScreen {
         if (bookPages == 0) {
             if (Revival.PEDIA_OBJECT instanceof EntityAnimal) {
                 FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties((EntityAnimal) Revival.PEDIA_OBJECT, FossilsMammalProperties.class);
-                if (PrehistoricEntityType.isMammal((Entity) Revival.PEDIA_OBJECT) && properties != null && properties.embryoProgress < 9999 && properties.embryo != null && properties.isPregnant) {
+                if (properties != null && properties.embryoProgress < 9999 && properties.embryo != null && properties.isPregnant) {
                     EntityAnimal entity = (EntityAnimal) Revival.PEDIA_OBJECT;
                     String s1 = I18n.format(entity.getName());
                     String s2 = "prehistoric.pregnant";
