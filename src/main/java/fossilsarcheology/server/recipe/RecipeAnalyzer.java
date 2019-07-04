@@ -37,7 +37,7 @@ public class RecipeAnalyzer {
 
     public ItemStack generateOutput(Random random) {
         float entry = random.nextFloat() * totalWeight;
-        return outputMap.higherEntry(entry).getValue();
+        return outputMap.higherEntry(entry).getValue().copy();
     }
 
     public NavigableMap<Float, ItemStack> getDisplayMap(){
