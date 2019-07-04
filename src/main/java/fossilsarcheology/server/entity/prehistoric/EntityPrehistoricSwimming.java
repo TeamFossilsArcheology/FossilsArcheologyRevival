@@ -173,7 +173,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
     @Override
     public void travel(float strafe, float vertical, float forward) {
         float f4;
-        if (this.isSitting()) {
+        if (this.isSitting() || !this.isAmphibious && !this.isInWaterMaterial()) {
             super.travel(0, 0, 0);
             return;
         }

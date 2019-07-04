@@ -326,7 +326,7 @@ public class ModelSarcosuchus extends ModelPrehistoric {
 			sitAnimationRotationPrev(rightHindThigh, sitProgress, (float) Math.toRadians(26.09D), -((float) Math.toRadians(2.61D)), (float) Math.toRadians(18.26D));
 			sitAnimationRotationPrev(rightHindFoot, sitProgress, (float) Math.toRadians(38.0D), 0, 0);
 			sitAnimationPos(lowerBody, sitProgress, 0, 3, 0);
-			sitAnimationPos(rightHindThigh, sitProgress, 0, 3, 0);
+			sitAnimationPos(rightHindThigh, sitProgress, 3, 3, 0);
 			sitAnimationPos(leftHindThigh, sitProgress, 0, 3, 0);
 			sitAnimationPos(leftFrontThigh, sitProgress, 0, 3, 0);
 			sitAnimationPos(rightFrontThigh, sitProgress, 0, 3, 0);
