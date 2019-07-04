@@ -5,7 +5,6 @@ import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.compat.thaumcraft.ThaumcraftCompatBridge;
 import fossilsarcheology.server.compat.tinkers.TinkersCompatBridge;
 import fossilsarcheology.server.config.FossilConfig;
-import fossilsarcheology.server.config.FossilConfigEvent;
 import fossilsarcheology.server.lib.LibDependencies;
 import fossilsarcheology.server.loot.CustomizeToDinosaur;
 import fossilsarcheology.server.message.*;
@@ -64,7 +63,6 @@ public class Revival {
         loadConfig();
         syncConfig();
         PROXY.onPreInit();
-        MinecraftForge.EVENT_BUS.register(new FossilConfigEvent());
         ThaumcraftCompatBridge.loadThaumcraftCompat();
         TinkersCompatBridge.loadTinkersCompat();
         LOGGER.info("Archaean horizon");
