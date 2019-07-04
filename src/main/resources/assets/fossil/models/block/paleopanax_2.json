@@ -1,6 +1,0 @@
-{
-  "parent": "block/cross",
-  "textures": {
-    "cross": "fossil:blocks/plants/plant_paleopanax_2"
-  }
-}

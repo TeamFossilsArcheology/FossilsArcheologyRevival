@@ -16,7 +16,7 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class FossilSeedsItem extends Item {
-	public static final String[] fossilSeeds = new String[]{"dillhoffia", "sarracina", "cephalotaxus", "licopodiophyta", "paleopanax", "zamites", "bennettitales", "welwitschia", "horsetail", "tempskya", "vaccinium", "osmunda", "crataegus", "florissantia", "ephedra", "duisbergia"};
+	public static final String[] fossilSeeds = new String[]{"dillhoffia", "sarracina", "cephalotaxus", "licopodiophyta", "foozia", "zamites", "bennettitales", "welwitschia", "horsetail", "tempskya", "vaccinium", "osmunda", "crataegus", "florissantia", "ephedra", "duisbergia"};
 	public final boolean isFossil;
 
 	public FossilSeedsItem(boolean isFossil) {
@@ -75,8 +75,8 @@ public class FossilSeedsItem extends Item {
 				world.setBlockState(new BlockPos(x, y + 1, z), FABlockRegistry.LICOPODIOPHYTA_FLOWER.getDefaultState());
 				return true;
 			case 4:
-				world.setBlockState(new BlockPos(x, y + 1, z), FABlockRegistry.PALEOPANAX_FLOWER.getDefaultState());
-				world.setBlockState(new BlockPos(x, y + 2, z), FABlockRegistry.PALEOPANAX_FLOWER.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.UPPER));
+				world.setBlockState(new BlockPos(x, y + 1, z), FABlockRegistry.FOOZIA_FLOWER.getDefaultState());
+				world.setBlockState(new BlockPos(x, y + 2, z), FABlockRegistry.FOOZIA_FLOWER.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.UPPER));
 				return true;
 			case 5:
 				world.setBlockState(new BlockPos(x, y + 1, z), FABlockRegistry.ZAMITES_FLOWER.getDefaultState());

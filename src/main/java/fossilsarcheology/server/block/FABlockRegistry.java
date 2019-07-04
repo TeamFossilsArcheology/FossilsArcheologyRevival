@@ -173,8 +173,8 @@ public class FABlockRegistry {
 	public static final ShortFlowerBlock CEPHALOTAXUS_FLOWER = new ShortFlowerBlock("cephalotaxus");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":licopodiophyta")
 	public static final ShortFlowerBlock LICOPODIOPHYTA_FLOWER = new ShortFlowerBlock("licopodiophyta");
-	@GameRegistry.ObjectHolder(Revival.MODID + ":paleopanax")
-	public static final TallFlowerBlock PALEOPANAX_FLOWER = new TallFlowerBlock("paleopanax");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":foozia")
+	public static final TallFlowerBlock FOOZIA_FLOWER = new TallFlowerBlock("foozia");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":zamites")
 	public static final ShortFlowerBlock ZAMITES_FLOWER = new ShortFlowerBlock("zamites");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":bennettitales_small")

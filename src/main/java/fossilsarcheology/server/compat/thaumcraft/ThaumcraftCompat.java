@@ -151,7 +151,7 @@ public class ThaumcraftCompat {
 		evt.register.registerObjectTag(new ItemStack(FABlockRegistry.ANCIENT_STONE_SINGLESLAB), new AspectList().add(Aspect.EARTH, 4).add(ThaumcraftCompat.TIME, 4).add(ThaumcraftCompat.RUIN, 3));
 		evt.register.registerObjectTag(new ItemStack(FABlockRegistry.ANCIENT_STONE_STAIRS), new AspectList().add(Aspect.EARTH, 4).add(ThaumcraftCompat.TIME, 4).add(ThaumcraftCompat.RUIN, 3));
 		evt.register.registerObjectTag(new ItemStack(FABlockRegistry.DILLHOFFIA_FLOWER), new AspectList().add(Aspect.PLANT, 4).add(ThaumcraftCompat.TIME, 4).add(ThaumcraftCompat.FOSSIL, 5));
-		evt.register.registerObjectTag(new ItemStack(FABlockRegistry.PALEOPANAX_FLOWER), new AspectList().add(Aspect.PLANT, 4).add(ThaumcraftCompat.TIME, 4).add(ThaumcraftCompat.FOSSIL, 5));
+		evt.register.registerObjectTag(new ItemStack(FABlockRegistry.FOOZIA_FLOWER), new AspectList().add(Aspect.PLANT, 4).add(ThaumcraftCompat.TIME, 4).add(ThaumcraftCompat.FOSSIL, 5));
 		evt.register.registerObjectTag(new ItemStack(FABlockRegistry.HORSETAIL_LARGE_FLOWER), new AspectList().add(Aspect.PLANT, 4).add(ThaumcraftCompat.TIME, 4).add(ThaumcraftCompat.FOSSIL, 5));
 		evt.register.registerObjectTag(new ItemStack(FABlockRegistry.HORSETAIL_SMALL_FLOWER), new AspectList().add(Aspect.PLANT, 4).add(ThaumcraftCompat.TIME, 4).add(ThaumcraftCompat.FOSSIL, 5));
 		evt.register.registerObjectTag(new ItemStack(FABlockRegistry.PERMAFROST), new AspectList().add(Aspect.EARTH, 4).add(Aspect.COLD, 4).add(ThaumcraftCompat.FOSSIL, 2));
@@ -271,7 +271,7 @@ public class ThaumcraftCompat {
 		ThaumcraftApi.registerSeed(FABlockRegistry.SARRACENIA_FLOWER, new ItemStack(FAItemRegistry.SEED, 1, 1));
 		ThaumcraftApi.registerSeed(FABlockRegistry.CEPHALOTAXUS_FLOWER, new ItemStack(FAItemRegistry.SEED, 1, 2));
 		ThaumcraftApi.registerSeed(FABlockRegistry.LICOPODIOPHYTA_FLOWER, new ItemStack(FAItemRegistry.SEED, 1, 3));
-		ThaumcraftApi.registerSeed(FABlockRegistry.PALEOPANAX_FLOWER, new ItemStack(FAItemRegistry.SEED, 1, 4));
+		ThaumcraftApi.registerSeed(FABlockRegistry.FOOZIA_FLOWER, new ItemStack(FAItemRegistry.SEED, 1, 4));
 		ThaumcraftApi.registerSeed(FABlockRegistry.ZAMITES_FLOWER, new ItemStack(FAItemRegistry.SEED, 1, 5));
 		ThaumcraftApi.registerSeed(FABlockRegistry.BENNETTITALES_SMALL_FLOWER, new ItemStack(FAItemRegistry.SEED, 1, 6));
 		ThaumcraftApi.registerSeed(FABlockRegistry.WELWITSCHIA_FLOWER, new ItemStack(FAItemRegistry.SEED, 1, 7));

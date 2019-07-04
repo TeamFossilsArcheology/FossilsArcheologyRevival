@@ -1,10 +1,10 @@
 {
   "variants": {
     "half=lower": {
-      "model": "fossil:paleopanax_1"
+      "model": "fossil:foozia_1"
     },
     "half=upper": {
-      "model": "fossil:paleopanax_2"
+      "model": "fossil:foozia_2"
     }
   }
 }
