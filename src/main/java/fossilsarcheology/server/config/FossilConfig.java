@@ -47,6 +47,7 @@ public class FossilConfig {
     public boolean eggsLikeChickens = false;
     public boolean dinosaurBreeding = true;
     public int flyingTargetMaxHeight = 128;
+    public int dinosaurUpdateTick = 10;
     public int dimensionIDDarknessLair = -23;
     public int dimensionIDTreasure = -24;
     public int homePortalExitDimension = 0;
@@ -85,6 +86,7 @@ public class FossilConfig {
         this.sturgeonSpawnRate = config.getInt("Sturgeon Spawn Rarity", "all", 4, 1, 100000000, "Chance of Sturgeon spawning in a new chunks. Higher number = more rare");
         this.healingDinos = config.getBoolean("Healing Dinos", "all", true, "True if Dinosaurs can heal with food");
         this.starvingDinos = config.getBoolean("Starving Dinos", "all", true, "True if Dinosaurs have hunger");
+        this.dinosaurUpdateTick = config.getInt("Dino Upgrade Tick", "all", 10, 1, 10000, "Dinosaurs will conduct expensive CPU operations like looking for plants or feeders every fraction of a tick(20 per second). Default is 10, so dinosaurs therefore update every half-second.");
         this.dinoBlockBreaking = config.getBoolean("Dino Block Breaking", "all", true, "True if Certain Dinosaurs can break blocks weaker than iron");
         this.dinoEatModdedMobs = config.getBoolean("Dino Eat Modded Mobs", "all", true, "True if Dinosaurs can eat non-vanilla mobs");
         this.customMainMenu = config.getBoolean("Custom Main Menu", "all", true, "True if Custom Main Menu is enabled");

@@ -1,5 +1,6 @@
 package fossilsarcheology.server.entity.ai;
 
+import fossilsarcheology.Revival;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.util.FoodMappings;
 import net.minecraft.block.Block;
@@ -34,7 +35,9 @@ public class DinoAIEatBlocks extends EntityAIBase {
         if (this.entity.isMovementBlocked()) {
             return false;
         }
-        resetTarget();
+        if(entity.ticksExisted % Revival.CONFIG_OPTIONS.dinosaurUpdateTick == 0){
+            resetTarget();//expensive operation
+        }
         if(targetBlock != null) {
             this.entity.shouldWander = false;
         }
