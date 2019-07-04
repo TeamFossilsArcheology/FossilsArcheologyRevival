@@ -98,7 +98,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
         if(flying && this.ticksExisted % 20 == 0 && !world.isRemote && !this.isChild()){
             this.playSound(FASoundRegistry.MEGANEURA_FLY, this.getSoundVolume(), 1);
         }
-        if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
+        if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 9 && this.getAttackTarget() != null && this.canReachPrey()) {
             doAttack();
         }
     }
