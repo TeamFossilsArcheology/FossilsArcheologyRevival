@@ -43,7 +43,7 @@ public class StructureUtils {
         if(!state.isOpaqueCube()){
             return false;
         }
-        return !world.getBlockState(pos.up()).isOpaqueCube();
+        return !world.getBlockState(pos.up()).isOpaqueCube() && !(world.getBlockState(pos.up(2)).getBlock() instanceof BlockLiquid);
     }
 
     public static boolean generateStructureAt(ResourceLocation structure, World world, BlockPos pos, boolean removeAir) {
