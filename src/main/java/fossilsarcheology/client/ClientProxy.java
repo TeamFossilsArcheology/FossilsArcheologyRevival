@@ -215,7 +215,7 @@ public class ClientProxy extends ServerProxy {
     @Override
     @SideOnly(Side.CLIENT)
     public void playSound(SoundEvent sound) {
-        Minecraft.getMinecraft().getSoundHandler().playSound(net.minecraft.client.audio.PositionedSoundRecord.getMusicRecord(sound));
+        Minecraft.getMinecraft().getSoundHandler().playSound(net.minecraft.client.audio.PositionedSoundRecord.getRecord(sound, 1, 1));
     }
 
     @Override
