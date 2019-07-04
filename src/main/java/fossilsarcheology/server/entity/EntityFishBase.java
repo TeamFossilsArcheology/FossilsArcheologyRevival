@@ -57,6 +57,7 @@ public abstract class EntityFishBase extends EntityTameable {
         this.tasks.addTask(0, new FishAIFindWaterTarget(this));
         this.tasks.addTask(1, new EntityAILookIdle(this));
     }
+
     @Override
     public boolean isAIDisabled() {
         return false;
@@ -79,6 +80,7 @@ public abstract class EntityFishBase extends EntityTameable {
     protected ResourceLocation getLootTable() {
         return PrehistoricEntityType.FISH_LOOT;
     }
+
     @Override
     protected boolean canTriggerWalking() {
         return false;
@@ -160,7 +162,7 @@ public abstract class EntityFishBase extends EntityTameable {
 
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
-       ItemStack stack = player.inventory.getCurrentItem();
+        ItemStack stack = player.inventory.getCurrentItem();
         if (stack != ItemStack.EMPTY && FMLCommonHandler.instance().getSide().isClient() && stack.getItem() == FAItemRegistry.DINOPEDIA) {
             this.setPedia();
             player.openGui(Revival.INSTANCE, 6, this.world, (int) this.posX, (int) this.posY, (int) this.posZ);
@@ -170,14 +172,16 @@ public abstract class EntityFishBase extends EntityTameable {
             if (stack != ItemStack.EMPTY && stack.getItem() == Items.FLINT) {
                 ((EntityNautilus) this).setInShell(false);
                 ((EntityNautilus) this).ticksToShell = 60;
-            } else if(stack.getItem() != FAItemRegistry.DINOPEDIA){
+            } else if (stack.getItem() != FAItemRegistry.DINOPEDIA) {
                 this.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1, this.getRNG().nextFloat() + 0.8F);
                 return false;
             }
         }
         if (stack.isEmpty() && this.getGrowingAge() > 0) {
             ItemStack var3 = new ItemStack(this.selfType.fishItem, 1);
-            player.inventory.addItemStackToInventory(var3);
+            if (!player.inventory.addItemStackToInventory(var3)) {
+                player.dropItem(var3, false);
+            }
             this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, this.getRNG().nextFloat() + 0.8F);
             this.setDead();
             return true;
@@ -193,7 +197,7 @@ public abstract class EntityFishBase extends EntityTameable {
 
     @Override
     public boolean getCanSpawnHere() {
-       return this.posY < (double)this.world.getSeaLevel() && this.isInWater();
+        return this.posY < (double) this.world.getSeaLevel() && this.isInWater();
     }
 
     public boolean isNotColliding() {
