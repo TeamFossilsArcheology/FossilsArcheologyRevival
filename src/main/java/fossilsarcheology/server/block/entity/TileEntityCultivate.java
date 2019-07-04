@@ -227,7 +227,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     private boolean canCultivate() {
         ItemStack inputStack = this.inputInventory.getStackInSlot(0);
         if (!inputStack.isEmpty()) {
-            ItemStack cultivatedStack = FAMachineRecipeRegistry.getCultivateResult(inputStack);
+            ItemStack cultivatedStack = FAMachineRecipeRegistry.getCultivateResult(inputStack).copy();
             if (cultivatedStack.isEmpty()) {
                 return false;
             }
@@ -239,7 +239,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     public void cultivate() {
         if (this.canCultivate()) {
             ItemStack inputStack = this.inputInventory.extractItem(0, 1, false);
-            ItemStack cultivatedStack = FAMachineRecipeRegistry.getCultivateResult(inputStack);
+            ItemStack cultivatedStack = FAMachineRecipeRegistry.getCultivateResult(inputStack).copy();
             this.outputInventory.insertItem(0, cultivatedStack, false);
 
             ItemStack containerStack = inputStack.getItem().getContainerItem(inputStack);

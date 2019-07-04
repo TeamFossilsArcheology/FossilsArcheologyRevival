@@ -14,15 +14,15 @@ public class RecipeWorktable {
     }
 
     public ItemStack getInput(){
-        return input;
+        return input.copy();
     }
 
     public ItemStack getOutput(){
-        return output;
+        return output.copy();
     }
 
     public ItemStack getFuel(){
-        return fuel;
+        return fuel.copy();
     }
 
 
