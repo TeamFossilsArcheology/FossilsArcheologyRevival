@@ -93,7 +93,7 @@ public class FossilLeavesBlock extends BlockLeaves implements DefaultRenderedIte
 	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
 		if (!world.isRemote) {
 			if (state.getValue(CHECK_DECAY) && state.getValue(DECAYABLE)) {
-				byte scanArea = 4;
+				byte scanArea = 6;
 				int i = scanArea + 2;
 				byte size = 32;
 				int sizeSquared = size * size;
