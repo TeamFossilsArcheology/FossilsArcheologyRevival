@@ -113,7 +113,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 		int z = (chunkZ * 16) + 8;
 		BlockPos height = StructureUtils.getGround(x, z, world);
 		Biome biome = world.getBiome(height);
-		if (Revival.CONFIG_OPTIONS.generateTarSites && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateTarSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS) {
+		if (Revival.CONFIG_OPTIONS.generateTarSites && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateTarSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS && StructureUtils.canGenOnBlock(world, height)) {
 			if(StructureUtils.generateStructureAtWithRandomRotation(TAR_SITE, world, height.down(3), random, true, false)){
 				BlockPos tentPos = random.nextBoolean() ? height.add(10  + random.nextInt(6), 10 + random.nextInt(6) , 10 + random.nextInt(6)) : height.add(-10 - random.nextInt(6), -10 - random.nextInt(6), -10 - random.nextInt(6));
 				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, StructureUtils.getGround(tentPos, world), random, false, false);
@@ -124,7 +124,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 			}
 		}
 
-		if (Revival.CONFIG_OPTIONS.generateFossilSites && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateFossilSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS) {
+		if (Revival.CONFIG_OPTIONS.generateFossilSites && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateFossilSiteRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && biome.topBlock.getBlock() == Blocks.GRASS && StructureUtils.canGenOnBlock(world, height)) {
 			if(StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE, world, height.down(3), random, true, false)){
 				BlockPos tentPos = random.nextBoolean() ? height.add(10  + random.nextInt(6), 10 + random.nextInt(6) , 10 + random.nextInt(6)) : height.add(-10 - random.nextInt(6), -10 - random.nextInt(6), -10 - random.nextInt(6));
 				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, StructureUtils.getGround(tentPos, world), random, false, false);
@@ -134,16 +134,16 @@ public class FAWorldGenerator implements IWorldGenerator {
 				world.spawnEntity(villager);
 			}
 		}
-		if (Revival.CONFIG_OPTIONS.generateMoai && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateMoaiRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.BEACH) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY) && world.getBlockState(height.down()).isOpaqueCube()) {
+		if (Revival.CONFIG_OPTIONS.generateMoai && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateMoaiRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.BEACH) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.COLD) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY) && world.getBlockState(height.down()).isOpaqueCube()  && StructureUtils.canGenOnBlock(world, height)) {
 			StructureUtils.generateStructureAtWithRandomRotation(random.nextInt(3) == 0 ? MOAI_WITH_HAT : MOAI, world, height.down(random.nextInt(5)), random, false, true);
 		}
-		if (Revival.CONFIG_OPTIONS.generateAztecWeaponShops && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateWeaponShopRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) {
-			StructureUtils.generateStructureAtWithRandomRotationWithLoot(AZTEC_WEAPONS_SHOP, AZTEC_WEAPONS_CHEST, world, height.down(2), random, true, false);
+		if (Revival.CONFIG_OPTIONS.generateAztecWeaponShops && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateWeaponShopRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE) && StructureUtils.canGenOnBlock(world, height)) {
+			StructureUtils.generateStructureAtWithRandomRotationWithLoot(AZTEC_WEAPONS_SHOP, AZTEC_WEAPONS_CHEST, world, height, random, true, false);
 		}
-		if (Revival.CONFIG_OPTIONS.generateTemple && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateTempleRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) {
+		if (Revival.CONFIG_OPTIONS.generateTemple && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateTempleRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE) && StructureUtils.canGenOnBlock(world, height)) {
 			StructureUtils.generateStructureAtWithRandomRotationWithLoot(AZTEC_TEMPLE, AZTEC_TEMPLE_CHEST, world, height, random, true, false);
 		}
-		if (Revival.CONFIG_OPTIONS.generateAcademy && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateAcademyRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.DRY) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT)) {
+		if (Revival.CONFIG_OPTIONS.generateAcademy && random.nextInt(Math.max(Revival.CONFIG_OPTIONS.generateAcademyRarity, 1)) == 0 && world.provider.hasSkyLight() && !world.provider.isNether() && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SANDY) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.DRY) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.HOT) && StructureUtils.canGenOnBlock(world, height)) {
 			StructureUtils.generateStructureAtWithRandomRotationWithLoot(EGYPTIAN_ACADEMY, EGYPTIAN_ACADEMY_CHEST, world, height.down(), random, true, false);
 		}
 		if (world.getChunk(chunkX, chunkZ) == world.getChunk(ANU_CASTLE_POS) && world.provider.getDimension() == Revival.CONFIG_OPTIONS.dimensionIDDarknessLair) {

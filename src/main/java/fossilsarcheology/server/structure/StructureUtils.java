@@ -1,6 +1,9 @@
 package fossilsarcheology.server.structure;
 
 import fossilsarcheology.server.world.FAWorldGenerator;
+import net.minecraft.block.BlockLiquid;
+import net.minecraft.block.BlockLog;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
@@ -30,6 +33,17 @@ public class StructureUtils {
         BlockPos center = balancePos(pos.offset(facing, template.getSize().getZ() / 2).offset(facing.rotateYCCW(), template.getSize().getX() / 2), template.getSize());
         template.addBlocksToWorldChunk(world, center, settings);
         return true;
+    }
+
+    public static boolean canGenOnBlock(World world, BlockPos pos){
+        IBlockState state = world.getBlockState(pos);
+        if(!state.isSideSolid(world, pos, EnumFacing.UP)){
+            return false;
+        }
+        if(!state.isOpaqueCube()){
+            return false;
+        }
+        return !world.getBlockState(pos.up()).isOpaqueCube();
     }
 
     public static boolean generateStructureAt(ResourceLocation structure, World world, BlockPos pos, boolean removeAir) {
@@ -150,18 +164,22 @@ public class StructureUtils {
     }
 
     public static BlockPos getGround(BlockPos pos, World world){
-        BlockPos skyPos = new BlockPos(pos.getX(), world.getHeight(), pos.getZ());
-        while (!world.getBlockState(skyPos).isOpaqueCube() && skyPos.getY() > 1){
+        return getGround(pos.getX(), pos.getZ(), world);
+    }
+
+    public static BlockPos getGround(int x, int z, World world){
+        BlockPos skyPos = new BlockPos(x, world.getHeight(), z);
+        while ((!world.getBlockState(skyPos).isOpaqueCube() || canHeightSkipBlock(skyPos, world)) && skyPos.getY() > 1){
             skyPos = skyPos.down();
         }
         return skyPos;
     }
 
-    public static BlockPos getGround(int x, int z, World world){
-        BlockPos skyPos = new BlockPos(x, world.getHeight(), z);
-        while (!world.getBlockState(skyPos).isOpaqueCube() && skyPos.getY() > 1){
-            skyPos = skyPos.down();
+    private static boolean canHeightSkipBlock(BlockPos pos, World world){
+        IBlockState state = world.getBlockState(pos);
+        if(state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLiquid){
+            return true;
         }
-        return skyPos;
+        return false;
     }
 }
