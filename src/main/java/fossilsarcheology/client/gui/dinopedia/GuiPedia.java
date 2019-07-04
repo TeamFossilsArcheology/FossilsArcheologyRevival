@@ -563,7 +563,7 @@ public class GuiPedia extends GuiScreen {
                 if (mouseX > x && mouseX < x + 154) {
                     if (mouseY > y && mouseY < y + 13) {
                         List<String> text = new ArrayList<>();
-                        text.add(I18n.format("pedia.moodstatus") + dino.getMoodFace().color + dino.getMood());
+                        text.add(I18n.format("pedia.moodstatus") + " " + dino.getMoodFace().color + dino.getMood());
                         GlStateManager.pushMatrix();
                         this.drawHoveringText(text, mouseX, mouseY, fontRenderer);
                         GlStateManager.popMatrix();
