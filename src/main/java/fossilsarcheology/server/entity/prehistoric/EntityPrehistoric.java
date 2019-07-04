@@ -536,6 +536,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (this.getMood() < -100) {
             this.setMood(-100);
         }
+        if(this.isDeadlyHungry() && this.getMood() > -50){
+            this.setMood(-50);
+        }
         if (this.ticksTillPlay > 0) {
             this.ticksTillPlay--;
         }
@@ -1039,7 +1042,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         return this.getHunger() < this.getMaxHunger() * 0.75F;
     }
 
-    public boolean IsDeadlyHungry() {
+    public boolean isDeadlyHungry() {
         return this.getHunger() < this.getMaxHunger() * 0.25F;
     }
 
