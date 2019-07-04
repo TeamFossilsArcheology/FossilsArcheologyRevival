@@ -6,16 +6,13 @@
   ],
   "key": {
     "X": {
-      "item": "minecraft:iron_ingot",
-      "data": 0
+      "item": "minecraft:iron_ingot"
     },
     "Y": {
-      "item": "fossil:biofossil",
-      "data": 0
+      "item": "fossil:biofossil"
     },
     "Z": {
-      "item": "fossil:relic_scrap",
-      "data": 0
+      "item": "fossil:relic_scrap"
     }
   },
   "result": {
