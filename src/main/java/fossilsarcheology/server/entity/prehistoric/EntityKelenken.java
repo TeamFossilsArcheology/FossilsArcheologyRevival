@@ -26,7 +26,7 @@ public class EntityKelenken extends EntityPrehistoric implements IScaryDinosaur{
 		teenAge = 4;
 		developsResistance = true;
 		breaksBlocks = false;
-		this.ridingY = 2.4F;
+		this.ridingY = 2.65F;
 		this.pediaScale = 25F;
 	}
 
@@ -187,6 +187,6 @@ public class EntityKelenken extends EntityPrehistoric implements IScaryDinosaur{
 
 	@Override
 	public boolean canBeRidden() {
-		return false;
+		return true;
 	}
 }
