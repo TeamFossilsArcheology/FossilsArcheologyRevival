@@ -161,6 +161,16 @@ public class EntityCrassigyrinus extends EntityPrehistoricSwimming {
     }
 
     @Override
+    public float getSoundPitch() {
+        return super.getSoundPitch() * 1.1F;
+    }
+
+    @Override
+    public float getSoundVolume() {
+        return super.getSoundVolume() * 0.75F;
+    }
+
+    @Override
     public boolean canBeRidden() {
         return false;
     }

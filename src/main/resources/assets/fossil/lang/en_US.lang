@@ -70,6 +70,8 @@ item.bone_unique_item.megaloceros.name=Megaloceros Antlers
 item.bone_unique_item.megalania.name=Megalania Claw
 item.bone_unique_item.platybelodon.name=Platybelodon Tusk
 item.bone_unique_item.tiktaalik.name=Tiktaalik Wrist
+item.bone_unique_item.crassigyrinus.name=Crassigyrinus Tail Bone
+item.bone_unique_item.diplocaulus.name=Diplocaulus Tail Bone
 
 # Items - DNA
 
@@ -160,6 +162,8 @@ entity.fossil.megalograptus.name=Megalograptus
 entity.fossil.megalodon.name=Megalodon
 entity.fossil.platybelodon.name=Platybelodon
 entity.fossil.tiktaalik.name=Tiktaalik
+entity.fossil.crassigyrinus.name=Crassigyrinus
+entity.fossil.diplocaulus.name=Diplocaulus
 entity.fossil.javelin.name=Javelin
 entity.fossil.ancient_javelin.name=Ancient Javelin
 entity.fossil.stone_tablet.name=Stone Tablet
@@ -334,6 +338,8 @@ item.rawAllosaurus.name=Allosaurus Meat
 item.rawSarcosuchus.name=Sarcosuchus Meat
 item.rawCeratosaurus.name=Ceratosaurus Meat
 item.rawMeganeura.name=Meganeura Meat
+item.rawCrassigyrinus.name=Crassigyrinus Meat
+item.rawDiplocaulus.name=Diplocaulus Meat
 item.eggTriceratops.name=Triceratops Egg
 item.eggVelociraptor.name=Velociraptor Egg
 item.eggTyrannosaurus.name=Tyrannosaurus Egg
@@ -362,6 +368,8 @@ item.eggKelenken.name=Kelenken Egg
 item.eggMegalania.name=Megalania Egg
 item.eggTiktaalik.name=Tiktaalik Egg
 item.eggMegalodon.name=Megalodon Sac
+item.eggCrassigyrinus.name=Crassigyrinus Egg
+item.eggDiplocaulus.name=Diplocaulus Egg
 item.dnaGastornis.name=Gastornis DNA
 item.dnaPhorusrhacos.name=Phorusrhacos DNA
 item.dnaTitanis.name=Titanis DNA
@@ -422,6 +430,8 @@ item.dnaMegalograptus.name=Megalograptus DNA
 item.dnaMegalodon.name=Megalodon DNA
 item.dnaPlatybelodon.name=Platybelodon DNA
 item.dnaTiktaalik.name=Tiktaalik DNA
+item.dnaCrassigyrinus.name=Crassigyrinus DNA
+item.dnaDiplocaulus.name=Diplocaulus DNA
 
 item.embryoPig.name=Pig Embryo
 item.embryoSheep.name=Sheep Embryo
@@ -546,6 +556,8 @@ item.cookedMegalograptus.name=Cooked Megalograptus Meat
 item.cookedMegalodon.name=Cooked Megalodon Meat
 item.cookedPlatybelodon.name=Cooked Platybelodon Meat
 item.cookedTiktaalik.name=Cooked Tiktaalik Meat
+item.cookedCrassigyrinus.name=Cooked Crassigyrinus Meat
+item.cookedDiplocaulus.name=Cooked Diplocaulus Meat
 
 item.fossilseed_dillhoffia.name=Fossilized Dillhoffia Seeds
 item.fossilseed_sarracina.name=Fossilized Sarracenia Seeds

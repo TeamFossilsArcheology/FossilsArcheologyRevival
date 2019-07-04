@@ -123,6 +123,8 @@ public class ModelCrassigyrinus extends ModelPrehistoric {
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         animate((IAnimatedEntity) entity, f, f1, f2, f3, f4, f5);
         GlStateManager.pushMatrix();
+        GlStateManager.translate(0, 0, -0.3F);
+
         GlStateManager.translate(this.Body.offsetX, this.Body.offsetY, this.Body.offsetZ);
         GlStateManager.translate(this.Body.rotationPointX * f5, this.Body.rotationPointY * f5, this.Body.rotationPointZ * f5);
         GlStateManager.scale(0.7D, 0.7D, 0.7D);

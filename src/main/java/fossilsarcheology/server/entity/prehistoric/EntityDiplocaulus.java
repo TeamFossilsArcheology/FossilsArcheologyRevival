@@ -16,13 +16,14 @@ import net.minecraft.world.World;
 public class EntityDiplocaulus extends EntityPrehistoricSwimming {
 
     public EntityDiplocaulus(World world) {
-        super(world, PrehistoricEntityType.DIPLOCAULUS, 1, 4, 4, 20, 0.15, 0.3, 1, 2);
-        this.setActualSize(0.95F, 0.4F);
+        super(world, PrehistoricEntityType.DIPLOCAULUS, 1, 2, 2, 10, 0.15, 0.3, 1, 2);
+        this.setActualSize(0.65F, 0.4F);
         minSize = 0.5F;
-        maxSize = 0.9F;
+        maxSize = 1F;
         teenAge = 3;
         this.hasBabyTexture = true;
-        this.pediaScale = 31;
+        this.pediaScale = 100;
+        this.pediaY = 15;
     }
 
     public void initEntityAI() {
@@ -169,6 +170,16 @@ public class EntityDiplocaulus extends EntityPrehistoricSwimming {
     @Override
     protected SoundEvent getDeathSound() {
         return FASoundRegistry.TIKTAALIK_DEATH;
+    }
+
+    @Override
+    public float getSoundPitch() {
+        return super.getSoundPitch() * 1.5F;
+    }
+
+    @Override
+    public float getSoundVolume() {
+        return super.getSoundVolume() * 0.15F;
     }
 
     @Override
