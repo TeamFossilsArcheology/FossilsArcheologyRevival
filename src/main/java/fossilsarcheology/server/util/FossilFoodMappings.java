@@ -146,6 +146,7 @@ public class FossilFoodMappings {
 		FoodMappings.INSTANCE.addMeat(EntityDryosaurus.class, 25);
 		FoodMappings.INSTANCE.addMeat(EntityTherizinosaurus.class, 125);
 		FoodMappings.INSTANCE.addMeat(EntityParasaurolophus.class, 150);
+		FoodMappings.INSTANCE.addMeat(EntityPlatybelodon.class, 90);
 		FoodMappings.INSTANCE.addFish(EntityCoelacanth.class, 20);
 		FoodMappings.INSTANCE.addFish(EntitySturgeon.class, 20);
 		FoodMappings.INSTANCE.addFish(EntityAlligatorGar.class, 20);
@@ -158,6 +159,9 @@ public class FossilFoodMappings {
 		FoodMappings.INSTANCE.addFish(EntityAlligatorGar.class, 50);
 		FoodMappings.INSTANCE.addFish(EntitySturgeon.class, 50);
 		FoodMappings.INSTANCE.addFish(EntitySquid.class, 40);
+		FoodMappings.INSTANCE.addFish(EntityTiktaalik.class, 40);
+		FoodMappings.INSTANCE.addFish(EntityCrassigyrinus.class, 35);
+		FoodMappings.INSTANCE.addFish(EntityDiplocaulus.class, 20);
 		FoodMappings.INSTANCE.addMeatEntity("rats:rat", 5);
 		FoodMappings.INSTANCE.addMeatEntity("historicizedmedicine:rat", 5);
 		FoodMappings.INSTANCE.addMeatEntity("bewitchment:lizard", 3);
