@@ -76,28 +76,22 @@ public class AncientChestBlock extends BlockContainer implements DefaultRendered
 
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		TileEntityAncientChest tile = (TileEntityAncientChest) world.getTileEntity(pos);
-		if (tile.chestState == 0) {
-			if (player.getHeldItem(hand) != null) {
-				if (player.getHeldItem(hand).getItem() != null) {
+		if(world.getTileEntity(pos) instanceof TileEntityAncientChest) {
+			TileEntityAncientChest tile = (TileEntityAncientChest) world.getTileEntity(pos);
+			if (tile.chestState == 0) {
+				if (!player.getHeldItem(hand).isEmpty()) {
 					if (player.getHeldItem(hand).getItem() == FAItemRegistry.ANCIENT_KEY) {
 						tile.chestState = 1;
 						if (!player.capabilities.isCreativeMode) {
 							player.getHeldItem(hand).shrink(1);
 						}
-
-						if (player.getHeldItem(hand).getCount() <= 0) {
-							player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
-						}
-
 					}
 				}
+			} else if (tile.chestState == 1) {
+				tile.chestState = 2;
+				tile.chestLidCounter = 1;
+				world.playSound(player, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
 			}
-		} else if (tile.chestState == 1) {
-			tile.chestState = 2;
-			tile.chestLidCounter = 1;
-			world.playSound(player, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-
 		}
 		return true;
 	}
