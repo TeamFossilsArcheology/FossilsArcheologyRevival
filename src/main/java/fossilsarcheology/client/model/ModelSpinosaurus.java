@@ -400,8 +400,8 @@ public class ModelSpinosaurus extends ModelPrehistoric {
 			sitAnimationRotationPrev(tail3, sitProgress, -((float) Math.toRadians(0.13D)), -((float) Math.toRadians(29.0D)), -((float) Math.toRadians(7.0D)));
 			sitAnimationRotationPrev(neck, sitProgress, (float) Math.toRadians(27.13D), (float) Math.toRadians(22.0D), 0);
 			sitAnimationPos(lowerBody, sitProgress, 0, 5, 0);
-			sitAnimationPos(rightThigh, sitProgress, 0, 5, 0);
-			sitAnimationPos(leftThigh, sitProgress, 0, 5, 0);
+			sitAnimationPos(rightThigh, sitProgress, -1, 5, 0);
+			sitAnimationPos(leftThigh, sitProgress, -1.5F, 5, 0);
 			sitAnimationPos(leftFoot, sitProgress, 0, -2, -1.5F);
 			sitAnimationPos(rightFoot, sitProgress, 0, -2, -1.5F);
 
