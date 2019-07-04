@@ -289,6 +289,14 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
 
         public void onUpdateMoveHelper() {
             if (this.action == EntityMoveHelper.Action.MOVE_TO) {
+                if (EntityMeganeura.this.collidedHorizontally) {
+                    EntityMeganeura.this.rotationYaw += 180.0F;
+                    this.speed = 0.1F;
+                    BlockPos target = EntityMeganeura.getPositionRelativetoGround(EntityMeganeura.this, EntityMeganeura.this.world, EntityMeganeura.this.posX + EntityMeganeura.this.rand.nextInt(15) - 7, EntityMeganeura.this.posZ + EntityMeganeura.this.rand.nextInt(15) - 7, EntityMeganeura.this.rand);
+                    this.posX = target.getX();
+                    this.posY = target.getY();
+                    this.posZ = target.getZ();
+                }
                 double d0 = this.posX - EntityMeganeura.this.posX;
                 double d1 = this.posY - EntityMeganeura.this.posY;
                 double d2 = this.posZ - EntityMeganeura.this.posZ;
