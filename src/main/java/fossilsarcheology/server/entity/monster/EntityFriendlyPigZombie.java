@@ -1,10 +1,7 @@
 package fossilsarcheology.server.entity.monster;
 
 import net.minecraft.block.Block;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityAgeable;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityTameable;
@@ -41,6 +38,10 @@ public class EntityFriendlyPigZombie extends EntityTameable {
         this.targetTasks.addTask(2, new EntityAIOwnerHurtTarget(this));
         this.targetTasks.addTask(3, new EntityAIHurtByTarget(this, true));
         this.setTamed(false);
+    }
+
+    public EnumCreatureAttribute getCreatureAttribute() {
+        return EnumCreatureAttribute.UNDEAD;
     }
 
     @Override
