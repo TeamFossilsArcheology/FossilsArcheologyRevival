@@ -176,7 +176,7 @@ public class ServerProxy implements IGuiHandler {
     public static void registerBiome(RegistryEvent.Register<Biome> event) {
         event.getRegistry().register(FAWorldRegistry.ANU_BIOME.setRegistryName("Lair of Darkness"));
         event.getRegistry().register(FAWorldRegistry.TREASURE_BIOME.setRegistryName("Treasure"));
-        BiomeDictionary.addTypes(FAWorldRegistry.ANU_BIOME, BiomeDictionary.Type.NETHER, BiomeDictionary.Type.VOID, BiomeDictionary.Type.SPOOKY);
+        BiomeDictionary.addTypes(FAWorldRegistry.ANU_BIOME, BiomeDictionary.Type.NETHER, BiomeDictionary.Type.VOID);
         BiomeDictionary.addTypes(FAWorldRegistry.TREASURE_BIOME, BiomeDictionary.Type.VOID);
 
     }
