@@ -73,6 +73,7 @@ public class GuiPedia extends GuiScreen {
         sorter = new FoodSorter();
     }
 
+
     public static void renderDinosaur(int posX, int posY, int scaleValue, float renderPitch, EntityLivingBase mob) {
         GlStateManager.enableColorMaterial();
         GlStateManager.pushMatrix();
@@ -237,7 +238,9 @@ public class GuiPedia extends GuiScreen {
 
     @Override
     public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_) {
-        this.drawDefaultBackground();
+        if(mc.world != null) {
+            this.drawDefaultBackground();
+        }
         int k = this.guiLeft;
         int l = this.guiTop;
         this.drawGuiContainerBackgroundLayer(p_73863_3_, p_73863_1_, p_73863_2_);
@@ -269,7 +272,7 @@ public class GuiPedia extends GuiScreen {
         if (bookPages == 0) {
             if (Revival.PEDIA_OBJECT instanceof EntityAnimal) {
                 FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties((EntityAnimal) Revival.PEDIA_OBJECT, FossilsMammalProperties.class);
-                if (properties != null && properties.embryoProgress < 9999 && properties.embryo != null && properties.isPregnant) {
+                if (properties != null) {
                     EntityAnimal entity = (EntityAnimal) Revival.PEDIA_OBJECT;
                     String s1 = I18n.format(entity.getName());
                     String s2 = "prehistoric.pregnant";

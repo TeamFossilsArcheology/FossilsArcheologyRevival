@@ -34,6 +34,7 @@ import net.minecraft.client.renderer.block.statemap.StateMapperBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
@@ -225,5 +226,11 @@ public class ClientProxy extends ServerProxy {
         if (Minecraft.getMinecraft().getSoundHandler().isSoundPlaying(isound)) {
             Minecraft.getMinecraft().getSoundHandler().stopSound(isound);
         }
+    }
+
+    @SideOnly(Side.CLIENT)
+    @Override
+    public void openPedia() {
+        Minecraft.getMinecraft().displayGuiScreen(new GuiPedia());
     }
 }

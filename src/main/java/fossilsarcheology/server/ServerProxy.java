@@ -194,8 +194,6 @@ public class ServerProxy implements IGuiHandler {
         MinecraftForge.EVENT_BUS.register(new FossilPickupItemEvent());
         MinecraftForge.EVENT_BUS.register(new FossilBonemealEvent());
         GameRegistry.registerWorldGenerator(new FAWorldGenerator(), 0);
-        EntityPropertiesHandler.INSTANCE.registerProperties(FossilsPlayerProperties.class);
-        EntityPropertiesHandler.INSTANCE.registerProperties(FossilsMammalProperties.class);
     }
 
     public void calculateChainBuffer(EntityFishBase entity) {
@@ -284,5 +282,8 @@ public class ServerProxy implements IGuiHandler {
 
     public Object getArmorModel(int id) {
         return null;
+    }
+
+    public void openPedia() {
     }
 }

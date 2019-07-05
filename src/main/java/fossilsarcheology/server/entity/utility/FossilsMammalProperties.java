@@ -13,7 +13,7 @@ public class FossilsMammalProperties extends EntityProperties<EntityAnimal> {
 
 	@Override
 	public int getTrackingTime() {
-		return 20;
+		return 1;
 	}
 
 	@Override

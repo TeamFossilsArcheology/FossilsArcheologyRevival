@@ -25,6 +25,7 @@ import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nullable;
@@ -69,12 +70,12 @@ public class FossilLivingEvent {
     }
 
     @SubscribeEvent
-    public void entityInteractEvent(PlayerInteractEvent.EntityInteract event) {
+    public void entityInteractEvent(PlayerInteractEvent.EntityInteractSpecific event) {
         if (event.getItemStack().getItem() == FAItemRegistry.DINOPEDIA && event.getTarget() instanceof EntityAnimal) {
             FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getTarget(), FossilsMammalProperties.class);
-            if (!PrehistoricEntityType.isMale(event.getTarget()) && properties != null && properties.isPregnant) {
+            if (properties != null && properties.isPregnant) {
                 Revival.PEDIA_OBJECT = event.getTarget();
-                event.getEntityPlayer().openGui(Revival.INSTANCE, ServerProxy.GUI_DINOPEDIA, event.getWorld(), event.getPos().getX(), event.getPos().getY(), event.getPos().getZ());
+                Revival.PROXY.openPedia();
             }
         }
     }

@@ -5,6 +5,8 @@ import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.compat.thaumcraft.ThaumcraftCompatBridge;
 import fossilsarcheology.server.compat.tinkers.TinkersCompatBridge;
 import fossilsarcheology.server.config.FossilConfig;
+import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
+import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.event.EventSharedConfig;
 import fossilsarcheology.server.event.FossilBonemealEvent;
 import fossilsarcheology.server.event.FossilLivingEvent;
@@ -13,6 +15,7 @@ import fossilsarcheology.server.loot.CustomizeToDinosaur;
 import fossilsarcheology.server.message.*;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import fossilsarcheology.server.util.ReleaseType;
+import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.ilexiconn.llibrary.server.network.NetworkWrapper;
 import net.minecraft.world.storage.loot.functions.LootFunctionManager;
 import net.minecraftforge.common.MinecraftForge;
@@ -75,6 +78,8 @@ public class Revival {
         LOGGER.info("Somewhere there, us sleeping");
         MinecraftForge.EVENT_BUS.register(new EventSharedConfig());
         MinecraftForge.EVENT_BUS.register(new FossilLivingEvent());
+        EntityPropertiesHandler.INSTANCE.registerProperties(FossilsPlayerProperties.class);
+        EntityPropertiesHandler.INSTANCE.registerProperties(FossilsMammalProperties.class);
     }
 
     @Mod.EventHandler

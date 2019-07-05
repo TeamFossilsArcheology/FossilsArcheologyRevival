@@ -24,20 +24,19 @@ public class MammalEmbryoItem extends PrehistoricEntityItem implements DefaultRe
 			if (properties != null) {
 				if (properties.isPregnant) {
 					return false;
-				}
-				if (this.type != null) {
-					properties.embryo = this.type;
+				}else{
+					properties.embryoProgress = 0;
 					properties.isPregnant = true;
+					properties.embryo = this.type;
 					if (!player.isCreative()) {
 						stack.shrink(1);
 					}
-				} else {
-					return false;
+					for (int i = 0; i < 7; i++) {
+						entity.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, entity.posX + entity.getRNG().nextFloat() * entity.width * 2.0F - entity.width, entity.posY + 0.5D + (entity.getRNG().nextFloat() * entity.height), entity.posZ + (entity.getRNG().nextFloat() * entity.width * 2.0F) - entity.width, entity.getRNG().nextGaussian() * 0.02D, entity.getRNG().nextGaussian() * 0.02D, entity.getRNG().nextGaussian() * 0.02D);
+					}
+					return true;
 				}
-				for (int i = 0; i < 7; i++) {
-					entity.world.spawnParticle(EnumParticleTypes.SMOKE_NORMAL, entity.posX + entity.getRNG().nextFloat() * entity.width * 2.0F - entity.width, entity.posY + 0.5D + (entity.getRNG().nextFloat() * entity.height), entity.posZ + (entity.getRNG().nextFloat() * entity.width * 2.0F) - entity.width, entity.getRNG().nextGaussian() * 0.02D, entity.getRNG().nextGaussian() * 0.02D, entity.getRNG().nextGaussian() * 0.02D);
-				}
-				return true;
+
 			}
 		}
 		return false;
