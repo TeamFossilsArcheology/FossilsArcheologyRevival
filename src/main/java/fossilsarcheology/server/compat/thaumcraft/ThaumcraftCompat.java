@@ -229,6 +229,9 @@ public class ThaumcraftCompat {
 
 		ThaumcraftApi.registerEntityTag("fossil.tikaalik", new AspectList().add(Aspect.BEAST, 25).add(Aspect.EARTH, 25).add(Aspect.WATER, 25).add(Aspect.EXCHANGE, 15).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
 		ThaumcraftApi.registerEntityTag("fossil.platybelodon", new AspectList().add(Aspect.BEAST, 35).add(Aspect.WATER, 35).add(Aspect.TOOL, 35).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
+		
+		ThaumcraftApi.registerEntityTag("fossil.diplocaulus", new AspectList().add(Aspect.BEAST, 25).add(Aspect.WATER, 25).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
+		ThaumcraftApi.registerEntityTag("fossil.crassigyrinus", new AspectList().add(Aspect.BEAST, 25).add(Aspect.WATER, 25).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
 
 		ThaumcraftApi.registerEntityTag("fossil.megalania", new AspectList().add(Aspect.BEAST, 35).add(Aspect.AVERSION, 35).add(Aspect.ALCHEMY, 35).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
 		ThaumcraftApi.registerEntityTag("fossil.meganeura", new AspectList().add(Aspect.BEAST, 35).add(Aspect.AVERSION, 35).add(Aspect.WATER, 35).add(Aspect.FLIGHT, 35).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
