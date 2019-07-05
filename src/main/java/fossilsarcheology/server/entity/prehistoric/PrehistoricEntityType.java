@@ -106,7 +106,6 @@ public enum PrehistoricEntityType {
 	public Item embryoItem;
 	public Item birdEggItem;
 	public Item bestBirdEggItem;
-	public final int growTime = 10000;
 	public final int primaryEggColor;
 	public final int secondaryEggColor;
 	public final float eggScale;

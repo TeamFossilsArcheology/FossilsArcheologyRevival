@@ -15,9 +15,6 @@ import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 public class FAEntityRegistry {
 	public static void register() {
-		EntityPropertiesHandler.INSTANCE.registerProperties(FossilsPlayerProperties.class);
-		EntityPropertiesHandler.INSTANCE.registerProperties(FossilsMammalProperties.class);
-
 		for (int id = 0; id < PrehistoricEntityType.values().length; id++) {
 			PrehistoricEntityType type = PrehistoricEntityType.values()[id];
 			if (type.mobType != MobType.CHICKEN && type.mobType != MobType.VANILLA) {

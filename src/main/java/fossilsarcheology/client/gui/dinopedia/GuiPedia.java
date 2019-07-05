@@ -273,7 +273,7 @@ public class GuiPedia extends GuiScreen {
                     EntityAnimal entity = (EntityAnimal) Revival.PEDIA_OBJECT;
                     String s1 = I18n.format(entity.getName());
                     String s2 = "prehistoric.pregnant";
-                    int quot = (int) Math.floor(((float) properties.embryoProgress / (float) (properties.embryo.growTime + 1) * 100.0F));
+                    int quot = (int) Math.floor(((float) properties.embryoProgress / (float) (Revival.CONFIG_OPTIONS.pregnancyTime + 1) * 100.0F));
                     String s3 = I18n.format("prehistoric.pregnantTime") + " " + String.valueOf(quot) + "%";
                     printStringXY(s3, (-this.fontRenderer.getStringWidth(s3) / 2) + 100, 110, 157, 126, 103);
                     GlStateManager.scale(1.5F, 1.5F, 1.5F);

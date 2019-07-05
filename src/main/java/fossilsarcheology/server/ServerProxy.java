@@ -15,6 +15,8 @@ import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.MobType;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.entity.projectile.EntityBirdEgg;
+import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
+import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.event.FossilBonemealEvent;
 import fossilsarcheology.server.event.FossilCraftingEvent;
 import fossilsarcheology.server.event.FossilLivingEvent;
@@ -24,6 +26,7 @@ import fossilsarcheology.server.recipe.FAOreDictRegistry;
 import fossilsarcheology.server.util.FossilFoodMappings;
 import fossilsarcheology.server.world.FAWorldGenerator;
 import fossilsarcheology.server.world.FAWorldRegistry;
+import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
@@ -65,13 +68,6 @@ public class ServerProxy implements IGuiHandler {
     @SubscribeEvent
     public static void registerVillagers(RegistryEvent.Register<VillagerRegistry.VillagerProfession> event) {
         event.getRegistry().register(FAVillagerRegistry.ARCHEOLOGIST_PROFESSION);
-    }
-
-    @SubscribeEvent
-    public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        if (event.getModID().equalsIgnoreCase(Revival.MODID)) {
-            Revival.syncConfig();
-        }
     }
 
     @SuppressWarnings("deprecation")
@@ -197,9 +193,9 @@ public class ServerProxy implements IGuiHandler {
         MinecraftForge.EVENT_BUS.register(new FossilCraftingEvent());
         MinecraftForge.EVENT_BUS.register(new FossilPickupItemEvent());
         MinecraftForge.EVENT_BUS.register(new FossilBonemealEvent());
-        MinecraftForge.EVENT_BUS.register(new FossilLivingEvent());
         GameRegistry.registerWorldGenerator(new FAWorldGenerator(), 0);
-
+        EntityPropertiesHandler.INSTANCE.registerProperties(FossilsPlayerProperties.class);
+        EntityPropertiesHandler.INSTANCE.registerProperties(FossilsMammalProperties.class);
     }
 
     public void calculateChainBuffer(EntityFishBase entity) {

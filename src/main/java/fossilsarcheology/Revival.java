@@ -5,6 +5,9 @@ import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.compat.thaumcraft.ThaumcraftCompatBridge;
 import fossilsarcheology.server.compat.tinkers.TinkersCompatBridge;
 import fossilsarcheology.server.config.FossilConfig;
+import fossilsarcheology.server.event.EventSharedConfig;
+import fossilsarcheology.server.event.FossilBonemealEvent;
+import fossilsarcheology.server.event.FossilLivingEvent;
 import fossilsarcheology.server.lib.LibDependencies;
 import fossilsarcheology.server.loot.CustomizeToDinosaur;
 import fossilsarcheology.server.message.*;
@@ -70,6 +73,8 @@ public class Revival {
         LOGGER.info("On a pristine Gaea");
         LOGGER.info("Opus perfectum");
         LOGGER.info("Somewhere there, us sleeping");
+        MinecraftForge.EVENT_BUS.register(new EventSharedConfig());
+        MinecraftForge.EVENT_BUS.register(new FossilLivingEvent());
     }
 
     @Mod.EventHandler

@@ -53,6 +53,7 @@ public class FossilConfig {
     public int homePortalExitDimension = 0;
     public boolean logCascadingWorldGen = false;
     public boolean animalsFearDinosaurs = true;
+    public int pregnancyTime;
 
     public void init(Configuration config) {
         this.generatePalaeoraphe = config.getBoolean("Generate Palaeoraphe", "all", false, "True if Palaeoraphe Trees are to generate naturally");
@@ -87,6 +88,7 @@ public class FossilConfig {
         this.healingDinos = config.getBoolean("Healing Dinos", "all", true, "True if Dinosaurs can heal with food");
         this.starvingDinos = config.getBoolean("Starving Dinos", "all", true, "True if Dinosaurs have hunger");
         this.dinosaurUpdateTick = config.getInt("Dino Upgrade Tick", "all", 10, 1, 10000, "Dinosaurs will conduct expensive CPU operations like looking for plants or feeders every fraction of a tick(20 per second). Default is 10, so dinosaurs therefore update every half-second.");
+        this.pregnancyTime = config.getInt("Pregnancy TIme", "all", 10000, 1, 1000000000, "How long do mammal pregnancies last, in ticks.");
         this.dinoBlockBreaking = config.getBoolean("Dino Block Breaking", "all", true, "True if Certain Dinosaurs can break blocks weaker than iron");
         this.dinoEatModdedMobs = config.getBoolean("Dino Eat Modded Mobs", "all", true, "True if Dinosaurs can eat non-vanilla mobs");
         this.customMainMenu = config.getBoolean("Custom Main Menu", "all", true, "True if Custom Main Menu is enabled");
