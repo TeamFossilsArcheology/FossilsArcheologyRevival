@@ -32,7 +32,7 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
         this.pediaScale = 35F;
         this.nearByMobsAllowed = 5;
         minSize = 0.2F;
-        maxSize = 1.1F;
+        maxSize = 0.95F;
         developsResistance = true;
         this.teenAge = 5;
         this.ridingY = 1.7F;
