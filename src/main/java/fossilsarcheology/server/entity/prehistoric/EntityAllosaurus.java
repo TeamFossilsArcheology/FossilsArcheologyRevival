@@ -22,7 +22,7 @@ public class EntityAllosaurus extends EntityPrehistoric implements IScaryDinosau
 		this.pediaScale = 35F;
 		this.nearByMobsAllowed = 5;
 		minSize = 0.25F;
-		maxSize = 2.3F;
+		maxSize = 2.5F;
 		developsResistance = true;
 		breaksBlocks = true;
 		this.teenAge = 5;
