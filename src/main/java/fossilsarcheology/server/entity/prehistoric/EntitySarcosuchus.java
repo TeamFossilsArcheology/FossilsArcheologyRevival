@@ -30,7 +30,7 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming implements ISca
 		this.setActualSize(2.0F, 1.0F);
 		isAmphibious = true;
 		minSize = 0.15F;
-		maxSize = 2F;
+		maxSize = 1.8F;
 		teenAge = 5;
 		developsResistance = true;
 		breaksBlocks = true;
