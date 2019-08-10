@@ -501,25 +501,25 @@
       "fossil:prehistoric/pachycephalosaurus_living3"
     ]
   },
-  "plesiosaur_hurt": {
+  "plesiosaurus_hurt": {
     "category": "neutral",
     "sounds": [
       "fossil:prehistoric/plesiosaur_hurt"
     ]
   },
-  "plesiosaur_death": {
+  "plesiosaurus_death": {
     "category": "neutral",
     "sounds": [
       "fossil:prehistoric/plesiosaur_hurt"
     ]
   },
-  "plesiosaur_living_outside": {
+  "plesiosaurus_living_outside": {
     "category": "neutral",
     "sounds": [
       "fossil:prehistoric/plesiosaur_living"
     ]
   },
-  "plesiosaur_living_inside": {
+  "plesiosaurus_living_inside": {
     "category": "neutral",
     "sounds": [
       "fossil:prehistoric/plesiosaur_living"
