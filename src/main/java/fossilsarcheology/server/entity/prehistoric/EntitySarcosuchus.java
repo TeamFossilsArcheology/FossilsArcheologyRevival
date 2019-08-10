@@ -26,7 +26,7 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming implements ISca
 	private boolean isSwimming;
 
 	public EntitySarcosuchus(World world) {
-		super(world, PrehistoricEntityType.SARCOSUCHUS, 1, 3, 15, 70, 0.25, 0.25, 5, 20);
+		super(world, PrehistoricEntityType.SARCOSUCHUS, 1, 8, 15, 70, 0.25, 0.25, 5, 20);
 		this.setActualSize(2.0F, 1.0F);
 		isAmphibious = true;
 		minSize = 0.15F;
@@ -180,7 +180,6 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming implements ISca
 			doAttack();
 			doAttackKnockback(0.5F);
 			destroyBoat(this.getAttackTarget());
-
 		}
 		if (this.isInWaterMaterial()) {
 			this.setSwimming(true);

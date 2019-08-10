@@ -1596,7 +1596,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public void mate() {
-        Entity targetEntity;
         EntityAINearestAttackableTarget.Sorter theNearestAttackableTargetSorter = new EntityAINearestAttackableTarget.Sorter(this);
         double d0 = 64;
         List<Entity> list = world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expand(d0, 4.0D, d0), PREHISTORIC_PREDICATE);
