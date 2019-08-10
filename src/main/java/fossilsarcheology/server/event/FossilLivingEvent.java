@@ -107,7 +107,7 @@ public class FossilLivingEvent {
         EntityLivingBase entity = event.getEntityLiving();
         birthEntity = embryo.invokeClass(entity.world);
         if (embryo == PrehistoricEntityType.DONKEY) {
-            if (entity instanceof AbstractHorse) {
+            if (entity instanceof EntityDonkey) {
                 if (rnd < 5) {
                     birthEntity = new EntityDonkey(entity.world);
                     if (((AbstractHorse) entity).getOwnerUniqueId() != null) {
@@ -121,7 +121,7 @@ public class FossilLivingEvent {
                         ((EntityDonkey) birthEntity).setHorseTamed(true);
                     }
                 } else {
-                    birthEntity = ((AbstractHorse) entity).createChild(new EntityDonkey(entity.world));
+                    birthEntity = ((EntityDonkey) entity).createChild(new EntityDonkey(entity.world));
                 }
             } else {
                 EntityDonkey entityHorse = new EntityDonkey(entity.world);
@@ -129,7 +129,7 @@ public class FossilLivingEvent {
             }
         }
         if (embryo == PrehistoricEntityType.HORSE) {
-            if (entity instanceof AbstractHorse) {
+            if (entity instanceof EntityHorse) {
                 if (rnd < 5) {
                     birthEntity = new EntityHorse(entity.world);
                     ((EntityHorse) birthEntity).setHorseVariant(3);
@@ -145,11 +145,33 @@ public class FossilLivingEvent {
                         ((EntityHorse) birthEntity).setHorseTamed(true);
                     }
                 } else {
-                    birthEntity = ((AbstractHorse) entity).createChild(new EntityHorse(entity.world));
+                    birthEntity = ((EntityHorse) entity).createChild(new EntityHorse(entity.world));
                 }
             } else {
                 EntityHorse entityHorse = new EntityHorse(entity.world);
                 birthEntity = entityHorse.createChild(new EntityHorse(entity.world));
+            }
+        }
+        if (embryo == PrehistoricEntityType.LLAMA) {
+            if (entity instanceof EntityLlama) {
+                if (rnd < 5) {
+                    birthEntity = new EntityLlama(entity.world);
+                    if (((AbstractHorse) entity).getOwnerUniqueId() != null) {
+                        ((EntityLlama) birthEntity).setOwnerUniqueId(((AbstractHorse) entity).getOwnerUniqueId());
+                        ((EntityLlama) birthEntity).setHorseTamed(true);
+                    }
+                } else if (rnd < 10) {
+                    birthEntity = new EntityLlama(entity.world);
+                    if (((AbstractHorse) entity).getOwnerUniqueId() != null) {
+                        ((EntityLlama) birthEntity).setOwnerUniqueId(((AbstractHorse) entity).getOwnerUniqueId());
+                        ((EntityLlama) birthEntity).setHorseTamed(true);
+                    }
+                } else {
+                    birthEntity = ((EntityLlama) entity).createChild(new EntityLlama(entity.world));
+                }
+            } else {
+                EntityLlama entityHorse = new EntityLlama(entity.world);
+                birthEntity = entityHorse.createChild(new EntityLlama(entity.world));
             }
         }
         if (birthEntity instanceof EntityPrehistoric) {
