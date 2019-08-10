@@ -1,5 +1,6 @@
 package fossilsarcheology.client.gui.dinopedia;
 
+import com.google.common.collect.Lists;
 import com.mojang.realmsclient.gui.ChatFormatting;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.entity.EntityDinosaurEgg;
@@ -16,10 +17,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.ScaledResolution;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.OpenGlHelper;
-import net.minecraft.client.renderer.RenderHelper;
-import net.minecraft.client.renderer.RenderItem;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.block.model.IBakedModel;
+import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.resources.IResource;
 import net.minecraft.entity.Entity;
@@ -30,6 +30,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
+import net.minecraftforge.client.ItemModelMesherForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.lwjgl.input.Mouse;
@@ -62,7 +64,7 @@ public class GuiPedia extends GuiScreen {
     private float mouseX;
     private float mouseY;
     private final FoodSorter sorter;
-
+    private String renderText = "";
     public GuiPedia() {
         super();
         left = 0;
@@ -159,6 +161,7 @@ public class GuiPedia extends GuiScreen {
         if (!this.mc.player.isEntityAlive() || this.mc.player.isDead) {
             this.mc.player.closeScreen();
         }
+        renderText = "";
     }
 
     public void reset() {
@@ -202,14 +205,15 @@ public class GuiPedia extends GuiScreen {
             if (!item.isEmpty()) {
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 net.minecraft.client.gui.FontRenderer font = null;
+                ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
+                if(mesher instanceof ItemModelMesherForge && ((ItemModelMesherForge) mesher).getLocation(item) == ModelBakery.MODEL_MISSING){
+                    return false;
+                }
                 this.itemRender.renderItemAndEffectIntoGUI(item, x, y);
                 this.itemRender.renderItemOverlayIntoGUI(font, item, x, y, null);
                 if (mouseX > x && mouseX < x + drawSize) {
                     if (mouseY > y && mouseY < y + drawSize) {
-                        List<String> text = new ArrayList<>();
-                        String s1 = item.getDisplayName();
-                        text.add(s1);
-                        this.drawHoveringText(text, (-this.fontRenderer.getStringWidth(s1) / 2) + 280, 222, fontRenderer);
+                        renderText = item.getDisplayName();
                     }
                 }
                 return true;
@@ -263,6 +267,9 @@ public class GuiPedia extends GuiScreen {
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
         RenderHelper.enableStandardItemLighting();
+        if(!renderText.isEmpty()){
+            this.drawHoveringText(Lists.newArrayList(renderText), p_73863_1_, p_73863_2_, fontRenderer);
+        }
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
@@ -325,6 +332,7 @@ public class GuiPedia extends GuiScreen {
                 showPrehistoricBio("quagga");
             }
         }
+
     }
 
     public void showPrehistoricBio(String mobName) {
