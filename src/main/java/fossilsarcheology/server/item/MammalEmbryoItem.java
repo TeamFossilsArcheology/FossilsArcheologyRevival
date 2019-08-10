@@ -22,11 +22,10 @@ public class MammalEmbryoItem extends PrehistoricEntityItem implements DefaultRe
 		if (PrehistoricEntityType.isMammal(entity) && !entity.isChild()) {
 			FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(entity, FossilsMammalProperties.class);
 			if (properties != null) {
-				if (properties.isPregnant) {
+				if (properties.isPregnant()) {
 					return false;
 				}else{
-					properties.embryoProgress = 0;
-					properties.isPregnant = true;
+					properties.embryoProgress = 1;
 					properties.embryo = this.type;
 					if (!player.isCreative()) {
 						stack.shrink(1);

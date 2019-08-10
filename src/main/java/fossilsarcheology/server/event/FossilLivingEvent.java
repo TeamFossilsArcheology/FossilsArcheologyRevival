@@ -73,7 +73,7 @@ public class FossilLivingEvent {
     public void entityInteractEvent(PlayerInteractEvent.EntityInteractSpecific event) {
         if (event.getItemStack().getItem() == FAItemRegistry.DINOPEDIA && event.getTarget() instanceof EntityAnimal) {
             FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getTarget(), FossilsMammalProperties.class);
-            if (properties != null && properties.isPregnant) {
+            if (properties != null && properties.isPregnant()) {
                 Revival.PEDIA_OBJECT = event.getTarget();
                 Revival.PROXY.openPedia();
             }
@@ -90,13 +90,12 @@ public class FossilLivingEvent {
         }
         if (PrehistoricEntityType.isMammal(event.getEntityLiving()) && !event.getEntityLiving().isChild()) {
             FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getEntityLiving(), FossilsMammalProperties.class);
-            if (properties != null && properties.embryo != null && properties.isPregnant) {
+            if (properties != null && properties.embryo != null) {
                 ++properties.embryoProgress;
                 if (properties.embryoProgress >= Revival.CONFIG_OPTIONS.pregnancyTime) {
                     growEntity(properties.embryo, event);
                     properties.embryoProgress = 0;
                     properties.embryo = null;
-                    properties.isPregnant = false;
                 }
             }
         }

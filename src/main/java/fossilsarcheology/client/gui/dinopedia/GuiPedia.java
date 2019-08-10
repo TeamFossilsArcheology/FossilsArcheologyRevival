@@ -266,6 +266,7 @@ public class GuiPedia extends GuiScreen {
     }
 
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
+        boolean flag = false;
         if (Revival.PEDIA_OBJECT instanceof EntityPrehistoric || Revival.PEDIA_OBJECT instanceof EntityFishBase || Revival.PEDIA_OBJECT instanceof EntityQuagga) {
             this.buttonNextPage.enabled = true;
         }
@@ -273,15 +274,18 @@ public class GuiPedia extends GuiScreen {
             if (Revival.PEDIA_OBJECT instanceof EntityAnimal) {
                 FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties((EntityAnimal) Revival.PEDIA_OBJECT, FossilsMammalProperties.class);
                 if (properties != null) {
-                    EntityAnimal entity = (EntityAnimal) Revival.PEDIA_OBJECT;
-                    String s1 = I18n.format(entity.getName());
-                    String s2 = "prehistoric.pregnant";
-                    int quot = (int) Math.floor(((float) properties.embryoProgress / (float) (Revival.CONFIG_OPTIONS.pregnancyTime + 1) * 100.0F));
-                    String s3 = I18n.format("prehistoric.pregnantTime") + " " + String.valueOf(quot) + "%";
-                    printStringXY(s3, (-this.fontRenderer.getStringWidth(s3) / 2) + 100, 110, 157, 126, 103);
-                    GlStateManager.scale(1.5F, 1.5F, 1.5F);
-                    printStringXY(I18n.format(s2) + " " + entity.getName(), (-this.fontRenderer.getStringWidth(I18n.format(s2) + entity.getName()) / 2) + 65, 60, 66, 48, 36);
-                    return;
+                    if(properties.isPregnant()){
+                        flag = true;
+                        EntityAnimal entity = (EntityAnimal) Revival.PEDIA_OBJECT;
+                        String s1 = I18n.format(entity.getName());
+                        String s2 = "prehistoric.pregnant";
+                        int quot = (int) Math.floor(((float) properties.embryoProgress / (float) (Revival.CONFIG_OPTIONS.pregnancyTime + 1) * 100.0F));
+                        String s3 = I18n.format("prehistoric.pregnantTime") + " " + String.valueOf(quot) + "%";
+                        printStringXY(s3, (-this.fontRenderer.getStringWidth(s3) / 2) + 100, 110, 157, 126, 103);
+                        GlStateManager.scale(1.5F, 1.5F, 1.5F);
+                        printStringXY(I18n.format(s2) + " " + entity.getName(), (-this.fontRenderer.getStringWidth(I18n.format(s2) + entity.getName()) / 2) + 65, 60, 66, 48, 36);
+                        return;
+                    }
                 }
             }
             if (Revival.PEDIA_OBJECT instanceof EntityLivingBase) {

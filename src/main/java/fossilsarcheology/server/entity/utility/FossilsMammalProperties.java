@@ -7,20 +7,21 @@ import net.minecraft.nbt.NBTTagCompound;
 
 public class FossilsMammalProperties extends EntityProperties<EntityAnimal> {
 
-	public boolean isPregnant;
 	public int embryoProgress;
-	public PrehistoricEntityType embryo;
+	public PrehistoricEntityType embryo = null;
 
 	@Override
 	public int getTrackingTime() {
-		return 1;
+		return 20;
 	}
 
 	@Override
 	public void saveNBTData(NBTTagCompound compound) {
-		compound.setBoolean("Pregnant", isPregnant);
 		if(embryo != null){
 			compound.setInteger("Embryo", embryo.ordinal());
+		}else{
+			compound.setInteger("Embryo", -1);
+
 		}
 		compound.setInteger("EmbryoProgress", embryoProgress);
 
@@ -28,17 +29,22 @@ public class FossilsMammalProperties extends EntityProperties<EntityAnimal> {
 
 	@Override
 	public void loadNBTData(NBTTagCompound compound) {
-		this.isPregnant = compound.getBoolean("Pregnant");
 		this.embryoProgress = compound.getInteger("EmbryoProgress");
-		this.embryo = PrehistoricEntityType.values()[compound.getInteger("Embryo")];
+		int ordinal = compound.getInteger("Embryo");
+		if(ordinal < 0){
+			this.embryo = null;
+		}else{
+			this.embryo = PrehistoricEntityType.values()[ordinal];
+		}
 
+	}
+
+	public boolean isPregnant(){
+		return embryoProgress > 0;
 	}
 
 	@Override
 	public void init() {
-		isPregnant = false;
-		embryoProgress = 0;
-		embryo = PrehistoricEntityType.PIG;
 	}
 
 	@Override
