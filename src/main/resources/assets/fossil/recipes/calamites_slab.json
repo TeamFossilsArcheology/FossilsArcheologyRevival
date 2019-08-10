@@ -1,0 +1,17 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "fossil:calamites_planks",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "fossil:calamites_planks_slab",
+    "data": 0,
+    "count": 6
+  }
+}
