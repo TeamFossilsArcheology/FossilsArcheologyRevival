@@ -1,5 +1,6 @@
 package fossilsarcheology.server.entity.prehistoric;
 
+import com.google.common.base.Predicate;
 import fossilsarcheology.Revival;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.block.FABlockRegistry;
@@ -122,6 +123,11 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private int animTick;
     public boolean shouldWander = true;
     public boolean isRunningAway = false;
+    private static final Predicate PREHISTORIC_PREDICATE = new Predicate<EntityLivingBase>() {
+        public boolean apply(@Nullable EntityLivingBase entity) {
+            return entity != null && entity instanceof EntityPrehistoric;
+        }
+    };
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world);
@@ -562,7 +568,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             }
             this.doPlayBonus(15);
         }
-        if (Revival.CONFIG_OPTIONS.dinosaurBreeding && ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
+        if (Revival.CONFIG_OPTIONS.dinosaurBreeding && !world.isRemote && ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
             this.mate();
         }
         if (Revival.CONFIG_OPTIONS.healingDinos && !this.world.isRemote) {
@@ -1593,12 +1599,13 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         Entity targetEntity;
         EntityAINearestAttackableTarget.Sorter theNearestAttackableTargetSorter = new EntityAINearestAttackableTarget.Sorter(this);
         double d0 = 64;
-        List<EntityPrehistoric> list = world.getEntitiesWithinAABB(EntityPrehistoric.class, this.getEntityBoundingBox().expand(d0, 4.0D, d0), null);
+        List<Entity> list = world.getEntitiesInAABBexcluding(this, this.getEntityBoundingBox().expand(d0, 4.0D, d0), PREHISTORIC_PREDICATE);
         list.sort(theNearestAttackableTargetSorter);
         List<EntityPrehistoric> listOfFemales = new ArrayList<>();
         if (!list.isEmpty()) {
-            for (EntityPrehistoric mob : list) {
-                if (mob != this && mob.type == this.type && mob.isAdult() && mob.getGender() == 0 && mob.ticksTillMate == 0) {
+            for (Entity e : list) {
+                EntityPrehistoric mob = (EntityPrehistoric)e;
+                if (!mob.isEntityEqual(this) && mob.type == this.type && mob.isAdult() && mob.getGender() == 0 && mob.ticksTillMate == 0) {
                     listOfFemales.add(mob);
                 }
             }
