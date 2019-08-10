@@ -169,6 +169,6 @@ public class ModelHenodus extends ModelPrehistoric {
 		this.walk(rightthigh, speed2, 1.2F, false, 0, 0.5F, f, f1);
 		((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) tailParts);
 		float sleepProgress = ((EntityPrehistoric) entity).sleepProgress;
-		this.sitAnimationRotation(head, sleepProgress, 0, 25, 0);
+		this.sitAnimationRotation(head, sleepProgress, 0, (float)Math.toRadians(50), 0);
 	}
 }
