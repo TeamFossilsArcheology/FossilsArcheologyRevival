@@ -28,6 +28,7 @@ public class EntityPachycephalosaurus extends EntityPrehistoric {
 		breaksBlocks = false;
 		hasBabyTexture = false;
 		this.pediaScale = 40F;
+		this.ridingY = 1.8F;
 	}
 
 	public void initEntityAI() {
