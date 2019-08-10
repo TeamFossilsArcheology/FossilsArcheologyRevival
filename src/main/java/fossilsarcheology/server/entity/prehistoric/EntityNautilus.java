@@ -102,7 +102,7 @@ public class EntityNautilus extends EntityFishBase {
 	}
 
 	public boolean isAScaryAnimal(Entity entity) {
-		if (entity instanceof EntityPlayer) {
+		if (entity instanceof EntityPlayer && !((EntityPlayer) entity).isCreative()) {
 			return true;
 		}
 		if (entity instanceof EntityPrehistoric) {
