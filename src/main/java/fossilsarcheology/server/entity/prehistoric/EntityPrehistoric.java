@@ -121,6 +121,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private Animation currentAnimation;
     private int animTick;
     public boolean shouldWander = true;
+    public boolean isRunningAway = false;
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world);
@@ -656,7 +657,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (!world.isRemote && this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH && this.ticksSlept > 12000) {
             return false;
         }
-        return !world.isRemote && !this.isInWater() && !this.isBeingRidden() && !this.isActuallyWeak() && this.canSleep() && canSleepWhileHunting() && (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) && this.getOrderType() != OrderType.FOLLOW;
+        return !world.isRemote && this.getAttackTarget() == null && this.getRevengeTarget() == null && !this.isInWater() && !this.isBeingRidden() && !this.isActuallyWeak() && this.canSleep() && canSleepWhileHunting() && (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) && this.getOrderType() != OrderType.FOLLOW;
     }
 
     @Override

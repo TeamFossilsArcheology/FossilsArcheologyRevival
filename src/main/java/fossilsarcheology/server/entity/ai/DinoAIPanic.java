@@ -18,4 +18,10 @@ public class DinoAIPanic extends EntityAIPanic {
         }
         return super.shouldExecute();
     }
+
+    public void startExecuting()
+    {
+        super.startExecuting();
+        prehistoric.isRunningAway = true;
+    }
 }
