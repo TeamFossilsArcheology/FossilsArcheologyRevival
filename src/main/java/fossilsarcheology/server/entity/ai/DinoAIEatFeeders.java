@@ -85,7 +85,7 @@ public class DinoAIEatFeeders extends EntityAIBase {
             if (entity instanceof TileEntityFeeder) {
                 TileEntityFeeder feeder = (TileEntityFeeder) entity;
                 double distance = this.entity.getDistance(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ());
-                if (distance < Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2, 1.5F)) {
+                if (distance < Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2.5, 2.5F)) {
                     if (this.feedingTicks < 30 && !feeder.isEmpty(this.entity.type)) {
                         this.feedingTicks++;
                         feeder.feedDinosaur(this.entity);
