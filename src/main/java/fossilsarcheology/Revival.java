@@ -2,6 +2,7 @@ package fossilsarcheology;
 
 import fossilsarcheology.server.ServerProxy;
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.compat.crafttweaker.CraftTweakerCompatBridge;
 import fossilsarcheology.server.compat.thaumcraft.ThaumcraftCompatBridge;
 import fossilsarcheology.server.compat.tinkers.TinkersCompatBridge;
 import fossilsarcheology.server.config.FossilConfig;
@@ -71,6 +72,7 @@ public class Revival {
         PROXY.onPreInit();
         ThaumcraftCompatBridge.loadThaumcraftCompat();
         TinkersCompatBridge.loadTinkersCompat();
+        CraftTweakerCompatBridge.loadTweakerCompat();
         LOGGER.info("Archaean horizon");
         LOGGER.info("The first sunrise");
         LOGGER.info("On a pristine Gaea");

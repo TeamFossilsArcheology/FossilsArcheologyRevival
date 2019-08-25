@@ -239,19 +239,19 @@ public class FAMachineRecipeRegistry {
         }
     }
 
-    private static void registerAnalyzer(RecipeAnalyzer recipe) {
+    public static void registerAnalyzer(RecipeAnalyzer recipe) {
         analyzerRecipes.add(recipe);
     }
 
-    private static void registerSifter(RecipeAnalyzer recipe) {
+    public static void registerSifter(RecipeAnalyzer recipe) {
         sifterRecipes.add(recipe);
     }
 
-    private static void registerCultivate(ItemStack input, ItemStack output) {
+    public static void registerCultivate(ItemStack input, ItemStack output) {
         cultivateRecipes.put(input, output);
     }
 
-    private static void registerWorktable(ItemStack input, ItemStack output, ItemStack fuel) {
+    public static void registerWorktable(ItemStack input, ItemStack output, ItemStack fuel) {
         worktableRecipes.add(new RecipeWorktable(input, output, fuel));
     }
 
