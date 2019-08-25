@@ -32,7 +32,7 @@ public class FAMachineRecipeRegistry {
         RecipeAnalyzer plantFossil = new RecipeAnalyzer(FAItemRegistry.PLANT_FOSSIL)
                 .addOutput(new ItemStack(Blocks.SAND, 2), 35F)
                 .addOutput(new ItemStack(Items.DYE, 1, 2), 20F)
-                .addOutput(new ItemStack(FAItemRegistry.FERN_SEED, 1), 5F)
+                .addOutput(new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN, 1), 5F)
                 .addOutput(new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL, 1), 5F)
                 .addOutput(new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL, 1), 5F);
         float seedWeight = (100F - plantFossil.getTotalWeight()) / (float) FossilSeedsItem.fossilSeeds.length;
