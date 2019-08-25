@@ -8,6 +8,7 @@ import fossilsarcheology.server.block.IDinoUnbreakable;
 import fossilsarcheology.server.block.entity.TileEntityFeeder;
 import fossilsarcheology.server.entity.EntityDinosaurEgg;
 import fossilsarcheology.server.entity.FoodHelper;
+import fossilsarcheology.server.entity.ai.DinoMoveHelper;
 import fossilsarcheology.server.entity.utility.EntityToyBase;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.item.FAItemRegistry;
@@ -131,6 +132,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world);
+        this.moveHelper = new DinoMoveHelper(this);
         this.aiSit = new EntityAISit(this);
         this.setHunger(this.getMaxHunger() / 2);
         this.setScaleForAge(false);
@@ -756,9 +758,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (this.getGrowingAge() < 0) {
             this.setGrowingAge(0);
         }
-        if (world.isRemote) {
-            this.setScaleForAge(true);
-        }
+        this.setScaleForAge(true);
+
         if (!this.isSkeleton()) {
             this.setAgeinTicks(this.getAgeInTicks() + 1);
             if (this.getAgeInTicks() % 24000 == 0) {
@@ -2004,4 +2005,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, f, f1, f2, motionX, motionY, motionZ, Item.getIdFromItem(item));
     }
 
+    public float getMaxTurnDistancePerTick(){
+        return MathHelper.clamp(90 - this.getActualWidth() * 10, 0, 90);
+    }
 }
