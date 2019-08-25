@@ -57,7 +57,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 			if (world.provider.getDimension() == dimensionID) {
 				if (Revival.CONFIG_OPTIONS.generateFossils) {
 					boolean mesa = BiomeDictionary.hasType(world.getBiome(new BlockPos(chunkX * 16 + 8, 0, chunkX * 16 + 8)), BiomeDictionary.Type.MESA);
-					for (int i = 0; i < (mesa ? 60 : 38); i++) {
+					for (int i = 0; i < (mesa ? Revival.CONFIG_OPTIONS.fossilOreRarity * 2 : Revival.CONFIG_OPTIONS.fossilOreRarity); i++) {
 						int Xcoord = chunkX * 16 + random.nextInt(16);
 						int Ycoord = random.nextInt(100);
 						int Zcoord = chunkZ * 16 + random.nextInt(16);
@@ -65,7 +65,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 					}
 				}
 				if (Revival.CONFIG_OPTIONS.generatePermafrost) {
-					for (int i = 0; i < (BiomeDictionary.hasType(world.getBiome(new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8)), BiomeDictionary.Type.SNOWY) ? 9 : 4); i++) {
+					for (int i = 0; i < (BiomeDictionary.hasType(world.getBiome(new BlockPos(chunkX * 16 + 8, 0, chunkZ * 16 + 8)), BiomeDictionary.Type.SNOWY) ? Revival.CONFIG_OPTIONS.permafrostOreRarity * 2.5F : Revival.CONFIG_OPTIONS.permafrostOreRarity); i++) {
 						int Xcoord = chunkX * 16 + random.nextInt(16);
 						int Ycoord = random.nextInt(30);
 						int Zcoord = chunkZ * 16 + random.nextInt(16);
