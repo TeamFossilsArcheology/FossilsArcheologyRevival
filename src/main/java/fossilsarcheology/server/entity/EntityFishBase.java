@@ -41,6 +41,7 @@ public abstract class EntityFishBase extends EntityTameable {
     public BlockPos currentTarget;
     @SideOnly(Side.CLIENT)
     public ChainBuffer chainBuffer;
+    private boolean turnedToItem = false;
 
     public EntityFishBase(World world, PrehistoricEntityType selfType) {
         super(world);
@@ -176,17 +177,17 @@ public abstract class EntityFishBase extends EntityTameable {
                 this.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1, this.getRNG().nextFloat() + 0.8F);
                 return false;
             }
-        }
-        if (stack.isEmpty() && this.getGrowingAge() > 0) {
-            ItemStack var3 = new ItemStack(this.selfType.fishItem, 1);
-            if (!player.inventory.addItemStackToInventory(var3)) {
-                player.dropItem(var3, false);
+        }else{
+            if (!world.isRemote && stack.isEmpty() && this.getGrowingAge() > 0) {
+                if(!turnedToItem){
+                    turnedToItem = true;
+                    this.entityDropItem(new ItemStack(this.selfType.fishItem, 1), 0.1F);
+                    this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, this.getRNG().nextFloat() + 0.8F);
+                }
+                this.setDead();
+                return true;
             }
-            this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, this.getRNG().nextFloat() + 0.8F);
-            this.setDead();
-            return true;
         }
-
         return super.processInteract(player, hand);
     }
 
