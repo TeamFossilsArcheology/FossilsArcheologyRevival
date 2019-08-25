@@ -32,6 +32,15 @@ public class EntityTarSlime extends EntitySlime {
         return EnumParticleTypes.SUSPENDED_DEPTH;
     }
 
+    @Override
+    public boolean attackEntityFrom(DamageSource damageSource, float f) {
+        if(damageSource.getTrueSource() != null && this.getRidingEntity() != null && this.getRidingEntity().isEntityEqual(damageSource.getTrueSource())){
+            if(rand.nextBoolean()){
+                this.dismountRidingEntity();
+            }
+        }
+        return super.attackEntityFrom(damageSource, f);
+    }
 
     @Override
     protected EntitySlime createInstance() {
@@ -105,6 +114,9 @@ public class EntityTarSlime extends EntitySlime {
     public void updateRidden() {
         super.updateRidden();
         if (this.getRidingEntity() != null) {
+            if(!this.getRidingEntity().isEntityAlive()){
+                this.dismountRidingEntity();
+            }
             this.rotationYaw = getRidingEntity().rotationYaw;
             if (this.getRidingEntity() instanceof EntityPlayer) {
                 this.rotationYaw = ((EntityPlayer) getRidingEntity()).rotationYawHead;
@@ -119,7 +131,6 @@ public class EntityTarSlime extends EntitySlime {
                 squishFactor = 0.7F;
             } else {
                 squishFactor = 0.0F;
-
             }
             // alterSquishAmount();
         }
