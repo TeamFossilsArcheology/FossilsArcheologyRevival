@@ -11,6 +11,7 @@ public class CultivateContainer extends BlockEntityContainer {
     private static final int TOTAL_FUEL_TIME_ID = 1;
     private static final int CULTIVATE_TIME_ID = 2;
     private static final int DNA_TYPE_ID = 3;
+    private static final int ENERGY_ID = 4;
 
     private final TileEntityCultivate entity;
 
@@ -18,6 +19,7 @@ public class CultivateContainer extends BlockEntityContainer {
     public int totalFuelTime;
     public int cultivationTime;
     public int dnaType;
+    public int energy;
 
     public CultivateContainer(InventoryPlayer playerInventory, TileEntityCultivate entity) {
         super(entity);
@@ -48,6 +50,7 @@ public class CultivateContainer extends BlockEntityContainer {
         int newFuelTime = this.entity.fuelTime;
         int newTotalFuelTime = this.entity.totalFuelTime;
         int newCultivationTime = this.entity.cultivationTime;
+        int newEnergy = this.entity.energyStorage.energy;
         int newDnaType = this.entity.getDNAType();
         if (newFuelTime != this.fuelTime) {
             this.listeners.forEach(listener -> listener.sendWindowProperty(this, FUEL_TIME_ID, newFuelTime));
@@ -64,6 +67,10 @@ public class CultivateContainer extends BlockEntityContainer {
         if (newDnaType != this.dnaType) {
             this.listeners.forEach(listener -> listener.sendWindowProperty(this, DNA_TYPE_ID, newDnaType));
             this.dnaType = newDnaType;
+        }
+        if (newEnergy != this.energy) {
+            this.listeners.forEach(listener -> listener.sendWindowProperty(this, ENERGY_ID, newEnergy));
+            this.energy = newEnergy;
         }
         super.detectAndSendChanges();
     }
@@ -83,6 +90,9 @@ public class CultivateContainer extends BlockEntityContainer {
                 break;
             case DNA_TYPE_ID:
                 this.dnaType = data;
+                break;
+            case ENERGY_ID:
+                this.energy = data;
                 break;
         }
     }

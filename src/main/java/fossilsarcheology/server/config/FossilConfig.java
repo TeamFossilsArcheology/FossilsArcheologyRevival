@@ -55,6 +55,11 @@ public class FossilConfig {
     public int homePortalExitDimension = 0;
     public boolean logCascadingWorldGen = false;
     public boolean animalsFearDinosaurs = true;
+    public boolean machinesRequireEnergy = false;
+    public int machineMaxEnergy = 1000;
+    public int machineTransferRate = 10;
+    public int machineEnergyUsage = 1;
+
     public int pregnancyTime;
 
     public void init(Configuration config) {
@@ -112,6 +117,9 @@ public class FossilConfig {
         this.homePortalExitDimension = config.getInt("Home Portal Exit Dimension ID", "all", 0, -1000000, 1000000, "Dimension ID that home portals should return players to");
         this.logCascadingWorldGen = config.getBoolean("Log Cascading World Gen", "all", false, "True if you want to spam the console");
         this.animalsFearDinosaurs = config.getBoolean("Animals Fear Dinosaurs", "all", false, "True if vanilla animals should run away from dinosaurs");
-
+        this.machinesRequireEnergy = config.getBoolean("Machines require Forge Energy(FE)", "all", false, "True if machines require Forge Energy(FE) to operate");
+        this.machineMaxEnergy = config.getInt("Machine Max Stored Energy", "all", 1000, 1, 1000000, "Max stored Forge Energy(FE) machines can have");
+        this.machineTransferRate = config.getInt("Machine Max Energy Transfer Rate", "all", 10, 1, 1000000, "Max Forge Energy(FE) machines can transfer per tick");
+        this.machineEnergyUsage = config.getInt("Machine Max Energy Usage Rate", "all", 1, 1, 1000000, "Forge Energy(FE) machines consume per tick");
     }
 }

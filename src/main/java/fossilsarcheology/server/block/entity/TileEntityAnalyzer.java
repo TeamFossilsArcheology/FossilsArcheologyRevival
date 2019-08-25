@@ -1,5 +1,6 @@
 package fossilsarcheology.server.block.entity;
 
+import fossilsarcheology.Revival;
 import fossilsarcheology.server.block.AnalyzerBlock;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
@@ -16,6 +17,9 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.translation.I18n;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.EnergyStorage;
+import net.minecraftforge.energy.IEnergyStorage;
 
 import java.util.Random;
 
@@ -30,7 +34,7 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 	private String customName;
 	private NonNullList<ItemStack> stacks = NonNullList.withSize(13, ItemStack.EMPTY);
 	private int rawIndex = -1;
-
+	public FAEnergyStorage energyStorage;
 	private static int getFuelTime(ItemStack stack) {
 		return 100;
 	}
@@ -42,6 +46,10 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 	@Override
 	public int getSizeInventory() {
 		return this.stacks.size();
+	}
+
+	public TileEntityAnalyzer(){
+		energyStorage = new FAEnergyStorage(Revival.CONFIG_OPTIONS.machineMaxEnergy, Revival.CONFIG_OPTIONS.machineTransferRate, Revival.CONFIG_OPTIONS.machineTransferRate, 0);
 	}
 
 	@Override
@@ -92,17 +100,20 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 		if (compound.hasKey("CustomName")) {
 			this.customName = compound.getString("CustomName");
 		}
+		this.energyStorage.deserializeNBT(compound);
 	}
 
 	@Override
 	public NBTTagCompound writeToNBT(NBTTagCompound compound) {
-		compound = super.writeToNBT(compound);
+        compound = super.writeToNBT(compound);
 		compound.setShort("FuelTime", (short) this.analyzeFuelTime);
 		compound.setShort("AnalyzeTime", (short) this.analyzeTime);
 		ItemStackHelper.saveAllItems(compound, this.stacks);
 		if (this.hasCustomName()) {
 			compound.setString("CustomName", this.customName);
 		}
+		NBTTagCompound secondTag = this.energyStorage.serializeNBT();
+		compound.setInteger("EnergyStored", secondTag.getInteger("EnergyStored"));
 		return compound;
 	}
 
@@ -121,14 +132,13 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 
 	@Override
 	public void update() {
-		for (EntityPlayer player : this.world.playerEntities) {
-			if (this.getDistanceSq(player.posX, player.posY, player.posZ) < 40) {
-				for (int slot = 12; slot > 8; --slot) {
-					ItemStack stack = this.stacks.get(slot);
-					if (!stack.isEmpty()) {
-						if (stack.getItem() == FAItemRegistry.STONE_TABLET) {
-							// player.addStat(FossilAchievements.TABLET, 1);
-						}
+		if(Revival.CONFIG_OPTIONS.machinesRequireEnergy){
+			for(EnumFacing facing : EnumFacing.values()){
+				if(world.getTileEntity(this.pos.offset(facing)) != null && world.getTileEntity(this.pos.offset(facing)).hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite())){
+					IEnergyStorage storage = world.getTileEntity(this.pos.offset(facing)).getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
+					if(storage != null) {
+						int energy = storage.extractEnergy(Revival.CONFIG_OPTIONS.machineTransferRate, false);
+						this.energyStorage.receiveEnergy(energy, false);
 					}
 				}
 			}
@@ -145,6 +155,7 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 			}
 			if (this.isAnalyzing() && this.canAnalyze()) {
 				++this.analyzeTime;
+				this.energyStorage.extractEnergy(Revival.CONFIG_OPTIONS.machineEnergyUsage, false);
 				if (this.analyzeTime == 200) {
 					this.analyzeTime = 0;
 					this.analyzeItem();
@@ -166,6 +177,10 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 	private boolean canAnalyze() {
 		int spaceIndex = -1;
 		this.rawIndex = -1;
+		boolean hasPower = true;
+		if(Revival.CONFIG_OPTIONS.machinesRequireEnergy){
+			hasPower = this.energyStorage.energy > 0;
+		}
 		boolean flag = false;
 		for (int slot = 0; slot < 9; ++slot) {
 			if (!this.stacks.get(slot).isEmpty()) {
@@ -185,7 +200,7 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 					break;
 				}
 			}
-			return spaceIndex != -1 && this.rawIndex != -1;
+			return spaceIndex != -1 && this.rawIndex != -1 && hasPower;
 		}
 	}
 
@@ -240,6 +255,8 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 				return this.currentFuelTime;
 			case 2:
 				return this.analyzeTime;
+			case 3:
+				return this.energyStorage.energy;
 			default:
 				return 0;
 		}
@@ -257,12 +274,15 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 			case 2:
 				this.analyzeTime = value;
 				break;
+			case 3:
+				this.energyStorage.energy = value;
+				break;
 		}
 	}
 
 	@Override
 	public int getFieldCount() {
-		return 3;
+		return 4;
 	}
 
 	@Override
@@ -325,12 +345,14 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 
 	net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
 	net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
-
 	@SuppressWarnings("unchecked")
 	@Override
 	@javax.annotation.Nullable
 	public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
 	{
+		if(capability == CapabilityEnergy.ENERGY && Revival.CONFIG_OPTIONS.machinesRequireEnergy){
+			return (T) energyStorage;
+		}
 		if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
 			if (facing == EnumFacing.DOWN)
 				return (T) handlerBottom;

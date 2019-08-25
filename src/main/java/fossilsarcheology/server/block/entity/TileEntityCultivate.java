@@ -1,6 +1,7 @@
 package fossilsarcheology.server.block.entity;
 
 import com.google.common.base.Strings;
+import fossilsarcheology.Revival;
 import fossilsarcheology.server.block.CultivateBlock;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
@@ -19,6 +20,8 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.world.IWorldNameable;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.energy.CapabilityEnergy;
+import net.minecraftforge.energy.IEnergyStorage;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -39,6 +42,11 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     private final IItemHandlerModifiable outputInventory = new ItemStackHandler(1);
     private final IItemHandlerModifiable wrappedOutputInventory = new DirectionalInvWrapper(this.outputInventory, DirectionalInvWrapper.Mode.OUTPUT);
     private final IItemHandlerModifiable globalInventory = new CombinedInvWrapper(this.inputInventory, this.fuelInventory, this.outputInventory);
+    public FAEnergyStorage energyStorage;
+
+    public TileEntityCultivate(){
+        energyStorage = new FAEnergyStorage(Revival.CONFIG_OPTIONS.machineMaxEnergy, Revival.CONFIG_OPTIONS.machineTransferRate, Revival.CONFIG_OPTIONS.machineTransferRate, 0);
+    }
 
     public static int getItemFuelTime(ItemStack stack) {
         if (!stack.isEmpty()) {
@@ -142,6 +150,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
         this.cultivationTime = nbt.getShort("cultivation_time");
         this.isPlant = nbt.getBoolean("is_plant");
         this.totalFuelTime = getItemFuelTime(this.fuelInventory.getStackInSlot(0));
+        this.energyStorage.deserializeNBT(nbt);
 
         if (nbt.hasKey("CustomName")) {
             this.customName = nbt.getString("CustomName");
@@ -158,6 +167,8 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
         if (customName != null) {
             nbt.setString("CustomName", this.customName);
         }
+        NBTTagCompound secondTag = this.energyStorage.serializeNBT();
+        nbt.setInteger("EnergyStored", secondTag.getInteger("EnergyStored"));
         return nbt;
     }
 
@@ -167,6 +178,17 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
 
     @Override
     public void update() {
+        if(Revival.CONFIG_OPTIONS.machinesRequireEnergy){
+            for(EnumFacing facing : EnumFacing.values()){
+                if(world.getTileEntity(this.pos.offset(facing)) != null && world.getTileEntity(this.pos.offset(facing)).hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite())){
+                    IEnergyStorage storage = world.getTileEntity(this.pos.offset(facing)).getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
+                    if(storage != null) {
+                        int energy = storage.extractEnergy(Revival.CONFIG_OPTIONS.machineTransferRate, false);
+                        this.energyStorage.receiveEnergy(energy, false);
+                    }
+                }
+            }
+        }
         boolean wasActive = this.cultivationTime > 0;
         boolean dirty = false;
         isActive = this.cultivationTime > 0;
@@ -174,7 +196,9 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
             isPlant = isSeed((this.inputInventory.getStackInSlot(0)));
         }
         if (this.fuelTime > 0) {
-            --this.fuelTime;
+            if(!Revival.CONFIG_OPTIONS.machinesRequireEnergy || energyStorage.energy > 0){
+                --this.fuelTime;
+            }
         }
 
         if (!this.world.isRemote) {
@@ -198,7 +222,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
 
             if (this.fuelTime > 0 && this.canCultivate()) {
                 this.cultivationTime++;
-
+                this.energyStorage.extractEnergy(Revival.CONFIG_OPTIONS.machineEnergyUsage, false);
                 if (this.cultivationTime >= 6000) {
                     this.cultivationTime = 0;
                     this.cultivate();
@@ -225,16 +249,22 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     }
 
     private boolean canCultivate() {
+        boolean hasPower = true;
+        if(Revival.CONFIG_OPTIONS.machinesRequireEnergy){
+            hasPower = this.energyStorage.energy > 0;
+        }
         ItemStack inputStack = this.inputInventory.getStackInSlot(0);
         if (!inputStack.isEmpty()) {
             ItemStack cultivatedStack = FAMachineRecipeRegistry.getCultivateResult(inputStack).copy();
             if (cultivatedStack.isEmpty()) {
                 return false;
             }
-            return this.outputInventory.insertItem(0, cultivatedStack, true).isEmpty();
+            return hasPower && this.outputInventory.insertItem(0, cultivatedStack, true).isEmpty();
         }
         return false;
     }
+
+
 
     public void cultivate() {
         if (this.canCultivate()) {
@@ -274,6 +304,9 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
+        if(capability == CapabilityEnergy.ENERGY && Revival.CONFIG_OPTIONS.machinesRequireEnergy){
+            return (T) energyStorage;
+        }
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (facing == null) {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.globalInventory);
