@@ -26,7 +26,7 @@ public class DinoAIEatItems extends EntityAIBase {
         if(prehistoric.shouldWander){
             return false;
         }
-        if (this.prehistoric.getHunger() >= this.prehistoric.getMaxHunger()) {
+        if (this.prehistoric.getHunger() >= this.prehistoric.getMaxHunger() * 0.75F) {
             return false;
         } else if (this.prehistoric.isMovementBlocked()) {
             return false;

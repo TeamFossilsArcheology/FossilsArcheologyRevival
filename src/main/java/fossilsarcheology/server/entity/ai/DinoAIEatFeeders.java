@@ -29,7 +29,7 @@ public class DinoAIEatFeeders extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (this.entity.getHunger() >= this.entity.getMaxHunger()) {
+        if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
         if (this.entity.isMovementBlocked()) {
@@ -41,10 +41,11 @@ public class DinoAIEatFeeders extends EntityAIBase {
         if(targetBlock != null){
             this.entity.shouldWander = false;
         }
-        return true;
+        return targetBlock != null;
     }
 
     private void resetTarget() {
+        this.targetBlock = null;
         List<BlockPos> allBlocks = new ArrayList<>();
         for (BlockPos pos : BlockPos.getAllInBox(this.entity.getPosition().add(-RADIUS, -RADIUS, -RADIUS), this.entity.getPosition().add(RADIUS, RADIUS, RADIUS))) {
             TileEntity entity = this.entity.world.getTileEntity(pos);
@@ -71,6 +72,7 @@ public class DinoAIEatFeeders extends EntityAIBase {
     }
 
     public void resetTask(){
+        targetBlock = null;
         resetTarget();
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             this.entity.shouldWander = true;

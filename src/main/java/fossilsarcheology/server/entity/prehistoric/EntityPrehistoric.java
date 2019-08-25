@@ -754,16 +754,18 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     @Override
     public void onUpdate() {
         super.onUpdate();
+        if(world.isRemote){
+            this.setScaleForAge(false);
+        }
         //don't use the vanilla system
         if (this.getGrowingAge() < 0) {
             this.setGrowingAge(0);
         }
-        this.setScaleForAge(true);
-
         if (!this.isSkeleton()) {
             this.setAgeinTicks(this.getAgeInTicks() + 1);
             if (this.getAgeInTicks() % 24000 == 0) {
                 this.updateAbilities();
+                this.grow(0);
             }
             if (this.getAgeInTicks() % 1200 == 0 && this.getHunger() > 0 && Revival.CONFIG_OPTIONS.starvingDinos) {
                 this.setHunger(this.getHunger() - 1);
@@ -825,7 +827,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 this.setBesideClimbableBlock(false);
             }
         }
-
         Revival.PROXY.calculateChainBuffer(this);
         AnimationHandler.INSTANCE.updateAnimations(this);
     }
