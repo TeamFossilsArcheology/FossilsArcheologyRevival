@@ -520,7 +520,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         } else if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
             return !this.isDaytime() || this.world.canSeeSky(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.posY + 1), MathHelper.floor(this.posZ)));
         } else {
-            return false;
+            return this.ticksSlept > 8000;
         }
     }
 
@@ -636,7 +636,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setSitting(false);
             this.setSleeping(true);
         }
-        if (!this.world.isRemote && (!this.wantsToSleep() || !this.canSleep() || canWakeUp() && this.aiActivityType() != PrehistoricEntityTypeAI.Activity.BOTH)) {
+        if (!this.world.isRemote && (!this.wantsToSleep() || !this.canSleep() || canWakeUp())) {
             this.setSitting(false);
             this.setSleeping(false);
         }
@@ -669,7 +669,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public boolean wantsToSleep() {
-        if (!world.isRemote && this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH && this.ticksSlept > 12000) {
+        if (!world.isRemote && this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH && this.ticksSlept > 8000) {
             return false;
         }
         return !world.isRemote && this.getAttackTarget() == null && this.getRevengeTarget() == null && !this.isInWater() && !this.isBeingRidden() && !this.isActuallyWeak() && this.canSleep() && canSleepWhileHunting() && (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) && this.getOrderType() != OrderType.FOLLOW;
