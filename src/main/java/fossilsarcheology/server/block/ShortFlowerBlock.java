@@ -66,9 +66,6 @@ public class ShortFlowerBlock extends BlockBush implements DefaultRenderedItem {
 						if (!player.capabilities.isCreativeMode) {
 							itemstack.shrink(1);
 						}
-						if (itemstack.getCount() <= 0) {
-							player.inventory.setInventorySlotContents(player.inventory.currentItem, null);
-						}
 					}
 				}
 			}
