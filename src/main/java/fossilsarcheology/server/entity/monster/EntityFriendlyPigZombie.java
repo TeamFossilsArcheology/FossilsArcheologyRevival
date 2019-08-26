@@ -182,9 +182,11 @@ public class EntityFriendlyPigZombie extends EntityTameable {
     @Override
     public boolean processInteract(EntityPlayer player, EnumHand hand) {
         ItemStack itemstack = player.getHeldItem(hand);
+        boolean flag = false;
         if (this.isTamed()) {
             if (!itemstack.isEmpty()) {
-                if (itemstack.getItem() == Items.GOLD_NUGGET) {
+                if (itemstack.getItem() == Items.GOLD_NUGGET && this.getHealth() < this.getMaxHealth()) {
+                    flag = true;
                     if (!player.capabilities.isCreativeMode) {
                         itemstack.shrink(1);
                     }
@@ -193,7 +195,7 @@ public class EntityFriendlyPigZombie extends EntityTameable {
                     return true;
                 }
             }
-            if (this.isOwner(player) && !this.world.isRemote && itemstack.getItem() != Items.GOLD_NUGGET) {
+            if (this.isOwner(player) && !this.world.isRemote && !flag) {
                 this.aiSit.setSitting(!this.isSitting());
                 this.isJumping = false;
                 this.navigator.clearPath();
