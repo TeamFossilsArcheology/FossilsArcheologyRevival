@@ -113,14 +113,13 @@ public abstract class EntityFishBase extends EntityTameable {
     @Override
     public void onUpdate() {
         super.onUpdate();
-
         if (this.height != 0.95F) {
             this.height = 0.95F;
         }
         Revival.PROXY.calculateChainBuffer(this);
         if (this.isInWater() && this.getClosestMate() != null && this.getGrowingAge() == 0 && this.getClosestMate().getGrowingAge() == 0 && !this.world.isRemote) {
-            this.setGrowingAge(12000);
-            this.getClosestMate().setGrowingAge(12000);
+            this.setGrowingAge(48000);
+            this.getClosestMate().setGrowingAge(48000);
             this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(this.selfType.eggItem)));
         }
     }
@@ -133,15 +132,15 @@ public abstract class EntityFishBase extends EntityTameable {
 
     public EntityFishBase getClosestMate() {
         EntityAINearestAttackableTarget.Sorter theNearestAttackableTargetSorter = new EntityAINearestAttackableTarget.Sorter(this);
-        List<EntityFishBase> list = world.getEntitiesWithinAABB(EntityFishBase.class, this.getEntityBoundingBox().expand(2.0D, 2.0D, 2.0D), null);
+        List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(2.0D, 2.0D, 2.0D));
         list.sort(theNearestAttackableTargetSorter);
 
         if (list.isEmpty()) {
             return null;
         } else {
-            for (EntityFishBase entity : list) {
-                if (entity != this) {
-                    return entity.selfType == this.selfType ? entity : null;
+            for (Entity entity : list) {
+                if (entity instanceof EntityFishBase && !entity.isEntityEqual(this)) {
+                    return ((EntityFishBase)entity).selfType == this.selfType ? ((EntityFishBase)entity) : null;
                 }
             }
             return null;

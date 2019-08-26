@@ -45,9 +45,6 @@ public class ModelFriendlyPigZombie extends ModelZombie {
 			EnumHandSide enumhandside = this.getMainHand(entity);
 			ModelRenderer modelrenderer = this.getArmForSide(enumhandside);
 			float swingProg = this.swingProgress;
-			if(entity instanceof EntityFriendlyPigZombie){
-				swingProg = ((EntityFriendlyPigZombie) entity).getSwingProgress(f1);
-			}
 			this.bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt(swingProg) * ((float)Math.PI * 2F)) * 0.2F;
 
 			if (enumhandside == EnumHandSide.LEFT)
