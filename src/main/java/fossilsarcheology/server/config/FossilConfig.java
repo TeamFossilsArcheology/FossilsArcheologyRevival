@@ -48,6 +48,7 @@ public class FossilConfig {
     public boolean featheredDryosaurus = false;
     public boolean eggsLikeChickens = false;
     public boolean dinosaurBreeding = true;
+    public boolean helmetOverlays = true;
     public int flyingTargetMaxHeight = 128;
     public int dinosaurUpdateTick = 10;
     public int dimensionIDDarknessLair = -23;
@@ -111,15 +112,16 @@ public class FossilConfig {
         this.featheredDryosaurus = config.getBoolean("Feathered Dryosaurus", "all", false, "True if Dryosaurus should be represented with plumage");
         this.eggsLikeChickens = config.getBoolean("Eggs Like Chickens", "all", false, "True if Dinosaurs should create item eggs instead of entities");
         this.dinosaurBreeding = config.getBoolean("Dinosaur Breeding", "all", true, "True if Dinosaurs should breed");
+        this.helmetOverlays = config.getBoolean("Helmet Overlays", "all", true, "True if skull helmet and ancient helmet render overlays like vanilla pumpkin.");
         this.flyingTargetMaxHeight = config.getInt("Flying Target Max Height", "all", 128, 1, 512, "Maximum height that flying creatures should soar to");
         this.dimensionIDDarknessLair = config.getInt("Lair of Darkness Dimension ID", "all", -23, -1000000, 1000000, "Lair of Darkness Dimension ID");
         this.dimensionIDTreasure = config.getInt("Treasure Room Dimension ID", "all", -24, -1000000, 1000000, "Treasure Room Dimension ID");
         this.homePortalExitDimension = config.getInt("Home Portal Exit Dimension ID", "all", 0, -1000000, 1000000, "Dimension ID that home portals should return players to");
         this.logCascadingWorldGen = config.getBoolean("Log Cascading World Gen", "all", false, "True if you want to spam the console");
         this.animalsFearDinosaurs = config.getBoolean("Animals Fear Dinosaurs", "all", false, "True if vanilla animals should run away from dinosaurs");
-        this.machinesRequireEnergy = config.getBoolean("Machines require Forge Energy(FE)", "all", false, "True if machines require Forge Energy(FE) to operate");
-        this.machineMaxEnergy = config.getInt("Machine Max Stored Energy", "all", 1000, 1, 1000000, "Max stored Forge Energy(FE) machines can have");
-        this.machineTransferRate = config.getInt("Machine Max Energy Transfer Rate", "all", 10, 1, 1000000, "Max Forge Energy(FE) machines can transfer per tick");
-        this.machineEnergyUsage = config.getInt("Machine Max Energy Usage Rate", "all", 1, 1, 1000000, "Forge Energy(FE) machines consume per tick");
+        this.machinesRequireEnergy = config.getBoolean("Machines require Redstone Flux(RF)", "all", false, "True if machines require Redstone Flux(RF) to operate");
+        this.machineMaxEnergy = config.getInt("Machine Max Stored Energy", "all", 1000, 1, 1000000, "Max stored Redstone Flux(RF) machines can have");
+        this.machineTransferRate = config.getInt("Machine Max Energy Transfer Rate", "all", 10, 1, 1000000, "Max Redstone Flux(RF) machines can transfer per tick");
+        this.machineEnergyUsage = config.getInt("Machine Max Energy Usage Rate", "all", 1, 1, 1000000, "how much Redstone Flux(RF) machines consume per tick");
     }
 }

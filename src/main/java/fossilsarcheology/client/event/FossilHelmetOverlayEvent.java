@@ -37,7 +37,7 @@ public class FossilHelmetOverlayEvent {
             return;
         }
 
-        if (mc.gameSettings.thirdPersonView == 0) {
+        if (mc.gameSettings.thirdPersonView == 0 && Revival.CONFIG_OPTIONS.helmetOverlays) {
             ItemStack helmet = mc.player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
             if (!helmet.isEmpty() && helmet.getItem() == FAItemRegistry.ANCIENT_HELMET) {
                 ScaledResolution res = new ScaledResolution(this.mc);
