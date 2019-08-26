@@ -229,7 +229,7 @@ public class ModelSmilodon extends ModelPrehistoric {
 			sitAnimationRotation(lowerBody, sitProgress, -((float) Math.toRadians(5.22D)), 0, 0);
 			sitAnimationRotation(neck, sitProgress, (float) Math.toRadians(23.48D), (float) Math.toRadians(35D), 0);
 			sitAnimationRotation(leftHindLeg, sitProgress, (float) Math.toRadians(140.0D), 0, 0);
-			sitAnimationRotation(tail, sitProgress, -((float) Math.toRadians(36.52D)), (float) Math.toRadians(180.0D), 0);
+			sitAnimationRotation(tail, sitProgress, -((float) Math.toRadians(10D)), (float) Math.toRadians(-40.0D), 0);
 			sitAnimationRotation(rightHindLeg, sitProgress, (float) Math.toRadians(140.0D), 0, 0);
 			sitAnimationPos(lowerBody, sitProgress, 0, 5.1F, 0);
 			sitAnimationPos(rightFrontThigh, sitProgress, 0, 5.1F, 0);
