@@ -2064,9 +2064,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     @SideOnly(Side.CLIENT)
     public void handleStatusUpdate(byte id) {
         if (id == 45) {
-            spawnItemParticle(Items.REEDS);
-            spawnItemParticle(Items.REEDS);
-            spawnItemParticle(Items.REEDS);
+            spawnItemParticle(Items.WHEAT_SEEDS);
+            spawnItemParticle(Items.WHEAT_SEEDS);
+            spawnItemParticle(Items.WHEAT_SEEDS);
         } else if (id == 46) {
             spawnItemParticle(Items.BREAD);
             spawnItemParticle(Items.BREAD);

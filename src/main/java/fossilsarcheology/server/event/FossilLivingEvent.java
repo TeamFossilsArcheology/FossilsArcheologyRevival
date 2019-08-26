@@ -11,6 +11,7 @@ import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.item.FAItemRegistry;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -42,13 +43,17 @@ public class FossilLivingEvent {
     @SubscribeEvent
     public void onBreakBlock(BlockEvent.BreakEvent event) {
         FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getPlayer(), FossilsPlayerProperties.class);
-        if (event.getWorld().provider.getDimension() == Revival.CONFIG_OPTIONS.dimensionIDDarknessLair && event.getState().getBlock() != Blocks.OBSIDIAN && event.getState().getBlock() != FABlockRegistry.FAKE_OBSIDIAN && (properties != null && !properties.killedAnu)) {
+        if (event.getWorld().provider.getDimension() == Revival.CONFIG_OPTIONS.dimensionIDDarknessLair && !isBreakableInAnuLair(event.getState()) && event.getState().getBlock() != Blocks.OBSIDIAN && event.getState().getBlock() != FABlockRegistry.FAKE_OBSIDIAN && (properties != null && !properties.killedAnu)) {
             event.getPlayer().sendStatusMessage(new TextComponentTranslation("anu.breakblock"), true);
             event.setCanceled(true);
         }
         if (properties != null && properties.killedBiofossilCooldown > 0) {
             event.setCanceled(true);
         }
+    }
+
+    private boolean isBreakableInAnuLair(IBlockState state) {
+        return state.getBlock().getTranslationKey().toLowerCase().contains("grave");
     }
 
     @SubscribeEvent
