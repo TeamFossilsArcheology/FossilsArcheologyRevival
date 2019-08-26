@@ -67,12 +67,23 @@ public class ClientProxy extends ServerProxy {
         ModelLoader.setCustomStateMapper(FABlockRegistry.AMPHORA_VASE, (new StateMap.Builder()).ignore(VaseBlock.VARIANT).build());
         ModelLoader.setCustomStateMapper(FABlockRegistry.KYLIX_VASE, (new StateMap.Builder()).ignore(VaseBlock.VARIANT).build());
         ModelLoader.setCustomStateMapper(FABlockRegistry.FIGURINE, (new StateMap.Builder()).ignore(FigurineBlock.VARIANT).build());
-         ModelLoader.setCustomStateMapper(FABlockRegistry.PALM_LEAVES, (new StateMap.Builder()).ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE).build());
+
+        ModelLoader.setCustomStateMapper(FABlockRegistry.PALM_LEAVES, (new StateMap.Builder()).ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE).build());
         ModelLoader.setCustomStateMapper(FABlockRegistry.PALM_FENCE_GATE, (new StateMap.Builder()).ignore(FossilFenceGateBlock.POWERED).build());
         ModelLoader.setCustomStateMapper(FABlockRegistry.PALM_DOOR, (new StateMap.Builder()).ignore(FossilDoorBlock.POWERED).build());
+
         ModelLoader.setCustomStateMapper(FABlockRegistry.CALAMITES_LEAVES, (new StateMap.Builder()).ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE).build());
         ModelLoader.setCustomStateMapper(FABlockRegistry.CALAMITES_FENCE_GATE, (new StateMap.Builder()).ignore(FossilFenceGateBlock.POWERED).build());
         ModelLoader.setCustomStateMapper(FABlockRegistry.CALAMITES_DOOR, (new StateMap.Builder()).ignore(FossilDoorBlock.POWERED).build());
+
+        ModelLoader.setCustomStateMapper(FABlockRegistry.SIGILLARIA_LEAVES, (new StateMap.Builder()).ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE).build());
+        ModelLoader.setCustomStateMapper(FABlockRegistry.SIGILLARIA_FENCE_GATE, (new StateMap.Builder()).ignore(FossilFenceGateBlock.POWERED).build());
+        ModelLoader.setCustomStateMapper(FABlockRegistry.SIGILLARIA_DOOR, (new StateMap.Builder()).ignore(FossilDoorBlock.POWERED).build());
+
+        ModelLoader.setCustomStateMapper(FABlockRegistry.CORDAITES_LEAVES, (new StateMap.Builder()).ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE).build());
+        ModelLoader.setCustomStateMapper(FABlockRegistry.CORDAITES_FENCE_GATE, (new StateMap.Builder()).ignore(FossilFenceGateBlock.POWERED).build());
+        ModelLoader.setCustomStateMapper(FABlockRegistry.CORDAITES_DOOR, (new StateMap.Builder()).ignore(FossilDoorBlock.POWERED).build());
+        
         for (Block block : FABlockRegistry.BLOCKS) {
             if (block instanceof IgnoreRenderProperty) {
                 IProperty<?>[] ignoredProperties = ((IgnoreRenderProperty) block).getIgnoredProperties();

@@ -1,0 +1,1 @@
+{  "parent": "block/cube_column",  "textures": {    "end": "fossil:blocks/cordaites_log_top",    "side": "fossil:blocks/cordaites_log"  }}

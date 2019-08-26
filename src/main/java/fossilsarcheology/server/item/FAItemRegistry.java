@@ -73,6 +73,8 @@ public class FAItemRegistry {
 	public static final BasicItem FOSSIL_SEED_FERN = new BasicItem("fossil_seed_fern");
 	public static final BasicItem PALAE_SAPLING_FOSSIL = new BasicItem("fossil_sapling_palae");
 	public static final BasicItem CALAMITES_SAPLING_FOSSIL = new BasicItem("fossil_sapling_calamites");
+	public static final BasicItem SIGILLARIA_SAPLING_FOSSIL = new BasicItem("fossil_sapling_sigillaria");
+	public static final BasicItem CORDAITES_SAPLING_FOSSIL = new BasicItem("fossil_sapling_cordaites");
 	public static final FossilSeedsItem SEED = new FossilSeedsItem(false);
 	public static final FernSeedItem FERN_SEED = new FernSeedItem();
 	//public static final Item TAR_BUCKET = new ItemBucket(FABlockRegistry.TAR).setTranslationKey("tar_bucket").setContainerItem(Items.BUCKET).setCreativeTab(FATabRegistry.ITEMS);
@@ -90,6 +92,8 @@ public class FAItemRegistry {
 	public static final DinosaurBoneItem VERTEBRAE = new DinosaurBoneItem("vertebrae");
 	public static final ItemFossilDoor PALM_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.PALM_DOOR, "palm_door_item");
 	public static final ItemFossilDoor CALAMITES_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.CALAMITES_DOOR, "calamites_door_item");
+	public static final ItemFossilDoor SIGILLARIA_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.SIGILLARIA_DOOR, "sigillaria_door_item");
+	public static final ItemFossilDoor CORDAITES_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.CORDAITES_DOOR, "cordaites_door_item");
 
 	public static Item registerItem(RegistryEvent.Register<Item> event, Item item) {
 		String name = item.getTranslationKey().substring("item.".length());

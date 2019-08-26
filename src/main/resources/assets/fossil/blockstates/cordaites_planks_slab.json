@@ -1,0 +1,1 @@
+{  "variants": {    "inventory": {      "model": "fossil:cordaites_planks_slab"    },    "half=bottom": {      "model": "fossil:cordaites_planks_slab"    },    "half=top": {      "model": "fossil:cordaites_planks_upper_slab"    }  }}

@@ -25,6 +25,12 @@ public abstract class FossilPlanksSlabBlock extends FossilSlabBlock {
 		if(name.contains("calamites")){
 			return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
 		}
+		if(name.contains("sigillaria")){
+			return FABlockRegistry.SIGILLARIA_PLANKS_SINGLESLAB;
+		}
+		if(name.contains("cordaites")){
+			return FABlockRegistry.CORDAITES_PLANKS_SINGLESLAB;
+		}
 		return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
 	}
 
@@ -34,6 +40,12 @@ public abstract class FossilPlanksSlabBlock extends FossilSlabBlock {
 		}
 		if(name.contains("calamites")){
 			return FABlockRegistry.CALAMITES_PLANKS_DOUBLESLAB;
+		}
+		if(name.contains("sigillaria")){
+			return FABlockRegistry.SIGILLARIA_PLANKS_DOUBLESLAB;
+		}
+		if(name.contains("cordaites")){
+			return FABlockRegistry.CORDAITES_PLANKS_DOUBLESLAB;
 		}
 		return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
 	}

@@ -1,0 +1,1 @@
+{  "parent": "block/cube_column",  "textures": {    "end": "fossil:blocks/sigillaria_log_top",    "side": "fossil:blocks/sigillaria_log"  }}

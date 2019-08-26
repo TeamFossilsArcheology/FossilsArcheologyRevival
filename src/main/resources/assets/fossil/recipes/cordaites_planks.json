@@ -1,0 +1,14 @@
+{
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "fossil:cordaites_log",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "fossil:cordaites_planks",
+    "data": 0,
+    "count": 4
+  }
+}

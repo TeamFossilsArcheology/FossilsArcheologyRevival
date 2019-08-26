@@ -1,0 +1,1 @@
+{  "variants": {    "axis=y": {      "model": "fossil:sigillaria_log"    },    "axis=z": {      "model": "fossil:sigillaria_log",      "x": 90    },    "axis=x": {      "model": "fossil:sigillaria_log",      "x": 90,      "y": 90    },    "axis=none": {      "model": "fossil:sigillaria_bark"    }  }}

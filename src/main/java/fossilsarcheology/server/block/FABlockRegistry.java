@@ -128,6 +128,7 @@ public class FABlockRegistry {
 	public static final FossilDoorBlock PALM_DOOR = new FossilDoorBlock(PALM_PLANKS.getDefaultState(), "palm_door");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":palm_trapdoor")
 	public static final FossilTrapdoorBlock PALM_TRAPDOOR = new FossilTrapdoorBlock(PALM_PLANKS.getDefaultState(), "palm_trapdoor");
+
 	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_sapling")
 	public static final FossilSaplingBlock CALAMITES_SAPLING = new FossilSaplingBlock("calamites_sapling");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_log")
@@ -150,6 +151,52 @@ public class FABlockRegistry {
 	public static final FossilDoorBlock CALAMITES_DOOR = new FossilDoorBlock(CALAMITES_PLANKS.getDefaultState(), "calamites_door");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":calamites_trapdoor")
 	public static final FossilTrapdoorBlock CALAMITES_TRAPDOOR = new FossilTrapdoorBlock(CALAMITES_PLANKS.getDefaultState(), "calamites_trapdoor");
+
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_sapling")
+	public static final FossilSaplingBlock SIGILLARIA_SAPLING = new FossilSaplingBlock("sigillaria_sapling");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_log")
+	public static final FossilLogBlock SIGILLARIA_LOG = new FossilLogBlock("sigillaria_log");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_leaves")
+	public static final FossilLeavesBlock SIGILLARIA_LEAVES = new FossilLeavesBlock("sigillaria_leaves", SIGILLARIA_SAPLING);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_planks")
+	public static final FossilPlanksBlock SIGILLARIA_PLANKS = new FossilPlanksBlock("sigillaria_planks");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_planks_double_slab")
+	public static final FossilSlabBlock SIGILLARIA_PLANKS_DOUBLESLAB = new FossilPlanksSlabBlock.Double(SIGILLARIA_PLANKS, "sigillaria_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_planks_slab")
+	public static final FossilSlabBlock SIGILLARIA_PLANKS_SINGLESLAB = new FossilPlanksSlabBlock.Half(SIGILLARIA_PLANKS, "sigillaria_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_planks_stairs")
+	public static final FossilStairsBlock SIGILLARIA_PLANKS_STAIRS = new FossilStairsBlock(SIGILLARIA_PLANKS.getDefaultState(), "sigillaria_stairs");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_fence")
+	public static final FossilFenceBlock SIGILLARIA_FENCE = new FossilFenceBlock(SIGILLARIA_PLANKS.getDefaultState(), "sigillaria_fence");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_fence_gate")
+	public static final FossilFenceGateBlock SIGILLARIA_FENCE_GATE = new FossilFenceGateBlock("sigillaria_fence_gate");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_door")
+	public static final FossilDoorBlock SIGILLARIA_DOOR = new FossilDoorBlock(SIGILLARIA_PLANKS.getDefaultState(), "sigillaria_door");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sigillaria_trapdoor")
+	public static final FossilTrapdoorBlock SIGILLARIA_TRAPDOOR = new FossilTrapdoorBlock(SIGILLARIA_PLANKS.getDefaultState(), "sigillaria_trapdoor");
+
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_sapling")
+	public static final FossilSaplingBlock CORDAITES_SAPLING = new FossilSaplingBlock("cordaites_sapling");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_log")
+	public static final FossilLogBlock CORDAITES_LOG = new FossilLogBlock("cordaites_log");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_leaves")
+	public static final FossilLeavesBlock CORDAITES_LEAVES = new FossilLeavesBlock("cordaites_leaves", CORDAITES_SAPLING);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_planks")
+	public static final FossilPlanksBlock CORDAITES_PLANKS = new FossilPlanksBlock("cordaites_planks");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_planks_double_slab")
+	public static final FossilSlabBlock CORDAITES_PLANKS_DOUBLESLAB = new FossilPlanksSlabBlock.Double(CORDAITES_PLANKS, "cordaites_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_planks_slab")
+	public static final FossilSlabBlock CORDAITES_PLANKS_SINGLESLAB = new FossilPlanksSlabBlock.Half(CORDAITES_PLANKS, "cordaites_planks_slab", 1.4F, 7.5F, SoundType.WOOD);
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_planks_stairs")
+	public static final FossilStairsBlock CORDAITES_PLANKS_STAIRS = new FossilStairsBlock(CORDAITES_PLANKS.getDefaultState(), "cordaites_stairs");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_fence")
+	public static final FossilFenceBlock CORDAITES_FENCE = new FossilFenceBlock(CORDAITES_PLANKS.getDefaultState(), "cordaites_fence");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_fence_gate")
+	public static final FossilFenceGateBlock CORDAITES_FENCE_GATE = new FossilFenceGateBlock("cordaites_fence_gate");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_door")
+	public static final FossilDoorBlock CORDAITES_DOOR = new FossilDoorBlock(CORDAITES_PLANKS.getDefaultState(), "cordaites_door");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cordaites_trapdoor")
+	public static final FossilTrapdoorBlock CORDAITES_TRAPDOOR = new FossilTrapdoorBlock(CORDAITES_PLANKS.getDefaultState(), "cordaites_trapdoor");
 
 	@GameRegistry.ObjectHolder(Revival.MODID + ":ancient_wood")
 	public static final AncientWoodBlock ANCIENT_WOOD = new AncientWoodBlock();

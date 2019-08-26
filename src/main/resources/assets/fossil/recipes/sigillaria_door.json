@@ -1,0 +1,19 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    "PP",
+    "PP",
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "item": "fossil:sigillaria_planks",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "fossil:sigillaria_door_item",
+    "data": 0,
+    "count": 3
+  }
+}

@@ -13,8 +13,14 @@ public class FAOreDictRegistry {
 
     public static void register() {
         OreDictionary.registerOre("blockWool", new ItemStack(Blocks.WOOL, 1, OreDictionary.WILDCARD_VALUE));
-        OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.PALM_PLANKS));
+
         OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD));
+        OreDictionary.registerOre("stairWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD_STAIRS));
+        OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD));
+        OreDictionary.registerOre("stairWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD_STAIRS));
+
+        OreDictionary.registerOre("sapling", new ItemStack(FABlockRegistry.PALM_SAPLING));
+        OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.PALM_PLANKS));
         OreDictionary.registerOre("logWood", new ItemStack(FABlockRegistry.PALM_LOG));
         OreDictionary.registerOre("treeLeaves", new ItemStack(FABlockRegistry.PALM_LEAVES));
         OreDictionary.registerOre("slabWood", new ItemStack(FABlockRegistry.PALM_PLANKS_SINGLESLAB));
@@ -23,12 +29,10 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("trapdoorWood", new ItemStack(FABlockRegistry.PALM_TRAPDOOR));
         OreDictionary.registerOre("fenceWood", new ItemStack(FABlockRegistry.PALM_FENCE));
         OreDictionary.registerOre("fenceGateWood", new ItemStack(FABlockRegistry.PALM_FENCE_GATE));
-        OreDictionary.registerOre("stairWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD_STAIRS));
         OreDictionary.registerOre("treeSapling", new ItemStack(FABlockRegistry.PALM_SAPLING));
         OreDictionary.registerOre("saplingTree", new ItemStack(FABlockRegistry.PALM_SAPLING));
-        OreDictionary.registerOre("sapling", new ItemStack(FABlockRegistry.PALM_SAPLING));
+        
         OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.CALAMITES_PLANKS));
-        OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD));
         OreDictionary.registerOre("logWood", new ItemStack(FABlockRegistry.CALAMITES_LOG));
         OreDictionary.registerOre("treeLeaves", new ItemStack(FABlockRegistry.CALAMITES_LEAVES));
         OreDictionary.registerOre("slabWood", new ItemStack(FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB));
@@ -37,10 +41,36 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("trapdoorWood", new ItemStack(FABlockRegistry.CALAMITES_TRAPDOOR));
         OreDictionary.registerOre("fenceWood", new ItemStack(FABlockRegistry.CALAMITES_FENCE));
         OreDictionary.registerOre("fenceGateWood", new ItemStack(FABlockRegistry.CALAMITES_FENCE_GATE));
-        OreDictionary.registerOre("stairWood", new ItemStack(FABlockRegistry.ANCIENT_WOOD_STAIRS));
         OreDictionary.registerOre("treeSapling", new ItemStack(FABlockRegistry.CALAMITES_SAPLING));
         OreDictionary.registerOre("saplingTree", new ItemStack(FABlockRegistry.CALAMITES_SAPLING));
         OreDictionary.registerOre("sapling", new ItemStack(FABlockRegistry.CALAMITES_SAPLING));
+
+        OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.CORDAITES_PLANKS));
+        OreDictionary.registerOre("logWood", new ItemStack(FABlockRegistry.CORDAITES_LOG));
+        OreDictionary.registerOre("treeLeaves", new ItemStack(FABlockRegistry.CORDAITES_LEAVES));
+        OreDictionary.registerOre("slabWood", new ItemStack(FABlockRegistry.CORDAITES_PLANKS_SINGLESLAB));
+        OreDictionary.registerOre("stairWood", new ItemStack(FABlockRegistry.CORDAITES_PLANKS_STAIRS));
+        OreDictionary.registerOre("doorWood", new ItemStack(FAItemRegistry.CORDAITES_DOOR_ITEM));
+        OreDictionary.registerOre("trapdoorWood", new ItemStack(FABlockRegistry.CORDAITES_TRAPDOOR));
+        OreDictionary.registerOre("fenceWood", new ItemStack(FABlockRegistry.CORDAITES_FENCE));
+        OreDictionary.registerOre("fenceGateWood", new ItemStack(FABlockRegistry.CORDAITES_FENCE_GATE));
+        OreDictionary.registerOre("treeSapling", new ItemStack(FABlockRegistry.CORDAITES_SAPLING));
+        OreDictionary.registerOre("saplingTree", new ItemStack(FABlockRegistry.CORDAITES_SAPLING));
+        OreDictionary.registerOre("sapling", new ItemStack(FABlockRegistry.CORDAITES_SAPLING));
+
+        OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.SIGILLARIA_PLANKS));
+        OreDictionary.registerOre("logWood", new ItemStack(FABlockRegistry.SIGILLARIA_LOG));
+        OreDictionary.registerOre("treeLeaves", new ItemStack(FABlockRegistry.SIGILLARIA_LEAVES));
+        OreDictionary.registerOre("slabWood", new ItemStack(FABlockRegistry.SIGILLARIA_PLANKS_SINGLESLAB));
+        OreDictionary.registerOre("stairWood", new ItemStack(FABlockRegistry.SIGILLARIA_PLANKS_STAIRS));
+        OreDictionary.registerOre("doorWood", new ItemStack(FAItemRegistry.SIGILLARIA_DOOR_ITEM));
+        OreDictionary.registerOre("trapdoorWood", new ItemStack(FABlockRegistry.SIGILLARIA_TRAPDOOR));
+        OreDictionary.registerOre("fenceWood", new ItemStack(FABlockRegistry.SIGILLARIA_FENCE));
+        OreDictionary.registerOre("fenceGateWood", new ItemStack(FABlockRegistry.SIGILLARIA_FENCE_GATE));
+        OreDictionary.registerOre("treeSapling", new ItemStack(FABlockRegistry.SIGILLARIA_SAPLING));
+        OreDictionary.registerOre("saplingTree", new ItemStack(FABlockRegistry.SIGILLARIA_SAPLING));
+        OreDictionary.registerOre("sapling", new ItemStack(FABlockRegistry.SIGILLARIA_SAPLING));
+        
         OreDictionary.registerOre("oreFossil", new ItemStack(FABlockRegistry.FOSSIL));
         OreDictionary.registerOre("oreAmber", new ItemStack(FABlockRegistry.AMBER_ORE));
         OreDictionary.registerOre("stoneBasalt", new ItemStack(FABlockRegistry.VOLCANIC_ROCK));

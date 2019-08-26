@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    "PPP"
+  ],
+  "key": {
+    "P": {
+      "item": "fossil:sigillaria_planks"
+    }
+  },
+  "result": {
+    "item": "fossil:sigillaria_trapdoor",
+    "data": 0,
+    "count": 2
+  }
+}

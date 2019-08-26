@@ -34,8 +34,11 @@ public class FAMachineRecipeRegistry {
                 .addOutput(new ItemStack(Blocks.SAND, 2), 35F)
                 .addOutput(new ItemStack(Items.DYE, 1, 2), 20F)
                 .addOutput(new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN, 1), 5F)
-                .addOutput(new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL, 1), 5F)
-                .addOutput(new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL, 1), 5F);
+                .addOutput(new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL, 1), 2.5F)
+                .addOutput(new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL, 1), 2.5F)
+                .addOutput(new ItemStack(FAItemRegistry.SIGILLARIA_SAPLING_FOSSIL, 1), 2.5F)
+                .addOutput(new ItemStack(FAItemRegistry.CORDAITES_SAPLING_FOSSIL, 1), 2.5F);
+
         float seedWeight = (100F - plantFossil.getTotalWeight()) / (float) FossilSeedsItem.fossilSeeds.length;
         for (int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++) {
             plantFossil.addOutput(new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, i), seedWeight);
@@ -176,6 +179,8 @@ public class FAMachineRecipeRegistry {
                 .addOutput(new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN), 1)
                 .addOutput(new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL), 1)
                 .addOutput(new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL), 1)
+                .addOutput(new ItemStack(FAItemRegistry.SIGILLARIA_SAPLING_FOSSIL), 1)
+                .addOutput(new ItemStack(FAItemRegistry.CORDAITES_SAPLING_FOSSIL), 1)
                 .addOutput(new ItemStack(Items.WHEAT_SEEDS), 1)
                 .addOutput(new ItemStack(Items.BEETROOT_SEEDS), 1)
                 .addOutput(new ItemStack(Items.PUMPKIN_SEEDS), 1)
@@ -217,6 +222,8 @@ public class FAMachineRecipeRegistry {
         registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN), new ItemStack(FAItemRegistry.FERN_SEED));
         registerCultivate(new ItemStack(FAItemRegistry.PALAE_SAPLING_FOSSIL), new ItemStack(FABlockRegistry.PALM_SAPLING));
         registerCultivate(new ItemStack(FAItemRegistry.CALAMITES_SAPLING_FOSSIL), new ItemStack(FABlockRegistry.CALAMITES_SAPLING));
+        registerCultivate(new ItemStack(FAItemRegistry.SIGILLARIA_SAPLING_FOSSIL), new ItemStack(FABlockRegistry.SIGILLARIA_SAPLING));
+        registerCultivate(new ItemStack(FAItemRegistry.CORDAITES_SAPLING_FOSSIL), new ItemStack(FABlockRegistry.CORDAITES_SAPLING));
         registerWorktable(new ItemStack(FAItemRegistry.BROKEN_SWORD), new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.RELIC_SCRAP));
         registerWorktable(new ItemStack(FAItemRegistry.BROKEN_HELMET), new ItemStack(FAItemRegistry.ANCIENT_HELMET), new ItemStack(FAItemRegistry.RELIC_SCRAP));
         registerWorktable(new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.ANCIENT_SWORD), new ItemStack(FAItemRegistry.RELIC_SCRAP));

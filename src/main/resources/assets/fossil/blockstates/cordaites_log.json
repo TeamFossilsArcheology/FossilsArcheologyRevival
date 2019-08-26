@@ -1,0 +1,1 @@
+{  "variants": {    "axis=y": {      "model": "fossil:cordaites_log"    },    "axis=z": {      "model": "fossil:cordaites_log",      "x": 90    },    "axis=x": {      "model": "fossil:cordaites_log",      "x": 90,      "y": 90    },    "axis=none": {      "model": "fossil:cordaites_bark"    }  }}
