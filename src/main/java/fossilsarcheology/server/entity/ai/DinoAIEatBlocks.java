@@ -45,6 +45,7 @@ public class DinoAIEatBlocks extends EntityAIBase {
     }
 
     private void resetTarget(){
+        this.entity.shouldWander = true;
         targetBlock = null;
         List<BlockPos> allBlocks = new ArrayList<>();
         for (BlockPos pos : BlockPos.getAllInBox(this.entity.getPosition().add(-RADIUS, -RADIUS, -RADIUS), this.entity.getPosition().add(RADIUS, RADIUS, RADIUS))) {
@@ -69,9 +70,8 @@ public class DinoAIEatBlocks extends EntityAIBase {
     public void resetTask(){
         targetBlock = null;
         resetTarget();
-        if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
-            this.entity.shouldWander = true;
-        }
+        this.entity.shouldWander = true;
+
     }
 
     @Override
