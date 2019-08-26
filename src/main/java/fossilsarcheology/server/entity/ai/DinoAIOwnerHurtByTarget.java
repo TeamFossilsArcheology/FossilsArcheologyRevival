@@ -9,7 +9,7 @@ public class DinoAIOwnerHurtByTarget extends EntityAIOwnerHurtByTarget {
 
     public DinoAIOwnerHurtByTarget(EntityPrehistoric prehistoric) {
         super(prehistoric);
-        this.setMutexBits(1);
+        this.setMutexBits(0);
         this.prehistoric = prehistoric;
     }
 

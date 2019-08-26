@@ -28,7 +28,7 @@ public class EntityGallimimus extends EntityPrehistoric {
 		teenAge = 4;
 		developsResistance = true;
 		breaksBlocks = false;
-		this.ridingY = 1.6F;
+		this.ridingY = 2F;
 	}
 
 	public void initEntityAI() {

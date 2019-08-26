@@ -9,7 +9,7 @@ public class DinoAIOwnerHurtTarget extends EntityAIOwnerHurtTarget {
 
     public DinoAIOwnerHurtTarget(EntityPrehistoric prehistoric) {
         super(prehistoric);
-        this.setMutexBits(1);
+        this.setMutexBits(0);
         this.prehistoric = prehistoric;
     }
 
@@ -17,6 +17,7 @@ public class DinoAIOwnerHurtTarget extends EntityAIOwnerHurtTarget {
         if(prehistoric.isChild() || prehistoric.aiResponseType() == PrehistoricEntityTypeAI.Response.SCARED){
             return false;
         }
+
         return super.shouldExecute();
     }
 }
