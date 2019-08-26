@@ -1,8 +1,10 @@
 package fossilsarcheology.client.model;
 
 import fossilsarcheology.server.entity.monster.EntityFriendlyPigZombie;
+import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.entity.Entity;
+import net.minecraft.util.EnumHandSide;
 import net.minecraft.util.math.MathHelper;
 
 public class ModelFriendlyPigZombie extends ModelZombie {
@@ -37,6 +39,38 @@ public class ModelFriendlyPigZombie extends ModelZombie {
 			this.bipedLeftLeg.rotateAngleX = -((float) Math.PI * 2F / 5F);
 			this.bipedRightLeg.rotateAngleY = ((float) Math.PI / 10F);
 			this.bipedLeftLeg.rotateAngleY = -((float) Math.PI / 10F);
+		}
+		if (this.swingProgress > 0.0F)
+		{
+			EnumHandSide enumhandside = this.getMainHand(entity);
+			ModelRenderer modelrenderer = this.getArmForSide(enumhandside);
+			float swingProg = this.swingProgress;
+			if(entity instanceof EntityFriendlyPigZombie){
+				swingProg = ((EntityFriendlyPigZombie) entity).getSwingProgress(f1);
+			}
+			this.bipedBody.rotateAngleY = MathHelper.sin(MathHelper.sqrt(swingProg) * ((float)Math.PI * 2F)) * 0.2F;
+
+			if (enumhandside == EnumHandSide.LEFT)
+			{
+				this.bipedBody.rotateAngleY *= -1.0F;
+			}
+
+			this.bipedRightArm.rotationPointZ = MathHelper.sin(this.bipedBody.rotateAngleY) * 5.0F;
+			this.bipedRightArm.rotationPointX = -MathHelper.cos(this.bipedBody.rotateAngleY) * 5.0F;
+			this.bipedLeftArm.rotationPointZ = -MathHelper.sin(this.bipedBody.rotateAngleY) * 5.0F;
+			this.bipedLeftArm.rotationPointX = MathHelper.cos(this.bipedBody.rotateAngleY) * 5.0F;
+			this.bipedRightArm.rotateAngleY += this.bipedBody.rotateAngleY;
+			this.bipedLeftArm.rotateAngleY += this.bipedBody.rotateAngleY;
+			this.bipedLeftArm.rotateAngleX += this.bipedBody.rotateAngleY;
+			swingProg = 1.0F - this.swingProgress;
+			swingProg = swingProg * swingProg;
+			swingProg = swingProg * swingProg;
+			swingProg = 1.0F - swingProg;
+			float f12 = MathHelper.sin(swingProg * (float)Math.PI);
+			float f13 = MathHelper.sin(this.swingProgress * (float)Math.PI) * -(this.bipedHead.rotateAngleX - 0.7F) * 0.75F;
+			modelrenderer.rotateAngleX = (float)((double)modelrenderer.rotateAngleX - ((double)f12 * 1.2D + (double)f13));
+			modelrenderer.rotateAngleY += this.bipedBody.rotateAngleY * 2.0F;
+			modelrenderer.rotateAngleZ += MathHelper.sin(this.swingProgress * (float)Math.PI) * -0.4F;
 		}
 	}
 }

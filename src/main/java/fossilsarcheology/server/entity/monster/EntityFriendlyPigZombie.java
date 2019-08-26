@@ -1,8 +1,10 @@
 package fossilsarcheology.server.entity.monster;
 
+import com.google.common.collect.Multimap;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.passive.EntityWolf;
@@ -44,6 +46,18 @@ public class EntityFriendlyPigZombie extends EntityTameable {
         return EnumCreatureAttribute.UNDEAD;
     }
 
+    public void onLivingUpdate() {
+        this.updateArmSwingProgress();
+        float f = this.getBrightness();
+
+        if (f > 0.5F) {
+            this.idleTime += 2;
+        }
+
+        super.onLivingUpdate();
+    }
+
+
     @Override
     public void onKillEntity(EntityLivingBase entity) {
         super.onKillEntity(entity);
@@ -76,8 +90,15 @@ public class EntityFriendlyPigZombie extends EntityTameable {
 
     @Override
     public boolean attackEntityAsMob(Entity entity) {
-        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), 5);
-
+        float amount = 1;
+        if (!this.getHeldItemMainhand().isEmpty()) {
+            Multimap<String, AttributeModifier> map = this.getHeldItemMainhand().getItem().getAttributeModifiers(EntityEquipmentSlot.MAINHAND, this.getHeldItemMainhand());
+            for (AttributeModifier mod : map.get(SharedMonsterAttributes.ATTACK_DAMAGE.getName())) {
+                amount += mod.getAmount();
+            }
+        }
+        boolean flag = entity.attackEntityFrom(DamageSource.causeMobDamage(this), amount);
+        this.swingArm(EnumHand.MAIN_HAND);
         if (flag) {
             this.swingArm(EnumHand.MAIN_HAND);
             int i = this.world.getDifficulty().getId();
