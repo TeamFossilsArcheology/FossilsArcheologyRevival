@@ -10,7 +10,9 @@ import net.minecraft.entity.passive.AbstractChestHorse;
 import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.HorseArmorType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
@@ -32,12 +34,12 @@ public class EntityQuagga extends AbstractChestHorse {
 
     protected void applyEntityAttributes() {
         super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double)this.getModifiedMaxHealth());
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue((double) this.getModifiedMaxHealth());
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.getModifiedMovementSpeed());
         this.getEntityAttribute(JUMP_STRENGTH).setBaseValue(this.getModifiedJumpStrength());
     }
 
-    protected boolean canDespawn(){
+    protected boolean canDespawn() {
         return false;
     }
 
@@ -79,7 +81,7 @@ public class EntityQuagga extends AbstractChestHorse {
             player.openGui(Revival.INSTANCE, 6, this.world, (int) this.posX, (int) this.posY, (int) this.posZ);
             return true;
         }
-        if (flag && itemstack.getItem() == Items.SPAWN_EGG) {
+        if (flag && (itemstack.getItem() == Items.SPAWN_EGG || itemstack.getItem() == Item.getItemFromBlock(Blocks.CHEST))) {
             return super.processInteract(player, hand);
         } else {
             if (!this.isChild()) {
@@ -127,6 +129,10 @@ public class EntityQuagga extends AbstractChestHorse {
                 return super.processInteract(player, hand);
             }
         }
+    }
+
+    protected int getInventorySize() {
+        return super.getInventorySize();
     }
 
     public EntityAgeable createChild(EntityAgeable ageable) {
