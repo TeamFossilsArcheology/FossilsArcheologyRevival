@@ -25,7 +25,7 @@ public class MeganeuraAIGetInWater extends DinoAIGetInWater {
 		Random random = this.dino.getRNG();
 		BlockPos blockpos = new BlockPos(this.dino.posX, this.dino.getEntityBoundingBox().minY, this.dino.posZ);
 
-		for (int i = 0; i < 20; ++i) {
+		for (int i = 0; i < 30; ++i) {
 			BlockPos blockpos1 = blockpos.add(random.nextInt(40) - 20, random.nextInt(6) - 3, random.nextInt(40) - 20);
 
 			if (this.dino.world.getBlockState(blockpos1).getMaterial() == Material.WATER) {
