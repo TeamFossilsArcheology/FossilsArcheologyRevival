@@ -32,7 +32,7 @@ public class CultivateGUI extends GuiContainer {
 		if(Revival.CONFIG_OPTIONS.machinesRequireEnergy) {
 			if (mouseX > drawX + 114 && mouseX < drawX + 134) {
 				if (mouseY > drawY + 44 && mouseY < drawY + 79) {
-					this.drawHoveringText(NumberFormat.getNumberInstance().format(container.energy) + " FE", mouseX - drawX, mouseY - drawY);
+					this.drawHoveringText(NumberFormat.getNumberInstance().format(container.energy) + " RF", mouseX - drawX, mouseY - drawY);
 				}
 			}
 		}

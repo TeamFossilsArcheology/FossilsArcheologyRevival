@@ -1,16 +1,14 @@
 package fossilsarcheology.server.block.entity;
 
+import cofh.redstoneflux.api.IEnergyReceiver;
 import com.google.common.base.Strings;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.block.CultivateBlock;
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.compat.jei.culture.CultivateRecipes;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
-import fossilsarcheology.server.item.BirdEggItem;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
@@ -22,6 +20,7 @@ import net.minecraft.world.IWorldNameable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.Optional;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.minecraftforge.items.IItemHandlerModifiable;
 import net.minecraftforge.items.ItemStackHandler;
@@ -30,7 +29,8 @@ import net.minecraftforge.items.wrapper.CombinedInvWrapper;
 import javax.annotation.Nullable;
 import java.util.Random;
 
-public class TileEntityCultivate extends TileEntity implements ITickable, IWorldNameable {
+@Optional.Interface(iface = "cofh.redstoneflux.api.IEnergyReceiver", modid = "redstoneflux", striprefs = true)
+public class TileEntityCultivate extends TileEntity implements ITickable, IWorldNameable, IEnergyReceiver {
     public int fuelTime = 0;
     public int totalFuelTime = 0;
     public int cultivationTime = 0;
@@ -50,65 +50,9 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
 
     public static int getItemFuelTime(ItemStack stack) {
         if (!stack.isEmpty()) {
-            Item output = stack.getItem();
-
-            if (output == FAItemRegistry.BIOFOSSIL) {
-                return 300;
-            }
-
-            if (output == Items.PORKCHOP) {
-                return 3000;
-            }
-
-            if (output == Items.MUTTON) {
-                return 3000;
-            }
-
-            if (output == Items.FISH) {
-                return 1500;
-            }
-
-            if (output == Items.COOKED_FISH) {
-                return 1500;
-            }
-
-            if (output == Items.BEEF) {
-                return 4000;
-            }
-
-            if (output == Items.CHICKEN) {
-                return 1500;
-            }
-
-            if (output == Items.RABBIT_FOOT) {
-                return 500;
-            }
-
-            if (output == Items.RABBIT) {
-                return 1500;
-            }
-
-            if (output == Items.EGG) {
-                return 1000;
-            }
-
-            if (output instanceof BirdEggItem) {
-                return 1000;
-            }
-
-            if (output instanceof ItemFood && ((ItemFood) output).isWolfsFavoriteMeat()) {
-                return 1500;
-            }
-
-            if (output == Items.SLIME_BALL) {
-                return 800;
-            }
-
-            if (output == Items.MILK_BUCKET) {
-                return 6000;
-            }
+            ItemStack output = new ItemStack(stack.getItem(), 1);
+            return CultivateRecipes.getFuelValue(output);
         }
-
         return 0;
     }
 
@@ -345,5 +289,25 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     @Override
     public boolean hasCustomName() {
         return !Strings.isNullOrEmpty(this.customName);
+    }
+
+    @Override
+    public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
+        return energyStorage.receiveEnergy(maxReceive, simulate);
+    }
+
+    @Override
+    public int getEnergyStored(EnumFacing from) {
+        return energyStorage.getEnergyStored();
+    }
+
+    @Override
+    public int getMaxEnergyStored(EnumFacing from) {
+        return energyStorage.getMaxEnergyStored();
+    }
+
+    @Override
+    public boolean canConnectEnergy(EnumFacing from) {
+        return Revival.CONFIG_OPTIONS.machinesRequireEnergy;
     }
 }

@@ -57,6 +57,18 @@ public class CraftTweakerCompat {
     }
 
     @ZenMethod
+    public static void addCultivateFuel(IItemStack istack, int time) {
+        FAMachineRecipeRegistry.cultivateFuelValues.put(CraftTweakerMC.getItemStack(istack), time);
+    }
+
+    @ZenMethod
+    public static void removeCultivateFuel(IItemStack istack) {
+        ItemStack input = CraftTweakerMC.getItemStack(istack).copy();
+        input.setCount(1);
+        FAMachineRecipeRegistry.cultivateFuelValues.remove(input);
+    }
+
+    @ZenMethod
     public static void addWorktableRecipe(IItemStack iinput, IItemStack ifuel, IItemStack ioutput) {
         FAMachineRecipeRegistry.worktableRecipes.add(new RecipeWorktable(CraftTweakerMC.getItemStack(iinput), CraftTweakerMC.getItemStack(ioutput), CraftTweakerMC.getItemStack(ifuel)));
     }

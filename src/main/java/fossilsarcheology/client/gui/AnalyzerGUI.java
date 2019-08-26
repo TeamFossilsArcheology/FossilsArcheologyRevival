@@ -30,7 +30,7 @@ public class AnalyzerGUI extends GuiContainer {
 		if(Revival.CONFIG_OPTIONS.machinesRequireEnergy) {
 			if (mouseX > drawX + 81 && mouseX < drawX + 101) {
 				if (mouseY > drawY + 35 && mouseY < drawY + 70) {
-					this.drawHoveringText(NumberFormat.getNumberInstance().format(analyzer.energyStorage.getEnergyStored()) + " FE", mouseX - drawX, mouseY - drawY);
+					this.drawHoveringText(NumberFormat.getNumberInstance().format(analyzer.energyStorage.getEnergyStored()) + " RF", mouseX - drawX, mouseY - drawY);
 				}
 			}
 		}

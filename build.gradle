@@ -36,25 +36,28 @@ minecraft {
 
 repositories {
     mavenCentral()
- maven {
-    url = "http://maven.mcmoddev.com"
-  }
-  maven {
-    name = "Mobius Repo"
-    url = "http://tehnut.info/maven"
-  }
-  maven {
-    name = "JEI"
-    url = "http://dvs1.progwml6.com/files/maven"
-  }
-  maven {
-    name = "gegy1000"
-    url = "https://maven.gegy1000.net"
-  }
-  maven {
+    maven {
+        url = "http://maven.mcmoddev.com"
+    }
+    maven { // COFH Mods
+        url = "http://maven.covers1624.net"
+    }
+    maven {
+        name = "Mobius Repo"
+        url = "http://tehnut.info/maven"
+    }
+    maven {
+        name = "JEI"
+        url = "http://dvs1.progwml6.com/files/maven"
+    }
+    maven {
+        name = "gegy1000"
+        url = "https://maven.gegy1000.net"
+    }
+    maven {
         name "Jared"
         url "http://maven.blamejared.com/"
-  }
+    }
     maven { // mcjty
         name 'tterrag'
         url "https://maven.tterrag.com/"
@@ -65,7 +68,7 @@ repositories {
         url = "http://dvs1.progwml6.com/files/maven"
     }
     maven {
-            name = 'DVS1 Maven FS'
+        name = 'DVS1 Maven FS'
         url = 'http://dvs1.progwml6.com/files/maven'
     }
 
@@ -93,6 +96,7 @@ dependencies {
     compile "thaumcraft:Thaumcraft:1.12.2:6.1.BETA26"
     compile "baubles:Baubles:1.12:1.5.2"
     compile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.6.465"
+    deobfCompile "cofh:RedstoneFlux:1.12-2.1.0.7:universal"
 
 }
 

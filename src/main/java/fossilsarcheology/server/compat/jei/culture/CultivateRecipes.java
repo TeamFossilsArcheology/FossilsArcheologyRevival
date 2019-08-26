@@ -21,12 +21,18 @@ public class CultivateRecipes {
         return list;
     }
 
-    private static Item[] FUEL = new Item[]{FAItemRegistry.BIOFOSSIL, Items.PORKCHOP, Items.FISH, Items.BEEF, Items.MUTTON, Items.EGG, Items.SLIME_BALL, Items.MILK_BUCKET, Items.RABBIT_FOOT, Items.RABBIT, Item.getItemFromBlock(Blocks.BROWN_MUSHROOM), Item.getItemFromBlock(Blocks.RED_MUSHROOM)};
+    public static int getFuelValue(ItemStack stack) {
+        for(Map.Entry<ItemStack, Integer> values : FAMachineRecipeRegistry.cultivateFuelValues.entrySet()){
+            if(values.getKey().isItemEqual(stack)){
+                return values.getValue();
+            }
+        }
+        return 0;
+    }
 
     private static void addRecipe(List<RecipeCultivate> list, ItemStack input, ItemStack output){
-        for(Item item : FUEL){
-            list.add(new RecipeCultivate(input, output, new ItemStack(item)));
-
+        for(ItemStack item : FAMachineRecipeRegistry.cultivateFuelValues.keySet()){
+            list.add(new RecipeCultivate(input, output, item));
         }
 
     }

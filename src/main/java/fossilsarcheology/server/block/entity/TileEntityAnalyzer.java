@@ -1,5 +1,6 @@
 package fossilsarcheology.server.block.entity;
 
+import cofh.redstoneflux.api.IEnergyReceiver;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.block.AnalyzerBlock;
 import fossilsarcheology.server.item.FAItemRegistry;
@@ -20,10 +21,12 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraftforge.energy.CapabilityEnergy;
 import net.minecraftforge.energy.EnergyStorage;
 import net.minecraftforge.energy.IEnergyStorage;
+import net.minecraftforge.fml.common.Optional;
 
 import java.util.Random;
 
-public class TileEntityAnalyzer extends TileEntity implements IInventory, ISidedInventory, ITickable {
+@Optional.Interface(iface = "cofh.redstoneflux.api.IEnergyReceiver", modid = "redstoneflux", striprefs = true)
+public class TileEntityAnalyzer extends TileEntity implements IInventory, ISidedInventory, ITickable, IEnergyReceiver {
 	private static final int[] SLOTS_TOP = new int[]{};
 	private static final int[] SLOTS_BOTTOM = new int[]{9, 10, 11, 12};
 	private static final int[] SLOTS_SIDES = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
@@ -359,5 +362,25 @@ public class TileEntityAnalyzer extends TileEntity implements IInventory, ISided
 			else
 				return (T) handlerTop;
 		return super.getCapability(capability, facing);
+	}
+
+	@Override
+	public int receiveEnergy(EnumFacing from, int maxReceive, boolean simulate) {
+		return energyStorage.receiveEnergy(maxReceive, simulate);
+	}
+
+	@Override
+	public int getEnergyStored(EnumFacing from) {
+		return energyStorage.getEnergyStored();
+	}
+
+	@Override
+	public int getMaxEnergyStored(EnumFacing from) {
+		return energyStorage.getMaxEnergyStored();
+	}
+
+	@Override
+	public boolean canConnectEnergy(EnumFacing from) {
+		return Revival.CONFIG_OPTIONS.machinesRequireEnergy;
 	}
 }
