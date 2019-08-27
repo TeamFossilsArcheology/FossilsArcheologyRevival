@@ -11,13 +11,8 @@ public abstract class ModelPrehistoric extends AdvancedModelBase {
 	}
 
 	//Whoever made this doesnt realize these are passed by value
-	public void blockMovement(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-		if (entity instanceof EntityPrehistoric && ((EntityPrehistoric) entity).isMovementBlocked()) {
-			f = 0;
-			f1 = 0;
-			f3 = 0;
-			f4 = 0;
-		}
+	public boolean blockMovement(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
+		return entity instanceof EntityPrehistoric && ((EntityPrehistoric) entity).isMovementBlocked();
 	}
 
 	public void setRotateAngle(AdvancedModelRenderer modelRenderer, float x, float y, float z) {
