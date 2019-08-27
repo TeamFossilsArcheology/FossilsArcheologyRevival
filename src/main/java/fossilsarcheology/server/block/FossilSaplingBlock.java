@@ -3,7 +3,9 @@ package fossilsarcheology.server.block;
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.tab.FATabRegistry;
 import fossilsarcheology.server.world.gen.WorldGenCalamites;
+import fossilsarcheology.server.world.gen.WorldGenCordaites;
 import fossilsarcheology.server.world.gen.WorldGenPalm;
+import fossilsarcheology.server.world.gen.WorldGenSigillaria;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -71,6 +73,12 @@ public class FossilSaplingBlock extends BlockBush implements DefaultRenderedItem
 		if(this == FABlockRegistry.CALAMITES_SAPLING){
 			return WorldGenCalamites.canGenTree(world, pos);
 		}
+		if(this == FABlockRegistry.SIGILLARIA_SAPLING){
+			return WorldGenSigillaria.canGenTree(world, pos);
+		}
+		if(this == FABlockRegistry.CORDAITES_SAPLING){
+			return WorldGenCordaites.canGenTree(world, pos);
+		}
 		return false;
 	}
 
@@ -79,10 +87,21 @@ public class FossilSaplingBlock extends BlockBush implements DefaultRenderedItem
 			WorldGenPalm palmGen = new WorldGenPalm();
 			world.setBlockToAir(pos);
 			palmGen.generate(world, rand, pos);
-		}else{
+		}
+		if(this == FABlockRegistry.CALAMITES_SAPLING) {
 			WorldGenCalamites calamitesGen = new WorldGenCalamites();
 			world.setBlockToAir(pos);
 			calamitesGen.generate(world, rand, pos);
+		}
+		if(this == FABlockRegistry.SIGILLARIA_SAPLING) {
+			WorldGenSigillaria sigillaria = new WorldGenSigillaria();
+			world.setBlockToAir(pos);
+			sigillaria.generate(world, rand, pos);
+		}
+		if(this == FABlockRegistry.CORDAITES_SAPLING) {
+			WorldGenCordaites cordaites = new WorldGenCordaites();
+			world.setBlockToAir(pos);
+			cordaites.generate(world, rand, pos);
 		}
 	}
 
