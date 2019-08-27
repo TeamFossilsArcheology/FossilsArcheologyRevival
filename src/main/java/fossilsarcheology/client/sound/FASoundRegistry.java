@@ -174,6 +174,10 @@ public class FASoundRegistry {
 	public static final SoundEvent PLATYBELODON_DEATH = create("platybelodon_death");
 	public static final SoundEvent PLATYBELODON_LIVING = create("platybelodon_living");
 
+	public static final SoundEvent EDAPHOSAURUS_DEATH = create("edaphosaurus_death");
+	public static final SoundEvent EDAPHOSAURUS_HURT = create("edaphosaurus_hurt");
+	public static final SoundEvent EDAPHOSAURUS_LIVING = create("edaphosaurus_living");
+
 	public static final SoundEvent ANU_DEATH_EFFECT = create("anu_death_effect");
 
 	public static final SoundEvent DRUM_SINGLE = create("drum_single");

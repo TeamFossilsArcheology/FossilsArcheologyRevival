@@ -1,4 +1,33 @@
 {
+  "edaphosaurus_death": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/edaphosaurus_death1"
+    ]
+  },
+  "edaphosaurus_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/edaphosaurus_hurt1",
+      "fossil:prehistoric/edaphosaurus_hurt2",
+      "fossil:prehistoric/edaphosaurus_hurt3",
+      "fossil:prehistoric/edaphosaurus_hurt4"
+
+
+    ]
+  },
+  "edaphosaurus_living": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/edaphosaurus_living1",
+      "fossil:prehistoric/edaphosaurus_living2",
+      "fossil:prehistoric/edaphosaurus_living3",
+      "fossil:prehistoric/edaphosaurus_living4",
+      "fossil:prehistoric/edaphosaurus_living5",
+      "fossil:prehistoric/edaphosaurus_living6",
+      "fossil:prehistoric/edaphosaurus_living7"
+    ]
+  },
   "platybelodon_death": {
     "category": "neutral",
     "sounds": [

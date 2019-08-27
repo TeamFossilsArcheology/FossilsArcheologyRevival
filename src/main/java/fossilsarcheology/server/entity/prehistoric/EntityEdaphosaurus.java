@@ -163,16 +163,16 @@ public class EntityEdaphosaurus extends EntityPrehistoric {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return FASoundRegistry.DRYOSAURUS_LIVING;
+        return FASoundRegistry.EDAPHOSAURUS_LIVING;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return FASoundRegistry.DRYOSAURUS_HURT;
+        return FASoundRegistry.EDAPHOSAURUS_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return FASoundRegistry.DRYOSAURUS_DEATH;
+        return FASoundRegistry.EDAPHOSAURUS_DEATH;
     }
 }
