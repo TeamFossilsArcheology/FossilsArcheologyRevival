@@ -104,6 +104,7 @@ public class RenderingHandler {
         RenderingRegistry.registerEntityRenderingHandler(EntityCrassigyrinus.class, new RenderPrehistoric(new ModelCrassigyrinus()));
         RenderingRegistry.registerEntityRenderingHandler(EntityDiplocaulus.class, new RenderPrehistoric(new ModelDiplocaulus()));
         RenderingRegistry.registerEntityRenderingHandler(EntityEdaphosaurus.class, new RenderPrehistoric(new ModelEdaphosaurus()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityArthropleura.class, new RenderPrehistoric(new ModelArthropleura()));
         RenderingRegistry.registerEntityRenderingHandler(EntityDebugTest.class, new RenderDebugTest());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TileEntityAnuStatue.class, new TileEntityAnuStatueRender());

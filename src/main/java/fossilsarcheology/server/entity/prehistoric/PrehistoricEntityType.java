@@ -76,7 +76,8 @@ public enum PrehistoricEntityType {
 	TIKTAALIK(EntityTiktaalik.class, MobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCCARNIVORE, Parameter.TAME | Parameter.CARNIVORE | Parameter.MODEL, 0X6A5A1A, 0XD7CF99),
 	CRASSIGYRINUS(EntityCrassigyrinus.class, MobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE, Parameter.TAME | Parameter.CARNIVORE | Parameter.MODEL, 0XCA773A, 0X8F4B2D),
 	DIPLOCAULUS(EntityDiplocaulus.class, MobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE, Parameter.TAME | Parameter.CARNIVORE | Parameter.MODEL, 0XB0A380, 0X7C9694),
-	EDAPHOSAURUS(EntityEdaphosaurus.class, MobType.DINOSAUR, TimePeriod.PALEOZOIC, Diet.HERBIVORE, Parameter.TAME | Parameter.CARNIVORE | Parameter.MODEL, 0X64673D, 0XB58E43);
+	EDAPHOSAURUS(EntityEdaphosaurus.class, MobType.DINOSAUR, TimePeriod.PALEOZOIC, Diet.HERBIVORE, Parameter.TAME | Parameter.HERBIVORE | Parameter.MODEL, 0X64673D, 0XB58E43),
+	ARTHROPLEURA(EntityArthropleura.class, MobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.HERBIVORE, Parameter.TAME | Parameter.HERBIVORE | Parameter.MODEL, 0X2A292C, 0X97531F);
 
 	private final Class<? extends Entity> entity;
 	public final MobType mobType;
