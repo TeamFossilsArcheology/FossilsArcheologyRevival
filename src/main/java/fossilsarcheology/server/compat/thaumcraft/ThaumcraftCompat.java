@@ -238,6 +238,8 @@ public class ThaumcraftCompat {
 		ThaumcraftApi.registerEntityTag("fossil.megaloceros", new AspectList().add(Aspect.BEAST, 35).add(Aspect.AVERSION, 35).add(Aspect.EARTH, 35).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
 		ThaumcraftApi.registerEntityTag("fossil.megalograptus", new AspectList().add(Aspect.BEAST, 35).add(Aspect.AVERSION, 35).add(Aspect.WATER, 35).add(Aspect.PROTECT, 35).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
 		ThaumcraftApi.registerEntityTag("fossil.megalodon", new AspectList().add(Aspect.BEAST, 35).add(Aspect.AVERSION, 35).add(Aspect.WATER, 35).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
+		
+		ThaumcraftApi.registerEntityTag("fossil.edaphosaurus", new AspectList().add(Aspect.BEAST, 25).add(Aspect.FIRE, 25).add(Aspect.EARTH, 25).add(ThaumcraftCompat.TIME, 10).add(ThaumcraftCompat.FOSSIL, 10));
 
 		//Enum items
 		for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
