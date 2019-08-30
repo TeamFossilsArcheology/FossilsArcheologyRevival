@@ -8,6 +8,7 @@ import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
+import scala.util.parsing.combinator.PackratParsers;
 
 public class ModelArthropleura extends ModelPrehistoric {
     public AdvancedModelRenderer bodySegmentBA;
@@ -434,14 +435,36 @@ public class ModelArthropleura extends ModelPrehistoric {
         blockMovement(f, f1, f2, f3, f4, f5, (Entity) entity);
         this.resetToDefaultPose();
         setRotationAngles(f, f1, f2, f3, f4, f5, prehistoric);
+        animator.setAnimation(prehistoric.SPEAK_ANIMATION);
+        animator.startKeyframe(10);
+        ModelUtils.rotate(animator, mandibleL, 0, -40, 0);
+        ModelUtils.rotate(animator, mandibleR, 0, 40, 0);
+        animator.endKeyframe();
+        animator.resetKeyframe(10);
+        animator.setAnimation(prehistoric.ATTACK_ANIMATION);
+        animator.startKeyframe(10);
+        ModelUtils.rotate(animator, bodySegmentFA, -20, 0, 0);
+        ModelUtils.rotate(animator, bodySegmentFB, -20, 0, 0);
+        ModelUtils.rotate(animator, head, 40, 0, 0);
+        ModelUtils.rotate(animator, mandibleL, 0, -40, 0);
+        ModelUtils.rotate(animator, mandibleR, 0, 40, 0);
+        animator.endKeyframe();
+        animator.startKeyframe(5);
+        ModelUtils.rotate(animator, bodySegmentFA, -20, 0, 0);
+        ModelUtils.rotate(animator, bodySegmentFB, -20, 0, 0);
+        ModelUtils.rotate(animator, head, 40, 0, 0);
+        ModelUtils.rotate(animator, mandibleL, 0, 20, 0);
+        ModelUtils.rotate(animator, mandibleR, 0, -20, 0);
+        animator.endKeyframe();
+        animator.resetKeyframe(10);
     }
 
     @Override
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
-        EntityArthropleura prehistoric = (EntityArthropleura)entity;
-        AdvancedModelRenderer[] legsLeft = new AdvancedModelRenderer[]{ legFBLA, legFBLB, legFALA, legFALB, legBALA,
+        EntityArthropleura prehistoric = (EntityArthropleura) entity;
+        AdvancedModelRenderer[] legsLeft = new AdvancedModelRenderer[]{legFBLA, legFBLB, legFALA, legFALB, legBALA,
                 legBALB, legBBLA, legBBLB, legBCLA, legBCLB, legBDLA, legBDLB, legBELA, legBELB, legBFLA, legBFLB};
-        AdvancedModelRenderer[] legsRight = new AdvancedModelRenderer[]{ legFBRA, legFBRB, legFARA, legFARB, legBARA,
+        AdvancedModelRenderer[] legsRight = new AdvancedModelRenderer[]{legFBRA, legFBRB, legFARA, legFARB, legBARA,
                 legBARB, legBBRA, legBBRB, legBCRA, legBCRB, legBDRA, legBDRB, legBERA, legBERB, legBFRA, legBFRB};
         AdvancedModelRenderer[] bodySegments = new AdvancedModelRenderer[]{
                 bodySegmentBB, bodySegmentBC, bodySegmentBD, bodySegmentBE, bodySegmentBF};
@@ -450,22 +473,36 @@ public class ModelArthropleura extends ModelPrehistoric {
         float speed_walk = 2.7F;
         float degree_idle = prehistoric.isSleeping() ? 0.2F : 0.3F;
         float degree_walk = 1.75F;
-        ModelUtils.faceTargetMod(bodySegmentBA, f3, 0, 1F);
+        ModelUtils.faceTargetMod(bodySegmentFA, f3, 0, 0.3F);
+        ModelUtils.faceTargetMod(bodySegmentBA, f3, 0, 0.3F);
+        ModelUtils.faceTargetMod(head, f3, 0, 0.3F);
         this.chainFlap(legsLeft, speed_walk, degree_walk * 0.35F, -10, f, f1);
         this.chainFlap(legsRight, speed_walk, degree_walk * 0.35F, 10, f, f1);
         this.chainWave(legsLeft, speed_walk, -degree_walk * 0.35F, -10, f, f1);
         this.chainWave(legsRight, speed_walk, -degree_walk * 0.35F, 10, f, f1);
-
         this.swing(mandibleL, speed_idle, degree_idle * 0.15F, true, 1, 0, entity.ticksExisted, 1);
         this.swing(mandibleR, speed_idle, degree_idle * 0.15F, false, 1, 0, entity.ticksExisted, 1);
-
         this.swing(antennaRA, speed_idle, degree_idle * 0.25F, true, 1, 0, entity.ticksExisted, 1);
         this.swing(antennaRA_1, speed_idle, degree_idle * 0.25F, false, 1, 0, entity.ticksExisted, 1);
         this.walk(antennaRA, speed_idle, degree_idle * 0.15F, true, 1, 0, entity.ticksExisted, 1);
         this.walk(antennaRA_1, speed_idle, degree_idle * 0.15F, false, 1, 0, entity.ticksExisted, 1);
-
         this.walk(antennaLB, speed_idle, degree_idle * 0.1F, true, 0, -0.1F, entity.ticksExisted, 1);
         this.walk(antennaRB, speed_idle, degree_idle * 0.1F, false, 0, 0.1F, entity.ticksExisted, 1);
+        {
+            float sitProgress = prehistoric.sleepProgress;
+            for (int i = 0; i < bodySegments.length; i++) {
+                sitAnimationRotation(bodySegments[i], sitProgress, 0.0F, (float)Math.toRadians(-20F), 0.0F);
+            }
+            sitAnimationRotation(bodySegmentFA, sitProgress, 0.0F, (float)Math.toRadians(20F), 0.0F);
+            sitAnimationRotation(bodySegmentFB, sitProgress, 0.0F, (float)Math.toRadians(20F), 0.0F);
+            sitAnimationRotation(head, sitProgress, (float)Math.toRadians(10F), (float)Math.toRadians(20F), (float)Math.toRadians(20F));
+        }
+        {
+            float sitProgress = prehistoric.sitProgress;
+            sitAnimationRotation(bodySegmentFA, sitProgress,  (float)Math.toRadians(-30F), 0.0F, 0.0F);
+            sitAnimationRotation(bodySegmentFB, sitProgress,  (float)Math.toRadians(-30F), 0.0F, 0.0F);
+            sitAnimationRotation(head, sitProgress, (float)Math.toRadians(50F), 0, 0F);
 
+        }
     }
 }

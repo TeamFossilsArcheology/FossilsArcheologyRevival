@@ -69,7 +69,7 @@ public class DinoAIEatFeeders extends EntityAIBase {
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
-        return !this.entity.isMovementBlocked() && targetBlock != null;
+        return !this.entity.isMovementBlocked() && targetBlock != null && this.entity.world.getTileEntity(targetBlock) instanceof TileEntityFeeder;
     }
 
     public void resetTask(){

@@ -34,7 +34,7 @@ public class EntityArthropleura extends EntityPrehistoric {
     public ArthropleuraBuffer bodyBuffer;
 
     public EntityArthropleura(World world) {
-        super(world, PrehistoricEntityType.ARTHROPLEURA, 2, 10, 10, 34, 0.15, 0.2, 5, 15);
+        super(world, PrehistoricEntityType.ARTHROPLEURA, 1, 4, 10, 34, 0.15, 0.2, 5, 15);
         this.teenAge = 4;
         this.setActualSize(3F, 1.0F);
         minSize = 0.2F;
@@ -60,15 +60,11 @@ public class EntityArthropleura extends EntityPrehistoric {
         return PrehistoricEntityType.BONELESS_LOOT;
     }
 
-    public boolean isSleeping() {
-        return false;
-    }
-
     @Override
     public String getTexture() {
         String gender = this.isChild() ? "_baby" : this.getGender() == 0 ? "_female" : "_male";
         if (this.isTeen()) {
-            gender = "teen";
+            gender = "_teen";
         }
         if (this.isSkeleton()) {
             return "fossil:textures/model/" + type.toString().toLowerCase() + "_0/" + type.toString().toLowerCase() + "_skeleton.png";
@@ -185,7 +181,7 @@ public class EntityArthropleura extends EntityPrehistoric {
     public void onUpdate() {
         super.onUpdate();
         if (world.isRemote && !this.isAIDisabled()) {
-            bodyBuffer.calculateChainSwingBuffer(120, 6, 2F, this);
+            bodyBuffer.calculateChainSwingBuffer(120, 10, 2.5F, this);
         }
     }
 

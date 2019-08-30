@@ -64,7 +64,7 @@ public class DinoAIEatBlocks extends EntityAIBase {
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
-        return !this.entity.isMovementBlocked() && targetBlock != null;
+        return !this.entity.isMovementBlocked() && targetBlock != null && FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(targetBlock).getBlock(), this.entity.type.diet) > 0 ;
     }
 
     public void resetTask(){

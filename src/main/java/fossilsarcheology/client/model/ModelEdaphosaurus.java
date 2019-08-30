@@ -283,6 +283,23 @@ public class ModelEdaphosaurus extends ModelPrehistoric {
         blockMovement(f, f1, f2, f3, f4, f5, (Entity) entity);
         this.resetToDefaultPose();
         setRotationAngles(f, f1, f2, f3, f4, f5, (Entity) entity);
+        animator.setAnimation(prehistoric.SPEAK_ANIMATION);
+        animator.startKeyframe(10);
+        ModelUtils.rotate(animator, LowerJaw, 20, 0, 0);
+        animator.endKeyframe();
+        animator.resetKeyframe(10);
+        animator.setAnimation(prehistoric.ATTACK_ANIMATION);
+        animator.startKeyframe(10);
+        ModelUtils.rotate(animator, Neck, -11, 0, 0);
+        ModelUtils.rotate(animator, Head, 10, 0, 0);
+        ModelUtils.rotate(animator, LowerJaw, 25, 0, 0);
+        animator.endKeyframe();
+        animator.startKeyframe(5);
+        ModelUtils.rotate(animator, Neck, 6, 0, 0);
+        ModelUtils.rotate(animator, Head, -20, 0, 0);
+        ModelUtils.rotate(animator, LowerJaw, 25, 0, 0);
+        animator.endKeyframe();
+        animator.resetKeyframe(10);
     }
 
     @Override
@@ -296,7 +313,7 @@ public class ModelEdaphosaurus extends ModelPrehistoric {
         EntityEdaphosaurus dino = (EntityEdaphosaurus) entity;
         ModelUtils.faceTargetMod(Head, f3, f4, 0.5F);
         ModelUtils.faceTargetMod(Neck, f3, f4, 0.5F);
-        float speed1 = 0.7F;
+        float speed1 = 0.5F;
         float speed2 = 0.1F;
         float degree1 = 0.85F;
         float degree2 = 0.4F;
@@ -348,22 +365,27 @@ public class ModelEdaphosaurus extends ModelPrehistoric {
             sitAnimationRotation(RightUpperArm, sitProgress, -1.2747884856566583F, 0.5462880558742251F, -0.31869712141416456F);
             sitAnimationRotation(LeftThigh, sitProgress, 0.0F, 0.27314402793711257F, -0.22759093446006054F);
         }
-        this.flap(LeftUpperArm, speed1, degree1 * 0.2F, false, 0F, 0F, f, f1);
-        this.walk(LeftUpperArm, speed1, degree1 * 0.6F, false, 0F, 0.4F, f, f1);
-        this.walk(LeftLowerArm, speed1, degree1 * 0.2F, false, 0F, -0.6F, f, f1);
-        this.walk(LeftFrontFoot, speed1, degree1 * -0.6F, true, 3F, -0.1F, f, f1);
-        this.flap(RightUpperArm, speed1, degree1 * 0.2F, false, 0F, 0F, f, f1);
-        this.walk(RightUpperArm, speed1, degree1 * 0.6F, true, 0F, -0.4F, f, f1);
-        this.walk(LeftLowerArm_1, speed1, degree1 * 0.2F, true, 0F, 0.6F, f, f1);
-        this.walk(LeftFrontFoot_1, speed1, degree1 * -0.6F, false, 3F, 0.1F, f, f1);
-        this.flap(LeftThigh, speed1, degree1 * 0.2F, false, 0F, 0F, f, f1);
-        this.walk(LeftThigh, speed1, degree1 * 0.6F, true, 0F, 0.4F, f, f1);
-        this.walk(LeftShin, speed1, degree1 * 0.2F, true, 0F, -0.6F, f, f1);
-        this.walk(LeftHindFoot, speed1, degree1 * -0.6F, false, 2.15F, -0.15F, f, f1);
-        this.flap(RightThigh, speed1, degree1 * 0.2F, false, 0F, 0F, f, f1);
-        this.walk(RightThigh, speed1, degree1 * 0.6F, false, 0F, -0.4F, f, f1);
-        this.walk(RightShin, speed1, degree1 * 0.2F, false, 0F, 0.6F, f, f1);
-        this.walk(RightHindFoot, speed1, degree1 * -0.6F, true, 2.15F, 0.15F, f, f1);
+        this.walk(LeftUpperArm, speed1, degree1 * 0.6F, true, 0F, 0F, f, f1);
+        this.walk(LeftLowerArm, speed1, degree1 * 0.2F, true, 0F, -0.6F, f, f1);
+        this.walk(LeftFrontFoot, speed1, degree1 * -0.4F, false, -0.1F, -0.25F, f, f1);
+        this.walk(RightUpperArm, speed1, degree1 * 0.6F, false, 0F, 0F, f, f1);
+        this.walk(LeftLowerArm_1, speed1, degree1 * 0.2F, false, 0F, 0.6F, f, f1);
+        this.walk(LeftFrontFoot_1, speed1, degree1 * -0.4F, true, -0.1F, 0.25F, f, f1);
+
+        this.walk(LeftThigh, speed1, degree1 * 0.6F, false, 0F, 0.4F, f, f1);
+        this.walk(LeftShin, speed1, degree1 * 0.2F, false, 0F, -0.6F, f, f1);
+        this.walk(LeftHindFoot, speed1, degree1 * -0.3F, true, 0.9F, 0.25F, f, f1);
+
+        this.walk(RightThigh, speed1, degree1 * 0.6F, true, 0F, -0.4F, f, f1);
+        this.walk(RightShin, speed1, degree1 * 0.2F, true, 0F, 0.6F, f, f1);
+        this.walk(RightHindFoot, speed1, degree1 * -0.3F, false, -0.9F, -0.25F, f, f1);
+
+        this.flap(RightThigh, speed1, degree1 * 0.6F, true, -0.3F, 0.1F, f, f1);
+        this.flap(LeftThigh, speed1, degree1 * 0.6F, true, -0.3F, -0.1F, f, f1);
+
+        this.flap(LeftUpperArm, speed1, degree1 * 0.6F, false, -0.3F, 0.1F, f, f1);
+        this.flap(RightUpperArm, speed1, degree1 * 0.6F, false, -0.3F, -0.1F, f, f1);
+
         this.chainSwing(tailParts, speed1, degree1 * 0.5F, -3, f, f1);
         this.chainSwing(tailParts, speed2, degree2 * 0.5F, -3, entity.ticksExisted, 1);
         this.chainWave(neckParts, speed2, degree2 * 0.15F, 1, entity.ticksExisted, 1);

@@ -128,8 +128,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private int animTick;
     public boolean shouldWander = true;
     public boolean isRunningAway = false;
-    private static final Predicate PREHISTORIC_PREDICATE = new Predicate<EntityLivingBase>() {
-        public boolean apply(@Nullable EntityLivingBase entity) {
+    private static final Predicate PREHISTORIC_PREDICATE = new Predicate<Entity>() {
+        public boolean apply(@Nullable Entity entity) {
             return entity != null && entity instanceof EntityPrehistoric;
         }
     };
