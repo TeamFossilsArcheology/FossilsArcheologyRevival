@@ -93,7 +93,7 @@ public class FossilLivingEvent {
                 properties.killedBiofossilCooldown--;
             }
         }
-        if (PrehistoricEntityType.isMammal(event.getEntityLiving()) && !event.getEntityLiving().isChild()) {
+        if (!event.getEntityLiving().isChild()) {
             FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getEntityLiving(), FossilsMammalProperties.class);
             if (properties != null && properties.embryo != null) {
                 ++properties.embryoProgress;
