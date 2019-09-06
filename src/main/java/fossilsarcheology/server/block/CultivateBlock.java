@@ -31,6 +31,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.IBlockAccess;
@@ -208,7 +209,23 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
     @SuppressWarnings("deprecation")
     @Override
     public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
-        return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(pos));
+        int i = 0;
+        float f = 0.0F;
+        if(world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileEntityCultivate) {
+            TileEntityCultivate te = (TileEntityCultivate)world.getTileEntity(pos);
+            for (int j = 0; j < 3; ++j) {
+                ItemStack itemstack = te.globalInventory.getStackInSlot(j);
+                if (!itemstack.isEmpty()) {
+                    f += (float) itemstack.getCount() / (float) Math.min(64, itemstack.getMaxStackSize());
+                    ++i;
+                }
+            }
+
+            f = f / (float) 3;
+            return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
+        }else{
+            return 0;
+        }
     }
 
     @Override

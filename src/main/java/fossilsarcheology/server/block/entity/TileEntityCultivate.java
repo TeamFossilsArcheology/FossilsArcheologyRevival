@@ -41,7 +41,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     private final IItemHandlerModifiable fuelInventory = new ItemStackHandler(1);
     private final IItemHandlerModifiable outputInventory = new ItemStackHandler(1);
     private final IItemHandlerModifiable wrappedOutputInventory = new DirectionalInvWrapper(this.outputInventory, DirectionalInvWrapper.Mode.OUTPUT);
-    private final IItemHandlerModifiable globalInventory = new CombinedInvWrapper(this.inputInventory, this.fuelInventory, this.outputInventory);
+    public final IItemHandlerModifiable globalInventory = new CombinedInvWrapper(this.inputInventory, this.fuelInventory, this.outputInventory);
     public FAEnergyStorage energyStorage;
 
     public TileEntityCultivate(){
