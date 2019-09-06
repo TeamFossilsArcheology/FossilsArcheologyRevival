@@ -255,11 +255,11 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
             if (facing == null) {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.globalInventory);
             } else if (facing == EnumFacing.UP) {
-                return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.fuelInventory);
+                return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.inputInventory);
             } else if (facing == EnumFacing.DOWN) {
                 return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.wrappedOutputInventory);
             }
-            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.inputInventory);
+            return CapabilityItemHandler.ITEM_HANDLER_CAPABILITY.cast(this.fuelInventory);
         }
         return super.getCapability(capability, facing);
     }
