@@ -178,6 +178,11 @@ public class FASoundRegistry {
 	public static final SoundEvent EDAPHOSAURUS_HURT = create("edaphosaurus_hurt");
 	public static final SoundEvent EDAPHOSAURUS_LIVING = create("edaphosaurus_living");
 
+	public static final SoundEvent ARTHROPLEURA_DEATH = create("arthropluera_death");
+	public static final SoundEvent ARTHROPLEURA_HURT = create("arthropluera_hurt");
+	public static final SoundEvent ARTHROPLEURA_LIVING = create("arthropluera_living");
+	public static final SoundEvent ARTHROPLEURA_WALK = create("arthropluera_walk");
+
 	public static final SoundEvent ANU_DEATH_EFFECT = create("anu_death_effect");
 
 	public static final SoundEvent DRUM_SINGLE = create("drum_single");

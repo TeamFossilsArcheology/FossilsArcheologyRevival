@@ -6,6 +6,7 @@ import fossilsarcheology.client.render.ArthropleuraBuffer;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.ai.*;
 import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
+import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAISit;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -13,6 +14,7 @@ import net.minecraft.entity.ai.EntityMoveHelper;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.pathfinding.NodeProcessor;
 import net.minecraft.pathfinding.PathNavigate;
@@ -20,6 +22,7 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.FMLCommonHandler;
@@ -214,17 +217,22 @@ public class EntityArthropleura extends EntityPrehistoric {
 
     @Override
     protected SoundEvent getAmbientSound() {
-        return FASoundRegistry.MEGANEURA_LIVING;
+        return FASoundRegistry.ARTHROPLEURA_LIVING;
     }
 
     @Override
     protected SoundEvent getHurtSound(DamageSource source) {
-        return FASoundRegistry.MEGANEURA_HURT;
+        return FASoundRegistry.ARTHROPLEURA_HURT;
     }
 
     @Override
     protected SoundEvent getDeathSound() {
-        return FASoundRegistry.MEGANEURA_DEATH;
+        return FASoundRegistry.ARTHROPLEURA_DEATH;
+    }
+
+    @Override
+    protected void playStepSound(BlockPos pos, Block blockIn) {
+        this.playSound(FASoundRegistry.ARTHROPLEURA_WALK, 0.15F, 1.0F);
     }
 
     public boolean isMoving() {

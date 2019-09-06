@@ -1,4 +1,42 @@
 {
+  "arthropluera_walk": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/arthropleura_walk1",
+      "fossil:prehistoric/arthropleura_walk2",
+      "fossil:prehistoric/arthropleura_walk3",
+      "fossil:prehistoric/arthropleura_walk4",
+      "fossil:prehistoric/arthropleura_walk5"
+    ]
+  },
+  "arthropluera_death": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/arthropleura_death1"
+    ]
+  },
+  "arthropluera_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/arthropleura_hurt1",
+      "fossil:prehistoric/arthropleura_hurt2",
+      "fossil:prehistoric/arthropleura_hurt3",
+      "fossil:prehistoric/arthropleura_hurt4",
+      "fossil:prehistoric/arthropleura_hurt5"
+    ]
+  },
+  "arthropluera_living": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/arthropleura_living1",
+      "fossil:prehistoric/arthropleura_living2",
+      "fossil:prehistoric/arthropleura_living3",
+      "fossil:prehistoric/arthropleura_living4",
+      "fossil:prehistoric/arthropleura_living5",
+      "fossil:prehistoric/arthropleura_living6",
+      "fossil:prehistoric/arthropleura_living7"
+    ]
+  },
   "edaphosaurus_death": {
     "category": "neutral",
     "sounds": [
@@ -12,8 +50,6 @@
       "fossil:prehistoric/edaphosaurus_hurt2",
       "fossil:prehistoric/edaphosaurus_hurt3",
       "fossil:prehistoric/edaphosaurus_hurt4"
-
-
     ]
   },
   "edaphosaurus_living": {
