@@ -55,6 +55,10 @@ public class FARecipeRegistry {
         GameRegistry.addSmelting(FABlockRegistry.DENSE_SAND, new ItemStack(FABlockRegistry.STRONG_GLASS), 3.0F);
         GameRegistry.addSmelting(FAItemRegistry.RAW_CHICKEN_SOUP, new ItemStack(FAItemRegistry.COOKED_CHICKEN_SOUP), 1.0F);
         GameRegistry.addSmelting(Items.EGG, new ItemStack(FAItemRegistry.COOKED_EGG), 1.0F);
+        GameRegistry.addSmelting(FABlockRegistry.PALM_LOG, new ItemStack(Items.COAL, 1, 1), 0.15F);
+        GameRegistry.addSmelting(FABlockRegistry.CALAMITES_LOG, new ItemStack(Items.COAL, 1, 1), 0.15F);
+        GameRegistry.addSmelting(FABlockRegistry.CORDAITES_LOG, new ItemStack(Items.COAL, 1, 1), 0.15F);
+        GameRegistry.addSmelting(FABlockRegistry.SIGILLARIA_LOG, new ItemStack(Items.COAL, 1, 1), 0.15F);
         for (int i = 0; i < PrehistoricEntityType.values().length; i++) {
             if (PrehistoricEntityType.values()[i].mobType == MobType.DINOSAUR) {
                 GameRegistry.addSmelting(PrehistoricEntityType.values()[i].eggItem, new ItemStack(FAItemRegistry.COOKED_EGG), 1.0F);

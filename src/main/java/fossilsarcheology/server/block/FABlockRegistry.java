@@ -275,7 +275,24 @@ public class FABlockRegistry {
 		Blocks.FIRE.setFireInfo(CALAMITES_PLANKS_STAIRS, 5, 20);
 		Blocks.FIRE.setFireInfo(CALAMITES_FENCE, 5, 20);
 		Blocks.FIRE.setFireInfo(CALAMITES_FENCE_GATE, 5, 20);
-
+		Blocks.FIRE.setFireInfo(SIGILLARIA_LOG, 5, 5);
+		Blocks.FIRE.setFireInfo(SIGILLARIA_SAPLING, 15, 15);
+		Blocks.FIRE.setFireInfo(SIGILLARIA_LEAVES, 30, 60);
+		Blocks.FIRE.setFireInfo(SIGILLARIA_PLANKS, 5, 20);
+		Blocks.FIRE.setFireInfo(SIGILLARIA_PLANKS_SINGLESLAB, 5, 20);
+		Blocks.FIRE.setFireInfo(SIGILLARIA_PLANKS_DOUBLESLAB, 5, 20);
+		Blocks.FIRE.setFireInfo(SIGILLARIA_PLANKS_STAIRS, 5, 20);
+		Blocks.FIRE.setFireInfo(SIGILLARIA_FENCE, 5, 20);
+		Blocks.FIRE.setFireInfo(SIGILLARIA_FENCE_GATE, 5, 20);
+		Blocks.FIRE.setFireInfo(CORDAITES_LOG, 5, 5);
+		Blocks.FIRE.setFireInfo(CORDAITES_SAPLING, 15, 15);
+		Blocks.FIRE.setFireInfo(CORDAITES_LEAVES, 30, 60);
+		Blocks.FIRE.setFireInfo(CORDAITES_PLANKS, 5, 20);
+		Blocks.FIRE.setFireInfo(CORDAITES_PLANKS_SINGLESLAB, 5, 20);
+		Blocks.FIRE.setFireInfo(CORDAITES_PLANKS_DOUBLESLAB, 5, 20);
+		Blocks.FIRE.setFireInfo(CORDAITES_PLANKS_STAIRS, 5, 20);
+		Blocks.FIRE.setFireInfo(CORDAITES_FENCE, 5, 20);
+		Blocks.FIRE.setFireInfo(CORDAITES_FENCE_GATE, 5, 20);
 		Blocks.FIRE.setFireInfo(ANCIENT_WOOD, 5, 20);
 		Blocks.FIRE.setFireInfo(ANCIENT_WOOD_PILLAR, 5, 20);
 		Blocks.FIRE.setFireInfo(ANCIENT_WOOD_SINGLESLAB, 5, 20);
