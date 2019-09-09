@@ -191,6 +191,7 @@ public class FossilFoodMappings {
 		FoodMappings.INSTANCE.addMeatEntity("mysticalwildlife:plumper", 25);
 		FoodMappings.INSTANCE.addMeatEntity("mysticalwildlife:krill", 10);
 		FoodMappings.INSTANCE.addMeatEntity("mysticalwildlife:yaga_hog", 25);
+		FoodMappings.INSTANCE.addMeatEntity("mysticalwildlife:dusk_lurker", 25);
 		FoodMappings.INSTANCE.addMeatEntity("mysticalwildlife:vrontausaurus", 45);
 		FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:crab", 5);
 		FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_azure", 10);
