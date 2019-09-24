@@ -9,6 +9,7 @@ import fossilsarcheology.client.gui.*;
 import fossilsarcheology.client.gui.dinopedia.GuiPedia;
 import fossilsarcheology.client.model.ModelAncientHelmet;
 import fossilsarcheology.client.particle.BubbleFX;
+import fossilsarcheology.client.particle.ParticleTarBubble;
 import fossilsarcheology.client.render.FATEISR;
 import fossilsarcheology.client.render.RenderingHandler;
 import fossilsarcheology.server.ServerProxy;
@@ -217,6 +218,19 @@ public class ClientProxy extends ServerProxy {
     public void spawnBubbleParticles(World world, float f, float f1, float f2, double motionX, double motionY, double motionZ) {
         Minecraft.getMinecraft().effectRenderer.addEffect(new BubbleFX(world, f, f1, f2, motionX, motionY, motionZ));
     }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void spawnFAParticle(String type, float posX, float posY, float posZ, double motionX, double motionY, double motionZ) {
+        World world = Minecraft.getMinecraft().world;
+        if (world == null) {
+            return;
+        }
+        if (type.equals("tar_bubble")) {
+            Minecraft.getMinecraft().effectRenderer.addEffect(new ParticleTarBubble(world, posX, posY, posZ, motionX, motionY, motionZ));
+        }
+    }
+
 
     @Override
     @SideOnly(Side.CLIENT)

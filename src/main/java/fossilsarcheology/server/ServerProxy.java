@@ -274,6 +274,9 @@ public class ServerProxy implements IGuiHandler {
     public void spawnAnuParticle(World world, double posX, double posY, double posZ) {
     }
 
+    public void spawnFAParticle(String type, float posX, float posY, float posZ, double motionX, double motionY, double motionZ) {
+    }
+
     public void playSound(SoundEvent sound) {
     }
 

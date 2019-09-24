@@ -5,6 +5,7 @@ import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.monster.EntityTarSlime;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockChest;
+import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -16,6 +17,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
@@ -70,6 +72,15 @@ public class TarBlock extends BlockFluidClassic {
 	public void randomDisplayTick(IBlockState stateIn, World worldIn, BlockPos pos, Random rand) {
 		if (rand.nextInt(200) == 0) {
 			worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, FASoundRegistry.TAR, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
+		}
+		if (rand.nextInt(1) == 0) {
+			float posX = pos.getX() + rand.nextFloat();
+			float posY = pos.getY() +  Math.min(1 - BlockLiquid.getLiquidHeightPercent(stateIn.getValue(LEVEL)), quantaFraction);
+			float posZ = pos.getZ() + rand.nextFloat();
+			double motX = (rand.nextDouble() - 0.5D) * 0.3;
+			double motY = 0.3 * rand.nextDouble() + 0.2D;
+			double motZ = (rand.nextDouble() - 0.5D) * 0.3;
+			Revival.PROXY.spawnFAParticle("tar_bubble", posX, posY, posZ, motX, motY, motZ);
 		}
 	}
 	@Override
