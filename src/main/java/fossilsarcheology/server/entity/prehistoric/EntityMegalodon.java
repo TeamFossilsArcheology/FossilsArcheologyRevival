@@ -166,7 +166,7 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
                     }
                     this.faceEntity(this.getAttackTarget(), 30, 30);
                     if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() == 5 || this.getAnimationTick() == 6)) {
-                        this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.MAX_HEALTH).getAttributeValue());
+                        this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
                         destroyBoat(this.getAttackTarget());
                     }
                 } else if (this.getAnimation() != ATTACK_ANIMATION) {
