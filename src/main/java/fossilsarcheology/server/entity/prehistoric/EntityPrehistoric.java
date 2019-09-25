@@ -14,7 +14,6 @@ import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.message.MessageFoodParticles;
 import fossilsarcheology.server.message.MessageHappyParticles;
-import fossilsarcheology.server.message.MessageUpdateDinoState;
 import fossilsarcheology.server.message.MessageUpdateEgg;
 import fossilsarcheology.server.util.FoodMappings;
 import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
@@ -27,7 +26,6 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISit;
@@ -65,7 +63,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public abstract class EntityPrehistoric extends EntityTameable implements IPrehistoricAI, IAnimatedEntity {
+public abstract class EntityPrehistoric extends EntityTameable implements IPrehistoricAI, IAnimatedEntity, IJumpingMount {
 
     private static final DataParameter<Integer> AGETICK = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> HUNGER = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
@@ -78,13 +76,25 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private static final DataParameter<Integer> MOOD = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<String> OWNERDISPLAYNAME = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.STRING);
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BYTE);
-    private static final DataParameter<Byte> CONTROL_STATE = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BYTE);
+    private static final Predicate PREHISTORIC_PREDICATE = new Predicate<Entity>() {
+        public boolean apply(@Nullable Entity entity) {
+            return entity != null && entity instanceof EntityPrehistoric;
+        }
+    };
     public final Animation SPEAK_ANIMATION;
+    public final PrehistoricEntityType type;
+    public final double baseDamage;
+    public final double maxDamage;
+    public final double baseHealth;
+    public final double maxHealth;
+    public final double baseSpeed;
+    public final double maxSpeed;
+    public final double baseArmor;
+    public final double maxArmor;
     public Animation ATTACK_ANIMATION;
     public float minSize;
     public float maxSize;
     public int teenAge;
-    public final PrehistoricEntityType type;
     public ItemStack ItemInMouth = ItemStack.EMPTY;
     public OrderType currentOrder;
     public boolean hasFeatherToggle = false;
@@ -107,33 +117,22 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public int ticksTillMate;
     public int prevAge;
     public boolean isDaytime;
-    public final double baseDamage;
-    public final double maxDamage;
-    public final double baseHealth;
-    public final double maxHealth;
-    public final double baseSpeed;
-    public final double maxSpeed;
-    public final double baseArmor;
-    public final double maxArmor;
     public float ridingXZ;
     public float ridingY;
     public float actualWidth;
+    public boolean shouldWander = true;
+    public boolean isRunningAway = false;
+    public int flockWanderCooldown = 0;
     protected boolean isSitting;
     protected boolean isSleeping;
     protected boolean developsResistance;
     protected boolean breaksBlocks;
     protected int nearByMobsAllowed;
+    protected float jumpPower;
+    protected boolean horseJumping;
     private Animation currentAnimation;
     private int animTick;
-    public boolean shouldWander = true;
-    public boolean isRunningAway = false;
-    private static final Predicate PREHISTORIC_PREDICATE = new Predicate<Entity>() {
-        public boolean apply(@Nullable Entity entity) {
-            return entity != null && entity instanceof EntityPrehistoric;
-        }
-    };
     private int riderJumpCooldown = 0;
-    public int flockWanderCooldown = 0;
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world);
@@ -191,6 +190,22 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         entity.motionZ -= zMotion / (double) f1;
     }
 
+    public static boolean canBreak(Block block) {
+        return !(block instanceof IDinoUnbreakable) &&
+                block != net.minecraft.init.Blocks.BARRIER &&
+                block != net.minecraft.init.Blocks.OBSIDIAN &&
+                block != net.minecraft.init.Blocks.END_STONE &&
+                block != net.minecraft.init.Blocks.BEDROCK &&
+                block != net.minecraft.init.Blocks.END_PORTAL &&
+                block != net.minecraft.init.Blocks.END_PORTAL_FRAME &&
+                block != net.minecraft.init.Blocks.COMMAND_BLOCK &&
+                block != net.minecraft.init.Blocks.REPEATING_COMMAND_BLOCK &&
+                block != net.minecraft.init.Blocks.CHAIN_COMMAND_BLOCK &&
+                block != net.minecraft.init.Blocks.IRON_BARS &&
+                block != net.minecraft.init.Blocks.END_GATEWAY
+                || block == Blocks.WATERLILY;
+    }
+
     public int getSpeakLength() {
         return 20;
     }
@@ -213,7 +228,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.dataManager.register(CLIMBING, (byte) 0);
         this.dataManager.register(MOOD, 0);
         this.dataManager.register(OWNERDISPLAYNAME, "");
-        this.dataManager.register(CONTROL_STATE, (byte) 0);
     }
 
     @Override
@@ -351,6 +365,13 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
 
         return isSleeping;
+    }
+
+    public void setSleeping(boolean sleeping) {
+        this.dataManager.set(SLEEPING, sleeping);
+        if (!world.isRemote) {
+            this.isSleeping = sleeping;
+        }
     }
 
     public BlockPos getBlockToEat(int range) {
@@ -511,11 +532,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             return !this.isDaytime();
         } else if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
             return this.isDaytime() && !this.world.canSeeSky(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.posY + 1), MathHelper.floor(this.posZ)));
-        } else if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH) {
-            return true;
-        } else {
-            return false;
-        }
+        } else return this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH;
     }
 
     public boolean canWakeUp() {
@@ -655,7 +672,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (this.getAttackTarget() != null && this.getAttackTarget() instanceof EntityToyBase && (isPreyBlocked(this.getAttackTarget()) || this.ticksTillPlay > 0)) {
             this.setAttackTarget(null);
         }
-        if(flockWanderCooldown > 0){
+        if (flockWanderCooldown > 0) {
             flockWanderCooldown--;
         }
     }
@@ -696,13 +713,18 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
     }
 
+    public void setRidingPlayer(EntityPlayer player) {
+        player.rotationYaw = this.rotationYaw;
+        player.rotationPitch = this.rotationPitch;
+        player.startRiding(this);
+    }
+
     @Override
     public void travel(float strafe, float vertical, float forward) {
-        if (this.isSitting() || this.isMovementBlockedSoft()) {
+        if ((this.isSitting() || this.isMovementBlockedSoft()) && !this.isBeingRidden()) {
             super.travel(0, 0, 0);
             return;
         }
-        System.out.println(this.getPassengers());
         if (this.isBeingRidden() && this.canBeSteered()) {
             EntityLivingBase controller = (EntityLivingBase) this.getControllingPassenger();
             if (controller != null) {
@@ -712,13 +734,39 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 }
                 strafe = controller.moveStrafing * 0.5F;
                 forward = controller.moveForward;
+                if (this.jumpPower > 0.0F && !this.isDinoJumping() && this.onGround) {
+                    this.motionY = this.getJumpStrength() * (double) this.jumpPower;
+
+                    if (this.isPotionActive(MobEffects.JUMP_BOOST)) {
+                        this.motionY += (double) ((float) (this.getActivePotionEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1F);
+                    }
+
+                    this.setDinoJumping(true);
+                    this.isAirBorne = true;
+
+                    if (forward > 0.0F) {
+                        float f = MathHelper.sin(this.rotationYaw * 0.017453292F);
+                        float f1 = MathHelper.cos(this.rotationYaw * 0.017453292F);
+                        this.motionX += (double) (-0.4F * f * this.jumpPower);
+                        this.motionZ += (double) (0.4F * f1 * this.jumpPower);
+                        this.playSound(SoundEvents.ENTITY_HORSE_JUMP, 0.4F, 1.0F);
+                    }
+
+                    this.jumpPower = 0.0F;
+                }
+                this.jumpMovementFactor = this.getAIMoveSpeed() * 0.1F;
                 this.fallDistance = 0;
                 this.isJumping = false;
                 this.setAIMoveSpeed(onGround ? (float) this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue() : 2);
+                if (this.onGround) {
+                    this.jumpPower = 0.0F;
+                    this.setDinoJumping(false);
+                }
                 super.travel(strafe, vertical, forward);
                 return;
             }
         }
+        this.jumpMovementFactor = 0.02F;
         super.travel(strafe, vertical, forward);
     }
 
@@ -734,12 +782,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             }
         }
         return null;
-    }
-
-    public void setRidingPlayer(EntityPlayer player) {
-        player.rotationYaw = this.rotationYaw;
-        player.rotationPitch = this.rotationPitch;
-        player.startRiding(this, true);
     }
 
     @Override
@@ -820,29 +862,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
         Revival.PROXY.calculateChainBuffer(this);
         AnimationHandler.INSTANCE.updateAnimations(this);
-        if (world.isRemote) {
-            this.updateClientControls();
-        }
-        if (riderJumpCooldown > 0) {
-            riderJumpCooldown--;
-        }
-        boolean jumping = false;
-        if (up()) {
-            jumping = true;
-        }
-        if (jumping && this.onGround && this.riderJumpCooldown == 0) {
-            this.motionY += (double) this.getJumpUpwardsMotion() * 1.5F;
-            if (this.isPotionActive(MobEffects.JUMP_BOOST)) {
-                this.motionY += (double) ((float) (this.getActivePotionEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1F);
-            }
-            if (this.isSprinting()) {
-                float f = this.rotationYaw * 0.017453292F;
-                this.motionX -= (double) (MathHelper.sin(f) * 0.2F);
-                this.motionZ += (double) (MathHelper.cos(f) * 0.2F);
-            }
-            this.isAirBorne = true;
-            this.riderJumpCooldown = 10;
-        }
     }
 
     private boolean isAboveGround() {
@@ -851,45 +870,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             blockPos = blockPos.down();
         }
         return this.getEntityBoundingBox().minY > blockPos.getY();
-    }
-
-    @SideOnly(Side.CLIENT)
-    protected void updateClientControls() {
-        Minecraft mc = Minecraft.getMinecraft();
-        if (this.getControllingPassenger() != null && this.getControllingPassenger() instanceof EntityPlayer && this.getControllingPassenger() == mc.player) {
-            byte previousState = getControlState();
-            up(mc.gameSettings.keyBindJump.isKeyDown());
-            //attack(FAKeys.dinoAttack.isKeyDown());
-            byte controlState = getControlState();
-            if (controlState != previousState) {
-                Revival.NETWORK_WRAPPER.sendToServer(new MessageUpdateDinoState(this.getEntityId(), controlState, posX, posY, posZ));
-            }
-        }
-    }
-
-    private void setStateField(int i, boolean newState) {
-        byte prevState = dataManager.get(CONTROL_STATE).byteValue();
-        if (newState) {
-            dataManager.set(CONTROL_STATE, (byte) (prevState | (1 << i)));
-        } else {
-            dataManager.set(CONTROL_STATE, (byte) (prevState & ~(1 << i)));
-        }
-    }
-
-    public boolean up() {
-        return (dataManager.get(CONTROL_STATE).byteValue() & 1) == 1;
-    }
-
-    public boolean attack() {
-        return (dataManager.get(CONTROL_STATE).byteValue() >> 1 & 1) == 1;
-    }
-
-    public void up(boolean up) {
-        setStateField(0, up);
-    }
-
-    public void attack(boolean attack) {
-        setStateField(1, attack);
     }
 
     @Override
@@ -998,23 +978,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
     }
 
-    public static boolean canBreak(Block block) {
-        return !(block instanceof IDinoUnbreakable) &&
-                block != net.minecraft.init.Blocks.BARRIER &&
-                block != net.minecraft.init.Blocks.OBSIDIAN &&
-                block != net.minecraft.init.Blocks.END_STONE &&
-                block != net.minecraft.init.Blocks.BEDROCK &&
-                block != net.minecraft.init.Blocks.END_PORTAL &&
-                block != net.minecraft.init.Blocks.END_PORTAL_FRAME &&
-                block != net.minecraft.init.Blocks.COMMAND_BLOCK &&
-                block != net.minecraft.init.Blocks.REPEATING_COMMAND_BLOCK &&
-                block != net.minecraft.init.Blocks.CHAIN_COMMAND_BLOCK &&
-                block != net.minecraft.init.Blocks.IRON_BARS &&
-                block != net.minecraft.init.Blocks.END_GATEWAY
-                || block == Blocks.WATERLILY;
-    }
-
-
     @Override
     public void setScaleForAge(boolean child) {
         this.setScale(Math.min(this.getAgeScale() * 0.85F, 4F));
@@ -1090,14 +1053,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
     }
 
-    public byte getControlState() {
-        return Byte.valueOf(dataManager.get(CONTROL_STATE));
-    }
-
-    public void setControlState(byte state) {
-        dataManager.set(CONTROL_STATE, Byte.valueOf(state));
-    }
-
     public boolean increaseHunger(int hunger) {
         if (this.getHunger() >= this.getMaxHunger()) {
             return false;
@@ -1129,7 +1084,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public void sendStatusMessage(SituationType var1) {
         if (this.getOwner() != null && this.getDistance(this.getOwner()) < 50.0F) {
             ITextComponent itextcomponent = new TextComponentString(this.getName());
-            ((EntityPlayer) this.getOwner()).sendStatusMessage(new TextComponentTranslation(var1 == SituationType.Betrayed ? "prehistoric.betrayed" : "prehistoric.full", new Object[]{itextcomponent}), true);
+            ((EntityPlayer) this.getOwner()).sendStatusMessage(new TextComponentTranslation(var1 == SituationType.Betrayed ? "prehistoric.betrayed" : "prehistoric.full", itextcomponent), true);
         }
     }
 
@@ -1164,13 +1119,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     public void setGender(int gender) {
         this.dataManager.set(GENDER, gender);
-    }
-
-    public void setSleeping(boolean sleeping) {
-        this.dataManager.set(SLEEPING, sleeping);
-        if (!world.isRemote) {
-            this.isSleeping = sleeping;
-        }
     }
 
     public int getMood() {
@@ -1315,8 +1263,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 } else {
                     double d0 = player.posX - this.posX;
                     double d2 = player.posZ - this.posZ;
-                    double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
-                    float f = (float)(MathHelper.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
+                    double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
+                    float f = (float) (MathHelper.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
                     this.rotationYawHead = f;
                     this.rotationYaw = f;
                     this.renderYawOffset = f;
@@ -1419,7 +1367,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                     if (itemstack.getItem() == FAItemRegistry.WHIP && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult()) {
                         if (this.isTamed() && isOwner(player) && this.canBeRidden()) {
                             if (this.getRidingPlayer() == null) {
-                                if(!this.world.isRemote){
+                                if (!this.world.isRemote) {
                                     Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
                                 }
                                 this.setOrder(OrderType.WANDER);
@@ -1428,7 +1376,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                                 this.setSleeping(false);
                             } else if (this.getRidingPlayer() == player) {
                                 this.setSprinting(true);
-                                if(!this.world.isRemote) {
+                                if (!this.world.isRemote) {
                                     Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
                                 }
                                 this.setMood(this.getMood() - 5);
@@ -1438,7 +1386,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                             Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
                             if (getRNG().nextInt(5) == 0) {
                                 ITextComponent itextcomponent = new TextComponentString(this.getName());
-                                player.sendStatusMessage(new TextComponentTranslation("prehistoric.autotame", new Object[]{itextcomponent}), true);
+                                player.sendStatusMessage(new TextComponentTranslation("prehistoric.autotame", itextcomponent), true);
                                 this.setMood(this.getMood() - 25);
                                 this.setTamed(true);
                                 Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(Items.GOLD_INGOT)));
@@ -1484,7 +1432,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             float f1 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) + this.getEntityBoundingBox().minY);
             float f2 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) + this.getEntityBoundingBox().minZ);
             if (world.isRemote) {
-                this.world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, f, f1, f2, motionX, motionY, motionZ, new int[]{});
+                this.world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, f, f1, f2, motionX, motionY, motionZ);
             }
         }
         this.updateAbilities();
@@ -1502,7 +1450,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         String s = "dino.order." + var1.name().toLowerCase();
         ITextComponent itextcomponent = new TextComponentString(this.getName());
         if (this.getOwner() instanceof EntityPlayer) {
-            ((EntityPlayer) this.getOwner()).sendStatusMessage(new TextComponentTranslation(s, new Object[]{itextcomponent}), true);
+            ((EntityPlayer) this.getOwner()).sendStatusMessage(new TextComponentTranslation(s, itextcomponent), true);
         }
     }
 
@@ -1697,7 +1645,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     @Override
     public boolean canBeSteered() {
-        return canBeRidden() && (this.getRidingPlayer() != null && this.isOwner(this.getRidingPlayer()));
+        return canBeRidden() && this.getControllingPassenger() instanceof EntityLivingBase && this.isOwner((EntityLivingBase) this.getControllingPassenger());
     }
 
     public void procreate(EntityPrehistoric mob) {
@@ -1826,7 +1774,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(stack.getItem())));
                 this.setHunger(this.getHunger() + FoodMappings.INSTANCE.getItemFoodAmount(stack, type.diet));
                 stack.shrink(1);
-                if(this.getAnimation() == NO_ANIMATION){
+                if (this.getAnimation() == NO_ANIMATION) {
                     this.setAnimation(SPEAK_ANIMATION);
                 }
             }
@@ -1926,6 +1874,18 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
     }
 
+    private double getJumpStrength() {
+        return 3D;
+    }
+
+    protected boolean isDinoJumping() {
+        return horseJumping;
+    }
+
+    protected void setDinoJumping(boolean jump) {
+        horseJumping = jump;
+    }
+
     @Override
     public EntityAgeable createChild(EntityAgeable entity) {
         Entity baby = this.type.invokeClass(this.world);
@@ -1969,7 +1929,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public boolean isPreyBlocked(Entity prey) {
-        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector().add(0, this.height/2, 0), prey.getPositionVector().add(0, prey.height/2, 0), false);
+        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector().add(0, this.height / 2, 0), prey.getPositionVector().add(0, prey.height / 2, 0), false);
         if (rayTrace != null && rayTrace.hitVec != null) {
             BlockPos sidePos = rayTrace.getBlockPos();
             BlockPos pos = new BlockPos(rayTrace.hitVec);
@@ -2074,5 +2034,31 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     public float getMaxTurnDistancePerTick() {
         return MathHelper.clamp(90 - this.getActualWidth() * 10, 0, 90);
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void setJumpPower(int jumpPowerIn) {
+        if (this.isBeingRidden()) {
+            if (jumpPowerIn < 0) {
+                jumpPowerIn = 0;
+            }
+
+            if (jumpPowerIn >= 90) {
+                this.jumpPower = 1.0F;
+            } else {
+                this.jumpPower = 0.4F + 0.4F * (float) jumpPowerIn / 90.0F;
+            }
+        }
+    }
+
+    public boolean canJump()
+    {
+        return this.isBeingRidden();
+    }
+
+    public void handleStartJump(int i) {
+    }
+
+    public void handleStopJump() {
     }
 }
