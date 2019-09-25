@@ -1812,6 +1812,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(stack.getItem())));
                 this.setHunger(this.getHunger() + FoodMappings.INSTANCE.getItemFoodAmount(stack, type.diet));
                 stack.shrink(1);
+                if(this.getAnimation() == NO_ANIMATION){
+                    this.setAnimation(SPEAK_ANIMATION);
+                }
             }
         }
     }
@@ -1952,7 +1955,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public boolean isPreyBlocked(Entity prey) {
-        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector(), prey.getPositionVector(), false);
+        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector().add(0, this.height/2, 0), prey.getPositionVector().add(0, prey.height/2, 0), false);
         if (rayTrace != null && rayTrace.hitVec != null) {
             BlockPos sidePos = rayTrace.getBlockPos();
             BlockPos pos = new BlockPos(rayTrace.hitVec);

@@ -23,9 +23,6 @@ public class DinoAIEatItems extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if(prehistoric.shouldWander){
-            return false;
-        }
         if (this.prehistoric.getHunger() >= this.prehistoric.getMaxHunger() * 0.75F) {
             return false;
         } else if (this.prehistoric.isMovementBlocked()) {
@@ -48,17 +45,15 @@ public class DinoAIEatItems extends EntityAIBase {
     @Override
     public void updateTask() {
         double distance = Math.sqrt(Math.pow(this.prehistoric.posX - this.targetItem.posX, 2.0D) + Math.pow(this.prehistoric.posZ - this.targetItem.posZ, 2.0D));
-        if (distance < 16) {
-            this.prehistoric.getNavigator().tryMoveToXYZ(this.targetItem.posX, this.targetItem.posY, this.targetItem.posZ, 1D);
-            if (distance < 2.5D) {
-                if (this.targetItem != null) {
-                    this.prehistoric.eatItem(this.targetItem.getItem());
-                    this.targetItem.setDead();
-                }
+        this.prehistoric.getNavigator().tryMoveToXYZ(this.targetItem.posX, this.targetItem.posY, this.targetItem.posZ, 1D);
+        if (distance < 2.5D) {
+            if (this.targetItem != null) {
+                this.prehistoric.eatItem(this.targetItem.getItem());
+                this.targetItem.setDead();
             }
-            if(this.prehistoric.getNavigator().noPath()){
-                resetTask();
-            }
+        }
+        if(this.prehistoric.getNavigator().noPath()){
+            resetTask();
         }
     }
 
@@ -69,7 +64,8 @@ public class DinoAIEatItems extends EntityAIBase {
         for (EntityItem currentItem : nearbyItems) {
             if (!currentItem.getItem().isEmpty()) {
                 int foodValue = FoodMappings.INSTANCE.getItemFoodAmount(currentItem.getItem(), this.prehistoric.type.diet);
-                if (foodValue > 0 && this.prehistoric.getDistanceSq(currentItem) < range * range && !this.prehistoric.isPreyBlocked(currentItem)) {
+                System.out.println(this.prehistoric.getDistanceSq(currentItem));
+                if (foodValue > 0 && !this.prehistoric.isPreyBlocked(currentItem)) {
                     return currentItem;
                 }
             }
