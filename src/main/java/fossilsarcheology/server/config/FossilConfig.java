@@ -36,6 +36,7 @@ public class FossilConfig {
     public int sturgeonSpawnRate = 4;
     public boolean healingDinos = true;
     public boolean starvingDinos = true;
+    public boolean whipToTameDinos = true;
     public boolean dinoBlockBreaking = true;
     public boolean dinoEatModdedMobs = true;
     public boolean customMainMenu = true;
@@ -98,6 +99,7 @@ public class FossilConfig {
         this.sturgeonSpawnRate = config.getInt("Sturgeon Spawn Rarity", "all", 4, 1, 100000000, "Chance of Sturgeon spawning in a new chunks. Higher number = more rare");
         this.healingDinos = config.getBoolean("Healing Dinos", "all", true, "True if Dinosaurs can heal with food");
         this.starvingDinos = config.getBoolean("Starving Dinos", "all", true, "True if Dinosaurs have hunger");
+        this.whipToTameDinos = config.getBoolean("Whip to Tame Dinos", "all", true, "True if Whips can be used to tame some dinosaurs");
         this.dinosaurUpdateTick = config.getInt("Dino Upgrade Tick", "all", 10, 1, 10000, "Dinosaurs will conduct expensive CPU operations like looking for plants or feeders every fraction of a tick(20 per second). Default is 10, so dinosaurs therefore update every half-second.");
         this.pregnancyTime = config.getInt("Pregnancy TIme", "all", 10000, 1, 1000000000, "How long do mammal pregnancies last, in ticks.");
         this.dinoBlockBreaking = config.getBoolean("Dino Block Breaking", "all", true, "True if certain Dinosaurs can break blocks weaker than iron");
