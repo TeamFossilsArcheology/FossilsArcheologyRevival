@@ -107,7 +107,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public int ticksTillMate;
     public int prevAge;
     public boolean isDaytime;
-    public Flock flockObj;
     public final double baseDamage;
     public final double maxDamage;
     public final double baseHealth;
@@ -134,6 +133,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
     };
     private int riderJumpCooldown = 0;
+    public int flockWanderCooldown = 0;
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world);
@@ -648,23 +648,11 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (breaksBlocks && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this)) {
             this.breakBlock(5);
         }
-        if (this.doesFlock() && flockObj == null) {
-            Flock nearbyFlock = this.getNearbyFlock();
-            if (nearbyFlock != null) {
-                nearbyFlock.flockMembers.add(this);
-                flockObj = nearbyFlock;
-            } else {
-                flockObj = new Flock();
-                flockObj.createFlock(this);
-            }
-        }
-        if (this.flockObj != null) {
-            if (this == flockObj.flockLeader) {
-                this.flockObj.onUpdate();
-            }
-        }
         if (this.getAttackTarget() != null && this.getAttackTarget() instanceof EntityToyBase && (isPreyBlocked(this.getAttackTarget()) || this.ticksTillPlay > 0)) {
             this.setAttackTarget(null);
+        }
+        if(flockWanderCooldown > 0){
+            flockWanderCooldown--;
         }
     }
 
@@ -677,10 +665,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     @Override
     public void onDeath(DamageSource source) {
-        if (this.flockObj != null) {
-            this.flockObj.flockMembers.remove(this);
-            this.flockObj.setNewLeader();
-        }
         super.onDeath(source);
     }
 
@@ -698,11 +682,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         int blockY = MathHelper.floor(this.getEntityBoundingBox().minY) - 1;
         int blockZ = MathHelper.floor(this.posZ);
         return this.world.getBlockState(new BlockPos(blockX, blockY, blockZ)).getBlock();
-    }
-
-    public EntityPrehistoric findFlockLeader(List<EntityPrehistoric> flock) {
-        int index = new Random().nextInt(flock.size());
-        return flock.get(index);
     }
 
     public EntityPlayer getRidingPlayer() {
@@ -1665,21 +1644,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     public boolean isMad() {
         return this.getMoodFace() == PrehistoricMoodType.SAD;
-    }
-
-    public Flock getNearbyFlock() {
-        EntityAINearestAttackableTarget.Sorter theNearestAttackableTargetSorter = new EntityAINearestAttackableTarget.Sorter(this);
-        double d0 = 64;
-        List<EntityPrehistoric> list = world.getEntitiesWithinAABB(EntityPrehistoric.class, this.getEntityBoundingBox().expand(d0, 4.0D, d0), null);
-        list.sort(theNearestAttackableTargetSorter);
-        if (!list.isEmpty()) {
-            for (EntityPrehistoric mob : list) {
-                if (mob != this && mob.type == this.type && mob.flockObj != null && mob.flockObj.flockLeader == mob) {
-                    return mob.flockObj;
-                }
-            }
-        }
-        return null;
     }
 
     public void mate() {

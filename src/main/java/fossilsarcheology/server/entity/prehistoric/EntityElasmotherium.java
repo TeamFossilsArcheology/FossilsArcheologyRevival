@@ -126,7 +126,6 @@ public class EntityElasmotherium extends EntityPrehistoric {
 
 	@Override
 	public boolean doesFlock() {
-
 		return false;
 	}
 
