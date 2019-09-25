@@ -3,27 +3,25 @@ package fossilsarcheology.server.entity.ai;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.block.entity.TileEntityFeeder;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
+import fossilsarcheology.server.util.FoodMappings;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class DinoAIEatFeeders extends EntityAIBase {
+public class DinoAIEatFeeders extends DinoAIMoveToBlock {
     private static final int RADIUS = 8;
-
-    private BlockPos targetBlock = null;
     private final EntityPrehistoric entity;
-    private final BlockSorter targetSorter;
     private int feedingTicks;
 
     public DinoAIEatFeeders(EntityPrehistoric entity) {
-        super();
+        super(entity, 1.0F, 35);
         this.entity = entity;
-        this.targetSorter = new BlockSorter(entity);
         this.setMutexBits(0);
     }
 
@@ -35,79 +33,55 @@ public class DinoAIEatFeeders extends EntityAIBase {
         if (this.entity.isMovementBlocked()) {
             return false;
         }
-        if(entity.ticksExisted % Revival.CONFIG_OPTIONS.dinosaurUpdateTick == 0){
-            resetTarget();//expensive operation
+        this.distanceCheck = Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2.5F, 2.5F);
+        boolean execute = super.shouldExecute();
+        if(execute){
+            entity.shouldWander = false;
         }
-        if(targetBlock != null){
-            this.entity.shouldWander = false;
-        }
-        return targetBlock != null;
+        return execute;
     }
 
-    private void resetTarget() {
-        this.entity.shouldWander = true;
-        this.targetBlock = null;
-        List<BlockPos> allBlocks = new ArrayList<>();
-        for (BlockPos pos : BlockPos.getAllInBox(this.entity.getPosition().add(-RADIUS, -RADIUS, -RADIUS), this.entity.getPosition().add(RADIUS, RADIUS, RADIUS))) {
-            TileEntity entity = this.entity.world.getTileEntity(pos);
-            if (entity instanceof TileEntityFeeder) {
-                TileEntityFeeder feeder = (TileEntityFeeder) entity;
-                if (!feeder.isEmpty(this.entity.type) && this.entity.rayTraceFeeder(pos, false)) {
-                    allBlocks.add(pos);
-
-                }
-            }
-        }
-        if (!allBlocks.isEmpty()) {
-            allBlocks.sort(this.targetSorter);
-            this.targetBlock = allBlocks.get(0);
-        }
-    }
 
     @Override
     public boolean shouldContinueExecuting() {
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
-        return !this.entity.isMovementBlocked() && targetBlock != null && this.entity.world.getTileEntity(targetBlock) instanceof TileEntityFeeder;
+        return !this.entity.isMovementBlocked() && destinationBlock != null && this.entity.world.getTileEntity(destinationBlock.up()) instanceof TileEntityFeeder;
     }
 
     public void resetTask(){
-        targetBlock = null;
-        resetTarget();
         this.entity.shouldWander = true;
-
     }
 
     @Override
     public void updateTask() {
-        if (this.targetBlock != null) {
-            TileEntity entity = this.entity.world.getTileEntity(this.targetBlock);
-            this.entity.getNavigator().tryMoveToXYZ(this.targetBlock.getX() + 0.5D, this.targetBlock.getY(), this.targetBlock.getZ() + 0.5D, 1D);
+        super.updateTask();
+        if (this.getIsAboveDestination() && this.destinationBlock != null) {
+            BlockPos targetBlock = this.destinationBlock.up();
+            TileEntity entity = this.entity.world.getTileEntity(targetBlock);
+            this.entity.getNavigator().tryMoveToXYZ(targetBlock.getX() + 0.5D, targetBlock.getY(), targetBlock.getZ() + 0.5D, 1D);
             if (entity instanceof TileEntityFeeder) {
                 TileEntityFeeder feeder = (TileEntityFeeder) entity;
-                double distance = this.entity.getDistance(this.targetBlock.getX(), this.targetBlock.getY(), this.targetBlock.getZ());
+                double distance = this.entity.getDistance(targetBlock.getX(), targetBlock.getY(), targetBlock.getZ());
                 if (distance < Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2.5, 2.5F)) {
-                    if (this.feedingTicks < 30 && !feeder.isEmpty(this.entity.type)) {
+                    if (this.entity.getHunger() < this.entity.getMaxHunger() && !feeder.isEmpty(this.entity.type)) {
                         this.feedingTicks++;
                         feeder.feedDinosaur(this.entity);
                         this.entity.setHealth(Math.min(this.entity.getMaxHealth(), (int) (this.entity.getHealth() + this.feedingTicks / 4)));
                         this.entity.doFoodEffect();
                     } else {
                         this.feedingTicks = 0;
-                        this.targetBlock = null;
                         this.resetTask();
                         return;
                     }
                 } else {
                     this.feedingTicks = 0;
-                    this.targetBlock = null;
                     this.resetTask();
                     return;
                 }
             }
             if (!this.entity.rayTraceFeeder(targetBlock, false)) {
-                this.targetBlock = null;
                 this.resetTask();
                 return;
             }
@@ -115,25 +89,21 @@ public class DinoAIEatFeeders extends EntityAIBase {
         }
     }
 
-    public class BlockSorter implements Comparator<BlockPos> {
-        private final Entity entity;
-
-        public BlockSorter(Entity entity) {
-            this.entity = entity;
+    @Override
+    protected boolean shouldMoveTo(World worldIn, BlockPos below) {
+        BlockPos pos = below.up();
+        TileEntity entity = this.entity.world.getTileEntity(pos);
+        if (entity instanceof TileEntityFeeder) {
+            TileEntityFeeder feeder = (TileEntityFeeder) entity;
+            if (!feeder.isEmpty(this.entity.type) && this.entity.rayTraceFeeder(pos, false)) {
+                return true;
+            }
         }
+        return false;
+    }
 
-        @Override
-        public int compare(BlockPos pos1, BlockPos pos2) {
-            double distance1 = this.getDistance(pos1);
-            double distance2 = this.getDistance(pos2);
-            return Double.compare(distance1, distance2);
-        }
-
-        private double getDistance(BlockPos pos) {
-            double deltaX = this.entity.posX - (pos.getX() + 0.5);
-            double deltaY = this.entity.posY + this.entity.getEyeHeight() - (pos.getY() + 0.5);
-            double deltaZ = this.entity.posZ - (pos.getZ() + 0.5);
-            return deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
-        }
+    @Override
+    protected boolean overrideDelay() {
+        return this.entity.getHunger() <= 0.25 * this.entity.getMaxHunger();
     }
 }

@@ -8,22 +8,19 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class DinoAIEatBlocks extends EntityAIBase {
+public class DinoAIEatBlocks extends DinoAIMoveToBlock {
     private static final int RADIUS = 8;
-
     private final EntityPrehistoric entity;
-    private final BlockSorter targetSorter;
-    private BlockPos targetBlock;
 
     public DinoAIEatBlocks(EntityPrehistoric entity) {
-        super();
+        super(entity, 1.0F, 35);
         this.entity = entity;
-        this.targetSorter = new BlockSorter();
         this.setMutexBits(0);
     }
 
@@ -35,28 +32,12 @@ public class DinoAIEatBlocks extends EntityAIBase {
         if (this.entity.isMovementBlocked()) {
             return false;
         }
-        if(entity.ticksExisted % Revival.CONFIG_OPTIONS.dinosaurUpdateTick == 0){
-            resetTarget();//expensive operation
+        this.distanceCheck = Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2.5F, 2.5F);
+        boolean execute = super.shouldExecute();
+        if(execute){
+            entity.shouldWander = false;
         }
-        if(targetBlock != null) {
-            this.entity.shouldWander = false;
-        }
-        return targetBlock != null;
-    }
-
-    private void resetTarget(){
-        this.entity.shouldWander = true;
-        targetBlock = null;
-        List<BlockPos> allBlocks = new ArrayList<>();
-        for (BlockPos pos : BlockPos.getAllInBox(this.entity.getPosition().add(-RADIUS, -RADIUS, -RADIUS), this.entity.getPosition().add(RADIUS, RADIUS, RADIUS))) {
-            if (FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(pos).getBlock(), this.entity.type.diet) > 0 && this.entity.rayTraceFeeder(pos, true) && canReachBlock(entity, pos)) {
-                allBlocks.add(pos);
-            }
-        }
-        if (!allBlocks.isEmpty()) {
-            allBlocks.sort(this.targetSorter);
-            this.targetBlock = allBlocks.get(0);
-        }
+        return execute;
     }
 
     @Override
@@ -64,39 +45,41 @@ public class DinoAIEatBlocks extends EntityAIBase {
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
-        return !this.entity.isMovementBlocked() && targetBlock != null && FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(targetBlock).getBlock(), this.entity.type.diet) > 0 ;
-    }
-
-    public void resetTask(){
-        targetBlock = null;
-        resetTarget();
-        this.entity.shouldWander = true;
-
+        return !this.entity.isMovementBlocked() && destinationBlock != null && FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(destinationBlock.up()).getBlock(), this.entity.type.diet) > 0 ;
     }
 
     @Override
     public void updateTask() {
-        if (this.targetBlock != null) {
-            this.entity.getNavigator().tryMoveToXYZ(this.targetBlock.getX() + 0.5D, this.targetBlock.getY(), this.targetBlock.getZ() + 0.5D, 1D);
-            Block block = this.entity.world.getBlockState(this.targetBlock).getBlock();
+        super.updateTask();
+        if (this.getIsAboveDestination() && this.destinationBlock != null) {
+            BlockPos up = this.destinationBlock.up();
+            Block block = this.entity.world.getBlockState(up).getBlock();
             if (FoodMappings.INSTANCE.getBlockFoodAmount(block, this.entity.type.diet) > 0) {
-                double distance = this.getDistance(this.targetBlock);
+                double distance = this.getDistance(up);
                 if (distance < Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2, 1.5F)) {
                     this.entity.setHunger(Math.min(this.entity.getMaxHunger(), this.entity.getHunger() + FoodMappings.INSTANCE.getBlockFoodAmount(block, this.entity.type.diet)));
                     this.entity.setHealth(Math.min(this.entity.getMaxHealth(), (int) (this.entity.getHealth() + FoodMappings.INSTANCE.getBlockFoodAmount(block, this.entity.type.diet) / 10)));
                     this.entity.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1, 1);
-                    this.entity.world.destroyBlock(this.targetBlock, false);
-                    this.targetBlock = null;
+                    this.entity.world.destroyBlock(up, false);
                     this.resetTask();
                     return;
                 }
-                if(!this.entity.rayTraceFeeder(targetBlock, true) || FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(targetBlock).getBlock(), this.entity.type.diet) == 0 || !canReachBlock(this.entity, targetBlock)){
-                    this.targetBlock = null;
+                if(!this.entity.rayTraceFeeder(up, true) || FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(up).getBlock(), this.entity.type.diet) == 0 || !canReachBlock(this.entity, up)){
                     this.resetTask();
                 }
 
             }
         }
+    }
+
+    @Override
+    protected boolean shouldMoveTo(World worldIn, BlockPos below) {
+        BlockPos pos = below.up();
+        return FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(pos).getBlock(), this.entity.type.diet) > 0 && this.entity.rayTraceFeeder(pos, true) && canReachBlock(entity, pos);
+    }
+
+    public void resetTask(){
+        this.entity.shouldWander = true;
     }
 
     private double getDistance(BlockPos pos) {
@@ -106,16 +89,13 @@ public class DinoAIEatBlocks extends EntityAIBase {
         return deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
     }
 
-    public class BlockSorter implements Comparator<BlockPos> {
-        @Override
-        public int compare(BlockPos pos1, BlockPos pos2) {
-            double distance1 = DinoAIEatBlocks.this.getDistance(pos1);
-            double distance2 = DinoAIEatBlocks.this.getDistance(pos2);
-            return Double.compare(distance1, distance2);
-        }
-    }
 
     public boolean canReachBlock(Entity entity, BlockPos leafBlock){
         return entity.posY + entity.height >= leafBlock.getY();
+    }
+
+    @Override
+    protected boolean overrideDelay() {
+        return this.entity.getHunger() <= 0.25 * this.entity.getMaxHunger();
     }
 }

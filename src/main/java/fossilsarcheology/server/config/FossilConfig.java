@@ -60,8 +60,8 @@ public class FossilConfig {
     public int machineMaxEnergy = 1000;
     public int machineTransferRate = 10;
     public int machineEnergyUsage = 1;
-
-    public int pregnancyTime;
+    public int pregnancyTime = 10000;
+    public int dinoUpdateDelay = 100;
 
     public void init(Configuration config) {
         this.generatePalaeoraphe = config.getBoolean("Generate Palaeoraphe", "all", false, "True if Palaeoraphe Trees are to generate naturally");
@@ -101,6 +101,7 @@ public class FossilConfig {
         this.dinosaurUpdateTick = config.getInt("Dino Upgrade Tick", "all", 10, 1, 10000, "Dinosaurs will conduct expensive CPU operations like looking for plants or feeders every fraction of a tick(20 per second). Default is 10, so dinosaurs therefore update every half-second.");
         this.pregnancyTime = config.getInt("Pregnancy TIme", "all", 10000, 1, 1000000000, "How long do mammal pregnancies last, in ticks.");
         this.dinoBlockBreaking = config.getBoolean("Dino Block Breaking", "all", true, "True if certain Dinosaurs can break blocks weaker than iron");
+        this.dinoUpdateDelay = config.getInt("Dino Update Delay", "all", 100, 1, 10000, "Dinosaurs will conduct expensive CPU operations like looking for plants or feeders, once every this number of ticks(with added standard deviation for servers)");
         this.dinoEatModdedMobs = config.getBoolean("Dino Eat Modded Mobs", "all", true, "True if Dinosaurs can eat non-vanilla mobs");
         this.customMainMenu = config.getBoolean("Custom Main Menu", "all", true, "True if Custom Main Menu is enabled");
         this.featheredDeinonychus = config.getBoolean("Feathered Deinonychus", "all", true, "True if Deinonychus is accurate to science and not a fake movie monster or a relic of past age of scientific progress");
