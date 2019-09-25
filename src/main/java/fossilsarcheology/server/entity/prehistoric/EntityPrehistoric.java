@@ -1312,8 +1312,13 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 if (player.isSneaking()) {
                     this.nudgeEntity(player);
                 } else {
-                    this.rotationYawHead = -player.rotationYaw;
-                    this.renderYawOffset = -player.rotationYaw;
+                    double d0 = player.posX - this.posX;
+                    double d2 = player.posZ - this.posZ;
+                    double d3 = (double)MathHelper.sqrt(d0 * d0 + d2 * d2);
+                    float f = (float)(MathHelper.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
+                    this.rotationYawHead = f;
+                    this.rotationYaw = f;
+                    this.renderYawOffset = f;
                 }
             } else {
                 if (itemstack.getItem() == Items.BONE && this.getAgeInDays() < this.getAdultAge()) {
