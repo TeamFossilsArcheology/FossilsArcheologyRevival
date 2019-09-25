@@ -94,13 +94,15 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
                     world.destroyBlock(pos, false);
                     if (entity.isPlant) {
                         world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1, 1, false);
-                        world.setBlockState(pos, Blocks.DIRT.getDefaultState());
                         world.setBlockState(pos.up(), FABlockRegistry.MUTANT_FLOWER.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.LOWER));
-                        world.setBlockState(pos.up(2), FABlockRegistry.MUTANT_FLOWER.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.UPPER));
+                        if(world.getBlockState(pos).getMaterial().isReplaceable()){
+                            world.setBlockState(pos.up(2), FABlockRegistry.MUTANT_FLOWER.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.UPPER));
+                        }
                     } else {
                         EntityLiving creature;
                         world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1, 1, false);
                         world.setBlockState(pos, Blocks.WATER.getDefaultState());
+                        world.notifyBlockUpdate(pos, Blocks.WATER.getDefaultState(), Blocks.WATER.getDefaultState(), 3);
                         int rand = world.rand.nextInt(100);
 
                         if (rand <= 5) {
