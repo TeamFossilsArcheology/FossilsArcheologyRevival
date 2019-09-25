@@ -322,9 +322,9 @@ public class ModelTyrannosaurus extends ModelPrehistoric {
 		this.bob(rightThigh, speedIdle * 0.5F, degree * -0.4F, false, entity.ticksExisted, 1);
 		this.bob(leftThigh, speedIdle * 0.5F, degree * -0.4F, false, entity.ticksExisted, 1);
 		this.walk(upperBody, speedIdle * 0.5F, degree * 0.05F, false, 1F, 0F, entity.ticksExisted, 1);
-		this.walk(lowerBody, speed, degree * 0.05F, true, 0F, 0F, f, f1);
-		this.walk(rightThigh, speed, degree * -0.05F, true, 0F, 0F, f, f1);
-		this.walk(leftThigh, speed, degree * -0.05F, true, 0F, 0F, f, f1);
+		this.walk(lowerBody, speed2, degree * 0.15F, true, 0F, 0F, f, f1);
+		this.walk(rightThigh, speed2, degree * -0.15F, true, 0F, 0F, f, f1);
+		this.walk(leftThigh, speed2, degree * -0.15F, true, 0F, 0F, f, f1);
 		this.walk(leftThigh, speed2, 0.6F, false, 0F, 0.4F, f, f1);
 		this.walk(leftLeg, speed2, 0.2F, false, 0F, -0.6F, f, f1);
 		this.walk(leftFoot, speed2, -0.6F, true, 2.5F, -0.4F, f, f1);

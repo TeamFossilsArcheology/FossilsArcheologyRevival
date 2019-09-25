@@ -14,6 +14,7 @@ import net.minecraft.util.math.Vec3d;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Random;
 
 public class DinoAIFindWaterTarget extends EntityAIBase {
 	protected final DinoAIFindWaterTarget.Sorter fleePosSorter;
@@ -56,24 +57,13 @@ public class DinoAIFindWaterTarget extends EntityAIBase {
 	}
 
 	public BlockPos findWaterTarget() {
+		Random rand = this.mob.getRNG();
 		if (this.mob.getAttackTarget() == null || this.mob.getAttackTarget().isDead) {
-			List<BlockPos> water = new ArrayList<>();
-			for (int x = (int) this.mob.posX - range; x < (int) this.mob.posX + range; x++) {
-				for (int y = (int) this.mob.posY - range; y < (int) this.mob.posY + range; y++) {
-					for (int z = (int) this.mob.posZ - range; z < (int) this.mob.posZ + range; z++) {
-						if (this.mob.world.getBlockState(new BlockPos(x, y, z)).getMaterial() == Material.WATER && isDirectPathBetweenPoints(this.mob, this.mob.getPositionVector(), new Vec3d(x, y, z))) {
-							water.add(new BlockPos(x, y, z));
-						}
-
-					}
+			for(int i = 0; i < 20; i++){
+				BlockPos randPos = this.mob.getPosition().add(rand.nextInt(16) - 8, rand.nextInt(8) - 4, rand.nextInt(16) - 8);
+				if (this.mob.world.getBlockState(randPos).getMaterial() == Material.WATER && isDirectPathBetweenPoints(mob, this.mob.getPositionVector(), new Vec3d(randPos.getX() + 0.5, randPos.getY() + 0.5, randPos.getZ() + 0.5))) {
+					return randPos;
 				}
-			}
-			if (!water.isEmpty()) {
-				if (avoidAttacker && this.mob.getAttackingEntity() != null) {
-					water.sort(this.fleePosSorter);
-
-				}
-				return water.get(this.mob.getRNG().nextInt(water.size()));
 			}
 		} else {
 			BlockPos blockpos1 = new BlockPos(this.mob.getAttackTarget());
@@ -81,6 +71,7 @@ public class DinoAIFindWaterTarget extends EntityAIBase {
 		}
 		return null;
 	}
+
 
 	public boolean isDirectPathBetweenPoints(Entity entity, Vec3d vec1, Vec3d vec2) {
 		RayTraceResult movingobjectposition = entity.world.rayTraceBlocks(vec1, new Vec3d(vec2.x, vec2.y + (double) entity.height * 0.5D, vec2.z), false, true, false);
