@@ -1,4 +1,30 @@
 {
+  "citipati_death": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/citipati_death1"
+    ]
+  },
+  "citipati_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/citipati_hurt1",
+      "fossil:prehistoric/citipati_hurt2",
+      "fossil:prehistoric/citipati_hurt3"
+    ]
+  },
+  "citipati_living": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/citipati_living1",
+      "fossil:prehistoric/citipati_living2",
+      "fossil:prehistoric/citipati_living3",
+      "fossil:prehistoric/citipati_living4",
+      "fossil:prehistoric/citipati_living5",
+      "fossil:prehistoric/citipati_living6",
+      "fossil:prehistoric/citipati_living7"
+    ]
+  },
   "arthropluera_walk": {
     "category": "neutral",
     "sounds": [

@@ -183,6 +183,10 @@ public class FASoundRegistry {
 	public static final SoundEvent ARTHROPLEURA_LIVING = create("arthropluera_living");
 	public static final SoundEvent ARTHROPLEURA_WALK = create("arthropluera_walk");
 
+	public static final SoundEvent CITIPATI_DEATH = create("citipati_death");
+	public static final SoundEvent CITIPATI_HURT = create("citipati_hurt");
+	public static final SoundEvent CITIPATI_LIVING = create("citipati_living");
+
 	public static final SoundEvent ANU_DEATH_EFFECT = create("anu_death_effect");
 
 	public static final SoundEvent DRUM_SINGLE = create("drum_single");

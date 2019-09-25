@@ -305,7 +305,7 @@ public class ModelCitipati extends ModelPrehistoric {
         this.walk(rightLeg, speed2, 0.2F, true, 0F, 0.6F, f, f1);
         this.walk(rightFoot, speed2, -0.6F, false, 2.5F, 0.4F, f, f1);
         this.chainWave(neckParts, speed2, degree * 0.35F, 5, f, f1);
-        this.chainWave(tailParts, speed2, degree * 0.3F, 3, f, f1);
+        this.chainSwing(tailParts, speed2, degree * 0.1F, 0, f, f1);
         ((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) tailParts);
 
     }
