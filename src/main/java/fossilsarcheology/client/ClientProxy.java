@@ -1,5 +1,6 @@
 package fossilsarcheology.client;
 
+import com.google.common.collect.Maps;
 import fossilsarcheology.Revival;
 import fossilsarcheology.client.event.FossilClientPlayerEvent;
 import fossilsarcheology.client.event.FossilHelmetOverlayEvent;
@@ -28,6 +29,7 @@ import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.audio.ISound;
 import net.minecraft.client.renderer.block.model.ModelBakery;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.StateMap;
@@ -37,6 +39,7 @@ import net.minecraft.item.EnumDyeColor;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -48,6 +51,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Map;
 
 @Mod.EventBusSubscriber
 public class ClientProxy extends ServerProxy {
@@ -238,18 +243,31 @@ public class ClientProxy extends ServerProxy {
         return id == 0 ? helmetModel : null;
     }
 
+    private static final Map<String, ISound> CURRENTLY_PLAYING_SOUNDS = Maps.<String, ISound>newHashMap();
+
     @Override
     @SideOnly(Side.CLIENT)
     public void playSound(SoundEvent sound) {
-        Minecraft.getMinecraft().getSoundHandler().playSound(net.minecraft.client.audio.PositionedSoundRecord.getRecord(sound, 1, 1));
+        ISound sounds = CURRENTLY_PLAYING_SOUNDS.get(sound.getSoundName().toString());
+        if(sounds == null){
+            sounds = net.minecraft.client.audio.PositionedSoundRecord.getMusicRecord(sound);
+            CURRENTLY_PLAYING_SOUNDS.put(sound.getSoundName().toString(), sounds);
+        }
+        if (!Minecraft.getMinecraft().getSoundHandler().isSoundPlaying(sounds)) {
+            Minecraft.getMinecraft().getSoundHandler().playSound(sounds);
+        }
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public void stopSound(SoundEvent sound) {
-        net.minecraft.client.audio.ISound isound = net.minecraft.client.audio.PositionedSoundRecord.getMusicRecord(sound);
-        if (Minecraft.getMinecraft().getSoundHandler().isSoundPlaying(isound)) {
-            Minecraft.getMinecraft().getSoundHandler().stopSound(isound);
+        ISound sounds = CURRENTLY_PLAYING_SOUNDS.get(sound.getSoundName().toString());
+        if(sounds == null){
+            sounds = net.minecraft.client.audio.PositionedSoundRecord.getMusicRecord(sound);
+            CURRENTLY_PLAYING_SOUNDS.put(sound.getSoundName().toString(), sounds);
+        }
+        if (Minecraft.getMinecraft().getSoundHandler().isSoundPlaying(sounds)) {
+            Minecraft.getMinecraft().getSoundHandler().stopSound(sounds);
         }
     }
 

@@ -138,7 +138,7 @@ public class EntityCitipati extends EntityPrehistoric {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        this.setAnimation(ATTACK_ANIMATION);
+
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
             doAttack();
         }

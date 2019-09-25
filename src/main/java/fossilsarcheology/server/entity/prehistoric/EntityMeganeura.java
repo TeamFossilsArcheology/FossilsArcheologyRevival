@@ -28,7 +28,6 @@ import java.util.Random;
 
 public class EntityMeganeura extends EntityPrehistoricSwimming {
 
-
     public EntityMeganeura(World world) {
         super(world, PrehistoricEntityType.MEGANEURA, 1, 2, 4, 18, 0.15, 0.2, 0, 4);
         this.setActualSize(2.2F, 1.95F);

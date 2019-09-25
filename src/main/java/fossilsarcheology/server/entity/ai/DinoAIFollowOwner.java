@@ -1,6 +1,7 @@
 package fossilsarcheology.server.entity.ai;
 
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
+import fossilsarcheology.server.entity.prehistoric.EntityPrehistoricFlying;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoricSwimming;
 import fossilsarcheology.server.entity.prehistoric.OrderType;
 import net.minecraft.block.material.Material;
@@ -103,6 +104,12 @@ public class DinoAIFollowOwner extends EntityAIBase {
 								for (int i1 = 0; i1 <= 4; ++i1) {
 									if(this.prehistoric instanceof EntityPrehistoricSwimming){
 										if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && (this.theWorld.getBlockState(new BlockPos(i + l, k - 1, j + i1)).isOpaqueCube() || this.theWorld.getBlockState(new BlockPos(i + l, k - 1, j + i1)).getMaterial() == Material.WATER) && this.isEmptyBlock(new BlockPos(i + l, k, j + i1)) && this.isEmptyBlock(new BlockPos(i + l, k + 1, j + i1))) {
+											this.prehistoric.setLocationAndAngles((double) ((float) (i + l) + 0.5F), (double) k, (double) ((float) (j + i1) + 0.5F), this.prehistoric.rotationYaw, this.prehistoric.rotationPitch);
+											this.petPathfinder.clearPath();
+											return;
+										}
+									}else if(this.prehistoric instanceof EntityPrehistoricFlying){
+										if ((l < 1 || i1 < 1 || l > 3 || i1 > 3) && (this.theWorld.getBlockState(new BlockPos(i + l, k - 1, j + i1)).isOpaqueCube() || this.theWorld.isAirBlock(new BlockPos(i + l, k - 1, j + i1))) && this.isEmptyBlock(new BlockPos(i + l, k, j + i1)) && this.isEmptyBlock(new BlockPos(i + l, k + 1, j + i1))) {
 											this.prehistoric.setLocationAndAngles((double) ((float) (i + l) + 0.5F), (double) k, (double) ((float) (j + i1) + 0.5F), this.prehistoric.rotationYaw, this.prehistoric.rotationPitch);
 											this.petPathfinder.clearPath();
 											return;
