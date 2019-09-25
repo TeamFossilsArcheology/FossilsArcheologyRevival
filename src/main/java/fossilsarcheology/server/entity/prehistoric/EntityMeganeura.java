@@ -89,7 +89,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
             if (sitProgress != 0)
                 sitProgress = sleepProgress = 0F;
         }
-        if(!this.isMovementBlocked() && !this.useSwimAI()){
+        if(!this.isMovementBlockedSoft() && !this.useSwimAI()){
             this.motionY += 0.08D;
         } else if(!this.isChild()){
             this.moveHelper.action = EntityMoveHelper.Action.WAIT;
@@ -103,7 +103,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
     }
 
     private boolean isFlying(){
-        return !this.onGround && !this.isMovementBlocked();
+        return !this.onGround && !this.isMovementBlockedSoft();
     }
 
 

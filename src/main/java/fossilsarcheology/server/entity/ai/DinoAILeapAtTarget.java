@@ -30,7 +30,7 @@ public class DinoAILeapAtTarget extends EntityAIBase {
 			return false;
 		} else {
 			double d0 = this.dino.getDistanceSq(this.leapTarget);
-			return (d0 <= 16.0D) && this.dino.onGround && !dino.isMovementBlocked();
+			return (d0 <= 16.0D) && this.dino.onGround && !dino.isMovementBlockedSoft();
 		}
 	}
 

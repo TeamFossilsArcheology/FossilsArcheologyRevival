@@ -30,7 +30,7 @@ public class DinoAIEatFeeders extends DinoAIMoveToBlock {
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
-        if (this.entity.isMovementBlocked()) {
+        if (this.entity.isMovementBlockedSoft()) {
             return false;
         }
         this.distanceCheck = Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2.5F, 2.5F);
@@ -47,7 +47,7 @@ public class DinoAIEatFeeders extends DinoAIMoveToBlock {
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
-        return !this.entity.isMovementBlocked() && destinationBlock != null && this.entity.world.getTileEntity(destinationBlock.up()) instanceof TileEntityFeeder;
+        return !this.entity.isMovementBlockedSoft() && destinationBlock != null && this.entity.world.getTileEntity(destinationBlock.up()) instanceof TileEntityFeeder;
     }
 
     public void resetTask(){

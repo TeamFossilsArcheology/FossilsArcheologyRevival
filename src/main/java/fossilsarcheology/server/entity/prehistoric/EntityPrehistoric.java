@@ -336,7 +336,11 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     @Override
     public boolean isMovementBlocked() {
-        return this.getHealth() <= 0.0F || isSitting() || isSleeping() || this.isSkeleton() || this.isActuallyWeak() || this.isBeingRidden();
+        return this.getHealth() <= 0.0F || isSitting() || this.isSkeleton() || this.isActuallyWeak() || this.isBeingRidden();
+    }
+
+    public boolean isMovementBlockedSoft() {
+        return isMovementBlocked() || this.isSleeping();
     }
 
     public boolean isSleeping() {
@@ -694,7 +698,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     @Override
     public void travel(float strafe, float vertical, float forward) {
-        if (this.isSitting()) {
+        if (this.isSitting() || this.isMovementBlockedSoft()) {
             super.travel(0, 0, 0);
             return;
         }

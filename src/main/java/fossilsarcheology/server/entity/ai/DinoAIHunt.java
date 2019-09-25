@@ -21,12 +21,12 @@ public class DinoAIHunt<T extends EntityLivingBase> extends EntityAINearestAttac
 
 	@Override
 	public boolean shouldExecute() {
-		if (this.dino.isBeingRidden() || this.dino.isMovementBlocked()) {
+		if (this.dino.isBeingRidden() || this.dino.isMovementBlockedSoft()) {
 			return false;
 		}
 		if (super.shouldExecute() && this.targetEntity != null && !this.targetEntity.getClass().equals(this.dino.getClass())) {
 			if (this.dino.width * dino.getTargetScale() >= this.targetEntity.width || (dino.getMoodFace() == PrehistoricMoodType.ANGRY || dino.getMoodFace() == PrehistoricMoodType.SAD) && this.targetEntity instanceof EntityPlayer) {
-				if (this.taskOwner instanceof EntityPrehistoric && !((EntityPrehistoric) this.taskOwner).isMovementBlocked()) {
+				if (this.taskOwner instanceof EntityPrehistoric && !((EntityPrehistoric) this.taskOwner).isMovementBlockedSoft()) {
 					EntityPrehistoric prehistoric = (EntityPrehistoric) this.taskOwner;
 					if (targetEntity instanceof EntityPlayer && ((EntityPlayer) targetEntity).isCreative()) {
 						return false;

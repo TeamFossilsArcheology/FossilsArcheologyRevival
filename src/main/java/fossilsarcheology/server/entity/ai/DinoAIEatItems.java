@@ -25,7 +25,7 @@ public class DinoAIEatItems extends EntityAIBase {
     public boolean shouldExecute() {
         if (this.prehistoric.getHunger() >= this.prehistoric.getMaxHunger() * 0.75F) {
             return false;
-        } else if (this.prehistoric.isMovementBlocked()) {
+        } else if (this.prehistoric.isMovementBlockedSoft()) {
             return false;
         }
         this.targetItem = this.getNearestItem(16);
@@ -39,7 +39,7 @@ public class DinoAIEatItems extends EntityAIBase {
         } else if (this.prehistoric.getHunger() >= this.prehistoric.getMaxHunger()) {
             return false;
         }
-        return !this.prehistoric.isMovementBlocked();
+        return !this.prehistoric.isMovementBlockedSoft();
     }
 
     @Override

@@ -223,7 +223,7 @@ public class EntityParasaurolophus extends EntityPrehistoric {
 			doAttack();
 			doAttackKnockback(0.5F);
 		}
-		if (!this.world.isRemote && !this.isMovementBlocked() && !this.isStanding() && this.getRNG().nextInt(100) == 0 && standTicks == 0) {
+		if (!this.world.isRemote && !this.isMovementBlockedSoft() && !this.isStanding() && this.getRNG().nextInt(100) == 0 && standTicks == 0) {
 			this.setStanding(true);
 		}
 		if (!this.world.isRemote && this.isStanding() && this.getRNG().nextInt(800) == 0 && standTicks > 800) {

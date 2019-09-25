@@ -31,7 +31,7 @@ public class DinoAIWander extends EntityAIBase {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
-        if(!entity.shouldWander || entity.isMovementBlocked()){
+        if(!entity.shouldWander || entity.isMovementBlockedSoft()){
             return false;
         }
         if (!this.mustUpdate) {

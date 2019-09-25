@@ -28,7 +28,7 @@ public class DinoMeleeAttackAI extends EntityAIBase {
         EntityLivingBase target = this.entity.getAttackTarget();
         if (target == null || !target.isEntityAlive()) {
             return false;
-        } else if (this.entity.isMovementBlocked()) {
+        } else if (this.entity.isMovementBlockedSoft()) {
             return false;
         } else if (this.entity.world.getDifficulty() == EnumDifficulty.PEACEFUL && target instanceof EntityPlayer) {
             return false;

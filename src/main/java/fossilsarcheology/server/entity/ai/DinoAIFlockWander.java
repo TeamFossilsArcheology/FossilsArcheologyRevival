@@ -43,7 +43,7 @@ public class DinoAIFlockWander<T extends EntityPrehistoric> extends EntityAIBase
     }
 
     public boolean shouldExecute() {
-        if (!entity.shouldWander || entity.isMovementBlocked() || !entity.doesFlock()) {
+        if (!entity.shouldWander || entity.isMovementBlockedSoft() || !entity.doesFlock()) {
             return false;
         }
         Vec3d vec3d = this.getPosition();

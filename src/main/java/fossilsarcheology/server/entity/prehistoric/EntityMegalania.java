@@ -82,7 +82,7 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
     }
 
     public boolean canFight(){
-        return !this.isChild() && this.ticksSinceLastFight > 600 && !this.isMovementBlocked();
+        return !this.isChild() && this.ticksSinceLastFight > 600 && !this.isMovementBlockedSoft();
     }
 
     @Override
