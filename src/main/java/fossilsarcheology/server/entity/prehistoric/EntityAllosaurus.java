@@ -26,7 +26,7 @@ public class EntityAllosaurus extends EntityPrehistoric implements IScaryDinosau
 		developsResistance = true;
 		breaksBlocks = true;
 		this.teenAge = 5;
-		this.ridingY = 1.3F;
+		this.ridingY = 1.6F;
 	}
 
 	public void initEntityAI() {

@@ -8,7 +8,6 @@ public class EventSharedConfig {
 
     @SubscribeEvent
     public void onConfigChanged(ConfigChangedEvent.OnConfigChangedEvent event) {
-        System.out.println(event.getModID());
         if (event.getModID().equalsIgnoreCase(Revival.MODID)) {
             Revival.syncConfig();
         }

@@ -64,7 +64,6 @@ public class DinoAIEatItems extends EntityAIBase {
         for (EntityItem currentItem : nearbyItems) {
             if (!currentItem.getItem().isEmpty()) {
                 int foodValue = FoodMappings.INSTANCE.getItemFoodAmount(currentItem.getItem(), this.prehistoric.type.diet);
-                System.out.println(this.prehistoric.getDistanceSq(currentItem));
                 if (foodValue > 0 && !this.prehistoric.isPreyBlocked(currentItem)) {
                     return currentItem;
                 }

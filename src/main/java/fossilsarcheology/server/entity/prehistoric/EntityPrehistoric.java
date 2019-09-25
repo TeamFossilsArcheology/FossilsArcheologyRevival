@@ -702,6 +702,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             super.travel(0, 0, 0);
             return;
         }
+        System.out.println(this.getPassengers());
         if (this.isBeingRidden() && this.canBeSteered()) {
             EntityLivingBase controller = (EntityLivingBase) this.getControllingPassenger();
             if (controller != null) {
@@ -738,7 +739,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public void setRidingPlayer(EntityPlayer player) {
         player.rotationYaw = this.rotationYaw;
         player.rotationPitch = this.rotationPitch;
-        player.startRiding(this);
+        player.startRiding(this, true);
     }
 
     @Override
@@ -1415,17 +1416,21 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                         return true;
                     }
 
-                    if (itemstack.getItem() == FAItemRegistry.WHIP && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult() && !this.world.isRemote) {
+                    if (itemstack.getItem() == FAItemRegistry.WHIP && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult()) {
                         if (this.isTamed() && isOwner(player) && this.canBeRidden()) {
                             if (this.getRidingPlayer() == null) {
-                                Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
+                                if(!this.world.isRemote){
+                                    Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
+                                }
                                 this.setOrder(OrderType.WANDER);
                                 setRidingPlayer(player);
                                 this.setSitting(false);
                                 this.setSleeping(false);
                             } else if (this.getRidingPlayer() == player) {
                                 this.setSprinting(true);
-                                Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
+                                if(!this.world.isRemote) {
+                                    Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
+                                }
                                 this.setMood(this.getMood() - 5);
                             }
                         } else if (!this.isTamed() && this.aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && this.aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
