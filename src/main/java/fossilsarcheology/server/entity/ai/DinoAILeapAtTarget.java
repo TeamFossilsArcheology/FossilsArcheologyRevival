@@ -10,14 +10,16 @@ public class DinoAILeapAtTarget extends EntityAIBase {
 
 	public DinoAILeapAtTarget(EntityPrehistoric dino) {
 		this.dino = dino;
-		this.setMutexBits(5);
+		this.setMutexBits(3);
 	}
 
 	@Override
 	public boolean shouldExecute() {
 		this.leapTarget = this.dino.getAttackTarget();
-
-		if (dino.getAnimation() == dino.ATTACK_ANIMATION) {
+		if (!dino.useSpecialAttack()) {
+			return false;
+		}
+		if (dino.getAnimation() == dino.getExtraAnimation(0)) {
 			return false;
 		}
 		if (dino.isSitting()) {
@@ -41,8 +43,8 @@ public class DinoAILeapAtTarget extends EntityAIBase {
 
 	@Override
 	public void startExecuting() {
-		if (dino.getAnimation() != dino.ATTACK_ANIMATION) {
-			dino.setAnimation(dino.ATTACK_ANIMATION);
+		if (dino.getAnimation() != dino.getExtraAnimation(0)) {
+			dino.setAnimation(dino.getExtraAnimation(0));
 		}
 		dino.faceEntity(this.leapTarget, 100.0F, 100.0F);
 	}

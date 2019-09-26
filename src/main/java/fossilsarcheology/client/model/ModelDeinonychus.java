@@ -243,7 +243,7 @@ public class ModelDeinonychus extends ModelPrehistoric {
 		ModelUtils.rotate(animator, lowerJaw, 30, 0, 0);
 		animator.endKeyframe();
 		animator.resetKeyframe(10);
-		animator.setAnimation(deinonychus.ATTACK_ANIMATION);
+		animator.setAnimation(deinonychus.ANIMATION_JUMPAT);
 		animator.startKeyframe(15);
 		animator.move(leftThigh, 0, 3.2F, -0.5F);
 		animator.move(rightThigh, 0, 3.2F, -0.5F);
@@ -273,6 +273,19 @@ public class ModelDeinonychus extends ModelPrehistoric {
 		ModelUtils.rotate(animator, rightUpperArm, 0, 0, 50);
 		animator.endKeyframe();
 		animator.setStaticKeyframe(5);
+		animator.resetKeyframe(5);
+		animator.setAnimation(deinonychus.ATTACK_ANIMATION);
+		animator.startKeyframe(10);
+		ModelUtils.rotate(animator, neck, -20, 0, 0);
+		ModelUtils.rotate(animator, head, 20, 0, 0);
+		animator.move(head, 0, 0, -2);
+		ModelUtils.rotate(animator, lowerJaw, 25, 0, 0);
+		animator.endKeyframe();
+		animator.startKeyframe(5);
+		ModelUtils.rotate(animator, neck, 6, 0, 0);
+		ModelUtils.rotate(animator, head, -14, 0, 0);
+		ModelUtils.rotate(animator, lowerJaw, 1, 0, 0);
+		animator.endKeyframe();
 		animator.resetKeyframe(5);
 	}
 

@@ -5,6 +5,7 @@ import fossilsarcheology.Revival;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.ai.*;
 import fossilsarcheology.server.entity.utility.EntityToyBase;
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -23,6 +24,9 @@ import net.minecraft.world.World;
 
 public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosaur{
 
+	public static Animation ANIMATION_JUMPAT = Animation.create(35);
+	private boolean attackDecision = true;
+
 	public EntityDeinonychus(World world) {
 		super(world, PrehistoricEntityType.DEINONYCHUS, 2, 6, 10, 32, 0.23, 0.35, 0, 2);
 		this.nearByMobsAllowed = 9;
@@ -39,7 +43,8 @@ public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosa
 	}
 
 	public void initEntityAI() {
-		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
+		this.tasks.addTask(0, new DinoMeleeAttackAI(this, 1.0F, false));
+		this.tasks.addTask(0, new DinoAILeapAtTarget(this));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
@@ -61,7 +66,7 @@ public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosa
 
 	@Override
 	public int getAttackLength() {
-		return 35;
+		return 20;
 	}
 
 	@Override
@@ -154,29 +159,45 @@ public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosa
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		if (this.getAttackTarget() != null && this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() >= 15 && this.getAnimationTick() <= 20)) {
-			double d0 = this.getAttackTarget().posX - this.posX;
-			double d1 = this.getAttackTarget().posZ - this.posZ;
-			double d2 = this.getAttackTarget().posY - this.posY + this.getAttackTarget().height;
+		if(attackDecision){
+			if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null && this.getDistance(this.getAttackTarget()) < 6) {
+				doAttack();
+				attackDecision = rand.nextBoolean();
+				this.getAttackTarget().knockBack(this, (float)0.5F, (double)MathHelper.sin(this.rotationYaw * 0.017453292F), (double)(-MathHelper.cos(this.rotationYaw * 0.017453292F)));
+			}
+		}else {
+			if (this.getAttackTarget() != null){
+				if( this.getRidingEntity() != null) {
+					if (this.getRidingEntity() == this.getAttackTarget() && this.ticksExisted % 20 == 0) {
+						IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+						this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
+					}
+				}
+				double d0 = this.getDistanceSq(this.getAttackTarget());
+				if(d0 < 20 && this.getAnimation() != this.getExtraAnimation(0)){
+					this.setAnimation(this.getExtraAnimation(0));
+				}
+			}
 
-			float f = MathHelper.sqrt(d0 * d0 + d1 * d1);
-			this.motionX += d0 / (double) f * 0.800000011920929D + this.motionX * 0.20000000298023224D;
-			this.motionZ += d1 / (double) f * 0.800000011920929D + this.motionZ * 0.20000000298023224D;
-			this.getLookHelper().setLookPositionWithEntity(this.getAttackTarget(), 10, 12);
-			this.motionY += d2 / (double) f * 0.800000011920929D + this.motionY * 0.20000000298023224D;
-		}
-
-		if (this.getAttackTarget() != null && this.getRidingEntity() != null) {
-			if (this.getRidingEntity() == this.getAttackTarget() && this.ticksExisted % 20 == 0) {
-				IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-				this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
+			if (this.getAttackTarget() != null && this.getAttackTarget().isEntityAlive() && this.getAnimation() == ANIMATION_JUMPAT && (this.getAnimationTick() >= 17 && this.getAnimationTick() <= 20) && this.onGround) {
+				double d0 = this.getAttackTarget().posX - this.posX;
+				double d1 = this.getAttackTarget().posZ - this.posZ;
+				double d2 = this.getAttackTarget().posY - this.posY + this.getAttackTarget().height;
+				float f = MathHelper.sqrt(d0 * d0 + d1 * d1);
+				this.motionX += d0 / (double) f * 0.800000011920929D + this.motionX * 0.20000000298023224D;
+				this.motionZ += d1 / (double) f * 0.800000011920929D + this.motionZ * 0.20000000298023224D;
+				this.motionY += d2 / (double) f * 0.800000011920929D + this.motionY * 0.20000000298023224D;
 			}
 		}
-
 	}
 
 	@Override
 	public boolean attackEntityAsMob(Entity entity) {
+		if(attackDecision){
+			if (this.getAnimation() != ATTACK_ANIMATION) {
+				this.setAnimation(ATTACK_ANIMATION);
+			}
+		}
 		return false;
 	}
 
@@ -187,6 +208,7 @@ public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosa
 			if (this.getAttackTarget() == entity && this.getAnimation() == ATTACK_ANIMATION && !onGround && this.getRidingEntity() != entity && (entity instanceof EntityToyBase)) {
 				entity.attackEntityFrom(DamageSource.causeMobDamage(this), 1);
 			} else if (this.getAttackTarget() == entity && this.getAnimation() == ATTACK_ANIMATION && !onGround && this.getRidingEntity() != entity) {
+				attackDecision = rand.nextBoolean();
 				this.startRiding(entity);
 			}
 		}
@@ -203,12 +225,25 @@ public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosa
 			if (this.getLastAttackedEntity() != null) {
 				if (this.getLastAttackedEntity() == this.getRidingEntity()) {
 					if (this.getRNG().nextInt(2) == 0) {
-						this.startRiding(null);
+						this.dismountRidingEntity();
 					}
 				}
 			}
 		}
 		return super.attackEntityFrom(dmg, i);
+	}
+
+	public Animation getExtraAnimation(int i) {
+		return ANIMATION_JUMPAT;
+	}
+
+	public boolean useSpecialAttack(){
+		return !attackDecision;
+	}
+
+	@Override
+	public Animation[] getAnimations() {
+		return new Animation[]{SPEAK_ANIMATION, ATTACK_ANIMATION, ANIMATION_JUMPAT};
 	}
 
 	@Override

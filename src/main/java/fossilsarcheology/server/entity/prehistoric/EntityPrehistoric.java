@@ -1843,7 +1843,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     @Override
     public double getMountedYOffset() {
-        return 0;
+        return super.getMountedYOffset();
     }
 
     @Override
@@ -2060,5 +2060,13 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public void handleStopJump() {
+    }
+
+    public Animation getExtraAnimation(int i) {
+        return NO_ANIMATION;
+    }
+
+    public boolean useSpecialAttack(){
+        return false;
     }
 }
