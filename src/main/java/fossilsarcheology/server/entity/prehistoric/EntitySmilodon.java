@@ -19,11 +19,11 @@ public class EntitySmilodon extends EntityPrehistoric implements IScaryDinosaur{
 
 	public EntitySmilodon(World world) {
 		super(world, PrehistoricEntityType.SMILODON, 1, 5, 8, 34, 0.25, 0.3, 0, 0);
-		this.setActualSize(0.9F, 0.8F);
+		this.setActualSize(1.1F, 1.2F);
 		this.pediaScale = 47F;
 		this.nearByMobsAllowed = 7;
 		minSize = 0.4F;
-		maxSize = 1.4F;
+		maxSize = 1.6F;
 		teenAge = 4;
 		developsResistance = true;
 		breaksBlocks = false;
@@ -38,10 +38,10 @@ public class EntitySmilodon extends EntityPrehistoric implements IScaryDinosaur{
 		this.tasks.addTask(3, new DinoAIEatBlocks(this));
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
 		this.tasks.addTask(3, new DinoAIEatItems(this));
-		this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
+		this.tasks.addTask(4, new DinoAIRiding(this, 1.5F));
 		this.tasks.addTask(6, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-		this.tasks.addTask(8, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
-		this.tasks.addTask(8, new DinoAILookIdle(this));
+		this.tasks.addTask(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
+		this.tasks.addTask(7, new DinoAILookIdle(this));
 		this.targetTasks.addTask(1, new DinoAIOwnerHurtByTarget(this));
 		this.targetTasks.addTask(2, new DinoAIOwnerHurtTarget(this));
 		this.targetTasks.addTask(3, new DinoAIHurtByTarget(this));
@@ -65,7 +65,7 @@ public class EntitySmilodon extends EntityPrehistoric implements IScaryDinosaur{
 
 	@Override
 	public int getAttackLength() {
-		return 30;
+		return 25;
 	}
 
 	@Override
@@ -105,7 +105,7 @@ public class EntitySmilodon extends EntityPrehistoric implements IScaryDinosaur{
 	@Override
 	public Response aiResponseType() {
 
-		return Response.TERITORIAL;
+		return Response.AGRESSIVE;
 	}
 
 	@Override
