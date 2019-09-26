@@ -132,7 +132,7 @@ public class EntityMegaloceros extends EntityPrehistoric {
     public void onLivingUpdate() {
         super.onLivingUpdate();
         this.ridingY = this.getGender() == 1 ? 2.45F : 2.1F;
-        if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 15 && this.getAttackTarget() != null) {
+        if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 15 && this.getAttackTarget() != null && this.canReachPrey()) {
             doAttack();
             doAttackKnockback(2F);
         }
