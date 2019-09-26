@@ -3,7 +3,7 @@ package fossilsarcheology.server.config;
 import net.minecraftforge.common.config.Configuration;
 
 public class FossilConfig {
-    public boolean generatePalaeoraphe = false;
+    public boolean generatePrehistoricTrees = false;
     public boolean generateHellShips = true;
     public boolean generateAcademy = true;
     public boolean generateTemple = true;
@@ -63,9 +63,10 @@ public class FossilConfig {
     public int machineEnergyUsage = 1;
     public int pregnancyTime = 10000;
     public int dinoUpdateDelay = 100;
+    public int fernTickRate = 10;
 
     public void init(Configuration config) {
-        this.generatePalaeoraphe = config.getBoolean("Generate Palaeoraphe", "all", false, "True if Palaeoraphe Trees are to generate naturally");
+        this.generatePrehistoricTrees = config.getBoolean("Generate Prehistoric Trees", "all", false, "True if Palaeoraphe, Calamites, Sigillaria, etc. Trees are to generate naturally");
         this.generateHellShips = config.getBoolean("Generate Hell Ships", "all", true, "True if Hell Ships are to generate naturally");
         this.generateAcademy = config.getBoolean("Generate Desert Academies", "all", true, "True if Desert Academies are to generate naturally");
         this.generateTemple = config.getBoolean("Generate Aztec Temple", "all", true, "True if Aztec Temples are to generate naturally");
@@ -126,5 +127,6 @@ public class FossilConfig {
         this.machineMaxEnergy = config.getInt("Machine Max Stored Energy", "all", 1000, 1, 1000000, "Max stored Redstone Flux(RF) machines can have");
         this.machineTransferRate = config.getInt("Machine Max Energy Transfer Rate", "all", 10, 1, 1000000, "Max Redstone Flux(RF) machines can transfer per tick");
         this.machineEnergyUsage = config.getInt("Machine Max Energy Usage Rate", "all", 1, 1, 1000000, "how much Redstone Flux(RF) machines consume per tick");
+        this.fernTickRate = config.getInt("Fern Tick Rate", "all", 10, 1, 1000000, "How often ferns try to grow(raise number to decrease growth)");
     }
 }

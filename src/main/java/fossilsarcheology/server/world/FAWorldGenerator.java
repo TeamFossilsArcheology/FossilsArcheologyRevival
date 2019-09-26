@@ -86,7 +86,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 						(new WorldGenTarPit(FABlockRegistry.TAR)).generate(world, random, new BlockPos(x, y, z));
 					}
 				}
-				if (Revival.CONFIG_OPTIONS.generatePalaeoraphe) {
+				if (Revival.CONFIG_OPTIONS.generatePrehistoricTrees) {
 					for (int count = 0; count < 2; count++) {
 						BlockPos pos = world.getHeight(new BlockPos(x, 0, z));
 						new WorldGenPalm().generate(world, random, pos);

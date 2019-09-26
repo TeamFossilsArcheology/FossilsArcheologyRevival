@@ -17,6 +17,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 
 import java.util.Random;
 
@@ -84,9 +85,22 @@ public class FossilSaplingBlock extends BlockBush implements DefaultRenderedItem
 
 	public void generateTree(World world, BlockPos pos, Random rand) {
 		if(this == FABlockRegistry.PALM_SAPLING) {
-			WorldGenPalm palmGen = new WorldGenPalm();
+			WorldGenerator treeGen = new WorldGenPalm();
 			world.setBlockToAir(pos);
-			palmGen.generate(world, rand, pos);
+			switch (rand.nextInt(3)){
+				case 1:
+					treeGen = new WorldGenCalamites();
+					break;
+				case 2:
+					treeGen = new WorldGenSigillaria();
+					break;
+				case 3:
+					treeGen = new WorldGenCordaites();
+					break;
+				case 0:
+					break;
+			}
+			treeGen.generate(world, rand, pos);
 		}
 		if(this == FABlockRegistry.CALAMITES_SAPLING) {
 			WorldGenCalamites calamitesGen = new WorldGenCalamites();

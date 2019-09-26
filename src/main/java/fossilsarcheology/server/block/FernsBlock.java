@@ -1,5 +1,6 @@
 package fossilsarcheology.server.block;
 
+import fossilsarcheology.Revival;
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.item.FAItemRegistry;
 import net.minecraft.block.Block;
@@ -79,7 +80,7 @@ public class FernsBlock extends BlockBush implements DefaultRenderedItem {
         int var6 = currentState.getBlock().getMetaFromState(currentState);
 
         if (checkUnderTree(world, pos) && this.canGrow(var6)) {
-            if (rand.nextInt(10) > 1) {
+            if (rand.nextInt(Revival.CONFIG_OPTIONS.fernTickRate) == 0) {
                 if (world.getBlockState(pos.down()).getBlock() != this || var6 < 2) {
                     ++var6;
                     if (this.getLv2(var6)) {
