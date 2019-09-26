@@ -96,4 +96,16 @@ public class WorldProviderAnu extends WorldProvider {
 	public DimensionType getDimensionType() {
 		return FAWorldRegistry.ANU_LAIR;
 	}
+
+	public BlockPos getSpawnCoordinate() {
+		return new BlockPos(-74, 63, -115);
+	}
+
+	public BlockPos getSpawnPoint() {
+		return new BlockPos(-74, 63, -115);
+	}
+
+	public BlockPos getRandomizedSpawnPoint() {
+		return getSpawnPoint();
+	}
 }

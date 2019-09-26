@@ -121,4 +121,16 @@ public class WorldProviderTreasure extends WorldProvider {
 	public DimensionType getDimensionType() {
 		return FAWorldRegistry.TREASURE_ROOM;
 	}
+
+	public BlockPos getSpawnCoordinate() {
+		return new BlockPos(0, 60, 0);
+	}
+
+	public BlockPos getSpawnPoint() {
+		return new BlockPos(0, 60, 0);
+	}
+
+	public BlockPos getRandomizedSpawnPoint() {
+		return getSpawnPoint();
+	}
 }

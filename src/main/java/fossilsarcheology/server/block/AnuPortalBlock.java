@@ -63,10 +63,12 @@ public class AnuPortalBlock extends Block implements DefaultRenderedItem {
 				thePlayer.timeUntilPortal = 10;
 			} else if (thePlayer.dimension != Revival.CONFIG_OPTIONS.dimensionIDDarknessLair) {
 				thePlayer.timeUntilPortal = 10;
-				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG_OPTIONS.dimensionIDDarknessLair, new AnuTeleporter(thePlayer.server.getWorld(Revival.CONFIG_OPTIONS.dimensionIDDarknessLair)));
+				thePlayer.setLocationAndAngles((double) -74, (double) 63, (double) -115, entity.rotationYaw, 0.0F);
+				thePlayer.changeDimension(Revival.CONFIG_OPTIONS.dimensionIDDarknessLair, new AnuTeleporter(Revival.CONFIG_OPTIONS.dimensionIDDarknessLair));
+				thePlayer.setLocationAndAngles((double) -74, (double) 63, (double) -115, entity.rotationYaw, 0.0F);
 			} else {
 				thePlayer.timeUntilPortal = 10;
-				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG_OPTIONS.homePortalExitDimension, new AnuTeleporter(thePlayer.server.getWorld(Revival.CONFIG_OPTIONS.homePortalExitDimension)));
+				thePlayer.changeDimension(Revival.CONFIG_OPTIONS.homePortalExitDimension, new AnuTeleporter(Revival.CONFIG_OPTIONS.homePortalExitDimension));
 			}
 		}
 	}

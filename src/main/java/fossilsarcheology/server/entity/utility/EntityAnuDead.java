@@ -57,6 +57,7 @@ public class EntityAnuDead extends EntityLiving {
 				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, Revival.CONFIG_OPTIONS.dimensionIDTreasure, new TreasureTeleporter(thePlayer.server.getWorld(Revival.CONFIG_OPTIONS.dimensionIDTreasure)));
 			} else {
 				thePlayer.timeUntilPortal = 10;
+				thePlayer.setLocationAndAngles(0, 60, 0, 0, 0);
 				thePlayer.server.getPlayerList().transferPlayerToDimension(thePlayer, 0, new TreasureTeleporter(thePlayer.server.getWorld(0)));
 			}
 		}
