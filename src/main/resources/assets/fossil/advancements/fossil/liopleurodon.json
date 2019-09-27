@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:liopleurodon_egg"
+        },
+        "title": {
+            "translate": "advancements.fossil.liopleurodon_egg.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.liopleurodon_egg.description"
+        }
+    },
+    "parent": "fossil:fossil/dino_egg",
+    "criteria": {
+        "iron_pickaxe": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:liopleurodon_egg"
+                    }
+                ]
+            }
+        }
+    }
+}
