@@ -131,6 +131,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     protected float jumpPower;
     protected boolean horseJumping;
     private Animation currentAnimation;
+    private boolean droppedBiofossil = false;
     private int animTick;
     private int riderJumpCooldown = 0;
 
@@ -1181,13 +1182,14 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 return false;
             } else {
                 this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_SKELETON_HURT, SoundCategory.NEUTRAL, this.getSoundVolume(), this.getSoundPitch());
-                if (!world.isRemote) {
+                if (!world.isRemote && !droppedBiofossil) {
                     if (this.type.timePeriod == TimePeriod.CENOZOIC) {
                         this.dropItem(FAItemRegistry.TAR_FOSSIL, 1);
                     } else {
                         this.dropItem(FAItemRegistry.BIOFOSSIL, 1);
                     }
                     this.entityDropItem(new ItemStack(Items.BONE, Math.min(this.getAgeInDays(), this.getAdultAge())), 1);
+                    droppedBiofossil = true;
                 }
                 if (dmg.getTrueSource() != null && dmg.getTrueSource() instanceof EntityPlayer) {
                     EntityPlayer player = (EntityPlayer) dmg.getTrueSource();
