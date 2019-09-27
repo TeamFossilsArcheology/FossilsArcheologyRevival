@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:stone_tablet"
+        },
+        "title": {
+            "translate": "advancements.fossil.stone_tablet.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.stone_tablet.description"
+        }
+    },
+    "parent": "fossil:fossil/analyzer",
+    "criteria": {
+        "iron_pickaxe": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:stone_tablet"
+                    }
+                ]
+            }
+        }
+    }
+}

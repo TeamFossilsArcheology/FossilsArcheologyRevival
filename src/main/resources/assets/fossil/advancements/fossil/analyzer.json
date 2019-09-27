@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:analyzer"
+        },
+        "title": {
+            "translate": "advancements.fossil.analyzer.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.analyzer.description"
+        }
+    },
+    "parent": "fossil:fossil/break_fossil",
+    "criteria": {
+        "iron_pickaxe": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:analyzer"
+                    }
+                ]
+            }
+        }
+    }
+}

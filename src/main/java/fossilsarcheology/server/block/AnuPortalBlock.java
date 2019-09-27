@@ -3,6 +3,7 @@ package fossilsarcheology.server.block;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.dimension.AnuTeleporter;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -58,6 +59,7 @@ public class AnuPortalBlock extends Block implements DefaultRenderedItem {
 	@Override
 	public void onEntityCollision(World world, BlockPos pos, IBlockState state, Entity entity) {
 		if ((!entity.isBeingRidden()) && (entity.getPassengers().isEmpty()) && (entity instanceof EntityPlayerMP)) {
+			CriteriaTriggers.ENTER_BLOCK.trigger((EntityPlayerMP)entity, world.getBlockState(pos));
 			EntityPlayerMP thePlayer = (EntityPlayerMP) entity;
 			if (thePlayer.timeUntilPortal > 0) {
 				thePlayer.timeUntilPortal = 10;

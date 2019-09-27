@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:iced_meat"
+        },
+        "title": {
+            "translate": "advancements.fossil.iced_meat.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.iced_meat.description"
+        }
+    },
+    "parent": "fossil:fossil/break_fossil",
+    "criteria": {
+        "broken_sword": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:iced_meat"
+                    }
+                ]
+            }
+        }
+    }
+}

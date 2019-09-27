@@ -8,15 +8,12 @@ import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
-import net.minecraft.world.World;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,12 +105,6 @@ public class FossilBlock extends Block implements DefaultRenderedItem {
 		}
 		this.randomMeta = 0;
 		return Item.getItemFromBlock(Blocks.COBBLESTONE);
-	}
-
-	@Override
-	public void harvestBlock(World world, EntityPlayer player, BlockPos pos, IBlockState state, TileEntity tile, ItemStack stack) {
-		super.harvestBlock(world, player, pos, state, tile, stack);
-		//player.addStat(FossilAchievements.FIRST_FOSSIL);
 	}
 
 	@SuppressWarnings("deprecation")

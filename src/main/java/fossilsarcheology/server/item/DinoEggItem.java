@@ -2,6 +2,8 @@ package fossilsarcheology.server.item;
 
 import fossilsarcheology.Revival;
 import fossilsarcheology.client.sound.FASoundRegistry;
+import fossilsarcheology.server.advancement.DNATrigger;
+import fossilsarcheology.server.advancement.EggTrigger;
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.entity.EntityDinosaurEgg;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
@@ -11,8 +13,11 @@ import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityTypeAI;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.message.MessageUpdateEgg;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -20,11 +25,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class DinoEggItem extends PrehistoricEntityItem implements DefaultRenderedItem {
+    public static final EggTrigger EGG_TRIGGER = (EggTrigger) CriteriaTriggers.register(new EggTrigger());
     public DinoEggItem(PrehistoricEntityType type) {
         super("egg", type);
         this.setHasSubtypes(true);
         this.setMaxDamage(0);
         this.maxStackSize = 1;
+    }
+
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
+        if(!worldIn.isRemote && entityIn instanceof EntityPlayerMP){
+            EGG_TRIGGER.trigger((EntityPlayerMP)entityIn);
+        }
     }
 
     @Override

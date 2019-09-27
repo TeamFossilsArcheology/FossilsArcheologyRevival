@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:figurine"
+        },
+        "title": {
+            "translate": "advancements.fossil.figurine.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.figurine.description"
+        }
+    },
+    "parent": "fossil:fossil/worktable",
+    "criteria": {
+        "broken_sword": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:figurine"
+                    }
+                ]
+            }
+        }
+    }
+}

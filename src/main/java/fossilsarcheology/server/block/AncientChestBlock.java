@@ -1,10 +1,13 @@
 package fossilsarcheology.server.block;
 
+import fossilsarcheology.server.advancement.UseAncientKeyTrigger;
+import fossilsarcheology.server.advancement.UseScarabTrigger;
 import fossilsarcheology.server.api.BlockEntity;
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.block.entity.TileEntityAncientChest;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.tab.FATabRegistry;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.material.Material;
@@ -13,6 +16,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -30,6 +34,7 @@ public class AncientChestBlock extends BlockContainer implements DefaultRendered
 	protected static final AxisAlignedBB WEST_CHEST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
 	protected static final AxisAlignedBB EAST_CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 1.0D, 0.875D, 0.9375D);
 	protected static final AxisAlignedBB NOT_CONNECTED_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
+	public static final UseAncientKeyTrigger ANCIENT_KEY_TRIGGER = (UseAncientKeyTrigger) CriteriaTriggers.register(new UseAncientKeyTrigger());
 
 	protected AncientChestBlock() {
 		super(Material.WOOD);
@@ -84,6 +89,9 @@ public class AncientChestBlock extends BlockContainer implements DefaultRendered
 						tile.chestState = 1;
 						if (!player.capabilities.isCreativeMode) {
 							player.getHeldItem(hand).shrink(1);
+						}
+						if(!world.isRemote && player instanceof EntityPlayerMP){
+							ANCIENT_KEY_TRIGGER.trigger((EntityPlayerMP)player);
 						}
 					}
 				}

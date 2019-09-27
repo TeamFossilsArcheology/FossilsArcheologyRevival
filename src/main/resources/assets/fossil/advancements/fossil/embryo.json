@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:mammoth_syringe"
+        },
+        "title": {
+            "translate": "advancements.fossil.embryo.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.embryo.description"
+        }
+    },
+    "parent": "fossil:fossil/cultivate",
+    "criteria": {
+        "dna": {
+            "trigger": "fossil:embryo"
+        }
+    }
+}

@@ -1,10 +1,13 @@
 package fossilsarcheology.server.block;
 
+import fossilsarcheology.server.advancement.EggTrigger;
+import fossilsarcheology.server.advancement.UseScarabTrigger;
 import fossilsarcheology.server.api.BlockEntity;
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.block.entity.TileEntitySarcophagus;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.tab.FATabRegistry;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
@@ -12,6 +15,7 @@ import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
@@ -23,6 +27,7 @@ import net.minecraft.world.World;
 
 public class SarcophagusBlock extends BlockContainer implements DefaultRenderedItem, BlockEntity {
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+	public static final UseScarabTrigger SCARAB_TRIGGER = (UseScarabTrigger) CriteriaTriggers.register(new UseScarabTrigger());
 
 	public SarcophagusBlock() {
 		super(Material.ROCK);
@@ -49,9 +54,8 @@ public class SarcophagusBlock extends BlockContainer implements DefaultRenderedI
 				if (!player.capabilities.isCreativeMode) {
 					player.getHeldItem(hand).shrink(1);
 				}
-
-				if (player.getHeldItem(hand).getCount() <= 0) {
-					player.inventory.setInventorySlotContents(player.inventory.currentItem, ItemStack.EMPTY);
+				if(!world.isRemote && player instanceof EntityPlayerMP){
+					SCARAB_TRIGGER.trigger((EntityPlayerMP)player);
 				}
 			}
 		} else if (tile.chestState == 1) {

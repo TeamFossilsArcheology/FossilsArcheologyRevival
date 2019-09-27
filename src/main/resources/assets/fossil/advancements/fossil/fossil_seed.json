@@ -1,0 +1,42 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:fossilseed"
+        },
+        "title": {
+            "translate": "advancements.fossil.fossil_seed.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.fossil_seed.description"
+        }
+    },
+    "parent": "fossil:fossil/analyzer",
+    "criteria": {
+        "fossil_seed": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:fossilseed"
+                    }
+                ]
+            }
+        },
+        "fossil_fern_seed": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:fossil_seed_fern"
+                    }
+                ]
+            }
+        }
+    },
+    "requirements": [
+        [
+            "fossil_seed",
+            "fossil_fern_seed"
+        ]
+    ]
+}

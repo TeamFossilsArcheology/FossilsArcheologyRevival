@@ -1,0 +1,24 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:ancient_key"
+        },
+        "title": {
+            "translate": "advancements.fossil.kill_anu.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.kill_anu.description"
+        }
+    },
+    "parent": "fossil:fossil/sarcophagus",
+    "criteria": {
+        "killed": {
+            "trigger": "minecraft:player_killed_entity",
+            "conditions": {
+                "entity": {
+                    "type": "fossil:fossil.anu"
+                }
+            }
+        }
+    }
+}

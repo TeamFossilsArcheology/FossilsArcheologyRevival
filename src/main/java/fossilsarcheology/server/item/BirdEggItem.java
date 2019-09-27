@@ -3,7 +3,9 @@ package fossilsarcheology.server.item;
 import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.entity.projectile.EntityBirdEgg;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -18,6 +20,12 @@ public class BirdEggItem extends PrehistoricEntityItem implements DefaultRendere
 		super(cultivated ? "egg_cultivated" : "egg", type);
 		this.cultivated = cultivated;
 		this.maxStackSize = 16;
+	}
+
+	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
+		if(!worldIn.isRemote && entityIn instanceof EntityPlayerMP){
+			DinoEggItem.EGG_TRIGGER.trigger((EntityPlayerMP)entityIn);
+		}
 	}
 
 	@Override

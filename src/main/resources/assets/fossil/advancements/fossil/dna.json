@@ -1,0 +1,19 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:triceratops_dna"
+        },
+        "title": {
+            "translate": "advancements.fossil.dna.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.dna.description"
+        }
+    },
+    "parent": "fossil:fossil/analyzer",
+    "criteria": {
+        "dna": {
+            "trigger": "fossil:dna"
+        }
+    }
+}
