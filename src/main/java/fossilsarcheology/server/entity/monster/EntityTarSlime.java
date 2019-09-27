@@ -1,5 +1,6 @@
 package fossilsarcheology.server.entity.monster;
 
+import fossilsarcheology.Revival;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.item.FAItemRegistry;
 import net.minecraft.entity.EntityLivingBase;
@@ -34,8 +35,8 @@ public class EntityTarSlime extends EntitySlime {
 
     @Override
     public boolean attackEntityFrom(DamageSource damageSource, float f) {
-        if(damageSource.getTrueSource() != null && this.getRidingEntity() != null && this.getRidingEntity().isEntityEqual(damageSource.getTrueSource())){
-            if(rand.nextBoolean()){
+        if (damageSource.getTrueSource() != null && this.getRidingEntity() != null && this.getRidingEntity().isEntityEqual(damageSource.getTrueSource())) {
+            if (rand.nextBoolean()) {
                 this.dismountRidingEntity();
             }
         }
@@ -87,7 +88,7 @@ public class EntityTarSlime extends EntitySlime {
                 float f = ((float) (k % 2) - 0.5F) * (float) i / 4.0F;
                 float f1 = ((float) (k / 2) - 0.5F) * (float) i / 4.0F;
                 EntityTarSlime entityslime = new EntityTarSlime(this.world);
-                if(this.getFlag(0)){
+                if (this.getFlag(0)) {
                     entityslime.setFire(15);
                 }
                 if (this.hasCustomName()) {
@@ -114,7 +115,7 @@ public class EntityTarSlime extends EntitySlime {
     public void updateRidden() {
         super.updateRidden();
         if (this.getRidingEntity() != null) {
-            if(!this.getRidingEntity().isEntityAlive()){
+            if (!this.getRidingEntity().isEntityAlive()) {
                 this.dismountRidingEntity();
             }
             this.rotationYaw = getRidingEntity().rotationYaw;
@@ -151,6 +152,20 @@ public class EntityTarSlime extends EntitySlime {
         }
     }
 
+    protected boolean spawnCustomParticles() {
+        int i = this.getSlimeSize();
+        for (int j = 0; j < i * 4; ++j) {
+            float f = this.rand.nextFloat() * ((float) Math.PI * 2F);
+            float f1 = this.rand.nextFloat() * 0.5F + 0.5F;
+            float f2 = MathHelper.sin(f) * (float) i * 0.5F * f1;
+            float f3 = MathHelper.cos(f) * (float) i * 0.5F * f1;
+            double d0 = this.posX + (double) f2;
+            double d1 = this.posZ + (double) f3;
+            Revival.PROXY.spawnFAParticle("tar_bubble", (float)d0, (float)this.getEntityBoundingBox().minY, (float)d1, 0.0D, 0.0D, 0.0D);
+        }
+
+        return true;
+    }
 
     @Override
     protected boolean makesSoundOnJump() {

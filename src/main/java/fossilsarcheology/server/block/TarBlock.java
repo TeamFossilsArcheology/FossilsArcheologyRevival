@@ -73,7 +73,7 @@ public class TarBlock extends BlockFluidClassic {
 		if (rand.nextInt(200) == 0) {
 			worldIn.playSound((double) pos.getX() + 0.5D, (double) pos.getY() + 0.5D, (double) pos.getZ() + 0.5D, FASoundRegistry.TAR, SoundCategory.BLOCKS, 0.5F, rand.nextFloat() * 0.4F + 0.8F, false);
 		}
-		if (rand.nextInt(1) == 0) {
+		if (rand.nextInt(3) == 0) {
 			float posX = pos.getX() + rand.nextFloat();
 			float posY = pos.getY() +  Math.min(1 - BlockLiquid.getLiquidHeightPercent(stateIn.getValue(LEVEL)), quantaFraction);
 			float posZ = pos.getZ() + rand.nextFloat();
