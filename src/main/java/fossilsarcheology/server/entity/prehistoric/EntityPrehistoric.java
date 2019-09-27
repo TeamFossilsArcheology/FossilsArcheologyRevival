@@ -3,6 +3,8 @@ package fossilsarcheology.server.entity.prehistoric;
 import com.google.common.base.Predicate;
 import fossilsarcheology.Revival;
 import fossilsarcheology.client.sound.FASoundRegistry;
+import fossilsarcheology.server.advancement.ScarabTameTrigger;
+import fossilsarcheology.server.advancement.UseScarabTrigger;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.block.IDinoUnbreakable;
 import fossilsarcheology.server.block.entity.TileEntityFeeder;
@@ -21,6 +23,7 @@ import net.ilexiconn.llibrary.server.animation.Animation;
 import net.ilexiconn.llibrary.server.animation.AnimationHandler;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLiquid;
@@ -33,6 +36,7 @@ import net.minecraft.entity.ai.attributes.IAttributeInstance;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.MobEffects;
@@ -65,6 +69,7 @@ import java.util.*;
 
 public abstract class EntityPrehistoric extends EntityTameable implements IPrehistoricAI, IAnimatedEntity, IJumpingMount {
 
+    public static final ScarabTameTrigger SCARAB_TRIGGER = (ScarabTameTrigger) CriteriaTriggers.register(new ScarabTameTrigger());
     private static final DataParameter<Integer> AGETICK = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> HUNGER = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> MODELIZED = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BOOLEAN);
@@ -1419,6 +1424,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public abstract Item getOrderItem();
 
     private void triggerTamingAcheivement(EntityPlayer player) {
+        if(!player.world.isRemote && player instanceof EntityPlayerMP){
+            SCARAB_TRIGGER.trigger((EntityPlayerMP)player);
+        }
         // player.triggerAchievement(FossilAchievementHandler.theKing);
 
     }

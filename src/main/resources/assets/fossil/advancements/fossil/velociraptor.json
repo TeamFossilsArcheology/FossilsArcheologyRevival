@@ -1,23 +1,23 @@
 {
     "display": {
         "icon": {
-            "item": "fossil:tardrop"
+            "item": "fossil:velociraptor_egg"
         },
         "title": {
-            "translate": "advancements.fossil.tar_drop.title"
+            "translate": "advancements.fossil.velociraptor_egg.title"
         },
         "description": {
-            "translate": "advancements.fossil.tar_drop.description"
+            "translate": "advancements.fossil.velociraptor_egg.description"
         }
     },
-    "parent": "fossil:fossil/break_fossil",
+    "parent": "fossil:fossil/dino_egg",
     "criteria": {
-        "tar_drop": {
+        "iron_pickaxe": {
             "trigger": "minecraft:inventory_changed",
             "conditions": {
                 "items": [
                     {
-                        "item": "fossil:tardrop"
+                        "item": "fossil:velociraptor_egg"
                     }
                 ]
             }

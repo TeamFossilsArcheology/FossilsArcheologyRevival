@@ -8,7 +8,8 @@
         },
         "description": {
             "translate": "advancements.fossil.kill_anu.description"
-        }
+        },
+        "frame": "challenge"
     },
     "parent": "fossil:fossil/sarcophagus",
     "criteria": {
