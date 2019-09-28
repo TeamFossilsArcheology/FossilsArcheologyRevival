@@ -69,7 +69,6 @@ import java.util.*;
 
 public abstract class EntityPrehistoric extends EntityTameable implements IPrehistoricAI, IAnimatedEntity, IJumpingMount {
 
-    public static final ScarabTameTrigger SCARAB_TRIGGER = (ScarabTameTrigger) CriteriaTriggers.register(new ScarabTameTrigger());
     private static final DataParameter<Integer> AGETICK = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> HUNGER = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> MODELIZED = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BOOLEAN);
@@ -1425,9 +1424,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public abstract Item getOrderItem();
 
     private void triggerTamingAcheivement(EntityPlayer player) {
-        if(!player.world.isRemote && player instanceof EntityPlayerMP){
-            SCARAB_TRIGGER.trigger((EntityPlayerMP)player);
-        }
         // player.triggerAchievement(FossilAchievementHandler.theKing);
 
     }
