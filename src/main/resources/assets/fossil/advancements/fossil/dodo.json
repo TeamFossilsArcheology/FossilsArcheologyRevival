@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:dodo_egg_cultivated"
+        },
+        "title": {
+            "translate": "advancements.fossil.dodo_egg.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.dodo_egg.description"
+        }
+    },
+    "parent": "fossil:fossil/dino_egg",
+    "criteria": {
+        "iron_pickaxe": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:dodo_egg_cultivated"
+                    }
+                ]
+            }
+        }
+    }
+}
