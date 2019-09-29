@@ -72,13 +72,16 @@ public class FernsBlock extends BlockBush implements DefaultRenderedItem {
         return false;
     }
 
+    public int tickRate(World worldIn){
+        return 1;
+    }
+
     @SuppressWarnings("deprecation")
     @Override
     public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
         super.updateTick(world, pos, state, rand);
         IBlockState currentState = world.getBlockState(pos);
         int var6 = currentState.getBlock().getMetaFromState(currentState);
-
         if (checkUnderTree(world, pos) && this.canGrow(var6)) {
             if (rand.nextInt(Revival.CONFIG_OPTIONS.fernTickRate) == 0) {
                 if (world.getBlockState(pos.down()).getBlock() != this || var6 < 2) {

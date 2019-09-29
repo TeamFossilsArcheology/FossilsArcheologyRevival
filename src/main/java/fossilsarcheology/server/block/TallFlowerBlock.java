@@ -53,6 +53,9 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
 
     @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
+        if(this == FABlockRegistry.MUTANT_FLOWER){
+            return worldIn.isAirBlock(pos.up()) && worldIn.getBlockState(pos.down()).getMaterial().isSolid();
+        }
         return super.canPlaceBlockAt(worldIn, pos) && worldIn.isAirBlock(pos.up());
     }
 
@@ -91,8 +94,10 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
             //worldIn.setBlockState(pos.down(), this.getDefaultState().withProperty(HALF, TallFlowerBlock.EnumBlockHalf.LOWER), 2);
             return worldIn.getBlockState(pos.down()).getBlock() == this;
         } else {
-
             IBlockState iblockstate = worldIn.getBlockState(pos.up());
+            if(this == FABlockRegistry.MUTANT_FLOWER){
+                return iblockstate.getBlock() == this && worldIn.getBlockState(pos.down()).getMaterial().isSolid();
+            }
             return iblockstate.getBlock() == this && super.canBlockStay(worldIn, pos, iblockstate);
         }
     }
