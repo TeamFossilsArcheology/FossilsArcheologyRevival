@@ -208,6 +208,16 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
         return false;
     }
 
+    public static boolean canPutStackInInput(ItemStack stack){
+        if (stack != null && !stack.isEmpty()) {
+            ItemStack cultivatedStack = FAMachineRecipeRegistry.getCultivateResult(stack).copy();
+            if (cultivatedStack.isEmpty()) {
+                return false;
+            }
+            return true;
+        }
+        return false;
+    }
 
 
     public void cultivate() {
