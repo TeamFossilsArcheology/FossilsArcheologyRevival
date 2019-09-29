@@ -12,17 +12,5 @@ public class FossilBonemealEvent {
 
 	@SubscribeEvent
 	public void onUseBonemeal(BonemealEvent event) {
-		if (event.getBlock().getBlock() == FABlockRegistry.PALM_SAPLING) {
-			if (!event.getWorld().isRemote && WorldGenPalm.canGenTree(event.getWorld(), event.getPos()) && event.getWorld().rand.nextFloat() < 0.45D) {
-				FABlockRegistry.PALM_SAPLING.generateTree(event.getWorld(), event.getPos(), event.getWorld().rand);
-				event.setResult(Event.Result.ALLOW);
-			}
-		}
-		if (event.getBlock().getBlock() == FABlockRegistry.CALAMITES_SAPLING) {
-			if (!event.getWorld().isRemote && WorldGenCalamites.canGenTree(event.getWorld(), event.getPos()) && event.getWorld().rand.nextFloat() < 0.45D) {
-				FABlockRegistry.CALAMITES_SAPLING.generateTree(event.getWorld(), event.getPos(), event.getWorld().rand);
-				event.setResult(Event.Result.ALLOW);
-			}
-		}
 	}
 }

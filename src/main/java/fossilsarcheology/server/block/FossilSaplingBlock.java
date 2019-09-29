@@ -87,19 +87,6 @@ public class FossilSaplingBlock extends BlockBush implements DefaultRenderedItem
 		if(this == FABlockRegistry.PALM_SAPLING) {
 			WorldGenerator treeGen = new WorldGenPalm();
 			world.setBlockToAir(pos);
-			switch (rand.nextInt(3)){
-				case 1:
-					treeGen = new WorldGenCalamites();
-					break;
-				case 2:
-					treeGen = new WorldGenSigillaria();
-					break;
-				case 3:
-					treeGen = new WorldGenCordaites();
-					break;
-				case 0:
-					break;
-			}
 			treeGen.generate(world, rand, pos);
 		}
 		if(this == FABlockRegistry.CALAMITES_SAPLING) {
