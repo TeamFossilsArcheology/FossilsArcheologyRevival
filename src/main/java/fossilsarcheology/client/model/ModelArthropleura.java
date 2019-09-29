@@ -462,6 +462,9 @@ public class ModelArthropleura extends ModelPrehistoric {
     @Override
     public void setRotationAngles(float f, float f1, float f2, float f3, float f4, float f5, Entity entity) {
         EntityArthropleura prehistoric = (EntityArthropleura) entity;
+        if (prehistoric.isSkeleton() || prehistoric.isAIDisabled()) {
+            return;
+        }
         AdvancedModelRenderer[] legsLeft = new AdvancedModelRenderer[]{legFBLA, legFBLB, legFALA, legFALB, legBALA,
                 legBALB, legBBLA, legBBLB, legBCLA, legBCLB, legBDLA, legBDLB, legBELA, legBELB, legBFLA, legBFLB};
         AdvancedModelRenderer[] legsRight = new AdvancedModelRenderer[]{legFBRA, legFBRB, legFARA, legFARB, legBARA,
