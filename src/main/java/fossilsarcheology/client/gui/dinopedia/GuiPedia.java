@@ -242,8 +242,10 @@ public class GuiPedia extends GuiScreen {
 
     @Override
     public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_) {
-        if(mc.world != null) {
+        if(mc != null && mc.world != null) {
             this.drawDefaultBackground();
+        }else{
+            return;
         }
         int k = this.guiLeft;
         int l = this.guiTop;

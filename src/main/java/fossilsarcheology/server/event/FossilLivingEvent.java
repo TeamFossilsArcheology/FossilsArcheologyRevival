@@ -176,7 +176,8 @@ public class FossilLivingEvent {
                 }
             } else {
                 EntityLlama entityHorse = new EntityLlama(entity.world);
-                birthEntity = entityHorse.createChild(new EntityLlama(entity.world));
+                entityHorse.setVariant(entityHorse.getRNG().nextInt(4));
+                birthEntity = entityHorse;
             }
         }
         if (birthEntity instanceof EntityPrehistoric) {
