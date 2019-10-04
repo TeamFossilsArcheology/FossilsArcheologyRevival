@@ -80,7 +80,7 @@ public class PermafrostBlock extends BlockBreakable implements DefaultRenderedIt
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
 		int selection = rand.nextInt(20000);
 		if (selection >= 0 && selection < 4000) {
-			return FAItemRegistry.FERN_SEED;
+			return FAItemRegistry.FOSSIL_SEED_FERN;
 		} else {
 			if (selection >= 4000 && selection < 8000) {
 				return Item.getItemFromBlock(FABlockRegistry.SKULL_BLOCK);
