@@ -118,7 +118,6 @@ public class EntityTarSlime extends EntitySlime {
             if (!this.getRidingEntity().isEntityAlive()) {
                 this.dismountRidingEntity();
             }
-            this.rotationYaw = getRidingEntity().rotationYaw;
             if (this.getRidingEntity() instanceof EntityPlayer) {
                 this.rotationYaw = ((EntityPlayer) getRidingEntity()).rotationYawHead;
                 this.setPosition(posX, posY, posZ);
