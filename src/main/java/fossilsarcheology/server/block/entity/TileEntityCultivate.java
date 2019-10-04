@@ -243,7 +243,8 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
             if (inputStack.getItem() == PrehistoricEntityType.COELACANTH.dnaItem || inputStack.getItem() == PrehistoricEntityType.STURGEON.dnaItem || inputStack.getItem() == PrehistoricEntityType.ALLIGATOR_GAR.dnaItem) {
                 return 1;
             }
-            if (inputStack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || inputStack.getItem() == FAItemRegistry.CALAMITES_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.FOSSIL_SEED) {
+            if (inputStack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || inputStack.getItem() == FAItemRegistry.CALAMITES_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL
+                    || inputStack.getItem() == FAItemRegistry.SIGILLARIA_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.CORDAITES_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.FOSSIL_SEED) {
                 return 2;
             }
         }
