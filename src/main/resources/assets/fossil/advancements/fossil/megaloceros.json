@@ -1,0 +1,26 @@
+{
+    "display": {
+        "icon": {
+            "item": "fossil:megaloceros_syringe"
+        },
+        "title": {
+            "translate": "advancements.fossil.megaloceros_egg.title"
+        },
+        "description": {
+            "translate": "advancements.fossil.megaloceros_egg.description"
+        }
+    },
+    "parent": "fossil:fossil/embryo",
+    "criteria": {
+        "iron_pickaxe": {
+            "trigger": "minecraft:inventory_changed",
+            "conditions": {
+                "items": [
+                    {
+                        "item": "fossil:megaloceros_syringe"
+                    }
+                ]
+            }
+        }
+    }
+}
