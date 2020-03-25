@@ -194,8 +194,8 @@ public class ModelPteranodon extends ModelPrehistoric {
 		float speed = 0.1F;
 		float speed2 = 0.6F;
 		float speed3 = 0.2F;
-		this.bob(Body, speed, -0.15F, false, entity.ticksExisted, 1);
-		this.chainWave(neckParts, speed, 0.05F, 3, entity.ticksExisted, 1);
+		this.bob(Body, speed, -0.15F, false, f2, 1);
+		this.chainWave(neckParts, speed, 0.05F, 3, f2, 1);
 		{
 			float sitProgress = ((EntityPrehistoric) entity).sleepProgress;
 			sitAnimationRotation(WingL1, sitProgress, (float) Math.toRadians(23.48D), (float) Math.toRadians(1D), -(float) Math.toRadians(8D));

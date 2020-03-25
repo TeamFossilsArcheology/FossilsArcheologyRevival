@@ -347,8 +347,8 @@ public class ModelParasaurolophus extends ModelPrehistoric {
 				this.walk(rightThigh, speed2, degree * 0.6F, false, 0F, -0.4F, f, f1);
 				this.walk(rightLeg, speed2, degree * -0.2F, false, 0F, 0.6F, f, f1);
 				this.walk(rightFoot, speed2, degree * -0.6F, true, 2.5F, 0.2F, f, f1);
-				this.chainWave(leftArmParts, speed, degree * 0.5F, -3, entity.ticksExisted, 1);
-				this.chainWave(rightArmParts, speed, degree * 0.5F, -3, entity.ticksExisted, 1);
+				this.chainWave(leftArmParts, speed, degree * 0.5F, -3, f2, 1);
+				this.chainWave(rightArmParts, speed, degree * 0.5F, -3, f2, 1);
 
 			} else {
 				this.bob(lowerBody, speed2, degree * -0.4F, false, f, f1);
@@ -368,12 +368,12 @@ public class ModelParasaurolophus extends ModelPrehistoric {
 				this.walk(rightLowerArm, speed2, degree * 0.2F, true, 0F, 0.6F, f, f1);
 				this.walk(rightHand, speed2, degree * -0.6F, false, 2.5F, 0.4F, f, f1);
 			}
-			this.chainWave(tailParts, speed, degree * 0.05F, -3, entity.ticksExisted, 1);
-			this.chainSwing(tailParts, speed, degree * 0.25F, -3, entity.ticksExisted, 1);
-			this.chainWave(neckParts, speed, degree * 0.1F, -3, entity.ticksExisted, 1);
-			this.bob(lowerBody, speed, degree * -0.6F, false, entity.ticksExisted, 1);
-			this.bob(leftUpperArm, -speed, degree * -0.6F, false, entity.ticksExisted, 1);
-			this.bob(rightUpperArm, -speed, degree * -0.6F, false, entity.ticksExisted, 1);
+			this.chainWave(tailParts, speed, degree * 0.05F, -3, f2, 1);
+			this.chainSwing(tailParts, speed, degree * 0.25F, -3, f2, 1);
+			this.chainWave(neckParts, speed, degree * 0.1F, -3, f2, 1);
+			this.bob(lowerBody, speed, degree * -0.6F, false, f2, 1);
+			this.bob(leftUpperArm, -speed, degree * -0.6F, false, f2, 1);
+			this.bob(rightUpperArm, -speed, degree * -0.6F, false, f2, 1);
 			this.chainWave(neckParts, speed, degree * 0.7F, -3, f, f1);
 			((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) tailParts);
 		}

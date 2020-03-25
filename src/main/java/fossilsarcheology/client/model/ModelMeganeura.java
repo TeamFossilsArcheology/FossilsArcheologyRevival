@@ -233,10 +233,10 @@ public class ModelMeganeura extends ModelPrehistoric {
             this.chainWave(leftLegs, speed_walk, degree_walk, 1, f, f1);
             this.chainWave(rightLegs, speed_walk, degree_walk, 1, f, f1);
         }else{
-            this.chainFlap(leftWing, speed_fly, -degree_fly * 0.75F, 1, entity.ticksExisted, 1);
-            this.chainFlap(rightWing, speed_fly, degree_fly * 0.75F, 1, entity.ticksExisted, 1);
-            this.chainWave(leftLegs, speed_fly * 0.5F, degree_fly * -0.5F, 1, entity.ticksExisted, 1);
-            this.chainWave(rightLegs, speed_fly * 0.5F, degree_fly * -0.5F, 1, entity.ticksExisted, 1);
+            this.chainFlap(leftWing, speed_fly, -degree_fly * 0.75F, 1, f2, 1);
+            this.chainFlap(rightWing, speed_fly, degree_fly * 0.75F, 1, f2, 1);
+            this.chainWave(leftLegs, speed_fly * 0.5F, degree_fly * -0.5F, 1, f2, 1);
+            this.chainWave(rightLegs, speed_fly * 0.5F, degree_fly * -0.5F, 1, f2, 1);
         }
         sitAnimationRotation(RightLeg1, meganeura.flyProgress, (float) Math.toRadians(60.0D), 0, (float) Math.toRadians(-50.0D));
         sitAnimationRotation(RightLeg2, meganeura.flyProgress, (float) Math.toRadians(60.0D), 0, (float) Math.toRadians(-50.0D));

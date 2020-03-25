@@ -176,11 +176,11 @@ public class ModelSmilodon extends ModelPrehistoric {
 		float speed = 0.1F;
 		float speed2 = 0.6F;
 		float degree = 0.5F;
-		this.chainWave(tailParts, speed, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainSwing(tailParts, speed, degree * 0.15F, -2, entity.ticksExisted, 1);
-		this.chainWave(neckParts, speed, degree * 0.15F, 3, entity.ticksExisted, 1);
-		this.bob(lowerBody, speed, degree * 0.4F, false, entity.ticksExisted, 1);
-		this.walk(upperBody, speed, degree * 0.01F, true, 0.1F, 0F, entity.ticksExisted, 1);
+		this.chainWave(tailParts, speed, degree * 0.05F, -3, f2, 1);
+		this.chainSwing(tailParts, speed, degree * 0.15F, -2, f2, 1);
+		this.chainWave(neckParts, speed, degree * 0.15F, 3, f2, 1);
+		this.bob(lowerBody, speed, degree * 0.4F, false, f2, 1);
+		this.walk(upperBody, speed, degree * 0.01F, true, 0.1F, 0F, f2, 1);
 		this.walk(rightFrontThigh, speed2, degree * 0.7F, false, 0F, 0.1F, f, f1);
 		this.walk(leftFrontThigh, speed2, degree * 0.7F, true, 0F, 0.1F, f, f1);
 		this.walk(leftHindThigh, speed2, degree * 0.6F, true, 0F, -0.1F, f, f1);

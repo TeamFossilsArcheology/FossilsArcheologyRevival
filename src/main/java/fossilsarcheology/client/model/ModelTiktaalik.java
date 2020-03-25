@@ -161,7 +161,7 @@ public class ModelTiktaalik extends ModelPrehistoric {
             this.swing(RightFrontFin, speed_walk, 1.5F * degree_walk, true, 0, 0, f, f1);
             this.walk(LeftPelvicFin, speed_walk, 1.5F * degree_walk, false, 0, 0, f, f1);
             this.walk(RightPelvicFin, speed_walk, 1.5F * degree_walk, false, 0, 0, f, f1);
-            this.chainSwing(tailParts, speed_idle, degree_idle, 5, entity.ticksExisted, 1);
+            this.chainSwing(tailParts, speed_idle, degree_idle, 5, f2, 1);
 
         }
         float sleepProgress = prehistoric.sleepProgress;

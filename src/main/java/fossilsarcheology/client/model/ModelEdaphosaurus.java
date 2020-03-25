@@ -387,8 +387,8 @@ public class ModelEdaphosaurus extends ModelPrehistoric {
         this.flap(RightUpperArm, speed1, degree1 * 0.6F, false, -0.3F, -0.1F, f, f1);
 
         this.chainSwing(tailParts, speed1, degree1 * 0.5F, -3, f, f1);
-        this.chainSwing(tailParts, speed2, degree2 * 0.5F, -3, entity.ticksExisted, 1);
-        this.chainWave(neckParts, speed2, degree2 * 0.15F, 1, entity.ticksExisted, 1);
-        this.bob(BodyFront, speed2, degree2 * 0.5F,  false, entity.ticksExisted, 1);
+        this.chainSwing(tailParts, speed2, degree2 * 0.5F, -3, f2, 1);
+        this.chainWave(neckParts, speed2, degree2 * 0.15F, 1, f2, 1);
+        this.bob(BodyFront, speed2, degree2 * 0.5F,  false, f2, 1);
     }
 }

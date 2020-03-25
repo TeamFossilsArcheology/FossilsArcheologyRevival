@@ -318,10 +318,10 @@ public class ModelTyrannosaurus extends ModelPrehistoric {
 			sitAnimationPos(lowerBody, sitProgress, 0F, 10.80F - ModelUtils.getDefaultPositionY(lowerBody), 0F);
 			sitAnimationPos(leftThigh, sitProgress, 0F, 1.4F, 0F);
 		}
-		this.bob(lowerBody, speedIdle * 0.5F, degree * 0.4F, false, entity.ticksExisted, 1);
-		this.bob(rightThigh, speedIdle * 0.5F, degree * -0.4F, false, entity.ticksExisted, 1);
-		this.bob(leftThigh, speedIdle * 0.5F, degree * -0.4F, false, entity.ticksExisted, 1);
-		this.walk(upperBody, speedIdle * 0.5F, degree * 0.05F, false, 1F, 0F, entity.ticksExisted, 1);
+		this.bob(lowerBody, speedIdle * 0.5F, degree * 0.4F, false, f2, 1);
+		this.bob(rightThigh, speedIdle * 0.5F, degree * -0.4F, false, f2, 1);
+		this.bob(leftThigh, speedIdle * 0.5F, degree * -0.4F, false, f2, 1);
+		this.walk(upperBody, speedIdle * 0.5F, degree * 0.05F, false, 1F, 0F, f2, 1);
 		this.walk(lowerBody, speed2, degree * 0.15F, true, 0F, 0F, f, f1);
 		this.walk(rightThigh, speed2, degree * -0.15F, true, 0F, 0F, f, f1);
 		this.walk(leftThigh, speed2, degree * -0.15F, true, 0F, 0F, f, f1);
@@ -331,11 +331,11 @@ public class ModelTyrannosaurus extends ModelPrehistoric {
 		this.walk(rightThigh, speed2, 0.6F, true, 0F, -0.4F, f, f1);
 		this.walk(rightLeg, speed2, 0.2F, true, 0F, 0.6F, f, f1);
 		this.walk(rightFoot, speed2, -0.6F, false, 2.5F, 0.4F, f, f1);
-		this.chainWave(tailParts, speedIdle, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainWave(leftArmParts, speedIdle, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainWave(rightArmParts, speedIdle, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainSwing(tailParts, speedIdle, degree * 0.15F, -3, entity.ticksExisted, 1);
-		this.chainWave(neckParts, speedIdle, degree * 0.05F, -3, entity.ticksExisted, 1);
+		this.chainWave(tailParts, speedIdle, degree * 0.05F, -3, f2, 1);
+		this.chainWave(leftArmParts, speedIdle, degree * 0.05F, -3, f2, 1);
+		this.chainWave(rightArmParts, speedIdle, degree * 0.05F, -3, f2, 1);
+		this.chainSwing(tailParts, speedIdle, degree * 0.15F, -3, f2, 1);
+		this.chainWave(neckParts, speedIdle, degree * 0.05F, -3, f2, 1);
 		this.chainWave(neckParts, speedIdle, degree * 0.05F, 3, f, f1);
 		this.chainWave(tailParts, speedIdle, degree * 0.15F, -3, f, f1);
 		((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) tailParts);

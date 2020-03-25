@@ -107,13 +107,13 @@ public class ModelAlligatorGar extends AdvancedModelBase {
 		AdvancedModelRenderer[] tailParts = {this.Tail, this.Tail2, this.MiddleTailFin};
 		float speed = 0.4F;
 		if (entity instanceof  EntityLiving && !((EntityLiving) entity).isAIDisabled()) {
-			this.chainWave(tailParts, speed, 0.05F, -3, entity.ticksExisted, 1);
-			this.chainSwing(tailParts, speed, 0.5F, -3, entity.ticksExisted, 1);
-			this.swing(Body, speed, 0.3F, true, 0, 0, entity.ticksExisted, 1);
-			this.walk(LowerJaw, 0.1F, 0.2F, true, 0, -0.2F, entity.ticksExisted, 1);
+			this.chainWave(tailParts, speed, 0.05F, -3, f2, 1);
+			this.chainSwing(tailParts, speed, 0.5F, -3, f2, 1);
+			this.swing(Body, speed, 0.3F, true, 0, 0, f2, 1);
+			this.walk(LowerJaw, 0.1F, 0.2F, true, 0, -0.2F, f2, 1);
 			if (!entity.isInWater()) {
 				this.Body.rotateAngleZ = (float) Math.toRadians(90);
-				this.bob(Body, -speed, 5F, false, entity.ticksExisted, 1);
+				this.bob(Body, -speed, 5F, false, f2, 1);
 			}
 		}
 	}

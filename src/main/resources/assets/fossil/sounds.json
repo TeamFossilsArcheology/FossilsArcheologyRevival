@@ -1,4 +1,33 @@
 {
+  "diplodocus_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/diplodocus_hurt1",
+      "fossil:prehistoric/diplodocus_hurt2",
+      "fossil:prehistoric/diplodocus_hurt3",
+      "fossil:prehistoric/diplodocus_hurt4"
+    ]
+  },
+  "diplodocus_living": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/diplodocus_living1",
+      "fossil:prehistoric/diplodocus_living2",
+      "fossil:prehistoric/diplodocus_living3",
+      "fossil:prehistoric/diplodocus_living4",
+      "fossil:prehistoric/diplodocus_living5",
+      "fossil:prehistoric/diplodocus_living6",
+      "fossil:prehistoric/diplodocus_living7",
+      "fossil:prehistoric/diplodocus_living8",
+      "fossil:prehistoric/diplodocus_living9"
+    ]
+  },
+  "diplodocus_death": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/diplodocus_death1"
+    ]
+  },
   "citipati_death": {
     "category": "neutral",
     "sounds": [

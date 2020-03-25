@@ -206,11 +206,11 @@ public class ModelMegalograptus extends ModelPrehistoric {
             this.chainSwing(rightLegs, speed_walk, degree_walk * -0.35F, 3, f, f1);
 
         }
-        this.swing(leftPincer1_1, speed_idle, degree_idle * 0.15F, false, 0, 0, entity.ticksExisted, 1);
-        this.swing(rightPincer1_1, speed_idle, degree_idle * 0.15F, true, 0, 0, entity.ticksExisted, 1);
-        this.swing(leftPincer, speed_idle, degree_idle * 0.15F, true, 1, 0, entity.ticksExisted, 1);
-        this.swing(rightPincer, speed_idle, degree_idle * 0.15F, false, 1, 0, entity.ticksExisted, 1);
-        this.chainSwing(tailParts, speed_idle * 0.5F, degree_idle * 0.15F, 1, entity.ticksExisted, 1);
+        this.swing(leftPincer1_1, speed_idle, degree_idle * 0.15F, false, 0, 0, f2, 1);
+        this.swing(rightPincer1_1, speed_idle, degree_idle * 0.15F, true, 0, 0, f2, 1);
+        this.swing(leftPincer, speed_idle, degree_idle * 0.15F, true, 1, 0, f2, 1);
+        this.swing(rightPincer, speed_idle, degree_idle * 0.15F, false, 1, 0, f2, 1);
+        this.chainSwing(tailParts, speed_idle * 0.5F, degree_idle * 0.15F, 1, f2, 1);
         float sleepProgress = prehistoric.sleepProgress;
         this.sitAnimationRotation(tail, sleepProgress, 0, (float)Math.toRadians(16), 0);
         this.sitAnimationRotation(tail, sleepProgress, 0, (float)Math.toRadians(21), 0);

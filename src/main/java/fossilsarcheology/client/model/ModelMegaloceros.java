@@ -465,14 +465,14 @@ public class ModelMegaloceros extends ModelPrehistoric {
         ModelUtils.faceTargetMod(this.HeadBase, f3, f4, 0.33F);
         float speed = 0.05F;
         float speed2 = 0.7F;
-        this.chainWave(tailParts, speed, 0.05F, -3, entity.ticksExisted, 1);
-        this.chainSwing(tailParts, speed, 0.15F, -2, entity.ticksExisted, 1);
-        this.chainWave(neckParts, speed, 0.05F, 3, entity.ticksExisted, 1);
-        this.bob(Body, speed, 0.3F, false, entity.ticksExisted, 1);
-        this.bob(LegL1, speed, -0.3F, false, entity.ticksExisted, 1);
-        this.bob(LegR1, speed, -0.3F, false, entity.ticksExisted, 1);
-        this.bob(BackLegL1, speed, -0.3F, false, entity.ticksExisted, 1);
-        this.bob(BackLegR1, speed, -0.3F, false, entity.ticksExisted, 1);
+        this.chainWave(tailParts, speed, 0.05F, -3, f2, 1);
+        this.chainSwing(tailParts, speed, 0.15F, -2, f2, 1);
+        this.chainWave(neckParts, speed, 0.05F, 3, f2, 1);
+        this.bob(Body, speed, 0.3F, false, f2, 1);
+        this.bob(LegL1, speed, -0.3F, false, f2, 1);
+        this.bob(LegR1, speed, -0.3F, false, f2, 1);
+        this.bob(BackLegL1, speed, -0.3F, false, f2, 1);
+        this.bob(BackLegR1, speed, -0.3F, false, f2, 1);
 
         this.walk(LegL1, speed2, 0.5F, true, 0F, 0F, f, f1);
         this.walk(LegR1, speed2, 0.5F, false, 0F, 0F, f, f1);

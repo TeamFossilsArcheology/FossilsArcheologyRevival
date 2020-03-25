@@ -185,7 +185,7 @@ public class ModelTerrorBird extends ModelPrehistoric {
 		float speed = 0.1F;
 		float speed2 = 0.5F;
 		float degree = 0.5F;
-		this.bob(upperBody, speed, degree * 0.4F, false, entity.ticksExisted, 1);
+		this.bob(upperBody, speed, degree * 0.4F, false, f2, 1);
 
 		this.walk(leftThigh, speed2, 0.6F, false, 0F, 0.4F, f, f1);
 		this.walk(leftLeg, speed2, 0.2F, false, 0F, -0.6F, f, f1);
@@ -195,11 +195,11 @@ public class ModelTerrorBird extends ModelPrehistoric {
 		this.walk(rightFoot, speed2, -0.6F, false, 2.5F, 0.4F, f, f1);
 		this.chainWave(neckParts, speed2, degree * 0.3F, 4, f, f1);
 		if (((EntityPrehistoric) (entity)).isSleeping()) {
-			this.walk(upperBody, speed, degree * 0.05F, false, 0, 0, entity.ticksExisted, 1);
-			this.chainWave(neckParts, speed, degree * 0.05F, 3, entity.ticksExisted, 1);
+			this.walk(upperBody, speed, degree * 0.05F, false, 0, 0, f2, 1);
+			this.chainWave(neckParts, speed, degree * 0.05F, 3, f2, 1);
 		} else {
-			this.walk(upperBody, speed, degree * 0.1F, false, 0, 0, entity.ticksExisted, 1);
-			this.chainWave(neckParts, speed, degree * 0.15F, 3, entity.ticksExisted, 1);
+			this.walk(upperBody, speed, degree * 0.1F, false, 0, 0, f2, 1);
+			this.chainWave(neckParts, speed, degree * 0.15F, 3, f2, 1);
 		}
 		{
 			float sitProgress = ((EntityPrehistoric) (entity)).sitProgress;

@@ -376,25 +376,25 @@ public class ModelDeinonychus extends ModelPrehistoric {
 			sitAnimationPos(rightThigh, sitProgress, 0F, 15F - ModelUtils.getDefaultPositionY(rightThigh), -9.7F);
 			sitAnimationPos(leftThigh, sitProgress, 0F, 15F - ModelUtils.getDefaultPositionY(leftThigh), -9.7F);
 			if (sitProgress >= 10) {
-				this.walk(leftThigh, speed2, -0.8F, false, 0F, 0F, entity.ticksExisted, 1);
-				this.walk(leftLeg, speed2, 0.2F, true, 0F, -0.6F, entity.ticksExisted, 1);
-				this.walk(leftFoot, speed2, -0.4F, true, -0.5F, -0.2F, entity.ticksExisted, 1);
-				this.walk(rightThigh, speed2, -0.8F, false, 0F, 0F, entity.ticksExisted, 1);
-				this.walk(rightLeg, speed2, 0.2F, true, 0F, -0.6F, entity.ticksExisted, 1);
-				this.walk(rightFoot, speed2, -0.4F, true, -0.5F, -0.2F, entity.ticksExisted, 1);
-				this.walk(rightUpperArm, speed2, 0.6F, true, -0.5F, 0F, entity.ticksExisted, 1);
-				this.walk(rightUpperArm_1, speed2, 0.6F, true, -0.5F, 0F, entity.ticksExisted, 1);
-				this.chainWave(neckParts, speed, -0.3F, 5, entity.ticksExisted, 1);
+				this.walk(leftThigh, speed2, -0.8F, false, 0F, 0F, f2, 1);
+				this.walk(leftLeg, speed2, 0.2F, true, 0F, -0.6F, f2, 1);
+				this.walk(leftFoot, speed2, -0.4F, true, -0.5F, -0.2F, f2, 1);
+				this.walk(rightThigh, speed2, -0.8F, false, 0F, 0F, f2, 1);
+				this.walk(rightLeg, speed2, 0.2F, true, 0F, -0.6F, f2, 1);
+				this.walk(rightFoot, speed2, -0.4F, true, -0.5F, -0.2F, f2, 1);
+				this.walk(rightUpperArm, speed2, 0.6F, true, -0.5F, 0F, f2, 1);
+				this.walk(rightUpperArm_1, speed2, 0.6F, true, -0.5F, 0F, f2, 1);
+				this.chainWave(neckParts, speed, -0.3F, 5, f2, 1);
 			}
 		}
-		this.walk(upperBody, speed, degree * 0.1F, false, 1F, 0F, entity.ticksExisted, 1);
-		this.bob(lowerBody, speed, degree * 0.7F, false, entity.ticksExisted, 1);
-		this.chainWave(tailParts, speed, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainWave(leftArmParts, speed, degree * 0.15F, -3, entity.ticksExisted, 1);
-		this.chainWave(rightArmParts, speed, degree * 0.15F, -3, entity.ticksExisted, 1);
-		this.chainSwing(tailParts, speed, degree * 0.15F, -3, entity.ticksExisted, 1);
+		this.walk(upperBody, speed, degree * 0.1F, false, 1F, 0F, f2, 1);
+		this.bob(lowerBody, speed, degree * 0.7F, false, f2, 1);
+		this.chainWave(tailParts, speed, degree * 0.05F, -3, f2, 1);
+		this.chainWave(leftArmParts, speed, degree * 0.15F, -3, f2, 1);
+		this.chainWave(rightArmParts, speed, degree * 0.15F, -3, f2, 1);
+		this.chainSwing(tailParts, speed, degree * 0.15F, -3, f2, 1);
 		this.chainSwing(tailParts, speed2, degree * 0.25F, -3, f, f1);
-		this.chainWave(neckParts, speed, degree * 0.15F, 3, entity.ticksExisted, 1);
+		this.chainWave(neckParts, speed, degree * 0.15F, 3, f2, 1);
 
 		this.walk(leftThigh, speed2, 0.6F, false, 0F, 0.4F, f, f1);
 		this.walk(leftLeg, speed2, 0.2F, false, 0F, -0.6F, f, f1);
@@ -417,11 +417,11 @@ public class ModelDeinonychus extends ModelPrehistoric {
 			ModelUtils.setRotateAngleAlt(head, 60, 0, 0);
 			EntityDeinonychus dino = (EntityDeinonychus) entity;
 			float speed3 = 0.5F;
-			this.walk(lowerJaw, speed3, -0.3F, false, 0.5F, 0.3F, entity.ticksExisted, 1);
-			this.walk(neck, speed3, 0.4F, false, 0F, 0.4F, entity.ticksExisted, 1);
-			this.walk(head, speed3, 0.4F, true, 0F, 0.2F, entity.ticksExisted, 1);
-			this.flap(rightUpperArm_1, 0.8F, -0.4F, true, 0.3F, 0.2F, entity.ticksExisted, 1);
-			this.flap(rightUpperArm, 0.8F, -0.4F, false, 0.3F, 0.2F, entity.ticksExisted, 1);
+			this.walk(lowerJaw, speed3, -0.3F, false, 0.5F, 0.3F, f2, 1);
+			this.walk(neck, speed3, 0.4F, false, 0F, 0.4F, f2, 1);
+			this.walk(head, speed3, 0.4F, true, 0F, 0.2F, f2, 1);
+			this.flap(rightUpperArm_1, 0.8F, -0.4F, true, 0.3F, 0.2F, f2, 1);
+			this.flap(rightUpperArm, 0.8F, -0.4F, false, 0.3F, 0.2F, f2, 1);
 		}
 		((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((AdvancedModelRenderer[]) tailParts);
 	}

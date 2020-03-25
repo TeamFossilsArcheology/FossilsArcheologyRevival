@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class EntityBrachiosaurus extends EntityPrehistoric {
 
 	public EntityBrachiosaurus(World world) {
-		super(world, PrehistoricEntityType.BRACHIOSAURUS, 2, 46, 20, 200, 0.2, 0.45, 0, 10);
+		super(world, PrehistoricEntityType.BRACHIOSAURUS, 2, 46, 20, 200, 0.2, 0.3, 0, 10);
 		this.setActualSize(1.35F, 1.7F);
 		this.nearByMobsAllowed = 10;
 		minSize = 0.25F;

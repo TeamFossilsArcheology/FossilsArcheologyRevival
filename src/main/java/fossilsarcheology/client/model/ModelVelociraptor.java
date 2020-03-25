@@ -377,25 +377,25 @@ public class ModelVelociraptor extends ModelPrehistoric {
 			sitAnimationPos(leftThigh, sitProgress, 0F, 14F - ModelUtils.getDefaultPositionY(leftThigh), -6.7F);
 			if (sitProgress >= 10) {
 				speed2 = 0.4F;
-				this.walk(leftThigh, speed2, -0.8F, false, 0F, 0F, entity.ticksExisted, 1);
-				this.walk(leftLeg, speed2, 0.2F, true, 0F, -0.6F, entity.ticksExisted, 1);
-				this.walk(leftFoot, speed2, -0.4F, true, -0.5F, -0.2F, entity.ticksExisted, 1);
-				this.walk(rightThigh, speed2, -0.8F, false, 0F, 0F, entity.ticksExisted, 1);
-				this.walk(rightLeg, speed2, 0.2F, true, 0F, -0.6F, entity.ticksExisted, 1);
-				this.walk(rightFoot, speed2, -0.4F, true, -0.5F, -0.2F, entity.ticksExisted, 1);
-				this.walk(rightUpperArm, speed2, 0.6F, true, -0.5F, 0F, entity.ticksExisted, 1);
-				this.walk(leftUpperArm, speed2, 0.6F, true, -0.5F, 0F, entity.ticksExisted, 1);
-				this.chainWave(neckParts, speed, -0.3F, 5, entity.ticksExisted, 1);
+				this.walk(leftThigh, speed2, -0.8F, false, 0F, 0F, f2, 1);
+				this.walk(leftLeg, speed2, 0.2F, true, 0F, -0.6F, f2, 1);
+				this.walk(leftFoot, speed2, -0.4F, true, -0.5F, -0.2F, f2, 1);
+				this.walk(rightThigh, speed2, -0.8F, false, 0F, 0F, f2, 1);
+				this.walk(rightLeg, speed2, 0.2F, true, 0F, -0.6F, f2, 1);
+				this.walk(rightFoot, speed2, -0.4F, true, -0.5F, -0.2F, f2, 1);
+				this.walk(rightUpperArm, speed2, 0.6F, true, -0.5F, 0F, f2, 1);
+				this.walk(leftUpperArm, speed2, 0.6F, true, -0.5F, 0F, f2, 1);
+				this.chainWave(neckParts, speed, -0.3F, 5, f2, 1);
 			}
 		}
-		this.bob(lowerBody, speed, degree * 0.7F, false, entity.ticksExisted, 1);
-		this.walk(upperBody, speed, degree * 0.1F, false, 0, 0, entity.ticksExisted, 1);
-		this.chainWave(tailParts, speed, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainWave(leftArmParts, speed, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainWave(rightArmParts, speed, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainSwing(tailParts, speed, degree * 0.15F, -3, entity.ticksExisted, 1);
+		this.bob(lowerBody, speed, degree * 0.7F, false, f2, 1);
+		this.walk(upperBody, speed, degree * 0.1F, false, 0, 0, f2, 1);
+		this.chainWave(tailParts, speed, degree * 0.05F, -3, f2, 1);
+		this.chainWave(leftArmParts, speed, degree * 0.05F, -3, f2, 1);
+		this.chainWave(rightArmParts, speed, degree * 0.05F, -3, f2, 1);
+		this.chainSwing(tailParts, speed, degree * 0.15F, -3, f2, 1);
 		this.chainSwing(tailParts, speed2, degree * 0.25F, -3, f, f1);
-		this.chainWave(neckParts, speed, degree * 0.15F, 3, entity.ticksExisted, 1);
+		this.chainWave(neckParts, speed, degree * 0.15F, 3, f2, 1);
 		this.walk(leftThigh, speed2, 0.6F, false, 0F, 0.4F, f, f1);
 		this.walk(leftLeg, speed2, 0.2F, false, 0F, -0.6F, f, f1);
 		this.walk(leftFoot, speed2, -0.6F, true, 2.5F, -0.4F, f, f1);
@@ -417,11 +417,11 @@ public class ModelVelociraptor extends ModelPrehistoric {
 			ModelUtils.setRotateAngleAlt(head, 70, 0, 0);
 			EntityVelociraptor dino = (EntityVelociraptor) entity;
 			float speed3 = 0.5F;
-			this.walk(lowerJaw, speed3, -0.3F, true, 0.5F, -0.3F, entity.ticksExisted, 1);
-			this.walk(neck, speed3, 0.4F, false, 0F, 0.4F, entity.ticksExisted, 1);
-			this.walk(head, speed3, 0.4F, true, 0F, 0.2F, entity.ticksExisted, 1);
-			this.flap(leftUpperArm, 0.8F, -0.6F, true, 0.3F, -0.2F, entity.ticksExisted, 1);
-			this.flap(rightUpperArm, 0.8F, -0.6F, false, -0.3F, -0.2F, entity.ticksExisted, 1);
+			this.walk(lowerJaw, speed3, -0.3F, true, 0.5F, -0.3F, f2, 1);
+			this.walk(neck, speed3, 0.4F, false, 0F, 0.4F, f2, 1);
+			this.walk(head, speed3, 0.4F, true, 0F, 0.2F, f2, 1);
+			this.flap(leftUpperArm, 0.8F, -0.6F, true, 0.3F, -0.2F, f2, 1);
+			this.flap(rightUpperArm, 0.8F, -0.6F, false, -0.3F, -0.2F, f2, 1);
 		}
 		((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((AdvancedModelRenderer[]) tailParts);
 		// ((ChainBuffer)((EntityVelociraptor)entity).tailBuffer).applyChainSwingBuffer(tailParts);

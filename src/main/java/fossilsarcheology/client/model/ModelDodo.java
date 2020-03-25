@@ -142,19 +142,19 @@ public class ModelDodo extends ModelPrehistoric {
 		float speed = 0.9F;
 		float speed2 = 0.1F;
 		ModelUtils.faceTargetMod(head, f3, f4, 1F);
-		this.bob(body, speed2, -0.4F, false, entity.ticksExisted, 1);
+		this.bob(body, speed2, -0.4F, false, f2, 1);
 		this.walk(leftLeg, speed, 1.9F, false, 0F, 0F, f, f1);
 		this.walk(rightLeg, speed, 1.9F, true, 0F, 0F, f, f1);
 		this.walk(leftFoot, speed, 1.9F, true, 0.3F, 0F, f, f1);
 		this.walk(rightFoot, speed, 1.9F, false, 0.3F, 0F, f, f1);
-		this.chainWave(tailParts, speed2, 0.05F, -3, entity.ticksExisted, 1);
-		this.chainSwing(tailParts, speed2, 0.15F, -3, entity.ticksExisted, 1);
-		this.chainWave(neckParts, speed2, 0.1F, -3, entity.ticksExisted, 1);
+		this.chainWave(tailParts, speed2, 0.05F, -3, f2, 1);
+		this.chainSwing(tailParts, speed2, 0.15F, -3, f2, 1);
+		this.chainWave(neckParts, speed2, 0.1F, -3, f2, 1);
 		this.chainWave(neckParts, speed, 0.4F, -3, f, f1);
 		if(!dodo.onGround){
-			this.flap(rightWing, 1.25F, 0.9F, true, 0F, 0F, entity.ticksExisted, 1);
+			this.flap(rightWing, 1.25F, 0.9F, true, 0F, 0F, f2, 1);
 			this.rightWing.rotateAngleZ += Math.PI / 2;
-			this.flap(leftWing, 1.25F, 0.9F, false, 0F, 0F, entity.ticksExisted, 1);
+			this.flap(leftWing, 1.25F, 0.9F, false, 0F, 0F, f2, 1);
 			this.leftWing.rotateAngleZ -= Math.PI / 2;
 		}
 

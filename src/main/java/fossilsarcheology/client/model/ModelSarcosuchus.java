@@ -264,15 +264,15 @@ public class ModelSarcosuchus extends ModelPrehistoric {
 		if (((EntityPrehistoric) entity).isSkeleton() || ((EntityPrehistoric) entity).isAIDisabled()) {
 			return;
 		}
-		this.bob(lowerBody, speed, degree * 0.7F, false, entity.ticksExisted, 1);
-		this.chainSwing(tailParts, speed, degree * 0.15F, -3, entity.ticksExisted, 1);
+		this.bob(lowerBody, speed, degree * 0.7F, false, f2, 1);
+		this.chainSwing(tailParts, speed, degree * 0.15F, -3, f2, 1);
 		this.chainSwing(tailParts, speed2, degree * 0.5F, -3, f, f1);
-		this.chainSwing(hindRParts, speed, degree * 0.15F, -3, entity.ticksExisted, 1);
+		this.chainSwing(hindRParts, speed, degree * 0.15F, -3, f2, 1);
 		this.chainSwing(hindRParts, speed2, degree * 0.5F, -3, f, f1);
-		this.chainSwing(hindLParts, speed, degree * 0.15F, -3, entity.ticksExisted, 1);
+		this.chainSwing(hindLParts, speed, degree * 0.15F, -3, f2, 1);
 		this.chainSwing(hindLParts, speed2, degree * 0.5F, -3, f, f1);
 
-		this.chainWave(neckParts, speed, degree * 0.15F, 3, entity.ticksExisted, 1);
+		this.chainWave(neckParts, speed, degree * 0.15F, 3, f2, 1);
 		((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((AdvancedModelRenderer[]) tailParts);
 		if (entity.getPassengers().isEmpty()) {
 			ModelUtils.faceTargetMod(neck, f3, f4, 0.5F);

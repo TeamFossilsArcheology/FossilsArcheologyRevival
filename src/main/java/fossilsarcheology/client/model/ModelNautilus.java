@@ -84,7 +84,7 @@ public class ModelNautilus extends AdvancedModelBase {
 				this.shell.rotationPointY = 21.5F;
 				this.shell.rotationPointZ = 5F;
 			} else {
-				this.bob(shell, -speed, 0.5F, true, entity.ticksExisted, 1);
+				this.bob(shell, -speed, 0.5F, true, f2, 1);
 			}
 			{
 				float shellProgress = ((EntityNautilus) entity).shellProgress;
@@ -104,12 +104,12 @@ public class ModelNautilus extends AdvancedModelBase {
 				sitAnimationOffset(tenticle_5, shellProgress, 0.1F, 0, -0.25F);
 				sitAnimationOffset(head, shellProgress, 0, 0, -0.35F);
 				if (shellProgress == 0) {
-					tenticle_0.swing(speed, 0.4F, false, 0, 0, entity.ticksExisted, 1);
-					tenticle_1.swing(speed, 0.4F, false, 0, 0, entity.ticksExisted, 1);
-					tenticle_2.swing(speed, 0.4F, false, 0, 0, entity.ticksExisted, 1);
-					tenticle_3.swing(speed, 0.4F, true, 0, 0, entity.ticksExisted, 1);
-					tenticle_4.swing(speed, 0.4F, true, 0, 0, entity.ticksExisted, 1);
-					tenticle_5.swing(speed, 0.4F, true, 0, 0, entity.ticksExisted, 1);
+					tenticle_0.swing(speed, 0.4F, false, 0, 0, f2, 1);
+					tenticle_1.swing(speed, 0.4F, false, 0, 0, f2, 1);
+					tenticle_2.swing(speed, 0.4F, false, 0, 0, f2, 1);
+					tenticle_3.swing(speed, 0.4F, true, 0, 0, f2, 1);
+					tenticle_4.swing(speed, 0.4F, true, 0, 0, f2, 1);
+					tenticle_5.swing(speed, 0.4F, true, 0, 0, f2, 1);
 				}
 			}
 		}

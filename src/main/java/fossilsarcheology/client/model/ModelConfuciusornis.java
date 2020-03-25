@@ -194,8 +194,8 @@ public class ModelConfuciusornis extends ModelPrehistoric {
 		float speed = 0.1F;
 		float speed2 = 0.6F;
 		float speed3 = 0.2F;
-		this.bob(body, speed, -0.3F, false, entity.ticksExisted, 1);
-		this.chainWave(neckParts, speed, 0.15F, 3, entity.ticksExisted, 1);
+		this.bob(body, speed, -0.3F, false, f2, 1);
+		this.chainWave(neckParts, speed, 0.15F, 3, f2, 1);
 		{
 			float sitProgress = ((EntityPrehistoric) entity).sitProgress;
 			sitAnimationRotationPrev(leftLeg, sitProgress, 0, 0, (float) Math.toRadians(1.0D));

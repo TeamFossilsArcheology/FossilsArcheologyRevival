@@ -483,14 +483,14 @@ public class ModelArthropleura extends ModelPrehistoric {
         this.chainFlap(legsRight, speed_walk, degree_walk * 0.35F, 10, f, f1);
         this.chainWave(legsLeft, speed_walk, -degree_walk * 0.35F, -10, f, f1);
         this.chainWave(legsRight, speed_walk, -degree_walk * 0.35F, 10, f, f1);
-        this.swing(mandibleL, speed_idle, degree_idle * 0.15F, true, 1, 0, entity.ticksExisted, 1);
-        this.swing(mandibleR, speed_idle, degree_idle * 0.15F, false, 1, 0, entity.ticksExisted, 1);
-        this.swing(antennaRA, speed_idle, degree_idle * 0.25F, true, 1, 0, entity.ticksExisted, 1);
-        this.swing(antennaRA_1, speed_idle, degree_idle * 0.25F, false, 1, 0, entity.ticksExisted, 1);
-        this.walk(antennaRA, speed_idle, degree_idle * 0.15F, true, 1, 0, entity.ticksExisted, 1);
-        this.walk(antennaRA_1, speed_idle, degree_idle * 0.15F, false, 1, 0, entity.ticksExisted, 1);
-        this.walk(antennaLB, speed_idle, degree_idle * 0.1F, true, 0, -0.1F, entity.ticksExisted, 1);
-        this.walk(antennaRB, speed_idle, degree_idle * 0.1F, false, 0, 0.1F, entity.ticksExisted, 1);
+        this.swing(mandibleL, speed_idle, degree_idle * 0.15F, true, 1, 0, f2, 1);
+        this.swing(mandibleR, speed_idle, degree_idle * 0.15F, false, 1, 0, f2, 1);
+        this.swing(antennaRA, speed_idle, degree_idle * 0.25F, true, 1, 0, f2, 1);
+        this.swing(antennaRA_1, speed_idle, degree_idle * 0.25F, false, 1, 0, f2, 1);
+        this.walk(antennaRA, speed_idle, degree_idle * 0.15F, true, 1, 0, f2, 1);
+        this.walk(antennaRA_1, speed_idle, degree_idle * 0.15F, false, 1, 0, f2, 1);
+        this.walk(antennaLB, speed_idle, degree_idle * 0.1F, true, 0, -0.1F, f2, 1);
+        this.walk(antennaRB, speed_idle, degree_idle * 0.1F, false, 0, 0.1F, f2, 1);
         {
             float sitProgress = prehistoric.sleepProgress;
             for (int i = 0; i < bodySegments.length; i++) {

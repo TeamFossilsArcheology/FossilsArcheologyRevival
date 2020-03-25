@@ -46,7 +46,8 @@ public enum DinosaurBoneType {
 	CRASSIGYRINUS,
 	DIPLOCAULUS,
 	EDAPHOSAURUS,
-	CITIPATI;
+	CITIPATI,
+	DIPLODOCUS;
 
 	public static DinosaurBoneType get(PrehistoricEntityType prehistoric) {
 		return DinosaurBoneType.valueOf(prehistoric.name().toUpperCase(Locale.ENGLISH));

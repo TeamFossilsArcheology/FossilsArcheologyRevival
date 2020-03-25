@@ -156,6 +156,7 @@ public class FossilFoodMappings {
 		FoodMappings.INSTANCE.addMeat(EntityEdaphosaurus.class, 50);
 		FoodMappings.INSTANCE.addMeat(EntityArthropleura.class, 30);
 		FoodMappings.INSTANCE.addMeat(EntityCitipati.class, 60);
+		FoodMappings.INSTANCE.addMeat(EntityDiplodocus.class, 160);
 		FoodMappings.INSTANCE.addMeat(EntityMegalograptus.class, 25);
 		FoodMappings.INSTANCE.addFish(EntityNautilus.class, 30);
 		FoodMappings.INSTANCE.addFish(EntityCoelacanth.class, 40);

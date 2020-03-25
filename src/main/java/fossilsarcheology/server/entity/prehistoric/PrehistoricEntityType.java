@@ -56,6 +56,7 @@ public enum PrehistoricEntityType {
 	THERIZINOSAURUS(EntityTherizinosaurus.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Parameter.MODEL | Parameter.TAME | Parameter.HERBIVORE, 0X322212, 0XCA9C72, 0.8F),
 	PARASAUROLOPHUS(EntityParasaurolophus.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Parameter.MODEL | Parameter.TAME | Parameter.HERBIVORE, 0X7E8E30, 0X4C5438, 1F),
 	CITIPATI(EntityCitipati.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Parameter.MODEL | Parameter.TAME | Parameter.HERBIVORE, 0X5E4A3E, 0X667373, 0.6F),
+	DIPLODOCUS(EntityDiplodocus.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Parameter.MODEL | Parameter.TAME | Parameter.RIDE | Parameter.HERBIVORE, 0X937373, 0XDAD8C7),
 	HENODUS(EntityHenodus.class, MobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.HERBIVORE, Parameter.TAME | Parameter.HERBIVORE, 0X613C27, 0X9C8060),
 	ICTHYOSAURUS(EntityIcthyosaurus.class, MobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE, Parameter.TAME | Parameter.CARNIVORE, 0X2A2632, 0XCEC296),
 	MEGANEURA(EntityMeganeura.class, MobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCCARNIVORE, Parameter.TAME | Parameter.CARNIVORE | Parameter.MODEL, 0X6A4C3F, 0XE0B45A),

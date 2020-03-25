@@ -290,9 +290,9 @@ public class ModelTriceratops extends ModelPrehistoric {
 			sitAnimationPos(rightHindThigh, sitProgress, 1F, 20.50F - ModelUtils.getDefaultPositionY(rightHindThigh), 0F);
 			sitAnimationPos(leftHindThigh, sitProgress, 1F, 20.50F - ModelUtils.getDefaultPositionY(leftHindThigh), 0F);
 		}
-		this.walk(upperBody, speed2, degree * 0.05F, false, 1F, 0F, entity.ticksExisted, 1);
-		this.walk(lowerBody, speed2, degree * -0.05F, false, 1F, 0F, entity.ticksExisted, 1);
-		this.bob(upperBody, speed2, degree * 0.2F, false, entity.ticksExisted, 1);
+		this.walk(upperBody, speed2, degree * 0.05F, false, 1F, 0F, f2, 1);
+		this.walk(lowerBody, speed2, degree * -0.05F, false, 1F, 0F, f2, 1);
+		this.bob(upperBody, speed2, degree * 0.2F, false, f2, 1);
 		this.walk(leftHindThigh, speed, degree * 0.8F, false, 0F, 0.4F, f, f1);
 		this.walk(leftHindLeg, speed, degree * 0.2F, false, 0F, -0.6F, f, f1);
 		this.walk(rightHindThigh, speed, degree * 0.8F, true, 0F, 0.4F, f, f1);
@@ -301,9 +301,9 @@ public class ModelTriceratops extends ModelPrehistoric {
 		this.walk(leftFrontLeg, speed, degree * 0.2F, true, 0F, -0.6F, f, f1);
 		this.walk(rightFrontThigh, speed, degree * 0.8F, false, 0F, 0.4F, f, f1);
 		this.walk(rightFrontLeg, speed, degree * 0.2F, false, 0F, -0.6F, f, f1);
-		this.chainWave(tailParts, speed2, degree * 0.05F, -3, entity.ticksExisted, 1);
-		this.chainSwing(tailParts, speed2, degree * 0.35F, -3, entity.ticksExisted, 1);
-		this.chainWave(neckParts, speed2, degree * 0.05F, -3, entity.ticksExisted, 1);
+		this.chainWave(tailParts, speed2, degree * 0.05F, -3, f2, 1);
+		this.chainSwing(tailParts, speed2, degree * 0.35F, -3, f2, 1);
+		this.chainWave(neckParts, speed2, degree * 0.05F, -3, f2, 1);
 		((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) tailParts);
 	}
 

@@ -174,12 +174,12 @@ public class ModelElasmotherium extends ModelPrehistoric {
 		ModelUtils.faceTargetMod(head, f3, f4, 1);
 		float speed = 0.1F;
 		float speed2 = 0.5F;
-		this.chainWave(tailParts, speed, 0.05F, -3, entity.ticksExisted, 1);
-		this.chainSwing(tailParts, speed, 0.15F, -2, entity.ticksExisted, 1);
-		this.chainWave(neckParts, speed, 0.15F, 3, entity.ticksExisted, 1);
-		this.bob(middleBody, speed, 0.3F, false, entity.ticksExisted, 1);
-		this.walk(lowerBody, speed, 0.05F, true, 0F, 0F, entity.ticksExisted, 1);
-		this.walk(upperBody, speed, 0.05F, true, 0F, 0F, entity.ticksExisted, 1);
+		this.chainWave(tailParts, speed, 0.05F, -3, f2, 1);
+		this.chainSwing(tailParts, speed, 0.15F, -2, f2, 1);
+		this.chainWave(neckParts, speed, 0.15F, 3, f2, 1);
+		this.bob(middleBody, speed, 0.3F, false, f2, 1);
+		this.walk(lowerBody, speed, 0.05F, true, 0F, 0F, f2, 1);
+		this.walk(upperBody, speed, 0.05F, true, 0F, 0F, f2, 1);
 		this.walk(leftFrontThigh, speed2, 0.4F, true, 0F, -0.4F, f, f1);
 		this.walk(rightFrontThigh, speed2, 0.4F, false, 0F, 0.4F, f, f1);
 		this.walk(leftHindThigh, speed2, 0.4F, false, 0F, -0.4F, f, f1);

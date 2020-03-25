@@ -169,7 +169,7 @@ public class ModelCrassigyrinus extends ModelPrehistoric {
         }
         this.faceTarget(f3, f4, 2, Head);
         this.chainSwing(lowerBodyParts, speed_swim, degree_swim, -3, f, f1);
-        this.chainSwing(tailParts, speed_idle, degree_idle, -3, entity.ticksExisted, 1);
+        this.chainSwing(tailParts, speed_idle, degree_idle, -3, f2, 1);
         float sleepProgress = prehistoric.sleepProgress;
         this.sitAnimationRotation(Body, sleepProgress, 0, (float)Math.toRadians(25), 0);
         this.sitAnimationRotation(Tail1, sleepProgress, 0, (float)Math.toRadians(35), 0);

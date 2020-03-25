@@ -257,15 +257,15 @@ public class ModelMegalania extends ModelPrehistoric {
             ModelUtils.faceTargetMod(Head, f3, f4, 0.5F);
         }
 
-        this.chainWave(tailParts, speed, degree * 0.075F, -3, entity.ticksExisted, 1);
-        this.chainSwing(tailParts, speed, degree * 0.25F, -2, entity.ticksExisted, 1);
-        this.chainWave(neckParts, speed, degree * 0.075F, 3, entity.ticksExisted, 1);
-        this.bob(Shoulders, speed, degree * 0.5F, false, entity.ticksExisted, 1);
+        this.chainWave(tailParts, speed, degree * 0.075F, -3, f2, 1);
+        this.chainSwing(tailParts, speed, degree * 0.25F, -2, f2, 1);
+        this.chainWave(neckParts, speed, degree * 0.075F, 3, f2, 1);
+        this.bob(Shoulders, speed, degree * 0.5F, false, f2, 1);
 
-        this.bob(LeftArm, speed, degree * -0.5F, false, entity.ticksExisted, 1);
-        this.bob(RightArm, speed, degree * -0.5F, false, entity.ticksExisted, 1);
-        this.bob(LeftThigh, speed, degree * -0.5F, false, entity.ticksExisted, 1);
-        this.bob(RightThigh, speed, degree * -0.5F, false, entity.ticksExisted, 1);
+        this.bob(LeftArm, speed, degree * -0.5F, false, f2, 1);
+        this.bob(RightArm, speed, degree * -0.5F, false, f2, 1);
+        this.bob(LeftThigh, speed, degree * -0.5F, false, f2, 1);
+        this.bob(RightThigh, speed, degree * -0.5F, false, f2, 1);
 
         this.swing(LeftArm, speed2, degree * 1.2F, true, 0F, -0.5F, f, f1);
         this.swing(RightArm, speed2, degree * 1.2F, true, 0F, 0.5F, f, f1);
