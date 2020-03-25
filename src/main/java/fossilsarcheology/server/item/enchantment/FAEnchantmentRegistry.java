@@ -9,8 +9,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 
 public class FAEnchantmentRegistry {
+
     public static final Enchantment ENCHANTMENT_ARCHEOLOGY = new EnchantmentArcheology(true);
     public static final Enchantment ENCHANTMENT_PALEONTOLOGY = new EnchantmentArcheology(false);
-
 
 }

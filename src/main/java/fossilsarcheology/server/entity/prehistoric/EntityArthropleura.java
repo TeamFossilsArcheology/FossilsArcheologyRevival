@@ -40,7 +40,7 @@ public class EntityArthropleura extends EntityPrehistoric {
         super(world, PrehistoricEntityType.ARTHROPLEURA, 1, 4, 10, 34, 0.15, 0.2, 5, 15);
         this.teenAge = 4;
         this.setActualSize(3F, 1.0F);
-        minSize = 0.2F;
+        minSize = 0.1F;
         maxSize = 0.4F;
         developsResistance = true;
         hasTeenTexture = true;
