@@ -67,7 +67,7 @@ public class ServerProxy implements IGuiHandler {
 
     @SubscribeEvent
     public static void registerVillagers(RegistryEvent.Register<VillagerRegistry.VillagerProfession> event) {
-        event.getRegistry().register(FAVillagerRegistry.ARCHEOLOGIST_PROFESSION);
+        event.getRegistry().registerAll(FAVillagerRegistry.ARCHEOLOGIST_PROFESSION, FAVillagerRegistry.PALAEONTOLOGIST_PROFESSION);
     }
 
     @SuppressWarnings("deprecation")

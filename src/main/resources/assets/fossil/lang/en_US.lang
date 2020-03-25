@@ -192,6 +192,7 @@ entity.fossil.toytetheredlog.name=Tethered Log
 entity.fossil.toyscratchingpost.name=Scratching Post
 entity.fossil.debugtest.name=Debug Test
 entity.Villager.archeologist=Archaeologist
+entity.Villager.palaeontologist=Palaeontologist
 
 #PORT
 tile.skull_block.name=Skull Block
