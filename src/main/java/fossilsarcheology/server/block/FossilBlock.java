@@ -36,70 +36,58 @@ public class FossilBlock extends Block implements DefaultRenderedItem {
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
 		int i = rand.nextInt(1100);
-		if (i < 1) {
+		int paleo_level = 1;
+		int archeo_level = 1;
+		if (i < archeo_level) {
 			this.randomMeta = 0;
 			return FAItemRegistry.SCARAB_GEM;
-		} else if (i < 6) {
+		} else if (i < 3 + 3 * archeo_level) {
 			this.randomMeta = 0;
 			return FAItemRegistry.BROKEN_SWORD;
-		} else if (i < 11) {
+		} else if (i < 6 + 5 * archeo_level) {
 			this.randomMeta = 0;
 			return FAItemRegistry.BROKEN_HELMET;
-		} else if (i < 13) {
+		} else if (i < 13 * (paleo_level * 1.5F)) {
 			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
-			if (dropRandom != 4) {
-				this.randomMeta = dropRandom;
-			}
+			this.randomMeta = dropRandom;
 			return FAItemRegistry.LEG_BONE;
-		} else if (i < 15) {
+		} else if (i < 15 * (paleo_level * 1.5F)) {
 			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
-			if (dropRandom != 4) {
-				this.randomMeta = dropRandom;
-			}
+			this.randomMeta = dropRandom;
 			return FAItemRegistry.SKULL;
-		} else if (i < 17) {
+		} else if (i < 17 * (paleo_level * 1.5F)) {
 			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
-			if (dropRandom != 4) {
-				this.randomMeta = dropRandom;
-			}
+			this.randomMeta = dropRandom;
 			return FAItemRegistry.UNIQUE_ITEM;
-		} else if (i < 19) {
+		} else if (i < 19 * (paleo_level * 1.5F)) {
 			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
-			if (dropRandom != 4) {
-				this.randomMeta = dropRandom;
-			}
+			this.randomMeta = dropRandom;
 			return FAItemRegistry.FOOT;
-		} else if (i < 21) {
+		} else if (i < 21 * (paleo_level * 1.5F)) {
 			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
-			if (dropRandom != 4) {
-				this.randomMeta = dropRandom;
-			}
+			this.randomMeta = dropRandom;
 			return FAItemRegistry.VERTEBRAE;
-		} else if (i < 23) {
+		} else if (i < 23 * (paleo_level * 1.5F)) {
 			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
-			if (dropRandom != 4) {
-				this.randomMeta = dropRandom;
-			}
+			this.randomMeta = dropRandom;
 			return FAItemRegistry.ARM_BONE;
-		} else if (i < 25) {
+		} else if (i < 25 * (paleo_level * 1.5F)) {
 			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
-			if (dropRandom != 4) {
-				this.randomMeta = dropRandom;
-			}
+			this.randomMeta = dropRandom;
 			return FAItemRegistry.RIBCAGE;
-		} else if (i < 50) {
+		} else if (i < 50 * (Math.max(paleo_level, archeo_level) * 1.5F)) {
 			this.randomMeta = 0;
 			return Item.getItemFromBlock(FABlockRegistry.SKULL_BLOCK);
-		} else if (i < 350) {
+		} else if (i < 350 * (0.5F + paleo_level * 0.5F)) {
 			this.randomMeta = 0;
 			return FAItemRegistry.BIOFOSSIL;
-		} else if (i < 550) {
+		} else if (i < 550 * (0.5F + archeo_level * 0.5F)) {
 			this.randomMeta = 0;
 			return FAItemRegistry.RELIC_SCRAP;
-		} else if (i < 900) {
+		} else if (i < 900 * (0.5F + paleo_level * 0.5F)) {
 			this.randomMeta = 0;
 			return Items.BONE;
-		} else if (i < 1200) {
+		} else if (i < 1200 * (0.5F + paleo_level * 0.5F)) {
 			this.randomMeta = 0;
 			return FAItemRegistry.PLANT_FOSSIL;
 		}
@@ -121,4 +109,48 @@ public class FossilBlock extends Block implements DefaultRenderedItem {
 		}
 		return drops;
 	}
+
+	public static ItemStack getItemDroppedWithEnchants(IBlockState state, Random rand, int paleo_level, int archeo_level) {
+		int i = rand.nextInt(1100);
+		if (i < 1 + (archeo_level - 1) * 5) {
+			return new ItemStack(FAItemRegistry.SCARAB_GEM);
+		} else if (i < 3 + 3 * archeo_level) {
+			return new ItemStack(FAItemRegistry.BROKEN_SWORD);
+		} else if (i < 6 + 5 * archeo_level) {
+			return new ItemStack(FAItemRegistry.BROKEN_HELMET);
+		} else if (i < 13 * (paleo_level * 1.5F)) {
+			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
+			return new ItemStack(FAItemRegistry.LEG_BONE, 1, dropRandom);
+		} else if (i < 15 * (paleo_level * 1.5F)) {
+			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
+			return new ItemStack(FAItemRegistry.SKULL, 1, dropRandom);
+		} else if (i < 17 * (paleo_level * 1.5F)) {
+			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
+			return new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, dropRandom);
+		} else if (i < 19 * (paleo_level * 1.5F)) {
+			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
+			return new ItemStack(FAItemRegistry.FOOT, 1, dropRandom);
+		} else if (i < 21 * (paleo_level * 1.5F)) {
+			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
+			return new ItemStack(FAItemRegistry.VERTEBRAE, 1, dropRandom);
+		} else if (i < 23 * (paleo_level * 1.5F)) {
+			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
+			return new ItemStack(FAItemRegistry.ARM_BONE, 1, dropRandom);
+		} else if (i < 25 * (paleo_level * 1.5F)) {
+			int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
+			return new ItemStack(FAItemRegistry.RIBCAGE, 1, dropRandom);
+		} else if (i < 50 * (Math.max(paleo_level, archeo_level) * 1.5F)) {
+			return new ItemStack(FABlockRegistry.SKULL_BLOCK);
+		} else if (i < 350 * (0.5F + paleo_level * 0.5F)) {
+			return new ItemStack(FAItemRegistry.BIOFOSSIL);
+		} else if (i < 550 * (0.5F + archeo_level * 0.5F)) {
+			return new ItemStack(FAItemRegistry.RELIC_SCRAP);
+		} else if (i < 900 * (0.5F + paleo_level * 0.5F)) {
+			return new ItemStack(Items.BONE);
+		} else if (i < 1200 * (0.5F + paleo_level * 0.5F)) {
+			return new ItemStack(FAItemRegistry.PLANT_FOSSIL);
+		}
+		return new ItemStack(Blocks.COBBLESTONE);
+	}
+
 }

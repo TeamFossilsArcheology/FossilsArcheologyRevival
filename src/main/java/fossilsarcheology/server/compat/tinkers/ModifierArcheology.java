@@ -31,9 +31,9 @@ public class ModifierArcheology extends ModifierTrait  {
     private boolean fossils;
 
     public ModifierArcheology(boolean fossils) {
-        super(fossils ? "paleontologist" : "archeologist", 0XB6A074, 5, 50);
+        super(fossils ? "paleontologist" : "archeologist", 0XB6A074, 3, 50);
         this.fossils = fossils;
-        addAspects(new ModifierAspect.MultiAspect(this, 5, 50, 1), ModifierAspect.harvestOnly);
+        addAspects(new ModifierAspect.MultiAspect(this, 3, 50, 1), ModifierAspect.harvestOnly);
         MinecraftForge.EVENT_BUS.register(this);
     }
 

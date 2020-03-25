@@ -1058,3 +1058,6 @@ advancements.fossil.tar_drop.title=Tar Tar Sauce
 advancements.fossil.tar_drop.description=Turn a Bucket of Tar into Tar Drops
 advancements.fossil.tar_fossil.title=Fossil Fuel
 advancements.fossil.tar_fossil.description=Obtain a Tar Fossil from analyzing a Tar Drop
+#ENCHANTMENTS
+enchantment.fossil.archeology=Archaeologist
+enchantment.fossil.paleontology=Paleontologist

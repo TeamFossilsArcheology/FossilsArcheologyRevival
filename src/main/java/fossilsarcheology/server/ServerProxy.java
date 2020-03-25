@@ -22,6 +22,7 @@ import fossilsarcheology.server.event.FossilCraftingEvent;
 import fossilsarcheology.server.event.FossilLivingEvent;
 import fossilsarcheology.server.event.FossilPickupItemEvent;
 import fossilsarcheology.server.item.FAItemRegistry;
+import fossilsarcheology.server.item.enchantment.FAEnchantmentRegistry;
 import fossilsarcheology.server.recipe.FAOreDictRegistry;
 import fossilsarcheology.server.util.FossilFoodMappings;
 import fossilsarcheology.server.world.FAWorldGenerator;
@@ -31,6 +32,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockDispenser;
 import net.minecraft.dispenser.BehaviorProjectileDispense;
 import net.minecraft.dispenser.IPosition;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -68,6 +70,11 @@ public class ServerProxy implements IGuiHandler {
     @SubscribeEvent
     public static void registerVillagers(RegistryEvent.Register<VillagerRegistry.VillagerProfession> event) {
         event.getRegistry().registerAll(FAVillagerRegistry.ARCHEOLOGIST_PROFESSION, FAVillagerRegistry.PALAEONTOLOGIST_PROFESSION);
+    }
+
+    @SubscribeEvent
+    public static void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
+        event.getRegistry().registerAll(FAEnchantmentRegistry.ENCHANTMENT_ARCHEOLOGY, FAEnchantmentRegistry.ENCHANTMENT_PALEONTOLOGY);
     }
 
     @SuppressWarnings("deprecation")

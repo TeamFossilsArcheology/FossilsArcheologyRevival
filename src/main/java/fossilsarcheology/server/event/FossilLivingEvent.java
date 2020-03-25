@@ -5,13 +5,17 @@ import com.google.common.base.Predicate;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.ServerProxy;
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.block.FossilBlock;
 import fossilsarcheology.server.entity.ai.AnimalAIFearDinosaur;
 import fossilsarcheology.server.entity.prehistoric.*;
 import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.item.FAItemRegistry;
+import fossilsarcheology.server.item.enchantment.FAEnchantmentRegistry;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.Enchantment;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
@@ -20,6 +24,7 @@ import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
@@ -30,6 +35,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nullable;
+import java.util.Map;
 import java.util.Random;
 
 public class FossilLivingEvent {
@@ -49,6 +55,20 @@ public class FossilLivingEvent {
         }
         if (properties != null && properties.killedBiofossilCooldown > 0) {
             event.setCanceled(true);
+        }
+    }
+
+    @SubscribeEvent
+    public void onGatherBlockDrops(BlockEvent.HarvestDropsEvent event) {
+        if(event.getState().getBlock() == FABlockRegistry.FOSSIL){
+            ItemStack pickaxe = event.getHarvester().getHeldItemMainhand();
+            int arch_level = EnchantmentHelper.getEnchantmentLevel(FAEnchantmentRegistry.ENCHANTMENT_ARCHEOLOGY, pickaxe);
+            int paleo_level = EnchantmentHelper.getEnchantmentLevel(FAEnchantmentRegistry.ENCHANTMENT_PALEONTOLOGY, pickaxe);
+            if(arch_level != 0 || paleo_level != 0){
+                event.getDrops().clear();
+                ItemStack newDrop = FossilBlock.getItemDroppedWithEnchants(event.getState(), new Random(), 1 + paleo_level, 1 + arch_level).copy();
+                event.getDrops().add(newDrop);
+            }
         }
     }
 
