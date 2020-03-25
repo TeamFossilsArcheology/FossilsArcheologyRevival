@@ -10,7 +10,7 @@ public class EnchantmentArcheology extends Enchantment{
     private boolean archeology;
 
     protected EnchantmentArcheology(boolean archeology) {
-        super(Rarity.UNCOMMON, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
+        super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
         this.archeology = archeology;
         setName(archeology ? "fossil.archeology" : "fossil.paleontology");
         setRegistryName(archeology ? "fossil:archeology" : "fossil:paleontology");
