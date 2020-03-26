@@ -332,7 +332,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
 
         @Override
         public void onUpdateMoveHelper() {
-            if (this.action == EntityMoveHelper.Action.MOVE_TO && !this.dinosaur.getNavigator().noPath() && !this.dinosaur.isBeingRidden()) {
+            if (this.action == EntityMoveHelper.Action.MOVE_TO && !this.dinosaur.isBeingRidden()) {
                 double distanceX = this.posX - this.dinosaur.posX;
                 double distanceY = this.posY - this.dinosaur.posY;
                 double distanceZ = this.posZ - this.dinosaur.posZ;
