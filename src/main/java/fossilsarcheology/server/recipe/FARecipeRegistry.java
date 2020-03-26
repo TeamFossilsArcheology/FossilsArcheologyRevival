@@ -25,13 +25,6 @@ public class FARecipeRegistry {
     }
 
     public static void blocks() {
-        UniversalBucket bucket = ForgeModContainer.getInstance().universalBucket;
-        ItemStack filledBucket = new ItemStack(bucket);
-        NBTTagCompound tag = new NBTTagCompound();
-        tag.setString("FluidName", FAFluidRegistry.TAR_FLUID.getName());
-        tag.setInteger("Amount", bucket.getCapacity());
-        filledBucket.setTagCompound(tag);
-        GameRegistry.addShapelessRecipe(new ResourceLocation("fossil:tar_drop"), new ResourceLocation("fossil"), new ItemStack(FAItemRegistry.TARDROP, 4), Ingredient.fromStacks(filledBucket));
         FAItemRegistry.ANCIENT_HELMET_MATERIAL.setRepairItem(new ItemStack(FAItemRegistry.SCARAB_GEM));
         FAItemRegistry.SCARAB_MATERIAL.setRepairItem(new ItemStack(FAItemRegistry.SCARAB_GEM));
         FAItemRegistry.BONE.setRepairItem(new ItemStack(Items.BONE));

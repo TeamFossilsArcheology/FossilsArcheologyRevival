@@ -5,9 +5,12 @@ import fossilsarcheology.client.gui.CultivateGUI;
 import fossilsarcheology.client.gui.SifterGUI;
 import fossilsarcheology.client.gui.WorktableGUI;
 import fossilsarcheology.server.block.FABlockRegistry;
+import fossilsarcheology.server.block.FAFluidRegistry;
+import fossilsarcheology.server.block.TarBlock;
 import fossilsarcheology.server.compat.jei.analyzer.*;
 import fossilsarcheology.server.compat.jei.culture.*;
 import fossilsarcheology.server.compat.jei.sifter.*;
+import fossilsarcheology.server.compat.jei.tar.TarBucketRecipeMaker;
 import fossilsarcheology.server.compat.jei.worktable.*;
 import fossilsarcheology.server.item.FAItemRegistry;
 import mezz.jei.api.IModPlugin;
@@ -16,7 +19,20 @@ import mezz.jei.api.JEIPlugin;
 import mezz.jei.api.recipe.IRecipeCategoryRegistration;
 import mezz.jei.api.recipe.IRecipeWrapper;
 import mezz.jei.api.recipe.IRecipeWrapperFactory;
+import mezz.jei.api.recipe.VanillaRecipeCategoryUid;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.Ingredient;
+import net.minecraft.item.crafting.ShapelessRecipes;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.NonNullList;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.ForgeModContainer;
+import net.minecraftforge.fluids.Fluid;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.FluidUtil;
+import net.minecraftforge.fluids.UniversalBucket;
+
+import java.util.Collections;
 
 @JEIPlugin
 public class FAJEIPlugin implements IModPlugin {
@@ -51,6 +67,8 @@ public class FAJEIPlugin implements IModPlugin {
         registry.handleRecipes(RecipeSifter.class, new SifterFactory(), SIFTER_UID);
         registry.addRecipeCategoryCraftingItem(new ItemStack(FABlockRegistry.SIFTER_IDLE), SIFTER_UID);
         registry.addRecipeClickArea(SifterGUI.class, 75, 33, 26, 26, SIFTER_UID);
+
+        registry.addRecipes(TarBucketRecipeMaker.getTarBucketRecipes(), VanillaRecipeCategoryUid.CRAFTING);
 
         addDescription(registry, new ItemStack(FAItemRegistry.BIOFOSSIL));
         addDescription(registry, new ItemStack(FAItemRegistry.TAR_FOSSIL));

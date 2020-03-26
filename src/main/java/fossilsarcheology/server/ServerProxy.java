@@ -24,6 +24,7 @@ import fossilsarcheology.server.event.FossilPickupItemEvent;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.item.enchantment.FAEnchantmentRegistry;
 import fossilsarcheology.server.recipe.FAOreDictRegistry;
+import fossilsarcheology.server.recipe.RecipeTarDrops;
 import fossilsarcheology.server.util.FossilFoodMappings;
 import fossilsarcheology.server.world.FAWorldGenerator;
 import fossilsarcheology.server.world.FAWorldRegistry;
@@ -38,6 +39,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
@@ -75,6 +77,12 @@ public class ServerProxy implements IGuiHandler {
     @SubscribeEvent
     public static void registerEnchantments(RegistryEvent.Register<Enchantment> event) {
         event.getRegistry().registerAll(FAEnchantmentRegistry.ENCHANTMENT_ARCHEOLOGY, FAEnchantmentRegistry.ENCHANTMENT_PALEONTOLOGY);
+    }
+
+    @SubscribeEvent
+    public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
+        IRecipe recipeTarDrops = new RecipeTarDrops().setRegistryName(new ResourceLocation("fossil:tar_drop_from_bucket"));
+        event.getRegistry().registerAll(recipeTarDrops);
     }
 
     @SuppressWarnings("deprecation")
