@@ -17,7 +17,6 @@ import net.minecraft.world.World;
 
 public class EntityPterosaur extends EntityPrehistoricFlying {
 
-
 	public EntityPterosaur(World world) {
 		super(world, PrehistoricEntityType.PTEROSAUR, 2, 4, 6, 30, 0.15, 0.2, 0, 0);
 		this.setActualSize(1.1F, 1.1F);
@@ -45,6 +44,10 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
 		this.targetTasks.addTask(3, new DinoAIHurtByTarget(this));
 		this.targetTasks.addTask(4, new DinoAIHunt(this, EntityLivingBase.class, true, (Predicate<Entity>) entity -> entity instanceof EntityLivingBase));
 
+	}
+
+	public int getAttackLength() {
+		return 25;
 	}
 
 	@Override
@@ -125,7 +128,7 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 10 && this.getAttackTarget() != null) {
+		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
 			doAttack();
 		}
 	}
@@ -137,9 +140,6 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
 		}
 		return false;
 	}
-
-
-
 
 	@Override
 	public boolean doesFlock() {
