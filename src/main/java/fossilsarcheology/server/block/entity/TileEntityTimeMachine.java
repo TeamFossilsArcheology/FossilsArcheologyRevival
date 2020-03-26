@@ -1,5 +1,6 @@
 package fossilsarcheology.server.block.entity;
 
+import fossilsarcheology.Revival;
 import fossilsarcheology.server.item.FAItemRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.IInventory;
@@ -14,6 +15,7 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraftforge.energy.CapabilityEnergy;
 
 import javax.annotation.Nullable;
 
@@ -49,7 +51,7 @@ public class TileEntityTimeMachine extends TileEntity implements IInventory, ISi
 
 	@Override
 	public int getSizeInventory() {
-		return 64;
+		return this.stacks.size();
 	}
 
 	@Override
@@ -272,5 +274,13 @@ public class TileEntityTimeMachine extends TileEntity implements IInventory, ISi
 		return this.writeToNBT(new NBTTagCompound());
 	}
 
+	net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
 
+	@Override
+	@javax.annotation.Nullable
+	public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
+		if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
+			return (T) handlerTop;
+		return super.getCapability(capability, facing);
+	}
 }

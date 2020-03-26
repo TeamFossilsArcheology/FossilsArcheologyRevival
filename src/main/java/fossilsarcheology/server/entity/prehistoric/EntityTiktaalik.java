@@ -162,7 +162,6 @@ public class EntityTiktaalik extends EntityPrehistoricSwimming {
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 5 && this.getAttackTarget() != null) {
             doAttack();
         }
-        System.out.println(isInWater());
         if (this.isInWaterMaterial()) {
             this.setSwimming(true);
         } else {
