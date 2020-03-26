@@ -7,6 +7,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAISit;
 import net.minecraft.entity.ai.EntityAISwimming;
+import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
@@ -38,7 +39,7 @@ public class EntityDiplodocus extends EntityPrehistoric {
         this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
         this.tasks.addTask(3, new DinoAIEatBlocks(this));
         this.tasks.addTask(3, new DinoAIEatFeeders(this));
-        this.tasks.addTask(3, new DinoAIEatItems(this));
+        this.targetTasks.addTask(0, new DinoAIEatItems(this));
         this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
         this.tasks.addTask(5, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
         this.tasks.addTask(6, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
@@ -136,6 +137,11 @@ public class EntityDiplodocus extends EntityPrehistoric {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
+        for(EntityAITasks.EntityAITaskEntry entry : this.tasks.taskEntries){
+           // if(entry.using)
+           // System.out.println(entry.action.getClass().getSimpleName() + "    active: " + entry.using);
+        }
+        //System.out.println();
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 19 && this.getAttackTarget() != null) {
             doAttack();
             doAttackKnockback(0.5F);

@@ -38,7 +38,7 @@ public class EntityGallimimus extends EntityPrehistoric {
 		this.tasks.addTask(3, new DinoAIFlockWander<>(this,3,6, 1.0F));
 		this.tasks.addTask(3, new DinoAIEatBlocks(this));
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
-		this.tasks.addTask(3, new DinoAIEatItems(this));
+		this.targetTasks.addTask(0, new DinoAIEatItems(this));
 		this.tasks.addTask(4, new DinoAIRiding(this, 2F));
 		this.tasks.addTask(5, new DinoAIPanic(this, 1.25D));
 		this.tasks.addTask(7, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));

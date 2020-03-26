@@ -21,7 +21,7 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
     public DinoAIEatBlocks(EntityPrehistoric entity) {
         super(entity, 1.0F, 35);
         this.entity = entity;
-        this.setMutexBits(0);
+        this.setMutexBits(1);
     }
 
     @Override
@@ -32,7 +32,6 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
         if (this.entity.isMovementBlockedSoft()) {
             return false;
         }
-        this.distanceCheck = Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2.5F, 2.5F);
         boolean execute = super.shouldExecute();
         if(execute){
             entity.shouldWander = false;
@@ -45,18 +44,19 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
-        return !this.entity.isMovementBlockedSoft() && destinationBlock != null && FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(destinationBlock.up()).getBlock(), this.entity.type.diet) > 0 ;
+        return !this.entity.isMovementBlockedSoft() && destinationBlock != null && FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(destinationBlock).getBlock(), this.entity.type.diet) > 0 ;
     }
 
     @Override
     public void updateTask() {
         super.updateTask();
         if (this.getIsAboveDestination() && this.destinationBlock != null) {
-            BlockPos up = this.destinationBlock.up();
+            BlockPos up = this.destinationBlock;
             Block block = this.entity.world.getBlockState(up).getBlock();
             if (FoodMappings.INSTANCE.getBlockFoodAmount(block, this.entity.type.diet) > 0) {
                 double distance = this.getDistance(up);
-                if (distance < Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2, 1.5F)) {
+                double check = Math.max(this.getRequiredDistance(1.5F), 1.5F);
+                if (distance < check) {
                     this.entity.setHunger(Math.min(this.entity.getMaxHunger(), this.entity.getHunger() + FoodMappings.INSTANCE.getBlockFoodAmount(block, this.entity.type.diet)));
                     this.entity.setHealth(Math.min(this.entity.getMaxHealth(), (int) (this.entity.getHealth() + FoodMappings.INSTANCE.getBlockFoodAmount(block, this.entity.type.diet) / 10)));
                     this.entity.playSound(SoundEvents.ENTITY_GENERIC_EAT, 1, 1);
@@ -74,17 +74,18 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
 
     @Override
     protected boolean shouldMoveTo(World worldIn, BlockPos below) {
-        BlockPos pos = below.up();
+        BlockPos pos = below;
         return FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(pos).getBlock(), this.entity.type.diet) > 0 && this.entity.rayTraceFeeder(pos, true) && canReachBlock(entity, pos);
     }
 
     public void resetTask(){
         this.entity.shouldWander = true;
+        this.runDelay = 0;
     }
 
     private double getDistance(BlockPos pos) {
         double deltaX = this.entity.posX - (pos.getX() + 0.5);
-        double deltaY = this.entity.posY + this.entity.getEyeHeight() - (pos.getY() + 0.5);
+        double deltaY = this.entity.posY - (pos.getY() + 0.5);
         double deltaZ = this.entity.posZ - (pos.getZ() + 0.5);
         return deltaX * deltaX + deltaY * deltaY + deltaZ * deltaZ;
     }

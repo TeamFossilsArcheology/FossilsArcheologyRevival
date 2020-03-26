@@ -46,7 +46,7 @@ public class DinoAIEatItems extends EntityAIBase {
     public void updateTask() {
         double distance = Math.sqrt(Math.pow(this.prehistoric.posX - this.targetItem.posX, 2.0D) + Math.pow(this.prehistoric.posZ - this.targetItem.posZ, 2.0D));
         this.prehistoric.getNavigator().tryMoveToXYZ(this.targetItem.posX, this.targetItem.posY, this.targetItem.posZ, 1D);
-        if (distance < 2.5D) {
+        if (distance < Math.max(this.prehistoric.getEntityBoundingBox().getAverageEdgeLength(), 2.5D)) {
             if (this.targetItem != null) {
                 this.prehistoric.eatItem(this.targetItem.getItem());
                 this.targetItem.setDead();

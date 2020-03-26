@@ -48,7 +48,7 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming implements ISca
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
 		this.tasks.addTask(3, new DinoAIEatBlocks(this));
 		this.tasks.addTask(3, new DinoAIEatFeeders(this));
-		this.tasks.addTask(3, new DinoAIEatItems(this));
+		this.targetTasks.addTask(0, new DinoAIEatItems(this));
 		this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
 		this.tasks.addTask(5, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
 		this.tasks.addTask(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));

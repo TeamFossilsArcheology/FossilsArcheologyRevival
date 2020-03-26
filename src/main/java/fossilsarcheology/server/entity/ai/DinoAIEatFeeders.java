@@ -22,7 +22,7 @@ public class DinoAIEatFeeders extends DinoAIMoveToBlock {
     public DinoAIEatFeeders(EntityPrehistoric entity) {
         super(entity, 1.0F, 35);
         this.entity = entity;
-        this.setMutexBits(0);
+        this.setMutexBits(1);
     }
 
     @Override
@@ -33,7 +33,6 @@ public class DinoAIEatFeeders extends DinoAIMoveToBlock {
         if (this.entity.isMovementBlockedSoft()) {
             return false;
         }
-        this.distanceCheck = Math.max(this.entity.getEntityBoundingBox().getAverageEdgeLength() * 2.5F, 2.5F);
         boolean execute = super.shouldExecute();
         if(execute){
             entity.shouldWander = false;
@@ -60,7 +59,6 @@ public class DinoAIEatFeeders extends DinoAIMoveToBlock {
         if (this.getIsAboveDestination() && this.destinationBlock != null) {
             BlockPos targetBlock = this.destinationBlock.up();
             TileEntity entity = this.entity.world.getTileEntity(targetBlock);
-            this.entity.getNavigator().tryMoveToXYZ(targetBlock.getX() + 0.5D, targetBlock.getY(), targetBlock.getZ() + 0.5D, 1D);
             if (entity instanceof TileEntityFeeder) {
                 TileEntityFeeder feeder = (TileEntityFeeder) entity;
                 double distance = this.entity.getDistance(targetBlock.getX(), targetBlock.getY(), targetBlock.getZ());

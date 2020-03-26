@@ -1,13 +1,14 @@
 package fossilsarcheology.server.entity.ai;
 
 import fossilsarcheology.Revival;
+import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public abstract class DinoAIMoveToBlock extends EntityAIBase {
-    private final EntityCreature creature;
+    private final EntityPrehistoric creature;
     private final double movementSpeed;
     private final int searchLength;
     /**
@@ -20,14 +21,12 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
     protected BlockPos destinationBlock = BlockPos.ORIGIN;
     private int timeoutCounter;
     private int maxStayTicks;
-    protected double distanceCheck = 1.0D;
     private boolean isAboveDestination;
 
-    public DinoAIMoveToBlock(EntityCreature creature, double speedIn, int length) {
+    public DinoAIMoveToBlock(EntityPrehistoric creature, double speedIn, int length) {
         this.creature = creature;
         this.movementSpeed = speedIn;
         this.searchLength = length;
-        this.distanceCheck = 1.0D;
         this.setMutexBits(0);
     }
 
@@ -35,6 +34,9 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
+        if(overrideDelay()){
+           // runDelay = 0;
+        }
         if (this.runDelay > 0) {
             --this.runDelay;
             return false;
@@ -42,6 +44,10 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
             this.runDelay = Revival.CONFIG_OPTIONS.dinoUpdateDelay + this.creature.getRNG().nextInt(Revival.CONFIG_OPTIONS.dinoUpdateDelay);
             return this.searchForDestination();
         }
+    }
+
+    public void resetTask(){
+        destinationBlock = BlockPos.ORIGIN;
     }
 
     /**
@@ -64,10 +70,9 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
      * Keep ticking a continuous task that has already been started
      */
     public void updateTask() {
-        if (this.creature.getDistanceSqToCenter(this.destinationBlock.up()) > distanceCheck) {
+        if (this.creature.getDistanceSqToCenter(this.destinationBlock.up()) > getRequiredDistance(0)) {
             this.isAboveDestination = false;
             ++this.timeoutCounter;
-
             if (this.timeoutCounter % 40 == 0) {
                 this.creature.getNavigator().tryMoveToXYZ((double) ((float) this.destinationBlock.getX()) + 0.5D, (double) (this.destinationBlock.getY() + 1), (double) ((float) this.destinationBlock.getZ()) + 0.5D, this.movementSpeed);
             }
@@ -75,6 +80,11 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
             this.isAboveDestination = true;
             --this.timeoutCounter;
         }
+    }
+
+    public double getRequiredDistance(double extra) {
+        double avg = creature.getEntityBoundingBox().getAverageEdgeLength();
+        return Math.max(avg * avg + extra, 1D + extra);
     }
 
     protected boolean getIsAboveDestination() {
