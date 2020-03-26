@@ -20,7 +20,7 @@
     },
     "G": {
       "type": "forge:ore_dict",
-      "ore": "dyeGreen"
+      "ore": "slimeball"
     }
   },
   "result": {
