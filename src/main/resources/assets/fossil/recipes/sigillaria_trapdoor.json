@@ -1,12 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "fossil:trap_doors",
   "pattern": [
+    " S ",
     "PPP",
     "PPP"
   ],
   "key": {
     "P": {
       "item": "fossil:sigillaria_planks"
+    },
+    "S": {
+      "type": "forge:ore_dict",
+      "ore": "stickWood"
     }
   },
   "result": {
