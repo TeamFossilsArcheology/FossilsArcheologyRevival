@@ -25,7 +25,7 @@ public class EntityAnkylosaurus extends EntityPrehistoric {
 		teenAge = 5;
 		developsResistance = true;
 		breaksBlocks = true;
-		this.ridingY = 1.3F;
+		this.ridingY = 1.6F;
 		this.pediaScale = 45F;
 		this.hasBabyTexture = false;
 	}

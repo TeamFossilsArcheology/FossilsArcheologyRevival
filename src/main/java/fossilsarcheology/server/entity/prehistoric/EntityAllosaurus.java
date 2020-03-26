@@ -23,10 +23,10 @@ public class EntityAllosaurus extends EntityPrehistoric implements IScaryDinosau
 		this.nearByMobsAllowed = 5;
 		minSize = 0.25F;
 		maxSize = 2.5F;
+		this.ridingY = 1.4F;
 		developsResistance = true;
 		breaksBlocks = true;
 		this.teenAge = 5;
-		this.ridingY = 1.0F;
 	}
 
 	public void initEntityAI() {

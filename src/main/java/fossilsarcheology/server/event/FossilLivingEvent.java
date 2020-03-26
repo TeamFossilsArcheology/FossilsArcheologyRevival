@@ -60,7 +60,7 @@ public class FossilLivingEvent {
 
     @SubscribeEvent
     public void onGatherBlockDrops(BlockEvent.HarvestDropsEvent event) {
-        if(event.getState().getBlock() == FABlockRegistry.FOSSIL){
+        if(event.getState().getBlock() == FABlockRegistry.FOSSIL && event.getHarvester() != null && event.getHarvester().getHeldItemMainhand() != null){
             ItemStack pickaxe = event.getHarvester().getHeldItemMainhand();
             int arch_level = EnchantmentHelper.getEnchantmentLevel(FAEnchantmentRegistry.ENCHANTMENT_ARCHEOLOGY, pickaxe);
             int paleo_level = EnchantmentHelper.getEnchantmentLevel(FAEnchantmentRegistry.ENCHANTMENT_PALEONTOLOGY, pickaxe);

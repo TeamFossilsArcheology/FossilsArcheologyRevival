@@ -1376,9 +1376,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                             if (this.getRidingPlayer() == null) {
                                 if (!this.world.isRemote) {
                                     Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
+                                    setRidingPlayer(player);
                                 }
                                 this.setOrder(OrderType.WANDER);
-                                setRidingPlayer(player);
                                 this.setSitting(false);
                                 this.setSleeping(false);
                             } else if (this.getRidingPlayer() == player) {
