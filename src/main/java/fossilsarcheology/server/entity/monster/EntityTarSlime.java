@@ -115,9 +115,6 @@ public class EntityTarSlime extends EntitySlime {
     public void updateRidden() {
         super.updateRidden();
         if (this.getRidingEntity() != null) {
-            if (!this.getRidingEntity().isEntityAlive()) {
-                this.dismountRidingEntity();
-            }
             if (this.getRidingEntity() instanceof EntityPlayer) {
                 this.rotationYaw = ((EntityPlayer) getRidingEntity()).rotationYawHead;
                 this.setPosition(posX, posY, posZ);
@@ -131,6 +128,9 @@ public class EntityTarSlime extends EntitySlime {
                 squishFactor = 0.7F;
             } else {
                 squishFactor = 0.0F;
+            }
+            if (!this.getRidingEntity().isEntityAlive()) {
+                this.dismountRidingEntity();
             }
             // alterSquishAmount();
         }

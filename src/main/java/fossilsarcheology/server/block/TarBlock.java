@@ -34,6 +34,7 @@ public class TarBlock extends BlockFluidClassic {
 		super(FAFluidRegistry.TAR_FLUID, FAFluidRegistry.TAR_MATERIAL);
 		this.setLightOpacity(1);
 		this.setTranslationKey("tar");
+		this.setTickRandomly(true);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -58,7 +59,7 @@ public class TarBlock extends BlockFluidClassic {
 	@Override
 	public void updateTick(@Nonnull World world, @Nonnull BlockPos pos, @Nonnull IBlockState state, @Nonnull Random rand) {
 		super.updateTick(world, pos, state, rand);
-		if(world.getDifficulty() != EnumDifficulty.PEACEFUL &&Revival.CONFIG_OPTIONS.spawnTarSlimes && Revival.CONFIG_OPTIONS.tarSlimeSpawnRate > 0 && rand.nextInt(this.isSourceBlock(world, pos) ? Revival.CONFIG_OPTIONS.tarSlimeSpawnRate : Revival.CONFIG_OPTIONS.tarSlimeSpawnRate * 5) == 0){
+		if(world.getDifficulty() != EnumDifficulty.PEACEFUL && Revival.CONFIG_OPTIONS.spawnTarSlimes && Revival.CONFIG_OPTIONS.tarSlimeSpawnRate > 0 && rand.nextInt(this.isSourceBlock(world, pos) ? Revival.CONFIG_OPTIONS.tarSlimeSpawnRate : Revival.CONFIG_OPTIONS.tarSlimeSpawnRate * 15) == 0){
 			EntityTarSlime tarSlime = new EntityTarSlime(world);
 			tarSlime.onInitialSpawn(world.getDifficultyForLocation(pos), null);
 			tarSlime.setPositionAndRotation(pos.getX() + 0.5D, pos.getY() + 0.5D, pos.getZ() + 0.5D, 0, 0);

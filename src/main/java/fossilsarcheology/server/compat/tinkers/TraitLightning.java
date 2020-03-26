@@ -5,6 +5,7 @@ import fossilsarcheology.server.entity.utility.EntityAncientLightning;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityPigZombie;
+import net.minecraft.entity.passive.EntityAnimal;
 import net.minecraft.entity.passive.EntityPig;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
