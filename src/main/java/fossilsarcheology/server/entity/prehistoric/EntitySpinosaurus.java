@@ -316,7 +316,6 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming implements ISca
 
 	@Override
 	public boolean canBeRidden() {
-		// TODO Auto-generated method stub
 		return true;
 	}
 
@@ -333,5 +332,9 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming implements ISca
 	@Override
 	protected SoundEvent getDeathSound() {
 		return FASoundRegistry.SPINOSAURUS_DEATH;
+	}
+
+	public float getProximityToNextPathSkip(){
+		return (float)this.getEntityBoundingBox().getAverageEdgeLength() * 0.8F;
 	}
 }

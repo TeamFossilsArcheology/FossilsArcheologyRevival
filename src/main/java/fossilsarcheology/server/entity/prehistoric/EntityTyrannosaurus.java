@@ -13,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
 public class EntityTyrannosaurus extends EntityPrehistoric implements IScaryDinosaur {
@@ -180,6 +181,12 @@ public class EntityTyrannosaurus extends EntityPrehistoric implements IScaryDino
 
 	}
 
+	public AxisAlignedBB getAttackBounds() {
+		float size = this.getRenderSizeModifier() * 0.25F;
+		return this.getEntityBoundingBox().grow(4.0F + size, 2.0F + size, 4.0F + size);
+	}
+
+
 	@Override
 	public int getAdultAge() {
 		return 12;
@@ -226,5 +233,9 @@ public class EntityTyrannosaurus extends EntityPrehistoric implements IScaryDino
 	@Override
 	public boolean canBeRidden() {
 		return true;
+	}
+
+	public float getProximityToNextPathSkip(){
+		return (float)this.getEntityBoundingBox().getAverageEdgeLength() * 0.8F;
 	}
 }

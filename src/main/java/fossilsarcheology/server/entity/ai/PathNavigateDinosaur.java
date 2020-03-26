@@ -15,7 +15,7 @@ import net.minecraft.world.World;
 
 public class PathNavigateDinosaur extends PathNavigateGround {
     public BlockPos targetPosition;
-    private EntityPrehistoric dragon;
+    private EntityPrehistoric dinosaur;
     private int ticksAtLastPos;
     private Vec3d lastPosCheck = Vec3d.ZERO;
     private Vec3d timeoutCachedNode = Vec3d.ZERO;
@@ -23,9 +23,9 @@ public class PathNavigateDinosaur extends PathNavigateGround {
     private long lastTimeoutCheck;
     private double timeoutLimit;
 
-    public PathNavigateDinosaur(EntityPrehistoric entitylivingIn, World worldIn) {
-        super(entitylivingIn, worldIn);
-        this.dragon = entitylivingIn;
+    public PathNavigateDinosaur(EntityPrehistoric dinosaur, World worldIn) {
+        super(dinosaur, worldIn);
+        this.dinosaur = dinosaur;
     }
 
     protected PathFinder getPathFinder() {
@@ -66,7 +66,7 @@ public class PathNavigateDinosaur extends PathNavigateGround {
             }
         }
 
-        this.maxDistanceToWaypoint = this.entity.width / 2;
+        this.maxDistanceToWaypoint = dinosaur.getProximityToNextPathSkip();
         Vec3d vec3d1 = this.currentPath.getCurrentPos();
         float distX = MathHelper.abs((float) (this.entity.posX - (vec3d1.x + 0.5D)));
         float distZ = MathHelper.abs((float) (this.entity.posZ - (vec3d1.z + 0.5D)));

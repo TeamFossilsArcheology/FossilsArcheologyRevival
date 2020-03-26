@@ -2105,6 +2105,10 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public void handleStopJump() {
     }
 
+    public float getProximityToNextPathSkip(){
+        return width / 2;
+    }
+
     public Animation getExtraAnimation(int i) {
         return NO_ANIMATION;
     }
