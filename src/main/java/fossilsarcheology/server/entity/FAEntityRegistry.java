@@ -8,7 +8,6 @@ import fossilsarcheology.server.entity.projectile.AncientJavelinEntity;
 import fossilsarcheology.server.entity.projectile.EntityBirdEgg;
 import fossilsarcheology.server.entity.projectile.JavelinEntity;
 import fossilsarcheology.server.entity.utility.*;
-import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
@@ -18,7 +17,7 @@ public class FAEntityRegistry {
 		for (int id = 0; id < PrehistoricEntityType.values().length; id++) {
 			PrehistoricEntityType type = PrehistoricEntityType.values()[id];
 			if (type.mobType != MobType.CHICKEN && type.mobType != MobType.VANILLA) {
-				registerSpawnable(type.getEntity(), "fossil." + type.name().toLowerCase(), id + 200, type.primaryEggColor, type.secondaryEggColor);
+				registerSpawnable(type.getEntity(), "fossil." + type.name().toLowerCase(), id + 200, type.primaryEggColor, type.secondaryEggColor, type.maxRenderDistance);
 			}
 		}
 		registerEntity(JavelinEntity.class, "fossil.javelin", 0);
@@ -49,5 +48,9 @@ public class FAEntityRegistry {
 
 	public static void registerSpawnable(Class<? extends Entity> entityClass, String name, int id, int mainColor, int subColor) {
 		EntityRegistry.registerModEntity(new ResourceLocation(Revival.MODID, "" + name), entityClass, name, id, Revival.INSTANCE, 64, 1, true, mainColor, subColor);
+	}
+
+	public static void registerSpawnable(Class<? extends Entity> entityClass, String name, int id, int mainColor, int subColor, int trackingRange) {
+		EntityRegistry.registerModEntity(new ResourceLocation(Revival.MODID, "" + name), entityClass, name, id, Revival.INSTANCE, trackingRange, 1, true, mainColor, subColor);
 	}
 }
