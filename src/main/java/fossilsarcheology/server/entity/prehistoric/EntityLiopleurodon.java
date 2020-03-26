@@ -156,14 +156,9 @@ public class EntityLiopleurodon extends EntityPrehistoricSwimming {
 			if (canReachPrey()) {
 				this.attackEntityAsMob(this.getAttackTarget());
 				if (!isEntitySmallerThan(this.getAttackTarget(), 1.5F * (this.getAgeScale() / this.maxSize)) || this.getRNG().nextInt(5) != 0) {
-					if (this.getAnimation() != ATTACK_ANIMATION && this.getAnimation() != SHAKE_ANIMATION) {
-						this.setAnimation(ATTACK_ANIMATION);
-					}
+					this.setAnimation(ATTACK_ANIMATION);
+
 					this.faceEntity(this.getAttackTarget(), 30, 30);
-					if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() == 5 || this.getAnimationTick() == 6)) {
-						this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
-						destroyBoat(this.getAttackTarget());
-					}
 				} else if(this.getAnimation() != ATTACK_ANIMATION){
 					destroyBoat(this.getAttackTarget());
 					this.getAttackTarget().startRiding(this);
@@ -171,6 +166,10 @@ public class EntityLiopleurodon extends EntityPrehistoricSwimming {
 						this.setAnimation(SHAKE_ANIMATION);
 					}
 				}
+			}
+			if (this.getAnimation() == ATTACK_ANIMATION && (this.getAnimationTick() == 5 || this.getAnimationTick() == 6)) {
+				this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue());
+				destroyBoat(this.getAttackTarget());
 			}
 		}
 
@@ -238,4 +237,10 @@ public class EntityLiopleurodon extends EntityPrehistoricSwimming {
 	protected SoundEvent getDeathSound() {
 		return FASoundRegistry.LIOPLEURODON_DEATH;
 	}
+
+	@Override
+	public Animation[] getAnimations() {
+		return new Animation[]{SPEAK_ANIMATION, ATTACK_ANIMATION, SHAKE_ANIMATION};
+	}
+
 }

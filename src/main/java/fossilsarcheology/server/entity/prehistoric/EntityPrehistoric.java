@@ -1260,7 +1260,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (dmg.getTrueSource() != null) {
             this.setMood(this.getMood() - 5);
         }
-        if (this.getHurtSound(DamageSource.GENERIC) != null) {
+        if (this.getHurtSound(DamageSource.GENERIC) != null && i >= 1 && dmg != DamageSource.IN_WALL) {
             if (this.getAnimation() != null) {
                 if (this.getAnimation() == NO_ANIMATION && world.isRemote) {
                     this.setAnimation(SPEAK_ANIMATION);

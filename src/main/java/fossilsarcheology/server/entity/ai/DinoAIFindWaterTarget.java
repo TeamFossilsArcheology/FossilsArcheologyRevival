@@ -26,26 +26,19 @@ public class DinoAIFindWaterTarget extends EntityAIBase {
 		this.mob = mob;
 		this.range = range;
 		this.avoidAttacker = avoidAttacker;
-		this.setMutexBits(1);
 		fleePosSorter = new Sorter(mob);
 	}
 
 	@Override
 	public boolean shouldExecute() {
-		if (!this.mob.isInWater() || this.mob.isRiding() || this.mob instanceof EntityPrehistoricSwimming && (((EntityPrehistoricSwimming) this.mob).currentOrder != OrderType.WANDER || ((EntityPrehistoricSwimming) this.mob).shouldLeaveWater() )) {
+		if (!this.mob.isInWater() || this.mob.isRiding() || this.mob instanceof EntityPrehistoricSwimming && (((EntityPrehistoricSwimming) this.mob).currentOrder != OrderType.WANDER)) {
 			return false;
 		}
 		if (this.mob.getRNG().nextFloat() < 0.5F) {
-			Path path = this.mob.getNavigator().getPath();
-			if (!this.mob.getNavigator().noPath() && !isDirectPathBetweenPoints(this.mob, this.mob.getPositionVector(), new Vec3d(path.getFinalPathPoint().x, path.getFinalPathPoint().y, path.getFinalPathPoint().z)) || path != null && path.getFinalPathPoint() != null &&  this.mob.getDistanceSq(path.getFinalPathPoint().x, path.getFinalPathPoint().y, path.getFinalPathPoint().z) < 3) {
-				this.mob.getNavigator().clearPath();
-			}
-			if (this.mob.getNavigator().noPath()) {
-				BlockPos vec3 = this.findWaterTarget();
-				if (vec3 != null) {
-					this.mob.getNavigator().tryMoveToXYZ(vec3.getX(), vec3.getY(), vec3.getZ(), 1.0);
-					return true;
-				}
+			BlockPos vec3 = this.findWaterTarget();
+			if (vec3 != null) {
+				this.mob.getMoveHelper().setMoveTo(vec3.getX(), vec3.getY(), vec3.getZ(), 1.0);
+				return true;
 			}
 		}
 		return false;

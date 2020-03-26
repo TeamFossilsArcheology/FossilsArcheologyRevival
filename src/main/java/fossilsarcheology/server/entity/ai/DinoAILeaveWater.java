@@ -50,10 +50,11 @@ public class DinoAILeaveWater extends EntityAIBase {
             this.dino.motionX += (Math.signum(blockpos.getX() + 0.5D - this.dino.posX) * 0.5D - this.dino.motionX) * 0.100000000372529;
             this.dino.motionZ += (Math.signum(blockpos.getZ() + 0.5D - this.dino.posZ) * 0.5D - this.dino.motionZ) * 0.100000000372529;
         }
+        this.dino.getMoveHelper().setMoveTo(this.shelterX + 0.5F, this.shelterY + 1.5F, this.shelterZ + 0.5F, this.movementSpeed);
     }
 
     public boolean shouldContinueExecuting() {
-        return !this.dino.getNavigator().noPath();
+        return this.dino.isInWater();
     }
 
     public void startExecuting() {
@@ -63,11 +64,11 @@ public class DinoAILeaveWater extends EntityAIBase {
     @Nullable
     private Vec3d findPossibleShelter() {
         Random random = this.dino.getRNG();
-        BlockPos blockpos = new BlockPos(this.dino.posX, this.dino.getEntityBoundingBox().minY, this.dino.posZ);
+        BlockPos blockpos = new BlockPos(this.dino.posX, this.dino.posY, this.dino.posZ);
 
         for (int i = 0; i < 10; ++i) {
-            BlockPos blockpos1 = blockpos.add(random.nextInt(20) - 10, random.nextInt(6), random.nextInt(20) - 10);
-            if (this.world.getBlockState(blockpos1).isOpaqueCube() && blockpos1.getY() >= blockpos.getY()) {
+            BlockPos blockpos1 = blockpos.add(random.nextInt(20) - 10, 1 + random.nextInt(6), random.nextInt(20) - 10);
+            if (this.world.getBlockState(blockpos1).isOpaqueCube() && world.isAirBlock(blockpos1.up()) && blockpos1.getY() >= blockpos.getY()) {
                 return new Vec3d((double) blockpos1.getX(), (double) blockpos1.getY(), (double) blockpos1.getZ());
             }
         }
