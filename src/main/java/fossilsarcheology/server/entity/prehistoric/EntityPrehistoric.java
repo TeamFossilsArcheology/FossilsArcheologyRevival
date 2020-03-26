@@ -34,6 +34,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAINearestAttackableTarget;
 import net.minecraft.entity.ai.EntityAISit;
 import net.minecraft.entity.ai.attributes.IAttributeInstance;
+import net.minecraft.entity.item.EntityBoat;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
@@ -140,6 +141,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private boolean droppedBiofossil = false;
     private int animTick;
     private int riderJumpCooldown = 0;
+    private boolean isActuallyInWater;
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world);
@@ -211,6 +213,24 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 block != net.minecraft.init.Blocks.IRON_BARS &&
                 block != net.minecraft.init.Blocks.END_GATEWAY
                 || block == Blocks.WATERLILY;
+    }
+
+    public boolean handleWaterMovement() {
+        if (this.getRidingEntity() instanceof EntityBoat) {
+            this.inWater = false;
+        } else if (this.world.handleMaterialAcceleration(this.getEntityBoundingBox().shrink(0.001D), Material.WATER, this)) {
+            if (!this.inWater && !this.firstUpdate) {
+                this.doWaterSplashEffect();
+            }
+
+            this.fallDistance = 0.0F;
+            this.inWater = true;
+            this.extinguish();
+        } else {
+            this.inWater = false;
+        }
+
+        return this.inWater;
     }
 
     public int getSpeakLength() {
@@ -747,7 +767,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                     this.motionY = this.getJumpStrength() * (double) this.jumpPower;
 
                     if (this.isPotionActive(MobEffects.JUMP_BOOST)) {
-                        this.motionY += (double) ((float) (this.getActivePotionEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1F);
+                        this.motionY += (float) (this.getActivePotionEffect(MobEffects.JUMP_BOOST).getAmplifier() + 1) * 0.1F;
                     }
 
                     this.setDinoJumping(true);
@@ -756,8 +776,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                     if (forward > 0.0F) {
                         float f = MathHelper.sin(this.rotationYaw * 0.017453292F);
                         float f1 = MathHelper.cos(this.rotationYaw * 0.017453292F);
-                        this.motionX += (double) (-0.4F * f * this.jumpPower);
-                        this.motionZ += (double) (0.4F * f1 * this.jumpPower);
+                        this.motionX += -0.4F * f * this.jumpPower;
+                        this.motionZ += 0.4F * f1 * this.jumpPower;
                         this.playSound(SoundEvents.ENTITY_HORSE_JUMP, 0.4F, 1.0F);
                     }
 
@@ -804,7 +824,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setGrowingAge(0);
         }
         if (!this.isSkeleton()) {
-            if(!this.isAgingDisabled()){
+            if (!this.isAgingDisabled()) {
                 this.setAgeinTicks(this.getAgeInTicks() + 1);
                 if (this.getAgeInTicks() % 24000 == 0) {
                     this.updateAbilities();
@@ -1284,7 +1304,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 } else {
                     double d0 = player.posX - this.posX;
                     double d2 = player.posZ - this.posZ;
-                    double d3 = (double) MathHelper.sqrt(d0 * d0 + d2 * d2);
+                    double d3 = MathHelper.sqrt(d0 * d0 + d2 * d2);
                     float f = (float) (MathHelper.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
                     this.rotationYawHead = f;
                     this.rotationYaw = f;
@@ -1338,7 +1358,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                     }
                     return false;
                 }
-                if (itemstack.getItem() == FAItemRegistry.STUNTED_ESSENCE && !isAgingDisabled()){
+                if (itemstack.getItem() == FAItemRegistry.STUNTED_ESSENCE && !isAgingDisabled()) {
                     this.setHunger(this.getHunger() + 20);
                     this.heal(this.getMaxHealth());
                     this.playSound(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE, this.getSoundVolume(), this.getSoundPitch());
@@ -1664,7 +1684,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             EntityPrehistoric prehistoric = listOfFemales.get(0);
             if (prehistoric.ticksTillMate == 0) {
                 this.getNavigator().tryMoveToEntityLiving(prehistoric, 1);
-                double distance = (double) (this.width * 8.0F * this.width * 8.0F + prehistoric.width);
+                double distance = this.width * 8.0F * this.width * 8.0F + prehistoric.width;
                 if (this.getDistanceSq(prehistoric.posX, prehistoric.getEntityBoundingBox().minY, prehistoric.posZ) <= distance && prehistoric.onGround && this.onGround && this.isAdult() && prehistoric.isAdult()) {
                     prehistoric.procreate(this);
                     this.ticksTillMate = this.rand.nextInt(6000) + 6000;
@@ -1864,30 +1884,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         return false;
     }
 
-   /* @Override
-    protected void dropFewItems(boolean bool, int rand) {
-        int j = this.rand.nextInt(3) + this.rand.nextInt(1 + rand);
-        if (this.type.mobType == MobType.BIRD || this.type.mobType == MobType.TERRORBIRD) {
-            for (int k = 0; k < j; ++k) {
-                this.dropItem(Items.FEATHER, 1 + this.rand.nextInt(3));
-            }
-        }
-        if (this.isBurning() && this.type.cookedFoodItem != null) {
-            this.dropItem(this.type.cookedFoodItem, Math.min(this.getAgeInDays(), this.getAdultAge()));
-        } else if (this.type.foodItem != null) {
-            this.dropItem(this.type.foodItem, Math.min(this.getAgeInDays(), this.getAdultAge()));
-        }
-        if (DinosaurBoneType.get(this.type) != null) {
-            this.entityDropItem(new ItemStack(FAItemRegistry.SKULL, this.rand.nextInt(1), DinosaurBoneType.get(this.type).ordinal()), 0);
-            this.entityDropItem(new ItemStack(FAItemRegistry.ARM_BONE, this.rand.nextInt(2), DinosaurBoneType.get(this.type).ordinal()), 0);
-            this.entityDropItem(new ItemStack(FAItemRegistry.RIBCAGE, this.rand.nextInt(1), DinosaurBoneType.get(this.type).ordinal()), 0);
-            this.entityDropItem(new ItemStack(FAItemRegistry.VERTEBRAE, this.rand.nextInt(5), DinosaurBoneType.get(this.type).ordinal()), 0);
-            this.entityDropItem(new ItemStack(FAItemRegistry.FOOT, this.rand.nextInt(2), DinosaurBoneType.get(this.type).ordinal()), 0);
-            this.entityDropItem(new ItemStack(FAItemRegistry.UNIQUE_ITEM, this.rand.nextInt(2), DinosaurBoneType.get(this.type).ordinal()), 0);
-        }
-    }*/
-
-
     @Nullable
     protected ResourceLocation getLootTable() {
         return PrehistoricEntityType.DINOSAUR_LOOT;
@@ -1912,8 +1908,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             rotationYawHead = this.getRidingPlayer().rotationYaw;
             float radius = ridingXZ * (0.7F * getAgeScale()) * -3;
             float angle = (0.01745329251F * this.renderYawOffset);
-            double extraX = (double) (radius * MathHelper.sin((float) (Math.PI + angle)));
-            double extraZ = (double) (radius * MathHelper.cos(angle));
+            double extraX = radius * MathHelper.sin((float) (Math.PI + angle));
+            double extraZ = radius * MathHelper.cos(angle);
             double extraY = ridingY * (getAgeScale());
             float spinosaurusAddition = 0;
             if (this instanceof EntitySpinosaurus) {
@@ -2104,8 +2100,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
     }
 
-    public boolean canJump()
-    {
+    public boolean canJump() {
         return this.isBeingRidden();
     }
 
@@ -2119,7 +2114,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         return NO_ANIMATION;
     }
 
-    public boolean useSpecialAttack(){
+    public boolean useSpecialAttack() {
         return false;
     }
 }

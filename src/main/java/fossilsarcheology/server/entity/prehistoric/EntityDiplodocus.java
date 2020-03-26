@@ -137,11 +137,6 @@ public class EntityDiplodocus extends EntityPrehistoric {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        for(EntityAITasks.EntityAITaskEntry entry : this.tasks.taskEntries){
-           // if(entry.using)
-           // System.out.println(entry.action.getClass().getSimpleName() + "    active: " + entry.using);
-        }
-        //System.out.println();
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 19 && this.getAttackTarget() != null) {
             doAttack();
             doAttackKnockback(0.5F);
