@@ -327,7 +327,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
     }
 
     public boolean isDirectPathBetweenPoints(Vec3d target) {
-        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector(), target, false);
+        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector().add(0, -0.25, 0), target, false);
         if (rayTrace != null && rayTrace.hitVec != null) {
             BlockPos sidePos = rayTrace.getBlockPos();
             BlockPos pos = new BlockPos(rayTrace.hitVec);
@@ -350,7 +350,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
 
         public boolean shouldExecute() {
             target = EntityMeganeura.getPositionRelativetoGround(EntityMeganeura.this, EntityMeganeura.this.world, EntityMeganeura.this.posX + EntityMeganeura.this.rand.nextInt(16) - 8, EntityMeganeura.this.posZ + EntityMeganeura.this.rand.nextInt(16) - 8, EntityMeganeura.this.rand);
-            return !EntityMeganeura.this.useSwimAI() && !EntityMeganeura.this.isSitting() && EntityMeganeura.this.isDirectPathBetweenPoints(new Vec3d(target).add(0.5D, 0.5D, 0.5D)) && !EntityMeganeura.this.getMoveHelper().isUpdating() && EntityMeganeura.this.rand.nextInt(4) == 0;
+            return !EntityMeganeura.this.useSwimAI() && !EntityMeganeura.this.isSitting() && EntityMeganeura.this.isDirectPathBetweenPoints(new Vec3d(target).add(0.5D, 0.5D, 0.5D)) && EntityMeganeura.this.rand.nextInt(4) == 0;
         }
 
         public boolean shouldContinueExecuting() {
