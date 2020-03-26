@@ -245,19 +245,7 @@ public class FAMachineRecipeRegistry {
         for(int i = 5; i <= 14; i++){
             registerWorktable(new ItemStack(FABlockRegistry.FIGURINE, 1, i), new ItemStack(FABlockRegistry.FIGURINE, 1, i - 5), new ItemStack(FAItemRegistry.POTTERY_SHARD));
         }
-        cultivateFuelValues.put(new ItemStack(FAItemRegistry.BIOFOSSIL), 300);
-        cultivateFuelValues.put(new ItemStack(Items.PORKCHOP), 3000);
-        cultivateFuelValues.put(new ItemStack(Items.MUTTON), 3000);
-        cultivateFuelValues.put(new ItemStack(Items.FISH), 1500);
-        cultivateFuelValues.put(new ItemStack(Items.COOKED_FISH), 1500);
-        cultivateFuelValues.put(new ItemStack(Items.BEEF), 4000);
-        cultivateFuelValues.put(new ItemStack(Items.CHICKEN), 1500);
-        cultivateFuelValues.put(new ItemStack(Items.RABBIT_FOOT), 500);
-        cultivateFuelValues.put(new ItemStack(Items.RABBIT), 1500);
-        cultivateFuelValues.put(new ItemStack(Items.EGG), 3000);
-        cultivateFuelValues.put(new ItemStack(Items.SLIME_BALL), 800);
-        cultivateFuelValues.put(new ItemStack(Items.MILK_BUCKET), 6000);
-
+        cultivateFuelValues.put(new ItemStack(FAItemRegistry.BIO_GOO), 6000);
     }
 
     public static void registerAnalyzer(RecipeAnalyzer recipe) {

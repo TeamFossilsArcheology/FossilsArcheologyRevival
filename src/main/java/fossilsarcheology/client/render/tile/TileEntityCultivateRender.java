@@ -27,8 +27,8 @@ public class TileEntityCultivateRender extends TileEntitySpecialRenderer<TileEnt
     }
 
     public void renderCultureVatAt(TileEntityCultivate entity, double x, double y, double z, float partialTicks) {
-        float rot = Minecraft.getMinecraft().player.ticksExisted;
-        float bob = (float) (Math.sin(Minecraft.getMinecraft().player.ticksExisted * 0.1F) * 1 * 0.05F - 1 * 0.05F);
+        float rot = Minecraft.getMinecraft().player.ticksExisted + partialTicks;
+        float bob = (float) (Math.sin((Minecraft.getMinecraft().player.ticksExisted + partialTicks) * 0.03F) * 1 * 0.05F - 1 * 0.05F);
         GlStateManager.pushMatrix();
         GlStateManager.translate(x + 0.5F, y + 1.5F, z + 0.5F);
         GlStateManager.rotate(180, 0F, 0F, 1F);

@@ -26,6 +26,7 @@ public class FAItemRegistry {
 	public static final BioFossilItem TAR_FOSSIL = new BioFossilItem(true);
 	public static final BasicItem DINOPEDIA = new BasicItem("dinopedia");
 	public static final BasicItem FAILURESAURUS_FLESH = new BasicItem("failuresaurus_flesh");
+	public static final BasicItem BIO_GOO = new BasicItem("bio_goo");
 	public static final BasicItem AMBER = new BasicItem("amber");
 	public static final BasicItem DOMINICAN_AMBER = new BasicItem("dominican_amber");
 	public static final BasicItem CHICKEN_ESSENCE = new BasicItem("chicken_essence");
