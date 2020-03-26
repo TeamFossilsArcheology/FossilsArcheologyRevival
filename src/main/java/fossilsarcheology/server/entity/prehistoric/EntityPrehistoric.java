@@ -859,7 +859,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             sleepProgress = 0F;
         }
         if (!this.world.isRemote) {
-            if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD && !this.wantsToSleep()) {
+            if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD && !this.wantsToSleep() && !this.isSleeping()) {
                 this.setBesideClimbableBlock(this.collidedHorizontally);
             } else {
                 this.setBesideClimbableBlock(false);
@@ -1098,7 +1098,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (this.aiMovingType() == PrehistoricEntityTypeAI.Moving.AQUATIC || this.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMIAQUATIC) {
             return false;
         } else {
-            return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD && this.isBesideClimbableBlock();
+            return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD && this.isBesideClimbableBlock() && !this.isMovementBlockedSoft();
         }
     }
 
