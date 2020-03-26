@@ -13,6 +13,7 @@ import fossilsarcheology.server.event.FossilLivingEvent;
 import fossilsarcheology.server.lib.LibDependencies;
 import fossilsarcheology.server.loot.CustomizeToDinosaur;
 import fossilsarcheology.server.message.*;
+import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import fossilsarcheology.server.util.ReleaseType;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.ilexiconn.llibrary.server.network.NetworkWrapper;
@@ -80,6 +81,7 @@ public class Revival {
         MinecraftForge.EVENT_BUS.register(new FossilLivingEvent());
         EntityPropertiesHandler.INSTANCE.registerProperties(FossilsPlayerProperties.class);
         EntityPropertiesHandler.INSTANCE.registerProperties(FossilsMammalProperties.class);
+
     }
 
     @Mod.EventHandler
@@ -98,6 +100,7 @@ public class Revival {
     public void onPostInit(FMLPostInitializationEvent event) {
         PROXY.onPostInit();
         TinkersCompatBridge.loadTinkersPostInitCompat();
+        FAMachineRecipeRegistry.postInit();
     }
 
     public static void loadConfig() {

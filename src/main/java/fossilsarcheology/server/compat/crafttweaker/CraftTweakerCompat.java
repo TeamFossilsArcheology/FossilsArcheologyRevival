@@ -41,7 +41,7 @@ public class CraftTweakerCompat {
     public static void removeAnalyzerInput(IItemStack iinput) {
         ItemStack input = CraftTweakerMC.getItemStack(iinput).copy();
         input.setCount(1);
-        FAMachineRecipeRegistry.analyzerRecipes.removeIf(recipe -> recipe.getInput().copy().isItemEqual(input));
+        FAMachineRecipeRegistry.toBeRemovedAnalyzer.add(input);
     }
 
     @ZenMethod
@@ -53,7 +53,7 @@ public class CraftTweakerCompat {
     public static void removeCultivateRecipe(IItemStack iinput) {
         ItemStack input = CraftTweakerMC.getItemStack(iinput).copy();
         input.setCount(1);
-        FAMachineRecipeRegistry.cultivateRecipes.remove(input);
+        FAMachineRecipeRegistry.toBeRemovedCultivate.add(input);
     }
 
     @ZenMethod
@@ -77,7 +77,7 @@ public class CraftTweakerCompat {
     public static void removeWorktableRecipe(IItemStack iinput) {
         ItemStack input = CraftTweakerMC.getItemStack(iinput).copy();
         input.setCount(1);
-        FAMachineRecipeRegistry.worktableRecipes.removeIf(recipe -> recipe.getInput().copy().isItemEqual(input));
+        FAMachineRecipeRegistry.toBeRemovedWorktable.add(input);
     }
 
     @ZenMethod
@@ -104,7 +104,7 @@ public class CraftTweakerCompat {
     public static void removeSifterInput(IItemStack iinput) {
         ItemStack input = CraftTweakerMC.getItemStack(iinput).copy();
         input.setCount(1);
-        FAMachineRecipeRegistry.sifterRecipes.removeIf(recipe -> recipe.getInput().copy().isItemEqual(input));
+        FAMachineRecipeRegistry.toBeRemovedSifter.add(input);
     }
 
 

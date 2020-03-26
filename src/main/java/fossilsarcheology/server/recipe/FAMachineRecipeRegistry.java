@@ -4,6 +4,7 @@ import com.google.common.collect.Maps;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.block.entity.TileEntityCultivate;
 import fossilsarcheology.server.block.entity.TileEntitySifter;
+import fossilsarcheology.server.compat.jei.sifter.RecipeSifter;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.entity.prehistoric.TimePeriod;
 import fossilsarcheology.server.item.FAItemRegistry;
@@ -18,15 +19,20 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 public class FAMachineRecipeRegistry {
     public static List<RecipeAnalyzer> analyzerRecipes = new ArrayList<>();
+    public static List<ItemStack> toBeRemovedAnalyzer = new ArrayList<>();
     public static List<RecipeAnalyzer> sifterRecipes = new ArrayList<>();
+    public static List<ItemStack> toBeRemovedSifter = new ArrayList<>();
     public static Map<ItemStack, ItemStack> cultivateRecipes = Maps.<ItemStack, ItemStack>newHashMap();
+    public static List<ItemStack> toBeRemovedCultivate = new ArrayList<>();
     public static Map<ItemStack, Integer> cultivateFuelValues = Maps.<ItemStack, Integer>newHashMap();
     public static List<RecipeWorktable> worktableRecipes = new ArrayList<>();
+    public static List<ItemStack> toBeRemovedWorktable = new ArrayList<>();
 
 
     public static void init() {
@@ -213,10 +219,10 @@ public class FAMachineRecipeRegistry {
             sifterRecipe.addOutput(new ItemStack(FAItemRegistry.BIOFOSSIL), 2);
             registerSifter(sifterRecipe);
         }
-        for(PrehistoricEntityType type : PrehistoricEntityType.values()){
+        for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             registerCultivate(new ItemStack(type.dnaItem), TileEntityCultivate.getCultivationOutput(new ItemStack(type.dnaItem)));
         }
-        for(int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++){
+        for (int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++) {
             registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, i), new ItemStack(FAItemRegistry.SEED, 1, i));
         }
         registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN), new ItemStack(FAItemRegistry.FERN_SEED));
@@ -242,7 +248,7 @@ public class FAMachineRecipeRegistry {
         registerWorktable(new ItemStack(FABlockRegistry.KYLIX_VASE, 1, 0), new ItemStack(FABlockRegistry.KYLIX_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD));
         registerWorktable(new ItemStack(FABlockRegistry.VOLUTE_VASE, 1, 0), new ItemStack(FABlockRegistry.VOLUTE_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD));
         registerWorktable(new ItemStack(FABlockRegistry.AMPHORA_VASE, 1, 0), new ItemStack(FABlockRegistry.AMPHORA_VASE, 1, 1), new ItemStack(FAItemRegistry.POTTERY_SHARD));
-        for(int i = 5; i <= 14; i++){
+        for (int i = 5; i <= 14; i++) {
             registerWorktable(new ItemStack(FABlockRegistry.FIGURINE, 1, i), new ItemStack(FABlockRegistry.FIGURINE, 1, i - 5), new ItemStack(FAItemRegistry.POTTERY_SHARD));
         }
         cultivateFuelValues.put(new ItemStack(FAItemRegistry.BIO_GOO), 6000);
@@ -299,5 +305,38 @@ public class FAMachineRecipeRegistry {
             }
         }
         return null;
+    }
+
+    public static void postInit() {
+        Iterator<RecipeAnalyzer> itr = FAMachineRecipeRegistry.analyzerRecipes.iterator();
+        while(itr.hasNext()){
+            RecipeAnalyzer recipe = itr.next();
+            for(ItemStack stack : FAMachineRecipeRegistry.toBeRemovedAnalyzer){
+                if (recipe.getInput().isItemEqual(stack)) {
+                    itr.remove();
+                }
+            }
+        }
+        Iterator<RecipeAnalyzer> itr1 = FAMachineRecipeRegistry.sifterRecipes.iterator();
+        while(itr1.hasNext()){
+            RecipeAnalyzer recipe = itr1.next();
+            for(ItemStack stack : FAMachineRecipeRegistry.toBeRemovedSifter){
+                if (recipe.getInput().isItemEqual(stack)) {
+                    itr1.remove();
+                }
+            }
+        }
+        for(ItemStack cultivateStack : toBeRemovedCultivate){
+            FAMachineRecipeRegistry.cultivateRecipes.remove(cultivateStack);
+        }
+        Iterator<RecipeWorktable> itr3 = FAMachineRecipeRegistry.worktableRecipes.iterator();
+        while(itr3.hasNext()){
+            RecipeWorktable recipe = itr3.next();
+            for(ItemStack stack : FAMachineRecipeRegistry.toBeRemovedWorktable){
+                if (recipe.getInput().isItemEqual(stack)) {
+                    itr3.remove();
+                }
+            }
+        }
     }
 }
