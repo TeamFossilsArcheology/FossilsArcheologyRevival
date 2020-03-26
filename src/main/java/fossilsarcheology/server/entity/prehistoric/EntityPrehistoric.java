@@ -11,6 +11,7 @@ import fossilsarcheology.server.block.entity.TileEntityFeeder;
 import fossilsarcheology.server.entity.EntityDinosaurEgg;
 import fossilsarcheology.server.entity.FoodHelper;
 import fossilsarcheology.server.entity.ai.DinoMoveHelper;
+import fossilsarcheology.server.entity.ai.PathNavigateDinosaur;
 import fossilsarcheology.server.entity.utility.EntityToyBase;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.item.FAItemRegistry;
@@ -1674,7 +1675,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     protected PathNavigate createNavigator(World worldIn) {
-        return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ? new PathNavigateClimber(this, worldIn) : super.createNavigator(worldIn);
+        return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ? new PathNavigateClimber(this, worldIn) : new PathNavigateDinosaur(this, worldIn);
     }
 
 

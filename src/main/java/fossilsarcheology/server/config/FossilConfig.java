@@ -64,6 +64,7 @@ public class FossilConfig {
     public int pregnancyTime = 10000;
     public int dinoUpdateDelay = 100;
     public int fernTickRate = 2;
+    public boolean intensivePathfinding = false;
 
     public void init(Configuration config) {
         this.generatePrehistoricTrees = config.getBoolean("Generate Prehistoric Trees", "all", false, "True if Palaeoraphe, Calamites, Sigillaria, etc. Trees are to generate naturally");
@@ -128,5 +129,6 @@ public class FossilConfig {
         this.machineTransferRate = config.getInt("Machine Max Energy Transfer Rate", "all", 10, 1, 1000000, "Max Redstone Flux(RF) machines can transfer per tick");
         this.machineEnergyUsage = config.getInt("Machine Max Energy Usage Rate", "all", 1, 1, 1000000, "how much Redstone Flux(RF) machines consume per tick");
         this.fernTickRate = config.getInt("Fern Tick Rate", "all", 2, 1, 1000000, "How often ferns try to grow(raise number to decrease growth)");
+        this.intensivePathfinding = config.getBoolean("Intensive Pathfinding", "all", false, "True if dinosaurs should use more expensive and accurate pathfinding techniques");
     }
 }
