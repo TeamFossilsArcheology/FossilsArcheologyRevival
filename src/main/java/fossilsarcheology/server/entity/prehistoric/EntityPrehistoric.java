@@ -80,6 +80,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private static final DataParameter<Integer> MOOD = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<String> OWNERDISPLAYNAME = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.STRING);
     private static final DataParameter<Byte> CLIMBING = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BYTE);
+    private static final DataParameter<Boolean> AGINGDISABLED = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BOOLEAN);
     private static final Predicate PREHISTORIC_PREDICATE = new Predicate<Entity>() {
         public boolean apply(@Nullable Entity entity) {
             return entity != null && entity instanceof EntityPrehistoric;
@@ -233,6 +234,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.dataManager.register(CLIMBING, (byte) 0);
         this.dataManager.register(MOOD, 0);
         this.dataManager.register(OWNERDISPLAYNAME, "");
+        this.dataManager.register(AGINGDISABLED, false);
     }
 
     @Override
@@ -256,7 +258,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         compound.setString("OwnerDisplayName", this.getOwnerDisplayName());
         compound.setFloat("YawRotation", this.rotationYaw);
         compound.setFloat("HeadRotation", this.rotationYawHead);
-
+        compound.setBoolean("AgingDisabled", this.isAgingDisabled());
     }
 
     public String getOwnerDisplayName() {
@@ -288,6 +290,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.setGender(compound.getInteger("Gender"));
         this.setSleeping(compound.getBoolean("Sleeping"));
         this.setSitting(compound.getBoolean("Sitting"));
+        this.setAgingDisabled(compound.getBoolean("AgingDisabled"));
         this.setMood(compound.getInteger("Mood"));
         if (compound.hasKey("currentOrder")) {
             this.setOrder(OrderType.values()[compound.getByte("currentOrder")]);
@@ -800,15 +803,17 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setGrowingAge(0);
         }
         if (!this.isSkeleton()) {
-            this.setAgeinTicks(this.getAgeInTicks() + 1);
-            if (this.getAgeInTicks() % 24000 == 0) {
-                this.updateAbilities();
-                this.grow(0);
+            if(!this.isAgingDisabled()){
+                this.setAgeinTicks(this.getAgeInTicks() + 1);
+                if (this.getAgeInTicks() % 24000 == 0) {
+                    this.updateAbilities();
+                    this.grow(0);
+                }
             }
-            if (this.getAgeInTicks() % 1200 == 0 && this.getHunger() > 0 && Revival.CONFIG_OPTIONS.starvingDinos) {
+            if (this.ticksExisted % 1200 == 0 && this.getHunger() > 0 && Revival.CONFIG_OPTIONS.starvingDinos) {
                 this.setHunger(this.getHunger() - 1);
             }
-            if (this.getHealth() > this.getMaxHealth() / 2 && this.getHunger() == 0 && this.getAgeInTicks() % 40 == 0) {
+            if (this.getHealth() > this.getMaxHealth() / 2 && this.getHunger() == 0 && this.ticksExisted % 40 == 0) {
                 this.attackEntityFrom(DamageSource.STARVE, 1);
             }
         }
@@ -1057,6 +1062,15 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.dataManager.set(HUNGER, hunger);
         }
     }
+
+    public boolean isAgingDisabled() {
+        return this.dataManager.get(AGINGDISABLED).booleanValue();
+    }
+
+    public void setAgingDisabled(boolean isAgingDisabled) {
+        this.dataManager.set(AGINGDISABLED, isAgingDisabled);
+    }
+
 
     public boolean increaseHunger(int hunger) {
         if (this.getHunger() >= this.getMaxHunger()) {
@@ -1318,12 +1332,25 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                             return true;
                         }
                     }
-
                     if (!this.world.isRemote) {
                         player.sendStatusMessage(new TextComponentTranslation("prehistoric.essencefail"), true);
                     }
-
                     return false;
+                }
+                if (itemstack.getItem() == FAItemRegistry.STUNTED_ESSENCE && !isAgingDisabled()){
+                    this.setHunger(this.getHunger() + 20);
+                    this.heal(this.getMaxHealth());
+                    this.playSound(SoundEvents.ENTITY_ZOMBIE_VILLAGER_CURE, this.getSoundVolume(), this.getSoundPitch());
+                    spawnItemCrackParticles(itemstack.getItem());
+                    spawnItemCrackParticles(itemstack.getItem());
+                    spawnItemCrackParticles(Items.POISONOUS_POTATO);
+                    spawnItemCrackParticles(Items.POISONOUS_POTATO);
+                    spawnItemCrackParticles(Items.EGG);
+                    this.setAgingDisabled(true);
+                    if (!player.isCreative()) {
+                        itemstack.shrink(1);
+                    }
+                    return true;
                 }
 
                 if (FoodMappings.INSTANCE.getItemFoodAmount(itemstack, this.type.diet) != 0) {
@@ -1429,6 +1456,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public void grow(int ageInDays) {
+        if (this.isAgingDisabled()) {
+            return;
+        }
         this.setAgeInDays(this.getAgeInDays() + ageInDays);
         this.setScaleForAge(false);
         for (int i = 0; i < this.getAgeScale() * 4; i++) {
@@ -1734,6 +1764,21 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 break;
         }
     }
+
+    public void spawnItemCrackParticles(Item item) {
+        for (int i = 0; i < 15; i++) {
+            double motionX = getRNG().nextGaussian() * 0.07D;
+            double motionY = getRNG().nextGaussian() * 0.07D;
+            double motionZ = getRNG().nextGaussian() * 0.07D;
+            float f = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxX - this.getEntityBoundingBox().minX) + this.getEntityBoundingBox().minX);
+            float f1 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxY - this.getEntityBoundingBox().minY) + this.getEntityBoundingBox().minY);
+            float f2 = (float) (getRNG().nextFloat() * (this.getEntityBoundingBox().maxZ - this.getEntityBoundingBox().minZ) + this.getEntityBoundingBox().minZ);
+            if (world.isRemote) {
+                this.world.spawnParticle(EnumParticleTypes.ITEM_CRACK, f, f1, f2, motionX, motionY, motionZ, Item.getIdFromItem(item));
+            }
+        }
+    }
+
 
     public void spawnItemParticle(Item item, boolean itemBlock) {
         if (!world.isRemote) {

@@ -1,0 +1,22 @@
+{
+  "type": "forge:ore_shaped",
+  "pattern": [
+    " P ",
+    "PXP",
+    " P "
+  ],
+  "key": {
+    "X": {
+      "item": "fossil:chicken_essence",
+      "data": 0
+    },
+    "P": {
+      "item": "minecraft:poisonous_potato",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "fossil:stunted_essence",
+    "data": 0
+  }
+}

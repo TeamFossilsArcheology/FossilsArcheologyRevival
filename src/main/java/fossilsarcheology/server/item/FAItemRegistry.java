@@ -29,6 +29,7 @@ public class FAItemRegistry {
 	public static final BasicItem AMBER = new BasicItem("amber");
 	public static final BasicItem DOMINICAN_AMBER = new BasicItem("dominican_amber");
 	public static final BasicItem CHICKEN_ESSENCE = new BasicItem("chicken_essence");
+	public static final BasicItem STUNTED_ESSENCE = new BasicItem("stunted_essence");
 	public static final BasicItem SCARAB_GEM = new BasicItem("scarab_gem");
 	public static final BasicItem AQUATIC_SCARAB_GEM = new BasicItem("aquatic_scarab_gem");
 	public static final BasicAxeItem SCARAB_AXE = new BasicAxeItem(SCARAB_MATERIAL, "scarab_axe");
