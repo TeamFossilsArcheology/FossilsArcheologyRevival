@@ -15,6 +15,7 @@ import org.lwjgl.opengl.GL11;
 public class TileEntityCultivateRender extends TileEntitySpecialRenderer<TileEntityCultivate> {
     private static final ResourceLocation TEXTURE_EMBRYO_BASIC = new ResourceLocation(Revival.MODID, "textures/blocks/cultivate/embryo_generic.png");
     private static final ResourceLocation TEXTURE_EMBRYO_LIMBLESS = new ResourceLocation(Revival.MODID, "textures/blocks/cultivate/embryo_legless.png");
+    private static final ResourceLocation TEXTURE_EMBRYO_INSECT = new ResourceLocation(Revival.MODID, "textures/blocks/cultivate/embryo_insect.png");
     private static final ResourceLocation TEXTURE_EMBRYO_PLANT = new ResourceLocation(Revival.MODID, "textures/blocks/cultivate/embryo_plant.png");
     private static final ResourceLocation TEXTURE_EMBRYO_SPORE = new ResourceLocation(Revival.MODID, "textures/blocks/cultivate/embryo_spore.png");
 
@@ -49,6 +50,14 @@ public class TileEntityCultivateRender extends TileEntitySpecialRenderer<TileEnt
                 GlStateManager.rotate(rot, 0, 9, 0);
                 Minecraft.getMinecraft().renderEngine.bindTexture(TEXTURE_EMBRYO_PLANT);
                 this.modelPlant.render(0.0625F);
+                GlStateManager.popMatrix();
+            } else if (entity.getDNAType() == 3) {
+                GlStateManager.pushMatrix();
+                GlStateManager.translate(0, 0.5F + bob, 0);
+                GlStateManager.scale(0.5F, 0.5F, 0.5F);
+                GlStateManager.rotate(rot, 0, 9, 0);
+                Minecraft.getMinecraft().renderEngine.bindTexture(TEXTURE_EMBRYO_INSECT);
+                this.model.render(0.0625F);
                 GlStateManager.popMatrix();
             } else {
                 GlStateManager.pushMatrix();

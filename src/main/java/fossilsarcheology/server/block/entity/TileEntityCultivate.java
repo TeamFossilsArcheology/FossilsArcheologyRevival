@@ -7,6 +7,7 @@ import fossilsarcheology.server.block.CultivateBlock;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.compat.jei.culture.CultivateRecipes;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
+import fossilsarcheology.server.item.DNAItem;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import net.minecraft.item.ItemStack;
@@ -246,6 +247,9 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
             if (inputStack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || inputStack.getItem() == FAItemRegistry.CALAMITES_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL
                     || inputStack.getItem() == FAItemRegistry.SIGILLARIA_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.CORDAITES_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.FOSSIL_SEED) {
                 return 2;
+            }
+            if(inputStack.getItem() instanceof DNAItem && ((DNAItem)inputStack.getItem()).isBugDNA()){
+                return 3;
             }
         }
         return 0;
