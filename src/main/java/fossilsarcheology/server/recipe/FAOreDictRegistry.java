@@ -104,9 +104,11 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 15));
         for(int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++){
             OreDictionary.registerOre("listAllseed", new ItemStack(FAItemRegistry.SEED, 1, i));
+            OreDictionary.registerOre("seeds", new ItemStack(FAItemRegistry.SEED, 1, i));
             OreDictionary.registerOre("flowerSeed", new ItemStack(FAItemRegistry.SEED, 1, i));
         }
         OreDictionary.registerOre("listAllseed", new ItemStack(FAItemRegistry.FERN_SEED));
+        OreDictionary.registerOre("seeds", new ItemStack(FAItemRegistry.FERN_SEED));
         OreDictionary.registerOre("sporeFern", new ItemStack(FAItemRegistry.FERN_SEED));
         OreDictionary.registerOre("materialRotten", new ItemStack(FAItemRegistry.FAILURESAURUS_FLESH));
         OreDictionary.registerOre("slimeball", new ItemStack(FAItemRegistry.FAILURESAURUS_FLESH));
