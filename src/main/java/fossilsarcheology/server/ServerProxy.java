@@ -211,7 +211,6 @@ public class ServerProxy implements IGuiHandler {
         MinecraftForge.EVENT_BUS.register(new FossilPickupItemEvent());
         MinecraftForge.EVENT_BUS.register(new FossilBonemealEvent());
         GameRegistry.registerWorldGenerator(new FAWorldGenerator(), 0);
-        FAMachineRecipeRegistry.init();
     }
 
     public void calculateChainBuffer(EntityFishBase entity) {
