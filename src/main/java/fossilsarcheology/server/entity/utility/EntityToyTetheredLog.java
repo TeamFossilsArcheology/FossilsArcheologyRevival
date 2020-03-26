@@ -36,8 +36,10 @@ public class EntityToyTetheredLog extends EntityToyBase implements IAnimatedEnti
 		this.motionY *= 0;
 		this.motionZ *= 0;
 		if (!isAttachedToBlock()) {
-			if (!this.world.isRemote)
+			if (!this.world.isRemote && !spawnedItem && !this.isDead){
 				this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem()));
+				spawnedItem = true;
+			}
 			this.setDead();
 			this.playSound(getAttackNoise(), 1, 1);
 		}

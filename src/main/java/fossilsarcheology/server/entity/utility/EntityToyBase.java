@@ -13,7 +13,7 @@ import net.minecraft.world.World;
 public abstract class EntityToyBase extends EntityLiving {
 
 	public final int toyBonus;
-	private boolean spawnedItem = false;
+	protected boolean spawnedItem = false;
 	public EntityToyBase(World world, int toyBonus) {
 		super(world);
 		this.toyBonus = toyBonus;
@@ -35,7 +35,7 @@ public abstract class EntityToyBase extends EntityLiving {
 		if (dmg.getTrueSource() != null) {
 			if (dmg.getTrueSource() instanceof EntityPlayer) {
 				this.playSound(getAttackNoise(), 1, this.getSoundPitch());
-				if (!this.world.isRemote && !spawnedItem){
+				if (!this.world.isRemote && !spawnedItem && !this.isDead){
 					this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem()));
 					spawnedItem = true;
 				}
