@@ -65,7 +65,7 @@ public class EntityTyrannosaurus extends EntityPrehistoric implements IScaryDino
 	@Override
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
-		if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
+		if (this.getAnimation() == ATTACK_ANIMATION && this.canReachPrey() && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
 			doAttack();
 			doAttackKnockback(1F);
 		}

@@ -2077,7 +2077,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public float getMaxTurnDistancePerTick() {
-        return MathHelper.clamp(90 - this.getActualWidth() * 10, 0, 90);
+        return MathHelper.clamp(90 - this.getActualWidth() * 20, 10, 90);
     }
 
     @SideOnly(Side.CLIENT)
