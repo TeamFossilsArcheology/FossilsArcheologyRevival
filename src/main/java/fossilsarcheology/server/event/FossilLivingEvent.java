@@ -85,8 +85,13 @@ public class FossilLivingEvent {
     }
 
     private boolean isLivestock(Entity entity) {
-        String className = entity.getClass().getSimpleName();
-        return (entity instanceof EntityCow || entity instanceof EntitySheep || entity instanceof EntityPig || entity instanceof EntityChicken
+        String className = "";
+        try{
+            className = entity.getClass().getSimpleName();
+        }catch (Exception e){
+            System.out.println(e);
+        }
+        return !className.isEmpty() && (entity instanceof EntityCow || entity instanceof EntitySheep || entity instanceof EntityPig || entity instanceof EntityChicken
                 || entity instanceof EntityRabbit || entity instanceof AbstractHorse
                 || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig") || className.contains("Chicken")
                 || className.contains("Rabbit") || className.contains("Peacock") || className.contains("Goat") || className.contains("Ferret")
