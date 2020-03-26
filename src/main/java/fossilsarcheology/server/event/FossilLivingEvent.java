@@ -219,6 +219,8 @@ public class FossilLivingEvent {
         }
         if (birthEntity instanceof EntityPrehistoric) {
             ((EntityPrehistoric) birthEntity).setGender(new Random().nextInt(2));
+            ((EntityPrehistoric) birthEntity).setAgeinTicks(0);
+            ((EntityPrehistoric) birthEntity).setAgeInDays(0);
         } else if (birthEntity instanceof EntityAnimal) {
             ((EntityAnimal) birthEntity).setGrowingAge(-24000);
         }
