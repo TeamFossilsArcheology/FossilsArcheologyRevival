@@ -1216,34 +1216,29 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     @Override
     public boolean attackEntityFrom(DamageSource dmg, float i) {
-        if (i > 0 && this.isSkeleton()) {
-            if (dmg == DamageSource.IN_WALL) {
-                return false;
-            } else {
-                this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_SKELETON_HURT, SoundCategory.NEUTRAL, this.getSoundVolume(), this.getSoundPitch());
-                if (!world.isRemote && !droppedBiofossil) {
-                    if (this.type.timePeriod == TimePeriod.CENOZOIC) {
-                        this.dropItem(FAItemRegistry.TAR_FOSSIL, 1);
-                    } else {
-                        this.dropItem(FAItemRegistry.BIOFOSSIL, 1);
-                    }
-                    this.entityDropItem(new ItemStack(Items.BONE, Math.min(this.getAgeInDays(), this.getAdultAge())), 1);
-                    droppedBiofossil = true;
-                }
-                if (dmg.getTrueSource() != null && dmg.getTrueSource() instanceof EntityPlayer) {
-                    EntityPlayer player = (EntityPlayer) dmg.getTrueSource();
-                    FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(player, FossilsPlayerProperties.class);
-                    if (properties != null) {
-                        properties.killedBiofossilCooldown = 5;
-                    }
-                }
-
-                this.setDead();
-                return true;
-            }
-        }
-        if (dmg == DamageSource.IN_WALL && this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD) {
+        if (dmg == DamageSource.IN_WALL) {
             return false;
+        }
+        if (i > 0 && this.isSkeleton()) {
+            this.world.playSound(null, this.getPosition(), SoundEvents.ENTITY_SKELETON_HURT, SoundCategory.NEUTRAL, this.getSoundVolume(), this.getSoundPitch());
+            if (!world.isRemote && !droppedBiofossil) {
+                if (this.type.timePeriod == TimePeriod.CENOZOIC) {
+                    this.dropItem(FAItemRegistry.TAR_FOSSIL, 1);
+                } else {
+                    this.dropItem(FAItemRegistry.BIOFOSSIL, 1);
+                }
+                this.entityDropItem(new ItemStack(Items.BONE, Math.min(this.getAgeInDays(), this.getAdultAge())), 1);
+                droppedBiofossil = true;
+            }
+            if (dmg.getTrueSource() != null && dmg.getTrueSource() instanceof EntityPlayer) {
+                EntityPlayer player = (EntityPlayer) dmg.getTrueSource();
+                FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(player, FossilsPlayerProperties.class);
+                if (properties != null) {
+                    properties.killedBiofossilCooldown = 5;
+                }
+            }
+            this.setDead();
+            return true;
         }
         if (this.getLastAttackedEntity() instanceof EntityPlayer) {
             if (this.getOwner() == this.getLastAttackedEntity()) {
