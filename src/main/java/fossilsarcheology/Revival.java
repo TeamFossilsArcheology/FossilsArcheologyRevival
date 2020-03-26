@@ -9,12 +9,10 @@ import fossilsarcheology.server.config.FossilConfig;
 import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.event.EventSharedConfig;
-import fossilsarcheology.server.event.FossilBonemealEvent;
 import fossilsarcheology.server.event.FossilLivingEvent;
 import fossilsarcheology.server.lib.LibDependencies;
 import fossilsarcheology.server.loot.CustomizeToDinosaur;
 import fossilsarcheology.server.message.*;
-import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
 import fossilsarcheology.server.util.ReleaseType;
 import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
 import net.ilexiconn.llibrary.server.network.NetworkWrapper;
@@ -99,7 +97,6 @@ public class Revival {
     @Mod.EventHandler
     public void onPostInit(FMLPostInitializationEvent event) {
         PROXY.onPostInit();
-        FAMachineRecipeRegistry.init();
         TinkersCompatBridge.loadTinkersPostInitCompat();
     }
 
