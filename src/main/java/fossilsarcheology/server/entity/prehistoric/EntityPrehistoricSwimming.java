@@ -340,7 +340,9 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
                 distance = (double) MathHelper.sqrt(distance);
                 distanceY /= distance;
                 float angle = (float) (Math.atan2(distanceZ, distanceX) * 180.0D / Math.PI) - 90.0F;
-                this.dinosaur.rotationYaw = this.limitAngle(this.dinosaur.rotationYaw, angle, 30.0F);
+                if(distance > 0.2F){
+                    this.dinosaur.rotationYaw = this.limitAngle(this.dinosaur.rotationYaw, angle, 30.0F);
+                }
                 this.dinosaur.setAIMoveSpeed(0.65F);
                 this.dinosaur.motionY += (double) this.dinosaur.getAIMoveSpeed() * distanceY * 0.1D;
             } else if (this.action == EntityMoveHelper.Action.JUMPING) {

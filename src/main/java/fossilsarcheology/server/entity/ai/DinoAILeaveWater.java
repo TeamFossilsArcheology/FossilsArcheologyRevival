@@ -46,7 +46,7 @@ public class DinoAILeaveWater extends EntityAIBase {
         BlockPos blockpos = new BlockPos(this.shelterX, this.shelterY, this.shelterZ);
         if(shelterY > this.dino.getEntityBoundingBox().minY){
             this.dino.getJumpHelper().setJumping();
-            this.dino.motionY += 0.1D * this.dino.height;
+            this.dino.motionY += 0.25F;
             this.dino.motionX += (Math.signum(blockpos.getX() + 0.5D - this.dino.posX) * 0.5D - this.dino.motionX) * 0.100000000372529;
             this.dino.motionZ += (Math.signum(blockpos.getZ() + 0.5D - this.dino.posZ) * 0.5D - this.dino.motionZ) * 0.100000000372529;
         }
