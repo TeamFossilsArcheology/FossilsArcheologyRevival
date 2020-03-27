@@ -207,7 +207,7 @@ public class EntityDeinonychus extends EntityPrehistoric implements IScaryDinosa
 		if (this.getAttackTarget() != null) {
 			if (this.getAttackTarget() == entity && this.getAnimation() == ATTACK_ANIMATION && !onGround && this.getRidingEntity() != entity && (entity instanceof EntityToyBase)) {
 				entity.attackEntityFrom(DamageSource.causeMobDamage(this), 1);
-			} else if (this.getAttackTarget() == entity && this.getAnimation() == ATTACK_ANIMATION && !onGround && this.getRidingEntity() != entity) {
+			} else if (this.getAttackTarget() == entity && this.getAnimation() == ANIMATION_JUMPAT && !onGround && this.getRidingEntity() != entity) {
 				attackDecision = rand.nextBoolean();
 				this.startRiding(entity);
 			}
