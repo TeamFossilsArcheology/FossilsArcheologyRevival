@@ -37,7 +37,7 @@ public class DinoAIFindWaterTarget extends EntityAIBase {
 		if (this.mob.getRNG().nextFloat() < 0.5F) {
 			BlockPos vec3 = this.findWaterTarget();
 			if (vec3 != null) {
-				this.mob.getMoveHelper().setMoveTo(vec3.getX(), vec3.getY(), vec3.getZ(), 1.0);
+				this.mob.getMoveHelper().setMoveTo(vec3.getX() + 0.5D, vec3.getY() + 0.5D, vec3.getZ() + 0.5D, 1.0);
 				return true;
 			}
 		}
@@ -53,7 +53,7 @@ public class DinoAIFindWaterTarget extends EntityAIBase {
 		Random rand = this.mob.getRNG();
 		if (this.mob.getAttackTarget() == null || this.mob.getAttackTarget().isDead) {
 			for(int i = 0; i < 20; i++){
-				BlockPos randPos = this.mob.getPosition().add(rand.nextInt(16) - 8, rand.nextInt(8) - 4, rand.nextInt(16) - 8);
+				BlockPos randPos = this.mob.getPosition().add(rand.nextInt(16) - 7, rand.nextInt(8) - 4, rand.nextInt(16) - 7);
 				if (this.mob.world.getBlockState(randPos).getMaterial() == Material.WATER && isDirectPathBetweenPoints(mob, this.mob.getPositionVector(), new Vec3d(randPos.getX() + 0.5, randPos.getY() + 0.5, randPos.getZ() + 0.5))) {
 					return randPos;
 				}
@@ -67,7 +67,7 @@ public class DinoAIFindWaterTarget extends EntityAIBase {
 
 
 	public boolean isDirectPathBetweenPoints(Entity entity, Vec3d vec1, Vec3d vec2) {
-		RayTraceResult movingobjectposition = entity.world.rayTraceBlocks(vec1, new Vec3d(vec2.x, vec2.y + (double) entity.height * 0.5D, vec2.z), false, true, false);
+		RayTraceResult movingobjectposition = entity.world.rayTraceBlocks(vec1, new Vec3d(vec2.x, vec2.y + 0.5D, vec2.z), false, true, false);
 		return movingobjectposition == null || movingobjectposition.typeOfHit != RayTraceResult.Type.BLOCK;
 	}
 
