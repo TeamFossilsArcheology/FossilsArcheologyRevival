@@ -10,6 +10,7 @@ import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
 import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
 import fossilsarcheology.server.event.EventSharedConfig;
 import fossilsarcheology.server.event.FossilLivingEvent;
+import fossilsarcheology.server.event.TerrainGenerationEvents;
 import fossilsarcheology.server.lib.LibDependencies;
 import fossilsarcheology.server.loot.CustomizeToDinosaur;
 import fossilsarcheology.server.message.*;
@@ -79,6 +80,7 @@ public class Revival {
         LOGGER.info("Somewhere there, us sleeping");
         MinecraftForge.EVENT_BUS.register(new EventSharedConfig());
         MinecraftForge.EVENT_BUS.register(new FossilLivingEvent());
+        MinecraftForge.TERRAIN_GEN_BUS.register(new TerrainGenerationEvents());
         EntityPropertiesHandler.INSTANCE.registerProperties(FossilsPlayerProperties.class);
         EntityPropertiesHandler.INSTANCE.registerProperties(FossilsMammalProperties.class);
 

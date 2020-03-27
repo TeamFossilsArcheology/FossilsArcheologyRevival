@@ -48,6 +48,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
+import net.minecraftforge.common.BiomeManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
@@ -193,9 +194,15 @@ public class ServerProxy implements IGuiHandler {
     public static void registerBiome(RegistryEvent.Register<Biome> event) {
         event.getRegistry().register(FAWorldRegistry.ANU_BIOME.setRegistryName("Lair of Darkness"));
         event.getRegistry().register(FAWorldRegistry.TREASURE_BIOME.setRegistryName("Treasure"));
+        event.getRegistry().register(FAWorldRegistry.VOLCANO_BIOME.setRegistryName("Volcano"));
         BiomeDictionary.addTypes(FAWorldRegistry.ANU_BIOME, BiomeDictionary.Type.NETHER, BiomeDictionary.Type.VOID);
         BiomeDictionary.addTypes(FAWorldRegistry.TREASURE_BIOME, BiomeDictionary.Type.VOID);
+        BiomeDictionary.addTypes(FAWorldRegistry.VOLCANO_BIOME, BiomeDictionary.Type.DEAD, BiomeDictionary.Type.WASTELAND, BiomeDictionary.Type.HOT, BiomeDictionary.Type.DRY);
+        if (Revival.CONFIG_OPTIONS.spawnVolcanoes) {
+            BiomeManager.addSpawnBiome(FAWorldRegistry.VOLCANO_BIOME);
+            BiomeManager.addBiome(BiomeManager.BiomeType.DESERT, new BiomeManager.BiomeEntry(FAWorldRegistry.VOLCANO_BIOME, Revival.CONFIG_OPTIONS.volcanoSpawnChance));
 
+        }
     }
 
     public void onPreInit() {

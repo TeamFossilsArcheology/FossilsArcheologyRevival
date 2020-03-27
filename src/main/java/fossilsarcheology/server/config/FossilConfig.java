@@ -65,6 +65,8 @@ public class FossilConfig {
     public int dinoUpdateDelay = 100;
     public int fernTickRate = 2;
     public boolean intensivePathfinding = false;
+    public boolean spawnVolcanoes = true;
+    public int volcanoSpawnChance = 3;
 
     public void init(Configuration config) {
         this.generatePrehistoricTrees = config.getBoolean("Generate Prehistoric Trees", "all", false, "True if Palaeoraphe, Calamites, Sigillaria, etc. Trees are to generate naturally");
@@ -130,5 +132,7 @@ public class FossilConfig {
         this.machineEnergyUsage = config.getInt("Machine Max Energy Usage Rate", "all", 1, 1, 1000000, "how much Redstone Flux(RF) machines consume per tick");
         this.fernTickRate = config.getInt("Fern Tick Rate", "all", 2, 1, 1000000, "How often ferns try to grow(raise number to decrease growth)");
         this.intensivePathfinding = config.getBoolean("Intensive Pathfinding", "all", false, "True if dinosaurs should use more expensive and accurate pathfinding techniques");
+        this.spawnVolcanoes = config.getBoolean("Generate Volcano Biomes", "all", true, "Whether to generate volcano biomes or not");
+        this.volcanoSpawnChance = config.getInt("Volcano Spawn Weight", "all", 3, 1, 10000, "Volcano Spawn Weight. Higher number = more common");
     }
 }

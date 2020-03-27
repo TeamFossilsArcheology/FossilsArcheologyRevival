@@ -14,12 +14,14 @@ public class FAWorldRegistry {
 	public static DimensionType TREASURE_ROOM;
 	public static Biome ANU_BIOME;
 	public static Biome TREASURE_BIOME;
+	public static Biome VOLCANO_BIOME;
 
 	public static void register() {
 		ANU_BIOME = new FADimensionBiome(true, new Biome.BiomeProperties("anu").setRainDisabled().setTemperature(2), Blocks.NETHERRACK);
 		TREASURE_BIOME = new FADimensionBiome(false, new Biome.BiomeProperties("treasure").setRainDisabled().setTemperature(2), Blocks.AIR);
 		ANU_LAIR = DimensionType.register("Anu Lair", "_anu", Revival.CONFIG_OPTIONS.dimensionIDDarknessLair, WorldProviderAnu.class, false);
 		TREASURE_ROOM = DimensionType.register("Treasure Room", "_treasure", Revival.CONFIG_OPTIONS.dimensionIDTreasure, WorldProviderTreasure.class, false);
+		VOLCANO_BIOME = new FAVolcanoBiome();
 		DimensionManager.registerDimension(Revival.CONFIG_OPTIONS.dimensionIDDarknessLair, ANU_LAIR);
 		DimensionManager.registerDimension(Revival.CONFIG_OPTIONS.dimensionIDTreasure, TREASURE_ROOM);
 
