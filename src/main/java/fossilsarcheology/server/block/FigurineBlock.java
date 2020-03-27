@@ -43,6 +43,14 @@ public class FigurineBlock extends BlockContainer implements IBlockItem, BlockEn
         this.setDefaultState(this.blockState.getBaseState().withProperty(VARIANT, EnumType.FIGURINE_STEVE_PRISTINE));
     }
 
+    public IBlockState withRotation(IBlockState state, Rotation rot) {
+        return state;
+    }
+
+    public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
+        return state;
+    }
+
     @SuppressWarnings("deprecation")
     public BlockFaceShape getBlockFaceShape(IBlockAccess worldIn, IBlockState state, BlockPos pos, EnumFacing face) {
         return BlockFaceShape.UNDEFINED;
@@ -135,7 +143,7 @@ public class FigurineBlock extends BlockContainer implements IBlockItem, BlockEn
         return TileEntityFigurine.class;
     }
 
-    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, @Nullable EnumFacing side){
+    public boolean canConnectRedstone(IBlockState state, IBlockAccess world, BlockPos pos, @Nullable EnumFacing side) {
         return true;
     }
 

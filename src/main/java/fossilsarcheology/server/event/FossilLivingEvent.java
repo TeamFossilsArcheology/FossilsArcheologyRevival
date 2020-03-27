@@ -43,6 +43,7 @@ import java.util.UUID;
 
 public class FossilLivingEvent {
 
+    public static final UUID ALEX_UUID = UUID.fromString("71363abe-fd03-49c9-940d-aae8b8209b7c");
     private static final Predicate ANIMAL_FEAR_DINOSAUR = new Predicate<EntityLivingBase>() {
         public boolean apply(@Nullable EntityLivingBase entity) {
             return entity != null && entity instanceof IScaryDinosaur;
@@ -63,11 +64,11 @@ public class FossilLivingEvent {
 
     @SubscribeEvent
     public void onGatherBlockDrops(BlockEvent.HarvestDropsEvent event) {
-        if(event.getState().getBlock() == FABlockRegistry.FOSSIL && event.getHarvester() != null && event.getHarvester().getHeldItemMainhand() != null){
+        if (event.getState().getBlock() == FABlockRegistry.FOSSIL && event.getHarvester() != null && event.getHarvester().getHeldItemMainhand() != null) {
             ItemStack pickaxe = event.getHarvester().getHeldItemMainhand();
             int arch_level = EnchantmentHelper.getEnchantmentLevel(FAEnchantmentRegistry.ENCHANTMENT_ARCHEOLOGY, pickaxe);
             int paleo_level = EnchantmentHelper.getEnchantmentLevel(FAEnchantmentRegistry.ENCHANTMENT_PALEONTOLOGY, pickaxe);
-            if(arch_level != 0 || paleo_level != 0){
+            if (arch_level != 0 || paleo_level != 0) {
                 event.getDrops().clear();
                 ItemStack newDrop = FossilBlock.getItemDroppedWithEnchants(event.getState(), new Random(), 1 + paleo_level, 1 + arch_level).copy();
                 event.getDrops().add(newDrop);
@@ -89,9 +90,9 @@ public class FossilLivingEvent {
 
     private boolean isLivestock(Entity entity) {
         String className = "";
-        try{
+        try {
             className = entity.getClass().getSimpleName();
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         return !className.isEmpty() && (entity instanceof EntityCow || entity instanceof EntitySheep || entity instanceof EntityPig || entity instanceof EntityChicken
@@ -116,20 +117,28 @@ public class FossilLivingEvent {
     @SubscribeEvent
     public void onEntityLiving(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof EntityPlayer) {
-            FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties((EntityPlayer) event.getEntityLiving(), FossilsPlayerProperties.class);
-            if (properties != null && properties.killedBiofossilCooldown > 0) {
-                properties.killedBiofossilCooldown--;
+            try {
+                FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getEntityLiving(), FossilsPlayerProperties.class);
+                if (properties != null && properties.killedBiofossilCooldown > 0) {
+                    properties.killedBiofossilCooldown--;
+                }
+            } catch (Exception e) {
+                Revival.LOGGER.warn("could not instantiate fossils player properties for " + event.getEntityLiving().getName());
             }
         }
         if (!event.getEntityLiving().isChild()) {
-            FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getEntityLiving(), FossilsMammalProperties.class);
-            if (properties != null && properties.embryo != null) {
-                ++properties.embryoProgress;
-                if (properties.embryoProgress >= Revival.CONFIG_OPTIONS.pregnancyTime) {
-                    growEntity(properties.embryo, event);
-                    properties.embryoProgress = 0;
-                    properties.embryo = null;
+            try {
+                FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(event.getEntityLiving(), FossilsMammalProperties.class);
+                if (properties != null && properties.embryo != null) {
+                    ++properties.embryoProgress;
+                    if (properties.embryoProgress >= Revival.CONFIG_OPTIONS.pregnancyTime) {
+                        growEntity(properties.embryo, event);
+                        properties.embryoProgress = 0;
+                        properties.embryo = null;
+                    }
                 }
+            } catch (Exception e) {
+                Revival.LOGGER.warn("could not instantiate fossils entity properties for " + event.getEntityLiving().getName());
             }
         }
     }
@@ -238,8 +247,6 @@ public class FossilLivingEvent {
             entity.world.spawnEntity(birthEntity);
         }
     }
-
-    public static final UUID ALEX_UUID = UUID.fromString("71363abe-fd03-49c9-940d-aae8b8209b7c");
 
     @SubscribeEvent
     public void onEntityDie(LivingDeathEvent event) {
