@@ -1110,7 +1110,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         super.onKillEntity(var1);
         this.increaseHunger(FoodHelper.getMobFoodPoints(var1, this.type.diet));
         this.heal(FoodHelper.getMobFoodPoints(var1, this.type.diet) / 3);
-        this.setMood(this.getMood() + 25);
+        if(this.type.diet != Diet.HERBIVORE){
+            this.setMood(this.getMood() + 25);
+        }
     }
 
     public boolean isHungry() {
