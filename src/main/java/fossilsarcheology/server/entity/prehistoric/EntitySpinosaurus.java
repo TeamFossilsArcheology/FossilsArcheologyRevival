@@ -29,7 +29,7 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming implements ISca
 	private boolean isSwimming;
 
 	public EntitySpinosaurus(World world) {
-		super(world, PrehistoricEntityType.SPINOSAURUS, 2, 14, 15, 86, 0.35, 0.5, 10, 20);
+		super(world, PrehistoricEntityType.SPINOSAURUS, 2, 14, 15, 86, 0.25, 0.35, 10, 20);
 		this.setActualSize(1.5F, 1.0F);
 		isAmphibious = true;
 		FISH_ANIMATION = Animation.create(40);
