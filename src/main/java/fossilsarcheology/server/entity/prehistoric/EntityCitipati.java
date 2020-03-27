@@ -22,7 +22,7 @@ public class EntityCitipati extends EntityPrehistoric {
         this.setActualSize(1.5F, 1.8F);
         this.nearByMobsAllowed = 10;
         minSize = 0.2F;
-        maxSize = 1.1F;
+        maxSize = 0.9F;
         this.teenAge = 3;
         developsResistance = false;
         breaksBlocks = false;
@@ -42,6 +42,9 @@ public class EntityCitipati extends EntityPrehistoric {
         this.tasks.addTask(6, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
         this.tasks.addTask(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(7, new DinoAILookIdle(this));
+        this.targetTasks.addTask(1, new DinoAIOwnerHurtByTarget(this));
+        this.targetTasks.addTask(2, new DinoAIOwnerHurtTarget(this));
+        this.targetTasks.addTask(3, new DinoAIHurtByTarget(this));
         this.targetTasks.addTask(4, new DinoAIHunt(this, EntityLivingBase.class, true, (Predicate<Entity>) entity -> entity instanceof EntityLivingBase));
     }
 
@@ -86,7 +89,6 @@ public class EntityCitipati extends EntityPrehistoric {
 
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
-
         return PrehistoricEntityTypeAI.Response.TERITORIAL;
     }
 
