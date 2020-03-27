@@ -19,7 +19,7 @@ import net.minecraft.world.World;
 public class EntityDiplodocus extends EntityPrehistoric {
 
     public EntityDiplodocus(World world) {
-        super(world, PrehistoricEntityType.DIPLODOCUS, 2, 40, 15, 190, 0.2, 0.3, 0, 30);
+        super(world, PrehistoricEntityType.DIPLODOCUS, 2, 40, 15, 170, 0.2, 0.3, 0, 15);
         this.setActualSize(1.85F, 1.85F);
         this.nearByMobsAllowed = 8;
         minSize = 0.2F;
