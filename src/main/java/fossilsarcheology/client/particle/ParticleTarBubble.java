@@ -26,7 +26,7 @@ public class ParticleTarBubble extends Particle {
     public ParticleTarBubble(World world, float posX, float posY, float posZ, double motionX, double motionY, double motionZ) {
         super(world, posX, posY, posZ, motionX, motionY, motionZ);
         this.particleAlpha = 1F;
-        this.particleMaxAge = (int) (10.0D / (Math.random() * 0.8D + 0.2D));
+        this.particleMaxAge = (int) (5.0D / (Math.random() * 0.8D + 0.2D));
         this.motionX *= 0.10000000149011612D;
         this.motionY *= 0.10000000149011612D;
         this.motionZ *= 0.10000000149011612D;
@@ -36,8 +36,8 @@ public class ParticleTarBubble extends Particle {
         if (particleAge > particleMaxAge) {
             this.setExpired();
         }
-        popped = particleAge > particleMaxAge - 5;
-        particleScale = 0.05F * (this.particleMaxAge);
+        popped = particleAge > particleMaxAge - 2;
+        particleScale = 0.1F * (this.particleMaxAge);
         float f3 = (float) (this.posX - interpPosX);
         float f4 = (float) (this.posY - interpPosY);
         float f5 = (float) (this.posZ - interpPosZ);

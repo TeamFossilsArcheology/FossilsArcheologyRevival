@@ -76,7 +76,7 @@ public class TarBlock extends BlockFluidClassic {
 		}
 		if (rand.nextInt(3) == 0) {
 			float posX = pos.getX() + rand.nextFloat();
-			float posY = pos.getY() +  Math.min(1 - BlockLiquid.getLiquidHeightPercent(stateIn.getValue(LEVEL)), quantaFraction);
+			float posY = pos.getY() +  Math.max(1 - BlockLiquid.getLiquidHeightPercent(stateIn.getValue(LEVEL)), 0.25F);
 			float posZ = pos.getZ() + rand.nextFloat();
 			double motX = (rand.nextDouble() - 0.5D) * 0.3;
 			double motY = 0.3 * rand.nextDouble() + 0.2D;
