@@ -366,7 +366,14 @@
     "category": "neutral",
     "sounds": [
       "fossil:prehistoric/brachiosaurus_living1",
-      "fossil:prehistoric/brachiosaurus_living2"
+      "fossil:prehistoric/brachiosaurus_living2",
+      "fossil:prehistoric/brachiosaurus_living3",
+      "fossil:prehistoric/brachiosaurus_living4",
+      "fossil:prehistoric/brachiosaurus_living5",
+      "fossil:prehistoric/brachiosaurus_living6",
+      "fossil:prehistoric/brachiosaurus_living7",
+      "fossil:prehistoric/brachiosaurus_living8",
+      "fossil:prehistoric/brachiosaurus_living9"
     ]
   },
   "compsognathus_living": {
