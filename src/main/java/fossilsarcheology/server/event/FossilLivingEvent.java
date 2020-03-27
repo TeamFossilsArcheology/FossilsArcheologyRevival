@@ -20,6 +20,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.monster.EntityPolarBear;
 import net.minecraft.entity.passive.*;
 import net.minecraft.entity.player.EntityPlayer;
@@ -28,6 +29,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDeathEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerInteractEvent;
 import net.minecraftforge.event.world.BlockEvent;
@@ -37,6 +39,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import javax.annotation.Nullable;
 import java.util.Map;
 import java.util.Random;
+import java.util.UUID;
 
 public class FossilLivingEvent {
 
@@ -236,4 +239,12 @@ public class FossilLivingEvent {
         }
     }
 
+    public static final UUID ALEX_UUID = UUID.fromString("71363abe-fd03-49c9-940d-aae8b8209b7c");
+
+    @SubscribeEvent
+    public void onEntityDie(LivingDeathEvent event) {
+        if (event.getEntityLiving().getUniqueID().equals(ALEX_UUID)) {
+            event.getEntityLiving().entityDropItem(new ItemStack(FAItemRegistry.PINKERTON), 1);
+        }
+    }
 }

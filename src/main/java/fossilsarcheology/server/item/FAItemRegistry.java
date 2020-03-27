@@ -96,6 +96,7 @@ public class FAItemRegistry {
 	public static final ItemFossilDoor CALAMITES_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.CALAMITES_DOOR, "calamites_door_item");
 	public static final ItemFossilDoor SIGILLARIA_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.SIGILLARIA_DOOR, "sigillaria_door_item");
 	public static final ItemFossilDoor CORDAITES_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.CORDAITES_DOOR, "cordaites_door_item");
+	public static final HiddenItem PINKERTON = new HiddenItem();
 
 	public static Item registerItem(RegistryEvent.Register<Item> event, Item item) {
 		String name = item.getTranslationKey().substring("item.".length());

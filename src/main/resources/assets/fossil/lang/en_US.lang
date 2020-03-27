@@ -192,6 +192,7 @@ entity.fossil.toyball.name=Ball
 entity.fossil.toytetheredlog.name=Tethered Log
 entity.fossil.toyscratchingpost.name=Scratching Post
 entity.fossil.debugtest.name=Debug Test
+entity.fossil.debugtest_2.name=Debug Test
 entity.Villager.archeologist=Archaeologist
 entity.Villager.palaeontologist=Palaeontologist
 
@@ -524,6 +525,8 @@ item.ancient_sword.name=Ancient Sword
 item.ancient_helmet.name=Ancient Helmet
 item.ancientSword.name=Ancient Sword
 item.iced_meat.name=Frozen Meat
+item.pinkerton.name=Pinkerton
+item.pinkerton.desc=Weezer
 item.dnaDryosaurus.name=Dryosaurus DNA
 item.eggDryosaurus.name=Dryosaurus Egg
 item.rawDryosaurus.name=Dryosaurus Meat

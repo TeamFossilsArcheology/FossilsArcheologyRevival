@@ -36,6 +36,7 @@ public class FAEntityRegistry {
 		registerSpawnable(EntityAnubite.class, "fossil.anubite", 39, 0X2E1E14, 0X601200);
 		registerSpawnable(EntityAnu.class, "fossil.anu", 17, 0X0F0F0F, 0XF72D00);
 		registerEntity(EntityDebugTest.class, "fossil.debugtest", 40);
+		registerEntity(EntityWorseDebugTest.class, "fossil.debugtest_2", 41);
 
 		registerEntity(EntityToyBall.class, "fossil.toyball", 103);
 		registerEntity(EntityToyTetheredLog.class, "fossil.toytetheredlog", 104);

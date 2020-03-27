@@ -46,6 +46,7 @@ public class RenderingHandler {
         RenderingRegistry.registerEntityRenderingHandler(EntityToyBall.class, RenderToyBall::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityToyScratchingPost.class, RenderToyScratchingPost::new);
         RenderingRegistry.registerEntityRenderingHandler(EntityToyTetheredLog.class, RenderToyTetheredLog::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityWorseDebugTest.class, RenderWorseDebugTest::new);
     }
 
     @SuppressWarnings("deprecation")

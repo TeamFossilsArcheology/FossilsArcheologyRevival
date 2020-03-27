@@ -86,7 +86,7 @@ public class EntityDiplodocus extends EntityPrehistoric {
 
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return PrehistoricEntityTypeAI.Response.NONE;
+        return PrehistoricEntityTypeAI.Response.TERITORIAL;
     }
 
     @Override
