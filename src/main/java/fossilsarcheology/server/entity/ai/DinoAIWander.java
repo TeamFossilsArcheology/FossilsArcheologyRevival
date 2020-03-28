@@ -9,10 +9,10 @@ import javax.annotation.Nullable;
 
 public class DinoAIWander extends EntityAIBase {
     protected final EntityPrehistoric entity;
+    protected final double speed;
     protected double x;
     protected double y;
     protected double z;
-    protected final double speed;
     protected int executionChance;
     protected boolean mustUpdate;
 
@@ -31,7 +31,7 @@ public class DinoAIWander extends EntityAIBase {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
-        if(!entity.shouldWander || entity.isMovementBlockedSoft()){
+        if (!entity.shouldWander || entity.isMovementBlockedSoft()) {
             return false;
         }
         if (!this.mustUpdate) {
@@ -59,7 +59,12 @@ public class DinoAIWander extends EntityAIBase {
 
     @Nullable
     protected Vec3d getPosition() {
-        return RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
+        if (this.entity.isInWater()) {
+            Vec3d vec3d = RandomPositionGenerator.getLandPos(this.entity, 15, 7);
+            return vec3d == null ? RandomPositionGenerator.findRandomTarget(this.entity, 10, 7) : vec3d;
+        } else {
+            return this.entity.getRNG().nextFloat() >= 0.001D ? RandomPositionGenerator.getLandPos(this.entity, 10, 7) : RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);
+        }
     }
 
     /**

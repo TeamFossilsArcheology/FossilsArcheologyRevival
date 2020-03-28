@@ -173,6 +173,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.updateAbilities();
         if (!(this instanceof EntityPrehistoricSwimming)) {
             this.setPathPriority(PathNodeType.WATER, -1.0F);
+            this.getNavigator().getNodeProcessor().setCanSwim(true);
+            this.getNavigator().getNodeProcessor().setCanSwim(true);
         }
     }
 
