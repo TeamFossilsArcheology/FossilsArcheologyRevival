@@ -21,7 +21,7 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
-public class FeederBlock extends BlockContainer implements DefaultRenderedItem {
+public class FeederBlock extends BlockContainer implements DefaultRenderedItem, IDinoUnbreakable {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
     public static final PropertyBool HERB = PropertyBool.create("herb");
     public static final PropertyBool CARN = PropertyBool.create("carn");
