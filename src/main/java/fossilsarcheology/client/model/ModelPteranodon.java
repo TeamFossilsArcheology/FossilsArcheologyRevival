@@ -196,17 +196,7 @@ public class ModelPteranodon extends ModelPrehistoric {
 		float speed3 = 0.2F;
 		this.bob(Body, speed, -0.15F, false, f2, 1);
 		this.chainWave(neckParts, speed, 0.05F, 3, f2, 1);
-		{
-			float sitProgress = ((EntityPrehistoric) entity).sleepProgress;
-			sitAnimationRotation(WingL1, sitProgress, (float) Math.toRadians(23.48D), (float) Math.toRadians(1D), -(float) Math.toRadians(8D));
-			sitAnimationRotation(Body, sitProgress, -((float) Math.toRadians(23.43D)), -((float) Math.toRadians(7.83D)), 0);
-			sitAnimationRotation(Neck1, sitProgress, -((float) Math.toRadians(55D)), (float) Math.toRadians(5.22D), (float) Math.toRadians(18.26D));
-			sitAnimationRotation(WingR1, sitProgress, (float) Math.toRadians(13.04D), (float) Math.toRadians(19D), ((float) Math.toRadians(16D)));
-			sitAnimationRotation(Head, sitProgress, (float) Math.toRadians(50D), -((float) Math.toRadians(7.83D)), -((float) Math.toRadians(23.48D)));
-			sitAnimationRotation(Neck2, sitProgress, (float) Math.toRadians(50D), 0, 0);
-			sitAnimationPos(LegRight, sitProgress, -0.5F, 0, -3.4F);
-			sitAnimationPos(LegLeft, sitProgress, -0.4F, 0, -3.4F);
-		}
+
 		if(((EntityPrehistoricFlying) entity).isFlying()){
 			float sitProgress = ((EntityPrehistoricFlying) entity).flyProgress;
 			sitAnimationRotation(WingR1Child, sitProgress, (float) Math.toRadians(18.999999959540737D), (float) Math.toRadians(2.609999910412874D), (float) Math.toRadians(58.919998497711354D));
@@ -238,6 +228,16 @@ public class ModelPteranodon extends ModelPrehistoric {
 				this.swing(WingR1, speed2, 0.7F, false, 0F, 0F, f, f1);
 				this.swing(WingL1, speed2, 0.7F, false, 0F, 0F, f, f1);
 			}
+		}else {
+			float sitProgress = ((EntityPrehistoric) entity).sleepProgress;
+			sitAnimationRotation(WingL1, sitProgress, (float) Math.toRadians(23.48D), (float) Math.toRadians(1D), -(float) Math.toRadians(8D));
+			sitAnimationRotation(Body, sitProgress, -((float) Math.toRadians(23.43D)), -((float) Math.toRadians(7.83D)), 0);
+			sitAnimationRotation(Neck1, sitProgress, -((float) Math.toRadians(55D)), (float) Math.toRadians(5.22D), (float) Math.toRadians(18.26D));
+			sitAnimationRotation(WingR1, sitProgress, (float) Math.toRadians(13.04D), (float) Math.toRadians(19D), ((float) Math.toRadians(16D)));
+			sitAnimationRotation(Head, sitProgress, (float) Math.toRadians(50D), -((float) Math.toRadians(7.83D)), -((float) Math.toRadians(23.48D)));
+			sitAnimationRotation(Neck2, sitProgress, (float) Math.toRadians(50D), 0, 0);
+			sitAnimationPos(LegRight, sitProgress, -0.5F, 0, -3.4F);
+			sitAnimationPos(LegLeft, sitProgress, -0.4F, 0, -3.4F);
 		}
 	}
 }

@@ -68,6 +68,9 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
 	public void onLivingUpdate() {
 		super.onLivingUpdate();
 		boolean flying = world.isAirBlock(this.getPosition().down());
+		if(isFlying() && isSleeping()){
+			setSleeping(false);
+		}
 		if (!this.onGround && this.motionY < 0.0D) {
 			this.motionY *= 0.6D;
 		}
@@ -96,6 +99,10 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
 		if (!this.world.isRemote && ticksFlying > 80 && this.onGround) {
 			this.setFlying(false);
 		}
+		if(this.isFlying() && this.canSleep() && !world.isAirBlock(this.getPosition().down(2))){
+			this.setFlying(false);
+
+		}
 		if (this.isFlying() && getAttackTarget() == null) {
 			flyAround();
 		} else if (getAttackTarget() != null) {
@@ -105,10 +112,6 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
 
 	@Override
     public boolean canSleep() {
-		if (super.canSleep() && this.isFlying() && this.onGround) {
-			this.setFlying(false);
-			return super.canSleep();
-		}
 		return super.canSleep();
 	}
 

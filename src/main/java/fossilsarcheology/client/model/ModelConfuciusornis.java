@@ -217,27 +217,6 @@ public class ModelConfuciusornis extends ModelPrehistoric {
 			sitAnimationRotationPrev(rightLeg, sitProgress, 0, 0, (float) Math.toRadians(1.0D));
 			sitAnimationRotationPrev(RightWing3, sitProgress, (float) Math.toRadians(5.22D), 0, 0);
 		}
-		{
-			float sitProgress = ((EntityPrehistoric) entity).sleepProgress;
-			sitAnimationRotationPrev(tailFeathers, sitProgress, (float) Math.toRadians(78.26D), 0, 0);
-			sitAnimationRotationPrev(neck, sitProgress, (float) Math.toRadians(62.61D), (float) Math.toRadians(15.65D), (float) Math.toRadians(2.61D));
-			sitAnimationRotationPrev(RightWing2, sitProgress, (float) Math.toRadians(93.91D), 0, 0);
-			sitAnimationRotationPrev(leftWing3, sitProgress, (float) Math.toRadians(5.22D), 0, 0);
-			sitAnimationRotationPrev(leftTail3, sitProgress, (float) Math.toRadians(5.0D), 0, 0);
-			sitAnimationRotationPrev(leftTailFan, sitProgress, (float) Math.toRadians(1.0D), 0, 0);
-			sitAnimationRotationPrev(rightTail3, sitProgress, (float) Math.toRadians(5.0D), 0, 0);
-			sitAnimationRotationPrev(body, sitProgress, -((float) Math.toRadians(7.83D)), 0, 0);
-			sitAnimationRotationPrev(upperBeak, sitProgress, (float) Math.toRadians(8.52D), 0, 0);
-			sitAnimationRotationPrev(rightTailFan, sitProgress, (float) Math.toRadians(1.0D), 0, 0);
-			sitAnimationRotationPrev(headFeathers, sitProgress, -((float) Math.toRadians(68.17D)), 0, 0);
-			sitAnimationRotationPrev(RightWing, sitProgress, -((float) Math.toRadians(8.0D)), 0, (float) Math.toRadians(7.83D));
-			sitAnimationRotationPrev(leftLeg, sitProgress, 0, 0, (float) Math.toRadians(1.0D));
-			sitAnimationRotationPrev(leftWing, sitProgress, -((float) Math.toRadians(8.0D)), 0, -((float) Math.toRadians(15.65D)));
-			sitAnimationRotationPrev(RightWing3, sitProgress, (float) Math.toRadians(5.22D), 0, 0);
-			sitAnimationRotationPrev(leftWing2, sitProgress, (float) Math.toRadians(93.91D), 0, 0);
-			sitAnimationRotationPrev(rightLeg, sitProgress, 0, 0, (float) Math.toRadians(1.0D));
-			sitAnimationRotationPrev(head, sitProgress, -((float) Math.toRadians(18.0D)), -((float) Math.toRadians(52.17D)), (float) Math.toRadians(78.26D));
-		}
 		if(((EntityPrehistoricFlying) entity).isFlying()){
 			float sitProgress = ((EntityPrehistoricFlying) entity).flyProgress;
 			sitAnimationRotationPrev(rightTailFan, sitProgress, (float) Math.toRadians(1.0D), 0, 0);
@@ -272,6 +251,26 @@ public class ModelConfuciusornis extends ModelPrehistoric {
 				this.chainWave(neckParts, speed2, 0.1F, -3, f, f1);
 				this.chainWave(neckParts, speed, 0.4F, -3, f, f1);
 			}
+		}else {
+			float sitProgress = ((EntityPrehistoric) entity).sleepProgress;
+			sitAnimationRotationPrev(tailFeathers, sitProgress, (float) Math.toRadians(78.26D), 0, 0);
+			sitAnimationRotationPrev(neck, sitProgress, (float) Math.toRadians(62.61D), (float) Math.toRadians(15.65D), (float) Math.toRadians(2.61D));
+			sitAnimationRotationPrev(RightWing2, sitProgress, (float) Math.toRadians(93.91D), 0, 0);
+			sitAnimationRotationPrev(leftWing3, sitProgress, (float) Math.toRadians(5.22D), 0, 0);
+			sitAnimationRotationPrev(leftTail3, sitProgress, (float) Math.toRadians(5.0D), 0, 0);
+			sitAnimationRotationPrev(leftTailFan, sitProgress, (float) Math.toRadians(1.0D), 0, 0);
+			sitAnimationRotationPrev(rightTail3, sitProgress, (float) Math.toRadians(5.0D), 0, 0);
+			sitAnimationRotationPrev(body, sitProgress, -((float) Math.toRadians(7.83D)), 0, 0);
+			sitAnimationRotationPrev(upperBeak, sitProgress, (float) Math.toRadians(8.52D), 0, 0);
+			sitAnimationRotationPrev(rightTailFan, sitProgress, (float) Math.toRadians(1.0D), 0, 0);
+			sitAnimationRotationPrev(headFeathers, sitProgress, -((float) Math.toRadians(68.17D)), 0, 0);
+			sitAnimationRotationPrev(RightWing, sitProgress, -((float) Math.toRadians(8.0D)), 0, (float) Math.toRadians(7.83D));
+			sitAnimationRotationPrev(leftLeg, sitProgress, 0, 0, (float) Math.toRadians(1.0D));
+			sitAnimationRotationPrev(leftWing, sitProgress, -((float) Math.toRadians(8.0D)), 0, -((float) Math.toRadians(15.65D)));
+			sitAnimationRotationPrev(RightWing3, sitProgress, (float) Math.toRadians(5.22D), 0, 0);
+			sitAnimationRotationPrev(leftWing2, sitProgress, (float) Math.toRadians(93.91D), 0, 0);
+			sitAnimationRotationPrev(rightLeg, sitProgress, 0, 0, (float) Math.toRadians(1.0D));
+			sitAnimationRotationPrev(head, sitProgress, -((float) Math.toRadians(18.0D)), -((float) Math.toRadians(52.17D)), (float) Math.toRadians(78.26D));
 		}
 		((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) rightTailParts);
 		((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) leftTailParts);

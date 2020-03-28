@@ -89,6 +89,17 @@ public class DinoAIFindAirTarget extends EntityAIBase {
 	}
 
 	public BlockPos findAirTarget() {
+    	if(prehistoric.canSleep()){
+			for (int i = 0; i < 10; i++) {
+				BlockPos pos = getBlockInView(prehistoric);
+				if (pos != null && prehistoric.world.getBlockState(pos).getMaterial() == Material.AIR && !isTargetBlocked(prehistoric, new Vec3d(pos))) {
+					while(prehistoric.world.getBlockState(pos).getMaterial() == Material.AIR && pos.getY() > 3){
+						pos = pos.down();
+					}
+					return pos.up();
+				}
+			}
+		}
 		if (prehistoric.getAttackTarget() == null) {
 			for (int i = 0; i < 10; i++) {
 				BlockPos pos = getBlockInView(prehistoric);
