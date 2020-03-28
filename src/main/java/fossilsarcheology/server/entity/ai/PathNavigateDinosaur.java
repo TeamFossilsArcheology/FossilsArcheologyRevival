@@ -67,12 +67,13 @@ public class PathNavigateDinosaur extends PathNavigateGround {
         }
 
         this.maxDistanceToWaypoint = dinosaur.getProximityToNextPathSkip();
+        float maxYDist = Math.max(this.entity.height / 2, 1);
         Vec3d vec3d1 = this.currentPath.getCurrentPos();
         float distX = MathHelper.abs((float) (this.entity.posX - (vec3d1.x + 0.5D)));
         float distZ = MathHelper.abs((float) (this.entity.posZ - (vec3d1.z + 0.5D)));
         float distY = (float) Math.abs(this.entity.posY - vec3d1.y);
 
-        if (distX < this.maxDistanceToWaypoint && distZ < this.maxDistanceToWaypoint && distY < Math.max(this.entity.height / 2, 1)) {
+        if (distX < this.maxDistanceToWaypoint && distZ < this.maxDistanceToWaypoint && distY < maxYDist) {
             this.currentPath.setCurrentPathIndex(this.currentPath.getCurrentPathIndex() + 1);
         }
 

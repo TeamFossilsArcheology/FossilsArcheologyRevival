@@ -70,7 +70,9 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
      * Keep ticking a continuous task that has already been started
      */
     public void updateTask() {
-        if (this.creature.getDistanceSqToCenter(this.destinationBlock.up()) > getRequiredDistance(0)) {
+        double dist = this.creature.getDistanceSqToCenter(this.destinationBlock.up());
+        double requiredDistance =  Math.max(this.getRequiredDistance(1.5F), 1.5F);
+        if (dist > requiredDistance) {
             this.isAboveDestination = false;
             ++this.timeoutCounter;
             if (this.timeoutCounter % 40 == 0) {

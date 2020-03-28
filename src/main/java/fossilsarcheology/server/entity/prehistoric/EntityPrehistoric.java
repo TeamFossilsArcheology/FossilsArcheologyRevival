@@ -2108,7 +2108,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public float getProximityToNextPathSkip(){
-        return width / 2;
+        return this.width > 0.75F ? this.width / 2.0F : 0.75F - this.width / 2.0F;
     }
 
     public Animation getExtraAnimation(int i) {
