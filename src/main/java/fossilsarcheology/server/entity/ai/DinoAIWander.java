@@ -53,6 +53,7 @@ public class DinoAIWander extends EntityAIBase {
             this.y = vec3d.y;
             this.z = vec3d.z;
             this.mustUpdate = false;
+            this.entity.getNavigator().tryMoveToXYZ(this.x, this.y, this.z, this.speed);
             return true;
         }
     }
@@ -60,7 +61,7 @@ public class DinoAIWander extends EntityAIBase {
     @Nullable
     protected Vec3d getPosition() {
         if (this.entity.isInWater()) {
-            Vec3d vec3d = RandomPositionGenerator.getLandPos(this.entity, 15, 7);
+            Vec3d vec3d = RandomPositionGenerator.getLandPos(this.entity, 30, 8);
             return vec3d == null ? RandomPositionGenerator.findRandomTarget(this.entity, 10, 7) : vec3d;
         } else {
             return this.entity.getRNG().nextFloat() >= 0.001D ? RandomPositionGenerator.getLandPos(this.entity, 10, 7) : RandomPositionGenerator.findRandomTarget(this.entity, 10, 7);

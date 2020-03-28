@@ -300,6 +300,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
         this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1D);
+        this.getEntityAttribute(EntityLivingBase.SWIM_SPEED).setBaseValue(1D);
     }
 
     @Override
