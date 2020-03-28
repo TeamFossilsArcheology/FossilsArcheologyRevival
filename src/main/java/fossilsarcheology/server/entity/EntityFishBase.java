@@ -117,9 +117,10 @@ public abstract class EntityFishBase extends EntityTameable {
             this.height = 0.95F;
         }
         Revival.PROXY.calculateChainBuffer(this);
-        if (this.isInWater() && this.getClosestMate() != null && this.getGrowingAge() == 0 && this.getClosestMate().getGrowingAge() == 0 && !this.world.isRemote) {
+        EntityFishBase closestMate = this.getClosestMate();
+        if (this.isInWater() && closestMate != null && this.getGrowingAge() == 0 && closestMate.getGrowingAge() == 0 && !this.world.isRemote) {
             this.setGrowingAge(48000);
-            this.getClosestMate().setGrowingAge(48000);
+            closestMate.setGrowingAge(48000);
             this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(this.selfType.eggItem)));
         }
     }
