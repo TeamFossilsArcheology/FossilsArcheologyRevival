@@ -1,5 +1,6 @@
 package fossilsarcheology.server.structure;
 
+import fossilsarcheology.server.block.FigurineBlock;
 import net.minecraft.block.BlockChest;
 import net.minecraft.init.Blocks;
 import net.minecraft.nbt.NBTTagCompound;
@@ -28,9 +29,10 @@ public class FABlockProcessorLoot extends FABlockProcessor {
             NBTTagCompound tag = blockInfoIn.tileentityData == null ? new NBTTagCompound() : blockInfoIn.tileentityData;
             tag.setString("LootTable", LootHelper.getLoot(loot_table, rand).toString());
             tag.setLong("LootTableSeed", rand.nextLong());
-            Template.BlockInfo newInfo = new Template.BlockInfo(pos, Blocks.CHEST.getDefaultState(), tag);
+            Template.BlockInfo newInfo = new Template.BlockInfo(pos, blockInfoIn.blockState, tag);
             return newInfo;
         }
+
         return super.processBlock(worldIn, pos, blockInfoIn);
     }
 }

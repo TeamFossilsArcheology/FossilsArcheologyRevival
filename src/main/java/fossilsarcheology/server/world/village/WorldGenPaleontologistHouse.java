@@ -4,6 +4,7 @@ import fossilsarcheology.Revival;
 import fossilsarcheology.server.entity.FAVillagerRegistry;
 import fossilsarcheology.server.structure.FABlockProcessorVillage;
 import net.minecraft.entity.passive.EntityVillager;
+import net.minecraft.init.Blocks;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
@@ -20,14 +21,14 @@ import net.minecraft.world.storage.loot.LootTableList;
 
 import java.util.Random;
 
-public class WorldGenArcheologistHouse extends WorldGenerator {
+public class WorldGenPaleontologistHouse extends WorldGenerator {
 
-    private static final ResourceLocation HOUSE = new ResourceLocation(Revival.MODID, "archeologist_villager_house");
-    private static final ResourceLocation CHEST = LootTableList.register(new ResourceLocation(Revival.MODID, "archeologist_house"));
-    private VillageComponentArcheologistHouse component;
+    private static final ResourceLocation HOUSE = new ResourceLocation(Revival.MODID, "paleontologist_villager_house");
+    private static final ResourceLocation CHEST = LootTableList.register(new ResourceLocation(Revival.MODID, "paleontologist_house"));
+    private VillageComponentPaleontologistHouse component;
     private Rotation rotation;
     private EnumFacing facing;
-    public WorldGenArcheologistHouse(VillageComponentArcheologistHouse component, EnumFacing facing){
+    public WorldGenPaleontologistHouse(VillageComponentPaleontologistHouse component, EnumFacing facing){
         this.component = component;
         this.facing = facing;
         switch(facing){
@@ -52,18 +53,18 @@ public class WorldGenArcheologistHouse extends WorldGenerator {
         }
         MinecraftServer server = worldIn.getMinecraftServer();
         TemplateManager templateManager = worldIn.getSaveHandler().getStructureTemplateManager();
-        PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(Mirror.NONE);
+        PlacementSettings settings = new PlacementSettings().setRotation(rotation).setMirror(Mirror.NONE).setReplacedBlock(Blocks.AIR);
         Template template = templateManager.getTemplate(server, HOUSE);
         Biome biome = worldIn.getBiome(position);
         int xSize = template.getSize().getX() / 2;
         int zSize = template.getSize().getZ()/ 2;
 
-        template.addBlocksToWorld(worldIn, position.up(3).offset(EnumFacing.NORTH, xSize).offset(EnumFacing.SOUTH, zSize), new FABlockProcessorVillage(position.up(3), settings, CHEST, biome, facing.getOpposite()), settings, 2);
+        template.addBlocksToWorld(worldIn, position.up(6).offset(EnumFacing.NORTH, xSize).offset(EnumFacing.SOUTH, zSize), new FABlockProcessorVillage(position.up(3), settings, CHEST, biome,facing), settings, 2);
         if(component.villagerCount < 1) {
             EntityVillager villager = new EntityVillager(worldIn);
-            villager.setProfession(FAVillagerRegistry.ARCHEOLOGIST_PROFESSION);
+            villager.setProfession(FAVillagerRegistry.PALAEONTOLOGIST_PROFESSION);
             BlockPos center = position.add(template.getSize().getX() / 2, 4, template.getSize().getZ() / 2);
-            BlockPos villagerPos = center.up(4);
+            BlockPos villagerPos = center.up(6);
             villager.setLocationAndAngles(villagerPos.getX() + 0.5D, villagerPos.getY() + 0.5D, villagerPos.getZ() + 0.5D, 0, 0);
             worldIn.spawnEntity(villager);
             component.villagerCount++;

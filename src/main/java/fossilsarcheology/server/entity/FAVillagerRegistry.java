@@ -5,6 +5,8 @@ import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.item.enchantment.FAEnchantmentRegistry;
 import fossilsarcheology.server.world.village.VillageArcheologistHouseCreator;
 import fossilsarcheology.server.world.village.VillageComponentArcheologistHouse;
+import fossilsarcheology.server.world.village.VillageComponentPaleontologistHouse;
+import fossilsarcheology.server.world.village.VillagePaleontologistHouseCreator;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.enchantment.EnchantmentHelper;
@@ -75,6 +77,9 @@ public class FAVillagerRegistry {
 
         MapGenStructureIO.registerStructureComponent(VillageComponentArcheologistHouse.class, "archeologist_house");
         VillagerRegistry.instance().registerVillageCreationHandler(new VillageArcheologistHouseCreator());
+
+        MapGenStructureIO.registerStructureComponent(VillageComponentPaleontologistHouse.class, "paleontologist_house");
+        VillagerRegistry.instance().registerVillageCreationHandler(new VillagePaleontologistHouseCreator());
     }
 
     public static class ListEnchantedBookForEmeralds implements EntityVillager.ITradeList

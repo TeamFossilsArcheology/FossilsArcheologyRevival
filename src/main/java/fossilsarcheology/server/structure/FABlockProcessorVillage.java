@@ -1,9 +1,12 @@
 package fossilsarcheology.server.structure;
 
+import fossilsarcheology.server.block.FigurineBlock;
+import fossilsarcheology.server.block.VaseBlock;
 import fossilsarcheology.server.world.village.VillageComponentArcheologistHouse;
 import net.minecraft.block.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -17,17 +20,27 @@ import javax.annotation.Nullable;
 
 public class FABlockProcessorVillage extends FABlockProcessorLoot {
 
-    private VillageComponentArcheologistHouse village;
     private Biome biome;
-
-    public FABlockProcessorVillage(BlockPos pos, PlacementSettings settings, ResourceLocation loot, VillageComponentArcheologistHouse village, Biome biome) {
+    private EnumFacing facing;
+    public FABlockProcessorVillage(BlockPos pos, PlacementSettings settings, ResourceLocation loot, Biome biome, EnumFacing facing) {
         super(pos, settings, loot);
-        this.village = village;
         this.biome = biome;
+        this.facing = facing;
     }
 
     @Nullable
     public Template.BlockInfo processBlock(World worldIn, BlockPos pos, Template.BlockInfo blockInfoIn) {
+        if(blockInfoIn.blockState.getBlock() instanceof FigurineBlock) {
+            NBTTagCompound tag = blockInfoIn.tileentityData == null ? new NBTTagCompound() : blockInfoIn.tileentityData;
+            tag.setInteger("FigurineType", random.nextInt(15));
+            tag.setInteger("Rot", Math.max(facing.getHorizontalIndex(), 0));
+            return new Template.BlockInfo(pos, blockInfoIn.blockState, tag);
+        }
+        if(blockInfoIn.blockState.getBlock() instanceof VaseBlock) {
+            NBTTagCompound tag = blockInfoIn.tileentityData == null ? new NBTTagCompound() : blockInfoIn.tileentityData;
+            tag.setInteger("Rot", Math.max(facing.getHorizontalIndex(), 0));
+            return new Template.BlockInfo(pos, blockInfoIn.blockState, tag);
+        }
         if (blockInfoIn.blockState.getBlock() instanceof BlockChest) {
             return super.processBlock(worldIn, pos, blockInfoIn);
         } else {
