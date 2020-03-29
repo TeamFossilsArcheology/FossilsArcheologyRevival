@@ -3,6 +3,7 @@ package fossilsarcheology.server.world;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.entity.monster.EntitySentryPigman;
 import fossilsarcheology.server.world.gen.WorldGenAshPath;
+import fossilsarcheology.server.world.gen.WorldGenVolcanoCone;
 import fossilsarcheology.server.world.gen.WorldGenVolcanoFossils;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSand;
@@ -44,7 +45,9 @@ public class FAVolcanoBiome extends Biome {
 
     public void decorate(World worldIn, Random rand, BlockPos pos) {
         super.decorate(worldIn, rand, pos);
-
+        if(rand.nextInt(50) == 0){
+            (new WorldGenVolcanoCone()).generate(worldIn, rand,  worldIn.getHeight(pos).up(3));
+        }
         if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), DecorateBiomeEvent.Decorate.EventType.CUSTOM))
             if(rand.nextInt(10) == 0){
                 (new WorldGenVolcanoFossils()).generate(worldIn, rand,  worldIn.getHeight(pos).down(5 + rand.nextInt(12)));
