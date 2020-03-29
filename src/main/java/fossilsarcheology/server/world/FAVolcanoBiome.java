@@ -17,12 +17,11 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
+import net.minecraft.world.biome.BiomeHills;
 import net.minecraft.world.chunk.ChunkPrimer;
-import net.minecraft.world.gen.feature.WorldGenDesertWells;
-import net.minecraft.world.gen.feature.WorldGenFossils;
-import net.minecraft.world.gen.feature.WorldGenIcePath;
-import net.minecraft.world.gen.feature.WorldGenLakes;
+import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent;
+import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -37,7 +36,6 @@ public class FAVolcanoBiome extends Biome {
         this.fillerBlock = FABlockRegistry.VOLCANIC_ROCK.getDefaultState();
         this.spawnableCreatureList.clear();
         this.spawnableWaterCreatureList.clear();
-
         this.decorator.treesPerChunk = -999;
         this.decorator.deadBushPerChunk = 4;
 
@@ -45,12 +43,17 @@ public class FAVolcanoBiome extends Biome {
 
     public void decorate(World worldIn, Random rand, BlockPos pos) {
         super.decorate(worldIn, rand, pos);
-        if(rand.nextInt(50) == 0){
-            (new WorldGenVolcanoCone()).generate(worldIn, rand,  worldIn.getHeight(pos).up(3));
+        net.minecraftforge.common.MinecraftForge.ORE_GEN_BUS.post(new net.minecraftforge.event.terraingen.OreGenEvent.Pre(worldIn, rand, pos));
+        DiamondGen gen = new DiamondGen();
+        if (net.minecraftforge.event.terraingen.TerrainGen.generateOre(worldIn, rand, gen, pos, OreGenEvent.GenerateMinable.EventType.DIAMOND))
+            gen.generate(worldIn, rand, pos);
+
+        if (rand.nextInt(50) == 0) {
+            (new WorldGenVolcanoCone()).generate(worldIn, rand, worldIn.getHeight(pos).up(3));
         }
         if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), DecorateBiomeEvent.Decorate.EventType.CUSTOM))
-            if(rand.nextInt(10) == 0){
-                (new WorldGenVolcanoFossils()).generate(worldIn, rand,  worldIn.getHeight(pos).down(5 + rand.nextInt(12)));
+            if (rand.nextInt(10) == 0) {
+                (new WorldGenVolcanoFossils()).generate(worldIn, rand, worldIn.getHeight(pos).down(5 + rand.nextInt(12)));
             }
         if (net.minecraftforge.event.terraingen.TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType.FOSSIL))
             for (int l = 0; l < 2; ++l) {
@@ -58,11 +61,11 @@ public class FAVolcanoBiome extends Biome {
                 int j1 = rand.nextInt(16) + 8;
                 new WorldGenAshPath(4 + rand.nextInt(6), false).generate(worldIn, rand, worldIn.getHeight(pos.add(i1, worldIn.getHeight(pos.getX(), pos.getZ()), j1)));
             }
-            if(rand.nextInt(3) == 0){
-                int i1 = rand.nextInt(16) + 8;
-                int j1 = rand.nextInt(16) + 8;
-                new WorldGenAshPath(2 + rand.nextInt(3), true).generate(worldIn, rand, worldIn.getHeight(pos.add(i1, worldIn.getHeight(pos.getX(), pos.getZ()), j1)));
-            }
+        if (rand.nextInt(3) == 0) {
+            int i1 = rand.nextInt(16) + 8;
+            int j1 = rand.nextInt(16) + 8;
+            new WorldGenAshPath(2 + rand.nextInt(3), true).generate(worldIn, rand, worldIn.getHeight(pos.add(i1, worldIn.getHeight(pos.getX(), pos.getZ()), j1)));
+        }
         for (int i = 0; i < 5; i++) {
             int i2 = rand.nextInt(16) + 8;
             int k3 = rand.nextInt(16) + 8;
@@ -141,5 +144,22 @@ public class FAVolcanoBiome extends Biome {
     @SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
         return 0X300000;
+    }
+
+    private static class DiamondGen extends WorldGenerator {
+        @Override
+        public boolean generate(World worldIn, Random rand, BlockPos pos) {
+            int count = 3 + rand.nextInt(6);
+            for (int i = 0; i < count; i++) {
+                int offset = net.minecraftforge.common.ForgeModContainer.fixVanillaCascading ? 8 : 0; // MC-114332
+                BlockPos blockpos = pos.add(rand.nextInt(16) + offset, rand.nextInt(38) + 4, rand.nextInt(16) + offset);
+
+                net.minecraft.block.state.IBlockState state = worldIn.getBlockState(blockpos);
+                if (state.getBlock().isReplaceableOreGen(state, worldIn, blockpos, net.minecraft.block.state.pattern.BlockMatcher.forBlock(Blocks.STONE))) {
+                    worldIn.setBlockState(blockpos, Blocks.DIAMOND_ORE.getDefaultState(), 16 | 2);
+                }
+            }
+            return true;
+        }
     }
 }

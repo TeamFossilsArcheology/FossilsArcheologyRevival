@@ -119,7 +119,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, StructureUtils.getGround(tentPos, world), random, false, false);
 				EntityVillager villager = new EntityVillager(world);
 				villager.setProfession(FAVillagerRegistry.PALAEONTOLOGIST_PROFESSION);
-				villager.setLocationAndAngles(tentPos.getX() - 0.5D, tentPos.getY() - 0.5D, tentPos.getZ() - 0.5D, 0, 0);
+				villager.setLocationAndAngles(tentPos.getX() - 0.5D, world.getHeight(tentPos).getY() + 1.0D, tentPos.getZ() - 0.5D, 0, 0);
 				world.spawnEntity(villager);
 			}
 		}
@@ -130,7 +130,7 @@ public class FAWorldGenerator implements IWorldGenerator {
 				StructureUtils.generateStructureAtWithRandomRotation(FOSSIL_SITE_TENT, world, StructureUtils.getGround(tentPos, world), random, false, false);
 				EntityVillager villager = new EntityVillager(world);
 				villager.setProfession(FAVillagerRegistry.PALAEONTOLOGIST_PROFESSION);
-				villager.setLocationAndAngles(tentPos.getX() - 0.5D, tentPos.getY() - 0.5D, tentPos.getZ() - 0.5D, 0, 0);
+				villager.setLocationAndAngles(tentPos.getX() - 0.5D, world.getHeight(tentPos).getY() + 1.0D, tentPos.getZ() - 0.5D, 0, 0);
 				world.spawnEntity(villager);
 			}
 		}
