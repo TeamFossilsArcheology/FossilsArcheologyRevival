@@ -1,0 +1,26 @@
+{
+  "type": "forge:ore_shapeless",
+  "ingredients": [
+    {
+      "item": "fossil:volcano_ash",
+      "data": 0
+    },
+    {
+      "item": "fossil:volcano_ash",
+      "data": 0
+    },
+    {
+      "item": "fossil:volcano_ash",
+      "data": 0
+    },
+    {
+      "item": "fossil:volcano_ash",
+      "data": 0
+    }
+  ],
+  "result": {
+    "item": "minecraft:dye",
+    "data": 15,
+    "count": 1
+  }
+}
