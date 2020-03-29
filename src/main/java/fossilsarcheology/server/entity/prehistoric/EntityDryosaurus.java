@@ -29,6 +29,7 @@ public class EntityDryosaurus extends EntityPrehistoric {
 		hasTeenTexture = false;
 		pediaScale = 40;
 		hasFeatherToggle = true;
+		ridingY = 1.8F;
 		featherToggle = Revival.CONFIG_OPTIONS.featheredDryosaurus;
 	}
 

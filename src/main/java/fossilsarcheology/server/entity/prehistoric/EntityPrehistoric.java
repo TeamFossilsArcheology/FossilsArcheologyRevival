@@ -125,7 +125,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public int prevAge;
     public boolean isDaytime;
     public float ridingXZ;
-    public float ridingY;
+    public float ridingY = 1;
     public float actualWidth;
     public boolean shouldWander = true;
     public boolean isRunningAway = false;
