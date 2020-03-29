@@ -78,6 +78,7 @@ item.bone_unique_item.diplocaulus.name=Diplocaulus Tail Bone
 item.bone_unique_item.edaphosaurus.name=Edaphosaurus Sail
 item.bone_unique_item.citipati.name=Citipati Claw
 item.bone_unique_item.diplodocus.name=Diplodocus Tail Bone
+item.bone_unique_item.ornitholestes.name=Ornitholestes Tail Bone
 
 # Items - DNA
 
@@ -174,6 +175,7 @@ entity.fossil.edaphosaurus.name=Edaphosaurus
 entity.fossil.arthropleura.name=Arthropleura
 entity.fossil.citipati.name=Citipati
 entity.fossil.diplodocus.name=Diplodocus
+entity.fossil.ornitholestes.name=Ornitholestes
 entity.fossil.javelin.name=Javelin
 entity.fossil.ancient_javelin.name=Ancient Javelin
 entity.fossil.stone_tablet.name=Stone Tablet
@@ -380,6 +382,7 @@ item.rawEdaphosaurus.name=Edaphosaurus Meat
 item.rawArthropleura.name=Arthropleura Meat
 item.rawCitipati.name=Citipati Meat
 item.rawDiplodocus.name=Diplodocus Meat
+item.rawOrnitholestes.name=Ornitholestes Meat
 item.eggTriceratops.name=Triceratops Egg
 item.eggVelociraptor.name=Velociraptor Egg
 item.eggTyrannosaurus.name=Tyrannosaurus Egg
@@ -414,6 +417,7 @@ item.eggEdaphosaurus.name=Edaphosaurus Egg
 item.eggArthropleura.name=Arthropleura Eggs
 item.eggCitipati.name=Citipati Egg
 item.eggDiplodocus.name=Diplodocus Egg
+item.eggOrnitholestes.name=Ornitholestes Egg
 item.dnaGastornis.name=Gastornis DNA
 item.dnaPhorusrhacos.name=Phorusrhacos DNA
 item.dnaTitanis.name=Titanis DNA
@@ -480,6 +484,7 @@ item.dnaEdaphosaurus.name=Edaphosaurus DNA
 item.dnaCitipati.name=Citipati DNA
 item.dnaDiplodocus.name=Diplodocus DNA
 item.dnaArthropleura.name=Arthropleura DNA
+item.dnaOrnitholestes.name=Ornitholestes DNA
 item.embryoPig.name=Pig Embryo
 item.embryoSheep.name=Sheep Embryo
 item.embryoCow.name=Cow Embryo
@@ -611,6 +616,7 @@ item.cookedEdaphosaurus.name=Cooked Edaphosaurus Meat
 item.cookedArthropleura.name=Cooked Arthropleura Meat
 item.cookedCitipati.name=Cooked Citipati Meat
 item.cookedDiplodocus.name=Cooked Diplodocus Meat
+item.cookedOrnitholestes.name=Cooked Ornitholestes Meat
 
 item.fossilseed_dillhoffia.name=Fossilized Dillhoffia Seeds
 item.fossilseed_sarracina.name=Fossilized Sarracenia Seeds

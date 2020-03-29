@@ -1,4 +1,34 @@
 {
+  "ornitholestes_hurt": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/ornitholestes_hurt1",
+      "fossil:prehistoric/ornitholestes_hurt2",
+      "fossil:prehistoric/ornitholestes_hurt3"
+    ]
+  },
+  "ornitholestes_living": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/ornitholestes_living1",
+      "fossil:prehistoric/ornitholestes_living2",
+      "fossil:prehistoric/ornitholestes_living3",
+      "fossil:prehistoric/ornitholestes_living4",
+      "fossil:prehistoric/ornitholestes_living5",
+      "fossil:prehistoric/ornitholestes_living6",
+      "fossil:prehistoric/ornitholestes_living7",
+      "fossil:prehistoric/ornitholestes_living8",
+      "fossil:prehistoric/ornitholestes_living9",
+      "fossil:prehistoric/ornitholestes_living10",
+      "fossil:prehistoric/ornitholestes_living11"
+    ]
+  },
+  "ornitholestes_death": {
+    "category": "neutral",
+    "sounds": [
+      "fossil:prehistoric/ornitholestes_death1"
+    ]
+  },
   "diplodocus_hurt": {
     "category": "neutral",
     "sounds": [

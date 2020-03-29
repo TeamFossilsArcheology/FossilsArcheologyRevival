@@ -47,6 +47,7 @@ public class FossilConfig {
     public boolean featheredVelociraptor = true;
     public boolean featheredTherizinosaurus = true;
     public boolean featheredDryosaurus = false;
+    public boolean featheredOrnitholestes = true;
     public boolean eggsLikeChickens = false;
     public boolean dinosaurBreeding = true;
     public boolean helmetOverlays = true;
@@ -117,6 +118,7 @@ public class FossilConfig {
         this.featheredVelociraptor = config.getBoolean("Feathered Velociraptor", "all", true, "True if Velociraptor is accurate to science and not a fake movie monster or a relic of past age of scientific progress");
         this.featheredTherizinosaurus = config.getBoolean("Feathered Therizinosaurus", "all", true, "True if Therizinosaurus should be represented with plumage");
         this.featheredDryosaurus = config.getBoolean("Feathered Dryosaurus", "all", false, "True if Dryosaurus should be represented with plumage");
+        this.featheredOrnitholestes = config.getBoolean("Feathered Ornitholestes", "all", true, "True if Ornitholestes is accurate to science and not a fake movie monster or a relic of past age of scientific progress");
         this.eggsLikeChickens = config.getBoolean("Eggs Like Chickens", "all", false, "True if Dinosaurs should create item eggs instead of entities");
         this.dinosaurBreeding = config.getBoolean("Dinosaur Breeding", "all", true, "True if Dinosaurs should breed");
         this.helmetOverlays = config.getBoolean("Helmet Overlays", "all", true, "True if skull helmet and ancient helmet render overlays like vanilla pumpkin.");
