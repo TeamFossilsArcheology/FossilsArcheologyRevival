@@ -48,9 +48,7 @@ public class WorldGenVolcanoFossils extends WorldGenerator {
         StructureBoundingBox structureboundingbox = new StructureBoundingBox(chunkpos.getXStart(), 0, chunkpos.getZStart(), chunkpos.getXEnd(), 256, chunkpos.getZEnd());
         PlacementSettings placementsettings = (new PlacementSettings()).setRotation(rotation).setBoundingBox(structureboundingbox).setRandom(random);
         BlockPos blockpos = template.transformedSize(rotation);
-        int j = random.nextInt(16 - blockpos.getX());
-        int k = random.nextInt(16 - blockpos.getZ());
-        BlockPos blockpos1 = template.getZeroPositionWithTransform(position.add(j, 0, k), Mirror.NONE, rotation);
+        BlockPos blockpos1 = template.getZeroPositionWithTransform(position.add(-4, 0, -4), Mirror.NONE, rotation);
         placementsettings.setIntegrity(0.9F);
         template.addBlocksToWorld(worldIn, blockpos1, placementsettings, 20);
         placementsettings.setIntegrity(0.1F);
