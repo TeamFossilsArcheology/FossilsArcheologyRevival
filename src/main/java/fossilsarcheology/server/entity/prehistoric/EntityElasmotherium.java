@@ -32,7 +32,8 @@ public class EntityElasmotherium extends EntityPrehistoric {
 	}
 
 	public void initEntityAI() {
-		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.5D, false));
+		this.tasks.addTask(0, new DinoAIFleeBattle(this, 1.0D));
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIWander(this, 1.0D));

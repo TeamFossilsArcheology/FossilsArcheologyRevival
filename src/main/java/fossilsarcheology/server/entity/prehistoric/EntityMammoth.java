@@ -53,7 +53,8 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
 	}
 
 	public void initEntityAI() {
-		this.tasks.addTask(0, new DinoMeleeAttackAI(this, 1.0D, false));
+		this.tasks.addTask(0, new DinoAIFleeBattle(this, 1.0D));
+		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));
 		this.tasks.addTask(2, this.aiSit  = new EntityAISit(this));
 		this.tasks.addTask(3, new DinoAIFlockWander<>(this, 3,6, 0.75F));

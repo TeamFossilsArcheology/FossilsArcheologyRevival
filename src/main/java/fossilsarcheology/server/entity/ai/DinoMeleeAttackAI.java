@@ -33,6 +33,9 @@ public class DinoMeleeAttackAI extends EntityAIBase {
         } else if (this.entity.world.getDifficulty() == EnumDifficulty.PEACEFUL && target instanceof EntityPlayer) {
             return false;
         }
+        if(entity.isFleeing()){
+            return false;
+        }
         this.currentPath = this.entity.getNavigator().getPathToEntityLiving(target);
         return this.currentPath != null;
     }

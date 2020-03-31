@@ -75,6 +75,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private static final DataParameter<Integer> HUNGER = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> MODELIZED = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Boolean> ANGRY = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BOOLEAN);
+    private static final DataParameter<Boolean> FLEEING = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BOOLEAN);
     private static final DataParameter<Integer> SUBSPECIES = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> GENDER = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.VARINT);
     private static final DataParameter<Boolean> SLEEPING = EntityDataManager.createKey(EntityPrehistoric.class, DataSerializers.BOOLEAN);
@@ -141,6 +142,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private boolean droppedBiofossil = false;
     private int animTick;
     private int riderJumpCooldown = 0;
+    private int fleeTicks = 0;
     private boolean isActuallyInWater;
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
@@ -250,6 +252,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.dataManager.register(HUNGER, 0);
         this.dataManager.register(MODELIZED, false);
         this.dataManager.register(ANGRY, false);
+        this.dataManager.register(FLEEING, false);
         this.dataManager.register(SUBSPECIES, 0);
         this.dataManager.register(GENDER, 0);
         this.dataManager.register(SLEEPING, false);
@@ -267,6 +270,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         compound.setInteger("Hunger", this.getHunger());
         compound.setBoolean("isModelized", this.isSkeleton());
         compound.setBoolean("Angry", this.isAngry());
+        compound.setBoolean("Fleeing", this.isFleeingFlag());
         compound.setInteger("SubSpecies", this.getSubSpecies());
         compound.setInteger("Gender", this.getGender());
         compound.setBoolean("Sleeping", this.isSleeping);
@@ -308,6 +312,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         super.readEntityFromNBT(compound);
         this.setAgeinTicks(compound.getInteger("AgeTick"));
         this.setHunger(compound.getInteger("Hunger"));
+        this.setFleeingFlag(compound.getBoolean("Fleeing"));
         this.setSkeleton(compound.getBoolean("isModelized"));
         this.setAngry(compound.getBoolean("Angry"));
         this.setSubSpecies(compound.getInteger("SubSpecies"));
@@ -706,6 +711,13 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
         if (flockWanderCooldown > 0) {
             flockWanderCooldown--;
+        }
+        if(isFleeingFlag()){
+            fleeTicks++;
+            if(fleeTicks > getFleeingCooldown()){
+                this.setFleeingFlag(false);
+                fleeTicks = 0;
+            }
         }
     }
 
@@ -2047,7 +2059,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public void doAttack() {
         IAttributeInstance iattributeinstance = this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
         if (getAttackTarget() != null) {
-            this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
+            boolean b = this.getAttackTarget().attackEntityFrom(DamageSource.causeMobDamage(this), (float) iattributeinstance.getAttributeValue());
+            this.setFleeingFlag(b);
         }
     }
 
@@ -2120,5 +2133,25 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     public boolean useSpecialAttack() {
         return false;
+    }
+
+    public boolean isFleeingFlag() {
+        return this.dataManager.get(FLEEING);
+    }
+
+    public void setFleeingFlag(boolean fleeing) {
+        this.dataManager.set(FLEEING, fleeing);
+    }
+
+    public boolean isFleeing(){
+        return isFleeingFlag() && this.type.diet == Diet.HERBIVORE;
+    }
+
+    protected int getFleeingCooldown(){
+        if(this.getRevengeTarget() != null){
+            int i = (int)(Math.max(this.getRevengeTarget().width / 2F, 1) * 95);
+            return i;
+        }
+        return 100;
     }
 }
