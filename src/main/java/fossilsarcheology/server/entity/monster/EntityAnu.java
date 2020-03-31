@@ -281,7 +281,7 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
                 if (!this.checkGround()) {
                     flyAround();
                 }
-                if (getAttackTarget() != null) {
+                if (getAttackTarget() != null && world.getHeight(new BlockPos(this)).getY() > 10) {
                     currentTarget = new BlockPos((int) getAttackTarget().posX + rand.nextInt(20) - rand.nextInt(10), (int) ((int) getAttackTarget().posY + getAttackTarget().getEyeHeight()) + rand.nextInt(20) - rand.nextInt(10), (int) getAttackTarget().posZ + rand.nextInt(40) - rand.nextInt(10));
                     setFlying(false);
                     flyTowardsTarget();
