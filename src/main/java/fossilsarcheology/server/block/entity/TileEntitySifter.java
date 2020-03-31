@@ -25,11 +25,13 @@ import java.util.Random;
 
 public class TileEntitySifter extends TileEntity implements IInventory, ISidedInventory, ITickable {
 
-    private static final int[] slots_bottom = new int[] { 1, 2, 3, 4, 5 }; // output
-    private static final int[] slots_top = new int[] { 0 };// fuel
+    private static final int[] slots_bottom = new int[]{1, 2, 3, 4, 5}; // output
+    private static final int[] slots_top = new int[]{0};// fuel
     public int sifterBurnTime = 0;
     public int currentItemBurnTime = 0;
     public int sifterCookTime = 0;
+    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
+    net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
     private String customName;
     private NonNullList<ItemStack> stacks = NonNullList.withSize(6, ItemStack.EMPTY);
     private int rawIndex = -1;
@@ -41,6 +43,23 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
 
     public static boolean isItemFuel(ItemStack stack) {
         return getItemBurnTime(stack) > 0;
+    }
+
+    public static boolean isAnalyzable(ItemStack stack) {
+        return FAMachineRecipeRegistry.getSifterRecipeForItem(stack) != null;
+    }
+
+    public static EnumSiftType getSiftTypeFromStack(ItemStack stack) {
+        if (stack.getItem() instanceof ItemBlock) {
+            IBlockState block = ((ItemBlock) stack.getItem()).getBlock().getDefaultState();
+            if (block.getMaterial() == Material.SAND && !(block.getBlock() instanceof BlockConcretePowder)) {
+                return EnumSiftType.SAND;
+            }
+            if (block.getMaterial() == Material.GROUND) {
+                return EnumSiftType.GROUND;
+            }
+        }
+        return EnumSiftType.NONE;
     }
 
     @Override
@@ -203,10 +222,6 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
         }
     }
 
-    public static boolean isAnalyzable(ItemStack stack){
-        return FAMachineRecipeRegistry.getSifterRecipeForItem(stack) != null;
-    }
-
     private boolean canSmelt() {
         this.spaceIndex = -1;
         this.rawIndex = -1;
@@ -329,26 +344,6 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
         return false;
     }
 
-    public enum EnumSiftType{
-        NONE, GROUND, SAND;
-    }
-
-    public static EnumSiftType getSiftTypeFromStack(ItemStack stack){
-        if(stack.getItem() instanceof ItemBlock){
-            IBlockState block = ((ItemBlock) stack.getItem()).getBlock().getDefaultState();
-            if(block.getMaterial() == Material.SAND && !(block.getBlock() instanceof BlockConcretePowder)){
-                return EnumSiftType.SAND;
-            }
-            if(block.getMaterial() == Material.GROUND){
-                return EnumSiftType.GROUND;
-            }
-        }
-        return EnumSiftType.NONE;
-    }
-
-    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
-    net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
-
     @SuppressWarnings("unchecked")
     @Override
     @javax.annotation.Nullable
@@ -359,5 +354,9 @@ public class TileEntitySifter extends TileEntity implements IInventory, ISidedIn
             else
                 return (T) handlerTop;
         return super.getCapability(capability, facing);
+    }
+
+    public enum EnumSiftType {
+        NONE, GROUND, SAND
     }
 }

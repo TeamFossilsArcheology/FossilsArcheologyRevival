@@ -1,4 +1,5 @@
 package fossilsarcheology.server.world.village;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -11,8 +12,8 @@ import java.util.List;
 import java.util.Random;
 
 public class VillageComponentArcheologistHouse extends StructureVillagePieces.Village {
-    private int averageGroundLevel = -1;
     int villagerCount = 0;
+    private int averageGroundLevel = -1;
 
     public VillageComponentArcheologistHouse() {
         super();
@@ -29,6 +30,7 @@ public class VillageComponentArcheologistHouse extends StructureVillagePieces.Vi
         StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, -1, 11, 12, 14, facing);
         return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(pieces, structureboundingbox) == null ? new VillageComponentArcheologistHouse(startPiece, p5, random, structureboundingbox, facing) : null;
     }
+
     @Override
     public boolean addComponentParts(World world, Random random, StructureBoundingBox sbb) {
         if (this.averageGroundLevel < 0) {
@@ -41,13 +43,13 @@ public class VillageComponentArcheologistHouse extends StructureVillagePieces.Vi
         BlockPos blockpos = new BlockPos(this.getXWithOffset(11, -1), this.getYWithOffset(0), this.getZWithOffset(11, -1));
         EnumFacing facing = this.getCoordBaseMode().getOpposite();
         BlockPos genPos = blockpos.up();
-        if(facing == EnumFacing.SOUTH){
-            genPos =  genPos.offset(EnumFacing.WEST, 11).offset(EnumFacing.SOUTH, 2);
+        if (facing == EnumFacing.SOUTH) {
+            genPos = genPos.offset(EnumFacing.WEST, 11).offset(EnumFacing.SOUTH, 2);
         }
         return new WorldGenArcheologistHouse(this, facing.rotateY()).generate(world, random, genPos);
     }
 
-    public IBlockState getBiomeBlock(IBlockState state){
+    public IBlockState getBiomeBlock(IBlockState state) {
         return getBiomeSpecificBlockState(state);
     }
 

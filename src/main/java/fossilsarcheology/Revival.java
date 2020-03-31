@@ -65,6 +65,25 @@ public class Revival {
         }
     }
 
+    public static void loadConfig() {
+        File configFile = new File(Loader.instance().getConfigDir(), "fossil.cfg");
+        if (!configFile.exists()) {
+            try {
+                configFile.createNewFile();
+            } catch (Exception e) {
+                LOGGER.warn("Could not create a new FA config file.");
+                LOGGER.warn(e.getLocalizedMessage());
+            }
+        }
+        config = new Configuration(configFile);
+        config.load();
+    }
+
+    public static void syncConfig() {
+        CONFIG_OPTIONS.init(config);
+        config.save();
+    }
+
     @Mod.EventHandler
     public void onPreInit(FMLPreInitializationEvent event) {
         loadConfig();
@@ -103,24 +122,5 @@ public class Revival {
         PROXY.onPostInit();
         TinkersCompatBridge.loadTinkersPostInitCompat();
         FAMachineRecipeRegistry.postInit();
-    }
-
-    public static void loadConfig() {
-        File configFile = new File(Loader.instance().getConfigDir(), "fossil.cfg");
-        if (!configFile.exists()) {
-            try {
-                configFile.createNewFile();
-            } catch (Exception e) {
-                LOGGER.warn("Could not create a new FA config file.");
-                LOGGER.warn(e.getLocalizedMessage());
-            }
-        }
-        config = new Configuration(configFile);
-        config.load();
-    }
-
-    public static void syncConfig() {
-        CONFIG_OPTIONS.init(config);
-        config.save();
     }
 }

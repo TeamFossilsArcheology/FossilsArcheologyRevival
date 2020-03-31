@@ -22,16 +22,16 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
+    private static final int MAX_TIME_ON_LAND = 1000;
+    private static final int MAX_TIME_IN_WATER = 1000;
     public boolean movesOnLand;
     public Animation FISH_ANIMATION;
     public float onLandProgress;
-    protected boolean isAmphibious;
     public int timeInWater = 0;
     public int timeOnLand = 0;
-    protected boolean isLandNavigator;
     public float flyProgress;
-    private static final int MAX_TIME_ON_LAND = 1000;
-    private static final int MAX_TIME_IN_WATER = 1000;
+    protected boolean isAmphibious;
+    protected boolean isLandNavigator;
 
 
     public EntityPrehistoricSwimming(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
@@ -52,18 +52,18 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
         }
     }
 
-    public boolean shouldLeaveWater(){
+    public boolean shouldLeaveWater() {
         return isAmphibious && this.timeInWater > MAX_TIME_IN_WATER && timeOnLand < MAX_TIME_ON_LAND;
     }
 
-    public boolean shouldEnterWater(){
-        if(!isAmphibious){
+    public boolean shouldEnterWater() {
+        if (!isAmphibious) {
             return true;
         }
         return this.timeInWater == 0 && timeOnLand > MAX_TIME_ON_LAND;
     }
 
-    protected double getStrongAttackPower(){
+    protected double getStrongAttackPower() {
         return this.getAttributeMap().getAttributeInstance(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue() * 2;
     }
 
@@ -81,7 +81,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
 
     public abstract double swimSpeed();
 
-    private double getScaledSwimSpeed(){
+    private double getScaledSwimSpeed() {
         return getAgeScale() / maxSize * swimSpeed();
     }
 
@@ -95,7 +95,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
         return false;
     }
 
-    public void destroyBoat(Entity sailor){
+    public void destroyBoat(Entity sailor) {
         if (sailor.getRidingEntity() != null && sailor.getRidingEntity() instanceof EntityBoat && !world.isRemote) {
             EntityBoat boat = (EntityBoat) sailor.getRidingEntity();
             boat.setDead();
@@ -109,6 +109,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
             }
         }
     }
+
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
@@ -131,11 +132,11 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
                 this.motionY += 0.2D * swimSpeed();
             }
         }
-        if(this.isInWaterMaterial()){
+        if (this.isInWaterMaterial()) {
             this.timeInWater++;
             this.timeOnLand = 0;
         }
-        if(this.onGround && !this.isInWaterMaterial()){
+        if (this.onGround && !this.isInWaterMaterial()) {
             this.timeInWater = 0;
             this.timeOnLand++;
         }
@@ -199,12 +200,12 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
                         f4 += (0.54600006F - f4) * d0 / 3.0F;
                     }
                     this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-                    this.motionX *= (double) f4;
+                    this.motionX *= f4;
                     this.motionX *= 0.900000011920929D;
                     this.motionY *= 0.900000011920929D;
-                    this.motionY *= (double) f4;
+                    this.motionY *= f4;
                     this.motionZ *= 0.900000011920929D;
-                    this.motionZ *= (double) f4;
+                    this.motionZ *= f4;
                     motionY += 0.01185D;
                 } else {
                     forward = controller.moveForward * 0.25F;
@@ -231,7 +232,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
         }
         if (this.isServerWorld()) {
             if (this.isInWater()) {
-                this.moveRelative(strafe * (float)swimSpeed(), vertical * (float)swimSpeed(), forward * (float)swimSpeed(), 0.1F);
+                this.moveRelative(strafe * (float) swimSpeed(), vertical * (float) swimSpeed(), forward * (float) swimSpeed(), 0.1F);
                 f4 = 0.8F;
                 float speedModifier = (float) EnchantmentHelper.getDepthStriderModifier(this);
                 if (speedModifier > 3.0F) {
@@ -244,12 +245,12 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
                     f4 += (0.54600006F - f4) * speedModifier / 3.0F;
                 }
                 this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-                this.motionX *= (double) f4;
+                this.motionX *= f4;
                 this.motionX *= 0.9;
                 this.motionY *= 0.9;
                 this.motionZ *= 0.9;
-                this.motionY *= (double) f4;
-                this.motionZ *= (double) f4;
+                this.motionY *= f4;
+                this.motionZ *= f4;
             } else {
                 super.travel(strafe, vertical, forward);
             }
@@ -276,7 +277,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
     public void onEntityUpdate() {
         int i = this.getAir();
         super.onEntityUpdate();
-        if(!canBreathOnLand()) {
+        if (!canBreathOnLand()) {
             if (this.isEntityAlive() && !this.isInWater()) {
                 --i;
                 this.setAir(i);
@@ -291,7 +292,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
         }
     }
 
-    public boolean canBreathOnLand(){
+    public boolean canBreathOnLand() {
         return true;
     }
 
@@ -337,11 +338,11 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
                 double distanceY = this.posY - this.dinosaur.posY;
                 double distanceZ = this.posZ - this.dinosaur.posZ;
                 double distance = Math.abs(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
-                distance = (double) MathHelper.sqrt(distance);
+                distance = MathHelper.sqrt(distance);
                 distanceY /= distance;
                 float angle = (float) (Math.atan2(distanceZ, distanceX) * 180.0D / Math.PI) - 90.0F;
                 float maxChange = this.dinosaur.getMaxTurnDistancePerTick();
-                if(distance > 0.2F){
+                if (distance > 0.2F) {
                     this.dinosaur.rotationYaw = this.limitAngle(this.dinosaur.rotationYaw, angle, maxChange);
                 }
                 this.dinosaur.setAIMoveSpeed(0.65F);

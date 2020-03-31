@@ -41,7 +41,7 @@ public class EntityWorseDebugTest extends EntityMob {
         this.tasks.addTask(2, new AIWander());
         this.tasks.addTask(3, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(4, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, false));
     }
 
@@ -55,13 +55,13 @@ public class EntityWorseDebugTest extends EntityMob {
 
     public void attackEntityWithRangedAttack(EntityLivingBase target) {
         double d1 = target.posX - this.posX;
-        double d2 = target.getEntityBoundingBox().minY + (double)(target.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
+        double d2 = target.getEntityBoundingBox().minY + (double) (target.height / 2.0F) - (this.posY + (double) (this.height / 2.0F));
         double d3 = target.posZ - this.posZ;
         double d0 = this.getDistanceSq(target);
         float f = MathHelper.sqrt(MathHelper.sqrt(d0)) * 0.5F;
 
-        EntityLargeFireball entitysmallfireball = new EntityLargeFireball(this.world, this, d1 + this.getRNG().nextGaussian() * (double)f, d2, d3 + this.getRNG().nextGaussian() * (double)f);
-        entitysmallfireball.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
+        EntityLargeFireball entitysmallfireball = new EntityLargeFireball(this.world, this, d1 + this.getRNG().nextGaussian() * (double) f, d2, d3 + this.getRNG().nextGaussian() * (double) f);
+        entitysmallfireball.posY = this.posY + (double) (this.height / 2.0F) + 0.5D;
         entitysmallfireball.explosionPower = 5;
         this.world.spawnEntity(entitysmallfireball);
     }
@@ -82,7 +82,7 @@ public class EntityWorseDebugTest extends EntityMob {
         entity.motionZ = z;
         float f1 = MathHelper.sqrt(x * x + z * z);
         entity.rotationYaw = (float) (MathHelper.atan2(x, z) * (180D / Math.PI));
-        entity.rotationPitch = (float) (MathHelper.atan2(y, (double) f1) * (180D / Math.PI));
+        entity.rotationPitch = (float) (MathHelper.atan2(y, f1) * (180D / Math.PI));
         entity.prevRotationYaw = entity.rotationYaw;
         entity.prevRotationPitch = entity.rotationPitch;
     }
@@ -108,6 +108,19 @@ public class EntityWorseDebugTest extends EntityMob {
         return SoundEvents.ENTITY_ZOMBIE_PIG_DEATH;
     }
 
+    private boolean isDirectPathBetweenPoints(Vec3d vec3d) {
+        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector().add(0, -0.25, 0), vec3d, false);
+        if (rayTrace != null && rayTrace.hitVec != null) {
+            BlockPos sidePos = rayTrace.getBlockPos();
+            BlockPos pos = new BlockPos(rayTrace.hitVec);
+            if (!world.isAirBlock(pos) || !world.isAirBlock(sidePos)) {
+                return true;
+            } else {
+                return rayTrace.typeOfHit != RayTraceResult.Type.MISS;
+            }
+        }
+        return true;
+    }
 
     static class AIFireballAttack extends EntityAIBase {
         private final EntityWorseDebugTest mob;
@@ -191,7 +204,7 @@ public class EntityWorseDebugTest extends EntityMob {
                 double d1 = this.posY - EntityWorseDebugTest.this.posY;
                 double d2 = this.posZ - EntityWorseDebugTest.this.posZ;
                 double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-                d3 = (double) MathHelper.sqrt(d3);
+                d3 = MathHelper.sqrt(d3);
 
                 if (d3 < EntityWorseDebugTest.this.getEntityBoundingBox().getAverageEdgeLength()) {
                     this.action = EntityMoveHelper.Action.WAIT;
@@ -216,6 +229,7 @@ public class EntityWorseDebugTest extends EntityMob {
             }
         }
     }
+
     class AIWander extends EntityAIBase {
         BlockPos target;
 
@@ -244,19 +258,5 @@ public class EntityWorseDebugTest extends EntityMob {
                 }
             }
         }
-    }
-
-    private boolean isDirectPathBetweenPoints(Vec3d vec3d) {
-        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector().add(0, -0.25, 0), vec3d, false);
-        if (rayTrace != null && rayTrace.hitVec != null) {
-            BlockPos sidePos = rayTrace.getBlockPos();
-            BlockPos pos = new BlockPos(rayTrace.hitVec);
-            if (!world.isAirBlock(pos) || !world.isAirBlock(sidePos) ) {
-                return true;
-            }else{
-                return rayTrace.typeOfHit != RayTraceResult.Type.MISS;
-            }
-        }
-        return true;
     }
 }

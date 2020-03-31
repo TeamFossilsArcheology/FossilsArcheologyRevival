@@ -225,7 +225,7 @@ public class EntityAnubite extends EntityMob {
                 if (this.targetEntity != null) {
                     if (this.enderman.shouldAttackPlayer(this.targetEntity)) {
                         if (this.targetEntity.getDistanceSq(this.enderman) > 45.0D && this.enderman.getRNG().nextInt(55) == 0) {
-                           this.enderman.teleportToEntity(this.targetEntity);
+                            this.enderman.teleportToEntity(this.targetEntity);
                         }
                         this.teleportTime = 0;
                     } else if (this.targetEntity.getDistanceSq(this.enderman) > 256.0D && this.teleportTime++ >= 30 && this.enderman.teleportToEntity(this.targetEntity)) {

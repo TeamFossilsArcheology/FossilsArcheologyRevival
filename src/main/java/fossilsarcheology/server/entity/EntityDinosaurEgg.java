@@ -136,13 +136,13 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
         this.tickHatching();
     }
 
-    public boolean isCold(){
+    public boolean isCold() {
         Biome biome = this.world.getBiome(new BlockPos(this));
         float light = world.getLightBrightness(new BlockPos(this));
         float temperature = biome.getTemperature(new BlockPos(this));
-        if(temperature <= 0.15F){
+        if (temperature <= 0.15F) {
             return light < 0.75F;
-        }else{
+        } else {
             return light < 0.5F;
         }
     }
@@ -150,11 +150,11 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
 
     private void tickHatching() {
         EntityPlayer player = this.world.getClosestPlayerToEntity(this, 16.0D);
-        if(isCold() || this.inWater){
-            if(this.getBirthTick() > 0){
+        if (isCold() || this.inWater) {
+            if (this.getBirthTick() > 0) {
                 this.setBirthTick(this.getBirthTick() - 1);
             }
-        }else{
+        } else {
             lastBirthTick = this.getBirthTick();
             this.setBirthTick(this.getBirthTick() + 1);
         }
@@ -170,7 +170,7 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
                             prehistoricEntity.setTamed(true);
                             prehistoricEntity.setOwnerId(player.getUniqueID());
                             FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(player, FossilsPlayerProperties.class);
-                            if(properties != null && !properties.hasHatchedDinosaur){
+                            if (properties != null && !properties.hasHatchedDinosaur) {
                                 properties.hasHatchedDinosaur = true;
                                 Revival.PROXY.playSound(FASoundRegistry.MUSIC_FIRST_DINOSAUR);
                             }
@@ -188,7 +188,7 @@ public class EntityDinosaurEgg extends EntityLiving implements IEntityAdditional
 
                 entity.setLocationAndAngles(Math.floor(this.posX), Math.floor(this.posY) + 1, Math.floor(this.posZ), this.world.rand.nextFloat() * 360.0F, 0.0F);
 
-                if(!hasMessagedPlayer) {
+                if (!hasMessagedPlayer) {
                     for (int i = 0; i < 4; i++) {
                         double x = this.posX + (this.rand.nextFloat() - 0.5D) * this.width;
                         double y = this.getEntityBoundingBox().minY + 0.1D;

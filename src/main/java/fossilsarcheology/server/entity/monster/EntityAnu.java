@@ -49,15 +49,15 @@ import java.util.List;
 public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
     private static final DataParameter<Integer> ATTACK_MODE = EntityDataManager.createKey(EntityAnu.class, DataSerializers.VARINT);
-    public int allHealth = 600;
     public final int middleHealth = 400;
     public final int finalHealth = 200;
     // length of song in ticks
     public final int songLength = 4041;
+    private final BossInfoServer bossInfo = (BossInfoServer) (new BossInfoServer(new TextComponentString(TextFormatting.DARK_RED + this.getDisplayName().getFormattedText()), BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
+    public int allHealth = 600;
     public int songCounter = 0;
     public boolean isFlying;
     private BlockPos currentTarget;
-    private final BossInfoServer bossInfo = (BossInfoServer) (new BossInfoServer(new TextComponentString(TextFormatting.DARK_RED + this.getDisplayName().getFormattedText()) , BossInfo.Color.RED, BossInfo.Overlay.PROGRESS)).setDarkenSky(true);
 
     public EntityAnu(World world) {
         super(world);
@@ -287,9 +287,9 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
                     setFlying(false);
                     flyTowardsTarget();
                 }
-                if(world.getClosestPlayerToEntity(this, 100) != null && this.ticksExisted % 100 == 0){
+                if (world.getClosestPlayerToEntity(this, 100) != null && this.ticksExisted % 100 == 0) {
                     EntityPlayer player = world.getClosestPlayerToEntity(this, 100);
-                    if(this.getEntitySenses().canSee(player) && !player.isCreative()){
+                    if (this.getEntitySenses().canSee(player) && !player.isCreative()) {
                         this.attackEntityWithRangedAttack(player, 1.0F);
                     }
 
@@ -542,12 +542,12 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
     }
 
-    public void unlockDimensionAbilities(){
+    public void unlockDimensionAbilities() {
         List<EntityPlayer> players = this.world.getPlayers(EntityPlayer.class, EntitySelectors.NOT_SPECTATING);
-        for(EntityPlayer player : players){
-            if(player.dimension == this.dimension){
+        for (EntityPlayer player : players) {
+            if (player.dimension == this.dimension) {
                 FossilsPlayerProperties properties = EntityPropertiesHandler.INSTANCE.getProperties(player, FossilsPlayerProperties.class);
-                if(properties != null){
+                if (properties != null) {
                     properties.killedAnu = true;
                 }
             }

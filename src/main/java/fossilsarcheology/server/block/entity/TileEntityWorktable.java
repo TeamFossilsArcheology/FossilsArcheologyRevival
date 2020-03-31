@@ -22,12 +22,15 @@ import net.minecraft.util.NonNullList;
 import javax.annotation.Nullable;
 
 public class TileEntityWorktable extends TileEntity implements IInventory, ISidedInventory, ITickable {
-    private static final int[] slots_top = new int[] {1}; // input
-    private static final int[] slots_bottom = new int[] {2}; // output
-    private static final int[] slots_sides = new int[] {0};// fuel
+    private static final int[] slots_top = new int[]{1}; // input
+    private static final int[] slots_bottom = new int[]{2}; // output
+    private static final int[] slots_sides = new int[]{0};// fuel
     public int furnaceBurnTime = 0;
     public int currentItemBurnTime = 0;
     public int furnaceCookTime = 0;
+    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
+    net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
+    net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
     private NonNullList<ItemStack> stacks = NonNullList.withSize(3, ItemStack.EMPTY);
     private String customName;
 
@@ -223,7 +226,7 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
 
     private ItemStack checkSmelt(ItemStack itemstack) {
         RecipeWorktable recipeWorktable = FAMachineRecipeRegistry.getWorktableRecipeForItem(itemstack);
-        if(recipeWorktable != null){
+        if (recipeWorktable != null) {
             return recipeWorktable.getOutput();
         }
         return null;
@@ -268,7 +271,7 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
         } else {
             Item var2 = itemstack.getItem();
             RecipeWorktable recipeWorktable = FAMachineRecipeRegistry.getWorktableRecipeForItem(this.stacks.get(0));
-            if(recipeWorktable != null){
+            if (recipeWorktable != null) {
                 return var2 == recipeWorktable.getFuel().getItem() ? 300 : 0;
             }
             return 0;
@@ -339,15 +342,10 @@ public class TileEntityWorktable extends TileEntity implements IInventory, ISide
         readFromNBT(packet.getNbtCompound());
     }
 
-    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
-    net.minecraftforge.items.IItemHandler handlerBottom = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.DOWN);
-    net.minecraftforge.items.IItemHandler handlerSide = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.WEST);
-
     @SuppressWarnings("unchecked")
     @Override
     @javax.annotation.Nullable
-    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing)
-    {
+    public <T> T getCapability(net.minecraftforge.common.capabilities.Capability<T> capability, @javax.annotation.Nullable net.minecraft.util.EnumFacing facing) {
         if (facing != null && capability == net.minecraftforge.items.CapabilityItemHandler.ITEM_HANDLER_CAPABILITY)
             if (facing == EnumFacing.DOWN)
                 return (T) handlerBottom;

@@ -24,6 +24,7 @@ public class JavelinEntity extends EntityArrow implements IEntityAdditionalSpawn
     public Item.ToolMaterial material;
     protected int itemDamage;
     protected int newKnockBackStrength;
+
     public JavelinEntity(World world) {
         super(world);
     }
@@ -34,6 +35,15 @@ public class JavelinEntity extends EntityArrow implements IEntityAdditionalSpawn
         this.material = material;
         this.setDamage(getDamageFromMaterial(material));
         this.setPosition(x, y, z);
+    }
+
+    public JavelinEntity(World world, Item.ToolMaterial material, int damage, EntityLivingBase shooter) {
+        this(world, material, damage, shooter.posX, shooter.posY + shooter.getEyeHeight() - 0.1, shooter.posZ);
+        this.shootingEntity = shooter;
+        if (shooter instanceof EntityPlayer) {
+            this.pickupStatus = EntityArrow.PickupStatus.ALLOWED;
+        }
+        this.setDamage(getDamageFromMaterial(material));
     }
 
     public void setKnockbackStrength(int knockbackStrengthIn) {
@@ -111,15 +121,6 @@ public class JavelinEntity extends EntityArrow implements IEntityAdditionalSpawn
         }
     }
 
-    public JavelinEntity(World world, Item.ToolMaterial material, int damage, EntityLivingBase shooter) {
-        this(world, material, damage, shooter.posX, shooter.posY + shooter.getEyeHeight() - 0.1, shooter.posZ);
-        this.shootingEntity = shooter;
-        if (shooter instanceof EntityPlayer) {
-            this.pickupStatus = EntityArrow.PickupStatus.ALLOWED;
-        }
-        this.setDamage(getDamageFromMaterial(material));
-    }
-
     private double getDamageFromMaterial(Item.ToolMaterial material) {
         switch (material) {
             case WOOD:
@@ -162,13 +163,13 @@ public class JavelinEntity extends EntityArrow implements IEntityAdditionalSpawn
             case WOOD:
                 return new ItemStack(FAItemRegistry.WOODEN_JAVELIN, 1, FAItemRegistry.WOODEN_JAVELIN.getMaxDamage() - itemDamage);
             case STONE:
-                return new ItemStack(FAItemRegistry.STONE_JAVELIN, 1,  FAItemRegistry.STONE_JAVELIN.getMaxDamage() - itemDamage);
+                return new ItemStack(FAItemRegistry.STONE_JAVELIN, 1, FAItemRegistry.STONE_JAVELIN.getMaxDamage() - itemDamage);
             case IRON:
-                return new ItemStack(FAItemRegistry.IRON_JAVELIN, 1,  FAItemRegistry.IRON_JAVELIN.getMaxDamage() - itemDamage);
+                return new ItemStack(FAItemRegistry.IRON_JAVELIN, 1, FAItemRegistry.IRON_JAVELIN.getMaxDamage() - itemDamage);
             case GOLD:
-                return new ItemStack(FAItemRegistry.GOLD_JAVELIN, 1,  FAItemRegistry.GOLD_JAVELIN.getMaxDamage() - itemDamage);
+                return new ItemStack(FAItemRegistry.GOLD_JAVELIN, 1, FAItemRegistry.GOLD_JAVELIN.getMaxDamage() - itemDamage);
             case DIAMOND:
-                return new ItemStack(FAItemRegistry.DIAMOND_JAVELIN, 1,  FAItemRegistry.DIAMOND_JAVELIN.getMaxDamage() - itemDamage);
+                return new ItemStack(FAItemRegistry.DIAMOND_JAVELIN, 1, FAItemRegistry.DIAMOND_JAVELIN.getMaxDamage() - itemDamage);
         }
         return null;
     }

@@ -8,8 +8,8 @@ public class AnalyzerRecipeWrapper implements IRecipeWrapper {
 
     private JEIRecipeAnalyzer recipeAnalyzer;
 
-    public AnalyzerRecipeWrapper(JEIRecipeAnalyzer recipeAnalyzer){
-       this.recipeAnalyzer = recipeAnalyzer;
+    public AnalyzerRecipeWrapper(JEIRecipeAnalyzer recipeAnalyzer) {
+        this.recipeAnalyzer = recipeAnalyzer;
     }
 
     @Override

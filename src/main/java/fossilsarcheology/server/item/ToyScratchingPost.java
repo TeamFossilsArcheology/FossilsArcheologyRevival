@@ -13,22 +13,22 @@ import net.minecraft.world.World;
 
 public class ToyScratchingPost extends Item implements DefaultRenderedItem {
 
-	public ToyScratchingPost() {
-		this.setTranslationKey("toy_scratching_post");
-		this.setCreativeTab(FATabRegistry.ITEMS);
-	}
+    public ToyScratchingPost() {
+        this.setTranslationKey("toy_scratching_post");
+        this.setCreativeTab(FATabRegistry.ITEMS);
+    }
 
-	@Override
+    @Override
     public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (facing == EnumFacing.UP && worldIn.isAirBlock(pos.up()) && worldIn.isAirBlock(pos.up(2))) {
-			EntityToyScratchingPost ball = new EntityToyScratchingPost(worldIn);
-			ball.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0, 0);
-			if (!worldIn.isRemote)
-				worldIn.spawnEntity(ball);
-			ball.rotationYaw = playerIn.rotationYawHead;
-			if (!playerIn.capabilities.isCreativeMode)
-				playerIn.getHeldItem(hand).shrink(1);
-		}
-		return EnumActionResult.SUCCESS;
-	}
+        if (facing == EnumFacing.UP && worldIn.isAirBlock(pos.up()) && worldIn.isAirBlock(pos.up(2))) {
+            EntityToyScratchingPost ball = new EntityToyScratchingPost(worldIn);
+            ball.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, 0, 0);
+            if (!worldIn.isRemote)
+                worldIn.spawnEntity(ball);
+            ball.rotationYaw = playerIn.rotationYawHead;
+            if (!playerIn.capabilities.isCreativeMode)
+                playerIn.getHeldItem(hand).shrink(1);
+        }
+        return EnumActionResult.SUCCESS;
+    }
 }

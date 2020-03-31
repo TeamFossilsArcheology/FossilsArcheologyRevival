@@ -12,6 +12,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import org.lwjgl.opengl.GL11;
 
 public class ModelDiplocaulus extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer Body;
     public AdvancedModelRenderer Tail1;
     public AdvancedModelRenderer LeftLeg;
@@ -30,7 +31,6 @@ public class ModelDiplocaulus extends ModelPrehistoric {
     public AdvancedModelRenderer LeftBoomerang;
     public AdvancedModelRenderer RightBoomerang;
     public AdvancedModelRenderer Meme;
-    private final ModelAnimator animator;
 
     public ModelDiplocaulus() {
         this.textureWidth = 64;
@@ -141,6 +141,7 @@ public class ModelDiplocaulus extends ModelPrehistoric {
         this.Body.render(f5);
         GlStateManager.popMatrix();
     }
+
     public void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
         EntityDiplocaulus prehistoric = (EntityDiplocaulus) entity;
         animator.update(entity);
@@ -168,7 +169,7 @@ public class ModelDiplocaulus extends ModelPrehistoric {
         float speed_idle = 0.1F;
         float degree_idle = 0.2F;
         float degree_swim = 0.5F;
-        AdvancedModelRenderer[] lowerBodyParts = {Neck , Body, Tail1, Tail2};
+        AdvancedModelRenderer[] lowerBodyParts = {Neck, Body, Tail1, Tail2};
         AdvancedModelRenderer[] tailParts = {Tail1, Tail2};
         EntityDiplocaulus prehistoric = (EntityDiplocaulus) entity;
         if (prehistoric.isSkeleton() || prehistoric.isAIDisabled()) {
@@ -178,14 +179,14 @@ public class ModelDiplocaulus extends ModelPrehistoric {
         this.chainSwing(lowerBodyParts, speed_swim, degree_swim, -3, f, f1);
         this.chainSwing(tailParts, speed_idle, degree_idle, -3, f2, 1);
         float sleepProgress = prehistoric.sleepProgress;
-        this.sitAnimationRotation(Body, sleepProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Tail1, sleepProgress, 0, (float)Math.toRadians(35), 0);
-        this.sitAnimationRotation(Tail2, sleepProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Neck, sleepProgress, 0, (float)Math.toRadians(-15), (float)Math.toRadians(5));
+        this.sitAnimationRotation(Body, sleepProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Tail1, sleepProgress, 0, (float) Math.toRadians(35), 0);
+        this.sitAnimationRotation(Tail2, sleepProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Neck, sleepProgress, 0, (float) Math.toRadians(-15), (float) Math.toRadians(5));
         float sitProgress = prehistoric.sitProgress;
-        this.sitAnimationRotation(Body, sitProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Tail1, sitProgress, 0, (float)Math.toRadians(35), 0);
-        this.sitAnimationRotation(Tail2, sitProgress, 0, (float)Math.toRadians(25), 0);
+        this.sitAnimationRotation(Body, sitProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Tail1, sitProgress, 0, (float) Math.toRadians(35), 0);
+        this.sitAnimationRotation(Tail2, sitProgress, 0, (float) Math.toRadians(25), 0);
     }
 
 }

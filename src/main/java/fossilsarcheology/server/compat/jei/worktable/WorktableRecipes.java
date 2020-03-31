@@ -14,19 +14,19 @@ public class WorktableRecipes {
 
     public static List<JEIRecipeWorktable> getRecipes() {
         List<JEIRecipeWorktable> list = new ArrayList<>();
-        for(RecipeWorktable worktableRecipe : FAMachineRecipeRegistry.worktableRecipes){
-            if(worktableRecipe.getInput().isItemStackDamageable()){
+        for (RecipeWorktable worktableRecipe : FAMachineRecipeRegistry.worktableRecipes) {
+            if (worktableRecipe.getInput().isItemStackDamageable()) {
                 list.add(new JEIRecipeWorktable(createDamagedStack(worktableRecipe.getInput().getItem()), worktableRecipe.getOutput(), worktableRecipe.getFuel()));
-            }else{
+            } else {
                 list.add(new JEIRecipeWorktable(worktableRecipe.getInput(), worktableRecipe.getOutput(), worktableRecipe.getFuel()));
             }
         }
         return list;
     }
 
-    private static ItemStack createDamagedStack(Item item){
+    private static ItemStack createDamagedStack(Item item) {
         ItemStack stack = new ItemStack(item);
-        stack.attemptDamageItem((int)(stack.getMaxDamage() * 0.5F), RANDOM, null);
+        stack.attemptDamageItem((int) (stack.getMaxDamage() * 0.5F), RANDOM, null);
         return stack;
     }
 }

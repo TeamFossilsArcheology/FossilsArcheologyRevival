@@ -25,201 +25,201 @@ import java.util.Random;
 
 public abstract class FossilSlabBlock extends BlockSlab implements DefaultRenderedItem, ISlabItem {
 
-	private final Block baseBlock;
+    private final Block baseBlock;
 
-	public FossilSlabBlock(String name, float hardness, float resistance, SoundType soundType, Material material, Block baseBlock) {
-		super(material);
-		IBlockState iblockstate = this.blockState.getBaseState();
-		this.baseBlock = baseBlock;
-		this.setLightOpacity(0);
-		this.useNeighborBrightness = true;
-		setHardness(hardness);
-		setResistance(resistance);
-		setSoundType(soundType);
-		if (this.isDouble()) {
-			setTranslationKey(name + "_double");
-			this.setRegistryName(name + "_double");
-		} else {
-			iblockstate = iblockstate.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
-			setTranslationKey(name);
-			this.setRegistryName(name);
-			setCreativeTab(FATabRegistry.BLOCKS);
-		}
-	}
+    public FossilSlabBlock(String name, float hardness, float resistance, SoundType soundType, Material material, Block baseBlock) {
+        super(material);
+        IBlockState iblockstate = this.blockState.getBaseState();
+        this.baseBlock = baseBlock;
+        this.setLightOpacity(0);
+        this.useNeighborBrightness = true;
+        setHardness(hardness);
+        setResistance(resistance);
+        setSoundType(soundType);
+        if (this.isDouble()) {
+            setTranslationKey(name + "_double");
+            this.setRegistryName(name + "_double");
+        } else {
+            iblockstate = iblockstate.withProperty(HALF, BlockSlab.EnumBlockHalf.BOTTOM);
+            setTranslationKey(name);
+            this.setRegistryName(name);
+            setCreativeTab(FATabRegistry.BLOCKS);
+        }
+    }
 
-	@SideOnly(Side.CLIENT)
-	protected static boolean isHalfSlab(IBlockState state) {
-		return state.getBlock() instanceof FossilSlabBlock && !((FossilSlabBlock) state.getBlock()).isDouble();
-	}
+    @SideOnly(Side.CLIENT)
+    protected static boolean isHalfSlab(IBlockState state) {
+        return state.getBlock() instanceof FossilSlabBlock && !((FossilSlabBlock) state.getBlock()).isDouble();
+    }
 
-	@Override
+    @Override
     @Nullable
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return getSlabItem();
-	}
+    public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+        return getSlabItem();
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public ItemStack getItem(World worldIn, BlockPos pos, IBlockState state) {
-		return new ItemStack(getSlabItem());
-	}
+        return new ItemStack(getSlabItem());
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState getStateFromMeta(int meta) {
-		IBlockState iblockstate = this.getDefaultState();
-		if (!this.isDouble()) {
-			return iblockstate.withProperty(HALF, meta == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
-		} else {
-			return iblockstate;
-		}
-	}
+        IBlockState iblockstate = this.getDefaultState();
+        if (!this.isDouble()) {
+            return iblockstate.withProperty(HALF, meta == 0 ? BlockSlab.EnumBlockHalf.BOTTOM : BlockSlab.EnumBlockHalf.TOP);
+        } else {
+            return iblockstate;
+        }
+    }
 
-	@Override
+    @Override
     public int getMetaFromState(IBlockState state) {
-		int i = 0;
+        int i = 0;
 
-		if (!this.isDouble() && state.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP) {
-			i = 1;
-		}
+        if (!this.isDouble() && state.getValue(HALF) == BlockSlab.EnumBlockHalf.TOP) {
+            i = 1;
+        }
 
-		return i;
+        return i;
 
-	}
+    }
 
-	@Override
+    @Override
     protected BlockStateContainer createBlockState() {
-		return this.isDouble() ? super.createBlockState() : new BlockStateContainer(this, HALF);
-	}
+        return this.isDouble() ? super.createBlockState() : new BlockStateContainer(this, HALF);
+    }
 
-	@Override
-	public String getTranslationKey(int meta) {
-		return super.getTranslationKey();
-	}
+    @Override
+    public String getTranslationKey(int meta) {
+        return super.getTranslationKey();
+    }
 
-	@Override
-	public IProperty<?> getVariantProperty() {
-		return null;
-	}
+    @Override
+    public IProperty<?> getVariantProperty() {
+        return null;
+    }
 
-	@Override
-	public Comparable<?> getTypeForItem(ItemStack stack) {
-		return Variant.DEFAULT;
-	}
+    @Override
+    public Comparable<?> getTypeForItem(ItemStack stack) {
+        return Variant.DEFAULT;
+    }
 
-	public enum Variant implements IStringSerializable {
-		DEFAULT;
+    public enum Variant implements IStringSerializable {
+        DEFAULT;
 
-		@Override
+        @Override
         public String getName() {
-			return "default";
-		}
-	}
+            return "default";
+        }
+    }
 
-	public abstract static class Double extends FossilSlabBlock {
-		public Double(String name, float hardness, float resistance, SoundType soundType, Material material, Block baseBlock) {
-			super(name, hardness, resistance, soundType, material, baseBlock);
-		}
+    public abstract static class Double extends FossilSlabBlock {
+        public Double(String name, float hardness, float resistance, SoundType soundType, Material material, Block baseBlock) {
+            super(name, hardness, resistance, soundType, material, baseBlock);
+        }
 
-		@Override
+        @Override
         public boolean isDouble() {
-			return true;
-		}
-	}
+            return true;
+        }
+    }
 
-	public abstract static class Half extends FossilSlabBlock {
-		public Half(String name, float hardness, float resistance, SoundType soundType, Material material, Block baseBlock) {
-			super(name, hardness, resistance, soundType, material, baseBlock);
-		}
+    public abstract static class Half extends FossilSlabBlock {
+        public Half(String name, float hardness, float resistance, SoundType soundType, Material material, Block baseBlock) {
+            super(name, hardness, resistance, soundType, material, baseBlock);
+        }
 
-		@Override
+        @Override
         public boolean isDouble() {
-			return false;
-		}
+            return false;
+        }
 
-	}
+    }
 
-	class FossilSlabBlockItem extends ItemBlock {
-		private final BlockSlab singleSlab;
-		private final BlockSlab doubleSlab;
+    class FossilSlabBlockItem extends ItemBlock {
+        private final BlockSlab singleSlab;
+        private final BlockSlab doubleSlab;
 
-		public FossilSlabBlockItem(Block block, BlockSlab singleSlab, BlockSlab doubleSlab) {
-			super(block);
-			this.singleSlab = singleSlab;
-			this.doubleSlab = doubleSlab;
-			this.setMaxDamage(0);
-			this.setHasSubtypes(true);
-		}
+        public FossilSlabBlockItem(Block block, BlockSlab singleSlab, BlockSlab doubleSlab) {
+            super(block);
+            this.singleSlab = singleSlab;
+            this.doubleSlab = doubleSlab;
+            this.setMaxDamage(0);
+            this.setHasSubtypes(true);
+        }
 
-		@Override
+        @Override
         public int getMetadata(int damage) {
-			return damage;
-		}
+            return damage;
+        }
 
-		@Override
+        @Override
         public String getTranslationKey(ItemStack stack) {
-			return this.singleSlab.getTranslationKey(stack.getMetadata());
-		}
+            return this.singleSlab.getTranslationKey(stack.getMetadata());
+        }
 
-		@Override
+        @Override
         public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-			ItemStack stack = playerIn.getHeldItem(hand);
-			if(stack.getItem() == Item.getItemFromBlock(doubleSlab)){
-				return EnumActionResult.SUCCESS;
-			}
-			if (stack.getCount() != 0 && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)) {
-				Comparable<?> comparable = this.singleSlab.getTypeForItem(stack);
-				IBlockState iblockstate = worldIn.getBlockState(pos);
-				if (iblockstate.getBlock() == this.singleSlab) {
-					BlockSlab.EnumBlockHalf blockslab$enumblockhalf = iblockstate.getValue(BlockSlab.HALF);
-					if ((facing == EnumFacing.UP && blockslab$enumblockhalf == BlockSlab.EnumBlockHalf.BOTTOM || facing == EnumFacing.DOWN && blockslab$enumblockhalf == BlockSlab.EnumBlockHalf.TOP)) {
-						IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
-						AxisAlignedBB axisalignedbb = iblockstate1.getCollisionBoundingBox(worldIn, pos);
-						if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(pos)) && worldIn.setBlockState(pos, iblockstate1, 11)) {
-							SoundType soundtype = this.doubleSlab.getSoundType(iblockstate1, worldIn, pos, playerIn);
-							worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-							stack.shrink(1);
-						}
-						return EnumActionResult.SUCCESS;
-					}
-				}
-				return this.tryPlace(playerIn, stack, worldIn, pos.offset(facing), comparable) ? EnumActionResult.SUCCESS : super.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
-			} else {
-				return EnumActionResult.FAIL;
-			}
-		}
+            ItemStack stack = playerIn.getHeldItem(hand);
+            if (stack.getItem() == Item.getItemFromBlock(doubleSlab)) {
+                return EnumActionResult.SUCCESS;
+            }
+            if (stack.getCount() != 0 && playerIn.canPlayerEdit(pos.offset(facing), facing, stack)) {
+                Comparable<?> comparable = this.singleSlab.getTypeForItem(stack);
+                IBlockState iblockstate = worldIn.getBlockState(pos);
+                if (iblockstate.getBlock() == this.singleSlab) {
+                    BlockSlab.EnumBlockHalf blockslab$enumblockhalf = iblockstate.getValue(BlockSlab.HALF);
+                    if ((facing == EnumFacing.UP && blockslab$enumblockhalf == BlockSlab.EnumBlockHalf.BOTTOM || facing == EnumFacing.DOWN && blockslab$enumblockhalf == BlockSlab.EnumBlockHalf.TOP)) {
+                        IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
+                        AxisAlignedBB axisalignedbb = iblockstate1.getCollisionBoundingBox(worldIn, pos);
+                        if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(pos)) && worldIn.setBlockState(pos, iblockstate1, 11)) {
+                            SoundType soundtype = this.doubleSlab.getSoundType(iblockstate1, worldIn, pos, playerIn);
+                            worldIn.playSound(playerIn, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+                            stack.shrink(1);
+                        }
+                        return EnumActionResult.SUCCESS;
+                    }
+                }
+                return this.tryPlace(playerIn, stack, worldIn, pos.offset(facing), comparable) ? EnumActionResult.SUCCESS : super.onItemUse(playerIn, worldIn, pos, hand, facing, hitX, hitY, hitZ);
+            } else {
+                return EnumActionResult.FAIL;
+            }
+        }
 
-		@Override
+        @Override
         @SideOnly(Side.CLIENT)
-		public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack) {
-			BlockPos blockpos = pos;
-			IBlockState iblockstate = worldIn.getBlockState(pos);
+        public boolean canPlaceBlockOnSide(World worldIn, BlockPos pos, EnumFacing side, EntityPlayer player, ItemStack stack) {
+            BlockPos blockpos = pos;
+            IBlockState iblockstate = worldIn.getBlockState(pos);
 
-			if (iblockstate.getBlock() == this.singleSlab) {
-				boolean flag = iblockstate.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP;
-				if ((side == EnumFacing.UP && !flag || side == EnumFacing.DOWN && flag)) {
-					return true;
-				}
-			}
-			pos = pos.offset(side);
-			IBlockState iblockstate1 = worldIn.getBlockState(pos);
-			return iblockstate1.getBlock() == this.singleSlab || super.canPlaceBlockOnSide(worldIn, blockpos, side, player, stack);
-		}
+            if (iblockstate.getBlock() == this.singleSlab) {
+                boolean flag = iblockstate.getValue(BlockSlab.HALF) == BlockSlab.EnumBlockHalf.TOP;
+                if ((side == EnumFacing.UP && !flag || side == EnumFacing.DOWN && flag)) {
+                    return true;
+                }
+            }
+            pos = pos.offset(side);
+            IBlockState iblockstate1 = worldIn.getBlockState(pos);
+            return iblockstate1.getBlock() == this.singleSlab || super.canPlaceBlockOnSide(worldIn, blockpos, side, player, stack);
+        }
 
-		private boolean tryPlace(EntityPlayer player, ItemStack stack, World worldIn, BlockPos pos, Object itemSlabType) {
-			IBlockState iblockstate = worldIn.getBlockState(pos);
-			if (iblockstate.getBlock() == this.singleSlab) {
-				IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
-				AxisAlignedBB axisalignedbb = iblockstate1.getCollisionBoundingBox(worldIn, pos);
-				if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(pos)) && worldIn.setBlockState(pos, iblockstate1, 11)) {
-					SoundType soundtype = this.doubleSlab.getSoundType(iblockstate1, worldIn, pos, player);
-					worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
-					stack.shrink(1);
-				}
-				return true;
-			}
+        private boolean tryPlace(EntityPlayer player, ItemStack stack, World worldIn, BlockPos pos, Object itemSlabType) {
+            IBlockState iblockstate = worldIn.getBlockState(pos);
+            if (iblockstate.getBlock() == this.singleSlab) {
+                IBlockState iblockstate1 = this.doubleSlab.getDefaultState();
+                AxisAlignedBB axisalignedbb = iblockstate1.getCollisionBoundingBox(worldIn, pos);
+                if (axisalignedbb != Block.NULL_AABB && worldIn.checkNoEntityCollision(axisalignedbb.offset(pos)) && worldIn.setBlockState(pos, iblockstate1, 11)) {
+                    SoundType soundtype = this.doubleSlab.getSoundType(iblockstate1, worldIn, pos, player);
+                    worldIn.playSound(player, pos, soundtype.getPlaceSound(), SoundCategory.BLOCKS, (soundtype.getVolume() + 1.0F) / 2.0F, soundtype.getPitch() * 0.8F);
+                    stack.shrink(1);
+                }
+                return true;
+            }
 
-			return false;
-		}
-	}
+            return false;
+        }
+    }
 }

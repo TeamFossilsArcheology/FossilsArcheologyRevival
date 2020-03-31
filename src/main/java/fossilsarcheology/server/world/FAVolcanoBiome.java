@@ -148,7 +148,7 @@ public class FAVolcanoBiome extends Biome {
     }
 
     @SideOnly(Side.CLIENT)
-    public int getFoliageColorAtPos(BlockPos pos){
+    public int getFoliageColorAtPos(BlockPos pos) {
         return 0X808080;
     }
 

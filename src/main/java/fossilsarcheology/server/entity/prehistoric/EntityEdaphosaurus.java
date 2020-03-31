@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class EntityEdaphosaurus extends EntityPrehistoric {
 
     public EntityEdaphosaurus(World world) {
-        super(world, PrehistoricEntityType.EDAPHOSAURUS, 1, 5, 8, 30, 0.2, 0.3, 0,4);
+        super(world, PrehistoricEntityType.EDAPHOSAURUS, 1, 5, 8, 30, 0.2, 0.3, 0, 4);
         this.teenAge = 6;
         this.setActualSize(1.3F, 1.7F);
         minSize = 0.2F;

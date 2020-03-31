@@ -27,7 +27,7 @@ import slimeknights.tconstruct.library.utils.ToolHelper;
 import java.util.List;
 import java.util.Random;
 
-public class ModifierArcheology extends ModifierTrait  {
+public class ModifierArcheology extends ModifierTrait {
     private boolean fossils;
 
     public ModifierArcheology(boolean fossils) {
@@ -39,18 +39,18 @@ public class ModifierArcheology extends ModifierTrait  {
 
     @SubscribeEvent
     public void blockDropEvent(BlockEvent.HarvestDropsEvent event) {
-        if(event.getHarvester() == null) {
+        if (event.getHarvester() == null) {
             return;
         }
         ItemStack tool = DualToolHarvestUtils.getItemstackToUse(event.getHarvester(), event.getState());
 
-        if(tool != null && tool.getItem() instanceof ToolCore && !ToolHelper.isBroken(tool)) {
+        if (tool != null && tool.getItem() instanceof ToolCore && !ToolHelper.isBroken(tool)) {
             NBTTagList list = TagUtil.getTagListSafe(TagUtil.getTagSafe(tool), Tags.TOOL_MODIFIERS, TagUtil.TAG_TYPE_COMPOUND);
-            for(int i = 0; i < list.tagCount(); i++) {
+            for (int i = 0; i < list.tagCount(); i++) {
                 String identity = list.getStringTagAt(i);
                 String identifier = identity.substring(13, identity.indexOf("\","));
                 ITrait trait = TinkerRegistry.getTrait(identifier);
-                if(trait != null) {
+                if (trait != null) {
                     trait.blockHarvestDrops(tool, event);
                 }
             }
@@ -79,7 +79,7 @@ public class ModifierArcheology extends ModifierTrait  {
             for (int i = 0; i < Math.max(Math.ceil(getLevel(tool) / 2D), 1); i++) {
                 if (fossils) {
                     event.getDrops().add(getRandomFossilDrop(tool, random));
-                }else{
+                } else {
                     event.getDrops().add(getRandomRelicDrop(tool, random));
                 }
             }
@@ -87,7 +87,7 @@ public class ModifierArcheology extends ModifierTrait  {
         }
     }
 
-    private ItemStack getRandomFossilDrop(ItemStack tool, Random rand){
+    private ItemStack getRandomFossilDrop(ItemStack tool, Random rand) {
         int i = rand.nextInt(100);
         if (i < 2) {
             int dropRandom = rand.nextInt(DinosaurBoneType.values().length);
@@ -114,22 +114,22 @@ public class ModifierArcheology extends ModifierTrait  {
             return new ItemStack(FABlockRegistry.SKULL_BLOCK);
         } else if (i < 60) {
             return new ItemStack(FAItemRegistry.PLANT_FOSSIL);
-        }else{
+        } else {
             return new ItemStack(FAItemRegistry.BIOFOSSIL);
 
         }
     }
 
-    private ItemStack getRandomRelicDrop(ItemStack tool, Random rand){
+    private ItemStack getRandomRelicDrop(ItemStack tool, Random rand) {
         int i = rand.nextInt(1000);
         if (i < getLevel(tool) * 5) {
             return new ItemStack(FAItemRegistry.SCARAB_GEM);
         } else if (i < 900) {
             return new ItemStack(FAItemRegistry.RELIC_SCRAP);
         } else if (i < 950) {
-            return  new ItemStack(FAItemRegistry.BROKEN_SWORD);
-        }else{
-            return  new ItemStack(FAItemRegistry.BROKEN_HELMET);
+            return new ItemStack(FAItemRegistry.BROKEN_SWORD);
+        } else {
+            return new ItemStack(FAItemRegistry.BROKEN_HELMET);
         }
     }
 
@@ -147,9 +147,9 @@ public class ModifierArcheology extends ModifierTrait  {
     public List<List<ItemStack>> getItems() {
         ImmutableList.Builder<List<ItemStack>> builder = ImmutableList.builder();
 
-        for(RecipeMatch rm : items) {
+        for (RecipeMatch rm : items) {
             List<ItemStack> in = rm.getInputs();
-            if(!in.isEmpty()) {
+            if (!in.isEmpty()) {
                 builder.add(in);
             }
         }

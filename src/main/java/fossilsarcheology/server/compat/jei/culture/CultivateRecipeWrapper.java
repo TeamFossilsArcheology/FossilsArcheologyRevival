@@ -11,8 +11,8 @@ public class CultivateRecipeWrapper implements IRecipeWrapper {
 
     private RecipeCultivate recipeCultivate;
 
-    public CultivateRecipeWrapper(RecipeCultivate recipeCultivate){
-       this.recipeCultivate = recipeCultivate;
+    public CultivateRecipeWrapper(RecipeCultivate recipeCultivate) {
+        this.recipeCultivate = recipeCultivate;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class CultivateRecipeWrapper implements IRecipeWrapper {
         list.add(recipeCultivate.getInput());
         list.add(recipeCultivate.getFuel());
         ingredients.setInputs(ItemStack.class, list);
-        ingredients.setOutput(ItemStack.class,recipeCultivate.getOutput());
+        ingredients.setOutput(ItemStack.class, recipeCultivate.getOutput());
     }
 
     public RecipeCultivate getRecipeCultivate() {

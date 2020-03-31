@@ -2,25 +2,22 @@ package fossilsarcheology.client.render.obj;
 
 import net.minecraft.util.ResourceLocation;
 
-public class ObjModelLoader implements IModelCustomLoader
-{
+public class ObjModelLoader implements IModelCustomLoader {
+
+    private static final String[] types = {"obj"};
 
     @Override
-    public String getType()
-    {
+    public String getType() {
         return "OBJ model";
     }
 
-    private static final String[] types = { "obj" };
     @Override
-    public String[] getSuffixes()
-    {
+    public String[] getSuffixes() {
         return types;
     }
 
     @Override
-    public IModelCustom loadInstance(ResourceLocation resource) throws ModelFormatException
-    {
+    public IModelCustom loadInstance(ResourceLocation resource) throws ModelFormatException {
         return new WavefrontObject(resource);
     }
 }

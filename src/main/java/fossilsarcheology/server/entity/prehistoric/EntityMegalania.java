@@ -21,7 +21,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur{
+public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur {
 
     public static final Animation ANIMATION_FIGHT = Animation.create(40);
     private int ticksSinceLastFight;
@@ -38,7 +38,7 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
         this.ridingY = 1.7F;
     }
 
-    public float getTargetScale(){
+    public float getTargetScale() {
         return 1.5F;
     }
 
@@ -71,10 +71,11 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
         super.readEntityFromNBT(compound);
         this.ticksSinceLastFight = compound.getInteger("FightTicks");
     }
+
     protected void collideWithEntity(Entity entityIn) {
-        if (this.canFight() && entityIn instanceof EntityMegalania && ((EntityMegalania)entityIn).canFight()) {
+        if (this.canFight() && entityIn instanceof EntityMegalania && ((EntityMegalania) entityIn).canFight()) {
             this.setAnimation(ANIMATION_FIGHT);
-            EntityMegalania megalania = ((EntityMegalania)entityIn);
+            EntityMegalania megalania = ((EntityMegalania) entityIn);
             this.ticksSinceLastFight = 0;
             megalania.ticksSinceLastFight = 0;
             megalania.setAnimation(ANIMATION_FIGHT);
@@ -85,7 +86,7 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
         super.collideWithEntity(entityIn);
     }
 
-    public boolean canFight(){
+    public boolean canFight() {
         return !this.isChild() && this.ticksSinceLastFight > 600 && !this.isMovementBlockedSoft();
     }
 
@@ -186,7 +187,7 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
-        if(this.getAnimation() == ANIMATION_FIGHT){
+        if (this.getAnimation() == ANIMATION_FIGHT) {
             this.motionX = 0;
             this.motionZ = 0;
             this.renderYawOffset = this.rotationYaw;
@@ -217,7 +218,7 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
                     entity.dismountRidingEntity();
                 }
             }
-            if(entity instanceof EntityLivingBase){
+            if (entity instanceof EntityLivingBase) {
                 ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.POISON, 200));
                 ((EntityLivingBase) entity).addPotionEffect(new PotionEffect(MobEffects.SLOWNESS, 600));
             }
@@ -255,7 +256,7 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
 
     @Override
     public Animation[] getAnimations() {
-        return new Animation[] { SPEAK_ANIMATION, ATTACK_ANIMATION, ANIMATION_FIGHT };
+        return new Animation[]{SPEAK_ANIMATION, ATTACK_ANIMATION, ANIMATION_FIGHT};
     }
 
 }

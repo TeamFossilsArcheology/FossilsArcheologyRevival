@@ -10,11 +10,11 @@ import java.util.Map;
 
 public class SifterRecipes {
 
-    public static List<RecipeSifter> getRecipes(){
+    public static List<RecipeSifter> getRecipes() {
         List<RecipeSifter> list = new ArrayList<>();
-        for(RecipeAnalyzer analyzerRecipe : FAMachineRecipeRegistry.sifterRecipes){
+        for (RecipeAnalyzer analyzerRecipe : FAMachineRecipeRegistry.sifterRecipes) {
             int prevMinus = 0;
-            for(Map.Entry<Float, ItemStack> entry : analyzerRecipe.getDisplayMap().entrySet()){
+            for (Map.Entry<Float, ItemStack> entry : analyzerRecipe.getDisplayMap().entrySet()) {
                 list.add(new RecipeSifter(analyzerRecipe.getInput(), entry.getValue(), entry.getKey().intValue() - prevMinus));
                 prevMinus = entry.getKey().intValue();
             }

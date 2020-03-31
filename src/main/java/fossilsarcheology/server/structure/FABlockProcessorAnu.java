@@ -27,20 +27,20 @@ public class FABlockProcessorAnu extends FABlockProcessorLoot {
 
     @Nullable
     public Template.BlockInfo processBlock(World worldIn, BlockPos pos, Template.BlockInfo blockInfoIn) {
-        if(blockInfoIn.blockState.getBlock() == Blocks.STAINED_GLASS_PANE){
+        if (blockInfoIn.blockState.getBlock() == Blocks.STAINED_GLASS_PANE) {
             return new Template.BlockInfo(pos, FABlockRegistry.ANCIENT_GLASS.getDefaultState(), null);
         }
-        if(blockInfoIn.blockState.getBlock() == Blocks.GLASS){
+        if (blockInfoIn.blockState.getBlock() == Blocks.GLASS) {
             return new Template.BlockInfo(pos, Blocks.STAINED_GLASS.getDefaultState().withProperty(BlockStainedGlass.COLOR, EnumDyeColor.BLACK), null);
         }
-        if(blockInfoIn.blockState.getBlock() == Blocks.WALL_SIGN){
+        if (blockInfoIn.blockState.getBlock() == Blocks.WALL_SIGN) {
             return new Template.BlockInfo(pos, Blocks.AIR.getDefaultState(), null);
         }
-        if(blockInfoIn.blockState.getBlock() == Blocks.LIT_PUMPKIN){
+        if (blockInfoIn.blockState.getBlock() == Blocks.LIT_PUMPKIN) {
             EnumFacing facing = blockInfoIn.blockState.withRotation(this.rotation).getValue(BlockHorizontal.FACING);
             return new Template.BlockInfo(pos, FABlockRegistry.SKULL_LANTERN.getDefaultState().withProperty(SkullBlock.FACING, facing), null);
         }
-        if(blockInfoIn.blockState.getBlock() == Blocks.PUMPKIN){
+        if (blockInfoIn.blockState.getBlock() == Blocks.PUMPKIN) {
             EnumFacing facing = blockInfoIn.blockState.withRotation(this.rotation).getValue(BlockHorizontal.FACING);
             return new Template.BlockInfo(pos, FABlockRegistry.ANUBITE_STATUE.getDefaultState().withProperty(AnubiteStatueBlock.FACING, facing), null);
         }

@@ -6,7 +6,7 @@ import net.minecraft.block.BlockTrapDoor;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 
-public class FossilTrapdoorBlock extends BlockTrapDoor implements DefaultRenderedItem{
+public class FossilTrapdoorBlock extends BlockTrapDoor implements DefaultRenderedItem {
 
     protected FossilTrapdoorBlock(IBlockState parent, String name) {
         super(parent.getMaterial());

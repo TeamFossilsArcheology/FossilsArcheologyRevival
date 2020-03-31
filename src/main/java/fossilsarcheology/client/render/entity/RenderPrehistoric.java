@@ -12,7 +12,7 @@ import java.util.Map;
 
 public class RenderPrehistoric extends RenderLiving<EntityPrehistoric> {
 
-    private static final Map<String, ResourceLocation> LAYERED_LOCATION_CACHE = Maps.<String, ResourceLocation>newHashMap();
+    private static final Map<String, ResourceLocation> LAYERED_LOCATION_CACHE = Maps.newHashMap();
 
     public RenderPrehistoric(ModelBase model) {
         super(Minecraft.getMinecraft().getRenderManager(), model, 0.3F);
@@ -37,7 +37,7 @@ public class RenderPrehistoric extends RenderLiving<EntityPrehistoric> {
     }
 
     @Override
-    protected float getDeathMaxRotation(EntityPrehistoric entity){
+    protected float getDeathMaxRotation(EntityPrehistoric entity) {
         return entity.getDeathRotation();
     }
 

@@ -26,91 +26,91 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class AnubiteStatueBlock extends BlockContainer implements DefaultRenderedItem, BlockEntity {
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
+    public static final PropertyDirection FACING = PropertyDirection.create("facing", EnumFacing.Plane.HORIZONTAL);
 
-	protected AnubiteStatueBlock() {
-		super(Material.ROCK);
-		this.setCreativeTab(FATabRegistry.BLOCKS);
-		this.setTickRandomly(true);
-		this.setBlockUnbreakable();
-		this.setResistance(60000000.0F);
-		this.setTranslationKey("anubite_statue");
-	}
+    protected AnubiteStatueBlock() {
+        super(Material.ROCK);
+        this.setCreativeTab(FATabRegistry.BLOCKS);
+        this.setTickRandomly(true);
+        this.setBlockUnbreakable();
+        this.setResistance(60000000.0F);
+        this.setTranslationKey("anubite_statue");
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
-	}
+        return super.getStateForPlacement(worldIn, pos, facing, hitX, hitY, hitZ, meta, placer).withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		world.newExplosion(null, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5, 5F, true, true);
-		EntityAnubite newMob = new EntityAnubite(world);
-		if (!world.isRemote) {
-			newMob.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
-			world.spawnEntity(newMob);
-			world.removeTileEntity(pos);
-			world.setBlockState(pos, Blocks.AIR.getDefaultState());
-		}
-		return true;
-	}
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        world.newExplosion(null, pos.getX() + 0.5F, pos.getY(), pos.getZ() + 0.5, 5F, true, true);
+        EntityAnubite newMob = new EntityAnubite(world);
+        if (!world.isRemote) {
+            newMob.setLocationAndAngles(pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 0, 0);
+            world.spawnEntity(newMob);
+            world.removeTileEntity(pos);
+            world.setBlockState(pos, Blocks.AIR.getDefaultState());
+        }
+        return true;
+    }
 
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public boolean isFullCube(IBlockState state) {
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public BlockRenderLayer getRenderLayer() {
-		return BlockRenderLayer.CUTOUT;
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public BlockRenderLayer getRenderLayer() {
+        return BlockRenderLayer.CUTOUT;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
+    }
 
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getHorizontalIndex();
-	}
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(FACING).getHorizontalIndex();
+    }
 
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING);
-	}
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, FACING);
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     @Deprecated
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return new AxisAlignedBB(0F, 0.0F, 0F, 1F, 1.9F, 1);
-	}
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return new AxisAlignedBB(0F, 0.0F, 0F, 1F, 1.9F, 1);
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityAnubiteStatue();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return new TileEntityAnubiteStatue();
+    }
 
-	@Override
-	public Class<? extends TileEntity> getEntity() {
-		return TileEntityAnubiteStatue.class;
-	}
+    @Override
+    public Class<? extends TileEntity> getEntity() {
+        return TileEntityAnubiteStatue.class;
+    }
 }

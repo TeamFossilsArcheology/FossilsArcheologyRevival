@@ -28,10 +28,11 @@ public class WorldGenPaleontologistHouse extends WorldGenerator {
     private VillageComponentPaleontologistHouse component;
     private Rotation rotation;
     private EnumFacing facing;
-    public WorldGenPaleontologistHouse(VillageComponentPaleontologistHouse component, EnumFacing facing){
+
+    public WorldGenPaleontologistHouse(VillageComponentPaleontologistHouse component, EnumFacing facing) {
         this.component = component;
         this.facing = facing;
-        switch(facing){
+        switch (facing) {
             case SOUTH:
                 rotation = Rotation.CLOCKWISE_180;
                 break;
@@ -46,6 +47,7 @@ public class WorldGenPaleontologistHouse extends WorldGenerator {
                 break;
         }
     }
+
     @Override
     public boolean generate(World worldIn, Random rand, BlockPos position) {
         if (worldIn == null) {
@@ -57,10 +59,10 @@ public class WorldGenPaleontologistHouse extends WorldGenerator {
         Template template = templateManager.getTemplate(server, HOUSE);
         Biome biome = worldIn.getBiome(position);
         int xSize = template.getSize().getX() / 2;
-        int zSize = template.getSize().getZ()/ 2;
+        int zSize = template.getSize().getZ() / 2;
 
-        template.addBlocksToWorld(worldIn, position.up(6).offset(EnumFacing.NORTH, xSize).offset(EnumFacing.SOUTH, zSize), new FABlockProcessorVillage(position.up(3), settings, CHEST, biome,facing), settings, 2);
-        if(component.villagerCount < 1) {
+        template.addBlocksToWorld(worldIn, position.up(6).offset(EnumFacing.NORTH, xSize).offset(EnumFacing.SOUTH, zSize), new FABlockProcessorVillage(position.up(3), settings, CHEST, biome, facing), settings, 2);
+        if (component.villagerCount < 1) {
             EntityVillager villager = new EntityVillager(worldIn);
             villager.setProfession(FAVillagerRegistry.PALAEONTOLOGIST_PROFESSION);
             BlockPos center = position.add(template.getSize().getX() / 2, 4, template.getSize().getZ() / 2);

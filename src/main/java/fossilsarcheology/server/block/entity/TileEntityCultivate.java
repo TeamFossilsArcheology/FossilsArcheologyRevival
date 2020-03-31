@@ -32,20 +32,20 @@ import java.util.Random;
 
 @Optional.Interface(iface = "cofh.redstoneflux.api.IEnergyReceiver", modid = "redstoneflux", striprefs = true)
 public class TileEntityCultivate extends TileEntity implements ITickable, IWorldNameable, IEnergyReceiver {
+    public final IItemHandlerModifiable inputInventory = new ItemStackHandler(1);
+    private final IItemHandlerModifiable fuelInventory = new ItemStackHandler(1);
+    private final IItemHandlerModifiable outputInventory = new ItemStackHandler(1);
+    public final IItemHandlerModifiable globalInventory = new CombinedInvWrapper(this.inputInventory, this.fuelInventory, this.outputInventory);
+    private final IItemHandlerModifiable wrappedOutputInventory = new DirectionalInvWrapper(this.outputInventory, DirectionalInvWrapper.Mode.OUTPUT);
     public int fuelTime = 0;
     public int totalFuelTime = 0;
     public int cultivationTime = 0;
     public boolean isActive;
-    private String customName;
     public boolean isPlant;
-    public final IItemHandlerModifiable inputInventory = new ItemStackHandler(1);
-    private final IItemHandlerModifiable fuelInventory = new ItemStackHandler(1);
-    private final IItemHandlerModifiable outputInventory = new ItemStackHandler(1);
-    private final IItemHandlerModifiable wrappedOutputInventory = new DirectionalInvWrapper(this.outputInventory, DirectionalInvWrapper.Mode.OUTPUT);
-    public final IItemHandlerModifiable globalInventory = new CombinedInvWrapper(this.inputInventory, this.fuelInventory, this.outputInventory);
     public FAEnergyStorage energyStorage;
+    private String customName;
 
-    public TileEntityCultivate(){
+    public TileEntityCultivate() {
         energyStorage = new FAEnergyStorage(Revival.CONFIG_OPTIONS.machineMaxEnergy, Revival.CONFIG_OPTIONS.machineTransferRate, Revival.CONFIG_OPTIONS.machineTransferRate, 0);
     }
 
@@ -85,6 +85,14 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
         return ItemStack.EMPTY;
     }
 
+    public static boolean canPutStackInInput(ItemStack stack) {
+        if (stack != null && !stack.isEmpty()) {
+            ItemStack cultivatedStack = FAMachineRecipeRegistry.getCultivateResult(stack).copy();
+            return !cultivatedStack.isEmpty();
+        }
+        return false;
+    }
+
     @Override
     public void readFromNBT(NBTTagCompound nbt) {
         super.readFromNBT(nbt);
@@ -117,17 +125,17 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
         return nbt;
     }
 
-    private boolean isSeed(ItemStack stack){
-      return stack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || stack.getItem() == FAItemRegistry.CALAMITES_SAPLING_FOSSIL || stack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL || stack.getItem() == FAItemRegistry.FOSSIL_SEED;
+    private boolean isSeed(ItemStack stack) {
+        return stack.getItem() == FAItemRegistry.FOSSIL_SEED_FERN || stack.getItem() == FAItemRegistry.CALAMITES_SAPLING_FOSSIL || stack.getItem() == FAItemRegistry.PALAE_SAPLING_FOSSIL || stack.getItem() == FAItemRegistry.FOSSIL_SEED;
     }
 
     @Override
     public void update() {
-        if(Revival.CONFIG_OPTIONS.machinesRequireEnergy){
-            for(EnumFacing facing : EnumFacing.values()){
-                if(world.getTileEntity(this.pos.offset(facing)) != null && world.getTileEntity(this.pos.offset(facing)).hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite())){
+        if (Revival.CONFIG_OPTIONS.machinesRequireEnergy) {
+            for (EnumFacing facing : EnumFacing.values()) {
+                if (world.getTileEntity(this.pos.offset(facing)) != null && world.getTileEntity(this.pos.offset(facing)).hasCapability(CapabilityEnergy.ENERGY, facing.getOpposite())) {
                     IEnergyStorage storage = world.getTileEntity(this.pos.offset(facing)).getCapability(CapabilityEnergy.ENERGY, facing.getOpposite());
-                    if(storage != null) {
+                    if (storage != null) {
                         int energy = storage.extractEnergy(Revival.CONFIG_OPTIONS.machineTransferRate, false);
                         this.energyStorage.receiveEnergy(energy, false);
                     }
@@ -137,11 +145,11 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
         boolean wasActive = this.cultivationTime > 0;
         boolean dirty = false;
         isActive = this.cultivationTime > 0;
-        if(this.inputInventory.getStackInSlot(0).isEmpty()){
+        if (this.inputInventory.getStackInSlot(0).isEmpty()) {
             isPlant = isSeed((this.inputInventory.getStackInSlot(0)));
         }
         if (this.fuelTime > 0) {
-            if(!Revival.CONFIG_OPTIONS.machinesRequireEnergy || energyStorage.energy > 0){
+            if (!Revival.CONFIG_OPTIONS.machinesRequireEnergy || energyStorage.energy > 0) {
                 --this.fuelTime;
             }
         }
@@ -195,7 +203,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
 
     private boolean canCultivate() {
         boolean hasPower = true;
-        if(Revival.CONFIG_OPTIONS.machinesRequireEnergy){
+        if (Revival.CONFIG_OPTIONS.machinesRequireEnergy) {
             hasPower = this.energyStorage.energy > 0;
         }
         ItemStack inputStack = this.inputInventory.getStackInSlot(0);
@@ -208,18 +216,6 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
         }
         return false;
     }
-
-    public static boolean canPutStackInInput(ItemStack stack){
-        if (stack != null && !stack.isEmpty()) {
-            ItemStack cultivatedStack = FAMachineRecipeRegistry.getCultivateResult(stack).copy();
-            if (cultivatedStack.isEmpty()) {
-                return false;
-            }
-            return true;
-        }
-        return false;
-    }
-
 
     public void cultivate() {
         if (this.canCultivate()) {
@@ -248,7 +244,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
                     || inputStack.getItem() == FAItemRegistry.SIGILLARIA_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.CORDAITES_SAPLING_FOSSIL || inputStack.getItem() == FAItemRegistry.FOSSIL_SEED) {
                 return 2;
             }
-            if(inputStack.getItem() instanceof DNAItem && ((DNAItem)inputStack.getItem()).isBugDNA()){
+            if (inputStack.getItem() instanceof DNAItem && ((DNAItem) inputStack.getItem()).isBugDNA()) {
                 return 3;
             }
         }
@@ -263,7 +259,7 @@ public class TileEntityCultivate extends TileEntity implements ITickable, IWorld
     @Nullable
     @Override
     public <T> T getCapability(Capability<T> capability, @Nullable EnumFacing facing) {
-        if(capability == CapabilityEnergy.ENERGY && Revival.CONFIG_OPTIONS.machinesRequireEnergy){
+        if (capability == CapabilityEnergy.ENERGY && Revival.CONFIG_OPTIONS.machinesRequireEnergy) {
             return (T) energyStorage;
         }
         if (capability == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {

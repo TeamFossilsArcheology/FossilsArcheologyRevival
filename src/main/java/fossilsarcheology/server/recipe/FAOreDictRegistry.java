@@ -32,7 +32,7 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("fenceGateWood", new ItemStack(FABlockRegistry.PALM_FENCE_GATE));
         OreDictionary.registerOre("treeSapling", new ItemStack(FABlockRegistry.PALM_SAPLING));
         OreDictionary.registerOre("saplingTree", new ItemStack(FABlockRegistry.PALM_SAPLING));
-        
+
         OreDictionary.registerOre("plankWood", new ItemStack(FABlockRegistry.CALAMITES_PLANKS));
         OreDictionary.registerOre("logWood", new ItemStack(FABlockRegistry.CALAMITES_LOG));
         OreDictionary.registerOre("treeLeaves", new ItemStack(FABlockRegistry.CALAMITES_LEAVES));
@@ -71,7 +71,7 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("treeSapling", new ItemStack(FABlockRegistry.SIGILLARIA_SAPLING));
         OreDictionary.registerOre("saplingTree", new ItemStack(FABlockRegistry.SIGILLARIA_SAPLING));
         OreDictionary.registerOre("sapling", new ItemStack(FABlockRegistry.SIGILLARIA_SAPLING));
-        
+
         OreDictionary.registerOre("oreFossil", new ItemStack(FABlockRegistry.FOSSIL));
         OreDictionary.registerOre("oreAmber", new ItemStack(FABlockRegistry.AMBER_ORE));
         OreDictionary.registerOre("stoneBasalt", new ItemStack(FABlockRegistry.VOLCANIC_ROCK));
@@ -103,7 +103,7 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 11));
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 14));
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 15));
-        for(int i = 0; i < EnumFossilPlant.values().length; i++){
+        for (int i = 0; i < EnumFossilPlant.values().length; i++) {
             OreDictionary.registerOre("listAllseed", new ItemStack(FAItemRegistry.SEED, 1, i));
             OreDictionary.registerOre("seeds", new ItemStack(FAItemRegistry.SEED, 1, i));
             OreDictionary.registerOre("flowerSeed", new ItemStack(FAItemRegistry.SEED, 1, i));
@@ -116,7 +116,7 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("tar", new ItemStack(FAItemRegistry.TARDROP));
         OreDictionary.registerOre("slimeball", new ItemStack(FAItemRegistry.TARDROP));
         //OreDictionary.registerOre("tarBucket", new ItemStack(FAItemRegistry.TAR_BUCKET));
-       //OreDictionary.registerOre("bucketTar", new ItemStack(FAItemRegistry.TAR_BUCKET));
+        //OreDictionary.registerOre("bucketTar", new ItemStack(FAItemRegistry.TAR_BUCKET));
         OreDictionary.registerOre("dinosaurSkull", new ItemStack(FAItemRegistry.SKULL, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre("dinosaurLegBone", new ItemStack(FAItemRegistry.LEG_BONE, 1, OreDictionary.WILDCARD_VALUE));
         OreDictionary.registerOre("dinosaurFoot", new ItemStack(FAItemRegistry.FOOT, 1, OreDictionary.WILDCARD_VALUE));

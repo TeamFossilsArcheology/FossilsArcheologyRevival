@@ -57,14 +57,15 @@ import java.util.Map;
 @Mod.EventBusSubscriber
 public class ClientProxy extends ServerProxy {
     @SideOnly(Side.CLIENT)
-    private static final FATEISR TEISR = new FATEISR();
-    @SideOnly(Side.CLIENT)
     public static final Minecraft MINECRAFT = Minecraft.getMinecraft();
     @SideOnly(Side.CLIENT)
     public static final RenderingHandler RENDER_HANDLER = new RenderingHandler();
     @SideOnly(Side.CLIENT)
+    private static final FATEISR TEISR = new FATEISR();
+    @SideOnly(Side.CLIENT)
     private static final ModelAncientHelmet helmetModel = new ModelAncientHelmet(0.45f);
     private static final ModelResourceLocation BLOCK_TAR_MODEL = new ModelResourceLocation("fossil:tar", "fluid");
+    private static final Map<String, ISound> CURRENTLY_PLAYING_SOUNDS = Maps.newHashMap();
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
@@ -89,7 +90,7 @@ public class ClientProxy extends ServerProxy {
         ModelLoader.setCustomStateMapper(FABlockRegistry.CORDAITES_LEAVES, (new StateMap.Builder()).ignore(BlockLeaves.CHECK_DECAY, BlockLeaves.DECAYABLE).build());
         ModelLoader.setCustomStateMapper(FABlockRegistry.CORDAITES_FENCE_GATE, (new StateMap.Builder()).ignore(FossilFenceGateBlock.POWERED).build());
         ModelLoader.setCustomStateMapper(FABlockRegistry.CORDAITES_DOOR, (new StateMap.Builder()).ignore(FossilDoorBlock.POWERED).build());
-        
+
         for (Block block : FABlockRegistry.BLOCKS) {
             if (block instanceof IgnoreRenderProperty) {
                 IProperty<?>[] ignoredProperties = ((IgnoreRenderProperty) block).getIgnoredProperties();
@@ -236,20 +237,17 @@ public class ClientProxy extends ServerProxy {
         }
     }
 
-
     @Override
     @SideOnly(Side.CLIENT)
     public net.minecraft.client.model.ModelBiped getArmorModel(int id) {
         return id == 0 ? helmetModel : null;
     }
 
-    private static final Map<String, ISound> CURRENTLY_PLAYING_SOUNDS = Maps.<String, ISound>newHashMap();
-
     @Override
     @SideOnly(Side.CLIENT)
     public void playSound(SoundEvent sound) {
         ISound sounds = CURRENTLY_PLAYING_SOUNDS.get(sound.getSoundName().toString());
-        if(sounds == null){
+        if (sounds == null) {
             sounds = net.minecraft.client.audio.PositionedSoundRecord.getMusicRecord(sound);
             CURRENTLY_PLAYING_SOUNDS.put(sound.getSoundName().toString(), sounds);
         }
@@ -262,7 +260,7 @@ public class ClientProxy extends ServerProxy {
     @SideOnly(Side.CLIENT)
     public void stopSound(SoundEvent sound) {
         ISound sounds = CURRENTLY_PLAYING_SOUNDS.get(sound.getSoundName().toString());
-        if(sounds == null){
+        if (sounds == null) {
             sounds = net.minecraft.client.audio.PositionedSoundRecord.getMusicRecord(sound);
             CURRENTLY_PLAYING_SOUNDS.put(sound.getSoundName().toString(), sounds);
         }

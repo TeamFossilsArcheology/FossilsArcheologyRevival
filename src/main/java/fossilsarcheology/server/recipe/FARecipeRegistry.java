@@ -36,7 +36,7 @@ public class FARecipeRegistry {
         addBanner("dna", new ItemStack(FABlockRegistry.CULTIVATE_IDLE));
         addBanner("nautilus", new ItemStack(FAItemRegistry.SHELL));
         addBanner("biofossil", new ItemStack(FAItemRegistry.BIOFOSSIL));
-        for(DinosaurBoneType bone : DinosaurBoneType.values()){
+        for (DinosaurBoneType bone : DinosaurBoneType.values()) {
             GameRegistry.addShapelessRecipe(new ResourceLocation("fossil:bonemeal_from_" + bone.getResourceName() + "_leg_bone"), new ResourceLocation("fossil"), new ItemStack(Items.DYE, 3, 15), Ingredient.fromStacks(new ItemStack(FAItemRegistry.LEG_BONE, 1, bone.ordinal())));
             GameRegistry.addShapelessRecipe(new ResourceLocation("fossil:bonemeal_from_" + bone.getResourceName() + "_unique_item"), new ResourceLocation("fossil"), new ItemStack(Items.DYE, 3, 15), Ingredient.fromStacks(new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, bone.ordinal())));
             GameRegistry.addShapelessRecipe(new ResourceLocation("fossil:bonemeal_from_" + bone.getResourceName() + "_foot"), new ResourceLocation("fossil"), new ItemStack(Items.DYE, 3, 15), Ingredient.fromStacks(new ItemStack(FAItemRegistry.FOOT, 1, bone.ordinal())));

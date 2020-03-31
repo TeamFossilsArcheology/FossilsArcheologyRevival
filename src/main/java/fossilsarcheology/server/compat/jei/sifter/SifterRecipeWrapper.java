@@ -8,14 +8,14 @@ public class SifterRecipeWrapper implements IRecipeWrapper {
 
     private RecipeSifter recipeSifter;
 
-    public SifterRecipeWrapper(RecipeSifter recipeSifter){
-       this.recipeSifter = recipeSifter;
+    public SifterRecipeWrapper(RecipeSifter recipeSifter) {
+        this.recipeSifter = recipeSifter;
     }
 
     @Override
     public void getIngredients(IIngredients ingredients) {
         ingredients.setInput(ItemStack.class, recipeSifter.getInput());
-        ingredients.setOutput(ItemStack.class,recipeSifter.getOutput());
+        ingredients.setOutput(ItemStack.class, recipeSifter.getOutput());
     }
 
     public RecipeSifter getRecipeSifter() {

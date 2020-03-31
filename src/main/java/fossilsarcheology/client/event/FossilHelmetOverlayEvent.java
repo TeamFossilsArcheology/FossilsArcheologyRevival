@@ -50,9 +50,9 @@ public class FossilHelmetOverlayEvent {
                 Tessellator tessellator = Tessellator.getInstance();
                 BufferBuilder bufferbuilder = tessellator.getBuffer();
                 bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-                bufferbuilder.pos(0.0D, (double) res.getScaledHeight(), -90.0D).tex(0.0D, 1.0D).endVertex();
-                bufferbuilder.pos((double) res.getScaledWidth(), (double) res.getScaledHeight(), -90.0D).tex(1.0D, 1.0D).endVertex();
-                bufferbuilder.pos((double) res.getScaledWidth(), 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
+                bufferbuilder.pos(0.0D, res.getScaledHeight(), -90.0D).tex(0.0D, 1.0D).endVertex();
+                bufferbuilder.pos(res.getScaledWidth(), res.getScaledHeight(), -90.0D).tex(1.0D, 1.0D).endVertex();
+                bufferbuilder.pos(res.getScaledWidth(), 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
                 bufferbuilder.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
                 tessellator.draw();
                 GlStateManager.depthMask(true);
@@ -71,9 +71,9 @@ public class FossilHelmetOverlayEvent {
                 Tessellator tessellator = Tessellator.getInstance();
                 BufferBuilder bufferbuilder = tessellator.getBuffer();
                 bufferbuilder.begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION_TEX);
-                bufferbuilder.pos(0.0D, (double) res.getScaledHeight(), -90.0D).tex(0.0D, 1.0D).endVertex();
-                bufferbuilder.pos((double) res.getScaledWidth(), (double) res.getScaledHeight(), -90.0D).tex(1.0D, 1.0D).endVertex();
-                bufferbuilder.pos((double) res.getScaledWidth(), 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
+                bufferbuilder.pos(0.0D, res.getScaledHeight(), -90.0D).tex(0.0D, 1.0D).endVertex();
+                bufferbuilder.pos(res.getScaledWidth(), res.getScaledHeight(), -90.0D).tex(1.0D, 1.0D).endVertex();
+                bufferbuilder.pos(res.getScaledWidth(), 0.0D, -90.0D).tex(1.0D, 0.0D).endVertex();
                 bufferbuilder.pos(0.0D, 0.0D, -90.0D).tex(0.0D, 0.0D).endVertex();
                 tessellator.draw();
                 GlStateManager.depthMask(true);

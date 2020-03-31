@@ -33,7 +33,7 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
             return false;
         }
         boolean execute = super.shouldExecute();
-        if(execute){
+        if (execute) {
             entity.shouldWander = false;
         }
         return execute;
@@ -44,7 +44,7 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
         if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
             return false;
         }
-        return !this.entity.isMovementBlockedSoft() && destinationBlock != null && FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(destinationBlock).getBlock(), this.entity.type.diet) > 0 ;
+        return !this.entity.isMovementBlockedSoft() && destinationBlock != null && FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(destinationBlock).getBlock(), this.entity.type.diet) > 0;
     }
 
     @Override
@@ -64,7 +64,7 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
                     this.resetTask();
                     return;
                 }
-                if(!this.entity.rayTraceFeeder(up, true) || FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(up).getBlock(), this.entity.type.diet) == 0 || !canReachBlock(this.entity, up)){
+                if (!this.entity.rayTraceFeeder(up, true) || FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(up).getBlock(), this.entity.type.diet) == 0 || !canReachBlock(this.entity, up)) {
                     this.resetTask();
                 }
 
@@ -78,7 +78,7 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
         return FoodMappings.INSTANCE.getBlockFoodAmount(this.entity.world.getBlockState(pos).getBlock(), this.entity.type.diet) > 0 && this.entity.rayTraceFeeder(pos, true) && canReachBlock(entity, pos);
     }
 
-    public void resetTask(){
+    public void resetTask() {
         this.entity.shouldWander = true;
         this.runDelay = 0;
     }
@@ -91,7 +91,7 @@ public class DinoAIEatBlocks extends DinoAIMoveToBlock {
     }
 
 
-    public boolean canReachBlock(Entity entity, BlockPos leafBlock){
+    public boolean canReachBlock(Entity entity, BlockPos leafBlock) {
         return entity.posY + entity.height >= leafBlock.getY();
     }
 

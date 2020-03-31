@@ -42,6 +42,11 @@ public class FAJEIPlugin implements IModPlugin {
     public static final String WORKTABLE_UID = "fossil.worktable";
     public static final String SIFTER_UID = "fossil.sifter";
 
+    private static void addDescription(IModRegistry registry, ItemStack stack) {
+        registry.addIngredientInfo(stack, ItemStack.class, stack.getTranslationKey() + ".jei_desc");
+
+    }
+
     @SuppressWarnings("deprecation")
     public void register(IModRegistry registry) {
         registry.addRecipes(JEIAnalyzerRecipes.getRecipes(), ANALYZER_UID);
@@ -78,7 +83,7 @@ public class FAJEIPlugin implements IModPlugin {
         addDescription(registry, new ItemStack(FAItemRegistry.SCARAB_GEM));
         addDescription(registry, new ItemStack(FAItemRegistry.AQUATIC_SCARAB_GEM));
         addDescription(registry, new ItemStack(FAItemRegistry.STONE_TABLET));
-        for(int i = 0; i <= 15; i++){
+        for (int i = 0; i <= 15; i++) {
             registry.addIngredientInfo(new ItemStack(FAItemRegistry.TOY_BALL, 1, i), ItemStack.class, "item.toy.jei_desc");
         }
         registry.addIngredientInfo(new ItemStack(FAItemRegistry.TOY_TETHERED_LOG), ItemStack.class, "item.toy.jei_desc");
@@ -122,10 +127,5 @@ public class FAJEIPlugin implements IModPlugin {
         public IRecipeWrapper getRecipeWrapper(RecipeSifter recipe) {
             return new SifterRecipeWrapper(recipe);
         }
-    }
-
-    private static void addDescription(IModRegistry registry, ItemStack stack){
-        registry.addIngredientInfo(stack, ItemStack.class, stack.getTranslationKey() + ".jei_desc");
-
     }
 }

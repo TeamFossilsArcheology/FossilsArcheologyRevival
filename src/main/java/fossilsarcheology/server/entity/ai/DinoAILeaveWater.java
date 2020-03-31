@@ -11,11 +11,11 @@ import java.util.Random;
 
 public class DinoAILeaveWater extends EntityAIBase {
     private final EntityPrehistoricSwimming dino;
+    private final double movementSpeed;
+    private final World world;
     private double shelterX;
     private double shelterY;
     private double shelterZ;
-    private final double movementSpeed;
-    private final World world;
 
     public DinoAILeaveWater(EntityPrehistoricSwimming thedinoIn, double movementSpeedIn) {
         this.dino = thedinoIn;
@@ -44,7 +44,7 @@ public class DinoAILeaveWater extends EntityAIBase {
     public void updateTask() {
         double dist = this.dino.getDistance(this.shelterX + 0.5F, this.shelterY + 1.5F, this.shelterZ + 0.5F);
         BlockPos blockpos = new BlockPos(this.shelterX, this.shelterY, this.shelterZ);
-        if(shelterY > this.dino.getEntityBoundingBox().minY){
+        if (shelterY > this.dino.getEntityBoundingBox().minY) {
             this.dino.getJumpHelper().setJumping();
             this.dino.motionY += 0.25F;
             this.dino.motionX += (Math.signum(blockpos.getX() + 0.5D - this.dino.posX) * 0.5D - this.dino.motionX) * 0.100000000372529;
@@ -69,7 +69,7 @@ public class DinoAILeaveWater extends EntityAIBase {
         for (int i = 0; i < 10; ++i) {
             BlockPos blockpos1 = blockpos.add(random.nextInt(20) - 10, 1 + random.nextInt(6), random.nextInt(20) - 10);
             if (this.world.getBlockState(blockpos1).isOpaqueCube() && world.isAirBlock(blockpos1.up()) && blockpos1.getY() >= blockpos.getY()) {
-                return new Vec3d((double) blockpos1.getX(), (double) blockpos1.getY(), (double) blockpos1.getZ());
+                return new Vec3d(blockpos1.getX(), blockpos1.getY(), blockpos1.getZ());
             }
         }
 

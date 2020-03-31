@@ -27,9 +27,9 @@ public class ArthropleuraBuffer {
         this.prevPitchVariation = 0.0F;
     }
 
-    private boolean compareDouble(double a, double b){
-        double c = a-b;
-        return Math.abs(c-1.0) <= 0.01D;
+    private boolean compareDouble(double a, double b) {
+        double c = a - b;
+        return Math.abs(c - 1.0) <= 0.01D;
     }
 
     /**
@@ -46,27 +46,27 @@ public class ArthropleuraBuffer {
         if (!compareDouble(entity.renderYawOffset, entity.prevRenderYawOffset) && MathHelper.abs(this.yawVariation) < maxAngle) {
             this.yawVariation += (entity.prevRenderYawOffset - entity.renderYawOffset) / divisor;
         }
-            if (this.yawVariation > 0.7F * angleDecrement) {
-                if (this.yawTimer > bufferTime) {
-                    this.yawVariation -= angleDecrement;
-                    if (MathHelper.abs(this.yawVariation) < angleDecrement) {
-                        this.yawVariation = 0.0F;
-                        this.yawTimer = 0;
-                    }
-                } else {
-                    this.yawTimer++;
+        if (this.yawVariation > 0.7F * angleDecrement) {
+            if (this.yawTimer > bufferTime) {
+                this.yawVariation -= angleDecrement;
+                if (MathHelper.abs(this.yawVariation) < angleDecrement) {
+                    this.yawVariation = 0.0F;
+                    this.yawTimer = 0;
                 }
-            } else if (this.yawVariation < -0.7F * angleDecrement) {
-                if (this.yawTimer > bufferTime) {
-                    this.yawVariation += angleDecrement;
-                    if (MathHelper.abs(this.yawVariation) < angleDecrement) {
-                        this.yawVariation = 0.0F;
-                        this.yawTimer = 0;
-                    }
-                } else {
-                    this.yawTimer++;
-                }
+            } else {
+                this.yawTimer++;
             }
+        } else if (this.yawVariation < -0.7F * angleDecrement) {
+            if (this.yawTimer > bufferTime) {
+                this.yawVariation += angleDecrement;
+                if (MathHelper.abs(this.yawVariation) < angleDecrement) {
+                    this.yawVariation = 0.0F;
+                    this.yawTimer = 0;
+                }
+            } else {
+                this.yawTimer++;
+            }
+        }
     }
 
     /**
@@ -141,7 +141,6 @@ public class ArthropleuraBuffer {
             box.rotateAngleY += reverse ? -rotateAmount : rotateAmount;
         }
     }
-
 
 
     /**

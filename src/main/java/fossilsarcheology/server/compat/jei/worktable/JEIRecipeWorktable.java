@@ -8,7 +8,7 @@ public class JEIRecipeWorktable {
     private ItemStack output;
     private ItemStack fuel;
 
-    public JEIRecipeWorktable(ItemStack input, ItemStack output, ItemStack fuel){
+    public JEIRecipeWorktable(ItemStack input, ItemStack output, ItemStack fuel) {
         this.input = input;
         this.output = output;
         this.fuel = fuel;

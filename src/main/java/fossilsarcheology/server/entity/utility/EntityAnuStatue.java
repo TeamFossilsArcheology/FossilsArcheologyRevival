@@ -20,6 +20,7 @@ public class EntityAnuStatue extends EntityLiving {
     protected void initEntityAI() {
         this.tasks.addTask(0, new EntityAIWatchClosest(this, EntityPlayer.class, 64.0F));
     }
+
     public boolean attackEntityFrom(DamageSource source, float amount) {
         return false;
     }

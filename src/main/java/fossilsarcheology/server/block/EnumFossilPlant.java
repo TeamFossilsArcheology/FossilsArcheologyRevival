@@ -32,28 +32,27 @@ public enum EnumFossilPlant {
     private EnumFossilPlant.Type type;
     private Block[] placeBlock;
 
-    EnumFossilPlant(EnumFossilPlant.Type type, Block... placeBlock){
+    EnumFossilPlant(EnumFossilPlant.Type type, Block... placeBlock) {
         this.type = type;
         this.placeBlock = placeBlock;
     }
 
-    public void onPlace(World world, BlockPos pos){
-        if(type == Type.DOUBLE){
+    public void onPlace(World world, BlockPos pos) {
+        if (type == Type.DOUBLE) {
             world.setBlockState(pos, placeBlock[0].getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.LOWER));
             world.setBlockState(pos.up(), placeBlock[0].getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.UPPER));
-        }
-        else if(type == Type.FOUR){
+        } else if (type == Type.FOUR) {
             world.setBlockState(pos, placeBlock[0].getDefaultState().withProperty(LAYER, 0), 2);
             world.setBlockState(pos.up(), placeBlock[0].getDefaultState().withProperty(LAYER, 1), 2);
             world.setBlockState(pos.up(2), placeBlock[0].getDefaultState().withProperty(LAYER, 2), 2);
             world.setBlockState(pos.up(3), placeBlock[0].getDefaultState().withProperty(LAYER, 3), 2);
-        }else{
+        } else {
             world.setBlockState(pos, placeBlock[0].getDefaultState());
         }
     }
 
-    public int getClearance(){
-        switch (type){
+    public int getClearance() {
+        switch (type) {
             case SINGLE:
                 return 1;
             case DOUBLE:
@@ -66,11 +65,11 @@ public enum EnumFossilPlant {
         return 1;
     }
 
-    public IBlockState defaultState(){
+    public IBlockState defaultState() {
         return placeBlock[0].getDefaultState();
     }
 
-    enum Type{
-        SINGLE, DOUBLE, DOUBLE_BONEMEAL, FOUR;
+    enum Type {
+        SINGLE, DOUBLE, DOUBLE_BONEMEAL, FOUR
     }
 }

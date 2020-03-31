@@ -16,52 +16,52 @@ import net.minecraft.world.World;
 public class SkullBlock extends BlockHorizontal implements DefaultRenderedItem {
 
     public SkullBlock(boolean isActive) {
-		super(Material.ROCK);
-		this.setTickRandomly(true);
-		this.setHardness(4F);
-		this.setResistance(15F);
-		this.setHarvestLevel("pickaxe", 0);
+        super(Material.ROCK);
+        this.setTickRandomly(true);
+        this.setHardness(4F);
+        this.setResistance(15F);
+        this.setHarvestLevel("pickaxe", 0);
         this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		this.setCreativeTab(FATabRegistry.BLOCKS);
-		this.setTranslationKey(isActive ? "skull_lantern" : "skull_block");
-		this.setRegistryName(isActive ? "skull_lantern" : "skull_block");
-		if(isActive){
-			this.setLightLevel(0.9375F);
-		}
-	}
+        this.setCreativeTab(FATabRegistry.BLOCKS);
+        this.setTranslationKey(isActive ? "skull_lantern" : "skull_block");
+        this.setRegistryName(isActive ? "skull_lantern" : "skull_block");
+        if (isActive) {
+            this.setLightLevel(0.9375F);
+        }
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState withRotation(IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
-	}
+        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
-	}
+        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
-	}
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
-	}
+        return this.getDefaultState().withProperty(FACING, EnumFacing.byHorizontalIndex(meta));
+    }
 
-	@Override
+    @Override
     public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getHorizontalIndex();
-	}
+        return state.getValue(FACING).getHorizontalIndex();
+    }
 
-	@Override
+    @Override
     protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING);
-	}
+        return new BlockStateContainer(this, FACING);
+    }
 
 }

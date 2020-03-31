@@ -21,6 +21,10 @@ import java.util.Map;
 public class AdvancedModelLoader {
     private static Map<String, IModelCustomLoader> instances = Maps.newHashMap();
 
+    static {
+        registerModelHandler(new ObjModelLoader());
+    }
+
     /**
      * Register a new model handler
      *
@@ -59,10 +63,5 @@ public class AdvancedModelLoader {
 
     public static Collection<String> getSupportedSuffixes() {
         return instances.keySet();
-    }
-
-
-    static {
-        registerModelHandler(new ObjModelLoader());
     }
 }

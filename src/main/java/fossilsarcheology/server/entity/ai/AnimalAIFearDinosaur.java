@@ -16,10 +16,10 @@ public class AnimalAIFearDinosaur extends EntityAIAvoidEntity<EntityLivingBase> 
         super(entityIn, classToAvoidIn, avoidTargetSelectorIn, avoidDistanceIn, farSpeedIn, nearSpeedIn);
     }
 
-    public boolean shouldExecute(){
+    public boolean shouldExecute() {
         boolean should = super.shouldExecute();
-        if(should && this.closestLivingEntity != null){
-            if(closestLivingEntity instanceof EntityTameable && ((EntityTameable) closestLivingEntity).isTamed()){
+        if (should && this.closestLivingEntity != null) {
+            if (closestLivingEntity instanceof EntityTameable && ((EntityTameable) closestLivingEntity).isTamed()) {
                 return false;
             }
         }

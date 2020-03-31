@@ -18,10 +18,10 @@ public class RecipeTarDrops extends IForgeRegistryEntry.Impl<IRecipe> implements
     @Override
     public boolean matches(InventoryCrafting inv, World worldIn) {
         int bucketCount = 0;
-        for(int i = 0; i < 9; i++){
-            if (inv.getStackInSlot(i).getItem() == ForgeModContainer.getInstance().universalBucket){
+        for (int i = 0; i < 9; i++) {
+            if (inv.getStackInSlot(i).getItem() == ForgeModContainer.getInstance().universalBucket) {
                 FluidStack fluid = ForgeModContainer.getInstance().universalBucket.getFluid(inv.getStackInSlot(i));
-                if(fluid.getFluid() == FAFluidRegistry.TAR_FLUID){
+                if (fluid.getFluid() == FAFluidRegistry.TAR_FLUID) {
                     bucketCount++;
                 }
             }

@@ -24,7 +24,7 @@ public class FABlockProcessorLoot extends FABlockProcessor {
 
     @Nullable
     public Template.BlockInfo processBlock(World worldIn, BlockPos pos, Template.BlockInfo blockInfoIn) {
-        if(blockInfoIn.blockState.getBlock() instanceof BlockChest){
+        if (blockInfoIn.blockState.getBlock() instanceof BlockChest) {
             Random rand = new Random(worldIn.getSeed() + pos.toLong());
             NBTTagCompound tag = blockInfoIn.tileentityData == null ? new NBTTagCompound() : blockInfoIn.tileentityData;
             tag.setString("LootTable", LootHelper.getLoot(loot_table, rand).toString());

@@ -229,8 +229,8 @@ public class ServerProxy implements IGuiHandler {
     }
 
     public void onPostInit() {
-        for(PrehistoricEntityType prehistoric : PrehistoricEntityType.values()){
-            if(prehistoric.mobType == MobType.BIRD){
+        for (PrehistoricEntityType prehistoric : PrehistoricEntityType.values()) {
+            if (prehistoric.mobType == MobType.BIRD) {
                 BlockDispenser.DISPENSE_BEHAVIOR_REGISTRY.putObject(prehistoric.birdEggItem, new BehaviorProjectileDispense() {
                     protected IProjectile getProjectileEntity(World worldIn, IPosition position, ItemStack stackIn) {
                         EntityBirdEgg egg = new EntityBirdEgg(false, worldIn, position.getX(), position.getY(), position.getZ());

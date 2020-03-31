@@ -34,8 +34,8 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
      * Returns whether the EntityAIBase should begin execution.
      */
     public boolean shouldExecute() {
-        if(overrideDelay()){
-           // runDelay = 0;
+        if (overrideDelay()) {
+            // runDelay = 0;
         }
         if (this.runDelay > 0) {
             --this.runDelay;
@@ -46,7 +46,7 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
         }
     }
 
-    public void resetTask(){
+    public void resetTask() {
         destinationBlock = BlockPos.ORIGIN;
     }
 
@@ -61,7 +61,7 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
      * Execute a one shot task or start executing a continuous task
      */
     public void startExecuting() {
-        this.creature.getNavigator().tryMoveToXYZ((double) ((float) this.destinationBlock.getX()) + 0.5D, (double) (this.destinationBlock.getY() + 1), (double) ((float) this.destinationBlock.getZ()) + 0.5D, this.movementSpeed);
+        this.creature.getNavigator().tryMoveToXYZ((double) ((float) this.destinationBlock.getX()) + 0.5D, this.destinationBlock.getY() + 1, (double) ((float) this.destinationBlock.getZ()) + 0.5D, this.movementSpeed);
         this.timeoutCounter = 0;
         this.maxStayTicks = this.creature.getRNG().nextInt(this.creature.getRNG().nextInt(1200) + 1200) + 1200;
     }
@@ -76,7 +76,7 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
             this.isAboveDestination = false;
             ++this.timeoutCounter;
             if (this.timeoutCounter % 40 == 0) {
-                this.creature.getNavigator().tryMoveToXYZ((double) ((float) this.destinationBlock.getX()) + 0.5D, (double) (this.destinationBlock.getY() + 1), (double) ((float) this.destinationBlock.getZ()) + 0.5D, this.movementSpeed);
+                this.creature.getNavigator().tryMoveToXYZ((double) ((float) this.destinationBlock.getX()) + 0.5D, this.destinationBlock.getY() + 1, (double) ((float) this.destinationBlock.getZ()) + 0.5D, this.movementSpeed);
             }
         } else {
             this.isAboveDestination = true;
@@ -120,5 +120,6 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
      * Return true to set given position as destination
      */
     protected abstract boolean shouldMoveTo(World worldIn, BlockPos pos);
+
     protected abstract boolean overrideDelay();
 }

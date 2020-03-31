@@ -15,23 +15,23 @@ public class CultivateRecipes {
 
     public static List<RecipeCultivate> getRecipes() {
         List<RecipeCultivate> list = new ArrayList<>();
-        for(Map.Entry<ItemStack, ItemStack> recipe : FAMachineRecipeRegistry.cultivateRecipes.entrySet()){
+        for (Map.Entry<ItemStack, ItemStack> recipe : FAMachineRecipeRegistry.cultivateRecipes.entrySet()) {
             addRecipe(list, recipe.getKey(), recipe.getValue());
         }
         return list;
     }
 
     public static int getFuelValue(ItemStack stack) {
-        for(Map.Entry<ItemStack, Integer> values : FAMachineRecipeRegistry.cultivateFuelValues.entrySet()){
-            if(values.getKey().isItemEqual(stack)){
+        for (Map.Entry<ItemStack, Integer> values : FAMachineRecipeRegistry.cultivateFuelValues.entrySet()) {
+            if (values.getKey().isItemEqual(stack)) {
                 return values.getValue();
             }
         }
         return 0;
     }
 
-    private static void addRecipe(List<RecipeCultivate> list, ItemStack input, ItemStack output){
-        for(ItemStack item : FAMachineRecipeRegistry.cultivateFuelValues.keySet()){
+    private static void addRecipe(List<RecipeCultivate> list, ItemStack input, ItemStack output) {
+        for (ItemStack item : FAMachineRecipeRegistry.cultivateFuelValues.keySet()) {
             list.add(new RecipeCultivate(input, output, item));
         }
 

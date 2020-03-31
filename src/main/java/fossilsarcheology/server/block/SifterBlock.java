@@ -30,105 +30,105 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import java.util.Random;
 
 public class SifterBlock extends BlockContainer implements DefaultRenderedItem, BlockEntity {
-	private static boolean keepInventory = false;
+    private static boolean keepInventory = false;
 
     public SifterBlock(boolean isActive) {
-		super(Material.WOOD);
-		this.setHarvestLevel("axe", 0);
-		this.setHardness(2.5F);
-		this.setSoundType(SoundType.METAL);
+        super(Material.WOOD);
+        this.setHarvestLevel("axe", 0);
+        this.setHardness(2.5F);
+        this.setSoundType(SoundType.METAL);
         if (isActive) {
-			setTranslationKey("sifter_active");
-		} else {
-			setTranslationKey("sifter");
-			setCreativeTab(FATabRegistry.BLOCKS);
-		}
-	}
+            setTranslationKey("sifter_active");
+        } else {
+            setTranslationKey("sifter");
+            setCreativeTab(FATabRegistry.BLOCKS);
+        }
+    }
 
-	@Override
-	public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		return true;
-	}
+    public static void setState(boolean isActive, World world, BlockPos pos) {
+        TileEntity tile = world.getTileEntity(pos);
+        keepInventory = true;
+        if (isActive) {
+            world.setBlockState(pos, FABlockRegistry.SIFTER_ACTIVE.getDefaultState());
+        } else {
+            world.setBlockState(pos, FABlockRegistry.SIFTER_IDLE.getDefaultState());
+        }
+        keepInventory = false;
+        if (tile != null) {
+            tile.validate();
+            world.setTileEntity(pos, tile);
+        }
+    }
 
-	public static void setState(boolean isActive, World world, BlockPos pos) {
-		TileEntity tile = world.getTileEntity(pos);
-		keepInventory = true;
-		if (isActive) {
-			world.setBlockState(pos, FABlockRegistry.SIFTER_ACTIVE.getDefaultState());
-		} else {
-			world.setBlockState(pos, FABlockRegistry.SIFTER_IDLE.getDefaultState());
-		}
-		keepInventory = false;
-		if (tile != null) {
-			tile.validate();
-			world.setTileEntity(pos, tile);
-		}
-	}
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.MODEL;
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.MODEL;
+    }
 
-	@Override
-	public Item getItemDropped(IBlockState state, Random random, int fortune) {
-		return Item.getItemFromBlock(FABlockRegistry.SIFTER_IDLE);
-	}
+    @Override
+    public Item getItemDropped(IBlockState state, Random random, int fortune) {
+        return Item.getItemFromBlock(FABlockRegistry.SIFTER_IDLE);
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if (!world.isRemote) {
-			player.openGui(Revival.INSTANCE, ServerProxy.GUI_SIFTER, world, pos.getX(), pos.getY(), pos.getZ());
-		}
-		return true;
-	}
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (!world.isRemote) {
+            player.openGui(Revival.INSTANCE, ServerProxy.GUI_SIFTER, world, pos.getX(), pos.getY(), pos.getZ());
+        }
+        return true;
+    }
 
-	@Override
-	public void breakBlock(World world, BlockPos pos, IBlockState state) {
-		if (!keepInventory  || !(world.getBlockState(pos).getBlock() instanceof SifterBlock)) {
-			TileEntity entity = world.getTileEntity(pos);
-			if (entity == null) {
-				return;
-			}
-			if (entity instanceof TileEntitySifter) {
-				TileEntitySifter analyzer = (TileEntitySifter)entity;
-				for (int i = 0; i < analyzer.getSizeInventory(); i++) {
-					ItemStack stack = analyzer.getStackInSlot(i);
-					if (!stack.isEmpty()) {
-						InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
-					}
-				}
-			}
-		}
-		super.breakBlock(world, pos, state);
-	}
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        if (!keepInventory || !(world.getBlockState(pos).getBlock() instanceof SifterBlock)) {
+            TileEntity entity = world.getTileEntity(pos);
+            if (entity == null) {
+                return;
+            }
+            if (entity instanceof TileEntitySifter) {
+                TileEntitySifter analyzer = (TileEntitySifter) entity;
+                for (int i = 0; i < analyzer.getSizeInventory(); i++) {
+                    ItemStack stack = analyzer.getStackInSlot(i);
+                    if (!stack.isEmpty()) {
+                        InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
+                    }
+                }
+            }
+        }
+        super.breakBlock(world, pos, state);
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World world, int metadata) {
-		return new TileEntitySifter();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World world, int metadata) {
+        return new TileEntitySifter();
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public boolean hasComparatorInputOverride(IBlockState state) {
-		return true;
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public boolean hasComparatorInputOverride(IBlockState state) {
+        return true;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
-		return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(pos));
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
+        return Container.calcRedstoneFromInventory((IInventory) world.getTileEntity(pos));
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
-		return new ItemStack(FABlockRegistry.SIFTER_IDLE);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
+        return new ItemStack(FABlockRegistry.SIFTER_IDLE);
+    }
 
-	@Override
-	public Class<? extends TileEntity> getEntity() {
-		return TileEntitySifter.class;
-	}
+    @Override
+    public Class<? extends TileEntity> getEntity() {
+        return TileEntitySifter.class;
+    }
 }

@@ -41,14 +41,12 @@ public class HomePortalBlock extends Block implements DefaultRenderedItem {
     }
 
     @SideOnly(Side.CLIENT)
-    public BlockRenderLayer getRenderLayer()
-    {
+    public BlockRenderLayer getRenderLayer() {
         return BlockRenderLayer.TRANSLUCENT;
     }
 
     @SuppressWarnings("deprecation")
-    public boolean isFullCube(IBlockState state)
-    {
+    public boolean isFullCube(IBlockState state) {
         return false;
     }
 
@@ -110,7 +108,7 @@ public class HomePortalBlock extends Block implements DefaultRenderedItem {
                         if (!world.isAirBlock(new BlockPos((l - x) / 2 + x, j1, (i1 - z) / 2 + z))) {
                             break;
                         }
-                        world.spawnParticle(EnumParticleTypes.PORTAL, x + 0.5D, y + 0.5D, z + 0.5D, (double) ((float) (l - x) + rand.nextFloat()) - 0.5D, (double) ((float) (j1 - y) - rand.nextFloat() - 1.0F), (double) ((float) (i1 - z) + rand.nextFloat()) - 0.5D);
+                        world.spawnParticle(EnumParticleTypes.PORTAL, x + 0.5D, y + 0.5D, z + 0.5D, (double) ((float) (l - x) + rand.nextFloat()) - 0.5D, (float) (j1 - y) - rand.nextFloat() - 1.0F, (double) ((float) (i1 - z) + rand.nextFloat()) - 0.5D);
                     }
                 }
             }

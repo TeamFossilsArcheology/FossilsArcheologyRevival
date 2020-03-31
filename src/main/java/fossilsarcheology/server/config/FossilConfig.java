@@ -14,7 +14,7 @@ public class FossilConfig {
     public boolean generateMoai = true;
     public boolean generateTarSites = true;
     public boolean generateFossilSites = true;
-    public int[] oreGenerationDimensions = { 0 };
+    public int[] oreGenerationDimensions = {0};
     public int fossilOreRarity = 38;
     public int permafrostOreRarity = 4;
     public int generateHellShipRarity = 100;

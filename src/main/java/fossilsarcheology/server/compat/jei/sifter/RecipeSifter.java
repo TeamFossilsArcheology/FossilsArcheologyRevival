@@ -8,7 +8,7 @@ public class RecipeSifter {
     private ItemStack output;
     private int chance;
 
-    public RecipeSifter(ItemStack input, ItemStack output, int chance){
+    public RecipeSifter(ItemStack input, ItemStack output, int chance) {
         this.input = input;
         this.output = output;
         this.chance = chance;

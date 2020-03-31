@@ -14,44 +14,42 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderBirdEgg extends Render<EntityBirdEgg> {
-	private final RenderItem itemRenderer;
+    private final RenderItem itemRenderer;
 
-	public RenderBirdEgg(RenderManager renderManagerIn, RenderItem itemRendererIn) {
-		super(renderManagerIn);
-		this.itemRenderer = itemRendererIn;
-	}
+    public RenderBirdEgg(RenderManager renderManagerIn, RenderItem itemRendererIn) {
+        super(renderManagerIn);
+        this.itemRenderer = itemRendererIn;
+    }
 
-	@Override
+    @Override
     public void doRender(EntityBirdEgg entity, double x, double y, double z, float entityYaw, float partialTicks) {
-		GlStateManager.pushMatrix();
-		GlStateManager.translate((float)x, (float)y, (float)z);
-		GlStateManager.enableRescaleNormal();
-		GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
-		GlStateManager.rotate((float)(this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-		GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
-		this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
+        GlStateManager.pushMatrix();
+        GlStateManager.translate((float) x, (float) y, (float) z);
+        GlStateManager.enableRescaleNormal();
+        GlStateManager.rotate(-this.renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate((float) (this.renderManager.options.thirdPersonView == 2 ? -1 : 1) * this.renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(180.0F, 0.0F, 1.0F, 0.0F);
+        this.bindTexture(TextureMap.LOCATION_BLOCKS_TEXTURE);
 
-		if (this.renderOutlines)
-		{
-			GlStateManager.enableColorMaterial();
-			GlStateManager.enableOutlineMode(this.getTeamColor(entity));
-		}
+        if (this.renderOutlines) {
+            GlStateManager.enableColorMaterial();
+            GlStateManager.enableOutlineMode(this.getTeamColor(entity));
+        }
 
-		this.itemRenderer.renderItem(new ItemStack(entity.getEnumType().birdEggItem), ItemCameraTransforms.TransformType.GROUND);
+        this.itemRenderer.renderItem(new ItemStack(entity.getEnumType().birdEggItem), ItemCameraTransforms.TransformType.GROUND);
 
-		if (this.renderOutlines)
-		{
-			GlStateManager.disableOutlineMode();
-			GlStateManager.disableColorMaterial();
-		}
+        if (this.renderOutlines) {
+            GlStateManager.disableOutlineMode();
+            GlStateManager.disableColorMaterial();
+        }
 
-		GlStateManager.disableRescaleNormal();
-		GlStateManager.popMatrix();
-		super.doRender(entity, x, y, z, entityYaw, partialTicks);
-	}
+        GlStateManager.disableRescaleNormal();
+        GlStateManager.popMatrix();
+        super.doRender(entity, x, y, z, entityYaw, partialTicks);
+    }
 
-	@Override
+    @Override
     protected ResourceLocation getEntityTexture(EntityBirdEgg entity) {
-		return TextureMap.LOCATION_BLOCKS_TEXTURE;
-	}
+        return TextureMap.LOCATION_BLOCKS_TEXTURE;
+    }
 }

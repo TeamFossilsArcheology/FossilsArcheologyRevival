@@ -8,14 +8,14 @@ import java.util.List;
 
 public class TarBucketRecipeMaker {
 
+    private TarBucketRecipeMaker() {
+
+    }
+
     public static List<TarBucketRecipeWrapper> getTarBucketRecipes() {
         List<TarBucketRecipeWrapper> recipes = new ArrayList<>();
         recipes.add(new TarBucketRecipeWrapper());
         return recipes;
-    }
-
-    private TarBucketRecipeMaker() {
-
     }
 
 }

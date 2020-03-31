@@ -25,7 +25,7 @@ public class WorldGenVolcanoCone extends WorldGenerator {
             for (float i = 0; i < layer * 0.5; i += 0.5) {
                 for (float j = 0; j < 2 * Math.PI * i + rand.nextInt(2); j += 0.5) {
                     BlockPos stonePos = new BlockPos(Math.floor(center.getX() + Math.sin(j) * i + rand.nextInt(2)), center.getY(), Math.floor(center.getZ() + Math.cos(j) * i + rand.nextInt(2)));
-                    if(worldIn.isAirBlock(stonePos)){
+                    if (worldIn.isAirBlock(stonePos)) {
                         worldIn.setBlockState(stonePos, FABlockRegistry.VOLCANIC_ROCK.getDefaultState(), 3);
                     }
                 }

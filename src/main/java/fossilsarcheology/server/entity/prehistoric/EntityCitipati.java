@@ -18,7 +18,7 @@ import net.minecraft.world.World;
 public class EntityCitipati extends EntityPrehistoric {
 
     public EntityCitipati(World world) {
-        super(world, PrehistoricEntityType.CITIPATI, 1, 6, 10, 30, 0.2, 0.35, 0,0);
+        super(world, PrehistoricEntityType.CITIPATI, 1, 6, 10, 30, 0.2, 0.35, 0, 0);
         this.setActualSize(1.5F, 1.8F);
         this.nearByMobsAllowed = 10;
         minSize = 0.2F;

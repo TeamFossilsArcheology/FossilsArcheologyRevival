@@ -35,7 +35,7 @@ public class EntityDebugTest extends EntityMob {
         this.tasks.addTask(5, new EntityAIWanderAvoidWater(this, 1.0D));
         this.tasks.addTask(6, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(6, new EntityAILookIdle(this));
-        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(1, new EntityAIHurtByTarget(this, false));
         this.targetTasks.addTask(2, new EntityAINearestAttackableTarget(this, EntityLivingBase.class, false));
     }
 
@@ -49,13 +49,13 @@ public class EntityDebugTest extends EntityMob {
 
     public void attackEntityWithRangedAttack(EntityLivingBase target) {
         double d1 = target.posX - this.posX;
-        double d2 = target.getEntityBoundingBox().minY + (double)(target.height / 2.0F) - (this.posY + (double)(this.height / 2.0F));
+        double d2 = target.getEntityBoundingBox().minY + (double) (target.height / 2.0F) - (this.posY + (double) (this.height / 2.0F));
         double d3 = target.posZ - this.posZ;
         double d0 = this.getDistanceSq(target);
         float f = MathHelper.sqrt(MathHelper.sqrt(d0)) * 0.5F;
 
-        EntityLargeFireball entitysmallfireball = new EntityLargeFireball(this.world, this, d1 + this.getRNG().nextGaussian() * (double)f, d2, d3 + this.getRNG().nextGaussian() * (double)f);
-        entitysmallfireball.posY = this.posY + (double)(this.height / 2.0F) + 0.5D;
+        EntityLargeFireball entitysmallfireball = new EntityLargeFireball(this.world, this, d1 + this.getRNG().nextGaussian() * (double) f, d2, d3 + this.getRNG().nextGaussian() * (double) f);
+        entitysmallfireball.posY = this.posY + (double) (this.height / 2.0F) + 0.5D;
         entitysmallfireball.explosionPower = 5;
         this.world.spawnEntity(entitysmallfireball);
     }
@@ -76,7 +76,7 @@ public class EntityDebugTest extends EntityMob {
         entity.motionZ = z;
         float f1 = MathHelper.sqrt(x * x + z * z);
         entity.rotationYaw = (float) (MathHelper.atan2(x, z) * (180D / Math.PI));
-        entity.rotationPitch = (float) (MathHelper.atan2(y, (double) f1) * (180D / Math.PI));
+        entity.rotationPitch = (float) (MathHelper.atan2(y, f1) * (180D / Math.PI));
         entity.prevRotationYaw = entity.rotationYaw;
         entity.prevRotationPitch = entity.rotationPitch;
     }

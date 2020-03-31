@@ -15,7 +15,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-public class EntityOrnitholestes extends EntityPrehistoric implements IScaryDinosaur{
+public class EntityOrnitholestes extends EntityPrehistoric implements IScaryDinosaur {
 
     public EntityOrnitholestes(World world) {
         super(world, PrehistoricEntityType.ORNITHOLESTES, 1, 3, 5, 20, 0.25, 0.4, 0, 0);
@@ -32,7 +32,7 @@ public class EntityOrnitholestes extends EntityPrehistoric implements IScaryDino
         this.ridingY = 1.0F;
     }
 
-    public float getTargetScale(){
+    public float getTargetScale() {
         return 1.5F;
     }
 

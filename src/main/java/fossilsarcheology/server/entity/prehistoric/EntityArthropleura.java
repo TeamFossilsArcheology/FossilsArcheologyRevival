@@ -318,17 +318,15 @@ public class EntityArthropleura extends EntityPrehistoric {
 
     public class BodyHelper extends EntityBodyHelper {
         private EntityArthropleura living;
-
-        public BodyHelper(EntityArthropleura arthropleura) {
-            super(arthropleura);
-            this.living = arthropleura;
-        }
-
         /**
          * Used to progressively ajust the rotation of the body to the rotation of the head
          */
         private int rotationTickCounter;
         private float prevRenderYawHead;
+        public BodyHelper(EntityArthropleura arthropleura) {
+            super(arthropleura);
+            this.living = arthropleura;
+        }
 
         public void updateRenderAngles() {
             double d0 = this.living.posX - this.living.prevPosX;

@@ -11,18 +11,18 @@ import net.minecraft.world.IBlockAccess;
 
 public class FossilPlanksBlock extends Block implements DefaultRenderedItem {
 
-	public FossilPlanksBlock(String name) {
-		super(Material.WOOD);
-		setHardness(2.0F);
-		setResistance(5.0F);
-		setSoundType(SoundType.WOOD);
-		setTranslationKey(name);
-		this.setCreativeTab(FATabRegistry.BLOCKS);
-	}
+    public FossilPlanksBlock(String name) {
+        super(Material.WOOD);
+        setHardness(2.0F);
+        setResistance(5.0F);
+        setSoundType(SoundType.WOOD);
+        setTranslationKey(name);
+        this.setCreativeTab(FATabRegistry.BLOCKS);
+    }
 
-	@Override
-	public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		return true;
-	}
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
 }
 

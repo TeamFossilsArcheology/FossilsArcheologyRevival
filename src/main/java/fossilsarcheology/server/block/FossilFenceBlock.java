@@ -9,7 +9,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
-public class FossilFenceBlock  extends BlockFence implements DefaultRenderedItem {
+public class FossilFenceBlock extends BlockFence implements DefaultRenderedItem {
 
     public FossilFenceBlock(IBlockState parent, String name) {
         super(parent.getMaterial(), parent.getMaterial().getMaterialMapColor());

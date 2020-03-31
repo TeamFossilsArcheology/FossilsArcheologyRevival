@@ -32,9 +32,9 @@ public class FossilDoorBlock extends BlockDoor implements DefaultRenderedItem {
     }
 
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        if(state.getValue(HALF) == EnumDoorHalf.UPPER){
+        if (state.getValue(HALF) == EnumDoorHalf.UPPER) {
             return null;
-        }else{
+        } else {
             return getDoorItem();
         }
     }
@@ -48,14 +48,14 @@ public class FossilDoorBlock extends BlockDoor implements DefaultRenderedItem {
         return new ItemStack(getDoorItem());
     }
 
-    public Item getDoorItem(){
-        if(this == FABlockRegistry.CALAMITES_DOOR){
+    public Item getDoorItem() {
+        if (this == FABlockRegistry.CALAMITES_DOOR) {
             return FAItemRegistry.CALAMITES_DOOR_ITEM;
         }
-        if(this == FABlockRegistry.CORDAITES_DOOR){
+        if (this == FABlockRegistry.CORDAITES_DOOR) {
             return FAItemRegistry.CORDAITES_DOOR_ITEM;
         }
-        if(this == FABlockRegistry.SIGILLARIA_DOOR){
+        if (this == FABlockRegistry.SIGILLARIA_DOOR) {
             return FAItemRegistry.SIGILLARIA_DOOR_ITEM;
         }
         return FAItemRegistry.PALM_DOOR_ITEM;

@@ -10,16 +10,16 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public class AncientWoodBlock extends Block implements DefaultRenderedItem {
-	public AncientWoodBlock() {
-		super(Material.WOOD);
-		this.setCreativeTab(FATabRegistry.BLOCKS);
-		setHardness(2.0F);
-		setSoundType(SoundType.WOOD);
-		setTranslationKey("ancient_wood");
-	}
+    public AncientWoodBlock() {
+        super(Material.WOOD);
+        this.setCreativeTab(FATabRegistry.BLOCKS);
+        setHardness(2.0F);
+        setSoundType(SoundType.WOOD);
+        setTranslationKey("ancient_wood");
+    }
 
-	@Override
-	public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		return true;
-	}
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
 }

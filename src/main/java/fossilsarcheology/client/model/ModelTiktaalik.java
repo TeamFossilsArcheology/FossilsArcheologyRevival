@@ -7,6 +7,7 @@ import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 
 public class ModelTiktaalik extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer BodyFront;
     public AdvancedModelRenderer BodyBack;
     public AdvancedModelRenderer Neck;
@@ -22,7 +23,6 @@ public class ModelTiktaalik extends ModelPrehistoric {
     public AdvancedModelRenderer Eyes;
     public AdvancedModelRenderer LeftFrontFin;
     public AdvancedModelRenderer RightFrontFin;
-    private final ModelAnimator animator;
 
     public ModelTiktaalik() {
         this.textureWidth = 64;
@@ -141,19 +141,19 @@ public class ModelTiktaalik extends ModelPrehistoric {
         float degree_walk = 0.25F;
         AdvancedModelRenderer[] tailParts = {Tail, TailFin};
         AdvancedModelRenderer[] lowerBodyParts = {BodyBack, BodyFront, Tail, TailFin};
-        EntityTiktaalik prehistoric = (EntityTiktaalik)entity;
+        EntityTiktaalik prehistoric = (EntityTiktaalik) entity;
         if (prehistoric.isSkeleton() || prehistoric.isAIDisabled()) {
             return;
         }
         this.faceTarget(f3, f4, 2, Head);
-        if(prehistoric.swimProgress > 0) {
+        if (prehistoric.swimProgress > 0) {
             this.chainSwing(lowerBodyParts, speed_swim, degree_swim, 5, f, f1);
             this.swing(Neck, speed_swim, -degree_swim, false, 0, 0, f, f1);
             this.flap(LeftWrist, speed_swim, -degree_swim, false, 0, 0, f, f1);
             this.flap(RightWrist, speed_swim, -degree_swim, true, 0, 0, f, f1);
             this.flap(LeftPelvicFin, speed_swim, -degree_swim, false, 1, 0, f, f1);
             this.flap(RightPelvicFin, speed_swim, -degree_swim, true, 1, 0, f, f1);
-        }else{
+        } else {
             this.chainSwing(lowerBodyParts, speed_walk, degree_walk * 0.5F, 5, f, f1);
             this.swing(LeftWrist, speed_walk, 1.5F * degree_walk, false, 0, 0, f, f1);
             this.swing(LeftFrontFin, speed_walk, 1.5F * degree_walk, false, 0, 0, f, f1);
@@ -165,14 +165,14 @@ public class ModelTiktaalik extends ModelPrehistoric {
 
         }
         float sleepProgress = prehistoric.sleepProgress;
-        this.sitAnimationRotation(BodyBack, sleepProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Tail, sleepProgress, 0, (float)Math.toRadians(35), 0);
-        this.sitAnimationRotation(TailFin, sleepProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Head, sleepProgress, 0, (float)Math.toRadians(-35), (float)Math.toRadians(10));
+        this.sitAnimationRotation(BodyBack, sleepProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Tail, sleepProgress, 0, (float) Math.toRadians(35), 0);
+        this.sitAnimationRotation(TailFin, sleepProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Head, sleepProgress, 0, (float) Math.toRadians(-35), (float) Math.toRadians(10));
         float sitProgress = prehistoric.sitProgress;
-        this.sitAnimationRotation(BodyBack, sitProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Tail, sitProgress, 0, (float)Math.toRadians(35), 0);
-        this.sitAnimationRotation(TailFin, sitProgress, 0, (float)Math.toRadians(25), 0);
+        this.sitAnimationRotation(BodyBack, sitProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Tail, sitProgress, 0, (float) Math.toRadians(35), 0);
+        this.sitAnimationRotation(TailFin, sitProgress, 0, (float) Math.toRadians(25), 0);
 
     }
 

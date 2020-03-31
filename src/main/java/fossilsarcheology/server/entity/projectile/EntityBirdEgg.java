@@ -22,137 +22,136 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class EntityBirdEgg extends EntityThrowable {
-	final boolean cultivated;
-	private static final DataParameter<Integer> TYPE = EntityDataManager.createKey(EntityBirdEgg.class, DataSerializers.VARINT);
+    private static final DataParameter<Integer> TYPE = EntityDataManager.createKey(EntityBirdEgg.class, DataSerializers.VARINT);
+    final boolean cultivated;
 
-	public EntityBirdEgg(World par1World) {
-		super(par1World);
-		this.cultivated = false;
-	}
+    public EntityBirdEgg(World par1World) {
+        super(par1World);
+        this.cultivated = false;
+    }
 
-	@Override
-	protected void entityInit() {
-		super.entityInit();
-		this.dataManager.register(TYPE, PrehistoricEntityType.CHICKEN.ordinal());
-	}
+    public EntityBirdEgg(boolean cultivated, World par1World) {
+        super(par1World);
+        this.cultivated = cultivated;
+    }
 
-	@Override
-	public void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeEntityToNBT(compound);
-		compound.setInteger("Type", this.getType());
-	}
+    public EntityBirdEgg(boolean cultivated, World par1World, double posX, double posY, double posZ) {
+        super(par1World);
+        this.cultivated = cultivated;
+        this.posX = posX;
+        this.posY = posY;
+        this.posZ = posZ;
+    }
 
-	@Override
-	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
-		this.setType(compound.getInteger("Type"));
+    public EntityBirdEgg(World par1World, EntityLivingBase par2EntityLivingBase, boolean cultivated) {
+        super(par1World, par2EntityLivingBase);
+        this.cultivated = cultivated;
+    }
 
-	}
+    @Override
+    protected void entityInit() {
+        super.entityInit();
+        this.dataManager.register(TYPE, PrehistoricEntityType.CHICKEN.ordinal());
+    }
 
-	public void setType(int ordinal) {
-		this.dataManager.set(TYPE, ordinal);
-	}
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setInteger("Type", this.getType());
+    }
 
-	public int getType() {
-		return this.dataManager.get(TYPE);
-	}
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        this.setType(compound.getInteger("Type"));
 
+    }
 
-	public void setEnumType(PrehistoricEntityType type) {
-		this.setType(type.ordinal());
-	}
+    public int getType() {
+        return this.dataManager.get(TYPE);
+    }
 
-	public PrehistoricEntityType getEnumType() {
-		return PrehistoricEntityType.values()[MathHelper.clamp(getType(), 0, PrehistoricEntityType.values().length - 1)];
-	}
+    public void setType(int ordinal) {
+        this.dataManager.set(TYPE, ordinal);
+    }
 
-	public EntityBirdEgg(boolean cultivated, World par1World) {
-		super(par1World);
-		this.cultivated = cultivated;
-	}
+    public PrehistoricEntityType getEnumType() {
+        return PrehistoricEntityType.values()[MathHelper.clamp(getType(), 0, PrehistoricEntityType.values().length - 1)];
+    }
 
-	public EntityBirdEgg(boolean cultivated, World par1World, double posX, double posY, double posZ) {
-		super(par1World);
-		this.cultivated = cultivated;
-		this.posX = posX;
-		this.posY = posY;
-		this.posZ = posZ;
-	}
+    public void setEnumType(PrehistoricEntityType type) {
+        this.setType(type.ordinal());
+    }
 
-	public EntityBirdEgg(World par1World, EntityLivingBase par2EntityLivingBase, boolean cultivated) {
-		super(par1World, par2EntityLivingBase);
-		this.cultivated = cultivated;
-	}
+    public String getTexture() {
+        return cultivated ? "fossil/items/prehistoric/birdEggs/Egg_" + getEnumType().toString() + ".png" : "fossil/items/prehistoric/birdEggs/Egg_Cultivated" + getEnumType().toString() + ".png";
+    }
 
-	public String getTexture() {
-		return cultivated ? "fossil/items/prehistoric/birdEggs/Egg_" + getEnumType().toString() + ".png" : "fossil/items/prehistoric/birdEggs/Egg_Cultivated" + getEnumType().toString() + ".png";
-	}
+    /**
+     * Called when this EntityThrowable hits a block or entity.
+     */
+    @Override
+    protected void onImpact(RayTraceResult par1MovingObjectPosition) {
+        if (par1MovingObjectPosition.entityHit != null) {
+            par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
+        }
+        if (this.cultivated) {
+            this.spawnAnimal();
 
-	/**
-	 * Called when this EntityThrowable hits a block or entity.
-	 */
-	@Override
-	protected void onImpact(RayTraceResult par1MovingObjectPosition) {
-		if (par1MovingObjectPosition.entityHit != null) {
-			par1MovingObjectPosition.entityHit.attackEntityFrom(DamageSource.causeThrownDamage(this, this.getThrower()), 0);
-		}
-		if (this.cultivated) {
-			this.spawnAnimal();
+        } else {
+            if (!this.world.isRemote && this.rand.nextInt(8) == 0) {
+                byte b0 = 1;
 
-		} else {
-			if (!this.world.isRemote && this.rand.nextInt(8) == 0) {
-				byte b0 = 1;
+                if (this.rand.nextInt(32) == 0) {
+                    b0 = 4;
+                }
 
-				if (this.rand.nextInt(32) == 0) {
-					b0 = 4;
-				}
+                for (int i = 0; i < b0; ++i) {
+                    this.spawnAnimal();
 
-				for (int i = 0; i < b0; ++i) {
-					this.spawnAnimal();
+                }
+                for (int j = 0; j < 8; ++j) {
+                    this.world.spawnParticle(EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
+                }
+            }
+        }
 
-				}
-				for (int j = 0; j < 8; ++j) {
-					this.world.spawnParticle(EnumParticleTypes.SNOWBALL, this.posX, this.posY, this.posZ, 0.0D, 0.0D, 0.0D);
-				}
-			}
-		}
+        if (!this.world.isRemote) {
+            this.setDead();
+        }
 
-		if (!this.world.isRemote) {
-			this.setDead();
-		}
+    }
 
-	}
-
-	private void spawnAnimal() {
-		if (getEnumType().mobType != MobType.CHICKEN) {
-			EntityPrehistoric mob = (EntityPrehistoric) getEnumType().invokeClass(world);
-			if (!world.isRemote && mob != null) {
-				mob.setAgeInDays(0);
-				mob.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
-				this.world.spawnEntity(mob);
-				mob.setTamed(true);
-				if (world.getClosestPlayerToEntity(mob, 5) != null) {
-					mob.setOwnerId(world.getClosestPlayerToEntity(mob, 5).getUniqueID());
-				}
-				mob.setGender(new Random().nextBoolean() ? 0 : 1);
-			}
-		} else {
-			EntityAgeable mob = null;
-			switch(getEnumType()){
-				case PARROT:
-					mob = new EntityParrot(world);
-					mob.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(this)), null);
-					break;
-				default:
-					mob = new EntityChicken(world);
-					break;
-			}
-			if (!world.isRemote && mob != null) {
-				mob.setGrowingAge(-24000);
-				mob.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
-				this.world.spawnEntity(mob);
-			}
-		}
-	}
+    private void spawnAnimal() {
+        if (getEnumType().mobType != MobType.CHICKEN) {
+            EntityPrehistoric mob = (EntityPrehistoric) getEnumType().invokeClass(world);
+            if (!world.isRemote && mob != null) {
+                mob.setAgeInDays(0);
+                mob.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
+                this.world.spawnEntity(mob);
+                mob.setTamed(true);
+                if (world.getClosestPlayerToEntity(mob, 5) != null) {
+                    mob.setOwnerId(world.getClosestPlayerToEntity(mob, 5).getUniqueID());
+                }
+                mob.setGender(new Random().nextBoolean() ? 0 : 1);
+            }
+        } else {
+            EntityAgeable mob = null;
+            switch (getEnumType()) {
+                case PARROT:
+                    mob = new EntityParrot(world);
+                    mob.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(this)), null);
+                    break;
+                default:
+                    mob = new EntityChicken(world);
+                    break;
+            }
+            if (!world.isRemote && mob != null) {
+                mob.setGrowingAge(-24000);
+                mob.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, 0.0F);
+                this.world.spawnEntity(mob);
+            }
+        }
+    }
 
 }

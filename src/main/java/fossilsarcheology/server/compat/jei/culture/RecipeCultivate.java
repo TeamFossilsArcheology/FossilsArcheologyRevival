@@ -8,7 +8,7 @@ public class RecipeCultivate {
     private ItemStack output;
     private ItemStack fuel;
 
-    public RecipeCultivate(ItemStack input, ItemStack output, ItemStack fuel){
+    public RecipeCultivate(ItemStack input, ItemStack output, ItemStack fuel) {
         this.input = input;
         this.output = output;
         this.fuel = fuel;

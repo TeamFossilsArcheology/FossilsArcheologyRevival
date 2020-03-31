@@ -35,12 +35,12 @@ public class StructureUtils {
         return true;
     }
 
-    public static boolean canGenOnBlock(World world, BlockPos pos){
+    public static boolean canGenOnBlock(World world, BlockPos pos) {
         IBlockState state = world.getBlockState(pos);
-        if(!state.isSideSolid(world, pos, EnumFacing.UP)){
+        if (!state.isSideSolid(world, pos, EnumFacing.UP)) {
             return false;
         }
-        if(!state.isOpaqueCube()){
+        if (!state.isOpaqueCube()) {
             return false;
         }
         return !world.getBlockState(pos.up()).isOpaqueCube() && !(world.getBlockState(pos.up(2)).getBlock() instanceof BlockLiquid);
@@ -61,7 +61,7 @@ public class StructureUtils {
         return true;
     }
 
-    private static BlockPos balancePos(BlockPos center, BlockPos templateSize){
+    private static BlockPos balancePos(BlockPos center, BlockPos templateSize) {
         BlockPos heightNE = center.offset(EnumFacing.NORTH, templateSize.getZ() / 2).offset(EnumFacing.EAST, templateSize.getZ() / 2);
         BlockPos heightNW = center.offset(EnumFacing.NORTH, templateSize.getZ() / 2).offset(EnumFacing.WEST, templateSize.getZ() / 2);
         BlockPos heightSE = center.offset(EnumFacing.SOUTH, templateSize.getZ() / 2).offset(EnumFacing.EAST, templateSize.getZ() / 2);
@@ -108,7 +108,7 @@ public class StructureUtils {
         }
         Template template = templateManager.getTemplate(server, structure);
         BlockPos center = pos;
-        switch(rotation){
+        switch (rotation) {
             case NONE:
                 center = pos;
                 break;
@@ -163,23 +163,20 @@ public class StructureUtils {
         }
     }
 
-    public static BlockPos getGround(BlockPos pos, World world){
+    public static BlockPos getGround(BlockPos pos, World world) {
         return getGround(pos.getX(), pos.getZ(), world);
     }
 
-    public static BlockPos getGround(int x, int z, World world){
+    public static BlockPos getGround(int x, int z, World world) {
         BlockPos skyPos = new BlockPos(x, world.getHeight(), z);
-        while ((!world.getBlockState(skyPos).isOpaqueCube() || canHeightSkipBlock(skyPos, world)) && skyPos.getY() > 1){
+        while ((!world.getBlockState(skyPos).isOpaqueCube() || canHeightSkipBlock(skyPos, world)) && skyPos.getY() > 1) {
             skyPos = skyPos.down();
         }
         return skyPos;
     }
 
-    private static boolean canHeightSkipBlock(BlockPos pos, World world){
+    private static boolean canHeightSkipBlock(BlockPos pos, World world) {
         IBlockState state = world.getBlockState(pos);
-        if(state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLiquid){
-            return true;
-        }
-        return false;
+        return state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLiquid;
     }
 }

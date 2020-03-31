@@ -45,7 +45,7 @@ public class PathNavigateDinosaur extends PathNavigateGround {
         return super.getPathToEntityLiving(entityIn);
     }
 
-    public boolean getCanSwim(){
+    public boolean getCanSwim() {
         return true;
     }
 

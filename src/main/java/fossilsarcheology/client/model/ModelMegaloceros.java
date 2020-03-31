@@ -8,6 +8,7 @@ import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 
 public class ModelMegaloceros extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer Body;
     public AdvancedModelRenderer LegL1;
     public AdvancedModelRenderer LowerBody;
@@ -72,7 +73,6 @@ public class ModelMegaloceros extends ModelPrehistoric {
     public AdvancedModelRenderer RAntler15;
     public AdvancedModelRenderer RAntler17;
     public AdvancedModelRenderer LegR2;
-    private final ModelAnimator animator;
 
     public ModelMegaloceros() {
         this.textureWidth = 128;

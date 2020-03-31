@@ -147,7 +147,7 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
         int maxTries = rand.nextInt(2);
         int tries = 0;
         int timeout = 0;
-        while(tries < maxTries && timeout < 101){
+        while (tries < maxTries && timeout < 101) {
             timeout++;
             BlockPos tryPos = pos.add(rand.nextInt(10) - 4, rand.nextInt(8) - 4, rand.nextInt(10) - 4);
             if (world.isAirBlock(tryPos.up()) && world.isAirBlock(tryPos.up(2)) && canSustainBush(world.getBlockState(tryPos))) {

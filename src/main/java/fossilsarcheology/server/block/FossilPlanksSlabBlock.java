@@ -11,95 +11,95 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public abstract class FossilPlanksSlabBlock extends FossilSlabBlock {
-	private String name;
+    private String name;
 
-	public FossilPlanksSlabBlock(Block parent, String name, float hardness, float resistance, SoundType soundType) {
-		super(name, hardness, resistance, soundType, Material.WOOD, parent);
-		this.name = name;
-	}
+    public FossilPlanksSlabBlock(Block parent, String name, float hardness, float resistance, SoundType soundType) {
+        super(name, hardness, resistance, soundType, Material.WOOD, parent);
+        this.name = name;
+    }
 
-	protected BlockSlab singleSlab(){
-		if(name.contains("palm")){
-			return FABlockRegistry.PALM_PLANKS_SINGLESLAB;
-		}
-		if(name.contains("calamites")){
-			return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
-		}
-		if(name.contains("sigillaria")){
-			return FABlockRegistry.SIGILLARIA_PLANKS_SINGLESLAB;
-		}
-		if(name.contains("cordaites")){
-			return FABlockRegistry.CORDAITES_PLANKS_SINGLESLAB;
-		}
-		return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
-	}
+    protected BlockSlab singleSlab() {
+        if (name.contains("palm")) {
+            return FABlockRegistry.PALM_PLANKS_SINGLESLAB;
+        }
+        if (name.contains("calamites")) {
+            return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
+        }
+        if (name.contains("sigillaria")) {
+            return FABlockRegistry.SIGILLARIA_PLANKS_SINGLESLAB;
+        }
+        if (name.contains("cordaites")) {
+            return FABlockRegistry.CORDAITES_PLANKS_SINGLESLAB;
+        }
+        return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
+    }
 
-	protected BlockSlab doubleSlab(){
-		if(name.contains("palm")){
-			return FABlockRegistry.PALM_PLANKS_DOUBLESLAB;
-		}
-		if(name.contains("calamites")){
-			return FABlockRegistry.CALAMITES_PLANKS_DOUBLESLAB;
-		}
-		if(name.contains("sigillaria")){
-			return FABlockRegistry.SIGILLARIA_PLANKS_DOUBLESLAB;
-		}
-		if(name.contains("cordaites")){
-			return FABlockRegistry.CORDAITES_PLANKS_DOUBLESLAB;
-		}
-		return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
-	}
+    protected BlockSlab doubleSlab() {
+        if (name.contains("palm")) {
+            return FABlockRegistry.PALM_PLANKS_DOUBLESLAB;
+        }
+        if (name.contains("calamites")) {
+            return FABlockRegistry.CALAMITES_PLANKS_DOUBLESLAB;
+        }
+        if (name.contains("sigillaria")) {
+            return FABlockRegistry.SIGILLARIA_PLANKS_DOUBLESLAB;
+        }
+        if (name.contains("cordaites")) {
+            return FABlockRegistry.CORDAITES_PLANKS_DOUBLESLAB;
+        }
+        return FABlockRegistry.CALAMITES_PLANKS_SINGLESLAB;
+    }
 
 
-	@Override
-	public ItemBlock getItemBlock() {
-		return new FossilSlabBlockItem(this, singleSlab(), doubleSlab());
-	}
+    @Override
+    public ItemBlock getItemBlock() {
+        return new FossilSlabBlockItem(this, singleSlab(), doubleSlab());
+    }
 
-	public static class Double extends FossilPlanksSlabBlock {
-		public Double(Block parent, String name, float hardness, float resistance, SoundType soundType) {
-			super(parent, name, hardness, resistance, soundType);
-		}
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
 
-		@Override
+    public static class Double extends FossilPlanksSlabBlock {
+        public Double(Block parent, String name, float hardness, float resistance, SoundType soundType) {
+            super(parent, name, hardness, resistance, soundType);
+        }
+
+        @Override
         public boolean isDouble() {
-			return true;
-		}
+            return true;
+        }
 
-		@Override
-		public ItemBlock getItemBlock() {
-			return new FossilSlabBlockItem(this, singleSlab(), doubleSlab());
-		}
+        @Override
+        public ItemBlock getItemBlock() {
+            return new FossilSlabBlockItem(this, singleSlab(), doubleSlab());
+        }
 
-		@Override
-		public Item getSlabItem() {
-			return Item.getItemFromBlock(singleSlab());
-		}
-	}
+        @Override
+        public Item getSlabItem() {
+            return Item.getItemFromBlock(singleSlab());
+        }
+    }
 
-	@Override
-	public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		return true;
-	}
+    public static class Half extends FossilPlanksSlabBlock {
+        public Half(Block parent, String name, float hardness, float resistance, SoundType soundType) {
+            super(parent, name, hardness, resistance, soundType);
+        }
 
-	public static class Half extends FossilPlanksSlabBlock {
-		public Half(Block parent, String name, float hardness, float resistance, SoundType soundType) {
-			super(parent, name, hardness, resistance, soundType);
-		}
-
-		@Override
+        @Override
         public boolean isDouble() {
-			return false;
-		}
+            return false;
+        }
 
-		@Override
-		public ItemBlock getItemBlock() {
-			return new FossilSlabBlockItem(this, singleSlab(), doubleSlab());
-		}
+        @Override
+        public ItemBlock getItemBlock() {
+            return new FossilSlabBlockItem(this, singleSlab(), doubleSlab());
+        }
 
-		@Override
-		public Item getSlabItem() {
-			return Item.getItemFromBlock(singleSlab());
-		}
-	}
+        @Override
+        public Item getSlabItem() {
+            return Item.getItemFromBlock(singleSlab());
+        }
+    }
 }

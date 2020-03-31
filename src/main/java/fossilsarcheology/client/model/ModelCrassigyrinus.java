@@ -9,6 +9,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.client.renderer.GlStateManager;
 
 public class ModelCrassigyrinus extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer Body;
     public AdvancedModelRenderer Tail1;
     public AdvancedModelRenderer LeftArm;
@@ -26,7 +27,6 @@ public class ModelCrassigyrinus extends ModelPrehistoric {
     public AdvancedModelRenderer Snout1;
     public AdvancedModelRenderer shape31;
     public AdvancedModelRenderer Snout2;
-    private final ModelAnimator animator;
 
     public ModelCrassigyrinus() {
         this.textureWidth = 64;
@@ -171,14 +171,14 @@ public class ModelCrassigyrinus extends ModelPrehistoric {
         this.chainSwing(lowerBodyParts, speed_swim, degree_swim, -3, f, f1);
         this.chainSwing(tailParts, speed_idle, degree_idle, -3, f2, 1);
         float sleepProgress = prehistoric.sleepProgress;
-        this.sitAnimationRotation(Body, sleepProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Tail1, sleepProgress, 0, (float)Math.toRadians(35), 0);
-        this.sitAnimationRotation(Tail2, sleepProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Head, sleepProgress, 0, (float)Math.toRadians(-35), (float)Math.toRadians(10));
+        this.sitAnimationRotation(Body, sleepProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Tail1, sleepProgress, 0, (float) Math.toRadians(35), 0);
+        this.sitAnimationRotation(Tail2, sleepProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Head, sleepProgress, 0, (float) Math.toRadians(-35), (float) Math.toRadians(10));
         float sitProgress = prehistoric.sitProgress;
-        this.sitAnimationRotation(Body, sitProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(Tail1, sitProgress, 0, (float)Math.toRadians(35), 0);
-        this.sitAnimationRotation(Tail2, sitProgress, 0, (float)Math.toRadians(25), 0);
-        this.sitAnimationRotation(shape22, sitProgress, 0, (float)Math.toRadians(25), 0);
+        this.sitAnimationRotation(Body, sitProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(Tail1, sitProgress, 0, (float) Math.toRadians(35), 0);
+        this.sitAnimationRotation(Tail2, sitProgress, 0, (float) Math.toRadians(25), 0);
+        this.sitAnimationRotation(shape22, sitProgress, 0, (float) Math.toRadians(25), 0);
     }
 }

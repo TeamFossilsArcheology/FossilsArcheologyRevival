@@ -12,10 +12,6 @@ import java.util.Map;
 import java.util.UUID;
 
 public class FossilClientPlayerEvent {
-    public ResourceLocation DEVELOPER_TEXTURE = new ResourceLocation("fossil", "textures/model/developer_cape.png");
-    public ResourceLocation CONTRIBUTOR_TEXTURE = new ResourceLocation("fossil", "textures/model/contributor_cape.png");
-    public ResourceLocation DEVELOPER_ELYTRA_TEXTURE = new ResourceLocation("fossil", "textures/model/developer_elytra.png");
-    public ResourceLocation CONTRIBUTOR_ELYTRA_TEXTURE = new ResourceLocation("fossil", "textures/model/contributor_elytra.png");
     public static final UUID[] DEV_UUIDS = new UUID[]{
             /* tyranno66 */UUID.fromString("04e6d7f5-b587-4e4f-8ce0-b210d368a79e"),
             /* Raptorfarian */UUID.fromString("0ed918c8-d612-4360-b711-cd415671356f"),
@@ -42,6 +38,10 @@ public class FossilClientPlayerEvent {
             /*Alpha_Hyperion*/UUID.fromString("13d60612-a851-4945-bf88-4183dd281d7a"),
             /*Sargeant_789575*/UUID.fromString("d243cdf3-fb0f-4fbb-a4a7-6c894a440354"),
             /*Cactus_King9*/UUID.fromString("4cb62b58-3a82-4846-bf9d-5817eabfd22b")};
+    public ResourceLocation DEVELOPER_TEXTURE = new ResourceLocation("fossil", "textures/model/developer_cape.png");
+    public ResourceLocation CONTRIBUTOR_TEXTURE = new ResourceLocation("fossil", "textures/model/contributor_cape.png");
+    public ResourceLocation DEVELOPER_ELYTRA_TEXTURE = new ResourceLocation("fossil", "textures/model/developer_elytra.png");
+    public ResourceLocation CONTRIBUTOR_ELYTRA_TEXTURE = new ResourceLocation("fossil", "textures/model/contributor_elytra.png");
 
     @SubscribeEvent
     public void playerRender(RenderPlayerEvent.Pre event) {

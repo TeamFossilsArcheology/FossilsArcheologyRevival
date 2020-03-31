@@ -8,6 +8,7 @@ import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 
 public class ModelMegalograptus extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer head;
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer leftLeg3_1;
@@ -31,7 +32,6 @@ public class ModelMegalograptus extends ModelPrehistoric {
     public AdvancedModelRenderer rightPincer1_2;
     public AdvancedModelRenderer rightPincerProngs1_1;
     public AdvancedModelRenderer rightPincerProngs1_2;
-    private final ModelAnimator animator;
 
     public ModelMegalograptus() {
         this.textureWidth = 64;
@@ -189,19 +189,19 @@ public class ModelMegalograptus extends ModelPrehistoric {
         if (((EntityPrehistoric) entity).isSkeleton() || ((EntityPrehistoric) entity).isAIDisabled()) {
             return;
         }
-        EntityMegalograptus prehistoric = (EntityMegalograptus)entity;
+        EntityMegalograptus prehistoric = (EntityMegalograptus) entity;
         float speed_swim = 0.9F;
         float speed_walk = 1.7F;
         float speed_idle = prehistoric.isSleeping() ? 0.2F : 0.4F;
         float degree_idle = prehistoric.isSleeping() ? 0.2F : 0.7F;
         float degree_swim = 0.5F;
         float degree_walk = 0.75F;
-        if(prehistoric.swimProgress > 0) {
+        if (prehistoric.swimProgress > 0) {
             this.chainWave(tailParts, speed_swim, degree_swim * 0.35F, 0, f, f1);
             this.walk(head, speed_swim, degree_swim * 0.15F, false, 0, 0, f, f1);
             this.chainFlap(leftLegs, speed_swim, degree_swim * 0.35F, 3, f, f1);
             this.chainFlap(rightLegs, speed_swim, degree_swim * -0.35F, 3, f, f1);
-        }else{
+        } else {
             this.chainSwing(leftLegs, speed_walk, degree_walk * 0.35F, 3, f, f1);
             this.chainSwing(rightLegs, speed_walk, degree_walk * -0.35F, 3, f, f1);
 
@@ -212,12 +212,12 @@ public class ModelMegalograptus extends ModelPrehistoric {
         this.swing(rightPincer, speed_idle, degree_idle * 0.15F, false, 1, 0, f2, 1);
         this.chainSwing(tailParts, speed_idle * 0.5F, degree_idle * 0.15F, 1, f2, 1);
         float sleepProgress = prehistoric.sleepProgress;
-        this.sitAnimationRotation(tail, sleepProgress, 0, (float)Math.toRadians(16), 0);
-        this.sitAnimationRotation(tail, sleepProgress, 0, (float)Math.toRadians(21), 0);
-        this.sitAnimationRotation(rightLeg3_1, sleepProgress, 0, (float)Math.toRadians(41), 0);
-        this.sitAnimationRotation(leftLeg3_1, sleepProgress, 0, (float)Math.toRadians(-41), 0);
-        this.sitAnimationRotation(rightPincer1_1, sleepProgress, 0, (float)Math.toRadians(-55), 0);
-        this.sitAnimationRotation(leftPincer1_1, sleepProgress, 0, (float)Math.toRadians(55), 0);
+        this.sitAnimationRotation(tail, sleepProgress, 0, (float) Math.toRadians(16), 0);
+        this.sitAnimationRotation(tail, sleepProgress, 0, (float) Math.toRadians(21), 0);
+        this.sitAnimationRotation(rightLeg3_1, sleepProgress, 0, (float) Math.toRadians(41), 0);
+        this.sitAnimationRotation(leftLeg3_1, sleepProgress, 0, (float) Math.toRadians(-41), 0);
+        this.sitAnimationRotation(rightPincer1_1, sleepProgress, 0, (float) Math.toRadians(-55), 0);
+        this.sitAnimationRotation(leftPincer1_1, sleepProgress, 0, (float) Math.toRadians(55), 0);
 
     }
 }

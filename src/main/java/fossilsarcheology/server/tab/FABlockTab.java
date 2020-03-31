@@ -8,18 +8,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class FABlockTab extends CreativeTabs {
-	public FABlockTab() {
-		super("Fossil Blocks");
-	}
+    public FABlockTab() {
+        super("Fossil Blocks");
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ItemStack createIcon() {
-		return new ItemStack(FABlockRegistry.WORKTABLE_ACTIVE);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemStack createIcon() {
+        return new ItemStack(FABlockRegistry.WORKTABLE_ACTIVE);
+    }
 
-	@Override
-	public String getTranslationKey() {
-		return Localizations.TAB_BLOCKS;
-	}
+    @Override
+    public String getTranslationKey() {
+        return Localizations.TAB_BLOCKS;
+    }
 }

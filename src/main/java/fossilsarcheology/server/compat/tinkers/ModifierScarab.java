@@ -19,7 +19,7 @@ public class ModifierScarab extends ToolModifier {
     public void applyEffect(NBTTagCompound rootCompound, NBTTagCompound modifierTag) {
         ToolNBT data = TagUtil.getToolStats(rootCompound);
         data.durability += 1000;
-        while(data.harvestLevel < HarvestLevels.COBALT){
+        while (data.harvestLevel < HarvestLevels.COBALT) {
             data.harvestLevel++;
 
         }

@@ -39,7 +39,7 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
         this.ridingXZ = -0.2F;
     }
 
-    public float getTargetScale(){
+    public float getTargetScale() {
         return 2.0F;
     }
 
@@ -209,7 +209,7 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
                     return;
                 } else {
                     if (passenger instanceof EntityLivingBase) {
-                        riddenByEntity.attackEntityFrom(DamageSource.causeMobDamage(this), (float)getStrongAttackPower());
+                        riddenByEntity.attackEntityFrom(DamageSource.causeMobDamage(this), (float) getStrongAttackPower());
                     }
                     riddenByEntity.dismountRidingEntity();
                     this.onKillEntity((EntityLivingBase) riddenByEntity);
@@ -219,8 +219,8 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
             rotationYaw = renderYawOffset;
             float radius = 0.35F * (0.7F * getAgeScale()) * -3;
             float angle = (0.01745329251F * this.renderYawOffset) + 3.15F + (modTick_1 * 1.75F) * 0.05F;
-            double extraX = (double) (radius * MathHelper.sin((float) (Math.PI + angle)));
-            double extraZ = (double) (radius * MathHelper.cos(angle));
+            double extraX = radius * MathHelper.sin((float) (Math.PI + angle));
+            double extraZ = radius * MathHelper.cos(angle);
             double extraY = 0.065F * (getAgeScale());
             riddenByEntity.setPosition(this.posX + extraX, this.posY + extraY, this.posZ + extraZ);
         }

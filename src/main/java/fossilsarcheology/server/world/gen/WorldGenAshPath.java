@@ -30,8 +30,8 @@ public class WorldGenAshPath extends WorldGenerator {
             int i = rand.nextInt(this.basePathWidth) + 2;
             int j = 1;
 
-            for (int k = position.getX() - i - (int)(rand.nextFloat() * i); k <= position.getX() + i + (int)(rand.nextFloat() * i); ++k) {
-                for (int l = position.getZ() - i - (int)(rand.nextFloat() * i); l <= position.getZ() + i + (int)(rand.nextFloat() * i); ++l) {
+            for (int k = position.getX() - i - (int) (rand.nextFloat() * i); k <= position.getX() + i + (int) (rand.nextFloat() * i); ++k) {
+                for (int l = position.getZ() - i - (int) (rand.nextFloat() * i); l <= position.getZ() + i + (int) (rand.nextFloat() * i); ++l) {
                     int i1 = k - position.getX();
                     int j1 = l - position.getZ();
 
@@ -41,14 +41,14 @@ public class WorldGenAshPath extends WorldGenerator {
                             Block block = worldIn.getBlockState(blockpos).getBlock();
                             if (block == Blocks.DIRT || block == FABlockRegistry.VOLCANIC_ROCK || block == Blocks.OBSIDIAN) {
                                 float chance = rand.nextFloat();
-                                if(magma){
+                                if (magma) {
                                     worldIn.setBlockState(blockpos, Blocks.MAGMA.getDefaultState(), 2);
-                                }else{
-                                    if(chance < 0.8F){
+                                } else {
+                                    if (chance < 0.8F) {
                                         worldIn.setBlockState(blockpos, this.block.getDefaultState(), 2);
-                                    }else if (chance < 0.85F){
+                                    } else if (chance < 0.85F) {
                                         worldIn.setBlockState(blockpos, FABlockRegistry.FOSSIL.getDefaultState(), 2);
-                                    }else{
+                                    } else {
                                         worldIn.setBlockState(blockpos, Blocks.STONE.getDefaultState(), 2);
                                     }
                                 }

@@ -89,8 +89,9 @@ public class TimeMachineBlock extends BlockContainer implements DefaultRenderedI
         TileEntity entity = world.getTileEntity(pos);
         if (entity == null) {
             return;
-        }if (entity instanceof TileEntityTimeMachine) {
-            ItemStack stack = ((TileEntityTimeMachine)entity).getStackInSlot(0);
+        }
+        if (entity instanceof TileEntityTimeMachine) {
+            ItemStack stack = ((TileEntityTimeMachine) entity).getStackInSlot(0);
             if (!stack.isEmpty()) {
                 InventoryHelper.spawnItemStack(world, pos.getX(), pos.getY(), pos.getZ(), stack);
             }

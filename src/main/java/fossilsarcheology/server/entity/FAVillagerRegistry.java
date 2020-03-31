@@ -27,7 +27,7 @@ public class FAVillagerRegistry {
     public static final VillagerRegistry.VillagerProfession ARCHEOLOGIST_PROFESSION = new VillagerRegistry.VillagerProfession("fossil:archeologist", "fossil:textures/model/archaeologist.png", "fossil:textures/model/archaeologist_zombie.png");
     public static final VillagerRegistry.VillagerProfession PALAEONTOLOGIST_PROFESSION = new VillagerRegistry.VillagerProfession("fossil:palaeontologist", "fossil:textures/model/palaeontologist.png", "fossil:textures/model/palaeontologist_zombie.png");
 
-    public static void register(){
+    public static void register() {
         VillagerRegistry.VillagerCareer archeoCareer = new VillagerRegistry.VillagerCareer(ARCHEOLOGIST_PROFESSION, "archeologist");
         archeoCareer.addTrade(1, new EntityVillager.ListItemForEmeralds(FAItemRegistry.RELIC_SCRAP, new EntityVillager.PriceInfo(1, 6)));
         archeoCareer.addTrade(1, new EntityVillager.EmeraldForItems(FAItemRegistry.POTTERY_SHARD, new EntityVillager.PriceInfo(1, 3)));
@@ -82,29 +82,26 @@ public class FAVillagerRegistry {
         VillagerRegistry.instance().registerVillageCreationHandler(new VillagePaleontologistHouseCreator());
     }
 
-    public static class ListEnchantedBookForEmeralds implements EntityVillager.ITradeList
-    {
+    public static class ListEnchantedBookForEmeralds implements EntityVillager.ITradeList {
         public ItemStack enchantedItemStack;
         public EntityVillager.PriceInfo priceInfo;
         private Enchantment enchantment;
-        public ListEnchantedBookForEmeralds(Enchantment enchant, EntityVillager.PriceInfo p_i45814_2_)
-        {
+
+        public ListEnchantedBookForEmeralds(Enchantment enchant, EntityVillager.PriceInfo p_i45814_2_) {
             this.enchantedItemStack = new ItemStack(Items.ENCHANTED_BOOK);
             this.priceInfo = p_i45814_2_;
             this.enchantment = enchant;
         }
 
-        public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random)
-        {
+        public void addMerchantRecipe(IMerchant merchant, MerchantRecipeList recipeList, Random random) {
             int i = 1;
 
-            if (this.priceInfo != null)
-            {
+            if (this.priceInfo != null) {
                 i = this.priceInfo.getPrice(random);
             }
 
             ItemStack itemstack = new ItemStack(Items.EMERALD, i, 0);
-            ItemStack soldBook =  this.enchantedItemStack.copy();
+            ItemStack soldBook = this.enchantedItemStack.copy();
             ItemEnchantedBook.addEnchantment(soldBook, new EnchantmentData(enchantment, 1 + random.nextInt(2)));
             recipeList.add(new MerchantRecipe(itemstack, soldBook));
         }

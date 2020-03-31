@@ -34,7 +34,8 @@ public class EntityTiktaalik extends EntityPrehistoricSwimming {
         this.pediaScale = 31;
     }
 
-    public void applyEntityCollision(Entity entityIn){}
+    public void applyEntityCollision(Entity entityIn) {
+    }
 
     public AxisAlignedBB getAttackBounds() {
         float size = this.getRenderSizeModifier() * 0.25F;

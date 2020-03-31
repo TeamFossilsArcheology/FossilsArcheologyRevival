@@ -10,18 +10,19 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 
 public class DNAItem extends PrehistoricEntityItem implements DefaultRenderedItem {
-	public static final DNATrigger DNA_TRIGGER = (DNATrigger) CriteriaTriggers.register(new DNATrigger());
-	public DNAItem(PrehistoricEntityType type) {
-		super("dna", type);
-	}
+    public static final DNATrigger DNA_TRIGGER = CriteriaTriggers.register(new DNATrigger());
 
-	public boolean isBugDNA() {
-		return type == PrehistoricEntityType.NAUTILUS || type == PrehistoricEntityType.MEGANEURA || type == PrehistoricEntityType.ARTHROPLEURA;
-	}
+    public DNAItem(PrehistoricEntityType type) {
+        super("dna", type);
+    }
 
-	public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
-		if(!worldIn.isRemote && entityIn instanceof EntityPlayerMP){
-			DNA_TRIGGER.trigger((EntityPlayerMP)entityIn);
-		}
-	}
+    public boolean isBugDNA() {
+        return type == PrehistoricEntityType.NAUTILUS || type == PrehistoricEntityType.MEGANEURA || type == PrehistoricEntityType.ARTHROPLEURA;
+    }
+
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (!worldIn.isRemote && entityIn instanceof EntityPlayerMP) {
+            DNA_TRIGGER.trigger((EntityPlayerMP) entityIn);
+        }
+    }
 }

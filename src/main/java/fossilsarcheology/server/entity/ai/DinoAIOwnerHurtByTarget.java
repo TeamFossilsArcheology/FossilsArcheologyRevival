@@ -13,8 +13,8 @@ public class DinoAIOwnerHurtByTarget extends EntityAIOwnerHurtByTarget {
         this.prehistoric = prehistoric;
     }
 
-    public boolean shouldExecute(){
-        if(prehistoric.isChild() || prehistoric.aiResponseType() == PrehistoricEntityTypeAI.Response.SCARED){
+    public boolean shouldExecute() {
+        if (prehistoric.isChild() || prehistoric.aiResponseType() == PrehistoricEntityTypeAI.Response.SCARED) {
             return false;
         }
         return super.shouldExecute();

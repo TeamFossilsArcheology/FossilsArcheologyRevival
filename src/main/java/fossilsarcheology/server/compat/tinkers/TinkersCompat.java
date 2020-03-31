@@ -21,15 +21,16 @@ import slimeknights.tconstruct.tools.traits.TraitSlimey;
 import static slimeknights.tconstruct.library.utils.HarvestLevels.STONE;
 
 public class TinkersCompat {
-    private static final TinkersCompat INSTANCE = new TinkersCompat();
-    private static boolean registered = false;
     public static final Material ancientMetal = new Material("ancient_metal", 0XE01800);
     public static final Material tarSlime = new Material("tar_slime", 0X222222);
     public static final AbstractTrait lightningTrait = new TraitLightning();
     public static final AbstractTrait tarSlimeTrait = new TraitSlimey("tar", EntityTarSlime.class);
+    private static final TinkersCompat INSTANCE = new TinkersCompat();
     public static AbstractTrait fossilModifier = new ModifierArcheology(true);
     public static AbstractTrait archeologistModifier = new ModifierArcheology(false);
     public static ModifierScarab scarabModifier = new ModifierScarab();
+    private static boolean registered = false;
+
     static void register() {
         if (!registered) {
             registered = true;
@@ -85,10 +86,10 @@ public class TinkersCompat {
         scarabModifier.addItem(FAItemRegistry.SCARAB_GEM);
         scarabModifier.addItem("gemScarab");
         scarabModifier.addRecipeMatch(new RecipeMatch.ItemCombination(1, new ItemStack(FAItemRegistry.SCARAB_GEM)));
-       }
+    }
 
     public static void post() {
-        TinkerRegistry.registerTableCasting(new CastingRecipe(new ItemStack(FAItemRegistry.TAR_FOSSIL),  RecipeMatch.of("fossil"), FAFluidRegistry.TAR_FLUID, Material.VALUE_Nugget, true, false));
+        TinkerRegistry.registerTableCasting(new CastingRecipe(new ItemStack(FAItemRegistry.TAR_FOSSIL), RecipeMatch.of("fossil"), FAFluidRegistry.TAR_FLUID, Material.VALUE_Nugget, true, false));
         TinkerRegistry.registerTableCasting(new ItemStack(FAItemRegistry.TARDROP), TinkerSmeltery.castNugget, FAFluidRegistry.TAR_FLUID, Material.VALUE_Nugget);
     }
 }

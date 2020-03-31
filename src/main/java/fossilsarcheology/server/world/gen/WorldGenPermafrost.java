@@ -14,8 +14,8 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import java.util.Random;
 
 public class WorldGenPermafrost extends WorldGenerator {
-    private final IBlockState oreBlock;
     private static final IBlockState ICED_STONE = FABlockRegistry.ICED_STONE.getDefaultState();
+    private final IBlockState oreBlock;
     private final int numberOfBlocks;
     private final Predicate<IBlockState> predicate;
 
@@ -31,12 +31,12 @@ public class WorldGenPermafrost extends WorldGenerator {
 
     public boolean generate(World worldIn, Random rand, BlockPos position) {
         float f = rand.nextFloat() * (float) Math.PI;
-        double d0 = (double) ((float) (position.getX() + 8) + MathHelper.sin(f) * (float) this.numberOfBlocks / 8.0F);
-        double d1 = (double) ((float) (position.getX() + 8) - MathHelper.sin(f) * (float) this.numberOfBlocks / 8.0F);
-        double d2 = (double) ((float) (position.getZ() + 8) + MathHelper.cos(f) * (float) this.numberOfBlocks / 8.0F);
-        double d3 = (double) ((float) (position.getZ() + 8) - MathHelper.cos(f) * (float) this.numberOfBlocks / 8.0F);
-        double d4 = (double) (position.getY() + rand.nextInt(3) - 2);
-        double d5 = (double) (position.getY() + rand.nextInt(3) - 2);
+        double d0 = (float) (position.getX() + 8) + MathHelper.sin(f) * (float) this.numberOfBlocks / 8.0F;
+        double d1 = (float) (position.getX() + 8) - MathHelper.sin(f) * (float) this.numberOfBlocks / 8.0F;
+        double d2 = (float) (position.getZ() + 8) + MathHelper.cos(f) * (float) this.numberOfBlocks / 8.0F;
+        double d3 = (float) (position.getZ() + 8) - MathHelper.cos(f) * (float) this.numberOfBlocks / 8.0F;
+        double d4 = position.getY() + rand.nextInt(3) - 2;
+        double d5 = position.getY() + rand.nextInt(3) - 2;
 
         for (int i = 0; i < this.numberOfBlocks; ++i) {
             float f1 = (float) i / (float) this.numberOfBlocks;
@@ -69,10 +69,10 @@ public class WorldGenPermafrost extends WorldGenerator {
 
                                     IBlockState state = worldIn.getBlockState(blockpos);
                                     if (state.getBlock().isReplaceableOreGen(state, worldIn, blockpos, this.predicate)) {
-                                        if(this.oreBlock.getBlock() == FABlockRegistry.PERMAFROST){
-                                            for(EnumFacing facing : EnumFacing.values()){
+                                        if (this.oreBlock.getBlock() == FABlockRegistry.PERMAFROST) {
+                                            for (EnumFacing facing : EnumFacing.values()) {
                                                 IBlockState state2 = worldIn.getBlockState(blockpos.offset(facing));
-                                                if(state2.getBlock().isReplaceableOreGen(state2, worldIn, blockpos.offset(facing), this.predicate)){
+                                                if (state2.getBlock().isReplaceableOreGen(state2, worldIn, blockpos.offset(facing), this.predicate)) {
                                                     worldIn.setBlockState(blockpos.offset(facing), ICED_STONE, 2);
                                                 }
                                             }
@@ -96,7 +96,7 @@ public class WorldGenPermafrost extends WorldGenerator {
 
         public boolean apply(IBlockState p_apply_1_) {
             if (p_apply_1_ != null && p_apply_1_.getBlock() == Blocks.STONE) {
-                BlockStone.EnumType blockstone$enumtype = (BlockStone.EnumType) p_apply_1_.getValue(BlockStone.VARIANT);
+                BlockStone.EnumType blockstone$enumtype = p_apply_1_.getValue(BlockStone.VARIANT);
                 return blockstone$enumtype.isNatural();
             } else {
                 return false;

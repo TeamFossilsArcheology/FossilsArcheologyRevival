@@ -56,7 +56,10 @@ public class FourTallFlowerBlock extends BlockBush implements DefaultRenderedIte
         return AABB;
     }
 
-    @Override public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity) { return true; }
+    @Override
+    public boolean isLadder(IBlockState state, IBlockAccess world, BlockPos pos, EntityLivingBase entity) {
+        return true;
+    }
 
     @Override
     public boolean canBlockStay(World worldIn, BlockPos pos, IBlockState state) {
@@ -117,7 +120,7 @@ public class FourTallFlowerBlock extends BlockBush implements DefaultRenderedIte
         int maxTries = rand.nextInt(3);
         int tries = 0;
         int timeout = 0;
-        while(tries < maxTries && timeout < 101){
+        while (tries < maxTries && timeout < 101) {
             timeout++;
             BlockPos tryPos = pos.add(rand.nextInt(10) - 4, rand.nextInt(8) - 4, rand.nextInt(10) - 4);
             if (world.isAirBlock(tryPos.up()) && world.isAirBlock(tryPos.up(2)) && world.isAirBlock(tryPos.up(3)) && world.isAirBlock(tryPos.up(4)) && canSustainBush(world.getBlockState(tryPos))) {
@@ -141,7 +144,7 @@ public class FourTallFlowerBlock extends BlockBush implements DefaultRenderedIte
                     worldIn.destroyBlock(pos.up(i), false);
                 }
             }
-        }else{
+        } else {
             worldIn.destroyBlock(pos, false);
         }
         super.onBlockHarvested(worldIn, pos, state, player);

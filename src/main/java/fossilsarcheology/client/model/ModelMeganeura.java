@@ -9,6 +9,7 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
 
 public class ModelMeganeura extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer Head;
     public AdvancedModelRenderer LeftEye;
     public AdvancedModelRenderer LeftPincer;
@@ -35,7 +36,6 @@ public class ModelMeganeura extends ModelPrehistoric {
     public AdvancedModelRenderer RightFoot1;
     public AdvancedModelRenderer RightFoot2;
     public AdvancedModelRenderer RightFoot3;
-    private final ModelAnimator animator;
 
     public ModelMeganeura() {
         this.textureWidth = 128;
@@ -221,7 +221,7 @@ public class ModelMeganeura extends ModelPrehistoric {
         AdvancedModelRenderer[] rightWing = {RightTopWing, RightBottomWing};
         AdvancedModelRenderer[] leftLegs = {LeftLeg1, LeftLeg2, LeftLeg3};
         AdvancedModelRenderer[] rightLegs = {RightLeg1, RightLeg2, RightLeg3};
-        EntityMeganeura meganeura = (EntityMeganeura)entity;
+        EntityMeganeura meganeura = (EntityMeganeura) entity;
         float speed_fly = 1.1F;
         float speed_walk = 0.4F;
         float degree_fly = 1F;
@@ -229,10 +229,10 @@ public class ModelMeganeura extends ModelPrehistoric {
         if (((EntityPrehistoric) entity).isSkeleton() || ((EntityPrehistoric) entity).isAIDisabled()) {
             return;
         }
-        if(meganeura.flyProgress == 0){
+        if (meganeura.flyProgress == 0) {
             this.chainWave(leftLegs, speed_walk, degree_walk, 1, f, f1);
             this.chainWave(rightLegs, speed_walk, degree_walk, 1, f, f1);
-        }else{
+        } else {
             this.chainFlap(leftWing, speed_fly, -degree_fly * 0.75F, 1, f2, 1);
             this.chainFlap(rightWing, speed_fly, degree_fly * 0.75F, 1, f2, 1);
             this.chainWave(leftLegs, speed_fly * 0.5F, degree_fly * -0.5F, 1, f2, 1);

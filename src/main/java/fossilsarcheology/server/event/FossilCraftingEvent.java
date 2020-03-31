@@ -9,7 +9,7 @@ public class FossilCraftingEvent {
 
     @SubscribeEvent
     public void onFurnaceFuelEvent(FurnaceFuelBurnTimeEvent event) {
-        if(event.getItemStack().getItem() == Item.getItemFromBlock(FABlockRegistry.PALM_SAPLING)){
+        if (event.getItemStack().getItem() == Item.getItemFromBlock(FABlockRegistry.PALM_SAPLING)) {
             event.setBurnTime(100);
         }
     }

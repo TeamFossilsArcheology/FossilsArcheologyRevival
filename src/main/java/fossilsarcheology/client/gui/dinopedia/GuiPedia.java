@@ -48,10 +48,11 @@ public class GuiPedia extends GuiScreen {
     private static final ResourceLocation moods = new ResourceLocation(Revival.MODID, "textures/gui/dinopedia_mood.png");
     public final int xGui = 390;
     public final int yGui = 320;
+    public final int bookPagesTotal = 1;
+    private final FoodSorter sorter;
     public ButtonDinopediaPage buttonNextPage;
     public ButtonDinopediaPage buttonPreviousPage;
     public int bookPages;
-    public final int bookPagesTotal = 1;
     public ButtonDinopedia buttonIcon;
     protected int xSize = 176;
     protected int ySize = 166;
@@ -63,8 +64,8 @@ public class GuiPedia extends GuiScreen {
     private RenderItem itemRender;
     private float mouseX;
     private float mouseY;
-    private final FoodSorter sorter;
     private String renderText = "";
+
     public GuiPedia() {
         super();
         left = 0;
@@ -90,7 +91,7 @@ public class GuiPedia extends GuiScreen {
         GlStateManager.rotate(-90.0F, 0.0F, 1.0F, 0.0F);
         RenderHelper.enableStandardItemLighting();
         GlStateManager.rotate(-135.0F, 0.0F, 0.0F, 0.0F);
-        GlStateManager.rotate(-((float) Math.atan((double) (renderPitch / 40.0F))) * 20.0F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(-((float) Math.atan(renderPitch / 40.0F)) * 20.0F, 1.0F, 0.0F, 0.0F);
         GlStateManager.translate(0.0F, (float) mob.getYOffset(), 0.0F);
         Minecraft.getMinecraft().getRenderManager().playerViewY = 180.0F;
         if (mob instanceof EntityPrehistoric) {
@@ -123,8 +124,8 @@ public class GuiPedia extends GuiScreen {
         RenderHelper.enableStandardItemLighting();
         GlStateManager.rotate(-135.0F, 0.0F, 0.0F, 0.0F);
         GlStateManager.rotate(-((float) Math.atan(renderPitch / 40.0F)) * 20.0F, 1.0F, 0.0F, 0.0F);
-        mob.rotationYaw = (float) Math.atan((double) (renderYaw / 40.0F)) * 40.0F;
-        mob.rotationPitch = -((float) Math.atan((double) (renderPitch / 40.0F))) * 20.0F;
+        mob.rotationYaw = (float) Math.atan(renderYaw / 40.0F) * 40.0F;
+        mob.rotationPitch = -((float) Math.atan(renderPitch / 40.0F)) * 20.0F;
         GlStateManager.translate(0.0F, (float) mob.getYOffset(), 0.0F);
         GlStateManager.rotate(mob.ticksExisted, 0.0F, 1.0F, 0.0F);
         Minecraft.getMinecraft().getRenderManager().playerViewY = 180.0F;
@@ -206,7 +207,7 @@ public class GuiPedia extends GuiScreen {
                 GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
                 net.minecraft.client.gui.FontRenderer font = null;
                 ItemModelMesher mesher = Minecraft.getMinecraft().getRenderItem().getItemModelMesher();
-                if(mesher instanceof ItemModelMesherForge && ((ItemModelMesherForge) mesher).getLocation(item) == ModelBakery.MODEL_MISSING){
+                if (mesher instanceof ItemModelMesherForge && ((ItemModelMesherForge) mesher).getLocation(item) == ModelBakery.MODEL_MISSING) {
                     return false;
                 }
                 this.itemRender.renderItemAndEffectIntoGUI(item, x, y);
@@ -242,9 +243,9 @@ public class GuiPedia extends GuiScreen {
 
     @Override
     public void drawScreen(int p_73863_1_, int p_73863_2_, float p_73863_3_) {
-        if(mc != null && mc.world != null) {
+        if (mc != null && mc.world != null) {
             this.drawDefaultBackground();
-        }else{
+        } else {
             return;
         }
         int k = this.guiLeft;
@@ -269,7 +270,7 @@ public class GuiPedia extends GuiScreen {
         GlStateManager.enableLighting();
         GlStateManager.enableDepth();
         RenderHelper.enableStandardItemLighting();
-        if(!renderText.isEmpty()){
+        if (!renderText.isEmpty()) {
             this.drawHoveringText(Lists.newArrayList(renderText), p_73863_1_, p_73863_2_, fontRenderer);
         }
     }
@@ -283,13 +284,13 @@ public class GuiPedia extends GuiScreen {
             if (Revival.PEDIA_OBJECT instanceof EntityAnimal) {
                 FossilsMammalProperties properties = EntityPropertiesHandler.INSTANCE.getProperties((EntityAnimal) Revival.PEDIA_OBJECT, FossilsMammalProperties.class);
                 if (properties != null) {
-                    if(properties.isPregnant()){
+                    if (properties.isPregnant()) {
                         flag = true;
                         EntityAnimal entity = (EntityAnimal) Revival.PEDIA_OBJECT;
                         String s1 = I18n.format(entity.getName());
                         String s2 = "prehistoric.pregnant";
                         int quot = (int) Math.floor(((float) properties.embryoProgress / (float) (Revival.CONFIG_OPTIONS.pregnancyTime + 1) * 100.0F));
-                        String s3 = I18n.format("prehistoric.pregnantTime") + " " + String.valueOf(quot) + "%";
+                        String s3 = I18n.format("prehistoric.pregnantTime") + " " + quot + "%";
                         printStringXY(s3, (-this.fontRenderer.getStringWidth(s3) / 2) + 100, 110, 157, 126, 103);
                         GlStateManager.scale(1.5F, 1.5F, 1.5F);
                         printStringXY(I18n.format(s2) + " " + entity.getName(), (-this.fontRenderer.getStringWidth(I18n.format(s2) + entity.getName()) / 2) + 65, 60, 66, 48, 36);
@@ -343,7 +344,7 @@ public class GuiPedia extends GuiScreen {
         String translatePath = "dinopedia/" + Minecraft.getMinecraft().gameSettings.language.toLowerCase() + "/";
         String bioFile = mobName + ".txt";
         try {
-            IResource resource = this.mc.getResourceManager().getResource(new ResourceLocation("fossil",translatePath + bioFile));
+            IResource resource = this.mc.getResourceManager().getResource(new ResourceLocation("fossil", translatePath + bioFile));
             InputStream fileReader = resource.getInputStream();
             if (getClass().getClassLoader().getResourceAsStream(translatePath) == null) {
                 translatePath = "assets/fossil/dinopedia/en_us/";
@@ -618,9 +619,9 @@ public class GuiPedia extends GuiScreen {
         }
     }
 
-    private boolean shouldShowItem(ItemStack item, List<ItemStack> keys){
-        for(ItemStack stack : keys){
-            if(stack.getItem() == item.getItem() && stack.getMetadata() == item.getMetadata()){
+    private boolean shouldShowItem(ItemStack item, List<ItemStack> keys) {
+        for (ItemStack stack : keys) {
+            if (stack.getItem() == item.getItem() && stack.getMetadata() == item.getMetadata()) {
                 return false;
             }
         }

@@ -1,4 +1,5 @@
 package fossilsarcheology.server.world.village;
+
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
@@ -11,8 +12,8 @@ import java.util.List;
 import java.util.Random;
 
 public class VillageComponentPaleontologistHouse extends StructureVillagePieces.Village {
-    private int averageGroundLevel = -1;
     int villagerCount = 0;
+    private int averageGroundLevel = -1;
 
     public VillageComponentPaleontologistHouse() {
         super();
@@ -29,6 +30,7 @@ public class VillageComponentPaleontologistHouse extends StructureVillagePieces.
         StructureBoundingBox structureboundingbox = StructureBoundingBox.getComponentToAddBoundingBox(x, y, z, 0, 0, -1, 6, 15, 7, facing);
         return canVillageGoDeeper(structureboundingbox) && StructureComponent.findIntersecting(pieces, structureboundingbox) == null ? new VillageComponentPaleontologistHouse(startPiece, p5, random, structureboundingbox, facing) : null;
     }
+
     @Override
     public boolean addComponentParts(World world, Random random, StructureBoundingBox sbb) {
         if (this.averageGroundLevel < 0) {
@@ -41,13 +43,13 @@ public class VillageComponentPaleontologistHouse extends StructureVillagePieces.
         BlockPos blockpos = new BlockPos(this.getXWithOffset(6, -1), this.getYWithOffset(0), this.getZWithOffset(7, -1));
         EnumFacing facing = this.getCoordBaseMode().getOpposite();
         BlockPos genPos = blockpos.up();
-        if(facing == EnumFacing.SOUTH){
-            genPos =  genPos.offset(EnumFacing.WEST, 6).offset(EnumFacing.SOUTH, 2);
+        if (facing == EnumFacing.SOUTH) {
+            genPos = genPos.offset(EnumFacing.WEST, 6).offset(EnumFacing.SOUTH, 2);
         }
         return new WorldGenPaleontologistHouse(this, facing.rotateY()).generate(world, random, genPos);
     }
 
-    public IBlockState getBiomeBlock(IBlockState state){
+    public IBlockState getBiomeBlock(IBlockState state) {
         return getBiomeSpecificBlockState(state);
     }
 

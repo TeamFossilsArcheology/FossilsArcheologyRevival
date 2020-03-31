@@ -13,22 +13,22 @@ import net.minecraft.world.World;
 
 public class ToyTetheredLog extends Item implements DefaultRenderedItem {
 
-	public ToyTetheredLog() {
-		this.setTranslationKey("toy_tethered_log");
-		this.setCreativeTab(FATabRegistry.ITEMS);
-	}
+    public ToyTetheredLog() {
+        this.setTranslationKey("toy_tethered_log");
+        this.setCreativeTab(FATabRegistry.ITEMS);
+    }
 
-	@Override
+    @Override
     public EnumActionResult onItemUse(EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		if (facing == EnumFacing.DOWN && worldIn.isAirBlock(pos.down(1)) && worldIn.isAirBlock(pos.down(2))) {
-			EntityToyTetheredLog ball = new EntityToyTetheredLog(worldIn);
-			ball.setLocationAndAngles(pos.getX() + 0.5, pos.getY() - 1.9, pos.getZ() + 0.5, 0, 0);
-			if (!worldIn.isRemote)
-				worldIn.spawnEntity(ball);
-			ball.rotationYaw = playerIn.rotationYawHead;
-			if (!playerIn.capabilities.isCreativeMode)
-				playerIn.getHeldItem(hand).shrink(1);
-		}
-		return EnumActionResult.SUCCESS;
-	}
+        if (facing == EnumFacing.DOWN && worldIn.isAirBlock(pos.down(1)) && worldIn.isAirBlock(pos.down(2))) {
+            EntityToyTetheredLog ball = new EntityToyTetheredLog(worldIn);
+            ball.setLocationAndAngles(pos.getX() + 0.5, pos.getY() - 1.9, pos.getZ() + 0.5, 0, 0);
+            if (!worldIn.isRemote)
+                worldIn.spawnEntity(ball);
+            ball.rotationYaw = playerIn.rotationYawHead;
+            if (!playerIn.capabilities.isCreativeMode)
+                playerIn.getHeldItem(hand).shrink(1);
+        }
+        return EnumActionResult.SUCCESS;
+    }
 }

@@ -4,16 +4,16 @@ import fossilsarcheology.server.entity.monster.EntityAnu;
 import net.minecraft.entity.ai.EntityAIAttackMelee;
 
 public class AnuAIAttackOnCollide extends EntityAIAttackMelee {
-	private final EntityAnu theEntity;
+    private final EntityAnu theEntity;
 
-	public AnuAIAttackOnCollide(EntityAnu anu, Class clazz, double d, boolean foref) {
-		super(anu, d, foref);
-		theEntity = anu;
-	}
+    public AnuAIAttackOnCollide(EntityAnu anu, Class clazz, double d, boolean foref) {
+        super(anu, d, foref);
+        theEntity = anu;
+    }
 
-	@Override
-	public boolean shouldExecute() {
-		return theEntity.getAttackMode() == 0 && super.shouldExecute();
-	}
+    @Override
+    public boolean shouldExecute() {
+        return theEntity.getAttackMode() == 0 && super.shouldExecute();
+    }
 
 }

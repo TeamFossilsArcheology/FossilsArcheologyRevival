@@ -10,6 +10,7 @@ import net.minecraft.entity.Entity;
 
 public class ModelMegalodon extends ModelPrehistoric {
 
+    private final ModelAnimator animator;
     public AdvancedModelRenderer body;
     public AdvancedModelRenderer upperBody;
     public AdvancedModelRenderer tail1;
@@ -27,7 +28,6 @@ public class ModelMegalodon extends ModelPrehistoric {
     public AdvancedModelRenderer tailFin2;
     public AdvancedModelRenderer lowerJaw;
     public AdvancedModelRenderer nose;
-    private final ModelAnimator animator;
 
     public ModelMegalodon() {
         this.textureWidth = 128;
@@ -209,7 +209,7 @@ public class ModelMegalodon extends ModelPrehistoric {
         this.chainSwing(neckParts, speed2, -0.1F, 2, f, f1);
         this.flap(rightBodyFin, speed2, 0.6F, true, 0, 0, f, f1);
         this.flap(leftBodyFin, speed2, 0.6F, false, 0, 0, f, f1);
-        ((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) tailParts);
+        ((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer(tailParts);
         if (entity.getPassengers().isEmpty()) {
             ModelUtils.faceTargetMod(upperBody, f3, f4, 0.5F);
         }

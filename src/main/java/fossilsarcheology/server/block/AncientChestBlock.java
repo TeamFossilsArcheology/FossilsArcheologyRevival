@@ -28,106 +28,106 @@ import net.minecraft.world.World;
 
 public class AncientChestBlock extends BlockContainer implements DefaultRenderedItem, BlockEntity {
 
-	public static final PropertyDirection FACING = BlockHorizontal.FACING;
-	protected static final AxisAlignedBB NORTH_CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0D, 0.9375D, 0.875D, 0.9375D);
-	protected static final AxisAlignedBB SOUTH_CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.875D, 1.0D);
-	protected static final AxisAlignedBB WEST_CHEST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
-	protected static final AxisAlignedBB EAST_CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 1.0D, 0.875D, 0.9375D);
-	protected static final AxisAlignedBB NOT_CONNECTED_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
-	public static final UseAncientKeyTrigger ANCIENT_KEY_TRIGGER = (UseAncientKeyTrigger) CriteriaTriggers.register(new UseAncientKeyTrigger());
+    public static final PropertyDirection FACING = BlockHorizontal.FACING;
+    public static final UseAncientKeyTrigger ANCIENT_KEY_TRIGGER = CriteriaTriggers.register(new UseAncientKeyTrigger());
+    protected static final AxisAlignedBB NORTH_CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0D, 0.9375D, 0.875D, 0.9375D);
+    protected static final AxisAlignedBB SOUTH_CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.875D, 1.0D);
+    protected static final AxisAlignedBB WEST_CHEST_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
+    protected static final AxisAlignedBB EAST_CHEST_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 1.0D, 0.875D, 0.9375D);
+    protected static final AxisAlignedBB NOT_CONNECTED_AABB = new AxisAlignedBB(0.0625D, 0.0D, 0.0625D, 0.9375D, 0.875D, 0.9375D);
 
-	protected AncientChestBlock() {
-		super(Material.WOOD);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
-		this.setCreativeTab(FATabRegistry.BLOCKS);
-		this.setBlockUnbreakable();
-		this.setTranslationKey("ancient_chest");
-	}
+    protected AncientChestBlock() {
+        super(Material.WOOD);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
+        this.setCreativeTab(FATabRegistry.BLOCKS);
+        this.setBlockUnbreakable();
+        this.setTranslationKey("ancient_chest");
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public boolean isOpaqueCube(IBlockState state) {
-		return false;
-	}
+        return false;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public boolean isFullCube(IBlockState state) {
-		return false;
-	}
+        return false;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public EnumBlockRenderType getRenderType(IBlockState state) {
-		return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
-	}
+        return EnumBlockRenderType.ENTITYBLOCK_ANIMATED;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return source.getBlockState(pos.north()).getBlock() == this ? NORTH_CHEST_AABB : (source.getBlockState(pos.south()).getBlock() == this ? SOUTH_CHEST_AABB : (source.getBlockState(pos.west()).getBlock() == this ? WEST_CHEST_AABB : (source.getBlockState(pos.east()).getBlock() == this ? EAST_CHEST_AABB : NOT_CONNECTED_AABB)));
-	}
+        return source.getBlockState(pos.north()).getBlock() == this ? NORTH_CHEST_AABB : (source.getBlockState(pos.south()).getBlock() == this ? SOUTH_CHEST_AABB : (source.getBlockState(pos.west()).getBlock() == this ? WEST_CHEST_AABB : (source.getBlockState(pos.east()).getBlock() == this ? EAST_CHEST_AABB : NOT_CONNECTED_AABB)));
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState getStateForPlacement(World worldIn, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer) {
-		return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
-	}
+        return this.getDefaultState().withProperty(FACING, placer.getHorizontalFacing().getOpposite());
+    }
 
-	@Override
+    @Override
     public int getMetaFromState(IBlockState state) {
-		return state.getValue(FACING).getIndex();
-	}
+        return state.getValue(FACING).getIndex();
+    }
 
-	@Override
-	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
-		if(world.getTileEntity(pos) instanceof TileEntityAncientChest) {
-			TileEntityAncientChest tile = (TileEntityAncientChest) world.getTileEntity(pos);
-			if (tile.chestState == 0) {
-				if (!player.getHeldItem(hand).isEmpty()) {
-					if (player.getHeldItem(hand).getItem() == FAItemRegistry.ANCIENT_KEY) {
-						tile.chestState = 1;
-						if (!player.capabilities.isCreativeMode) {
-							player.getHeldItem(hand).shrink(1);
-						}
-						if(!world.isRemote && player instanceof EntityPlayerMP){
-							ANCIENT_KEY_TRIGGER.trigger((EntityPlayerMP)player);
-						}
-					}
-				}
-			} else if (tile.chestState == 1) {
-				tile.chestState = 2;
-				tile.chestLidCounter = 1;
-				world.playSound(player, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
-			}
-		}
-		return true;
-	}
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ) {
+        if (world.getTileEntity(pos) instanceof TileEntityAncientChest) {
+            TileEntityAncientChest tile = (TileEntityAncientChest) world.getTileEntity(pos);
+            if (tile.chestState == 0) {
+                if (!player.getHeldItem(hand).isEmpty()) {
+                    if (player.getHeldItem(hand).getItem() == FAItemRegistry.ANCIENT_KEY) {
+                        tile.chestState = 1;
+                        if (!player.capabilities.isCreativeMode) {
+                            player.getHeldItem(hand).shrink(1);
+                        }
+                        if (!world.isRemote && player instanceof EntityPlayerMP) {
+                            ANCIENT_KEY_TRIGGER.trigger((EntityPlayerMP) player);
+                        }
+                    }
+                }
+            } else if (tile.chestState == 1) {
+                tile.chestState = 2;
+                tile.chestLidCounter = 1;
+                world.playSound(player, pos, SoundEvents.BLOCK_CHEST_OPEN, SoundCategory.BLOCKS, 0.5F, world.rand.nextFloat() * 0.1F + 0.9F);
+            }
+        }
+        return true;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState withRotation(IBlockState state, Rotation rot) {
-		return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
-	}
+        return state.withProperty(FACING, rot.rotate(state.getValue(FACING)));
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public IBlockState withMirror(IBlockState state, Mirror mirrorIn) {
-		return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
-	}
+        return state.withRotation(mirrorIn.toRotation(state.getValue(FACING)));
+    }
 
-	@Override
+    @Override
     protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, FACING);
-	}
+        return new BlockStateContainer(this, FACING);
+    }
 
-	@Override
-	public TileEntity createNewTileEntity(World worldIn, int meta) {
-		return new TileEntityAncientChest();
-	}
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return new TileEntityAncientChest();
+    }
 
-	@Override
-	public Class<? extends TileEntity> getEntity() {
-		return TileEntityAncientChest.class;
-	}
+    @Override
+    public Class<? extends TileEntity> getEntity() {
+        return TileEntityAncientChest.class;
+    }
 }

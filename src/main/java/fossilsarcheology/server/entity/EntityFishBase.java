@@ -141,7 +141,7 @@ public abstract class EntityFishBase extends EntityTameable {
         } else {
             for (Entity entity : list) {
                 if (entity instanceof EntityFishBase && !entity.isEntityEqual(this)) {
-                    return ((EntityFishBase)entity).selfType == this.selfType ? ((EntityFishBase)entity) : null;
+                    return ((EntityFishBase) entity).selfType == this.selfType ? ((EntityFishBase) entity) : null;
                 }
             }
             return null;
@@ -177,9 +177,9 @@ public abstract class EntityFishBase extends EntityTameable {
                 this.playSound(SoundEvents.ENTITY_ITEM_BREAK, 1, this.getRNG().nextFloat() + 0.8F);
                 return false;
             }
-        }else{
+        } else {
             if (!world.isRemote && stack.isEmpty() && this.getGrowingAge() > 0) {
-                if(!turnedToItem){
+                if (!turnedToItem) {
                     turnedToItem = true;
                     this.entityDropItem(new ItemStack(this.selfType.fishItem, 1), 0.1F);
                     this.playSound(SoundEvents.ENTITY_ITEM_PICKUP, 1, this.getRNG().nextFloat() + 0.8F);
@@ -287,12 +287,12 @@ public abstract class EntityFishBase extends EntityTameable {
                         f4 += (0.54600006F - f4) * d0 / 3.0F;
                     }
                     //this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-                    this.motionX *= (double) f4;
+                    this.motionX *= f4;
                     this.motionX *= 0.900000011920929D;
                     this.motionY *= 0.900000011920929D;
-                    this.motionY *= (double) f4;
+                    this.motionY *= f4;
                     this.motionZ *= 0.900000011920929D;
-                    this.motionZ *= (double) f4;
+                    this.motionZ *= f4;
                     motionY += 0.01185D;
                 } else {
                     forward = controller.moveForward * 0.25F;
@@ -332,12 +332,12 @@ public abstract class EntityFishBase extends EntityTameable {
                     f4 += (0.54600006F - f4) * speedModifier / 3.0F;
                 }
                 this.move(MoverType.SELF, this.motionX, this.motionY, this.motionZ);
-                this.motionX *= (double) f4;
+                this.motionX *= f4;
                 this.motionX *= 0.9;
                 this.motionY *= 0.9;
-                this.motionY *= (double) f4;
+                this.motionY *= f4;
                 this.motionZ *= 0.9;
-                this.motionZ *= (double) f4;
+                this.motionZ *= f4;
             } else {
                 super.travel(strafe, vertical, forward);
             }
@@ -369,7 +369,7 @@ public abstract class EntityFishBase extends EntityTameable {
                     double distanceY = this.posY - this.dinosaur.posY;
                     double distanceZ = this.posZ - this.dinosaur.posZ;
                     double distance = Math.abs(distanceX * distanceX + distanceY * distanceY + distanceZ * distanceZ);
-                    distance = (double) MathHelper.sqrt(distance);
+                    distance = MathHelper.sqrt(distance);
                     distanceY /= distance;
                     float angle = (float) (Math.atan2(distanceZ, distanceX) * 180.0D / Math.PI) - 90.0F;
                     this.dinosaur.rotationYaw = this.limitAngle(this.dinosaur.rotationYaw, angle, 30.0F);

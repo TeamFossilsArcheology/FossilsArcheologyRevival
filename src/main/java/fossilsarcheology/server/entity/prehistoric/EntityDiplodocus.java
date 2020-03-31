@@ -32,7 +32,7 @@ public class EntityDiplodocus extends EntityPrehistoric {
         this.pediaScale = 30F;
     }
 
-    public void initEntityAI(){
+    public void initEntityAI() {
         this.tasks.addTask(0, new DinoAIFleeBattle(this, 1.0D));
         this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
         this.tasks.addTask(1, new EntityAISwimming(this));

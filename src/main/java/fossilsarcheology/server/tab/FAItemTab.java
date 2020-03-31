@@ -8,18 +8,18 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class FAItemTab extends CreativeTabs {
-	public FAItemTab() {
-		super("Fossil Items");
-	}
+    public FAItemTab() {
+        super("Fossil Items");
+    }
 
-	@Override
-	@SideOnly(Side.CLIENT)
-	public ItemStack createIcon() {
-		return new ItemStack(FAItemRegistry.BIOFOSSIL);
-	}
+    @Override
+    @SideOnly(Side.CLIENT)
+    public ItemStack createIcon() {
+        return new ItemStack(FAItemRegistry.BIOFOSSIL);
+    }
 
-	@Override
-	public String getTranslationKey() {
-		return Localizations.TAB_ITEMS;
-	}
+    @Override
+    public String getTranslationKey() {
+        return Localizations.TAB_ITEMS;
+    }
 }

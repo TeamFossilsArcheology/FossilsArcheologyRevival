@@ -17,18 +17,18 @@ public class FATEISR extends TileEntityItemStackRenderer {
     public static final TileEntityAnuStatueRender RENDER_ANU_STATUE = new TileEntityAnuStatueRender();
     public static final TileEntitySarcophagusRender RENDER_SARCAPHOGUS = new TileEntitySarcophagusRender();
 
-    public void renderByItem(ItemStack itemStackIn){
-        if(itemStackIn.getItem() == Item.getItemFromBlock(FABlockRegistry.ANUBITE_STATUE)){
+    public void renderByItem(ItemStack itemStackIn) {
+        if (itemStackIn.getItem() == Item.getItemFromBlock(FABlockRegistry.ANUBITE_STATUE)) {
             GL11.glScalef(1.2F, 1.2F, 1.2F);
             RENDER_ANUBITE_STATUE.render(null, 0F, -0.2F, 0, 0, 0, 0);
-        }else if(itemStackIn.getItem() == Item.getItemFromBlock(FABlockRegistry.ANCIENT_CHEST)){
+        } else if (itemStackIn.getItem() == Item.getItemFromBlock(FABlockRegistry.ANCIENT_CHEST)) {
             RENDER_ANCIENT_CHEST.render(null, 0F, 0F, 0, 0, 0, 0);
-        }else if(itemStackIn.getItem() == Item.getItemFromBlock(FABlockRegistry.ANU_STATUE)){
+        } else if (itemStackIn.getItem() == Item.getItemFromBlock(FABlockRegistry.ANU_STATUE)) {
             //GL11.glRotatef(180, 0F, 1.0F, 0F);
             RENDER_ANU_STATUE.render(null, 0F, -0.2F, 0, 0, 0, 0);
-        }else if(itemStackIn.getItem() == Item.getItemFromBlock(FABlockRegistry.SARCOPHAGUS)){
+        } else if (itemStackIn.getItem() == Item.getItemFromBlock(FABlockRegistry.SARCOPHAGUS)) {
             RENDER_SARCAPHOGUS.render(null, 0, 0, 0, 0, 0, 0);
-        }else{
+        } else {
             super.renderByItem(itemStackIn);
         }
     }

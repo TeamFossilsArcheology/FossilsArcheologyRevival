@@ -10,9 +10,9 @@ import java.util.Comparator;
 import java.util.List;
 
 public class DinoAIEatItems extends EntityAIBase {
-    private EntityItem targetItem;
     private final EntityPrehistoric prehistoric;
     private final ItemsSorter targetSorter;
+    private EntityItem targetItem;
 
     public DinoAIEatItems(EntityPrehistoric prehistoric) {
         super();
@@ -52,7 +52,7 @@ public class DinoAIEatItems extends EntityAIBase {
                 this.targetItem.setDead();
             }
         }
-        if(this.prehistoric.getNavigator().noPath()){
+        if (this.prehistoric.getNavigator().noPath()) {
             resetTask();
         }
     }

@@ -37,7 +37,7 @@ public class EntityMegalograptus extends EntityPrehistoricSwimming {
         this.pediaScale = 30;
     }
 
-    public EnumCreatureAttribute getCreatureAttribute(){
+    public EnumCreatureAttribute getCreatureAttribute() {
         return EnumCreatureAttribute.ARTHROPOD;
     }
 
@@ -46,12 +46,13 @@ public class EntityMegalograptus extends EntityPrehistoricSwimming {
         return PrehistoricEntityType.BONELESS_LOOT;
     }
 
-    public void applyEntityCollision(Entity entityIn){}
+    public void applyEntityCollision(Entity entityIn) {
+    }
 
     @Override
     public String getTexture() {
         String gender = this.isChild() ? "_baby" : this.getGender() == 0 ? "_female" : "_male";
-        if(this.isSkeleton()){
+        if (this.isSkeleton()) {
             return "fossil:textures/model/" + type.toString().toLowerCase() + "_0/" + type.toString().toLowerCase() + "_skeleton.png";
         }
         return "fossil:textures/model/" + type.toString().toLowerCase() + "_0/" + type.toString().toLowerCase() + gender + ".png";

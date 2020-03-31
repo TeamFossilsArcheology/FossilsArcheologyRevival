@@ -31,14 +31,14 @@ public class FAGUIFactory implements IModGuiFactory {
         return null;
     }
 
-    private class GuiFossilConfig  extends GuiConfig {
+    private class GuiFossilConfig extends GuiConfig {
         public GuiFossilConfig(GuiScreen parent) {
             super(parent, new ConfigElement(Revival.config.getCategory("all")).getChildElements(), Revival.MODID, false, false, "Fossils Archeology Confg");
             titleLine2 = Revival.config.getConfigFile().getAbsolutePath();
         }
 
         @Override
-        public void onGuiClosed(){
+        public void onGuiClosed() {
             super.onGuiClosed();
         }
     }

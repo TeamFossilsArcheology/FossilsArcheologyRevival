@@ -10,18 +10,18 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public class AncientWoodPillarBlock extends BlockRotatedPillar implements DefaultRenderedItem {
-	protected AncientWoodPillarBlock() {
-		super(Material.WOOD);
-		this.setCreativeTab(FATabRegistry.BLOCKS);
-		this.setSoundType(SoundType.WOOD);
-		this.setHardness(1.4F);
-		this.setResistance(1.0F);
+    protected AncientWoodPillarBlock() {
+        super(Material.WOOD);
+        this.setCreativeTab(FATabRegistry.BLOCKS);
+        this.setSoundType(SoundType.WOOD);
+        this.setHardness(1.4F);
+        this.setResistance(1.0F);
 
-		this.setTranslationKey("ancient_wood_pillar");
-	}
+        this.setTranslationKey("ancient_wood_pillar");
+    }
 
-	@Override
-	public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		return true;
-	}
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
 }

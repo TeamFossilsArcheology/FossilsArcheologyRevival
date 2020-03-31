@@ -18,6 +18,20 @@ public class WorldGenCordaites extends WorldGenerator {
     private static final IBlockState LEAF = FABlockRegistry.CORDAITES_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, true).withProperty(BlockLeaves.DECAYABLE, true);
     private boolean keepGenerating = true;
 
+    public static boolean canGenTree(World world, BlockPos pos) {
+        for (int y = 0; y <= 20; y++) {
+            if (!isReplaceable(world, pos.up(y))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isReplaceable(World world, BlockPos pos) {
+        return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos)
+                || world.getBlockState(pos).getBlock() == FABlockRegistry.CORDAITES_SAPLING || world.getBlockState(pos).getBlock().isLeaves(world.getBlockState(pos), world, pos);
+    }
+
     @Override
     public boolean generate(World world, Random rand, BlockPos pos) {
         Block j1 = world.getBlockState(pos.down()).getBlock();
@@ -33,7 +47,7 @@ public class WorldGenCordaites extends WorldGenerator {
         for (int i = 0; i < height; i++) {
             setBlockState(world, pos.up(i), LOG);
             for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-                if(i > height * 0.6F && rand.nextInt(1) == 0 && isReplaceable(world, pos.up(i - 1).offset(facing))){
+                if (i > height * 0.6F && rand.nextInt(1) == 0 && isReplaceable(world, pos.up(i - 1).offset(facing))) {
                     int heightMinus = (int) (i - height * 0.6F);
                     genBranch(world, pos.up(i), Math.max(1, 2 + rand.nextInt(2) - heightMinus), facing, rand);
                 }
@@ -57,26 +71,12 @@ public class WorldGenCordaites extends WorldGenerator {
                 setBlockState(world, pos.offset(direction, i).up(yOffset).offset(direction.rotateY()), LEAF);
                 setBlockState(world, pos.offset(direction, i + 1).up(yOffset).offset(direction.rotateYCCW(), 1), LEAF);
                 setBlockState(world, pos.offset(direction, i + 1).up(yOffset).offset(direction.rotateY(), 1), LEAF);
-                setBlockState(world, pos.offset(direction, i + 2).up(yOffset+ 1), LEAF);
+                setBlockState(world, pos.offset(direction, i + 2).up(yOffset + 1), LEAF);
             }
             if (i > 2 && random.nextBoolean()) {
                 yOffset++;
             }
         }
-    }
-
-    public static boolean canGenTree(World world, BlockPos pos) {
-        for (int y = 0; y <= 20; y++) {
-            if (!isReplaceable(world, pos.up(y))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean isReplaceable(World world, BlockPos pos) {
-        return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos)
-                || world.getBlockState(pos).getBlock() == FABlockRegistry.CORDAITES_SAPLING || world.getBlockState(pos).getBlock().isLeaves(world.getBlockState(pos), world, pos);
     }
 
     public void setBlockState(World world, BlockPos pos, IBlockState state) {

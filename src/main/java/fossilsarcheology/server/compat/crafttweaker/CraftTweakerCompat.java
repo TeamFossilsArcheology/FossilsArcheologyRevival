@@ -13,7 +13,7 @@ import stanhebben.zenscript.annotations.ZenMethod;
 @ZenClass("mods.fossils.recipes")
 public class CraftTweakerCompat {
 
-    public static void preInit(){
+    public static void preInit() {
         CraftTweakerAPI.registerClass(CraftTweakerCompat.class);
     }
 
@@ -22,17 +22,17 @@ public class CraftTweakerCompat {
         ItemStack input = CraftTweakerMC.getItemStack(iinput);
         RecipeAnalyzer recipe = null;
         boolean addToFlag = false;
-        for(RecipeAnalyzer recipesInList : FAMachineRecipeRegistry.analyzerRecipes){
-            if(input.isItemEqual(recipesInList.getInput())){
+        for (RecipeAnalyzer recipesInList : FAMachineRecipeRegistry.analyzerRecipes) {
+            if (input.isItemEqual(recipesInList.getInput())) {
                 recipe = recipesInList;
             }
         }
-        if(recipe == null){
+        if (recipe == null) {
             addToFlag = true;
             recipe = new RecipeAnalyzer(input);
         }
         recipe.addOutput(CraftTweakerMC.getItemStack(ioutput), weight);
-        if(addToFlag){
+        if (addToFlag) {
             FAMachineRecipeRegistry.analyzerRecipes.add(recipe);
         }
     }
@@ -85,17 +85,17 @@ public class CraftTweakerCompat {
         ItemStack input = CraftTweakerMC.getItemStack(iinput);
         RecipeAnalyzer recipe = null;
         boolean addToFlag = false;
-        for(RecipeAnalyzer recipesInList : FAMachineRecipeRegistry.sifterRecipes){
-            if(input.isItemEqual(recipesInList.getInput())){
+        for (RecipeAnalyzer recipesInList : FAMachineRecipeRegistry.sifterRecipes) {
+            if (input.isItemEqual(recipesInList.getInput())) {
                 recipe = recipesInList;
             }
         }
-        if(recipe == null){
+        if (recipe == null) {
             addToFlag = true;
             recipe = new RecipeAnalyzer(input);
         }
         recipe.addOutput(CraftTweakerMC.getItemStack(ioutput), weight);
-        if(addToFlag){
+        if (addToFlag) {
             FAMachineRecipeRegistry.sifterRecipes.add(recipe);
         }
     }

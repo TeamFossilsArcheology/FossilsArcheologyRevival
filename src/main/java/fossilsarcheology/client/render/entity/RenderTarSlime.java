@@ -9,13 +9,13 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderTarSlime extends RenderSlime {
 
-	public RenderTarSlime(RenderManager rendermanager) {
-		super(rendermanager);
-		this.mainModel = new ModelTarSlime(16);
-	}
+    public RenderTarSlime(RenderManager rendermanager) {
+        super(rendermanager);
+        this.mainModel = new ModelTarSlime(16);
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(EntitySlime entity) {
-		return new ResourceLocation(Revival.MODID, "textures/model/tar_slime.png");
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(EntitySlime entity) {
+        return new ResourceLocation(Revival.MODID, "textures/model/tar_slime.png");
+    }
 }

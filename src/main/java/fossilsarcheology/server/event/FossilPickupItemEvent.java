@@ -5,13 +5,13 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
 
 public class FossilPickupItemEvent {
-	@SubscribeEvent
-	public void notifyPickup(PlayerEvent.ItemPickupEvent event) {
-	}
+    @SubscribeEvent
+    public void notifyPickup(PlayerEvent.ItemPickupEvent event) {
+    }
 
-	@SubscribeEvent
-	public void notifyPickup(PlayerEvent.ItemCraftedEvent event) {
-	}
+    @SubscribeEvent
+    public void notifyPickup(PlayerEvent.ItemCraftedEvent event) {
+    }
 
   /*  @SubscribeEvent
     public void notifyPickup(PlayerEvent.ItemSmeltedEvent event) {

@@ -95,7 +95,7 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
                     if (entity.isPlant) {
                         world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1, 1, false);
                         world.setBlockState(pos.up(), FABlockRegistry.MUTANT_FLOWER.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.LOWER));
-                        if(world.getBlockState(pos).getMaterial().isReplaceable()){
+                        if (world.getBlockState(pos).getMaterial().isReplaceable()) {
                             world.setBlockState(pos.up(2), FABlockRegistry.MUTANT_FLOWER.getDefaultState().withProperty(TallFlowerBlock.HALF, TallFlowerBlock.EnumBlockHalf.UPPER));
                         }
                     } else {
@@ -133,11 +133,11 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
         float offsetX = rand.nextFloat() * 0.8F + 0.1F;
         float offsetY = rand.nextFloat() * 0.8F + 0.1F;
         float offsetZ = rand.nextFloat() * 0.8F + 0.1F;
-        EntityItem item = new EntityItem(world, (double) ((float) pos.getX() + offsetX), (double) ((float) pos.getY() + offsetY), (double) ((float) pos.getZ() + offsetZ), stack);
+        EntityItem item = new EntityItem(world, (float) pos.getX() + offsetX, (float) pos.getY() + offsetY, (float) pos.getZ() + offsetZ, stack);
         float motionMutlipler = 0.05F;
-        item.motionX = (double) ((float) rand.nextGaussian() * motionMutlipler);
-        item.motionY = (double) ((float) rand.nextGaussian() * motionMutlipler + 0.2F);
-        item.motionZ = (double) ((float) rand.nextGaussian() * motionMutlipler);
+        item.motionX = (float) rand.nextGaussian() * motionMutlipler;
+        item.motionY = (float) rand.nextGaussian() * motionMutlipler + 0.2F;
+        item.motionZ = (float) rand.nextGaussian() * motionMutlipler;
         world.spawnEntity(item);
     }
 
@@ -213,8 +213,8 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
     public int getComparatorInputOverride(IBlockState state, World world, BlockPos pos) {
         int i = 0;
         float f = 0.0F;
-        if(world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileEntityCultivate) {
-            TileEntityCultivate te = (TileEntityCultivate)world.getTileEntity(pos);
+        if (world.getTileEntity(pos) != null && world.getTileEntity(pos) instanceof TileEntityCultivate) {
+            TileEntityCultivate te = (TileEntityCultivate) world.getTileEntity(pos);
             for (int j = 0; j < 3; ++j) {
                 ItemStack itemstack = te.globalInventory.getStackInSlot(j);
                 if (!itemstack.isEmpty()) {
@@ -225,7 +225,7 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
 
             f = f / (float) 3;
             return MathHelper.floor(f * 14.0F) + (i > 0 ? 1 : 0);
-        }else{
+        } else {
             return 0;
         }
     }
@@ -254,7 +254,7 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
 
     @Deprecated
     @SideOnly(Side.CLIENT)
-    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side){
+    public boolean shouldSideBeRendered(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side) {
         return true;
     }
 }

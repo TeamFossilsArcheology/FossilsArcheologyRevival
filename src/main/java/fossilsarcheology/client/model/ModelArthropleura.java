@@ -11,6 +11,7 @@ import net.minecraft.entity.Entity;
 import scala.util.parsing.combinator.PackratParsers;
 
 public class ModelArthropleura extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer bodySegmentBA;
     public AdvancedModelRenderer bodySegmentFA;
     public AdvancedModelRenderer flangeBAL;
@@ -75,7 +76,6 @@ public class ModelArthropleura extends ModelPrehistoric {
     public AdvancedModelRenderer legBFRB;
     public AdvancedModelRenderer legBFLA;
     public AdvancedModelRenderer legBFLB;
-    private final ModelAnimator animator;
 
     public ModelArthropleura() {
         this.textureWidth = 128;
@@ -494,17 +494,17 @@ public class ModelArthropleura extends ModelPrehistoric {
         {
             float sitProgress = prehistoric.sleepProgress;
             for (int i = 0; i < bodySegments.length; i++) {
-                sitAnimationRotation(bodySegments[i], sitProgress, 0.0F, (float)Math.toRadians(-20F), 0.0F);
+                sitAnimationRotation(bodySegments[i], sitProgress, 0.0F, (float) Math.toRadians(-20F), 0.0F);
             }
-            sitAnimationRotation(bodySegmentFA, sitProgress, 0.0F, (float)Math.toRadians(20F), 0.0F);
-            sitAnimationRotation(bodySegmentFB, sitProgress, 0.0F, (float)Math.toRadians(20F), 0.0F);
-            sitAnimationRotation(head, sitProgress, (float)Math.toRadians(10F), (float)Math.toRadians(20F), (float)Math.toRadians(20F));
+            sitAnimationRotation(bodySegmentFA, sitProgress, 0.0F, (float) Math.toRadians(20F), 0.0F);
+            sitAnimationRotation(bodySegmentFB, sitProgress, 0.0F, (float) Math.toRadians(20F), 0.0F);
+            sitAnimationRotation(head, sitProgress, (float) Math.toRadians(10F), (float) Math.toRadians(20F), (float) Math.toRadians(20F));
         }
         {
             float sitProgress = prehistoric.sitProgress;
-            sitAnimationRotation(bodySegmentFA, sitProgress,  (float)Math.toRadians(-30F), 0.0F, 0.0F);
-            sitAnimationRotation(bodySegmentFB, sitProgress,  (float)Math.toRadians(-30F), 0.0F, 0.0F);
-            sitAnimationRotation(head, sitProgress, (float)Math.toRadians(50F), 0, 0F);
+            sitAnimationRotation(bodySegmentFA, sitProgress, (float) Math.toRadians(-30F), 0.0F, 0.0F);
+            sitAnimationRotation(bodySegmentFB, sitProgress, (float) Math.toRadians(-30F), 0.0F, 0.0F);
+            sitAnimationRotation(head, sitProgress, (float) Math.toRadians(50F), 0, 0F);
 
         }
     }

@@ -160,7 +160,7 @@ public class EntityTarSlime extends EntitySlime {
             float f3 = MathHelper.cos(f) * (float) i * 0.5F * f1;
             double d0 = this.posX + (double) f2;
             double d1 = this.posZ + (double) f3;
-            Revival.PROXY.spawnFAParticle("tar_bubble", (float)d0, (float)this.getEntityBoundingBox().minY, (float)d1, 0.0D, 0.0D, 0.0D);
+            Revival.PROXY.spawnFAParticle("tar_bubble", (float) d0, (float) this.getEntityBoundingBox().minY, (float) d1, 0.0D, 0.0D, 0.0D);
         }
 
         return true;

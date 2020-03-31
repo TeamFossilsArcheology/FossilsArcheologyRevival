@@ -55,7 +55,7 @@ public class AncientGlassBlock extends BlockBreakable implements DefaultRendered
     }
 
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, new IProperty[]{UP, DOWN, NORTH, SOUTH, EAST, WEST});
+        return new BlockStateContainer(this, UP, DOWN, NORTH, SOUTH, EAST, WEST);
     }
 
     public int getMetaFromState(IBlockState state) {

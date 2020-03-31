@@ -32,11 +32,11 @@ public class HiddenItem extends Item implements DefaultRenderedItem {
         if (worldIn.getBlockState(pos).getBlock() == Blocks.GOLD_BLOCK) {
             EntityWorseDebugTest weezer = new EntityWorseDebugTest(worldIn);
             weezer.setLocationAndAngles(pos.getX() + 0.5, pos.getY() + 1.9, pos.getZ() + 0.5, 0, 0);
-            if (!worldIn.isRemote){
+            if (!worldIn.isRemote) {
                 worldIn.spawnEntity(weezer);
             }
             weezer.rotationYaw = playerIn.rotationYawHead;
-            if (!playerIn.capabilities.isCreativeMode){
+            if (!playerIn.capabilities.isCreativeMode) {
                 playerIn.getHeldItem(hand).shrink(1);
             }
         }

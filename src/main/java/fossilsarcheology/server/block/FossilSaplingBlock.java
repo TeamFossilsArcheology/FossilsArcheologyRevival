@@ -22,118 +22,118 @@ import net.minecraft.world.gen.feature.WorldGenerator;
 import java.util.Random;
 
 public class FossilSaplingBlock extends BlockBush implements DefaultRenderedItem, IGrowable {
-	public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
-	protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
+    public static final PropertyInteger STAGE = PropertyInteger.create("stage", 0, 1);
+    protected static final AxisAlignedBB SAPLING_AABB = new AxisAlignedBB(0.09999999403953552D, 0.0D, 0.09999999403953552D, 0.8999999761581421D, 0.800000011920929D, 0.8999999761581421D);
 
-	public FossilSaplingBlock(String name) {
-		super();
-		this.setCreativeTab(FATabRegistry.BLOCKS);
-		this.setSoundType(SoundType.PLANT);
-		this.setHardness(0.2F);
-		this.setResistance(1F);
-		this.setTranslationKey(name);
-		this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
+    public FossilSaplingBlock(String name) {
+        super();
+        this.setCreativeTab(FATabRegistry.BLOCKS);
+        this.setSoundType(SoundType.PLANT);
+        this.setHardness(0.2F);
+        this.setResistance(1F);
+        this.setTranslationKey(name);
+        this.setDefaultState(this.blockState.getBaseState().withProperty(STAGE, 0));
 
-	}
+    }
 
-	@Override
-	public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		return true;
-	}
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-		return SAPLING_AABB;
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return SAPLING_AABB;
+    }
 
-	@Override
-	public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
-		if (!world.isRemote) {
-			super.updateTick(world, pos, state, rand);
-			if (world.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
-				this.grow(world, pos, state, rand);
-			}
-		}
-	}
+    @Override
+    public void updateTick(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (!world.isRemote) {
+            super.updateTick(world, pos, state, rand);
+            if (world.getLightFromNeighbors(pos.up()) >= 9 && rand.nextInt(7) == 0) {
+                this.grow(world, pos, state, rand);
+            }
+        }
+    }
 
-	public void grow(World world, BlockPos pos, IBlockState state, Random rand) {
-		if (state.getValue(STAGE) == 0) {
-			world.setBlockState(pos, state.cycleProperty(STAGE), 4);
-		} else {
-			if(canGenerateTree(world, pos)){
-				this.generateTree(world, pos, rand);
-			}
-		}
-	}
+    public void grow(World world, BlockPos pos, IBlockState state, Random rand) {
+        if (state.getValue(STAGE) == 0) {
+            world.setBlockState(pos, state.cycleProperty(STAGE), 4);
+        } else {
+            if (canGenerateTree(world, pos)) {
+                this.generateTree(world, pos, rand);
+            }
+        }
+    }
 
-	public boolean canGenerateTree(World world, BlockPos pos){
-		if(this == FABlockRegistry.PALM_SAPLING){
-			return WorldGenPalm.canGenTree(world, pos);
-		}
-		if(this == FABlockRegistry.CALAMITES_SAPLING){
-			return WorldGenCalamites.canGenTree(world, pos);
-		}
-		if(this == FABlockRegistry.SIGILLARIA_SAPLING){
-			return WorldGenSigillaria.canGenTree(world, pos);
-		}
-		if(this == FABlockRegistry.CORDAITES_SAPLING){
-			return WorldGenCordaites.canGenTree(world, pos);
-		}
-		return false;
-	}
+    public boolean canGenerateTree(World world, BlockPos pos) {
+        if (this == FABlockRegistry.PALM_SAPLING) {
+            return WorldGenPalm.canGenTree(world, pos);
+        }
+        if (this == FABlockRegistry.CALAMITES_SAPLING) {
+            return WorldGenCalamites.canGenTree(world, pos);
+        }
+        if (this == FABlockRegistry.SIGILLARIA_SAPLING) {
+            return WorldGenSigillaria.canGenTree(world, pos);
+        }
+        if (this == FABlockRegistry.CORDAITES_SAPLING) {
+            return WorldGenCordaites.canGenTree(world, pos);
+        }
+        return false;
+    }
 
-	public void generateTree(World world, BlockPos pos, Random rand) {
-		if(this == FABlockRegistry.PALM_SAPLING) {
-			WorldGenerator treeGen = new WorldGenPalm();
-			world.setBlockToAir(pos);
-			treeGen.generate(world, rand, pos);
-		}
-		if(this == FABlockRegistry.CALAMITES_SAPLING) {
-			WorldGenCalamites calamitesGen = new WorldGenCalamites();
-			world.setBlockToAir(pos);
-			calamitesGen.generate(world, rand, pos);
-		}
-		if(this == FABlockRegistry.SIGILLARIA_SAPLING) {
-			WorldGenSigillaria sigillaria = new WorldGenSigillaria();
-			world.setBlockToAir(pos);
-			sigillaria.generate(world, rand, pos);
-		}
-		if(this == FABlockRegistry.CORDAITES_SAPLING) {
-			WorldGenCordaites cordaites = new WorldGenCordaites();
-			world.setBlockToAir(pos);
-			cordaites.generate(world, rand, pos);
-		}
-	}
+    public void generateTree(World world, BlockPos pos, Random rand) {
+        if (this == FABlockRegistry.PALM_SAPLING) {
+            WorldGenerator treeGen = new WorldGenPalm();
+            world.setBlockToAir(pos);
+            treeGen.generate(world, rand, pos);
+        }
+        if (this == FABlockRegistry.CALAMITES_SAPLING) {
+            WorldGenCalamites calamitesGen = new WorldGenCalamites();
+            world.setBlockToAir(pos);
+            calamitesGen.generate(world, rand, pos);
+        }
+        if (this == FABlockRegistry.SIGILLARIA_SAPLING) {
+            WorldGenSigillaria sigillaria = new WorldGenSigillaria();
+            world.setBlockToAir(pos);
+            sigillaria.generate(world, rand, pos);
+        }
+        if (this == FABlockRegistry.CORDAITES_SAPLING) {
+            WorldGenCordaites cordaites = new WorldGenCordaites();
+            world.setBlockToAir(pos);
+            cordaites.generate(world, rand, pos);
+        }
+    }
 
-	@Override
-	public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
-		return true;
-	}
+    @Override
+    public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
+        return true;
+    }
 
-	@Override
-	public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
-		return (double) world.rand.nextFloat() < 0.45D;
-	}
+    @Override
+    public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
+        return (double) world.rand.nextFloat() < 0.45D;
+    }
 
-	@Override
-	public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
-		this.grow(world, pos, state, rand);
-	}
+    @Override
+    public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
+        this.grow(world, pos, state, rand);
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(STAGE, meta);
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    public IBlockState getStateFromMeta(int meta) {
+        return this.getDefaultState().withProperty(STAGE, meta);
+    }
 
-	@Override
-	public int getMetaFromState(IBlockState state) {
-		return state.getValue(STAGE);
-	}
+    @Override
+    public int getMetaFromState(IBlockState state) {
+        return state.getValue(STAGE);
+    }
 
-	@Override
-	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, STAGE);
-	}
+    @Override
+    protected BlockStateContainer createBlockState() {
+        return new BlockStateContainer(this, STAGE);
+    }
 }

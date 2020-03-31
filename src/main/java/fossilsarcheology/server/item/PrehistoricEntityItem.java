@@ -7,16 +7,16 @@ import net.minecraft.item.Item;
 import net.minecraft.util.ResourceLocation;
 
 public class PrehistoricEntityItem extends Item implements DefaultRenderedItem {
-	public final String resourceName;
-	protected PrehistoricEntityType type;
+    public final String resourceName;
+    protected PrehistoricEntityType type;
 
-	public PrehistoricEntityItem(String name, PrehistoricEntityType type) {
-		super();
-		this.type = type;
-		this.setTranslationKey(name + type.friendlyName);
-		this.resourceName = type.resourceName + "_" + name;
-		this.setCreativeTab(FATabRegistry.ITEMS);
-	}
+    public PrehistoricEntityItem(String name, PrehistoricEntityType type) {
+        super();
+        this.type = type;
+        this.setTranslationKey(name + type.friendlyName);
+        this.resourceName = type.resourceName + "_" + name;
+        this.setCreativeTab(FATabRegistry.ITEMS);
+    }
 
     @Override
     public String getResource(ResourceLocation registryName) {

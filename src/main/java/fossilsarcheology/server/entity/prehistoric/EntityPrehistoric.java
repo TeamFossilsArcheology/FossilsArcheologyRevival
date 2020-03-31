@@ -712,9 +712,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (flockWanderCooldown > 0) {
             flockWanderCooldown--;
         }
-        if(isFleeingFlag()){
+        if (isFleeingFlag()) {
             fleeTicks++;
-            if(fleeTicks > getFleeingCooldown()){
+            if (fleeTicks > getFleeingCooldown()) {
                 this.setFleeingFlag(false);
                 fleeTicks = 0;
             }
@@ -1123,10 +1123,10 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     @Override
     public void onKillEntity(EntityLivingBase var1) {
         super.onKillEntity(var1);
-         if(this.type.diet != Diet.HERBIVORE){
-             this.increaseHunger(FoodHelper.getMobFoodPoints(var1, this.type.diet));
-             this.heal(FoodHelper.getMobFoodPoints(var1, this.type.diet) / 3);
-             this.setMood(this.getMood() + 25);
+        if (this.type.diet != Diet.HERBIVORE) {
+            this.increaseHunger(FoodHelper.getMobFoodPoints(var1, this.type.diet));
+            this.heal(FoodHelper.getMobFoodPoints(var1, this.type.diet) / 3);
+            this.setMood(this.getMood() + 25);
         }
     }
 
@@ -2123,7 +2123,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public void handleStopJump() {
     }
 
-    public float getProximityToNextPathSkip(){
+    public float getProximityToNextPathSkip() {
         return this.width > 0.75F ? this.width / 2.0F : 0.75F - this.width / 2.0F;
     }
 
@@ -2143,14 +2143,14 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.dataManager.set(FLEEING, fleeing);
     }
 
-    public boolean isFleeing(){
+    public boolean isFleeing() {
         return isFleeingFlag() && this.type.diet == Diet.HERBIVORE;
     }
 
-    protected int getFleeingCooldown(){
-        if(this.getRevengeTarget() != null){
-            int i = (int)(Math.max(this.getRevengeTarget().width / 2F, 1) * 95);
-            int j = (int)(Math.min(this.width / 2F, 0.5D) * 50);
+    protected int getFleeingCooldown() {
+        if (this.getRevengeTarget() != null) {
+            int i = (int) (Math.max(this.getRevengeTarget().width / 2F, 1) * 95);
+            int j = (int) (Math.min(this.width / 2F, 0.5D) * 50);
             return i - j;
         }
         return 100;

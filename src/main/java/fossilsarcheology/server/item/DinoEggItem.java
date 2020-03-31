@@ -25,7 +25,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class DinoEggItem extends PrehistoricEntityItem implements DefaultRenderedItem {
-    public static final EggTrigger EGG_TRIGGER = (EggTrigger) CriteriaTriggers.register(new EggTrigger());
+    public static final EggTrigger EGG_TRIGGER = CriteriaTriggers.register(new EggTrigger());
+
     public DinoEggItem(PrehistoricEntityType type) {
         super("egg", type);
         this.setHasSubtypes(true);
@@ -33,9 +34,9 @@ public class DinoEggItem extends PrehistoricEntityItem implements DefaultRendere
         this.maxStackSize = 1;
     }
 
-    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected){
-        if(!worldIn.isRemote && entityIn instanceof EntityPlayerMP){
-            EGG_TRIGGER.trigger((EntityPlayerMP)entityIn);
+    public void onUpdate(ItemStack stack, World worldIn, Entity entityIn, int itemSlot, boolean isSelected) {
+        if (!worldIn.isRemote && entityIn instanceof EntityPlayerMP) {
+            EGG_TRIGGER.trigger((EntityPlayerMP) entityIn);
         }
     }
 

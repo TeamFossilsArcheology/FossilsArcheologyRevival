@@ -37,11 +37,20 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
         pediaScale = 45;
     }
 
-    public EnumCreatureAttribute getCreatureAttribute(){
+    public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, Random rand) {
+        BlockPos pos = new BlockPos(x, entity.posY, z);
+        while (world.isAirBlock(pos.down()) && pos.getY() > 0) {
+            pos = pos.down();
+        }
+        return pos.up(2 + rand.nextInt(3));
+    }
+
+    public EnumCreatureAttribute getCreatureAttribute() {
         return EnumCreatureAttribute.ARTHROPOD;
     }
 
-    public void applyEntityCollision(Entity entityIn){}
+    public void applyEntityCollision(Entity entityIn) {
+    }
 
     @Override
     public boolean attackEntityFrom(DamageSource dmg, float i) {
@@ -89,12 +98,12 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
             if (sitProgress != 0)
                 sitProgress = sleepProgress = 0F;
         }
-        if(!this.isMovementBlockedSoft() && !this.useSwimAI()){
+        if (!this.isMovementBlockedSoft() && !this.useSwimAI()) {
             this.motionY += 0.08D;
-        } else if(!this.isChild()){
+        } else if (!this.isChild()) {
             this.moveHelper.action = EntityMoveHelper.Action.WAIT;
         }
-        if(flying && this.ticksExisted % 20 == 0 && !world.isRemote && !this.isChild()){
+        if (flying && this.ticksExisted % 20 == 0 && !world.isRemote && !this.isChild()) {
             this.playSound(FASoundRegistry.MEGANEURA_FLY, this.getSoundVolume(), 1);
         }
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 9 && this.getAttackTarget() != null && this.canReachPrey()) {
@@ -102,11 +111,9 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
         }
     }
 
-    private boolean isFlying(){
+    private boolean isFlying() {
         return !this.onGround && !this.isMovementBlockedSoft();
     }
-
-
 
     protected void switchNavigator(boolean onLand) {
         if (onLand) {
@@ -121,13 +128,13 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
     }
 
     public boolean isSleeping() {
-       return false;
+        return false;
     }
 
     @Override
     public String getTexture() {
         String gender = this.isChild() ? "_baby" : this.getGender() == 0 ? "_female" : "_male";
-        if(this.isSkeleton()){
+        if (this.isSkeleton()) {
             return "fossil:textures/model/" + type.toString().toLowerCase() + "_0/" + type.toString().toLowerCase() + "_skeleton.png";
         }
         return "fossil:textures/model/" + type.toString().toLowerCase() + "_0/" + type.toString().toLowerCase() + gender + ".png";
@@ -226,8 +233,6 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
         return false;
     }
 
-
-
     @Override
     public boolean doesFlock() {
         return false;
@@ -268,16 +273,22 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
         return FASoundRegistry.MEGANEURA_DEATH;
     }
 
-    protected float getSoundVolume(){
+    protected float getSoundVolume() {
         return 0.5F;
     }
 
-    public static BlockPos getPositionRelativetoGround(Entity entity, World world, double x, double z, Random rand) {
-        BlockPos pos = new BlockPos(x, entity.posY, z);
-        while(world.isAirBlock(pos.down()) && pos.getY() > 0){
-            pos = pos.down();
+    public boolean isDirectPathBetweenPoints(Vec3d target) {
+        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector().add(0, -0.25, 0), target, false);
+        if (rayTrace != null && rayTrace.hitVec != null) {
+            BlockPos sidePos = rayTrace.getBlockPos();
+            BlockPos pos = new BlockPos(rayTrace.hitVec);
+            if (!world.isAirBlock(pos) || !world.isAirBlock(sidePos)) {
+                return true;
+            } else {
+                return rayTrace.typeOfHit != RayTraceResult.Type.MISS;
+            }
         }
-        return pos.up(2 + rand.nextInt(3));
+        return true;
     }
 
     class FlightMoveHelper extends EntityMoveHelper {
@@ -300,7 +311,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
                 double d1 = this.posY - EntityMeganeura.this.posY;
                 double d2 = this.posZ - EntityMeganeura.this.posZ;
                 double d3 = d0 * d0 + d1 * d1 + d2 * d2;
-                d3 = (double) MathHelper.sqrt(d3);
+                d3 = MathHelper.sqrt(d3);
 
                 if (d3 < EntityMeganeura.this.getEntityBoundingBox().getAverageEdgeLength()) {
                     this.action = EntityMoveHelper.Action.WAIT;
@@ -326,21 +337,6 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
         }
     }
 
-    public boolean isDirectPathBetweenPoints(Vec3d target) {
-        RayTraceResult rayTrace = world.rayTraceBlocks(this.getPositionVector().add(0, -0.25, 0), target, false);
-        if (rayTrace != null && rayTrace.hitVec != null) {
-            BlockPos sidePos = rayTrace.getBlockPos();
-            BlockPos pos = new BlockPos(rayTrace.hitVec);
-            if (!world.isAirBlock(pos) || !world.isAirBlock(sidePos) ) {
-                return true;
-            }else{
-                return rayTrace.typeOfHit != RayTraceResult.Type.MISS;
-            }
-        }
-        return true;
-    }
-
-
     class AIWander extends EntityAIBase {
         BlockPos target;
 
@@ -362,7 +358,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
                 target = EntityMeganeura.getPositionRelativetoGround(EntityMeganeura.this, EntityMeganeura.this.world, EntityMeganeura.this.posX + EntityMeganeura.this.rand.nextInt(15) - 7, EntityMeganeura.this.posZ + EntityMeganeura.this.rand.nextInt(15) - 7, EntityMeganeura.this.rand);
             }
             if (EntityMeganeura.this.world.isAirBlock(target)) {
-                if(!EntityMeganeura.this.isFlying()){
+                if (!EntityMeganeura.this.isFlying()) {
                     EntityMeganeura.this.switchNavigator(false);
                 }
                 EntityMeganeura.this.moveHelper.setMoveTo((double) target.getX() + 0.5D, (double) target.getY() + 0.5D, (double) target.getZ() + 0.5D, 0.25D);

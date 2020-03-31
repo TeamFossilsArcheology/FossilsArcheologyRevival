@@ -39,8 +39,8 @@ public class TileEntityTimeMachineRender extends TileEntitySpecialRenderer<TileE
         this.bindTexture(TEXTURE);
         float var12 = 0.0F;
         float var13 = 0.0F;
-        var12 = (var12 - (float) MathHelper.fastFloor((double) var12)) * 1.6F - 0.3F;
-        var13 = (var13 - (float) MathHelper.fastFloor((double) var13)) * 1.6F - 0.3F;
+        var12 = (var12 - (float) MathHelper.fastFloor(var12)) * 1.6F - 0.3F;
+        var13 = (var13 - (float) MathHelper.fastFloor(var13)) * 1.6F - 0.3F;
 
         if (var12 < 0.0F) {
             var12 = 0.0F;

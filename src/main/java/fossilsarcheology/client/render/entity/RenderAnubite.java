@@ -11,15 +11,15 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class RenderAnubite extends RenderBiped {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Revival.MODID, "textures/model/anubite.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Revival.MODID, "textures/model/anubite.png");
 
-	public RenderAnubite(RenderManager render) {
-		super(render, new ModelAnubite(), 0.3F);
-	}
+    public RenderAnubite(RenderManager render) {
+        super(render, new ModelAnubite(), 0.3F);
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(EntityLiving entity) {
-		return TEXTURE;
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(EntityLiving entity) {
+        return TEXTURE;
+    }
 
 }

@@ -39,6 +39,11 @@ public enum FoodMappings {
     private Map<Class<? extends Entity>, Integer> insectivoreEntityDiet;
     private Map<Class<? extends Entity>, Integer> pisccarnivoreEntityDiet;
 
+    private static Class<? extends Entity> getClassFromName(String name) {
+        net.minecraftforge.fml.common.registry.EntityEntry entry = net.minecraftforge.fml.common.registry.ForgeRegistries.ENTITIES.getValue(new ResourceLocation(name));
+        return entry == null ? null : entry.getEntityClass();
+    }
+
     /**
      * Add an item to a specific diet.
      *
@@ -403,12 +408,6 @@ public enum FoodMappings {
         }
     }
 
-    private static Class<? extends Entity> getClassFromName(String name) {
-        net.minecraftforge.fml.common.registry.EntityEntry entry = net.minecraftforge.fml.common.registry.ForgeRegistries.ENTITIES.getValue(new ResourceLocation(name));
-        return entry == null ? null : entry.getEntityClass();
-    }
-
-
     public void addToEntityMappings(Class<? extends Entity> entity, int food, Diet diet) {
         switch (diet) {
             case CARNIVORE:
@@ -685,7 +684,7 @@ public enum FoodMappings {
         this.addOreDictionary(ore_dictionary_name, food, Diet.HERBIVORE);
         this.addOreDictionary(ore_dictionary_name, food, Diet.OMNIVORE);
     }
-    
+
     /**
      * Adds a item, block, or entity class to all the herbivore mappings.
      *
@@ -795,7 +794,7 @@ public enum FoodMappings {
         this.addOreDictionary(ore_dictionary_name, food, Diet.CARNIVORE_EGG);
         this.addOreDictionary(ore_dictionary_name, food, Diet.OMNIVORE);
     }
-    
+
     /**
      * Adds a item, block, or entity class to all the egg eating mappings.
      *
@@ -806,7 +805,7 @@ public enum FoodMappings {
         this.addToEntityMappings(entity, food, Diet.CARNIVORE_EGG);
         this.addToEntityMappings(entity, food, Diet.OMNIVORE);
     }
-    
+
     /**
      * Adds a item, block, or entity class to all the insectivore mappings.
      *
@@ -816,7 +815,7 @@ public enum FoodMappings {
     public void addInsect(Class<? extends Entity> entity, int food) {
         this.addToEntityMappings(entity, food, Diet.INSECTIVORE);
     }
-    
+
     /**
      * Adds a item, block, or entity class to all the insectivore mappings.
      *
@@ -826,7 +825,7 @@ public enum FoodMappings {
     public void addInsectEntity(String entity, int food) {
         this.addToEntityMappings(entity, food, Diet.INSECTIVORE);
     }
-    
+
     /**
      * Adds a item, block, or entity class to all the insectivore mappings.
      *
@@ -836,7 +835,7 @@ public enum FoodMappings {
     public void addInsect(Block block, int food) {
         this.addToBlockMappings(block, food, Diet.INSECTIVORE, true);
     }
-    
+
     /**
      * Adds a item, block, or entity class to all the insectivore mappings.
      *
@@ -846,7 +845,7 @@ public enum FoodMappings {
     public void addInsect(ItemStack item, int food) {
         this.addToItemMappings(item, food, Diet.INSECTIVORE);
     }
-    
+
     /**
      * Adds all ore dictionary registries to all the insectivore mappings.
      *

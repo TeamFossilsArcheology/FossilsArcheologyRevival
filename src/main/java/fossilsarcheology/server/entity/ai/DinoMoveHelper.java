@@ -62,7 +62,7 @@ public class DinoMoveHelper extends EntityMoveHelper {
                 return;
             }
 
-            float turn = ((EntityPrehistoric)entity).getMaxTurnDistancePerTick();
+            float turn = ((EntityPrehistoric) entity).getMaxTurnDistancePerTick();
             float f9 = (float) (MathHelper.atan2(d1, d0) * (180D / Math.PI)) - 90;
             this.entity.rotationYaw = this.limitAngle(this.entity.rotationYaw, f9, turn);
             this.entity.setAIMoveSpeed((float) (this.speed * this.entity.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).getAttributeValue()));

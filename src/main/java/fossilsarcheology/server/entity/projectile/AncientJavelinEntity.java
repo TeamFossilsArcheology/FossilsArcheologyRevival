@@ -9,48 +9,48 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 public class AncientJavelinEntity extends JavelinEntity {
-	private boolean lightning = false;
+    private boolean lightning = false;
 
-	public AncientJavelinEntity(World world) {
-		super(world);
-	}
+    public AncientJavelinEntity(World world) {
+        super(world);
+    }
 
-	public AncientJavelinEntity(World world, int damage, double x, double y, double z) {
-		super(world, Item.ToolMaterial.WOOD, damage, x, y, z);
-		this.setDamage(10D);
-	}
+    public AncientJavelinEntity(World world, int damage, double x, double y, double z) {
+        super(world, Item.ToolMaterial.WOOD, damage, x, y, z);
+        this.setDamage(10D);
+    }
 
-	public AncientJavelinEntity(World world, int damage, EntityLivingBase shooter) {
-		super(world, Item.ToolMaterial.WOOD, damage, shooter);
-		this.setDamage(10D);
-	}
+    public AncientJavelinEntity(World world, int damage, EntityLivingBase shooter) {
+        super(world, Item.ToolMaterial.WOOD, damage, shooter);
+        this.setDamage(10D);
+    }
 
-	@Override
-	public void writeEntityToNBT(NBTTagCompound compound) {
-		super.writeEntityToNBT(compound);
-		compound.setBoolean("LightningShot", this.lightning);
-	}
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setBoolean("LightningShot", this.lightning);
+    }
 
-	@Override
-	public void readEntityFromNBT(NBTTagCompound compound) {
-		super.readEntityFromNBT(compound);
-		this.lightning = compound.getBoolean("LightningShot");
-	}
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        this.lightning = compound.getBoolean("LightningShot");
+    }
 
-	@Override
-	public void onUpdate() {
-		if (this.inGround && !this.lightning) {
-			if (this.rand.nextInt(100) < 30) {
-				this.world.addWeatherEffect(new EntityLightningBolt(this.world, this.posX, this.posY, this.posZ, false));
-			}
-			this.lightning = true;
-		}
-		super.onUpdate();
-	}
+    @Override
+    public void onUpdate() {
+        if (this.inGround && !this.lightning) {
+            if (this.rand.nextInt(100) < 30) {
+                this.world.addWeatherEffect(new EntityLightningBolt(this.world, this.posX, this.posY, this.posZ, false));
+            }
+            this.lightning = true;
+        }
+        super.onUpdate();
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
-	protected ItemStack getArrowStack() {
-		return new ItemStack(FAItemRegistry.ANCIENT_JAVELIN, 1, FAItemRegistry.ANCIENT_JAVELIN.getMaxDamage() - this.itemDamage);
-	}
+    @SuppressWarnings("deprecation")
+    @Override
+    protected ItemStack getArrowStack() {
+        return new ItemStack(FAItemRegistry.ANCIENT_JAVELIN, 1, FAItemRegistry.ANCIENT_JAVELIN.getMaxDamage() - this.itemDamage);
+    }
 }

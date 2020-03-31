@@ -13,25 +13,26 @@ public class RecipeAnalyzer {
     private ItemStack stack;
     private NavigableMap<Float, ItemStack> outputMap = new TreeMap<Float, ItemStack>();
     private float totalWeight;
-    public RecipeAnalyzer(ItemStack input){
+
+    public RecipeAnalyzer(ItemStack input) {
         this.stack = input;
     }
 
-    public RecipeAnalyzer(Item input){
+    public RecipeAnalyzer(Item input) {
         this.stack = new ItemStack(input);
     }
 
-    public RecipeAnalyzer(Block input){
+    public RecipeAnalyzer(Block input) {
         this(Item.getItemFromBlock(input));
     }
 
-    public RecipeAnalyzer addOutput(ItemStack stack, float weight){
+    public RecipeAnalyzer addOutput(ItemStack stack, float weight) {
         totalWeight += weight;
         outputMap.put(totalWeight, stack);
         return this;
     }
 
-    public ItemStack getInput(){
+    public ItemStack getInput() {
         return stack;
     }
 
@@ -40,11 +41,11 @@ public class RecipeAnalyzer {
         return outputMap.higherEntry(entry).getValue().copy();
     }
 
-    public NavigableMap<Float, ItemStack> getDisplayMap(){
+    public NavigableMap<Float, ItemStack> getDisplayMap() {
         return outputMap;
     }
 
-    public float getTotalWeight(){
+    public float getTotalWeight() {
         return totalWeight;
     }
 

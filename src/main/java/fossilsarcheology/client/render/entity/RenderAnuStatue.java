@@ -11,20 +11,20 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class RenderAnuStatue extends RenderLiving<EntityAnuStatue> {
-	private static final ResourceLocation TEXTURE = new ResourceLocation(Revival.MODID, "textures/model/anu_statue.png");
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Revival.MODID, "textures/model/anu_statue.png");
 
-	public RenderAnuStatue(RenderManager renderManager) {
-		super(renderManager, new ModelAnuTotem(), 0.5F);
-		layerRenderers.add(new LayerAnuStatueGlow());
-		layerRenderers.add(new LayerAnuStatueOverlay(this));
-	}
+    public RenderAnuStatue(RenderManager renderManager) {
+        super(renderManager, new ModelAnuTotem(), 0.5F);
+        layerRenderers.add(new LayerAnuStatueGlow());
+        layerRenderers.add(new LayerAnuStatueOverlay(this));
+    }
 
-	protected void preRenderCallback(EntityAnuStatue anu, float partialTickTime) {
-		GL11.glRotatef(anu.ticksExisted * anu.ticksExisted * 0.15F, 0, 1, 0);
-	}
+    protected void preRenderCallback(EntityAnuStatue anu, float partialTickTime) {
+        GL11.glRotatef(anu.ticksExisted * anu.ticksExisted * 0.15F, 0, 1, 0);
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(EntityAnuStatue entity) {
-		return TEXTURE;
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(EntityAnuStatue entity) {
+        return TEXTURE;
+    }
 }

@@ -8,6 +8,7 @@ import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
 import net.minecraft.entity.Entity;
 
 public class ModelMegalania extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer Shoulders;
     public AdvancedModelRenderer Neck;
     public AdvancedModelRenderer Body;
@@ -31,7 +32,6 @@ public class ModelMegalania extends ModelPrehistoric {
     public AdvancedModelRenderer RHand;
     public AdvancedModelRenderer LLowerArm;
     public AdvancedModelRenderer LHand;
-    private final ModelAnimator animator;
 
     public ModelMegalania() {
         this.textureWidth = 128;
@@ -171,7 +171,7 @@ public class ModelMegalania extends ModelPrehistoric {
         ModelUtils.rotate(animator, BottomJaw1, 15, 0, 0);
         animator.endKeyframe();
         animator.resetKeyframe(10);
-        animator.setAnimation(prehistoric.ANIMATION_FIGHT);
+        animator.setAnimation(EntityMegalania.ANIMATION_FIGHT);
         animator.startKeyframe(10);
         standPos();
         ModelUtils.rotate(animator, Neck, 23, 36, 0);
@@ -220,7 +220,7 @@ public class ModelMegalania extends ModelPrehistoric {
         animator.resetKeyframe(10);
     }
 
-    private void standPos(){
+    private void standPos() {
         ModelUtils.rotate(animator, Shoulders, -60, 0, 0);
         ModelUtils.rotate(animator, Body, 7, 0, 0);
         ModelUtils.rotate(animator, Hips, 25, 0, 0);
@@ -273,10 +273,10 @@ public class ModelMegalania extends ModelPrehistoric {
         this.swing(LeftThigh, speed2, degree * 1.2F, false, 0F, -0.5F, f, f1);
         this.swing(RightThigh, speed2, degree * 1.2F, false, 0F, 0.5F, f, f1);
 
-       this.walk(LeftArm, speed2, degree * 0.7F, false, 0F, 0F, f, f1);
-       this.walk(RightArm, speed2, degree * 0.7F, true, 0F, 0F, f, f1);
-       this.walk(LeftThigh, speed2, degree * 0.7F, true, 0F, 0F, f, f1);
-       this.walk(RightThigh, speed2, degree * 0.7F, false, 0F, 0F, f, f1);
+        this.walk(LeftArm, speed2, degree * 0.7F, false, 0F, 0F, f, f1);
+        this.walk(RightArm, speed2, degree * 0.7F, true, 0F, 0F, f, f1);
+        this.walk(LeftThigh, speed2, degree * 0.7F, true, 0F, 0F, f, f1);
+        this.walk(RightThigh, speed2, degree * 0.7F, false, 0F, 0F, f, f1);
 
         this.walk(LHand, speed2, degree * 0.7F, false, 1F, 0.25F, f, f1);
         this.walk(RHand, speed2, degree * 0.7F, true, 1F, -0.25F, f, f1);
@@ -299,9 +299,9 @@ public class ModelMegalania extends ModelPrehistoric {
             sitAnimationRotationPrev(LeftThigh, sitProgress, ((float) Math.toRadians(7.0D)), ((float) Math.toRadians(-40.0D)), ((float) Math.toRadians(13.0D)));
             sitAnimationRotationPrev(RightShin, sitProgress, ((float) Math.toRadians(15.0D)), ((float) Math.toRadians(20.0D)), ((float) Math.toRadians(90.0D)));
             sitAnimationRotationPrev(LeftShin, sitProgress, ((float) Math.toRadians(15.0D)), ((float) Math.toRadians(-20.0D)), ((float) Math.toRadians(-90.0D)));
-            sitAnimationRotationPrev(Rightfoot, sitProgress,0, 0,  ((float) Math.toRadians(-80)));
-            sitAnimationRotationPrev(LeftFoot, sitProgress,0, 0,  ((float) Math.toRadians(80)));
-            sitAnimationRotationPrev(Tail1, sitProgress,0, 0,  0);
+            sitAnimationRotationPrev(Rightfoot, sitProgress, 0, 0, ((float) Math.toRadians(-80)));
+            sitAnimationRotationPrev(LeftFoot, sitProgress, 0, 0, ((float) Math.toRadians(80)));
+            sitAnimationRotationPrev(Tail1, sitProgress, 0, 0, 0);
             sitAnimationPos(RightThigh, sitProgress, 2.1F, 0F, 0F);
             sitAnimationPos(LeftThigh, sitProgress, -2.1F, 0F, 0F);
             sitAnimationPos(Shoulders, sitProgress, 0F, 6F, 0F);
@@ -318,12 +318,12 @@ public class ModelMegalania extends ModelPrehistoric {
             sitAnimationRotationPrev(LeftThigh, sitProgress, ((float) Math.toRadians(7.0D)), ((float) Math.toRadians(-40.0D)), ((float) Math.toRadians(13.0D)));
             sitAnimationRotationPrev(RightShin, sitProgress, ((float) Math.toRadians(15.0D)), ((float) Math.toRadians(20.0D)), ((float) Math.toRadians(90.0D)));
             sitAnimationRotationPrev(LeftShin, sitProgress, ((float) Math.toRadians(15.0D)), ((float) Math.toRadians(-20.0D)), ((float) Math.toRadians(-90.0D)));
-            sitAnimationRotationPrev(Rightfoot, sitProgress,0, 0,  ((float) Math.toRadians(-80)));
-            sitAnimationRotationPrev(LeftFoot, sitProgress,0, 0,  ((float) Math.toRadians(80)));
+            sitAnimationRotationPrev(Rightfoot, sitProgress, 0, 0, ((float) Math.toRadians(-80)));
+            sitAnimationRotationPrev(LeftFoot, sitProgress, 0, 0, ((float) Math.toRadians(80)));
             sitAnimationRotationPrev(Neck, sitProgress, ((float) Math.toRadians(18)), 0, 0);
             sitAnimationRotationPrev(Head, sitProgress, ((float) Math.toRadians(-20)), 0, 0);
 
-            sitAnimationRotationPrev(Tail1, sitProgress,0, 0,  0);
+            sitAnimationRotationPrev(Tail1, sitProgress, 0, 0, 0);
             sitAnimationPos(RightThigh, sitProgress, 2.1F, 0F, 0F);
             sitAnimationPos(LeftThigh, sitProgress, -2.1F, 0F, 0F);
             sitAnimationPos(Shoulders, sitProgress, 0F, 6F, 0F);
@@ -340,12 +340,12 @@ public class ModelMegalania extends ModelPrehistoric {
             sitAnimationRotationPrev(LeftThigh, sitProgress, ((float) Math.toRadians(7.0D)), ((float) Math.toRadians(-40.0D)), ((float) Math.toRadians(13.0D)));
             sitAnimationRotationPrev(RightShin, sitProgress, ((float) Math.toRadians(15.0D)), ((float) Math.toRadians(20.0D)), ((float) Math.toRadians(90.0D)));
             sitAnimationRotationPrev(LeftShin, sitProgress, ((float) Math.toRadians(15.0D)), ((float) Math.toRadians(-20.0D)), ((float) Math.toRadians(-90.0D)));
-            sitAnimationRotationPrev(Rightfoot, sitProgress,0, 0,  ((float) Math.toRadians(-80)));
-            sitAnimationRotationPrev(LeftFoot, sitProgress,0, 0,  ((float) Math.toRadians(80)));
+            sitAnimationRotationPrev(Rightfoot, sitProgress, 0, 0, ((float) Math.toRadians(-80)));
+            sitAnimationRotationPrev(LeftFoot, sitProgress, 0, 0, ((float) Math.toRadians(80)));
             sitAnimationRotationPrev(Neck, sitProgress, ((float) Math.toRadians(18)), 0, 0);
             sitAnimationRotationPrev(Head, sitProgress, ((float) Math.toRadians(-20)), 0, 0);
 
-            sitAnimationRotationPrev(Tail1, sitProgress,0, 0,  0);
+            sitAnimationRotationPrev(Tail1, sitProgress, 0, 0, 0);
             sitAnimationPos(RightThigh, sitProgress, 2.1F, 0F, 0F);
             sitAnimationPos(LeftThigh, sitProgress, -2.1F, 0F, 0F);
             sitAnimationPos(Shoulders, sitProgress, 0F, 6F, 0F);

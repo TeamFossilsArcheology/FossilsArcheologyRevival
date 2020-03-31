@@ -177,8 +177,8 @@ public class ChunkProviderAnu implements IChunkGenerator {
 
         for (int i = -12; i <= 12; ++i) {
             for (int j = -12; j <= 12; ++j) {
-                long k = (long) (p_185960_1_ + i);
-                long l = (long) (p_185960_2_ + j);
+                long k = p_185960_1_ + i;
+                long l = p_185960_2_ + j;
 
                 if (k * k + l * l > 4096L && this.islandNoise.getValue((double) k, (double) l) < -0.8999999761581421D) {
                     float f3 = (MathHelper.abs((float) k) * 3439.0F + MathHelper.abs((float) l) * 147.0F) % 13.0F + 9.0F;
@@ -248,7 +248,7 @@ public class ChunkProviderAnu implements IChunkGenerator {
                     int k1 = 2;
 
                     if (j1 > p_185963_6_ / 2 - k1) {
-                        double d6 = (double) ((float) (j1 - (p_185963_6_ / 2 - k1)) / 64.0F);
+                        double d6 = (float) (j1 - (p_185963_6_ / 2 - k1)) / 64.0F;
                         d6 = MathHelper.clamp(d6, 0.0D, 1.0D);
                         d4 = d4 * (1.0D - d6) + -3000.0D * d6;
                     }
@@ -256,7 +256,7 @@ public class ChunkProviderAnu implements IChunkGenerator {
                     k1 = 8;
 
                     if (j1 < k1) {
-                        double d7 = (double) ((float) (k1 - j1) / ((float) k1 - 1.0F));
+                        double d7 = (float) (k1 - j1) / ((float) k1 - 1.0F);
                         d4 = d4 * (1.0D - d7) + -30.0D * d7;
                     }
 

@@ -25,7 +25,8 @@ import net.minecraft.util.text.translation.I18n;
 import net.minecraft.world.World;
 
 public class TileEntityFeeder extends TileEntity implements IInventory, ISidedInventory, ITickable {
-    private static final int[] SLOTS_TOP = new int[] { 0, 1 };
+    private static final int[] SLOTS_TOP = new int[]{0, 1};
+    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
     private int meat;
     private int plant;
     private int prevMeat;
@@ -122,10 +123,10 @@ public class TileEntityFeeder extends TileEntity implements IInventory, ISidedIn
 
     @Override
     public boolean isItemValidForSlot(int slot, ItemStack stack) {
-        if(slot == 0){
+        if (slot == 0) {
             return FoodMappings.INSTANCE.getItemFoodAmount(stack, Diet.CARNIVORE_EGG) > 0 || FoodMappings.INSTANCE.getItemFoodAmount(stack, Diet.PISCCARNIVORE) > 0;
         }
-        if(slot == 1){
+        if (slot == 1) {
             return FoodMappings.INSTANCE.getItemFoodAmount(stack, Diet.HERBIVORE) > 0;
         }
         return false;
@@ -167,7 +168,7 @@ public class TileEntityFeeder extends TileEntity implements IInventory, ISidedIn
 
     @Override
     public int[] getSlotsForFace(EnumFacing side) {
-        return side != EnumFacing.DOWN ? SLOTS_TOP : new int[] {};
+        return side != EnumFacing.DOWN ? SLOTS_TOP : new int[]{};
     }
 
     @Override
@@ -300,8 +301,6 @@ public class TileEntityFeeder extends TileEntity implements IInventory, ISidedIn
     public int getVegBarScaled(int i) {
         return this.getField(1) * i / 10000;
     }
-
-    net.minecraftforge.items.IItemHandler handlerTop = new net.minecraftforge.items.wrapper.SidedInvWrapper(this, net.minecraft.util.EnumFacing.UP);
 
     @SuppressWarnings("unchecked")
     @Override

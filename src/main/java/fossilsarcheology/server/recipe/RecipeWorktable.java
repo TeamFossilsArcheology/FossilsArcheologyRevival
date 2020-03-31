@@ -7,21 +7,22 @@ public class RecipeWorktable {
     private ItemStack input;
     private ItemStack output;
     private ItemStack fuel;
-    public RecipeWorktable(ItemStack input, ItemStack output, ItemStack fuel){
+
+    public RecipeWorktable(ItemStack input, ItemStack output, ItemStack fuel) {
         this.input = input;
         this.output = output;
         this.fuel = fuel;
     }
 
-    public ItemStack getInput(){
+    public ItemStack getInput() {
         return input.copy();
     }
 
-    public ItemStack getOutput(){
+    public ItemStack getOutput() {
         return output.copy();
     }
 
-    public ItemStack getFuel(){
+    public ItemStack getFuel() {
         return fuel.copy();
     }
 

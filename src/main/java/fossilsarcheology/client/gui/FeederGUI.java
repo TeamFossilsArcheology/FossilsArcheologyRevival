@@ -17,7 +17,7 @@ public class FeederGUI extends GuiContainer {
 
     public FeederGUI(InventoryPlayer inventoryPlayer, TileEntityFeeder entity) {
         super(new FeederContainer(inventoryPlayer, entity));
-        this.feederEntity = (TileEntityFeeder) entity;
+        this.feederEntity = entity;
     }
 
     @Override

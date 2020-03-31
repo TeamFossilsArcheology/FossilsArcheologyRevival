@@ -9,59 +9,59 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 
 public abstract class AncientWoodSlabBlock extends FossilSlabBlock {
-	public AncientWoodSlabBlock(String name, float hardness, float resistance, SoundType soundType) {
-		super(name, hardness, resistance, soundType, Material.WOOD, FABlockRegistry.ANCIENT_WOOD);
-	}
+    public AncientWoodSlabBlock(String name, float hardness, float resistance, SoundType soundType) {
+        super(name, hardness, resistance, soundType, Material.WOOD, FABlockRegistry.ANCIENT_WOOD);
+    }
 
-	@Override
-	public ItemBlock getItemBlock() {
-		return new FossilSlabBlockItem(this, FABlockRegistry.ANCIENT_WOOD_SINGLESLAB, FABlockRegistry.ANCIENT_WOOD_DOUBLESLAB);
-	}
+    @Override
+    public ItemBlock getItemBlock() {
+        return new FossilSlabBlockItem(this, FABlockRegistry.ANCIENT_WOOD_SINGLESLAB, FABlockRegistry.ANCIENT_WOOD_DOUBLESLAB);
+    }
 
-	@Override
-	public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
-		return true;
-	}
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
+    }
 
-	public static class Double extends FossilSlabBlock {
-		public Double(String name, float hardness, float resistance, SoundType soundType) {
-			super(name, hardness, resistance, soundType, Material.WOOD, FABlockRegistry.ANCIENT_WOOD);
-		}
+    public static class Double extends FossilSlabBlock {
+        public Double(String name, float hardness, float resistance, SoundType soundType) {
+            super(name, hardness, resistance, soundType, Material.WOOD, FABlockRegistry.ANCIENT_WOOD);
+        }
 
-		@Override
+        @Override
         public boolean isDouble() {
-			return true;
-		}
+            return true;
+        }
 
-		@Override
-		public Item getSlabItem() {
-			return Item.getItemFromBlock(FABlockRegistry.ANCIENT_WOOD_SINGLESLAB);
-		}
+        @Override
+        public Item getSlabItem() {
+            return Item.getItemFromBlock(FABlockRegistry.ANCIENT_WOOD_SINGLESLAB);
+        }
 
-		@Override
-		public ItemBlock getItemBlock() {
-			return new FossilSlabBlockItem(this, FABlockRegistry.ANCIENT_WOOD_SINGLESLAB, FABlockRegistry.ANCIENT_WOOD_DOUBLESLAB);
-		}
-	}
+        @Override
+        public ItemBlock getItemBlock() {
+            return new FossilSlabBlockItem(this, FABlockRegistry.ANCIENT_WOOD_SINGLESLAB, FABlockRegistry.ANCIENT_WOOD_DOUBLESLAB);
+        }
+    }
 
-	public static class Half extends FossilSlabBlock {
-		public Half(String name, float hardness, float resistance, SoundType soundType) {
-			super(name, hardness, resistance, soundType, Material.WOOD, FABlockRegistry.ANCIENT_WOOD);
-		}
+    public static class Half extends FossilSlabBlock {
+        public Half(String name, float hardness, float resistance, SoundType soundType) {
+            super(name, hardness, resistance, soundType, Material.WOOD, FABlockRegistry.ANCIENT_WOOD);
+        }
 
-		@Override
+        @Override
         public boolean isDouble() {
-			return false;
-		}
+            return false;
+        }
 
-		@Override
-		public Item getSlabItem() {
-			return Item.getItemFromBlock(FABlockRegistry.ANCIENT_WOOD_SINGLESLAB);
-		}
+        @Override
+        public Item getSlabItem() {
+            return Item.getItemFromBlock(FABlockRegistry.ANCIENT_WOOD_SINGLESLAB);
+        }
 
-		@Override
-		public ItemBlock getItemBlock() {
-			return new FossilSlabBlockItem(this, FABlockRegistry.ANCIENT_WOOD_SINGLESLAB, FABlockRegistry.ANCIENT_WOOD_DOUBLESLAB);
-		}
-	}
+        @Override
+        public ItemBlock getItemBlock() {
+            return new FossilSlabBlockItem(this, FABlockRegistry.ANCIENT_WOOD_SINGLESLAB, FABlockRegistry.ANCIENT_WOOD_DOUBLESLAB);
+        }
+    }
 }

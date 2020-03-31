@@ -12,15 +12,14 @@ public class DinoAIPanic extends EntityAIPanic {
         this.prehistoric = prehistoric;
     }
 
-    public boolean shouldExecute(){
-        if(prehistoric.aiResponseType() != PrehistoricEntityTypeAI.Response.SCARED){
+    public boolean shouldExecute() {
+        if (prehistoric.aiResponseType() != PrehistoricEntityTypeAI.Response.SCARED) {
             return false;
         }
         return super.shouldExecute();
     }
 
-    public void startExecuting()
-    {
+    public void startExecuting() {
         super.startExecuting();
         prehistoric.isRunningAway = true;
     }

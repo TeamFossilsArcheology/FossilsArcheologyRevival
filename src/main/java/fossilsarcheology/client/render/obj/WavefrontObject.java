@@ -59,6 +59,127 @@ public class WavefrontObject implements IModelCustom {
         loadObjModel(inputStream);
     }
 
+    /***
+     * Verifies that the given line from the model file is a valid vertex
+     * @param line the line being validated
+     * @return true if the line is a valid vertex, false otherwise
+     */
+    private static boolean isValidVertexLine(String line) {
+        if (vertexMatcher != null) {
+            vertexMatcher.reset();
+        }
+
+        vertexMatcher = vertexPattern.matcher(line);
+        return vertexMatcher.matches();
+    }
+
+    /***
+     * Verifies that the given line from the model file is a valid vertex normal
+     * @param line the line being validated
+     * @return true if the line is a valid vertex normal, false otherwise
+     */
+    private static boolean isValidVertexNormalLine(String line) {
+        if (vertexNormalMatcher != null) {
+            vertexNormalMatcher.reset();
+        }
+
+        vertexNormalMatcher = vertexNormalPattern.matcher(line);
+        return vertexNormalMatcher.matches();
+    }
+
+    /***
+     * Verifies that the given line from the model file is a valid texture coordinate
+     * @param line the line being validated
+     * @return true if the line is a valid texture coordinate, false otherwise
+     */
+    private static boolean isValidTextureCoordinateLine(String line) {
+        if (textureCoordinateMatcher != null) {
+            textureCoordinateMatcher.reset();
+        }
+
+        textureCoordinateMatcher = textureCoordinatePattern.matcher(line);
+        return textureCoordinateMatcher.matches();
+    }
+
+    /***
+     * Verifies that the given line from the model file is a valid face that is described by vertices, texture coordinates, and vertex normals
+     * @param line the line being validated
+     * @return true if the line is a valid face that matches the format "f v1/vt1/vn1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
+     */
+    private static boolean isValidFace_V_VT_VN_Line(String line) {
+        if (face_V_VT_VN_Matcher != null) {
+            face_V_VT_VN_Matcher.reset();
+        }
+
+        face_V_VT_VN_Matcher = face_V_VT_VN_Pattern.matcher(line);
+        return face_V_VT_VN_Matcher.matches();
+    }
+
+    /***
+     * Verifies that the given line from the model file is a valid face that is described by vertices and texture coordinates
+     * @param line the line being validated
+     * @return true if the line is a valid face that matches the format "f v1/vt1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
+     */
+    private static boolean isValidFace_V_VT_Line(String line) {
+        if (face_V_VT_Matcher != null) {
+            face_V_VT_Matcher.reset();
+        }
+
+        face_V_VT_Matcher = face_V_VT_Pattern.matcher(line);
+        return face_V_VT_Matcher.matches();
+    }
+
+    /***
+     * Verifies that the given line from the model file is a valid face that is described by vertices and vertex normals
+     * @param line the line being validated
+     * @return true if the line is a valid face that matches the format "f v1//vn1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
+     */
+    private static boolean isValidFace_V_VN_Line(String line) {
+        if (face_V_VN_Matcher != null) {
+            face_V_VN_Matcher.reset();
+        }
+
+        face_V_VN_Matcher = face_V_VN_Pattern.matcher(line);
+        return face_V_VN_Matcher.matches();
+    }
+
+    /***
+     * Verifies that the given line from the model file is a valid face that is described by only vertices
+     * @param line the line being validated
+     * @return true if the line is a valid face that matches the format "f v1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
+     */
+    private static boolean isValidFace_V_Line(String line) {
+        if (face_V_Matcher != null) {
+            face_V_Matcher.reset();
+        }
+
+        face_V_Matcher = face_V_Pattern.matcher(line);
+        return face_V_Matcher.matches();
+    }
+
+    /***
+     * Verifies that the given line from the model file is a valid face of any of the possible face formats
+     * @param line the line being validated
+     * @return true if the line is a valid face that matches any of the valid face formats, false otherwise
+     */
+    private static boolean isValidFaceLine(String line) {
+        return isValidFace_V_VT_VN_Line(line) || isValidFace_V_VT_Line(line) || isValidFace_V_VN_Line(line) || isValidFace_V_Line(line);
+    }
+
+    /***
+     * Verifies that the given line from the model file is a valid group (or object)
+     * @param line the line being validated
+     * @return true if the line is a valid group (or object), false otherwise
+     */
+    private static boolean isValidGroupObjectLine(String line) {
+        if (groupObjectMatcher != null) {
+            groupObjectMatcher.reset();
+        }
+
+        groupObjectMatcher = groupObjectPattern.matcher(line);
+        return groupObjectMatcher.matches();
+    }
+
     private void loadObjModel(InputStream inputStream) throws ModelFormatException {
         BufferedReader reader = null;
 
@@ -386,127 +507,6 @@ public class WavefrontObject implements IModelCustom {
         }
 
         return group;
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid vertex
-     * @param line the line being validated
-     * @return true if the line is a valid vertex, false otherwise
-     */
-    private static boolean isValidVertexLine(String line) {
-        if (vertexMatcher != null) {
-            vertexMatcher.reset();
-        }
-
-        vertexMatcher = vertexPattern.matcher(line);
-        return vertexMatcher.matches();
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid vertex normal
-     * @param line the line being validated
-     * @return true if the line is a valid vertex normal, false otherwise
-     */
-    private static boolean isValidVertexNormalLine(String line) {
-        if (vertexNormalMatcher != null) {
-            vertexNormalMatcher.reset();
-        }
-
-        vertexNormalMatcher = vertexNormalPattern.matcher(line);
-        return vertexNormalMatcher.matches();
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid texture coordinate
-     * @param line the line being validated
-     * @return true if the line is a valid texture coordinate, false otherwise
-     */
-    private static boolean isValidTextureCoordinateLine(String line) {
-        if (textureCoordinateMatcher != null) {
-            textureCoordinateMatcher.reset();
-        }
-
-        textureCoordinateMatcher = textureCoordinatePattern.matcher(line);
-        return textureCoordinateMatcher.matches();
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid face that is described by vertices, texture coordinates, and vertex normals
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches the format "f v1/vt1/vn1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
-     */
-    private static boolean isValidFace_V_VT_VN_Line(String line) {
-        if (face_V_VT_VN_Matcher != null) {
-            face_V_VT_VN_Matcher.reset();
-        }
-
-        face_V_VT_VN_Matcher = face_V_VT_VN_Pattern.matcher(line);
-        return face_V_VT_VN_Matcher.matches();
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid face that is described by vertices and texture coordinates
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches the format "f v1/vt1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
-     */
-    private static boolean isValidFace_V_VT_Line(String line) {
-        if (face_V_VT_Matcher != null) {
-            face_V_VT_Matcher.reset();
-        }
-
-        face_V_VT_Matcher = face_V_VT_Pattern.matcher(line);
-        return face_V_VT_Matcher.matches();
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid face that is described by vertices and vertex normals
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches the format "f v1//vn1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
-     */
-    private static boolean isValidFace_V_VN_Line(String line) {
-        if (face_V_VN_Matcher != null) {
-            face_V_VN_Matcher.reset();
-        }
-
-        face_V_VN_Matcher = face_V_VN_Pattern.matcher(line);
-        return face_V_VN_Matcher.matches();
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid face that is described by only vertices
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches the format "f v1 ..." (with a minimum of 3 points in the face, and a maximum of 4), false otherwise
-     */
-    private static boolean isValidFace_V_Line(String line) {
-        if (face_V_Matcher != null) {
-            face_V_Matcher.reset();
-        }
-
-        face_V_Matcher = face_V_Pattern.matcher(line);
-        return face_V_Matcher.matches();
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid face of any of the possible face formats
-     * @param line the line being validated
-     * @return true if the line is a valid face that matches any of the valid face formats, false otherwise
-     */
-    private static boolean isValidFaceLine(String line) {
-        return isValidFace_V_VT_VN_Line(line) || isValidFace_V_VT_Line(line) || isValidFace_V_VN_Line(line) || isValidFace_V_Line(line);
-    }
-
-    /***
-     * Verifies that the given line from the model file is a valid group (or object)
-     * @param line the line being validated
-     * @return true if the line is a valid group (or object), false otherwise
-     */
-    private static boolean isValidGroupObjectLine(String line) {
-        if (groupObjectMatcher != null) {
-            groupObjectMatcher.reset();
-        }
-
-        groupObjectMatcher = groupObjectPattern.matcher(line);
-        return groupObjectMatcher.matches();
     }
 
     @Override

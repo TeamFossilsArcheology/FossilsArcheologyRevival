@@ -5,12 +5,12 @@ import net.minecraft.enchantment.EnumEnchantmentType;
 import net.minecraft.init.Enchantments;
 import net.minecraft.inventory.EntityEquipmentSlot;
 
-public class EnchantmentArcheology extends Enchantment{
+public class EnchantmentArcheology extends Enchantment {
 
     private boolean archeology;
 
     protected EnchantmentArcheology(boolean archeology) {
-        super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[] {EntityEquipmentSlot.MAINHAND});
+        super(Rarity.VERY_RARE, EnumEnchantmentType.DIGGER, new EntityEquipmentSlot[]{EntityEquipmentSlot.MAINHAND});
         this.archeology = archeology;
         setName(archeology ? "fossil.archeology" : "fossil.paleontology");
         setRegistryName(archeology ? "fossil:archeology" : "fossil:paleontology");
@@ -24,8 +24,7 @@ public class EnchantmentArcheology extends Enchantment{
         return super.getMinEnchantability(enchantmentLevel) + 50;
     }
 
-    public int getMinEnchantability(int enchantmentLevel)
-    {
+    public int getMinEnchantability(int enchantmentLevel) {
         return 1 + 10 * (enchantmentLevel - 1);
     }
 

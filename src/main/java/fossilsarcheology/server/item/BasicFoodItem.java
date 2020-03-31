@@ -11,15 +11,15 @@ import net.minecraft.world.World;
 
 public class BasicFoodItem extends ItemFood implements DefaultRenderedItem {
 
-	public BasicFoodItem(int amount, float saturation, boolean meat, String name) {
-		super(amount, saturation, meat);
-		this.setCreativeTab(FATabRegistry.ITEMS);
-		this.setTranslationKey(name);
-	}
+    public BasicFoodItem(int amount, float saturation, boolean meat, String name) {
+        super(amount, saturation, meat);
+        this.setCreativeTab(FATabRegistry.ITEMS);
+        this.setTranslationKey(name);
+    }
 
-	protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player){
-		if(stack.getItem() == FAItemRegistry.RAW_CHICKEN_SOUP || stack.getItem() == FAItemRegistry.COOKED_CHICKEN_SOUP){
-			player.addItemStackToInventory(new ItemStack(Items.BUCKET));
-		}
-	}
+    protected void onFoodEaten(ItemStack stack, World worldIn, EntityPlayer player) {
+        if (stack.getItem() == FAItemRegistry.RAW_CHICKEN_SOUP || stack.getItem() == FAItemRegistry.COOKED_CHICKEN_SOUP) {
+            player.addItemStackToInventory(new ItemStack(Items.BUCKET));
+        }
+    }
 }

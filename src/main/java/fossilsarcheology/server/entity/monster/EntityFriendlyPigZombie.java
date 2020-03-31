@@ -199,7 +199,7 @@ public class EntityFriendlyPigZombie extends EntityTameable {
                 this.aiSit.setSitting(!this.isSitting());
                 this.isJumping = false;
                 this.navigator.clearPath();
-                this.setAttackTarget((EntityLivingBase) null);
+                this.setAttackTarget(null);
             }
         }
         return super.processInteract(player, hand);

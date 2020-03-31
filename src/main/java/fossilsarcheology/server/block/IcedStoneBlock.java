@@ -15,37 +15,37 @@ import net.minecraft.world.World;
 import java.util.Random;
 
 public class IcedStoneBlock extends Block implements DefaultRenderedItem {
-	public IcedStoneBlock() {
-		super(Material.ROCK);
-		this.setHarvestLevel("pickaxe", 1);
-		this.setHardness(1.5F);
-		this.setResistance(10.0F);
-		this.setSoundType(SoundType.GLASS);
-		this.setTranslationKey("iced_stone");
-		this.setRegistryName("iced_stone");
-		this.setCreativeTab(FATabRegistry.BLOCKS);
-	}
+    public IcedStoneBlock() {
+        super(Material.ROCK);
+        this.setHarvestLevel("pickaxe", 1);
+        this.setHardness(1.5F);
+        this.setResistance(10.0F);
+        this.setSoundType(SoundType.GLASS);
+        this.setTranslationKey("iced_stone");
+        this.setRegistryName("iced_stone");
+        this.setCreativeTab(FATabRegistry.BLOCKS);
+    }
 
-	@Override
-	public Item getItemDropped(IBlockState state, Random random, int fortune) {
-		return Item.getItemFromBlock(Blocks.COBBLESTONE);
-	}
+    @Override
+    public Item getItemDropped(IBlockState state, Random random, int fortune) {
+        return Item.getItemFromBlock(Blocks.COBBLESTONE);
+    }
 
-	@SuppressWarnings("deprecation")
-	@Override
+    @SuppressWarnings("deprecation")
+    @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
-		if (worldIn.getLightFor(EnumSkyBlock.BLOCK, pos) > 11 - this.getDefaultState().getLightOpacity()) {
-			this.turnIntoRock(worldIn, pos);
-		}
-	}
+        if (worldIn.getLightFor(EnumSkyBlock.BLOCK, pos) > 11 - this.getDefaultState().getLightOpacity()) {
+            this.turnIntoRock(worldIn, pos);
+        }
+    }
 
-	protected void turnIntoRock(World worldIn, BlockPos pos) {
-		if (worldIn.provider.doesWaterVaporize()) {
-			worldIn.setBlockToAir(pos);
-		} else {
-			this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
-			worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
-			worldIn.notifyNeighborsOfStateChange(pos, Blocks.STONE, true);
-		}
-	}
+    protected void turnIntoRock(World worldIn, BlockPos pos) {
+        if (worldIn.provider.doesWaterVaporize()) {
+            worldIn.setBlockToAir(pos);
+        } else {
+            this.dropBlockAsItem(worldIn, pos, worldIn.getBlockState(pos), 0);
+            worldIn.setBlockState(pos, Blocks.STONE.getDefaultState());
+            worldIn.notifyNeighborsOfStateChange(pos, Blocks.STONE, true);
+        }
+    }
 }

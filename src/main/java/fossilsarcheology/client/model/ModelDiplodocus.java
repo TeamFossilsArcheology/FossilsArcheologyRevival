@@ -9,6 +9,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelDiplodocus extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer upperBody;
     public AdvancedModelRenderer lowerBody;
     public AdvancedModelRenderer neck1;
@@ -57,7 +58,6 @@ public class ModelDiplodocus extends ModelPrehistoric {
     public AdvancedModelRenderer lowerJaw;
     public AdvancedModelRenderer leftFrontLeg;
     public AdvancedModelRenderer rightFrontLeg;
-    private final ModelAnimator animator;
 
     public ModelDiplodocus() {
         this.textureWidth = 256;
@@ -372,7 +372,7 @@ public class ModelDiplodocus extends ModelPrehistoric {
             this.bob(rightFrontThigh, -speed, degree * 0.5F, false, f2, 1);
             this.bob(leftHindThigh, -speed, degree * 0.5F, false, f2, 1);
             this.bob(rightHindThigh, -speed, degree * 0.5F, false, f2, 1);
-            if(((EntityPrehistoric) entity).getAnimation() == ((EntityPrehistoric) entity).ATTACK_ANIMATION){
+            if (((EntityPrehistoric) entity).getAnimation() == ((EntityPrehistoric) entity).ATTACK_ANIMATION) {
                 f = f2;
                 f1 = 0.5F;
             }
@@ -408,7 +408,7 @@ public class ModelDiplodocus extends ModelPrehistoric {
             sitAnimationRotation(Spine2, sitProgress, -0.3665191429188092F, -0.0F, 0.0F);
             sitAnimationRotation(tail1, sitProgress, -0.06981317007977318F, -0.0F, 0.0F);
             sitAnimationRotation(Spine24, sitProgress, -0.3141592653589793F, -0.0F, 0.0F);
-           sitAnimationRotation(tail2, sitProgress, 0.017453292519943295F, -0.0F, 0.0F);
+            sitAnimationRotation(tail2, sitProgress, 0.017453292519943295F, -0.0F, 0.0F);
             sitAnimationRotation(Spine1, sitProgress, -0.3665191429188092F, -0.0F, 0.0F);
             sitAnimationRotation(Spine14, sitProgress, -0.3665191429188092F, -0.0F, 0.0F);
             sitAnimationRotation(Spine19, sitProgress, -0.3665191429188092F, -0.0F, 0.0F);
@@ -489,7 +489,7 @@ public class ModelDiplodocus extends ModelPrehistoric {
             sitAnimationRotation(rightHindThigh, sitProgress, 1.1344640137963142F, -0.0F, 0.0F);
 
         }
-        ((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) tailParts);
+        ((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer(tailParts);
     }
 
-    }
+}

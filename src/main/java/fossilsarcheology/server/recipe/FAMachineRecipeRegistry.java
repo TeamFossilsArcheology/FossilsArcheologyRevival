@@ -29,9 +29,9 @@ public class FAMachineRecipeRegistry {
     public static List<ItemStack> toBeRemovedAnalyzer = new ArrayList<>();
     public static List<RecipeAnalyzer> sifterRecipes = new ArrayList<>();
     public static List<ItemStack> toBeRemovedSifter = new ArrayList<>();
-    public static Map<ItemStack, ItemStack> cultivateRecipes = Maps.<ItemStack, ItemStack>newHashMap();
+    public static Map<ItemStack, ItemStack> cultivateRecipes = Maps.newHashMap();
     public static List<ItemStack> toBeRemovedCultivate = new ArrayList<>();
-    public static Map<ItemStack, Integer> cultivateFuelValues = Maps.<ItemStack, Integer>newHashMap();
+    public static Map<ItemStack, Integer> cultivateFuelValues = Maps.newHashMap();
     public static List<RecipeWorktable> worktableRecipes = new ArrayList<>();
     public static List<ItemStack> toBeRemovedWorktable = new ArrayList<>();
 
@@ -310,30 +310,30 @@ public class FAMachineRecipeRegistry {
 
     public static void postInit() {
         Iterator<RecipeAnalyzer> itr = FAMachineRecipeRegistry.analyzerRecipes.iterator();
-        while(itr.hasNext()){
+        while (itr.hasNext()) {
             RecipeAnalyzer recipe = itr.next();
-            for(ItemStack stack : FAMachineRecipeRegistry.toBeRemovedAnalyzer){
+            for (ItemStack stack : FAMachineRecipeRegistry.toBeRemovedAnalyzer) {
                 if (recipe.getInput().isItemEqual(stack)) {
                     itr.remove();
                 }
             }
         }
         Iterator<RecipeAnalyzer> itr1 = FAMachineRecipeRegistry.sifterRecipes.iterator();
-        while(itr1.hasNext()){
+        while (itr1.hasNext()) {
             RecipeAnalyzer recipe = itr1.next();
-            for(ItemStack stack : FAMachineRecipeRegistry.toBeRemovedSifter){
+            for (ItemStack stack : FAMachineRecipeRegistry.toBeRemovedSifter) {
                 if (recipe.getInput().isItemEqual(stack)) {
                     itr1.remove();
                 }
             }
         }
-        for(ItemStack cultivateStack : toBeRemovedCultivate){
+        for (ItemStack cultivateStack : toBeRemovedCultivate) {
             FAMachineRecipeRegistry.cultivateRecipes.remove(cultivateStack);
         }
         Iterator<RecipeWorktable> itr3 = FAMachineRecipeRegistry.worktableRecipes.iterator();
-        while(itr3.hasNext()){
+        while (itr3.hasNext()) {
             RecipeWorktable recipe = itr3.next();
-            for(ItemStack stack : FAMachineRecipeRegistry.toBeRemovedWorktable){
+            for (ItemStack stack : FAMachineRecipeRegistry.toBeRemovedWorktable) {
                 if (recipe.getInput().isItemEqual(stack)) {
                     itr3.remove();
                 }

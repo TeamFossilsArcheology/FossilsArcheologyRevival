@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class FossilBonemealEvent {
 
-	@SubscribeEvent
-	public void onUseBonemeal(BonemealEvent event) {
-	}
+    @SubscribeEvent
+    public void onUseBonemeal(BonemealEvent event) {
+    }
 }

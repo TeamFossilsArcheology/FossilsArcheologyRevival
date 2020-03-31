@@ -22,6 +22,7 @@ public class FABlockProcessorVillage extends FABlockProcessorLoot {
 
     private Biome biome;
     private EnumFacing facing;
+
     public FABlockProcessorVillage(BlockPos pos, PlacementSettings settings, ResourceLocation loot, Biome biome, EnumFacing facing) {
         super(pos, settings, loot);
         this.biome = biome;
@@ -30,13 +31,13 @@ public class FABlockProcessorVillage extends FABlockProcessorLoot {
 
     @Nullable
     public Template.BlockInfo processBlock(World worldIn, BlockPos pos, Template.BlockInfo blockInfoIn) {
-        if(blockInfoIn.blockState.getBlock() instanceof FigurineBlock) {
+        if (blockInfoIn.blockState.getBlock() instanceof FigurineBlock) {
             NBTTagCompound tag = blockInfoIn.tileentityData == null ? new NBTTagCompound() : blockInfoIn.tileentityData;
             tag.setInteger("FigurineType", random.nextInt(15));
             tag.setInteger("Rot", Math.max(facing.getHorizontalIndex(), 0));
             return new Template.BlockInfo(pos, blockInfoIn.blockState, tag);
         }
-        if(blockInfoIn.blockState.getBlock() instanceof VaseBlock) {
+        if (blockInfoIn.blockState.getBlock() instanceof VaseBlock) {
             NBTTagCompound tag = blockInfoIn.tileentityData == null ? new NBTTagCompound() : blockInfoIn.tileentityData;
             tag.setInteger("Rot", Math.max(facing.getHorizontalIndex(), 0));
             return new Template.BlockInfo(pos, blockInfoIn.blockState, tag);

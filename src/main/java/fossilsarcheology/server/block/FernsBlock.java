@@ -40,11 +40,6 @@ public class FernsBlock extends BlockBush implements DefaultRenderedItem {
         this.setDefaultState(this.blockState.getBaseState().withProperty(TYPE, 0).withProperty(GROWTH, 0));
     }
 
-    @Override
-    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
-        return true;
-    }
-
     public static boolean checkUnderTree(World var0, BlockPos pos) {
         for (int i = 0; i <= 128; ++i) {
             if (var0.getBlockState(pos.up(i)).getMaterial() == Material.LEAVES) {
@@ -52,6 +47,15 @@ public class FernsBlock extends BlockBush implements DefaultRenderedItem {
             }
         }
         return false;
+    }
+
+    public static boolean canGrowOn(IBlockState state) {
+        return state.getMaterial() == Material.GRASS || state.getBlock() == Blocks.DIRT || state.getBlock().getTranslationKey().contains("dirt");
+    }
+
+    @Override
+    public boolean isFlammable(IBlockAccess world, BlockPos pos, EnumFacing face) {
+        return true;
     }
 
     @SuppressWarnings("deprecation")
@@ -72,7 +76,7 @@ public class FernsBlock extends BlockBush implements DefaultRenderedItem {
         return false;
     }
 
-    public int tickRate(World worldIn){
+    public int tickRate(World worldIn) {
         return 1;
     }
 
@@ -123,10 +127,6 @@ public class FernsBlock extends BlockBush implements DefaultRenderedItem {
         int meta = currentState.getBlock().getMetaFromState(currentState);
         return (canGrowOn(world.getBlockState(pos.down())) || world.getBlockState(pos.down()).getBlock() == this) && checkUnderTree(world, pos.up());
 
-    }
-
-    public static boolean canGrowOn(IBlockState state){
-        return state.getMaterial() == Material.GRASS || state.getBlock() == Blocks.DIRT || state.getBlock().getTranslationKey().contains("dirt");
     }
 
     public boolean checkLevel(int meta) {

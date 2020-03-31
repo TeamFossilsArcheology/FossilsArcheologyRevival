@@ -41,19 +41,19 @@ public class LootHelper {
     private static final ResourceLocation EGYPTIAN_ACADEMY_CHEST_14 = new ResourceLocation(Revival.MODID, "egyptian_academy/gyptian_academy_13");
     private static final ResourceLocation EGYPTIAN_ACADEMY_CHEST_15 = new ResourceLocation(Revival.MODID, "egyptian_academy/gyptian_academy_14");
     private static final ResourceLocation EGYPTIAN_ACADEMY_CHEST_16 = new ResourceLocation(Revival.MODID, "egyptian_academy/gyptian_academy_15");
-    
-    public static ResourceLocation getLoot(ResourceLocation lootTable, Random random){
-        if(lootTable == FAWorldGenerator.AZTEC_TEMPLE_CHEST){
+
+    public static ResourceLocation getLoot(ResourceLocation lootTable, Random random) {
+        if (lootTable == FAWorldGenerator.AZTEC_TEMPLE_CHEST) {
             return getAztecLoot(random);
         }
-        if(lootTable == FAWorldGenerator.EGYPTIAN_ACADEMY_CHEST){
+        if (lootTable == FAWorldGenerator.EGYPTIAN_ACADEMY_CHEST) {
             return getEgyptianLoot(random);
         }
         return lootTable;
     }
 
-    private static ResourceLocation getEgyptianLoot(Random random){
-        switch(random.nextInt(16)){
+    private static ResourceLocation getEgyptianLoot(Random random) {
+        switch (random.nextInt(16)) {
             case 0:
                 return EGYPTIAN_ACADEMY_CHEST_1;
             case 1:
@@ -89,8 +89,8 @@ public class LootHelper {
         }
     }
 
-    private static ResourceLocation getAztecLoot(Random random){
-        switch(random.nextInt(16)){
+    private static ResourceLocation getAztecLoot(Random random) {
+        switch (random.nextInt(16)) {
             case 0:
                 return AZTEC_TEMPLE_CHEST_1;
             case 1:

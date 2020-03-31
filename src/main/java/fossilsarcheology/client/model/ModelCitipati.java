@@ -10,6 +10,7 @@ import net.minecraft.client.model.ModelRenderer;
 import net.minecraft.entity.Entity;
 
 public class ModelCitipati extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer lowerBody;
     public AdvancedModelRenderer leftThigh;
     public AdvancedModelRenderer rightThigh;
@@ -39,7 +40,6 @@ public class ModelCitipati extends ModelPrehistoric {
     public AdvancedModelRenderer leftFoot;
     public AdvancedModelRenderer rightLeg;
     public AdvancedModelRenderer rightFoot;
-    private final ModelAnimator animator;
 
     public ModelCitipati() {
         this.textureWidth = 128;
@@ -243,7 +243,7 @@ public class ModelCitipati extends ModelPrehistoric {
         ModelUtils.faceTargetMod(neck, f3, f4, 0.5F);
         float speed = dino.isSleeping() ? 0.05F : 0.1F;
         float speed2 = 0.5F;
-        float degree = dino.isSleeping() ? 0.2F :0.5F;
+        float degree = dino.isSleeping() ? 0.2F : 0.5F;
         {
             float sitProgress = dino.sitProgress;
             sitAnimationRotationPrev(leftLeg, sitProgress, (float) Math.toRadians(30.0D), 0, 0);
@@ -306,7 +306,7 @@ public class ModelCitipati extends ModelPrehistoric {
         this.walk(rightFoot, speed2, -0.6F, false, 2.5F, 0.4F, f, f1);
         this.chainWave(neckParts, speed2, degree * 0.35F, 5, f, f1);
         this.chainSwing(tailParts, speed2, degree * 0.1F, 0, f, f1);
-        ((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer((ModelRenderer[]) tailParts);
+        ((EntityPrehistoric) entity).chainBuffer.applyChainSwingBuffer(tailParts);
 
     }
 }

@@ -18,6 +18,19 @@ public class WorldGenCalamites extends WorldGenerator {
     private static final IBlockState LEAF = FABlockRegistry.CALAMITES_LEAVES.getDefaultState().withProperty(BlockLeaves.CHECK_DECAY, true).withProperty(BlockLeaves.DECAYABLE, true);
     private boolean keepGenerating = true;
 
+    public static boolean canGenTree(World world, BlockPos pos) {
+        for (int y = 0; y <= 30; y++) {
+            if (!isReplaceable(world, pos.up(y))) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private static boolean isReplaceable(World world, BlockPos pos) {
+        return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos) || world.getBlockState(pos).getBlock() == FABlockRegistry.CALAMITES_SAPLING;
+    }
+
     @Override
     public boolean generate(World world, Random rand, BlockPos pos) {
         Block j1 = world.getBlockState(pos.down()).getBlock();
@@ -73,19 +86,6 @@ public class WorldGenCalamites extends WorldGenerator {
 
         }
 
-    }
-
-    public static boolean canGenTree(World world, BlockPos pos) {
-        for (int y = 0; y <= 30; y++) {
-            if (!isReplaceable(world, pos.up(y))) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private static boolean isReplaceable(World world, BlockPos pos) {
-        return world.isAirBlock(pos) || world.getBlockState(pos).getBlock().isReplaceable(world, pos) || world.getBlockState(pos).getBlock() == FABlockRegistry.CALAMITES_SAPLING;
     }
 
     public void setBlockState(World world, BlockPos pos, IBlockState state) {

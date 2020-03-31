@@ -13,59 +13,59 @@ import net.minecraft.world.World;
 
 public class EntityToyScratchingPost extends EntityToyBase {
 
-	public EntityToyScratchingPost(World world) {
-		super(world, 20);
-	}
+    public EntityToyScratchingPost(World world) {
+        super(world, 20);
+    }
 
-	@Override
-	protected ItemStack getItem() {
-		return new ItemStack(FAItemRegistry.TOY_SCRATCHING_POST);
-	}
+    @Override
+    protected ItemStack getItem() {
+        return new ItemStack(FAItemRegistry.TOY_SCRATCHING_POST);
+    }
 
-	@Override
-	protected SoundEvent getAttackNoise() {
-		return SoundEvents.BLOCK_CLOTH_BREAK;
-	}
+    @Override
+    protected SoundEvent getAttackNoise() {
+        return SoundEvents.BLOCK_CLOTH_BREAK;
+    }
 
-	@Override
-	public void onUpdate() {
-		super.onUpdate();
-		this.motionX *= 0;
-		this.motionZ *= 0;
-		if (!isOnBlock()) {
-			if (!this.world.isRemote && !spawnedItem && !this.isDead){
-				this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem()));
-				spawnedItem = true;
-			}
-			this.setDead();
-			this.playSound(getAttackNoise(), 1, 1);
-		}
-	}
+    @Override
+    public void onUpdate() {
+        super.onUpdate();
+        this.motionX *= 0;
+        this.motionZ *= 0;
+        if (!isOnBlock()) {
+            if (!this.world.isRemote && !spawnedItem && !this.isDead) {
+                this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, this.getItem()));
+                spawnedItem = true;
+            }
+            this.setDead();
+            this.playSound(getAttackNoise(), 1, 1);
+        }
+    }
 
-	public boolean isOnBlock() {
-		int blockX = MathHelper.floor(this.posX);
-		int blockY = MathHelper.floor(this.posY) - 1;
-		int blockZ = MathHelper.floor(this.posZ);
-		return !this.world.isAirBlock(new BlockPos(blockX, blockY, blockZ));
-	}
+    public boolean isOnBlock() {
+        int blockX = MathHelper.floor(this.posX);
+        int blockY = MathHelper.floor(this.posY) - 1;
+        int blockZ = MathHelper.floor(this.posZ);
+        return !this.world.isAirBlock(new BlockPos(blockX, blockY, blockZ));
+    }
 
-	@Override
+    @Override
     public AxisAlignedBB getCollisionBox(Entity entity) {
-		return this.getEntityBoundingBox();
-	}
+        return this.getEntityBoundingBox();
+    }
 
-	@Override
-	public boolean canBePushed() {
-		return false;
-	}
+    @Override
+    public boolean canBePushed() {
+        return false;
+    }
 
-	@Override
-	public boolean canBeCollidedWith() {
-		return !this.isDead;
-	}
+    @Override
+    public boolean canBeCollidedWith() {
+        return !this.isDead;
+    }
 
-	@Override
+    @Override
     protected float getSoundPitch() {
-		return super.getSoundPitch() * 0.2F;
-	}
+        return super.getSoundPitch() * 0.2F;
+    }
 }

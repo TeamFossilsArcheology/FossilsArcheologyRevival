@@ -12,31 +12,31 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderFriendlyPigZombie extends RenderLiving<EntityFriendlyPigZombie> {
 
-	private static final ResourceLocation ZOMBIE_PIGMAN_TEXTURE = new ResourceLocation("textures/entity/zombie_pigman.png");
+    private static final ResourceLocation ZOMBIE_PIGMAN_TEXTURE = new ResourceLocation("textures/entity/zombie_pigman.png");
 
-	public RenderFriendlyPigZombie(ModelBase model, RenderManager renderer) {
-		super(renderer, model, 0.5F);
-		this.addLayer(new LayerHeldItem(this));
-		this.addLayer(new LayerBipedArmor(this) {
-			@Override
-			protected void initArmor() {
-				this.modelLeggings = new ModelZombie(0.5F, true);
-				this.modelArmor = new ModelZombie(1.0F, true);
-			}
-		});
-	}
+    public RenderFriendlyPigZombie(ModelBase model, RenderManager renderer) {
+        super(renderer, model, 0.5F);
+        this.addLayer(new LayerHeldItem(this));
+        this.addLayer(new LayerBipedArmor(this) {
+            @Override
+            protected void initArmor() {
+                this.modelLeggings = new ModelZombie(0.5F, true);
+                this.modelArmor = new ModelZombie(1.0F, true);
+            }
+        });
+    }
 
-	@Override
-	protected void preRenderCallback(EntityFriendlyPigZombie fpz, float par2) {
-		if (fpz.isSitting()) {
-			GlStateManager.translate(0F, 0.4F, 0F);
-		}
-	}
+    @Override
+    protected void preRenderCallback(EntityFriendlyPigZombie fpz, float par2) {
+        if (fpz.isSitting()) {
+            GlStateManager.translate(0F, 0.4F, 0F);
+        }
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(EntityFriendlyPigZombie entity) {
-		return ZOMBIE_PIGMAN_TEXTURE;
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(EntityFriendlyPigZombie entity) {
+        return ZOMBIE_PIGMAN_TEXTURE;
+    }
 
 
 }

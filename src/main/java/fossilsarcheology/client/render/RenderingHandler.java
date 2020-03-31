@@ -53,7 +53,7 @@ public class RenderingHandler {
     public void onInit() {
         RenderingRegistry.registerEntityRenderingHandler(EntityQuagga.class, new RenderQuagga(MINECRAFT.getRenderManager()));
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityAnuStatue.class,new RenderAnuStatue(MINECRAFT.getRenderManager()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityAnuStatue.class, new RenderAnuStatue(MINECRAFT.getRenderManager()));
         RenderingRegistry.registerEntityRenderingHandler(EntityNautilus.class, new RenderFish(new ModelNautilus(), MINECRAFT.getRenderManager()));
         RenderingRegistry.registerEntityRenderingHandler(EntityCoelacanth.class, new RenderFish(new ModelCoelacanth(), MINECRAFT.getRenderManager()));
         RenderingRegistry.registerEntityRenderingHandler(EntityAlligatorGar.class, new RenderFish(new ModelAlligatorGar(), MINECRAFT.getRenderManager()));

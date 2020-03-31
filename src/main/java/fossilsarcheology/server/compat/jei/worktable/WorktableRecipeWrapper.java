@@ -11,8 +11,8 @@ public class WorktableRecipeWrapper implements IRecipeWrapper {
 
     private JEIRecipeWorktable recipeWorktable;
 
-    public WorktableRecipeWrapper(JEIRecipeWorktable recipeWorktable){
-       this.recipeWorktable = recipeWorktable;
+    public WorktableRecipeWrapper(JEIRecipeWorktable recipeWorktable) {
+        this.recipeWorktable = recipeWorktable;
     }
 
     @Override
@@ -21,7 +21,7 @@ public class WorktableRecipeWrapper implements IRecipeWrapper {
         list.add(recipeWorktable.getInput());
         list.add(recipeWorktable.getFuel());
         ingredients.setInputs(ItemStack.class, list);
-        ingredients.setOutput(ItemStack.class,recipeWorktable.getOutput());
+        ingredients.setOutput(ItemStack.class, recipeWorktable.getOutput());
     }
 
     public JEIRecipeWorktable getRecipeWorktable() {

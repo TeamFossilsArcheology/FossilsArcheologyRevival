@@ -10,6 +10,7 @@ import net.minecraft.client.model.ModelBase;
 import net.minecraft.entity.Entity;
 
 public class ModelEdaphosaurus extends ModelPrehistoric {
+    private final ModelAnimator animator;
     public AdvancedModelRenderer BodyFront;
     public AdvancedModelRenderer LeftUpperArm;
     public AdvancedModelRenderer RightUpperArm;
@@ -52,7 +53,6 @@ public class ModelEdaphosaurus extends ModelPrehistoric {
     public AdvancedModelRenderer LeftHindFoot;
     public AdvancedModelRenderer RightShin;
     public AdvancedModelRenderer RightHindFoot;
-    private final ModelAnimator animator;
 
     public ModelEdaphosaurus() {
         this.textureWidth = 64;
@@ -389,6 +389,6 @@ public class ModelEdaphosaurus extends ModelPrehistoric {
         this.chainSwing(tailParts, speed1, degree1 * 0.5F, -3, f, f1);
         this.chainSwing(tailParts, speed2, degree2 * 0.5F, -3, f2, 1);
         this.chainWave(neckParts, speed2, degree2 * 0.15F, 1, f2, 1);
-        this.bob(BodyFront, speed2, degree2 * 0.5F,  false, f2, 1);
+        this.bob(BodyFront, speed2, degree2 * 0.5F, false, f2, 1);
     }
 }

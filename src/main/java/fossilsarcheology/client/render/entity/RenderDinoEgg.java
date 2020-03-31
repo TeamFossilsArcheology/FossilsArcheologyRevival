@@ -9,17 +9,17 @@ import net.minecraft.util.ResourceLocation;
 
 public class RenderDinoEgg extends RenderLiving<EntityDinosaurEgg> {
 
-	public RenderDinoEgg(RenderManager manager) {
-		super(manager, new ModelDinoEgg(), 0.25F);
-	}
+    public RenderDinoEgg(RenderManager manager) {
+        super(manager, new ModelDinoEgg(), 0.25F);
+    }
 
-	@Override
-	protected void preRenderCallback(EntityDinosaurEgg entity, float f) {
-		GlStateManager.scale(entity.selfType.eggScale, entity.selfType.eggScale, entity.selfType.eggScale);
-	}
+    @Override
+    protected void preRenderCallback(EntityDinosaurEgg entity, float f) {
+        GlStateManager.scale(entity.selfType.eggScale, entity.selfType.eggScale, entity.selfType.eggScale);
+    }
 
-	@Override
-	protected ResourceLocation getEntityTexture(EntityDinosaurEgg entity) {
-		return new ResourceLocation(entity.getTexture());
-	}
+    @Override
+    protected ResourceLocation getEntityTexture(EntityDinosaurEgg entity) {
+        return new ResourceLocation(entity.getTexture());
+    }
 }

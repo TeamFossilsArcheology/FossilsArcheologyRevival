@@ -9,7 +9,7 @@ public class NodeProcessorDinosaur extends WalkNodeProcessor {
 
     public void init(IBlockAccess sourceIn, EntityLiving mob) {
         super.init(sourceIn, mob);
-        if(!Revival.CONFIG_OPTIONS.intensivePathfinding){
+        if (!Revival.CONFIG_OPTIONS.intensivePathfinding) {
             this.entitySizeX = 1;
             this.entitySizeY = 1;
             this.entitySizeZ = 1;

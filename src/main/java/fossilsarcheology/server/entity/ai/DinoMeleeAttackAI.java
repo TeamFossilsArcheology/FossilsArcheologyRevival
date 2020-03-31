@@ -33,7 +33,7 @@ public class DinoMeleeAttackAI extends EntityAIBase {
         } else if (this.entity.world.getDifficulty() == EnumDifficulty.PEACEFUL && target instanceof EntityPlayer) {
             return false;
         }
-        if(entity.isFleeing()){
+        if (entity.isFleeing()) {
             return false;
         }
         this.currentPath = this.entity.getNavigator().getPathToEntityLiving(target);
@@ -76,7 +76,7 @@ public class DinoMeleeAttackAI extends EntityAIBase {
             this.entity.swingArm(EnumHand.MAIN_HAND);
             this.attackTick = 20;
             this.entity.attackEntityAsMob(target);
-            if(target instanceof EntityToyBase && this.entity.ATTACK_ANIMATION != null){
+            if (target instanceof EntityToyBase && this.entity.ATTACK_ANIMATION != null) {
                 this.entity.setAnimation(this.entity.ATTACK_ANIMATION);
             }
         } else {

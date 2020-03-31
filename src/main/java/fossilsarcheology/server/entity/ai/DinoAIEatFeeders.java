@@ -34,7 +34,7 @@ public class DinoAIEatFeeders extends DinoAIMoveToBlock {
             return false;
         }
         boolean execute = super.shouldExecute();
-        if(execute){
+        if (execute) {
             entity.shouldWander = false;
         }
         return execute;
@@ -49,7 +49,7 @@ public class DinoAIEatFeeders extends DinoAIMoveToBlock {
         return !this.entity.isMovementBlockedSoft() && destinationBlock != null && this.entity.world.getTileEntity(destinationBlock.up()) instanceof TileEntityFeeder;
     }
 
-    public void resetTask(){
+    public void resetTask() {
         this.entity.shouldWander = true;
     }
 
@@ -93,9 +93,7 @@ public class DinoAIEatFeeders extends DinoAIMoveToBlock {
         TileEntity entity = this.entity.world.getTileEntity(pos);
         if (entity instanceof TileEntityFeeder) {
             TileEntityFeeder feeder = (TileEntityFeeder) entity;
-            if (!feeder.isEmpty(this.entity.type) && this.entity.rayTraceFeeder(pos, false)) {
-                return true;
-            }
+            return !feeder.isEmpty(this.entity.type) && this.entity.rayTraceFeeder(pos, false);
         }
         return false;
     }

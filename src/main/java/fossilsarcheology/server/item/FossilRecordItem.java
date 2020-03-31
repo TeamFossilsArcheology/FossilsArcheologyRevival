@@ -7,15 +7,15 @@ import net.minecraft.util.SoundEvent;
 
 public class FossilRecordItem extends ItemRecord implements DefaultRenderedItem {
 
-	public final String recordName;
+    public final String recordName;
 
 
-	public FossilRecordItem(String string, SoundEvent sound, String name) {
-		super(name, sound);
-		this.recordName = string;
-		this.maxStackSize = 1;
-		setCreativeTab(FATabRegistry.ITEMS);
-		this.setTranslationKey(name);
+    public FossilRecordItem(String string, SoundEvent sound, String name) {
+        super(name, sound);
+        this.recordName = string;
+        this.maxStackSize = 1;
+        setCreativeTab(FATabRegistry.ITEMS);
+        this.setTranslationKey(name);
 
-	}
+    }
 }
