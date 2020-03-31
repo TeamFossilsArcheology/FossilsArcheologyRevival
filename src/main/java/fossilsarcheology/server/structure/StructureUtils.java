@@ -1,6 +1,7 @@
 package fossilsarcheology.server.structure;
 
 import fossilsarcheology.server.world.FAWorldGenerator;
+import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLiquid;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.state.IBlockState;
@@ -177,6 +178,6 @@ public class StructureUtils {
 
     private static boolean canHeightSkipBlock(BlockPos pos, World world) {
         IBlockState state = world.getBlockState(pos);
-        return state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLiquid;
+        return state.getBlock() instanceof BlockLog || state.getBlock() instanceof BlockLeaves || state.getBlock() instanceof BlockLiquid;
     }
 }
