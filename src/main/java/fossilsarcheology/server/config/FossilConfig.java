@@ -67,7 +67,7 @@ public class FossilConfig {
     public int fernTickRate = 2;
     public boolean intensivePathfinding = false;
     public boolean spawnVolcanoes = true;
-    public int volcanoSpawnChance = 3;
+    public int volcanoSpawnChance = 1;
 
     public void init(Configuration config) {
         this.generatePrehistoricTrees = config.getBoolean("Generate Prehistoric Trees", "all", false, "True if Palaeoraphe, Calamites, Sigillaria, etc. Trees are to generate naturally");
@@ -135,6 +135,6 @@ public class FossilConfig {
         this.fernTickRate = config.getInt("Fern Tick Rate", "all", 2, 1, 1000000, "How often ferns try to grow(raise number to decrease growth)");
         this.intensivePathfinding = config.getBoolean("Intensive Pathfinding", "all", false, "True if dinosaurs should use more expensive and accurate pathfinding techniques");
         this.spawnVolcanoes = config.getBoolean("Generate Volcano Biomes", "all", true, "Whether to generate volcano biomes or not");
-        this.volcanoSpawnChance = config.getInt("Volcano Spawn Weight", "all", 3, 1, 10000, "Volcano Spawn Weight. Higher number = more common");
+        this.volcanoSpawnChance = config.getInt("Volcano Spawn Weight", "all", 1, 0, 10000, "Volcano Spawn Weight. Higher number = more common");
     }
 }
