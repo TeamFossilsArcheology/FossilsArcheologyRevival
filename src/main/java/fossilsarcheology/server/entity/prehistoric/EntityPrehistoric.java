@@ -2150,7 +2150,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     protected int getFleeingCooldown(){
         if(this.getRevengeTarget() != null){
             int i = (int)(Math.max(this.getRevengeTarget().width / 2F, 1) * 95);
-            return i;
+            int j = (int)(Math.min(this.width / 2F, 0.5D) * 50);
+            return i - j;
         }
         return 100;
     }
