@@ -32,6 +32,10 @@ public class EntityOrnitholestes extends EntityPrehistoric implements IScaryDino
         this.ridingY = 1.0F;
     }
 
+    public float getTargetScale(){
+        return 1.5F;
+    }
+
     public void initEntityAI() {
         this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
         this.tasks.addTask(1, new EntityAISwimming(this));

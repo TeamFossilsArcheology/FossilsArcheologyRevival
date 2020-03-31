@@ -30,6 +30,10 @@ public class EntityDilophosaurus extends EntityPrehistoric implements IScaryDino
 		this.ridingXZ = -0.05F;
 	}
 
+	public float getTargetScale(){
+		return 1.25F;
+	}
+
 	public void initEntityAI() {
 		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));

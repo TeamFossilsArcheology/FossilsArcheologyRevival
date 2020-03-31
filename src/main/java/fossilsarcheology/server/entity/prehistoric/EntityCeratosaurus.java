@@ -27,6 +27,10 @@ public class EntityCeratosaurus extends EntityPrehistoric implements IScaryDinos
 		this.ridingY = 2.2F;
 	}
 
+	public float getTargetScale(){
+		return 1.25F;
+	}
+
 	public void initEntityAI() {
 		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));

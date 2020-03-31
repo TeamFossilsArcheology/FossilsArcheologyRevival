@@ -36,6 +36,10 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
 		this.ridingY = 0.8F;
 	}
 
+	public float getTargetScale(){
+		return 2.0F;
+	}
+
 	public void initEntityAI() {
 		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));

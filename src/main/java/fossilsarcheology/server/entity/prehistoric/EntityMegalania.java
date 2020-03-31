@@ -38,6 +38,10 @@ public class EntityMegalania extends EntityPrehistoric implements IScaryDinosaur
         this.ridingY = 1.7F;
     }
 
+    public float getTargetScale(){
+        return 1.5F;
+    }
+
     public void initEntityAI() {
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));

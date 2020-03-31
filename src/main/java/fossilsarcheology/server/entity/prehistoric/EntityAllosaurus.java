@@ -29,6 +29,10 @@ public class EntityAllosaurus extends EntityPrehistoric implements IScaryDinosau
 		this.teenAge = 5;
 	}
 
+	public float getTargetScale(){
+		return 2.0F;
+	}
+
 	public void initEntityAI() {
 		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new EntityAISwimming(this));

@@ -39,6 +39,10 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
         this.ridingXZ = -0.2F;
     }
 
+    public float getTargetScale(){
+        return 2.0F;
+    }
+
     public void initEntityAI() {
         this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
         this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));

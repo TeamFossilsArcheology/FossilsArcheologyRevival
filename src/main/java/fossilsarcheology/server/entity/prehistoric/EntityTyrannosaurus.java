@@ -53,6 +53,10 @@ public class EntityTyrannosaurus extends EntityPrehistoric implements IScaryDino
 		this.targetTasks.addTask(4, new DinoAIHunt(this, EntityLivingBase.class, true, (Predicate<Entity>) entity -> entity instanceof EntityLivingBase));
 	}
 
+	public float getTargetScale(){
+		return 2.0F;
+	}
+
 	@Override
 	public int getAttackLength() {
 		return 30;

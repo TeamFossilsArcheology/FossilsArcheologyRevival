@@ -44,6 +44,10 @@ public class EntitySpinosaurus extends EntityPrehistoricSwimming implements ISca
 		this.pediaScale = 26F;
 	}
 
+	public float getTargetScale(){
+		return 1.5F;
+	}
+
 	public void initEntityAI() {
 		this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
 		this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));

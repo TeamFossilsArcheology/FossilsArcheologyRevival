@@ -39,6 +39,10 @@ public class EntitySarcosuchus extends EntityPrehistoricSwimming implements ISca
 		this.pediaScale = 30;
 	}
 
+	public float getTargetScale(){
+		return 2.0F;
+	}
+
 	public void initEntityAI() {
 		this.tasks.addTask(0, new DinoMeleeAttackAI(this, 1.0D, false));
 		this.tasks.addTask(1, new DinoAIFindWaterTarget(this, 10, true));
