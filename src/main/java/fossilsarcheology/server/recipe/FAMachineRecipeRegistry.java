@@ -1,6 +1,7 @@
 package fossilsarcheology.server.recipe;
 
 import com.google.common.collect.Maps;
+import fossilsarcheology.server.block.EnumFossilPlant;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.block.entity.TileEntityCultivate;
 import fossilsarcheology.server.block.entity.TileEntitySifter;
@@ -45,8 +46,8 @@ public class FAMachineRecipeRegistry {
                 .addOutput(new ItemStack(FAItemRegistry.SIGILLARIA_SAPLING_FOSSIL, 1), 2.5F)
                 .addOutput(new ItemStack(FAItemRegistry.CORDAITES_SAPLING_FOSSIL, 1), 2.5F);
 
-        float seedWeight = (100F - plantFossil.getTotalWeight()) / (float) FossilSeedsItem.fossilSeeds.length;
-        for (int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++) {
+        float seedWeight = (100F - plantFossil.getTotalWeight()) / (float) EnumFossilPlant.values().length;
+        for (int i = 0; i < EnumFossilPlant.values().length; i++) {
             plantFossil.addOutput(new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, i), seedWeight);
         }
         registerAnalyzer(plantFossil);
@@ -222,7 +223,7 @@ public class FAMachineRecipeRegistry {
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             registerCultivate(new ItemStack(type.dnaItem), TileEntityCultivate.getCultivationOutput(new ItemStack(type.dnaItem)));
         }
-        for (int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++) {
+        for (int i = 0; i < EnumFossilPlant.values().length; i++) {
             registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED, 1, i), new ItemStack(FAItemRegistry.SEED, 1, i));
         }
         registerCultivate(new ItemStack(FAItemRegistry.FOSSIL_SEED_FERN), new ItemStack(FAItemRegistry.FERN_SEED));

@@ -213,7 +213,7 @@ public class FABlockRegistry {
 	@GameRegistry.ObjectHolder(Revival.MODID + ":ferns")
 	public static final FernsBlock FERNS = new FernsBlock();
 	@GameRegistry.ObjectHolder(Revival.MODID + ":dillhoffia")
-	public static final DillhoffiaFlowerBlock DILLHOFFIA_FLOWER = new DillhoffiaFlowerBlock();
+	public static final ShortFlowerBlock DILLHOFFIA_FLOWER = new ShortFlowerBlock("dillhoffia_flower");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":sarracenia")
 	public static final TallFlowerBlock SARRACENIA_FLOWER = new TallFlowerBlock("sarracenia");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":cephalotaxus")
@@ -237,7 +237,7 @@ public class FABlockRegistry {
 	@GameRegistry.ObjectHolder(Revival.MODID + ":mutant_plant")
 	public static final TallFlowerBlock MUTANT_FLOWER = new TallFlowerBlock("mutant_plant");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":tempskya")
-	public static final TempskyaBlock TEMPSKYA_FLOWER = new TempskyaBlock();
+	public static final FourTallFlowerBlock TEMPSKYA_FLOWER = new FourTallFlowerBlock("tempskya");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":vaccinium")
 	public static final ShortFlowerBlock VACCINIUM_FLOWER = new ShortFlowerBlock("vaccinium");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":osmunda")
@@ -250,6 +250,14 @@ public class FABlockRegistry {
 	public static final ShortFlowerBlock EPENDRA_FLOWER = new ShortFlowerBlock("ependra");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":duisbergia")
 	public static final TallFlowerBlock DUISBERGIA_FLOWER = new TallFlowerBlock("duisbergia");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":dipteris")
+	public static final TallFlowerBlock DIPTERIS_FLOWER = new TallFlowerBlock("dipteris");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":dictyophyllum")
+	public static final ShortFlowerBlock DICTYOPHYLLUM_FLOWER = new ShortFlowerBlock("dictyophyllum");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":sagenopteris")
+	public static final ShortFlowerBlock SAGENOPTERIS_FLOWER = new ShortFlowerBlock("sagenopteris");
+	@GameRegistry.ObjectHolder(Revival.MODID + ":cyathea")
+	public static final FourTallFlowerBlock CYATHEA_FLOWER = new FourTallFlowerBlock("cyathea");
 	@GameRegistry.ObjectHolder(Revival.MODID + ":fake_obsidian")
 	public static final FakeObsidianBlock FAKE_OBSIDIAN = new FakeObsidianBlock();
 

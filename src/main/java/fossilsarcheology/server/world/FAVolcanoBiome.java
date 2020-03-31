@@ -14,6 +14,7 @@ import net.minecraft.entity.monster.EntityPigZombie;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.world.ColorizerFoliage;
 import net.minecraft.world.ColorizerGrass;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -143,8 +144,14 @@ public class FAVolcanoBiome extends Biome {
 
     @SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
-        return 0X300000;
+        return 0X808080;
     }
+
+    @SideOnly(Side.CLIENT)
+    public int getFoliageColorAtPos(BlockPos pos){
+        return 0X808080;
+    }
+
 
     private static class DiamondGen extends WorldGenerator {
         @Override

@@ -17,17 +17,20 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.EnumPlantType;
+import net.minecraftforge.common.IPlantable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Random;
 
-public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, IGrowable {
+public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, IGrowable, IPlantable {
 
     public static final PropertyEnum<TallFlowerBlock.EnumBlockHalf> HALF = PropertyEnum.create("half", TallFlowerBlock.EnumBlockHalf.class);
 
@@ -53,7 +56,7 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
 
     @Override
     public boolean canPlaceBlockAt(World worldIn, BlockPos pos) {
-        if(this == FABlockRegistry.MUTANT_FLOWER){
+        if (this == FABlockRegistry.MUTANT_FLOWER) {
             return worldIn.isAirBlock(pos.up()) && worldIn.getBlockState(pos.down()).getMaterial().isSolid();
         }
         return super.canPlaceBlockAt(worldIn, pos) && worldIn.isAirBlock(pos.up());
@@ -65,8 +68,8 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
             boolean flag = state.getValue(HALF) == EnumBlockHalf.UPPER;
             BlockPos blockpos = flag ? pos : pos.up();
             BlockPos blockpos1 = flag ? pos.down() : pos;
-            Block block = (Block) (flag ? this : worldIn.getBlockState(blockpos).getBlock());
-            Block block1 = (Block) (flag ? worldIn.getBlockState(blockpos1).getBlock() : this);
+            Block block = flag ? this : worldIn.getBlockState(blockpos).getBlock();
+            Block block1 = flag ? worldIn.getBlockState(blockpos1).getBlock() : this;
 
             if (!flag) this.dropBlockAsItem(worldIn, pos, state, 0); //Forge move above the setting to air.
 
@@ -83,7 +86,7 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
         if (state.getValue(HALF) == EnumBlockHalf.UPPER) {
             return Items.AIR;
-        }else{
+        } else {
             return super.getItemDropped(state, rand, fortune);
         }
     }
@@ -95,7 +98,7 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
             return worldIn.getBlockState(pos.down()).getBlock() == this;
         } else {
             IBlockState iblockstate = worldIn.getBlockState(pos.up());
-            if(this == FABlockRegistry.MUTANT_FLOWER){
+            if (this == FABlockRegistry.MUTANT_FLOWER) {
                 return iblockstate.getBlock() == this && worldIn.getBlockState(pos.down()).getMaterial().isSolid();
             }
             return iblockstate.getBlock() == this && super.canBlockStay(worldIn, pos, iblockstate);
@@ -133,7 +136,26 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
 
     @Override
     public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-        spawnAsEntity(worldIn, pos, new ItemStack(this));
+        spreadAsBonemeal(worldIn, pos);
+    }
+
+    private void spreadAsBonemeal(World world, BlockPos pos) {
+        Random rand = new Random();
+        world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
+        world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
+        world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
+        int maxTries = rand.nextInt(2);
+        int tries = 0;
+        while (tries < maxTries) {
+            BlockPos tryPos = pos.add(rand.nextInt(10) - 4, rand.nextInt(8) - 4, rand.nextInt(10) - 4);
+            if (world.isAirBlock(tryPos.up()) && world.isAirBlock(tryPos.up(2)) && canSustainBush(world.getBlockState(tryPos))) {
+                tries++;
+                world.setBlockState(tryPos.up(), this.getDefaultState().withProperty(HALF, TallFlowerBlock.EnumBlockHalf.LOWER), 2);
+                world.setBlockState(tryPos.up(2), this.getDefaultState().withProperty(HALF, TallFlowerBlock.EnumBlockHalf.UPPER), 2);
+            } else {
+                continue;
+            }
+        }
     }
 
     @SuppressWarnings("deprecation")
@@ -164,6 +186,16 @@ public class TallFlowerBlock extends BlockBush implements DefaultRenderedItem, I
     @SideOnly(Side.CLIENT)
     public Block.EnumOffsetType getOffsetType() {
         return Block.EnumOffsetType.XZ;
+    }
+
+    @Override
+    public net.minecraftforge.common.EnumPlantType getPlantType(net.minecraft.world.IBlockAccess world, BlockPos pos) {
+        return EnumPlantType.Plains;
+    }
+
+    @Override
+    public IBlockState getPlant(net.minecraft.world.IBlockAccess world, BlockPos pos) {
+        return getDefaultState();
     }
 
     public enum EnumBlockHalf implements IStringSerializable {

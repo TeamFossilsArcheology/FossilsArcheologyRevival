@@ -1,5 +1,6 @@
 package fossilsarcheology.server.recipe;
 
+import fossilsarcheology.server.block.EnumFossilPlant;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.entity.prehistoric.MobType;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
@@ -102,7 +103,7 @@ public class FAOreDictRegistry {
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 11));
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 14));
         OreDictionary.registerOre("dinosaurClaw", new ItemStack(FAItemRegistry.UNIQUE_ITEM, 1, 15));
-        for(int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++){
+        for(int i = 0; i < EnumFossilPlant.values().length; i++){
             OreDictionary.registerOre("listAllseed", new ItemStack(FAItemRegistry.SEED, 1, i));
             OreDictionary.registerOre("seeds", new ItemStack(FAItemRegistry.SEED, 1, i));
             OreDictionary.registerOre("flowerSeed", new ItemStack(FAItemRegistry.SEED, 1, i));

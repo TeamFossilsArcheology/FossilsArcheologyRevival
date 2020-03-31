@@ -139,9 +139,9 @@ public class ClientProxy extends ServerProxy {
             RENDER_HANDLER.registerItemRenderer(Item.getItemFromBlock(FABlockRegistry.FIGURINE), i, "figurine_" + i, "inventory");
         }
 
-        for (int i = 0; i < FossilSeedsItem.fossilSeeds.length; i++) {
-            RENDER_HANDLER.registerItemRenderer(FAItemRegistry.FOSSIL_SEED, i, "fossil_seed_" + FossilSeedsItem.fossilSeeds[i], "inventory");
-            RENDER_HANDLER.registerItemRenderer(FAItemRegistry.SEED, i, "seed_" + FossilSeedsItem.fossilSeeds[i], "inventory");
+        for (int i = 0; i < EnumFossilPlant.values().length; i++) {
+            RENDER_HANDLER.registerItemRenderer(FAItemRegistry.FOSSIL_SEED, i, "fossil_seed_" + EnumFossilPlant.values()[i], "inventory");
+            RENDER_HANDLER.registerItemRenderer(FAItemRegistry.SEED, i, "seed_" + EnumFossilPlant.values()[i], "inventory");
         }
 
         for (int i = 0; i < 5; i++) {
