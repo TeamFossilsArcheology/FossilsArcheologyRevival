@@ -79,7 +79,9 @@ public class ShortFlowerBlock extends BlockBush implements DefaultRenderedItem {
 						world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
 						int maxTries = rand.nextInt(3);
 						int tries = 0;
-						while(tries < maxTries){
+						int timeout = 0;
+						while(tries < maxTries && timeout < 101){
+							timeout++;
 							BlockPos tryPos = pos.add(rand.nextInt(10) - 4, rand.nextInt(8) - 4, rand.nextInt(10) - 4);
 							if(world.isAirBlock(tryPos.up()) && canSustainBush(world.getBlockState(tryPos))){
 								tries++;
