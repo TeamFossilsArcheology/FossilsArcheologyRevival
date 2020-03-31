@@ -206,10 +206,9 @@ public class EntityAnu extends EntityMob implements IRangedAttackMob {
 
     @Override
     public void onDeath(DamageSource dmg) {
-
         EntityAnuDead entity = new EntityAnuDead(this.world);
+        entity.setLocationAndAngles(this.posX, this.posY, this.posZ, this.rotationYaw, this.rotationPitch);
         if (!this.world.isRemote) {
-            entity.setLocationAndAngles(this.posX + this.getRNG().nextInt(4), this.posY, this.posZ + this.getRNG().nextInt(4), this.rotationYaw, this.rotationPitch);
             this.world.spawnEntity(entity);
         }
         unlockDimensionAbilities();
