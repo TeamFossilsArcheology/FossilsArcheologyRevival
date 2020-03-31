@@ -23,7 +23,7 @@ public class FossilConfig {
     public int generateMoaiRarity = 400;
     public int generateWeaponShopRarity = 400;
     public int generateTempleRarity = 400;
-    public int generateAcademyRarity = 1500;
+    public int generateAcademyRarity = 3500;
     public boolean spawnCoelacanth = true;
     public boolean spawnSturgeon = true;
     public boolean spawnAlligatorGar = true;
@@ -91,7 +91,7 @@ public class FossilConfig {
         this.generateMoaiRarity = config.getInt("Moai Rarity", "all", 400, 1, 100000000, "Rarity of Moai Structure. Higher number = more rare");
         this.generateWeaponShopRarity = config.getInt("Aztec Weapon Shop Rarity", "all", 400, 1, 100000000, "Rarity of Aztec Weapon Shop Structure. Higher number = more rare");
         this.generateTempleRarity = config.getInt("Aztec Temple Rarity", "all", 500, 1, 100000000, "Rarity of Aztec Temple Structure. Higher number = more rare");
-        this.generateAcademyRarity = config.getInt("Desert Academy Rarity", "all", 1500, 1, 100000000, "Rarity of Desert Academy Structure. Higher number = more rare");
+        this.generateAcademyRarity = config.getInt("Desert Academy Rarity", "all", 3500, 1, 100000000, "Rarity of Desert Academy Structure. Higher number = more rare");
         this.spawnCoelacanth = config.getBoolean("Spawn Coelacanth", "all", true, "True if Coelacanths are to spawn naturally in oceans");
         this.spawnSturgeon = config.getBoolean("Spawn Sturgeon", "all", true, "True if Sturgeons are to spawn naturally in rivers");
         this.spawnAlligatorGar = config.getBoolean("Spawn Alligator Gar", "all", true, "True if Alligator Gars are to spawn naturally in swamps");

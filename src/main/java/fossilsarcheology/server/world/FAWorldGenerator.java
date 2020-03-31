@@ -80,7 +80,7 @@ public class FAWorldGenerator implements IWorldGenerator {
             int x = chunkX * 16 + random.nextInt(16);
             int z = chunkZ * 16 + random.nextInt(16);
 
-            if (BiomeDictionary.hasType(world.getBiome(new BlockPos(x, 0, z)), BiomeDictionary.Type.SWAMP) && random.nextInt(15) == 0) {
+            if (BiomeDictionary.hasType(world.getBiome(new BlockPos(x, 0, z)), BiomeDictionary.Type.SWAMP) && random.nextInt(500) == 0) {
                 if (Revival.CONFIG_OPTIONS.generateTarSites) {
                     for (int k = 0; k < 10; k++) {
                         int y = random.nextInt(128);
