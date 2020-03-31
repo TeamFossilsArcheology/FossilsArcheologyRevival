@@ -62,7 +62,7 @@ public class EntityDiplodocus extends EntityPrehistoric {
 
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
-        return PrehistoricEntityTypeAI.Activity.DIURINAL;
+        return PrehistoricEntityTypeAI.Activity.BOTH;
     }
 
     @Override
