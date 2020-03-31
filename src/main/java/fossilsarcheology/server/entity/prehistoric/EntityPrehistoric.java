@@ -703,7 +703,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setSitting(true);
             this.setSleeping(false);
         }
-        if (breaksBlocks && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this)) {
+        if (breaksBlocks && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this) && this.getMood() < 0) {
             this.breakBlock(5);
         }
         if (this.getAttackTarget() != null && this.getAttackTarget() instanceof EntityToyBase && (isPreyBlocked(this.getAttackTarget()) || this.ticksTillPlay > 0)) {
