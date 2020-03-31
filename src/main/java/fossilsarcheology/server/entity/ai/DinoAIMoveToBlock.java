@@ -71,7 +71,7 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
      */
     public void updateTask() {
         double dist = this.creature.getDistanceSqToCenter(this.destinationBlock.up());
-        double requiredDistance =  Math.max(this.getRequiredDistance(1.5F), 1.5F);
+        double requiredDistance = Math.max(this.getRequiredDistance(2F), 1.5F);
         if (dist > requiredDistance) {
             this.isAboveDestination = false;
             ++this.timeoutCounter;
