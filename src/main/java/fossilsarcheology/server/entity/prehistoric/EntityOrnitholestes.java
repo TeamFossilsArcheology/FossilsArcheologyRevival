@@ -148,7 +148,7 @@ public class EntityOrnitholestes extends EntityPrehistoric implements IScaryDino
         super.onLivingUpdate();
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
             doAttack();
-            doAttackKnockback(0.3F);
+            doAttackKnockback(0.1F);
         }
     }
 
