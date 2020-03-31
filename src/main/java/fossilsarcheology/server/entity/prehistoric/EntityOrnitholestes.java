@@ -65,8 +65,7 @@ public class EntityOrnitholestes extends EntityPrehistoric implements IScaryDino
 
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
-
-        return PrehistoricEntityTypeAI.Activity.DIURINAL;
+        return PrehistoricEntityTypeAI.Activity.NOCTURNAL;
     }
 
     @Override
