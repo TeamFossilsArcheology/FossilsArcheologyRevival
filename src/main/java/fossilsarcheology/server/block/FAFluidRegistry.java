@@ -7,7 +7,7 @@ import net.minecraftforge.fluids.FluidRegistry;
 
 public class FAFluidRegistry {
 
-    public static final Fluid TAR_FLUID = new Fluid("tar", new ResourceLocation("fossil", "blocks/tar"), new ResourceLocation("fossil", "blocks/tar_flowing")).setDensity(3000).setTemperature(400).setViscosity(8000);
+    public static final Fluid TAR_FLUID = new Fluid("fossil_tar", new ResourceLocation("fossil", "blocks/tar"), new ResourceLocation("fossil", "blocks/tar_flowing")).setDensity(3000).setTemperature(400).setViscosity(8000);
     public static final Material TAR_MATERIAL = new MaterialTar();
 
     public static void register() {
