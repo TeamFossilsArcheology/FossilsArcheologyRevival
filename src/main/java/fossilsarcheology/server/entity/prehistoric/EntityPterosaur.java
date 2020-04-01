@@ -92,8 +92,7 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
 
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
-
-        return PrehistoricEntityTypeAI.Response.SCARED;
+        return PrehistoricEntityTypeAI.Response.TERITORIAL;
     }
 
     @Override
