@@ -2,8 +2,10 @@ package fossilsarcheology.server.block;
 
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.api.DefaultRenderedItem;
+import fossilsarcheology.server.block.entity.TileEntityBubbleBlower;
 import fossilsarcheology.server.tab.FATabRegistry;
 import net.minecraft.block.Block;
+import net.minecraft.block.BlockContainer;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -13,15 +15,17 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nullable;
 import java.util.Random;
 
-public class BubbleBlowerBlock extends Block implements DefaultRenderedItem {
+public class BubbleBlowerBlock extends BlockContainer implements IDinoUnbreakable, DefaultRenderedItem {
     public static final PropertyDirection FACING = BlockHorizontal.FACING;
 
     public BubbleBlowerBlock() {
@@ -142,5 +146,16 @@ public class BubbleBlowerBlock extends Block implements DefaultRenderedItem {
                     break;
             }
         }
+    }
+
+    @Override
+    public EnumBlockRenderType getRenderType(IBlockState state) {
+        return EnumBlockRenderType.MODEL;
+    }
+    
+    @Nullable
+    @Override
+    public TileEntity createNewTileEntity(World worldIn, int meta) {
+        return new TileEntityBubbleBlower();
     }
 }

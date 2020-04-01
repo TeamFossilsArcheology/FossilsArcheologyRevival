@@ -30,7 +30,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
     public int timeInWater = 0;
     public int timeOnLand = 0;
     public float flyProgress;
-    protected boolean isAmphibious;
+    protected boolean isAmphibious = false;
     protected boolean isLandNavigator;
 
 

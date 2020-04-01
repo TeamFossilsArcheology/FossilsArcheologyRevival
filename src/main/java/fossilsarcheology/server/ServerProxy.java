@@ -107,6 +107,7 @@ public class ServerProxy implements IGuiHandler {
 
         GameRegistry.registerTileEntity(TileEntityCultivate.class, "fossil:cultivate");
         GameRegistry.registerTileEntity(TileEntityFeeder.class, "fossil:feeder");
+        GameRegistry.registerTileEntity(TileEntityBubbleBlower.class, "fossil:bubble_blower");
         GameRegistry.registerTileEntity(TileEntityWorktable.class, "fossil:archeology_workbench");
         GameRegistry.registerTileEntity(TileEntityAnalyzer.class, "fossil:analyzer");
         GameRegistry.registerTileEntity(TileEntityAncientChest.class, "fossil:ancient_chest");

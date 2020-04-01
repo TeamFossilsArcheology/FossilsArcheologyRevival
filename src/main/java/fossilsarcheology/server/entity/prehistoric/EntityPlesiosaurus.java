@@ -19,7 +19,7 @@ public class EntityPlesiosaurus extends EntityPrehistoricSwimming {
     public EntityPlesiosaurus(World world) {
         super(world, PrehistoricEntityType.PLESIOSAUR, 2, 6, 10, 30, 0.2, 0.3, 0, 0);
         FISH_ANIMATION = Animation.create(40);
-        this.setActualSize(1.0F, 1.5F);
+        this.setActualSize(1.0F, 1.0F);
         minSize = 0.65F;
         maxSize = 1.05F;
         teenAge = 3;

@@ -374,9 +374,11 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     }
 
     public void doPlayBonus(int playBonus) {
-        ticksTillPlay = this.rand.nextInt(600) + 600;
-        this.setMood(this.getMood() + playBonus);
-        Revival.NETWORK_WRAPPER.sendToAll(new MessageHappyParticles(this.getEntityId()));
+        if(ticksTillPlay == 0){
+            this.setMood(this.getMood() + playBonus);
+            Revival.NETWORK_WRAPPER.sendToAll(new MessageHappyParticles(this.getEntityId()));
+            ticksTillPlay = this.rand.nextInt(600) + 600;
+        }
     }
 
     public abstract void setSpawnValues();
@@ -526,40 +528,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         return !this.isSkeleton() && super.canBePushed();
     }
 
-    public int getNearestBubbleBlock(int range, int type) {
-        for (int r = 1; r <= range; r++) {
-            for (int ds = -r; ds <= r; ds++) {
-                for (int dy = 4; dy > -5; dy--) {
-                    int x = MathHelper.floor(this.posX + ds);
-                    int y = MathHelper.floor(this.posY + dy);
-                    int z = MathHelper.floor(this.posZ - r);
-                    if (this.posY + dy >= 0 && this.posY + dy <= this.world.getHeight() && this.world.getBlockState(new BlockPos(x, y, z)).getBlock() == FABlockRegistry.BUBBLE_MACHINE && this.world.getRedstonePowerFromNeighbors(new BlockPos(x, y, z)) > 0) {
-                        switch (type) {
-                            case 0:
-                                return x;
-                            case 1:
-                                return y;
-                            case 2:
-                                return z;
-                        }
-                    }
-
-                    if (this.posY + dy >= 0 && this.posY + dy <= this.world.getHeight() && this.world.getBlockState(new BlockPos(x, y, z)).getBlock() == FABlockRegistry.BUBBLE_MACHINE && this.world.getRedstonePowerFromNeighbors(new BlockPos(x, y, z)) > 0) {
-                        switch (type) {
-                            case 0:
-                                return x;
-                            case 1:
-                                return y;
-                            case 2:
-                                return z;
-                        }
-                    }
-                }
-            }
-        }
-        return 0;
-    }
-
     public boolean isPlantBlock(IBlockState block) {
         return block.getMaterial() == Material.GRASS || block.getMaterial() == Material.PLANTS || block.getMaterial() == Material.LEAVES;
     }
@@ -620,19 +588,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
         if (this.getRidingPlayer() != null) {
             this.stepHeight = 1;
-        }
-        int blockX = MathHelper.floor(this.posX);
-        int blockY = MathHelper.floor(this.getEntityBoundingBox().minY) - 1;
-        int blockZ = MathHelper.floor(this.posZ);
-        if (this.getBlockUnder() == FABlockRegistry.BUBBLE_MACHINE && this.world.getRedstonePowerFromNeighbors(new BlockPos(blockX, blockY, blockZ)) > 0 && this.ticksTillPlay == 0) {
-            this.jump();
-            for (int i = 0; i < 1; ++i) {
-                double dd = this.getRNG().nextGaussian() * 0.02D;
-                double dd1 = this.getRNG().nextGaussian() * 0.02D;
-                double dd2 = this.getRNG().nextGaussian() * 0.02D;
-                Revival.PROXY.spawnPacketHeartParticles(this.world, (float) (this.posX + (this.getRNG().nextFloat() * this.width * 2.0F) - this.width), (float) (this.posY + 0.5D + (this.getRNG().nextFloat() * this.height)), (float) (this.posZ + (this.getRNG().nextFloat() * this.width * 2.0F) - this.width), dd, dd1, dd2);
-            }
-            this.doPlayBonus(15);
         }
         if (Revival.CONFIG_OPTIONS.dinosaurBreeding && !world.isRemote && ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
             this.mate();
