@@ -3,6 +3,7 @@ package fossilsarcheology.server.entity.prehistoric;
 import com.google.common.base.Predicate;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.ai.*;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.EnumCreatureAttribute;
@@ -153,6 +154,9 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
     public void setSpawnValues() {
 
     }
+
+    @Override
+    protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) { }
 
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
