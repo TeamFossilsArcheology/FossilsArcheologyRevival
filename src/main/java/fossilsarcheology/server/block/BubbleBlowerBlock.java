@@ -152,7 +152,7 @@ public class BubbleBlowerBlock extends BlockContainer implements IDinoUnbreakabl
     public EnumBlockRenderType getRenderType(IBlockState state) {
         return EnumBlockRenderType.MODEL;
     }
-    
+
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
