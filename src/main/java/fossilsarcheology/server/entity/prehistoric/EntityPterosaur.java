@@ -3,16 +3,24 @@ package fossilsarcheology.server.entity.prehistoric;
 import com.google.common.base.Predicate;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.ai.*;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAISit;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 
 public class EntityPterosaur extends EntityPrehistoricFlying {
@@ -131,6 +139,9 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
             doAttack();
         }
+        if (this.isInWater() && !this.isFlying()) {
+            this.setFlying(true);
+        }
     }
 
     @Override
@@ -184,5 +195,41 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
     @Override
     protected SoundEvent getDeathSound() {
         return FASoundRegistry.PTEROSAUR_DEATH;
+    }
+
+    @Nullable
+    @Override
+    public BlockPos generateAirTarget() {
+        if (this.isHungry()) {
+            BlockPos groundPos = new BlockPos(this);
+            while (groundPos.getY() > 3 && world.isAirBlock(groundPos)) {
+                groundPos = groundPos.down();
+            }
+            for (int i = 0; i < 10; i++) {
+                BlockPos checkForWaterPos = groundPos.add(getRNG().nextInt(16) - 8, 0, getRNG().nextInt(16) - 8);
+                if (world.getBlockState(checkForWaterPos).getMaterial() == Material.WATER) {
+                    return checkForWaterPos.up();
+                }
+            }
+        }
+        return super.generateAirTarget();
+    }
+
+    protected void onReachAirTarget(BlockPos target) {
+        if (world.getBlockState(target.down()).getMaterial() == Material.WATER && this.isHungry()) {
+            ItemStack stack2 = new ItemStack(Items.FISH, 1, this.getRNG().nextInt(2));
+            this.entityDropItem(stack2, 1);
+            this.playSound(SoundEvents.ENTITY_GENERIC_SWIM, 0.7F, 1.0F + world.rand.nextFloat() * 0.4F);
+            this.playSound(SoundEvents.ENTITY_HOSTILE_SWIM, 0.4F, 1.0F + world.rand.nextFloat() * 0.4F);
+            if (this.world.isRemote) {
+                for (int i = 0; i < 20; ++i) {
+                    double d0 = this.rand.nextGaussian() * 0.02D;
+                    double d1 = this.rand.nextGaussian() * 0.02D;
+                    double d2 = this.rand.nextGaussian() * 0.02D;
+                    double d3 = 10.0D;
+                    this.world.spawnParticle(EnumParticleTypes.WATER_SPLASH, (target.down().getX() + 0.5D + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width - d0 * 10.0D), target.down().getY() + 1.0D + (double) (this.rand.nextFloat() * this.height) - d1 * 10.0D, target.down().getZ() + 0.5D + (double) (this.rand.nextFloat() * this.width * 2.0F) - (double) this.width - d2 * 10.0D, d0, d1, d2);
+                }
+            }
+        }
     }
 }

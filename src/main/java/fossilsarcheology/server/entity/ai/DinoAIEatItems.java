@@ -23,7 +23,7 @@ public class DinoAIEatItems extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (this.prehistoric.getHunger() >= this.prehistoric.getMaxHunger() * 0.75F) {
+        if (this.prehistoric.getHunger() >= this.prehistoric.getMaxHunger()) {
             return false;
         } else if (this.prehistoric.isMovementBlockedSoft()) {
             return false;

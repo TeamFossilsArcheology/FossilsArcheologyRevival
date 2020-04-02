@@ -1,6 +1,8 @@
 package fossilsarcheology.server.entity.prehistoric;
 
+import fossilsarcheology.Revival;
 import net.minecraft.block.material.Material;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityFlying;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -11,6 +13,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public abstract class EntityPrehistoricFlying extends EntityPrehistoric implements EntityFlying {
 
@@ -106,7 +110,7 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
         if (!this.world.isRemote && ticksFlying > 80 && this.onGround) {
             this.setFlying(false);
         }
-        if (this.isFlying() && this.canSleep() && !world.isAirBlock(this.getPosition().down(2))) {
+        if (this.isFlying() && this.canSleep() && !world.isAirBlock(this.getPosition().down(2)) && !this.isOverWater()) {
             this.setFlying(false);
 
         }
@@ -132,18 +136,28 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
     }
 
     public void flyTowardsTarget() {
-        if (airTarget != null && isTargetInAir() && this.isFlying() && this.getDistanceSquared(new Vec3d(airTarget.getX(), this.posY, airTarget.getZ())) > 3) {
-            double targetX = airTarget.getX() + 0.5D - posX;
-            double targetY = Math.min(airTarget.getY(), 256) + 1D - posY;
-            double targetZ = airTarget.getZ() + 0.5D - posZ;
-            motionX += (Math.signum(targetX) * 0.5D - motionX) * 0.100000000372529 * 2;
-            motionY += (Math.signum(targetY) * 0.5D - motionY) * 0.100000000372529 * 2;
-            motionZ += (Math.signum(targetZ) * 0.5D - motionZ) * 0.100000000372529 * 2;
-            float angle = (float) (Math.atan2(motionZ, motionX) * 180.0D / Math.PI) - 90.0F;
-            float rotation = MathHelper.wrapDegrees(angle - rotationYaw);
-            moveForward = 0.5F;
-            prevRotationYaw = rotationYaw;
-            rotationYaw += rotation;
+        double bbLength = this.getEntityBoundingBox().getAverageEdgeLength() * 2;
+        double maxDist = Math.max(3, bbLength * bbLength);
+        if (airTarget != null && isTargetInAir() && this.isFlying()) {
+            if(this.getDistanceSquared(new Vec3d(airTarget.getX() + 0.5D, airTarget.getY() + 0.5D, airTarget.getZ() + 0.5D)) > maxDist){
+                double targetX = airTarget.getX() + 0.5D - posX;
+                double targetY = Math.min(airTarget.getY(), 256) + 1D - posY;
+                double targetZ = airTarget.getZ() + 0.5D - posZ;
+                motionX += (Math.signum(targetX) * 0.5D - motionX) * 0.100000000372529 * 2;
+                motionY += (Math.signum(targetY) * 0.5D - motionY) * 0.100000000372529 * 2;
+                motionZ += (Math.signum(targetZ) * 0.5D - motionZ) * 0.100000000372529 * 2;
+                System.out.println(motionX);
+                float angle = (float) (Math.atan2(motionZ, motionX) * 180.0D / Math.PI) - 90.0F;
+                float rotation = MathHelper.wrapDegrees(angle - rotationYaw);
+                moveForward = 0.5F;
+                prevRotationYaw = rotationYaw;
+                if(Math.abs(motionX) > 0.09 || Math.abs(motionZ) > 0.09){
+                    rotationYaw += rotation;
+                }
+            }else{
+                this.onReachAirTarget(this.airTarget);
+                this.airTarget = null;
+            }
         } else {
             this.airTarget = null;
         }
@@ -153,6 +167,9 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
 	   /* if (airTarget != null && isTargetInAir() && this.isFlying() && this.getDistanceSquared(new Vec3d(airTarget.getX(), this.posY, airTarget.getZ())) < 3) {
 	        this.setFlying(false);
         }*/
+    }
+
+    protected void onReachAirTarget(BlockPos airTarget) {
     }
 
     protected boolean isTargetInAir() {
@@ -167,4 +184,44 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
     }
 
     protected abstract double getFlySpeed();
+
+    public static BlockPos getBlockInView(EntityPrehistoricFlying dinosaur) {
+        float radius = 0.75F * (0.7F * 4) * -3 - dinosaur.getRNG().nextInt(20);
+        float neg = dinosaur.getRNG().nextBoolean() ? 1 : -1;
+        float angle = (0.01745329251F * dinosaur.renderYawOffset) + 3.15F + (dinosaur.getRNG().nextFloat() * neg);
+        double extraX = radius * MathHelper.sin((float) (Math.PI + angle));
+        double extraZ = radius * MathHelper.cos(angle);
+        BlockPos radialPos = new BlockPos(dinosaur.posX + extraX, 0, dinosaur.posZ + extraZ);
+        BlockPos ground = dinosaur.world.getHeight(radialPos);
+        int distFromGround = (int) dinosaur.posY - ground.getY();
+        BlockPos newPos = radialPos.up(distFromGround > 16 ? (int) Math.min(Revival.CONFIG_OPTIONS.flyingTargetMaxHeight, dinosaur.posY + dinosaur.getRNG().nextInt(16) - 8) : (int) dinosaur.posY + dinosaur.getRNG().nextInt(16) + 1);
+        if (!isTargetBlocked(dinosaur, new Vec3d(newPos)) && dinosaur.getDistanceSqToCenter(newPos) > 6) {
+            return newPos;
+        }
+        return null;
+    }
+
+    public static boolean isTargetBlocked(Entity entity, Vec3d target) {
+        if (target != null) {
+            RayTraceResult rayTrace = entity.world.rayTraceBlocks(new Vec3d(entity.getPosition()), target, false);
+            if (rayTrace != null && rayTrace.hitVec != null) {
+                BlockPos sidePos = rayTrace.getBlockPos();
+                BlockPos pos = new BlockPos(rayTrace.hitVec);
+                return !entity.world.isAirBlock(pos) || !entity.world.isAirBlock(sidePos);
+            }
+        }
+        return false;
+    }
+
+    @Nullable
+    public BlockPos generateAirTarget(){
+        BlockPos pos = null;
+        for (int i = 0; i < 10; i++) {
+            pos = getBlockInView(this);
+            if (pos != null && this.world.getBlockState(pos).getMaterial() == Material.AIR && !isTargetBlocked(this, new Vec3d(pos))) {
+                return pos;
+            }
+        }
+        return pos;
+    }
 }
