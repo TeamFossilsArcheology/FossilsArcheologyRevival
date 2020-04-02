@@ -25,6 +25,9 @@ public class DinoAIHunt<T extends EntityLivingBase> extends EntityAINearestAttac
             return false;
         }
         if (super.shouldExecute() && this.targetEntity != null && !this.targetEntity.getClass().equals(this.dino.getClass())) {
+            if(targetEntity instanceof EntityToyBase && dino.ticksTillPlay == 0){
+                return true;
+            }
             double targetWidth = this.targetEntity.width;
             if(this.targetEntity.getEntityBoundingBox() != null){
                 targetWidth = this.targetEntity.getEntityBoundingBox().getAverageEdgeLength();
