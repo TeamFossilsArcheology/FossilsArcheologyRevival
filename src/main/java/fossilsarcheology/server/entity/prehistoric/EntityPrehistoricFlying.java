@@ -146,7 +146,6 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
                 motionX += (Math.signum(targetX) * 0.5D - motionX) * 0.100000000372529 * 2;
                 motionY += (Math.signum(targetY) * 0.5D - motionY) * 0.100000000372529 * 2;
                 motionZ += (Math.signum(targetZ) * 0.5D - motionZ) * 0.100000000372529 * 2;
-                System.out.println(motionX);
                 float angle = (float) (Math.atan2(motionZ, motionX) * 180.0D / Math.PI) - 90.0F;
                 float rotation = MathHelper.wrapDegrees(angle - rotationYaw);
                 moveForward = 0.5F;

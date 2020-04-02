@@ -114,9 +114,11 @@ public class FourTallFlowerBlock extends BlockBush implements DefaultRenderedIte
 
     private void spreadAsBonemeal(World world, BlockPos pos) {
         Random rand = new Random();
-        world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
-        world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
-        world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
+        if (world.isRemote) {
+            world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
+            world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
+            world.spawnParticle(EnumParticleTypes.VILLAGER_HAPPY, pos.getX() + (rand.nextDouble() - 0.5D), pos.getY() + rand.nextDouble(), pos.getZ() + (rand.nextDouble() - 0.5D), 0.0D, 0.0D, 0.0D);
+        }
         int maxTries = rand.nextInt(3);
         int tries = 0;
         int timeout = 0;
@@ -125,10 +127,12 @@ public class FourTallFlowerBlock extends BlockBush implements DefaultRenderedIte
             BlockPos tryPos = pos.add(rand.nextInt(10) - 4, rand.nextInt(8) - 4, rand.nextInt(10) - 4);
             if (world.isAirBlock(tryPos.up()) && world.isAirBlock(tryPos.up(2)) && world.isAirBlock(tryPos.up(3)) && world.isAirBlock(tryPos.up(4)) && canSustainBush(world.getBlockState(tryPos))) {
                 tries++;
-                world.setBlockState(tryPos.up(), this.getDefaultState().withProperty(LAYER, 0), 2);
-                world.setBlockState(tryPos.up(2), this.getDefaultState().withProperty(LAYER, 1), 2);
-                world.setBlockState(tryPos.up(3), this.getDefaultState().withProperty(LAYER, 2), 2);
-                world.setBlockState(tryPos.up(4), this.getDefaultState().withProperty(LAYER, 3), 2);
+                if (!world.isRemote) {
+                    world.setBlockState(tryPos.up(), this.getDefaultState().withProperty(LAYER, 0), 2);
+                    world.setBlockState(tryPos.up(2), this.getDefaultState().withProperty(LAYER, 1), 2);
+                    world.setBlockState(tryPos.up(3), this.getDefaultState().withProperty(LAYER, 2), 2);
+                    world.setBlockState(tryPos.up(4), this.getDefaultState().withProperty(LAYER, 3), 2);
+                }
             } else {
                 continue;
             }
