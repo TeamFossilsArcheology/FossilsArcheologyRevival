@@ -1610,7 +1610,11 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             return true;
         }
         boolean isAnotherDino = target instanceof EntityPrehistoric;
-        if (this.type.diet != Diet.HERBIVORE && this.type.diet != Diet.NONE && canAttackClass(target.getClass())) {
+        boolean b = true;
+        if(target instanceof EntityLivingBase){
+            b = FoodHelper.getMobFoodPoints((EntityLivingBase) target, this.type.diet) > 0;
+        }
+        if (this.type.diet != Diet.HERBIVORE && this.type.diet != Diet.NONE && b && canAttackClass(target.getClass())) {
             if (isAnotherDino ? this.getActualWidth() * getTargetScale() >= ((EntityPrehistoric) target).getActualWidth() : this.getActualWidth() * getTargetScale() >= target.width) {
                 if (hunger) {
                     return isHungry() || target instanceof EntityToyBase && this.ticksTillPlay == 0;
