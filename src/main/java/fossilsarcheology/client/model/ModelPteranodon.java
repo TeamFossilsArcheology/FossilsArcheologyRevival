@@ -221,11 +221,22 @@ public class ModelPteranodon extends ModelPrehistoric {
         ModelUtils.faceTargetMod(Neck2, f3, f4, 0.3F);
         ModelUtils.faceTargetMod(Head, f3, f4, 0.3F);
         float speed = 0.1F;
-        float speed2 = 0.9F;
+        float speed2 = 0.6F;
         float speed3 = 0.3F;
         this.bob(Body, speed, -0.15F, false, f2, 1);
         this.chainWave(neckParts, speed, 0.05F, 3, f2, 1);
         EntityPrehistoricFlying pteranodon = (EntityPrehistoricFlying)entity;
+        if (pteranodon.flyProgress >= 10) {
+            this.chainFlap(rightWingParts, speed3, 0.65F, 0, f, f1);
+            this.chainFlap(leftWingParts, speed3, -0.65F, 0, f, f1);
+            this.swing(WingR1, speed3, 0.6F, false, 0F, -0.1F, f, f1);
+            this.swing(WingL1, speed3, 0.6F, true, 0F, -0.1F, f, f1);
+        } else{
+            this.walk(LegLeft, speed2, 0.9F, false, 0F, 0F, f, f1);
+            this.walk(LegRight, speed2, 0.9F, true, 0F, 0F, f, f1);
+            this.swing(WingR1, speed2, 0.7F, false, 0F, 0F, f, f1);
+            this.swing(WingL1, speed2, 0.7F, false, 0F, 0F, f, f1);
+        }
         if (((EntityPrehistoricFlying) entity).isFlying() || pteranodon.getAnimation() == pteranodon.TAKEOFF_ANIMATION) {
             float sitProgress = ((EntityPrehistoricFlying) entity).flyProgress;
             if(pteranodon.getAnimation() == pteranodon.TAKEOFF_ANIMATION){
@@ -249,17 +260,7 @@ public class ModelPteranodon extends ModelPrehistoric {
             sitAnimationPos(LegRight, sitProgress, 0, -1.5F, -1F);
             sitAnimationPos(LegLeft, sitProgress, 0, -1.5F, -1F);
             sitAnimationPos(Head, sitProgress, 0, 1F, -0.8F);
-            if (sitProgress >= 10) {
-                this.chainFlap(rightWingParts, speed3, 0.65F, 0, f, f1);
-                this.chainFlap(leftWingParts, speed3, -0.65F, 0, f, f1);
-                this.swing(WingR1, speed3, 0.6F, false, 0F, -0.1F, f, f1);
-                this.swing(WingL1, speed3, 0.6F, true, 0F, -0.1F, f, f1);
-            } else {
-                this.walk(LegLeft, speed2, 0.9F, false, 0F, 0F, f, f1);
-                this.walk(LegRight, speed2, 0.9F, true, 0F, 0F, f, f1);
-                this.swing(WingR1, speed2, 0.7F, false, 0F, 0F, f, f1);
-                this.swing(WingL1, speed2, 0.7F, false, 0F, 0F, f, f1);
-            }
+
         } else {
             float sitProgress = ((EntityPrehistoric) entity).sleepProgress;
             sitAnimationRotation(WingL1, sitProgress, (float) Math.toRadians(23.48D), (float) Math.toRadians(1D), -(float) Math.toRadians(8D));

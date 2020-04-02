@@ -226,7 +226,7 @@ public class EntityPteranodon extends EntityPrehistoricFlying {
     }
 
     public int getTakeoffTick() {
-        return 5;
+        return 10;
     }
 
     public boolean hasTakeoffAnimation(){
