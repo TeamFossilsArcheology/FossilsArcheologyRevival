@@ -119,7 +119,7 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addMeat(EntityTriceratops.class, 120);
         FoodMappings.INSTANCE.addMeat(EntityVelociraptor.class, 20);
         FoodMappings.INSTANCE.addMeat(EntityTyrannosaurus.class, 120);
-        FoodMappings.INSTANCE.addMeat(EntityPterosaur.class, 35);
+        FoodMappings.INSTANCE.addMeat(EntityPteranodon.class, 35);
         FoodMappings.INSTANCE.addMeat(EntityMosasaurus.class, 50);
         FoodMappings.INSTANCE.addMeat(EntitySarcosuchus.class, 50);
         FoodMappings.INSTANCE.addMeat(EntityLiopleurodon.class, 50);

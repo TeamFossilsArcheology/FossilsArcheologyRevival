@@ -3,6 +3,7 @@ package fossilsarcheology.server.entity.prehistoric;
 import com.google.common.base.Predicate;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.ai.*;
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -23,10 +24,11 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 
 
-public class EntityPterosaur extends EntityPrehistoricFlying {
+public class EntityPteranodon extends EntityPrehistoricFlying {
 
-    public EntityPterosaur(World world) {
+    public EntityPteranodon(World world) {
         super(world, PrehistoricEntityType.PTEROSAUR, 2, 4, 6, 30, 0.15, 0.2, 0, 0);
+        TAKEOFF_ANIMATION = Animation.create(30);
         this.setActualSize(1.1F, 1.1F);
         minSize = 0.3F;
         maxSize = 1.1F;
@@ -70,31 +72,26 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
 
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
-
         return PrehistoricEntityTypeAI.Activity.DIURINAL;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Attacking aiAttackType() {
-
         return PrehistoricEntityTypeAI.Attacking.BASIC;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Climbing aiClimbType() {
-
         return PrehistoricEntityTypeAI.Climbing.NONE;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Following aiFollowType() {
-
         return PrehistoricEntityTypeAI.Following.AGRESSIVE;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Jumping aiJumpType() {
-
         return PrehistoricEntityTypeAI.Jumping.BASIC;
     }
 
@@ -105,31 +102,26 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
 
     @Override
     public PrehistoricEntityTypeAI.Stalking aiStalkType() {
-
         return PrehistoricEntityTypeAI.Stalking.NONE;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Taming aiTameType() {
-
         return PrehistoricEntityTypeAI.Taming.FEEDING;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Untaming aiUntameType() {
-
         return PrehistoricEntityTypeAI.Untaming.ATTACK;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Moving aiMovingType() {
-
         return PrehistoricEntityTypeAI.Moving.FLIGHT;
     }
 
     @Override
     public PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType() {
-
         return PrehistoricEntityTypeAI.WaterAbility.IGNOREANDFISH;
     }
 
@@ -140,7 +132,7 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
             doAttack();
         }
         if (this.isInWater() && !this.isFlying()) {
-            this.setFlying(true);
+            this.startFlying();
         }
     }
 
@@ -231,5 +223,13 @@ public class EntityPterosaur extends EntityPrehistoricFlying {
                 }
             }
         }
+    }
+
+    public int getTakeoffTick() {
+        return 5;
+    }
+
+    public boolean hasTakeoffAnimation(){
+        return true;
     }
 }

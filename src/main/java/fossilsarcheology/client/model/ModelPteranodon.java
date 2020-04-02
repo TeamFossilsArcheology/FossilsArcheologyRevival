@@ -2,7 +2,7 @@ package fossilsarcheology.client.model;
 
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoricFlying;
-import fossilsarcheology.server.entity.prehistoric.EntityPterosaur;
+import fossilsarcheology.server.entity.prehistoric.EntityPteranodon;
 import net.ilexiconn.llibrary.client.model.ModelAnimator;
 import net.ilexiconn.llibrary.client.model.tools.AdvancedModelRenderer;
 import net.ilexiconn.llibrary.server.animation.IAnimatedEntity;
@@ -156,7 +156,7 @@ public class ModelPteranodon extends ModelPrehistoric {
     }
 
     public void animate(IAnimatedEntity entity, float f, float f1, float f2, float f3, float f4, float f5) {
-        EntityPterosaur pterosaur = (EntityPterosaur) entity;
+        EntityPteranodon pterosaur = (EntityPteranodon) entity;
         animator.update(entity);
         blockMovement(f, f1, f2, f3, f4, f5, (Entity) entity);
         this.resetToDefaultPose();
@@ -178,6 +178,35 @@ public class ModelPteranodon extends ModelPrehistoric {
         ModelUtils.rotate(animator, Jaw, -15, 0, 0);
         animator.endKeyframe();
         animator.resetKeyframe(10);
+        animator.setAnimation(pterosaur.TAKEOFF_ANIMATION);
+        animator.startKeyframe(7);
+        ModelUtils.rotate(animator, Neck1, 30, 0, 0);
+        ModelUtils.rotate(animator, Neck2, -5, 0, 0);
+        ModelUtils.rotate(animator, Head, -10, 0, 0);
+        ModelUtils.rotate(animator, LegLeft, -30, 0, 0);
+        ModelUtils.rotate(animator, LegRight, -30, 0, 0);
+        ModelUtils.rotate(animator, WingL1, -20, 10, 0);
+        ModelUtils.rotate(animator, WingR1, -20, -10, 0);
+        animator.move(Body, 0, 0, 8);
+        animator.move(LegLeft, 0, 0, 8);
+        animator.move(LegRight, 0, 0, 8);
+        animator.move(WingL1, 0, 0, 6);
+        animator.move(WingR1, 0, 0, 6);
+        animator.endKeyframe();
+        animator.startKeyframe(7);
+        ModelUtils.rotate(animator, Body, 30, 0, 0);
+        ModelUtils.rotate(animator, Neck1, -20, 0, 0);
+        ModelUtils.rotate(animator, WingL1, 0, -50, 0);
+        ModelUtils.rotate(animator, WingL1Child_1, 0, 20, 10);
+        ModelUtils.rotate(animator, WingR1, 0, 50, 0);
+        ModelUtils.rotate(animator, WingR1Child_1, 0, -20, -10);
+        animator.move(Body, 0, -1, -5);
+        animator.move(LegLeft, 0, -3, -5);
+        animator.move(LegRight, 0, -3, -5);
+        animator.move(WingL1, 0, -2, -5);
+        animator.move(WingR1, 0, -2, -5);
+        animator.endKeyframe();
+        animator.resetKeyframe(10);
     }
 
     @Override
@@ -192,13 +221,16 @@ public class ModelPteranodon extends ModelPrehistoric {
         ModelUtils.faceTargetMod(Neck2, f3, f4, 0.3F);
         ModelUtils.faceTargetMod(Head, f3, f4, 0.3F);
         float speed = 0.1F;
-        float speed2 = 0.6F;
+        float speed2 = 0.9F;
         float speed3 = 0.3F;
         this.bob(Body, speed, -0.15F, false, f2, 1);
         this.chainWave(neckParts, speed, 0.05F, 3, f2, 1);
-
-        if (((EntityPrehistoricFlying) entity).isFlying()) {
+        EntityPrehistoricFlying pteranodon = (EntityPrehistoricFlying)entity;
+        if (((EntityPrehistoricFlying) entity).isFlying() || pteranodon.getAnimation() == pteranodon.TAKEOFF_ANIMATION) {
             float sitProgress = ((EntityPrehistoricFlying) entity).flyProgress;
+            if(pteranodon.getAnimation() == pteranodon.TAKEOFF_ANIMATION){
+                sitProgress = Math.min(20, Math.max(pteranodon.getAnimationTick() - 13, 0));
+            }
             sitAnimationRotation(WingR1Child, sitProgress, (float) Math.toRadians(18.999999959540737D), (float) Math.toRadians(2.609999910412874D), (float) Math.toRadians(58.919998497711354D));
             sitAnimationRotation(WingR1Child_1, sitProgress, 0, -(float) Math.toRadians(180D), 0);
             sitAnimationRotation(WingR1, sitProgress, (float) Math.toRadians(7.0D), (float) Math.toRadians(19.0D), ((float) Math.toRadians(55.0D)));

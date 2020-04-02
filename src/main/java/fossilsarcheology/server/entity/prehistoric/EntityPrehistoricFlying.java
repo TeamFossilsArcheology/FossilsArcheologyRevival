@@ -1,6 +1,7 @@
 package fossilsarcheology.server.entity.prehistoric;
 
 import fossilsarcheology.Revival;
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.block.material.Material;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.passive.EntityFlying;
@@ -18,12 +19,12 @@ import javax.annotation.Nullable;
 
 public abstract class EntityPrehistoricFlying extends EntityPrehistoric implements EntityFlying {
 
-    public static final int FLYING_INDEX = 29;
     private static final DataParameter<Boolean> FLYING = EntityDataManager.createKey(EntityPrehistoricFlying.class, DataSerializers.BOOLEAN);
     public BlockPos airTarget;
     public float flyProgress;
     private boolean isFlying;
     private int ticksFlying;
+    public Animation TAKEOFF_ANIMATION;
 
     public EntityPrehistoricFlying(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world, type, baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, maxSpeed, baseArmor, maxArmor);
@@ -99,7 +100,7 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
                 sitProgress = sleepProgress = 0F;
         }
         if (!this.isFlying() && !this.isMovementBlockedSoft() && rand.nextInt(200) == 0 && !this.world.isRemote && this.isAdult() && this.getControllingPassenger() == null && this.onGround && ticksExisted > 50) {
-            this.setFlying(true);
+            this.startFlying();
         }
         if (!this.world.isRemote && isFlying()) {
             ticksFlying++;
@@ -119,11 +120,17 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
         } else if (getAttackTarget() != null) {
             flyTowardsTarget();
         }
+        if (this.hasTakeoffAnimation() && !this.isFlying() && this.getAnimation() == TAKEOFF_ANIMATION && this.getAnimationTick() >= getTakeoffTick()) {
+            this.setFlying(true);
+        }
     }
 
-    @Override
-    public boolean canSleep() {
-        return super.canSleep();
+    public void startFlying(){
+        if(this.hasTakeoffAnimation()){
+            this.setAnimation(TAKEOFF_ANIMATION);
+        }else{
+            this.setFlying(true);
+        }
     }
 
     public void flyAround() {
@@ -136,7 +143,7 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
     }
 
     public void flyTowardsTarget() {
-        double bbLength = this.getEntityBoundingBox().getAverageEdgeLength() * 2;
+        double bbLength = this.getEntityBoundingBox().getAverageEdgeLength() * 2.5D;
         double maxDist = Math.max(3, bbLength * bbLength);
         if (airTarget != null && isTargetInAir() && this.isFlying()) {
             if(this.getDistanceSquared(new Vec3d(airTarget.getX() + 0.5D, airTarget.getY() + 0.5D, airTarget.getZ() + 0.5D)) > maxDist){
@@ -150,7 +157,7 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
                 float rotation = MathHelper.wrapDegrees(angle - rotationYaw);
                 moveForward = 0.5F;
                 prevRotationYaw = rotationYaw;
-                if(Math.abs(motionX) > 0.09 || Math.abs(motionZ) > 0.09){
+                if(Math.abs(motionX) > 0.12 || Math.abs(motionZ) > 0.12){
                     rotationYaw += rotation;
                 }
             }else{
@@ -163,9 +170,6 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
         if(collidedHorizontally){
             this.airTarget = null;
         }
-	   /* if (airTarget != null && isTargetInAir() && this.isFlying() && this.getDistanceSquared(new Vec3d(airTarget.getX(), this.posY, airTarget.getZ())) < 3) {
-	        this.setFlying(false);
-        }*/
     }
 
     protected void onReachAirTarget(BlockPos airTarget) {
@@ -222,5 +226,18 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
             }
         }
         return pos;
+    }
+
+    @Override
+    public Animation[] getAnimations() {
+        return new Animation[]{SPEAK_ANIMATION, ATTACK_ANIMATION, TAKEOFF_ANIMATION};
+    }
+
+    public boolean hasTakeoffAnimation(){
+        return false;
+    }
+
+    public int getTakeoffTick() {
+        return TAKEOFF_ANIMATION.getDuration() - 1;
     }
 }

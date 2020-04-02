@@ -36,7 +36,7 @@ public enum PrehistoricEntityType {
     TRICERATOPS(EntityTriceratops.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Parameter.MODEL | Parameter.TAME | Parameter.RIDE | Parameter.HERBIVORE, 0X64352D, 0X251A17, 0.8F, 128),
     VELOCIRAPTOR(EntityVelociraptor.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, Parameter.TAME | Parameter.CARNIVORE, 0X4A0D04, 0XC9C9C9, 0.5F),
     TYRANNOSAURUS(EntityTyrannosaurus.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, Parameter.MODEL | Parameter.TAME | Parameter.RIDE | Parameter.CARNIVORE, 0X9D8A74, 0X4C3116, 0.9F, 128),
-    PTEROSAUR(EntityPterosaur.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE, Parameter.MODEL | Parameter.TAME | Parameter.CARNIVORE, 0XD6D6D6, 0X3B3B3B, 0.4F),
+    PTEROSAUR(EntityPteranodon.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE, Parameter.MODEL | Parameter.TAME | Parameter.CARNIVORE, 0XD6D6D6, 0X3B3B3B, 0.4F),
     PLESIOSAUR(EntityPlesiosaurus.class, MobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE, Parameter.MODEL | Parameter.TAME | Parameter.RIDE | Parameter.CARNIVORE, 0XE4A86E, 0XE17920),
     MOSASAURUS(EntityMosasaurus.class, MobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCCARNIVORE, Parameter.MODEL | Parameter.CARNIVORE, 0X888D90, 0X3A4C52, 1, 128),
     STEGOSAURUS(EntityStegosaurus.class, MobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Parameter.MODEL | Parameter.TAME | Parameter.HERBIVORE, 0X9C8138, 0X651817, 0.7F, 128),
