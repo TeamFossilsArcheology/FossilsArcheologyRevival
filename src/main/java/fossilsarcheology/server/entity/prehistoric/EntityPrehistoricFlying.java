@@ -147,6 +147,9 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
         } else {
             this.airTarget = null;
         }
+        if(collidedHorizontally){
+            this.airTarget = null;
+        }
 	   /* if (airTarget != null && isTargetInAir() && this.isFlying() && this.getDistanceSquared(new Vec3d(airTarget.getX(), this.posY, airTarget.getZ())) < 3) {
 	        this.setFlying(false);
         }*/

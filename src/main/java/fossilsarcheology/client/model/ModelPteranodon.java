@@ -193,7 +193,7 @@ public class ModelPteranodon extends ModelPrehistoric {
         ModelUtils.faceTargetMod(Head, f3, f4, 0.3F);
         float speed = 0.1F;
         float speed2 = 0.6F;
-        float speed3 = 0.2F;
+        float speed3 = 0.3F;
         this.bob(Body, speed, -0.15F, false, f2, 1);
         this.chainWave(neckParts, speed, 0.05F, 3, f2, 1);
 
@@ -218,10 +218,10 @@ public class ModelPteranodon extends ModelPrehistoric {
             sitAnimationPos(LegLeft, sitProgress, 0, -1.5F, -1F);
             sitAnimationPos(Head, sitProgress, 0, 1F, -0.8F);
             if (sitProgress >= 10) {
-                this.chainFlap(rightWingParts, speed3, 0.9F, 1, f, f1);
-                this.chainFlap(leftWingParts, speed3, -0.9F, 1, f, f1);
-                this.swing(WingR1, speed3, 0.7F, false, 0F, -0.1F, f, f1);
-                this.swing(WingL1, speed3, 0.7F, true, 0F, -0.1F, f, f1);
+                this.chainFlap(rightWingParts, speed3, 0.65F, 0, f, f1);
+                this.chainFlap(leftWingParts, speed3, -0.65F, 0, f, f1);
+                this.swing(WingR1, speed3, 0.6F, false, 0F, -0.1F, f, f1);
+                this.swing(WingL1, speed3, 0.6F, true, 0F, -0.1F, f, f1);
             } else {
                 this.walk(LegLeft, speed2, 0.9F, false, 0F, 0F, f, f1);
                 this.walk(LegRight, speed2, 0.9F, true, 0F, 0F, f, f1);
