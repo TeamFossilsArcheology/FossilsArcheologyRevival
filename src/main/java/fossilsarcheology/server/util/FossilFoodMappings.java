@@ -180,7 +180,10 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:deer", 35);
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:goat", 25);
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:pheasant", 10);
+        FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:turkey", 10);
+        FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:goose", 10);
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:boar", 30);
+        FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:moose", 45);
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:reindeer", 35);
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:squirrel", 3);
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:songbird", 3);
@@ -442,5 +445,8 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addMeat("foodRatcooked", 25);
         FoodMappings.INSTANCE.addEgg("listAllegg", 7);
         FoodMappings.INSTANCE.addEgg("egg", 7);
+        FoodMappings.INSTANCE.addEgg("foodEgg", 7);
+        FoodMappings.INSTANCE.addEgg("eggCookable", 7);
+        FoodMappings.INSTANCE.addEgg("listAllEgg", 7);
     }
 }

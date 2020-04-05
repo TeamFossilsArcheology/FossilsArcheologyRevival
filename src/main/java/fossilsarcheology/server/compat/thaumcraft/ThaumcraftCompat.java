@@ -243,6 +243,7 @@ public class ThaumcraftCompat {
         ThaumcraftApi.registerEntityTag("fossil.arthropleura", new AspectList().add(Aspect.BEAST, 45).add(Aspect.PROTECT, 45).add(Aspect.EARTH, 45).add(ThaumcraftCompat.TIME, 20).add(ThaumcraftCompat.FOSSIL, 20));
         ThaumcraftApi.registerEntityTag("fossil.citipati", new AspectList().add(Aspect.BEAST, 25).add(Aspect.ENERGY, 25).add(Aspect.AIR, 25).add(ThaumcraftCompat.TIME, 10).add(ThaumcraftCompat.FOSSIL, 10));
     
+        ThaumcraftApi.registerEntityTag("fossil.ornitholestes", new AspectList().add(Aspect.BEAST, 15).add(Aspect.AIR, 15).add(ThaumcraftCompat.TIME, 10).add(ThaumcraftCompat.FOSSIL, 10));
         ThaumcraftApi.registerEntityTag("fossil.diplodocus", new AspectList().add(Aspect.BEAST, 45).add(Aspect.EARTH, 45).add(ThaumcraftCompat.TIME, 25).add(ThaumcraftCompat.FOSSIL, 25));
 
         ThaumcraftApi.registerEntityTag("fossil.stone_tablet", new AspectList().add(Aspect.EARTH, 10).add(ThaumcraftCompat.TIME, 10));
