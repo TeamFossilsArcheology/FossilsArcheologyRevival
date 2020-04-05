@@ -215,7 +215,11 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:nautilus", 15);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:lamprey", 5);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:crab", 5);
-        FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:shark", 35);
+        FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:shark", 40);
+        FoodMappings.INSTANCE.addFishEntity("jaff:clownfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("jaff:cod", 5);
+        FoodMappings.INSTANCE.addFishEntity("jaff:pufferfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("jaff:salmon", 5);
         FoodMappings.INSTANCE.addFishEntity("abyssaldepths:swordfish", 15);
         FoodMappings.INSTANCE.addFishEntity("abyssaldepths:seahorse", 15);
         FoodMappings.INSTANCE.addFishEntity("abyssaldepths:sailfish", 15);
