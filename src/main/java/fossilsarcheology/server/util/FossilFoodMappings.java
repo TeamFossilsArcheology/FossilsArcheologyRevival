@@ -209,6 +209,7 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_sandy", 10);
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_wintry", 10);
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_lovely", 10);
+        FoodMappings.INSTANCE.addInsectEntity("minecraftfuture:bee", 2);
         FoodMappings.INSTANCE.addFishEntity("mysticalwildlife:krill", 10);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:horseshoecrab", 13);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:nautilus", 15);
@@ -227,6 +228,8 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addFishEntity("abyssaldepths:bannerfish", 5);
         FoodMappings.INSTANCE.addFishEntity("abyssaldepths:blackcap_basslet", 5);
         FoodMappings.INSTANCE.addFishEntity("abyssaldepths:spotfin_butterflyfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:eel_saltwater", 8);
+        FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:eel_freshwater", 8);
         FoodMappings.INSTANCE.addFishEntity("quark:crab", 5);
         FoodMappings.INSTANCE.removeItemMapping(new ItemStack(PrehistoricEntityType.HORSE.embryoItem), Diet.CARNIVORE_EGG);
         FoodMappings.INSTANCE.addFish("listAllfishraw", 5);
