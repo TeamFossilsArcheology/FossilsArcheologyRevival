@@ -136,6 +136,7 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addMeat(EntityDodo.class, 20);
         FoodMappings.INSTANCE.addMeat(EntityQuagga.class, 50);
         FoodMappings.INSTANCE.addMeat(EntityTitanis.class, 40);
+        FoodMappings.INSTANCE.addMeat(EntityOrnitholestes.class, 25);
         FoodMappings.INSTANCE.addMeat(EntityPhorusrhacos.class, 40);
         FoodMappings.INSTANCE.addMeat(EntityKelenken.class, 40);
         FoodMappings.INSTANCE.addMeat(EntityTitanis.class, 40);
