@@ -199,6 +199,8 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addMeatEntity("mysticalwildlife:dusk_lurker", 25);
         FoodMappings.INSTANCE.addMeatEntity("mysticalwildlife:vrontausaurus", 45);
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:crab", 5);
+        FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:walrus", 35);
+        FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:whale", 65);
         FoodMappings.INSTANCE.addMeatEntity("quark:crab", 5);
         FoodMappings.INSTANCE.addMeatEntity("quark:frog", 3);
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_azure", 10);
@@ -213,6 +215,18 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:lamprey", 5);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:crab", 5);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:shark", 35);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:swordfish", 15);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:seahorse", 15);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:sailfish", 15);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:raccoon_butterflyfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:masked_butterflyfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:fish", 5);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:fairy_basslet", 5);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:clownfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:butterflyfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:bannerfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:blackcap_basslet", 5);
+        FoodMappings.INSTANCE.addFishEntity("abyssaldepths:spotfin_butterflyfish", 5);
         FoodMappings.INSTANCE.addFishEntity("quark:crab", 5);
         FoodMappings.INSTANCE.removeItemMapping(new ItemStack(PrehistoricEntityType.HORSE.embryoItem), Diet.CARNIVORE_EGG);
         FoodMappings.INSTANCE.addFish("listAllfishraw", 5);
