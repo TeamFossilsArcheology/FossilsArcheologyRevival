@@ -11,6 +11,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class FossilFoodMappings {
@@ -448,5 +449,7 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addEgg("foodEgg", 7);
         FoodMappings.INSTANCE.addEgg("eggCookable", 7);
         FoodMappings.INSTANCE.addEgg("listAllEgg", 7);
+    
+        FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:cooked_butterflyfish")), 7);
     }
 }
