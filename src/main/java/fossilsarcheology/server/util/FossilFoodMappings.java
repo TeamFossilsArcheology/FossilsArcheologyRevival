@@ -214,7 +214,8 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_sandy", 10);
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_wintry", 10);
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_lovely", 10);
-        FoodMappings.INSTANCE.addInsectEntity("minecraftfuture:bee", 2);
+        FoodMappings.INSTANCE.addInsectEntity("futuremc:bee", 2);
+        FoodMappings.INSTANCE.addMeatEntity("futuremc:panda", 35);
         FoodMappings.INSTANCE.addFishEntity("mysticalwildlife:krill", 10);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:horseshoecrab", 13);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:nautilus", 15);
@@ -240,6 +241,10 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:eel_saltwater", 8);
         FoodMappings.INSTANCE.addFishEntity("betteranimalsplus:eel_freshwater", 8);
         FoodMappings.INSTANCE.addFishEntity("quark:crab", 5);
+        FoodMappings.INSTANCE.addFishEntity("futuremc:cod", 5);
+        FoodMappings.INSTANCE.addFishEntity("futuremc:pufferfish", 5);
+        FoodMappings.INSTANCE.addFishEntity("futuremc:salmon", 5);
+        FoodMappings.INSTANCE.addFishEntity("futuremc:tropical_fish", 5);
         FoodMappings.INSTANCE.removeItemMapping(new ItemStack(PrehistoricEntityType.HORSE.embryoItem), Diet.CARNIVORE_EGG);
         FoodMappings.INSTANCE.addFish("listAllfishraw", 5);
         FoodMappings.INSTANCE.addFish("foodOctopuscooked", 30);
@@ -457,5 +462,8 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:masked_butterflyfish")), 5);
         FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:butterflyfish")), 5);
         FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:bannerfish")), 5);
+    
+        FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("betteranimalsplus:eel_meat_raw")), 6);
+        FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("betteranimalsplus:eel_meat_cooked")), 8);
     }
 }
