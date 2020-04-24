@@ -2,19 +2,19 @@
   "type": "forge:ore_shapeless",
   "ingredients": [
     {
-      "item": "fossil:volcano_ash",
+      "item": "fossil:volcanic_ash",
       "data": 0
     },
     {
-      "item": "fossil:volcano_ash",
+      "item": "fossil:volcanic_ash",
       "data": 0
     },
     {
-      "item": "fossil:volcano_ash",
+      "item": "fossil:volcanic_ash",
       "data": 0
     },
     {
-      "item": "fossil:volcano_ash",
+      "item": "fossil:volcanic_ash",
       "data": 0
     }
   ],

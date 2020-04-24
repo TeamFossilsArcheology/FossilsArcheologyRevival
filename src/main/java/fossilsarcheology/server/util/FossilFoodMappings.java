@@ -14,6 +14,7 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+@SuppressWarnings({"ConstantConditions"})
 public class FossilFoodMappings {
 
     public static void register() {
@@ -451,5 +452,10 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addEgg("listAllEgg", 7);
     
         FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:cooked_butterflyfish")), 7);
+        FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:spotfin_butterflyfish")), 5);
+        FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:raccoon_butterflyfish")), 5);
+        FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:masked_butterflyfish")), 5);
+        FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:butterflyfish")), 5);
+        FoodMappings.INSTANCE.addFish(new ItemStack(Item.getByNameOrId("abyssaldepths:bannerfish")), 5);
     }
 }
