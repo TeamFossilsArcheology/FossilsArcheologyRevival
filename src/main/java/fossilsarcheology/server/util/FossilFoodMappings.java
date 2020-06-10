@@ -216,6 +216,18 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addMeatEntity("betteranimalsplus:whale", 65);
         FoodMappings.INSTANCE.addMeatEntity("quark:crab", 5);
         FoodMappings.INSTANCE.addMeatEntity("quark:frog", 3);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:chinchilla", 3);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:gecko", 3);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:gemsbok", 35);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:hedgehog", 5);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:capybara", 25);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:giraffe", 55);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:anteater", 25);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:rhino", 37);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:camel", 25);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:frog", 3);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:porcupine", 7);
+        FoodMappings.INSTANCE.addMeatEntity("zoocraftdiscoveries:tapir", 25);
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_azure", 10);
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_verdant", 10);
         FoodMappings.INSTANCE.addInsectEntity("mysticalwildlife:cicaptera_crimson", 10);
