@@ -37,6 +37,8 @@ ExDragonith
 Raptorfarian  
 [Bluestreak52](https://github.com/Bluestreak52)  
 Coldrake  
+Lindstheginj/ASDFGirl
+Totemaster
 
 ###### Audio Artists  
 whitejoshman  
