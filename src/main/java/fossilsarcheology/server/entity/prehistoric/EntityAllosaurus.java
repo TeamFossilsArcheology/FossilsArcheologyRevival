@@ -29,6 +29,8 @@ public class EntityAllosaurus extends EntityPrehistoric implements IScaryDinosau
         this.teenAge = 5;
     }
 
+
+
     public float getTargetScale() {
         return 2.0F;
     }

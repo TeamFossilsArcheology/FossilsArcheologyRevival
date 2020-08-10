@@ -590,7 +590,13 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.stepHeight = 1;
         }
         if (Revival.CONFIG_OPTIONS.dinosaurBreeding && !world.isRemote && ticksTillMate == 0 && this.getGender() == 1 && this.getMood() > 50) {
-            this.mate();
+            float cramDist = 30;
+            List<EntityPrehistoric> crammedList = world.getEntitiesWithinAABB(this.getClass(), new AxisAlignedBB(this.posX - cramDist, this.posY - cramDist / 2, this.posZ - cramDist, this.posX + cramDist, this.posY + cramDist, this.posZ + cramDist));
+            if(crammedList.size() > this.getMaxPopulation()){
+                this.ticksTillMate = this.rand.nextInt(6000) + 6000;
+            }else{
+                this.mate();
+            }
         }
         if (Revival.CONFIG_OPTIONS.healingDinos && !this.world.isRemote) {
             if (this.rand.nextInt(500) == 0 && this.deathTime == 0) {
@@ -674,6 +680,13 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
                 fleeTicks = 0;
             }
         }
+    }
+
+    /*
+        How many dinosaurs of this type can exist in the same small, enclosed space.
+     */
+    public int getMaxPopulation() {
+        return nearByMobsAllowed;
     }
 
     public boolean wantsToSleep() {
