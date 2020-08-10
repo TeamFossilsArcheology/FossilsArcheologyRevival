@@ -139,7 +139,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private boolean droppedBiofossil = false;
     private int animTick;
     private int fleeTicks = 0;
-    private int moodCheckCooldown;
+    private int moodCheckCooldown = 0;
+    private int cathermalSleepCooldown = 0;
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world);
@@ -280,6 +281,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         compound.setFloat("YawRotation", this.rotationYaw);
         compound.setFloat("HeadRotation", this.rotationYawHead);
         compound.setBoolean("AgingDisabled", this.isAgingDisabled());
+        compound.setInteger("CathermalTimer", this.cathermalSleepCooldown);
     }
 
     public String getOwnerDisplayName() {
@@ -330,6 +332,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         } else {
             this.setOwnerDisplayName(compound.getString("OwnerDisplayName"));
         }
+        this.cathermalSleepCooldown = compound.getInteger("CathermalTimer");
     }
 
     public AxisAlignedBB getAttackBounds() {
@@ -402,6 +405,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.dataManager.set(SLEEPING, sleeping);
         if (!world.isRemote) {
             this.isSleeping = sleeping;
+        }
+        if(!sleeping){
+            cathermalSleepCooldown = 10000 + rand.nextInt(6000);
         }
     }
 
@@ -515,7 +521,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         } else if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
             return !this.isDaytime() || this.world.canSeeSky(new BlockPos(MathHelper.floor(this.posX), MathHelper.floor(this.posY + 1), MathHelper.floor(this.posZ)));
         } else {
-            return this.ticksSlept > 8000;
+            return this.ticksSlept > 4000;
         }
     }
 
@@ -599,9 +605,23 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setSitting(false);
             ticksSitted = 0;
         }
-        if (!this.world.isRemote && this.wantsToSleep() && this.getRNG().nextInt(this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH ? 700 : 100) == 1 && !this.isSleeping()) {
-            this.setSitting(false);
-            this.setSleeping(true);
+        if(cathermalSleepCooldown > 0){
+            cathermalSleepCooldown--;
+        }
+        if(!this.world.isRemote && this.wantsToSleep()){
+            if(this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH){
+                if(cathermalSleepCooldown == 0){
+                    if(this.getRNG().nextInt(1200) == 1 && !this.isSleeping()){
+                        this.setSitting(false);
+                        this.setSleeping(true);
+                    }
+                }
+            }else if(this.aiActivityType() != PrehistoricEntityTypeAI.Activity.NOSLEEP){
+                if(this.getRNG().nextInt(200) == 1 && !this.isSleeping()){
+                    this.setSitting(false);
+                    this.setSleeping(true);
+                }
+            }
         }
         if (!this.world.isRemote && (!this.wantsToSleep() || !this.canSleep() || canWakeUp())) {
             this.setSitting(false);
