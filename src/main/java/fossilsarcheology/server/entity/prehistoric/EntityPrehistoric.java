@@ -267,6 +267,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         compound.setInteger("Hunger", this.getHunger());
         compound.setBoolean("isModelized", this.isSkeleton());
         compound.setBoolean("Angry", this.isAngry());
+        compound.setBoolean("DinoTamed", this.isTamed());
         compound.setBoolean("Fleeing", this.isFleeingFlag());
         compound.setInteger("SubSpecies", this.getSubSpecies());
         compound.setInteger("Gender", this.getGender());
@@ -284,24 +285,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         compound.setInteger("CathermalTimer", this.cathermalSleepCooldown);
     }
 
-    public String getOwnerDisplayName() {
-        return this.dataManager.get(OWNERDISPLAYNAME);
-    }
-
-    public void setOwnerDisplayName(String displayName) {
-        this.dataManager.set(OWNERDISPLAYNAME, displayName);
-    }
-
-    @Override
-    protected void applyEntityAttributes() {
-        super.applyEntityAttributes();
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.maxSpeed);
-        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(this.maxArmor);
-        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
-        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1D);
-        this.getEntityAttribute(EntityLivingBase.SWIM_SPEED).setBaseValue(1D);
-    }
 
     @Override
     public void readEntityFromNBT(NBTTagCompound compound) {
@@ -311,6 +294,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         this.setFleeingFlag(compound.getBoolean("Fleeing"));
         this.setSkeleton(compound.getBoolean("isModelized"));
         this.setAngry(compound.getBoolean("Angry"));
+        this.setTamed(compound.getBoolean("DinoTamed"));
         this.setSubSpecies(compound.getInteger("SubSpecies"));
         this.setGender(compound.getInteger("Gender"));
         this.setSleeping(compound.getBoolean("Sleeping"));
@@ -333,6 +317,25 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setOwnerDisplayName(compound.getString("OwnerDisplayName"));
         }
         this.cathermalSleepCooldown = compound.getInteger("CathermalTimer");
+    }
+
+    public String getOwnerDisplayName() {
+        return this.dataManager.get(OWNERDISPLAYNAME);
+    }
+
+    public void setOwnerDisplayName(String displayName) {
+        this.dataManager.set(OWNERDISPLAYNAME, displayName);
+    }
+
+    @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(this.maxSpeed);
+        this.getEntityAttribute(SharedMonsterAttributes.ARMOR).setBaseValue(this.maxArmor);
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(20);
+        this.getAttributeMap().registerAttribute(SharedMonsterAttributes.ATTACK_DAMAGE);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(1D);
+        this.getEntityAttribute(EntityLivingBase.SWIM_SPEED).setBaseValue(1D);
     }
 
     public AxisAlignedBB getAttackBounds() {
