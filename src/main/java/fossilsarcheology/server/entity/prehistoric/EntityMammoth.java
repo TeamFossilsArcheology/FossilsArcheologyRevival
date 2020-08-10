@@ -39,7 +39,7 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
     private int eatGrassTimes = 0;
 
     public EntityMammoth(World world) {
-        super(world, PrehistoricEntityType.MAMMOTH, 2, 12, 10, 66, 0.25, 0.35, 0, 10);
+        super(world, PrehistoricEntityType.MAMMOTH, 2, 12, 10, 66, 0.2, 0.25, 0, 10);
         this.setActualSize(1.2F, 0.7F);
         this.pediaScale = 60F;
         minSize = 1.1F;
