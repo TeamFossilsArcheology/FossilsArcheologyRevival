@@ -1,6 +1,7 @@
 package fossilsarcheology.server.block;
 
 import fossilsarcheology.server.api.DefaultRenderedItem;
+import fossilsarcheology.server.item.DinosaurBoneItem;
 import fossilsarcheology.server.item.FAItemRegistry;
 import fossilsarcheology.server.item.variant.DinosaurBoneType;
 import fossilsarcheology.server.tab.FATabRegistry;
@@ -147,7 +148,11 @@ public class FossilBlock extends Block implements DefaultRenderedItem {
         for (int i = 0; i < count; i++) {
             Item item = this.getItemDropped(state, random, fortune);
             if (item != null) {
-                drops.add(new ItemStack(item, 1, this.randomMeta));
+                int meta = randomMeta;
+                if(item instanceof DinosaurBoneItem){
+                    meta = random.nextInt(DinosaurBoneType.values().length);
+                }
+                drops.add(new ItemStack(item, 1, meta));
             }
         }
         return drops;
