@@ -37,6 +37,7 @@ import net.minecraft.dispenser.IPosition;
 import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.IProjectile;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -124,6 +125,7 @@ public class ServerProxy implements IGuiHandler {
 
     @SubscribeEvent
     public static void registerItems(RegistryEvent.Register<Item> event) {
+        FAItemRegistry.COOKED_CHICKEN_SOUP.setContainerItem(Items.BUCKET);
         try {
             for (Field f : FAItemRegistry.class.getDeclaredFields()) {
                 Object obj = f.get(null);
