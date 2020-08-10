@@ -34,6 +34,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.world.DimensionType;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -101,8 +102,12 @@ public class CultivateBlock extends BlockContainer implements DefaultRenderedIte
                     } else {
                         EntityLiving creature;
                         world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_GLASS_BREAK, SoundCategory.BLOCKS, 1, 1, false);
-                        world.setBlockState(pos, Blocks.WATER.getDefaultState());
-                        world.notifyBlockUpdate(pos, Blocks.WATER.getDefaultState(), Blocks.WATER.getDefaultState(), 3);
+                        if(!world.provider.doesWaterVaporize()){
+                            world.setBlockState(pos, Blocks.WATER.getDefaultState());
+                            world.notifyBlockUpdate(pos, Blocks.WATER.getDefaultState(), Blocks.WATER.getDefaultState(), 3);
+                        }else{
+                            world.playSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.BLOCK_LAVA_EXTINGUISH, SoundCategory.BLOCKS, 1, 1, false);
+                        }
                         int rand = world.rand.nextInt(100);
 
                         if (rand <= 5) {
