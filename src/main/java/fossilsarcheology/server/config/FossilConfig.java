@@ -15,6 +15,7 @@ public class FossilConfig {
     public boolean generateTarSites = true;
     public boolean generateFossilSites = true;
     public int[] oreGenerationDimensions = {0};
+    public int[] overworldGenerationDimensions = {0};
     public int fossilOreRarity = 38;
     public int permafrostOreRarity = 4;
     public int generateHellShipRarity = 1000;
@@ -81,7 +82,8 @@ public class FossilConfig {
         this.generateMoai = config.getBoolean("Generate Moai", "all", true, "True if Moai are to generate naturally");
         this.generateTarSites = config.getBoolean("Generate Tarpit Dig Sites", "all", true, "True if Tarpit Dig Sites are to generate naturally");
         this.generateFossilSites = config.getBoolean("Generate Fossil Dig Sites", "all", true, "True if Fossil Dig Sites are to generate naturally");
-        this.oreGenerationDimensions = config.get("Ore Generation Dimensions", "all", new int[]{0}, "List of Dimension IDs to spawn Fossil and Permafrost ores in").getIntList();
+        this.oreGenerationDimensions = config.get("Ore Generation Dimensions", "all", new int[]{0}, "List of Dimension IDs to spawn structures like digsites and temples in").getIntList();
+        this.overworldGenerationDimensions = config.get("Overworld Structure Dimensions", "all", new int[]{0}, "List of Dimension IDs to spawn Fossil and Permafrost ores in").getIntList();
         this.fossilOreRarity = config.getInt("Fossil Ore Rarity", "all", 38, 1, 100000000, "Rarity of Fossil ore. Higher number = more rare");
         this.permafrostOreRarity = config.getInt("Permafrost Ore Rarity", "all", 4, 1, 100000000, "Rarity of Permafrost ore. Higher number = more rare");
         this.generateHellShipRarity = config.getInt("Hell Ship Rarity", "all", 1000, 1, 100000000, "Rarity of Hell Ship Structure. Higher number = more rare");

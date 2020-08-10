@@ -119,11 +119,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public ChainBuffer chainBuffer;
     public float pediaScale;
     public int pediaY = 0;
-    public boolean mood_nospace;
-    public boolean mood_noplants;
     public int ticksTillPlay;
     public int ticksTillMate;
-    public int prevAge;
     public boolean isDaytime;
     public float ridingXZ;
     public float ridingY = 1;
@@ -141,9 +138,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private Animation currentAnimation;
     private boolean droppedBiofossil = false;
     private int animTick;
-    private int riderJumpCooldown = 0;
     private int fleeTicks = 0;
-    private boolean isActuallyInWater;
     private int moodCheckCooldown;
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
@@ -277,8 +272,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         compound.setBoolean("Sleeping", this.isSleeping);
         compound.setInteger("Mood", this.getMood());
         compound.setBoolean("Sitting", this.isSitting);
-        compound.setBoolean("MoodNoSpace", this.mood_nospace);
-        compound.setBoolean("MoodNoPlants", this.mood_noplants);
         compound.setInteger("TicksSincePlay", this.ticksTillPlay);
         compound.setInteger("TicksSlept", this.ticksSlept);
         compound.setInteger("TicksSinceMate", this.ticksTillMate);
@@ -325,8 +318,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (compound.hasKey("currentOrder")) {
             this.setOrder(OrderType.values()[compound.getByte("currentOrder")]);
         }
-        this.mood_nospace = compound.getBoolean("MoodNoSpace");
-        this.mood_noplants = compound.getBoolean("MoodNoPlants");
         this.ticksTillPlay = compound.getInteger("TicksSincePlay");
         this.ticksTillMate = compound.getInteger("TicksSinceMate");
         this.ticksSlept = compound.getInteger("TicksSlept");
@@ -621,7 +612,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setSitting(true);
             this.setSleeping(false);
         }
-        if (breaksBlocks && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this) && this.getMood() < 0) {
+        if (breaksBlocks && this.getMood() < 0) {
             this.breakBlock(5);
         }
         if (this.getAttackTarget() != null && this.getAttackTarget() instanceof EntityToyBase && (isPreyBlocked(this.getAttackTarget()) || this.ticksTillPlay > 0)) {
@@ -941,7 +932,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     public void breakBlock(float hardness) {
         if (Revival.CONFIG_OPTIONS.dinoBlockBreaking) {
-            if (!isSkeleton() && this.isAdult() && this.isHungry()) {
+            if (!isSkeleton() && this.isAdult() && this.isHungry() && net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.world, this)) {
                 for (int a = (int) Math.round(this.getEntityBoundingBox().minX) - 1; a <= (int) Math.round(this.getEntityBoundingBox().maxX) + 1; a++) {
                     for (int b = (int) Math.round(this.getEntityBoundingBox().minY) + 1; (b <= (int) Math.round(this.getEntityBoundingBox().maxY) + 2) && (b <= 127); b++) {
                         for (int c = (int) Math.round(this.getEntityBoundingBox().minZ) - 1; c <= (int) Math.round(this.getEntityBoundingBox().maxZ) + 1; c++) {
