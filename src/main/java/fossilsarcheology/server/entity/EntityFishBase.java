@@ -3,6 +3,7 @@ package fossilsarcheology.server.entity;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.entity.ai.FishAIFindWaterTarget;
 import fossilsarcheology.server.entity.prehistoric.EntityNautilus;
+import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.PrehistoricEntityType;
 import fossilsarcheology.server.item.FAItemRegistry;
 import net.ilexiconn.llibrary.client.model.tools.ChainBuffer;
@@ -19,6 +20,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
@@ -42,6 +44,7 @@ public abstract class EntityFishBase extends EntityTameable {
     @SideOnly(Side.CLIENT)
     public ChainBuffer chainBuffer;
     private boolean turnedToItem = false;
+    private int absoluteEggCooldown = 0;
 
     public EntityFishBase(World world, PrehistoricEntityType selfType) {
         super(world);
@@ -108,6 +111,18 @@ public abstract class EntityFishBase extends EntityTameable {
         }
     }
 
+    @Override
+    public void writeEntityToNBT(NBTTagCompound compound) {
+        super.writeEntityToNBT(compound);
+        compound.setInteger("AbsEggTick", absoluteEggCooldown);
+    }
+
+    @Override
+    public void readEntityFromNBT(NBTTagCompound compound) {
+        super.readEntityFromNBT(compound);
+        absoluteEggCooldown = compound.getInteger("AbsEggTick");
+    }
+
     protected abstract double getSwimSpeed();
 
     @Override
@@ -117,12 +132,19 @@ public abstract class EntityFishBase extends EntityTameable {
             this.height = 0.95F;
         }
         Revival.PROXY.calculateChainBuffer(this);
-        EntityFishBase closestMate = this.getClosestMate();
-        if (this.isInWater() && closestMate != null && this.getGrowingAge() == 0 && closestMate.getGrowingAge() == 0 && !this.world.isRemote) {
-            this.setGrowingAge(48000);
-            closestMate.setGrowingAge(48000);
-            this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(this.selfType.eggItem)));
+        if(absoluteEggCooldown > 0){
+            absoluteEggCooldown--;
         }
+        if(!this.world.isRemote){
+            EntityFishBase closestMate = this.getClosestMate();
+            if (this.isInWater() && closestMate != null && this.getGrowingAge() == 0 && closestMate.getGrowingAge() == 0 && absoluteEggCooldown <= 0) {
+                this.setGrowingAge(48000 + rand.nextInt(48000));
+                closestMate.setGrowingAge(48000 + rand.nextInt(48000));
+                absoluteEggCooldown = 48000 + rand.nextInt(12000);
+                this.world.spawnEntity(new EntityItem(this.world, this.posX, this.posY, this.posZ, new ItemStack(this.selfType.eggItem)));
+            }
+        }
+
     }
 
     @Override
@@ -133,9 +155,9 @@ public abstract class EntityFishBase extends EntityTameable {
 
     public EntityFishBase getClosestMate() {
         EntityAINearestAttackableTarget.Sorter theNearestAttackableTargetSorter = new EntityAINearestAttackableTarget.Sorter(this);
-        List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(this, this.getEntityBoundingBox().expand(2.0D, 2.0D, 2.0D));
+        double d0 = 2;
+        List<EntityFishBase> list = world.getEntitiesWithinAABB(this.getClass(), this.getEntityBoundingBox().expand(d0, d0, d0), null);
         list.sort(theNearestAttackableTargetSorter);
-
         if (list.isEmpty()) {
             return null;
         } else {
