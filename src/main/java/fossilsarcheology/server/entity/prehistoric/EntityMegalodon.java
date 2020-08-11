@@ -39,6 +39,11 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
         this.ridingXZ = -0.2F;
     }
 
+    @Override
+    public boolean canHuntMobsOnLand() {
+        return false;
+    }
+
     public float getTargetScale() {
         return 2.0F;
     }

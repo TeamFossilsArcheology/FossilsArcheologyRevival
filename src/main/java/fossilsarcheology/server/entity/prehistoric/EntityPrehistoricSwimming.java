@@ -357,4 +357,12 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
             }
         }
     }
+
+    public boolean canDinoHunt(Entity target, boolean hunger) {
+        return super.canDinoHunt(target, hunger) && (target.isInWater() || canHuntMobsOnLand());
+    }
+
+    public boolean canHuntMobsOnLand() {
+        return true;
+    }
 }

@@ -27,6 +27,11 @@ public class EntityPlesiosaurus extends EntityPrehistoricSwimming {
         pediaScale = 40;
     }
 
+    @Override
+    public boolean canHuntMobsOnLand() {
+        return false;
+    }
+
     public void initEntityAI() {
         this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
         this.tasks.addTask(0, new DinoAIFollowOwner(this, 1, 10, 2));

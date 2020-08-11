@@ -36,6 +36,11 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
         this.ridingY = 0.8F;
     }
 
+    @Override
+    public boolean canHuntMobsOnLand() {
+        return false;
+    }
+
     public float getTargetScale() {
         return 2.0F;
     }

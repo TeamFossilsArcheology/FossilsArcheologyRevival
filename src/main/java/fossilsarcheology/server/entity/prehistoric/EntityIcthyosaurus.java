@@ -45,6 +45,11 @@ public class EntityIcthyosaurus extends EntityPrehistoricSwimming {
     }
 
     @Override
+    public boolean canHuntMobsOnLand() {
+        return false;
+    }
+
+    @Override
     public void setSpawnValues() {
     }
 

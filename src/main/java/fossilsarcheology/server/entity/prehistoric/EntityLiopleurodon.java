@@ -35,6 +35,11 @@ public class EntityLiopleurodon extends EntityPrehistoricSwimming {
         this.ridingY = 1.3F;
     }
 
+    @Override
+    public boolean canHuntMobsOnLand() {
+        return false;
+    }
+
     public void initEntityAI() {
         this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
         this.tasks.addTask(0, new DinoAIFollowOwner(this, 1, 10, 2));

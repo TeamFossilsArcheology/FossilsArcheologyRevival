@@ -27,6 +27,11 @@ public class EntityHenodus extends EntityPrehistoricSwimming {
         this.pediaScale = 40F;
     }
 
+    @Override
+    public boolean canHuntMobsOnLand() {
+        return false;
+    }
+
     public void initEntityAI() {
         this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 5, true));
         this.tasks.addTask(1, new DinoAIGetInWater(this, 1.0D));
