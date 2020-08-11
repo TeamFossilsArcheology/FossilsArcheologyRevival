@@ -48,8 +48,7 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
         this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
         this.tasks.addTask(0, new DinoAIFollowOwner(this, 1, 10, 2));
         this.tasks.addTask(1, this.aiSit = new EntityAISit(this));
-        this.tasks.addTask(2, new DinoAIEatBlocks(this));
-        this.tasks.addTask(2, new DinoAIEatFeeders(this));
+        this.tasks.addTask(2, new DinoAIEatFeedersAndBlocks(this));
         this.targetTasks.addTask(0, new DinoAIEatItems(this));
         this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
         this.tasks.addTask(5, new DinoAILookIdle(this));

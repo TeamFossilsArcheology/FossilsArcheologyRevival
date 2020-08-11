@@ -70,8 +70,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
         this.tasks.addTask(0, new DinoAIFindWaterTarget(this, 10, true));
         this.tasks.addTask(1, new MeganeuraAIGetInWater(this, 1.0D));
         this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
-        this.tasks.addTask(3, new DinoAIEatBlocks(this));
-        this.tasks.addTask(3, new DinoAIEatFeeders(this));
+        this.tasks.addTask(3, new DinoAIEatFeedersAndBlocks(this));
         this.targetTasks.addTask(0, new DinoAIEatItems(this));
         this.tasks.addTask(4, new MeganeuraAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
         this.tasks.addTask(3, new AIWander());

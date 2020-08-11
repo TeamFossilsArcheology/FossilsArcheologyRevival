@@ -33,8 +33,7 @@ public class EntityPlesiosaurus extends EntityPrehistoricSwimming {
         this.tasks.addTask(1, new DinoAIGetInWater(this, 1.0D));
         this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
         this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
-        this.tasks.addTask(3, new DinoAIEatBlocks(this));
-        this.tasks.addTask(3, new DinoAIEatFeeders(this));
+        this.tasks.addTask(3, new DinoAIEatFeedersAndBlocks(this));
         this.targetTasks.addTask(0, new DinoAIEatItems(this));
         this.tasks.addTask(4, new DinoAIMakeFish(this));
         this.tasks.addTask(5, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
