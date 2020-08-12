@@ -11,12 +11,18 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISit;
+import net.minecraft.entity.passive.EntityTameable;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+
+import javax.annotation.Nullable;
 
 public class EntityMosasaurus extends EntityPrehistoricSwimming {
 
@@ -37,8 +43,18 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
     }
 
     @Override
+    protected void applyEntityAttributes() {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64);
+    }
+
+    @Override
     public boolean canHuntMobsOnLand() {
         return false;
+    }
+
+    public boolean canDinoHunt(Entity target, boolean hunger) {
+        return super.canDinoHunt(target, hunger);
     }
 
     public float getTargetScale() {
@@ -57,8 +73,10 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
         this.tasks.addTask(5, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(5, new DinoAILookIdle(this));
         this.targetTasks.addTask(1, new DinoAIHurtByTarget(this));
-        this.targetTasks.addTask(4, new DinoAIHunt(this, EntityLivingBase.class, true, (Predicate<Entity>) entity -> entity instanceof EntityLivingBase));
+        this.targetTasks.addTask(2, new DinoAIHunt(this, EntityLivingBase.class, true, (Predicate<Entity>) entity -> entity instanceof EntityLivingBase));
     }
+
+    public boolean doesBreachAttack(){ return true; }
 
     @Override
     public void setSpawnValues() {
@@ -96,13 +114,11 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
 
     @Override
     public Response aiResponseType() {
-
         return Response.AGRESSIVE;
     }
 
     @Override
     public Stalking aiStalkType() {
-
         return Stalking.NONE;
     }
 
@@ -158,6 +174,7 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
+        this.setHunger(1);
         if (this.getAttackTarget() != null) {
             if (canReachPrey()) {
                 this.attackEntityAsMob(this.getAttackTarget());
@@ -179,7 +196,6 @@ public class EntityMosasaurus extends EntityPrehistoricSwimming {
                 }
             }
         }
-
     }
 
     @Override

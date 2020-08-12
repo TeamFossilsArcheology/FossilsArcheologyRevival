@@ -99,7 +99,8 @@ public abstract class EntityPrehistoricFlying extends EntityPrehistoric implemen
             if (sitProgress != 0)
                 sitProgress = sleepProgress = 0F;
         }
-        if (!this.isFlying() && !this.isMovementBlockedSoft() && rand.nextInt(200) == 0 && !this.world.isRemote && this.isAdult() && this.getControllingPassenger() == null && this.onGround && ticksExisted > 50) {
+        int flightChance = 250;
+        if (!this.isFlying() && !this.isMovementBlockedSoft() && rand.nextInt(flightChance) == 0 && !this.world.isRemote && this.isAdult() && this.getControllingPassenger() == null && this.onGround && ticksExisted > 50) {
             this.startFlying();
         }
         if (!this.world.isRemote && isFlying()) {

@@ -62,6 +62,12 @@ public class DinoAIHunt<T extends EntityLivingBase> extends EntityAINearestAttac
 
     @Override
     protected AxisAlignedBB getTargetableArea(double targetDistance) {
-        return this.taskOwner.getEntityBoundingBox().grow(targetDistance, (dino instanceof EntityPrehistoricSwimming || dino instanceof EntityPrehistoricFlying) ? targetDistance : 4.0D, targetDistance);
+        double yDist = 4.0D;
+        if(dino instanceof EntityPrehistoricFlying){
+            yDist = targetDistance;
+        }else if(dino instanceof EntityPrehistoricSwimming){
+            yDist = ((EntityPrehistoricSwimming) dino).doesBreachAttack() ? 50 : targetDistance;
+        }
+        return this.taskOwner.getEntityBoundingBox().grow(targetDistance, yDist, targetDistance);
     }
 }

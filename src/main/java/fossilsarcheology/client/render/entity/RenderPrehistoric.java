@@ -2,6 +2,7 @@ package fossilsarcheology.client.render.entity;
 
 import com.google.common.collect.Maps;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
+import fossilsarcheology.server.entity.prehistoric.EntityPrehistoricSwimming;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -31,6 +32,12 @@ public class RenderPrehistoric extends RenderLiving<EntityPrehistoric> {
 
     @Override
     protected void preRenderCallback(EntityPrehistoric entity, float f) {
+        float xRot = 0;
+        if(entity instanceof EntityPrehistoricSwimming){
+            EntityPrehistoricSwimming aquatic = (EntityPrehistoricSwimming)entity;
+            xRot = aquatic.prevBreachPitch + (aquatic.getBreachPitch() - aquatic.prevBreachPitch) * f;
+            GlStateManager.rotate(xRot, 1.0F, 0F, 0F);
+        }
         float scale = entity.getGender() == 1 ? entity.getMaleSize() * entity.getAgeScale() : 1 * entity.getAgeScale();
         GlStateManager.scale(scale, scale, scale);
         this.shadowSize = entity.width * 0.45F;

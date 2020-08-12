@@ -13,15 +13,21 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.datasync.DataParameter;
+import net.minecraft.network.datasync.DataSerializers;
+import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.PathNavigateSwimmer;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
+    protected static final DataParameter<Boolean> IS_BREACHING = EntityDataManager.createKey(EntityPrehistoricSwimming.class, DataSerializers.BOOLEAN);
+    protected static final DataParameter<Float> BREACHING_PITCH = EntityDataManager.createKey(EntityPrehistoricSwimming.class, DataSerializers.FLOAT);
     private static final int MAX_TIME_ON_LAND = 1000;
     private static final int MAX_TIME_IN_WATER = 1000;
     public boolean movesOnLand;
@@ -30,14 +36,54 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
     public int timeInWater = 0;
     public int timeOnLand = 0;
     public float flyProgress;
+    public float prevBreachPitch;
     protected boolean isAmphibious = false;
     protected boolean isLandNavigator;
-
+    protected int breachCooldown = 0;
+    protected boolean isGoingDownAfterBreach = false;
+    protected float jumpX;
+    protected float jumpY;
+    protected float jumpZ;
 
     public EntityPrehistoricSwimming(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world, type, baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, maxSpeed, baseArmor, maxArmor);
         this.switchNavigator(true);
         this.hasBabyTexture = false;
+    }
+
+    @Override
+    protected void entityInit() {
+        super.entityInit();
+        this.dataManager.register(IS_BREACHING, false);
+        this.dataManager.register(BREACHING_PITCH, 0F);
+    }
+
+    public boolean doesBreachAttack() {
+        return false;
+    }
+
+    public boolean isBreaching() {
+        return this.dataManager.get(IS_BREACHING);
+    }
+
+    public void setBreaching(boolean breaching) {
+        this.dataManager.set(IS_BREACHING, breaching);
+    }
+
+    public float getBreachPitch() {
+        return this.dataManager.get(BREACHING_PITCH);
+    }
+
+    public void setBreachPitch(float pitch) {
+        this.dataManager.set(BREACHING_PITCH, pitch);
+    }
+
+    public void incrementBreachPitch(float pitch) {
+        dataManager.set(BREACHING_PITCH, getBreachPitch() + pitch);
+    }
+
+    public void decrementBreachPitch(float pitch) {
+        dataManager.set(BREACHING_PITCH, getBreachPitch() - pitch);
     }
 
     protected void switchNavigator(boolean onLand) {
@@ -113,6 +159,72 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
+        prevBreachPitch = this.getBreachPitch();
+
+        if (breachCooldown > 0) {
+            breachCooldown--;
+        }
+
+        if (this.doesBreachAttack()) {
+            if (this.getAttackTarget() != null) {
+                if (canReachPrey()) {
+                    if (this.isBreaching()) {
+                        isGoingDownAfterBreach = true;
+                        this.setBreaching(false);
+                    }
+                }
+                if (!isEntitySubmerged(this.getAttackTarget()) && this.getAttackTarget().isOverWater() && this.isInWater() && !this.getAttackTarget().isRidingOrBeingRiddenBy(this) && breachCooldown == 0) {
+                    this.setBreaching(true);
+                    isGoingDownAfterBreach = false;
+                    breachCooldown = 120;
+                    jumpX = (float) this.getAttackTarget().posX;
+                    jumpY = (float) this.getAttackTarget().posY + 1F;
+                    jumpZ = (float) this.getAttackTarget().posZ;
+                }
+                if (isEntitySubmerged(this.getAttackTarget()) || !this.getAttackTarget().isOverWater()) {
+                    this.setBreaching(false);
+                    isGoingDownAfterBreach = false;
+                }
+                if (this.isBreaching() && !isGoingDownAfterBreach) {
+                    double targetX = jumpX - posX;
+                    double targetY = jumpY - posY;
+                    double targetZ = jumpZ - posZ;
+                    motionX += (Math.signum(targetX) * 0.5D - motionX) * 0.100000000372529 * 2D;
+                    motionY += (Math.signum(targetY) * 0.5D - motionY) * 0.100000000372529 * 5D;// 0.10000000149011612D
+                    motionZ += (Math.signum(targetZ) * 0.5D - motionZ) * 0.100000000372529 * 2D; // 0.10000000149011612D
+                    float angle = (float) (Math.atan2(motionZ, motionX) * 180.0D / Math.PI) - 90.0F;
+                    float rotation = MathHelper.wrapDegrees(angle - rotationYaw);
+                    moveForward = 0.5F;
+                    rotationYaw += rotation;
+                    double dist = this.getDistance(jumpX, jumpY, jumpZ);
+                    if (dist < 2.5D) {
+                        this.setBreaching(false);
+                        isGoingDownAfterBreach = true;
+                    }
+                }
+                if (!isEntitySubmerged(this.getAttackTarget()) && !this.getAttackTarget().isOverWater()) {
+                    this.setAttackTarget(null);
+                }
+            }
+            if (this.isInWater()) {
+                isGoingDownAfterBreach = false;
+            }
+            if ((!onGround || !isInWater())) {
+                double ydist = this.prevPosY - this.posY;//down 0.4 up -0.4
+                float BreachDist = (float) ((Math.abs(this.motionX) + Math.abs(this.motionZ)) * 2F);
+                this.incrementBreachPitch((float) (ydist) * 15);
+
+                this.setBreachPitch(MathHelper.clamp(this.getBreachPitch(), -60, 60));
+                float plateau = 0;
+                if (this.getBreachPitch() > plateau) {
+                    this.decrementBreachPitch(1);
+                } else if (this.getBreachPitch() < -plateau) {
+                    this.incrementBreachPitch(1);
+                }
+            } else {
+                this.setBreachPitch(0);
+            }
+        }
         if (this.isInWater() && this.useSwimAI() && this.isLandNavigator && !this.world.isRemote) {
             switchNavigator(false);
         }
@@ -143,6 +255,11 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
     }
 
     @Override
+    public boolean isOverWater() {
+        return this.world.handleMaterialAcceleration(this.getEntityBoundingBox().grow(0.0D, -50.0D, 0.0D).shrink(0.001D), Material.WATER, this);
+    }
+
+    @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
         compound.setInteger("TimeOnLand", this.timeOnLand);
@@ -169,6 +286,10 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
     @Override
     public boolean canBeSteered() {
         return this.type.isVivariousAquatic() ? this.isInWater() && super.canBeSteered() : super.canBeSteered();
+    }
+
+    public boolean isEntitySubmerged(EntityLivingBase entity){
+        return world.getBlockState(new BlockPos(entity).up()).getMaterial() == Material.WATER;
     }
 
     @Override
@@ -296,6 +417,17 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
         return true;
     }
 
+    public boolean canDinoHunt(Entity target, boolean hunger) {
+        if (doesBreachAttack() && target.isOverWater()) {
+            return super.canDinoHunt(target, hunger);
+        }
+        return super.canDinoHunt(target, hunger) && (target.isInWater() || canHuntMobsOnLand());
+    }
+
+    public boolean canHuntMobsOnLand() {
+        return true;
+    }
+
     class PathNavigateLargeSwimmer extends PathNavigateSwimmer {
 
         public PathNavigateLargeSwimmer(EntityLiving entitylivingIn, World worldIn) {
@@ -356,13 +488,5 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric {
                 this.dinosaur.setAIMoveSpeed(0.0F);
             }
         }
-    }
-
-    public boolean canDinoHunt(Entity target, boolean hunger) {
-        return super.canDinoHunt(target, hunger) && (target.isInWater() || canHuntMobsOnLand());
-    }
-
-    public boolean canHuntMobsOnLand() {
-        return true;
     }
 }

@@ -39,6 +39,8 @@ public class EntityMegalodon extends EntityPrehistoricSwimming {
         this.ridingXZ = -0.2F;
     }
 
+    public boolean doesBreachAttack(){ return true; }
+
     @Override
     public boolean canHuntMobsOnLand() {
         return false;
