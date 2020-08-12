@@ -7,6 +7,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.RenderLiving;
+import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Map;
@@ -47,5 +48,6 @@ public class RenderPrehistoric extends RenderLiving<EntityPrehistoric> {
     protected float getDeathMaxRotation(EntityPrehistoric entity) {
         return entity.getDeathRotation();
     }
+
 
 }

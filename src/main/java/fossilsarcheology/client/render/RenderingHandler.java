@@ -95,7 +95,7 @@ public class RenderingHandler {
         RenderingRegistry.registerEntityRenderingHandler(EntityTitanis.class, new RenderPrehistoric(new ModelTerrorBird()));
         RenderingRegistry.registerEntityRenderingHandler(EntityHenodus.class, new RenderPrehistoric(new ModelHenodus()));
         RenderingRegistry.registerEntityRenderingHandler(EntityIcthyosaurus.class, new RenderPrehistoric(new ModelIcthyosaurus()));
-        RenderingRegistry.registerEntityRenderingHandler(EntityMeganeura.class, new RenderPrehistoric(new ModelMeganeura()));
+        RenderingRegistry.registerEntityRenderingHandler(EntityMeganeura.class, new RenderMeganeura(new ModelMeganeura()));
         RenderingRegistry.registerEntityRenderingHandler(EntityMegaloceros.class, new RenderPrehistoric(new ModelMegaloceros()));
         RenderingRegistry.registerEntityRenderingHandler(EntityMegalania.class, new RenderPrehistoric(new ModelMegalania()));
         RenderingRegistry.registerEntityRenderingHandler(EntityMegalograptus.class, new RenderPrehistoric(new ModelMegalograptus()));

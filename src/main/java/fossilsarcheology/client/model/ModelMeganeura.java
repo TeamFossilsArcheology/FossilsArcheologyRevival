@@ -229,7 +229,7 @@ public class ModelMeganeura extends ModelPrehistoric {
         if (((EntityPrehistoric) entity).isSkeleton() || ((EntityPrehistoric) entity).isAIDisabled()) {
             return;
         }
-        if (meganeura.flyProgress == 0) {
+        if (meganeura.flyProgress == 0 || meganeura.getAttachmentPos() != null) {
             this.chainWave(leftLegs, speed_walk, degree_walk, 1, f, f1);
             this.chainWave(rightLegs, speed_walk, degree_walk, 1, f, f1);
         } else {
