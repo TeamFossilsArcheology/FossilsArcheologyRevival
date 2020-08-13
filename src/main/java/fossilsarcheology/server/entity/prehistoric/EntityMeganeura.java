@@ -198,7 +198,7 @@ public class EntityMeganeura extends EntityPrehistoricSwimming {
                 this.setAttachmentPos(null);
             }
         }
-        if(attachTicks > 1500 || this.getAttachmentPos() != null && this.getAttackTarget() != null){
+        if(attachTicks > 1150 && rand.nextInt(123) == 0 || this.getAttachmentPos() != null && this.getAttackTarget() != null){
             this.attachTicks = 0;
             attachCooldown = 1000 + rand.nextInt(1500);
             this.dataManager.set(ATTACHED_FACE, EnumFacing.DOWN);

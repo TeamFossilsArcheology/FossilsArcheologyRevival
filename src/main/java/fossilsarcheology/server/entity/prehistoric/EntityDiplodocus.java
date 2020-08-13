@@ -3,20 +3,26 @@ package fossilsarcheology.server.entity.prehistoric;
 import com.google.common.base.Predicate;
 import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.ai.*;
+import fossilsarcheology.server.util.FoodMappings;
+import net.ilexiconn.llibrary.server.animation.Animation;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.EntityAISit;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.EntityAITasks;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 public class EntityDiplodocus extends EntityPrehistoric {
+
+    public static final Animation ANIMATION_EATLEAVES = Animation.create(40);
 
     public EntityDiplodocus(World world) {
         super(world, PrehistoricEntityType.DIPLODOCUS, 2, 40, 15, 170, 0.2, 0.3, 0, 15);
@@ -137,6 +143,45 @@ public class EntityDiplodocus extends EntityPrehistoric {
     @Override
     public void onLivingUpdate() {
         super.onLivingUpdate();
+        if(this.isHungry() && !this.isMovementBlockedSoft() && this.getAnimation() == NO_ANIMATION && rand.nextInt(100) == 0 && this.posY < world.getHeight((int)posX, (int)posZ)){
+            BlockPos pos = new BlockPos(this).up((int) height);
+            while(pos.getY() < 256 && pos.getY() - this.posY <= 19F){
+                if(world.getBlockState(pos).getBlock().isLeaves(world.getBlockState(pos), world, pos)){
+                    break;
+                }
+                pos = pos.up();
+            }
+            if(world.getBlockState(pos).getBlock().isLeaves(world.getBlockState(pos), world, pos)){
+                this.setAnimation(ANIMATION_EATLEAVES);
+            }
+        }
+        if(this.getAnimation() == ANIMATION_EATLEAVES){
+            this.motionX = 0.0D;
+            this.motionZ = 0.0D;
+        }
+        if(this.getAnimation() == ANIMATION_EATLEAVES && this.getAnimationTick() == 16){
+            BlockPos pos = new BlockPos(this).up((int) height);
+            while(pos.getY() < 256 && pos.getY() - this.posY <= 19F){
+                if(world.getBlockState(pos).getBlock().isLeaves(world.getBlockState(pos), world, pos)){
+                    break;
+                }
+                pos = pos.up();
+            }
+            if(world.getBlockState(pos).getBlock().isLeaves(world.getBlockState(pos), world, pos)){
+                int range = 2;
+                for(int i = -range; i < range; i++){
+                    for(int j = -range; j < range; j++){
+                        for(int k = -range; k < range; k++){
+                            BlockPos leafPos = pos.add(i, j, k);
+                            if(world.getBlockState(leafPos).getBlock().isLeaves(world.getBlockState(leafPos), world, leafPos)) {
+                                this.setHunger(Math.min(this.getMaxHunger(), this.getHunger() + FoodMappings.INSTANCE.getBlockFoodAmount(world.getBlockState(leafPos).getBlock(), this.type.diet)));
+                                world.destroyBlock(leafPos, false);
+                            }
+                        }
+                    }
+                }
+            }
+        }
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 19 && this.getAttackTarget() != null) {
             doAttack();
             doAttackKnockback(0.5F);
@@ -180,4 +225,10 @@ public class EntityDiplodocus extends EntityPrehistoric {
     protected SoundEvent getDeathSound() {
         return FASoundRegistry.DIPLODOCUS_DEATH;
     }
+
+    @Override
+    public Animation[] getAnimations() {
+        return new Animation[]{SPEAK_ANIMATION, ATTACK_ANIMATION, ANIMATION_EATLEAVES};
+    }
+
 }

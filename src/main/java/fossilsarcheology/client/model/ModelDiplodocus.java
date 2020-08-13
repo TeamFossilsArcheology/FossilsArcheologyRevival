@@ -345,6 +345,34 @@ public class ModelDiplodocus extends ModelPrehistoric {
         animator.move(upperBody, 0, 0, 25);
         animator.endKeyframe();
         animator.resetKeyframe(15);
+        animator.setAnimation(EntityDiplodocus.ANIMATION_EATLEAVES);
+        animator.startKeyframe(15);
+        animator.move(upperBody, 0, -10, 5);
+        animator.move(lowerBody, 0, 0, -2);
+        animator.move(tail1, 0, 0, -2);
+        animator.move(leftHindThigh, 0, 0, -3);
+        animator.move(rightHindThigh, 0, 0, -3);
+        ModelUtils.rotate(animator, upperBody, -50, 0, 0);
+        ModelUtils.rotate(animator, leftHindThigh, 30, 0, 0);
+        ModelUtils.rotate(animator, rightHindThigh, 30, 0, 0);
+        ModelUtils.rotate(animator, leftHindFoot, 5, 0, 0);
+        ModelUtils.rotate(animator, rightHindFoot, 5, 0, 0);
+        ModelUtils.rotate(animator, rightFrontThigh, 45, 0, 0);
+        ModelUtils.rotate(animator, leftFrontThigh, 45, 0, 0);
+        ModelUtils.rotate(animator, rightFrontLeg, 15, 0, 0);
+        ModelUtils.rotate(animator, leftFrontLeg, 15, 0, 0);
+        ModelUtils.rotate(animator, neck1, -10, 0, 0);
+        ModelUtils.rotate(animator, neck2, -10, 0, 0);
+        ModelUtils.rotate(animator, neck4, -10, 0, 0);
+        ModelUtils.rotate(animator, lowerJaw, 20, 0, 0);
+
+
+        ModelUtils.rotate(animator, lowerBody, 15, 0, 0);
+        ModelUtils.rotate(animator, tail1, 25, 0, 0);
+        ModelUtils.rotate(animator, tail2, 5, 0, 0);
+        animator.endKeyframe();
+        animator.setStaticKeyframe(5);
+        animator.resetKeyframe(15);
     }
 
     @Override
