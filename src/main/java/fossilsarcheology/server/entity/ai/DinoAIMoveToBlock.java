@@ -35,7 +35,7 @@ public abstract class DinoAIMoveToBlock extends EntityAIBase {
      */
     public boolean shouldExecute() {
         if (overrideDelay()) {
-            // runDelay = 0;
+            runDelay = 0;
         }
         if (this.runDelay > 0) {
             --this.runDelay;

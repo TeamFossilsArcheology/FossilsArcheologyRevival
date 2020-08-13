@@ -371,7 +371,7 @@ public class ModelDiplodocus extends ModelPrehistoric {
         ModelUtils.rotate(animator, tail1, 25, 0, 0);
         ModelUtils.rotate(animator, tail2, 5, 0, 0);
         animator.endKeyframe();
-        animator.setStaticKeyframe(5);
+        animator.setStaticKeyframe(15);
         animator.resetKeyframe(15);
     }
 

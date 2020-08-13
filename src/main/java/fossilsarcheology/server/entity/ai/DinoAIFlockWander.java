@@ -5,10 +5,8 @@ import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.RayTraceResult;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.init.Blocks;
+import net.minecraft.util.math.*;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -46,16 +44,20 @@ public class DinoAIFlockWander<T extends EntityPrehistoric> extends EntityAIBase
         if (!entity.shouldWander || entity.isMovementBlockedSoft() || !entity.doesFlock()) {
             return false;
         }
-        Vec3d vec3d = this.getPosition();
-        if (vec3d == null) {
-            return false;
-        } else {
-            this.x = vec3d.x;
-            this.y = vec3d.y;
-            this.z = vec3d.z;
-            this.mustUpdate = false;
-            return true;
+
+        if(speciesRand.nextInt(9) == 0){
+            Vec3d vec3d = this.getPosition();
+            if (vec3d == null) {
+                return false;
+            } else {
+                this.x = vec3d.x;
+                this.y = vec3d.y;
+                this.z = vec3d.z;
+                this.mustUpdate = false;
+                return true;
+            }
         }
+        return false;
     }
 
     @Nullable
@@ -71,7 +73,7 @@ public class DinoAIFlockWander<T extends EntityPrehistoric> extends EntityAIBase
         for (EntityPrehistoric prehistoric : mobList) {
             if (prehistoric.doesFlock() && prehistoric.getClass() == entity.getClass()) {
                 counted++;
-                countedVec = countedVec.add(getVectorForRotation(prehistoric.rotationPitch, prehistoric.rotationYaw + possibleYawChange));
+                countedVec = countedVec.add(getVectorForRotation(prehistoric.rotationPitch, prehistoric.rotationYaw + possibleYawChange)).add(prehistoric.getPositionVector());
             }
         }
         Vec3d avgVec = new Vec3d(countedVec.x / (double) counted, countedVec.y / (double) counted, countedVec.z / (double) counted);
@@ -86,10 +88,11 @@ public class DinoAIFlockWander<T extends EntityPrehistoric> extends EntityAIBase
             }
         }
         Vec3d heightVec = closestTo.getPositionVector().add(0, closestTo.height, 0);
-        Vec3d target = RandomPositionGenerator.findRandomTargetBlockTowards(furthestTo, xzDist, 7, heightVec.add(avgVec.scale(tracingScale)));
+        Vec3d target = RandomPositionGenerator.findRandomTargetBlockTowards(furthestTo, 13, 7, heightVec.add(avgVec.scale(tracingScale)));
         if (target != null) {
             double distance = entity.getDistance(target.x, target.y, target.z);
             speed = baseSpeed + Math.max(distance * 0.0075F, 0.5F);
+            entity.world.setBlockState(new BlockPos(target).down(), Blocks.DIAMOND_BLOCK.getDefaultState());
         }
         return target;
     }

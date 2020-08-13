@@ -15,6 +15,7 @@ public class Flock {
     public PrehistoricEntityType type;
     private BlockPos leaderTarget;
 
+
     public static BlockPos getGroundedPos(World world, BlockPos pos) {
         BlockPos current = pos;
         while (world.isAirBlock(current.down())) {
@@ -44,7 +45,7 @@ public class Flock {
             }
         }
         if (flockLeader != null) {
-            if (!flockLeader.isMovementBlocked() && (flockLeader.getNavigator().noPath() || leaderTarget != null && flockLeader.getDistanceSqToCenter(leaderTarget) < 5) && flockLeader.shouldWanderInFlock()) {
+            if (!flockLeader.isMovementBlocked() && (flockLeader.getNavigator().noPath() || leaderTarget != null && flockLeader.getDistanceSqToCenter(leaderTarget) < 5) && flockLeader.shouldWanderInFlock() && flockLeader.getRNG().nextInt(230) == 0) {
                 Vec3d vec = RandomPositionGenerator.findRandomTarget(flockLeader, 18, 7);
                 if (vec != null) {
                     leaderTarget = new BlockPos(vec);

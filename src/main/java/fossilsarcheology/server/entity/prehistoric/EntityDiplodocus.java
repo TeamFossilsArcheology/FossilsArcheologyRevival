@@ -22,7 +22,7 @@ import net.minecraft.world.World;
 
 public class EntityDiplodocus extends EntityPrehistoric {
 
-    public static final Animation ANIMATION_EATLEAVES = Animation.create(40);
+    public static final Animation ANIMATION_EATLEAVES = Animation.create(50);
 
     public EntityDiplodocus(World world) {
         super(world, PrehistoricEntityType.DIPLODOCUS, 2, 40, 15, 170, 0.2, 0.3, 0, 15);
@@ -145,7 +145,8 @@ public class EntityDiplodocus extends EntityPrehistoric {
         super.onLivingUpdate();
         if(this.isHungry() && !this.isMovementBlockedSoft() && this.getAnimation() == NO_ANIMATION && rand.nextInt(100) == 0 && this.posY < world.getHeight((int)posX, (int)posZ)){
             BlockPos pos = new BlockPos(this).up((int) height);
-            while(pos.getY() < 256 && pos.getY() - this.posY <= 19F){
+            float scale = this.getAgeScale() / maxSize;
+            while(pos.getY() < 256 && pos.getY() - this.posY <= 19F * scale){
                 if(world.getBlockState(pos).getBlock().isLeaves(world.getBlockState(pos), world, pos)){
                     break;
                 }

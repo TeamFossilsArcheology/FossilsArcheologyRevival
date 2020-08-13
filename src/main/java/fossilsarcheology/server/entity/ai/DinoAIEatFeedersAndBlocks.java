@@ -6,6 +6,7 @@ import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.util.FoodMappings;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
+import net.minecraft.init.Blocks;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
@@ -39,7 +40,7 @@ public class DinoAIEatFeedersAndBlocks extends DinoAIMoveToBlock {
 
     @Override
     public boolean shouldContinueExecuting() {
-        if (this.entity.getHunger() >= this.entity.getMaxHunger() * 0.75F) {
+        if (this.entity.getHunger() >= this.entity.getMaxHunger()) {
             return false;
         }
         return !this.entity.isMovementBlockedSoft() && destinationBlock != null && shouldTarget(destinationBlock);
@@ -49,6 +50,9 @@ public class DinoAIEatFeedersAndBlocks extends DinoAIMoveToBlock {
     public void updateTask() {
         super.updateTask();
         boolean isFeeder = false;
+        if(this.destinationBlock != null){
+            this.entity.getNavigator().tryMoveToXYZ((double) ((float) this.destinationBlock.getX()) + 0.5D, this.destinationBlock.getY() + 1, (double) ((float) this.destinationBlock.getZ()) + 0.5D, 1);
+        }
         if (this.getIsAboveDestination() && this.destinationBlock != null) {
             BlockPos up = this.destinationBlock;
             Block block = this.entity.world.getBlockState(up).getBlock();
@@ -122,7 +126,7 @@ public class DinoAIEatFeedersAndBlocks extends DinoAIMoveToBlock {
 
 
     public boolean canReachBlock(Entity entity, BlockPos leafBlock) {
-        return entity.posY + entity.height >= leafBlock.getY();
+        return true;
     }
 
     @Override
