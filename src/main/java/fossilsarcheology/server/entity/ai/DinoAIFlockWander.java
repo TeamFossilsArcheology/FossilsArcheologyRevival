@@ -92,7 +92,6 @@ public class DinoAIFlockWander<T extends EntityPrehistoric> extends EntityAIBase
         if (target != null) {
             double distance = entity.getDistance(target.x, target.y, target.z);
             speed = baseSpeed + Math.max(distance * 0.0075F, 0.5F);
-            entity.world.setBlockState(new BlockPos(target).down(), Blocks.DIAMOND_BLOCK.getDefaultState());
         }
         return target;
     }
