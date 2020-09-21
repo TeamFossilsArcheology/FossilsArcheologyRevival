@@ -144,9 +144,15 @@ public class FAOreDictRegistry {
             }
             if (prehistoric.foodItem != null) {
                 OreDictionary.registerOre("listAllmeatraw", prehistoric.foodItem);
+                OreDictionary.registerOre("foodMeat", prehistoric.foodItem);
+                OreDictionary.registerOre("meatRaw", prehistoric.foodItem);
+                OreDictionary.registerOre("listAllMeat", prehistoric.foodItem);
+                OreDictionary.registerOre("allFlesh", prehistoric.foodItem);
             }
             if (prehistoric.cookedFoodItem != null) {
                 OreDictionary.registerOre("listAllmeatcooked", prehistoric.cookedFoodItem);
+                OreDictionary.registerOre("foodMeat", prehistoric.cookedFoodItem);
+                OreDictionary.registerOre("foodCooked", prehistoric.cookedFoodItem);
             }
         }
         OreDictionary.registerOre("foodCalamariraw", PrehistoricEntityType.NAUTILUS.fishItem);
