@@ -296,6 +296,7 @@ public class FossilFoodMappings {
         FoodMappings.INSTANCE.addFishEntity("futuremc:pufferfish", 5);
         FoodMappings.INSTANCE.addFishEntity("futuremc:salmon", 5);
         FoodMappings.INSTANCE.addFishEntity("futuremc:tropical_fish", 5);
+        FoodMappings.INSTANCE.addMeatEntity("camels:camel", 25);
         FoodMappings.INSTANCE.removeItemMapping(new ItemStack(PrehistoricEntityType.HORSE.embryoItem), Diet.CARNIVORE_EGG);
         FoodMappings.INSTANCE.addFish("listAllfishraw", 5);
         FoodMappings.INSTANCE.addFish("foodOctopuscooked", 30);
