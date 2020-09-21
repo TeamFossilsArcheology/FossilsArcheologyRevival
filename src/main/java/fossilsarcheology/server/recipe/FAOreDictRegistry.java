@@ -135,12 +135,31 @@ public class FAOreDictRegistry {
                 OreDictionary.registerOre("objectEgg", prehistoric.eggItem);
                 OreDictionary.registerOre("bakingEgg", prehistoric.eggItem);
                 OreDictionary.registerOre("egg", prehistoric.eggItem);
+                OreDictionary.registerOre("eggCookable", prehistoric.eggItem);
                 OreDictionary.registerOre("ingredientEgg", prehistoric.eggItem);
                 OreDictionary.registerOre("foodSimpleEgg", prehistoric.eggItem);
                 if (prehistoric.mobType == MobType.FISH) {
                     OreDictionary.registerOre("foodRoe", prehistoric.eggItem);
                     OreDictionary.registerOre("foodCaviar", prehistoric.eggItem);
                 }
+            }
+            if (prehistoric.birdEggItem != null) {
+                OreDictionary.registerOre("listAllegg", prehistoric.eggItem);
+                OreDictionary.registerOre("objectEgg", prehistoric.eggItem);
+                OreDictionary.registerOre("bakingEgg", prehistoric.eggItem);
+                OreDictionary.registerOre("egg", prehistoric.eggItem);
+                OreDictionary.registerOre("eggCookable", prehistoric.eggItem);
+                OreDictionary.registerOre("ingredientEgg", prehistoric.eggItem);
+                OreDictionary.registerOre("foodSimpleEgg", prehistoric.eggItem);
+            }
+            if (prehistoric.bestBirdEggItem != null) {
+                OreDictionary.registerOre("listAllegg", prehistoric.eggItem);
+                OreDictionary.registerOre("objectEgg", prehistoric.eggItem);
+                OreDictionary.registerOre("bakingEgg", prehistoric.eggItem);
+                OreDictionary.registerOre("egg", prehistoric.eggItem);
+                OreDictionary.registerOre("eggCookable", prehistoric.eggItem);
+                OreDictionary.registerOre("ingredientEgg", prehistoric.eggItem);
+                OreDictionary.registerOre("foodSimpleEgg", prehistoric.eggItem);
             }
             if (prehistoric.foodItem != null) {
                 OreDictionary.registerOre("listAllmeatraw", prehistoric.foodItem);
