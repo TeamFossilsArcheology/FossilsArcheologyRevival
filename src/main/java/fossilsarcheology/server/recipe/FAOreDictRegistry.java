@@ -152,7 +152,7 @@ public class FAOreDictRegistry {
                 OreDictionary.registerOre("ingredientEgg", prehistoric.eggItem);
                 OreDictionary.registerOre("foodSimpleEgg", prehistoric.eggItem);
             }
-            if (prehistoric.bestBirdEggItem != null) {
+            if (prehistoric.bestBirdEggItem != null && prehistoric.eggItem != null) {
                 OreDictionary.registerOre("listAllegg", prehistoric.eggItem);
                 OreDictionary.registerOre("objectEgg", prehistoric.eggItem);
                 OreDictionary.registerOre("bakingEgg", prehistoric.eggItem);
