@@ -127,7 +127,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public float actualWidth;
     public boolean shouldWander = true;
     public boolean isRunningAway = false;
-    public int flockWanderCooldown = 0;
     protected boolean isSitting;
     protected boolean isSleeping;
     protected boolean developsResistance;
@@ -641,9 +640,6 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if (this.getAttackTarget() != null && this.getAttackTarget() instanceof EntityToyBase && (isPreyBlocked(this.getAttackTarget()) || this.ticksTillPlay > 0)) {
             this.setAttackTarget(null);
         }
-        if (flockWanderCooldown > 0) {
-            flockWanderCooldown--;
-        }
         if (isFleeingFlag()) {
             fleeTicks++;
             if (fleeTicks > getFleeingCooldown()) {
@@ -907,7 +903,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
 
     public abstract int getAdultAge();
 
-    public abstract boolean doesFlock();
+    public boolean doesFlock(){
+        return false;
+    }
 
     @Override
     public boolean canAttackClass(Class clazz) {
@@ -1710,8 +1708,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     public boolean isThereNearbyTypes() {
         double d0 = 40;
         List<EntityPrehistoric> list = world.getEntitiesWithinAABB(this.getClass(), this.getEntityBoundingBox().expand(d0, 4.0D, d0), null);
-
-        if (list.isEmpty() || this.doesFlock()) {
+        if (list.isEmpty()) {
             return false;
         } else {
             List<EntityPrehistoric> listOfType = new ArrayList<>();
@@ -1983,16 +1980,8 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         }
     }
 
-    public boolean shouldFollowFlock() {
-        return !this.isSleeping() && !this.isSitting() && this.getOrderType() != OrderType.FOLLOW;
-    }
-
     public float getDeathRotation() {
         return 90.0F;
-    }
-
-    public boolean shouldWanderInFlock() {
-        return shouldFollowFlock() && this.getAttackTarget() == null;
     }
 
     protected float getSoundVolume() {

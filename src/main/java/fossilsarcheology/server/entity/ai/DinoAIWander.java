@@ -1,6 +1,7 @@
 package fossilsarcheology.server.entity.ai;
 
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
+import fossilsarcheology.server.entity.prehistoric.EntityPrehistoricFlocking;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.util.math.Vec3d;
@@ -32,6 +33,9 @@ public class DinoAIWander extends EntityAIBase {
      */
     public boolean shouldExecute() {
         if (!entity.shouldWander || entity.isMovementBlockedSoft()) {
+            return false;
+        }
+        if(entity instanceof EntityPrehistoricFlocking && !((EntityPrehistoricFlocking) entity).isGroupLeader() && ((EntityPrehistoricFlocking) entity).hasGroupLeader()){
             return false;
         }
         if (!this.mustUpdate) {

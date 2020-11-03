@@ -3,6 +3,7 @@ package fossilsarcheology.server.entity.ai;
 import com.sun.istack.internal.Nullable;
 import fossilsarcheology.server.entity.prehistoric.EntityGallimimus;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
+import fossilsarcheology.server.entity.prehistoric.EntityPrehistoricFlocking;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.ai.EntityAIBase;
 import net.minecraft.entity.ai.RandomPositionGenerator;
@@ -11,115 +12,66 @@ import net.minecraft.util.math.*;
 
 import java.util.List;
 import java.util.Random;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-public class DinoAIFlockWander<T extends EntityPrehistoric> extends EntityAIBase {
-    protected final T entity;
-    protected final int xzDist;
-    protected double speed;
-    protected double x;
-    protected double y;
-    protected double z;
-    protected int executionChance;
-    protected boolean mustUpdate;
-    private static final int FLOCK_DISTANCE = 32;
-    private Random speciesRand;
-    private float possibleYawChange;
-    private float baseSpeed;
+public class DinoAIFlockWander extends EntityAIBase {
+    protected final EntityPrehistoricFlocking entity;
+    private int navigateTimer;
+    private int groupTimer;
 
-    public DinoAIFlockWander(T creatureIn, int distance, float speed) {
-        this(creatureIn, 1, distance, speed);
-    }
-
-    public DinoAIFlockWander(T creatureIn, int chance, int distance, float baseSpeed) {
+    public DinoAIFlockWander(EntityPrehistoricFlocking creatureIn) {
         this.entity = creatureIn;
-        this.xzDist = distance;
-        this.executionChance = chance;
-        this.setMutexBits(1);
-        this.speciesRand = new Random(creatureIn.getClass().hashCode());
-        this.baseSpeed = baseSpeed;
-        this.speed = baseSpeed;
+        this.groupTimer = this.resetTimer(entity);
     }
+
+    protected int resetTimer(EntityPrehistoricFlocking dino) {
+        return 10 + dino.getRNG().nextInt(200) % 20;
+    }
+
 
     public boolean shouldExecute() {
-        if (!entity.shouldWander || entity.isMovementBlockedSoft() || !entity.doesFlock()) {
+        if (!entity.shouldWander || entity.isMovementBlockedSoft()) {
             return false;
         }
-
-        if(speciesRand.nextInt(9) == 0){
-            Vec3d vec3d = this.getPosition();
-            if (vec3d == null) {
-                return false;
-            } else {
-                this.x = vec3d.x;
-                this.y = vec3d.y;
-                this.z = vec3d.z;
-                this.mustUpdate = false;
-                return true;
-            }
+        if (this.entity.isGroupLeader()) {
+            return false;
+        } else if (this.entity.hasGroupLeader()) {
+            return true;
+        } else if (this.groupTimer > 0) {
+            --this.groupTimer;
+            return false;
+        } else {
+            this.groupTimer = this.resetTimer(this.entity);
+            double dist = 100D;
+            List<EntityPrehistoricFlocking> lvt_2_1_ = this.entity.world.getEntitiesWithinAABB(entity.getClass(), entity.getEntityBoundingBox().grow(dist, dist, dist),  (dino) -> {
+                return dino.canGroupGrow() || !dino.hasGroupLeader();
+            });
+            EntityPrehistoricFlocking lvt_3_1_ = (EntityPrehistoricFlocking)lvt_2_1_.stream().filter(EntityPrehistoricFlocking::canGroupGrow).findAny().orElse(this.entity);
+            lvt_3_1_.createFromStream((Stream<EntityPrehistoricFlocking>) lvt_2_1_.stream().filter((fish) -> {
+                return !fish.hasGroupLeader();
+            }));
+            return this.entity.hasGroupLeader();
         }
-        return false;
-    }
-
-    @Nullable
-    protected Vec3d getPosition() {
-        Vec3d countedVec = new Vec3d(0, 0, 0);
-        double tracingScale = 10;
-        int counted = 0;
-        int i = (int) Math.floor(entity.posX);
-        int j = (int) Math.floor(entity.posY);
-        int k = (int) Math.floor(entity.posZ);
-        List<EntityPrehistoric> mobList = entity.world.getEntitiesWithinAABB(EntityPrehistoric.class, new AxisAlignedBB((double) i - FLOCK_DISTANCE, (double) j - FLOCK_DISTANCE, (double) k - FLOCK_DISTANCE, (double) i + FLOCK_DISTANCE, (double) j + FLOCK_DISTANCE, (double) k + FLOCK_DISTANCE));
-        possibleYawChange = speciesRand.nextFloat() * 360 - 180F;
-        for (EntityPrehistoric prehistoric : mobList) {
-            if (prehistoric.doesFlock() && prehistoric.getClass() == entity.getClass()) {
-                counted++;
-                countedVec = countedVec.add(getVectorForRotation(prehistoric.rotationPitch, prehistoric.rotationYaw + possibleYawChange)).add(prehistoric.getPositionVector());
-            }
-        }
-        Vec3d avgVec = new Vec3d(countedVec.x / (double) counted, countedVec.y / (double) counted, countedVec.z / (double) counted);
-        EntityPrehistoric closestTo = this.entity;
-        EntityPrehistoric furthestTo = this.entity;
-        for (EntityPrehistoric prehistoric : mobList) {
-            if (closestTo.getDistance(avgVec.x, avgVec.y, avgVec.z) > prehistoric.getDistance(avgVec.x, avgVec.y, avgVec.z)) {
-                closestTo = prehistoric;
-            }
-            if (furthestTo.getDistance(avgVec.x, avgVec.y, avgVec.z) < furthestTo.getDistance(avgVec.x, avgVec.y, avgVec.z)) {
-                furthestTo = prehistoric;
-            }
-        }
-        Vec3d heightVec = closestTo.getPositionVector().add(0, closestTo.height, 0);
-        Vec3d target = RandomPositionGenerator.findRandomTargetBlockTowards(furthestTo, 13, 7, heightVec.add(avgVec.scale(tracingScale)));
-        if (target != null) {
-            double distance = entity.getDistance(target.x, target.y, target.z);
-            speed = baseSpeed + Math.max(distance * 0.0075F, 0.5F);
-        }
-        return target;
     }
 
     public boolean shouldContinueExecuting() {
-        return !this.entity.getNavigator().noPath();
+        return this.entity.hasGroupLeader() && this.entity.inRangeOfGroupLeader();
     }
 
     public void startExecuting() {
-        this.entity.getNavigator().tryMoveToXYZ(this.x, this.y, this.z, this.speed);
+        this.navigateTimer = 0;
     }
 
     public void resetTask() {
+        this.entity.leaveGroup();
     }
 
-    public void makeUpdate() {
-        this.mustUpdate = true;
-    }
-
-    public void setExecutionChance(int newchance) {
-        this.executionChance = newchance;
-    }
-
-    private Vec3d getVectorForRotation(float pitch, float yaw) {
-        float f = MathHelper.cos(-yaw * 0.017453292F - (float) Math.PI);
-        float f1 = MathHelper.sin(-yaw * 0.017453292F - (float) Math.PI);
-        float f2 = -MathHelper.cos(-pitch * 0.017453292F);
-        float f3 = MathHelper.sin(-pitch * 0.017453292F);
-        return new Vec3d(f1 * f2, f3, f * f2);
+    public void updateTask() {
+        super.updateTask();
+        if (--this.navigateTimer <= 0) {
+            this.navigateTimer = 25;
+            this.entity.moveToGroupLeader();
+        }
     }
 }

@@ -31,7 +31,7 @@ import net.minecraftforge.common.IShearable;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 
-public class EntityMammoth extends EntityPrehistoric implements IShearable {
+public class EntityMammoth extends EntityPrehistoricFlocking implements IShearable {
 
     private static final DataParameter<Boolean> SHEARED = EntityDataManager.createKey(EntityMammoth.class, DataSerializers.BOOLEAN);
     private static final PotionEffect BIOME_EFFECT = new PotionEffect(MobEffects.WEAKNESS, 60, 1);
@@ -57,7 +57,7 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
         this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
-        this.tasks.addTask(3, new DinoAIFlockWander<>(this, 3, 6, 0.75F));
+        this.tasks.addTask(3, new DinoAIFlockWander(this));
         this.tasks.addTask(3, new DinoAIEatFeedersAndBlocks(this));
         this.targetTasks.addTask(0, new DinoAIEatItems(this));
         this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
@@ -224,6 +224,11 @@ public class EntityMammoth extends EntityPrehistoric implements IShearable {
     @Override
     public boolean doesFlock() {
         return true;
+    }
+
+    @Override
+    protected int getMaxGroupSize() {
+        return 7;
     }
 
     @Override

@@ -6,6 +6,7 @@ import fossilsarcheology.client.sound.FASoundRegistry;
 import fossilsarcheology.server.entity.ai.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.ai.EntityAISit;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,9 +14,12 @@ import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 
-public class EntityGallimimus extends EntityPrehistoric {
+import javax.annotation.Nullable;
+
+public class EntityGallimimus extends EntityPrehistoricFlocking {
 
     public EntityGallimimus(World world) {
         super(world, PrehistoricEntityType.GALLIMIMUS, 1, 3, 8, 40, 0.25, 0.4, 0, 0);
@@ -35,7 +39,8 @@ public class EntityGallimimus extends EntityPrehistoric {
         this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
         this.tasks.addTask(1, new EntityAISwimming(this));
         this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
-        this.tasks.addTask(3, new DinoAIFlockWander<>(this, 3, 6, 1.0F));
+        this.tasks.addTask(2, new DinoAIFlockWander(this));
+        this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
         this.tasks.addTask(3, new DinoAIEatFeedersAndBlocks(this));
         this.targetTasks.addTask(0, new DinoAIEatItems(this));
         this.tasks.addTask(4, new DinoAIRiding(this, 2F));
@@ -124,12 +129,6 @@ public class EntityGallimimus extends EntityPrehistoric {
     }
 
     @Override
-    public boolean doesFlock() {
-
-        return true;
-    }
-
-    @Override
     public Item getOrderItem() {
 
         return Items.STICK;
@@ -143,6 +142,11 @@ public class EntityGallimimus extends EntityPrehistoric {
     @Override
     public int getTailSegments() {
         return 3;
+    }
+
+    @Override
+    protected int getMaxGroupSize() {
+        return 10;
     }
 
     @Override
