@@ -4,6 +4,7 @@ import fossilsarcheology.server.api.DefaultRenderedItem;
 import fossilsarcheology.server.entity.monster.EntityFriendlyPigZombie;
 import fossilsarcheology.server.entity.utility.EntityAncientLightning;
 import fossilsarcheology.server.tab.FATabRegistry;
+import net.minecraft.entity.EntityAgeable;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.monster.EntityPigZombie;
@@ -38,6 +39,9 @@ public class AncientSwordItem extends ItemSword implements DefaultRenderedItem {
                         targetEntity.world.spawnEntity(fpz);
                     }
                     fpz.setTamedBy((EntityPlayer) player);
+                    if(targetEntity instanceof EntityAgeable){
+                        fpz.setGrowingAge(((EntityAgeable)targetEntity).getGrowingAge());
+                    }
                     fpz.sendMessageToOwner("pigman.summon");
                     targetEntity.setDead();
                     targetEntity.world.spawnEntity(new EntityLightningBolt(targetEntity.world, targetEntity.posX, targetEntity.posY, targetEntity.posZ, true));

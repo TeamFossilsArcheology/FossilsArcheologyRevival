@@ -29,7 +29,7 @@ public class RenderFriendlyPigZombie extends RenderLiving<EntityFriendlyPigZombi
     @Override
     protected void preRenderCallback(EntityFriendlyPigZombie fpz, float par2) {
         if (fpz.isSitting()) {
-            GlStateManager.translate(0F, 0.4F, 0F);
+            GlStateManager.translate(0F, fpz.isChild() ? 0.2F : 0.4F, 0F);
         }
     }
 

@@ -863,6 +863,9 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             }
             if(this.isOnLadder() || ticksClimbing < 0){
                 ticksClimbing++;
+                if(world.getBlockState(this.getPosition().up()).getMaterial().isSolid()){
+                    ticksClimbing = 200;
+                }
             }
         }
         Revival.PROXY.calculateChainBuffer(this);
