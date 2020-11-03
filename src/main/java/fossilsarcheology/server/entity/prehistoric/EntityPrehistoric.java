@@ -140,6 +140,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
     private int fleeTicks = 0;
     private int moodCheckCooldown = 0;
     private int cathermalSleepCooldown = 0;
+    private int ticksClimbing = 0;
 
     public EntityPrehistoric(World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
         super(world);
@@ -276,6 +277,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         compound.setInteger("TicksSincePlay", this.ticksTillPlay);
         compound.setInteger("TicksSlept", this.ticksSlept);
         compound.setInteger("TicksSinceMate", this.ticksTillMate);
+        compound.setInteger("TicksClimbing", this.ticksClimbing);
         compound.setByte("currentOrder", (byte) this.currentOrder.ordinal());
         compound.setString("OwnerDisplayName", this.getOwnerDisplayName());
         compound.setFloat("YawRotation", this.rotationYaw);
@@ -304,6 +306,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             this.setOrder(OrderType.values()[compound.getByte("currentOrder")]);
         }
         this.ticksTillPlay = compound.getInteger("TicksSincePlay");
+        this.ticksClimbing = compound.getInteger("TicksClimbing");
         this.ticksTillMate = compound.getInteger("TicksSinceMate");
         this.ticksSlept = compound.getInteger("TicksSlept");
         this.rotationYaw = compound.getInteger("YawRotation");
@@ -850,10 +853,16 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
             sleepProgress = 0F;
         }
         if (!this.world.isRemote) {
-            if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD && !this.wantsToSleep() && !this.isSleeping()) {
+            if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD && !this.wantsToSleep() && !this.isSleeping() && ticksClimbing >= 0 && ticksClimbing < 100) {
                 this.setBesideClimbableBlock(this.collidedHorizontally);
             } else {
                 this.setBesideClimbableBlock(false);
+                if(ticksClimbing >= 100){
+                    ticksClimbing = -900;
+                }
+            }
+            if(this.isOnLadder() || ticksClimbing < 0){
+                ticksClimbing++;
             }
         }
         Revival.PROXY.calculateChainBuffer(this);
