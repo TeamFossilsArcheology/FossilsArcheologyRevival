@@ -21,7 +21,7 @@ public class DinoAIFlockWander<T extends EntityPrehistoric> extends EntityAIBase
     protected double z;
     protected int executionChance;
     protected boolean mustUpdate;
-    private int FLOCK_DISTANCE = 32;
+    private static final int FLOCK_DISTANCE = 32;
     private Random speciesRand;
     private float possibleYawChange;
     private float baseSpeed;
