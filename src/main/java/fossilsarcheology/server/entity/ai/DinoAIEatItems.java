@@ -49,7 +49,7 @@ public class DinoAIEatItems extends EntityAIBase {
         if (distance < Math.max(this.prehistoric.getEntityBoundingBox().getAverageEdgeLength(), 2.5D)) {
             if (this.targetItem != null) {
                 this.prehistoric.eatItem(this.targetItem.getItem());
-                this.targetItem.setDead();
+                this.targetItem.getItem().shrink(1);
             }
         }
         if (this.prehistoric.getNavigator().noPath()) {

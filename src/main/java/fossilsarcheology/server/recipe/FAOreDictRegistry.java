@@ -143,23 +143,23 @@ public class FAOreDictRegistry {
                     OreDictionary.registerOre("foodCaviar", prehistoric.eggItem);
                 }
             }
-            if (prehistoric.birdEggItem != null) {
-                OreDictionary.registerOre("listAllegg", prehistoric.eggItem);
-                OreDictionary.registerOre("objectEgg", prehistoric.eggItem);
-                OreDictionary.registerOre("bakingEgg", prehistoric.eggItem);
-                OreDictionary.registerOre("egg", prehistoric.eggItem);
-                OreDictionary.registerOre("eggCookable", prehistoric.eggItem);
-                OreDictionary.registerOre("ingredientEgg", prehistoric.eggItem);
-                OreDictionary.registerOre("foodSimpleEgg", prehistoric.eggItem);
+            if (prehistoric.birdEggItem != null ) {
+                OreDictionary.registerOre("listAllegg", prehistoric.birdEggItem);
+                OreDictionary.registerOre("objectEgg", prehistoric.birdEggItem);
+                OreDictionary.registerOre("bakingEgg", prehistoric.birdEggItem);
+                OreDictionary.registerOre("egg", prehistoric.birdEggItem);
+                OreDictionary.registerOre("eggCookable", prehistoric.birdEggItem);
+                OreDictionary.registerOre("ingredientEgg", prehistoric.birdEggItem);
+                OreDictionary.registerOre("foodSimpleEgg", prehistoric.birdEggItem);
             }
-            if (prehistoric.bestBirdEggItem != null && prehistoric.eggItem != null) {
-                OreDictionary.registerOre("listAllegg", prehistoric.eggItem);
-                OreDictionary.registerOre("objectEgg", prehistoric.eggItem);
-                OreDictionary.registerOre("bakingEgg", prehistoric.eggItem);
-                OreDictionary.registerOre("egg", prehistoric.eggItem);
-                OreDictionary.registerOre("eggCookable", prehistoric.eggItem);
-                OreDictionary.registerOre("ingredientEgg", prehistoric.eggItem);
-                OreDictionary.registerOre("foodSimpleEgg", prehistoric.eggItem);
+            if (prehistoric.bestBirdEggItem != null) {
+                OreDictionary.registerOre("listAllegg", prehistoric.bestBirdEggItem);
+                OreDictionary.registerOre("objectEgg", prehistoric.bestBirdEggItem);
+                OreDictionary.registerOre("bakingEgg", prehistoric.bestBirdEggItem);
+                OreDictionary.registerOre("egg", prehistoric.bestBirdEggItem);
+                OreDictionary.registerOre("eggCookable", prehistoric.bestBirdEggItem);
+                OreDictionary.registerOre("ingredientEgg", prehistoric.bestBirdEggItem);
+                OreDictionary.registerOre("foodSimpleEgg", prehistoric.bestBirdEggItem);
             }
             if (prehistoric.foodItem != null) {
                 OreDictionary.registerOre("listAllmeatraw", prehistoric.foodItem);
