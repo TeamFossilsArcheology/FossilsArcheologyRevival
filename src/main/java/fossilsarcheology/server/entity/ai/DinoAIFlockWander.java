@@ -1,5 +1,6 @@
 package fossilsarcheology.server.entity.ai;
 
+import com.sun.istack.internal.Nullable;
 import fossilsarcheology.server.entity.prehistoric.EntityGallimimus;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import net.minecraft.entity.EntityLiving;
@@ -8,7 +9,6 @@ import net.minecraft.entity.ai.RandomPositionGenerator;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.*;
 
-import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Random;
 
