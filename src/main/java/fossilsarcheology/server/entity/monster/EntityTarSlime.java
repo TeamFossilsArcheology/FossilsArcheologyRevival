@@ -3,6 +3,7 @@ package fossilsarcheology.server.entity.monster;
 import fossilsarcheology.Revival;
 import fossilsarcheology.server.block.FABlockRegistry;
 import fossilsarcheology.server.item.FAItemRegistry;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
@@ -114,22 +115,23 @@ public class EntityTarSlime extends EntitySlime {
     @Override
     public void updateRidden() {
         super.updateRidden();
-        if (this.getRidingEntity() != null) {
-            if (this.getRidingEntity() instanceof EntityPlayer) {
-                this.rotationYaw = ((EntityPlayer) getRidingEntity()).rotationYawHead;
+        Entity riding = this.getRidingEntity();
+        if (riding != null) {
+            if (riding instanceof EntityPlayer) {
+                this.rotationYaw = ((EntityPlayer) riding).rotationYawHead;
                 this.setPosition(posX, posY, posZ);
             }
-            if (getRidingEntity() instanceof EntityLivingBase) {
-                ((EntityLivingBase) getRidingEntity()).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 1));
+            if (riding instanceof EntityLivingBase) {
+                ((EntityLivingBase) riding).addPotionEffect(new PotionEffect(MobEffects.BLINDNESS, 100, 1));
+                if (this.ticksExisted % 20 == 0) {
+                    riding.attackEntityFrom(DamageSource.causeMobDamage(this), this.getSlimeSize());
+                    this.playSound(this.getJumpSound(), this.getSoundVolume(), getSoundPitch() * ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) / 0.8F);
+                    squishFactor = 0.7F;
+                } else {
+                    squishFactor = 0.0F;
+                }
             }
-            if (this.ticksExisted % 20 == 0) {
-                this.getRidingEntity().attackEntityFrom(DamageSource.causeMobDamage(this), this.getSlimeSize());
-                this.playSound(this.getJumpSound(), this.getSoundVolume(), getSoundPitch() * ((this.rand.nextFloat() - this.rand.nextFloat()) * 0.2F + 1.0F) / 0.8F);
-                squishFactor = 0.7F;
-            } else {
-                squishFactor = 0.0F;
-            }
-            if (!this.getRidingEntity().isEntityAlive()) {
+            if (!riding.isEntityAlive()) {
                 this.dismountRidingEntity();
             }
             // alterSquishAmount();
