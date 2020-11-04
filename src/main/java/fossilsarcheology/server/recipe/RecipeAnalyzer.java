@@ -37,6 +37,11 @@ public class RecipeAnalyzer {
     }
 
     public ItemStack generateOutput(Random random) {
+        if(totalWeight < 100){
+            if(random.nextFloat() >= totalWeight * 0.01F){
+                return ItemStack.EMPTY;
+            }
+        }
         float entry = random.nextFloat() * totalWeight;
         return outputMap.higherEntry(entry).getValue().copy();
     }
