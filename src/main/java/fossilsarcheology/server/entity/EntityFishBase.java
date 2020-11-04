@@ -105,6 +105,10 @@ public abstract class EntityFishBase extends EntityTameable {
         }
     }
 
+    public boolean isEntityInvulnerable(DamageSource source) {
+        return source == DamageSource.IN_WALL || super.isEntityInvulnerable(source);
+    }
+
     @Override
     public void writeEntityToNBT(NBTTagCompound compound) {
         super.writeEntityToNBT(compound);
@@ -122,9 +126,6 @@ public abstract class EntityFishBase extends EntityTameable {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (this.height != 0.95F) {
-            this.height = 0.95F;
-        }
         Revival.PROXY.calculateChainBuffer(this);
         if(absoluteEggCooldown > 0){
             absoluteEggCooldown--;
