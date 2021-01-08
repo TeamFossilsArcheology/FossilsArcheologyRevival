@@ -84,8 +84,8 @@ public class FossilConfig {
         this.generateFossilSites = config.getBoolean("Generate Fossil Dig Sites", "all", true, "True if Fossil Dig Sites are to generate naturally");
         this.oreGenerationDimensions = config.get("Ore Generation Dimensions", "all", new int[]{0}, "List of Dimension IDs to spawn structures like digsites and temples in").getIntList();
         this.overworldGenerationDimensions = config.get("Overworld Structure Dimensions", "all", new int[]{0}, "List of Dimension IDs to spawn Fossil and Permafrost ores in").getIntList();
-        this.fossilOreRarity = config.getInt("Fossil Ore Rarity", "all", 38, 1, 100000000, "Rarity of Fossil ore. Higher number = more rare");
-        this.permafrostOreRarity = config.getInt("Permafrost Ore Rarity", "all", 4, 1, 100000000, "Rarity of Permafrost ore. Higher number = more rare");
+        this.fossilOreRarity = config.getInt("Fossil Ore Rarity", "all", 38, 1, 100000000, "Rarity of Fossil ore. Higher number = more common");
+        this.permafrostOreRarity = config.getInt("Permafrost Ore Rarity", "all", 4, 1, 100000000, "Rarity of Permafrost ore. Higher number = more common");
         this.generateHellShipRarity = config.getInt("Hell Ship Rarity", "all", 1000, 1, 100000000, "Rarity of Hell Ship Structure. Higher number = more rare");
         this.generateTarSiteRarity = config.getInt("Tarpit Dig Site Rarity", "all", 900, 1, 100000000, "Rarity of Tarpit Dig Site Structure. Higher number = more rare");
         this.generateFossilSiteRarity = config.getInt("Fossil Dig Site Rarity", "all", 900, 1, 100000000, "Rarity of Fossil Dig Site Structure. Higher number = more rare");
