@@ -377,7 +377,7 @@ public abstract class EntityPrehistoric extends EntityTameable implements IPrehi
         if(ticksTillPlay == 0){
             this.setMood(this.getMood() + playBonus);
             if(!this.world.isRemote){
-                Revival.NETWORK_WRAPPER.sendToAll(new MessageHappyParticles(this.getEntityId()));s
+                Revival.NETWORK_WRAPPER.sendToAll(new MessageHappyParticles(this.getEntityId()));
             }
             ticksTillPlay = this.rand.nextInt(600) + 600;
         }

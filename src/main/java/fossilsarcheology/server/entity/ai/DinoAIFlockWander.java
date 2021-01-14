@@ -1,6 +1,5 @@
 package fossilsarcheology.server.entity.ai;
 
-import com.sun.istack.internal.Nullable;
 import fossilsarcheology.server.entity.prehistoric.EntityGallimimus;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoric;
 import fossilsarcheology.server.entity.prehistoric.EntityPrehistoricFlocking;
@@ -44,11 +43,11 @@ public class DinoAIFlockWander extends EntityAIBase {
         } else {
             this.groupTimer = this.resetTimer(this.entity);
             double dist = 100D;
-            List<EntityPrehistoricFlocking> lvt_2_1_ = this.entity.world.getEntitiesWithinAABB(entity.getClass(), entity.getEntityBoundingBox().grow(dist, dist, dist),  (dino) -> {
+            List<EntityPrehistoricFlocking> lvt_2_1_ = this.entity.world.getEntitiesWithinAABB(entity.getClass(), entity.getEntityBoundingBox().grow(dist, dist, dist), (dino) -> {
                 return dino.canGroupGrow() || !dino.hasGroupLeader();
             });
-            EntityPrehistoricFlocking lvt_3_1_ = (EntityPrehistoricFlocking)lvt_2_1_.stream().filter(EntityPrehistoricFlocking::canGroupGrow).findAny().orElse(this.entity);
-            lvt_3_1_.createFromStream((Stream<EntityPrehistoricFlocking>) lvt_2_1_.stream().filter((fish) -> {
+            EntityPrehistoricFlocking lvt_3_1_ = lvt_2_1_.stream().filter(EntityPrehistoricFlocking::canGroupGrow).findAny().orElse(this.entity);
+            lvt_3_1_.createFromStream(lvt_2_1_.stream().filter((fish) -> {
                 return !fish.hasGroupLeader();
             }));
             return this.entity.hasGroupLeader();
