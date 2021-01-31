@@ -5,9 +5,6 @@ buildscript {
             name = "forge"
             url = "http://files.minecraftforge.net/maven"
         }
-        maven { 
-			url "https://plugins.gradle.org/m2/" 
-		}		
         maven {
             name = "sonatype"
             url = "https://oss.sonatype.org/content/repositories/snapshots/"
@@ -27,7 +24,6 @@ buildscript {
 }
 
 apply plugin: "net.minecraftforge.gradle.forge"
-apply plugin: 'com.wynprice.cursemaven'
 
 group = "fossilsarcheology"
 archivesBaseName = "fossilsarcheology"
@@ -99,7 +95,6 @@ dependencies {
     compile "thaumcraft:Thaumcraft:1.12.2:6.1.BETA26"
     compile "baubles:Baubles:1.12:1.5.2"
     compile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.6.465"
-    deobfProvided "curse.maven:llibrary-243298:2644704"	
     deobfCompile "cofh:RedstoneFlux:1.12-2.1.0.7:universal"
 
 }
