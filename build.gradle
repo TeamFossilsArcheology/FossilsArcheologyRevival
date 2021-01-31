@@ -17,16 +17,17 @@ buildscript {
             url = "https://minecraft.curseforge.com/api/maven/"
         }
         maven {
-            url "https://www.cursemaven.com"
+            name = "CurseMaven"
+            url = "https://www.cursemaven.com"
         }
     }
     dependencies {
         classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
-        classpath 'com.wynprice.cursemaven:CurseMaven:2.1.5'		
     }
 }
 
 apply plugin: "net.minecraftforge.gradle.forge"
+apply plugin: 'com.wynprice.cursemaven'
 
 group = "fossilsarcheology"
 archivesBaseName = "fossilsarcheology"
@@ -66,9 +67,6 @@ repositories {
         name 'tterrag'
         url "https://maven.tterrag.com/"
     }
-    maven {
-        url "https://www.cursemaven.com"
-    }	
     maven {
         // location of the maven that hosts JEI files
         name = "Progwml6 maven"
