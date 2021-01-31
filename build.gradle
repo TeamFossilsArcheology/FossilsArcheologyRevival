@@ -40,6 +40,9 @@ repositories {
     maven {
         url = "http://maven.mcmoddev.com"
     }
+    maven {
+        url = "https://mmdmaven.blamejared.com/"
+    }
     maven { // COFH Mods
         url = "http://maven.covers1624.net"
     }
