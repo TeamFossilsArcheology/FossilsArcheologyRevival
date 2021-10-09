@@ -55,7 +55,7 @@ public class FishAIFindWaterTarget extends EntityAIBase {
         Random rand = this.mob.getRNG();
         if (this.mob.getAttackTarget() == null) {
             for (int i = 0; i < 10; i++) {
-                BlockPos randPos = this.mob.getPosition().add(rand.nextInt(16) - 8, rand.nextInt(8) - 4, rand.nextInt(16) - 8);
+                BlockPos randPos = this.mob.getPosition().add(rand.nextInt(17) - 8, rand.nextInt(9) - 4, rand.nextInt(17) - 8);
                 if (this.mob.world.getBlockState(randPos).getMaterial() == Material.WATER && this.mob.isDirectPathBetweenPoints(this.mob.getPositionVector(), new Vec3d(randPos.getX() + 0.5, randPos.getY() + 0.5, randPos.getZ() + 0.5))) {
                     return randPos;
                 }
