@@ -40,6 +40,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @SideOnly(Side.CLIENT)
@@ -343,13 +344,13 @@ public class GuiPedia extends GuiScreen {
         this.addStringLR("", 150, false);
         String translatePath = "dinopedia/" + Minecraft.getMinecraft().gameSettings.language.toLowerCase() + "/";
         String bioFile = mobName + ".txt";
+        if (getClass().getClassLoader().getResourceAsStream(translatePath) == null) {
+            translatePath = "dinopedia/en_us/";
+        }
         try {
             IResource resource = this.mc.getResourceManager().getResource(new ResourceLocation("fossil", translatePath + bioFile));
             InputStream fileReader = resource.getInputStream();
-            if (getClass().getClassLoader().getResourceAsStream(translatePath) == null) {
-                translatePath = "assets/fossil/dinopedia/en_us/";
-            }
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileReader));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(fileReader, StandardCharsets.UTF_8));
             String line;
             int linenumber = 0;
             this.addStringLR("", 250, true);
