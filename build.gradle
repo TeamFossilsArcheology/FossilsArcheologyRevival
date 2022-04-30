@@ -1,133 +1,141 @@
 buildscript {
     repositories {
+        maven { url = 'https://files.minecraftforge.net/maven' }
+        jcenter()
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-        maven {
-            name = "CurseForge"
-            url = "https://minecraft.curseforge.com/api/maven/"
-        }
-        maven {
-            name = "CurseMaven"
-            url = "https://www.cursemaven.com"
-        }
     }
+
     dependencies {
-        classpath "net.minecraftforge.gradle:ForgeGradle:2.3-SNAPSHOT"
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '3.+', changing: true
     }
 }
-
-apply plugin: "net.minecraftforge.gradle.forge"
-
-group = "fossilsarcheology"
-archivesBaseName = "fossilsarcheology"
-sourceCompatibility = targetCompatibility = "1.8"
-
-minecraft {
-    version = "1.12.2-14.23.5.2860"
-    runDir = "minecraft"
-    mappings = "stable_39"
-}
-
-repositories {
-    mavenCentral()
+apply plugin: 'net.minecraftforge.gradle'
+repositories{
     maven {
-        url = "http://maven.mcmoddev.com"
-    }
-    maven {
-        url = "https://mmdmaven.blamejared.com/"
-    }
-    maven { // COFH Mods
-        url = "http://maven.covers1624.net"
-    }
-    maven {
-        name = "Mobius Repo"
-        url = "http://tehnut.info/maven"
-    }
-    maven {
-        name = "JEI"
-        url = "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-        name = "gegy1000"
-        url = "https://maven.gegy1000.net"
-    }
-    maven {
-        name "Jared"
-        url "http://maven.blamejared.com/"
-    }
-    maven { // mcjty
-        name 'tterrag'
-        url "https://maven.tterrag.com/"
-    }
-    maven {
-        // location of the maven that hosts JEI files
-        name = "Progwml6 maven"
-        url = "http://dvs1.progwml6.com/files/maven"
-    }
-    maven {
-        name = 'DVS1 Maven FS'
-        url = 'http://dvs1.progwml6.com/files/maven'
-    }
-
-    maven {
+        name = "CurseForge"
         url = "https://minecraft.curseforge.com/api/maven/"
     }
     maven {
-        // location of a maven mirror for JEI files, as a fallback
-        name = "ModMaven"
-        url = "modmaven.k-4u.nl"
+        name = "Progwml6 maven"
+        url = "https://dvs1.progwml6.com/files/maven/"
     }
-
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.k-4u.nl"
+    }
 }
+apply plugin: 'eclipse'
+apply plugin: 'maven-publish'
+
+version = '9.0.0-BETA'
+group = 'com.github.alexthe667' // http://maven.apache.org/guides/mini/guide-naming-conventions.html
+archivesBaseName = 'fossil'
+
+sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
+minecraft {
+ mappings channel: 'snapshot', version: '20201028-1.16.3'
+    // makeObfSourceJar = false // an Srg named sources jar is made by default. uncomment this to disable.
+    
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
+    // Default run configurations.
+    // These can be tweaked, removed, or duplicated as needed.
+    runs {
+        client {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        server {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+
+        data {
+            workingDirectory project.file('run')
+
+            // Recommended logging data for a userdev environment
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+            // Recommended logging level for the console
+            property 'forge.logging.console.level', 'debug'
+
+            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
+            args '--mod', 'examplemod', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            mods {
+                examplemod {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
+
+// Include resources generated by data generators.
+sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    deobfCompile "slimeknights.mantle:Mantle:1.12-1.3.1.21"
-    deobfCompile "slimeknights:TConstruct:1.12.2-2.9.1.70"
-    runtime "mezz.jei:jei_1.12.2:4.9.1.181"
-    // compile against the JEI API but do not include it at runtime
-    deobfProvided "mezz.jei:jei_1.12.2:4.9.1.181:api"
-    // at runtime, use the full JEI jar
-    runtime "mezz.jei:jei_1.12.2:4.9.1.181"
-    compile "thaumcraft:Thaumcraft:1.12.2:6.1.BETA26"
-    compile "baubles:Baubles:1.12:1.5.2"
-    compile "CraftTweaker2:CraftTweaker2-MC1120-Main:1.12-4.1.6.465"
-    deobfCompile "cofh:RedstoneFlux:1.12-2.1.0.7:universal"
-
+    minecraft 'net.minecraftforge:forge:1.16.4-35.1.10'
+    compileOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.3.19:api")
+    runtimeOnly fg.deobf("mezz.jei:jei-1.16.2:7.1.3.19")
+    compile 'citadel:citadel:1.5.3:deobf'
 }
 
-processResources {
-    inputs.property "version", project.version
-    inputs.property "mcversion", project.minecraft.version
-    inputs.property "llibrary_version", "1.7.17-1.12.2"
-
-    from(sourceSets.main.resources.srcDirs) {
-        include "mcmod.info"
-        expand "version": project.version, "mcversion": project.minecraft.version, "llibrary_version": "1.7.17-1.12.2"
-    }
-
-    from(sourceSets.main.resources.srcDirs) {
-        exclude "mcmod.info"
-    }
-}
-
+// Example for how to get properties into the manifest for reading by the runtime..
 jar {
     manifest {
-        attributes "FMLAT": "fossil_at.cfg"
+        attributes([
+            "Specification-Title": "fossil",
+            "Specification-Vendor": "alexthe667",
+            "Specification-Version": "9.0.0", // We are version 1 of ourselves
+            "Implementation-Title": project.name,
+            "Implementation-Version": "${version}",
+            "Implementation-Vendor" :"alexthe667",
+            "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")
+        ])
     }
 }
 
-task devJar(type: Jar) {
-    classifier = "dev"
-    from sourceSets.main.output
-    manifest {
-        attributes "FMLAT": "fossil_at.cfg"
+// Example configuration to allow publishing using the maven-publish task
+// This is the preferred method to reobfuscate your jar file
+jar.finalizedBy('reobfJar') 
+// However if you are in a multi-project build, dev time needs unobfed jar files, so you can delay the obfuscation until publishing by doing
+//publish.dependsOn('reobfJar')
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact jar
+        }
+    }
+    repositories {
+        maven {
+            url "file:///${project.projectDir}/mcmodsrepo"
+        }
     }
 }
-

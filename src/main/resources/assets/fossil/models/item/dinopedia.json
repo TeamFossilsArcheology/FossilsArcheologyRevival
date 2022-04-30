@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "fossil:items/dinopedia"
+    "layer0": "fossil:item/dinopedia"
   }
 }

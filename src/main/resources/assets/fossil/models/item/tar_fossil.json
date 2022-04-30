@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "fossil:items/tar_fossil"
+    "layer0": "fossil:item/tar_fossil"
   }
 }

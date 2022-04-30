@@ -1,8 +1,0 @@
-{
-  "parent": "block/stairs",
-  "textures": {
-    "bottom": "fossil:blocks/volcanic_brick",
-    "top": "fossil:blocks/volcanic_brick",
-    "side": "fossil:blocks/volcanic_brick"
-  }
-}

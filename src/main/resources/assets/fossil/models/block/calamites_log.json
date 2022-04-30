@@ -1,7 +1,0 @@
-{
-  "parent": "block/cube_column",
-  "textures": {
-    "end": "fossil:blocks/calamites_log_top",
-    "side": "fossil:blocks/calamites_log"
-  }
-}

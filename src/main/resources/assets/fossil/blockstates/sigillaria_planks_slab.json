@@ -1,1 +1,0 @@
-{  "variants": {    "inventory": {      "model": "fossil:sigillaria_planks_slab"    },    "half=bottom": {      "model": "fossil:sigillaria_planks_slab"    },    "half=top": {      "model": "fossil:sigillaria_planks_upper_slab"    }  }}

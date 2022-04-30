@@ -1,1 +1,0 @@
-{  "parent": "block/door_bottom",  "textures": {    "bottom": "fossil:blocks/cordaites_door_bottom",    "top": "fossil:blocks/cordaites_door_top"  }}

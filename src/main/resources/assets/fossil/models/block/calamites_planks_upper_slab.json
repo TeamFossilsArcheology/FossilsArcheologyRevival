@@ -1,8 +1,0 @@
-{
-  "parent": "block/upper_slab",
-  "textures": {
-    "bottom": "fossil:blocks/calamites_planks",
-    "top": "fossil:blocks/calamites_planks",
-    "side": "fossil:blocks/calamites_planks"
-  }
-}

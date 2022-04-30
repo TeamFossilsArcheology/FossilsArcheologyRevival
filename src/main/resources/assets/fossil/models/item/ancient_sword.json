@@ -1,7 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "fossil:items/ancient_sword"
+    "layer0": "fossil:item/ancient_sword"
   }
 }
-

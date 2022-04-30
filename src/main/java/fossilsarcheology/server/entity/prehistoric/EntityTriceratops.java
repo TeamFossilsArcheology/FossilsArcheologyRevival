@@ -2,27 +2,27 @@ package fossilsarcheology.server.entity.prehistoric;
 
 import com.google.common.base.Predicate;
 import fossilsarcheology.Revival;
-import fossilsarcheology.client.sound.FASoundRegistry;
-import fossilsarcheology.server.entity.ai.*;
+import fossilsarcheology.server.entity.prehistoric.base.EntityPrehistoric;
+import fossilsarcheology.server.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import fossilsarcheology.server.util.PrehistoricEntityType;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.ai.EntityAISit;
-import net.minecraft.entity.ai.EntityAISwimming;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
+import net.minecraft.entity.EntityType;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.AttributeModifierMap;
+import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.item.Item;
+import net.minecraft.item.Items;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.world.World;
 
-
 public class EntityTriceratops extends EntityPrehistoric {
 
-    public EntityTriceratops(World world) {
-        super(world, PrehistoricEntityType.TRICERATOPS, 1, 12, 12, 64, 0.2, 0.35, 5, 15);
+    public EntityTriceratops(EntityType type, World world) {
+        super(type, world, PrehistoricEntityType.TRICERATOPS, 1, 12, 12, 64, 0.2, 0.35, 5, 15);
         this.hasFeatherToggle = true;
         this.featherToggle = Revival.CONFIG_OPTIONS.quilledTriceratops;
-        this.setActualSize(1.1F, 0.6F);
         this.nearByMobsAllowed = 7;
         minSize = 0.4F;
         maxSize = 5F;
@@ -34,22 +34,25 @@ public class EntityTriceratops extends EntityPrehistoric {
         this.pediaScale = 55;
     }
 
-    public void initEntityAI() {
-        this.tasks.addTask(0, new DinoAIFleeBattle(this, 1.0D));
-        this.tasks.addTask(1, new DinoMeleeAttackAI(this, 1.0D, false));
-        this.tasks.addTask(1, new EntityAISwimming(this));
-        this.tasks.addTask(2, this.aiSit = new EntityAISit(this));
-        this.tasks.addTask(3, new DinoAIWander(this, 1.0D));
-        this.tasks.addTask(3, new DinoAIEatFeedersAndBlocks(this));
-        this.targetTasks.addTask(0, new DinoAIEatItems(this));
-        this.tasks.addTask(4, new DinoAIRiding(this, 1.0F));
-        this.tasks.addTask(4, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-        this.tasks.addTask(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.tasks.addTask(7, new DinoAILookIdle(this));
-        this.targetTasks.addTask(1, new DinoAIOwnerHurtByTarget(this));
-        this.targetTasks.addTask(2, new DinoAIOwnerHurtTarget(this));
-        this.targetTasks.addTask(3, new DinoAIHurtByTarget(this));
-        this.targetTasks.addTask(4, new DinoAIHunt(this, EntityLivingBase.class, true, (Predicate<Entity>) entity -> entity instanceof EntityLivingBase));
+    public void registerGoals() {
+ /*
+            this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.0D));
+        this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1.0D, false));
+        this.goalSelector.addGoal(1, new EntityAISwimming(this));
+        this.goalSelector.addGoal(2, this.aiSit = new EntityAISit(this));
+        this.goalSelector.addGoal(3, new DinoAIWander(this, 1.0D));
+        this.goalSelector.addGoal(3, new DinoAIEatFeedersAndBlocks(this));
+        this.targetSelector.addGoal(0, new DinoAIEatItems(this));
+        this.goalSelector.addGoal(4, new DinoAIRiding(this, 1.0F));
+        this.goalSelector.addGoal(4, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
+        this.goalSelector.addGoal(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.goalSelector.addGoal(7, new DinoAILookIdle(this));
+        this.targetSelector.addGoal(1, new DinoAIOwnerHurtByTarget(this));
+        this.targetSelector.addGoal(2, new DinoAIOwnerHurtTarget(this));
+        this.targetSelector.addGoal(3, new DinoAIHurtByTarget(this));
+        this.targetSelector.addGoal(4, new DinoAIHunt(this, LivingEntity.class, true, (Predicate<Entity>) entity -> entity instanceof EntityLivingBase));
+}
+  */
     }
 
     @Override
@@ -148,8 +151,8 @@ public class EntityTriceratops extends EntityPrehistoric {
     }
 
     @Override
-    public void onLivingUpdate() {
-        super.onLivingUpdate();
+    public void livingTick() {
+        super.livingTick();
         if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
             doAttack();
             doAttackKnockback(0.5F);
@@ -170,7 +173,7 @@ public class EntityTriceratops extends EntityPrehistoric {
         return 175;
     }
 
-    @Override
+   /* @Override
     protected SoundEvent getAmbientSound() {
         return FASoundRegistry.TRICERATOPS_LIVING;
     }
@@ -183,7 +186,7 @@ public class EntityTriceratops extends EntityPrehistoric {
     @Override
     protected SoundEvent getDeathSound() {
         return FASoundRegistry.TRICERATOPS_DEATH;
-    }
+    }*/
 
     @Override
     public boolean canBeRidden() {

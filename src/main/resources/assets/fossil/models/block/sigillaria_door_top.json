@@ -1,1 +1,0 @@
-{  "parent": "block/door_top",  "textures": {    "bottom": "fossil:blocks/sigillaria_door_bottom",    "top": "fossil:blocks/sigillaria_door_top"  }}

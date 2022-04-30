@@ -1,6 +1,0 @@
-{
-  "parent": "fossil:item/javelin",
-  "textures": {
-    "layer0": "fossil:items/weapon/ancient_javelin"
-  }
-}

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "fossil:items/relic_scrap"
+    "layer0": "fossil:item/relic_scrap"
   }
 }

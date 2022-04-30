@@ -1,6 +1,0 @@
-{
-  "parent": "block/cube_all",
-  "textures": {
-    "all": "fossil:items/figurine/figurine_icon_15"
-  }
-}

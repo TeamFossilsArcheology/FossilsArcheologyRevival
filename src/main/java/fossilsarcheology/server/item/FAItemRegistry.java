@@ -1,116 +1,48 @@
 package fossilsarcheology.server.item;
 
+import com.github.alexthe666.citadel.server.item.CustomArmorMaterial;
+import com.github.alexthe666.citadel.server.item.CustomToolMaterial;
 import fossilsarcheology.Revival;
-import fossilsarcheology.client.sound.FASoundRegistry;
-import fossilsarcheology.server.block.FABlockRegistry;
-import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.BannerPatternItem;
 import net.minecraft.item.Item;
-import net.minecraft.item.ItemArmor;
-import net.minecraft.util.ResourceLocation;
-import net.minecraftforge.common.util.EnumHelper;
+import net.minecraft.util.SoundEvents;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.lang.reflect.Field;
 
+@Mod.EventBusSubscriber(modid = Revival.MODID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class FAItemRegistry {
-    public static final List<Item> ITEMS = new ArrayList<>();
-    public static final ItemArmor.ArmorMaterial ANCIENT_HELMET_MATERIAL = EnumHelper.addArmorMaterial("AncientHelmet", "fossil:armor_ancient_helmet", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ITEM_ARMOR_EQUIP_IRON, 0.0F);
-    public static final ItemArmor.ArmorMaterial BONE = EnumHelper.addArmorMaterial("Bone", "fossil:armor_bone", 25, new int[]{2, 7, 6, 2}, 15, SoundEvents.ITEM_ARMOR_EQUIP_CHAIN, 0F);
-    public static final Item.ToolMaterial SCARAB_MATERIAL = EnumHelper.addToolMaterial("Scarab", 3, 1861, 8.0F, 4.0F, 25);
-    public static final Item.ToolMaterial TOOTH_DAGGER_MATERIAL = EnumHelper.addToolMaterial("toothDagger", 3, 250, 70.0F, 1.5F, 25);
-    public static final Item.ToolMaterial ICED_MEAT_MATERIAL = EnumHelper.addToolMaterial("IcedMeat", 1, 2, 1.0F, 3.5F, 10);
+    public static CustomArmorMaterial ANCIENT_HELMET_MATERIAL = new FAArmorMaterial("ancient_helmet", 18, new int[]{4, 4, 4, 4}, 10, SoundEvents.ITEM_ARMOR_EQUIP_TURTLE, 1);
+    public static CustomToolMaterial ANCIENT_SWORD_MATERIAL = new CustomToolMaterial("ancient_sword", 2, 300, 2.0F, 6.5F, 10);
 
-    public static final BioFossilItem BIOFOSSIL = new BioFossilItem(false);
-    public static final BioFossilItem TAR_FOSSIL = new BioFossilItem(true);
-    public static final BasicItem DINOPEDIA = new BasicItem("dinopedia");
-    public static final BasicItem FAILURESAURUS_FLESH = new BasicItem("failuresaurus_flesh");
-    public static final BasicItem BIO_GOO = new BasicItem("bio_goo");
-    public static final BasicItem AMBER = new BasicItem("amber");
-    public static final BasicItem DOMINICAN_AMBER = new BasicItem("dominican_amber");
-    public static final BasicItem CHICKEN_ESSENCE = new BasicItem("chicken_essence");
-    public static final BasicItem STUNTED_ESSENCE = new BasicItem("stunted_essence");
-    public static final BasicItem SCARAB_GEM = new BasicItem("scarab_gem");
-    public static final BasicItem AQUATIC_SCARAB_GEM = new BasicItem("aquatic_scarab_gem");
-    public static final BasicAxeItem SCARAB_AXE = new BasicAxeItem(SCARAB_MATERIAL, "scarab_axe");
-    public static final BasicPickaxeItem SCARAB_PICKAXE = new BasicPickaxeItem(SCARAB_MATERIAL, "scarab_pickaxe");
-    public static final BasicSwordItem SCARAB_SWORD = new BasicSwordItem(SCARAB_MATERIAL, "scarab_sword");
-    public static final BasicHoeItem SCARAB_HOE = new BasicHoeItem(SCARAB_MATERIAL, "scarab_hoe");
-    public static final BasicShovelItem SCARAB_SHOVEL = new BasicShovelItem(SCARAB_MATERIAL, "scarab_shovel");
-    public static final BasicArmorItem SKULL_HELMET = new BasicArmorItem(BONE, 0, EntityEquipmentSlot.HEAD, "skull_helmet");
-    public static final BasicArmorItem RIBCAGE_CHESTPLATE = new BasicArmorItem(BONE, 1, EntityEquipmentSlot.CHEST, "skull_chestplate");
-    public static final BasicArmorItem SHIN_LEGGINGS = new BasicArmorItem(BONE, 2, EntityEquipmentSlot.LEGS, "shin_leggings");
-    public static final BasicArmorItem FEET_BOOTS = new BasicArmorItem(BONE, 3, EntityEquipmentSlot.FEET, "feet_boots");
-    public static final BasicItem ANCIENT_KEY = new BasicItem("ancient_key");
-    public static final BasicItem ANCIENT_CLOCK = new BasicItem("ancient_clock");
-    public static final BasicItem SHELL = new BasicItem("shell");
-    public static final BasicFoodItem SJL = new BasicFoodItem(8, 2, false, "sjl");
-    public static final BasicItem MAGIC_CONCH = new BasicItem("magic_conch");
-    public static final BasicFoodItem RAW_CHICKEN_SOUP = new BasicFoodItem(4, 2, false, "raw_chicken_soup");
-    public static final BasicFoodItem COOKED_CHICKEN_SOUP = new BasicFoodItem(8, 2, false, "cooked_chicken_soup");
-    public static final BasicFoodItem COOKED_EGG = new BasicFoodItem(4, 2, false, "cooked_egg");
-    public static final BasicItem RELIC_SCRAP = new BasicItem("relic_scrap");
-    public static final BasicItem POTTERY_SHARD = new BasicItem("pottery_shard");
-    public static final BasicItem PLANT_FOSSIL = new BasicItem("plant_fossil");
-    public static final BasicItem SKULL_STICK = new BasicItem("skull_stick");
-    public static final BasicSwordItem TOOTH_DAGGER = new BasicSwordItem(TOOTH_DAGGER_MATERIAL, "tooth_dagger");
-    public static final StoneTabletItem STONE_TABLET = new StoneTabletItem();
-    public static final WhipItem WHIP = new WhipItem();
-    public static final ToyBallItem TOY_BALL = new ToyBallItem();
-    public static final ToyScratchingPost TOY_SCRATCHING_POST = new ToyScratchingPost();
-    public static final ToyTetheredLog TOY_TETHERED_LOG = new ToyTetheredLog();
-    public static final JavelinItem WOODEN_JAVELIN = new JavelinItem(Item.ToolMaterial.WOOD, "wooden_javelin", false);
-    public static final JavelinItem STONE_JAVELIN = new JavelinItem(Item.ToolMaterial.STONE, "stone_javelin", false);
-    public static final JavelinItem IRON_JAVELIN = new JavelinItem(Item.ToolMaterial.IRON, "iron_javelin", false);
-    public static final JavelinItem GOLD_JAVELIN = new JavelinItem(Item.ToolMaterial.GOLD, "gold_javelin", false);
-    public static final JavelinItem DIAMOND_JAVELIN = new JavelinItem(Item.ToolMaterial.DIAMOND, "diamond_javelin", false);
-    public static final JavelinItem ANCIENT_JAVELIN = new JavelinItem(null, "ancient_javelin", true);
-    public static final BasicItem BROKEN_SWORD = new BasicItem("broken_sword");
-    public static final BasicItem BROKEN_HELMET = new BasicItem("broken_helmet");
-    public static final AncientSwordItem ANCIENT_SWORD = new AncientSwordItem();
-    public static final AncientHelmetItem ANCIENT_HELMET = new AncientHelmetItem();
-    public static final BasicSwordItem ICED_MEAT = new ItemFrozenMeat();
-    public static final FossilSeedsItem FOSSIL_SEED = new FossilSeedsItem(true);
-    public static final BasicItem FOSSIL_SEED_FERN = new BasicItem("fossil_seed_fern");
-    public static final BasicItem PALAE_SAPLING_FOSSIL = new BasicItem("fossil_sapling_palae");
-    public static final BasicItem CALAMITES_SAPLING_FOSSIL = new BasicItem("fossil_sapling_calamites");
-    public static final BasicItem SIGILLARIA_SAPLING_FOSSIL = new BasicItem("fossil_sapling_sigillaria");
-    public static final BasicItem CORDAITES_SAPLING_FOSSIL = new BasicItem("fossil_sapling_cordaites");
-    public static final FossilSeedsItem SEED = new FossilSeedsItem(false);
-    public static final FernSeedItem FERN_SEED = new FernSeedItem();
-    //public static final Item TAR_BUCKET = new ItemBucket(FABlockRegistry.TAR).setTranslationKey("tar_bucket").setContainerItem(Items.BUCKET).setCreativeTab(FATabRegistry.ITEMS);
-    public static final BasicItem TARDROP = new BasicItem("tardrop");
-    public static final FossilRecordItem FOSSIL_RECORD_BONES = new FossilRecordItem("record_bones_desc", FASoundRegistry.RECORD_BONES, "record_bones");
-    public static final FossilRecordItem FOSSIL_RECORD_NANO_ANU = new FossilRecordItem("music.anu", FASoundRegistry.MUSIC_ANU, "record_anu");
-    public static final FossilRecordItem FOSSIL_RECORD_NANO_SCARAB = new FossilRecordItem("music.scarab", FASoundRegistry.MUSIC_SCARAB, "record_scarab");
-    public static final FossilRecordItem FOSSIL_RECORD_NANO_DISCOVERING = new FossilRecordItem("music.discovery", FASoundRegistry.MUSIC_DISCOVERY, "record_discovering");
-    public static final DinosaurBoneItem LEG_BONE = new DinosaurBoneItem("leg_bone");
-    public static final DinosaurBoneItem UNIQUE_ITEM = new DinosaurBoneItem("unique_item");
-    public static final DinosaurBoneItem FOOT = new DinosaurBoneItem("foot");
-    public static final DinosaurBoneItem SKULL = new DinosaurBoneItem("skull");
-    public static final DinosaurBoneItem ARM_BONE = new DinosaurBoneItem("arm_bone");
-    public static final DinosaurBoneItem RIBCAGE = new DinosaurBoneItem("ribcage");
-    public static final DinosaurBoneItem VERTEBRAE = new DinosaurBoneItem("vertebrae");
-    public static final ItemFossilDoor PALM_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.PALM_DOOR, "palm_door_item");
-    public static final ItemFossilDoor CALAMITES_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.CALAMITES_DOOR, "calamites_door_item");
-    public static final ItemFossilDoor SIGILLARIA_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.SIGILLARIA_DOOR, "sigillaria_door_item");
-    public static final ItemFossilDoor CORDAITES_DOOR_ITEM = new ItemFossilDoor(FABlockRegistry.CORDAITES_DOOR, "cordaites_door_item");
-    public static final HiddenItem PINKERTON = new HiddenItem();
+    public static final ItemBioFossil BIO_FOSSIL = new ItemBioFossil(false);
+    public static final ItemBioFossil TAR_FOSSIL = new ItemBioFossil(true);
+    public static final Item RELIC_SCRAP = new Item(new Item.Properties().group(Revival.TAB_ITEMS)).setRegistryName("fossil:relic_scrap");
+    public static final Item BROKEN_SWORD = new Item(new Item.Properties().group(Revival.TAB_ITEMS)).setRegistryName("fossil:broken_sword");
+    public static final Item BROKEN_HELMET = new Item(new Item.Properties().group(Revival.TAB_ITEMS)).setRegistryName("fossil:broken_helmet");
+    public static final Item ANCIENT_SWORD = new ItemAncientSword();
+    public static final Item ANCIENT_HELMET = new ItemRevivalArmor(ANCIENT_HELMET_MATERIAL, EquipmentSlotType.HEAD).setRegistryName("fossil:ancient_helmet");
+    public static final Item DINOPEDIA = new Item(new Item.Properties().group(Revival.TAB_ITEMS).maxStackSize(1)).setRegistryName("fossil:dinopedia");
+    public static final Item SCARAB_GEM = new Item(new Item.Properties().group(Revival.TAB_ITEMS)).setRegistryName("fossil:scarab_gem");
+    public static final Item AQUATIC_SCARAB_GEM = new Item(new Item.Properties().group(Revival.TAB_ITEMS)).setRegistryName("fossil:aquatic_scarab_gem");
+    public static final Item CHICKEN_ESSENCE = new Item(new Item.Properties().group(Revival.TAB_ITEMS)).setRegistryName("fossil:chicken_essence");
+    public static final Item STUNTED_ESSENCE = new Item(new Item.Properties().group(Revival.TAB_ITEMS)).setRegistryName("fossil:stunted_essence");
+    public static final Item WHIP = new Item(new Item.Properties().group(Revival.TAB_ITEMS).maxDamage(256)).setRegistryName("fossil:whip");
 
-    public static Item registerItem(RegistryEvent.Register<Item> event, Item item) {
-        String name = item.getTranslationKey().substring("item.".length());
-        item.setRegistryName(new ResourceLocation(Revival.MODID, name));
-        event.getRegistry().register(item);
-        ITEMS.add(item);
-        return item;
-    }
-
-
-    public static Item registerItem(RegistryEvent.Register<Item> event, Item item, String registryName) {
-        item.setRegistryName(new ResourceLocation(Revival.MODID, registryName));
-        event.getRegistry().register(item);
-        ITEMS.add(item);
-        return item;
+    @SubscribeEvent
+    public static void registerItem(RegistryEvent.Register<Item> event) {
+        try {
+            for (Field f : FAItemRegistry.class.getDeclaredFields()) {
+                Object obj = f.get(null);
+                if (obj instanceof Item && ((Item) obj).getRegistryName() != null) {
+                    event.getRegistry().register((Item) obj);
+                }
+            }
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

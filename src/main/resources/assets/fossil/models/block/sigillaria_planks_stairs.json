@@ -1,1 +1,0 @@
-{  "parent": "block/stairs",  "textures": {    "bottom": "fossil:blocks/sigillaria_planks",    "top": "fossil:blocks/sigillaria_planks",    "side": "fossil:blocks/sigillaria_planks"  }}

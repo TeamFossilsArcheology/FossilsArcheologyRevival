@@ -1,6 +1,0 @@
-{
-  "parent": "block/crop",
-  "textures": {
-    "crop": "fossil:blocks/obsidian_spikes"
-  }
-}

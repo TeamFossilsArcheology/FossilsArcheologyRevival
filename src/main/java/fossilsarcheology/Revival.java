@@ -1,126 +1,111 @@
 package fossilsarcheology;
 
+import fossilsarcheology.client.ClientProxy;
 import fossilsarcheology.server.ServerProxy;
 import fossilsarcheology.server.block.FABlockRegistry;
-import fossilsarcheology.server.compat.crafttweaker.CraftTweakerCompatBridge;
-import fossilsarcheology.server.compat.thaumcraft.ThaumcraftCompatBridge;
-import fossilsarcheology.server.compat.tinkers.TinkersCompatBridge;
-import fossilsarcheology.server.config.FossilConfig;
-import fossilsarcheology.server.entity.utility.FossilsMammalProperties;
-import fossilsarcheology.server.entity.utility.FossilsPlayerProperties;
-import fossilsarcheology.server.event.EventSharedConfig;
-import fossilsarcheology.server.event.FossilLivingEvent;
-import fossilsarcheology.server.event.TerrainGenerationEvents;
-import fossilsarcheology.server.lib.LibDependencies;
-import fossilsarcheology.server.loot.CustomizeToDinosaur;
-import fossilsarcheology.server.message.*;
-import fossilsarcheology.server.recipe.FAMachineRecipeRegistry;
-import fossilsarcheology.server.util.ReleaseType;
-import net.ilexiconn.llibrary.server.entity.EntityPropertiesHandler;
-import net.ilexiconn.llibrary.server.network.NetworkWrapper;
-import net.minecraft.world.storage.loot.functions.LootFunctionManager;
+import fossilsarcheology.server.item.FAItemRegistry;
+import net.minecraft.block.Block;
+import net.minecraft.block.Blocks;
+import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemGroup;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.Loader;
+import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.InterModComms;
+import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.SidedProxy;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
+import net.minecraftforge.fml.config.ModConfig;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModEnqueueEvent;
+import net.minecraftforge.fml.event.lifecycle.InterModProcessEvent;
+import net.minecraftforge.fml.event.server.FMLServerStartingEvent;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.fml.network.NetworkDirection;
+import net.minecraftforge.fml.network.NetworkRegistry;
+import net.minecraftforge.fml.network.simple.SimpleChannel;
+import net.minecraftforge.fml.server.ServerLifecycleHooks;
+import net.minecraftforge.registries.ForgeRegistries;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.io.File;
+import java.util.stream.Collectors;
 
-@Mod(modid = Revival.MODID, name = "Fossils and Archeology Revival", version = Revival.VERSION, acceptedMinecraftVersions = "[1.12,1.12.2]", dependencies = LibDependencies.DEPENDENCIES, guiFactory = "fossilsarcheology.client.gui.FAGUIFactory")
-
+@Mod("fossil")
 public class Revival {
+    public static final Logger LOGGER = LogManager.getLogger();
     public static final String MODID = "fossil";
-    public static final String VERSION = "8.0.5";
-    public static final ReleaseType RELEASE_TYPE = ReleaseType.parseVersion(VERSION);
-    public static final String LLIBRARY_VERSION = "1.7.17";
-
-    public static final Logger LOGGER = LogManager.getLogger("fossils");
-
-    @SidedProxy(clientSide = "fossilsarcheology.client.ClientProxy", serverSide = "fossilsarcheology.server.ServerProxy")
-    public static ServerProxy PROXY;
-    @NetworkWrapper({MessageFoodParticles.class, MessageSetDay.class, MessageHappyParticles.class, MessageUpdateEgg.class, MessageRollBall.class, MessageUpdateFeeder.class})
-    public static SimpleNetworkWrapper NETWORK_WRAPPER;
-    public static FossilConfig CONFIG_OPTIONS = new FossilConfig();
-    public static Configuration config;
-
-    @Mod.Instance(MODID)
-    public static Revival INSTANCE;
-    public static Object PEDIA_OBJECT;
-
+    public static final SimpleChannel NETWORK_WRAPPER;
+    public static final RevivalConfig CONFIG_OPTIONS = new RevivalConfig();
+    private static final String PROTOCOL_VERSION = Integer.toString(1);
+    public static ServerProxy PROXY = DistExecutor.runForDist(() -> ClientProxy::new, () -> ServerProxy::new);
+    private static int packetsRegistered = 0;
+    public static ItemGroup TAB_ITEMS = new ItemGroup("fossil_items") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(FAItemRegistry.BIO_FOSSIL);
+        }
+    };
+    public static ItemGroup TAB_BLOCKS = new ItemGroup("fossil_blocks") {
+        @Override
+        public ItemStack createIcon() {
+            return new ItemStack(FABlockRegistry.FOSSIL_ORE);
+        }
+    };
     static {
-        FluidRegistry.enableUniversalBucket();
+        NetworkRegistry.ChannelBuilder channel = NetworkRegistry.ChannelBuilder.named(new ResourceLocation("astro", "main_channel"));
+        String version = PROTOCOL_VERSION;
+        version.getClass();
+        channel = channel.clientAcceptedVersions(version::equals);
+        version = PROTOCOL_VERSION;
+        version.getClass();
+        NETWORK_WRAPPER = channel.serverAcceptedVersions(version::equals).networkProtocolVersion(() -> {
+            return PROTOCOL_VERSION;
+        }).simpleChannel();
     }
 
-    public static void debug(String message) {
-        if (RELEASE_TYPE.enableDebugging()) {
-            LOGGER.debug(message);
+    public Revival() {
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setup);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupClient);
+        FMLJavaModLoadingContext.get().getModEventBus().addListener(this::setupParticleEvent);
+        final ModLoadingContext modLoadingContext = ModLoadingContext.get();
+        PROXY.setup();
+
+    }
+
+    public static <MSG> void sendMSGToServer(MSG message) {
+        NETWORK_WRAPPER.sendToServer(message);
+    }
+
+    public static <MSG> void sendMSGToAll(MSG message) {
+        for (ServerPlayerEntity player : ServerLifecycleHooks.getCurrentServer().getPlayerList().getPlayers()) {
+            sendNonLocal(message, player);
         }
     }
 
-    public static void loadConfig() {
-        File configFile = new File(Loader.instance().getConfigDir(), "fossil.cfg");
-        if (!configFile.exists()) {
-            try {
-                configFile.createNewFile();
-            } catch (Exception e) {
-                LOGGER.warn("Could not create a new FA config file.");
-                LOGGER.warn(e.getLocalizedMessage());
-            }
+    public static <MSG> void sendNonLocal(MSG msg, ServerPlayerEntity player) {
+        if (player.server.isDedicatedServer() || !player.getName().equals(player.server.getServerOwner())) {
+            NETWORK_WRAPPER.sendTo(msg, player.connection.netManager, NetworkDirection.PLAY_TO_CLIENT);
         }
-        config = new Configuration(configFile);
-        config.load();
     }
 
-    public static void syncConfig() {
-        CONFIG_OPTIONS.init(config);
-        config.save();
+    private void setup(final FMLCommonSetupEvent event) {
+        MinecraftForge.EVENT_BUS.register(PROXY);
+        PROXY.setup();
     }
 
-    @Mod.EventHandler
-    public void onPreInit(FMLPreInitializationEvent event) {
-        loadConfig();
-        syncConfig();
-        PROXY.onPreInit();
-        ThaumcraftCompatBridge.loadThaumcraftCompat();
-        TinkersCompatBridge.loadTinkersCompat();
-        CraftTweakerCompatBridge.loadTweakerCompat();
-        LOGGER.info("Archaean horizon");
-        LOGGER.info("The first sunrise");
-        LOGGER.info("On a pristine Gaea");
-        LOGGER.info("Opus perfectum");
-        LOGGER.info("Somewhere there, us sleeping");
-        MinecraftForge.EVENT_BUS.register(new EventSharedConfig());
-        MinecraftForge.EVENT_BUS.register(new FossilLivingEvent());
-        MinecraftForge.TERRAIN_GEN_BUS.register(new TerrainGenerationEvents());
-        EntityPropertiesHandler.INSTANCE.registerProperties(FossilsPlayerProperties.class);
-        EntityPropertiesHandler.INSTANCE.registerProperties(FossilsMammalProperties.class);
-
+    private void setupClient(FMLClientSetupEvent event) {
+        PROXY.setupClient();
     }
 
-    @Mod.EventHandler
-    public void onInit(FMLInitializationEvent event) {
-        PROXY.onInit();
-        LootFunctionManager.registerFunction(new CustomizeToDinosaur.Serializer());
-        FABlockRegistry.init();
-        LOGGER.info("After a billion years");
-        LOGGER.info("The show is still here");
-        LOGGER.info("Not a single one of your fathers died young");
-        LOGGER.info("The handy travelers out of Africa");
-        LOGGER.info("Little Lucy of the Afar");
+    private void setupParticleEvent(ParticleFactoryRegisterEvent event) {
+        PROXY.setupParticles();
     }
 
-    @Mod.EventHandler
-    public void onPostInit(FMLPostInitializationEvent event) {
-        PROXY.onPostInit();
-        TinkersCompatBridge.loadTinkersPostInitCompat();
-        FAMachineRecipeRegistry.postInit();
-    }
 }
