@@ -32,14 +32,14 @@ import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 import net.minecraftforge.fml.server.ServerLifecycleHooks;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.stream.Collectors;
 
 @Mod("fossil")
 public class Revival {
-    public static final Logger LOGGER = LogManager.getLogger();
+    public static final Logger LOGGER = LoggerFactory.getLogger();
     public static final String MODID = "fossil";
     public static final SimpleChannel NETWORK_WRAPPER;
     public static final RevivalConfig CONFIG_OPTIONS = new RevivalConfig();
