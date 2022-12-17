@@ -1,0 +1,15 @@
+{
+  "itemGroup.fossil_blocks": "Blocs de Fossils and Archeology",
+  "itemGroup.fossil_items": "Objets de Fossils and Archeology",
+  "item.fossil.bio_fossil": "Bio-fossile",
+  "item.fossil.tar_fossil": "Fossile de goudron",
+  "item.fossil.relic_scrap": "Fragments de relique",
+  "item.fossil.broken_sword": "Épée ancienne brisée",
+  "item.fossil.broken_helmet": "Casque ancien brisé",
+  "item.fossil.ancient_sword": "Épée ancienne",
+  "item.fossil.ancient_helmet": "Casque ancien",
+  "item.fossil.dinopedia": "Dinopedia",
+  "item.fossil.spawn_egg_triceratops": "Oeuf d'apparition de Triceratops",
+  "block.fossil.fossil_ore": "Fossile",
+  "entity.fossil.triceratops": "Triceratops"
+}
