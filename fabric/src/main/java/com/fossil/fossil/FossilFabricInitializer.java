@@ -1,5 +1,11 @@
 package com.fossil.fossil;
 
-public class FossilFabricInitializer extends ModInitializer {
+import net.fabricmc.api.ModInitializer;
+
+public class FossilFabricInitializer implements ModInitializer {
+    @Override
+    public void onInitialize() {
+
+    }
 }
 
