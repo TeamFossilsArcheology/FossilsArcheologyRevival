@@ -5,16 +5,6 @@ bin
 .metadata
 .classpath
 .project
-.gradle
-bin/
-tmp/
-*.tmp
-*.bak
-*.swp
-*.properties
-.settings/
-.loadpath
-.idea/
 
 # idea
 out
@@ -27,14 +17,9 @@ out
 build
 .gradle
 
-
 # other
 eclipse
 run
--out/
-minecraft/
-eclipse/
-build/
-.classpath
-.project
-*.java___jb_tmp___
+
+# Files from Forge MDK
+forge*changelog.txt

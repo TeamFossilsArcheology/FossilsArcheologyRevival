@@ -1,0 +1,35 @@
+modLoader="javafml"
+
+loaderVersion="[40,)"
+
+license="April 26, 2014 the Fossils and Archeology Revival was put under the Creative Commons Attribution license (http://creativecommons.org/licenses/by/4.0/). The source is now home in a public organization found here: https://github.com/FossilsArcheologyRevival."
+
+[[mods]]
+modId="fossil"
+
+version="9.0.0"
+
+displayName="Fossils and Archeology: Revival"
+displayURL="https://www.curseforge.com/minecraft/mc-mods"
+
+logoFile= "../../../../../src/main/resources/fossils.png"
+
+credits="Original mod by Flammarilva and Team July!"
+
+authors= " 4f6f3b, Alexthe666, BadgerBoy, Cannibal Vox, DaBritishFrog, Elyasisly, gegy1000, iLexiconn, JTGhawk137, LeHotApe,Microjunk, Robberto08, Shadowbeast007, Sunconure11, TheSleepySpino, TotallyNotAHobo, Totemaster, Tyranno66"
+
+description="Adding dinosaurs, fossils, and more to Minecraft. If you have downloaded this mod from a source that is not Minecraft Forums or Curse, be aware you might be using an out of date or unofficial version."
+
+[[dependencies.fossil]]
+    modId="forge"
+    mandatory=true
+    versionRange="[40,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.fossil]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.18.2,1.19)"
+    ordering="NONE"
+    side="BOTH"

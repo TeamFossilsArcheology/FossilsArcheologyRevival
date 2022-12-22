@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "fossil:blocks/worktable_top",
+    "front": "fossil:blocks/worktable_front",
+    "side": "fossil:blocks/worktable_side",
+    "bottom": "fossil:blocks/worktable_bottom"
+  }
+}

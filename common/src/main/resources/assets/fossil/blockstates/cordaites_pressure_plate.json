@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "fossil:block/cordaites_pressure_plate" },
+    "powered=true": { "model": "fossil:block/cordaites_pressure_plate_down" }
+  }
+}

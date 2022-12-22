@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "":
+    { "model": "fossil:block/permafrost_block" }
+  }
+}

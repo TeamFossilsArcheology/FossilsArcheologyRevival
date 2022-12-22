@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "fossil",
+  "version": "${version}",
+  "name": "Fossils and Archeology: Revival",
+  "description": "Adding dinosaurs, fossils, and more to Minecraft. If you have downloaded this mod from a source that is not Minecraft Forums or Curse, be aware you might be using an out of date or unofficial version.",
+  "authors": [
+    "4f6f3b",
+    "Alexthe666",
+    "BadgerBoy",
+    "Cannibal Vox",
+    "DaBritishFrog",
+    "Elyasisly",
+    "gegy1000",
+    "iLexiconn",
+    "JTGhawk137",
+    "LeHotApe",
+    "Microjunk",
+    "Robberto08",
+    "Shadowbeast007",
+    "Sunconure11",
+    "TheSleepySpino",
+    "TotallyNotAHobo",
+    "Totemaster",
+    "Tyranno66",
+    "tmvkrpxl0"
+  ],
+  "contact": {
+    "sources": "https://github.com/FossilsArcheologyRevival/FossilsArcheologyRevival"
+  },
+  "license": "Insert License Here",
+  "icon": "fossils.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.fossil.fossil.FossilFabricInitializer"
+    ]
+  },
+  "mixins": [
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.18.2",
+    "architectury": ">=4.9.83"
+  }
+}
