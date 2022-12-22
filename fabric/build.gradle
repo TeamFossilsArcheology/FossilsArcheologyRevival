@@ -52,7 +52,7 @@ remapJar {
 }
 
 jar {
-    archiveClassifier "dev"
+    classifier "dev"
 }
 
 components.java {
