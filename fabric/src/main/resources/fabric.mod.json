@@ -33,7 +33,10 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.fossil.fossil.FossilFabricInitializer"
+      "com.fossil.fossil.fabric.FossilFabric"
+    ],
+    "client": [
+      "com.fossil.fossil.fabric.FossilFabricClient"
     ]
   },
   "mixins": [
