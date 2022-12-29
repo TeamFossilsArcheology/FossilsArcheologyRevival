@@ -1,27 +1,21 @@
-package fossilsarcheology.server.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric;
 
-import fossilsarcheology.Revival;
-import fossilsarcheology.server.entity.prehistoric.base.EntityPrehistoric;
-import fossilsarcheology.server.entity.prehistoric.base.PrehistoricEntityTypeAI;
-import fossilsarcheology.server.util.PrehistoricEntityType;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.AttributeModifierMap;
-import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.monster.MonsterEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.Items;
-import net.minecraft.util.DamageSource;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.world.World;
+import com.fossil.fossil.Fossil;
+import com.fossil.fossil.entity.prehistoric.base.EntityPrehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.util.PrehistoricEntityType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
 
 public class EntityTriceratops extends EntityPrehistoric {
 
-    public EntityTriceratops(EntityType type, World world) {
-        super(type, world, PrehistoricEntityType.TRICERATOPS, 1, 12, 12, 64, 0.2, 0.35, 5, 15);
+    public EntityTriceratops(EntityType<? extends EntityTriceratops> type, Level level) {
+        super(type, level, PrehistoricEntityType.TRICERATOPS, 1, 12, 12, 64, 0.2, 0.35, 5, 15);
         this.hasFeatherToggle = true;
-        this.featherToggle = Revival.CONFIG_OPTIONS.quilledTriceratops;
+        this.featherToggle = Fossil.CONFIG_OPTIONS.quilledTriceratops;
         this.nearByMobsAllowed = 7;
         minSize = 0.4F;
         maxSize = 5F;
@@ -96,7 +90,7 @@ public class EntityTriceratops extends EntityPrehistoric {
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
 
-        return this.isChild() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERITORIAL;
+        return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERITORIAL;
     }
 
     @Override
@@ -150,19 +144,19 @@ public class EntityTriceratops extends EntityPrehistoric {
     }
 
     @Override
-    public void livingTick() {
-        super.livingTick();
-        if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
+    public void tick() {
+        super.tick();
+        /*if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
             doAttack();
             doAttackKnockback(0.5F);
-        }
+        }*/
     }
 
     @Override
-    public boolean attackEntityAsMob(Entity entity) {
-        if (this.getAnimation() != ATTACK_ANIMATION) {
+    public boolean doHurtTarget(Entity entity) {
+        /*if (this.getAnimation() != ATTACK_ANIMATION) {
             this.setAnimation(ATTACK_ANIMATION);
-        }
+        }*/
         return false;
     }
 

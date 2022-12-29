@@ -1,4 +1,4 @@
-package fossilsarcheology;
+package com.fossil.fossil;
 
 public class RevivalConfig {
     public boolean dinosaurBreeding = true;

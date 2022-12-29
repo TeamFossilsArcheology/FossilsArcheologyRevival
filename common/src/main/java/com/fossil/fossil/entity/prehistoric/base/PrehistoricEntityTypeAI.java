@@ -1,4 +1,4 @@
-package fossilsarcheology.server.entity.prehistoric.base;
+package com.fossil.fossil.entity.prehistoric.base;
 
 public class PrehistoricEntityTypeAI {
     public enum Moving {

@@ -1,20 +1,29 @@
-package fossilsarcheology.server.entity.prehistoric.base;
+package com.fossil.fossil.entity.prehistoric.base;
 
-import fossilsarcheology.server.util.PrehistoricEntityType;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.item.Item;
-import net.minecraft.nbt.CompoundNBT;
-import net.minecraft.world.World;
-import net.minecraft.world.server.ServerWorld;
-
-import javax.annotation.Nullable;
+import com.fossil.fossil.util.PrehistoricEntityType;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.AgeableMob;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 public abstract class EntityPrehistoricSwimming extends EntityPrehistoric{
 
-    public EntityPrehistoricSwimming(EntityType t, World world, PrehistoricEntityType type, double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor, double maxArmor) {
-        super(t, world, type, baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, maxSpeed, baseArmor, maxArmor);
+    public EntityPrehistoricSwimming(
+            EntityType<? extends EntityPrehistoricSwimming> entityType,
+            Level level,
+            PrehistoricEntityType type,
+            double baseDamage,
+            double maxDamage,
+            double baseHealth,
+            double maxHealth,
+            double baseSpeed,
+            double maxSpeed,
+            double baseArmor,
+            double maxArmor
+    ) {
+        super(entityType, level, type, baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, maxSpeed, baseArmor, maxArmor);
     }
 
     @Override
@@ -99,17 +108,7 @@ public abstract class EntityPrehistoricSwimming extends EntityPrehistoric{
 
     @Nullable
     @Override
-    public AgeableEntity func_241840_a(ServerWorld p_241840_1_, AgeableEntity p_241840_2_) {
+    public AgeableMob getBreedOffspring(ServerLevel p_241840_1_, AgeableMob p_241840_2_) {
         return null;
-    }
-
-    @Override
-    public Entity getEntity() {
-        return null;
-    }
-
-    @Override
-    public void deserializeNBT(CompoundNBT nbt) {
-
     }
 }

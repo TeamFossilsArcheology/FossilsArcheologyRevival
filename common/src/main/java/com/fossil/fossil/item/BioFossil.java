@@ -7,7 +7,7 @@ public class BioFossil extends Item {
     private final boolean isTar;
 
     public BioFossil(boolean isTar) {
-        super(new Properties().tab(FATabRegistry.FAITEMTAB));
+        super(new Properties().tab(ModTabs.FAITEMTAB));
         this.isTar = isTar;
     }
 }

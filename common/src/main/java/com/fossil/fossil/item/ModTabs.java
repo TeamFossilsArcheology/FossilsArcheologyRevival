@@ -7,7 +7,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 
-public class FATabRegistry {
+public class ModTabs {
     public static final CreativeModeTab FABLOCKTAB = CreativeTabRegistry.create(
             new ResourceLocation(Fossil.MOD_ID, "fa_block_tab"), () -> new ItemStack(ModBlocks.WORKTABLE.get())
     );

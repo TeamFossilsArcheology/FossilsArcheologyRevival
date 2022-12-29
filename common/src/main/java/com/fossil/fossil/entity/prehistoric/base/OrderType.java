@@ -1,4 +1,4 @@
-package fossilsarcheology.server.entity.prehistoric.base;
+package com.fossil.fossil.entity.prehistoric.base;
 
 enum OrderType {
     STAY, FOLLOW, WANDER;

@@ -13,5 +13,7 @@
   "block.fossil.bennettitales_tall": "Tall Bennettitales",
 
   "itemGroup.fa_block_tab": "Fossil Revival Blocks",
-  "itemGroup.fa_item_tab": "Fossil Revival Items"
+  "itemGroup.fa_item_tab": "Fossil Revival Items",
+
+  "prehistoric.essencefail": "This prehistoric mob is fully grown!"
 }
