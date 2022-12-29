@@ -1,4 +1,4 @@
-package com.fossil.fossil.client.render;
+package com.fossil.fossil.client.renderer;
 
 import com.fossil.fossil.entity.prehistoric.base.EntityPrehistoric;
 import com.fossil.fossil.entity.prehistoric.base.EntityPrehistoricSwimming;
