@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "fossil:block/ancient_glass/ancient_glass_all",
+    "down": "fossil:block/ancient_glass/ancient_glass_right",
+    "up": "fossil:block/ancient_glass/ancient_glass_right",
+    "north": "fossil:block/ancient_glass/ancient_glass_left",
+    "east": "fossil:block/ancient_glass/ancient_glass_blank",
+    "south": "fossil:block/ancient_glass/ancient_glass_right",
+    "west": "fossil:block/ancient_glass/ancient_glass_blank"
+  }
+}
+

@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=y": {
+      "model": "fossil:block/ancient_wood_pillar"
+    },
+    "axis=z": {
+      "model": "fossil:block/ancient_wood_pillar",
+      "x": 90
+    },
+    "axis=x": {
+      "model": "fossil:block/ancient_wood_pillar",
+      "x": 90,
+      "y": 90
+    }
+  }
+}

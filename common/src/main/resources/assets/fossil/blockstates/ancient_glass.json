@@ -1,0 +1,163 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "fossil:block/ancient_glass"
+      }
+    },
+    {
+      "when": {
+        "up": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_down",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "down": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_up",
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "east": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_left",
+        "y": 0,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "west": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_right",
+        "y": 0,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "north": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_right",
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "south": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_left",
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "north": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_corner_north_east_up",
+        "y": 0,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "up": "false",
+        "south": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_corner_north_east_up",
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "south": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_corner_north_east_up",
+        "y": 180,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "up": "false",
+        "north": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_corner_north_east_up",
+        "y": 270,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "down": "false",
+        "north": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_corner_north_east_down",
+        "y": 0,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "east": "false",
+        "down": "false",
+        "south": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_corner_north_east_down",
+        "y": 90,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "down": "false",
+        "south": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_corner_north_east_down",
+        "y": 180,
+        "uvlock": false
+      }
+    },
+    {
+      "when": {
+        "west": "false",
+        "down": "false",
+        "north": "false"
+      },
+      "apply": {
+        "model": "fossil:block/ancient_glass_corner_north_east_down",
+        "y": 270,
+        "uvlock": false
+      }
+    }
+  ]
+}

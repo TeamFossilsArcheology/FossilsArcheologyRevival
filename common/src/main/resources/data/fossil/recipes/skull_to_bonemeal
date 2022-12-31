@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "bonemeal",
+  "ingredients": [
+    {
+      "item": "fossil:skull"
+    }
+  ],
+  "result": {
+    "item": "minecraft:bone_meal",
+    "count": 5
+  }
+}

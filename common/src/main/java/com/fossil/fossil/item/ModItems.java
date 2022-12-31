@@ -13,6 +13,8 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(Fossil.MOD_ID, Registry.ITEM_REGISTRY);
 
+    public static final RegistrySupplier<Item> AMBER = ITEMS.register("amber",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BIOFOSSIL = ITEMS.register("biofossil",
             () -> new BioFossil(false));
 

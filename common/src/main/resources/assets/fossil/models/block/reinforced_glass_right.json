@@ -1,0 +1,13 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "fossil:block/reinforced_glass/reinforced_glass_all",
+    "down": "fossil:block/reinforced_glass/reinforced_glass_right",
+    "up": "fossil:block/reinforced_glass/reinforced_glass_right",
+    "north": "fossil:block/reinforced_glass/reinforced_glass_left",
+    "east": "fossil:block/reinforced_glass/reinforced_glass_blank",
+    "south": "fossil:block/reinforced_glass/reinforced_glass_right",
+    "west": "fossil:block/reinforced_glass/reinforced_glass_blank"
+  }
+}
+

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X  ",
+    "XX ",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "fossil:ancient_wood"
+    }
+  },
+  "result": {
+    "item": "fossil:ancient_wood_stairs",
+    "count": 4
+  }
+}

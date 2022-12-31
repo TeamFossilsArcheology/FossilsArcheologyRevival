@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "X  ",
+    "XX ",
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "fossil:volcanic_bricks",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "fossil:volcanic_brick_stairs",
+    "count": 4
+  }
+}

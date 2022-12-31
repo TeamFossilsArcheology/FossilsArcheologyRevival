@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "fossil:block/ancient_stone_slab"
+    },
+    "type=double": {
+      "model": "fossil:block/ancient_stone_brick"
+    },
+    "type=top": {
+      "model": "fossil:block/ancient_stone_slab_top"
+    }
+  }
+}

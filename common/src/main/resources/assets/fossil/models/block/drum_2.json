@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "north": "fossil:block/drum_side",
+    "south": "fossil:block/drum_side",
+    "east": "fossil:block/drum_side",
+    "west": "fossil:block/drum_side",
+    "up": "fossil:block/drum_top_2",
+    "down": "fossil:block/drum_bottom",
+    "particle": "fossil:block/drum_side"
+  }
+}

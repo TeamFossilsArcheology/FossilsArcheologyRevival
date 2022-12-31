@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "ZZZ",
+    "XYX",
+    "XXX"
+  ],
+  "key": {
+    "Z": {
+      "item": "minecraft:leather"
+    },
+    "Y": {
+      "item": "minecraft:redstone"
+    },
+    "X": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "fossil:drum"
+  }
+}

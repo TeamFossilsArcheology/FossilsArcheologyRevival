@@ -1,24 +1,27 @@
 package com.fossil.fossil.block;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.custom_blocks.AnalyzerBlock;
-import com.fossil.fossil.block.custom_blocks.CordaitesLeaves;
-import com.fossil.fossil.block.custom_blocks.ModFlammableRotatedPillarBlock;
-import com.fossil.fossil.block.custom_blocks.WorktableBlock;
+import com.fossil.fossil.block.custom_blocks.*;
+import com.fossil.fossil.block.custom_blocks.SkullBlock;
 import com.fossil.fossil.item.ModTabs;
 import com.fossil.fossil.item.ModItems;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.function.Supplier;
 
 public class ModBlocks {
@@ -30,7 +33,41 @@ public class ModBlocks {
             () -> new AnalyzerBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(2f).requiresCorrectToolForDrops()),
             ModTabs.FABLOCKTAB
     );
-
+    public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
+            () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public  static  final RegistrySupplier<IceBlock> ICED_STONE = registerBlock("iced_stone",
+            () -> new IceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 10f).requiresCorrectToolForDrops().sound(SoundType.GLASS).randomTicks()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<DenseSandBlock> DENSE_SAND = registerBlock("dense_sand",
+            () -> new DenseSandBlock(9205340, BlockBehaviour.Properties.of(Material.SAND).strength(3f, 15f).sound(SoundType.SAND)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<SkullBlock> SKULL_BLOCK = registerBlock("skull",
+            () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4f, 15f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<SkullBlock> SKULL_LANTERN = registerBlock("skull_lantern",
+            () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(value -> 14).strength(4f, 15f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> ANCIENT_STONE = registerBlock("ancient_stone",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> ANCIENT_STONE_BRICK = registerBlock("ancient_stone_brick",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 6f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<SlabBlock> ANCIENT_STONE_SLAB = registerBlock("ancient_stone_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.7f, 7.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<StairBlock> ANCIENT_STONE_STAIRS = registerBlock("ancient_stone_stairs",
+            () -> new StairBlock(ANCIENT_STONE.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> ANCIENT_WOOD = registerBlock("ancient_wood",
+            () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2f, 3f).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<SlabBlock> ANCIENT_WOOD_SLAB = registerBlock("ancient_wood_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2f, 3f).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<RotatedPillarBlock> ANCIENT_WOOD_PILLAR = registerBlock("ancient_wood_pillar",
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.4f, 1f).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<StairBlock> ANCIENT_WOOD_STAIRS = registerBlock("ancient_wood_stairs",
+            () -> new StairBlock(ANCIENT_WOOD.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.WOOD).strength(1.4f, 1f).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
+    private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return false;
+    }
+    public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",
+            () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(3f, 25f).noOcclusion()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<ClearGlassBlock> ANCIENT_GLASS = registerBlock("ancient_glass",
+            () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(1f).noOcclusion().isViewBlocking(ModBlocks::never)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
+            () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> CULTIVATE_BLOCK = registerBlock("cultivate_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> FOSSIL_BLOCK = registerBlock("fossil_block",
@@ -40,10 +77,17 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable_block",
             () -> new WorktableBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
 
+    public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
+            () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(SoundType.GRAVEL)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_ROCK = registerBlock("volcanic_rock",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_BRICKS = registerBlock("volcanic_bricks",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+
+    public static final RegistrySupplier<Block> VOLCANIC_BRICK_SLAB = registerBlock("volcanic_brick_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2f, 3f)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> VOLCANIC_BRICK_STAIRS = registerBlock("volcanic_brick_stairs",
+            () -> new StairBlock(VOLCANIC_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())), ModTabs.FABLOCKTAB);
 
     public static final RegistrySupplier<Block> CORDAITES_PLANKS = registerBlock("cordaites_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);

@@ -6,6 +6,18 @@
     "fossil:analyzer_block",
     "fossil:worktable_block",
     "fossil:volcanic_rock",
-    "fossil:volcanic_bricks"
+    "fossil:volcanic_bricks",
+    "fossil:volcanic_brick_slab",
+    "fossil:volcanic_brick_stairs",
+    "fossil:reinforced_glass",
+    "fossil:ancient_glass",
+    "fossil:amber_ore",
+    "fossil:ancient_stone",
+    "fossil:ancient_stone_brick",
+    "fossil:ancient_stone_slab",
+    "fossil:ancient_stone_stairs",
+    "fossil:iced_stone",
+    "fossil:skull",
+    "fossil:skull_lantern"
   ]
 }

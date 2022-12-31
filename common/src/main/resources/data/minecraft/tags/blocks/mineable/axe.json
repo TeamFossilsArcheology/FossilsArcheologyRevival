@@ -1,6 +1,11 @@
 {
   "replace": false,
   "values": [
-    "fossil:worktable_block"
+    "fossil:worktable_block",
+    "fossil:ancient_wood",
+    "fossil:ancient_wood_slab",
+    "fossil:ancient_wood_pillar",
+    "fossil:ancient_wood_stairs",
+    "fossil:drum"
   ]
 }

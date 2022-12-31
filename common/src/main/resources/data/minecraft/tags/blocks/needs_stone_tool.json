@@ -3,6 +3,8 @@
   "values": [
     "fossil:cultivate_block",
     "fossil:analyzer_block",
-    "fossil:volcanic_rock"
+    "fossil:volcanic_rock",
+    "fossil:reinforced_glass",
+    "fossil:ancient_glass"
   ]
 }

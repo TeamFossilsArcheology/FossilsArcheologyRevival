@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "fossil:block/reinforced_glass/reinforced_glass",
+    "particle": "fossil:block/reinforced_glass/reinforced_glass_all"
+  }
+}

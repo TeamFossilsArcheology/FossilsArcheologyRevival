@@ -1,8 +1,8 @@
 package com.fossil.fossil;
 
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.entity.ModEntities;
-import com.fossil.fossil.entity.blockentity.ModBlockEntities;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.world.feature.ModPlacedFeatures;
 

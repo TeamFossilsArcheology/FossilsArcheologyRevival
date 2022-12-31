@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "drums=0": {
+      "model": "fossil:block/drum_0"
+    },
+    "drums=1": {
+      "model": "fossil:block/drum_1"
+    },
+    "drums=2": {
+      "model": "fossil:block/drum_2"
+    }
+  }
+}

@@ -7,5 +7,6 @@ public class FossilFabricClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientInit.immediate();
+        ClientInit.later();
     }
 }

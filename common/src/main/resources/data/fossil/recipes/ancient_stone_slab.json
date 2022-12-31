@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "XXX"
+  ],
+  "key": {
+    "X": {
+      "item": "fossil:ancient_stone_bricks",
+      "data": 0
+    }
+  },
+  "result": {
+    "item": "fossil:ancient_stone_slab",
+    "count": 6
+  }
+}

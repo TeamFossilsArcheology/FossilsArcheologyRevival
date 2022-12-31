@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
-    "fossil:fossil_block"
+    "fossil:fossil_block",
+    "fossil:amber_ore"
   ]
 }
