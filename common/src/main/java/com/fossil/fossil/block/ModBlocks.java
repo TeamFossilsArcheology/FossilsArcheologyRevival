@@ -128,6 +128,45 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> CORDAITES_LEAVES = registerBlock("cordaites_leaves",
             () -> CordaitesLeaves.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)), ModTabs.FABLOCKTAB);
 
+    public static final RegistrySupplier<Block> SIGILLARIA_PLANKS = registerBlock("sigillaria_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_STAIRS = registerBlock("sigillaria_stairs",
+            () -> new StairBlock(ModBlocks.SIGILLARIA_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_SLAB = registerBlock("sigillaria_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB)
+                    .strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_FENCE = registerBlock("sigillaria_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE)
+                    .strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_FENCE_GATE = registerBlock("sigillaria_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE)
+                    .strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_DOOR = registerBlock("sigillaria_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR)
+                    .strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_TRAPDOOR = registerBlock("sigillaria_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR)
+                    .strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_BUTTON = registerBlock("sigillaria_button",
+            () -> new StoneButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON)
+                    .strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_PRESSURE_PLATE = registerBlock("sigillaria_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
+                    .strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+
+    public static final RegistrySupplier<Block> SIGILLARIA_LOG = registerBlock("sigillaria_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SIGILLARIA_WOOD = registerBlock("sigillaria_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> STRIPPED_SIGILLARIA_LOG = registerBlock("stripped_sigillaria_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> STRIPPED_SIGILLARIA_WOOD = registerBlock("stripped_sigillaria_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)), ModTabs.FABLOCKTAB);
+
+    public static final RegistrySupplier<Block> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
+            () -> SigillariaLeaves.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)), ModTabs.FABLOCKTAB);
+
 
     public static final RegistrySupplier<Block> BENNETTITALES_SMALL = registerBlock("bennettitales_small",
             () -> new FlowerBlock(MobEffects.SATURATION, 0,
