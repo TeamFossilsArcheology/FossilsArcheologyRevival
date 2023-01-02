@@ -42,6 +42,8 @@ tasks {
         filesMatching("fabric.mod.json") {
             expand("version" to project.version)
         }
+
+        from(project(":common").sourceSets.main.get().resources)
     }
 
     shadowJar {

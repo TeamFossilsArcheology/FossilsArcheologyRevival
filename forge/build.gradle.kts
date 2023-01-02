@@ -45,6 +45,8 @@ tasks {
         filesMatching("META-INF/mods.toml") {
             expand("version" to project.version)
         }
+
+        from(project(":common").sourceSets.main.get().resources)
     }
 
     shadowJar {
