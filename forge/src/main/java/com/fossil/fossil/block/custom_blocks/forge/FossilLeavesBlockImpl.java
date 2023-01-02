@@ -8,7 +8,7 @@ import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
-public class CordaitesLeavesImpl {
+public class FossilLeavesBlockImpl {
 
     public static Block get(BlockBehaviour.Properties properties) {
         return new LeavesBlock(properties) {

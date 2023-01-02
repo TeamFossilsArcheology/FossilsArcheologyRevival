@@ -126,7 +126,7 @@ public class ModBlocks {
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)), ModTabs.FABLOCKTAB);
 
     public static final RegistrySupplier<Block> CORDAITES_LEAVES = registerBlock("cordaites_leaves",
-            () -> CordaitesLeaves.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)), ModTabs.FABLOCKTAB);
+            () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)), ModTabs.FABLOCKTAB);
 
     public static final RegistrySupplier<Block> SIGILLARIA_PLANKS = registerBlock("sigillaria_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);

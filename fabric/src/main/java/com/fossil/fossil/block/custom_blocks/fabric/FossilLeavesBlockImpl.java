@@ -5,7 +5,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class CordaitesLeavesImpl {
+public class FossilLeavesBlockImpl {
 
     public static Block get(BlockBehaviour.Properties properties) {
         Block block = new LeavesBlock(properties);

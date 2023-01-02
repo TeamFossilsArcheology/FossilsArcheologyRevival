@@ -4,7 +4,7 @@
       "model": "fossil:block/ancient_stone_slab"
     },
     "type=double": {
-      "model": "fossil:block/ancient_stone_brick"
+      "model": "fossil:block/ancient_stone_bricks"
     },
     "type=top": {
       "model": "fossil:block/ancient_stone_slab_top"

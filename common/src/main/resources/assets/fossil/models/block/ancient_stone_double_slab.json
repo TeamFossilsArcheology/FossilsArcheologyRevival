@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/upper_slab",
-  "textures": {
-    "bottom": "fossil:block/ancient_stone_brick",
-    "top": "fossil:block/ancient_stone_brick",
-    "side": "fossil:block/ancient_stone_brick"
-  }
-}
