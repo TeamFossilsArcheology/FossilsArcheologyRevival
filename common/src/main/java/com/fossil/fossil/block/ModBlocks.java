@@ -45,7 +45,7 @@ public class ModBlocks {
             () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(value -> 14).strength(4f, 15f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> ANCIENT_STONE = registerBlock("ancient_stone",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
-    public static final RegistrySupplier<Block> ANCIENT_STONE_BRICK = registerBlock("ancient_stone_brick",
+    public static final RegistrySupplier<Block> ANCIENT_STONE_BRICKS = registerBlock("ancient_stone_bricks",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 6f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<SlabBlock> ANCIENT_STONE_SLAB = registerBlock("ancient_stone_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.7f, 7.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
@@ -165,7 +165,7 @@ public class ModBlocks {
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)), ModTabs.FABLOCKTAB);
 
     public static final RegistrySupplier<Block> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
-            () -> SigillariaLeaves.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)), ModTabs.FABLOCKTAB);
+            () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)), ModTabs.FABLOCKTAB);
 
 
     public static final RegistrySupplier<Block> BENNETTITALES_SMALL = registerBlock("bennettitales_small",
@@ -174,6 +174,39 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> BENNETTITALES_TALL = registerBlock("bennettitales_tall",
             () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.TALL_GRASS).noOcclusion()), ModTabs.FABLOCKTAB);
 
+    public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
+    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
+    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
+    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RED_FIGURE = registerVolute( VaseBlock.VaseVariant.RED_FIGURE);
+    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_BLACK_FIGURE = registerVolute(VaseBlock.VaseVariant.BLACK_FIGURE);
+    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_PORCELAIN = registerVolute(VaseBlock.VaseVariant.PORCELAIN);
+
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_DAMAGED = registerKylix( VaseBlock.VaseVariant.DAMAGED);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RESTORED = registerKylix( VaseBlock.VaseVariant.RESTORED);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RED_FIGURE = registerKylix( VaseBlock.VaseVariant.RED_FIGURE);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_BLACK_FIGURE = registerKylix( VaseBlock.VaseVariant.BLACK_FIGURE);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_PORCELAIN = registerKylix( VaseBlock.VaseVariant.PORCELAIN);
+
+    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = registerAmphora(VaseBlock.VaseVariant.DAMAGED);
+    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = registerAmphora(VaseBlock.VaseVariant.RESTORED);
+    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RED_FIGURE = registerAmphora(VaseBlock.VaseVariant.RED_FIGURE);
+    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_BLACK_FIGURE = registerAmphora(VaseBlock.VaseVariant.BLACK_FIGURE);
+    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_PORCELAIN = registerAmphora(VaseBlock.VaseVariant.PORCELAIN);
+
+    private static RegistrySupplier<VaseBlock> registerVolute(VaseBlock.VaseVariant variant) {
+        return registerVase("volute", variant, () -> new VoluteVaseBlock(variant));
+    }
+    private static RegistrySupplier<VaseBlock> registerKylix(VaseBlock.VaseVariant variant) {
+        return registerVase("kylix", variant, () -> new KylixVaseBlock(variant));
+    }
+    private static RegistrySupplier<VaseBlock> registerAmphora(VaseBlock.VaseVariant variant) {
+        return registerVase("amphora", variant, () -> new AmphoraVaseBlock(variant));
+    }
+    private static RegistrySupplier<VaseBlock> registerVase(String name, VaseBlock.VaseVariant variant, Supplier<VaseBlock> supplier) {
+        var toReturn = registerBlock("vase_"+name+"_"+variant.getSerializedName(), supplier, ModTabs.FABLOCKTAB);
+        VASES.add(toReturn);
+        return toReturn;
+    }
 
     private static <T extends Block> RegistrySupplier<T> registerBlockWithoutBlockItem(String name, Supplier<T> block, CreativeModeTab tab) {
         return BLOCKS.register(name, block);

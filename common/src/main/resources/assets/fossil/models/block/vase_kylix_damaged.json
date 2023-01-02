@@ -1,0 +1,6 @@
+{
+	"parent": "fossil:block/template_vase_kylix",
+	"textures": {
+		"texture": "fossil:block/vases/vase_damaged_kylix"
+	}
+}

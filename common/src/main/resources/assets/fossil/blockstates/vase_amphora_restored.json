@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fossil:block/vase_amphora_restored",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fossil:block/vase_amphora_restored"
+    },
+    "facing=south": {
+      "model": "fossil:block/vase_amphora_restored",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/vase_amphora_restored",
+      "y": 270
+    }
+  }
+}
