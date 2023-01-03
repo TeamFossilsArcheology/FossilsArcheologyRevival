@@ -1,10 +1,10 @@
 package com.fossil.fossil.block;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.block.custom_blocks.SkullBlock;
-import com.fossil.fossil.item.ModTabs;
+import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.item.ModTabs;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
@@ -76,7 +76,8 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable_block",
             () -> new WorktableBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
-
+    public static final RegistrySupplier<FeederBlock> FEEDER =  registerBlock("feeder",
+            () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
             () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(SoundType.GRAVEL)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_ROCK = registerBlock("volcanic_rock",

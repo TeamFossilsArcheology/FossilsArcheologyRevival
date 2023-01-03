@@ -3,6 +3,7 @@ package com.fossil.fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.world.feature.ModPlacedFeatures;
 
@@ -16,6 +17,7 @@ public class Fossil {
         ModBlocks.register();
         ModItems.register();
         ModEntities.register();
+        ModMenus.register();
         ModBlockEntities.register();
         ModPlacedFeatures.register();
     }

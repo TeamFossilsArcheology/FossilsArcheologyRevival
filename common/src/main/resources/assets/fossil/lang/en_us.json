@@ -2,6 +2,7 @@
   "item.fossil.biofossil": "Biofossil",
   "item.fossil.relic_scrap": "Relic Scrap",
 
+  "block.fossil.feeder": "Feeder",
   "block.fossil.amber_ore": "Amber Ore",
   "block.fossil.analyzer_block": "Analyzer",
   "block.fossil.ancient_glass": "Ancient Glass",
@@ -61,5 +62,7 @@
   "itemGroup.fa_block_tab": "Fossil Revival Blocks",
   "itemGroup.fa_item_tab": "Fossil Revival Items",
 
-  "prehistoric.essencefail": "This prehistoric mob is fully grown!"
+  "prehistoric.essencefail": "This prehistoric mob is fully grown!",
+
+  "fossil.container.feeder": "Feeder"
 }

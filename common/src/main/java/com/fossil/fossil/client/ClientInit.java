@@ -2,13 +2,16 @@ package com.fossil.fossil.client;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.client.gui.FeederScreen;
 import com.fossil.fossil.client.model.TriceratopsModel;
 import com.fossil.fossil.client.renderer.RenderPrehistoric;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.inventory.ModMenus;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.RenderType;
 
 public class ClientInit {
@@ -17,6 +20,7 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.TRICERATOPS,
                 context -> new RenderPrehistoric(context, new TriceratopsModel<>(context.bakeLayer(TriceratopsModel.LAYER_LOCATION)))
         );
+        BlockEntityRendererRegistry.register(ModBlockEntities.VASE.get(), VaseRenderer::new);
     }
 
     public static void later() {
@@ -31,5 +35,6 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CORDAITES_LEAVES.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANCIENT_GLASS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.REINFORCED_GLASS.get());
+        MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
     }
 }
