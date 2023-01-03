@@ -31,17 +31,18 @@ subprojects {
             name = "ParchmentMC"
             setUrl("https://maven.parchmentmc.org")
         }
+
+        maven {
+            setUrl("https://cursemaven.com")
+            content {
+                includeGroup("curse.maven")
+            }
+        }
+        maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
     }
 
     dependencies {
-
         "minecraft"("com.mojang:minecraft:$minecraft_version")
-
-        "mappings"(loom.layered {
-            officialMojangMappings()
-            parchment("org.parchmentmc.data:parchment-1.18.2:2022.11.06@zip")
-        })
-
     }
 }
 

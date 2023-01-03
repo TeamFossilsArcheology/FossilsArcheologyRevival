@@ -1,3 +1,5 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
 }
@@ -19,14 +21,22 @@ configurations {
 val forge_version: String by rootProject
 val architectury_version: String by rootProject
 val archives_base_name: String by rootProject
+val parchment_date: String by rootProject
 
 dependencies {
+    "mappings"(loom.layered {
+        officialMojangMappings()
+        parchment("org.parchmentmc.data:parchment-1.18.2:$parchment_date@zip")
+    })
+
     forge("net.minecraftforge:forge:${forge_version}")
     // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury-forge:${architectury_version}")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionForge")) { isTransitive = false }
+
+    modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
 }
 
 loom {
@@ -35,6 +45,13 @@ loom {
     forge {
         convertAccessWideners.set(true)
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
+
+        /*
+        mixinConfig("fa-common.mixins.json")
+        mixinConfig("fa-forge.mixins.json")
+
+        let's use these when we actually need it
+        */
     }
 }
 
@@ -51,7 +68,6 @@ tasks {
 
     shadowJar {
         exclude("fabric.mod.json")
-        exclude("architectury.common.json")
 
         configurations = listOf(project.configurations["shadowCommon"])
         archiveClassifier.set("dev-shadow")
