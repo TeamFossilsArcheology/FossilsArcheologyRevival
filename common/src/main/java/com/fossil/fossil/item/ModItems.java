@@ -15,10 +15,10 @@ public class ModItems {
 
     public static final RegistrySupplier<Item> AMBER = ITEMS.register("amber",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> BIOFOSSIL = ITEMS.register("biofossil",
+    public static final RegistrySupplier<Item> BIO_FOSSIL = ITEMS.register("bio_fossil",
             () -> new BioFossil(false));
 
-    public static final RegistrySupplier<Item> TARFOSSIL = ITEMS.register("tarfossil",
+    public static final RegistrySupplier<Item> TAR_FOSSIL = ITEMS.register("tar_fossil",
             () -> new BioFossil(true));
 
     public static final RegistrySupplier<Item> RELIC_SCRAP = ITEMS.register("relic_scrap",

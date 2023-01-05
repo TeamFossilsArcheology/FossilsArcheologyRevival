@@ -1,0 +1,14 @@
+{
+  "variants": {
+    "type=bottom": {
+     "model": "fossil:block/sigillaria_slab"
+    },
+    "type=double": {
+      "model": "fossil:block/sigillaria_planks"
+    },
+    "type=top": {
+      "model": "fossil:block/sigillaria_slab_top"
+
+      }
+    }
+  }

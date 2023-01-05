@@ -1,9 +1,9 @@
 {
   "parent": "minecraft:block/orientable",
   "textures": {
-    "top": "fossil:blocks/cultivate_top",
-    "front": "fossil:blocks/cultivate_sides",
-    "side": "fossil:blocks/cultivate_sides",
-    "bottom": "fossil:blocks/cultivate_bottom"
+    "top": "fossil:block/cultivate/cultivate_top",
+    "front": "fossil:block/cultivate/cultivate_side",
+    "side": "fossil:block/cultivate/cultivate_side",
+    "bottom": "fossil:block/cultivate/cultivate_bottom"
   }
 }

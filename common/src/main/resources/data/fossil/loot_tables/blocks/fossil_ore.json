@@ -2,12 +2,12 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "name": "biofossil",
+      "name": "bio_fossil",
       "rolls": 1,
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fossil:biofossil"
+          "name": "fossil:bio_fossil"
         }
       ],
       "conditions": [

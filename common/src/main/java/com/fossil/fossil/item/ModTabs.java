@@ -12,6 +12,6 @@ public class ModTabs {
             new ResourceLocation(Fossil.MOD_ID, "fa_block_tab"), () -> new ItemStack(ModBlocks.WORKTABLE.get())
     );
     public static final CreativeModeTab FAITEMTAB = CreativeTabRegistry.create(
-            new ResourceLocation(Fossil.MOD_ID, "fa_item_tab"), () -> new ItemStack(ModItems.BIOFOSSIL.get())
+            new ResourceLocation(Fossil.MOD_ID, "fa_item_tab"), () -> new ItemStack(ModItems.BIO_FOSSIL.get())
     ); 
 }
