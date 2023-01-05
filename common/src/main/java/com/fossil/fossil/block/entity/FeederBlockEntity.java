@@ -9,6 +9,7 @@ import com.fossil.fossil.util.PrehistoricEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.ContainerHelper;
@@ -31,7 +32,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     private int prevMeat;
     private int prevPlant;
     private int ticksExisted;
-    protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+    protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
     private final ContainerData dataAccess = new ContainerData() {
 
         @Override
@@ -50,12 +51,8 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0: {
-                    meat = value;
-                }
-                case 1: {
-                    plant = value;
-                }
+                case 0-> meat = value;
+                case 1-> plant = value;
             }
         }
 
@@ -103,6 +100,22 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
                 state.setValue(FeederBlock.HERB, blockEntity.plant > 0).setValue(FeederBlock.CARN, blockEntity.meat > 0);
             }
         }
+    }
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(tag, this.items);
+        this.meat = tag.getShort("Meat");
+        this.plant = tag.getShort("Plant");
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putShort("Meat", (short)this.meat);
+        tag.putShort("Plant", (short)this.plant);
+        ContainerHelper.saveAllItems(tag, this.items);
     }
 
     @Override

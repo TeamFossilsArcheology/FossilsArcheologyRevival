@@ -1,0 +1,17 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "minecraft:porkchop"
+  },
+  "outputs": [
+    {
+      "item": "minecraft:prismarine_crystals",
+      "weight": 15,
+      "count": 2
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "weight": 75
+    }
+  ]
+}

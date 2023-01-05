@@ -1173,9 +1173,9 @@ public abstract class EntityPrehistoric extends TamableAnimal implements IPrehis
             );
             if (!level.isClientSide && !droppedBiofossil) {
                 if (this.dinoType.timePeriod == TimePeriod.CENOZOIC) {
-                    this.spawnAtLocation(ModItems.TARFOSSIL.get(), 1);
+                    this.spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
                 } else {
-                    this.spawnAtLocation(ModItems.BIOFOSSIL.get(), 1);
+                    this.spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
                 }
                 this.spawnAtLocation(new ItemStack(Items.BONE, Math.min(this.getAgeInDays(), this.getAdultAge())), 1);
                 droppedBiofossil = true;

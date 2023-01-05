@@ -2,7 +2,7 @@ package com.fossil.fossil.client;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
-import com.fossil.fossil.client.gui.FeederScreen;
+import com.fossil.fossil.client.gui.*;
 import com.fossil.fossil.client.model.TriceratopsModel;
 import com.fossil.fossil.client.renderer.RenderPrehistoric;
 import com.fossil.fossil.entity.ModEntities;
@@ -20,7 +20,6 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.TRICERATOPS,
                 context -> new RenderPrehistoric(context, new TriceratopsModel<>(context.bakeLayer(TriceratopsModel.LAYER_LOCATION)))
         );
-        BlockEntityRendererRegistry.register(ModBlockEntities.VASE.get(), VaseRenderer::new);
     }
 
     public static void later() {
@@ -36,5 +35,10 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANCIENT_GLASS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.REINFORCED_GLASS.get());
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
+        MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
+        MenuScreens.register(ModMenus.CULTIVATE.get(), CultivateScreen::new);
+        MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
+        MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
+        BlockEntityRendererRegistry.register(ModBlockEntities.VASE.get(), VaseRenderer::new);
     }
 }

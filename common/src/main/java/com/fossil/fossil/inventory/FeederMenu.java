@@ -62,16 +62,23 @@ public class FeederMenu extends AbstractContainerMenu {
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
-        int otherSlots = slots.size() - 36;
+        int inventorySlots = 36;
         if (slot.hasItem()) {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
-            if (index < otherSlots) {
-                if (!moveItemStackTo(current, otherSlots, slots.size(), true)) {
+            if (index < 3) {
+                if (!moveItemStackTo(current, 2, inventorySlots + 2, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!moveItemStackTo(current, 0, otherSlots, false)) {
-                return ItemStack.EMPTY;
+            } else {
+                if (!moveItemStackTo(current, 0, 2, false)) {
+                    return ItemStack.EMPTY;
+                } else if (index < inventorySlots + 2 - 9 && !this.moveItemStackTo(current, inventorySlots + 2 - 9, inventorySlots + 2, false)) {
+                    return ItemStack.EMPTY;
+                } else if (index >= inventorySlots + 2 - 9 && index < inventorySlots + 3 && !this.moveItemStackTo(current, 2, inventorySlots + 2 - 9,
+                        false)) {
+                    return ItemStack.EMPTY;
+                }
             }
             if (current.isEmpty()) {
                 slot.set(ItemStack.EMPTY);

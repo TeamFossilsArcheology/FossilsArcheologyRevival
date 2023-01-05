@@ -33,6 +33,14 @@ public class ModBlocks {
             () -> new AnalyzerBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(2f).requiresCorrectToolForDrops()),
             ModTabs.FABLOCKTAB
     );
+    public static final RegistrySupplier<SifterBlock> SIFTER = registerBlock("sifter",
+            () -> new SifterBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.METAL)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> CULTIVATE_BLOCK = registerBlock("cultivate_block",
+            () -> new CultivateBlock(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable_block",
+            () -> new WorktableBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).requiresCorrectToolForDrops().sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<FeederBlock> FEEDER =  registerBlock("feeder",
+            () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public  static  final RegistrySupplier<IceBlock> ICED_STONE = registerBlock("iced_stone",
@@ -68,16 +76,10 @@ public class ModBlocks {
             () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(1f).noOcclusion().isViewBlocking(ModBlocks::never)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
             () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
-    public static final RegistrySupplier<Block> CULTIVATE_BLOCK = registerBlock("cultivate_block",
-            () -> new Block(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> FOSSIL_BLOCK = registerBlock("fossil_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(2f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
-    public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable_block",
-            () -> new WorktableBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
-    public static final RegistrySupplier<FeederBlock> FEEDER =  registerBlock("feeder",
-            () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
             () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(SoundType.GRAVEL)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_ROCK = registerBlock("volcanic_rock",

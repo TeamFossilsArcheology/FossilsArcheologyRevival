@@ -1,6 +1,11 @@
 {
-  "item.fossil.biofossil": "Biofossil",
+  "item.fossil.amber": "Amber",
+  "item.fossil.bio_fossil": "Bio Fossil",
+  "item.fossil.bio_goo": "Bio Goo",
+  "item.fossil.chicken_essence": "Chicken Essence",
+  "item.fossil.pottery_shard": "Pottery Shard",
   "item.fossil.relic_scrap": "Relic Scrap",
+  "item.fossil.tar_fossil": "Tar Fossil",
 
   "block.fossil.feeder": "Feeder",
   "block.fossil.amber_ore": "Amber Ore",
@@ -64,5 +69,9 @@
 
   "prehistoric.essencefail": "This prehistoric mob is fully grown!",
 
-  "fossil.container.feeder": "Feeder"
+  "fossil.container.feeder": "Feeder",
+  "fossil.container.cultivate": "Culture Vat",
+  "fossil.container.sifter": "Sifter",
+  "fossil.container.analyzer": "Analyzer",
+  "fossil.container.worktable": "Archeology Workbench"
 }

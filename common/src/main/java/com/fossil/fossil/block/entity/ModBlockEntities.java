@@ -17,6 +17,14 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(VaseBlockEntity::new, ModBlocks.VASES.stream().map(Supplier::get).toArray(Block[]::new)).build(null));
     public static final RegistrySupplier<BlockEntityType<FeederBlockEntity>> FEEDER = BLOCK_ENTITIES.register("feeder",
             () -> BlockEntityType.Builder.of(FeederBlockEntity::new, ModBlocks.FEEDER.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<SifterBlockEntity>> SIFTER = BLOCK_ENTITIES.register("sifter",
+            () -> BlockEntityType.Builder.of(SifterBlockEntity::new, ModBlocks.SIFTER.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<AnalyzerBlockEntity>> ANALYZER = BLOCK_ENTITIES.register("analyzer",
+            () -> BlockEntityType.Builder.of(AnalyzerBlockEntity::new, ModBlocks.ANALYZER_BLOCK.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<CultivateBlockEntity>> CULTIVATE = BLOCK_ENTITIES.register("cultivate",
+            () -> BlockEntityType.Builder.of(CultivateBlockEntity::new, ModBlocks.CULTIVATE_BLOCK.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<WorktableBlockEntity>> WORKTABLE = BLOCK_ENTITIES.register("worktable",
+            () -> BlockEntityType.Builder.of(WorktableBlockEntity::new, ModBlocks.WORKTABLE.get()).build(null));
 
     public static void register() {
         BLOCK_ENTITIES.register();

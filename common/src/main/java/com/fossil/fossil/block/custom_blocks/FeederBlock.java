@@ -31,6 +31,7 @@ public class FeederBlock extends BaseEntityBlock implements IDinoUnbreakable {
     public static final BooleanProperty HERB = BooleanProperty.create("herb");
     public static final BooleanProperty CARN = BooleanProperty.create("carn");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+
     public FeederBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(HERB, false).setValue(CARN, false).setValue(FACING, Direction.NORTH));
@@ -43,7 +44,7 @@ public class FeederBlock extends BaseEntityBlock implements IDinoUnbreakable {
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof FeederBlockEntity) {
-            player.openMenu((MenuProvider)blockEntity);
+            player.openMenu((MenuProvider) blockEntity);
         }
         return InteractionResult.CONSUME;
     }

@@ -27,6 +27,11 @@ public class ModItems {
     public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("chicken_essence",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
 
+    public static final RegistrySupplier<Item> POTTERY_SHARD = ITEMS.register("pottery_shard",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BIO_GOO = ITEMS.register("bio_goo",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+
     public static final RegistrySupplier<SpawnEggItem> TRICERATOPS_SPAWN_EGG = ITEMS.register("spawn_egg_triceratops",
             () -> new ArchitecturySpawnEggItem(ModEntities.TRICERATOPS, 0x64352D, 0x251A17, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );

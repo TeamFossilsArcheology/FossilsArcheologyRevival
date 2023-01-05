@@ -5,6 +5,7 @@ import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.world.feature.ModPlacedFeatures;
 
 
@@ -20,5 +21,6 @@ public class Fossil {
         ModMenus.register();
         ModBlockEntities.register();
         ModPlacedFeatures.register();
+        ModRecipes.register();
     }
 }
