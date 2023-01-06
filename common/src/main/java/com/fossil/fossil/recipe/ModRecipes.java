@@ -59,6 +59,7 @@ public class ModRecipes {
         registerWorktable(ModBlocks.VOLUTE_VASE_DAMAGED.get().asItem(), ModBlocks.VOLUTE_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.KYLIX_VASE_DAMAGED.get().asItem(), ModBlocks.KYLIX_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
         registerCultivate(ModBlocks.AMBER_ORE.get().asItem(), ModItems.AMBER.get(), ModItems.BIO_GOO.get());
+        registerCultivate(Items.WHEAT_SEEDS, ModItems.AMBER.get(), ModItems.BIO_GOO.get());
     }
 
     private static void registerSifter(ItemLike item, ItemLike[] outputs, Double[] weights) {

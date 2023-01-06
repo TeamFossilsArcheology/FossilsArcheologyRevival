@@ -21,7 +21,7 @@ public class ModPlacedFeatures {
     public static void register() {
         LifecycleEvent.SETUP.register(() -> {
             final List<OreConfiguration.TargetBlockState> OVERWORLD_FOSSIL_BLOCK = List.of(
-                    OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.FOSSIL_BLOCK.get().defaultBlockState()));
+                    OreConfiguration.target(OreFeatures.STONE_ORE_REPLACEABLES, ModBlocks.FOSSIL.get().defaultBlockState()));
             final List<OreConfiguration.TargetBlockState> OVERWORLD_VOLCANIC_ROCK = List.of(
                     OreConfiguration.target(OreFeatures.DEEPSLATE_ORE_REPLACEABLES, ModBlocks.VOLCANIC_ROCK.get().defaultBlockState()));
 

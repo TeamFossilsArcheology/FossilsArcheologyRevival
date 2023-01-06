@@ -93,7 +93,8 @@ public class AnalyzerBlockEntity extends CustomBlockEntity {
         }
         if (fueled != blockEntity.isProcessing()) {
             dirty = true;
-            state.setValue(AnalyzerBlock.ACTIVE, blockEntity.isProcessing());
+            state = state.setValue(AnalyzerBlock.ACTIVE, blockEntity.isProcessing());
+            level.setBlock(pos, state, 3);
         }
         if (dirty) {
             setChanged(level, pos, state);

@@ -23,23 +23,27 @@ import net.minecraft.world.level.material.MaterialColor;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
+import java.util.function.ToIntFunction;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(Fossil.MOD_ID, Registry.BLOCK_REGISTRY);
 
-    public static final RegistrySupplier<Block> ANALYZER_BLOCK = registerBlock(
-            "analyzer_block",
-            () -> new AnalyzerBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(2f).requiresCorrectToolForDrops()),
-            ModTabs.FABLOCKTAB
-    );
+    private static ToIntFunction<BlockState> activeBlockEmission(int lightValue) {
+        return arg -> arg.getValue(CustomEntityBlock.ACTIVE) ? lightValue : 0;
+    }
+    public static final RegistrySupplier<Block> ANALYZER = registerBlock("analyzer",
+            () -> new AnalyzerBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(3f).requiresCorrectToolForDrops()
+                    .lightLevel(activeBlockEmission(14))), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<SifterBlock> SIFTER = registerBlock("sifter",
             () -> new SifterBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.METAL)), ModTabs.FABLOCKTAB);
-    public static final RegistrySupplier<Block> CULTIVATE_BLOCK = registerBlock("cultivate_block",
-            () -> new CultivateBlock(BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
-    public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable_block",
-            () -> new WorktableBlock(BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).requiresCorrectToolForDrops().sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
-    public static final RegistrySupplier<FeederBlock> FEEDER =  registerBlock("feeder",
+    public static final RegistrySupplier<Block> CULTIVATE = registerBlock("cultivate", () -> new CultivateBlock(
+            BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()
+                    .lightLevel(activeBlockEmission(14)).noOcclusion()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable", () -> new WorktableBlock(
+                    BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).sound(SoundType.WOOD)),
+            ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<FeederBlock> FEEDER = registerBlock("feeder",
             () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
@@ -70,13 +74,15 @@ public class ModBlocks {
     private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
         return false;
     }
+
     public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",
-            () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(3f, 25f).noOcclusion()), ModTabs.FABLOCKTAB);
+            () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(3f, 25f).noOcclusion()
+                    .isViewBlocking(ModBlocks::never)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<ClearGlassBlock> ANCIENT_GLASS = registerBlock("ancient_glass",
             () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(1f).noOcclusion().isViewBlocking(ModBlocks::never)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
             () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
-    public static final RegistrySupplier<Block> FOSSIL_BLOCK = registerBlock("fossil_block",
+    public static final RegistrySupplier<Block> FOSSIL = registerBlock("fossil",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(2f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
@@ -180,15 +186,15 @@ public class ModBlocks {
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
-    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RED_FIGURE = registerVolute( VaseBlock.VaseVariant.RED_FIGURE);
+    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RED_FIGURE = registerVolute(VaseBlock.VaseVariant.RED_FIGURE);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_BLACK_FIGURE = registerVolute(VaseBlock.VaseVariant.BLACK_FIGURE);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_PORCELAIN = registerVolute(VaseBlock.VaseVariant.PORCELAIN);
 
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_DAMAGED = registerKylix( VaseBlock.VaseVariant.DAMAGED);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RESTORED = registerKylix( VaseBlock.VaseVariant.RESTORED);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RED_FIGURE = registerKylix( VaseBlock.VaseVariant.RED_FIGURE);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_BLACK_FIGURE = registerKylix( VaseBlock.VaseVariant.BLACK_FIGURE);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_PORCELAIN = registerKylix( VaseBlock.VaseVariant.PORCELAIN);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_DAMAGED = registerKylix(VaseBlock.VaseVariant.DAMAGED);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RESTORED = registerKylix(VaseBlock.VaseVariant.RESTORED);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RED_FIGURE = registerKylix(VaseBlock.VaseVariant.RED_FIGURE);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_BLACK_FIGURE = registerKylix(VaseBlock.VaseVariant.BLACK_FIGURE);
+    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_PORCELAIN = registerKylix(VaseBlock.VaseVariant.PORCELAIN);
 
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = registerAmphora(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = registerAmphora(VaseBlock.VaseVariant.RESTORED);
@@ -199,14 +205,17 @@ public class ModBlocks {
     private static RegistrySupplier<VaseBlock> registerVolute(VaseBlock.VaseVariant variant) {
         return registerVase("volute", variant, () -> new VoluteVaseBlock(variant));
     }
+
     private static RegistrySupplier<VaseBlock> registerKylix(VaseBlock.VaseVariant variant) {
         return registerVase("kylix", variant, () -> new KylixVaseBlock(variant));
     }
+
     private static RegistrySupplier<VaseBlock> registerAmphora(VaseBlock.VaseVariant variant) {
         return registerVase("amphora", variant, () -> new AmphoraVaseBlock(variant));
     }
+
     private static RegistrySupplier<VaseBlock> registerVase(String name, VaseBlock.VaseVariant variant, Supplier<VaseBlock> supplier) {
-        var toReturn = registerBlock("vase_"+name+"_"+variant.getSerializedName(), supplier, ModTabs.FABLOCKTAB);
+        var toReturn = registerBlock("vase_" + name + "_" + variant.getSerializedName(), supplier, ModTabs.FABLOCKTAB);
         VASES.add(toReturn);
         return toReturn;
     }

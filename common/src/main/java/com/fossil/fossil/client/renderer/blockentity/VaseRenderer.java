@@ -1,4 +1,4 @@
-package com.fossil.fossil.client;
+package com.fossil.fossil.client.renderer.blockentity;
 
 import com.fossil.fossil.block.custom_blocks.AmphoraVaseBlock;
 import com.fossil.fossil.block.custom_blocks.VaseBlock;
@@ -55,7 +55,7 @@ public class VaseRenderer implements BlockEntityRenderer<VaseBlockEntity> {
         if (block instanceof AmphoraVaseBlock) {
             poseStack.pushPose();
             if (blockEntity.getBlockState().getValue(VaseBlock.FACING).getAxis() == Direction.Axis.X) {
-                poseStack.translate(0,0,1);
+                poseStack.translate(0, 0, 1);
                 poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
             }
             var c = bufferSource.getBuffer(RenderType.entityCutout((block.getVariantTexture())));

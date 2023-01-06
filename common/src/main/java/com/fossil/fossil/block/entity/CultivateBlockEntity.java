@@ -114,7 +114,9 @@ public class CultivateBlockEntity extends CustomBlockEntity {
         if (wasActive != blockEntity.cookingProgress > 0) {
             dirty = true;
             //isPlant = isSeed((blockEntity.items.get(INPUT_SLOT_ID)));
-            state.setValue(CultivateBlock.ACTIVE, blockEntity.cookingProgress > 0);
+            state = state.setValue(CultivateBlock.ACTIVE, blockEntity.cookingProgress > 0);
+            state = state.setValue(CultivateBlock.EMBRYO, getDNAType(blockEntity));
+            level.setBlock(pos, state, 3);
         }
 
         if (dirty) {
@@ -158,9 +160,20 @@ public class CultivateBlockEntity extends CustomBlockEntity {
     public NonNullList<ItemStack> getItems() {
         return items;
     }
+
     @Override
     protected @NotNull Component getDefaultName() {
         return new TranslatableComponent("fossil.container.cultivate");
+    }
+
+    public static CultivateBlock.EmbryoType getDNAType(CultivateBlockEntity blockEntity) {
+        ItemStack inputStack = blockEntity.items.get(CultivateMenu.INPUT_SLOT_ID);
+        if (!inputStack.isEmpty()) {
+            if (inputStack.is(Items.WHEAT_SEEDS)) {
+                return CultivateBlock.EmbryoType.PLANT;
+            }
+        }
+        return CultivateBlock.EmbryoType.GENERIC;
     }
 
     @Override
@@ -174,6 +187,7 @@ public class CultivateBlockEntity extends CustomBlockEntity {
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());
         }
+        setChanged();
     }
 
     @Override

@@ -51,8 +51,8 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0-> meat = value;
-                case 1-> plant = value;
+                case 0 -> meat = value;
+                case 1 -> plant = value;
             }
         }
 
@@ -72,35 +72,42 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         blockEntity.prevPlant = blockEntity.plant;
         blockEntity.meat = Math.max(blockEntity.meat, 0);
         blockEntity.plant = Math.max(blockEntity.plant, 0);
-        if (!level.isClientSide) {
-            ItemStack itemStack = blockEntity.getItem(0);
-            if (!itemStack.isEmpty()) {
-                if (blockEntity.canPlaceItem(0, itemStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
-                    int foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.CARNIVORE_EGG);
-                    if (foodPoints == 0) {
-                        foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.PISCIVORE);
-                    }
-                    if (foodPoints > 0) {
-                        blockEntity.meat += foodPoints;
-                        itemStack.shrink(1);
-                    }
+        boolean dirty = false;
+        ItemStack itemStack = blockEntity.getItem(0);
+        if (!itemStack.isEmpty()) {
+            if (blockEntity.canPlaceItem(0, itemStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
+                int foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.CARNIVORE_EGG);
+                if (foodPoints == 0) {
+                    foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.PISCIVORE);
                 }
-            }
-            itemStack = blockEntity.getItem(1);
-            if (!itemStack.isEmpty()) {
-                if (blockEntity.canPlaceItem(1, itemStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.plant < 10000) {
-                    int foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.HERBIVORE);
-                    if (foodPoints > 0) {
-                        blockEntity.plant += foodPoints;
-                        itemStack.shrink(1);
-                    }
+                if (foodPoints > 0) {
+                    dirty = true;
+                    blockEntity.meat += foodPoints;
+                    itemStack.shrink(1);
                 }
-            }
-            if (blockEntity.prevMeat != blockEntity.meat || blockEntity.prevPlant != blockEntity.plant) {
-                state.setValue(FeederBlock.HERB, blockEntity.plant > 0).setValue(FeederBlock.CARN, blockEntity.meat > 0);
             }
         }
+        itemStack = blockEntity.getItem(1);
+        if (!itemStack.isEmpty()) {
+            if (blockEntity.canPlaceItem(1, itemStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.plant < 10000) {
+                int foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.HERBIVORE);
+                if (foodPoints > 0) {
+                    dirty = true;
+                    blockEntity.plant += foodPoints;
+                    itemStack.shrink(1);
+                }
+            }
+        }
+        if (blockEntity.prevMeat != blockEntity.meat || blockEntity.prevPlant != blockEntity.plant) {
+            dirty = true;
+            state = state.setValue(FeederBlock.HERB, blockEntity.plant > 0).setValue(FeederBlock.CARN, blockEntity.meat > 0);
+            level.setBlock(pos, state, 3);
+        }
+        if (dirty) {
+            setChanged(level, pos, state);
+        }
     }
+
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -113,8 +120,8 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putShort("Meat", (short)this.meat);
-        tag.putShort("Plant", (short)this.plant);
+        tag.putShort("Meat", (short) this.meat);
+        tag.putShort("Plant", (short) this.plant);
         ContainerHelper.saveAllItems(tag, this.items);
     }
 
@@ -179,7 +186,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
             }
         }
         level.getBlockState(getBlockPos()).setValue(FeederBlock.HERB, plant > 0).setValue(FeederBlock.CARN, meat > 0);
-       // FeederBlock.updateFeederBlockState(plant > 0, meat > 0, level, getBlockPos());
+        // FeederBlock.updateFeederBlockState(plant > 0, meat > 0, level, getBlockPos());
         mob.setHunger(mob.getHunger() + feedamount);
         return feedamount;
     }

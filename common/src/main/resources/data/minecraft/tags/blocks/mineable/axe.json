@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "fossil:worktable_block",
+    "fossil:worktable",
     "fossil:ancient_wood",
     "fossil:ancient_wood_slab",
     "fossil:ancient_wood_pillar",
@@ -20,6 +20,7 @@
     "fossil:cordaites_wood",
     "fossil:stripped_cordaites_wood",
     "fossil:stripped_cordaites_log",
+    "fossil:sifter",
     "fossil:sigillaria_planks",
     "fossil:sigillaria_button",
     "fossil:sigillaria_door",

@@ -20,9 +20,9 @@ public class ModBlockEntities {
     public static final RegistrySupplier<BlockEntityType<SifterBlockEntity>> SIFTER = BLOCK_ENTITIES.register("sifter",
             () -> BlockEntityType.Builder.of(SifterBlockEntity::new, ModBlocks.SIFTER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<AnalyzerBlockEntity>> ANALYZER = BLOCK_ENTITIES.register("analyzer",
-            () -> BlockEntityType.Builder.of(AnalyzerBlockEntity::new, ModBlocks.ANALYZER_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of(AnalyzerBlockEntity::new, ModBlocks.ANALYZER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<CultivateBlockEntity>> CULTIVATE = BLOCK_ENTITIES.register("cultivate",
-            () -> BlockEntityType.Builder.of(CultivateBlockEntity::new, ModBlocks.CULTIVATE_BLOCK.get()).build(null));
+            () -> BlockEntityType.Builder.of(CultivateBlockEntity::new, ModBlocks.CULTIVATE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<WorktableBlockEntity>> WORKTABLE = BLOCK_ENTITIES.register("worktable",
             () -> BlockEntityType.Builder.of(WorktableBlockEntity::new, ModBlocks.WORKTABLE.get()).build(null));
 

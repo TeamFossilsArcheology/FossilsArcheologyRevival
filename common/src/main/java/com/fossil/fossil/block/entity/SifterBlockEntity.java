@@ -112,7 +112,8 @@ public class SifterBlockEntity extends CustomBlockEntity {
 
         if (fueled != blockEntity.isProcessing()) {
             dirty = true;
-            state.setValue(SifterBlock.ACTIVE, blockEntity.isProcessing());
+            state = state.setValue(SifterBlock.ACTIVE, blockEntity.isProcessing());
+            level.setBlock(pos, state, 3);
         }
 
         if (dirty) {

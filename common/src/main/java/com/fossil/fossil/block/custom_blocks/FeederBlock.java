@@ -5,9 +5,7 @@ import com.fossil.fossil.block.entity.FeederBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
@@ -35,6 +33,19 @@ public class FeederBlock extends BaseEntityBlock implements IDinoUnbreakable {
     public FeederBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(HERB, false).setValue(CARN, false).setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
+        if (state.is(newState.getBlock())) {
+            return;
+        }
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof Container) {
+            Containers.dropContents(level, pos, (Container) blockEntity);
+            level.updateNeighbourForOutputSignal(pos, this);
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override

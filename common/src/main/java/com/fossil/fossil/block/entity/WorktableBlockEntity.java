@@ -111,7 +111,8 @@ public class WorktableBlockEntity extends CustomBlockEntity {
 
         if (var1 != blockEntity.isProcessing()) {
             dirty = true;
-            state.setValue(WorktableBlock.ACTIVE, blockEntity.isProcessing());
+            state = state.setValue(WorktableBlock.ACTIVE, blockEntity.isProcessing());
+            level.setBlock(pos, state, 3);
         }
 
         if (dirty) {

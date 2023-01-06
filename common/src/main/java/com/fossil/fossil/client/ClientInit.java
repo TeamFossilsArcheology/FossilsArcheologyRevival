@@ -5,6 +5,8 @@ import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.gui.*;
 import com.fossil.fossil.client.model.TriceratopsModel;
 import com.fossil.fossil.client.renderer.RenderPrehistoric;
+import com.fossil.fossil.client.renderer.blockentity.CultivateRenderer;
+import com.fossil.fossil.client.renderer.blockentity.VaseRenderer;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.inventory.ModMenus;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
@@ -34,11 +36,13 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CORDAITES_LEAVES.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANCIENT_GLASS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.REINFORCED_GLASS.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CULTIVATE.get());
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
         MenuScreens.register(ModMenus.CULTIVATE.get(), CultivateScreen::new);
         MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.VASE.get(), VaseRenderer::new);
+        BlockEntityRendererRegistry.register(ModBlockEntities.CULTIVATE.get(), CultivateRenderer::new);
     }
 }
