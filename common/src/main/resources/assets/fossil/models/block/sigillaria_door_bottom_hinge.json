@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_rh",
+  "textures": {
+    "top": "fossil:block/sigillaria_door_top",
+    "bottom": "fossil:block/sigillaria_door_bottom"
+  }
+}

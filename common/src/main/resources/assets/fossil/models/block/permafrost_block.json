@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "fossil:blocks/permafrost"
+    "all": "fossil:block/permafrost"
   }
 }

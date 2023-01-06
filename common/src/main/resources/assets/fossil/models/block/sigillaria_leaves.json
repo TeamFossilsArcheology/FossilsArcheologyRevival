@@ -1,0 +1,6 @@
+{
+  "parent": "block/leaves",
+  "textures": {
+    "all": "fossil:block/sigillaria_leaves"
+  }
+}

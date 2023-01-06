@@ -1,0 +1,10 @@
+{
+  "parent": "fossil:block/orientable_with_back",
+  "textures": {
+    "top": "fossil:block/arch_table_top_idle",
+    "front": "fossil:block/arch_table_side1",
+    "side": "fossil:block/arch_table_side2",
+    "back": "fossil:block/arch_table_side1",
+    "bottom": "fossil:block/arch_table_bottom"
+  }
+}

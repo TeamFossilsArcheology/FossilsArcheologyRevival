@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "fossil:blocks/bennettitales_tall_1"
+    "cross": "fossil:block/bennettitales_tall_1"
   }
 }

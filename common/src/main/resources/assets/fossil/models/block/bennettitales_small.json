@@ -1,6 +1,6 @@
 {
   "parent": "block/cross",
   "textures": {
-    "cross": "fossil:blocks/bennettitales_small"
+    "cross": "fossil:block/bennettitales_small"
   }
 }

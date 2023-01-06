@@ -1,7 +1,7 @@
 {
   "replace": false,
   "values": [
-    "fossil:analyzer_block",
-    "fossil:worktable_block"
+    "fossil:analyzer",
+    "fossil:worktable"
   ]
 }

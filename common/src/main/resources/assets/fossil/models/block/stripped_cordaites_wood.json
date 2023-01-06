@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "end": "fossil:blocks/stripped_cordaites_log",
-    "side": "fossil:blocks/stripped_cordaites_log"
+    "end": "fossil:block/stripped_cordaites_log",
+    "side": "fossil:block/stripped_cordaites_log"
   }
 }

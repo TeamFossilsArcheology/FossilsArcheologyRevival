@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
-    "fossil:cultivate_block",
-    "fossil:analyzer_block",
+    "fossil:cultivate",
+    "fossil:analyzer",
     "fossil:volcanic_rock",
     "fossil:reinforced_glass",
     "fossil:ancient_glass"

@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "YXY",
+    "XZX",
+    "XYX"
+  ],
+  "key": {
+    "Z": {
+      "item": "minecraft:iron_bars"
+    },
+    "Y": {
+      "item": "minecraft:string"
+    },
+    "X": {
+      "item": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "fossil:sifter"
+  }
+}

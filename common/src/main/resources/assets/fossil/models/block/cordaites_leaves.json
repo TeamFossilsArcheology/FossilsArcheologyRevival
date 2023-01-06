@@ -1,6 +1,6 @@
 {
   "parent": "block/leaves",
   "textures": {
-    "all": "fossil:blocks/cordaites_leaves"
+    "all": "fossil:block/cordaites_leaves"
   }
 }

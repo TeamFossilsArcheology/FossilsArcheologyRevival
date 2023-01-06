@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "active=false": {
+      "model": "fossil:block/cultivate"
+    },
+    "active=true": {
       "model": "fossil:block/cultivate"
     }
   }

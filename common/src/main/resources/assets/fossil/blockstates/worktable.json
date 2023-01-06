@@ -1,0 +1,34 @@
+{
+  "variants": {
+    "facing=east,active=false": {
+      "model": "fossil:block/worktable",
+      "y": 90
+    },
+    "facing=north,active=false": {
+      "model": "fossil:block/worktable"
+    },
+    "facing=south,active=false": {
+      "model": "fossil:block/worktable",
+      "y": 180
+    },
+    "facing=west,active=false": {
+      "model": "fossil:block/worktable",
+      "y": 270
+    },
+    "facing=east,active=true": {
+      "model": "fossil:block/worktable_on",
+      "y": 90
+    },
+    "facing=north,active=true": {
+      "model": "fossil:block/worktable_on"
+    },
+    "facing=south,active=true": {
+      "model": "fossil:block/worktable_on",
+      "y": 180
+    },
+    "facing=west,active=true": {
+      "model": "fossil:block/worktable_on",
+      "y": 270
+    }
+  }
+}

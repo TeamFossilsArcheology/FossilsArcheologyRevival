@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "fossil:block/stripped_sigillaria_log",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "fossil:block/stripped_sigillaria_log"
+    },
+    "axis=z": {
+      "model": "fossil:block/stripped_sigillaria_log",
+      "x": 90
+    }
+  }
+}

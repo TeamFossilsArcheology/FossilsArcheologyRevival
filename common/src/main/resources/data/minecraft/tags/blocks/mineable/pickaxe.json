@@ -1,10 +1,10 @@
 {
   "replace": false,
   "values": [
-    "fossil:cultivate_block",
-    "fossil:fossil_block",
-    "fossil:analyzer_block",
-    "fossil:worktable_block",
+    "fossil:cultivate",
+    "fossil:fossil",
+    "fossil:analyzer",
+    "fossil:worktable",
     "fossil:volcanic_rock",
     "fossil:volcanic_bricks",
     "fossil:volcanic_brick_slab",

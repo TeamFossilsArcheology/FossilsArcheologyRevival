@@ -1,6 +1,6 @@
 {
   "replace": false,
   "values": [
-    "fossil:worktable_block"
+    "fossil:worktable"
   ]
 }

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures":{
-    "layer0": "fossil:blocks/bennettitales_tall_2"
+    "layer0": "fossil:block/bennettitales_tall_2"
   }
 }

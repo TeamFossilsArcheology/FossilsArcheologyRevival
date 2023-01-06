@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/door_top_rh",
   "textures": {
-    "top": "fossil:blocks/cordaites_door_top",
-    "bottom": "fossil:blocks/cordaites_door_bottom"
+    "top": "fossil:block/cordaites_door_top",
+    "bottom": "fossil:block/cordaites_door_bottom"
   }
 }

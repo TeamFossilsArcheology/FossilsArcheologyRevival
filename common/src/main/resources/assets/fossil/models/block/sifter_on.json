@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "particle": "fossil:block/sifter_top_active",
+    "down": "fossil:block/sifter_bottom",
+    "up": "fossil:block/sifter_top_active",
+    "north": "fossil:block/sifter_side",
+    "east": "fossil:block/sifter_side",
+    "south": "fossil:block/sifter_side",
+    "west": "fossil:block/sifter_side"
+  }
+}

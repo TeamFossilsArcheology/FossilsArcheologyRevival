@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/template_trapdoor_open",
   "textures": {
-    "texture": "fossil:blocks/cordaites_trapdoor"
+    "texture": "fossil:block/cordaites_trapdoor"
   }
 }

@@ -1,6 +1,6 @@
 {
   "parent": "block/cube_all",
   "textures": {
-    "all": "fossil:blocks/cordaites_planks"
+    "all": "fossil:block/cordaites_planks"
   }
 }

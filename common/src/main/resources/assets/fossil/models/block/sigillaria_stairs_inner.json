@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "fossil:block/sigillaria_planks",
+    "top": "fossil:block/sigillaria_planks",
+    "side": "fossil:block/sigillaria_planks"
+  }
+}
