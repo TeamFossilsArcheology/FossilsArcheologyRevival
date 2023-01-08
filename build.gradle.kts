@@ -39,6 +39,7 @@ subprojects {
             }
         }
         maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
+        maven { url = uri("https://maven.shedaniel.me/") }
     }
 
     dependencies {

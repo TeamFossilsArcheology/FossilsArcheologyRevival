@@ -36,6 +36,8 @@ val fabric_api_version: String by rootProject
 val architectury_version: String by rootProject
 val archives_base_name: String by rootProject
 val parchment_date: String by rootProject
+val cloth_config_version: String by rootProject
+val rei_version: String by rootProject
 
 dependencies {
     "mappings"(loom.layered {
@@ -82,6 +84,8 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury-fabric:${architectury_version}")
     modRuntimeOnly("curse.maven:modmenu-308702:4145213")
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}")
+    modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}")
     modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.80")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }

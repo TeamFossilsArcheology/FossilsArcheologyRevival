@@ -22,6 +22,8 @@ val forge_version: String by rootProject
 val architectury_version: String by rootProject
 val archives_base_name: String by rootProject
 val parchment_date: String by rootProject
+val cloth_config_version: String by rootProject
+val rei_version: String by rootProject
 
 dependencies {
     "mappings"(loom.layered {
@@ -36,6 +38,8 @@ dependencies {
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionForge")) { isTransitive = false }
 
+    modImplementation("me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}")
+    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rei_version}")
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
 }
 
