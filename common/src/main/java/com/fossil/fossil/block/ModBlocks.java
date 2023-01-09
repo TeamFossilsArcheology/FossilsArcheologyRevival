@@ -55,6 +55,8 @@ public class ModBlocks {
             () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4f, 15f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<SkullBlock> SKULL_LANTERN = registerBlock("skull_lantern",
             () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(value -> 14).strength(4f, 15f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> SLIME_TRAIL = registerBlock("slime_trail",
+            () -> new RailBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> ANCIENT_STONE = registerBlock("ancient_stone",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> ANCIENT_STONE_BRICKS = registerBlock("ancient_stone_bricks",
@@ -218,6 +220,26 @@ public class ModBlocks {
         var toReturn = registerBlock("vase_" + name + "_" + variant.getSerializedName(), supplier, ModTabs.FABLOCKTAB);
         VASES.add(toReturn);
         return toReturn;
+    }
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFigurine("steve_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFigurine("steve_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFigurine("steve_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_BROKEN = registerFigurine("skeleton_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DAMAGED = registerFigurine("skeleton_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerFigurine("skeleton_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_BROKEN = registerFigurine("zombie_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DAMAGED = registerFigurine("zombie_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerFigurine("zombie_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_BROKEN = registerFigurine("enderman_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DAMAGED = registerFigurine("enderman_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerFigurine("enderman_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> PIGLIN_ZOMBIE_FIGURINE_BROKEN = registerFigurine("piglin_zombie_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> PIGLIN_ZOMBIE_FIGURINE_DAMAGED = registerFigurine("piglin_zombie_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> PIGLIN_ZOMBIE_FIGURINE_PRISTINE = registerFigurine("piglin_zombie_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> MYSTERIOUS_FIGURINE = registerFigurine("mysterious", FigurineBlock::new);
+
+    private static RegistrySupplier<FigurineBlock> registerFigurine(String name, Supplier<FigurineBlock> supplier) {
+        return registerBlock("figurine_"+name, supplier, ModTabs.FABLOCKTAB);
     }
 
     private static <T extends Block> RegistrySupplier<T> registerBlockWithoutBlockItem(String name, Supplier<T> block, CreativeModeTab tab) {

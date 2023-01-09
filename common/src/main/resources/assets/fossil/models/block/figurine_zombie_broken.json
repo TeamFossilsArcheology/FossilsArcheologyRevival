@@ -1,0 +1,6 @@
+{
+  "parent": "fossil:block/template_figurine",
+  "textures": {
+    "texture": "fossil:block/figurines/figurine_zombie_broken"
+  }
+}

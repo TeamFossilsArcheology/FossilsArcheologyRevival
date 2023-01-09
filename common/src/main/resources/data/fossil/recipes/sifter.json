@@ -13,7 +13,7 @@
       "item": "minecraft:string"
     },
     "X": {
-      "item": "minecraft:planks"
+      "tag": "minecraft:planks"
     }
   },
   "result": {

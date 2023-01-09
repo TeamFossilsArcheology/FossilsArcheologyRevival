@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fossil:block/figurine_zombie_damaged",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fossil:block/figurine_zombie_damaged"
+    },
+    "facing=south": {
+      "model": "fossil:block/figurine_zombie_damaged",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/figurine_zombie_damaged",
+      "y": 270
+    }
+  }
+}

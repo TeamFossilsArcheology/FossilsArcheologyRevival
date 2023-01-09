@@ -71,10 +71,6 @@ public abstract class VaseBlock extends BaseEntityBlock {
             this.kylixTexture = new ResourceLocation(Fossil.MOD_ID, "textures/block/vases/vase_" + name + "_kylix.png");
         }
 
-        public static VaseVariant get(int meta) {
-            return values()[meta % values().length];
-        }
-
         public ResourceLocation getVoluteTexture() {
             return this.voluteTexture;
         }

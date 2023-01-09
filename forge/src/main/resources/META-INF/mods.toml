@@ -4,13 +4,15 @@ loaderVersion="[40,)"
 
 license="April 26, 2014 the Fossils and Archeology Revival was put under the Creative Commons Attribution license (http://creativecommons.org/licenses/by/4.0/). The source is now home in a public organization found here: https://github.com/FossilsArcheologyRevival."
 
+issueTrackerURL="https://github.com/FossilsArcheologyRevival/FossilsArcheologyRevival/issues"
+
 [[mods]]
 modId="fossil"
 
-version="9.0.0"
+version="${version}"
 
 displayName="Fossils and Archeology: Revival"
-displayURL="https://www.curseforge.com/minecraft/mc-mods"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/fossils"
 
 logoFile="fossils.png"
 

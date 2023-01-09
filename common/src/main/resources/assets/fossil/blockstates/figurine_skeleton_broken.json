@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "fossil:block/figurine_skeleton_broken",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "fossil:block/figurine_skeleton_broken"
+    },
+    "facing=south": {
+      "model": "fossil:block/figurine_skeleton_broken",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/figurine_skeleton_broken",
+      "y": 270
+    }
+  }
+}
