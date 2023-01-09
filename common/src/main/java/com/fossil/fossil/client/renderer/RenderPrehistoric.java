@@ -8,6 +8,7 @@ import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -30,8 +31,11 @@ public class RenderPrehistoric extends MobRenderer<EntityPrehistoric, EntityMode
             LAYERED_LOCATION_CACHE.put(s, resourcelocation);
         }
         return resourcelocation;
+    }
 
-
+    @NotNull
+    public ResourceLocation _getTextureLocation(Entity entity) {
+        return getTextureLocation((EntityPrehistoric) entity);
     }
 
     @Override
