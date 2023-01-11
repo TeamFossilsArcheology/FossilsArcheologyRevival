@@ -73,7 +73,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> AGINGDISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<ItemStack> HOLDING_IN_MOUTH = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.ITEM_STACK);
-    private static final EntityDataAccessor<FossilAnimations> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, FossilAnimations.SERIALIZER);
+    private static final EntityDataAccessor<Integer> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private Gender gender; // should be effectively final
     private static final Predicate<Entity> IS_PREHISTORIC = entity -> entity instanceof Prehistoric;
     // public final Animation SPEAK_ANIMATION;
@@ -123,10 +123,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private int cathermalSleepCooldown = 0;
     private int ticksClimbing = 0;
     private float eggScale = 1.0F;
-    public TimePeriod timePeriod;
-    public Diet diet;
-    public Item cultivatedEggItem;
-    public Item uncultivatedEggItem;
+    public final TimePeriod timePeriod;
+    public final Diet diet;
+    public final Item cultivatedEggItem;
+    // public final Item uncultivatedEggItem;
     public final boolean isCannibalistic;
     public ResourceLocation textureLocation;
 
@@ -145,7 +145,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             double baseSpeed,
             double maxSpeed,
             double baseArmor,
-            double maxArmor
+            double maxArmor,
+            TimePeriod timePeriod,
+            Diet diet,
+            Item cultivatedEggItem
     ) {
         super(entityType, level);
         this.setHunger(this.getMaxHunger() / 2);
@@ -169,6 +172,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.maxSpeed = maxSpeed;
         this.baseArmor = baseArmor;
         this.maxArmor = maxArmor;
+        this.timePeriod = timePeriod;
+        this.diet = diet;
+        this.cultivatedEggItem = cultivatedEggItem;
         this.updateAbilities();
         if (this.getMobType() == MobType.WATER) {
             this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
@@ -249,6 +255,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.entityData.define(OWNERDISPLAYNAME, "");
         this.entityData.define(AGINGDISABLED, false);
         this.entityData.define(HOLDING_IN_MOUTH, ItemStack.EMPTY);
+        this.entityData.define(CURRENT_ANIMATION, 0);
     }
 
     @Override
@@ -665,27 +672,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (this.getRidingPlayer() != null) {
             this.maxUpStep = 1;
         }
-        if (Fossil.CONFIG_OPTIONS.dinosaurBreeding &&
-                !level.isClientSide &&
-                ticksTillMate == 0 &&
-                this.gender == Gender.MALE &&
-                this.getMood() > 50
-        ) {
-            float cramDist = 30;
-            AABB area = new AABB(this.getX() - cramDist,
-                    this.getY() - cramDist / 2,
-                    this.getZ() - cramDist,
-
-                    this.getX() + cramDist,
-                    this.getY() + cramDist,
-                    this.getZ() + cramDist);
-            List<? extends Prehistoric> crammedList = level.getEntitiesOfClass(this.getClass(), area);
-            if (crammedList.size() > this.getMaxPopulation()) {
-                this.ticksTillMate = this.random.nextInt(6000) + 6000;
-            } else {
-                this.mate();
-            }
-        }
         if (Fossil.CONFIG_OPTIONS.healingDinos && !this.level.isClientSide) {
             if (this.random.nextInt(500) == 0 && this.deathTime == 0) {
                 this.heal(1.0F);
@@ -860,6 +846,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                 if (level.getBlockState(this.blockPosition().above()).getMaterial().isSolid()) {
                     ticksClimbing = 200;
                 }
+            }
+            if ((this.navigation.getPath() == null || this.navigation.getPath().isDone()) && !this.isSleeping() && this.getLastHurtByMob() == null && this.getTarget() == null) {
+                this.setCurrentAnimation(FossilAnimation.IDLE);
             }
         }
         // AnimationHandler.INSTANCE.updateAnimations(this);
@@ -1071,6 +1060,20 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public void setItemInMouth(@NotNull ItemStack stack) {
         this.entityData.set(HOLDING_IN_MOUTH, stack);
+    }
+
+    public FossilAnimation getCurrentAnimation() {
+        return FossilAnimation.values()[this.entityData.get(CURRENT_ANIMATION)];
+    }
+
+    public void setCurrentAnimation(@NotNull FossilAnimation newAnimation) {
+        for (int i = 0; i < FossilAnimation.values().length; i++) {
+            if (FossilAnimation.values()[i] == newAnimation) {
+                this.entityData.set(CURRENT_ANIMATION, i);
+                return;
+            }
+        }
+        throw new IllegalStateException("Unable to change animation of dinosaur!");
     }
 
     public boolean increaseHunger(int hunger) {
@@ -1613,36 +1616,12 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     @Override
     public boolean canMate(Animal otherAnimal) {
         return otherAnimal != this &&
-                otherAnimal.getClass() == this.getClass() &&
-                this.isAdult() &&
-                this.getMood() > 50 &&
-                this.ticksTillMate == 0 &&
-                ((Prehistoric) otherAnimal).gender != this.gender;
-    }
-
-    public void mate() {
-        if (this.gender != Gender.MALE) return;
-
-        double inflateAmount = 64;
-        List<? extends Prehistoric> listOfFemales = level.getEntitiesOfClass(this.getClass(), this.getBoundingBox().inflate(inflateAmount, 4.0D, inflateAmount), entity -> {
-            if (entity.getGender() != Gender.FEMALE) return false;
-            if (entity.getClass() != this.getClass()) return false;
-            if (!entity.isAdult()) return false;
-            if (entity.ticksTillMate > 0) return false;
-            return false;
-        });
-        if (!listOfFemales.isEmpty() && this.ticksTillMate == 0) {
-            Prehistoric prehistoric = listOfFemales.get(0);
-            if (prehistoric.ticksTillMate == 0) {
-                this.getNavigation().moveTo(prehistoric, 1);
-                double distance = this.getBbWidth() * 8.0F * this.getBbWidth() * 8.0F + prehistoric.getBbWidth();
-                if (this.distanceToSqr(prehistoric.getX(), prehistoric.getBoundingBox().minY, prehistoric.getZ()) <= distance && prehistoric.onGround && this.onGround && this.isAdult() && prehistoric.isAdult()) {
-                    prehistoric.procreate(this);
-                    this.ticksTillMate = this.random.nextInt(6000) + 6000;
-                    prehistoric.ticksTillMate = this.random.nextInt(12000) + 24000;
-                }
-            }
-        }
+            otherAnimal.getClass() == this.getClass() &&
+            this.isAdult() &&
+            this.getMood() > 50 &&
+            this.ticksTillMate == 0 &&
+            ((Prehistoric) otherAnimal).gender != this.gender &&
+            (this.getTarget() == null || this.getTarget() == otherAnimal);
     }
 
     @Override

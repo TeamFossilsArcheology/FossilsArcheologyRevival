@@ -1,7 +1,13 @@
 package com.fossil.fossil.entity.prehistoric;
 
+import com.fossil.fossil.entity.ai.DinoAIWander;
+import com.fossil.fossil.entity.prehistoric.base.IDinosaur;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.util.Diet;
+import com.fossil.fossil.util.FossilAnimation;
+import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -17,10 +23,37 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 // TODO Accurately adjust values here, for now setting it identical to Triceratops
-public class Therizinosaurus extends Prehistoric implements IAnimatable {
+public class Therizinosaurus extends Prehistoric implements IAnimatable, IDinosaur {
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    public static final String IDLE = "fa.therizinosaurus.idle";
+    public static final String WALK = "fa.therizinosaurus.walk";
     public Therizinosaurus(EntityType<? extends Prehistoric> entityType, Level level) {
-        super(entityType, level, false, 0.4F, 5F, 5, 6, 12,12, 12, 64, 0.2, 0.35, 5, 15);
+        super(
+            entityType,
+            level,
+            false,
+            0.4F,
+            5F,
+            5,
+            6,
+            12,
+            12,
+            12,
+            64,
+            0.2,
+            0.35,
+            5,
+            15,
+            TimePeriod.MESOZOIC,
+            Diet.HERBIVORE,
+            ModItems.THERIZINOSAURUS_SPAWN_EGG.get()
+        );
+    }
+
+    @Override
+    protected void registerGoals() {
+        super.registerGoals();
+        this.goalSelector.addGoal(3, new DinoAIWander(this, 1.0D));
     }
 
     @Override
@@ -109,7 +142,13 @@ public class Therizinosaurus extends Prehistoric implements IAnimatable {
     }
 
     public PlayState onFrame(AnimationEvent<Therizinosaurus> event) {
-        event.getController().setAnimation(new AnimationBuilder().addAnimation("animations.fa.therizinosaurus.idle", ILoopType.EDefaultLoopTypes.LOOP));
+        String animation;
+        if (this.getCurrentAnimation() == FossilAnimation.WALK) {
+            animation = WALK;
+        } else {
+            animation = IDLE;
+        }
+        event.getController().setAnimation(new AnimationBuilder().addAnimation(animation, ILoopType.EDefaultLoopTypes.LOOP));
         return PlayState.CONTINUE;
     }
 

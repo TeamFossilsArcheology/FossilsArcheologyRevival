@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.util.FossilAnimation;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.phys.Vec3;
@@ -81,6 +82,8 @@ public class DinoAIWander extends Goal {
     @Override
     public void start() {
         this.dinosaur.getNavigation().moveTo(this.x, this.y, this.z, this.speed);
+        FossilAnimation current = this.dinosaur.getCurrentAnimation();
+        if (!current.isAggressive()) this.dinosaur.setCurrentAnimation(FossilAnimation.WALK);
     }
 
     /**

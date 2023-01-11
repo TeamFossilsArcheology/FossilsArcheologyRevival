@@ -7,6 +7,9 @@ import com.fossil.fossil.entity.ai.DinoMeleeAttackAI;
 import com.fossil.fossil.entity.prehistoric.base.IDinosaur;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.util.Diet;
+import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -23,7 +26,26 @@ public class Triceratops extends Prehistoric implements IDinosaur {
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Triceratops(EntityType<? extends Triceratops> type, Level level) {
-        super(type, level, false, 0.4F, 5F, 5, 12, 1, 12, 12, 64, 0.2, 0.35, 5, 15);
+        super(
+            type,
+            level,
+            false,
+            0.4F,
+            5F,
+            5,
+            12,
+            1,
+            12,
+            12,
+            64,
+            0.2,
+            0.35,
+            5,
+            15,
+            TimePeriod.MESOZOIC,
+            Diet.HERBIVORE,
+            ModItems.TRICERATOPS_SPAWN_EGG.get()
+        );
         this.hasFeatherToggle = true;
         this.featherToggle = Fossil.CONFIG_OPTIONS.quilledTriceratops;
         this.nearByMobsAllowed = 7;
