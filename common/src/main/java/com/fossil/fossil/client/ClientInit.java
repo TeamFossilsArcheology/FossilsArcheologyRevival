@@ -3,8 +3,10 @@ package com.fossil.fossil.client;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.gui.*;
+import com.fossil.fossil.client.model.TherizinosaurusModel;
 import com.fossil.fossil.client.model.TriceratopsModel;
 import com.fossil.fossil.client.renderer.RenderPrehistoric;
+import com.fossil.fossil.client.renderer.RenderPrehistoricGeo;
 import com.fossil.fossil.client.renderer.blockentity.CultivateRenderer;
 import com.fossil.fossil.client.renderer.blockentity.VaseRenderer;
 import com.fossil.fossil.entity.ModEntities;
@@ -22,6 +24,8 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.TRICERATOPS,
                 context -> new RenderPrehistoric(context, new TriceratopsModel<>(context.bakeLayer(TriceratopsModel.LAYER_LOCATION)))
         );
+        EntityRendererRegistry.register(ModEntities.THERIZINOSAURUS,
+                context -> new RenderPrehistoricGeo<>(context, new TherizinosaurusModel()));
     }
 
     public static void later() {

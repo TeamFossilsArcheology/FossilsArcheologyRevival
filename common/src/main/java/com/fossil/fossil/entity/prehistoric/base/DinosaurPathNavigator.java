@@ -4,7 +4,7 @@ import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.level.Level;
 
 public class DinosaurPathNavigator extends GroundPathNavigation {
-    public DinosaurPathNavigator(EntityPrehistoric prehistoric, Level level) {
+    public DinosaurPathNavigator(Prehistoric prehistoric, Level level) {
         super(prehistoric, level);
     }
 }

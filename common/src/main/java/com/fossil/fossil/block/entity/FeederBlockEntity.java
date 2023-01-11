@@ -1,11 +1,10 @@
 package com.fossil.fossil.block.entity;
 
 import com.fossil.fossil.block.custom_blocks.FeederBlock;
-import com.fossil.fossil.entity.prehistoric.base.EntityPrehistoric;
+import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.inventory.FeederMenu;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
-import com.fossil.fossil.util.PrehistoricEntityType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -38,10 +37,10 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         @Override
         public int get(int index) {
             switch (index) {
-                case 0: {
+                case 0 -> {
                     return meat;
                 }
-                case 1: {
+                case 1 -> {
                     return plant;
                 }
             }
@@ -149,30 +148,30 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         return true;
     }
 
-    public boolean isEmpty(PrehistoricEntityType type) {
-        if (type.diet == Diet.CARNIVORE || type.diet == Diet.CARNIVORE_EGG || type.diet == Diet.PISCCARNIVORE || type.diet == Diet.PISCIVORE || type.diet == Diet.INSECTIVORE) {
+    public boolean isEmpty(Prehistoric entity) {
+        if (entity.diet == Diet.CARNIVORE || entity.diet == Diet.CARNIVORE_EGG || entity.diet == Diet.PISCCARNIVORE || entity.diet == Diet.PISCIVORE || entity.diet == Diet.INSECTIVORE) {
             return meat == 0;
         }
-        if (type.diet == Diet.HERBIVORE) {
+        if (entity.diet == Diet.HERBIVORE) {
             return plant == 0;
         }
-        return type.diet == Diet.OMNIVORE && meat == 0 && plant == 0;
+        return entity.diet == Diet.OMNIVORE && meat == 0 && plant == 0;
     }
 
-    public int feedDinosaur(EntityPrehistoric mob) {
+    public int feedDinosaur(Prehistoric mob) {
         int feedamount = 0;
-        if (!isEmpty(mob.dinoType)) {
-            if (mob.dinoType.diet == Diet.CARNIVORE || mob.dinoType.diet == Diet.CARNIVORE_EGG || mob.dinoType.diet == Diet.PISCCARNIVORE || mob.dinoType.diet == Diet.PISCIVORE || mob.dinoType.diet == Diet.INSECTIVORE) {
+        if (!isEmpty(mob)) {
+            if (mob.diet == Diet.CARNIVORE || mob.diet == Diet.CARNIVORE_EGG || mob.diet == Diet.PISCCARNIVORE || mob.diet == Diet.PISCIVORE || mob.diet == Diet.INSECTIVORE) {
                 meat--;
                 level.broadcastEntityEvent(mob, (byte) 47);
                 feedamount++;
             }
-            if (mob.dinoType.diet == Diet.HERBIVORE) {
+            if (mob.diet == Diet.HERBIVORE) {
                 plant--;
                 level.broadcastEntityEvent(mob, (byte) 45);
                 feedamount++;
             }
-            if (mob.dinoType.diet == Diet.OMNIVORE) {
+            if (mob.diet == Diet.OMNIVORE) {
                 if (meat == 0 && plant != 0) {
                     meat--;
                     feedamount++;

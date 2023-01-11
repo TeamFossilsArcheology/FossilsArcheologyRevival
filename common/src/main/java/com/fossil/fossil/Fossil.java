@@ -22,5 +22,6 @@ public class Fossil {
         ModBlockEntities.register();
         ModPlacedFeatures.register();
         ModRecipes.register();
+
     }
 }
