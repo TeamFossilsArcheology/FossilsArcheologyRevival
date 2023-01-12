@@ -120,6 +120,14 @@ public class ModBlocks {
             () -> new StairBlock(VOLCANIC_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_BRICK_WALL = registerBlock("volcanic_brick_wall",
             () -> new WallBlock(BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> VOLCANIC_TILES = registerBlock("volcanic_tiles",
+            () -> new Block(BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> VOLCANIC_TILE_SLAB = registerBlock("volcanic_tile_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(VOLCANIC_TILES.get())), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> VOLCANIC_TILE_STAIRS = registerBlock("volcanic_tile_stairs",
+            () -> new StairBlock(VOLCANIC_TILES.get().defaultBlockState(), BlockBehaviour.Properties.copy(VOLCANIC_TILES.get())), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> VOLCANIC_TILE_WALL = registerBlock("volcanic_tile_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(VOLCANIC_TILES.get())), ModTabs.FABLOCKTAB);
 
     public static final RegistrySupplier<Block> CORDAITES_PLANKS = registerBlock("cordaites_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);

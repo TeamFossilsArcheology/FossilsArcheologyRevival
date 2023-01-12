@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "fossil:cordaites_logs"
+    }
+  ],
+  "result": {
+    "item": "fossil:cordaites_planks",
+    "count": 4
+  }
+}

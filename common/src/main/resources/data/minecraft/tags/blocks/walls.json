@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "fossil:ancient_stone_wall",
-    "fossil:volcanic_brick_wall"
+    "fossil:volcanic_brick_wall",
+    "fossil:volcanic_tile_wall"
   ]
 }

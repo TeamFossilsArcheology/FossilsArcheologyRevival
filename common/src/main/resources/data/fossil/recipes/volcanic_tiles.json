@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "VV",
+    "VV"
+  ],
+  "key": {
+    "V": {
+      "item": "fossil:volcanic_bricks"
+    }
+  },
+  "result": {
+    "item": "fossil:volcanic_tiles",
+    "count": 4
+  }
+}

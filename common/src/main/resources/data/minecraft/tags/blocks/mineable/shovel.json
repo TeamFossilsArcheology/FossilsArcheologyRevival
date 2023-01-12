@@ -3,6 +3,7 @@
   "values": [
     "fossil:permafrost_block",
     "fossil:dense_sand",
-    "fossil:volcanic_ash"
+    "fossil:volcanic_ash",
+    "fossil:tarred_dirt"
   ]
 }

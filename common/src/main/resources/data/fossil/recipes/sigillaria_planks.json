@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "fossil:sigillaria_logs"
+    }
+  ],
+  "result": {
+    "item": "fossil:sigillaria_planks",
+    "count": 4
+  }
+}

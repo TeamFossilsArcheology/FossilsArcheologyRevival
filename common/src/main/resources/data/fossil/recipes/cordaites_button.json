@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "wooden_button",
+  "ingredients": [
+    {
+      "item": "fossil:cordaites_planks"
+    }
+  ],
+  "result": {
+    "item": "fossil:cordaites_button"
+  }
+}

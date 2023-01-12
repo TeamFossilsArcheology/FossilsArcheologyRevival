@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "fossil:block/volcanic_tile_slab"
+    },
+    "type=double": {
+      "model": "fossil:block/volcanic_tiles"
+    },
+    "type=top": {
+      "model": "fossil:block/volcanic_tile_slab_top"
+    }
+  }
+}
