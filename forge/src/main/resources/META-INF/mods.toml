@@ -44,6 +44,13 @@ description="Adding dinosaurs, fossils, and more to Minecraft. If you have downl
     side="BOTH"
 
 [[dependencies.fossil]]
+    modId="geckolib3"
+    mandatory=true
+    versionRange="[3.0.55,)"
+    ordering="AFTER"
+    side="BOTH"
+
+[[dependencies.fossil]]
     modId="cloth_config"
     mandatory=false
     versionRange="[6.3.81,)"

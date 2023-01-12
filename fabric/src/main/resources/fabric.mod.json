@@ -45,6 +45,11 @@
   "depends": {
     "fabric": "*",
     "minecraft": ">=1.18.2",
-    "architectury": ">=4.9.83"
+    "architectury": ">=4.9.83",
+    "geckolib3": ">=3.0.62"
+  },
+  "suggests": {
+    "cloth_config": ">=6.3.81",
+    "roughlyenoughitems": ">=8.3.495"
   }
 }
