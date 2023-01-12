@@ -39,10 +39,14 @@ public class ModEntities {
         ).sized(0.5F, 0.7F).build("dinosaur_egg")
     );
 
+    public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
+            () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
+
     public static void register() {
         ENTITIES.register();
         EntityAttributeRegistry.register(TRICERATOPS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(THERIZINOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DINOSAUR_EGG, DinosaurEgg::createAttributes);
+        EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
     }
 }

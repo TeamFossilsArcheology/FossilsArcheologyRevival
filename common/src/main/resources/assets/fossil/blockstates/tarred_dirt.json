@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "fossil:block/tarred_dirt"
+    }
+  }
+}

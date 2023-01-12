@@ -19,6 +19,7 @@ import org.jetbrains.annotations.NotNull;
 public class DrumBlock extends Block {
     private static final int DRUM_COUNT = 2;
     public static final IntegerProperty DRUMS = IntegerProperty.create("drums", 0, DRUM_COUNT);
+    public static final ResourceLocation DRUM_SOUND = new ResourceLocation(Fossil.MOD_ID, "drum_single");
 
     public DrumBlock(Properties properties) {
         super(properties);
@@ -38,7 +39,7 @@ public class DrumBlock extends Block {
         } else {
             level.setBlock(pos, state.setValue(DRUMS, 0), 3);
         }
-        level.playSound(player, pos, new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "drum_single")), SoundSource.BLOCKS, 1, 1);
+        level.playSound(player, pos, new SoundEvent(DRUM_SOUND), SoundSource.BLOCKS, 1, 1);
         return InteractionResult.SUCCESS;
     }
 }

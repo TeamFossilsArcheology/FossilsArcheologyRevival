@@ -25,6 +25,14 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(CultivateBlockEntity::new, ModBlocks.CULTIVATE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<WorktableBlockEntity>> WORKTABLE = BLOCK_ENTITIES.register("worktable",
             () -> BlockEntityType.Builder.of(WorktableBlockEntity::new, ModBlocks.WORKTABLE.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<AnuStatueBlockEntity>> ANU_STATUE = BLOCK_ENTITIES.register("anu_statue",
+            () -> BlockEntityType.Builder.of(AnuStatueBlockEntity::new, ModBlocks.ANU_STATUE.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<AnubiteStatueBlockEntity>> ANUBITE_STATUE = BLOCK_ENTITIES.register("anubite_statue",
+            () -> BlockEntityType.Builder.of(AnubiteStatueBlockEntity::new, ModBlocks.ANUBITE_STATUE.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<AncientChestBlockEntity>> ANCIENT_CHEST = BLOCK_ENTITIES.register("ancient_chest",
+            () -> BlockEntityType.Builder.of(AncientChestBlockEntity::new, ModBlocks.ANCIENT_CHEST.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<SarcophagusBlockEntity>> SARCOPHAGUS = BLOCK_ENTITIES.register("sarcophagus",
+            () -> BlockEntityType.Builder.of(SarcophagusBlockEntity::new, ModBlocks.SARCOPHAGUS.get()).build(null));
 
     public static void register() {
         BLOCK_ENTITIES.register();

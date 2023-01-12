@@ -3,8 +3,7 @@ package com.fossil.fossil.block;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.custom_blocks.SkullBlock;
 import com.fossil.fossil.block.custom_blocks.*;
-import com.fossil.fossil.item.ModItems;
-import com.fossil.fossil.item.ModTabs;
+import com.fossil.fossil.item.*;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
@@ -22,6 +21,7 @@ import net.minecraft.world.level.material.MaterialColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
@@ -45,10 +45,25 @@ public class ModBlocks {
             ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<FeederBlock> FEEDER = registerBlock("feeder",
             () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<AnuStatueBlock> ANU_STATUE = registerBlockWithCustomBlockItem("anu_statue",
+            () -> new AnuStatueBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
+            block -> AnuStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+    public static final RegistrySupplier<AnubiteStatueBlock> ANUBITE_STATUE = registerBlockWithCustomBlockItem("anubite_statue",
+            () -> new AnubiteStatueBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
+            block -> AnubiteStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+    public static final RegistrySupplier<AncientChestBlock> ANCIENT_CHEST = registerBlockWithCustomBlockItem("ancient_chest",
+            () -> new AncientChestBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().strength(-1, 3600000).noDrops()),
+            block -> AncientChestBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+    public static final RegistrySupplier<Block> SARCOPHAGUS = registerBlockWithCustomBlockItem("sarcophagus",
+            () -> new SarcophagusBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
+            block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public  static  final RegistrySupplier<IceBlock> ICED_STONE = registerBlock("iced_stone",
             () -> new IceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 10f).requiresCorrectToolForDrops().sound(SoundType.GLASS).randomTicks()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
+            () -> new ObsidianSpikesBlock(BlockBehaviour.Properties.of(Material.STONE).strength(50, 2000).sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops().noOcclusion()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<DenseSandBlock> DENSE_SAND = registerBlock("dense_sand",
             () -> new DenseSandBlock(9205340, BlockBehaviour.Properties.of(Material.SAND).strength(3f, 15f).sound(SoundType.SAND)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<SkullBlock> SKULL_BLOCK = registerBlock("skull",
@@ -60,19 +75,21 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> ANCIENT_STONE = registerBlock("ancient_stone",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> ANCIENT_STONE_BRICKS = registerBlock("ancient_stone_bricks",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 6f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+            () -> new Block(BlockBehaviour.Properties.copy(ANCIENT_STONE.get())), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<SlabBlock> ANCIENT_STONE_SLAB = registerBlock("ancient_stone_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.7f, 7.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(ANCIENT_STONE.get())), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<StairBlock> ANCIENT_STONE_STAIRS = registerBlock("ancient_stone_stairs",
-            () -> new StairBlock(ANCIENT_STONE.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+            () -> new StairBlock(ANCIENT_STONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_STONE.get())), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> ANCIENT_STONE_WALL = registerBlock("ancient_stone_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(ANCIENT_STONE.get())), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> ANCIENT_WOOD = registerBlock("ancient_wood",
             () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2f, 3f).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<SlabBlock> ANCIENT_WOOD_SLAB = registerBlock("ancient_wood_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2f, 3f).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<RotatedPillarBlock> ANCIENT_WOOD_PILLAR = registerBlock("ancient_wood_pillar",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(1.4f, 1f).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<StairBlock> ANCIENT_WOOD_STAIRS = registerBlock("ancient_wood_stairs",
-            () -> new StairBlock(ANCIENT_WOOD.get().defaultBlockState(), BlockBehaviour.Properties.of(Material.WOOD).strength(1.4f, 1f).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
+            () -> new StairBlock(ANCIENT_WOOD.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())), ModTabs.FABLOCKTAB);
     private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
         return false;
     }
@@ -86,6 +103,8 @@ public class ModBlocks {
             () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> FOSSIL = registerBlock("fossil",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(2f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> TARRED_DIRT = registerBlock("tarred_dirt",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
@@ -93,12 +112,14 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> VOLCANIC_ROCK = registerBlock("volcanic_rock",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_BRICKS = registerBlock("volcanic_bricks",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1.5f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
 
     public static final RegistrySupplier<Block> VOLCANIC_BRICK_SLAB = registerBlock("volcanic_brick_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2f, 3f)), ModTabs.FABLOCKTAB);
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> VOLCANIC_BRICK_STAIRS = registerBlock("volcanic_brick_stairs",
             () -> new StairBlock(VOLCANIC_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<Block> VOLCANIC_BRICK_WALL = registerBlock("volcanic_brick_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())), ModTabs.FABLOCKTAB);
 
     public static final RegistrySupplier<Block> CORDAITES_PLANKS = registerBlock("cordaites_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()), ModTabs.FABLOCKTAB);
@@ -244,6 +265,12 @@ public class ModBlocks {
 
     private static <T extends Block> RegistrySupplier<T> registerBlockWithoutBlockItem(String name, Supplier<T> block, CreativeModeTab tab) {
         return BLOCKS.register(name, block);
+    }
+
+    private static <T extends Block, R extends BlockItem> RegistrySupplier<T> registerBlockWithCustomBlockItem(String name, Supplier<T> block, Function<T, R> blockItem) {
+        RegistrySupplier<T> toReturn = BLOCKS.register(name, block);
+        ModItems.ITEMS.register(name, () -> blockItem.apply(toReturn.get()));
+        return toReturn;
     }
 
     private static <T extends Block> RegistrySupplier<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {

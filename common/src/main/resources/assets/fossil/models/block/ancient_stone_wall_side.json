@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_wall_side",
+  "textures": {
+    "wall": "fossil:block/ancient_stone_bricks"
+  }
+}

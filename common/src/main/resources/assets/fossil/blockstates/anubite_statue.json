@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/anubite_statue",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "fossil:block/anubite_statue",
+      "y": 0
+    },
+    "facing=west": {
+      "model": "fossil:block/anubite_statue",
+      "y": -270
+    },
+    "facing=east": {
+      "model": "fossil:block/anubite_statue",
+      "y": -90
+    }
+  }
+}
