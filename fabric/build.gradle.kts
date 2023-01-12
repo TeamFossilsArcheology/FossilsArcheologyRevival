@@ -31,18 +31,18 @@ configurations {
     named("developmentFabric").get().extendsFrom(common)
 }
 
-val fabric_loader_version: String by rootProject
-val fabric_api_version: String by rootProject
-val architectury_version: String by rootProject
-val archives_base_name: String by rootProject
-val parchment_date: String by rootProject
-val cloth_config_version: String by rootProject
-val rei_version: String by rootProject
+val fabricLoaderVersion: String by rootProject
+val fabricApiVersion: String by rootProject
+val architecturyVersion: String by rootProject
+val archivesBaseName: String by rootProject
+val parchmentDate: String by rootProject
+val clothConfigVersion: String by rootProject
+val reiVersion: String by rootProject
 
 dependencies {
     "mappings"(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.18.2:$parchment_date@zip")
+        parchment("org.parchmentmc.data:parchment-1.18.2:$parchmentDate@zip")
 
         addLayer(object : MappingsSpec<MappingLayer> {
             val getClasses = MappingTreeView::class.java.getDeclaredMethod("getClasses")
@@ -79,13 +79,13 @@ dependencies {
         })
     })
 
-    modImplementation("net.fabricmc:fabric-loader:${fabric_loader_version}")
-    modApi("net.fabricmc.fabric-api:fabric-api:${fabric_api_version}")
+    modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
+    modApi("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}")
     // Remove the next line if you don't want to depend on the API
-    modApi("dev.architectury:architectury-fabric:${architectury_version}")
+    modApi("dev.architectury:architectury-fabric:${architecturyVersion}")
     modRuntimeOnly("curse.maven:modmenu-308702:4145213")
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${cloth_config_version}")
-    modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${rei_version}")
+    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${clothConfigVersion}")
+    modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.80")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
@@ -128,7 +128,7 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
 publishing {
     publications {
         create<MavenPublication>("mavenFabric") {
-            artifactId = archives_base_name + "-" + project.name
+            artifactId = archivesBaseName + "-" + project.name
             from(components["java"])
         }
     }

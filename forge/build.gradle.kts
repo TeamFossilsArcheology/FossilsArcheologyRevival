@@ -18,28 +18,28 @@ configurations {
     named("developmentForge").get().extendsFrom(common)
 }
 
-val forge_version: String by rootProject
-val architectury_version: String by rootProject
-val archives_base_name: String by rootProject
-val parchment_date: String by rootProject
-val cloth_config_version: String by rootProject
-val rei_version: String by rootProject
+val forgeVersion: String by rootProject
+val architecturyVersion: String by rootProject
+val archivesBaseName: String by rootProject
+val parchmentDate: String by rootProject
+val clothConfigVersion: String by rootProject
+val reiVersion: String by rootProject
 
 dependencies {
     "mappings"(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.18.2:$parchment_date@zip")
+        parchment("org.parchmentmc.data:parchment-1.18.2:$parchmentDate@zip")
     })
 
-    forge("net.minecraftforge:forge:${forge_version}")
+    forge("net.minecraftforge:forge:${forgeVersion}")
     // Remove the next line if you don't want to depend on the API
-    modApi("dev.architectury:architectury-forge:${architectury_version}")
+    modApi("dev.architectury:architectury-forge:${architecturyVersion}")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionForge")) { isTransitive = false }
 
-    modImplementation("me.shedaniel.cloth:cloth-config-forge:${cloth_config_version}")
-    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${rei_version}")
+    modImplementation("me.shedaniel.cloth:cloth-config-forge:${clothConfigVersion}")
+    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
 }
 
@@ -96,7 +96,7 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
 publishing {
     publications {
         create<MavenPublication>("mavenForge") {
-            artifactId = archives_base_name + "-" + project.name
+            artifactId = archivesBaseName + "-" + project.name
             from(components["java"])
         }
     }

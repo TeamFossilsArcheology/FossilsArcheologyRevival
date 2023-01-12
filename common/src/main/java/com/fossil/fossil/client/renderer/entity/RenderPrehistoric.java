@@ -1,4 +1,4 @@
-package com.fossil.fossil.client.renderer;
+package com.fossil.fossil.client.renderer.entity;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.Gender;
