@@ -19,6 +19,7 @@ public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+        this.renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTick);
         RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
         int x = (this.width - imageWidth) / 2;
