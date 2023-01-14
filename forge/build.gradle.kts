@@ -74,13 +74,15 @@ tasks {
         exclude("fabric.mod.json")
 
         configurations = listOf(project.configurations["shadowCommon"])
-        archiveClassifier.set("dev-shadow")
+        archiveClassifier.set("forge-dev-shadow")
+        archiveBaseName.set(archivesBaseName)
     }
 
     remapJar {
         inputFile.set(shadowJar.get().archiveFile)
         dependsOn(shadowJar)
-        archiveClassifier.set(null as String?)
+        archiveClassifier.set("forge")
+        archiveBaseName.set(archivesBaseName)
     }
 
     jar {

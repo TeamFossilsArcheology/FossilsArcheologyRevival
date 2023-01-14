@@ -105,14 +105,16 @@ tasks {
 
     shadowJar {
         configurations = listOf(shadowCommon)
-        archiveClassifier.set("dev-shadow")
+        archiveClassifier.set("fabric-dev-shadow")
+        archiveBaseName.set(archivesBaseName)
     }
 
     remapJar {
         injectAccessWidener.set(true)
         inputFile.set(shadowJar.get().archiveFile)
         dependsOn(shadowJar)
-        archiveClassifier.set(null as String?)
+        archiveClassifier.set("fabric")
+        archiveBaseName.set(archivesBaseName)
     }
 
     jar {
