@@ -6,6 +6,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class SarcophagusBlockEntity extends BlockEntity {
+    public static final int STATE_LOCKED = 0;
+    public static final int STATE_UNLOCKED = 1;
+    public static final int STATE_OPENING = 2;
+    public static final int STATE_CLOSING = 3;
     private int state;
     private int doorTimer;
 
@@ -14,12 +18,12 @@ public class SarcophagusBlockEntity extends BlockEntity {
     }
 
     private static void tick(Level level, BlockPos pos, BlockState state, SarcophagusBlockEntity blockEntity) {
-        if (blockEntity.state != 3) {
+        if (blockEntity.state != STATE_CLOSING) {
             if (blockEntity.doorTimer > 0) {
                 blockEntity.doorTimer++;
             }
             if (blockEntity.doorTimer >= 91) {
-                blockEntity.state = 3;
+                blockEntity.state = STATE_CLOSING;
                 if (!level.isClientSide) {
                     //TODO: Spawn Anu
                 }
@@ -29,7 +33,7 @@ public class SarcophagusBlockEntity extends BlockEntity {
                 blockEntity.doorTimer--;
             }
             if (blockEntity.doorTimer == 0) {
-                blockEntity.state = 0;
+                blockEntity.state = STATE_LOCKED;
             }
         }
     }

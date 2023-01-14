@@ -43,13 +43,13 @@ public class AncientChestBlock extends BaseEntityBlock {
             if (blockEntity.getState() == 0) {
                 ItemStack itemStack = player.getItemInHand(hand);
                 if (itemStack.is(ModItems.ANCIENT_KEY.get())) {
-                    blockEntity.setState(1);
+                    blockEntity.setState(AncientChestBlockEntity.STATE_UNLOCKED);
                     if (!player.isCreative()) {
                         itemStack.shrink(1);
                     }
                 }
             } else if (blockEntity.getState() == 1) {
-                blockEntity.setState(2);
+                blockEntity.setState(AncientChestBlockEntity.STATE_OPENING);
                 blockEntity.setLidTimer(1);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);

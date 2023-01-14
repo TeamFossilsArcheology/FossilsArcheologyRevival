@@ -41,7 +41,7 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
         var c = bufferSource.getBuffer(RenderType.entityCutout(SarcophagusModel.TEXTURE));
         sarcophagusModel.render(poseStack, c, packedLight, packedOverlay);
         poseStack.popPose();
-        if (blockEntity.getState() == 1) {
+        if (blockEntity.getState() == SarcophagusBlockEntity.STATE_UNLOCKED) {
             poseStack.pushPose();
             if (direction == Direction.NORTH) {
                 poseStack.translate(0.5f, 1.2f, 0);
@@ -62,7 +62,7 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
                     bufferSource, mc.level, packedLight, packedOverlay, 0);
             poseStack.popPose();
         }
-        if (blockEntity.getState() != 3) {
+        if (blockEntity.getState() != SarcophagusBlockEntity.STATE_CLOSING) {
 
         }
     }

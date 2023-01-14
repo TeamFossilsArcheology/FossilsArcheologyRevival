@@ -9,6 +9,10 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AncientChestBlockEntity extends BlockEntity {
+    public static final int STATE_LOCKED = 0;
+    public static final int STATE_UNLOCKED = 1;
+    public static final int STATE_OPENING = 2;
+    public static final int STATE_CLOSING = 3;
     private int state;
     private int lidTimer;
 
@@ -17,12 +21,12 @@ public class AncientChestBlockEntity extends BlockEntity {
     }
 
     private static void tick(Level level, BlockPos pos, BlockState state, AncientChestBlockEntity blockEntity) {
-        if (blockEntity.state != 3) {
+        if (blockEntity.state != STATE_CLOSING) {
             if (blockEntity.lidTimer > 0) {
                 blockEntity.lidTimer++;
             }
             if (blockEntity.lidTimer >= 91) {
-                blockEntity.state = 3;
+                blockEntity.state = STATE_CLOSING;
                 if (!level.isClientSide) {
                     ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5,
                             new ItemStack(ModItems.ANCIENT_CLOCK.get()), 0, 0.1, 0);
@@ -34,7 +38,7 @@ public class AncientChestBlockEntity extends BlockEntity {
                 blockEntity.lidTimer--;
             }
             if (blockEntity.lidTimer == 0) {
-                blockEntity.state = 0;
+                blockEntity.state = STATE_LOCKED;
             }
 
         }

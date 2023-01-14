@@ -43,13 +43,13 @@ public class SarcophagusBlock extends BaseEntityBlock {
             if (blockEntity.getState() == 0) {
                 ItemStack itemStack = player.getItemInHand(hand);
                 if (itemStack.is(ModItems.SCARAB_GEM.get())) {
-                    blockEntity.setState(1);
+                    blockEntity.setState(SarcophagusBlockEntity.STATE_UNLOCKED);
                     if (!player.isCreative()) {
                         itemStack.shrink(1);
                     }
                 }
             } else if (blockEntity.getState() == 1) {
-                blockEntity.setState(2);
+                blockEntity.setState(SarcophagusBlockEntity.STATE_OPENING);
                 blockEntity.setDoorTimer(1);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
