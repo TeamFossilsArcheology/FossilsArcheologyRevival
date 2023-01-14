@@ -2,6 +2,8 @@ package com.fossil.fossil.item;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.material.ModFluids;
+import dev.architectury.core.item.ArchitecturyBucketItem;
 import dev.architectury.core.item.ArchitecturySpawnEggItem;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -13,6 +15,10 @@ public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(Fossil.MOD_ID, Registry.ITEM_REGISTRY);
 
+    public static final RegistrySupplier<Item> TAR_BUCKET = ITEMS.register("tar_bucket",
+            () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> TAR_DROP = ITEMS.register("tar_drop",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> AMBER = ITEMS.register("amber",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BIO_FOSSIL = ITEMS.register("bio_fossil",
@@ -48,6 +54,9 @@ public class ModItems {
 
     public static final RegistrySupplier<SpawnEggItem> THERIZINOSAURUS_SPAWN_EGG = ITEMS.register("therizinosaurus_spawn_egg",
             () -> new ArchitecturySpawnEggItem(ModEntities.THERIZINOSAURUS, 0x64352D, 0x251A17, new Item.Properties().tab(ModTabs.FAITEMTAB))
+    );
+    public static final RegistrySupplier<SpawnEggItem> TAR_SLIME_SPAWN_EGG = ITEMS.register("tar_slime_spawn_egg",
+            () -> new ArchitecturySpawnEggItem(ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );
 
     public static void register() {

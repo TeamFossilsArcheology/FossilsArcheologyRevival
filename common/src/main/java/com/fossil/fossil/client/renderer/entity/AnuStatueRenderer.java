@@ -1,6 +1,7 @@
 package com.fossil.fossil.client.renderer.entity;
 
 import com.fossil.fossil.client.model.AnuStatueModel;
+import com.fossil.fossil.client.renderer.RendererFabricFix;
 import com.fossil.fossil.client.renderer.entity.layers.AnuStatueOverlayLayer;
 import com.fossil.fossil.entity.AnuStatueEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -17,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class AnuStatueRenderer extends MobRenderer<AnuStatueEntity, AnuStatueModel> {
+public class AnuStatueRenderer extends MobRenderer<AnuStatueEntity, AnuStatueModel> implements RendererFabricFix {
     public AnuStatueRenderer(EntityRendererProvider.Context context, AnuStatueModel entityModel) {
         super(context, entityModel, 0.5f);
         addLayer(new AnuStatueOverlayLayer(this));
@@ -26,6 +27,11 @@ public class AnuStatueRenderer extends MobRenderer<AnuStatueEntity, AnuStatueMod
     @Override
     public @NotNull ResourceLocation getTextureLocation(AnuStatueEntity entity) {
         return AnuStatueModel.TEXTURE;
+    }
+
+    @NotNull
+    public ResourceLocation _getTextureLocation(Entity entity) {
+        return getTextureLocation((AnuStatueEntity) entity);
     }
 
     @Override
@@ -86,11 +92,6 @@ public class AnuStatueRenderer extends MobRenderer<AnuStatueEntity, AnuStatueMod
 
     private static void vertex4(VertexConsumer vertexConsumer, Matrix4f matrix4f, float f, float g) {
         vertexConsumer.vertex(matrix4f, 0.0f, f, g).color(255, 0, 0, 0).endVertex();
-    }
-
-    @NotNull
-    public ResourceLocation _getTextureLocation(Entity entity) {
-        return getTextureLocation((AnuStatueEntity) entity);
     }
 
 }

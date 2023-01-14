@@ -1,6 +1,9 @@
 package com.fossil.fossil.block.entity;
 
+import com.fossil.fossil.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,9 +24,9 @@ public class AncientChestBlockEntity extends BlockEntity {
             if (blockEntity.lidTimer >= 91) {
                 blockEntity.state = 3;
                 if (!level.isClientSide) {
-                    blockEntity.state = 0;
-                    blockEntity.lidTimer = 0;
-                    //TODO: Spawn item
+                    ItemEntity itemEntity = new ItemEntity(level, pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5,
+                            new ItemStack(ModItems.ANCIENT_CLOCK.get()), 0, 0.1, 0);
+                    level.addFreshEntity(itemEntity);
                 }
             }
         } else {

@@ -4,6 +4,8 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.custom_blocks.SkullBlock;
 import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.item.*;
+import com.fossil.fossil.material.ModFluids;
+import dev.architectury.core.block.ArchitecturyLiquidBlock;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
@@ -32,6 +34,9 @@ public class ModBlocks {
     private static ToIntFunction<BlockState> activeBlockEmission(int lightValue) {
         return arg -> arg.getValue(CustomEntityBlock.ACTIVE) ? lightValue : 0;
     }
+    public static final RegistrySupplier<BubbleBlowerBlock> BUBBLE_BLOWER = registerBlock("bubble_blower",
+            () -> new BubbleBlowerBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3).sound(SoundType.METAL).requiresCorrectToolForDrops())
+            , ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<Block> ANALYZER = registerBlock("analyzer",
             () -> new AnalyzerBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(3f).requiresCorrectToolForDrops()
                     .lightLevel(activeBlockEmission(14))), ModTabs.FABLOCKTAB);
@@ -45,12 +50,18 @@ public class ModBlocks {
             ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<FeederBlock> FEEDER = registerBlock("feeder",
             () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<ArchitecturyLiquidBlock> TAR = registerBlockWithoutBlockItem("tar",
+            () -> TarBlock.get(ModFluids.TAR, BlockBehaviour.Properties.copy(Blocks.WATER).isSuffocating(ModBlocks::always)), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<AnuStatueBlock> ANU_STATUE = registerBlockWithCustomBlockItem("anu_statue",
             () -> new AnuStatueBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
             block -> AnuStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
     public static final RegistrySupplier<AnubiteStatueBlock> ANUBITE_STATUE = registerBlockWithCustomBlockItem("anubite_statue",
             () -> new AnubiteStatueBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
             block -> AnubiteStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+    public static final RegistrySupplier<AnuPortal> ANU_PORTAL = registerBlock("anu_portal",
+            () -> new AnuPortal(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL).noDrops()), ModTabs.FABLOCKTAB);
+    public static final RegistrySupplier<AnuPortal> HOME_PORTAL = registerBlock("home_portal",
+            () -> new AnuPortal(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL).noDrops()), ModTabs.FABLOCKTAB);
     public static final RegistrySupplier<AncientChestBlock> ANCIENT_CHEST = registerBlockWithCustomBlockItem("ancient_chest",
             () -> new AncientChestBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().strength(-1, 3600000).noDrops()),
             block -> AncientChestBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
@@ -92,6 +103,9 @@ public class ModBlocks {
             () -> new StairBlock(ANCIENT_WOOD.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())), ModTabs.FABLOCKTAB);
     private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
         return false;
+    }
+    private static boolean always(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return true;
     }
 
     public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",

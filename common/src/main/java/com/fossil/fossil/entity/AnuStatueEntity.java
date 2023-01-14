@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity;
 
+import com.fossil.fossil.block.ModBlocks;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -39,8 +40,8 @@ public class AnuStatueEntity extends Mob {
 
     private void createPortal() {
         level.setBlock(blockPosition().below(), Blocks.OBSIDIAN.defaultBlockState(), 3);
-        level.setBlock(blockPosition(), Blocks.NETHER_PORTAL.defaultBlockState(), 18);
-        level.setBlock(blockPosition().above(), Blocks.NETHER_PORTAL.defaultBlockState(), 18);
+        level.setBlock(blockPosition(), ModBlocks.ANU_PORTAL.get().defaultBlockState(), 18);
+        level.setBlock(blockPosition().above(), ModBlocks.ANU_PORTAL.get().defaultBlockState(), 18);
         level.setBlock(blockPosition().above(2), Blocks.OBSIDIAN.defaultBlockState(), 3);
         remove(RemovalReason.DISCARDED);
     }

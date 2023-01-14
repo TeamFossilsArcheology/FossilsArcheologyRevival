@@ -6,13 +6,17 @@ import com.fossil.fossil.client.gui.*;
 import com.fossil.fossil.client.model.AnuStatueModel;
 import com.fossil.fossil.client.model.TherizinosaurusModel;
 import com.fossil.fossil.client.model.TriceratopsModel;
+import com.fossil.fossil.client.particle.BubbleParticle;
+import com.fossil.fossil.client.particle.TarBubbleParticle;
 import com.fossil.fossil.client.renderer.blockentity.*;
 import com.fossil.fossil.client.renderer.entity.RenderPrehistoric;
 import com.fossil.fossil.client.renderer.entity.RenderPrehistoricGeo;
+import com.fossil.fossil.client.renderer.entity.TarSlimeRenderer;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.inventory.ModMenus;
 import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
+import dev.architectury.registry.client.particle.ParticleProviderRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -29,6 +33,9 @@ public class ClientInit {
 
         EntityRendererRegistry.register(ModEntities.ANU_STATUE,
                 context -> new com.fossil.fossil.client.renderer.entity.AnuStatueRenderer(context, new AnuStatueModel()));
+        EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);
+        ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
+        ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
     }
 
     public static void later() {

@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.entity.monster.TarSlime;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
@@ -39,6 +40,8 @@ public class ModEntities {
         ).sized(0.5F, 0.7F).build("dinosaur_egg")
     );
 
+    public static final RegistrySupplier<EntityType<TarSlime>> TAR_SLIME = ENTITIES.register("tar_slime",
+            () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).build("tar_slime"));
     public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
             () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
 
@@ -48,5 +51,6 @@ public class ModEntities {
         EntityAttributeRegistry.register(THERIZINOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DINOSAUR_EGG, DinosaurEgg::createAttributes);
         EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
+        EntityAttributeRegistry.register(TAR_SLIME, TarSlime::createAttributes);
     }
 }

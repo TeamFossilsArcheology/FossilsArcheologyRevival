@@ -1,5 +1,6 @@
 package com.fossil.fossil.client.renderer.entity;
 
+import com.fossil.fossil.client.renderer.RendererFabricFix;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.Gender;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,7 +13,7 @@ import net.minecraft.world.entity.MobType;
 import org.jetbrains.annotations.NotNull;
 
 // TODO Migrate to geckolib rendering as all dinosaurs should be rendered with it
-public class RenderPrehistoric extends MobRenderer<Prehistoric, EntityModel<Prehistoric>> {
+public class RenderPrehistoric extends MobRenderer<Prehistoric, EntityModel<Prehistoric>> implements RendererFabricFix {
 
     public RenderPrehistoric(EntityRendererProvider.Context context, EntityModel<Prehistoric> model) {
         super(context, model, 0.3F);

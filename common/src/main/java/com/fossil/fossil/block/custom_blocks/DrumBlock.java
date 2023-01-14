@@ -1,8 +1,7 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.Fossil;
+import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
@@ -19,7 +18,6 @@ import org.jetbrains.annotations.NotNull;
 public class DrumBlock extends Block {
     private static final int DRUM_COUNT = 2;
     public static final IntegerProperty DRUMS = IntegerProperty.create("drums", 0, DRUM_COUNT);
-    public static final ResourceLocation DRUM_SOUND = new ResourceLocation(Fossil.MOD_ID, "drum_single");
 
     public DrumBlock(Properties properties) {
         super(properties);
@@ -39,7 +37,7 @@ public class DrumBlock extends Block {
         } else {
             level.setBlock(pos, state.setValue(DRUMS, 0), 3);
         }
-        level.playSound(player, pos, new SoundEvent(DRUM_SOUND), SoundSource.BLOCKS, 1, 1);
+        level.playSound(player, pos, new SoundEvent(ModSounds.DRUM_SINGLE), SoundSource.BLOCKS, 1, 1);
         return InteractionResult.SUCCESS;
     }
 }

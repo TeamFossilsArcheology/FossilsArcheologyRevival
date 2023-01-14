@@ -2,9 +2,12 @@ package com.fossil.fossil.block.entity;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.client.particle.BubbleParticle;
+import com.fossil.fossil.client.particle.TarBubbleParticle;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.core.particles.ParticleType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 
@@ -13,6 +16,12 @@ import java.util.function.Supplier;
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
             DeferredRegister.create(Fossil.MOD_ID, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
+    public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(Fossil.MOD_ID, Registry.PARTICLE_TYPE_REGISTRY);
+    public static final RegistrySupplier<BubbleParticle.Type> BUBBLE = PARTICLE_TYPES.register("bubble", () -> new BubbleParticle.Type(false));
+    public static final RegistrySupplier<TarBubbleParticle.Type> TAR_BUBBLE = PARTICLE_TYPES.register("tar_bubble", () -> new TarBubbleParticle.Type(false));
+
+    public static final RegistrySupplier<BlockEntityType<BubbleBlowerBlockEntity>> BUBBLE_BLOWER = BLOCK_ENTITIES.register("bubble_blower",
+            () -> BlockEntityType.Builder.of(BubbleBlowerBlockEntity::new, ModBlocks.BUBBLE_BLOWER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<VaseBlockEntity>> VASE = BLOCK_ENTITIES.register("vase",
             () -> BlockEntityType.Builder.of(VaseBlockEntity::new, ModBlocks.VASES.stream().map(Supplier::get).toArray(Block[]::new)).build(null));
     public static final RegistrySupplier<BlockEntityType<FeederBlockEntity>> FEEDER = BLOCK_ENTITIES.register("feeder",
@@ -36,5 +45,6 @@ public class ModBlockEntities {
 
     public static void register() {
         BLOCK_ENTITIES.register();
+        PARTICLE_TYPES.register();
     }
 }

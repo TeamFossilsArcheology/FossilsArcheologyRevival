@@ -1,5 +1,11 @@
 {
   "drum_single": {
-    "sounds": [ "fossil:drum_single" ]
+    "sounds": ["fossil:drum_single"]
+  },
+  "anu_totem": {
+    "sounds": ["fossil:anu_totem"]
+  },
+  "tar": {
+    "sounds": ["fossil:tar"]
   }
 }

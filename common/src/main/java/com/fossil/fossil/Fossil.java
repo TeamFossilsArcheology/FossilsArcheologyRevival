@@ -5,7 +5,9 @@ import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.material.ModFluids;
 import com.fossil.fossil.recipe.ModRecipes;
+import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.world.feature.ModPlacedFeatures;
 
 
@@ -15,6 +17,7 @@ public class Fossil {
     public static final RevivalConfig CONFIG_OPTIONS = new RevivalConfig();
 
     public static void init() {
+        ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
         ModItems.register();
         ModEntities.register();
@@ -22,6 +25,6 @@ public class Fossil {
         ModBlockEntities.register();
         ModPlacedFeatures.register();
         ModRecipes.register();
-
+        ModSounds.register();
     }
 }

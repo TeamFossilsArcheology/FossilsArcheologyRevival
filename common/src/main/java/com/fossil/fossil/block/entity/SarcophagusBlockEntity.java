@@ -21,8 +21,6 @@ public class SarcophagusBlockEntity extends BlockEntity {
             if (blockEntity.doorTimer >= 91) {
                 blockEntity.state = 3;
                 if (!level.isClientSide) {
-                    blockEntity.state = 0;
-                    blockEntity.doorTimer = 0;
                     //TODO: Spawn Anu
                 }
             }

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/bubble_blower"
+    },
+    "facing=south": {
+      "model": "fossil:block/bubble_blower",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/bubble_blower",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "fossil:block/bubble_blower",
+      "y": 90
+    }
+  }
+}

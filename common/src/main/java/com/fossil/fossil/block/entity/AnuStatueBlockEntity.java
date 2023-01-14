@@ -1,10 +1,9 @@
 package com.fossil.fossil.block.entity;
 
-import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.custom_blocks.FigurineBlock;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
@@ -16,7 +15,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class AnuStatueBlockEntity extends BlockEntity {
-    public static final ResourceLocation SPAWN_SOUND = new ResourceLocation(Fossil.MOD_ID, "anu_totem");
 
     public AnuStatueBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.ANU_STATUE.get(), blockPos, blockState);
@@ -26,7 +24,7 @@ public class AnuStatueBlockEntity extends BlockEntity {
         if (hasFigurines(level, pos) && hasRedstone(level, pos)) {
             level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Explosion.BlockInteraction.BREAK);
             ModEntities.ANU_STATUE.get().spawn((ServerLevel) level, null, null, null, pos.offset(0.5f, 0, 0.5f), MobSpawnType.EVENT, false, false);
-            level.playSound(null, pos, new SoundEvent(SPAWN_SOUND), SoundSource.BLOCKS, 1, 1);
+            level.playSound(null, pos, ModSounds.ANU_TOTEM.get(), SoundSource.BLOCKS, 1, 1);
             level.removeBlock(pos.north().east(), false);
             level.removeBlock(pos.north().west(), false);
             level.removeBlock(pos.south().east(), false);
