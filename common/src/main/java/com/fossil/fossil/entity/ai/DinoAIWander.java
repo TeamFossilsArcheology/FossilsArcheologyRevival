@@ -1,32 +1,20 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.util.FossilAnimation;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumSet;
 
-public class DinoAIWander extends Goal {
-    protected final Prehistoric dinosaur;
-    protected final double speed;
-    protected double x;
-    protected double y;
-    protected double z;
-    protected int interval;
-    protected boolean forceTrigger;
+public class DinoAIWander extends RandomStrollGoal {
 
     public DinoAIWander(Prehistoric dinosaur, double speed) {
-        this(dinosaur, speed, 30);
+        this(dinosaur, speed, 120);
     }
 
     public DinoAIWander(Prehistoric dinosaur, double speed, int interval) {
-        this.dinosaur = dinosaur;
-        this.speed = speed;
-        this.interval = interval;
-        setFlags(EnumSet.of(Goal.Flag.MOVE));
+        super(dinosaur, speed, interval);
     }
 
     /**
@@ -34,69 +22,37 @@ public class DinoAIWander extends Goal {
      */
     @Override
     public boolean canUse() {
-        if (!dinosaur.shouldWander || dinosaur.isImmobile()) {
+        Prehistoric dinosaur = (Prehistoric) mob;
+        if (!dinosaur.shouldWander || dinosaur.isImmobile() || dinosaur.getTarget() != null) {
             return false;
         }
+        if (dinosaur.isSleeping()) return false;
+        return super.canUse();
         /*if(dinosaur instanceof EntityPrehistoricFlocking && !((EntityPrehistoricFlocking) dinosaur).isGroupLeader() && ((EntityPrehistoricFlocking) dinosaur).hasGroupLeader()){
             return false;
         }*/
-        if (!this.forceTrigger) {
-            if (dinosaur.getNoActionTime() >= 100) {
-                return false;
-            }
-
-            if (dinosaur.getRandom().nextInt(this.interval) != 0) {
-                return false;
-            }
-        }
-
-        Vec3 position = this.getPosition();
-
-        if (position == null) {
-            return false;
-        } else {
-            this.x = position.x;
-            this.y = position.y;
-            this.z = position.z;
-            this.forceTrigger = false;
-            this.dinosaur.getNavigation().moveTo(this.x, this.y, this.z, this.speed);
-            return true;
-        }
     }
 
     @Nullable
-    protected Vec3 getPosition() {
-        if (dinosaur.isInWater()) {
-            Vec3 randomPos = DefaultRandomPos.getPos(dinosaur, 30, 8);
-            return randomPos == null ? DefaultRandomPos.getPos(dinosaur, 10, 7) : randomPos;
-        } else {
-            return DefaultRandomPos.getPos(dinosaur, 10, 7);
-        }
-    }
-
     @Override
-    public boolean canContinueToUse() {
-        return !this.dinosaur.getNavigation().isDone();
+    protected Vec3 getPosition() {
+        if (mob.isInWater()) {
+            Vec3 randomPos = DefaultRandomPos.getPos(mob, 30, 8);
+            return randomPos == null ? DefaultRandomPos.getPos(mob, 10, 7) : randomPos;
+        } else {
+            return DefaultRandomPos.getPos(mob, 10, 7);
+        }
     }
 
     @Override
     public void start() {
-        this.dinosaur.getNavigation().moveTo(this.x, this.y, this.z, this.speed);
-        FossilAnimation current = this.dinosaur.getCurrentAnimation();
-        if (!current.isAggressive()) this.dinosaur.setCurrentAnimation(FossilAnimation.WALK);
+        super.start();
+        ((Prehistoric)mob).setCurrentAnimation(((Prehistoric)mob).getWalkingAnimation());
     }
 
-    /**
-     * Makes task to bypass chance
-     */
-    public void trigger() {
-        this.forceTrigger = true;
-    }
-
-    /**
-     * Changes task random possibility for execution
-     */
-    public void setInterval(int interval) {
-        this.interval = interval;
+    @Override
+    public void stop() {
+        super.stop();
+        ((Prehistoric)mob).setCurrentAnimation(((Prehistoric)mob).getIdleAnimation());
     }
 }

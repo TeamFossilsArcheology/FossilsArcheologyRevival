@@ -10,20 +10,42 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.TimePeriod;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Triceratops extends Prehistoric implements IDinosaur {
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
+
+    public static final String IDLE = "animation.triceratops.idle";
+    public static final String WALK = "animation.triceratops.walk";
+    public static final String RUN = "animation.triceratops.run";
+    public static final String SWIM = "animation.triceratops.swim";
+    public static final String DRINK = "animation.triceratops.drink";
+    public static final String EAT = "animation.triceratops.eat";
+    public static final String SIT = "animation.triceratops.sit";
+    public static final String SLEEP1 = "animation.triceratops.sleep1";
+    public static final String SLEEP2 = "animation.triceratops.sleep2";
+    public static final String RAM = "animation.triceratops.ram";
+    public static final String RAM_WINDUP = "animation.triceratops.ram_windup";
+    public static final String TURN_RIGHT = "animation.triceratops.turn_right";
+    public static final String TURN_LEFT = "animation.triceratops.turn_left";
+    public static final String SPEAK = "animation.triceratops.speak";
+    public static final String CALL = "animation.triceratops.call";
+    public static final String ATTACK1 = "animation.triceratops.attack1";
+    public static final String ATTACK2 = "animation.triceratops.attack2";
 
     public Triceratops(EntityType<? extends Triceratops> type, Level level) {
         super(
@@ -38,8 +60,8 @@ public class Triceratops extends Prehistoric implements IDinosaur {
             12,
             12,
             64,
-            0.2,
-            0.35,
+            0.1,
+            0.25,
             5,
             15,
             TimePeriod.MESOZOIC,
@@ -54,15 +76,19 @@ public class Triceratops extends Prehistoric implements IDinosaur {
         this.ridingY = 0.73F;
         this.ridingXZ = -0.05F;
         this.pediaScale = 55;
+        this.maxUpStep = 1.5F;
     }
 
     @Override
     public void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.0D));
-        this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1.0D, false));
+
+        double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
+        this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.2 * speed));
+        this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed, false));
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(3, new DinoAIWander(this, 1.0D));
+        this.goalSelector.addGoal(7, new DinoAIWander(this, speed));
+        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         /*this.goalSelector.addGoal(3, new DinoAIEatFeedersAndBlocks(this));
         this.targetSelector.addGoal(3, new DinoAIEatItems(this));
         this.goalSelector.addGoal(4, new DinoAIRiding(this, 1.0F));
@@ -157,11 +183,6 @@ public class Triceratops extends Prehistoric implements IDinosaur {
     }
 
     @Override
-    public int getTailSegments() {
-        return 3;
-    }
-
-    @Override
     public void tick() {
         super.tick();
         /*if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
@@ -171,18 +192,10 @@ public class Triceratops extends Prehistoric implements IDinosaur {
     }
 
     @Override
-    public boolean doHurtTarget(Entity entity) {
-        /*if (this.getAnimation() != ATTACK_ANIMATION) {
-            this.setAnimation(ATTACK_ANIMATION);
-        }*/
-        return false;
-    }
-
-
-    @Override
     public int getMaxHunger() {
         return 175;
     }
+
 
    /* @Override
     protected SoundEvent getAmbientSound() {
@@ -199,6 +212,24 @@ public class Triceratops extends Prehistoric implements IDinosaur {
         return FASoundRegistry.TRICERATOPS_DEATH;
     }*/
 
+    public PlayState onFrame(AnimationEvent<Triceratops> event) {
+        /*if (event.getController().getAnimationState() == AnimationState.Stopped) {
+            setCurrentAnimation(IDLE);
+        }
+        if (IDLE.equals(getCurrentAnimation()) && navigation.isInProgress()) setCurrentAnimation(WALK);*/
+
+        String animation = getCurrentAnimation();
+        ILoopType type;
+        if (IDLE.equals(animation) || WALK.equals(animation) || SLEEP1.equals(animation) || SLEEP2.equals(animation) ||
+            RUN.equals(animation) || SWIM.equals(animation) || SIT.equals(animation) || RAM.equals(animation)) {
+            type = ILoopType.EDefaultLoopTypes.LOOP;
+        } else {
+            type = ILoopType.EDefaultLoopTypes.HOLD_ON_LAST_FRAME;
+        }
+        event.getController().setAnimation(new AnimationBuilder().addAnimation(animation, type));
+        return PlayState.CONTINUE;
+    }
+
     @Override
     public boolean canBeRidden() {
         return true;
@@ -206,11 +237,34 @@ public class Triceratops extends Prehistoric implements IDinosaur {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, (value) -> PlayState.STOP));
+        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::onFrame));
     }
 
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Override
+    public String getWalkingAnimation() {
+        return WALK;
+    }
+
+    @Override
+    public String getChasingAnimation() {
+        return RUN;
+    }
+
+    @Override
+    public AttackAnimationInfo[] getAttackAnimationsWithDelay() {
+        return new AttackAnimationInfo[]{
+            new AttackAnimationInfo(ATTACK1, 20, 8),
+            new AttackAnimationInfo(ATTACK2, 20, 8)
+        };
+    }
+
+    @Override
+    public String getIdleAnimation() {
+        return IDLE;
     }
 }

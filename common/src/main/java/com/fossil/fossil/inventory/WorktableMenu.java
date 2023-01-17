@@ -1,6 +1,5 @@
 package com.fossil.fossil.inventory;
 
-import com.fossil.fossil.block.entity.WorktableBlockEntity;
 import com.fossil.fossil.recipe.ModRecipes;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;

@@ -5,7 +5,6 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Explosion;

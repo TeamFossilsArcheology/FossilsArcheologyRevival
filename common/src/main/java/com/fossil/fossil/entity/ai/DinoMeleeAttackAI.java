@@ -1,88 +1,77 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.util.EntityToyBase;
+import com.fossil.fossil.util.DisposableTask;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.level.storage.ServerLevelData;
+import net.minecraft.world.level.timers.TimerQueue;
 
-import java.util.EnumSet;
+import java.util.Arrays;
 
-public class DinoMeleeAttackAI extends Goal {
-    private final Prehistoric entity;
-    private final double speed;
-    private final boolean memory;
-    private int attackAfter = 20;
-    private Path currentPath;
-
-    public DinoMeleeAttackAI(Prehistoric entity, double speed, boolean memory) {
-        this.entity = entity;
-        this.speed = speed;
-        this.memory = memory;
-        // Move = 0001;
-        // Look = 0010;
-        setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+public class DinoMeleeAttackAI extends MeleeAttackGoal {
+    public DinoMeleeAttackAI(Prehistoric entity, double speed, boolean followTargetEvenIfNotSeen) {
+        super(entity, speed, followTargetEvenIfNotSeen);
     }
 
     @Override
     public boolean canUse() {
-        LivingEntity target = entity.getTarget();
-        if (target == null || !target.isAlive()) {
+        Prehistoric dinosaur = (Prehistoric) mob;
+        LivingEntity target = dinosaur.getTarget();
+        if (dinosaur.isImmobile()) {
             return false;
-        } else if (entity.isImmobile()) {
-            return false;
-        } else if (entity.level.getDifficulty() == Difficulty.PEACEFUL && target instanceof Player) {
-            return false;
-        }
-        if (entity.isFleeing()) {
+        } else if (dinosaur.level.getDifficulty() == Difficulty.PEACEFUL && target instanceof Player) {
             return false;
         }
-        currentPath = entity.getNavigation().createPath(target, 0);
-        return currentPath != null;
-    }
+        if (dinosaur.isFleeing()) {
+            return false;
+        }
 
-    @Override
-    public boolean canContinueToUse() {
-        LivingEntity target = this.entity.getTarget();
-        return target != null && (target.isAlive() && (!memory ? !entity.getNavigation().isDone() : entity.isWithinRestriction(target.blockPosition())));
+        return super.canUse();
     }
 
     @Override
     public void start() {
-        if (entity.getControllingPassenger() == null) {
-            entity.getNavigation().moveTo(currentPath, speed);
-        }
+        super.start();
+        Prehistoric dinosaur = (Prehistoric) mob;
+        dinosaur.setCurrentAnimation(dinosaur.getChasingAnimation());
     }
 
     @Override
-    public void stop() {
-        entity.getNavigation().stop();
-    }
+    protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
+        Prehistoric dinosaur = (Prehistoric) mob;
+        var attackAnimations = dinosaur.getAttackAnimationsWithDelay();
+        var currentAttackAnimation = Arrays.stream(attackAnimations)
+            .filter(entry -> entry.animation().equals(dinosaur.getCurrentAnimation()))
+            .findAny();
 
-    @Override
-    public void tick() {
-        LivingEntity target = entity.getTarget();
-        if (target == null) {
-            return;
-        }
-        if (target instanceof EntityToyBase && entity.ticksTillPlay > 0) {
-            entity.setTarget(null);
-            return;
-        }
-        if (entity.getControllingPassenger() == null) {
-            entity.getNavigation().moveTo(target, speed);
-        }
-        attackAfter = Math.max(attackAfter - 1, 0);
-        if (entity.getAttackBounds().intersects(target.getBoundingBox())) {
-            if (attackAfter == 0) {
-                entity.doHurtTarget(target);
-                attackAfter = 20;
-            } else {
+        if (currentAttackAnimation.isEmpty()) {
+            double distanceSqr = this.mob.getBbWidth() * this.mob.getBbWidth() * 2 + enemy.getBbWidth();
+            if (distToEnemySqr > distanceSqr || !isTimeToAttack()) return;
+
+            int index = dinosaur.getRandom().nextInt(attackAnimations.length);
+            Prehistoric.AttackAnimationInfo newAnimation = attackAnimations[index];
+            dinosaur.setCurrentAnimation(newAnimation.animation());
+
+            TimerQueue<MinecraftServer> queue = ((ServerLevelData)dinosaur.level.getLevelData()).getScheduledEvents();
+            long gameTime = dinosaur.level.getGameTime();
+            for (int attackDelay : newAnimation.attackDelays()) {
+                queue.schedule(dinosaur.getStringUUID(), gameTime + attackDelay, new DisposableTask((unused1, unused2, unused3) -> {
+                    if (dinosaur.isAlive() && enemy.isAlive()) {
+                        dinosaur.doHurtTarget(enemy);
+                    }
+                    resetAttackCooldown();
+                }));
             }
-        } else {
-            entity.getLookControl().setLookAt(target, 30.0F, 30.0F);
+
+            queue.schedule(dinosaur.getStringUUID(), gameTime + newAnimation.animationLength(), new DisposableTask((u1, u2, u3) -> {
+                if (dinosaur.getCurrentAnimation().equals(newAnimation.animation())) {
+                    dinosaur.setCurrentAnimation(dinosaur.getIdleAnimation());
+                }
+            }));
         }
     }
 }

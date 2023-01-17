@@ -1,18 +1,19 @@
 package com.fossil.fossil.entity.prehistoric;
 
+import com.fossil.fossil.entity.ai.DinoAIFleeBattle;
 import com.fossil.fossil.entity.ai.DinoAIWander;
+import com.fossil.fossil.entity.ai.DinoMeleeAttackAI;
 import com.fossil.fossil.entity.prehistoric.base.IDinosaur;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Diet;
-import com.fossil.fossil.util.FossilAnimation;
 import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.builder.ILoopType;
@@ -23,10 +24,17 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 // TODO Accurately adjust values here, for now setting it identical to Triceratops
-public class Therizinosaurus extends Prehistoric implements IAnimatable, IDinosaur {
+public class Therizinosaurus extends Prehistoric implements IDinosaur {
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public static final String IDLE = "fa.therizinosaurus.idle";
     public static final String WALK = "fa.therizinosaurus.walk";
+    public static final String SLEEP = "fa.therizinosaurus.sleep";
+    public static final String SLEEP_BABY = "fa.therizinosaurus.sleep_baby";
+    public static final String THREAT = "fa.therizinosaurus.threat";
+    public static final String ATTACK1 = "fa.therizinosaurus.attack1";
+    public static final String ATTACK2 = "fa.therizinosaurus.attack2";
+    public static final String EAT = "fa.therizinosaurus.eat";
+
     public Therizinosaurus(EntityType<? extends Prehistoric> entityType, Level level) {
         super(
             entityType,
@@ -53,7 +61,10 @@ public class Therizinosaurus extends Prehistoric implements IAnimatable, IDinosa
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(3, new DinoAIWander(this, 1.0D));
+        this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.0D));
+        this.goalSelector.addGoal(2, new DinoMeleeAttackAI(this, 1.0, true));
+        this.goalSelector.addGoal(7, new DinoAIWander(this, 1.0));
+        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
     @Override
@@ -142,13 +153,14 @@ public class Therizinosaurus extends Prehistoric implements IAnimatable, IDinosa
     }
 
     public PlayState onFrame(AnimationEvent<Therizinosaurus> event) {
-        String animation;
-        if (this.getCurrentAnimation() == FossilAnimation.WALK) {
-            animation = WALK;
+        String animation = getCurrentAnimation();
+        ILoopType type;
+        if (IDLE.equals(animation) || WALK.equals(animation) || SLEEP.equals(animation) || SLEEP_BABY.equals(animation)) {
+            type = ILoopType.EDefaultLoopTypes.LOOP;
         } else {
-            animation = IDLE;
+            type = ILoopType.EDefaultLoopTypes.HOLD_ON_LAST_FRAME;
         }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation(animation, ILoopType.EDefaultLoopTypes.LOOP));
+        event.getController().setAnimation(new AnimationBuilder().addAnimation(animation, type));
         return PlayState.CONTINUE;
     }
 
@@ -160,5 +172,28 @@ public class Therizinosaurus extends Prehistoric implements IAnimatable, IDinosa
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Override
+    public String getIdleAnimation() {
+        return IDLE;
+    }
+
+    @Override
+    public String getWalkingAnimation() {
+        return WALK;
+    }
+
+    @Override
+    public String getChasingAnimation() {
+        return WALK;
+    }
+
+    @Override
+    public AttackAnimationInfo[] getAttackAnimationsWithDelay() {
+        return new AttackAnimationInfo[] {
+            new AttackAnimationInfo(ATTACK1, 21, 12),
+            new AttackAnimationInfo(ATTACK2, 25, 12, 15)
+        };
     }
 }

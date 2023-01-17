@@ -21,7 +21,7 @@ public class ModEntities {
         () -> EntityType.Builder.of(
             Triceratops::new,
             MobCategory.CREATURE
-        ).sized(1.1F, 0.6F).build("triceratops")
+        ).sized(3.5F, 3F).build("triceratops")
     );
 
     public static final RegistrySupplier<EntityType<Therizinosaurus>> THERIZINOSAURUS = ENTITIES.register(
@@ -29,7 +29,7 @@ public class ModEntities {
         () -> EntityType.Builder.of(
             Therizinosaurus::new,
             MobCategory.CREATURE
-        ).sized(1.1F, 0.6F).build("therizinosaurus")
+        ).sized(2.5F, 2.5F).build("therizinosaurus")
     );
 
     public static final RegistrySupplier<EntityType<DinosaurEgg>> DINOSAUR_EGG = ENTITIES.register(

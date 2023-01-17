@@ -4,17 +4,13 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.gui.*;
 import com.fossil.fossil.client.model.AnuStatueModel;
-import com.fossil.fossil.client.model.TherizinosaurusModel;
-import com.fossil.fossil.client.model.TriceratopsModel;
 import com.fossil.fossil.client.particle.BubbleParticle;
 import com.fossil.fossil.client.particle.TarBubbleParticle;
 import com.fossil.fossil.client.renderer.blockentity.*;
-import com.fossil.fossil.client.renderer.entity.RenderPrehistoric;
 import com.fossil.fossil.client.renderer.entity.RenderPrehistoricGeo;
 import com.fossil.fossil.client.renderer.entity.TarSlimeRenderer;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.inventory.ModMenus;
-import dev.architectury.registry.client.level.entity.EntityModelLayerRegistry;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.particle.ParticleProviderRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
@@ -24,12 +20,10 @@ import net.minecraft.client.renderer.RenderType;
 
 public class ClientInit {
     public static void immediate() {
-        EntityModelLayerRegistry.register(TriceratopsModel.LAYER_LOCATION, TriceratopsModel::createBodyLayer);
-        EntityRendererRegistry.register(ModEntities.TRICERATOPS,
-                context -> new RenderPrehistoric(context, new TriceratopsModel<>(context.bakeLayer(TriceratopsModel.LAYER_LOCATION)))
-        );
         EntityRendererRegistry.register(ModEntities.THERIZINOSAURUS,
-                context -> new RenderPrehistoricGeo<>(context, new TherizinosaurusModel()));
+            context -> new RenderPrehistoricGeo<>(context, "therizinosaurus.geo.json", "fa.therizinosaurus.animations.json", 1, 1));
+        EntityRendererRegistry.register(ModEntities.TRICERATOPS,
+            context -> new RenderPrehistoricGeo<>(context, "triceratops.geo.json", "triceratops.animation.json", 3, 3));
 
         EntityRendererRegistry.register(ModEntities.ANU_STATUE,
                 context -> new com.fossil.fossil.client.renderer.entity.AnuStatueRenderer(context, new AnuStatueModel()));

@@ -8,7 +8,9 @@ import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.material.ModFluids;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.util.DisposableTask;
 import com.fossil.fossil.world.feature.ModPlacedFeatures;
+import net.minecraft.world.level.timers.TimerCallbacks;
 
 
 public class Fossil {
@@ -26,5 +28,7 @@ public class Fossil {
         ModPlacedFeatures.register();
         ModRecipes.register();
         ModSounds.register();
+
+        TimerCallbacks.SERVER_CALLBACKS.register(new DisposableTask.Serializer());
     }
 }
