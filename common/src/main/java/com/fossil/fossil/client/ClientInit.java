@@ -3,6 +3,7 @@ package com.fossil.fossil.client;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.gui.*;
+import com.fossil.fossil.client.gui.filters.CreativeTabFilters;
 import com.fossil.fossil.client.model.AnuStatueModel;
 import com.fossil.fossil.client.model.TherizinosaurusModel;
 import com.fossil.fossil.client.model.TriceratopsModel;
@@ -36,6 +37,7 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);
         ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
+
     }
 
     public static void later() {
@@ -64,5 +66,6 @@ public class ClientInit {
         BlockEntityRendererRegistry.register(ModBlockEntities.SARCOPHAGUS.get(), SarcophagusRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.CULTIVATE.get(), CultivateRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANCIENT_CHEST.get(), AncientChestRenderer::new);
+        CreativeTabFilters.register();
     }
 }
