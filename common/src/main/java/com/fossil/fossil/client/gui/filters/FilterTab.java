@@ -25,7 +25,6 @@ public class FilterTab {
     private static final ResourceLocation FILTER_TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/filters.png");
 
     private final List<FilterButton> buttons = new ArrayList<>();
-    private int enabledButton = -1;
 
     public FilterTab(int i, int j, List<Filter> filters) {
         for (Filter filter : filters) {
@@ -36,8 +35,9 @@ public class FilterTab {
 
     public List<Holder<Item>> getItems() {
         List<Holder<Item>> list = new ArrayList<>();
-        if (enabledButton != -1) {
-            var optional = Registry.ITEM.getTag(buttons.get(enabledButton).filter.tag);
+        var enabledButton = buttons.stream().filter(button -> button.filter.enabled).findFirst();
+        if (enabledButton.isPresent()) {
+            var optional = Registry.ITEM.getTag(enabledButton.get().filter.tag);
             if (optional.isPresent()) {
                 list = optional.get().stream().toList();
             }
@@ -50,19 +50,18 @@ public class FilterTab {
     }
 
     private void enableButton(FilterButton button) {
-        int newIndex = buttons.indexOf(button);
         if (button.filter.enabled) {
-            newIndex = -1;
-        } else if (enabledButton != -1) {
-            buttons.get(enabledButton).filter.enabled = false;
+            button.filter.enabled = false;
+        } else {
+            for (FilterButton filterButton : buttons) {
+                filterButton.filter.enabled = false;
+            }
+            button.filter.enabled = true;
         }
-        enabledButton = newIndex;
-        button.filter.enabled = !button.filter.enabled;
     }
 
     public void enableButtons() {
         buttons.forEach(FilterButton::setActive);
-        buttons.stream().filter(button -> button.filter.enabled).map(buttons::indexOf).findFirst().ifPresent(idx -> enabledButton = idx);
     }
 
     public void disableButtons() {

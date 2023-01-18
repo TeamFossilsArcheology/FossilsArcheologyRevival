@@ -37,23 +37,26 @@ public class CreativeTabFilters {
         ClientGuiEvent.RENDER_PRE.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
                 FilterTab filterTab = tabs.get(creativeScreen.getSelectedTab());
-                if (activeTab == -1) {
+                boolean first = activeTab == -1;
+                boolean switchedTab = activeTab != creativeScreen.getSelectedTab();
+                creativeScreen.getMenu().items.clear();
+                if (first) {
                     filterTab.enableButtons();
-                } else if (activeTab != creativeScreen.getSelectedTab()) {
+                } else if (switchedTab) {
                     tabs.get(activeTab).disableButtons();
                     filterTab.enableButtons();
                 }
+                NonNullList<ItemStack> stacks = NonNullList.create();
+                CreativeModeTab.TABS[creativeScreen.getSelectedTab()].fillItemList(stacks);
                 activeTab = creativeScreen.getSelectedTab();
-
-                creativeScreen.getMenu().items.clear();
                 List<Holder<Item>> list = tabs.get(creativeScreen.getSelectedTab()).getItems();
                 for (Holder<Item> holder : list) {
-                    creativeScreen.getMenu().items.add(new ItemStack(holder));
+                    creativeScreen.getMenu().items.addAll(stacks.stream().filter(itemStack -> itemStack.sameItem(new ItemStack(holder))).toList());
                 }
                 if (creativeScreen.getMenu().items.isEmpty()) {
                     CreativeModeTab.TABS[creativeScreen.getSelectedTab()].fillItemList(creativeScreen.getMenu().items);
                 }
-                creativeScreen.getMenu().scrollTo(0);
+                creativeScreen.getMenu().scrollTo(switchedTab ? 0 : creativeScreen.scrollOffs);
             }
             return EventResult.pass();
         });
