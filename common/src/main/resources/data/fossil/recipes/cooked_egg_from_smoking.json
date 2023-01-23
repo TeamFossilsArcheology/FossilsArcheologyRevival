@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "minecraft:egg"
+  },
+  "result": "fossil:cooked_egg",
+  "experience": 1,
+  "cookingtime": 100
+}

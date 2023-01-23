@@ -1,11 +1,13 @@
 {
   "item.fossil.amber": "Amber",
-  "item.fossil.bio_fossil": "Bio Fossil",
   "item.fossil.bio_goo": "Bio Goo",
   "item.fossil.chicken_essence": "Chicken Essence",
+  "item.fossil.nautilus_cooked": "Sio-Chiu-Le",
   "item.fossil.pottery_shard": "Pottery Shard",
   "item.fossil.relic_scrap": "Relic Scrap",
-  "item.fossil.tar_fossil": "Tar Fossil",
+  "item.fossil.fossil_bio": "Bio Fossil",
+  "item.fossil.fossil_plant": "Plant Fossil",
+  "item.fossil.fossil_tar": "Tar Fossil",
 
   "block.fossil.feeder": "Feeder",
   "block.fossil.amber_ore": "Amber Ore",

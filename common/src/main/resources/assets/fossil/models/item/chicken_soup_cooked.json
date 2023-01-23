@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "fossil:item/bio_fossil"
+    "layer0": "fossil:item/chicken_soup_cooked"
   }
 }

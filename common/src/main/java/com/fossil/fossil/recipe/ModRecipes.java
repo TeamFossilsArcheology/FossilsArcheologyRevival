@@ -8,6 +8,7 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Tuple;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -20,10 +21,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.NavigableMap;
-import java.util.TreeMap;
+import java.util.*;
 
 public class ModRecipes {
     public static final Map<ItemLike, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
@@ -48,11 +46,17 @@ public class ModRecipes {
 
     public static void initRecipes() {
         registerAnalyzer(Items.BEEF, new ItemLike[]{Items.BLUE_DYE, Items.ACACIA_LOG}, new Double[]{80.0, 20.0});
-        var outputs = new ItemLike[]{Blocks.SAND, Items.POTATO, Items.CARROT, Items.BONE_MEAL};
-        var weights = new Double[]{25d, 15d, 10d, 20d};
+        List<Tuple<ItemLike, Double>> outputs = new ArrayList<>();
+        outputs.add(new Tuple<>(Blocks.SAND, 20d));
+        outputs.add(new Tuple<>(Items.POTATO, 15d));
+        outputs.add(new Tuple<>(Items.CARROT, 10d));
+        outputs.add(new Tuple<>(Items.BONE_MEAL, 20d));
+        outputs.add(new Tuple<>(ModItems.PlANT_FOSSIL.get(), 14d));
+        outputs.add(new Tuple<>(ModItems.BIO_FOSSIL.get(), 2d));
+        outputs.add(new Tuple<>(ModItems.POTTERY_SHARD.get(), 5d));
         for (Item item : Registry.ITEM) {
             if (item instanceof BlockItem && SifterBlockEntity.getSiftTypeFromStack(new ItemStack(item)) != SifterBlockEntity.EnumSiftType.NONE) {
-                registerSifter(item, outputs, weights);
+                registerSifter(item, outputs);
             }
         }
         registerWorktable(ModBlocks.AMPHORA_VASE_DAMAGED.get().asItem(), ModBlocks.AMPHORA_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
@@ -62,10 +66,10 @@ public class ModRecipes {
         registerCultivate(Items.WHEAT_SEEDS, ModItems.AMBER.get(), ModItems.BIO_GOO.get());
     }
 
-    private static void registerSifter(ItemLike item, ItemLike[] outputs, Double[] weights) {
+    private static void registerSifter(ItemLike item, List<Tuple<ItemLike, Double>> outputs) {
         NavigableMap<Double, ItemStack> map = new TreeMap<>();
-        for (int i = 0; i < outputs.length; i++) {
-            map.put(weights[i], new ItemStack(outputs[i]));
+        for (Tuple<ItemLike, Double> output : outputs) {
+            map.put(output.getB(), new ItemStack(output.getA()));
         }
         SIFTER_RECIPES.put(item, new AnalyzerRecipe(new ResourceLocation(Fossil.MOD_ID, item.toString()), Ingredient.of(item), map));
     }

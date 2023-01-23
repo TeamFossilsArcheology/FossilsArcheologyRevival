@@ -1,0 +1,60 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "fossil:amber_dominican"
+  },
+  "outputs": [
+    {
+      "item": "minecraft:spider_eye",
+      "weight": 9
+    },
+    {
+      "item": "minecraft:string",
+      "weight": 10
+    },
+    {
+      "item": "minecraft:dirt",
+      "weight": 25
+    },
+    {
+      "item": "minecraft:gravel",
+      "weight": 25
+    },
+    {
+      "item": "minecraft:wheat_seeds",
+      "weight": 1
+    },
+    {
+      "item": "minecraft:beetroot_seeds",
+      "weight": 1
+    },
+    {
+      "item": "minecraft:pumpkin_seeds",
+      "weight": 1
+    },
+    {
+      "item": "minecraft:melon_seeds",
+      "weight": 1
+    },
+    {
+      "item": "fossil:fossil_seed_fern",
+      "weight": 1
+    },
+    {
+      "item": "fossil:fossil_sapling_palae",
+      "weight": 1
+    },
+    {
+      "item": "fossil:fossil_sapling_calamites",
+      "weight": 1
+    },
+    {
+      "item": "fossil:fossil_sapling_sigillaria",
+      "weight": 1
+    },
+    {
+      "item": "fossil:fossil_sapling_cordaites",
+      "weight": 1
+    }
+  ]
+}
