@@ -5,6 +5,8 @@ import com.fossil.fossil.block.custom_blocks.SkullBlock;
 import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.material.ModFluids;
+import com.fossil.fossil.world.feature.tree.CordaitesTreeGrower;
+import com.fossil.fossil.world.feature.tree.SigillariaTreeGrower;
 import dev.architectury.core.block.ArchitecturyLiquidBlock;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -12,7 +14,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -180,6 +181,8 @@ public class ModBlocks {
 
     public static final RegistrySupplier<Block> CORDAITES_LEAVES = registerBlock("cordaites_leaves",
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistrySupplier<Block> CORDAITES_SAPLING = registerBlock("cordaites_sapling",
+            () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
     public static final RegistrySupplier<Block> SIGILLARIA_PLANKS = registerBlock("sigillaria_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
@@ -213,6 +216,8 @@ public class ModBlocks {
 
     public static final RegistrySupplier<Block> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistrySupplier<Block> SIGILLARIA_SAPLING = registerBlock("sigillaria_sapling",
+            () -> new SaplingBlock(new SigillariaTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
 
     public static final RegistrySupplier<Block> BENNETTITALES_SMALL = registerBlock("bennettitales_small",
@@ -257,26 +262,24 @@ public class ModBlocks {
         return toReturn;
     }
 
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFigurine("steve_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFigurine("steve_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFigurine("steve_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_BROKEN = registerFigurine("skeleton_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DAMAGED = registerFigurine("skeleton_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerFigurine("skeleton_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_BROKEN = registerFigurine("zombie_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DAMAGED = registerFigurine("zombie_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerFigurine("zombie_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_BROKEN = registerFigurine("enderman_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DAMAGED = registerFigurine("enderman_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerFigurine("enderman_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> PIGLIN_ZOMBIE_FIGURINE_BROKEN = registerFigurine("piglin_zombie_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> PIGLIN_ZOMBIE_FIGURINE_DAMAGED = registerFigurine("piglin_zombie_damaged",
-            FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> PIGLIN_ZOMBIE_FIGURINE_PRISTINE = registerFigurine("piglin_zombie_pristine",
-            FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> MYSTERIOUS_FIGURINE = registerFigurine("mysterious", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFig("steve_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFig("steve_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFig("steve_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_BROKEN = registerFig("skeleton_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DAMAGED = registerFig("skeleton_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerFig("skeleton_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_BROKEN = registerFig("zombie_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DAMAGED = registerFig("zombie_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerFig("zombie_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_BROKEN = registerFig("enderman_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DAMAGED = registerFig("enderman_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerFig("enderman_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_BROKEN = registerFig("piglin_zombie_broken", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_DAMAGED = registerFig("piglin_zombie_damaged", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_PRISTINE = registerFig("piglin_zombie_pristine", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> MYSTERIOUS_FIGURINE = registerFig("mysterious", FigurineBlock::new);
 
-    private static RegistrySupplier<FigurineBlock> registerFigurine(String name, Supplier<FigurineBlock> supplier) {
+    private static RegistrySupplier<FigurineBlock> registerFig(String name, Supplier<FigurineBlock> supplier) {
         return registerBlock("figurine_" + name, supplier);
     }
 

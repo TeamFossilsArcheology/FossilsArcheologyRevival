@@ -6,6 +6,7 @@ import com.fossil.fossil.block.entity.ModBlockEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -24,16 +26,39 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Random;
 
 public class BubbleBlowerBlock extends BaseEntityBlock implements IDinoUnbreakable {
+    public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public BubbleBlowerBlock(Properties properties) {
         super(properties);
-        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH));
+        registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH).setValue(ACTIVE, false));
+    }
+
+    @Override
+    public void neighborChanged(BlockState state, Level level, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
+        if (level.isClientSide) {
+            return;
+        }
+        boolean bl = state.getValue(ACTIVE);
+        if (bl != level.hasNeighborSignal(pos)) {
+            if (bl) {
+                level.scheduleTick(pos, this, 4);
+            } else {
+                level.setBlock(pos, state.setValue(ACTIVE, true), 2);
+            }
+        }
+    }
+
+    @Override
+    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+        if (state.getValue(ACTIVE) && !level.hasNeighborSignal(pos)) {
+            level.setBlock(pos, state.setValue(ACTIVE, false), 2);
+        }
     }
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
-        if (level.hasNeighborSignal(pos)) {
+        if (state.getValue(ACTIVE)) {
             Minecraft mc = Minecraft.getInstance();
             level.playSound(mc.player, pos, SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.5f, random.nextFloat() * 0.7f + 0.4f);
             int x = pos.getX();
@@ -84,6 +109,6 @@ public class BubbleBlowerBlock extends BaseEntityBlock implements IDinoUnbreakab
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        builder.add(FACING, ACTIVE);
     }
 }
