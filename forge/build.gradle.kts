@@ -50,6 +50,9 @@ loom {
         convertAccessWideners.set(true)
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
 
+        //dataGen { //breaks my forge run, so I disable it when not needed
+        //    mod(archivesBaseName)
+        //}
         /*
         mixinConfig("fa-common.mixins.json")
         mixinConfig("fa-forge.mixins.json")
@@ -62,7 +65,7 @@ loom {
 tasks {
     processResources {
         inputs.property("version", project.version)
-
+        //duplicatesStrategy = DuplicatesStrategy.INCLUDE
         filesMatching("META-INF/mods.toml") {
             expand("version" to project.version)
         }
