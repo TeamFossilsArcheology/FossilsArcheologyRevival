@@ -1,0 +1,16 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "minecraft:feather"
+  },
+  "outputs": [
+    {
+      "item": "fossil:chicken_dna",
+      "weight": 95
+    },
+    {
+      "item": "fossil:parrot_dna",
+      "weight": 5
+    }
+  ]
+}

@@ -1,11 +1,11 @@
 {
   "type": "fossil:analyzer",
   "ingredient": {
-    "item": "minecraft:porkchop"
+    "item": "minecraft:rabbit_foot"
   },
   "outputs": [
     {
-      "item": "fossil:pig_dna",
+      "item": "fossil:rabbit_dna",
       "weight": 100
     }
   ]

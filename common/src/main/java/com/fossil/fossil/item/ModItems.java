@@ -2,6 +2,7 @@ package com.fossil.fossil.item;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.material.ModFluids;
 import dev.architectury.core.item.ArchitecturyBucketItem;
 import dev.architectury.core.item.ArchitecturySpawnEggItem;
@@ -25,10 +26,10 @@ public class ModItems {
     public static final RegistrySupplier<Item> DOMINICAN_AMBER = ITEMS.register("amber_dominican",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BIO_FOSSIL = ITEMS.register("fossil_bio",
-            () -> new BioFossil(false));
+            () -> new BioFossilItem(false));
 
     public static final RegistrySupplier<Item> TAR_FOSSIL = ITEMS.register("fossil_tar",
-            () -> new BioFossil(true));
+            () -> new BioFossilItem(true));
     public static final RegistrySupplier<Item> PlANT_FOSSIL = ITEMS.register("fossil_plant",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
 
@@ -40,8 +41,6 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
 
     public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("chicken_essence",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> NAUTILUS_SHELL = ITEMS.register("nautilus_shell",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> COOKED_NAUTILUS = ITEMS.register("nautilus_cooked",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));
@@ -69,6 +68,18 @@ public class ModItems {
     public static final RegistrySupplier<Item> COOKED_EGG = ITEMS.register("cooked_egg",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(4).saturationMod(2).build())));
 
+
+    public static final RegistrySupplier<Item> FERN_SEED_FOSSIL = ITEMS.register("fossil_seed_fern",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> PALAE_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_palae",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> CALAMITES_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_calamites",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> SIGILLARIA_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_sigillaria",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> CORDAITES_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_cordaites",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+
     public static final RegistrySupplier<SpawnEggItem> TRICERATOPS_SPAWN_EGG = ITEMS.register("triceratops_spawn_egg",
             () -> new ArchitecturySpawnEggItem(ModEntities.TRICERATOPS, 0x64352D, 0x251A17, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );
@@ -82,5 +93,6 @@ public class ModItems {
 
     public static void register() {
         ITEMS.register();
+        PrehistoricEntityType.register();
     }
 }

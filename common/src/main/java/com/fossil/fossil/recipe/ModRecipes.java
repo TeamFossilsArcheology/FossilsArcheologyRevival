@@ -3,7 +3,9 @@ package com.fossil.fossil.recipe;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.util.TimePeriod;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
@@ -24,9 +26,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class ModRecipes {
-    public static final Map<ItemLike, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
-    public static final Map<ItemLike, AnalyzerRecipe> SIFTER_RECIPES = new HashMap<>();
-    public static final Map<ItemLike, WorktableRecipe> WORKTABLE_RECIPES = new HashMap<>();
+    public static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
+    public static final Map<Item, AnalyzerRecipe> SIFTER_RECIPES = new HashMap<>();
+    public static final Map<Item, WorktableRecipe> WORKTABLE_RECIPES = new HashMap<>();
     public static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new HashMap<>();
     public static final Map<ItemLike, WorktableRecipe> CULTIVATE_RECIPES = new HashMap<>();
     public static final Map<ItemLike, Integer> CULTIVATE_FUEL_VALUES = new HashMap<>();
@@ -45,7 +47,71 @@ public class ModRecipes {
     }
 
     public static void initRecipes() {
-        registerAnalyzer(Items.BEEF, new ItemLike[]{Items.BLUE_DYE, Items.ACACIA_LOG}, new Double[]{80.0, 20.0});
+        AnalyzerRecipe.Builder plantFossil = new AnalyzerRecipe.Builder(ModItems.PlANT_FOSSIL.get())
+                .addOutput(Blocks.SAND, 35)
+                .addOutput(Items.GREEN_DYE, 20)
+                .addOutput(ModItems.FERN_SEED_FOSSIL.get(), 5)
+                .addOutput(ModItems.PALAE_SAPLING_FOSSIL.get(), 2.5)
+                .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 2.5)
+                .addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)
+                .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5);
+        registerAnalyzer(plantFossil);
+        AnalyzerRecipe.Builder bioFossil = new AnalyzerRecipe.Builder(ModItems.BIO_FOSSIL.get())
+                .addOutput(Blocks.SAND, 35)
+                .addOutput(Items.BONE_MEAL, 15);
+        List<PrehistoricEntityType> bioFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
+        float bioFossilDNAChance = 15F / (float) bioFossilEntityList.size();
+        for (PrehistoricEntityType type : bioFossilEntityList) {
+            bioFossil.addOutput(type.dnaItem, bioFossilDNAChance);
+        }
+        registerAnalyzer(bioFossil);
+        AnalyzerRecipe.Builder tarFossil = new AnalyzerRecipe.Builder(ModItems.TAR_FOSSIL.get())
+                .addOutput(Items.BONE_MEAL, 15)
+                .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 30);
+        List<PrehistoricEntityType> tarFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.CENOZOIC);
+        float tarFossilDNAChance = 15F / (float) tarFossilEntityList.size();
+        for (PrehistoricEntityType type : tarFossilEntityList) {
+            bioFossil.addOutput(type.dnaItem, tarFossilDNAChance);
+        }
+        registerAnalyzer(tarFossil);
+        AnalyzerRecipe.Builder tarDrop = new AnalyzerRecipe.Builder(ModItems.TAR_DROP.get())
+                .addOutput(Items.COAL, 20)
+                .addOutput(Items.CHARCOAL, 20)
+                .addOutput(ModItems.TAR_FOSSIL.get(), 45)
+                .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 15);
+        registerAnalyzer(tarDrop);
+
+        for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.armBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.footBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.skullBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.ribcageBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.vertebraeBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.uniqueBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+        }
+
         List<Tuple<ItemLike, Double>> outputs = new ArrayList<>();
         outputs.add(new Tuple<>(Blocks.SAND, 20d));
         outputs.add(new Tuple<>(Items.POTATO, 15d));
@@ -59,10 +125,23 @@ public class ModRecipes {
                 registerSifter(item, outputs);
             }
         }
-        registerWorktable(ModBlocks.AMPHORA_VASE_DAMAGED.get().asItem(), ModBlocks.AMPHORA_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.VOLUTE_VASE_DAMAGED.get().asItem(), ModBlocks.VOLUTE_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.KYLIX_VASE_DAMAGED.get().asItem(), ModBlocks.KYLIX_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerCultivate(ModBlocks.AMBER_ORE.get().asItem(), ModItems.AMBER.get(), ModItems.BIO_GOO.get());
+        registerWorktable(ModBlocks.AMPHORA_VASE_DAMAGED.get(), ModBlocks.AMPHORA_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.VOLUTE_VASE_DAMAGED.get(), ModBlocks.VOLUTE_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.KYLIX_VASE_DAMAGED.get(), ModBlocks.KYLIX_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.STEVE_FIGURINE_BROKEN.get(), ModBlocks.STEVE_FIGURINE_DAMAGED.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.SKELETON_FIGURINE_BROKEN.get(), ModBlocks.SKELETON_FIGURINE_DAMAGED.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.ZOMBIE_FIGURINE_BROKEN.get(), ModBlocks.ZOMBIE_FIGURINE_DAMAGED.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.ENDERMAN_FIGURINE_BROKEN.get(), ModBlocks.ENDERMAN_FIGURINE_DAMAGED.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.PIGZOMBIE_FIGURINE_BROKEN.get(), ModBlocks.PIGZOMBIE_FIGURINE_DAMAGED.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.STEVE_FIGURINE_DAMAGED.get(), ModBlocks.STEVE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.SKELETON_FIGURINE_DAMAGED.get(), ModBlocks.SKELETON_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.ZOMBIE_FIGURINE_DAMAGED.get(), ModBlocks.ZOMBIE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.ENDERMAN_FIGURINE_DAMAGED.get(), ModBlocks.ENDERMAN_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModBlocks.PIGZOMBIE_FIGURINE_DAMAGED.get(), ModBlocks.PIGZOMBIE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
+
+        registerCultivate(ModBlocks.AMBER_ORE.get(), ModItems.AMBER.get(), ModItems.BIO_GOO.get());
+        registerCultivate(ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModBlocks.CORDAITES_SAPLING.get(), ModItems.BIO_GOO.get());
+        registerCultivate(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultivate(Items.WHEAT_SEEDS, ModItems.AMBER.get(), ModItems.BIO_GOO.get());
     }
 
@@ -71,20 +150,16 @@ public class ModRecipes {
         for (Tuple<ItemLike, Double> output : outputs) {
             map.put(output.getB(), new ItemStack(output.getA()));
         }
-        SIFTER_RECIPES.put(item, new AnalyzerRecipe(new ResourceLocation(Fossil.MOD_ID, item.toString()), Ingredient.of(item), map));
+        SIFTER_RECIPES.put(item.asItem(), new AnalyzerRecipe(new ResourceLocation(Fossil.MOD_ID, item.toString()), Ingredient.of(item), map));
     }
 
-    private static void registerAnalyzer(ItemLike item, ItemLike[] outputs, Double[] weights) {
-        NavigableMap<Double, ItemStack> map = new TreeMap<>();
-        for (int i = 0; i < outputs.length; i++) {
-            map.put(weights[i], new ItemStack(outputs[i]));
-        }
-        ANALYZER_RECIPES.put(item, new AnalyzerRecipe(new ResourceLocation(Fossil.MOD_ID, item.toString()), Ingredient.of(item), map));
+    private static void registerAnalyzer(AnalyzerRecipe.Builder recipe) {
+        ANALYZER_RECIPES.put(recipe.item.asItem(), recipe.build());
     }
 
     private static void registerWorktable(ItemLike item, ItemLike output, ItemLike fuel) {
         WORKTABLE_FUEL_VALUES.putIfAbsent(fuel, 300);
-        WORKTABLE_RECIPES.put(item, new WorktableRecipe(new ItemStack(item), new ItemStack(output), new ItemStack(fuel)));
+        WORKTABLE_RECIPES.put(item.asItem(), new WorktableRecipe(new ItemStack(item), new ItemStack(output), new ItemStack(fuel)));
     }
 
     private static void registerCultivate(ItemLike item, ItemLike output, ItemLike fuel) {

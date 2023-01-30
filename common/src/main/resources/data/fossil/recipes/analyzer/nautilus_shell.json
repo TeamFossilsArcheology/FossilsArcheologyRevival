@@ -1,7 +1,7 @@
 {
   "type": "fossil:analyzer",
   "ingredient": {
-    "item": "fossil:nautilus_shell"
+    "item": "minecraft:nautilus_shell"
   },
   "outputs": [
     {

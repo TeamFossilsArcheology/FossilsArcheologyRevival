@@ -1,0 +1,21 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "tag": "minecraft:wool"
+  },
+  "outputs": [
+    {
+      "item": "minecraft:string",
+      "count": 3,
+      "weight": 60
+    },
+    {
+      "item": "fossil:sheep_dna",
+      "weight": 27
+    },
+    {
+      "item": "fossil:llama_dna",
+      "weight": 13
+    }
+  ]
+}
