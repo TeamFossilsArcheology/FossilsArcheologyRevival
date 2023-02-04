@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fossil:meat_titanis"
+  },
+  "result": "fossil:cooked_titanis",
+  "experience": 1.5,
+  "cookingtime": 600
+}

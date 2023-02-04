@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:cooked_gallimimus"
+    ]
+  },
+  "criteria": {
+    "has_gallimimus_meat": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:meat_gallimimus"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:cooked_gallimimus"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_gallimimus_meat",
+      "has_the_recipe"
+    ]
+  ]
+}

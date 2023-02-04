@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_confuciusornis"
+  },
+  "result": "fossil:cooked_confuciusornis",
+  "experience": 1.5,
+  "cookingtime": 200
+}

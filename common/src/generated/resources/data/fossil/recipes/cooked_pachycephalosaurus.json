@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_pachycephalosaurus"
+  },
+  "result": "fossil:cooked_pachycephalosaurus",
+  "experience": 1.5,
+  "cookingtime": 200
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_edaphosaurus"
+  },
+  "result": "fossil:cooked_edaphosaurus",
+  "experience": 1.5,
+  "cookingtime": 100
+}

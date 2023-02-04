@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "layer=0": {
+      "model": "fossil:block/plants/tempskya_1"
+    },
+    "layer=1": {
+      "model": "fossil:block/plants/tempskya_2"
+    },
+    "layer=2": {
+      "model": "fossil:block/plants/tempskya_3"
+    },
+    "layer=3": {
+      "model": "fossil:block/plants/tempskya_4"
+    }
+  }
+}

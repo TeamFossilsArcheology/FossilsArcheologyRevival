@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_megaloceros"
+  },
+  "result": "fossil:cooked_megaloceros",
+  "experience": 1.5,
+  "cookingtime": 200
+}

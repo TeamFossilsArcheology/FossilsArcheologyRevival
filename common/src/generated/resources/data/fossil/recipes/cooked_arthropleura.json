@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_arthropleura"
+  },
+  "result": "fossil:cooked_arthropleura",
+  "experience": 1.5,
+  "cookingtime": 200
+}

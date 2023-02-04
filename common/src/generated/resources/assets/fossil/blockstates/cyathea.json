@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "layer=0": {
+      "model": "fossil:block/plants/cyathea_1"
+    },
+    "layer=1": {
+      "model": "fossil:block/plants/cyathea_2"
+    },
+    "layer=2": {
+      "model": "fossil:block/plants/cyathea_3"
+    },
+    "layer=3": {
+      "model": "fossil:block/plants/cyathea_4"
+    }
+  }
+}

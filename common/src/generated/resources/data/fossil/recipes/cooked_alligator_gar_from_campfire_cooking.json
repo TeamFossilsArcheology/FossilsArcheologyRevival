@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fossil:fish_alligator_gar"
+  },
+  "result": "fossil:cooked_alligator_gar",
+  "experience": 1.5,
+  "cookingtime": 600
+}

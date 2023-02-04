@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_crassigyrinus"
+  },
+  "result": "fossil:cooked_crassigyrinus",
+  "experience": 1.5,
+  "cookingtime": 200
+}

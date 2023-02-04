@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fossil:meat_allosaurus"
+  },
+  "result": "fossil:cooked_allosaurus",
+  "experience": 1.5,
+  "cookingtime": 600
+}

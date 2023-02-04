@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_liopleurodon"
+  },
+  "result": "fossil:cooked_liopleurodon",
+  "experience": 1.5,
+  "cookingtime": 200
+}

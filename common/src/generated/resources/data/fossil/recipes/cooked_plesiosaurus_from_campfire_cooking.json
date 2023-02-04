@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fossil:meat_plesiosaurus"
+  },
+  "result": "fossil:cooked_plesiosaurus",
+  "experience": 1.5,
+  "cookingtime": 600
+}

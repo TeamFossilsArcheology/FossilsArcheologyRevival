@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_quagga"
+  },
+  "result": "fossil:cooked_quagga",
+  "experience": 1.5,
+  "cookingtime": 200
+}

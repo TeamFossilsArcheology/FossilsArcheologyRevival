@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_therizinosaurus"
+  },
+  "result": "fossil:cooked_therizinosaurus",
+  "experience": 1.5,
+  "cookingtime": 100
+}

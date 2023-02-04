@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_phorusrhacos"
+  },
+  "result": "fossil:cooked_phorusrhacos",
+  "experience": 1.5,
+  "cookingtime": 100
+}

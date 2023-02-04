@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_meganeura"
+  },
+  "result": "fossil:cooked_meganeura",
+  "experience": 1.5,
+  "cookingtime": 200
+}

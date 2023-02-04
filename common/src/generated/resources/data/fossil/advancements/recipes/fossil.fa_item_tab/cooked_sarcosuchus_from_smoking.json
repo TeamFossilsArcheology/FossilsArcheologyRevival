@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:cooked_sarcosuchus_from_smoking"
+    ]
+  },
+  "criteria": {
+    "has_sarcosuchus_meat": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:meat_sarcosuchus"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:cooked_sarcosuchus_from_smoking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_sarcosuchus_meat",
+      "has_the_recipe"
+    ]
+  ]
+}

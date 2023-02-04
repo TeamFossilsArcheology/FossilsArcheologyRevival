@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=upper": {
+      "model": "fossil:block/plants/foozia_2"
+    },
+    "half=lower": {
+      "model": "fossil:block/plants/foozia_1"
+    }
+  }
+}

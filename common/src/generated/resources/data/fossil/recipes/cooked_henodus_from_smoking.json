@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_henodus"
+  },
+  "result": "fossil:cooked_henodus",
+  "experience": 1.5,
+  "cookingtime": 100
+}

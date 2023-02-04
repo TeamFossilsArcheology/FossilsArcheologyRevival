@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fossil:meat_ichtyosaurus"
+  },
+  "result": "fossil:cooked_ichtyosaurus",
+  "experience": 1.5,
+  "cookingtime": 600
+}

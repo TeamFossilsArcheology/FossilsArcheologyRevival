@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=upper": {
+      "model": "fossil:block/plants/horsetail_large_2"
+    },
+    "half=lower": {
+      "model": "fossil:block/plants/horsetail_large_1"
+    }
+  }
+}
