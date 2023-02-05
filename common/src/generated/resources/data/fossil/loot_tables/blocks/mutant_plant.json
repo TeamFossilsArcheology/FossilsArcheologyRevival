@@ -10,6 +10,13 @@
           "conditions": [
             {
               "condition": "minecraft:survives_explosion"
+            },
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "fossil:mutant_plant",
+              "properties": {
+                "half": "lower"
+              }
             }
           ],
           "name": "fossil:mutant_plant"

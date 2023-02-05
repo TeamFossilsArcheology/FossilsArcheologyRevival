@@ -8,12 +8,16 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 
 public class TallFlowerBlock extends DoublePlantBlock implements BonemealableBlock {
-    public TallFlowerBlock(Properties properties) {
+    private final VoxelShape shape;
+    public TallFlowerBlock(Properties properties, VoxelShape shape) {
         super(properties);
+        this.shape = shape;
+        //TODO: Shape
     }
 
     @Override

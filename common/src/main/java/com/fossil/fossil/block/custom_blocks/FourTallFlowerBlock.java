@@ -18,15 +18,19 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
 public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock {
     public static final IntegerProperty LAYER = IntegerProperty.create("layer", 0, 3);
+    private final VoxelShape shape;
 
-    public FourTallFlowerBlock(Properties properties) {
+    public FourTallFlowerBlock(Properties properties, VoxelShape shape) {
         super(properties);
+        this.shape = shape;
+        //TODO: Shape
         this.registerDefaultState(this.stateDefinition.any().setValue(LAYER, 0));
     }
 
@@ -44,11 +48,10 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        BlockPos blockPos = pos.above();
         //level.setBlock(blockPos, this.defaultBlockState().setValue(LAYER, 0), 3);
-        level.setBlock(blockPos.above(), this.defaultBlockState().setValue(LAYER, 1), 3);
-        level.setBlock(blockPos.above(2), this.defaultBlockState().setValue(LAYER, 2), 3);
-        level.setBlock(blockPos.above(3), this.defaultBlockState().setValue(LAYER, 3), 3);
+        level.setBlock(pos.above(), this.defaultBlockState().setValue(LAYER, 1), 3);
+        level.setBlock(pos.above(2), this.defaultBlockState().setValue(LAYER, 2), 3);
+        level.setBlock(pos.above(3), this.defaultBlockState().setValue(LAYER, 3), 3);
     }
 
     @Override

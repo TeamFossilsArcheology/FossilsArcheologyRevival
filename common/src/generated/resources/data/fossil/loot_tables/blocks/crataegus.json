@@ -10,6 +10,13 @@
           "conditions": [
             {
               "condition": "minecraft:survives_explosion"
+            },
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "fossil:crataegus",
+              "properties": {
+                "half": "lower"
+              }
             }
           ],
           "name": "fossil:crataegus"

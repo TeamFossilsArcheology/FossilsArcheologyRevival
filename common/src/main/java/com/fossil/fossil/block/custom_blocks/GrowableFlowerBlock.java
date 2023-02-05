@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 
@@ -12,8 +13,8 @@ public class GrowableFlowerBlock extends ShortFlowerBlock {
 
     private final RegistrySupplier<TallFlowerBlock> tallFlower;
 
-    public GrowableFlowerBlock(Properties properties, RegistrySupplier<TallFlowerBlock> tallFlower) {
-        super(properties);
+    public GrowableFlowerBlock(Properties properties, RegistrySupplier<TallFlowerBlock> tallFlower, VoxelShape shape) {
+        super(properties, shape);
         this.tallFlower = tallFlower;
     }
 

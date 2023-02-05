@@ -1,11 +1,10 @@
 package com.fossil.fossil.forge.data.providers;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.custom_blocks.FourTallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.ShortFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.BushBlock;
@@ -36,8 +35,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        for (RegistrySupplier<? extends BushBlock> flowerRegistry : ModBlocks.FLOWERS) {
-            BushBlock flower = flowerRegistry.get();
+        for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
+            BushBlock flower = type.getPlantBlock().get();
             if (flower instanceof ShortFlowerBlock shortFlower) {
                 shortFlowerBlock(shortFlower);
             } else if (flower instanceof TallFlowerBlock tallFlower) {
@@ -49,7 +48,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     public void shortFlowerBlock(ShortFlowerBlock block) {
-        itemModels().plantItem(block, "");
+        itemModels().plantBlockItem(block, "");
         ResourceLocation flower = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath());
         models().registerExisting(flower);
         getVariantBuilder(block).partialState().setModels(
@@ -57,7 +56,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     public void tallFlowerBlock(TallFlowerBlock block) {
-        itemModels().plantItem(block, "_2");
+        itemModels().plantBlockItem(block, "_2");
         ResourceLocation lower = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_1");
         ResourceLocation upper = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_2");
         models().registerExisting(lower, upper);
@@ -69,7 +68,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     public void fourTallFlowerBlock(FourTallFlowerBlock block) {
-        itemModels().plantItem(block, "_1");
+        itemModels().plantBlockItem(block, "_1");
         ResourceLocation first = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_1");
         ResourceLocation second = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_2");
         ResourceLocation third = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_3");

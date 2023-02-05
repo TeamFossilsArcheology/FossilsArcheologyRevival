@@ -1,11 +1,10 @@
 package com.fossil.fossil.forge.data.providers;
 
-import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.custom_blocks.FourTallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.advancements.critereon.StatePropertiesPredicate;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
@@ -21,7 +20,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.ExplosionCondition;
 import net.minecraft.world.level.storage.loot.predicates.LootItemBlockStatePropertyCondition;
-import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -60,8 +58,8 @@ public class ModLootProvider extends LootTableProvider {
                         .add(LootItem.lootTableItem(block.asItem())
                                 .when(ExplosionCondition.survivesExplosion())))
                 .setParamSet(LootContextParamSets.BLOCK))));*/
-        for (RegistrySupplier<? extends BushBlock> flowerRegistry : ModBlocks.FLOWERS) {
-            BushBlock flower = flowerRegistry.get();
+        for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
+            BushBlock flower = type.getPlantBlock().get();
             var condition = LootItem.lootTableItem(flower.asItem()).when(ExplosionCondition.survivesExplosion());
             if (flower instanceof TallFlowerBlock) {
                 condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(

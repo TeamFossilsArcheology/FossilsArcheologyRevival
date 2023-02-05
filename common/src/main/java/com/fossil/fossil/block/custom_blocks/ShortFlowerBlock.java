@@ -4,16 +4,34 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 
 public class ShortFlowerBlock extends BushBlock implements BonemealableBlock {
-    public ShortFlowerBlock(Properties properties) {
+    private final VoxelShape shape;
+
+    public ShortFlowerBlock(Properties properties, VoxelShape shape) {
         super(properties);
+        this.shape = shape;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        Vec3 vec3 = state.getOffset(level, pos);
+        return shape.move(vec3.x, vec3.y, vec3.z);
+    }
+
+    @Override
+    public BlockBehaviour.OffsetType getOffsetType() {
+        return BlockBehaviour.OffsetType.XZ;
     }
 
     @Override
@@ -40,9 +58,5 @@ public class ShortFlowerBlock extends BushBlock implements BonemealableBlock {
             }
         }
         level.setBlock(pos, state.getBlock().defaultBlockState(), 3);
-    }
-    @Override
-    public BlockBehaviour.OffsetType getOffsetType() {
-        return BlockBehaviour.OffsetType.XZ;
     }
 }

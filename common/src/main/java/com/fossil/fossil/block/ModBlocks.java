@@ -2,8 +2,8 @@ package com.fossil.fossil.block;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.custom_blocks.SkullBlock;
-import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
+import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.material.ModFluids;
 import com.fossil.fossil.world.feature.tree.CordaitesTreeGrower;
@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.material.MaterialColor;
+import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -257,79 +258,48 @@ public class ModBlocks {
         return toReturn;
     }
 
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFig("steve_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFig("steve_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFig("steve_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_BROKEN = registerFig("skeleton_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DAMAGED = registerFig("skeleton_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerFig("skeleton_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_BROKEN = registerFig("zombie_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DAMAGED = registerFig("zombie_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerFig("zombie_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_BROKEN = registerFig("enderman_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DAMAGED = registerFig("enderman_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerFig("enderman_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_BROKEN = registerFig("piglin_zombie_broken", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_DAMAGED = registerFig("piglin_zombie_damaged", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_PRISTINE = registerFig("piglin_zombie_pristine", FigurineBlock::new);
-    public static final RegistrySupplier<FigurineBlock> MYSTERIOUS_FIGURINE = registerFig("mysterious", FigurineBlock::new);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFigurine("steve_broken");
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFigurine("steve_damaged");
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFigurine("steve_pristine");
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_BROKEN = registerFigurine("skeleton_broken");
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DAMAGED = registerFigurine("skeleton_damaged");
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerFigurine("skeleton_pristine");
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_BROKEN = registerFigurine("zombie_broken");
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DAMAGED = registerFigurine("zombie_damaged");
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerFigurine("zombie_pristine");
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_BROKEN = registerFigurine("enderman_broken");
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DAMAGED = registerFigurine("enderman_damaged");
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerFigurine("enderman_pristine");
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_BROKEN = registerFigurine("piglin_zombie_broken");
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_DAMAGED = registerFigurine("piglin_zombie_damaged");
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_PRISTINE = registerFigurine("piglin_zombie_pristine");
+    public static final RegistrySupplier<FigurineBlock> MYSTERIOUS_FIGURINE = registerFigurine("mysterious");
 
-    private static RegistrySupplier<FigurineBlock> registerFig(String name, Supplier<FigurineBlock> supplier) {
-        return registerBlock("figurine_" + name, supplier);
+    private static RegistrySupplier<FigurineBlock> registerFigurine(String name) {
+        return registerBlock("figurine_" + name, FigurineBlock::new);
     }
 
-    public static final List<RegistrySupplier<? extends BushBlock>> FLOWERS = new ArrayList<>();
-    public static final RegistrySupplier<TallFlowerBlock> BENNETTITALES_LARGE_FLOWER = registerTallFlower("bennettitales_large");
-    public static final RegistrySupplier<GrowableFlowerBlock> BENNETTITALES_SMALL_FLOWER = registerGrowableFlower("bennettitales_small",
-            BENNETTITALES_LARGE_FLOWER);
-    public static final RegistrySupplier<ShortFlowerBlock> CEPHALOTAXUS_FLOWER = registerShortFlower("cephalotaxus");
-    public static final RegistrySupplier<TallFlowerBlock> CRATAEGUS_FLOWER = registerTallFlower("crataegus");
-    public static final RegistrySupplier<FourTallFlowerBlock> CYATHEA_FLOWER = registerFourTallFlower("cyathea");
-    public static final RegistrySupplier<ShortFlowerBlock> DICTYOPHYLLUM_FLOWER = registerShortFlower("dictyophyllum");
-    public static final RegistrySupplier<ShortFlowerBlock> DILLHOFFIA_FLOWER = registerShortFlower("dillhoffia");
-    public static final RegistrySupplier<TallFlowerBlock> DIPTERIS_FLOWER = registerTallFlower("dipteris");
-    public static final RegistrySupplier<TallFlowerBlock> DUISBERGIA_FLOWER = registerTallFlower("duisbergia");
-    public static final RegistrySupplier<ShortFlowerBlock> EPENDRA_FLOWER = registerShortFlower("ependra");
-    public static final RegistrySupplier<ShortFlowerBlock> FLORISSANTIA_FLOWER = registerShortFlower("florissantia");
-    public static final RegistrySupplier<TallFlowerBlock> FOOZIA_FLOWER = registerTallFlower("foozia");
-    public static final RegistrySupplier<TallFlowerBlock> HORSETAIL_LARGE_FLOWER = registerTallFlower("horsetail_large");
-    public static final RegistrySupplier<GrowableFlowerBlock> HORSETAIL_SMALL_FLOWER = registerGrowableFlower("horsetail_small",
-            HORSETAIL_LARGE_FLOWER);
-    public static final RegistrySupplier<ShortFlowerBlock> LICOPODIOPHYTA_FLOWER = registerShortFlower("licopodiophyta");
-    public static final RegistrySupplier<TallFlowerBlock> MUTANT_FLOWER = registerTallFlower("mutant_plant");
-    public static final RegistrySupplier<ShortFlowerBlock> OSMUNDA_FLOWER = registerShortFlower("osmunda");
-    public static final RegistrySupplier<ShortFlowerBlock> SAGENOPTERIS_FLOWER = registerShortFlower("sagenopteris");
-    public static final RegistrySupplier<TallFlowerBlock> SARRACENIA_FLOWER = registerTallFlower("sarracenia");
-    public static final RegistrySupplier<FourTallFlowerBlock> TEMPSKYA_FLOWER = registerFourTallFlower("tempskya");
-    public static final RegistrySupplier<ShortFlowerBlock> VACCINIUM_FLOWER = registerShortFlower("vaccinium");
-    public static final RegistrySupplier<ShortFlowerBlock> WELWITSCHIA_FLOWER = registerShortFlower("welwitschia");
-    public static final RegistrySupplier<ShortFlowerBlock> ZAMITES_FLOWER = registerShortFlower("zamites");
-
-    private static RegistrySupplier<ShortFlowerBlock> registerShortFlower(String name) {
-        var block = registerBlock(name,
-                () -> new ShortFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS)));
-        FLOWERS.add(block);
-        return block;
+    public static RegistrySupplier<ShortFlowerBlock> registerShortFlower(String name, VoxelShape shape) {
+        return registerBlock(name,
+                () -> new ShortFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
     }
 
-    private static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name) {
-        var block = registerBlock(name,
-                () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS)));
-        FLOWERS.add(block);
-        return block;
-    }
-    private static RegistrySupplier<FourTallFlowerBlock> registerFourTallFlower(String name) {
-        var block = registerBlock(name,
-                () -> new FourTallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS)));
-        FLOWERS.add(block);
-        return block;
+    public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape shape) {
+        return registerBlock(name,
+                () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
     }
 
-    private static RegistrySupplier<GrowableFlowerBlock> registerGrowableFlower(String name, RegistrySupplier<TallFlowerBlock> tallFlower) {
-        var block = registerBlock(name,
-                () -> new GrowableFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), tallFlower));
-        FLOWERS.add(block);
-        return block;
+    public static RegistrySupplier<FourTallFlowerBlock> registerFourTallFlower(String name, VoxelShape shape) {
+        return registerBlock(name,
+                () -> new FourTallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS),
+                        shape));
+    }
+
+    public static RegistrySupplier<GrowableFlowerBlock> registerGrowableFlower(String name, RegistrySupplier<TallFlowerBlock> tallFlower,
+                                                                               VoxelShape shape) {
+        return registerBlock(name,
+                () -> new GrowableFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS),
+                        tallFlower, shape));
     }
 
     private static <T extends Block> RegistrySupplier<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {
@@ -355,6 +325,7 @@ public class ModBlocks {
     }
 
     public static void register() {
+        PrehistoricPlantType.register();
         BLOCKS.register();
     }
 }

@@ -10,6 +10,13 @@
           "conditions": [
             {
               "condition": "minecraft:survives_explosion"
+            },
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "fossil:foozia",
+              "properties": {
+                "half": "lower"
+              }
             }
           ],
           "name": "fossil:foozia"
