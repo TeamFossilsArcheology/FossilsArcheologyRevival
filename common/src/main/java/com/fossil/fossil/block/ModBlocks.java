@@ -3,6 +3,7 @@ package com.fossil.fossil.block;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.custom_blocks.SkullBlock;
 import com.fossil.fossil.block.custom_blocks.*;
+import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.material.ModFluids;
 import com.fossil.fossil.world.feature.tree.CordaitesTreeGrower;
@@ -12,7 +13,6 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
@@ -48,7 +48,7 @@ public class ModBlocks {
             BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()
                     .lightLevel(activeBlockEmission(14)).noOcclusion()));
     public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable", () -> new WorktableBlock(
-                    BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).sound(SoundType.WOOD)));
+            BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<FeederBlock> FEEDER = registerBlock("feeder",
             () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)));
     public static final RegistrySupplier<ArchitecturyLiquidBlock> TAR = registerBlockWithoutBlockItem("tar",
@@ -71,8 +71,8 @@ public class ModBlocks {
             block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<IceBlock> ICED_STONE = registerBlock("iced_stone",
-            () -> new IceBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 10f).requiresCorrectToolForDrops()
+    public static final RegistrySupplier<IcedStoneBlock> ICED_STONE = registerBlock("iced_stone",
+            () -> new IcedStoneBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 10f).requiresCorrectToolForDrops()
                     .sound(SoundType.GLASS).randomTicks()));
     public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
             () -> new ObsidianSpikesBlock(BlockBehaviour.Properties.of(Material.STONE).strength(50, 2000).sound(SoundType.STONE)
@@ -125,7 +125,8 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> TARRED_DIRT = registerBlock("tarred_dirt",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT)));
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(1f).requiresCorrectToolForDrops()));
+            () -> new PermafrostBlock(
+                    BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
             () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(
                     SoundType.GRAVEL)));
@@ -219,12 +220,6 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SIGILLARIA_SAPLING = registerBlock("sigillaria_sapling",
             () -> new SaplingBlock(new SigillariaTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
 
-
-    public static final RegistrySupplier<Block> BENNETTITALES_SMALL = registerBlock("bennettitales_small",
-            () -> new FlowerBlock(MobEffects.SATURATION, 0, BlockBehaviour.Properties.copy(Blocks.DANDELION).noOcclusion()));
-    public static final RegistrySupplier<Block> BENNETTITALES_TALL = registerBlock("bennettitales_tall",
-            () -> new DoublePlantBlock(BlockBehaviour.Properties.copy(Blocks.TALL_GRASS).noOcclusion()));
-
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
@@ -281,6 +276,60 @@ public class ModBlocks {
 
     private static RegistrySupplier<FigurineBlock> registerFig(String name, Supplier<FigurineBlock> supplier) {
         return registerBlock("figurine_" + name, supplier);
+    }
+
+    public static final List<RegistrySupplier<? extends BushBlock>> FLOWERS = new ArrayList<>();
+    public static final RegistrySupplier<TallFlowerBlock> BENNETTITALES_LARGE_FLOWER = registerTallFlower("bennettitales_large");
+    public static final RegistrySupplier<GrowableFlowerBlock> BENNETTITALES_SMALL_FLOWER = registerGrowableFlower("bennettitales_small",
+            BENNETTITALES_LARGE_FLOWER);
+    public static final RegistrySupplier<ShortFlowerBlock> CEPHALOTAXUS_FLOWER = registerShortFlower("cephalotaxus");
+    public static final RegistrySupplier<TallFlowerBlock> CRATAEGUS_FLOWER = registerTallFlower("crataegus");
+    public static final RegistrySupplier<FourTallFlowerBlock> CYATHEA_FLOWER = registerFourTallFlower("cyathea");
+    public static final RegistrySupplier<ShortFlowerBlock> DICTYOPHYLLUM_FLOWER = registerShortFlower("dictyophyllum");
+    public static final RegistrySupplier<ShortFlowerBlock> DILLHOFFIA_FLOWER = registerShortFlower("dillhoffia");
+    public static final RegistrySupplier<TallFlowerBlock> DIPTERIS_FLOWER = registerTallFlower("dipteris");
+    public static final RegistrySupplier<TallFlowerBlock> DUISBERGIA_FLOWER = registerTallFlower("duisbergia");
+    public static final RegistrySupplier<ShortFlowerBlock> EPENDRA_FLOWER = registerShortFlower("ependra");
+    public static final RegistrySupplier<ShortFlowerBlock> FLORISSANTIA_FLOWER = registerShortFlower("florissantia");
+    public static final RegistrySupplier<TallFlowerBlock> FOOZIA_FLOWER = registerTallFlower("foozia");
+    public static final RegistrySupplier<TallFlowerBlock> HORSETAIL_LARGE_FLOWER = registerTallFlower("horsetail_large");
+    public static final RegistrySupplier<GrowableFlowerBlock> HORSETAIL_SMALL_FLOWER = registerGrowableFlower("horsetail_small",
+            HORSETAIL_LARGE_FLOWER);
+    public static final RegistrySupplier<ShortFlowerBlock> LICOPODIOPHYTA_FLOWER = registerShortFlower("licopodiophyta");
+    public static final RegistrySupplier<TallFlowerBlock> MUTANT_FLOWER = registerTallFlower("mutant_plant");
+    public static final RegistrySupplier<ShortFlowerBlock> OSMUNDA_FLOWER = registerShortFlower("osmunda");
+    public static final RegistrySupplier<ShortFlowerBlock> SAGENOPTERIS_FLOWER = registerShortFlower("sagenopteris");
+    public static final RegistrySupplier<TallFlowerBlock> SARRACENIA_FLOWER = registerTallFlower("sarracenia");
+    public static final RegistrySupplier<FourTallFlowerBlock> TEMPSKYA_FLOWER = registerFourTallFlower("tempskya");
+    public static final RegistrySupplier<ShortFlowerBlock> VACCINIUM_FLOWER = registerShortFlower("vaccinium");
+    public static final RegistrySupplier<ShortFlowerBlock> WELWITSCHIA_FLOWER = registerShortFlower("welwitschia");
+    public static final RegistrySupplier<ShortFlowerBlock> ZAMITES_FLOWER = registerShortFlower("zamites");
+
+    private static RegistrySupplier<ShortFlowerBlock> registerShortFlower(String name) {
+        var block = registerBlock(name,
+                () -> new ShortFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS)));
+        FLOWERS.add(block);
+        return block;
+    }
+
+    private static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name) {
+        var block = registerBlock(name,
+                () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS)));
+        FLOWERS.add(block);
+        return block;
+    }
+    private static RegistrySupplier<FourTallFlowerBlock> registerFourTallFlower(String name) {
+        var block = registerBlock(name,
+                () -> new FourTallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS)));
+        FLOWERS.add(block);
+        return block;
+    }
+
+    private static RegistrySupplier<GrowableFlowerBlock> registerGrowableFlower(String name, RegistrySupplier<TallFlowerBlock> tallFlower) {
+        var block = registerBlock(name,
+                () -> new GrowableFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), tallFlower));
+        FLOWERS.add(block);
+        return block;
     }
 
     private static <T extends Block> RegistrySupplier<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {

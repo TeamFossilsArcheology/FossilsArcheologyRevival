@@ -1,6 +1,8 @@
 package com.fossil.fossil.block.custom_blocks;
 
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
@@ -9,12 +11,23 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
+import java.util.Random;
+
 public class PermafrostBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 
     public PermafrostBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+    }
+
+    @Override
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+        spread();
+    }
+
+    private void spread() {
+        //TODO: Spread
     }
 
     public BlockState getStateForPlacement(BlockPlaceContext p_51377_) {
