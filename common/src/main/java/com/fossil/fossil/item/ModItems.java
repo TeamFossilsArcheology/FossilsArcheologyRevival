@@ -9,9 +9,9 @@ import dev.architectury.core.item.ArchitecturySpawnEggItem;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.item.*;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -39,6 +39,16 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> SKULL_STICK = ITEMS.register("skull_stick",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> TOOTH_DAGGER = ITEMS.register("tooth_dagger",
+            () -> new SwordItem(ModToolTiers.TOOTH_DAGGER, 3, -2.4f, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BONE_HELMET = ITEMS.register("bone_helmet",
+            () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.HEAD, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BONE_CHESTPLATE = ITEMS.register("bone_chestplate",
+            () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.CHEST, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BONE_LEGGINGS = ITEMS.register("bone_leggings",
+            () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.LEGS, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BONE_BOOTS = ITEMS.register("bone_boots",
+            () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.FEET, new Item.Properties().tab(ModTabs.FAITEMTAB)));
 
     public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("chicken_essence",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
@@ -69,6 +79,16 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(4).saturationMod(2).build())));
 
 
+    public static final RegistrySupplier<Item> BROKEN_SWORD = ITEMS.register("broken_sword",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BROKEN_HELMET = ITEMS.register("broken_helmet",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> ANCIENT_SWORD = ITEMS.register("ancient_sword",
+            () -> new SwordItem(Tiers.IRON, 3, -2.4f, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet",
+            () -> new ArmorItem(ModArmorMaterials.ANCIENT_ARMOR, EquipmentSlot.HEAD, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> FROZEN_MEAT = ITEMS.register("frozen_meat",
+            () -> new SwordItem(ModToolTiers.FROZEN_MEAT, 3, -2.4f, new Item.Properties().stacksTo(64).tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> FERN_SEED_FOSSIL = ITEMS.register("fossil_seed_fern",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> PALAE_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_palae",
@@ -92,7 +112,7 @@ public class ModItems {
     );
 
     public static void register() {
-        ITEMS.register();
         PrehistoricEntityType.register();
+        ITEMS.register();
     }
 }

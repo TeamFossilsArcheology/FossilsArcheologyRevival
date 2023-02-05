@@ -10,6 +10,7 @@ import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.Donkey;
 import net.minecraft.world.entity.animal.horse.Horse;
 import net.minecraft.world.entity.animal.horse.Llama;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 
 import java.util.ArrayList;
@@ -35,8 +36,8 @@ public enum PrehistoricEntityType {
     TRICERATOPS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, true),
     VELOCIRAPTOR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG),
     TYRANNOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
-    PTEROSAUR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE),
-    PLESIOSAUR(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE),
+    PTERANODON(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE),
+    PLESIOSAURUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE),
     MOSASAURUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCCARNIVORE),
     STEGOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     DILOPHOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
@@ -58,7 +59,7 @@ public enum PrehistoricEntityType {
     DIPLODOCUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     ORNITHOLESTES(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG),
     HENODUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.HERBIVORE),
-    ICTHYOSAURUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE),
+    ICHTYOSAURUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE),
     MEGANEURA(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCCARNIVORE),
     MEGALOGRAPTUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE),
     CONFUCIUSORNIS(PrehistoricMobType.BIRD, TimePeriod.MESOZOIC, Diet.HERBIVORE),
@@ -94,6 +95,9 @@ public enum PrehistoricEntityType {
     public Item ribcageBoneItem;
     public Item vertebraeBoneItem;
     public Item uniqueBoneItem;
+    public Item foodItem;
+    public Item cookedFoodItem;
+    public Item fishItem;
 
     PrehistoricEntityType(PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet) {
         this.entity = null;
@@ -140,6 +144,22 @@ public enum PrehistoricEntityType {
                         item -> type.vertebraeBoneItem = item);
                 ModItems.ITEMS.register("bone_unique_item_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB))).listen(
                         item -> type.uniqueBoneItem = item);
+            }
+            if (type.mobType == PrehistoricMobType.FISH) {
+                ModItems.ITEMS.register("fish_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)))
+                        .listen(item -> type.fishItem = item);
+            }
+            if (type.timePeriod != TimePeriod.CURRENT) {
+                if (type.mobType != PrehistoricMobType.FISH) {
+                    ModItems.ITEMS.register("meat_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
+                                    .food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3f).build())))
+                            .listen(item -> type.foodItem = item);
+                }
+                if (type != NAUTILUS) {
+                    ModItems.ITEMS.register("cooked_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
+                                    .food(new FoodProperties.Builder().nutrition(8).saturationMod(0.8f).build())))
+                            .listen(item -> type.cookedFoodItem = item);
+                }
             }
         }
     }

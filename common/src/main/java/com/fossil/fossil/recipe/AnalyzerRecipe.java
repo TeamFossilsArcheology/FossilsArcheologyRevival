@@ -154,7 +154,7 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
 
         public final ItemLike item;
         private final NavigableMap<Double, ItemStack> map = new TreeMap<>();
-        private double total;
+        public double total;
 
         public Builder(ItemLike item) {
             this.item = item;

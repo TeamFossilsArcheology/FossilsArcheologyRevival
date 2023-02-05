@@ -2,6 +2,7 @@ package com.fossil.fossil.recipe;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.item.ModItems;
@@ -55,12 +56,17 @@ public class ModRecipes {
                 .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 2.5)
                 .addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)
                 .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5);
+
+        double seedWeight = (100F - plantFossil.total) / (double) PrehistoricPlantType.plantsWithSeeds().size();
+        for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
+            plantFossil.addOutput(type.getFossilPlantSeedItem().get(), seedWeight);
+        }
         registerAnalyzer(plantFossil);
         AnalyzerRecipe.Builder bioFossil = new AnalyzerRecipe.Builder(ModItems.BIO_FOSSIL.get())
                 .addOutput(Blocks.SAND, 35)
                 .addOutput(Items.BONE_MEAL, 15);
         List<PrehistoricEntityType> bioFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
-        float bioFossilDNAChance = 15F / (float) bioFossilEntityList.size();
+        double bioFossilDNAChance = 15F / (double) bioFossilEntityList.size();
         for (PrehistoricEntityType type : bioFossilEntityList) {
             bioFossil.addOutput(type.dnaItem, bioFossilDNAChance);
         }
@@ -69,7 +75,7 @@ public class ModRecipes {
                 .addOutput(Items.BONE_MEAL, 15)
                 .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 30);
         List<PrehistoricEntityType> tarFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.CENOZOIC);
-        float tarFossilDNAChance = 15F / (float) tarFossilEntityList.size();
+        double tarFossilDNAChance = 15F / (double) tarFossilEntityList.size();
         for (PrehistoricEntityType type : tarFossilEntityList) {
             bioFossil.addOutput(type.dnaItem, tarFossilDNAChance);
         }
@@ -81,7 +87,11 @@ public class ModRecipes {
                 .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 15);
         registerAnalyzer(tarDrop);
 
+        AnalyzerRecipe.Builder failuresaurusFlesh = new AnalyzerRecipe.Builder(ModItems.FAILURESAURUS_FLESH.get())
+                .addOutput(Items.ROTTEN_FLESH, 33);
+        double failuresaurusDNAChance = 67F / PrehistoricEntityType.values().length;
         for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
+            failuresaurusFlesh.addOutput(type.dnaItem, failuresaurusDNAChance);
             registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
@@ -111,6 +121,22 @@ public class ModRecipes {
                     .addOutput(Items.BONE, 35)
                     .addOutput(type.dnaItem, 35));
         }
+        registerAnalyzer(failuresaurusFlesh);
+        AnalyzerRecipe.Builder frozenMeat = new AnalyzerRecipe.Builder(ModItems.FROZEN_MEAT.get())
+                .addOutput(Items.CHICKEN, 15)
+                .addOutput(Items.MUTTON, 15)
+                .addOutput(Items.BEEF, 15)
+                .addOutput(Items.PORKCHOP, 15)
+                .addOutput(Items.CHICKEN, 15)
+                .addOutput(ModItems.TAR_FOSSIL.get(), 20);
+        for (PrehistoricEntityType type : tarFossilEntityList) {
+            frozenMeat.addOutput(type.dnaItem, tarFossilDNAChance);
+        }
+        registerAnalyzer(frozenMeat);
+        for (PrehistoricEntityType type : tarFossilEntityList) {
+            frozenMeat.addOutput(type.dnaItem, tarFossilDNAChance);
+        }
+        registerAnalyzer(frozenMeat);
 
         List<Tuple<ItemLike, Double>> outputs = new ArrayList<>();
         outputs.add(new Tuple<>(Blocks.SAND, 20d));
@@ -125,6 +151,10 @@ public class ModRecipes {
                 registerSifter(item, outputs);
             }
         }
+        registerWorktable(ModItems.BROKEN_SWORD.get(), ModItems.ANCIENT_SWORD.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.BROKEN_HELMET.get(), ModItems.ANCIENT_HELMET.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.ANCIENT_SWORD.get(), ModItems.ANCIENT_SWORD.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.ANCIENT_HELMET.get(), ModItems.ANCIENT_HELMET.get(), ModItems.RELIC_SCRAP.get());
         registerWorktable(ModBlocks.AMPHORA_VASE_DAMAGED.get(), ModBlocks.AMPHORA_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.VOLUTE_VASE_DAMAGED.get(), ModBlocks.VOLUTE_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.KYLIX_VASE_DAMAGED.get(), ModBlocks.KYLIX_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
@@ -142,6 +172,9 @@ public class ModRecipes {
         registerCultivate(ModBlocks.AMBER_ORE.get(), ModItems.AMBER.get(), ModItems.BIO_GOO.get());
         registerCultivate(ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModBlocks.CORDAITES_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultivate(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
+        for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
+            registerCultivate(type.getFossilPlantSeedItem().get(), type.getPlantSeedItem().get(), ModItems.BIO_GOO.get());
+        }
         registerCultivate(Items.WHEAT_SEEDS, ModItems.AMBER.get(), ModItems.BIO_GOO.get());
     }
 
