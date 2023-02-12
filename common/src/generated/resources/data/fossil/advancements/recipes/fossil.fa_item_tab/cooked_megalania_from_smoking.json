@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:cooked_megalania_from_smoking"
+    ]
+  },
+  "criteria": {
+    "has_megalania_meat": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:meat_megalania"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:cooked_megalania_from_smoking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_megalania_meat",
+      "has_the_recipe"
+    ]
+  ]
+}

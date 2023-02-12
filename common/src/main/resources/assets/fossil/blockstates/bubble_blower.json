@@ -1,18 +1,33 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,active=false": {
       "model": "fossil:block/bubble_blower"
     },
-    "facing=south": {
+    "facing=south,active=false": {
       "model": "fossil:block/bubble_blower",
       "y": 180
     },
-    "facing=west": {
+    "facing=west,active=false": {
       "model": "fossil:block/bubble_blower",
       "y": 270
     },
-    "facing=east": {
+    "facing=east,active=false": {
       "model": "fossil:block/bubble_blower",
+      "y": 90
+    },
+    "facing=north,active=true": {
+      "model": "fossil:block/bubble_blower_active"
+    },
+    "facing=south,active=true": {
+      "model": "fossil:block/bubble_blower_active",
+      "y": 180
+    },
+    "facing=west,active=true": {
+      "model": "fossil:block/bubble_blower_active",
+      "y": 270
+    },
+    "facing=east,active=true": {
+      "model": "fossil:block/bubble_blower_active",
       "y": 90
     }
   }

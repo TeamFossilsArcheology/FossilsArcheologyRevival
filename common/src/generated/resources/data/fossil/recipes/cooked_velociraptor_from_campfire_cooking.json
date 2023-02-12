@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fossil:meat_velociraptor"
+  },
+  "result": "fossil:cooked_velociraptor",
+  "experience": 1.5,
+  "cookingtime": 600
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:chicken_soup_raw"
+  },
+  "result": "fossil:chicken_soup_cooked",
+  "experience": 1,
+  "cookingtime": 100
+}

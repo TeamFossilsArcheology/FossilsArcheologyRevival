@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_mammoth"
+  },
+  "result": "fossil:cooked_mammoth",
+  "experience": 1.5,
+  "cookingtime": 100
+}

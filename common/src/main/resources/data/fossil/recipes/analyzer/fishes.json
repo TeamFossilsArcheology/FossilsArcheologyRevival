@@ -1,0 +1,20 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "tag": "minecraft:fishes"
+  },
+  "outputs": [
+    {
+      "item": "minecraft:prismarine_crystals",
+      "weight": 15
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "weight": 75
+    },
+    {
+      "item": "fossil:polarbear_dna",
+      "weight": 10
+    }
+  ]
+}

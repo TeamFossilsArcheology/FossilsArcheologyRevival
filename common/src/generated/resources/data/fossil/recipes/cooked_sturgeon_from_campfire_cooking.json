@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fossil:fish_sturgeon"
+  },
+  "result": "fossil:cooked_sturgeon",
+  "experience": 1.5,
+  "cookingtime": 600
+}

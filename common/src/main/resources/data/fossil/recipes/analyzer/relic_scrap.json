@@ -1,0 +1,32 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "fossil:relic_scrap"
+  },
+  "outputs": [
+    {
+      "item": "minecraft:gravel",
+      "weight": 30
+    },
+    {
+      "item": "minecraft:flint",
+      "weight": 18
+    },
+    {
+      "item": "fossil:pottery_shard",
+      "weight": 4
+    },
+    {
+      "item": "fossil:broken_helmet",
+      "weight": 4
+    },
+    {
+      "item": "fossil:broken_sword",
+      "weight": 4
+    },
+    {
+      "item": "fossil:stone_tablet",
+      "weight": 30
+    }
+  ]
+}

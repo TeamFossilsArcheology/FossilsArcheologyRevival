@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:cooked_ankylosaurus_from_smoking"
+    ]
+  },
+  "criteria": {
+    "has_ankylosaurus_meat": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:meat_ankylosaurus"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:cooked_ankylosaurus_from_smoking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ankylosaurus_meat",
+      "has_the_recipe"
+    ]
+  ]
+}

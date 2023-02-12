@@ -1,0 +1,20 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "minecraft:leather"
+  },
+  "outputs": [
+    {
+      "item": "fossil:cow_dna",
+      "weight": 60
+    },
+    {
+      "item": "fossil:donkey_dna",
+      "weight": 10
+    },
+    {
+      "item": "fossil:horse_dna",
+      "weight": 30
+    }
+  ]
+}

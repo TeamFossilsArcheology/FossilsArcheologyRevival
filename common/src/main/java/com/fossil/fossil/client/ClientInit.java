@@ -1,8 +1,10 @@
 package com.fossil.fossil.client;
 
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.gui.*;
+import com.fossil.fossil.client.gui.filters.CreativeTabFilters;
 import com.fossil.fossil.client.model.AnuStatueModel;
 import com.fossil.fossil.client.particle.BubbleParticle;
 import com.fossil.fossil.client.particle.TarBubbleParticle;
@@ -30,11 +32,13 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);
         ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
+
     }
 
     public static void later() {
-        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.BENNETTITALES_SMALL.get());
-        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.BENNETTITALES_TALL.get());
+        for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
+            RenderTypeRegistry.register(RenderType.cutout(), type.getPlantBlock().get());
+        }
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.AMPHORA_VASE_DAMAGED.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.KYLIX_VASE_DAMAGED.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.VOLUTE_VASE_DAMAGED.get());
@@ -42,6 +46,9 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CORDAITES_DOOR.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CORDAITES_TRAPDOOR.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CORDAITES_LEAVES.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SIGILLARIA_LEAVES.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CORDAITES_SAPLING.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SIGILLARIA_SAPLING.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SLIME_TRAIL.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.OBSIDIAN_SPIKES.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANCIENT_GLASS.get());
@@ -58,5 +65,6 @@ public class ClientInit {
         BlockEntityRendererRegistry.register(ModBlockEntities.SARCOPHAGUS.get(), SarcophagusRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.CULTIVATE.get(), CultivateRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANCIENT_CHEST.get(), AncientChestRenderer::new);
+        CreativeTabFilters.register();
     }
 }

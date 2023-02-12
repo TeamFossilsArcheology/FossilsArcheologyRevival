@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_gastornis"
+  },
+  "result": "fossil:cooked_gastornis",
+  "experience": 1.5,
+  "cookingtime": 200
+}

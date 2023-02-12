@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "fossil:block/plants/plant_tempskya_3"
+  }
+}

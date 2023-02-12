@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_triceratops"
+  },
+  "result": "fossil:cooked_triceratops",
+  "experience": 1.5,
+  "cookingtime": 200
+}

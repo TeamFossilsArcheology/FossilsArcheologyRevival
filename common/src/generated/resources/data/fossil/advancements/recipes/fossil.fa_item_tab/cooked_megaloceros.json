@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:cooked_megaloceros"
+    ]
+  },
+  "criteria": {
+    "has_megaloceros_meat": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:meat_megaloceros"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:cooked_megaloceros"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_megaloceros_meat",
+      "has_the_recipe"
+    ]
+  ]
+}

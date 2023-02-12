@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:smelting",
+  "group": "coal",
+  "ingredient": {
+    "item": "fossil:dense_sand"
+  },
+  "result": "fossil:reinforced_glass",
+  "experience": 1,
+  "cookingtime": 200
+}

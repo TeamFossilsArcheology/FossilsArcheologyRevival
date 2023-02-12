@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_brachiosaurus"
+  },
+  "result": "fossil:cooked_brachiosaurus",
+  "experience": 1.5,
+  "cookingtime": 200
+}

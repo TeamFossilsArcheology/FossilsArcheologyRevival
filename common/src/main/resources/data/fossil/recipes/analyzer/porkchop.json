@@ -5,13 +5,8 @@
   },
   "outputs": [
     {
-      "item": "minecraft:prismarine_crystals",
-      "weight": 15,
-      "count": 2
-    },
-    {
-      "item": "minecraft:bone_meal",
-      "weight": 75
+      "item": "fossil:pig_dna",
+      "weight": 100
     }
   ]
 }

@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:cooked_mosasaurus_from_smoking"
+    ]
+  },
+  "criteria": {
+    "has_mosasaurus_meat": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:meat_mosasaurus"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:cooked_mosasaurus_from_smoking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_mosasaurus_meat",
+      "has_the_recipe"
+    ]
+  ]
+}

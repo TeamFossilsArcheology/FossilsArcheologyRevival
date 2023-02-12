@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "minecraft:nautilus_shell"
+  },
+  "outputs": [
+    {
+      "item": "fossil:nautilus_cooked",
+      "weight": 100
+    }
+  ]
+}

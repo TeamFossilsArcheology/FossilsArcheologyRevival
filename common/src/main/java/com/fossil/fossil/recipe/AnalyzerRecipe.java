@@ -1,5 +1,6 @@
 package com.fossil.fossil.recipe;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -11,6 +12,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
+import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -89,7 +91,9 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
     }
 
     public static class Type implements RecipeType<AnalyzerRecipe> {
-        private Type() {}
+        private Type() {
+        }
+
         public static final Type INSTANCE = new Type();
 /*
         @Override
@@ -113,12 +117,12 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
 
         private static NavigableMap<Double, ItemStack> weightedItemsFromJson(JsonArray outputsArray) {
             NavigableMap<Double, ItemStack> items = new TreeMap<>();
-            double total=0;
+            double total = 0;
             for (int i = 0; i < outputsArray.size(); ++i) {
                 JsonObject object = outputsArray.get(i).getAsJsonObject();
                 ItemStack item = ShapedRecipe.itemStackFromJson(object);
                 if (item.isEmpty()) continue;
-                total+= GsonHelper.getAsDouble(object, "weight");
+                total += GsonHelper.getAsDouble(object, "weight");
                 items.put(total, item);
             }
             return items;
@@ -143,6 +147,27 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
                 buffer.writeDouble(output.getKey());
                 buffer.writeItem(output.getValue());
             }
+        }
+    }
+
+    public static class Builder {
+
+        public final ItemLike item;
+        private final NavigableMap<Double, ItemStack> map = new TreeMap<>();
+        public double total;
+
+        public Builder(ItemLike item) {
+            this.item = item;
+        }
+
+        public Builder addOutput(ItemLike itemLike, double weight) {
+            total += weight;
+            map.put(total, new ItemStack(itemLike));
+            return this;
+        }
+
+        public AnalyzerRecipe build() {
+            return new AnalyzerRecipe(new ResourceLocation(Fossil.MOD_ID, item.toString()), Ingredient.of(item), map);
         }
     }
 }

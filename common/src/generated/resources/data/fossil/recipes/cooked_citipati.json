@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_citipati"
+  },
+  "result": "fossil:cooked_citipati",
+  "experience": 1.5,
+  "cookingtime": 200
+}

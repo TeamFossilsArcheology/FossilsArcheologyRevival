@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_compsognathus"
+  },
+  "result": "fossil:cooked_compsognathus",
+  "experience": 1.5,
+  "cookingtime": 200
+}

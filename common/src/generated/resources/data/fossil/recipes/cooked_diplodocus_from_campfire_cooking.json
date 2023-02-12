@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "item": "fossil:meat_diplodocus"
+  },
+  "result": "fossil:cooked_diplodocus",
+  "experience": 1.5,
+  "cookingtime": 600
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_tiktaalik"
+  },
+  "result": "fossil:cooked_tiktaalik",
+  "experience": 1.5,
+  "cookingtime": 100
+}
