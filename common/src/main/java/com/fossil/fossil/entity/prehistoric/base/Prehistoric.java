@@ -1562,7 +1562,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             b = true;// FoodHelper.getMobFoodPoints((LivingEntity) target, this.diet) > 0;
         }
         if (this.diet != Diet.HERBIVORE && this.diet != Diet.NONE && b && canAttack(target)) {
-            if (isAnotherDino ? this.getBbWidth() * getTargetScale() >= ((Prehistoric) target).getBbWidth() : this.getBbWidth() * getTargetScale() >= target.getBbWidth()) {
+            if (this.getBbWidth() * getTargetScale() >= target.getBbWidth()) {
                 if (hunger) {
                     return isHungry();
                 } else {
