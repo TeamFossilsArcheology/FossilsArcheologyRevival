@@ -37,7 +37,7 @@ public class ClientInit {
 
     public static void later() {
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-            RenderTypeRegistry.register(RenderType.cutout(), type.getPlantBlock().get());
+            RenderTypeRegistry.register(RenderType.cutout(), type.getPlantBlock());
         }
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.AMPHORA_VASE_DAMAGED.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.KYLIX_VASE_DAMAGED.get());

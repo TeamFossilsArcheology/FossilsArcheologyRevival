@@ -49,8 +49,8 @@ public class ModItemProvider extends ItemModelProvider {
         }
         if (plantItems) {
             for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-                plantSeedItem(type.getPlantSeedItem().get().getRegistryName());
-                plantSeedItem(type.getFossilPlantSeedItem().get().getRegistryName());
+                plantSeedItem(type.getPlantSeedItem().getRegistryName());
+                plantSeedItem(type.getFossilPlantSeedItem().getRegistryName());
             }
         }
     }

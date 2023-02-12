@@ -59,7 +59,7 @@ public class ModLootProvider extends LootTableProvider {
                                 .when(ExplosionCondition.survivesExplosion())))
                 .setParamSet(LootContextParamSets.BLOCK))));*/
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-            BushBlock flower = type.getPlantBlock().get();
+            BushBlock flower = type.getPlantBlock();
             var condition = LootItem.lootTableItem(flower.asItem()).when(ExplosionCondition.survivesExplosion());
             if (flower instanceof TallFlowerBlock) {
                 condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(

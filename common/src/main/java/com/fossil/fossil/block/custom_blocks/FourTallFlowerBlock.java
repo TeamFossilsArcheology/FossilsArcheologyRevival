@@ -18,6 +18,8 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
@@ -30,8 +32,13 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
     public FourTallFlowerBlock(Properties properties, VoxelShape shape) {
         super(properties);
         this.shape = shape;
-        //TODO: Shape
         this.registerDefaultState(this.stateDefinition.any().setValue(LAYER, 0));
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        Vec3 vec3 = state.getOffset(level, pos);
+        return shape.move(vec3.x, vec3.y, vec3.z);
     }
 
     @Override

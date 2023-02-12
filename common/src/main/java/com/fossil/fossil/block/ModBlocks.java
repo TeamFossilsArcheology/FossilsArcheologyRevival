@@ -45,7 +45,7 @@ public class ModBlocks {
                     .lightLevel(activeBlockEmission(14))));
     public static final RegistrySupplier<SifterBlock> SIFTER = registerBlock("sifter",
             () -> new SifterBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.METAL)));
-    public static final RegistrySupplier<Block> CULTIVATE = registerBlock("cultivate", () -> new CultivateBlock(
+    public static final RegistrySupplier<CultivateBlock> CULTIVATE = registerBlock("cultivate", () -> new CultivateBlock(
             BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()
                     .lightLevel(activeBlockEmission(14)).noOcclusion()));
     public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable", () -> new WorktableBlock(
@@ -122,7 +122,7 @@ public class ModBlocks {
     public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
             () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
     public static final RegistrySupplier<Block> FOSSIL = registerBlock("fossil",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(2f).requiresCorrectToolForDrops()));
+            () -> new FossilBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(2f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> TARRED_DIRT = registerBlock("tarred_dirt",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT)));
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
@@ -284,9 +284,9 @@ public class ModBlocks {
                 () -> new ShortFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
     }
 
-    public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape shape) {
+    public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape... shapes) {
         return registerBlock(name,
-                () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
+                () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shapes));
     }
 
     public static RegistrySupplier<FourTallFlowerBlock> registerFourTallFlower(String name, VoxelShape shape) {

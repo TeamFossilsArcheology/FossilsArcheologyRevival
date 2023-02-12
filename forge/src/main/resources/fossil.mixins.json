@@ -1,11 +1,12 @@
 {
   "required": true,
-  "package": "com.fossil.fossil.fabric.mixins",
+  "package": "com.fossil.fossil.forge.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
   ],
   "mixins": [
-    "LivingEntityMixin"
+    "TerrainParticleMixin",
+    "ParticleAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

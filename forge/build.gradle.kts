@@ -49,6 +49,7 @@ loom {
     forge {
         convertAccessWideners.set(true)
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
+        mixinConfig("fossil.mixins.json")
 
         //dataGen { //breaks my forge run, so I disable it when not needed
         //    mod(archivesBaseName)

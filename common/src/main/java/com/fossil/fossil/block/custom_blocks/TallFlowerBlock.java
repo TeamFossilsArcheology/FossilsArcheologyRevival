@@ -8,16 +8,27 @@ import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Random;
 
 public class TallFlowerBlock extends DoublePlantBlock implements BonemealableBlock {
-    private final VoxelShape shape;
-    public TallFlowerBlock(Properties properties, VoxelShape shape) {
+    private final VoxelShape[] shapes;
+
+    public TallFlowerBlock(Properties properties, VoxelShape... shapes) {
         super(properties);
-        this.shape = shape;
-        //TODO: Shape
+        this.shapes = shapes;
+    }
+
+    @Override
+    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        Vec3 vec3 = state.getOffset(level, pos);
+        if (shapes.length > 1 && state.getValue(HALF) == DoubleBlockHalf.UPPER) {
+            return shapes[1].move(vec3.x, vec3.y, vec3.z);
+        }
+        return shapes[0].move(vec3.x, vec3.y, vec3.z);
     }
 
     @Override

@@ -40,7 +40,7 @@
     ]
   },
   "mixins": [
-    "fossils.mixins.json"
+    "fossil.mixins.json"
   ],
   "depends": {
     "fabric": "*",

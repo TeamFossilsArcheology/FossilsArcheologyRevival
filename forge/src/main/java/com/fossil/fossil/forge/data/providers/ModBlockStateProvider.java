@@ -36,7 +36,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-            BushBlock flower = type.getPlantBlock().get();
+            BushBlock flower = type.getPlantBlock();
             if (flower instanceof ShortFlowerBlock shortFlower) {
                 shortFlowerBlock(shortFlower);
             } else if (flower instanceof TallFlowerBlock tallFlower) {
