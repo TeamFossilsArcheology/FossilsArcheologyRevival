@@ -53,7 +53,7 @@ public class Triceratops extends Prehistoric implements IDinosaur {
             level,
             false,
             0.4F,
-            1.2F,
+            1.4F,
             5,
             12,
             1,

@@ -41,7 +41,7 @@ public class Therizinosaurus extends Prehistoric implements IDinosaur {
             level,
             false,
             0.4F,
-            1.6F,
+            2.0F,
             5,
             6,
             12,
