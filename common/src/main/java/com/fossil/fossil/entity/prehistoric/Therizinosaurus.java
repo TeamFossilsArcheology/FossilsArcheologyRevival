@@ -41,7 +41,7 @@ public class Therizinosaurus extends Prehistoric implements IDinosaur {
             level,
             false,
             0.4F,
-            5F,
+            1.6F,
             5,
             6,
             12,
@@ -150,6 +150,11 @@ public class Therizinosaurus extends Prehistoric implements IDinosaur {
     @Override
     public boolean canBeRidden() {
         return false;
+    }
+
+    @Override
+    public float getFemaleScale() {
+        return 1.12F;
     }
 
     public PlayState onFrame(AnimationEvent<Therizinosaurus> event) {

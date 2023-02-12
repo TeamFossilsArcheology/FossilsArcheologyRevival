@@ -87,8 +87,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public final double baseArmor;
     public final double maxArmor;
     // public Animation ATTACK_ANIMATION;
-    public final float minSize;
-    public final float maxSize;
+    public final float minScale;
+    public final float maxScale;
     public final int teenAgeDays;
     public final int adultAgeDays;
     public OrderType currentOrder;
@@ -109,7 +109,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public boolean isDaytime;
     public float ridingXZ;
     public float ridingY = 1;
-    public float actualWidth;
     public boolean shouldWander = true;
     protected boolean developsResistance;
     protected boolean breaksBlocks;
@@ -136,8 +135,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             EntityType<? extends Prehistoric> entityType,
             Level level,
             boolean isCannibalistic,
-            float minSize,
-            float maxSize,
+            float minScale,
+            float maxScale,
             int teenAgeDays,
             int adultAgeDays,
             double baseDamage,
@@ -161,8 +160,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             ticksTillMate = this.random.nextInt(6000) + 6000;
         }
         this.isCannibalistic = isCannibalistic;
-        this.minSize = minSize;
-        this.maxSize = maxSize;
+        this.minScale = minScale;
+        this.maxScale = maxScale;
         this.teenAgeDays = teenAgeDays;
         this.adultAgeDays = adultAgeDays;
         this.baseDamage = baseDamage;
@@ -192,8 +191,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
 
     @Override
-    public EntityDimensions getDimensions(Pose poseIn) {
-        return this.getType().getDimensions();
+    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
+        return this.getType().getDimensions().scale(this.getScale());
     }
 
     @Override
@@ -205,7 +204,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public static boolean isEntitySmallerThan(Entity entity, float size) {
         if (entity instanceof Prehistoric prehistoric) {
-            return prehistoric.getActualWidth() <= size;
+            return prehistoric.getBbWidth() <= size;
         } else {
             return entity.getBbWidth() <= size;
         }
@@ -257,7 +256,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.entityData.define(OWNERDISPLAYNAME, "");
         this.entityData.define(AGINGDISABLED, false);
         this.entityData.define(HOLDING_IN_MOUTH, ItemStack.EMPTY);
-        this.entityData.define(CURRENT_ANIMATION, "idle");
+        this.entityData.define(CURRENT_ANIMATION, getIdleAnimation());
     }
 
     @Override
@@ -496,10 +495,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return null;
     }*/
     // TODO ^s
-
-    public float getActualWidth() {
-        return this.actualWidth * this.getAgeScale();
-    }
 
     public boolean arePlantsNearby(int range) {
         for (int i = Mth.floor(this.getX() - range); i < Mth.ceil(this.getX() + range); i++) {
@@ -896,17 +891,22 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return false;
     }
 
-    public float getAgeScale() {
-        float step = (this.maxSize - this.minSize) / ((this.adultAgeDays * 24000) + 1);
+    @Override
+    public float getScale() {
+        float step = ((this.maxScale * getFemaleScale()) - this.minScale) / ((this.adultAgeDays * 24000) + 1);
         if (this.getAgeInTicks() > this.adultAgeDays * 24000) {
-            return this.minSize + ((step) * this.adultAgeDays * 24000);
+            return this.minScale + ((step) * this.adultAgeDays * 24000);
         }
-        return this.minSize + ((step * this.getAgeInTicks()));
+        return this.minScale + ((step * this.getAgeInTicks()));
+    }
+
+    public float getModelScale() {
+        return getScale();
     }
 
     @Override
     protected int getExperienceReward(Player player) {
-        float base = 6 * this.getActualWidth() * (this.diet == Diet.HERBIVORE ? 1.0F : 2.0F)
+        float base = 6 * this.getBbWidth() * (this.diet == Diet.HERBIVORE ? 1.0F : 2.0F)
                 * (this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM ? 1.0F : 2.0F)
                 * (this.aiAttackType() == PrehistoricEntityTypeAI.Attacking.BASIC ? 1.0F : 1.25F);
         return Mth.floor((float) Math.min(this.adultAgeDays, this.getAgeInDays()) * base);
@@ -1020,6 +1020,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public void setAgeInDays(int days) {
         this.entityData.set(AGETICK, days * 24000);
+        refreshDimensions();
         if (!level.isClientSide) {
             updateAbilities();
         }
@@ -1031,6 +1032,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public void setAgeinTicks(int ticks) {
         refreshTexturePath();
+        refreshDimensions();
         this.entityData.set(AGETICK, ticks);
     }
 
@@ -1423,7 +1425,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             return;
         }
         this.setAgeInDays(this.getAgeInDays() + ageInDays);
-        for (int i = 0; i < this.getAgeScale() * 4; i++) {
+        for (int i = 0; i < this.getScale() * 4; i++) {
             double motionX = getRandom().nextGaussian() * 0.07D;
             double motionY = getRandom().nextGaussian() * 0.07D;
             double motionZ = getRandom().nextGaussian() * 0.07D;
@@ -1519,38 +1521,13 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return 0.4F;
     }
 
-    public float getMaleSize() {
+    public float getFemaleScale() {
         return 1.0F;
     }
 
     public String getOverlayTexture() {
         return "fossil:textures/blank.png";
     }
-
-    /*@Override
-    public int getAnimationTick() {
-        return animTick;
-    }
-
-    @Override
-    public void setAnimationTick(int tick) {
-        animTick = tick;
-    }
-
-    @Override
-    public Animation getAnimation() {
-        return currentAnimation == null ? NO_ANIMATION : currentAnimation;
-    }
-
-    @Override
-    public void setAnimation(Animation animation) {
-        currentAnimation = animation;
-    }
-
-    @Override
-    public Animation[] getAnimations() {
-        return new Animation[]{SPEAK_ANIMATION, ATTACK_ANIMATION};
-    }*/
 
     @Override
     public void playAmbientSound() {
@@ -1585,7 +1562,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             b = true;// FoodHelper.getMobFoodPoints((LivingEntity) target, this.diet) > 0;
         }
         if (this.diet != Diet.HERBIVORE && this.diet != Diet.NONE && b && canAttack(target)) {
-            if (isAnotherDino ? this.getActualWidth() * getTargetScale() >= ((Prehistoric) target).getActualWidth() : this.getActualWidth() * getTargetScale() >= target.getBbWidth()) {
+            if (isAnotherDino ? this.getBbWidth() * getTargetScale() >= ((Prehistoric) target).getBbWidth() : this.getBbWidth() * getTargetScale() >= target.getBbWidth()) {
                 if (hunger) {
                     return isHungry();
                 } else {
@@ -1804,11 +1781,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (this.getRidingPlayer() != null && this.isOwnedBy(this.getRidingPlayer()) && this.getTarget() != this.getRidingPlayer()) {
             yBodyRot = this.getRidingPlayer().yBodyRot;
             yHeadRot = this.getRidingPlayer().yBodyRot;
-            float radius = ridingXZ * (0.7F * getAgeScale()) * -3;
+            float radius = ridingXZ * (0.7F * getScale()) * -3;
             float angle = (0.01745329251F * this.yBodyRot);
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
-            double extraY = ridingY * (getAgeScale());
+            double extraY = ridingY * (getScale());
             float spinosaurusAddition = 0;
          /*    if (this instanceof EntitySpinosaurus) {
                 spinosaurusAddition = -(((EntitySpinosaurus) this).swimProgress * 0.1F);
@@ -1936,7 +1913,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public float getMaxTurnDistancePerTick() {
-        return Mth.clamp(90 - this.getActualWidth() * 20, 10, 90);
+        return Mth.clamp(90 - this.getBbWidth() * 20, 10, 90);
     }
 
     /*@OnlyIn(Dist.CLIENT)
@@ -2001,9 +1978,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         refreshTexturePath();
     }
 
-    @NotNull
+    @Nullable
     public Gender getGender() {
-        if (this.gender == null) throw new NullPointerException();
         return this.gender;
     }
 

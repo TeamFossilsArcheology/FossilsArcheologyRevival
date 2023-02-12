@@ -23,9 +23,9 @@ import net.minecraft.client.renderer.RenderType;
 public class ClientInit {
     public static void immediate() {
         EntityRendererRegistry.register(ModEntities.THERIZINOSAURUS,
-            context -> new RenderPrehistoricGeo<>(context, "therizinosaurus.geo.json", "fa.therizinosaurus.animations.json", 1.7F, 1.7F));
+            context -> new RenderPrehistoricGeo<>(context, "therizinosaurus.geo.json", "fa.therizinosaurus.animations.json"));
         EntityRendererRegistry.register(ModEntities.TRICERATOPS,
-            context -> new RenderPrehistoricGeo<>(context, "triceratops.geo.json", "triceratops.animation.json", 3, 3));
+            context -> new RenderPrehistoricGeo<>(context, "triceratops.geo.json", "triceratops.animation.json"));
 
         EntityRendererRegistry.register(ModEntities.ANU_STATUE,
                 context -> new com.fossil.fossil.client.renderer.entity.AnuStatueRenderer(context, new AnuStatueModel()));

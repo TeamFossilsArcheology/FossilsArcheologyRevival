@@ -53,7 +53,7 @@ public class Triceratops extends Prehistoric implements IDinosaur {
             level,
             false,
             0.4F,
-            5F,
+            1.2F,
             5,
             12,
             1,
@@ -100,6 +100,11 @@ public class Triceratops extends Prehistoric implements IDinosaur {
         this.targetSelector.addGoal(2, new DinoAIOwnerHurtTarget(this));
         this.targetSelector.addGoal(3, new DinoAIHurtByTarget(this));
         this.targetSelector.addGoal(4, new DinoAIHunt(this, LivingEntity.class, true, entity -> entity instanceof LivingEntity));*/
+    }
+
+    @Override
+    public float getModelScale() {
+        return super.getModelScale() * 3;
     }
 
     @Override
