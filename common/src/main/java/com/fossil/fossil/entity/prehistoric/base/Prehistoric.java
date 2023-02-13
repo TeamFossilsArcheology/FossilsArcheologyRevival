@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.IDinoUnbreakable;
+import com.fossil.fossil.block.entity.FeederBlockEntity;
 import com.fossil.fossil.entity.ai.DinoAIMating;
 import com.fossil.fossil.entity.util.EntityToyBase;
 import com.fossil.fossil.item.ModItems;
@@ -123,16 +124,14 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private int cathermalSleepCooldown = 0;
     private int ticksClimbing = 0;
     private float eggScale = 1.0F;
-    public final TimePeriod timePeriod;
-    public final Diet diet;
-    public final Item cultivatedEggItem;
+    public final PrehistoricEntityType type;
     // public final Item uncultivatedEggItem;
     public final boolean isCannibalistic;
     public ResourceLocation textureLocation;
     public DinoAIMating matingGoal;
 
     public Prehistoric(
-            EntityType<? extends Prehistoric> entityType,
+            EntityType<? extends Prehistoric> entityType, PrehistoricEntityType type,
             Level level,
             boolean isCannibalistic,
             float minScale,
@@ -146,12 +145,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             double baseSpeed,
             double maxSpeed,
             double baseArmor,
-            double maxArmor,
-            TimePeriod timePeriod,
-            Diet diet,
-            Item cultivatedEggItem
+            double maxArmor
     ) {
         super(entityType, level);
+        this.type = type;
         this.setHunger(this.getMaxHunger() / 2);
         this.pediaScale = 1.0F;
         this.nearByMobsAllowed = 15;
@@ -172,9 +169,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.maxSpeed = maxSpeed;
         this.baseArmor = baseArmor;
         this.maxArmor = maxArmor;
-        this.timePeriod = timePeriod;
-        this.diet = diet;
-        this.cultivatedEggItem = cultivatedEggItem;
         this.updateAbilities();
         if (this.getMobType() == MobType.WATER) {
             this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
@@ -429,7 +423,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     int z = Mth.floor(this.getZ() - r);
                     if (this.getY() + dy >= 0 &&
                             this.getY() + dy <= this.level.getHeight() &&
-                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), diet) != 0
+                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -437,7 +431,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
                     if (this.getY() + dy >= 0 &&
                             this.getY() + dy <= this.level.getHeight() &&
-                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), diet) != 0
+                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -453,7 +447,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
                     if (this.getY() + dy >= 0 &&
                             this.getY() + dy <= this.level.getHeight() &&
-                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), diet) != 0
+                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -461,7 +455,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
                     if (this.getY() + dy >= 0 &&
                             this.getY() + dy <= this.level.getHeight() &&
-                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), diet) != 0
+                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -906,7 +900,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     protected int getExperienceReward(Player player) {
-        float base = 6 * this.getBbWidth() * (this.diet == Diet.HERBIVORE ? 1.0F : 2.0F)
+        float base = 6 * this.getBbWidth() * (this.type.diet == Diet.HERBIVORE ? 1.0F : 2.0F)
                 * (this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM ? 1.0F : 2.0F)
                 * (this.aiAttackType() == PrehistoricEntityTypeAI.Attacking.BASIC ? 1.0F : 1.25F);
         return Mth.floor((float) Math.min(this.adultAgeDays, this.getAgeInDays()) * base);
@@ -972,18 +966,15 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             baby = mammal.createChild((ServerLevel) level);
         }
         if (this instanceof FlyingAnimal) {
-            baby = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), new ItemStack(cultivatedEggItem));
+            baby = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), new ItemStack(type.cultivatedBirdEggItem));
         }
-        if (this instanceof IDinosaur) {
-            baby = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), new ItemStack(this.cultivatedEggItem));
-            /*
-            For now disable this behavior as egg model does not exist yet.
-            if (Fossil.CONFIG_OPTIONS.eggsLikeChickens || this.isVivariousAquatic()) {
-            } else {
-                baby = new DinosaurEgg(this.level, (EntityType<? extends Prehistoric>) this.getType(), eggScale);
-            }
-            */
+        /*
+        For now disable this behavior as egg model does not exist yet.
+        if (Fossil.CONFIG_OPTIONS.eggsLikeChickens || this.isVivariousAquatic()) {
+        } else {
+            baby = new DinosaurEgg(this.level, (EntityType<? extends Prehistoric>) this.getType(), eggScale);
         }
+        */
         return baby;
     }
 
@@ -1172,7 +1163,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     this.getVoicePitch()
             );
             if (!level.isClientSide && !droppedBiofossil) {
-                if (this.timePeriod == TimePeriod.CENOZOIC) {
+                if (type.timePeriod == TimePeriod.CENOZOIC) {
                     this.spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
                 } else {
                     this.spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
@@ -1245,14 +1236,13 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                 } else {
                     double d0 = player.getX() - this.getX();
                     double d2 = player.getZ() - this.getZ();
-                    double d3 = Math.sqrt(d0 * d0 + d2 * d2);
                     float f = (float) (Mth.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
                     this.yHeadRot = f;
                     this.yBodyRot = f;
                 }
                 return InteractionResult.SUCCESS;
             } else {
-                if (itemstack.getItem() == Items.BONE && this.getAgeInDays() < this.adultAgeDays) {
+                if (itemstack.is(Items.BONE) && this.getAgeInDays() < this.adultAgeDays) {
                     this.level.playSound(null, this.blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.NEUTRAL, 0.8F, 1);
                     this.setAgeInDays(this.getAgeInDays() + 1);
                     if (!player.isCreative()) {
@@ -1262,10 +1252,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                 }
             }
         } else {
-
             if (!itemstack.isEmpty()) {
-                // TODO Add GEM items
-                /*if ((this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM && itemstack.getItem() == ModItems.SCARAB_GEM) || (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUEGEM && itemstack.getItem() == ModItems.AQUATIC_SCARAB_GEM)) {
+                if ((this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM && itemstack.is(ModItems.SCARAB_GEM.get())) ||
+                        (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUEGEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
                     if (!this.isTame() && !this.isOwnedBy(player) && this.isActuallyWeak()) {
                         this.triggerTamingAcheivement(player);
                         this.heal(200);
@@ -1276,13 +1265,13 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                         this.setLastHurtByMob(null);
                         this.setTame(true);
                         this.setOwnerUUID(player.getUUID());
-                        this.level.setEntityState(this, (byte) 35); // also somehow port this
+                        this.level.broadcastEntityEvent(this, (byte) 35);
                         itemstack.shrink(1);
                         return InteractionResult.SUCCESS;
                     }
-                }*/
+                }
 
-                if (itemstack.getItem() == ModItems.CHICKEN_ESSENCE.get() && this.aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && this.aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && !player.level.isClientSide) {
+                if (itemstack.is(ModItems.CHICKEN_ESSENCE.get()) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && this.aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && !player.level.isClientSide) {
                     if (this.getAgeInDays() < this.adultAgeDays && this.getHunger() > 0) {
                         if (this.getHunger() > 0) {
                             itemstack.shrink(1);
@@ -1300,7 +1289,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     }
                     return InteractionResult.SUCCESS;
                 }
-                /*if (itemstack.getItem() == ModItems.STUNTED_ESSENCE && !isAgingDisabled()) { // TODO Add STUNTED_ESSENCE
+                /*if (itemstack.is(ModItems.STUNTED_ESSENCE) && !isAgingDisabled()) { // TODO Add STUNTED_ESSENCE
                     this.setHunger(this.getHunger() + 20);
                     this.heal(this.getMaxHealth());
                     this.playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, this.getSoundVolume(), this.getVoicePitch());
@@ -1316,10 +1305,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     return InteractionResult.SUCCESS;
                 }*/
 
-                if (FoodMappings.getItemFoodAmount(itemstack, this.diet) != 0) {
+                if (FoodMappings.getItemFoodAmount(itemstack, this.type.diet) != 0) {
                     if (!player.level.isClientSide) {
                         if (this.getHunger() < this.getMaxHunger() || this.getHealth() < this.getMaxHealth() && Fossil.CONFIG_OPTIONS.healingDinos || !this.isTame() && this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
-                            this.setHunger(this.getHunger() + FoodMappings.getItemFoodAmount(itemstack, this.diet));
+                            this.setHunger(this.getHunger() + FoodMappings.getItemFoodAmount(itemstack, this.type.diet));
                             if (!level.isClientSide) {
                                 this.eatItem(itemstack);
                             }
@@ -1347,20 +1336,19 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
                     return InteractionResult.PASS;
                 } else {
-                    if (itemstack.getItem() == Items.LEAD && this.isTame()) {
+                    if (itemstack.is(Items.LEAD) && this.isTame()) {
                         if (this.isOwnedBy(player)) {
                             this.setLeashedTo(player, true);
                             itemstack.shrink(1);
                             return InteractionResult.SUCCESS;
                         }
                     }
-                    /*if (level.isClientSide && itemstack.getItem() == ModItems.DINOPEDIA) { // TODO Add DIOPEDIA
-                        this.setPedia();
-                        //  player.openGui(Revival.INSTANCE, 6, this.level, (int) this.getX(), (int) this.getY(), (int) this.getZ());
+                    /*if (level.isClientSide && itemstack.is(ModItems.DINOPEDIA.get())) {
+                        Minecraft.getInstance().setScreen(new DinopediaScreen(this));
                         return InteractionResult.SUCCESS;
-                    }*/
+                    }
 
-                    /*if (itemstack.getItem() == ModItems.WHIP && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult()) { // TODO Add WHIP
+                    if (itemstack.is(ModItems.WHIP) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult()) { // TODO Add WHIP
                         if (this.isTame() && this.isOwnedBy(player) && this.canBeRidden()) {
                             if (this.getRidingPlayer() == null) {
                                 if (!this.level.isClientSide) {
@@ -1394,7 +1382,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                         // this.currentOrder = OrderType.FreeMove;
                         // setRidingPlayer(player);
                     }*/
-                    if (this.getOrderItem() != null && itemstack.getItem() == this.getOrderItem() && this.isTame() && this.isOwnedBy(player) && !player.isPassenger()) {
+                    if (this.getOrderItem() != null && itemstack.is(this.getOrderItem()) && this.isTame() && this.isOwnedBy(player) && !player.isPassenger()) {
                         if (!this.level.isClientSide) {
                             this.jumping = false;
                             this.getNavigation().stop();
@@ -1559,9 +1547,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         boolean isAnotherDino = target instanceof Prehistoric;
         boolean b = true;
         if (target != null) {
-            b = true;// FoodHelper.getMobFoodPoints((LivingEntity) target, this.diet) > 0;
+            b = true;// FoodHelper.getMobFoodPoints((LivingEntity) target, this.type.diet) > 0;
         }
-        if (this.diet != Diet.HERBIVORE && this.diet != Diet.NONE && b && canAttack(target)) {
+        if (this.type.diet != Diet.HERBIVORE && this.type.diet != Diet.NONE && b && canAttack(target)) {
             if (this.getBbWidth() * getTargetScale() >= target.getBbWidth()) {
                 if (hunger) {
                     return isHungry();
@@ -1656,7 +1644,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public void doFoodEffect() {
         this.level.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, this.getSoundVolume(), this.getVoicePitch());
-        switch (this.diet) {
+        switch (this.type.diet) {
             case HERBIVORE:
                 spawnItemParticle(Items.WHEAT_SEEDS, false);
                 break;
@@ -1729,11 +1717,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public void eatItem(ItemStack stack) {
         if (stack != null) {
-            if (FoodMappings.getItemFoodAmount(stack, diet) != 0) {
+            if (FoodMappings.getItemFoodAmount(stack, type.diet) != 0) {
                 this.setMood(this.getMood() + 5);
                 doFoodEffect(stack.getItem());
                 //Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(stack.getItem())));
-                this.setHunger(this.getHunger() + FoodMappings.getItemFoodAmount(stack, diet));
+                this.setHunger(this.getHunger() + FoodMappings.getItemFoodAmount(stack, type.diet));
                 stack.shrink(1);
             /*if (this.getAnimation() == NO_ANIMATION) {
                 this.setAnimation(SPEAK_ANIMATION);
@@ -1760,7 +1748,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (this.getBbWidth() <= entity.getBbWidth()) {
             if (entity instanceof Prehistoric) {
                 Prehistoric mob = (Prehistoric) entity;
-                return mob.diet != Diet.HERBIVORE;
+                return mob.type.diet != Diet.HERBIVORE;
             } else {
                 if (entity instanceof Player) {
                     Player player = (Player) entity;
@@ -1849,11 +1837,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private boolean isFeeder(BlockPos pos, boolean leaves) {
         if (leaves) {
             BlockState state = level.getBlockState(pos);
-            return FoodMappings.getBlockFoodAmount(state.getBlock(), this.diet) > 0;
+            return FoodMappings.getBlockFoodAmount(state.getBlock(), this.type.diet) > 0;
         } else {
-            BlockState state = level.getBlockState(pos);
             BlockEntity entity = this.level.getBlockEntity(pos);
-            return false;//  return entity instanceof TileEntityFeeder;
+            return entity instanceof FeederBlockEntity;
         }
     }
 

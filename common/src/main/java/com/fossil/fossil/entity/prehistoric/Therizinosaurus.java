@@ -3,12 +3,10 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.DinoAIFleeBattle;
 import com.fossil.fossil.entity.ai.DinoAIWander;
 import com.fossil.fossil.entity.ai.DinoMeleeAttackAI;
-import com.fossil.fossil.entity.prehistoric.base.IDinosaur;
+import com.fossil.fossil.entity.ai.EatFeedersAndBlocksGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
-import com.fossil.fossil.item.ModItems;
-import com.fossil.fossil.util.Diet;
-import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
@@ -24,7 +22,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 // TODO Accurately adjust values here, for now setting it identical to Triceratops
-public class Therizinosaurus extends Prehistoric implements IDinosaur {
+public class Therizinosaurus extends Prehistoric {
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public static final String IDLE = "fa.therizinosaurus.idle";
     public static final String WALK = "fa.therizinosaurus.walk";
@@ -38,6 +36,7 @@ public class Therizinosaurus extends Prehistoric implements IDinosaur {
     public Therizinosaurus(EntityType<? extends Prehistoric> entityType, Level level) {
         super(
             entityType,
+            PrehistoricEntityType.THERIZINOSAURUS,
             level,
             false,
             0.4F,
@@ -51,10 +50,7 @@ public class Therizinosaurus extends Prehistoric implements IDinosaur {
             0.2,
             0.35,
             5,
-            15,
-            TimePeriod.MESOZOIC,
-            Diet.HERBIVORE,
-            ModItems.THERIZINOSAURUS_SPAWN_EGG.get()
+            15
         );
     }
 
@@ -63,6 +59,7 @@ public class Therizinosaurus extends Prehistoric implements IDinosaur {
         super.registerGoals();
         this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.0D));
         this.goalSelector.addGoal(2, new DinoMeleeAttackAI(this, 1.0, true));
+        this.goalSelector.addGoal(3, new EatFeedersAndBlocksGoal(this));
         this.goalSelector.addGoal(7, new DinoAIWander(this, 1.0));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }

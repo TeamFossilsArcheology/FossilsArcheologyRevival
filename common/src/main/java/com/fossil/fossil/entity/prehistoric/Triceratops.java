@@ -4,12 +4,10 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ai.DinoAIFleeBattle;
 import com.fossil.fossil.entity.ai.DinoAIWander;
 import com.fossil.fossil.entity.ai.DinoMeleeAttackAI;
-import com.fossil.fossil.entity.prehistoric.base.IDinosaur;
+import com.fossil.fossil.entity.ai.EatFeedersAndBlocksGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
-import com.fossil.fossil.item.ModItems;
-import com.fossil.fossil.util.Diet;
-import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -26,7 +24,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Triceratops extends Prehistoric implements IDinosaur {
+public class Triceratops extends Prehistoric {
     public AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public static final String IDLE = "animation.triceratops.idle";
@@ -49,7 +47,7 @@ public class Triceratops extends Prehistoric implements IDinosaur {
 
     public Triceratops(EntityType<? extends Triceratops> type, Level level) {
         super(
-            type,
+            type, PrehistoricEntityType.TRICERATOPS,
             level,
             false,
             0.4F,
@@ -63,10 +61,7 @@ public class Triceratops extends Prehistoric implements IDinosaur {
             0.1,
             0.25,
             5,
-            15,
-            TimePeriod.MESOZOIC,
-            Diet.HERBIVORE,
-            ModItems.TRICERATOPS_SPAWN_EGG.get()
+            15
         );
         this.hasFeatherToggle = true;
         this.featherToggle = Fossil.CONFIG_OPTIONS.quilledTriceratops;
@@ -88,6 +83,7 @@ public class Triceratops extends Prehistoric implements IDinosaur {
         this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed, false));
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(7, new DinoAIWander(this, speed));
+        this.goalSelector.addGoal(3, new EatFeedersAndBlocksGoal(this));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         /*this.goalSelector.addGoal(3, new DinoAIEatFeedersAndBlocks(this));
         this.targetSelector.addGoal(3, new DinoAIEatItems(this));

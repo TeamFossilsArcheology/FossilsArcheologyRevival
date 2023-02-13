@@ -2,6 +2,7 @@ package com.fossil.fossil.block.entity;
 
 import com.fossil.fossil.block.custom_blocks.FeederBlock;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.inventory.FeederMenu;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
@@ -148,46 +149,50 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         return true;
     }
 
-    public boolean isEmpty(Prehistoric entity) {
-        if (entity.diet == Diet.CARNIVORE || entity.diet == Diet.CARNIVORE_EGG || entity.diet == Diet.PISCCARNIVORE || entity.diet == Diet.PISCIVORE || entity.diet == Diet.INSECTIVORE) {
+    public boolean isEmpty(PrehistoricEntityType type) {
+        if (type.diet == Diet.CARNIVORE || type.diet == Diet.CARNIVORE_EGG || type.diet == Diet.PISCCARNIVORE || type.diet == Diet.PISCIVORE || type.diet == Diet.INSECTIVORE) {
             return meat == 0;
         }
-        if (entity.diet == Diet.HERBIVORE) {
+        if (type.diet == Diet.HERBIVORE) {
             return plant == 0;
         }
-        return entity.diet == Diet.OMNIVORE && meat == 0 && plant == 0;
+        return type.diet == Diet.OMNIVORE && meat == 0 && plant == 0;
     }
 
-    public int feedDinosaur(Prehistoric mob) {
-        int feedamount = 0;
-        if (!isEmpty(mob)) {
-            if (mob.diet == Diet.CARNIVORE || mob.diet == Diet.CARNIVORE_EGG || mob.diet == Diet.PISCCARNIVORE || mob.diet == Diet.PISCIVORE || mob.diet == Diet.INSECTIVORE) {
-                meat--;
-                level.broadcastEntityEvent(mob, (byte) 47);
-                feedamount++;
-            }
-            if (mob.diet == Diet.HERBIVORE) {
-                plant--;
-                level.broadcastEntityEvent(mob, (byte) 45);
-                feedamount++;
-            }
-            if (mob.diet == Diet.OMNIVORE) {
-                if (meat == 0 && plant != 0) {
+    public void feedDinosaur(Prehistoric mob) {
+        if (level != null) {
+            int feedAmount = 0;
+            if (!isEmpty(mob.type)) {
+                if (mob.type.diet == Diet.CARNIVORE || mob.type.diet == Diet.CARNIVORE_EGG || mob.type.diet == Diet.PISCCARNIVORE || mob.type.diet == Diet.PISCIVORE || mob.type.diet == Diet.INSECTIVORE) {
                     meat--;
-                    feedamount++;
-                } else if (meat != 0 && plant == 0) {
-                    meat--;
-                    feedamount++;
-                } else if (meat != 0) {
-                    meat--;
-                    feedamount++;
+                    level.broadcastEntityEvent(mob, (byte) 47);
+                    feedAmount++;
+                }
+                if (mob.type.diet == Diet.HERBIVORE) {
+                    plant--;
+                    level.broadcastEntityEvent(mob, (byte) 45);
+                    feedAmount++;
+                }
+                if (mob.type.diet == Diet.OMNIVORE) {
+                    if (meat == 0 && plant != 0) {
+                        plant--;
+                        feedAmount++;
+                    } else if (meat != 0 && plant == 0) {
+                        meat--;
+                        feedAmount++;
+                    } else if (meat != 0) {
+                        meat--;
+                        feedAmount++;
+                    }
                 }
             }
+            if (feedAmount > 0) {
+                level.getBlockState(getBlockPos()).setValue(FeederBlock.HERB, plant > 0).setValue(FeederBlock.CARN, meat > 0);
+                level.setBlockAndUpdate(getBlockPos(), getBlockState());
+                setChanged(level, getBlockPos(), getBlockState());
+                mob.setHunger(mob.getHunger() + feedAmount);
+            }
         }
-        level.getBlockState(getBlockPos()).setValue(FeederBlock.HERB, plant > 0).setValue(FeederBlock.CARN, meat > 0);
-        // FeederBlock.updateFeederBlockState(plant > 0, meat > 0, level, getBlockPos());
-        mob.setHunger(mob.getHunger() + feedamount);
-        return feedamount;
     }
 
     @Override

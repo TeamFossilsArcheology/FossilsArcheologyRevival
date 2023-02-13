@@ -64,34 +64,14 @@ public class ModRecipes {
         registerAnalyzer(plantFossil);
         AnalyzerRecipe.Builder bioFossil = new AnalyzerRecipe.Builder(ModItems.BIO_FOSSIL.get())
                 .addOutput(Blocks.SAND, 35)
-                .addOutput(Items.BONE_MEAL, 15);
+                .addOutput(Items.BONE_MEAL, 50);
         List<PrehistoricEntityType> bioFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
         double bioFossilDNAChance = 15F / (double) bioFossilEntityList.size();
         for (PrehistoricEntityType type : bioFossilEntityList) {
             bioFossil.addOutput(type.dnaItem, bioFossilDNAChance);
         }
         registerAnalyzer(bioFossil);
-        AnalyzerRecipe.Builder tarFossil = new AnalyzerRecipe.Builder(ModItems.TAR_FOSSIL.get())
-                .addOutput(Items.BONE_MEAL, 15)
-                .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 30);
-        List<PrehistoricEntityType> tarFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.CENOZOIC);
-        double tarFossilDNAChance = 15F / (double) tarFossilEntityList.size();
-        for (PrehistoricEntityType type : tarFossilEntityList) {
-            bioFossil.addOutput(type.dnaItem, tarFossilDNAChance);
-        }
-        registerAnalyzer(tarFossil);
-        AnalyzerRecipe.Builder tarDrop = new AnalyzerRecipe.Builder(ModItems.TAR_DROP.get())
-                .addOutput(Items.COAL, 20)
-                .addOutput(Items.CHARCOAL, 20)
-                .addOutput(ModItems.TAR_FOSSIL.get(), 45)
-                .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 15);
-        registerAnalyzer(tarDrop);
-
-        AnalyzerRecipe.Builder failuresaurusFlesh = new AnalyzerRecipe.Builder(ModItems.FAILURESAURUS_FLESH.get())
-                .addOutput(Items.ROTTEN_FLESH, 33);
-        double failuresaurusDNAChance = 67F / PrehistoricEntityType.values().length;
         for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
-            failuresaurusFlesh.addOutput(type.dnaItem, failuresaurusDNAChance);
             registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
@@ -121,6 +101,46 @@ public class ModRecipes {
                     .addOutput(Items.BONE, 35)
                     .addOutput(type.dnaItem, 35));
         }
+        AnalyzerRecipe.Builder tarDrop = new AnalyzerRecipe.Builder(ModItems.TAR_DROP.get())
+                .addOutput(Items.COAL, 20)
+                .addOutput(Items.CHARCOAL, 20)
+                .addOutput(ModItems.TAR_FOSSIL.get(), 45)
+                .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 15);
+        registerAnalyzer(tarDrop);
+        AnalyzerRecipe.Builder tarFossil = new AnalyzerRecipe.Builder(ModItems.TAR_FOSSIL.get())
+                .addOutput(Items.BONE_MEAL, 15)
+                .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 30);
+        List<PrehistoricEntityType> tarFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.CENOZOIC);
+        double tarFossilDNAChance = 15F / (double) tarFossilEntityList.size();
+        for (PrehistoricEntityType type : tarFossilEntityList) {
+            tarFossil.addOutput(type.dnaItem, tarFossilDNAChance);
+        }
+        registerAnalyzer(tarFossil);
+
+        AnalyzerRecipe.Builder failuresaurusFlesh = new AnalyzerRecipe.Builder(ModItems.FAILURESAURUS_FLESH.get())
+                .addOutput(Items.ROTTEN_FLESH, 33);
+        double failuresaurusDNAChance = 67F / PrehistoricEntityType.values().length;
+        for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
+            failuresaurusFlesh.addOutput(type.dnaItem, failuresaurusDNAChance);
+            if (type.foodItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(type.foodItem).addOutput(type.dnaItem, 100));
+            }
+            if (type.eggItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(type.eggItem).addOutput(type.dnaItem, 100));
+            }
+            if (type.birdEggItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(type.birdEggItem).addOutput(type.dnaItem, 100));
+            }
+            if (type.cultivatedBirdEggItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(type.cultivatedBirdEggItem).addOutput(type.dnaItem, 100));
+            }
+            if (type.fishItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(type.fishItem).addOutput(type.dnaItem, 100));
+            }
+            if (type.embryoItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(type.embryoItem).addOutput(type.dnaItem, 100));
+            }
+        }
         registerAnalyzer(failuresaurusFlesh);
         AnalyzerRecipe.Builder frozenMeat = new AnalyzerRecipe.Builder(ModItems.FROZEN_MEAT.get())
                 .addOutput(Items.CHICKEN, 15)
@@ -133,16 +153,14 @@ public class ModRecipes {
             frozenMeat.addOutput(type.dnaItem, tarFossilDNAChance);
         }
         registerAnalyzer(frozenMeat);
-        for (PrehistoricEntityType type : tarFossilEntityList) {
-            frozenMeat.addOutput(type.dnaItem, tarFossilDNAChance);
-        }
-        registerAnalyzer(frozenMeat);
 
         List<Tuple<ItemLike, Double>> outputs = new ArrayList<>();
         outputs.add(new Tuple<>(Blocks.SAND, 20d));
         outputs.add(new Tuple<>(Items.POTATO, 15d));
         outputs.add(new Tuple<>(Items.CARROT, 10d));
         outputs.add(new Tuple<>(Items.BONE_MEAL, 20d));
+        outputs.add(new Tuple<>(ModItems.DOMINICAN_AMBER.get(), 1d));
+        outputs.add(new Tuple<>(ModItems.FERN_SEED_FOSSIL.get(), 10d));
         outputs.add(new Tuple<>(ModItems.PlANT_FOSSIL.get(), 14d));
         outputs.add(new Tuple<>(ModItems.BIO_FOSSIL.get(), 2d));
         outputs.add(new Tuple<>(ModItems.POTTERY_SHARD.get(), 5d));
@@ -169,13 +187,17 @@ public class ModRecipes {
         registerWorktable(ModBlocks.ENDERMAN_FIGURINE_DAMAGED.get(), ModBlocks.ENDERMAN_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.PIGZOMBIE_FIGURINE_DAMAGED.get(), ModBlocks.PIGZOMBIE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
 
-        registerCultivate(ModBlocks.AMBER_ORE.get(), ModItems.AMBER.get(), ModItems.BIO_GOO.get());
+        for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithDNAResult()) {
+            registerCultivate(type.dnaItem, type.getDNAResult(), ModItems.BIO_GOO.get());
+        }
+        registerCultivate(ModItems.FERN_SEED_FOSSIL.get(), ModItems.FERN_SEED.get(), ModItems.BIO_GOO.get());
         registerCultivate(ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModBlocks.CORDAITES_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultivate(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
+        //registerCultivate(ModItems.PALAE_SAPLING_FOSSIL.get(), ModBlocks.PALAE_SAPLING.get(), ModItems.BIO_GOO.get());
+        //registerCultivate(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModBlocks.CALAMITES_SAPLING.get(), ModItems.BIO_GOO.get());
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
             registerCultivate(type.getFossilPlantSeedItem(), type.getPlantSeedItem(), ModItems.BIO_GOO.get());
         }
-        registerCultivate(Items.WHEAT_SEEDS, ModItems.AMBER.get(), ModItems.BIO_GOO.get());
     }
 
     private static void registerSifter(ItemLike item, List<Tuple<ItemLike, Double>> outputs) {
