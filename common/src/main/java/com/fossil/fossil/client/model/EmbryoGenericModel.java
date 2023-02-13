@@ -9,7 +9,9 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
 public class EmbryoGenericModel {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/block/cultivate/embryo_generic.png");
+    public static final ResourceLocation TEXTURE_GENERIC = new ResourceLocation(Fossil.MOD_ID, "textures/block/cultivate/embryo_generic.png");
+    public static final ResourceLocation TEXTURE_LIMBLESS = new ResourceLocation(Fossil.MOD_ID, "textures/block/cultivate/embryo_limbless.png");
+    public static final ResourceLocation TEXTURE_INSECT = new ResourceLocation(Fossil.MOD_ID, "textures/block/cultivate/embryo_insect.png");
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();

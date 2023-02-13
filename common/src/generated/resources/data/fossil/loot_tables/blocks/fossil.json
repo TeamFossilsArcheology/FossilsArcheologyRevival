@@ -1,0 +1,651 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:group",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "fossil:archeology",
+                        "levels": 1
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "weight": 6,
+                  "name": "fossil:scarab_gem"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 3,
+                  "name": "fossil:broken_sword"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 7,
+                  "name": "fossil:broken_helmet"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 37,
+                  "name": "fossil:skull"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 275,
+                  "name": "fossil:fossil_bio"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 475,
+                  "name": "fossil:relic_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 75,
+                  "name": "minecraft:bone"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 200,
+                  "name": "fossil:fossil_plant"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 4,
+                  "name": "fossil:bones_leg"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_arm"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_foot"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_skull"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_ribcage"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_vertebrae"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_unique"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:group",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "fossil:archeology",
+                        "levels": 2
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "weight": 11,
+                  "name": "fossil:scarab_gem"
+                },
+                {
+                  "type": "minecraft:item",
+                  "name": "fossil:broken_sword"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 9,
+                  "name": "fossil:broken_helmet"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 37,
+                  "name": "fossil:skull"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 275,
+                  "name": "fossil:fossil_bio"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 750,
+                  "name": "fossil:relic_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "minecraft:bone"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:fossil_plant"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 0,
+                  "name": "fossil:bones_leg"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 2,
+                  "name": "fossil:bones_arm"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_foot"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_skull"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_ribcage"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_vertebrae"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3000,
+                  "name": "fossil:bones_unique"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:group",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "fossil:archeology",
+                        "levels": 3
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "weight": 16,
+                  "name": "fossil:scarab_gem"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:broken_sword"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 10,
+                  "name": "fossil:broken_helmet"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 37,
+                  "name": "fossil:skull"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 275,
+                  "name": "fossil:fossil_bio"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 750,
+                  "name": "fossil:relic_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "minecraft:bone"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:fossil_plant"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 0,
+                  "name": "fossil:bones_leg"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 0,
+                  "name": "fossil:bones_arm"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 0,
+                  "name": "fossil:bones_foot"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_skull"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_ribcage"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_vertebrae"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_unique"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:group",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "fossil:paleontology",
+                        "levels": 1
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "weight": 6,
+                  "name": "fossil:scarab_gem"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 3,
+                  "name": "fossil:broken_sword"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 7,
+                  "name": "fossil:broken_helmet"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 75,
+                  "name": "fossil:skull"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 375,
+                  "name": "fossil:fossil_bio"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 25,
+                  "name": "fossil:relic_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 550,
+                  "name": "minecraft:bone"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:fossil_plant"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 28,
+                  "name": "fossil:bones_leg"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 6,
+                  "name": "fossil:bones_arm"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 6,
+                  "name": "fossil:bones_foot"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 6,
+                  "name": "fossil:bones_skull"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 6,
+                  "name": "fossil:bones_ribcage"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 6,
+                  "name": "fossil:bones_vertebrae"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 6,
+                  "name": "fossil:bones_unique"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:group",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "fossil:paleontology",
+                        "levels": 2
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "weight": 11,
+                  "name": "fossil:scarab_gem"
+                },
+                {
+                  "type": "minecraft:item",
+                  "name": "fossil:broken_sword"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 9,
+                  "name": "fossil:broken_helmet"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 112,
+                  "name": "fossil:skull"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 475,
+                  "name": "fossil:fossil_bio"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:relic_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 400,
+                  "name": "minecraft:bone"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:fossil_plant"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 48,
+                  "name": "fossil:bones_leg"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 9,
+                  "name": "fossil:bones_arm"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 9,
+                  "name": "fossil:bones_foot"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 9,
+                  "name": "fossil:bones_skull"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 9,
+                  "name": "fossil:bones_ribcage"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 9,
+                  "name": "fossil:bones_vertebrae"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 9,
+                  "name": "fossil:bones_unique"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:group",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "fossil:paleontology",
+                        "levels": 3
+                      }
+                    ]
+                  }
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "weight": 16,
+                  "name": "fossil:scarab_gem"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:broken_sword"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 10,
+                  "name": "fossil:broken_helmet"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 150,
+                  "name": "fossil:skull"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 575,
+                  "name": "fossil:fossil_bio"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:relic_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 225,
+                  "name": "minecraft:bone"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 0,
+                  "name": "fossil:fossil_plant"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 67,
+                  "name": "fossil:bones_leg"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 12,
+                  "name": "fossil:bones_arm"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 12,
+                  "name": "fossil:bones_foot"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 12,
+                  "name": "fossil:bones_skull"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 12,
+                  "name": "fossil:bones_ribcage"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 12,
+                  "name": "fossil:bones_vertebrae"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 12,
+                  "name": "fossil:bones_unique"
+                }
+              ]
+            },
+            {
+              "type": "minecraft:group",
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "name": "fossil:scarab_gem"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 5,
+                  "name": "fossil:broken_sword"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 5,
+                  "name": "fossil:broken_helmet"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 37,
+                  "name": "fossil:skull"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 275,
+                  "name": "fossil:fossil_bio"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 200,
+                  "name": "fossil:relic_scrap"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 350,
+                  "name": "minecraft:bone"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 200,
+                  "name": "fossil:fossil_plant"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 9,
+                  "name": "fossil:bones_leg"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_arm"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_foot"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_skull"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_ribcage"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_vertebrae"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_unique"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

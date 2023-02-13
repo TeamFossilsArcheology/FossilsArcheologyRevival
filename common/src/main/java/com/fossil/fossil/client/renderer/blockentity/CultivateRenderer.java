@@ -35,11 +35,17 @@ public class CultivateRenderer implements BlockEntityRenderer<CultivateBlockEnti
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.mulPose(Vector3f.YP.rotationDegrees(rot));
             if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.GENERIC) {//generic
-                var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE));
+                var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_GENERIC));
                 this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
             } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.PLANT) {//plant
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoPlantModel.TEXTURE));
                 this.modelPlant.render(poseStack, c, packedLight, packedOverlay);
+            } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.INSECT) {//plant
+                var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_INSECT));
+                this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
+            } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.LIMBLESS) {//plant
+                var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_LIMBLESS));
+                this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
             }
             poseStack.popPose();
         }

@@ -1,7 +1,10 @@
 package com.fossil.fossil.block.entity;
 
+import com.fossil.fossil.Fossil;
+import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.custom_blocks.CultivateBlock;
 import com.fossil.fossil.inventory.CultivateMenu;
+import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.recipe.WorktableRecipe;
 import com.fossil.fossil.util.Diet;
@@ -9,11 +12,16 @@ import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -27,6 +35,10 @@ public class CultivateBlockEntity extends CustomBlockEntity {
     private static final int[] SLOTS_FOR_UP = new int[]{CultivateMenu.INPUT_SLOT_ID}; //Input
     private static final int[] SLOTS_FOR_SIDES = new int[]{CultivateMenu.FUEL_SLOT_ID, CultivateMenu.OUTPUT_SLOT_ID}; //Fuel+Output
     private static final int[] SLOTS_FOR_DOWN = new int[]{CultivateMenu.OUTPUT_SLOT_ID}; //Output
+    private static final ResourceKey<? extends Registry<Item>> key = ModItems.ITEMS.getRegistrar().key();
+    public static final TagKey<Item> LIMBLESS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_limbless"));
+    public static final TagKey<Item> INSECTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_insects"));
+    public static final TagKey<Item> PLANTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_plants"));
 
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
     private final ContainerData dataAccess = new ContainerData() {
@@ -77,9 +89,6 @@ public class CultivateBlockEntity extends CustomBlockEntity {
     public static void serverTick(Level level, BlockPos pos, BlockState state, CultivateBlockEntity blockEntity) {
         boolean wasActive = blockEntity.cookingProgress > 0;
         boolean dirty = false;
-        if (blockEntity.items.get(CultivateMenu.INPUT_SLOT_ID).isEmpty()) {
-            //isPlant = isSeed((blockEntity.items.get(INPUT_SLOT_ID)));
-        }
         if (blockEntity.isProcessing()) {
             --blockEntity.litTime;
         }
@@ -113,7 +122,6 @@ public class CultivateBlockEntity extends CustomBlockEntity {
 
         if (wasActive != blockEntity.cookingProgress > 0) {
             dirty = true;
-            //isPlant = isSeed((blockEntity.items.get(INPUT_SLOT_ID)));
             state = state.setValue(CultivateBlock.ACTIVE, blockEntity.cookingProgress > 0);
             state = state.setValue(CultivateBlock.EMBRYO, getDNAType(blockEntity));
             level.setBlock(pos, state, 3);
@@ -124,7 +132,7 @@ public class CultivateBlockEntity extends CustomBlockEntity {
         }
 
         if (blockEntity.cookingProgress == 3001 && new Random().nextInt(100) < 20) {
-            // FABlockRegistry.CULTIVATE_IDLE.onBlockRemovalLost(world, pos, true);
+            ModBlocks.CULTIVATE.get().onFailedCultivation(level, pos);
         }
     }
 
@@ -167,10 +175,14 @@ public class CultivateBlockEntity extends CustomBlockEntity {
     }
 
     public static CultivateBlock.EmbryoType getDNAType(CultivateBlockEntity blockEntity) {
-        ItemStack inputStack = blockEntity.items.get(CultivateMenu.INPUT_SLOT_ID);
-        if (!inputStack.isEmpty()) {
-            if (inputStack.is(Items.WHEAT_SEEDS)) {
+        ItemStack input = blockEntity.items.get(CultivateMenu.INPUT_SLOT_ID);
+        if (!input.isEmpty()) {
+            if (input.is(PLANTS)) {
                 return CultivateBlock.EmbryoType.PLANT;
+            } else if (input.is(LIMBLESS)) {
+                return CultivateBlock.EmbryoType.LIMBLESS;
+            } else if (input.is(INSECTS)) {
+                return CultivateBlock.EmbryoType.INSECT;
             }
         }
         return CultivateBlock.EmbryoType.GENERIC;

@@ -1,6 +1,7 @@
 package com.fossil.fossil.item;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.material.ModFluids;
@@ -91,6 +92,8 @@ public class ModItems {
             () -> new SwordItem(ModToolTiers.FROZEN_MEAT, 3, -2.4f, new Item.Properties().stacksTo(64).tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> FERN_SEED_FOSSIL = ITEMS.register("fossil_seed_fern",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> FERN_SEED = ITEMS.register("fern_seed",
+            () -> new ItemNameBlockItem(ModBlocks.FERNS.get(), new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> PALAE_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_palae",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> CALAMITES_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_calamites",

@@ -2,10 +2,7 @@ package com.fossil.fossil.block.custom_blocks;
 
 import com.fossil.fossil.block.entity.CustomBlockEntity;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.Containers;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.MenuProvider;
+import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseEntityBlock;
@@ -25,15 +22,19 @@ public abstract class CustomEntityBlock extends BaseEntityBlock {
         super(properties);
     }
 
+    protected void dropInventory(Level level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof Container) {
+            Containers.dropContents(level, pos, (Container) blockEntity);
+        }
+    }
+
     @Override
     public @NotNull InteractionResult use(BlockState state, Level level, BlockPos pos, Player player, InteractionHand hand, BlockHitResult hit) {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CustomBlockEntity) {
-            player.openMenu((MenuProvider) blockEntity);
-        }
+        dropInventory(level, pos);
         return InteractionResult.CONSUME;
     }
 

@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "fossil:item/fossil_seed_fern"
+    "layer0": "fossil:item/seeds/fossil_seed_fern"
   }
 }

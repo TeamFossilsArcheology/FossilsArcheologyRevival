@@ -284,6 +284,8 @@ public class ModBlocks {
                 () -> new ShortFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
     }
 
+    public static final RegistrySupplier<Block> FERNS = registerBlockWithoutBlockItem("ferns", FernsBlock::new);
+
     public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape... shapes) {
         return registerBlock(name,
                 () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shapes));

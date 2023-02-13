@@ -1,0 +1,6 @@
+{
+  "parent": "fossil:block/ferns_crop",
+  "textures": {
+    "crop": "fossil:block/ferns_stage7"
+  }
+}

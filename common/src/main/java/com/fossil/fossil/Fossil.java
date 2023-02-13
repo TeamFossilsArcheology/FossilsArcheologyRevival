@@ -2,6 +2,7 @@ package com.fossil.fossil;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
@@ -28,6 +29,7 @@ public class Fossil {
         ModPlacedFeatures.register();
         ModRecipes.register();
         ModSounds.register();
+        ModEnchantments.register();
 
         TimerCallbacks.SERVER_CALLBACKS.register(new DisposableTask.Serializer());
     }
