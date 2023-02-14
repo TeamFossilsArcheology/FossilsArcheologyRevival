@@ -41,6 +41,8 @@ public class Therizinosaurus extends Prehistoric {
             false,
             0.4F,
             2.0F,
+            2F,
+            2F,
             5,
             6,
             12,
@@ -168,7 +170,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::onFrame));
+        data.addAnimationController(new AnimationController<>(this, "controller", 15, this::onFrame));
     }
 
     @Override

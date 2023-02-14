@@ -90,6 +90,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     // public Animation ATTACK_ANIMATION;
     public final float minScale;
     public final float maxScale;
+    public final float baseKnockBackResistance;
+    public final float maxKnockBackResistance;
     public final int teenAgeDays;
     public final int adultAgeDays;
     public OrderType currentOrder;
@@ -111,7 +113,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public float ridingXZ;
     public float ridingY = 1;
     public boolean shouldWander = true;
-    protected boolean developsResistance;
     protected boolean breaksBlocks;
     protected int nearByMobsAllowed;
     protected float jumpPower;
@@ -136,6 +137,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             boolean isCannibalistic,
             float minScale,
             float maxScale,
+            float baseKnockBackResistance,
+            float maxKnockBackResistance,
             int teenAgeDays,
             int adultAgeDays,
             double baseDamage,
@@ -159,6 +162,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.isCannibalistic = isCannibalistic;
         this.minScale = minScale;
         this.maxScale = maxScale;
+        this.baseKnockBackResistance = baseKnockBackResistance;
+        this.maxKnockBackResistance = maxKnockBackResistance;
         this.teenAgeDays = teenAgeDays;
         this.adultAgeDays = adultAgeDays;
         this.baseDamage = baseDamage;
@@ -916,15 +921,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, baseDamage, maxDamage)));
         this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Mth.lerp(percent, baseSpeed, maxSpeed));
         this.getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, baseArmor, maxArmor));
-        if (this.developsResistance) {
-            if (this.isTeen()) {
-                this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.5D);
-            } else if (this.isAdult()) {
-                this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(2.0D);
-            } else {
-                this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.0D);
-            }
-        }
+        this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, baseKnockBackResistance, maxKnockBackResistance));
 
         this.heal((float) healthDifference);
     }

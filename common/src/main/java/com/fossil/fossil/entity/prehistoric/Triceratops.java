@@ -52,6 +52,8 @@ public class Triceratops extends Prehistoric {
             false,
             0.4F,
             1.4F,
+            0.5F,
+            2F,
             5,
             12,
             1,
@@ -66,7 +68,6 @@ public class Triceratops extends Prehistoric {
         this.hasFeatherToggle = true;
         this.featherToggle = Fossil.CONFIG_OPTIONS.quilledTriceratops;
         this.nearByMobsAllowed = 7;
-        developsResistance = true;
         breaksBlocks = true;
         this.ridingY = 0.73F;
         this.ridingXZ = -0.05F;
@@ -238,7 +239,7 @@ public class Triceratops extends Prehistoric {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 0, this::onFrame));
+        data.addAnimationController(new AnimationController<>(this, "controller", 15, this::onFrame));
     }
 
     @Override
