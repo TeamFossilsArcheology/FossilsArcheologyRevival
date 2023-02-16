@@ -26,6 +26,7 @@ public abstract class CustomEntityBlock extends BaseEntityBlock {
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (blockEntity instanceof Container) {
             Containers.dropContents(level, pos, (Container) blockEntity);
+            level.updateNeighbourForOutputSignal(pos, this);
         }
     }
 
@@ -34,7 +35,10 @@ public abstract class CustomEntityBlock extends BaseEntityBlock {
         if (level.isClientSide) {
             return InteractionResult.SUCCESS;
         }
-        dropInventory(level, pos);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof CustomBlockEntity) {
+            player.openMenu((MenuProvider) blockEntity);
+        }
         return InteractionResult.CONSUME;
     }
 
@@ -43,11 +47,7 @@ public abstract class CustomEntityBlock extends BaseEntityBlock {
         if (state.is(newState.getBlock())) {
             return;
         }
-        BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CustomBlockEntity) {
-            Containers.dropContents(level, pos, (CustomBlockEntity) blockEntity);
-            level.updateNeighbourForOutputSignal(pos, this);
-        }
+        dropInventory(level, pos);
         super.onRemove(state, level, pos, newState, isMoving);
     }
 

@@ -3,6 +3,7 @@ package com.fossil.fossil.forge;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.ClientInit;
 import com.fossil.fossil.recipe.ModRecipes;
+import com.fossil.fossil.util.FossilFoodMappings;
 import com.mojang.logging.LogUtils;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraftforge.api.distmarker.Dist;
@@ -36,5 +37,6 @@ public class FossilForge {
     }
     public void onCommon(FMLCommonSetupEvent event) {
         ModRecipes.initRecipes();
+        FossilFoodMappings.register();
     }
 }
