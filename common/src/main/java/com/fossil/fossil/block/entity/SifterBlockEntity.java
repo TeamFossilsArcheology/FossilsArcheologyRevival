@@ -63,14 +63,6 @@ public class SifterBlockEntity extends CustomBlockEntity {
         super(ModBlockEntities.SIFTER.get(), blockPos, blockState);
     }
 
-    private static int getItemBurnTime(ItemStack stack) {
-        return 100;
-    }
-
-    public static boolean isItemFuel(ItemStack stack) {
-        return getItemBurnTime(stack) > 0;
-    }
-
 
     public static EnumSiftType getSiftTypeFromStack(ItemStack stack) {
         if (stack.getItem() instanceof BlockItem) {
@@ -185,11 +177,6 @@ public class SifterBlockEntity extends CustomBlockEntity {
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());
         }
-    }
-
-    @Override
-    public boolean canPlaceItem(int index, ItemStack stack) {
-        return index == 0 && isItemFuel(stack);
     }
 
 

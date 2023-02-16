@@ -183,11 +183,6 @@ public class AnalyzerBlockEntity extends CustomBlockEntity {
     }
 
     @Override
-    public boolean canPlaceItem(int index, ItemStack stack) {
-        return (index != 1 || isFuel(stack));
-    }
-
-    @Override
     public int @NotNull [] getSlotsForFace(Direction side) {
         return side == Direction.DOWN ? SLOTS_FOR_DOWN : SLOTS_FOR_UP;
     }

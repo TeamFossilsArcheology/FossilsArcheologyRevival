@@ -20,6 +20,7 @@ import net.minecraft.world.item.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class FilterTab {
     private static final ResourceLocation FILTER_TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/filters.png");
@@ -33,16 +34,21 @@ public class FilterTab {
         }
     }
 
-    public List<Holder<Item>> getItems() {
-        List<Holder<Item>> list = new ArrayList<>();
+    public List<Item> getItems() {
+        List<Item> list = new ArrayList<>();
         var enabledButton = buttons.stream().filter(button -> button.filter.enabled).findFirst();
         if (enabledButton.isPresent()) {
             var optional = Registry.ITEM.getTag(enabledButton.get().filter.tag);
             if (optional.isPresent()) {
-                list = optional.get().stream().toList();
+                list = optional.get().stream().map(Holder::value).toList();
             }
         }
         return list;
+    }
+
+    public Optional<TagKey<Item>> getTag() {
+        var enabledButton = buttons.stream().filter(button -> button.filter.enabled).findFirst();
+        return enabledButton.map(filterButton -> filterButton.filter.tag);
     }
 
     public void renderButtons(PoseStack poseStack, int mouseX, int mouseY, float partialTicks) {

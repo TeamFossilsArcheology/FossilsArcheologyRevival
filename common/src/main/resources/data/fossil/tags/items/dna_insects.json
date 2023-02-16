@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:alligator_gar_dna",
+    "fossil:arthropleura_dna",
+    "fossil:meganeura_dna"
+  ]
+}

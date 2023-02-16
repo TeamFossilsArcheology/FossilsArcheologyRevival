@@ -221,11 +221,6 @@ public class WorktableBlockEntity extends CustomBlockEntity {
         }
     }
 
-    @Override
-    public boolean canPlaceItem(int index, ItemStack stack) {
-        return true;
-    }
-
 
     @Override
     public int @NotNull [] getSlotsForFace(Direction side) {

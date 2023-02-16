@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:fossil_sapling_calamites",
+    "fossil:fossil_sapling_cordaites",
+    "fossil:fossil_sapling_palae",
+    "fossil:fossil_sapling_sigillaria",
+    "#fossil:fossil_seeds"
+  ]
+}

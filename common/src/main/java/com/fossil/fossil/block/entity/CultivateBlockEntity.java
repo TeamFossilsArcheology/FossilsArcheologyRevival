@@ -203,17 +203,6 @@ public class CultivateBlockEntity extends CustomBlockEntity {
     }
 
     @Override
-    public boolean canPlaceItem(int index, ItemStack stack) {
-        if (index == 0) {
-            return FoodMappings.getItemFoodAmount(stack, Diet.CARNIVORE_EGG) > 0 || FoodMappings.getItemFoodAmount(stack, Diet.PISCCARNIVORE) > 0;
-        }
-        if (index == 1) {
-            return FoodMappings.getItemFoodAmount(stack, Diet.HERBIVORE) > 0;
-        }
-        return false;
-    }
-
-    @Override
     public int @NotNull [] getSlotsForFace(Direction side) {
         return side == Direction.DOWN ? SLOTS_FOR_DOWN : (side == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_SIDES);
     }

@@ -1,21 +1,20 @@
 package com.fossil.fossil.client.gui.filters;
 
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ModTabs;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.client.ClientGuiEvent;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
-import net.minecraft.core.Holder;
 import net.minecraft.core.NonNullList;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static com.fossil.fossil.client.gui.filters.FilterTab.Filter;
 
@@ -49,10 +48,11 @@ public class CreativeTabFilters {
                 NonNullList<ItemStack> stacks = NonNullList.create();
                 CreativeModeTab.TABS[creativeScreen.getSelectedTab()].fillItemList(stacks);
                 activeTab = creativeScreen.getSelectedTab();
-                List<Holder<Item>> list = tabs.get(creativeScreen.getSelectedTab()).getItems();
-                for (Holder<Item> holder : list) {
-                    creativeScreen.getMenu().items.addAll(stacks.stream().filter(itemStack -> itemStack.sameItem(new ItemStack(holder))).toList());
-                }
+                Optional<TagKey<Item>> selectedTag = tabs.get(creativeScreen.getSelectedTab()).getTag();
+                selectedTag.ifPresent(tag -> stacks.removeIf(stack -> !stack.is(tag)));
+                creativeScreen.getMenu().items.addAll(stacks);
+                //List<Item> list = tabs.get(creativeScreen.getSelectedTab()).getItems();
+                //creativeScreen.getMenu().items.addAll(stacks.stream().filter(stack -> list.contains(stack.getItem())).toList());
                 if (creativeScreen.getMenu().items.isEmpty()) {
                     CreativeModeTab.TABS[creativeScreen.getSelectedTab()].fillItemList(creativeScreen.getMenu().items);
                 }
