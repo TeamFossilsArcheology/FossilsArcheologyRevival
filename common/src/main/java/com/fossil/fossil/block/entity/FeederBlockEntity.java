@@ -76,9 +76,9 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         ItemStack itemStack = blockEntity.getItem(0);
         if (!itemStack.isEmpty()) {
             if (blockEntity.canPlaceItem(0, itemStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
-                int foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.CARNIVORE_EGG);
+                int foodPoints = FoodMappings.getFoodAmount(itemStack.getItem(), Diet.CARNIVORE_EGG);
                 if (foodPoints == 0) {
-                    foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.PISCIVORE);
+                    foodPoints = FoodMappings.getFoodAmount(itemStack.getItem(), Diet.PISCIVORE);
                 }
                 if (foodPoints > 0) {
                     dirty = true;
@@ -90,7 +90,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         itemStack = blockEntity.getItem(1);
         if (!itemStack.isEmpty()) {
             if (blockEntity.canPlaceItem(1, itemStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.plant < 10000) {
-                int foodPoints = FoodMappings.getItemFoodAmount(itemStack, Diet.HERBIVORE);
+                int foodPoints = FoodMappings.getFoodAmount(itemStack.getItem(), Diet.HERBIVORE);
                 if (foodPoints > 0) {
                     dirty = true;
                     blockEntity.plant += foodPoints;
@@ -222,17 +222,6 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     public boolean stillValid(Player player) {
         return level.getBlockEntity(worldPosition) == this && player.distanceToSqr((double) worldPosition.getX() + 0.5,
                 (double) worldPosition.getY() + 0.5, (double) worldPosition.getZ() + 0.5) <= 64.0;
-    }
-
-    @Override
-    public boolean canPlaceItem(int index, ItemStack stack) {
-        if (index == 0) {
-            return FoodMappings.getItemFoodAmount(stack, Diet.CARNIVORE_EGG) > 0 || FoodMappings.getItemFoodAmount(stack, Diet.PISCCARNIVORE) > 0;
-        }
-        if (index == 1) {
-            return FoodMappings.getItemFoodAmount(stack, Diet.HERBIVORE) > 0;
-        }
-        return false;
     }
 
     @Override

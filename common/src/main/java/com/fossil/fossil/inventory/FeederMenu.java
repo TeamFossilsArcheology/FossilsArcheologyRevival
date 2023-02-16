@@ -29,13 +29,14 @@ public class FeederMenu extends AbstractContainerMenu {
         addSlot(new Slot(container, 0, 60, 62) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return FoodMappings.getItemFoodAmount(stack, Diet.CARNIVORE_EGG) > 0 || FoodMappings.getItemFoodAmount(stack, Diet.PISCCARNIVORE) > 0;
+                return FoodMappings.getFoodAmount(stack.getItem(), Diet.CARNIVORE_EGG) > 0 || FoodMappings.getFoodAmount(stack.getItem(),
+                        Diet.PISCCARNIVORE) > 0;
             }
         });
         addSlot(new Slot(container, 1, 104, 62) {
             @Override
             public boolean mayPlace(ItemStack stack) {
-                return FoodMappings.getItemFoodAmount(stack, Diet.HERBIVORE) > 0;
+                return FoodMappings.getFoodAmount(stack.getItem(), Diet.HERBIVORE) > 0;
             }
         });
         int l;

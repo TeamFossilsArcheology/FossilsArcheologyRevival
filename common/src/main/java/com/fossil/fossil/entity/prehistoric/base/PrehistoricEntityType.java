@@ -6,6 +6,7 @@ import com.fossil.fossil.item.ModTabs;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.Donkey;
 import net.minecraft.world.entity.animal.horse.Horse;
@@ -22,16 +23,16 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 public enum PrehistoricEntityType {
-    CHICKEN(Chicken.class, PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE),
-    COW(Cow.class, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
-    DONKEY(Donkey.class, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
-    HORSE(Horse.class, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
-    LLAMA(Llama.class, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
-    PARROT(Parrot.class, PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE),
-    PIG(Pig.class, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.OMNIVORE),
-    POLARBEAR(PolarBear.class, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
-    RABBIT(Rabbit.class, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
-    SHEEP(Sheep.class, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
+    CHICKEN(EntityType.CHICKEN, PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE),
+    COW(EntityType.COW, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
+    DONKEY(EntityType.DONKEY, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
+    HORSE(EntityType.HORSE, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
+    LLAMA(EntityType.LLAMA, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
+    PARROT(EntityType.PARROT, PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE),
+    PIG(EntityType.PIG, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.OMNIVORE),
+    POLARBEAR(EntityType.POLAR_BEAR, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
+    RABBIT(EntityType.RABBIT, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
+    SHEEP(EntityType.SHEEP, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE),
     ALLIGATOR_GAR(PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE),
     ALLOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
     ANKYLOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
@@ -84,9 +85,9 @@ public enum PrehistoricEntityType {
     TRICERATOPS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, true),
     TYRANNOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
     VELOCIRAPTOR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG);
-    private final Class<? extends Entity> entity;
-    private final PrehistoricMobType mobType;
-    final TimePeriod timePeriod;
+    public final EntityType<? extends Entity> entity;
+    public final PrehistoricMobType mobType;
+    public final TimePeriod timePeriod;
     public final Diet diet;
     public final String resourceName;
     private final boolean hasBoneItems;
@@ -124,7 +125,7 @@ public enum PrehistoricEntityType {
         this.hasBoneItems = hasBoneItems;
     }
 
-    PrehistoricEntityType(Class<? extends Entity> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet) {
+    PrehistoricEntityType(EntityType<? extends Entity> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet) {
         this.entity = entity;
         this.mobType = mobType;
         this.timePeriod = timePeriod;

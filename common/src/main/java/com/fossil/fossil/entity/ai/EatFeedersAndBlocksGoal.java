@@ -5,6 +5,7 @@ import com.fossil.fossil.block.entity.FeederBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -72,8 +73,12 @@ public class EatFeedersAndBlocksGoal extends MoveToBlockGoal {
                 feeder.feedDinosaur(entity);
                 entity.setHealth(Math.min(entity.getMaxHealth(), entity.getHealth() + feedingTicks / 4.0f));
                 entity.doFoodEffect();
-            } else if (FoodMappings.getBlockFoodAmount(blockState.getBlock(), entity.type.diet) > 0) {
-                //Eat plant
+            } else if (FoodMappings.getFoodAmount(blockState.getBlock(), entity.type.diet) > 0) {
+                int foodAmount = FoodMappings.getFoodAmount(blockState.getBlock(), entity.type.diet);
+                entity.setHunger(Math.min(entity.getMaxHunger(), entity.getHunger() + foodAmount));
+                entity.setHunger((int) Math.min(entity.getMaxHealth(), entity.getHealth() + foodAmount / 10f));
+                entity.playSound(SoundEvents.GENERIC_EAT, 1, 1);
+                entity.level.destroyBlock(blockPos, false);
             } else {
                 //stop?
             }

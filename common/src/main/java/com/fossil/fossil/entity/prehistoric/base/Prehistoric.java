@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.block.entity.FeederBlockEntity;
+import com.fossil.fossil.client.gui.DinopediaScreen;
 import com.fossil.fossil.entity.ai.DinoAIMating;
 import com.fossil.fossil.entity.util.EntityToyBase;
 import com.fossil.fossil.item.ModItems;
@@ -12,6 +13,7 @@ import com.fossil.fossil.util.Gender;
 import com.fossil.fossil.util.TimePeriod;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -428,7 +430,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     int z = Mth.floor(this.getZ() - r);
                     if (this.getY() + dy >= 0 &&
                             this.getY() + dy <= this.level.getHeight() &&
-                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
+                            FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -436,7 +438,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
                     if (this.getY() + dy >= 0 &&
                             this.getY() + dy <= this.level.getHeight() &&
-                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
+                            FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -452,7 +454,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
                     if (this.getY() + dy >= 0 &&
                             this.getY() + dy <= this.level.getHeight() &&
-                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
+                            FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -460,7 +462,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
                     if (this.getY() + dy >= 0 &&
                             this.getY() + dy <= this.level.getHeight() &&
-                            FoodMappings.getBlockFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
+                            FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type.diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -1079,6 +1081,15 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return true;
     }
 
+    @Override
+    public void killed(ServerLevel level, LivingEntity killedEntity) {
+        super.killed(level, killedEntity);
+        if (type.diet != Diet.HERBIVORE) {
+            increaseHunger(FoodMappings.getMobFoodPoints(killedEntity, type.diet));
+            heal(FoodMappings.getMobFoodPoints(killedEntity, type.diet) / 3);
+            setMood(getMood() + 25);
+        }
+    }
 
     public boolean isHungry() {
         return this.getHunger() < this.getMaxHunger() * 0.75F;
@@ -1302,10 +1313,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     return InteractionResult.SUCCESS;
                 }*/
 
-                if (FoodMappings.getItemFoodAmount(itemstack, this.type.diet) != 0) {
+                if (FoodMappings.getFoodAmount(itemstack.getItem(), this.type.diet) != 0) {
                     if (!player.level.isClientSide) {
                         if (this.getHunger() < this.getMaxHunger() || this.getHealth() < this.getMaxHealth() && Fossil.CONFIG_OPTIONS.healingDinos || !this.isTame() && this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
-                            this.setHunger(this.getHunger() + FoodMappings.getItemFoodAmount(itemstack, this.type.diet));
+                            this.setHunger(this.getHunger() + FoodMappings.getFoodAmount(itemstack.getItem(), this.type.diet));
                             if (!level.isClientSide) {
                                 this.eatItem(itemstack);
                             }
@@ -1340,12 +1351,12 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                             return InteractionResult.SUCCESS;
                         }
                     }
-                    /*if (level.isClientSide && itemstack.is(ModItems.DINOPEDIA.get())) {
+                    if (level.isClientSide && itemstack.is(ModItems.DINOPEDIA.get())) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen(this));
                         return InteractionResult.SUCCESS;
                     }
 
-                    if (itemstack.is(ModItems.WHIP) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult()) { // TODO Add WHIP
+                    /*if (itemstack.is(ModItems.WHIP) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult()) { // TODO Add WHIP
                         if (this.isTame() && this.isOwnedBy(player) && this.canBeRidden()) {
                             if (this.getRidingPlayer() == null) {
                                 if (!this.level.isClientSide) {
@@ -1541,12 +1552,12 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (target instanceof EntityToyBase) {
             return true;
         }
-        boolean isAnotherDino = target instanceof Prehistoric;
         boolean b = true;
         if (target != null) {
-            b = true;// FoodHelper.getMobFoodPoints((LivingEntity) target, this.type.diet) > 0;
+            b = FoodMappings.getMobFoodPoints(target, type.diet) > 0;
         }
         if (this.type.diet != Diet.HERBIVORE && this.type.diet != Diet.NONE && b && canAttack(target)) {
+            //target instanceof Prehistoric dino ? getBbWidth() * getTargetScale() >= dino.getActualWidth() : getBbWidth() * getTargetScale() >= target.getBbWidth()
             if (this.getBbWidth() * getTargetScale() >= target.getBbWidth()) {
                 if (hunger) {
                     return isHungry();
@@ -1714,11 +1725,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public void eatItem(ItemStack stack) {
         if (stack != null) {
-            if (FoodMappings.getItemFoodAmount(stack, type.diet) != 0) {
+            if (FoodMappings.getFoodAmount(stack.getItem(), type.diet) != 0) {
                 this.setMood(this.getMood() + 5);
                 doFoodEffect(stack.getItem());
                 //Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(stack.getItem())));
-                this.setHunger(this.getHunger() + FoodMappings.getItemFoodAmount(stack, type.diet));
+                this.setHunger(this.getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type.diet));
                 stack.shrink(1);
             /*if (this.getAnimation() == NO_ANIMATION) {
                 this.setAnimation(SPEAK_ANIMATION);
@@ -1834,7 +1845,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private boolean isFeeder(BlockPos pos, boolean leaves) {
         if (leaves) {
             BlockState state = level.getBlockState(pos);
-            return FoodMappings.getBlockFoodAmount(state.getBlock(), this.type.diet) > 0;
+            return FoodMappings.getFoodAmount(state.getBlock(), this.type.diet) > 0;
         } else {
             BlockEntity entity = this.level.getBlockEntity(pos);
             return entity instanceof FeederBlockEntity;
