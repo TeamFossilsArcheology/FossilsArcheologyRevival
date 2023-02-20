@@ -3,7 +3,6 @@ package com.fossil.fossil.block.custom_blocks;
 import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.block.entity.BubbleBlowerBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -59,11 +58,10 @@ public class BubbleBlowerBlock extends BaseEntityBlock implements IDinoUnbreakab
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
         if (state.getValue(ACTIVE)) {
-            Minecraft mc = Minecraft.getInstance();
-            level.playSound(mc.player, pos, SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.5f, random.nextFloat() * 0.7f + 0.4f);
             int x = pos.getX();
             int y = pos.getY();
             int z = pos.getZ();
+            level.playLocalSound(x, y, z, SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.5f, random.nextFloat() * 0.7f + 0.4f, false);
             switch (state.getValue(FACING)) {
                 case NORTH -> {
                     for (int i = 0; i < 4; i++) {

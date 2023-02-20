@@ -3,7 +3,6 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.block.entity.FeederBlockEntity;
-import com.fossil.fossil.client.gui.DinopediaScreen;
 import com.fossil.fossil.entity.ai.DinoAIMating;
 import com.fossil.fossil.entity.util.EntityToyBase;
 import com.fossil.fossil.item.ModItems;
@@ -13,7 +12,6 @@ import com.fossil.fossil.util.Gender;
 import com.fossil.fossil.util.TimePeriod;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
-import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -1350,10 +1348,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                             itemstack.shrink(1);
                             return InteractionResult.SUCCESS;
                         }
-                    }
-                    if (level.isClientSide && itemstack.is(ModItems.DINOPEDIA.get())) {
-                        Minecraft.getInstance().setScreen(new DinopediaScreen(this));
-                        return InteractionResult.SUCCESS;
                     }
 
                     /*if (itemstack.is(ModItems.WHIP) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult()) { // TODO Add WHIP
