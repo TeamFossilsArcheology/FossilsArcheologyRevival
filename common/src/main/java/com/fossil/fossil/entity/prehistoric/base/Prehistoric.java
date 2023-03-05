@@ -2044,7 +2044,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
 
         public ServerAttackAnimationInfo(Animation animation, int priority, int... attackDelays) {
-            this(animation.animationName, priority, (int) Math.round(20 * animation.animationLength), attackDelays);
+            this(animation.animationName, priority, (int) Math.round(animation.animationLength), attackDelays);
         }
     }
 
@@ -2062,7 +2062,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
 
         public ServerAnimationInfo(Animation animation, int priority) {
-            this(animation.animationName, priority, (int) Math.round(20 * animation.animationLength), animation.loop == ILoopType.EDefaultLoopTypes.LOOP);
+            this(animation.animationName, priority, (int) Math.round(animation.animationLength), animation.loop == ILoopType.EDefaultLoopTypes.LOOP);
         }
     }
 

@@ -9,7 +9,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-// I know that its superclass sounds weird
 public class DinoAIMating extends BreedGoal {
 
     public DinoAIMating(Prehistoric dinosaur, double speed) {

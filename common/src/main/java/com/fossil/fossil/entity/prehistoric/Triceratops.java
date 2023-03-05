@@ -98,8 +98,8 @@ public class Triceratops extends Prehistoric {
         super.registerGoals();
 
         double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
-        this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.2 * speed));
-        this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed, false));
+        this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.5 * speed));
+        this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed * 1.5, false));
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(7, new DinoAIWander(this, speed));
         this.goalSelector.addGoal(3, new EatFeedersAndBlocksGoal(this));
@@ -237,9 +237,15 @@ public class Triceratops extends Prehistoric {
     @Override
     @NotNull
     public ServerAnimationInfo nextMovingAnimation() {
-        String key;
-        if (isInWater()) key = SWIM;
-        else key = WALK;
+        String key = WALK;
+        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackAI);
+
+        if (isInWater()) {
+            key = SWIM;
+        } else if (isChasing) {
+            key = RUN;
+        }
+
         return getAllAnimations().get(key);
     }
 

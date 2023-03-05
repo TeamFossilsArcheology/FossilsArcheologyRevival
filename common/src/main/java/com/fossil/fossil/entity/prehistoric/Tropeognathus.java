@@ -198,6 +198,9 @@ public class Tropeognathus extends Pterosaurs {
     @NotNull
     public ServerAnimationInfo nextMovingAnimation() {
         String key = WALK;
+        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackAI);
+
+        if (isChasing) key = RUN;
         if (isInWater()) key = SWIM;
         if (isFlying()) key = FLY;
 
