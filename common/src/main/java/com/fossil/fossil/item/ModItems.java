@@ -110,6 +110,11 @@ public class ModItems {
     public static final RegistrySupplier<SpawnEggItem> THERIZINOSAURUS_SPAWN_EGG = ITEMS.register("therizinosaurus_spawn_egg",
             () -> new ArchitecturySpawnEggItem(ModEntities.THERIZINOSAURUS, 0x64352D, 0x251A17, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );
+
+    public static final RegistrySupplier<SpawnEggItem> TROPEOGNATHUS_SPAWN_EGG = ITEMS.register("tropeognathus_spawn_egg",
+        () -> new ArchitecturySpawnEggItem(ModEntities.TROPEOGNATHUS, 0XD6D6D6, 0X3B3B3B, new Item.Properties().tab(ModTabs.FAITEMTAB))
+    );
+
     public static final RegistrySupplier<SpawnEggItem> TAR_SLIME_SPAWN_EGG = ITEMS.register("tar_slime_spawn_egg",
             () -> new ArchitecturySpawnEggItem(ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );

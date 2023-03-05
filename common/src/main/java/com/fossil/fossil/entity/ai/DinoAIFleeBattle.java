@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.phys.Vec3;
 
 public class DinoAIFleeBattle extends Goal {
@@ -27,7 +28,9 @@ public class DinoAIFleeBattle extends Goal {
     protected boolean tryFindPlaceToFlee() {
         LivingEntity fleeFrom = dinosaur.getLastHurtByMob();
 
-        Vec3 fleeTo = DefaultRandomPos.getPosAway(dinosaur, 25, 10, fleeFrom.position());
+        int yRange = 10;
+        if (dinosaur instanceof FlyingAnimal) yRange = 25;
+        Vec3 fleeTo = DefaultRandomPos.getPosAway(dinosaur, 25, yRange, fleeFrom.position());
 
         if (fleeTo == null) {
             return false;

@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.ai;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -36,23 +37,13 @@ public class DinoAIWander extends RandomStrollGoal {
     @Nullable
     @Override
     protected Vec3 getPosition() {
-        if (mob.isInWater()) {
-            Vec3 randomPos = DefaultRandomPos.getPos(mob, 30, 8);
-            return randomPos == null ? DefaultRandomPos.getPos(mob, 10, 7) : randomPos;
-        } else {
-            return DefaultRandomPos.getPos(mob, 10, 7);
-        }
-    }
+        Vec3 randomPos = null;
+        int verticalDistance = 7;
+        if (mob instanceof FlyingAnimal) verticalDistance = 10;
 
-    @Override
-    public void start() {
-        super.start();
-        ((Prehistoric)mob).setCurrentAnimation(((Prehistoric)mob).getWalkingAnimation());
-    }
+        if (mob.isInWater()) randomPos = DefaultRandomPos.getPos(mob, 30, 8);
+        if (randomPos == null) randomPos = DefaultRandomPos.getPos(mob, 10, verticalDistance);
 
-    @Override
-    public void stop() {
-        super.stop();
-        ((Prehistoric)mob).setCurrentAnimation(((Prehistoric)mob).getIdleAnimation());
+        return randomPos;
     }
 }

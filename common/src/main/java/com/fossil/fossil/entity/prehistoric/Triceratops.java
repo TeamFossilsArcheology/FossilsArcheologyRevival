@@ -8,6 +8,8 @@ import com.fossil.fossil.entity.ai.EatFeedersAndBlocksGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -15,18 +17,18 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
-import software.bernie.geckolib3.core.manager.AnimationData;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.resource.GeckoLibCache;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Triceratops extends Prehistoric {
-    public AnimationFactory factory = GeckoLibUtil.createFactory(this);
+import java.util.HashMap;
+import java.util.Map;
 
+public class Triceratops extends Prehistoric {
+    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+
+    public static final String ANIMATIONS = "triceratops.animation.json";
     public static final String IDLE = "animation.triceratops.idle";
     public static final String WALK = "animation.triceratops.walk";
     public static final String RUN = "animation.triceratops.run";
@@ -45,7 +47,23 @@ public class Triceratops extends Prehistoric {
     public static final String ATTACK1 = "animation.triceratops.attack1";
     public static final String ATTACK2 = "animation.triceratops.attack2";
 
-    public Triceratops(EntityType<? extends Triceratops> type, Level level) {
+    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
+        var file = GeckoLibCache.getInstance().getAnimations().get(new ResourceLocation(Fossil.MOD_ID, "animations/" + ANIMATIONS));
+        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
+        file.animations().forEach((key, value) -> {
+            ServerAnimationInfo info;
+            switch (key) {
+                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 12);
+                case IDLE ->  info = new ServerAnimationInfo(value, IDLE_PRIORITY);
+                case WALK, RUN, SWIM -> info = new ServerAnimationInfo(value, MOVING_PRIORITY);
+                default -> info = new ServerAnimationInfo(value, DEFAULT_PRIORITY);
+            }
+            newMap.put(key, info);
+        });
+        return newMap;
+    });
+
+    public Triceratops(EntityType<Triceratops> type, Level level) {
         super(
             type, PrehistoricEntityType.TRICERATOPS,
             level,
@@ -102,10 +120,6 @@ public class Triceratops extends Prehistoric {
     @Override
     public float getModelScale() {
         return super.getModelScale() * 3;
-    }
-
-    @Override
-    public void setSpawnValues() {
     }
 
     @Override
@@ -185,17 +199,13 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        /*if (this.getAnimation() == ATTACK_ANIMATION && this.getAnimationTick() == 12 && this.getAttackTarget() != null) {
-            doAttack();
-            doAttackKnockback(0.5F);
-        }*/
+    public int getMaxHunger() {
+        return 175;
     }
 
     @Override
-    public int getMaxHunger() {
-        return 175;
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
 
@@ -214,32 +224,9 @@ public class Triceratops extends Prehistoric {
         return FASoundRegistry.TRICERATOPS_DEATH;
     }*/
 
-    public PlayState onFrame(AnimationEvent<Triceratops> event) {
-        /*if (event.getController().getAnimationState() == AnimationState.Stopped) {
-            setCurrentAnimation(IDLE);
-        }
-        if (IDLE.equals(getCurrentAnimation()) && navigation.isInProgress()) setCurrentAnimation(WALK);*/
-
-        String animation = getCurrentAnimation();
-        ILoopType type;
-        if (IDLE.equals(animation) || WALK.equals(animation) || SLEEP1.equals(animation) || SLEEP2.equals(animation) ||
-            RUN.equals(animation) || SWIM.equals(animation) || SIT.equals(animation) || RAM.equals(animation)) {
-            type = ILoopType.EDefaultLoopTypes.LOOP;
-        } else {
-            type = ILoopType.EDefaultLoopTypes.HOLD_ON_LAST_FRAME;
-        }
-        event.getController().setAnimation(new AnimationBuilder().addAnimation(animation, type));
-        return PlayState.CONTINUE;
-    }
-
     @Override
     public boolean canBeRidden() {
         return true;
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 15, this::onFrame));
     }
 
     @Override
@@ -248,25 +235,40 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public String getWalkingAnimation() {
-        return WALK;
+    @NotNull
+    public ServerAnimationInfo nextMovingAnimation() {
+        String key;
+        if (isInWater()) key = SWIM;
+        else key = WALK;
+        return getAllAnimations().get(key);
     }
 
     @Override
-    public String getChasingAnimation() {
-        return RUN;
+    @NotNull
+    public Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+        String key;
+        if (isInWater()) key = SWIM;
+        else key = RUN;
+        return getAllAnimations().get(key);
     }
 
     @Override
-    public AttackAnimationInfo[] getAttackAnimationsWithDelay() {
-        return new AttackAnimationInfo[]{
-            new AttackAnimationInfo(ATTACK1, 20, 8),
-            new AttackAnimationInfo(ATTACK2, 20, 8)
-        };
+    @NotNull
+    public Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+        int random = getRandom().nextInt(2);
+        String key;
+        if (random == 0) {
+            key = ATTACK1;
+        } else {
+            key = ATTACK2;
+        }
+
+        return (ServerAttackAnimationInfo) getAllAnimations().get(key);
     }
 
     @Override
-    public String getIdleAnimation() {
-        return IDLE;
+    @NotNull
+    public ServerAnimationInfo nextIdleAnimation() {
+        return getAllAnimations().get(IDLE);
     }
 }

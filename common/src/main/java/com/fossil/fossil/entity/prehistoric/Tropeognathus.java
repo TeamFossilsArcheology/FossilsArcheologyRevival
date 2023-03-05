@@ -8,6 +8,7 @@ import com.fossil.fossil.entity.ai.EatFeedersAndBlocksGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.entity.prehistoric.base.Pterosaurs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.EntityType;
@@ -23,18 +24,27 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO Accurately adjust values here, for now setting it identical to Triceratops
-public class Therizinosaurus extends Prehistoric {
-    public static final String ANIMATIONS = "fa.therizinosaurus.animations.json";
+public class Tropeognathus extends Pterosaurs {
+    public static final String ANIMATIONS = "fa.tropeognathus.animations.json";
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    public static final String IDLE = "fa.therizinosaurus.idle";
-    public static final String WALK = "fa.therizinosaurus.walk";
-    public static final String SLEEP = "fa.therizinosaurus.sleep";
-    public static final String SLEEP_BABY = "fa.therizinosaurus.sleep_baby";
-    public static final String THREAT = "fa.therizinosaurus.threat";
-    public static final String ATTACK1 = "fa.therizinosaurus.attack1";
-    public static final String ATTACK2 = "fa.therizinosaurus.attack2";
-    public static final String EAT = "fa.therizinosaurus.eat";
+    public static final String FLY = "fa.tropeognathus.fly";
+    public static final String GROUND_TAKEOFF = "fa.tropeognathus.groundtakeoff";
+    public static final String RUN = "fa.tropeognathus.run";
+    public static final String WALK = "fa.tropeognathus.walk";
+    public static final String BITE_EAT = "fa.tropeognathus.biteeat";
+    public static final String BITE_ATTACK = "fa.tropeognathus.biteattack";
+    public static final String BITE_EAT_IN_WATER = "fa.tropeognathus.biteeatwater";
+    public static final String IDLE_SWIM = "fa.tropeognathus.idleswim";
+    public static final String SWIM = "fa.tropeognathus.swim";
+    public static final String BITE_ATTACK_WATER = "fa.tropeognathus.biteattackwater";
+    public static final String BITE_IN_AIR = "fa.tropeognathus.bitefly";
+    public static final String DISPLAY = "fa.tropeognathus.display";
+    public static final String IDLE = "fa.tropeognathus.idle";
+    public static final String IDLE_PREEN = "fa.tropeognathus.idlepreen";
+    public static final String IDLE_CALL = "fa.tropeognathus.idlecall";
+    public static final String IDLE_LOOKAROUND = "fa.tropeognathus.idlelookaround";
+    public static final String WATER_TAKEOFF = "fa.tropeognathus.watertakeoff";
+    public static final String SLEEP = "fa.tropeognathus.sleep";
 
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         var file = GeckoLibCache.getInstance().getAnimations().get(new ResourceLocation(Fossil.MOD_ID, "animations/" + ANIMATIONS));
@@ -42,10 +52,11 @@ public class Therizinosaurus extends Prehistoric {
         file.animations().forEach((key, value) -> {
             ServerAnimationInfo info;
             switch (key) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 12);
-                case ATTACK2 -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 12, 25);
-                case IDLE -> info = new ServerAnimationInfo(value, IDLE_PRIORITY);
-                case WALK -> info = new ServerAnimationInfo(value, MOVING_PRIORITY);
+                case BITE_ATTACK -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 20);
+                case BITE_ATTACK_WATER -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 11);
+                case BITE_IN_AIR -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 15);
+                case SWIM, WALK, RUN, FLY -> info = new ServerAnimationInfo(value, MOVING_PRIORITY);
+                case IDLE, IDLE_CALL, IDLE_LOOKAROUND, IDLE_PREEN, IDLE_SWIM -> info = new ServerAnimationInfo(value, IDLE_PRIORITY);
                 default -> info = new ServerAnimationInfo(value, DEFAULT_PRIORITY);
             }
             newMap.put(key, info);
@@ -53,10 +64,10 @@ public class Therizinosaurus extends Prehistoric {
         return newMap;
     });
 
-    public Therizinosaurus(EntityType<Therizinosaurus> entityType, Level level) {
+    public Tropeognathus(EntityType<Tropeognathus> entityType, Level level) {
         super(
             entityType,
-            PrehistoricEntityType.THERIZINOSAURUS,
+            PrehistoricEntityType.PTEROSAUR,
             level,
             false,
             0.4F,
@@ -86,6 +97,7 @@ public class Therizinosaurus extends Prehistoric {
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }
 
+    // TODO These may not be correct, should be adjusted
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
         return PrehistoricEntityTypeAI.Activity.DIURINAL;
@@ -93,62 +105,52 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public PrehistoricEntityTypeAI.Attacking aiAttackType() {
-
-        return PrehistoricEntityTypeAI.Attacking.KNOCKUP;
+        return PrehistoricEntityTypeAI.Attacking.BASIC;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Climbing aiClimbType() {
-
         return PrehistoricEntityTypeAI.Climbing.NONE;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Following aiFollowType() {
-
         return PrehistoricEntityTypeAI.Following.NORMAL;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Jumping aiJumpType() {
-
         return PrehistoricEntityTypeAI.Jumping.BASIC;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
-
-        return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERITORIAL;
+        return PrehistoricEntityTypeAI.Response.NONE;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Stalking aiStalkType() {
-
         return PrehistoricEntityTypeAI.Stalking.NONE;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Taming aiTameType() {
-
-        return PrehistoricEntityTypeAI.Taming.IMPRINTING;
+        return PrehistoricEntityTypeAI.Taming.NONE;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Untaming aiUntameType() {
-
-        return PrehistoricEntityTypeAI.Untaming.STARVE;
+        return PrehistoricEntityTypeAI.Untaming.NONE;
     }
 
     @Override
     public PrehistoricEntityTypeAI.Moving aiMovingType() {
-
-        return PrehistoricEntityTypeAI.Moving.WALK;
+        return PrehistoricEntityTypeAI.Moving.FLIGHT;
     }
 
     @Override
     public PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType() {
-
-        return PrehistoricEntityTypeAI.WaterAbility.NONE;
+        return PrehistoricEntityTypeAI.WaterAbility.ATTACK;
     }
 
     @Override
@@ -172,8 +174,59 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    public float getFemaleScale() {
-        return 1.12F;
+    @NotNull
+    public ServerAnimationInfo nextIdleAnimation() {
+        String key = IDLE;
+
+        if (isInWater()) {
+            key = IDLE_SWIM;
+        }
+        else {
+            int number = random.nextInt(10);
+            switch (number) {
+                case 0, 1, 2, 3, 4, 5, 6 -> key = IDLE;
+                case 7 -> key = IDLE_PREEN;
+                case 8 -> key = IDLE_LOOKAROUND;
+                case 9 -> key = IDLE_CALL;
+            }
+        }
+
+        return getAllAnimations().get(key);
+    }
+
+    @Override
+    @NotNull
+    public ServerAnimationInfo nextMovingAnimation() {
+        String key = WALK;
+        if (isInWater()) key = SWIM;
+        if (isFlying()) key = FLY;
+
+        return getAllAnimations().get(key);
+    }
+
+    @Override
+    @NotNull
+    public Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+        String key = RUN;
+        if (isInWater()) key = SWIM;
+        if (isFlying()) key = FLY;
+
+        return getAllAnimations().get(key);
+    }
+
+    @Override
+    @NotNull
+    public Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+        String key = BITE_ATTACK;
+        if (isInWater()) key = BITE_ATTACK_WATER;
+        if (isFlying()) key = BITE_IN_AIR;
+
+        return (ServerAttackAnimationInfo) getAllAnimations().get(key);
+    }
+
+    @Override
+    public boolean isFlying() {
+        return !onGround;
     }
 
     @Override
@@ -182,34 +235,10 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    @NotNull
-    public ServerAnimationInfo nextIdleAnimation() {
-        return allAnimations.get().get(IDLE);
-    }
+    public ServerAnimationInfo getTakeOffAnimation() {
+        String key = GROUND_TAKEOFF;
+        if (isInWater()) key = WATER_TAKEOFF;
 
-    @Override
-    @NotNull
-    public ServerAnimationInfo nextMovingAnimation() {
-        return allAnimations.get().get(WALK);
-    }
-
-    @Override
-    @NotNull
-    public Prehistoric.ServerAnimationInfo nextChasingAnimation() {
-        return nextMovingAnimation();
-    }
-
-    @Override
-    @NotNull
-    public Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
-        String key;
-
-        if (getRandom().nextBoolean()) {
-            key = ATTACK1;
-        } else {
-            key =ATTACK2;
-        }
-
-        return (ServerAttackAnimationInfo) allAnimations.get().get(key);
+        return getAllAnimations().get(key);
     }
 }

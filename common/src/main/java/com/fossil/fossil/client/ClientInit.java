@@ -12,6 +12,9 @@ import com.fossil.fossil.client.renderer.blockentity.*;
 import com.fossil.fossil.client.renderer.entity.RenderPrehistoricGeo;
 import com.fossil.fossil.client.renderer.entity.TarSlimeRenderer;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
+import com.fossil.fossil.entity.prehistoric.Triceratops;
+import com.fossil.fossil.entity.prehistoric.Tropeognathus;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
@@ -28,9 +31,14 @@ import net.minecraft.client.renderer.RenderType;
 public class ClientInit {
     public static void immediate() {
         EntityRendererRegistry.register(ModEntities.THERIZINOSAURUS,
-            context -> new RenderPrehistoricGeo<>(context, "therizinosaurus.geo.json", "fa.therizinosaurus.animations.json"));
+            context -> new RenderPrehistoricGeo<>(context, "therizinosaurus.geo.json", Therizinosaurus.ANIMATIONS)
+        );
         EntityRendererRegistry.register(ModEntities.TRICERATOPS,
-            context -> new RenderPrehistoricGeo<>(context, "triceratops.geo.json", "triceratops.animation.json"));
+            context -> new RenderPrehistoricGeo<>(context, "triceratops.geo.json", Triceratops.ANIMATIONS)
+        );
+        EntityRendererRegistry.register(ModEntities.TROPEOGNATHUS,
+            context -> new RenderPrehistoricGeo<>(context, "fa.tropeognathus.geo.json", Tropeognathus.ANIMATIONS)
+        );
 
         EntityRendererRegistry.register(ModEntities.ANU_STATUE,
                 context -> new com.fossil.fossil.client.renderer.entity.AnuStatueRenderer(context, new AnuStatueModel()));

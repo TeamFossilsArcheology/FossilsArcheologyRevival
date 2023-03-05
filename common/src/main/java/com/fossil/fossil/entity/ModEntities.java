@@ -4,6 +4,7 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.monster.TarSlime;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
+import com.fossil.fossil.entity.prehistoric.Tropeognathus;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
@@ -32,6 +33,14 @@ public class ModEntities {
         ).sized(2.5F, 2.5F).build("therizinosaurus")
     );
 
+    public static final RegistrySupplier<EntityType<Tropeognathus>> TROPEOGNATHUS = ENTITIES.register(
+        "tropeognathus",
+        () -> EntityType.Builder.of(
+            Tropeognathus::new,
+            MobCategory.CREATURE
+        ).sized(2F, 1F).build("tropeognathus")
+    );
+
     public static final RegistrySupplier<EntityType<DinosaurEgg>> DINOSAUR_EGG = ENTITIES.register(
     "dinosaur_egg",
         () -> EntityType.Builder.<DinosaurEgg>of(
@@ -49,6 +58,7 @@ public class ModEntities {
         ENTITIES.register();
         EntityAttributeRegistry.register(TRICERATOPS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(THERIZINOSAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(TROPEOGNATHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DINOSAUR_EGG, DinosaurEgg::createAttributes);
         EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
         EntityAttributeRegistry.register(TAR_SLIME, TarSlime::createAttributes);

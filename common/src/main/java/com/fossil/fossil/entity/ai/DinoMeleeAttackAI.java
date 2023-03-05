@@ -10,8 +10,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.storage.ServerLevelData;
 import net.minecraft.world.level.timers.TimerQueue;
 
-import java.util.Arrays;
-
 public class DinoMeleeAttackAI extends MeleeAttackGoal {
     public DinoMeleeAttackAI(Prehistoric entity, double speed, boolean followTargetEvenIfNotSeen) {
         super(entity, speed, followTargetEvenIfNotSeen);
@@ -37,41 +35,31 @@ public class DinoMeleeAttackAI extends MeleeAttackGoal {
     public void start() {
         super.start();
         Prehistoric dinosaur = (Prehistoric) mob;
-        dinosaur.setCurrentAnimation(dinosaur.getChasingAnimation());
+        dinosaur.setCurrentAnimation(dinosaur.nextChasingAnimation());
     }
 
     @Override
     protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
         Prehistoric dinosaur = (Prehistoric) mob;
-        var attackAnimations = dinosaur.getAttackAnimationsWithDelay();
-        var currentAttackAnimation = Arrays.stream(attackAnimations)
-            .filter(entry -> entry.animation().equals(dinosaur.getCurrentAnimation()))
-            .findAny();
+        var currentAttackAnimation = dinosaur.getCurrentAnimation();
 
-        if (currentAttackAnimation.isEmpty()) {
+        if (!(currentAttackAnimation instanceof Prehistoric.ServerAttackAnimationInfo)) {
+            var attackAnimations = dinosaur.nextAttackAnimation();
             double distanceSqr = this.mob.getBbWidth() * this.mob.getBbWidth() * 2 + enemy.getBbWidth();
             if (distToEnemySqr > distanceSqr || !isTimeToAttack()) return;
 
-            int index = dinosaur.getRandom().nextInt(attackAnimations.length);
-            Prehistoric.AttackAnimationInfo newAnimation = attackAnimations[index];
-            dinosaur.setCurrentAnimation(newAnimation.animation());
+            resetAttackCooldown();
+            dinosaur.setCurrentAnimation(attackAnimations);
 
             TimerQueue<MinecraftServer> queue = ((ServerLevelData)dinosaur.level.getLevelData()).getScheduledEvents();
             long gameTime = dinosaur.level.getGameTime();
-            for (int attackDelay : newAnimation.attackDelays()) {
+            for (int attackDelay : attackAnimations.attackDelays) {
                 queue.schedule(dinosaur.getStringUUID(), gameTime + attackDelay, new DisposableTask((unused1, unused2, unused3) -> {
                     if (dinosaur.isAlive() && enemy.isAlive()) {
                         dinosaur.doHurtTarget(enemy);
                     }
-                    resetAttackCooldown();
                 }));
             }
-
-            queue.schedule(dinosaur.getStringUUID(), gameTime + newAnimation.animationLength(), new DisposableTask((u1, u2, u3) -> {
-                if (dinosaur.getCurrentAnimation().equals(newAnimation.animation())) {
-                    dinosaur.setCurrentAnimation(dinosaur.getIdleAnimation());
-                }
-            }));
         }
     }
 }
