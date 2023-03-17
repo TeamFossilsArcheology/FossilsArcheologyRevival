@@ -15,10 +15,10 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
 import dev.architectury.event.EventResult;
+import dev.architectury.event.events.client.ClientRawInputEvent;
 import dev.architectury.event.events.common.InteractionEvent;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.particle.ParticleProviderRegistry;
@@ -26,7 +26,9 @@ import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
+import org.lwjgl.glfw.GLFW;
 
 public class ClientInit {
     public static void immediate() {
@@ -73,9 +75,11 @@ public class ClientInit {
         MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
-            if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof Prehistoric prehistoric) {
-                Minecraft.getInstance().setScreen(new DinopediaScreen(prehistoric));
-                return EventResult.interruptTrue();
+            if (player instanceof AbstractClientPlayer) {
+                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof com.fossil.fossil.entity.prehistoric.base.Prehistoric prehistoric) {
+                    Minecraft.getInstance().setScreen(new DinopediaScreen(prehistoric));
+                    return EventResult.interruptTrue();
+                }
             }
             return EventResult.pass();
         });
