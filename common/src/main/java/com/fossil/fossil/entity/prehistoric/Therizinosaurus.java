@@ -10,6 +10,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
@@ -59,6 +60,7 @@ public class Therizinosaurus extends Prehistoric {
             PrehistoricEntityType.THERIZINOSAURUS,
             level,
             false,
+            false,
             0.4F,
             2.0F,
             2F,
@@ -74,6 +76,11 @@ public class Therizinosaurus extends Prehistoric {
             5,
             15
         );
+    }
+
+    @Override
+    public Entity[] getPartsF() {
+        return new Entity[0];
     }
 
     @Override

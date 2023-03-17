@@ -11,6 +11,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.entity.prehistoric.base.Pterosaurs;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
@@ -85,6 +86,11 @@ public class Tropeognathus extends Pterosaurs {
             5,
             15
         );
+    }
+
+    @Override
+    public Entity[] getPartsF() {
+        return new Entity[0];
     }
 
     @Override

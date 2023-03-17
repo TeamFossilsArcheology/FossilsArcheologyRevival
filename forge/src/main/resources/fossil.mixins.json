@@ -7,6 +7,7 @@
     "ParticleAccessor"
   ],
   "mixins": [
+    "PrehistoricMixin"
   ],
   "injectors": {
     "defaultRequire": 1

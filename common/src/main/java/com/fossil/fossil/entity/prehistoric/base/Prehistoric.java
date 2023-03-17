@@ -32,6 +32,7 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -57,6 +58,10 @@ import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.BooleanOp;
+import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -87,6 +92,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
 
     private Gender gender; // should be effectively final
+    private final boolean isMultiPart;
     public final double baseDamage;
     public final double maxDamage;
     public final double baseHealth;
@@ -140,26 +146,28 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public DinoAIMating matingGoal;
 
     public Prehistoric(
-        EntityType<? extends Prehistoric> entityType, PrehistoricEntityType type,
-        Level level,
-        boolean isCannibalistic,
-        float minScale,
-        float maxScale,
-        float baseKnockBackResistance,
-        float maxKnockBackResistance,
-        int teenAgeDays,
-        int adultAgeDays,
-        double baseDamage,
-        double maxDamage,
-        double baseHealth,
-        double maxHealth,
-        double baseSpeed,
-        double maxSpeed,
-        double baseArmor,
-        double maxArmor
+            EntityType<? extends Prehistoric> entityType, PrehistoricEntityType type,
+            Level level,
+            boolean isMultiPart,
+            boolean isCannibalistic,
+            float minScale,
+            float maxScale,
+            float baseKnockBackResistance,
+            float maxKnockBackResistance,
+            int teenAgeDays,
+            int adultAgeDays,
+            double baseDamage,
+            double maxDamage,
+            double baseHealth,
+            double maxHealth,
+            double baseSpeed,
+            double maxSpeed,
+            double baseArmor,
+            double maxArmor
     ) {
         super(entityType, level);
         this.type = type;
+        this.isMultiPart = isMultiPart;
         this.setHunger(this.getMaxHunger() / 2);
         this.pediaScale = 1.0F;
         this.nearByMobsAllowed = 15;
@@ -188,6 +196,55 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             this.getNavigation().getNodeEvaluator().setCanFloat(true);
         }
         setPersistenceRequired();
+    }
+
+
+    public boolean isMultiPartF() {
+        return isMultiPart;
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        for (int i = 0; i < getPartsF().length; ++i) {
+            this.getPartsF()[i].setId(id + i + 1);
+        }
+    }
+
+    /**
+     *
+     * @return The child parts of this entity.
+     * @implSpec On the forge classpath this implementation should return objects that inherit from PartEntity instead of Entity.
+     */
+    public abstract Entity[] getPartsF();
+
+    @Override
+    public boolean isPickable() {
+        return !isMultiPartF();
+    }
+    @Override
+    public boolean canBeCollidedWith() {
+        return !isMultiPartF();
+    }
+    @Override
+    protected void doPush(Entity entity) {
+        if (!isMultiPartF()) {
+            super.doPush(entity);
+        }
+    }
+
+    @Override
+    public boolean isColliding(BlockPos pos, BlockState state) {
+        if (isMultiPartF()) {
+            VoxelShape voxelShape = state.getCollisionShape(this.level, pos, CollisionContext.of(this));
+            VoxelShape voxelShape2 = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
+            return Shapes.joinIsNotEmpty(voxelShape2, Shapes.create(getPartsF()[0].getBoundingBox()), BooleanOp.AND);
+        }
+        return super.isColliding(pos, state);
+    }
+
+    public boolean hurt(Entity part, DamageSource source, float damage) {
+        return super.hurt(source, damage);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -1190,6 +1247,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
+        if (isMultiPartF() && getPartsF().length > 0) {
+            if (source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns() && !this.level.isClientSide) {
+                return this.hurt(getPartsF()[0], source, amount);
+            }
+        }
         if (source == DamageSource.IN_WALL) {
             return false;
         }

@@ -8,8 +8,11 @@ import com.fossil.fossil.entity.ai.EatFeedersAndBlocksGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -17,6 +20,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.resource.GeckoLibCache;
@@ -46,6 +50,7 @@ public class Triceratops extends Prehistoric {
     public static final String CALL = "animation.triceratops.call";
     public static final String ATTACK1 = "animation.triceratops.attack1";
     public static final String ATTACK2 = "animation.triceratops.attack2";
+    private final Entity[] parts;
 
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         var file = GeckoLibCache.getInstance().getAnimations().get(new ResourceLocation(Fossil.MOD_ID, "animations/" + ANIMATIONS));
@@ -65,24 +70,29 @@ public class Triceratops extends Prehistoric {
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(
-            type, PrehistoricEntityType.TRICERATOPS,
-            level,
-            false,
-            0.4F,
-            1.4F,
-            0.5F,
-            2F,
-            5,
-            12,
-            1,
-            12,
-            12,
-            64,
-            0.1,
-            0.25,
-            5,
-            15
+                type, PrehistoricEntityType.TRICERATOPS,
+                level,
+                true,
+                false,
+                0.4F,
+                1.4F,
+                0.5F,
+                2F,
+                5,
+                12,
+                1,
+                12,
+                12,
+                64,
+                0.1,
+                0.25,
+                5,
+                15
         );
+        var head = PrehistoricPart.get(this, 2.5f, 2.5f);
+        var body = PrehistoricPart.get(this, 3.2f, 3.3f);
+        var tail = PrehistoricPart.get(this, 2.2f, 2f);
+        this.parts = new Entity[]{body, head, tail};
         this.hasFeatherToggle = true;
         this.featherToggle = Fossil.CONFIG_OPTIONS.quilledTriceratops;
         this.nearByMobsAllowed = 7;
@@ -91,6 +101,42 @@ public class Triceratops extends Prehistoric {
         this.ridingXZ = -0.05F;
         this.pediaScale = 55;
         this.maxUpStep = 1.5F;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+
+        Vec3[] vec3s = new Vec3[this.parts.length];
+        for (int i = 0; i < this.parts.length; i++) {
+            vec3s[i] = parts[i].getPosition(1.0f);
+        }
+        Vec3 offset = calculateViewVector(getXRot(), yBodyRot).reverse().scale(0.3);
+        //Vec3 offset = new Vec3(1, 1, 1);
+        //body.setPos(getX(), getY(), getZ());
+        parts[0].setPos(getX() + offset.x, getY() + offset.y, getZ() + offset.z);
+
+        Vec3 offsetHor = calculateViewVector(0, yBodyRot).scale(1.1 * getScale());
+        Vec3 headOffset = calculateViewVector(0, yBodyRot).with(Direction.Axis.Y, 0).add(0, getScale(), 0);
+        parts[1].setPos(getX() + headOffset.x + offsetHor.x, getY() + headOffset.y, getZ() + headOffset.z + offsetHor.z);
+
+        offsetHor = offsetHor.yRot((float) Math.toRadians(180));
+        Vec3 tailOffset = calculateViewVector(0, yBodyRot).scale(-1.5).add(0, 1.1D, 0);
+        parts[2].setPos(getX() + tailOffset.x + offsetHor.x, getY() + tailOffset.y, getZ() + tailOffset.z + offsetHor.z);
+
+        for (int i = 0; i < this.parts.length; i++) {
+            this.parts[i].xo = vec3s[i].x;
+            this.parts[i].yo = vec3s[i].y;
+            this.parts[i].zo = vec3s[i].z;
+            this.parts[i].xOld = vec3s[i].x;
+            this.parts[i].yOld = vec3s[i].y;
+            this.parts[i].zOld = vec3s[i].z;
+        }
+    }
+
+    @Override
+    public Entity[] getPartsF() {
+        return parts;
     }
 
     @Override

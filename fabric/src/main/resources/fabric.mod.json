@@ -51,5 +51,10 @@
   "suggests": {
     "cloth_config": ">=6.3.81",
     "roughlyenoughitems": ">=8.3.495"
+  },
+  "custom": {
+    "injected_interfaces": {
+      "net/minecraft/class_3218": ["com/fossil/fossil/fabric/MultiPartServerLevel"]
+    }
   }
 }
