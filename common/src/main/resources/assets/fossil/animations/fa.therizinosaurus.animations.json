@@ -2105,7 +2105,7 @@
 				}
 			}
 		},
-		"fa.therizinosaurus.eatfront": {
+		"fa.therizinosaurus.eat": {
 			"animation_length": 3.12,
 			"bones": {
 				"lowerBody": {

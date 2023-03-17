@@ -59,7 +59,7 @@ public class Triceratops extends Prehistoric {
             ServerAnimationInfo info;
             switch (key) {
                 case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 12);
-                case IDLE ->  info = new ServerAnimationInfo(value, IDLE_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(value, IDLE_PRIORITY);
                 case WALK, RUN, SWIM -> info = new ServerAnimationInfo(value, MOVING_PRIORITY);
                 default -> info = new ServerAnimationInfo(value, DEFAULT_PRIORITY);
             }
@@ -135,7 +135,7 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public Entity[] getPartsF() {
+    public Entity[] getCustomParts() {
         return parts;
     }
 
@@ -297,16 +297,24 @@ public class Triceratops extends Prehistoric {
 
     @Override
     @NotNull
-    public Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public ServerAnimationInfo nextChasingAnimation() {
         String key;
-        if (isInWater()) key = SWIM;
-        else key = RUN;
+        if (isInWater()) {
+            key = SWIM;
+        } else {
+            key = RUN;
+        }
         return getAllAnimations().get(key);
     }
 
     @Override
+    public ServerAnimationInfo nextEatingAnimation() {
+        return getAllAnimations().get(EAT);
+    }
+
+    @Override
     @NotNull
-    public Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public ServerAttackAnimationInfo nextAttackAnimation() {
         int random = getRandom().nextInt(2);
         String key;
         if (random == 0) {

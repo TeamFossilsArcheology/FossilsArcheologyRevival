@@ -20,7 +20,7 @@ public abstract class PrehistoricMixin extends Entity {
 
     @Override
     public PartEntity<?>[] getParts() {
-        Entity[] parts = ((Prehistoric) (Object) this).getPartsF();
+        Entity[] parts = ((Prehistoric) (Object) this).getCustomParts();
         PartEntity<?>[] ret = new PartEntity[parts.length];
         for (int i = 0; i < parts.length; i++) {
             ret[i] = (PartEntity<?>) parts[i];
@@ -30,6 +30,6 @@ public abstract class PrehistoricMixin extends Entity {
 
     @Override
     public boolean isMultipartEntity() {
-        return ((Prehistoric) (Object) this).isMultiPartF();
+        return ((Prehistoric) (Object) this).isCustomMultiPart();
     }
 }

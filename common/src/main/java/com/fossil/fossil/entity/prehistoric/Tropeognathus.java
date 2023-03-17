@@ -37,6 +37,7 @@ public class Tropeognathus extends Pterosaurs {
     public static final String BITE_EAT_IN_WATER = "fa.tropeognathus.biteeatwater";
     public static final String IDLE_SWIM = "fa.tropeognathus.idleswim";
     public static final String SWIM = "fa.tropeognathus.swim";
+    public static final String EAT = "fa.tropeognathus.eat";
     public static final String BITE_ATTACK_WATER = "fa.tropeognathus.biteattackwater";
     public static final String BITE_IN_AIR = "fa.tropeognathus.bitefly";
     public static final String DISPLAY = "fa.tropeognathus.display";
@@ -89,7 +90,7 @@ public class Tropeognathus extends Pterosaurs {
     }
 
     @Override
-    public Entity[] getPartsF() {
+    public Entity[] getCustomParts() {
         return new Entity[0];
     }
 
@@ -221,6 +222,12 @@ public class Tropeognathus extends Pterosaurs {
         if (isFlying()) key = FLY;
 
         return getAllAnimations().get(key);
+    }
+
+    @Override
+    public ServerAnimationInfo nextEatingAnimation() {
+        return getAllAnimations().get(IDLE);
+        //return getAllAnimations().get(EAT);
     }
 
     @Override

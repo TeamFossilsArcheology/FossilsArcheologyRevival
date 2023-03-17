@@ -79,7 +79,7 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    public Entity[] getPartsF() {
+    public Entity[] getCustomParts() {
         return new Entity[0];
     }
 
@@ -204,6 +204,11 @@ public class Therizinosaurus extends Prehistoric {
     @NotNull
     public Prehistoric.ServerAnimationInfo nextChasingAnimation() {
         return nextMovingAnimation();
+    }
+
+    @Override
+    public ServerAnimationInfo nextEatingAnimation() {
+        return getAllAnimations().get(EAT);
     }
 
     @Override

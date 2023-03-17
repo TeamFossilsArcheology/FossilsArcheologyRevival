@@ -36,7 +36,7 @@ public abstract class EntityRenderDispatcherMixin {
             double e = -Mth.lerp(partialTicks, entity.yOld, entity.getY());
             double f = -Mth.lerp(partialTicks, entity.zOld, entity.getZ());
             int kj = 0;
-            for (Entity part : ((Prehistoric)entity).getPartsF()) {
+            for (Entity part : ((Prehistoric)entity).getCustomParts()) {
                 matrixStack.pushPose();
                 double g = d + Mth.lerp(partialTicks, part.xOld, part.getX());
                 double h = e + Mth.lerp(partialTicks, part.yOld, part.getY());

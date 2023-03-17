@@ -29,7 +29,7 @@ public abstract class EntityCallbacksMixin {
     @Inject(method = "onTrackingStart(Lnet/minecraft/world/entity/Entity;)V", at = @At(value = "RETURN"))
     public void addMultiPart(Entity entity, CallbackInfo ci) {
         if (entity instanceof Prehistoric prehistoric) {
-            for (Entity part : prehistoric.getPartsF()) {
+            for (Entity part : prehistoric.getCustomParts()) {
                 ((MultiPartServerLevel) field_26936).addMultiPart(part);
             }
         }
@@ -37,7 +37,7 @@ public abstract class EntityCallbacksMixin {
     @Inject(method = "onTrackingEnd(Lnet/minecraft/world/entity/Entity;)V", at = @At(value = "RETURN"))
     public void removeMultiPart(Entity entity, CallbackInfo ci) {
         if (entity instanceof Prehistoric prehistoric) {
-            for (Entity part : prehistoric.getPartsF()) {
+            for (Entity part : prehistoric.getCustomParts()) {
                 ((MultiPartServerLevel) field_26936).removeMultiPart(part);
             }
         }

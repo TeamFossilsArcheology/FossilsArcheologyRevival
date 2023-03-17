@@ -199,15 +199,15 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
 
-    public boolean isMultiPartF() {
+    public boolean isCustomMultiPart() {
         return isMultiPart;
     }
 
     @Override
     public void setId(int id) {
         super.setId(id);
-        for (int i = 0; i < getPartsF().length; ++i) {
-            this.getPartsF()[i].setId(id + i + 1);
+        for (int i = 0; i < getCustomParts().length; ++i) {
+            this.getCustomParts()[i].setId(id + i + 1);
         }
     }
 
@@ -216,29 +216,29 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
      * @return The child parts of this entity.
      * @implSpec On the forge classpath this implementation should return objects that inherit from PartEntity instead of Entity.
      */
-    public abstract Entity[] getPartsF();
+    public abstract Entity[] getCustomParts();
 
     @Override
     public boolean isPickable() {
-        return !isMultiPartF();
+        return !isCustomMultiPart();
     }
     @Override
     public boolean canBeCollidedWith() {
-        return !isMultiPartF();
+        return !isCustomMultiPart();
     }
     @Override
     protected void doPush(Entity entity) {
-        if (!isMultiPartF()) {
+        if (!isCustomMultiPart()) {
             super.doPush(entity);
         }
     }
 
     @Override
     public boolean isColliding(BlockPos pos, BlockState state) {
-        if (isMultiPartF()) {
+        if (isCustomMultiPart()) {
             VoxelShape voxelShape = state.getCollisionShape(this.level, pos, CollisionContext.of(this));
             VoxelShape voxelShape2 = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
-            return Shapes.joinIsNotEmpty(voxelShape2, Shapes.create(getPartsF()[0].getBoundingBox()), BooleanOp.AND);
+            return Shapes.joinIsNotEmpty(voxelShape2, Shapes.create(getCustomParts()[0].getBoundingBox()), BooleanOp.AND);
         }
         return super.isColliding(pos, state);
     }
@@ -1247,9 +1247,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (isMultiPartF() && getPartsF().length > 0) {
+        if (isCustomMultiPart() && getCustomParts().length > 0) {
             if (source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns() && !this.level.isClientSide) {
-                return this.hurt(getPartsF()[0], source, amount);
+                return this.hurt(getCustomParts()[0], source, amount);
             }
         }
         if (source == DamageSource.IN_WALL) {
@@ -2075,6 +2075,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "controller", 4, event -> this.onFrame(event, getCurrentAnimation())));
     }
+
+    public abstract ServerAnimationInfo nextEatingAnimation();
 
     @NotNull
     public abstract ServerAnimationInfo nextIdleAnimation();

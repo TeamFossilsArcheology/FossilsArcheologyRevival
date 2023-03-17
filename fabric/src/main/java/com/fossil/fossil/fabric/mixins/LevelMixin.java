@@ -32,7 +32,7 @@ public abstract class LevelMixin {
     private void addPartEntities(Entity entity, AABB area, Predicate<? super Entity> predicate, CallbackInfoReturnable<List<Entity>> ci) {
         getEntities().get(area, entity2 -> {
             if (entity2 instanceof Prehistoric prehistoric) {
-                for (Entity part : prehistoric.getPartsF()) {
+                for (Entity part : prehistoric.getCustomParts()) {
                     if (part == entity || !part.getBoundingBox().intersects(area) || !predicate.test(part)) continue;
                     ci.getReturnValue().add(part);
                 }
