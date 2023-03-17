@@ -7,6 +7,10 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.material.ModFluids;
+import com.fossil.fossil.network.AIMessage;
+import com.fossil.fossil.network.AnimationMessage;
+import com.fossil.fossil.network.DebugHandler;
+import com.fossil.fossil.network.RotationMessage;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.DisposableTask;
@@ -30,6 +34,10 @@ public class Fossil {
         ModRecipes.register();
         ModSounds.register();
         ModEnchantments.register();
+
+        DebugHandler.DEBUG_CHANNEL.register(AIMessage.class, AIMessage::write, AIMessage::new, AIMessage::apply);
+        DebugHandler.DEBUG_CHANNEL.register(RotationMessage.class, RotationMessage::write, RotationMessage::new, RotationMessage::apply);
+        DebugHandler.DEBUG_CHANNEL.register(AnimationMessage.class, AnimationMessage::write, AnimationMessage::new, AnimationMessage::apply);
 
         TimerCallbacks.SERVER_CALLBACKS.register(new DisposableTask.Serializer());
     }

@@ -10,6 +10,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
@@ -118,7 +119,17 @@ public class Triceratops extends Prehistoric {
 
         Vec3 offsetHor = calculateViewVector(0, yBodyRot).scale(1.1 * getScale());
         Vec3 headOffset = calculateViewVector(0, yBodyRot).with(Direction.Axis.Y, 0).add(0, getScale(), 0);
+        if (level.isClientSide) {
+        } else {
+            CompoundTag tag = entityData.get(DEBUG).copy();
+            tag.putDouble("x", getX() + headOffset.x + offsetHor.x);
+            tag.putDouble("y", getY() + headOffset.y);
+            tag.putDouble("z", getZ() + headOffset.z + offsetHor.z);
+            entityData.set(DEBUG, tag);
+        }
         parts[1].setPos(getX() + headOffset.x + offsetHor.x, getY() + headOffset.y, getZ() + headOffset.z + offsetHor.z);
+        CompoundTag tag = entityData.get(DEBUG);
+        parts[1].setPos(tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
 
         offsetHor = offsetHor.yRot((float) Math.toRadians(180));
         Vec3 tailOffset = calculateViewVector(0, yBodyRot).scale(-1.5).add(0, 1.1D, 0);

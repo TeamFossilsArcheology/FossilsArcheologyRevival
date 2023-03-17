@@ -253,6 +253,25 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             .add(Attributes.ATTACK_DAMAGE, 2D);
     }
 
+    public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
+
+    public void disableCustomAI(byte type, boolean disableAI) {
+        CompoundTag tag = entityData.get(DEBUG).copy();
+        switch (type) {
+            case 0 -> setNoAi(disableAI);
+            case 1 -> {
+                tag.putBoolean("disableGoalAI", disableAI);
+            }
+            case 2 -> {
+                tag.putBoolean("disableMoveAI", disableAI);
+            }
+            case 3 -> {
+                tag.putBoolean("disableLookAI", disableAI);
+            }
+        }
+        entityData.set(DEBUG, tag);
+    }
+
 
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
@@ -325,6 +344,15 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         var idle = nextIdleAnimation();
         this.entityData.define(CURRENT_ANIMATION, idle.animationId);
         changedAnimationAt = tickCount;
+
+        CompoundTag tag = new CompoundTag();
+        tag.putDouble("x", position().x);
+        tag.putDouble("y", position().y);
+        tag.putDouble("z", position().z);
+        tag.putBoolean("disableGoalAI", false);
+        tag.putBoolean("disableMoveAI", false);
+        tag.putBoolean("disableLookAI", false);
+        entityData.define(DEBUG, tag);
     }
 
     @Override

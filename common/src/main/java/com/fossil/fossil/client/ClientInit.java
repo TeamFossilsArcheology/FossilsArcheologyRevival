@@ -15,31 +15,37 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
+import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
+import com.mojang.blaze3d.platform.InputConstants;
 import dev.architectury.event.EventResult;
-import dev.architectury.event.events.client.ClientRawInputEvent;
+import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.event.events.common.InteractionEvent;
+import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
 import dev.architectury.registry.client.particle.ParticleProviderRegistry;
 import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
-import org.lwjgl.glfw.GLFW;
 
 public class ClientInit {
+    public static final KeyMapping DEBUG_SCREEN_KEY = new KeyMapping("key.fossil.debug_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_Y,
+            "category.fossil.debug");
+
     public static void immediate() {
         EntityRendererRegistry.register(ModEntities.THERIZINOSAURUS,
-            context -> new RenderPrehistoricGeo<>(context, "therizinosaurus.geo.json", Therizinosaurus.ANIMATIONS)
+                context -> new RenderPrehistoricGeo<>(context, "therizinosaurus.geo.json", Therizinosaurus.ANIMATIONS)
         );
         EntityRendererRegistry.register(ModEntities.TRICERATOPS,
-            context -> new RenderPrehistoricGeo<>(context, "triceratops.geo.json", Triceratops.ANIMATIONS)
+                context -> new RenderPrehistoricGeo<>(context, "triceratops.geo.json", Triceratops.ANIMATIONS)
         );
         EntityRendererRegistry.register(ModEntities.TROPEOGNATHUS,
-            context -> new RenderPrehistoricGeo<>(context, "fa.tropeognathus.geo.json", Tropeognathus.ANIMATIONS)
+                context -> new RenderPrehistoricGeo<>(context, "fa.tropeognathus.geo.json", Tropeognathus.ANIMATIONS)
         );
 
         EntityRendererRegistry.register(ModEntities.ANU_STATUE,
@@ -47,10 +53,10 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);
         ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
-
     }
 
     public static void later() {
+        KeyMappingRegistry.register(DEBUG_SCREEN_KEY);
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
             RenderTypeRegistry.register(RenderType.cutout(), type.getPlantBlock());
         }
@@ -76,7 +82,7 @@ public class ClientInit {
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             if (player instanceof AbstractClientPlayer) {
-                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof com.fossil.fossil.entity.prehistoric.base.Prehistoric prehistoric) {
+                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof Prehistoric prehistoric) {
                     Minecraft.getInstance().setScreen(new DinopediaScreen(prehistoric));
                     return EventResult.interruptTrue();
                 }
@@ -90,5 +96,10 @@ public class ClientInit {
         BlockEntityRendererRegistry.register(ModBlockEntities.CULTIVATE.get(), CultivateRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANCIENT_CHEST.get(), AncientChestRenderer::new);
         CreativeTabFilters.register();
+        ClientTickEvent.CLIENT_POST.register(minecraft -> {
+            while (DEBUG_SCREEN_KEY.consumeClick()) {
+                minecraft.setScreen(new DebugScreen(DebugScreen.getHitResult(minecraft)));
+            }
+        });
     }
 }
