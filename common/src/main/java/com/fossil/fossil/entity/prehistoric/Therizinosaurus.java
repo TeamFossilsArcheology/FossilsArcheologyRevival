@@ -1,10 +1,7 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.ai.DinoAIFleeBattle;
-import com.fossil.fossil.entity.ai.DinoAIWander;
-import com.fossil.fossil.entity.ai.DinoMeleeAttackAI;
-import com.fossil.fossil.entity.ai.EatFeedersAndBlocksGoal;
+import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
@@ -88,7 +85,9 @@ public class Therizinosaurus extends Prehistoric {
         super.registerGoals();
         this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.0D));
         this.goalSelector.addGoal(2, new DinoMeleeAttackAI(this, 1.0, true));
-        this.goalSelector.addGoal(3, new EatFeedersAndBlocksGoal(this));
+        this.goalSelector.addGoal(3, new EatFromFeederGoal(this));
+        this.goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        this.goalSelector.addGoal(5, new EatPlantGoal(this));
         this.goalSelector.addGoal(7, new DinoAIWander(this, 1.0));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
     }

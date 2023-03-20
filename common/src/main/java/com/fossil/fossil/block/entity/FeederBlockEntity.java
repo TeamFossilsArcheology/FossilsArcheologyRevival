@@ -149,20 +149,20 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         return true;
     }
 
-    public boolean isEmpty(PrehistoricEntityType type) {
-        if (type.diet == Diet.CARNIVORE || type.diet == Diet.CARNIVORE_EGG || type.diet == Diet.PISCCARNIVORE || type.diet == Diet.PISCIVORE || type.diet == Diet.INSECTIVORE) {
+    public boolean isEmpty(Diet diet) {
+        if (diet == Diet.CARNIVORE || diet == Diet.CARNIVORE_EGG || diet == Diet.PISCCARNIVORE || diet == Diet.PISCIVORE || diet == Diet.INSECTIVORE) {
             return meat == 0;
         }
-        if (type.diet == Diet.HERBIVORE) {
+        if (diet == Diet.HERBIVORE) {
             return plant == 0;
         }
-        return type.diet == Diet.OMNIVORE && meat == 0 && plant == 0;
+        return diet == Diet.OMNIVORE && meat == 0 && plant == 0;
     }
 
     public void feedDinosaur(Prehistoric mob) {
         if (level != null) {
             int feedAmount = 0;
-            if (!isEmpty(mob.type)) {
+            if (!isEmpty(mob.type.diet)) {
                 if (mob.type.diet == Diet.CARNIVORE || mob.type.diet == Diet.CARNIVORE_EGG || mob.type.diet == Diet.PISCCARNIVORE || mob.type.diet == Diet.PISCIVORE || mob.type.diet == Diet.INSECTIVORE) {
                     meat--;
                     level.broadcastEntityEvent(mob, (byte) 47);

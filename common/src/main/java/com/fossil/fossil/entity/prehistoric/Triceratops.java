@@ -1,10 +1,7 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.ai.DinoAIFleeBattle;
-import com.fossil.fossil.entity.ai.DinoAIWander;
-import com.fossil.fossil.entity.ai.DinoMeleeAttackAI;
-import com.fossil.fossil.entity.ai.EatFeedersAndBlocksGoal;
+import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
@@ -159,10 +156,11 @@ public class Triceratops extends Prehistoric {
         this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed * 1.5, false));
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(7, new DinoAIWander(this, speed));
-        this.goalSelector.addGoal(3, new EatFeedersAndBlocksGoal(this));
+        this.goalSelector.addGoal(3, new EatFromFeederGoal(this));
+        this.goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        this.goalSelector.addGoal(5, new EatPlantGoal(this));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        /*this.goalSelector.addGoal(3, new DinoAIEatFeedersAndBlocks(this));
-        this.targetSelector.addGoal(3, new DinoAIEatItems(this));
+        /*
         this.goalSelector.addGoal(4, new DinoAIRiding(this, 1.0F));
         this.goalSelector.addGoal(4, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
         this.goalSelector.addGoal(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));

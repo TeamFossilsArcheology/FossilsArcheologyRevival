@@ -1434,13 +1434,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     return InteractionResult.SUCCESS;
                 }*/
 
-                if (FoodMappings.getFoodAmount(itemstack.getItem(), this.type.diet) != 0) {
-                    if (!player.level.isClientSide) {
+                if (FoodMappings.getFoodAmount(itemstack.getItem(), this.type.diet) > 0) {
+                    if (!level.isClientSide) {
                         if (this.getHunger() < this.getMaxHunger() || this.getHealth() < this.getMaxHealth() && Fossil.CONFIG_OPTIONS.healingDinos || !this.isTame() && this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
                             this.setHunger(this.getHunger() + FoodMappings.getFoodAmount(itemstack.getItem(), this.type.diet));
-                            if (!level.isClientSide) {
-                                this.eatItem(itemstack);
-                            }
+                            this.eatItem(itemstack);
                             if (Fossil.CONFIG_OPTIONS.healingDinos) {
                                 this.heal(3);
                             }
@@ -1448,11 +1446,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                                 if (this.isTame()) {
                                 }
                             }
-                            itemstack.shrink(1);
+                            usePlayerItem(player, hand, itemstack);
                             if (this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
                                 if (!this.isTame() && this.isTameable() && (new Random()).nextInt(10) == 1) {
-                                    this.setTame(true);
-                                    this.setOwnerUUID(player.getUUID());
+                                    this.tame(player);
                                     this.level.broadcastEntityEvent(this, (byte) 35);
                                 }
                             }
@@ -1627,11 +1624,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public boolean isActuallyWeak() {
         return (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUEGEM || this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM) && this.isWeak();
-    }
-
-    @Override
-    public float getSpeed() {
-        return 0.4F;
     }
 
     public float getFemaleScale() {
@@ -1841,12 +1833,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             if (FoodMappings.getFoodAmount(stack.getItem(), type.diet) != 0) {
                 this.setMood(this.getMood() + 5);
                 doFoodEffect(stack.getItem());
-                //Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(stack.getItem())));
                 this.setHunger(this.getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type.diet));
                 stack.shrink(1);
-            /*if (this.getAnimation() == NO_ANIMATION) {
-                this.setAnimation(SPEAK_ANIMATION);
-            }*/
+                setCurrentAnimation(nextEatingAnimation());
             }
         }
     }
@@ -1951,20 +1940,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return this.hasLineOfSight(prey);
     }
 
-    public boolean rayTraceFeeder(BlockPos position, boolean leaves) {
-        return true;
+    public boolean canSeeFood(BlockPos position) {
+        Vec3 target = new Vec3(position.getX() + 0.5, position.getY() + 0.5, position.getZ() + 0.5);
+        BlockHitResult rayTrace = level.clip(new ClipContext(position(), target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, this));
+        return rayTrace.getType() != HitResult.Type.MISS;
     }
-
-    private boolean isFeeder(BlockPos pos, boolean leaves) {
-        if (leaves) {
-            BlockState state = level.getBlockState(pos);
-            return FoodMappings.getFoodAmount(state.getBlock(), this.type.diet) > 0;
-        } else {
-            BlockEntity entity = this.level.getBlockEntity(pos);
-            return entity instanceof FeederBlockEntity;
-        }
-    }
-
     public float getDeathRotation() {
         return 90.0F;
     }

@@ -4,6 +4,7 @@ import com.fossil.fossil.item.DNAItem;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ModTabs;
 import com.fossil.fossil.util.Diet;
+import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -144,13 +145,16 @@ public enum PrehistoricEntityType {
                 registerItem("bone_unique_item", type, Item::new, item -> type.uniqueBoneItem = item);
             }
             if (type.mobType == PrehistoricMobType.FISH) {
+                FoodMappings.addFish(type.entity, 100);//TODO: Define value somewhere. Also should all dinos be added here?
                 registerItem("fish", type, Item::new, item -> type.fishItem = item);
                 registerItem("egg", type, Item::new, item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.DINOSAUR) {
+                FoodMappings.addMeat(type.entity, 100);
                 registerItem("egg_item", type, Item::new, item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.MAMMAL || type.mobType == PrehistoricMobType.VANILLA) {
                 registerItem("syringe", type, Item::new, item -> type.embryoItem = item);
             } else if (type.mobType == PrehistoricMobType.BIRD || type.mobType == PrehistoricMobType.CHICKEN) {
+                FoodMappings.addMeat(type.entity, 100);
                 if (type.mobType == PrehistoricMobType.BIRD) {
                     registerItem("egg", type, Item::new, item -> type.birdEggItem = item);
                 }
