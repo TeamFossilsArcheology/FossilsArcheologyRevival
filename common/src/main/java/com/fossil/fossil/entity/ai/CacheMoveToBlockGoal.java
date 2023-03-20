@@ -1,13 +1,19 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.network.DebugHandler;
+import com.fossil.fossil.network.MarkMessage;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MoveToBlockGoal;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
 
 import java.util.EnumSet;
@@ -111,14 +117,17 @@ public abstract class CacheMoveToBlockGoal extends Goal {
 
     @Override
     public void stop() {
+        resetBlocks();
         entity.setCurrentAnimation(entity.nextIdleAnimation());
     }
 
     protected void moveMobToBlock() {
+        resetBlocks();
         var old = entity.getAttribute(Attributes.FOLLOW_RANGE).getBaseValue();
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(32);
         path = entity.getNavigation().createPath(getMoveToTarget().getX() + 0.5d, getMoveToTarget().getY(), getMoveToTarget().getZ() + 0.5d, 1);
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(old);
+        setBlocks(false);
         entity.getNavigation().moveTo(path, speedModifier);
     }
 
@@ -168,6 +177,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             }
         }
         if ((!isReachedTarget() && entity.getNavigation().isDone()) || entity.getNavigation().isStuck()) {
+            setBlocks(true);
             //if the navigation is done but hasn't reached the target, there is no complete path to the target.
             //if the navigation is stuck, the entity is stuck before reaching the end of the current path.
             stuckTicks++;
@@ -226,5 +236,41 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     protected boolean isValidTarget(LevelReader level, BlockPos pos) {
         return !cache.contains(pos.asLong());
+    }
+
+    private void setBlocks(boolean stuck) {
+        if (path != null) {
+            int[] targets = new int[path.getNodeCount() * 3];
+            BlockState[] blocks = new BlockState[path.getNodeCount()];
+            for (int i = 0; i < path.getNodeCount(); i++) {
+                Node node = path.getNode(i);
+                if (stuck) {
+                    blocks[i] = node.equals(path.getEndNode()) && path.getNodeCount() != 1 ? Blocks.GOLD_BLOCK.defaultBlockState() : Blocks.REDSTONE_BLOCK.defaultBlockState();
+                } else {
+                    blocks[i] = node.equals(path.getEndNode()) ? Blocks.GOLD_BLOCK.defaultBlockState() : Blocks.EMERALD_BLOCK.defaultBlockState();
+                }
+                targets[3 * i] = node.x;
+                targets[3 * i + 1] = node.y;
+                targets[3 * i + 2] = node.z;
+            }
+            DebugHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) entity.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(entity)),
+                    new MarkMessage(targets, blocks));
+        }
+    }
+
+    private void resetBlocks() {
+        if (path != null) {
+            int[] targets = new int[path.getNodeCount() * 3];
+            BlockState[] blocks = new BlockState[path.getNodeCount()];
+            for (int i = 0; i < path.getNodeCount(); i++) {
+                Node node = path.getNode(i);
+                blocks[i] = entity.level.getBlockState(new BlockPos(node.x, node.y, node.z).below());
+                targets[3 * i] = node.x;
+                targets[3 * i + 1] = node.y;
+                targets[3 * i + 2] = node.z;
+            }
+            DebugHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) entity.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(entity)),
+                    new MarkMessage(targets, blocks));
+        }
     }
 }

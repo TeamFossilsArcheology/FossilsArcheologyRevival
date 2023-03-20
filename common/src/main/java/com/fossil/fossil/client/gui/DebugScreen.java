@@ -1,26 +1,23 @@
 package com.fossil.fossil.client.gui;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.network.AIMessage;
-import com.fossil.fossil.network.AnimationMessage;
-import com.fossil.fossil.network.DebugHandler;
-import com.fossil.fossil.network.RotationMessage;
+import com.fossil.fossil.network.*;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.components.AbstractSliderButton;
-import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ContainerObjectSelectionList;
-import net.minecraft.client.gui.components.CycleButton;
+import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.Screen;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -34,7 +31,11 @@ public class DebugScreen extends Screen {
     public static float rotY = 0;
     private float rotYBase;
     public static CycleButton<Boolean> disableAI;
+    private EditBox xPosInput;
+    private EditBox yPosInput;
+    private EditBox zPosInput;
     private final Mob mob;
+    public static boolean showPaths;
 
     public DebugScreen(Mob mob) {
         super(mob == null ? new TextComponent("Debug Screen") : mob.getDisplayName());
@@ -47,12 +48,20 @@ public class DebugScreen extends Screen {
     public static Mob getHitResult(Minecraft mc) {
         Entity camera = mc.getCameraEntity();
         Vec3 view = camera.getViewVector(1.0f);
-        double range = 14;
+        double range = 30;
         Vec3 end = camera.getEyePosition().add(view.x * range, view.y * range, view.z * range);
         AABB aabb = camera.getBoundingBox().expandTowards(view.scale(range)).inflate(1);
         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(camera, camera.getEyePosition(), end, aabb,
                 entity1 -> entity1 instanceof Mob, range * range);
         return (entityHitResult != null) ? (Mob) entityHitResult.getEntity() : null;
+    }
+
+    public static void showPath(Player player, List<BlockPos> targets, List<BlockState> blocks) {
+        if (showPaths) {
+            for (int i = 0; i < targets.size(); i++) {
+                player.level.setBlock(targets.get(i).below(), blocks.get(i), 3);
+            }
+        }
     }
 
     @Override
@@ -64,7 +73,9 @@ public class DebugScreen extends Screen {
     protected void init() {
         int yLeft = 0;
         int yRight = 0;
-        if (mob instanceof Prehistoric) {
+        var builder = CycleButton.booleanBuilder(new TextComponent("On"), new TextComponent("Off")).withValues(
+                ImmutableList.of(Boolean.TRUE, Boolean.FALSE));
+        if (mob instanceof Prehistoric prehistoric) {
             Slider slider = this.addRenderableWidget(
                     new Slider(20, 60 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation Y: "), new TextComponent(""), 0, 360, 0, 5, 3,
                             true) {
@@ -78,9 +89,7 @@ public class DebugScreen extends Screen {
                             mob.setYHeadRot(newRot);
                         }
                     });
-
-            var builder = CycleButton.booleanBuilder(new TextComponent("On"), new TextComponent("Off")).withValues(
-                    ImmutableList.of(Boolean.TRUE, Boolean.FALSE)).withInitialValue(mob.isNoAi());
+            builder.withInitialValue(mob.isNoAi());
             disableAI = builder.create(20, height - 130, width / 6, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
                 DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(mob.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
             });
@@ -101,10 +110,25 @@ public class DebugScreen extends Screen {
                 rotYBase = 0;
                 slider.setSliderValue(0, true);
             }));
-        }
-        if (mob instanceof Prehistoric prehistoric) {
             this.addRenderableWidget(new AnimationsList(minecraft, mob.getId(), prehistoric.getAllAnimations().keySet(), this));
+           /* xPosInput = this.addRenderableWidget(new EditBox(this.font, 280, height - 40, 50, 20, new TextComponent("")));
+            xPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(mob.getX()));
+            yPosInput = this.addRenderableWidget(new EditBox(this.font, 340, height - 40, 50, 20, new TextComponent("")));
+            yPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(mob.getY()));
+            zPosInput = this.addRenderableWidget(new EditBox(this.font, 400, height - 40, 50, 20, new TextComponent("")));
+            zPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(mob.getZ()));
+            this.addRenderableWidget(new Button(210, height - 40, 130, 20, new TextComponent("Move to Target"), button -> {
+                Player player = Minecraft.getInstance().player;
+            }));*/
+            this.addRenderableWidget(new Button(470, height - 40, 150, 20, new TextComponent("Move to player"), button -> {
+                Player player = Minecraft.getInstance().player;
+                DebugHandler.DEBUG_CHANNEL.sendToServer(new MovementMessage(mob.getId(), player.getX(), player.getY(), player.getZ()));
+            }));
         }
+        builder.withInitialValue(showPaths);
+        this.addRenderableWidget(builder.create(240, height - 40, 200, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
+            showPaths = (boolean) cycleButton.getValue();
+        }));
     }
 
     @Override
