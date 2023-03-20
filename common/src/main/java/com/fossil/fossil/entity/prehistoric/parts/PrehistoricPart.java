@@ -10,4 +10,14 @@ public class PrehistoricPart {
     public static <T extends Prehistoric> Entity get(T entity, float f, float g) {
         throw new AssertionError();
     }
+
+    @ExpectPlatform
+    public static boolean isMultiPart(Object object) {
+        throw new AssertionError();
+    }
+
+    @ExpectPlatform
+    public static Prehistoric getParent(Object object) {
+        throw new AssertionError();
+    }
 }

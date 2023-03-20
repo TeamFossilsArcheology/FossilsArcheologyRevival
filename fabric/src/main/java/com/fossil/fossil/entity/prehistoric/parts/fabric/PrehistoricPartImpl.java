@@ -23,6 +23,14 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
         return new PrehistoricPartImpl<>(entity, f, g);
     }
 
+    public static boolean isMultiPart(Object object) {
+        return object instanceof PrehistoricPartImpl<?>;
+    }
+
+    public static Prehistoric getParent(Object object) {
+        return ((PrehistoricPartImpl<?>)object).parent;
+    }
+
     @Override
     public boolean isPickable() {
         return true;

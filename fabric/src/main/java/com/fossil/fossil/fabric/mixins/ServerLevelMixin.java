@@ -18,9 +18,12 @@ import java.util.Collection;
 /**
  * Fabric has no PartEntity so we mixin our own
  *
+ * @see ChunkMapMixin
  * @see EntityCallbacksMixin
- * @see MultiPartServerLevel
  * @see LevelMixin
+ * @see PlayerMixin
+ * @see ServerPlayerMixin
+ * @see MultiPartServerLevel
  */
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin implements MultiPartServerLevel {

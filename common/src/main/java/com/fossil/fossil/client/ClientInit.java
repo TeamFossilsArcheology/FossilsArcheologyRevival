@@ -16,6 +16,7 @@ import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -82,6 +83,9 @@ public class ClientInit {
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             if (player instanceof AbstractClientPlayer) {
+                if (PrehistoricPart.isMultiPart(entity)) {
+                    entity = PrehistoricPart.getParent(entity);
+                }
                 if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof Prehistoric prehistoric) {
                     Minecraft.getInstance().setScreen(new DinopediaScreen(prehistoric));
                     return EventResult.interruptTrue();

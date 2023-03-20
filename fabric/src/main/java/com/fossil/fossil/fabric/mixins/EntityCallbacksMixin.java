@@ -16,8 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * Fabric has no PartEntity so we mixin our own
  *
  * @see ServerLevelMixin
- * @see MultiPartServerLevel
- * @see LevelMixin
  */
 @Mixin(targets = "net/minecraft/server/level/ServerLevel$EntityCallbacks")
 public abstract class EntityCallbacksMixin {
@@ -34,6 +32,7 @@ public abstract class EntityCallbacksMixin {
             }
         }
     }
+
     @Inject(method = "onTrackingEnd(Lnet/minecraft/world/entity/Entity;)V", at = @At(value = "RETURN"))
     public void removeMultiPart(Entity entity, CallbackInfo ci) {
         if (entity instanceof Prehistoric prehistoric) {

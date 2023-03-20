@@ -10,8 +10,6 @@ import java.util.Collection;
  * Fabric has no PartEntity so we mixin our own
  *
  * @see ServerLevelMixin
- * @see com.fossil.fossil.fabric.mixins.EntityCallbacksMixin
- * @see com.fossil.fossil.fabric.mixins.LevelMixin
  */
 public interface MultiPartServerLevel {
     default Collection<Entity> getMultiParts() {
