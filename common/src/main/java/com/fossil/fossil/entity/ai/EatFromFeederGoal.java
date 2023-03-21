@@ -20,7 +20,7 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
     public void tick() {
         super.tick();
         if (isReachedTarget()) {
-            if (entity.level.getBlockEntity(blockPos) instanceof FeederBlockEntity feeder) {
+            if (entity.level.getBlockEntity(targetPos) instanceof FeederBlockEntity feeder) {
                 feedingTicks++;
                 feeder.feedDinosaur(entity);
                 entity.setHealth(Math.min(entity.getMaxHealth(), entity.getHealth() + 0.25f));//TODO: Update healing

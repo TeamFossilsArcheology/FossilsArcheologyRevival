@@ -2,7 +2,9 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.IDinoUnbreakable;
+import com.fossil.fossil.entity.ai.CacheMoveToBlockGoal;
 import com.fossil.fossil.entity.ai.DinoAIMating;
+import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.entity.util.EntityToyBase;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Diet;
@@ -37,6 +39,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
+import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
@@ -244,6 +247,35 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return super.isColliding(pos, state);
     }
 
+    @Override
+    public float getPickRadius() {
+        if (isCustomMultiPart()) {
+            //return Math.max(getDimensions(Pose.STANDING).width - getBbWidth(), 0);
+            return getType().getWidth()*getScale() - getBbWidth();
+        }
+        return super.getPickRadius();
+    }
+
+    @Override
+    protected AABB makeBoundingBox() {
+        if (isCustomMultiPart()) {
+            //Using the position of the custom part will not work because its behind by 1 tick?
+            // return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(getCustomParts()[0].position());
+            return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(position());
+        }
+        return super.makeBoundingBox();
+    }
+
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+        for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
+            if (availableGoal.getGoal() instanceof CacheMoveToBlockGoal goal) {
+                goal.stop();
+            }
+        }
+    }
     public boolean hurt(Entity part, DamageSource source, float damage) {
         return super.hurt(source, damage);
     }
@@ -276,7 +308,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
-        return this.getType().getDimensions().scale(this.getScale());
+        //return this.getType().getDimensions().scale(this.getScale());
+        return this.getType().getDimensions();
     }
 
     @Override
@@ -570,25 +603,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public void setOrder(OrderType newOrder) {
         this.currentOrder = newOrder;
     }
-
-    /*public TileEntityFeeder getNearestFeeder(int feederRange) {
-        for (int dx = -2; dx != -(feederRange + 1); dx += (dx < 0) ? (dx * -2) : (-(2 * dx + 1))) {
-            for (int dy = -5; dy < 4; dy++) {
-                for (int dz = -2; dz != -(feederRange + 1); dz += (dz < 0) ? (dz * -2) : (-(2 * dz + 1))) {
-                    if (this.getY() + dy >= 0 && this.getY() + dy <= this.level.getHeight()) {
-                        TileEntity feeder = this.level.getTileEntity(new BlockPos(Mth.floor(this.getX() + dx), Mth.floor(this.getY() + dy), Mth.floor(this.getZ() + dz)));
-
-                        if (feeder instanceof TileEntityFeeder && !((TileEntityFeeder) feeder).isEmpty(dinoType)) {
-                            return (TileEntityFeeder) feeder;
-                        }
-                    }
-                }
-            }
-        }
-
-        return null;
-    }*/
-    // TODO ^s
 
     public boolean arePlantsNearby(int range) {
         for (int i = Mth.floor(this.getX() - range); i < Mth.ceil(this.getX() + range); i++) {
@@ -1700,7 +1714,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     protected PathNavigation createNavigation(Level levelIn) {
-        return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new DinosaurPathNavigator(this, levelIn);
+        return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
     }
 
 

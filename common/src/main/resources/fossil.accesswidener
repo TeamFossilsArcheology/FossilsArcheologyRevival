@@ -2,3 +2,4 @@ accessWidener   v2  named
 accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/minecraft/world/inventory/MenuType;Lnet/minecraft/client/gui/screens/MenuScreens$ScreenConstructor;)V
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
 accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen scrollOffs F
+accessible method net/minecraft/world/level/pathfinder/WalkNodeEvaluator hasPositiveMalus (Lnet/minecraft/core/BlockPos;)Z

@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.ai;
 
+import com.fossil.fossil.entity.ai.navigation.CenteredPath;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.network.DebugHandler;
 import com.fossil.fossil.network.MarkMessage;
@@ -19,14 +20,19 @@ import net.minecraft.world.level.pathfinder.Path;
 import java.util.EnumSet;
 
 /**
- * Custom Implementation of {@link MoveToBlockGoal} that caches unreachable targets and removes them from the pool of targets.
- * The cache will be cleared after if it is full and a necessary amount of ticks has passed.
+ * Custom Implementation of {@link MoveToBlockGoal} that caches unreachable targets and removes them from the pool of targets. The cache will be
+ * cleared after if it is full and a necessary amount of ticks has passed.
  */
 public abstract class CacheMoveToBlockGoal extends Goal {
     private static final int GIVE_UP_TICKS = 1200;
     private static final int STAY_TICKS = 1200;
     private static final int INTERVAL_TICKS = 200;
     protected static final int CLEAR_TICKS = 1200;
+    /**
+     * How much distance the entity must have moved since the last time it was stuck for the {@link CacheMoveToBlockGoal#stuckTicks stuckTicks} to be
+     * reset
+     */
+    public static final int STUCK_DISTANCE = 2;
     protected final Prehistoric entity;
     public final double speedModifier;
     /**
@@ -42,12 +48,13 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     /**
      * Block to move to
      */
-    protected BlockPos blockPos = BlockPos.ZERO;
+    protected BlockPos targetPos = BlockPos.ZERO;
     private boolean reachedTarget;
     protected final int searchRange;
     private final int verticalSearchRange;
     protected int verticalSearchStart;
     private Path path;
+    private BlockPos lastStuckPos;
     /**
      * Cache that contains all block positions that should be avoided
      */
@@ -72,6 +79,9 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     @Override
     public boolean canUse() {
         boolean dontStart = false;
+        if (entity.isImmobile()) {
+            return false;
+        }
         if (clearTicks > 0) {
             clearTicks--;
             if (clearTicks == 0) {
@@ -84,19 +94,18 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             dontStart = true;
         }
         if (dontStart) return false;
-        nextStartTick = nextStartTick(this.entity);
+        nextStartTick = nextStartTick();
 
-        //TODO: Movement Soft Blocked
         return findNearestBlock();
     }
 
     /**
-     * Returns a random integer between {@link CacheMoveToBlockGoal#INTERVAL_TICKS} and 2x {@link CacheMoveToBlockGoal#INTERVAL_TICKS}.
-     * Used to set the delay between two goal executions.
+     * Returns an integer that is used to the delay between two goal executions.
      *
-     * @return a random integer between {@link CacheMoveToBlockGoal#INTERVAL_TICKS} and 2x {@link CacheMoveToBlockGoal#INTERVAL_TICKS}
+     * @implSpec Returns a random integer between {@link CacheMoveToBlockGoal#INTERVAL_TICKS} and 2x {@link CacheMoveToBlockGoal#INTERVAL_TICKS}
+     * @return an integer that is used to the delay between two goal executions
      */
-    protected int nextStartTick(Prehistoric entity) {
+    protected int nextStartTick() {
         return reducedTickDelay(INTERVAL_TICKS + entity.getRandom().nextInt(INTERVAL_TICKS));
     }
 
@@ -105,14 +114,18 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        //TODO: Movement Soft Blocked
-        return this.tryTicks >= -STAY_TICKS && this.tryTicks < GIVE_UP_TICKS && this.isValidTarget(this.entity.level, this.blockPos);
+        if (entity.isImmobile()) {
+            return false;
+        }
+        return this.tryTicks >= -STAY_TICKS && this.tryTicks < GIVE_UP_TICKS && this.isValidTarget(this.entity.level, this.targetPos);
     }
 
     @Override
     public void start() {
-        this.moveMobToBlock();
-        this.tryTicks = 0;
+        moveMobToBlock();
+        tryTicks = 0;
+        stuckTicks = 0;
+        lastStuckPos = null;
     }
 
     @Override
@@ -126,6 +139,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         var old = entity.getAttribute(Attributes.FOLLOW_RANGE).getBaseValue();
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(32);
         path = entity.getNavigation().createPath(getMoveToTarget().getX() + 0.5d, getMoveToTarget().getY(), getMoveToTarget().getZ() + 0.5d, 1);
+        path = CenteredPath.createFromPath(path);
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(old);
         setBlocks(false);
         entity.getNavigation().moveTo(path, speedModifier);
@@ -139,7 +153,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     protected BlockPos getMoveToTarget() {
-        return this.blockPos.above();
+        return this.targetPos.above();
     }
 
     @Override
@@ -153,7 +167,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      * @return the amount of ticks the entity will stay stuck before aborting the current execution of the goal
      */
     protected int getStuckPatience() {
-        return 100;
+        return 150;
     }
 
     /**
@@ -161,6 +175,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     @Override
     public void tick() {
+        if (entity.isRemoved()) resetBlocks();
         BlockPos blockPos = this.getMoveToTarget();
         if (checkReachedTarget()) {
             reachedTarget = true;
@@ -178,11 +193,19 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         }
         if ((!isReachedTarget() && entity.getNavigation().isDone()) || entity.getNavigation().isStuck()) {
             setBlocks(true);
-            //if the navigation is done but hasn't reached the target, there is no complete path to the target.
-            //if the navigation is stuck, the entity is stuck before reaching the end of the current path.
+            /*
+            Stuck detection based on the following navigation behaviour:
+            If the navigation is done but hasn't reached the target, there is no complete path to the target.
+            If the navigation is stuck, the entity is stuck before reaching the end of the current path.
+            However, we can't reset stuckTicks everytime the above condition is false like we did in the initial commit because any moveTo() call in
+            moveMobToBlock() will set the navigation stuck variable to false.
+             */
+
+            if (lastStuckPos != null && !lastStuckPos.closerToCenterThan(entity.position(), STUCK_DISTANCE)) {
+                stuckTicks = 0;
+            }
             stuckTicks++;
-        } else {
-            stuckTicks = 0;
+            lastStuckPos = entity.blockPosition();
         }
     }
 
@@ -191,7 +214,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     protected boolean checkReachedTarget() {
-        return blockPos.closerToCenterThan(entity.position(), acceptedDistance());
+        return targetPos.closerToCenterThan(entity.position(), acceptedDistance());
     }
 
     protected boolean isReachedTarget() {
@@ -199,7 +222,8 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     /**
-     * Searches and sets new destination block and returns true if a suitable block (specified in {@link CacheMoveToBlockGoal#isValidTarget}) can be found.
+     * Searches and sets new destination block and returns true if a suitable block (specified in {@link CacheMoveToBlockGoal#isValidTarget}) can be
+     * found.
      *
      * @implNote If no block has been found the cache will be set to be cleared.
      */
@@ -215,7 +239,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
                     while (z <= l) {
                         mutableBlockPos.setWithOffset(entityPos, x, y - 1, z);
                         if (entity.isWithinRestriction(mutableBlockPos) && isValidTarget(entity.level, mutableBlockPos)) {
-                            blockPos = mutableBlockPos;
+                            targetPos = mutableBlockPos;
                             return true;
                         }
                         z = z > 0 ? -z : 1 - z;
@@ -245,7 +269,8 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             for (int i = 0; i < path.getNodeCount(); i++) {
                 Node node = path.getNode(i);
                 if (stuck) {
-                    blocks[i] = node.equals(path.getEndNode()) && path.getNodeCount() != 1 ? Blocks.GOLD_BLOCK.defaultBlockState() : Blocks.REDSTONE_BLOCK.defaultBlockState();
+                    blocks[i] = node.equals(
+                            path.getEndNode()) && path.getNodeCount() != 1 ? Blocks.GOLD_BLOCK.defaultBlockState() : Blocks.REDSTONE_BLOCK.defaultBlockState();
                 } else {
                     blocks[i] = node.equals(path.getEndNode()) ? Blocks.GOLD_BLOCK.defaultBlockState() : Blocks.EMERALD_BLOCK.defaultBlockState();
                 }

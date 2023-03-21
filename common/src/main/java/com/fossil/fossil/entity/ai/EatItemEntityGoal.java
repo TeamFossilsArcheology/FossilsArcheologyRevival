@@ -29,12 +29,12 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
      * other can be eaten more quickly.
      */
     @Override
-    protected int nextStartTick(Prehistoric entity) {
+    protected int nextStartTick() {
         if (recentlyAte) {
             recentlyAte = false;
             return 20;
         }
-        return super.nextStartTick(entity);
+        return super.nextStartTick();
     }
 
     /**
@@ -84,7 +84,7 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
             this.clearTicks = cache.size() > 0 ? CLEAR_TICKS : 0;
             return false;
         } else {
-            blockPos = targetItem.blockPosition();
+            targetPos = targetItem.blockPosition();
             return true;
         }
     }
