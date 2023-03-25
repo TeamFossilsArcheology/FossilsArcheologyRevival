@@ -13,10 +13,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.*;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
@@ -28,32 +27,33 @@ import java.util.List;
 import java.util.Set;
 
 public class DebugScreen extends Screen {
-    public static float rotY = 0;
     private float rotYBase;
+    private float rotXBase;
     public static CycleButton<Boolean> disableAI;
     private EditBox xPosInput;
     private EditBox yPosInput;
     private EditBox zPosInput;
-    private final Mob mob;
+    private final LivingEntity entity;
     public static boolean showPaths;
 
-    public DebugScreen(Mob mob) {
-        super(mob == null ? new TextComponent("Debug Screen") : mob.getDisplayName());
-        this.mob = mob;
-        if (mob != null) {
-            this.rotYBase = mob.yBodyRot;//TODO: Different rot?
+    public DebugScreen(LivingEntity entity) {
+        super(entity == null ? new TextComponent("Debug Screen") : entity.getDisplayName());
+        this.entity = entity;
+        if (entity != null) {
+            this.rotYBase = entity.yBodyRot;
+            this.rotXBase = entity.getXRot();
         }
     }
 
-    public static Mob getHitResult(Minecraft mc) {
+    public static LivingEntity getHitResult(Minecraft mc) {
         Entity camera = mc.getCameraEntity();
         Vec3 view = camera.getViewVector(1.0f);
         double range = 30;
         Vec3 end = camera.getEyePosition().add(view.x * range, view.y * range, view.z * range);
         AABB aabb = camera.getBoundingBox().expandTowards(view.scale(range)).inflate(1);
         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(camera, camera.getEyePosition(), end, aabb,
-                entity1 -> entity1 instanceof Mob, range * range);
-        return (entityHitResult != null) ? (Mob) entityHitResult.getEntity() : null;
+                entity1 -> entity1 instanceof LivingEntity, range * range);
+        return (entityHitResult != null) ? (LivingEntity) entityHitResult.getEntity() : null;
     }
 
     public static void showPath(Player player, List<BlockPos> targets, List<BlockState> blocks) {
@@ -75,42 +75,53 @@ public class DebugScreen extends Screen {
         int yRight = 0;
         var builder = CycleButton.booleanBuilder(new TextComponent("On"), new TextComponent("Off")).withValues(
                 ImmutableList.of(Boolean.TRUE, Boolean.FALSE));
-        if (mob instanceof Prehistoric prehistoric) {
-            Slider slider = this.addRenderableWidget(
-                    new Slider(20, 60 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation Y: "), new TextComponent(""), 0, 360, 0, 5, 3,
-                            true) {
-                        @Override
-                        protected void applyValue() {
-                            rotY = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
-                            float newRot = (rotYBase + rotY) % 360;
-                            DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(mob.getId(), newRot));
-                            mob.setYBodyRot(newRot);
-                            mob.setYRot(newRot);
-                            mob.setYHeadRot(newRot);
-                        }
-                    });
-            builder.withInitialValue(mob.isNoAi());
-            disableAI = builder.create(20, height - 130, width / 6, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(mob.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
+        if (entity instanceof LivingEntity) {
+            Slider sliderY = this.addRenderableWidget(new Slider(20, 60 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation Y: "), new TextComponent(""), 0, 360, 0, 5, 3, true) {
+                @Override
+                protected void applyValue() {
+                    float rotY = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                    float newRot = (rotYBase + rotY) % 360;
+                    DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.Y_ROT));
+                    entity.setYBodyRot(newRot);
+                    entity.setYRot(newRot);
+                    entity.setYHeadRot(newRot);
+                }
             });
-            this.addRenderableWidget(disableAI);
-            builder.withInitialValue(mob.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableGoalAI"));
-            this.addRenderableWidget(builder.create(20, height - 100, width / 6, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(mob.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
-            }));
-            builder.withInitialValue(mob.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableMoveAI"));
-            this.addRenderableWidget(builder.create(20, height - 70, width / 6, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(mob.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
-            }));
-            builder.withInitialValue(mob.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableLookAI"));
-            this.addRenderableWidget(builder.create(20, height - 40, width / 6, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(mob.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
-            }));
+            Slider sliderX = this.addRenderableWidget(new Slider(20, 60 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation X: "), new TextComponent(""), 0, 360, 0, 5, 3, true) {
+                @Override
+                protected void applyValue() {
+                    float rotX = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                    float newRot = (rotXBase + rotX) % 360;
+                    DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.X_ROT));
+                    entity.setXRot(newRot);
+                }
+            });
             this.addRenderableWidget(new Button(20, 60 + (yLeft++) * 30, width / 6, 20, new TextComponent("Reset Rotation"), button -> {
                 rotYBase = 0;
-                slider.setSliderValue(0, true);
+                rotXBase = 0;
+                sliderY.setSliderValue(0, true);
+                sliderX.setSliderValue(0, true);
             }));
-            this.addRenderableWidget(new AnimationsList(minecraft, mob.getId(), prehistoric.getAllAnimations().keySet(), this));
+        }
+        if (entity instanceof Prehistoric prehistoric) {
+            builder.withInitialValue(prehistoric.isNoAi());
+            disableAI = builder.create(20, height - 130, width / 6, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
+                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
+            });
+            this.addRenderableWidget(disableAI);
+            builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableGoalAI"));
+            this.addRenderableWidget(builder.create(20, height - 100, width / 6, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
+                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
+            }));
+            builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableMoveAI"));
+            this.addRenderableWidget(builder.create(20, height - 70, width / 6, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
+                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
+            }));
+            builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableLookAI"));
+            this.addRenderableWidget(builder.create(20, height - 40, width / 6, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
+                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
+            }));
+            this.addRenderableWidget(new AnimationsList(minecraft, entity.getId(), prehistoric.getAllAnimations().keySet(), this));
            /* xPosInput = this.addRenderableWidget(new EditBox(this.font, 280, height - 40, 50, 20, new TextComponent("")));
             xPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(mob.getX()));
             yPosInput = this.addRenderableWidget(new EditBox(this.font, 340, height - 40, 50, 20, new TextComponent("")));
@@ -122,7 +133,7 @@ public class DebugScreen extends Screen {
             }));*/
             this.addRenderableWidget(new Button(470, height - 40, 150, 20, new TextComponent("Move to player"), button -> {
                 Player player = Minecraft.getInstance().player;
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new MovementMessage(mob.getId(), player.getX(), player.getY(), player.getZ()));
+                DebugHandler.DEBUG_CHANNEL.sendToServer(new MovementMessage(entity.getId(), player.getX(), player.getY(), player.getZ()));
             }));
         }
         builder.withInitialValue(showPaths);
@@ -135,10 +146,10 @@ public class DebugScreen extends Screen {
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
         drawCenteredString(poseStack, this.font, this.title, width / 2, 20, 16777215);
-        if (mob != null) {
-            drawString(poseStack, this.font, new TextComponent("Rotation: " + mob.getYRot()), 20, 180, 16777215);
-            drawString(poseStack, this.font, new TextComponent("Rotation Body: " + mob.yBodyRot), 20, 200, 16777215);
-            drawString(poseStack, this.font, new TextComponent("Rotation Head: " + mob.getYHeadRot()), 20, 220, 16777215);
+        if (entity != null) {
+            drawString(poseStack, this.font, new TextComponent("Rotation: " + entity.getYRot()), 20, 180, 16777215);
+            drawString(poseStack, this.font, new TextComponent("Rotation Body: " + entity.yBodyRot), 20, 200, 16777215);
+            drawString(poseStack, this.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 220, 16777215);
             drawString(poseStack, this.font, new TextComponent("Start Animation:"), width - width / 4 + 20, 30, 16777215);
         }
     }
