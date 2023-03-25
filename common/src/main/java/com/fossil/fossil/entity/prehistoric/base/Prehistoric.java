@@ -2,10 +2,10 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.IDinoUnbreakable;
+import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.CacheMoveToBlockGoal;
 import com.fossil.fossil.entity.ai.DinoAIMating;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
-import com.fossil.fossil.entity.util.EntityToyBase;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
@@ -507,13 +507,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return this.isSkeleton() || super.isNoAi();
     }
 
-    public void doPlayBonus(int playBonus) {
+    public void useToy(int playBonus) {
         if (ticksTillPlay == 0) {
             this.setMood(this.getMood() + playBonus);
-            if (!this.level.isClientSide) {
-                //TODO
-                // Revival.sendMSGToAll(new MessageHappyParticles(this.getEntityId()));
-            }
             ticksTillPlay = this.random.nextInt(600) + 600;
         }
     }
@@ -694,7 +690,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     private boolean canSleepWhileHunting() {
-        return this.getTarget() == null || this.getTarget() instanceof EntityToyBase;
+        return this.getTarget() == null || this.getTarget() instanceof ToyBase;
     }
 
     @Override
@@ -851,7 +847,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             this.breakBlock(5);
         }
         if (this.getTarget() != null &&
-            this.getTarget() instanceof EntityToyBase &&
+            this.getTarget() instanceof ToyBase &&
             (isPreyBlocked(this.getTarget()) || this.ticksTillPlay > 0)) {
             this.setTarget(null);
         }
@@ -1662,7 +1658,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public void knockbackEntity(Entity knockBackMob, float knockbackStrength, float knockbackStrengthUp) {
-        if (!(knockBackMob instanceof EntityToyBase) && knockBackMob instanceof LivingEntity) {
+        if (!(knockBackMob instanceof ToyBase) && knockBackMob instanceof LivingEntity) {
             double resistance = ((LivingEntity) knockBackMob).getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue();
             double reversed = 1 - resistance;
             knockBackMob.setDeltaMovement(knockBackMob.getDeltaMovement().add(0, 0.4000000059604645D * reversed + 0.1D, 0));
@@ -1673,7 +1669,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public boolean canDinoHunt(LivingEntity target, boolean hunger) {
-        if (target instanceof EntityToyBase) {
+        if (target instanceof ToyBase) {
             return true;
         }
         boolean b = true;

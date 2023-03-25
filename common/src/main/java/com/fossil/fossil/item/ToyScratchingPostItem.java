@@ -1,0 +1,39 @@
+package com.fossil.fossil.item;
+
+import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.entity.ToyScratchingPost;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.BlockPlaceContext;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.gameevent.GameEvent;
+
+public class ToyScratchingPostItem extends Item {
+    public ToyScratchingPostItem(Properties properties) {
+        super(properties);
+    }
+
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level level = context.getLevel();
+        BlockPos blockPos = new BlockPlaceContext(context).getClickedPos();
+        if (!(context.getClickedFace() == Direction.UP && level.isEmptyBlock(blockPos.above()) && level.isEmptyBlock(blockPos.above(2)))) {
+            return InteractionResult.FAIL;
+        }
+        if (level instanceof ServerLevel serverLevel) {
+            ToyScratchingPost entity = ModEntities.TOY_SCRATCHING_POST.get().create(serverLevel);
+            if (entity == null) {
+                return InteractionResult.FAIL;
+            }
+            entity.moveTo(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, 0, 0);
+            level.addFreshEntity(entity);
+            level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, entity);
+        }
+        context.getItemInHand().shrink(1);
+        return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+}

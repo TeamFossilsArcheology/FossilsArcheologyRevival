@@ -14,6 +14,9 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
             DeferredRegister.create(Fossil.MOD_ID, Registry.ITEM_REGISTRY);
@@ -56,6 +59,11 @@ public class ModItems {
     public static final RegistrySupplier<Item> COOKED_NAUTILUS = ITEMS.register("nautilus_cooked",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));
 
+    public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = new HashMap<>();
+    public static final RegistrySupplier<Item> TOY_TETHERED_LOG = ITEMS.register("toy_tethered_log",
+            () -> new ToyTetheredLogItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> TOY_SCRATCHING_POST = ITEMS.register("toy_scratching_post",
+            () -> new ToyScratchingPostItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> POTTERY_SHARD = ITEMS.register("pottery_shard",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BIO_GOO = ITEMS.register("bio_goo",
@@ -112,15 +120,26 @@ public class ModItems {
     );
 
     public static final RegistrySupplier<SpawnEggItem> TROPEOGNATHUS_SPAWN_EGG = ITEMS.register("tropeognathus_spawn_egg",
-        () -> new ArchitecturySpawnEggItem(ModEntities.TROPEOGNATHUS, 0XD6D6D6, 0X3B3B3B, new Item.Properties().tab(ModTabs.FAITEMTAB))
+            () -> new ArchitecturySpawnEggItem(ModEntities.TROPEOGNATHUS, 0XD6D6D6, 0X3B3B3B, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );
 
     public static final RegistrySupplier<SpawnEggItem> TAR_SLIME_SPAWN_EGG = ITEMS.register("tar_slime_spawn_egg",
             () -> new ArchitecturySpawnEggItem(ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );
 
+    private static RegistrySupplier<ToyBallItem> registerBall(DyeColor color) {
+        var item = ITEMS.register("toy_ball_" + color.getName(), () -> new ToyBallItem(color, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+        TOY_BALLS.put(color, item);
+        return item;
+    }
+
     public static void register() {
         PrehistoricEntityType.register();
+
+        for (DyeColor color : DyeColor.values()) {
+            registerBall(color);
+        }
+
         ITEMS.register();
     }
 }

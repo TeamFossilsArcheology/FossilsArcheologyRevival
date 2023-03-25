@@ -7,6 +7,8 @@ import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.item.ToyScratchingPostItem;
+import com.fossil.fossil.item.ToyTetheredLogItem;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -16,6 +18,13 @@ import net.minecraft.world.entity.MobCategory;
 
 public class ModEntities {
     private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Fossil.MOD_ID, Registry.ENTITY_TYPE_REGISTRY);
+
+    public static final RegistrySupplier<EntityType<ToyBall>> TOY_BALL = ENTITIES.register("toy_ball",
+            () -> EntityType.Builder.of(ToyBall::new, MobCategory.MISC).sized(0.5f, 0.5f).build("toy_ball"));
+    public static final RegistrySupplier<EntityType<ToyTetheredLog>> TOY_TETHERED_LOG = ENTITIES.register("toy_tethered_log",
+            () -> EntityType.Builder.of(ToyTetheredLog::new, MobCategory.MISC).sized(0.6f, 1.9375f).build("toy_tethered_log"));
+    public static final RegistrySupplier<EntityType<ToyScratchingPost>> TOY_SCRATCHING_POST = ENTITIES.register("toy_scratching_post",
+            () -> EntityType.Builder.of(ToyScratchingPost::new, MobCategory.MISC).sized(0.6f, 2).build("toy_scratching_post"));
 
     public static final RegistrySupplier<EntityType<Triceratops>> TRICERATOPS = ENTITIES.register(
     "triceratops",
@@ -61,6 +70,9 @@ public class ModEntities {
         EntityAttributeRegistry.register(TROPEOGNATHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DINOSAUR_EGG, DinosaurEgg::createAttributes);
         EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
+        EntityAttributeRegistry.register(TOY_BALL, ToyBase::createAttributes);
+        EntityAttributeRegistry.register(TOY_TETHERED_LOG, ToyBase::createAttributes);
+        EntityAttributeRegistry.register(TOY_SCRATCHING_POST, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TAR_SLIME, TarSlime::createAttributes);
     }
 }

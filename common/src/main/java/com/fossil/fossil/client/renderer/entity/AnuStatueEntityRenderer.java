@@ -18,8 +18,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class AnuStatueRenderer extends MobRenderer<AnuStatueEntity, AnuStatueModel> implements RendererFabricFix {
-    public AnuStatueRenderer(EntityRendererProvider.Context context, AnuStatueModel entityModel) {
+public class AnuStatueEntityRenderer extends MobRenderer<AnuStatueEntity, AnuStatueModel> implements RendererFabricFix {
+    public AnuStatueEntityRenderer(EntityRendererProvider.Context context, AnuStatueModel entityModel) {
         super(context, entityModel, 0.5f);
         addLayer(new AnuStatueOverlayLayer(this));
     }

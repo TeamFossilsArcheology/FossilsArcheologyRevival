@@ -6,11 +6,13 @@ import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.gui.*;
 import com.fossil.fossil.client.gui.filters.CreativeTabFilters;
 import com.fossil.fossil.client.model.AnuStatueModel;
+import com.fossil.fossil.client.model.ToyBallModel;
+import com.fossil.fossil.client.model.ToyScratchingPostModel;
+import com.fossil.fossil.client.model.ToyTetheredLogModel;
 import com.fossil.fossil.client.particle.BubbleParticle;
 import com.fossil.fossil.client.particle.TarBubbleParticle;
 import com.fossil.fossil.client.renderer.blockentity.*;
-import com.fossil.fossil.client.renderer.entity.RenderPrehistoricGeo;
-import com.fossil.fossil.client.renderer.entity.TarSlimeRenderer;
+import com.fossil.fossil.client.renderer.entity.*;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
@@ -49,9 +51,11 @@ public class ClientInit {
                 context -> new RenderPrehistoricGeo<>(context, "fa.tropeognathus.geo.json", Tropeognathus.ANIMATIONS)
         );
 
-        EntityRendererRegistry.register(ModEntities.ANU_STATUE,
-                context -> new com.fossil.fossil.client.renderer.entity.AnuStatueRenderer(context, new AnuStatueModel()));
+        EntityRendererRegistry.register(ModEntities.ANU_STATUE, context -> new AnuStatueEntityRenderer(context, new AnuStatueModel()));
         EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);
+        EntityRendererRegistry.register(ModEntities.TOY_BALL, context -> new ToyBallRenderer(context, new ToyBallModel()));
+        EntityRendererRegistry.register(ModEntities.TOY_TETHERED_LOG, context -> new ToyTetheredLogRenderer(context, new ToyTetheredLogModel()));
+        EntityRendererRegistry.register(ModEntities.TOY_SCRATCHING_POST, context -> new ToyScratchingPostRenderer(context, new ToyScratchingPostModel()));
         ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
     }
