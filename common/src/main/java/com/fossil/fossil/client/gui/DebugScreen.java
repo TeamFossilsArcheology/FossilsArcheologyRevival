@@ -10,7 +10,8 @@ import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.*;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -75,7 +76,7 @@ public class DebugScreen extends Screen {
         int yRight = 0;
         var builder = CycleButton.booleanBuilder(new TextComponent("On"), new TextComponent("Off")).withValues(
                 ImmutableList.of(Boolean.TRUE, Boolean.FALSE));
-        if (entity instanceof LivingEntity) {
+        if (entity != null) {
             Slider sliderY = this.addRenderableWidget(new Slider(20, 60 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation Y: "), new TextComponent(""), 0, 360, 0, 5, 3, true) {
                 @Override
                 protected void applyValue() {
@@ -158,7 +159,8 @@ public class DebugScreen extends Screen {
 
         public AnimationsList(Minecraft minecraft, int mobId, Set<String> animations, DebugScreen screen) {
             super(minecraft, 200, screen.height, 60, screen.height, 25);
-            for (String animation : animations) {
+            List<String> sortedAnimations = animations.stream().sorted().toList();
+            for (String animation : sortedAnimations) {
                 addEntry(new AnimationEntry(mobId, animation));
             }
             setRenderBackground(false);

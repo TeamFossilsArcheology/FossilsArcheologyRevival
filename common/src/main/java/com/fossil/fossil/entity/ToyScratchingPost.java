@@ -18,6 +18,7 @@ public class ToyScratchingPost extends ToyBase {
     @Override
     public void tick() {
         super.tick();
+        setDeltaMovement(0, 0, 0);
         if (!isOnBlock()) {
             if (!level.isClientSide) {
                 Block.popResource(level, blockPosition(), getPickResult());

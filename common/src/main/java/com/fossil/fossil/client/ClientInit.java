@@ -14,6 +14,7 @@ import com.fossil.fossil.client.particle.TarBubbleParticle;
 import com.fossil.fossil.client.renderer.blockentity.*;
 import com.fossil.fossil.client.renderer.entity.*;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.entity.prehistoric.Dilophosaurus;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
@@ -41,6 +42,9 @@ public class ClientInit {
             "category.fossil.debug");
 
     public static void immediate() {
+        EntityRendererRegistry.register(ModEntities.DILOPHOSAURUS,
+                context -> new RenderPrehistoricGeo<>(context, "dilophosaurus.geo.json", Dilophosaurus.ANIMATIONS)
+        );
         EntityRendererRegistry.register(ModEntities.THERIZINOSAURUS,
                 context -> new RenderPrehistoricGeo<>(context, "therizinosaurus.geo.json", Therizinosaurus.ANIMATIONS)
         );

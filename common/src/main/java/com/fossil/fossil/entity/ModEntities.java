@@ -2,6 +2,7 @@ package com.fossil.fossil.entity;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.monster.TarSlime;
+import com.fossil.fossil.entity.prehistoric.Dilophosaurus;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
@@ -26,36 +27,38 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<ToyScratchingPost>> TOY_SCRATCHING_POST = ENTITIES.register("toy_scratching_post",
             () -> EntityType.Builder.of(ToyScratchingPost::new, MobCategory.MISC).sized(0.6f, 2).build("toy_scratching_post"));
 
+    public static final RegistrySupplier<EntityType<Dilophosaurus>> DILOPHOSAURUS = ENTITIES.register("dilophosaurus",
+            () -> EntityType.Builder.of(Dilophosaurus::new, MobCategory.CREATURE).sized(3, 2).build("dilophosaurus"));
     public static final RegistrySupplier<EntityType<Triceratops>> TRICERATOPS = ENTITIES.register(
-    "triceratops",
-        () -> EntityType.Builder.of(
-            Triceratops::new,
-            MobCategory.CREATURE
-        ).sized(3.5F, 3F).build("triceratops")
+            "triceratops",
+            () -> EntityType.Builder.of(
+                    Triceratops::new,
+                    MobCategory.CREATURE
+            ).sized(3.5F, 3F).build("triceratops")
     );
 
     public static final RegistrySupplier<EntityType<Therizinosaurus>> THERIZINOSAURUS = ENTITIES.register(
-    "therizinosaurus",
-        () -> EntityType.Builder.of(
-            Therizinosaurus::new,
-            MobCategory.CREATURE
-        ).sized(2.5F, 2.5F).build("therizinosaurus")
+            "therizinosaurus",
+            () -> EntityType.Builder.of(
+                    Therizinosaurus::new,
+                    MobCategory.CREATURE
+            ).sized(2.5F, 2.5F).build("therizinosaurus")
     );
 
     public static final RegistrySupplier<EntityType<Tropeognathus>> TROPEOGNATHUS = ENTITIES.register(
-        "tropeognathus",
-        () -> EntityType.Builder.of(
-            Tropeognathus::new,
-            MobCategory.CREATURE
-        ).sized(2F, 1F).build("tropeognathus")
+            "tropeognathus",
+            () -> EntityType.Builder.of(
+                    Tropeognathus::new,
+                    MobCategory.CREATURE
+            ).sized(2F, 1F).build("tropeognathus")
     );
 
     public static final RegistrySupplier<EntityType<DinosaurEgg>> DINOSAUR_EGG = ENTITIES.register(
-    "dinosaur_egg",
-        () -> EntityType.Builder.<DinosaurEgg>of(
-            DinosaurEgg::new,
-            MobCategory.CREATURE
-        ).sized(0.5F, 0.7F).build("dinosaur_egg")
+            "dinosaur_egg",
+            () -> EntityType.Builder.<DinosaurEgg>of(
+                    DinosaurEgg::new,
+                    MobCategory.CREATURE
+            ).sized(0.5F, 0.7F).build("dinosaur_egg")
     );
 
     public static final RegistrySupplier<EntityType<TarSlime>> TAR_SLIME = ENTITIES.register("tar_slime",
@@ -65,6 +68,7 @@ public class ModEntities {
 
     public static void register() {
         ENTITIES.register();
+        EntityAttributeRegistry.register(DILOPHOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TRICERATOPS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(THERIZINOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TROPEOGNATHUS, Prehistoric::createAttributes);
