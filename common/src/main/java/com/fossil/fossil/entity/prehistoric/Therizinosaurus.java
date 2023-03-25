@@ -90,6 +90,7 @@ public class Therizinosaurus extends Prehistoric {
         this.goalSelector.addGoal(5, new EatPlantGoal(this));
         this.goalSelector.addGoal(7, new DinoAIWander(this, 1.0));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        targetSelector.addGoal(4, new HuntGoal(this));
     }
 
     @Override

@@ -101,6 +101,7 @@ public class Tropeognathus extends Pterosaurs {
         this.goalSelector.addGoal(5, new EatPlantGoal(this));
         this.goalSelector.addGoal(7, new DinoAIWander(this, 1.0));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        targetSelector.addGoal(4, new HuntGoal(this));
     }
 
     // TODO These may not be correct, should be adjusted
