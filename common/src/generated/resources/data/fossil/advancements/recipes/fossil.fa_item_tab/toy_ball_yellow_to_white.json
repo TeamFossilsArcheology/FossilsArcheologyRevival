@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:toy_ball_yellow_to_white"
+    ]
+  },
+  "criteria": {
+    "has_ball": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:toy_ball_white"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:toy_ball_yellow_to_white"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_ball",
+      "has_the_recipe"
+    ]
+  ]
+}

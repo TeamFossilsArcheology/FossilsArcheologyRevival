@@ -1,0 +1,22 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "SWS",
+    "WBW",
+    "SWS"
+  ],
+  "key": {
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "B": {
+      "item": "minecraft:slime_ball"
+    }
+  },
+  "result": {
+    "item": "fossil:toy_ball_white"
+  }
+}
