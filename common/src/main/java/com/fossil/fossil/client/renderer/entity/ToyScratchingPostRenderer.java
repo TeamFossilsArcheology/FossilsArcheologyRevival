@@ -26,7 +26,7 @@ public class ToyScratchingPostRenderer extends LivingEntityRenderer<ToyScratchin
 
     @Override
     public ResourceLocation getTextureLocation(ToyScratchingPost entity) {
-        return ToyScratchingPostModel.TEXTURE;
+        return ToyScratchingPostModel.TEXTURES.get(entity.getWoodTypeName());
     }
 
     @Override

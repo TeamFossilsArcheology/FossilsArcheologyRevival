@@ -13,9 +13,12 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
+import net.minecraft.world.level.block.state.properties.WoodType;
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS =
@@ -58,12 +61,6 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> COOKED_NAUTILUS = ITEMS.register("nautilus_cooked",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));
-
-    public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = new HashMap<>();
-    public static final RegistrySupplier<Item> TOY_TETHERED_LOG = ITEMS.register("toy_tethered_log",
-            () -> new ToyTetheredLogItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> TOY_SCRATCHING_POST = ITEMS.register("toy_scratching_post",
-            () -> new ToyScratchingPostItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> POTTERY_SHARD = ITEMS.register("pottery_shard",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BIO_GOO = ITEMS.register("bio_goo",
@@ -130,18 +127,21 @@ public class ModItems {
             () -> new ArchitecturySpawnEggItem(ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );
 
+    public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = Arrays.stream(DyeColor.values()).collect(Collectors.toMap(Function.identity(), ModItems::registerBall));
+    public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
+    public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));
     private static RegistrySupplier<ToyBallItem> registerBall(DyeColor color) {
-        var item = ITEMS.register("toy_ball_" + color.getName(), () -> new ToyBallItem(color, new Item.Properties().tab(ModTabs.FAITEMTAB)));
-        TOY_BALLS.put(color, item);
-        return item;
+        return ITEMS.register("toy_ball_" + color.getName(), () -> new ToyBallItem(color, new Item.Properties().tab(ModTabs.FAPARKTAB)));
+    }
+    private static RegistrySupplier<ToyTetheredLogItem> registerTetheredLog(WoodType woodType) {
+        return ITEMS.register("toy_tethered_log_" + woodType.name(), () -> new ToyTetheredLogItem(woodType, new Item.Properties().tab(ModTabs.FAPARKTAB)));
+    }
+    private static RegistrySupplier<ToyScratchingPostItem> registerScratchingPost(WoodType woodType) {
+        return ITEMS.register("toy_scratching_post_" + woodType.name(), () -> new ToyScratchingPostItem(woodType, new Item.Properties().tab(ModTabs.FAPARKTAB)));
     }
 
     public static void register() {
         PrehistoricEntityType.register();
-
-        for (DyeColor color : DyeColor.values()) {
-            registerBall(color);
-        }
 
         ITEMS.register();
     }

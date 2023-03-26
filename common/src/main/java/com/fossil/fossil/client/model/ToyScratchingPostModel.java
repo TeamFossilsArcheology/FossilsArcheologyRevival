@@ -12,9 +12,14 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.state.properties.WoodType;
+
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ToyScratchingPostModel extends EntityModel<ToyScratchingPost> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/toy/scratching-post_oak.png");
+    public static final Map<String, ResourceLocation> TEXTURES = WoodType.values().collect(Collectors.toMap(WoodType::name,
+            woodType -> new ResourceLocation(Fossil.MOD_ID, "textures/entity/toy/scratching_post_" + woodType.name() + ".png")));
 
     private final ModelPart model = createBodyLayer().bakeRoot();
 

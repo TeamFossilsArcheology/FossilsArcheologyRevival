@@ -28,7 +28,7 @@ public class ToyTetheredLogRenderer extends LivingEntityRenderer<ToyTetheredLog,
 
     @Override
     public ResourceLocation getTextureLocation(ToyTetheredLog entity) {
-        return ToyTetheredLogModel.TEXTURE;
+        return ToyTetheredLogModel.TEXTURES.get(entity.getWoodTypeName());
     }
 
     @Override

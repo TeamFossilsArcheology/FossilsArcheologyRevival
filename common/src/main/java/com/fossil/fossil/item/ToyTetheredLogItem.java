@@ -9,11 +9,15 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.gameevent.GameEvent;
 
 public class ToyTetheredLogItem extends Item {
-    public ToyTetheredLogItem(Properties properties) {
+    private final WoodType woodType;
+
+    public ToyTetheredLogItem(WoodType woodType, Properties properties) {
         super(properties);
+        this.woodType = woodType;
     }
 
 
@@ -29,6 +33,7 @@ public class ToyTetheredLogItem extends Item {
             if (entity == null) {
                 return InteractionResult.FAIL;
             }
+            entity.setWoodType(woodType);
             entity.moveTo(blockPos.getX() + 0.5, blockPos.getY() - 1.95, blockPos.getZ() + 0.5, 0, 0);
             level.addFreshEntity(entity);
             level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, entity);
