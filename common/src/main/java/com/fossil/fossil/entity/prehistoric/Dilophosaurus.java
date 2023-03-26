@@ -45,7 +45,8 @@ public class Dilophosaurus extends Prehistoric {
     public static final String TURN_LEFT = "animation.dilophosaurus.turn_left";
     public static final String SPEAK = "animation.dilophosaurus.speak";
     public static final String CALL = "animation.dilophosaurus.call";
-    public static final String ATTACK = "animation.dilophosaurus.attack";
+    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK2 = "animation.dilophosaurus.attack2";
 
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         var file = GeckoLibCache.getInstance().getAnimations().get(new ResourceLocation(Fossil.MOD_ID, "animations/" + ANIMATIONS));
@@ -53,7 +54,7 @@ public class Dilophosaurus extends Prehistoric {
         file.animations().forEach((key, value) -> {
             ServerAnimationInfo info;
             switch (key) {
-                case ATTACK -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 12);
+                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 12);
                 case IDLE -> info = new ServerAnimationInfo(value, IDLE_PRIORITY);
                 case WALK, RUN, SWIM -> info = new ServerAnimationInfo(value, MOVING_PRIORITY);
                 default -> info = new ServerAnimationInfo(value, DEFAULT_PRIORITY);
@@ -191,7 +192,13 @@ public class Dilophosaurus extends Prehistoric {
 
     @Override
     public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK);
+        String key;
+        if (getRandom().nextInt(2) == 0) {
+            key = ATTACK1;
+        } else {
+            key = ATTACK2;
+        }
+        return (ServerAttackAnimationInfo) getAllAnimations().get(key);
     }
 
     @Override
