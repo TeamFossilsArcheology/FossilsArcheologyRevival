@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "S",
+    "L"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "L": {
+      "item": "minecraft:crimson_stem"
+    }
+  },
+  "result": {
+    "item": "fossil:toy_tethered_log_crimson"
+  }
+}

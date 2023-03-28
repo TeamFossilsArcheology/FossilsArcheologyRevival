@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "S",
+    "S",
+    "L"
+  ],
+  "key": {
+    "S": {
+      "item": "minecraft:string"
+    },
+    "L": {
+      "item": "minecraft:jungle_log"
+    }
+  },
+  "result": {
+    "item": "fossil:toy_tethered_log_jungle"
+  }
+}
