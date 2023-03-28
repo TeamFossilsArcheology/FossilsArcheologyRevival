@@ -1,6 +1,6 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
-enum OrderType {
+public enum OrderType {
     STAY, FOLLOW, WANDER;
 
     public final OrderType next() {

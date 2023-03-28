@@ -81,6 +81,7 @@ public class Dilophosaurus extends Prehistoric {
         goalSelector.addGoal(3, new DinoAIWander(this, speed));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
     }
