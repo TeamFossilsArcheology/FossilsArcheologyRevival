@@ -129,12 +129,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public int ticksTillMate;
     public boolean isDaytime;
     public float ridingXZ;
-    public float ridingY = 1;
     public boolean shouldWander = true;
     protected boolean breaksBlocks;
     protected int nearByMobsAllowed;
-    protected float jumpPower;
-    protected boolean horseJumping;
+    protected float playerJumpPendingScale;
+    protected boolean isJumping;
     // private Animation currentAnimation;
     private boolean droppedBiofossil = false;
     private int changedAnimationAt;
@@ -615,6 +614,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean isPushable() {
+        //TODO: Maybe also !isVehicle()?
         return !this.isSkeleton() && super.isPushable();
     }
 
@@ -703,27 +703,61 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return false;
     }
 
+    @Nullable
     public Player getRidingPlayer() {
-        if (this.getControllingPassenger() instanceof Player) {
-            return (Player) getControllingPassenger();
-        } else {
-            return null;
-        }
+        return getControllingPassenger() instanceof Player player ? player : null;
     }
 
     public void setRidingPlayer(Player player) {
         player.yBodyRot = this.yBodyRot;
-        player.setXRot(this.getXRot());
+        player.setXRot(getXRot());
         player.startRiding(this);
     }
 
     @Override
-    public void travel(Vec3 movement) {
-        if ((this.isOrderedToSit() || this.isImmobile()) && this.isVehicle()) {
+    public void travel(Vec3 travelVector) {
+        if ((this.isOrderedToSit() || this.isImmobile()) && !this.isVehicle()) {
             super.travel(Vec3.ZERO);
             return;
         }
-        super.travel(movement);
+        if (!isVehicle() || !canBeControlledByRider()) {
+            flyingSpeed = 0.02f;
+            super.travel(travelVector);
+            return;
+        }
+        Player rider = getRidingPlayer();
+        if (getTarget() != null) {
+            setTarget(null);
+            getNavigation().stop();
+        }
+        setYRot(rider.getYRot());
+        yRotO = getYRot();
+        setXRot(rider.getXRot() * 0.5f);
+        setRot(getYRot(), getXRot());
+        yHeadRot = yBodyRot = getYRot();
+        float newXMovement = rider.xxa * 0.5f;
+        float newZMovement = rider.zza;
+        if (onGround && playerJumpPendingScale > 0 && !isJumping()) {
+            double newYMovement = getJumpStrength() * playerJumpPendingScale * getBlockJumpFactor() + getJumpBoostPower();
+            Vec3 currentMovement = getDeltaMovement();
+            setDeltaMovement(currentMovement.x, newYMovement, currentMovement.z);
+            setIsJumping(true);
+            hasImpulse = true;
+            if (newZMovement > 0) {
+                float h = Mth.sin(getYRot() * ((float)Math.PI / 180));
+                float i = Mth.cos(getYRot() * ((float)Math.PI / 180));
+                this.setDeltaMovement(getDeltaMovement().add(-0.4f * h * playerJumpPendingScale, 0.0, 0.4f * i * playerJumpPendingScale));
+            }
+            playerJumpPendingScale = 0;
+        }
+        flyingSpeed = getSpeed() * 0.1f;
+        fallDistance = 0;
+        setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
+        if (onGround) {
+            playerJumpPendingScale = 0;
+            setIsJumping(false);
+        }
+        super.travel(new Vec3(newXMovement, travelVector.y, newZMovement));
     }
 
     @Override
@@ -1075,6 +1109,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
 
+    @Nullable
     public Entity createChild() {
         if (level.isClientSide) return null;
         Entity baby = null;
@@ -1281,7 +1316,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean rideableUnderWater() {
-        return true;
+        return false;
     }
 
     @Override
@@ -1316,7 +1351,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
         if (this.getLastHurtByMob() instanceof Player) {
             if (this.getOwner() == this.getLastHurtByMob()) {
-                this.setTame(false);
+                setTame(false);
+                setOwnerUUID(null);
                 this.setMood(this.getMood() - 15);
             }
         }
@@ -1403,8 +1439,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                         this.getNavigation().stop();
                         this.setTarget(null);
                         this.setLastHurtByMob(null);
-                        this.setTame(true);
-                        this.setOwnerUUID(player.getUUID());
+                        tame(player);
                         this.level.broadcastEntityEvent(this, (byte) 35);
                         itemstack.shrink(1);
                         return InteractionResult.SUCCESS;
@@ -1481,40 +1516,29 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                         }
                     }
 
-                    /*if (itemstack.is(ModItems.WHIP) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && this.isAdult()) { // TODO Add WHIP
-                        if (this.isTame() && this.isOwnedBy(player) && this.canBeRidden()) {
-                            if (this.getRidingPlayer() == null) {
+                    if (itemstack.is(ModItems.WHIP.get()) && aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && isAdult()) {
+                        if (isTame() && isOwnedBy(player) && canBeRidden()) {
+                            if (getRidingPlayer() == null) {
                                 if (!this.level.isClientSide) {
-                                    //   Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
                                     setRidingPlayer(player);
                                 }
-                                this.setOrder(OrderType.WANDER);
-                                this.setOrderedToSit(false);
-                                this.setSleeping(false);
-                            } else if (this.getRidingPlayer() == player) {
-                                this.setSprinting(true);
-                                if (!this.level.isClientSide) {
-                                    //    Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
-                                }
-                                this.setMood(this.getMood() - 5);
+                                setOrder(OrderType.WANDER);
+                                setOrderedToSit(false);
+                                setSleeping(false);
+                            } else if (getRidingPlayer() == player) {
+                                setSprinting(true);
+                                setMood(getMood() - 5);
                             }
-                        } else if (!this.isTame() && this.aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && this.aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
-                            this.setMood(this.getMood() - 5);
-                            //  Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), FABlockRegistry.VOLCANIC_ROCK));
+                        } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
+                            setMood(getMood() - 5);
                             if (getRandom().nextInt(5) == 0) {
-                                player.displayClientMessage(new TranslatableComponent("prehistoric.autotame", this.getName().getString()), true);
-                                this.setMood(this.getMood() - 25);
-                                this.setTame(true);
-                                //    Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(Items.GOLD_INGOT)));
-                                this.setOwnerUUID(player.getUUID());
+                                player.displayClientMessage(new TranslatableComponent("prehistoric.autotame", getName().getString()), true);
+                                setMood(getMood() - 25);
+                                tame(player);
                             }
                         }
                         this.setOrderedToSit(false);
-                        // this.setOrder(OrderType.WANDER);
-
-                        // this.currentOrder = OrderType.FreeMove;
-                        // setRidingPlayer(player);
-                    }*/
+                    }
                     if (this.getOrderItem() != null && itemstack.is(this.getOrderItem()) && this.isTame() && this.isOwnedBy(player) && !player.isPassenger()) {
                         if (!this.level.isClientSide) {
                             this.jumping = false;
@@ -1718,7 +1742,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean canBeControlledByRider() {
-        return canBeRidden() && this.getControllingPassenger() instanceof LivingEntity && this.isOwnedBy((LivingEntity) this.getControllingPassenger());
+        return canBeRidden() && this.getControllingPassenger() instanceof LivingEntity rider && this.isOwnedBy(rider);
     }
 
     public void procreate(Prehistoric mob) {
@@ -1884,46 +1908,35 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     @Override
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
-        if (this.hasPassenger(passenger)) {
-            this.yBodyRot = passenger.getYRot();
+        if (passenger instanceof Mob mob) {
+            this.yBodyRot = mob.yBodyRot;
         }
-        if (this.getRidingPlayer() != null && this.isOwnedBy(this.getRidingPlayer()) && this.getTarget() != this.getRidingPlayer()) {
-            yBodyRot = this.getRidingPlayer().yBodyRot;
-            yHeadRot = this.getRidingPlayer().yBodyRot;
+        Player rider = getRidingPlayer();
+        if (isOwnedBy(rider) && getTarget() != rider) {
             float radius = ridingXZ * (0.7F * getScale()) * -3;
             float angle = (0.01745329251F * this.yBodyRot);
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
-            double extraY = ridingY * (getScale());
-            float spinosaurusAddition = 0;
-         /*    if (this instanceof EntitySpinosaurus) {
-                spinosaurusAddition = -(((EntitySpinosaurus) this).swimProgress * 0.1F);
-            }*/
-            this.getRidingPlayer().teleportTo(this.getX() + extraX, this.getY() + extraY + spinosaurusAddition - 1.75F, this.getZ() + extraZ);
+            rider.setPos(getX() + extraX, getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ() + extraZ);
         }
-       /* if (passenger instanceof EntityVelociraptor || passenger instanceof EntityDeinonychus) {
-            double extraY = Math.min(ridingY * (getAgeScale()) - 1D, 0.5D);
-            passenger.setPosition(this.getX(), this.getY() + extraY, this.getZ());
-        }/
-        //TODO
-        */
+        //TODO: Offsets for all ridable dinos
     }
 
-    private double getJumpStrength() {
+    protected double getJumpStrength() {
         return 3D;
     }
 
-    protected boolean isDinoJumping() {
-        return horseJumping;
+    protected boolean isJumping() {
+        return isJumping;
     }
 
-    protected void setDinoJumping(boolean jump) {
-        horseJumping = jump;
+    protected void setIsJumping(boolean jumping) {
+        isJumping = jumping;
     }
 
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob AgeableMob) {
-        if (AgeableMob instanceof Prehistoric) {
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
+        if (ageableMob instanceof Prehistoric) {
             Entity baby = this.createChild();
             Prehistoric prehistoric = (Prehistoric) baby;
             prehistoric.setAgeInDays(0);
@@ -1938,11 +1951,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public boolean isAquatic() {
         return this.getMobType() == MobType.WATER;
     }
-
-    public void onWhipRightClick() {
-
-    }
-
     public boolean canReachPrey() {
         return this.getTarget() != null && getAttackBounds().intersects(this.getTarget().getBoundingBox()) && !isPreyBlocked(this.getTarget());
     }
@@ -2017,21 +2025,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return Mth.clamp(90 - this.getBbWidth() * 20, 10, 90);
     }
 
-    /*@OnlyIn(Dist.CLIENT)
-    public void setJumpPower(int jumpPowerIn) {
-        if (!this.isVehicle()) {
-            if (jumpPowerIn < 0) {
-                jumpPowerIn = 0;
-            }
-
-            if (jumpPowerIn >= 90) {
-                this.jumpPower = 1.0F;
-            } else {
-                this.jumpPower = 0.4F + 0.4F * (float) jumpPowerIn / 90.0F;
-            }
-        }
-    }*/
-
     @Override
     public boolean canJump() {
         return !this.isVehicle();
@@ -2039,6 +2032,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public void handleStartJump(int i) {
+        playSound(SoundEvents.HORSE_JUMP, 0.4f, 1);
     }
 
     @Override
@@ -2047,6 +2041,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public void onPlayerJump(int jumpPower) {
+        playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * (float)jumpPower / 90.0f;
     }
 
     public float getProximityToNextPathSkip() {

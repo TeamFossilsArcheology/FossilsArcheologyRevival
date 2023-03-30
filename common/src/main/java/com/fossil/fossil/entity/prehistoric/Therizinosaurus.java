@@ -176,7 +176,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public boolean canBeRidden() {
-        return false;
+        return true;
     }
 
     @Override

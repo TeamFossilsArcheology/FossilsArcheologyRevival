@@ -7,5 +7,8 @@
   },
   "tar": {
     "sounds": ["fossil:tar"]
+  },
+  "whip": {
+    "sounds": ["fossil:whip"]
   }
 }

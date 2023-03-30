@@ -11,6 +11,7 @@ public class ModSounds {
 
     public static final ResourceLocation DRUM_SINGLE = new ResourceLocation(Fossil.MOD_ID, "drum_single");
     public static final ResourceLocation TAR = new ResourceLocation(Fossil.MOD_ID, "tar");
+    public static final ResourceLocation WHIP = new ResourceLocation(Fossil.MOD_ID, "whip");
 
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(Fossil.MOD_ID, Registry.SOUND_EVENT_REGISTRY);
 
