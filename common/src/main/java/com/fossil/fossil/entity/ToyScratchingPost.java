@@ -2,6 +2,7 @@ package com.fossil.fossil.entity;
 
 import com.fossil.fossil.item.ModItems;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -54,11 +55,27 @@ public class ToyScratchingPost extends ToyBase {
         return new ItemStack(ModItems.TOY_SCRATCHING_POSTS.get(getWoodTypeName()).get());
     }
 
-    public void setWoodType(WoodType woodType) {
-        entityData.set(WOOD_TYPE, woodType.name());
+    public void setWoodType(String woodType) {
+        entityData.set(WOOD_TYPE, woodType);
     }
 
     public String getWoodTypeName() {
         return entityData.get(WOOD_TYPE);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putString("woodType", getWoodTypeName());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        String woodType = compound.getString("woodType");
+        if (woodType.isBlank()) {
+            woodType = WoodType.OAK.name();
+        }
+        setWoodType(woodType);
     }
 }

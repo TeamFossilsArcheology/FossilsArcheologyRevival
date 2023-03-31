@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.level.block.state.properties.WoodType;
 
 public class ToyTetheredLogRenderer extends LivingEntityRenderer<ToyTetheredLog, ToyTetheredLogModel> implements RendererFabricFix {
 
@@ -28,6 +29,9 @@ public class ToyTetheredLogRenderer extends LivingEntityRenderer<ToyTetheredLog,
 
     @Override
     public ResourceLocation getTextureLocation(ToyTetheredLog entity) {
+        if (!ToyTetheredLogModel.TEXTURES.containsKey(entity.getWoodTypeName())) {
+            return ToyTetheredLogModel.TEXTURES.get(WoodType.OAK.name());
+        }
         return ToyTetheredLogModel.TEXTURES.get(entity.getWoodTypeName());
     }
 

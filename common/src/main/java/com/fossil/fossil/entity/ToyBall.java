@@ -2,6 +2,7 @@ package com.fossil.fossil.entity;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.item.ModItems;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -81,5 +82,17 @@ public class ToyBall extends ToyBase {
 
     public DyeColor getColor() {
         return DyeColor.byId(entityData.get(COLOR_ID));
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putInt("color", getColor().getId());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        setColor(DyeColor.byId(compound.getInt("color")));
     }
 }

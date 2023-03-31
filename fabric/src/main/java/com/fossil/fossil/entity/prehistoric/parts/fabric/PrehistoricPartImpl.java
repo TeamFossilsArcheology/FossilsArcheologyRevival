@@ -3,10 +3,13 @@ package com.fossil.fossil.entity.prehistoric.parts.fabric;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.player.Player;
 
 public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
     public final T parent;
@@ -29,6 +32,11 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
 
     public static Prehistoric getParent(Object object) {
         return ((PrehistoricPartImpl<?>)object).parent;
+    }
+
+    @Override
+    public InteractionResult interact(Player player, InteractionHand hand) {
+        return parent.interact(player, hand);
     }
 
     @Override
