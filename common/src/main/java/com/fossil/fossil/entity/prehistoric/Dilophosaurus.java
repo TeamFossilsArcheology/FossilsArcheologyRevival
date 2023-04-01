@@ -5,7 +5,6 @@ import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
-import com.fossil.fossil.util.Gender;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
@@ -24,7 +23,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Dilophosaurus extends Prehistoric {
+public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public static final String ANIMATIONS = "dilophosaurus.animation.json";
@@ -76,6 +75,7 @@ public class Dilophosaurus extends Prehistoric {
     public void registerGoals() {
         super.registerGoals();
         double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
+        goalSelector.addGoal(0, new FleeBattleGoal(this, 1));
         goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoAIWander(this, speed));

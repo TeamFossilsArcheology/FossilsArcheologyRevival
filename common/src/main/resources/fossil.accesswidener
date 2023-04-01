@@ -3,3 +3,4 @@ accessible method net/minecraft/client/gui/screens/MenuScreens register (Lnet/mi
 accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
 accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen scrollOffs F
 accessible method net/minecraft/world/level/pathfinder/WalkNodeEvaluator hasPositiveMalus (Lnet/minecraft/core/BlockPos;)Z
+accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;

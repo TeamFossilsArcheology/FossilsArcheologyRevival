@@ -94,7 +94,7 @@ public class Tropeognathus extends Pterosaurs {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.0D));
+        this.goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
         this.goalSelector.addGoal(2, new DinoMeleeAttackAI(this, 1.0, true));
         this.goalSelector.addGoal(3, new EatFromFeederGoal(this));
         this.goalSelector.addGoal(4, new EatItemEntityGoal(this));

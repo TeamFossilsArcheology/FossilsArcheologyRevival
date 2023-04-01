@@ -7,4 +7,5 @@ public class RevivalConfig {
     public boolean dinoBlockBreaking = true;
     public boolean eggsLikeChickens;
     public boolean quilledTriceratops;
+    public boolean animalsFearDinosaurs = true;
 }

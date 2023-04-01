@@ -151,7 +151,7 @@ public class Triceratops extends Prehistoric {
         super.registerGoals();
 
         double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
-        this.goalSelector.addGoal(0, new DinoAIFleeBattle(this, 1.5 * speed));
+        this.goalSelector.addGoal(0, new FleeBattleGoal(this, 1.5 * speed));
         this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed * 1.5, false));
         this.goalSelector.addGoal(1, new FloatGoal(this));
         this.goalSelector.addGoal(7, new DinoAIWander(this, speed));

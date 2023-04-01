@@ -4,6 +4,7 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.material.ModFluids;
@@ -31,6 +32,7 @@ public class Fossil {
         ModRecipes.register();
         ModSounds.register();
         ModEnchantments.register();
+        ModEvents.init();
 
         DebugHandler.DEBUG_CHANNEL.register(AIMessage.class, AIMessage::write, AIMessage::new, AIMessage::apply);
         DebugHandler.DEBUG_CHANNEL.register(RotationMessage.class, RotationMessage::write, RotationMessage::new, RotationMessage::apply);
