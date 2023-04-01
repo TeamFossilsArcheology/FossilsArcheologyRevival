@@ -15,7 +15,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(Player.class)
 public abstract class PlayerMixin {
 
-    @ModifyVariable(method = "attack", at = @At("STORE"), name = "entity")
+    @ModifyVariable(method = "attack", at = @At(value = "STORE"), ordinal = 1)//Can't use the name of the variable because that crashes in production
     private Entity replaceHurtEntity(Entity value) {
         if (PrehistoricPart.isMultiPart(value)) {
             return PrehistoricPart.getParent(value);
