@@ -161,6 +161,11 @@ public class Dilophosaurus extends Prehistoric {
     }
 
     @Override
+    public double getPassengersRidingOffset() {
+        return super.getPassengersRidingOffset() + 0.1;
+    }
+
+    @Override
     public ServerAnimationInfo nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }

@@ -5,6 +5,7 @@ import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.CacheMoveToBlockGoal;
 import com.fossil.fossil.entity.ai.DinoAIMating;
+import com.fossil.fossil.entity.ai.WhipSteering;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Diet;
@@ -147,6 +148,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public final boolean isCannibalistic;
     public ResourceLocation textureLocation;
     public DinoAIMating matingGoal;
+    private final WhipSteering steering = new WhipSteering();
 
     public Prehistoric(
             EntityType<? extends Prehistoric> entityType, PrehistoricEntityType type,
@@ -735,15 +737,15 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         setXRot(rider.getXRot() * 0.5f);
         setRot(getYRot(), getXRot());
         yHeadRot = yBodyRot = getYRot();
-        float newXMovement = rider.xxa * 0.5f;
-        float newZMovement = rider.zza;
+        float newStrafeMovement = rider.xxa * 0.5f;
+        float newForwardMovement = rider.zza;
         if (onGround && playerJumpPendingScale > 0 && !isJumping()) {
             double newYMovement = getJumpStrength() * playerJumpPendingScale * getBlockJumpFactor() + getJumpBoostPower();
             Vec3 currentMovement = getDeltaMovement();
             setDeltaMovement(currentMovement.x, newYMovement, currentMovement.z);
             setIsJumping(true);
             hasImpulse = true;
-            if (newZMovement > 0) {
+            if (newForwardMovement > 0) {
                 float h = Mth.sin(getYRot() * ((float)Math.PI / 180));
                 float i = Mth.cos(getYRot() * ((float)Math.PI / 180));
                 this.setDeltaMovement(getDeltaMovement().add(-0.4f * h * playerJumpPendingScale, 0.0, 0.4f * i * playerJumpPendingScale));
@@ -752,12 +754,17 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
         flyingSpeed = getSpeed() * 0.1f;
         fallDistance = 0;
-        setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
+        if (this.isControlledByLocalInstance()) {
+            setSpeed((float)getAttributeValue(Attributes.MOVEMENT_SPEED));
+            steering.travel(this, rider, travelVector);
+            super.travel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement));
+        } else {
+            setDeltaMovement(Vec3.ZERO);
+        }
         if (onGround) {
             playerJumpPendingScale = 0;
             setIsJumping(false);
         }
-        super.travel(new Vec3(newXMovement, travelVector.y, newZMovement));
     }
 
     @Override
@@ -1316,7 +1323,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean rideableUnderWater() {
-        return false;
+        return true;
     }
 
     @Override
@@ -1919,11 +1926,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             double extraZ = radius * Mth.cos(angle);
             rider.setPos(getX() + extraX, getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ() + extraZ);
         }
-        //TODO: Offsets for all ridable dinos
     }
 
     protected double getJumpStrength() {
-        return 3D;
+        return 1;//TODO: Jump Strength for all rideable dinos
     }
 
     protected boolean isJumping() {
@@ -2027,7 +2033,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean canJump() {
-        return !this.isVehicle();
+        return this.isVehicle();
     }
 
     @Override

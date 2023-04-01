@@ -286,6 +286,11 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
+    public double getPassengersRidingOffset() {
+        return super.getPassengersRidingOffset() + 0.5;
+    }
+
+    @Override
     public AnimationFactory getFactory() {
         return factory;
     }
