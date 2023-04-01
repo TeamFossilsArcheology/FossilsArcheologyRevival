@@ -89,7 +89,8 @@ public class Therizinosaurus extends Prehistoric {
         this.goalSelector.addGoal(4, new EatItemEntityGoal(this));
         this.goalSelector.addGoal(5, new EatPlantGoal(this));
         goalSelector.addGoal(5, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        this.goalSelector.addGoal(7, new DinoAIWander(this, 1.0));
+        this.goalSelector.addGoal(7, new DinoWanderGoal(this, 1.0));
+        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
     }
@@ -176,7 +177,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public boolean canBeRidden() {
-        return true;
+        return false;
     }
 
     @Override

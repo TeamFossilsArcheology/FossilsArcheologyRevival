@@ -154,11 +154,12 @@ public class Triceratops extends Prehistoric {
         this.goalSelector.addGoal(0, new FleeBattleGoal(this, 1.5 * speed));
         this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed * 1.5, false));
         this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(7, new DinoAIWander(this, speed));
         this.goalSelector.addGoal(3, new EatFromFeederGoal(this));
         this.goalSelector.addGoal(4, new EatItemEntityGoal(this));
         this.goalSelector.addGoal(5, new EatPlantGoal(this));
         goalSelector.addGoal(4, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(7, new DinoWanderGoal(this, speed));
+        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
         /*
