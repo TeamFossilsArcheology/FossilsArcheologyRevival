@@ -1317,7 +1317,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
     }
 
-    public int getScaledMood() {
+    public int getMoodPosition() {
         return (int) (71 * -(this.getMood() * 0.01));
     }
 
@@ -2066,9 +2066,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         refreshTexturePath();
     }
 
-    @Nullable
     public Gender getGender() {
-        return this.gender;
+        return gender == null ? Gender.MALE : gender;
     }
 
     protected PlayState onFrame(AnimationEvent<? extends Prehistoric> event, ServerAnimationInfo currentAnimation) {
