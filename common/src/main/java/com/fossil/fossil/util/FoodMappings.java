@@ -21,14 +21,14 @@ public abstract class FoodMappings {
     private static final Map<ItemLike, Integer> HERBIVORE_DIET = new HashMap<>();
     private static final Map<ItemLike, Integer> OMNIVORE_DIET = new HashMap<>();
     private static final Map<ItemLike, Integer> PISCIVORE_DIET = new HashMap<>();
-    private static final Map<ItemLike, Integer> PISCCARNIVORE_DIET = new HashMap<>();
+    private static final Map<ItemLike, Integer> PISCI_CARNIVORE_DIET = new HashMap<>();
     private static final Map<ItemLike, Integer> INSECTIVORE_DIET = new HashMap<>();
     private static final Map<EntityType<? extends Entity>, Integer> CARNIVORE_ENTITY_DIET = new HashMap<>();
     private static final Map<EntityType<? extends Entity>, Integer> CARNIVORE_EGG_ENTITY_DIET = new HashMap<>();
     private static final Map<EntityType<? extends Entity>, Integer> HERBIVORE_ENTITY_DIET = new HashMap<>();
     private static final Map<EntityType<? extends Entity>, Integer> OMNIVORE_ENTITY_DIET = new HashMap<>();
     private static final Map<EntityType<? extends Entity>, Integer> PISCIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends Entity>, Integer> PISCCARNIVORE_ENTITY_DIET = new HashMap<>();
+    private static final Map<EntityType<? extends Entity>, Integer> PISCI_CARNIVORE_ENTITY_DIET = new HashMap<>();
     private static final Map<EntityType<? extends Entity>, Integer> INSECTIVORE_ENTITY_DIET = new HashMap<>();
 
 
@@ -39,7 +39,7 @@ public abstract class FoodMappings {
             case HERBIVORE -> HERBIVORE_DIET.put(itemLike, food);
             case OMNIVORE -> OMNIVORE_DIET.put(itemLike, food);
             case PISCIVORE -> PISCIVORE_DIET.put(itemLike, food);
-            case PISCCARNIVORE -> PISCCARNIVORE_DIET.put(itemLike, food);
+            case PISCI_CARNIVORE -> PISCI_CARNIVORE_DIET.put(itemLike, food);
             case INSECTIVORE -> INSECTIVORE_DIET.put(itemLike, food);
         }
     }
@@ -51,7 +51,7 @@ public abstract class FoodMappings {
             case HERBIVORE -> HERBIVORE_ENTITY_DIET.put(entity, food);
             case OMNIVORE -> OMNIVORE_ENTITY_DIET.put(entity, food);
             case PISCIVORE -> PISCIVORE_ENTITY_DIET.put(entity, food);
-            case PISCCARNIVORE -> PISCCARNIVORE_ENTITY_DIET.put(entity, food);
+            case PISCI_CARNIVORE -> PISCI_CARNIVORE_ENTITY_DIET.put(entity, food);
             case INSECTIVORE -> INSECTIVORE_ENTITY_DIET.put(entity, food);
         }
     }
@@ -61,6 +61,33 @@ public abstract class FoodMappings {
         if (registerItem) {
             addToMappings(block.asItem(), food, diet);
         }
+    }
+
+    public static Map<ItemLike, Integer> getFoodRenderList(Diet diet) {
+        switch (diet) {
+            case CARNIVORE -> {
+                return CARNIVORE_DIET;
+            }
+            case CARNIVORE_EGG -> {
+                return CARNIVORE_EGG_DIET;
+            }
+            case HERBIVORE -> {
+                return HERBIVORE_DIET;
+            }
+            case OMNIVORE -> {
+                return OMNIVORE_DIET;
+            }
+            case PISCIVORE -> {
+                return PISCIVORE_DIET;
+            }
+            case PISCI_CARNIVORE -> {
+                return PISCI_CARNIVORE_DIET;
+            }
+            case INSECTIVORE -> {
+                return INSECTIVORE_DIET;
+            }
+        }
+        return CARNIVORE_DIET;
     }
 
     public static int getFoodAmount(ItemLike itemLike, Diet diet) {
@@ -80,8 +107,8 @@ public abstract class FoodMappings {
             case PISCIVORE -> {
                 return PISCIVORE_DIET.getOrDefault(itemLike, 0);
             }
-            case PISCCARNIVORE -> {
-                return PISCCARNIVORE_DIET.getOrDefault(itemLike, 0);
+            case PISCI_CARNIVORE -> {
+                return PISCI_CARNIVORE_DIET.getOrDefault(itemLike, 0);
             }
             case INSECTIVORE -> {
                 return INSECTIVORE_DIET.getOrDefault(itemLike, 0);
@@ -107,8 +134,8 @@ public abstract class FoodMappings {
             case PISCIVORE -> {
                 return PISCIVORE_ENTITY_DIET.getOrDefault(entity, 0);
             }
-            case PISCCARNIVORE -> {
-                return PISCCARNIVORE_ENTITY_DIET.getOrDefault(entity, 0);
+            case PISCI_CARNIVORE -> {
+                return PISCI_CARNIVORE_ENTITY_DIET.getOrDefault(entity, 0);
             }
             case INSECTIVORE -> {
                 return INSECTIVORE_ENTITY_DIET.getOrDefault(entity, 0);
@@ -123,11 +150,11 @@ public abstract class FoodMappings {
             int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
             if (mappingsPoints == 0 && true) {//TODO Config options
                 if (entity instanceof Animal && !isAquaticMob(entity)) {
-                    if (diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCCARNIVORE) {
+                    if (diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCI_CARNIVORE) {
                         return widthPoints;
                     }
                 }
-                if (diet == Diet.PISCIVORE || diet == Diet.PISCCARNIVORE) {
+                if (diet == Diet.PISCIVORE || diet == Diet.PISCI_CARNIVORE) {
                     return isAquaticMob(entity) ? widthPoints : 0;
                 }
             }
@@ -144,24 +171,24 @@ public abstract class FoodMappings {
         addToMappings(entity, food, Diet.CARNIVORE);
         addToMappings(entity, food, Diet.CARNIVORE_EGG);
         addToMappings(entity, food, Diet.OMNIVORE);
-        addToMappings(entity, food, Diet.PISCCARNIVORE);
+        addToMappings(entity, food, Diet.PISCI_CARNIVORE);
     }
 
     public static void addMeat(ItemLike itemLike, int food) {
         addToMappings(itemLike, food, Diet.CARNIVORE);
         addToMappings(itemLike, food, Diet.CARNIVORE_EGG);
         addToMappings(itemLike, food, Diet.OMNIVORE);
-        addToMappings(itemLike, food, Diet.PISCCARNIVORE);
+        addToMappings(itemLike, food, Diet.PISCI_CARNIVORE);
     }
 
     public static void addFish(EntityType<? extends Entity> entity, int food) {
         addToMappings(entity, food, Diet.PISCIVORE);
-        addToMappings(entity, food, Diet.PISCCARNIVORE);
+        addToMappings(entity, food, Diet.PISCI_CARNIVORE);
     }
 
     public static void addFish(Item item, int food) {
         addToMappings(item, food, Diet.PISCIVORE);
-        addToMappings(item, food, Diet.PISCCARNIVORE);
+        addToMappings(item, food, Diet.PISCI_CARNIVORE);
     }
 
     public static void addEgg(Item item, int food) {

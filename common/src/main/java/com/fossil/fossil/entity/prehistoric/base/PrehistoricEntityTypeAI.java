@@ -1,12 +1,28 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.util.DinopediaInfo;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
+
 public class PrehistoricEntityTypeAI {
     public enum Moving {
         WALK, FLIGHT, AQUATIC, SEMIAQUATIC, WALKANDGLIDE
     }
 
-    public enum Response {
-        NONE, SCARED, TERITORIAL, AGRESSIVE, WATERAGRESSIVE, WATERCALM
+    public enum Response implements DinopediaInfo {
+        CALM, SCARED, TERRITORIAL, AGGRESSIVE, WATER_AGGRESSIVE, WATER_CALM;
+        private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase());
+        private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.temperament.desc." + name().toLowerCase());
+
+        @Override
+        public Component getName() {
+            return name;
+        }
+
+        @Override
+        public Component getDescription() {
+            return description;
+        }
     }
 
     public enum Following {
@@ -33,8 +49,20 @@ public class PrehistoricEntityTypeAI {
         NONE, STEALTH
     }
 
-    public enum Activity {
-        DIURINAL, NOCTURNAL, BOTH, NOSLEEP
+    public enum Activity implements DinopediaInfo {
+        DIURNAL, NOCTURNAL, BOTH, NO_SLEEP;//TODO: NO_SLEEP is unused in 1.12
+        private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase());
+        private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.activity.desc." + name().toLowerCase());
+
+        @Override
+        public Component getName() {
+            return name;
+        }
+
+        @Override
+        public Component getDescription() {
+            return description;
+        }
     }
 
     public enum Attacking {

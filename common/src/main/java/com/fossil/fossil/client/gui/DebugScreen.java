@@ -3,12 +3,18 @@ package com.fossil.fossil.client.gui;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.network.*;
 import com.google.common.collect.ImmutableList;
+import com.mojang.blaze3d.platform.Lighting;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.math.Quaternion;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
@@ -34,6 +40,7 @@ public class DebugScreen extends Screen {
     private EditBox xPosInput;
     private EditBox yPosInput;
     private EditBox zPosInput;
+    private float scale = 15;
     private final LivingEntity entity;
     public static boolean showPaths;
 
@@ -77,27 +84,39 @@ public class DebugScreen extends Screen {
         var builder = CycleButton.booleanBuilder(new TextComponent("On"), new TextComponent("Off")).withValues(
                 ImmutableList.of(Boolean.TRUE, Boolean.FALSE));
         if (entity != null) {
-            Slider sliderY = this.addRenderableWidget(new Slider(20, 60 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation Y: "), new TextComponent(""), 0, 360, 0, 5, 3, true) {
-                @Override
-                protected void applyValue() {
-                    float rotY = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
-                    float newRot = (rotYBase + rotY) % 360;
-                    DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.Y_ROT));
-                    entity.setYBodyRot(newRot);
-                    entity.setYRot(newRot);
-                    entity.setYHeadRot(newRot);
-                }
-            });
-            Slider sliderX = this.addRenderableWidget(new Slider(20, 60 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation X: "), new TextComponent(""), 0, 360, 0, 5, 3, true) {
-                @Override
-                protected void applyValue() {
-                    float rotX = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
-                    float newRot = (rotXBase + rotX) % 360;
-                    DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.X_ROT));
-                    entity.setXRot(newRot);
-                }
-            });
-            this.addRenderableWidget(new Button(20, 60 + (yLeft++) * 30, width / 6, 20, new TextComponent("Reset Rotation"), button -> {
+            Slider sliderY = this.addRenderableWidget(
+                    new Slider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation Y: "), new TextComponent(""), 0, 360, 0, 5, 3,
+                            true) {
+                        @Override
+                        protected void applyValue() {
+                            float rotY = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                            float newRot = (rotYBase + rotY) % 360;
+                            DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.Y_ROT));
+                            entity.setYBodyRot(newRot);
+                            entity.setYRot(newRot);
+                            entity.setYHeadRot(newRot);
+                        }
+                    });
+            Slider sliderX = this.addRenderableWidget(
+                    new Slider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation X: "), new TextComponent(""), 0, 360, 0, 5, 3,
+                            true) {
+                        @Override
+                        protected void applyValue() {
+                            float rotX = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                            float newRot = (rotXBase + rotX) % 360;
+                            DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.X_ROT));
+                            entity.setXRot(newRot);
+                        }
+                    });
+            this.addRenderableWidget(
+                    new Slider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Scale: "), new TextComponent(""), 0, 100, scale, 5, 3,
+                            true) {
+                        @Override
+                        protected void applyValue() {
+                            scale = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                        }
+                    });
+            this.addRenderableWidget(new Button(20, 30 + (yLeft++) * 30, width / 6, 20, new TextComponent("Reset Rotation"), button -> {
                 rotYBase = 0;
                 rotXBase = 0;
                 sliderY.setSliderValue(0, true);
@@ -148,11 +167,42 @@ public class DebugScreen extends Screen {
         super.render(poseStack, mouseX, mouseY, partialTick);
         drawCenteredString(poseStack, this.font, this.title, width / 2, 20, 16777215);
         if (entity != null) {
-            drawString(poseStack, this.font, new TextComponent("Rotation: " + entity.getYRot()), 20, 180, 16777215);
-            drawString(poseStack, this.font, new TextComponent("Rotation Body: " + entity.yBodyRot), 20, 200, 16777215);
-            drawString(poseStack, this.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 220, 16777215);
+            drawString(poseStack, this.font, new TextComponent("Rotation: " + entity.getYRot()), 20, 160, 16777215);
+            drawString(poseStack, this.font, new TextComponent("Rotation Body: " + entity.yBodyRot), 20, 180, 16777215);
+            drawString(poseStack, this.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
             drawString(poseStack, this.font, new TextComponent("Start Animation:"), width - width / 4 + 20, 30, 16777215);
         }
+        if (entity != null) {
+            renderEntityInDebug(70, 280, entity, (float) scale);
+        }
+    }
+
+    public static void renderEntityInDebug(int posX, int posY, LivingEntity entity, float scale) {
+        float g = -entity.getXRot() / 20f;
+        PoseStack poseStack = RenderSystem.getModelViewStack();
+        poseStack.pushPose();
+        poseStack.translate(posX, posY, 1050);
+        poseStack.scale(1, 1, -1);
+        RenderSystem.applyModelViewMatrix();
+        PoseStack poseStack2 = new PoseStack();
+        poseStack2.translate(0.0, 0.0, 1000.0);
+        poseStack2.scale(scale, scale, scale);
+        Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0f);
+        Quaternion quaternion2 = Vector3f.XP.rotationDegrees(g * 20.0f);
+        quaternion.mul(quaternion2);
+        poseStack2.mulPose(quaternion);
+        Lighting.setupForEntityInInventory();
+        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        quaternion2.conj();
+        entityRenderDispatcher.overrideCameraOrientation(quaternion2);
+        entityRenderDispatcher.setRenderShadow(false);
+        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, poseStack2, bufferSource, 0xF000F0));
+        bufferSource.endBatch();
+        entityRenderDispatcher.setRenderShadow(true);
+        poseStack.popPose();
+        RenderSystem.applyModelViewMatrix();
+        Lighting.setupFor3DItems();
     }
 
     private static class AnimationsList extends ContainerObjectSelectionList<AnimationEntry> {

@@ -2,7 +2,6 @@ package com.fossil.fossil.block.entity;
 
 import com.fossil.fossil.block.custom_blocks.FeederBlock;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.inventory.FeederMenu;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
@@ -127,7 +126,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("fossil.container.feeder");
+        return new TranslatableComponent("container.fossil.feeder");
     }
 
     @Override
@@ -150,7 +149,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     }
 
     public boolean isEmpty(Diet diet) {
-        if (diet == Diet.CARNIVORE || diet == Diet.CARNIVORE_EGG || diet == Diet.PISCCARNIVORE || diet == Diet.PISCIVORE || diet == Diet.INSECTIVORE) {
+        if (diet == Diet.CARNIVORE || diet == Diet.CARNIVORE_EGG || diet == Diet.PISCI_CARNIVORE || diet == Diet.PISCIVORE || diet == Diet.INSECTIVORE) {
             return meat == 0;
         }
         if (diet == Diet.HERBIVORE) {
@@ -163,7 +162,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         if (level != null) {
             int feedAmount = 0;
             if (!isEmpty(mob.type.diet)) {
-                if (mob.type.diet == Diet.CARNIVORE || mob.type.diet == Diet.CARNIVORE_EGG || mob.type.diet == Diet.PISCCARNIVORE || mob.type.diet == Diet.PISCIVORE || mob.type.diet == Diet.INSECTIVORE) {
+                if (mob.type.diet == Diet.CARNIVORE || mob.type.diet == Diet.CARNIVORE_EGG || mob.type.diet == Diet.PISCI_CARNIVORE || mob.type.diet == Diet.PISCIVORE || mob.type.diet == Diet.INSECTIVORE) {
                     meat--;
                     level.broadcastEntityEvent(mob, (byte) 47);
                     feedAmount++;

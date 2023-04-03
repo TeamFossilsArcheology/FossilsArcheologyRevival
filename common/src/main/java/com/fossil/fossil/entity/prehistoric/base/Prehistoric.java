@@ -629,7 +629,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public boolean canSleep() {
-        if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURINAL) {
+        if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURNAL) {
             return !this.isDaytime();
         } else if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
             return this.isDaytime() && !this.level.canSeeSky(this.blockPosition().above());
@@ -637,7 +637,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public boolean canWakeUp() {
-        if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURINAL) {
+        if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURNAL) {
             return this.isDaytime();
         } else if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
             return !this.isDaytime() || this.level.canSeeSky(this.blockPosition().above());
@@ -868,7 +868,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                         this.setSleeping(true);
                     }
                 }
-            } else if (this.aiActivityType() != PrehistoricEntityTypeAI.Activity.NOSLEEP) {
+            } else if (this.aiActivityType() != PrehistoricEntityTypeAI.Activity.NO_SLEEP) {
                 if (this.getRandom().nextInt(200) == 1 && !this.isSleeping()) {
                     this.setOrderedToSit(false);
                     this.setSleeping(true);
@@ -1880,20 +1880,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                 setCurrentAnimation(nextEatingAnimation());
             }
         }
-    }
-
-    public String getTempermentString() {
-        String s = null;
-        if (this.aiResponseType() == PrehistoricEntityTypeAI.Response.AGRESSIVE || this.aiResponseType() == PrehistoricEntityTypeAI.Response.WATERAGRESSIVE) {
-            s = "agressive";
-        } else if (this.aiResponseType() == PrehistoricEntityTypeAI.Response.SCARED) {
-            s = "scared";
-        } else if (this.aiResponseType() == PrehistoricEntityTypeAI.Response.NONE || this.aiResponseType() == PrehistoricEntityTypeAI.Response.WATERCALM) {
-            s = "none";
-        } else if (this.aiResponseType() == PrehistoricEntityTypeAI.Response.TERITORIAL) {
-            s = "territorial";
-        }
-        return "pedia.temperament." + s;
     }
 
     public boolean canRunFrom(Entity entity) {

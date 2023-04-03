@@ -198,7 +198,7 @@ public class WorktableBlockEntity extends CustomBlockEntity {
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("fossil.container.worktable");
+        return new TranslatableComponent("container.fossil.worktable");
     }
 
     @Override

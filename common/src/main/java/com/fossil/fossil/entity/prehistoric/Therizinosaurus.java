@@ -97,7 +97,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
-        return PrehistoricEntityTypeAI.Activity.DIURINAL;
+        return PrehistoricEntityTypeAI.Activity.DIURNAL;
     }
 
     @Override
@@ -127,7 +127,7 @@ public class Therizinosaurus extends Prehistoric {
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
 
-        return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERITORIAL;
+        return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
     }
 
     @Override

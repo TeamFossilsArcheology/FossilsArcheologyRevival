@@ -30,7 +30,7 @@ public class FeederMenu extends AbstractContainerMenu {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return FoodMappings.getFoodAmount(stack.getItem(), Diet.CARNIVORE_EGG) > 0 || FoodMappings.getFoodAmount(stack.getItem(),
-                        Diet.PISCCARNIVORE) > 0;
+                        Diet.PISCI_CARNIVORE) > 0;
             }
         });
         addSlot(new Slot(container, 1, 104, 62) {

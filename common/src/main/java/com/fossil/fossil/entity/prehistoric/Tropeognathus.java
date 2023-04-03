@@ -109,7 +109,7 @@ public class Tropeognathus extends Pterosaurs {
     // TODO These may not be correct, should be adjusted
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
-        return PrehistoricEntityTypeAI.Activity.DIURINAL;
+        return PrehistoricEntityTypeAI.Activity.DIURNAL;
     }
 
     @Override
@@ -134,7 +134,7 @@ public class Tropeognathus extends Pterosaurs {
 
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return PrehistoricEntityTypeAI.Response.NONE;
+        return PrehistoricEntityTypeAI.Response.CALM;
     }
 
     @Override

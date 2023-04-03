@@ -1,10 +1,20 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
-public enum OrderType {
-    STAY, FOLLOW, WANDER;
+import com.fossil.fossil.util.DinopediaInfo;
+import net.minecraft.network.chat.TranslatableComponent;
 
-    public final OrderType next() {
-        return OrderType.values()[(this.ordinal() + 1) % OrderType.values().length];
+public enum OrderType implements DinopediaInfo {
+    STAY, FOLLOW, WANDER;
+    private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.order." + name().toLowerCase());
+    private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.order.desc." + name().toLowerCase());
+
+    @Override
+    public TranslatableComponent getName() {
+        return name;
     }
 
+    @Override
+    public TranslatableComponent getDescription() {
+        return description;
+    }
 }

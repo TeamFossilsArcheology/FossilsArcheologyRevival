@@ -88,7 +88,7 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
     }
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
-        return PrehistoricEntityTypeAI.Activity.DIURINAL;
+        return PrehistoricEntityTypeAI.Activity.DIURNAL;
     }
 
     @Override
@@ -113,7 +113,7 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
 
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return PrehistoricEntityTypeAI.Response.TERITORIAL;
+        return PrehistoricEntityTypeAI.Response.TERRITORIAL;
     }
 
     @Override
@@ -153,7 +153,7 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
 
     @Override
     public Item getOrderItem() {
-        return Items.STICK;
+        return Items.BONE;
     }
 
     @Override

@@ -7,8 +7,6 @@ import com.fossil.fossil.inventory.CultivateMenu;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.recipe.WorktableRecipe;
-import com.fossil.fossil.util.Diet;
-import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
@@ -171,7 +169,7 @@ public class CultivateBlockEntity extends CustomBlockEntity {
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("fossil.container.cultivate");
+        return new TranslatableComponent("container.fossil.cultivate");
     }
 
     public static CultivateBlock.EmbryoType getDNAType(CultivateBlockEntity blockEntity) {

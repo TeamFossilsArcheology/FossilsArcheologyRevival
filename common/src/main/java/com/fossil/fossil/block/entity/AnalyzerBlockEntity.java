@@ -166,7 +166,7 @@ public class AnalyzerBlockEntity extends CustomBlockEntity {
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("fossil.container.analyzer");
+        return new TranslatableComponent("container.fossil.analyzer");
     }
 
     @Override

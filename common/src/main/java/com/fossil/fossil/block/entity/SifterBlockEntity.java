@@ -163,7 +163,7 @@ public class SifterBlockEntity extends CustomBlockEntity {
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("fossil.container.sifter");
+        return new TranslatableComponent("container.fossil.sifter");
     }
 
     @Override
