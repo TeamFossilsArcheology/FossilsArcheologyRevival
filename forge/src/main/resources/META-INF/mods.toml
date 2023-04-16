@@ -63,3 +63,10 @@ description="Adding dinosaurs, fossils, and more to Minecraft. If you have downl
     versionRange="[8.3.495,)"
     ordering="NONE"
     side="BOTH"
+
+[[dependencies.fossil]]
+    modId="terrablender"
+    mandatory=true
+    versionRange="[1.2.0,)"
+    ordering="NONE"
+    side="BOTH"

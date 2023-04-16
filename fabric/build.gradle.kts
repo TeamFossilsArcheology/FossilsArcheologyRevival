@@ -31,6 +31,7 @@ configurations {
     named("developmentFabric").get().extendsFrom(common)
 }
 
+val minecraftVersion: String by rootProject
 val fabricLoaderVersion: String by rootProject
 val fabricApiVersion: String by rootProject
 val architecturyVersion: String by rootProject
@@ -38,6 +39,7 @@ val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
 val clothConfigVersion: String by rootProject
 val reiVersion: String by rootProject
+val terraBlenderVersion: String by rootProject
 
 dependencies {
     "mappings"(loom.layered {
@@ -87,6 +89,7 @@ dependencies {
     modImplementation("me.shedaniel.cloth:cloth-config-fabric:${clothConfigVersion}")
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.80")
+    modImplementation("com.github.glitchfiend:TerraBlender-fabric:${minecraftVersion}-${terraBlenderVersion}")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }

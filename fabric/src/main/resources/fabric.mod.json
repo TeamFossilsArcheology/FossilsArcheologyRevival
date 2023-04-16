@@ -37,6 +37,9 @@
     ],
     "client": [
       "com.fossil.fossil.fabric.FossilFabricClient"
+    ],
+    "terrablender": [
+      "com.fossil.fossil.fabric.FossilFabric"
     ]
   },
   "mixins": [
@@ -46,7 +49,8 @@
     "fabric": "*",
     "minecraft": ">=1.18.2",
     "architectury": ">=4.9.83",
-    "geckolib3": ">=3.0.62"
+    "geckolib3": ">=3.0.62",
+    "terrablender": ">=1.2.0"
   },
   "suggests": {
     "cloth_config": ">=6.3.81",
