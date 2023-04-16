@@ -32,6 +32,8 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi {
     @Override
     public void onTerraBlenderInitialized() {
         init();
+        Regions.register(new FossilTerraBlenderRegion("overworld", RegionType.OVERWORLD, 4));
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Fossil.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
     }
 }
 

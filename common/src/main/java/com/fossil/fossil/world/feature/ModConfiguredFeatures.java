@@ -1,19 +1,28 @@
 package com.fossil.fossil.world.feature;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.world.feature.configuration.AshDiskConfiguration;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.util.valueproviders.ConstantInt;
+import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.LakeFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
+import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 
+/**
+ * Calling this class before the mod blocks have been initialized will cause a crash at the moment
+ */
 public class ModConfiguredFeatures {
-
 
     public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> CORDAITES_TREE = FeatureUtils.register("cordaites",
             Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -29,6 +38,19 @@ public class ModConfiguredFeatures {
                     BlockStateProvider.simple(ModBlocks.CORDAITES_LEAVES.get()),
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 4),
                     new TwoLayersFeatureSize(1, 0, 2)).build());
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> HELL_BOAT = register("hell_boat", ModFeatures.HELL_BOAT,
+            NoneFeatureConfiguration.INSTANCE);
+    public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> TAR_PIT = register("tar_pit", Feature.LAKE,
+            new LakeFeature.Configuration(BlockStateProvider.simple(ModBlocks.TAR.get()),
+                    BlockStateProvider.simple(Blocks.STONE)));
+    public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> ASH_DISK = register("ash_disk",
+            ModFeatures.ASH_DISK, new AshDiskConfiguration(UniformInt.of(6, 11), false));
+    public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> MAGMA_DISK = register("magma_disk",
+            ModFeatures.ASH_DISK, new AshDiskConfiguration(UniformInt.of(4, 6), true));
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> VOLCANO_CONE = register("volcano_cone",
+            ModFeatures.VOLCANO_CONE, NoneFeatureConfiguration.INSTANCE);
 
-
+    private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {
+        return FeatureUtils.register(Fossil.MOD_ID + ":" + name, feature, config);
+    }
 }
