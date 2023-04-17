@@ -12,7 +12,7 @@ public class ModSurfaceRules {
                     Noises.GRAVEL, -0.05, 0.05), SurfaceRules.state(Blocks.ANDESITE.defaultBlockState())),
             SurfaceRules.state(Blocks.STONE.defaultBlockState()));
     public static final SurfaceRules.RuleSource VOLCANIC_SURFACE_RULE = SurfaceRules.sequence(
-            SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.VOLCANO),
+            SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.VOLCANO_KEY),
                     SurfaceRules.sequence(
                             SurfaceRules.ifTrue(SurfaceRules.ON_FLOOR, SurfaceRules.state(ModBlocks.VOLCANIC_ROCK.get().defaultBlockState())),
                             SurfaceRules.ifTrue(SurfaceRules.noiseCondition(Noises.SURFACE, -1 / 8.25, Double.MAX_VALUE),

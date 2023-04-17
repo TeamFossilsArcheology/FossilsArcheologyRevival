@@ -12,8 +12,7 @@ import com.fossil.fossil.network.*;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.DisposableTask;
-import com.fossil.fossil.world.biome.ModBiomes;
-import com.fossil.fossil.world.feature.ModPlacedFeatures;
+import com.fossil.fossil.world.feature.ModFeatures;
 import net.minecraft.world.level.timers.TimerCallbacks;
 
 
@@ -29,8 +28,7 @@ public class Fossil {
         ModEntities.register();
         ModMenus.register();
         ModBlockEntities.register();
-        ModPlacedFeatures.register();
-        ModBiomes.register();
+        ModFeatures.register();
         ModRecipes.register();
         ModSounds.register();
         ModEnchantments.register();

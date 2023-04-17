@@ -1,6 +1,6 @@
 package com.fossil.fossil.world.feature.tree;
 
-import com.fossil.fossil.world.feature.ModConfiguredFeatures;
+import com.fossil.fossil.world.feature.configuration.ModConfiguredFeatures;
 import net.minecraft.core.Holder;
 import net.minecraft.world.level.block.grower.AbstractTreeGrower;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;

@@ -1,4 +1,4 @@
-package com.fossil.fossil.world.feature;
+package com.fossil.fossil.world.feature.structures;
 
 import com.fossil.fossil.Fossil;
 import net.minecraft.core.BlockPos;
@@ -21,6 +21,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemp
 
 import java.util.Random;
 
+//TODO: Move to jigsaw?
 public class HellBoatFeature extends Feature<NoneFeatureConfiguration> {
     private static final ResourceLocation STRUCTURE = new ResourceLocation(Fossil.MOD_ID, "hell_boat");
 

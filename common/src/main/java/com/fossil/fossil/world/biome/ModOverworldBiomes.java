@@ -1,6 +1,6 @@
 package com.fossil.fossil.world.biome;
 
-import com.fossil.fossil.world.feature.ModPlacedFeatures;
+import com.fossil.fossil.world.feature.placement.ModPlacedFeatures;
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
@@ -37,6 +37,7 @@ public class ModOverworldBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, ModPlacedFeatures.FOSSIL_VOLCANO);
         biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacedFeatures.coneVolcano());
 
+        //TODO: Colors
         return biome(Biome.Precipitation.NONE, Biome.BiomeCategory.DESERT, 2, 0, 0x300000, 0x300000, 0x300000, calculateSkyColor(2),
                 new MobSpawnSettings.Builder(), biomeBuilder);
     }

@@ -15,8 +15,8 @@ import terrablender.api.RegionType;
 
 import java.util.function.Consumer;
 
-public class FossilTerraBlenderRegion extends Region {
-    public FossilTerraBlenderRegion(String location, RegionType regionType, int weight) {
+public class ForgeFossilRegion extends Region {
+    public ForgeFossilRegion(String location, RegionType regionType, int weight) {
         super(new ResourceLocation(Fossil.MOD_ID, location), regionType, weight);
     }
 
@@ -30,8 +30,9 @@ public class FossilTerraBlenderRegion extends Region {
                     .erosion(ParameterUtils.Erosion.EROSION_5, ParameterUtils.Erosion.EROSION_1, ParameterUtils.Erosion.EROSION_0)
                     .depth(ParameterUtils.Depth.SURFACE, ParameterUtils.Depth.FLOOR)
                     .weirdness(ParameterUtils.Weirdness.MID_SLICE_NORMAL_ASCENDING, ParameterUtils.Weirdness.MID_SLICE_NORMAL_DESCENDING).build();
-            builder.replaceBiome(Biomes.BADLANDS, ModBiomes.VOLCANO);
-            hopfullyCorrectPoints.forEach(point -> builder.replaceBiome(point, ModBiomes.VOLCANO));//This does basically nothing :(
+            builder.replaceBiome(Biomes.BADLANDS, ModBiomes.VOLCANO_KEY);
+            builder.replaceBiome(Biomes.ERODED_BADLANDS, ModBiomes.VOLCANO_KEY);
+            hopfullyCorrectPoints.forEach(point -> builder.replaceBiome(point, ModBiomes.VOLCANO_KEY));//This does basically nothing :(
         });
 
     }

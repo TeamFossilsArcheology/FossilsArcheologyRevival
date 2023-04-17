@@ -2,7 +2,7 @@ package com.fossil.fossil.forge;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.ClientInit;
-import com.fossil.fossil.forge.world.biome.FossilTerraBlenderRegion;
+import com.fossil.fossil.forge.world.biome.ForgeFossilRegion;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.util.FossilFoodMappings;
 import com.fossil.fossil.world.surfacerules.ModSurfaceRules;
@@ -45,7 +45,7 @@ public class FossilForge {
         ModRecipes.initRecipes();
         FossilFoodMappings.register();
         event.enqueueWork(() -> {
-            Regions.register(new FossilTerraBlenderRegion("overworld", RegionType.OVERWORLD, 4));
+            Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Fossil.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
         });
     }

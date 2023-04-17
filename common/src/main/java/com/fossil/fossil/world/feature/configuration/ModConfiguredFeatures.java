@@ -1,8 +1,8 @@
-package com.fossil.fossil.world.feature;
+package com.fossil.fossil.world.feature.configuration;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.world.feature.configuration.AshDiskConfiguration;
+import com.fossil.fossil.world.feature.ModFeatures;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.util.valueproviders.ConstantInt;
@@ -38,17 +38,17 @@ public class ModConfiguredFeatures {
                     BlockStateProvider.simple(ModBlocks.CORDAITES_LEAVES.get()),
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 4),
                     new TwoLayersFeatureSize(1, 0, 2)).build());
-    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> HELL_BOAT = register("hell_boat", ModFeatures.HELL_BOAT,
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> HELL_BOAT = register("hell_boat", ModFeatures.HELL_BOAT.feature(),
             NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> TAR_PIT = register("tar_pit", Feature.LAKE,
             new LakeFeature.Configuration(BlockStateProvider.simple(ModBlocks.TAR.get()),
                     BlockStateProvider.simple(Blocks.STONE)));
     public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> ASH_DISK = register("ash_disk",
-            ModFeatures.ASH_DISK, new AshDiskConfiguration(UniformInt.of(6, 11), false));
+            ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(6, 11), false));
     public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> MAGMA_DISK = register("magma_disk",
-            ModFeatures.ASH_DISK, new AshDiskConfiguration(UniformInt.of(4, 6), true));
+            ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(4, 6), true));
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> VOLCANO_CONE = register("volcano_cone",
-            ModFeatures.VOLCANO_CONE, NoneFeatureConfiguration.INSTANCE);
+            ModFeatures.VOLCANO_CONE.feature(), NoneFeatureConfiguration.INSTANCE);
 
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {
         return FeatureUtils.register(Fossil.MOD_ID + ":" + name, feature, config);

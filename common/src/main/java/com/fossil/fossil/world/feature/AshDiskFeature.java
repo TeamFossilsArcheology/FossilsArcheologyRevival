@@ -2,7 +2,6 @@ package com.fossil.fossil.world.feature;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.world.feature.configuration.AshDiskConfiguration;
-import com.mojang.serialization.Codec;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
@@ -16,8 +15,8 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
  * instead a boolean to enable a few additional random blocks
  */
 public class AshDiskFeature extends Feature<AshDiskConfiguration> {
-    public AshDiskFeature(Codec<AshDiskConfiguration> codec) {
-        super(codec);
+    public AshDiskFeature() {
+        super(AshDiskConfiguration.CODEC);
     }
 
     @Override
