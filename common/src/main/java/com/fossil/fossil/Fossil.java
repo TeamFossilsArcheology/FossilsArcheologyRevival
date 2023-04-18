@@ -13,11 +13,15 @@ import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.DisposableTask;
 import com.fossil.fossil.world.feature.ModFeatures;
+import com.fossil.fossil.world.feature.structures.ModStructures;
+import com.mojang.logging.LogUtils;
 import net.minecraft.world.level.timers.TimerCallbacks;
+import org.slf4j.Logger;
 
 
 public class Fossil {
     public static final String MOD_ID = "fossil";
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public static final RevivalConfig CONFIG_OPTIONS = new RevivalConfig();
 
@@ -29,6 +33,7 @@ public class Fossil {
         ModMenus.register();
         ModBlockEntities.register();
         ModFeatures.register();
+        ModStructures.register();
         ModRecipes.register();
         ModSounds.register();
         ModEnchantments.register();

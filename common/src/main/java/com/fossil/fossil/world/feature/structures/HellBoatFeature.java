@@ -2,60 +2,49 @@ package com.fossil.fossil.world.feature.structures;
 
 import com.fossil.fossil.Fossil;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.Vec3i;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
-import net.minecraft.world.level.levelgen.feature.Feature;
-import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.structure.BoundingBox;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureManager;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.LegacyRandomSource;
+import net.minecraft.world.level.levelgen.WorldgenRandom;
+import net.minecraft.world.level.levelgen.feature.StructureFeature;
+import net.minecraft.world.level.levelgen.feature.configurations.RangeConfiguration;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
+import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
 
-import java.util.Random;
+import java.util.Optional;
 
-//TODO: Move to jigsaw?
-public class HellBoatFeature extends Feature<NoneFeatureConfiguration> {
-    private static final ResourceLocation STRUCTURE = new ResourceLocation(Fossil.MOD_ID, "hell_boat");
+public class HellBoatFeature extends StructureFeature<RangeConfiguration> {
 
     public HellBoatFeature() {
-        super(NoneFeatureConfiguration.CODEC);
+        super(RangeConfiguration.CODEC, HellBoatFeature::pieceGeneratorSupplier);
     }
 
-    @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
-        WorldGenLevel worldGenLevel = context.level();
-        BlockPos origin = context.origin();
-        NoiseColumn noiseColumn = context.chunkGenerator().getBaseColumn(origin.getX(), origin.getZ(), worldGenLevel);
+    private static Optional<PieceGenerator<RangeConfiguration>> pieceGeneratorSupplier(PieceGeneratorSupplier.Context<RangeConfiguration> context) {
+        BlockPos origin = context.chunkPos().getMiddleBlockPosition(0);
+        NoiseColumn noiseColumn = context.chunkGenerator().getBaseColumn(origin.getX(), origin.getZ(), context.heightAccessor());
+        Fossil.LOGGER.debug("Hellboat: Trying to place at " + origin.atY(30));
         if (noiseColumn.getBlock(31).getBlock() != Blocks.LAVA) {
-            return false;
+            Fossil.LOGGER.debug("Hellboat: No Lava");
+            return Optional.empty();
         }
         for (int i = 32; i < 50; i++) {
             Block block = noiseColumn.getBlock(i).getBlock();
             if (block != Blocks.AIR && block != Blocks.CAVE_AIR) {
-                return false;
+                Fossil.LOGGER.debug("Hellboat: No Air");
+                return Optional.empty();
             }
         }
-        StructureManager structureManager = worldGenLevel.getLevel().getServer().getStructureManager();
-        StructureTemplate hellBoatTemplate = structureManager.getOrCreate(STRUCTURE);
-        Random random = context.random();
-        Rotation rotation = Rotation.getRandom(random);
-        Vec3i size = hellBoatTemplate.getSize(rotation);
-        BlockPos blockPos = new BlockPos(-size.getX() / 2 + origin.getX(), 30, -size.getZ() / 2 + origin.getZ());
-        BlockPos transformedPos = hellBoatTemplate.getZeroPositionWithTransform(blockPos, Mirror.NONE, rotation);
-        ChunkPos chunkPos = new ChunkPos(origin);
-        BoundingBox boundingBox = new BoundingBox(chunkPos.getMinBlockX() - 16, worldGenLevel.getMinBuildHeight(), chunkPos.getMinBlockZ() - 16,
-                chunkPos.getMaxBlockX() + 16, worldGenLevel.getMaxBuildHeight(), chunkPos.getMaxBlockZ() + 16);
-        var structurePlaceSettings = new StructurePlaceSettings().setRotation(rotation).setBoundingBox(boundingBox).setRandom(random);
-        structurePlaceSettings.clearProcessors();
-        hellBoatTemplate.placeInWorld(worldGenLevel, transformedPos, transformedPos, structurePlaceSettings, random, 4);
-        return true;
+        WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
+        Rotation rotation = Rotation.getRandom(worldgenRandom);
+        Fossil.LOGGER.debug("Hellboat: Placed");
+        return Optional.of((builder, context2) -> builder.addPiece(new HellBoatPiece(context.structureManager(), origin.atY(30), rotation)));
+    }
+
+    @Override
+    public GenerationStep.Decoration step() {
+        return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 }

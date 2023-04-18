@@ -37,8 +37,6 @@ public class ModPlacedFeatures {
                 RarityFilter.onAverageOnceEvery(30), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome());
         var tarPitPlaced = PlacementUtils.register("tar_pit_placed", ModConfiguredFeatures.TAR_PIT, RarityFilter.onAverageOnceEvery(100),
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
-        var hellBoat = PlacementUtils.register("hell_boat", ModConfiguredFeatures.HELL_BOAT, RarityFilter.onAverageOnceEvery(300),
-                InSquarePlacement.spread());
 
         var fossilBlockPlaced = PlacementUtils.register("fossil_block_placed", ModOreFeatures.FOSSIL_BLOCK, commonOrePlacement(17, // VeinsPerChunk
                 HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-0), VerticalAnchor.aboveBottom(256))));
@@ -56,9 +54,6 @@ public class ModPlacedFeatures {
             mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, permafrostBlockPlaced);
             if (mutable.getCategory() == Biome.BiomeCategory.SWAMP) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.LAKES, tarPitPlaced);
-            }
-            if (mutable.getCategory() == Biome.BiomeCategory.NETHER) {
-                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, hellBoat);
             }
         });
     }
