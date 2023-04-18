@@ -4,3 +4,9 @@ accessible class net/minecraft/client/gui/screens/MenuScreens$ScreenConstructor
 accessible field net/minecraft/client/gui/screens/inventory/CreativeModeInventoryScreen scrollOffs F
 accessible method net/minecraft/world/level/pathfinder/WalkNodeEvaluator hasPositiveMalus (Lnet/minecraft/core/BlockPos;)Z
 accessible field net/minecraft/world/entity/Mob goalSelector Lnet/minecraft/world/entity/ai/goal/GoalSelector;
+accessible field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool templates Ljava/util/List;
+accessible field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool rawTemplates Ljava/util/List;
+mutable field net/minecraft/world/level/levelgen/structure/pools/StructureTemplatePool rawTemplates Ljava/util/List;
+accessible method net/minecraft/world/entity/ai/village/poi/PoiType registerBlockStates (Lnet/minecraft/world/entity/ai/village/poi/PoiType;)Lnet/minecraft/world/entity/ai/village/poi/PoiType;
+accessible method net/minecraft/world/entity/ai/village/poi/PoiType <init> (Ljava/lang/String;Ljava/util/Set;II)V
+accessible method net/minecraft/world/entity/npc/VillagerProfession <init> (Ljava/lang/String;Lnet/minecraft/world/entity/ai/village/poi/PoiType;Lcom/google/common/collect/ImmutableSet;Lcom/google/common/collect/ImmutableSet;Lnet/minecraft/sounds/SoundEvent;)V

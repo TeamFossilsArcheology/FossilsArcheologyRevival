@@ -30,6 +30,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi {
         ModPlacedFeatures.register();
         FabricModBiomes.register();
         ModRecipes.initRecipes();
+        ModRegistries.register();
         FossilFoodMappings.register();
     }
 

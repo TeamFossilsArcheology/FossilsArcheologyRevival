@@ -12,6 +12,7 @@ import com.fossil.fossil.network.*;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.DisposableTask;
+import com.fossil.fossil.villager.ModVillagers;
 import com.fossil.fossil.world.feature.ModFeatures;
 import com.fossil.fossil.world.feature.structures.ModStructures;
 import com.mojang.logging.LogUtils;
@@ -37,6 +38,7 @@ public class Fossil {
         ModRecipes.register();
         ModSounds.register();
         ModEnchantments.register();
+        ModVillagers.register();
         ModEvents.init();
 
         DebugHandler.DEBUG_CHANNEL.register(AIMessage.class, AIMessage::write, AIMessage::new, AIMessage::apply);

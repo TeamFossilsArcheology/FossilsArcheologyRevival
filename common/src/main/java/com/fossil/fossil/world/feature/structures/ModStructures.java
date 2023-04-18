@@ -8,17 +8,17 @@ import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfigur
 import net.minecraft.world.level.levelgen.feature.configurations.RangeConfiguration;
 
 public class ModStructures {
-    public static final Holder<RangeConfiguration, HellBoatFeature> HELL_BOAT = createStructure("hell_boat", new HellBoatFeature());
+    public static final Tuple<RangeConfiguration, HellBoatFeature> HELL_BOAT = createStructure("hell_boat", new HellBoatFeature());
 
-    public static <C extends FeatureConfiguration, F extends StructureFeature<C>> Holder<C, F> createStructure(String name, F feature) {
-        return new Holder<>(new ResourceLocation(Fossil.MOD_ID, name), feature);
+    private static <C extends FeatureConfiguration, F extends StructureFeature<C>> Tuple<C, F> createStructure(String name, F feature) {
+        return new Tuple<>(new ResourceLocation(Fossil.MOD_ID, name), feature);
     }
 
     @ExpectPlatform
     public static void register() {
     }
 
-    public record Holder<C extends FeatureConfiguration, F extends StructureFeature<C>>(ResourceLocation location, F feature) {
+    public record Tuple<C extends FeatureConfiguration, F extends StructureFeature<C>>(ResourceLocation location, F feature) {
 
     }
 }

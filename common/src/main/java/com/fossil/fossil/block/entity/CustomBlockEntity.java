@@ -47,7 +47,7 @@ public abstract class CustomBlockEntity extends BaseContainerBlockEntity impleme
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
         tag.putShort("LitTime", (short) this.litTime);
-        tag.putShort("LtDuration", (short) this.litDuration);
+        tag.putShort("LitDuration", (short) this.litDuration);
         tag.putShort("CookingProgress", (short) this.cookingProgress);
         tag.putShort("CookingTotalTime", (short) this.cookingTotalTime);
         ContainerHelper.saveAllItems(tag, getItems());
