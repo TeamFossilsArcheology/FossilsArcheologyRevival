@@ -2,8 +2,8 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.ai.navigation.CenteredPath;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.network.DebugHandler;
 import com.fossil.fossil.network.MarkMessage;
+import com.fossil.fossil.network.MessageHandler;
 import it.unimi.dsi.fastutil.longs.LongArrayList;
 import it.unimi.dsi.fastutil.longs.LongList;
 import net.minecraft.core.BlockPos;
@@ -278,7 +278,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
                 targets[3 * i + 1] = node.y;
                 targets[3 * i + 2] = node.z;
             }
-            DebugHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) entity.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(entity)),
+            MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) entity.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(entity)),
                     new MarkMessage(targets, blocks));
         }
     }
@@ -294,7 +294,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
                 targets[3 * i + 1] = node.y;
                 targets[3 * i + 2] = node.z;
             }
-            DebugHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) entity.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(entity)),
+            MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) entity.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(entity)),
                     new MarkMessage(targets, blocks));
         }
     }

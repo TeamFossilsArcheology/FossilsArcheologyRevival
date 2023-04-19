@@ -91,7 +91,7 @@ public class DebugScreen extends Screen {
                         protected void applyValue() {
                             float rotY = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                             float newRot = (rotYBase + rotY) % 360;
-                            DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.Y_ROT));
+                            MessageHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.Y_ROT));
                             entity.setYBodyRot(newRot);
                             entity.setYRot(newRot);
                             entity.setYHeadRot(newRot);
@@ -104,7 +104,7 @@ public class DebugScreen extends Screen {
                         protected void applyValue() {
                             float rotX = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                             float newRot = (rotXBase + rotX) % 360;
-                            DebugHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.X_ROT));
+                            MessageHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.X_ROT));
                             entity.setXRot(newRot);
                         }
                     });
@@ -126,20 +126,20 @@ public class DebugScreen extends Screen {
         if (entity instanceof Prehistoric prehistoric) {
             builder.withInitialValue(prehistoric.isNoAi());
             disableAI = builder.create(20, height - 130, width / 6, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
             });
             this.addRenderableWidget(disableAI);
             builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableGoalAI"));
             this.addRenderableWidget(builder.create(20, height - 100, width / 6, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
             }));
             builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableMoveAI"));
             this.addRenderableWidget(builder.create(20, height - 70, width / 6, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
             }));
             builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableLookAI"));
             this.addRenderableWidget(builder.create(20, height - 40, width / 6, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
             }));
             this.addRenderableWidget(new AnimationsList(minecraft, entity.getId(), prehistoric.getAllAnimations().keySet(), this));
            /* xPosInput = this.addRenderableWidget(new EditBox(this.font, 280, height - 40, 50, 20, new TextComponent("")));
@@ -153,7 +153,7 @@ public class DebugScreen extends Screen {
             }));*/
             this.addRenderableWidget(new Button(470, height - 40, 150, 20, new TextComponent("Move to player"), button -> {
                 Player player = Minecraft.getInstance().player;
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new MovementMessage(entity.getId(), player.getX(), player.getY(), player.getZ()));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new MovementMessage(entity.getId(), player.getX(), player.getY(), player.getZ()));
             }));
         }
         builder.withInitialValue(showPaths);
@@ -230,7 +230,7 @@ public class DebugScreen extends Screen {
 
         AnimationEntry(int id, String text) {
             changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
-                DebugHandler.DEBUG_CHANNEL.sendToServer(new AnimationMessage(id, button.getMessage().getContents()));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AnimationMessage(id, button.getMessage().getContents()));
             });
         }
 

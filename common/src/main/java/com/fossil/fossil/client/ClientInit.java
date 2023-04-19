@@ -56,10 +56,12 @@ public class ClientInit {
         );
 
         EntityRendererRegistry.register(ModEntities.ANU_STATUE, context -> new AnuStatueEntityRenderer(context, new AnuStatueModel()));
+        EntityRendererRegistry.register(ModEntities.STONE_TABLET, StoneTabletRenderer::new);
         EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);
         EntityRendererRegistry.register(ModEntities.TOY_BALL, context -> new ToyBallRenderer(context, new ToyBallModel()));
         EntityRendererRegistry.register(ModEntities.TOY_TETHERED_LOG, context -> new ToyTetheredLogRenderer(context, new ToyTetheredLogModel()));
         EntityRendererRegistry.register(ModEntities.TOY_SCRATCHING_POST, context -> new ToyScratchingPostRenderer(context, new ToyScratchingPostModel()));
+        EntityRendererRegistry.register(ModEntities.JAVELIN, JavelinRenderer::new);
         ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
     }

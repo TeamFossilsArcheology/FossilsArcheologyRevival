@@ -186,6 +186,12 @@ public class ModRecipes {
         registerWorktable(ModBlocks.ZOMBIE_FIGURINE_DAMAGED.get(), ModBlocks.ZOMBIE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.ENDERMAN_FIGURINE_DAMAGED.get(), ModBlocks.ENDERMAN_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.PIGZOMBIE_FIGURINE_DAMAGED.get(), ModBlocks.PIGZOMBIE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModItems.WOODEN_JAVELIN.get(), ModItems.WOODEN_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.STONE_JAVELIN.get(), ModItems.STONE_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.IRON_JAVELIN.get(), ModItems.IRON_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.GOLD_JAVELIN.get(), ModItems.GOLD_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.DIAMOND_JAVELIN.get(), ModItems.DIAMOND_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.ANCIENT_JAVELIN.get(), ModItems.ANCIENT_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
 
         for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithDNAResult()) {
             registerCultivate(type.dnaItem, type.getDNAResult(), ModItems.BIO_GOO.get());

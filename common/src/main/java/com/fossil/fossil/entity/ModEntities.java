@@ -8,8 +8,6 @@ import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.item.ToyScratchingPostItem;
-import com.fossil.fossil.item.ToyTetheredLogItem;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -65,6 +63,14 @@ public class ModEntities {
             () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).build("tar_slime"));
     public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
             () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
+
+    public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = ENTITIES.register("stone_tablet",
+            () -> EntityType.Builder.<StoneTablet>of(StoneTablet::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(10)
+                    .updateInterval(Integer.MAX_VALUE).build("stone_tablet"));
+
+    public static final RegistrySupplier<EntityType<Javelin>> JAVELIN = ENTITIES.register("javelin",
+            () -> EntityType.Builder.<Javelin>of(Javelin::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20)
+                    .build("javelin"));
 
     public static void register() {
         ENTITIES.register();
