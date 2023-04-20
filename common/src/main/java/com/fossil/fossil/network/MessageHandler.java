@@ -6,5 +6,6 @@ import net.minecraft.resources.ResourceLocation;
 
 public class MessageHandler {
     public static final NetworkChannel DEBUG_CHANNEL = NetworkChannel.create(new ResourceLocation(Fossil.MOD_ID, "debug_channel"));
+    public static final NetworkChannel CAP_CHANNEL = NetworkChannel.create(new ResourceLocation(Fossil.MOD_ID, "cap_channel"));
 
 }

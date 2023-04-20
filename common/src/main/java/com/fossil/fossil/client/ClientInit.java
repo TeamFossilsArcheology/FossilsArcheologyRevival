@@ -19,6 +19,7 @@ import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
@@ -36,6 +37,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.world.entity.Mob;
 
 public class ClientInit {
     public static final KeyMapping DEBUG_SCREEN_KEY = new KeyMapping("key.fossil.debug_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_Y,
@@ -96,8 +98,10 @@ public class ClientInit {
                 if (PrehistoricPart.isMultiPart(entity)) {
                     entity = PrehistoricPart.getParent(entity);
                 }
-                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof Prehistoric prehistoric) {
-                    Minecraft.getInstance().setScreen(new DinopediaScreen(prehistoric));
+                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof Mob mob) {
+                    if (entity instanceof Prehistoric || PrehistoricEntityType.isMammal(mob)) {
+                        Minecraft.getInstance().setScreen(new DinopediaScreen(mob));
+                    }
                     return EventResult.interruptTrue();
                 }
             }

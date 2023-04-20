@@ -1,6 +1,7 @@
 package com.fossil.fossil.client.gui;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.FoodMappings;
 import com.mojang.blaze3d.platform.Lighting;
@@ -34,7 +35,6 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -158,10 +158,18 @@ public class DinopediaScreen extends Screen {
     private void renderFirstPage(PoseStack poseStack, int mouseX, int mouseY) {
         int col = (157 << 16) | (126 << 8) | 103;
         if (entity instanceof Animal animal) {//TODO: Mammal Cardinal-Components-API on fabric
-            //if properties
-            //int quot = (int) Math.floor(((float) properties.embryoProgress / (float) (Revival.CONFIG_OPTIONS.pregnancyTime + 1) * 100.0F));
-            //var comp = new TranslatableComponent("pedia.fossil.pregnantTime", 50);
-            //font.draw(poseStack, comp, leftPos + (-font.width(comp) / 2) + 100, 110, col);
+            int embryoProgress = ModCapabilities.getEmbryoProgress(animal);
+            if (embryoProgress > 0) {
+                int quot = (int) Math.floor(((float) embryoProgress / (10000 + 1) * 100f));
+                var progress = new TranslatableComponent("pedia.fossil.pregnantTime", quot);
+                font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos+135, col);
+                poseStack.pushPose();
+                float scale = 1.5f;
+                poseStack.scale(scale, scale, scale);
+                TranslatableComponent name = new TranslatableComponent("pedia.fossil.pregnant", entity.getType().getDescription());
+                font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
+                poseStack.popPose();
+            }
         }
         renderFirstPageRight(poseStack, mouseX, mouseY);
         if (entity instanceof Prehistoric dino) {

@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.item.DNAItem;
+import com.fossil.fossil.item.MammalEmbryoItem;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ModTabs;
 import com.fossil.fossil.util.Diet;
@@ -8,6 +9,10 @@ import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ambient.Bat;
+import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
@@ -152,7 +157,7 @@ public enum PrehistoricEntityType {
                 FoodMappings.addMeat(type.entity, 100);
                 registerItem("egg_item", type, Item::new, item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.MAMMAL || type.mobType == PrehistoricMobType.VANILLA) {
-                registerItem("syringe", type, Item::new, item -> type.embryoItem = item);
+                registerItem("syringe", type, properties -> new MammalEmbryoItem(type), item -> type.embryoItem = item);
             } else if (type.mobType == PrehistoricMobType.BIRD || type.mobType == PrehistoricMobType.CHICKEN) {
                 FoodMappings.addMeat(type.entity, 100);
                 if (type.mobType == PrehistoricMobType.BIRD) {
@@ -218,5 +223,21 @@ public enum PrehistoricEntityType {
                     type -> type.eggItem != null || type.embryoItem != null || type.cultivatedBirdEggItem != null).toList();
         }
         return dnaCache;
+    }
+
+    public static boolean isMammal(Mob mob) {
+        //TODO: Maybe could be done with tags?
+        String className = "";
+        try {
+            className = mob.getClass().getSimpleName();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        return !className.isEmpty() && (mob instanceof Cow || mob instanceof Sheep || mob instanceof Pig || mob instanceof Chicken
+                || mob instanceof Rabbit || mob instanceof AbstractHorse || mob instanceof Prehistoric prehistoric &&
+                prehistoric.type.mobType == PrehistoricMobType.MAMMAL || mob instanceof PolarBear || mob instanceof Wolf || mob instanceof Ocelot
+                || mob instanceof Bat || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig")
+                || className.contains("Rabbit") || className.contains("Goat") || className.contains("Ferret") || className.contains("Hedgehog")
+                || className.contains("Sow") || className.contains("Hog"));
     }
 }
