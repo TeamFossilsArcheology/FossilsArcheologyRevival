@@ -40,6 +40,9 @@
     ],
     "terrablender": [
       "com.fossil.fossil.fabric.FossilFabric"
+    ],
+    "cardinal-components-entity": [
+      "com.fossil.fossil.fabric.FossilFabric"
     ]
   },
   "mixins": [
@@ -50,7 +53,8 @@
     "minecraft": ">=1.18.2",
     "architectury": ">=4.9.83",
     "geckolib3": ">=3.0.62",
-    "terrablender": ">=1.2.0"
+    "terrablender": ">=1.2.0",
+    "cardinal-components-base": ">=4.1.4"
   },
   "suggests": {
     "cloth_config": ">=6.3.81",
@@ -59,6 +63,9 @@
   "custom": {
     "injected_interfaces": {
       "net/minecraft/class_3218": ["com/fossil/fossil/fabric/MultiPartServerLevel"]
-    }
+    },
+    "cardinal-components": [
+      "fossil:mammal"
+    ]
   }
 }

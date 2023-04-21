@@ -44,11 +44,11 @@ public class MammalCapMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        contextSupplier.get().queue(() -> syncCap(contextSupplier.get().getPlayer().level, entityId, embryoProgress, embryo));
+        contextSupplier.get().queue(() -> applyCap(contextSupplier.get().getPlayer().level, entityId, embryoProgress, embryo));
     }
 
     @ExpectPlatform
-    public static void syncCap(Level level, int entityId, int embryoProgress, PrehistoricEntityType embryo) {
+    public static void applyCap(Level level, int entityId, int embryoProgress, PrehistoricEntityType embryo) {
 
     }
 }

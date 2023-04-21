@@ -1,11 +1,10 @@
-package com.fossil.fossil.forge.capabilities.mammal;
+package com.fossil.fossil.fabric.capabilities;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.capabilities.ICapabilitySerializable;
+import dev.onyxstudios.cca.api.v3.component.Component;
 import org.jetbrains.annotations.Nullable;
 
-public interface IMammalCap extends ICapabilitySerializable<CompoundTag> {
+public interface IMammalComponent extends Component {
     int getEmbryoProgress();
 
     void setEmbryoProgress(int progress);

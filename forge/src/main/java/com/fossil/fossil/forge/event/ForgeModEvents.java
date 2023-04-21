@@ -56,7 +56,7 @@ public class ForgeModEvents {
             if (currentProgress >= 10000) {
                 if (!animal.level.isClientSide) {
                     ModEvents.growEntity(ModCapabilitiesImpl.getEmbryo(animal), animal);
-                    ModCapabilities.stopEmbryo(animal);
+                    ModCapabilities.stopPregnancy(animal);
                 }
             } else {
                 ModCapabilitiesImpl.setEmbryoProgress(animal, currentProgress+1);

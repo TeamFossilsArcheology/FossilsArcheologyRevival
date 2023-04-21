@@ -26,7 +26,7 @@ public class MammalEmbryoItem extends Item {
                 return InteractionResult.PASS;
             }
             if (!player.level.isClientSide) {
-                ModCapabilities.startEmbryo(animal, type);
+                ModCapabilities.startPregnancy(animal, type);
                 stack.shrink(1);
             }
             //TODO: Particles

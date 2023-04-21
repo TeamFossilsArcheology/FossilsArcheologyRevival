@@ -3,6 +3,9 @@ package com.fossil.fossil.capabilities.forge;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
+import com.fossil.fossil.network.MammalCapMessage;
+import com.fossil.fossil.network.MessageHandler;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.Nullable;
@@ -42,8 +45,13 @@ public class ModCapabilitiesImpl {
         cap.ifPresent(iMammalCap -> iMammalCap.setEmbryoProgress(embryoProgress));
     }
 
-    public static void setEmbryo(Animal animal, @Nullable PrehistoricEntityType type) {
+    public static void setEmbryo(Animal animal, @Nullable PrehistoricEntityType embryo) {
         Optional<IMammalCap> cap = getMammalCap(animal);
-        cap.ifPresent(iMammalCap -> iMammalCap.setEmbryo(type));
+        cap.ifPresent(iMammalCap -> iMammalCap.setEmbryo(embryo));
+    }
+
+    public static void syncMammalWithClient(Animal animal, int embryoProgress, PrehistoricEntityType embryo) {
+        MessageHandler.CAP_CHANNEL.sendToPlayers(((ServerLevel) animal.level).getPlayers(serverPlayer -> true),
+                new MammalCapMessage(animal, embryoProgress, embryo));
     }
 }

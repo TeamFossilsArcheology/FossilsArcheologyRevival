@@ -7,7 +7,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.level.Level;
 
 public class MammalCapMessageImpl {
-    public static void syncCap(Level level, int entityId, int embryoProgress, PrehistoricEntityType embryo) {
+    public static void applyCap(Level level, int entityId, int embryoProgress, PrehistoricEntityType embryo) {
         Entity entity = level.getEntity(entityId);
         if (entity instanceof Animal animal) {
             ModCapabilitiesImpl.setEmbryoProgress(animal, embryoProgress);

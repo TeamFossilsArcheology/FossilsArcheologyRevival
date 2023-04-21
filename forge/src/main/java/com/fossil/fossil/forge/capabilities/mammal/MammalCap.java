@@ -54,7 +54,7 @@ public class MammalCap implements IMammalCap {
     }
 
     @Override
-    public void setEmbryo(PrehistoricEntityType type) {
-        this.embryo = type;
+    public void setEmbryo(PrehistoricEntityType embryo) {
+        this.embryo = embryo;
     }
 }
