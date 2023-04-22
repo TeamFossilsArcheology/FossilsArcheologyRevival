@@ -21,7 +21,7 @@ public class EatPlantGoal extends MoveToFoodGoal {
         super.tick();
         if (isReachedTarget()) {
             BlockState blockState = entity.level.getBlockState(targetPos);
-            int foodAmount = FoodMappings.getFoodAmount(blockState.getBlock(), entity.type.diet);
+            int foodAmount = FoodMappings.getFoodAmount(blockState.getBlock(), entity.type().diet);
             entity.setHunger(Math.min(entity.getMaxHunger(), entity.getHunger() + foodAmount));
             entity.setHealth((int) Math.min(entity.getMaxHealth(), entity.getHealth() + foodAmount / 10f));
             entity.playSound(SoundEvents.GENERIC_EAT, 1, 1);
@@ -35,6 +35,6 @@ public class EatPlantGoal extends MoveToFoodGoal {
         if (!super.isValidTarget(level, pos)) {
             return false;
         }
-        return FoodMappings.getFoodAmount(level.getBlockState(pos).getBlock(), entity.type.diet) > 0 && entity.canSeeFood(pos);
+        return FoodMappings.getFoodAmount(level.getBlockState(pos).getBlock(), entity.type().diet) > 0 && entity.canSeeFood(pos);
     }
 }

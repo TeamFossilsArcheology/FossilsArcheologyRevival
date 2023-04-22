@@ -42,7 +42,7 @@ public class HuntGoal extends NearestAttackableTargetGoal<LivingEntity> {
                 return !dino.isOwnedBy(target) && dino.canDinoHunt(target, true);
             }
         }
-        if (FoodMappings.getMobFoodPoints(target, dino.type.diet) > 0 || dino.aiResponseType() == PrehistoricEntityTypeAI.Response.AGGRESSIVE) {
+        if (FoodMappings.getMobFoodPoints(target, dino.type().diet) > 0 || dino.aiResponseType() == PrehistoricEntityTypeAI.Response.AGGRESSIVE) {
             return !dino.isOwnedBy(target) && dino.canDinoHunt(target, true);
         }
         return false;

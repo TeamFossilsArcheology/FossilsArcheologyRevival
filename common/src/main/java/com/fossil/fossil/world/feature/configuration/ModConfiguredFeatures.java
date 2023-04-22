@@ -52,7 +52,7 @@ public class ModConfiguredFeatures {
             .configured(new RangeConfiguration(ConstantHeight.of(VerticalAnchor.absolute(30))), BiomeTags.IS_NETHER));
     static {
         StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
-                HELL_BOAT, new RandomSpreadStructurePlacement(32, 5, RandomSpreadType.LINEAR, 92182587));
+                HELL_BOAT, new RandomSpreadStructurePlacement(24, 5, RandomSpreadType.LINEAR, 92182587));
     }
     public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> TAR_PIT = register("tar_pit", Feature.LAKE,
             new LakeFeature.Configuration(BlockStateProvider.simple(ModBlocks.TAR.get()),

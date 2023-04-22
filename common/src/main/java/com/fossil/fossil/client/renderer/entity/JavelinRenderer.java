@@ -3,6 +3,8 @@ package com.fossil.fossil.client.renderer.entity;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.renderer.RendererFabricFix;
 import com.fossil.fossil.entity.Javelin;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.ArrowRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -20,6 +22,14 @@ public class JavelinRenderer extends ArrowRenderer<Javelin> implements RendererF
 
     public JavelinRenderer(EntityRendererProvider.Context context) {
         super(context);
+    }
+
+    @Override
+    public void render(Javelin entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+        poseStack.pushPose();
+        poseStack.scale(2, 2, 2);
+        super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
+        poseStack.popPose();
     }
 
     @Override

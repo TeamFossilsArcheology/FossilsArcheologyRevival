@@ -15,12 +15,12 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     private int groupSize = 1;
     private PrehistoricFlocking groupLeader;
 
-    public PrehistoricFlocking(EntityType<? extends Prehistoric> entityType, PrehistoricEntityType type,
+    public PrehistoricFlocking(EntityType<? extends Prehistoric> entityType,
                                Level level, boolean isMultiPart, boolean isCannibalistic, float minScale, float maxScale,
                                float baseKnockBackResistance, float maxKnockBackResistance, int teenAgeDays, int adultAgeDays, double baseDamage,
                                double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double maxSpeed, double baseArmor,
                                double maxArmor) {
-        super(entityType, type, level, isMultiPart, isCannibalistic, minScale, maxScale, baseKnockBackResistance, maxKnockBackResistance, teenAgeDays,
+        super(entityType, level, isMultiPart, isCannibalistic, minScale, maxScale, baseKnockBackResistance, maxKnockBackResistance, teenAgeDays,
                 adultAgeDays, baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, maxSpeed, baseArmor, maxArmor);
     }
 

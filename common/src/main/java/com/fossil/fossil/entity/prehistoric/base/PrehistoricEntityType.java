@@ -235,7 +235,7 @@ public enum PrehistoricEntityType {
         }
         return !className.isEmpty() && (mob instanceof Cow || mob instanceof Sheep || mob instanceof Pig || mob instanceof Chicken
                 || mob instanceof Rabbit || mob instanceof AbstractHorse || mob instanceof Prehistoric prehistoric &&
-                prehistoric.type.mobType == PrehistoricMobType.MAMMAL || mob instanceof PolarBear || mob instanceof Wolf || mob instanceof Ocelot
+                prehistoric.type().mobType == PrehistoricMobType.MAMMAL || mob instanceof PolarBear || mob instanceof Wolf || mob instanceof Ocelot
                 || mob instanceof Bat || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig")
                 || className.contains("Rabbit") || className.contains("Goat") || className.contains("Ferret") || className.contains("Hedgehog")
                 || className.contains("Sow") || className.contains("Hog"));

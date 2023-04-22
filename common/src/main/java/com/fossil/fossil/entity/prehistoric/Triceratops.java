@@ -68,7 +68,7 @@ public class Triceratops extends Prehistoric {
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(
-                type, PrehistoricEntityType.TRICERATOPS,
+                type,
                 level,
                 true,
                 false,
@@ -172,6 +172,11 @@ public class Triceratops extends Prehistoric {
         this.targetSelector.addGoal(2, new DinoAIOwnerHurtTarget(this));
         this.targetSelector.addGoal(3, new DinoAIHurtByTarget(this));
         this.targetSelector.addGoal(4, new DinoAIHunt(this, LivingEntity.class, true, entity -> entity instanceof LivingEntity));*/
+    }
+
+    @Override
+    public PrehistoricEntityType type() {
+        return PrehistoricEntityType.TRICERATOPS;
     }
 
     @Override

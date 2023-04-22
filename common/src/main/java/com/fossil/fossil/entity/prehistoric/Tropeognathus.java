@@ -66,7 +66,6 @@ public class Tropeognathus extends Pterosaurs {
     public Tropeognathus(EntityType<Tropeognathus> entityType, Level level) {
         super(
             entityType,
-            PrehistoricEntityType.PTEROSAUR,
             level,
             false,
             0.4F,
@@ -104,6 +103,11 @@ public class Tropeognathus extends Pterosaurs {
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
+    }
+
+    @Override
+    public PrehistoricEntityType type() {
+        return PrehistoricEntityType.PTERANODON;
     }
 
     // TODO These may not be correct, should be adjusted

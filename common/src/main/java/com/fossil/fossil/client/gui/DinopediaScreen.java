@@ -186,8 +186,8 @@ public class DinopediaScreen extends Screen {
                     y + 30, col);
             font.draw(poseStack, new TranslatableComponent("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x,
                     y + 40, col);
-            var dietText = new TranslatableComponent("pedia.fossil.diet", dino.type.diet.getName());
-            renderHoverInfo(poseStack, x, y + 50, mouseX, mouseY, dietText, dino.type.diet.getDescription());
+            var dietText = new TranslatableComponent("pedia.fossil.diet", dino.type().diet.getName());
+            renderHoverInfo(poseStack, x, y + 50, mouseX, mouseY, dietText, dino.type().diet.getDescription());
             var tempText = new TranslatableComponent("pedia.fossil.temperament", dino.aiResponseType().getName());
             renderHoverInfo(poseStack, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
             font.draw(poseStack, new TranslatableComponent("pedia.fossil.gender", dino.getGender().getName()), x, y + 70, col);
@@ -256,7 +256,7 @@ public class DinopediaScreen extends Screen {
             blit(poseStack, x - dino.getMoodPosition(), y, 0, 26, 4, 10);
             poseStack.popPose();
 
-            var foodMap = FoodMappings.getFoodRenderList(dino.type.diet);
+            var foodMap = FoodMappings.getFoodRenderList(dino.type().diet);
             var keys = foodMap.keySet().stream().filter(itemLike -> itemLike instanceof Item).sorted(
                     Comparator.comparingInt(item -> Item.getId(item.asItem()))).limit(64).toList();
             int itemCount = 0;

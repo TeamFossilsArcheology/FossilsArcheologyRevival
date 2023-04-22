@@ -37,6 +37,6 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         if (!super.isValidTarget(level, pos)) {
             return false;
         }
-        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.type.diet) && entity.canSeeFood(pos);
+        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.type().diet) && entity.canSeeFood(pos);
     }
 }

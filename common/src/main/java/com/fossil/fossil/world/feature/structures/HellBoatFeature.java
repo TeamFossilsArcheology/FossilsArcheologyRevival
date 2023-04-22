@@ -13,6 +13,7 @@ import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.RangeConfiguration;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGenerator;
 import net.minecraft.world.level.levelgen.structure.pieces.PieceGeneratorSupplier;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Optional;
 
@@ -44,7 +45,7 @@ public class HellBoatFeature extends StructureFeature<RangeConfiguration> {
     }
 
     @Override
-    public GenerationStep.Decoration step() {
+    public GenerationStep.@NotNull Decoration step() {
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
 }

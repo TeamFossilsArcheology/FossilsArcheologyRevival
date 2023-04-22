@@ -54,7 +54,6 @@ public class Therizinosaurus extends Prehistoric {
     public Therizinosaurus(EntityType<Therizinosaurus> entityType, Level level) {
         super(
             entityType,
-            PrehistoricEntityType.THERIZINOSAURUS,
             level,
             false,
             false,
@@ -93,6 +92,11 @@ public class Therizinosaurus extends Prehistoric {
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
+    }
+
+    @Override
+    public PrehistoricEntityType type() {
+        return PrehistoricEntityType.THERIZINOSAURUS;
     }
 
     @Override

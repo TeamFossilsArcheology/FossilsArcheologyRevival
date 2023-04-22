@@ -63,7 +63,7 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
         return newMap;
     });
     public Dilophosaurus(EntityType<Dilophosaurus> type, Level level) {
-        super(type, PrehistoricEntityType.DILOPHOSAURUS, level, false, false, 0.18f, 1.4f, 0, 0, 4, 8, 1, 8, 8, 40, 0.25, 0.35, 0, 5);
+        super(type, level, false, false, 0.18f, 1.4f, 0, 0, 4, 8, 1, 8, 8, 40, 0.25, 0.35, 0, 5);
     }
 
     @Override
@@ -86,6 +86,12 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
     }
+
+    @Override
+    public PrehistoricEntityType type() {
+        return PrehistoricEntityType.DILOPHOSAURUS;
+    }
+
     @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
         return PrehistoricEntityTypeAI.Activity.DIURNAL;
