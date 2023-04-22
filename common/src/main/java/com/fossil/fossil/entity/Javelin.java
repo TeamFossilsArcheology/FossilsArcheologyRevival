@@ -5,18 +5,23 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class Javelin extends AbstractArrow {
     private static final EntityDataAccessor<Integer> TIER_ID = SynchedEntityData.defineId(Javelin.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> ANCIENT = SynchedEntityData.defineId(Javelin.class, EntityDataSerializers.BOOLEAN);
     private int itemDamage;
+    private boolean lightning;
 
     public Javelin(EntityType<Javelin> type, Level level) {
         super(type, level);
@@ -29,6 +34,7 @@ public class Javelin extends AbstractArrow {
             setTier(tiers);
         }
         entityData.set(ANCIENT, ancient);
+        setPierceLevel((byte) 16);
         setBaseDamage(getDamage(tier, ancient));
     }
 
@@ -66,8 +72,23 @@ public class Javelin extends AbstractArrow {
 
     @Override
     public void tick() {
+        if (isAncient() && inGround && !lightning) {
+            if (random.nextInt(100) < 30) {
+                if (level instanceof ServerLevel) {
+                    LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
+                    lightningBolt.moveTo(Vec3.atBottomCenterOf(blockPosition()));
+                    lightningBolt.setCause(getOwner() instanceof ServerPlayer ? (ServerPlayer) getOwner() : null);
+                    level.addFreshEntity(lightningBolt);
+                }
+            }
+            lightning = true;
+        }
         super.tick();
-        inGroundTime = 0;
+    }
+
+    @Override
+    protected void tickDespawn() {
+
     }
 
     public void setTier(Tiers tier) {
