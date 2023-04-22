@@ -97,7 +97,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> BROKEN_HELMET = ITEMS.register("broken_helmet",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> ANCIENT_SWORD = ITEMS.register("ancient_sword",
-            () -> new SwordItem(Tiers.IRON, 3, -2.4f, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+            () -> new AncientSwordItem(Tiers.IRON, 3, -2.4f));
     public static final RegistrySupplier<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet",
             () -> new ArmorItem(ModArmorMaterials.ANCIENT_ARMOR, EquipmentSlot.HEAD, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> FROZEN_MEAT = ITEMS.register("frozen_meat",

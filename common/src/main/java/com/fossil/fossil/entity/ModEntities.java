@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.entity.monster.FriendlyPiglin;
 import com.fossil.fossil.entity.monster.TarSlime;
 import com.fossil.fossil.entity.prehistoric.Dilophosaurus;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
@@ -71,6 +72,12 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Javelin>> JAVELIN = ENTITIES.register("javelin",
             () -> EntityType.Builder.<Javelin>of(Javelin::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20)
                     .build("javelin"));
+    public static final RegistrySupplier<EntityType<AncientLightningBolt>> ANCIENT_LIGHTNING_BOLT = ENTITIES.register("ancient_lightning_bolt",
+            () -> EntityType.Builder.of(AncientLightningBolt::new, MobCategory.MISC).sized(0, 0)
+                    .clientTrackingRange(16).updateInterval(Integer.MAX_VALUE).build("ancient_lightning_bolt"));
+    public static final RegistrySupplier<EntityType<FriendlyPiglin>> FRIENDLY_PIGLIN = ENTITIES.register("friendly_piglin",
+            () -> EntityType.Builder.of(FriendlyPiglin::new, MobCategory.MONSTER).sized(0.6f, 1.95f).fireImmune().clientTrackingRange(8)
+                    .build("friendly_piglin"));
 
     public static void register() {
         ENTITIES.register();
@@ -84,5 +91,6 @@ public class ModEntities {
         EntityAttributeRegistry.register(TOY_TETHERED_LOG, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TOY_SCRATCHING_POST, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TAR_SLIME, TarSlime::createAttributes);
+        EntityAttributeRegistry.register(FRIENDLY_PIGLIN, FriendlyPiglin::createAttributes);
     }
 }

@@ -3,12 +3,10 @@ package com.fossil.fossil.client;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.client.gui.*;
 import com.fossil.fossil.client.gui.filters.CreativeTabFilters;
-import com.fossil.fossil.client.model.AnuStatueModel;
-import com.fossil.fossil.client.model.ToyBallModel;
-import com.fossil.fossil.client.model.ToyScratchingPostModel;
-import com.fossil.fossil.client.model.ToyTetheredLogModel;
+import com.fossil.fossil.client.model.*;
 import com.fossil.fossil.client.particle.BubbleParticle;
 import com.fossil.fossil.client.particle.TarBubbleParticle;
 import com.fossil.fossil.client.renderer.blockentity.*;
@@ -37,7 +35,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.world.entity.Mob;
+import net.minecraft.client.renderer.entity.LightningBoltRenderer;
+import net.minecraft.world.entity.animal.Animal;
 
 public class ClientInit {
     public static final KeyMapping DEBUG_SCREEN_KEY = new KeyMapping("key.fossil.debug_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_Y,
@@ -64,6 +63,8 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.TOY_TETHERED_LOG, context -> new ToyTetheredLogRenderer(context, new ToyTetheredLogModel()));
         EntityRendererRegistry.register(ModEntities.TOY_SCRATCHING_POST, context -> new ToyScratchingPostRenderer(context, new ToyScratchingPostModel()));
         EntityRendererRegistry.register(ModEntities.JAVELIN, JavelinRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ANCIENT_LIGHTNING_BOLT, LightningBoltRenderer::new);
+        EntityRendererRegistry.register(ModEntities.FRIENDLY_PIGLIN, context -> new FriendlyPiglinRenderer(context, new FriendlyPiglinModel()));
         ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
     }
@@ -98,9 +99,9 @@ public class ClientInit {
                 if (PrehistoricPart.isMultiPart(entity)) {
                     entity = PrehistoricPart.getParent(entity);
                 }
-                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof Mob mob) {
-                    if (entity instanceof Prehistoric || PrehistoricEntityType.isMammal(mob)) {
-                        Minecraft.getInstance().setScreen(new DinopediaScreen(mob));
+                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof Animal animal) {
+                    if (entity instanceof Prehistoric || (PrehistoricEntityType.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0)) {
+                        Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
                     }
                     return EventResult.interruptTrue();
                 }

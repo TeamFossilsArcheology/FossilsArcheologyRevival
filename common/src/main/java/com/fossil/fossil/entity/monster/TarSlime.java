@@ -29,12 +29,6 @@ public class TarSlime extends Slime {
         super(entityType, level);
     }
 
-
-    @Override
-    protected void registerGoals() {
-        super.registerGoals();
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes().add(Attributes.ATTACK_DAMAGE);
     }

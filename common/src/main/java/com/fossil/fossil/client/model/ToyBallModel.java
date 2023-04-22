@@ -18,7 +18,7 @@ public class ToyBallModel extends EntityModel<ToyBall> {
 
     public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/toy/ball_white.png");
 
-    private ModelPart model = createBodyLayer().bakeRoot();
+    private final ModelPart model = createBodyLayer().bakeRoot();
     private float rotationX;
     private float[] rgb;
 

@@ -157,7 +157,7 @@ public class DinopediaScreen extends Screen {
 
     private void renderFirstPage(PoseStack poseStack, int mouseX, int mouseY) {
         int col = (157 << 16) | (126 << 8) | 103;
-        if (entity instanceof Animal animal) {//TODO: Mammal Cardinal-Components-API on fabric
+        if (entity instanceof Animal animal) {
             int embryoProgress = ModCapabilities.getEmbryoProgress(animal);
             if (embryoProgress > 0) {
                 int quot = (int) Math.floor(((float) embryoProgress / (10000 + 1) * 100f));
@@ -282,7 +282,10 @@ public class DinopediaScreen extends Screen {
         PoseStack poseStack = RenderSystem.getModelViewStack();
         poseStack.pushPose();
         poseStack.translate(posX, posY, 1050);
-        int scale = (int) (15);//TODO: Different dinos probably will need different values
+        int scale = 40;//TODO: Different dinos probably will need different values
+        if (entity instanceof Prehistoric) {
+            scale = 15;
+        }
         poseStack.scale(1, 1, -1);
         RenderSystem.applyModelViewMatrix();
         PoseStack poseStack2 = new PoseStack();
