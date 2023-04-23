@@ -24,6 +24,7 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Fossil.MOD_ID)
 public class ForgeModEvents {
+
     @SubscribeEvent
     public static void onKnockBack(LivingKnockBackEvent event) {
         double newStrength = Prehistoric.beforeKnockBack(
@@ -59,10 +60,11 @@ public class ForgeModEvents {
                     ModCapabilities.stopPregnancy(animal);
                 }
             } else {
-                ModCapabilitiesImpl.setEmbryoProgress(animal, currentProgress+1);
+                ModCapabilitiesImpl.setEmbryoProgress(animal, currentProgress + 1);
             }
         }
     }
+
     @SubscribeEvent
     public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
         if (event.getObject() instanceof Animal animal && PrehistoricEntityType.isMammal(animal)) {
