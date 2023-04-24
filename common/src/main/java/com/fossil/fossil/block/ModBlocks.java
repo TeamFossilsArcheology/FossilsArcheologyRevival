@@ -53,7 +53,7 @@ public class ModBlocks {
     public static final RegistrySupplier<FeederBlock> FEEDER = registerBlock("feeder",
             () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)));
     public static final RegistrySupplier<ArchitecturyLiquidBlock> TAR = registerBlockWithoutBlockItem("tar",
-            () -> TarBlock.get(ModFluids.TAR, BlockBehaviour.Properties.copy(Blocks.WATER).isSuffocating(ModBlocks::always)));
+            () -> TarBlock.get(ModFluids.TAR, BlockBehaviour.Properties.copy(Blocks.WATER).isSuffocating(ModBlocks::always).isViewBlocking(ModBlocks::always)));
     public static final RegistrySupplier<AnuStatueBlock> ANU_STATUE = registerBlockWithCustomBlockItem("anu_statue",
             () -> new AnuStatueBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
             block -> AnuStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));

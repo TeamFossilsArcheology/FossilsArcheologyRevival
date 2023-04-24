@@ -2,8 +2,22 @@
   "required": true,
   "package": "com.fossil.fossil.fabric.mixins",
   "compatibilityLevel": "JAVA_17",
-  "client": ["EntityRenderDispatcherMixin", "ParticleAccessor", "TerrainParticleMixin"],
-  "mixins": ["ChunkMapMixin", "LevelMixin", "LivingEntityMixin", "MobMixin", "PlayerMixin", "EntityCallbacksMixin", "ServerLevelMixin", "ServerPlayerMixin"],
+  "client": [
+    "EntityRenderDispatcherMixin",
+    "ParticleAccessor",
+    "ScreenEffectRendererMixin",
+    "TerrainParticleMixin"
+  ],
+  "mixins": [
+    "ChunkMapMixin",
+    "EntityCallbacksMixin",
+    "LevelMixin",
+    "LivingEntityMixin",
+    "MobMixin",
+    "PlayerMixin",
+    "ServerLevelMixin",
+    "ServerPlayerMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

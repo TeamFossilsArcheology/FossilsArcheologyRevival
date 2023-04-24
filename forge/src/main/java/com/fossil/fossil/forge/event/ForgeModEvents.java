@@ -4,6 +4,7 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.capabilities.forge.ModCapabilitiesImpl;
+import com.fossil.fossil.client.renderer.OverlayRenderer;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.event.ModEvents;
@@ -15,6 +16,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -71,6 +73,14 @@ public class ForgeModEvents {
             MammalCapProvider mammalProvider = new MammalCapProvider();
             event.addListener(mammalProvider::invalidate);
             event.addCapability(MammalCapProvider.IDENTIFIER, mammalProvider);
+        }
+    }
+
+    @SubscribeEvent
+    public static void tarOverlay(RenderBlockOverlayEvent event) {
+        if (event.getOverlayType() == RenderBlockOverlayEvent.OverlayType.BLOCK && event.getBlockState().is(ModBlocks.TAR.get())) {
+            event.setCanceled(true);
+            OverlayRenderer.renderTar(event.getPoseStack());
         }
     }
 }

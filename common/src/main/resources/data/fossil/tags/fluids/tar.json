@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:tar",
+    "fossil:tar_flowing"
+  ]
+}
