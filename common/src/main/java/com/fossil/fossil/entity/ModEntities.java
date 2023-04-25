@@ -64,6 +64,8 @@ public class ModEntities {
             () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).build("tar_slime"));
     public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
             () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
+    public static final RegistrySupplier<EntityType<Anu>> ANU = ENTITIES.register("anu",
+            () -> EntityType.Builder.of(Anu::new, MobCategory.MONSTER).sized(1, 1.8f).fireImmune().build("anu"));
 
     public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = ENTITIES.register("stone_tablet",
             () -> EntityType.Builder.<StoneTablet>of(StoneTablet::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(10)
@@ -86,6 +88,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(THERIZINOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TROPEOGNATHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DINOSAUR_EGG, DinosaurEgg::createAttributes);
+        EntityAttributeRegistry.register(ANU, Anu::createAttributes);
         EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
         EntityAttributeRegistry.register(TOY_BALL, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TOY_TETHERED_LOG, ToyBase::createAttributes);

@@ -2,6 +2,7 @@ package com.fossil.fossil.client.renderer.blockentity;
 
 import com.fossil.fossil.block.custom_blocks.SarcophagusBlock;
 import com.fossil.fossil.block.entity.SarcophagusBlockEntity;
+import com.fossil.fossil.client.model.AnuModel;
 import com.fossil.fossil.client.model.SarcophagusModel;
 import com.fossil.fossil.item.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -20,9 +21,13 @@ import net.minecraft.world.item.ItemStack;
 
 public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlockEntity> {
     private final ModelPart sarcophagusModel;
+    private final ModelPart anuModel;
 
     public SarcophagusRenderer(BlockEntityRendererProvider.Context context) {
         sarcophagusModel = SarcophagusModel.createBodyLayer().bakeRoot();
+        anuModel = AnuModel.createBodyLayer().bakeRoot();
+        anuModel.getChild("left_wing_1").visible = false;
+        anuModel.getChild("right_wing_1").visible = false;
     }
 
     @Override
@@ -38,8 +43,13 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
         float f1 = blockEntity.getDoorTimer();
         sarcophagusModel.getChild("hinge").setRotation(0, -f1 * Mth.DEG_TO_RAD, 0);
 
-        var c = bufferSource.getBuffer(RenderType.entityCutout(SarcophagusModel.TEXTURE));
-        sarcophagusModel.render(poseStack, c, packedLight, packedOverlay);
+        var vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(SarcophagusModel.TEXTURE));
+        sarcophagusModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
+        if (blockEntity.getState() == SarcophagusBlockEntity.STATE_OPENING) {
+            poseStack.translate(0, 0, 0.2);
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(AnuModel.TEXTURE));
+            anuModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
+        }
         poseStack.popPose();
         if (blockEntity.getState() == SarcophagusBlockEntity.STATE_UNLOCKED) {
             poseStack.pushPose();
@@ -61,9 +71,6 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
             itemRenderer.renderStatic(mc.player, new ItemStack(ModItems.SCARAB_GEM.get()), ItemTransforms.TransformType.FIXED, false, poseStack,
                     bufferSource, mc.level, packedLight, packedOverlay, 0);
             poseStack.popPose();
-        }
-        if (blockEntity.getState() != SarcophagusBlockEntity.STATE_CLOSING) {
-
         }
     }
 

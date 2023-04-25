@@ -39,15 +39,15 @@ public class AncientSwordItem extends SwordItem {
                     piglin.sendMessageToOwner(FriendlyPiglin.SUMMONED);
                     target.discard();
                     level.addFreshEntity(piglin);
-                    LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(player.level);
+                    LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
                     lightningBolt.moveTo(Vec3.atBottomCenterOf(target.blockPosition()));
                     lightningBolt.setCause(player);
-                    player.level.addFreshEntity(lightningBolt);
+                    level.addFreshEntity(lightningBolt);
                 } else if (attacker.getRandom().nextInt(5) == 0) {
-                    LightningBolt lightningBolt = ModEntities.ANCIENT_LIGHTNING_BOLT.get().create(player.level);
+                    LightningBolt lightningBolt = ModEntities.ANCIENT_LIGHTNING_BOLT.get().create(level);
                     lightningBolt.moveTo(Vec3.atBottomCenterOf(target.blockPosition()));
                     lightningBolt.setCause(player);
-                    player.level.addFreshEntity(lightningBolt);
+                    level.addFreshEntity(lightningBolt);
                 }
             }
         }

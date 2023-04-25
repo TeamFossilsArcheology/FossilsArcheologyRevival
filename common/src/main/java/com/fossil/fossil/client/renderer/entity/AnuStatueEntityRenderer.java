@@ -49,49 +49,50 @@ public class AnuStatueEntityRenderer extends MobRenderer<AnuStatueEntity, AnuSta
         Random random = new Random(432L);
         VertexConsumer vertexConsumer = buffer.getBuffer(RenderType.lightning());
         poseStack.pushPose();
-        int k = 0;
+        int passes = 0;
         poseStack.translate(0, 1.5, 0);
-        while ((float) k < (i + i * i) / 2f * 60f) {
+        //Rotates entity and creates beams similar to dying enderdragon
+        while ((float) passes < (i + i * i) / 2f * 60f) {
             poseStack.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360));
             poseStack.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360));
             poseStack.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360));
             poseStack.mulPose(Vector3f.XP.rotationDegrees(random.nextFloat() * 360));
             poseStack.mulPose(Vector3f.YP.rotationDegrees(random.nextFloat() * 360));
             poseStack.mulPose(Vector3f.ZP.rotationDegrees(random.nextFloat() * 360 + i * 90));
-            float l = random.nextFloat() * 20 + 5 + j * 10;
+            float y = random.nextFloat() * 20 + 5 + j * 10;
             float m = random.nextFloat() * 2 + 1 + j * 2;
             Matrix4f pose = poseStack.last().pose();
-            int n = (int) (255 * (1 - j));
-            vertex01(vertexConsumer, pose, n);
-            vertex2(vertexConsumer, pose, l, m);
-            vertex3(vertexConsumer, pose, l, m);
-            vertex01(vertexConsumer, pose, n);
-            vertex3(vertexConsumer, pose, l, m);
-            vertex4(vertexConsumer, pose, l, m);
-            vertex01(vertexConsumer, pose, n);
-            vertex4(vertexConsumer, pose, l, m);
-            vertex2(vertexConsumer, pose, l, m);
-            k++;
+            int alpha = (int) (255 * (1 - j));
+            vertex01(vertexConsumer, pose, alpha);
+            vertex2(vertexConsumer, pose, y, m);
+            vertex3(vertexConsumer, pose, y, m);
+            vertex01(vertexConsumer, pose, alpha);
+            vertex3(vertexConsumer, pose, y, m);
+            vertex4(vertexConsumer, pose, y, m);
+            vertex01(vertexConsumer, pose, alpha);
+            vertex4(vertexConsumer, pose, y, m);
+            vertex2(vertexConsumer, pose, y, m);
+            passes++;
         }
         poseStack.popPose();
     }
 
     private static final float HALF_SQRT_3 = (float) (Math.sqrt(3.0) / 2.0);
 
-    private static void vertex01(VertexConsumer vertexConsumer, Matrix4f matrix4f, int i) {
-        vertexConsumer.vertex(matrix4f, 0.0f, 0.0f, 0.0f).color(66, 0, 176, i).endVertex();
+    private static void vertex01(VertexConsumer vertexConsumer, Matrix4f matrix4f, int alpha) {
+        vertexConsumer.vertex(matrix4f, 0.0f, 0.0f, 0.0f).color(66, 0, 176, alpha).endVertex();
     }
 
-    private static void vertex2(VertexConsumer vertexConsumer, Matrix4f matrix4f, float f, float g) {
-        vertexConsumer.vertex(matrix4f, -HALF_SQRT_3 * g, f, -0.5f * g).color(255, 0, 0, 0).endVertex();
+    private static void vertex2(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
+        vertexConsumer.vertex(matrix4f, -HALF_SQRT_3 * g, y, -0.5f * g).color(255, 0, 0, 0).endVertex();
     }
 
-    private static void vertex3(VertexConsumer vertexConsumer, Matrix4f matrix4f, float f, float g) {
-        vertexConsumer.vertex(matrix4f, HALF_SQRT_3 * g, f, -0.5f * g).color(255, 0, 0, 0).endVertex();
+    private static void vertex3(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
+        vertexConsumer.vertex(matrix4f, HALF_SQRT_3 * g, y, -0.5f * g).color(255, 0, 0, 0).endVertex();
     }
 
-    private static void vertex4(VertexConsumer vertexConsumer, Matrix4f matrix4f, float f, float g) {
-        vertexConsumer.vertex(matrix4f, 0.0f, f, g).color(255, 0, 0, 0).endVertex();
+    private static void vertex4(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
+        vertexConsumer.vertex(matrix4f, 0.0f, y, g).color(255, 0, 0, 0).endVertex();
     }
 
 }

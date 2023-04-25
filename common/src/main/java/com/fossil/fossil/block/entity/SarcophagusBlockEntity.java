@@ -1,7 +1,12 @@
 package com.fossil.fossil.block.entity;
 
+import com.fossil.fossil.entity.Anu;
+import com.fossil.fossil.entity.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -25,7 +30,12 @@ public class SarcophagusBlockEntity extends BlockEntity {
             if (blockEntity.doorTimer >= 91) {
                 blockEntity.state = STATE_CLOSING;
                 if (!level.isClientSide) {
-                    //TODO: Spawn Anu
+                    Anu anu = ModEntities.ANU.get().create(level);
+                    anu.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(pos), MobSpawnType.NATURAL, null, null);
+                    anu.moveTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0);
+                    Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
+                    player.displayClientMessage(Anu.getRandomGreeting(level.random), false);
+                    level.addFreshEntity(anu);
                 }
             }
         } else {
@@ -41,6 +51,7 @@ public class SarcophagusBlockEntity extends BlockEntity {
     public static void serverTick(Level level, BlockPos pos, BlockState state, SarcophagusBlockEntity blockEntity) {
         tick(level, pos, state, blockEntity);
     }
+
     public static void clientTick(Level level, BlockPos pos, BlockState state, SarcophagusBlockEntity blockEntity) {
         tick(level, pos, state, blockEntity);
     }

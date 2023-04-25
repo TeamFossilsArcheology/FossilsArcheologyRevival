@@ -56,6 +56,7 @@ public class ClientInit {
                 context -> new RenderPrehistoricGeo<>(context, "fa.tropeognathus.geo.json", Tropeognathus.ANIMATIONS)
         );
 
+        EntityRendererRegistry.register(ModEntities.ANU, context -> new AnuRenderer(context, new AnuModel()));
         EntityRendererRegistry.register(ModEntities.ANU_STATUE, context -> new AnuStatueEntityRenderer(context, new AnuStatueModel()));
         EntityRendererRegistry.register(ModEntities.STONE_TABLET, StoneTabletRenderer::new);
         EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);
