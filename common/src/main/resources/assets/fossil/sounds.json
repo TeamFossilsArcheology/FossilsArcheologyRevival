@@ -1,14 +1,40 @@
 {
-  "drum_single": {
-    "sounds": ["fossil:drum_single"]
+  "anu_cough": {
+    "sounds": [
+      "fossil:anu_cough"
+    ]
+  },
+  "anu_death": {
+    "sounds": [
+      "fossil:anu_death"
+    ]
+  },
+  "anu_laugh": {
+    "sounds": [
+      "fossil:anu_laugh_1",
+      "fossil:anu_laugh_2",
+      "fossil:anu_laugh_3",
+      "fossil:anu_laugh_4"
+    ]
   },
   "anu_totem": {
-    "sounds": ["fossil:anu_totem"]
+    "sounds": [
+      "fossil:anu_totem"
+    ]
+  },
+  "drum_single": {
+    "sounds": [
+      "fossil:drum_single"
+    ]
   },
   "tar": {
-    "sounds": ["fossil:tar"]
+    "sounds": [
+      "fossil:tar"
+    ]
   },
   "whip": {
-    "sounds": ["fossil:whip"]
+    "sounds": [
+      "fossil:whip"
+    ]
   }
 }

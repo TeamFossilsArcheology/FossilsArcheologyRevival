@@ -2,7 +2,7 @@ package com.fossil.fossil.client.renderer.blockentity;
 
 import com.fossil.fossil.block.custom_blocks.SarcophagusBlock;
 import com.fossil.fossil.block.entity.SarcophagusBlockEntity;
-import com.fossil.fossil.client.model.AnuModel;
+import com.fossil.fossil.client.model.AnuBossModel;
 import com.fossil.fossil.client.model.SarcophagusModel;
 import com.fossil.fossil.item.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -25,7 +25,7 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
 
     public SarcophagusRenderer(BlockEntityRendererProvider.Context context) {
         sarcophagusModel = SarcophagusModel.createBodyLayer().bakeRoot();
-        anuModel = AnuModel.createBodyLayer().bakeRoot();
+        anuModel = AnuBossModel.createBodyLayer().bakeRoot();
         anuModel.getChild("left_wing_1").visible = false;
         anuModel.getChild("right_wing_1").visible = false;
     }
@@ -47,7 +47,7 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
         sarcophagusModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
         if (blockEntity.getState() == SarcophagusBlockEntity.STATE_OPENING) {
             poseStack.translate(0, 0, 0.2);
-            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(AnuModel.TEXTURE));
+            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(AnuBossModel.TEXTURE));
             anuModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
         }
         poseStack.popPose();

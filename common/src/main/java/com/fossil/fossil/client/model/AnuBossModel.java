@@ -1,7 +1,7 @@
 package com.fossil.fossil.client.model;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.Anu;
+import com.fossil.fossil.entity.AnuBoss;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.ArmedModel;
@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
-public class AnuModel extends EntityModel<Anu> implements ArmedModel {
+public class AnuBossModel extends EntityModel<AnuBoss> implements ArmedModel {
     public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu.png");
     private final ModelPart model = createBodyLayer().bakeRoot();
     private final ModelPart rightArm;
@@ -31,7 +31,7 @@ public class AnuModel extends EntityModel<Anu> implements ArmedModel {
     private final ModelPart leftWing2;
     private final ModelPart leftWing3;
 
-    public AnuModel() {
+    public AnuBossModel() {
         rightArm = model.getChild("right_arm");
         leftArm = model.getChild("left_arm");
         rightLeg = model.getChild("right_leg");
@@ -82,9 +82,9 @@ public class AnuModel extends EntityModel<Anu> implements ArmedModel {
         leftWing2.addOrReplaceChild("left_wing_3", CubeListBuilder.create().texOffs(36, 43)
                 .addBox(0, -4, 0, 6, 10, 0), PartPose.offset(12, 1, 0));
         PartDefinition rightWing1 = root.addOrReplaceChild("right_wing_1", CubeListBuilder.create().mirror().texOffs(0, 42)
-                .addBox(-6, -3, 0, 6, 10, 0), PartPose.offsetAndRotation(-2, 7.5f, 1.9f, 0, -0.4363323129985824f, 0));
+                .addBox(-6, -3, 0, 6, 10, 0), PartPose.offsetAndRotation(-2, 7.5f, 1.9f, 0, 0.4363323129985824f, 0));
         PartDefinition rightWing2 = rightWing1.addOrReplaceChild("right_wing_2", CubeListBuilder.create().mirror().texOffs(12, 43)
-                .addBox(-12, -4, 0, 12, 12, 0), PartPose.offsetAndRotation(-6, 0, 0, 0, 0.4363323129985824f, 0));
+                .addBox(-12, -4, 0, 12, 12, 0), PartPose.offsetAndRotation(-6, 0, 0, 0, -0.4363323129985824f, 0));
         rightWing2.addOrReplaceChild("right_wing_3", CubeListBuilder.create().mirror().texOffs(36, 43)
                 .addBox(-6, -4, 0, 6, 10, 0), PartPose.offset(-12, 1, 0));
 
@@ -92,24 +92,24 @@ public class AnuModel extends EntityModel<Anu> implements ArmedModel {
     }
 
     @Override
-    public void prepareMobModel(Anu entity, float limbSwing, float limbSwingAmount, float partialTick) {
-        boolean wingsVisible = entity.getAttackMode() == Anu.AttackMode.FLIGHT;
+    public void prepareMobModel(AnuBoss entity, float limbSwing, float limbSwingAmount, float partialTick) {
+        boolean wingsVisible = entity.getAttackMode() == AnuBoss.AttackMode.FLIGHT;
         leftWing1.visible = wingsVisible;
         rightWing1.visible = wingsVisible;
     }
 
     @Override
-    public void setupAnim(Anu entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity.getAttackMode() != Anu.AttackMode.FLIGHT) {
+    public void setupAnim(AnuBoss entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        if (entity.getAttackMode() != AnuBoss.AttackMode.FLIGHT) {
             rightArm.xRot = Mth.cos(limbSwing * 0.6662f + Mth.PI) * limbSwingAmount;
             leftArm.xRot = Mth.cos(limbSwing * 0.6662f + 1) * limbSwingAmount;
             rightLeg.xRot = Mth.cos(limbSwing * 0.6662f + 1) * limbSwingAmount;
             leftLeg.xRot = Mth.cos(limbSwing * 0.6662f + Mth.PI + 2) * limbSwingAmount;
-            if (entity.getAttackMode() == Anu.AttackMode.DEFENSE) {
+            if (entity.getAttackMode() == AnuBoss.AttackMode.DEFENSE) {
                 head.setRotation(headPitch / (180 / Mth.PI), netHeadYaw / (180 / Mth.PI), head.zRot);
             }
         }
-        if (entity.getAttackMode() == Anu.AttackMode.FLIGHT) {
+        if (entity.getAttackMode() == AnuBoss.AttackMode.FLIGHT) {
             head.setRotation((float) Math.toRadians(-35), 0, head.zRot);
             rightArm.xRot = 0;
             leftArm.xRot = (float) Math.toRadians(-125);

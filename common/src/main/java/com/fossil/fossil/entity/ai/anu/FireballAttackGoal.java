@@ -1,6 +1,6 @@
 package com.fossil.fossil.entity.ai.anu;
 
-import com.fossil.fossil.entity.Anu;
+import com.fossil.fossil.entity.AnuBoss;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -9,7 +9,7 @@ import java.util.EnumSet;
 
 public class FireballAttackGoal extends Goal {
 
-    private final Anu anu;
+    private final AnuBoss anu;
     private final double speedModifier;
     private final float attackRadius;
     private final float attackRadiusSqr;
@@ -17,7 +17,7 @@ public class FireballAttackGoal extends Goal {
     private int seeTime;
     private int attackTime;
 
-    public FireballAttackGoal(Anu anu, double speedModifier, float attackRadius) {
+    public FireballAttackGoal(AnuBoss anu, double speedModifier, float attackRadius) {
         this.anu = anu;
         this.speedModifier = speedModifier;
         this.attackRadius = attackRadius;
@@ -30,7 +30,7 @@ public class FireballAttackGoal extends Goal {
         if (anu.getTarget() == null) {
             return false;
         }
-        return anu.getAttackMode() == Anu.AttackMode.FLIGHT;
+        return anu.getAttackMode() == AnuBoss.AttackMode.FLIGHT;
     }
 
     @Override

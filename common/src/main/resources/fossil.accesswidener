@@ -12,3 +12,4 @@ accessible method net/minecraft/world/entity/ai/village/poi/PoiType <init> (Ljav
 accessible method net/minecraft/world/entity/npc/VillagerProfession <init> (Ljava/lang/String;Lnet/minecraft/world/entity/ai/village/poi/PoiType;Lcom/google/common/collect/ImmutableSet;Lcom/google/common/collect/ImmutableSet;Lnet/minecraft/sounds/SoundEvent;)V
 accessible field net/minecraft/world/item/Item$Properties maxStackSize I
 accessible method net/minecraft/world/entity/animal/horse/Horse setTypeVariant (I)V
+accessible field net/minecraft/world/entity/Entity portalTime I

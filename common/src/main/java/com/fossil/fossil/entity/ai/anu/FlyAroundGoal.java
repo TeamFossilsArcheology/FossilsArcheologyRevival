@@ -1,15 +1,15 @@
 package com.fossil.fossil.entity.ai.anu;
 
-import com.fossil.fossil.entity.Anu;
+import com.fossil.fossil.entity.AnuBoss;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
 
 public class FlyAroundGoal extends Goal {
-    private Anu anu;
+    private AnuBoss anu;
     private BlockPos targetPos;
-    public FlyAroundGoal(Anu anu) {
+    public FlyAroundGoal(AnuBoss anu) {
         this.anu = anu;
         targetPos = anu.blockPosition();
         setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));

@@ -6,6 +6,8 @@ import com.fossil.fossil.entity.ai.anu.AnuMeleeAttackGoal;
 import com.fossil.fossil.entity.ai.anu.FireballAttackGoal;
 import com.fossil.fossil.entity.ai.anu.FlyNearTargetGoal;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.sounds.MusicHandler;
 import com.fossil.fossil.world.feature.structures.AnuDefenseHut;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
@@ -16,6 +18,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerBossEvent;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.BossEvent;
@@ -30,6 +33,7 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Blaze;
 import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.RangedAttackMob;
@@ -50,7 +54,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
-public class Anu extends PathfinderMob implements RangedAttackMob {
+public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     private static final TranslatableComponent SPAWN_1 = new TranslatableComponent("entity.fossil.anu.hello");
     private static final TranslatableComponent SPAWN_2 = new TranslatableComponent("entity.fossil.anu.fewBeaten");
     private static final TranslatableComponent ANU_COMBAT_BRUTES = new TranslatableComponent("entity.fossil.anu.brutes");
@@ -60,7 +64,9 @@ public class Anu extends PathfinderMob implements RangedAttackMob {
     private static final TranslatableComponent ANU_COMBAT_COWARD = new TranslatableComponent("entity.fossil.anu.coward");
     private static final TranslatableComponent ANU_COMBAT_ANCIENT = new TranslatableComponent("entity.fossil.anu.ancient");
     private static final TranslatableComponent ANU_DEATH = new TranslatableComponent("entity.fossil.anu.death");
+    private static final int SONG_LENGTH = 4041;
     private final ServerBossEvent bossEvent = (ServerBossEvent) new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setDarkenScreen(true);
+    private int songTick;
 
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes().add(Attributes.FOLLOW_RANGE, 40).add(Attributes.MAX_HEALTH, 600).add(Attributes.MOVEMENT_SPEED, 0.35);
@@ -70,7 +76,7 @@ public class Anu extends PathfinderMob implements RangedAttackMob {
         return random.nextInt(2) == 0 ? SPAWN_1 : SPAWN_2;
     }
 
-    public Anu(EntityType<? extends PathfinderMob> entityType, Level level) {
+    public AnuBoss(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
         setPersistenceRequired();
         xpReward = 50;
@@ -92,8 +98,39 @@ public class Anu extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
+    public boolean canChangeDimensions() {
+        return false;
+    }
+
+    @Override
+    public void tick() {
+        if (getAttackMode() == AttackMode.DEFENSE || getAttackMode() == AttackMode.FLIGHT) {
+            if (tickCount % 20 == 0) {
+                heal(2);
+            }
+        }
+        super.tick();
+    }
+
+    @Override
     public void aiStep() {
-        //TODO: Music
+        if (level.isClientSide) {
+            if (songTick < SONG_LENGTH) {
+                songTick++;
+            }
+            if (songTick == SONG_LENGTH - 1) {
+                songTick = 0;
+            }
+            if (songTick == 1) {
+                MusicHandler.startMusic(ModSounds.ANU_MUSIC.get());
+            }
+            if (!isAlive()) {
+                MusicHandler.stopMusic(ModSounds.ANU_MUSIC.get());
+            }
+            if (lastHurtByPlayer != null && !lastHurtByPlayer.isAlive()) {
+                MusicHandler.stopMusic(ModSounds.ANU_MUSIC.get());
+            }
+        }
         super.aiStep();
         if (getAttackMode() == AttackMode.FLIGHT) {
             if (!onGround && getDeltaMovement().y < 0) {
@@ -109,7 +146,7 @@ public class Anu extends PathfinderMob implements RangedAttackMob {
                 level.addParticle(ParticleTypes.SMOKE, this.getRandomX(0.5), this.getRandomY(), this.getRandomZ(0.5), 0, 0, 0);
             }
         }
-        if (getAttackMode() == AttackMode.DEFENSE) {
+        if (getAttackMode() == AttackMode.DEFENSE && deathTime <= 0) {
             boolean summonSpikes = random.nextInt(250) == 0;
             boolean summonDefenses = random.nextInt(500) == 0;
             boolean summonPiglin = random.nextInt(250) == 0;
@@ -197,8 +234,32 @@ public class Anu extends PathfinderMob implements RangedAttackMob {
 
     @Override
     public void die(DamageSource damageSource) {
-        //TODO: Dead Anu
+        if (!level.isClientSide) {
+            AnuDead anuDead = ModEntities.ANU_DEAD.get().create(level);
+            anuDead.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
+            level.addFreshEntity(anuDead);
+        }
+
+        //unlockDimensionAbilities();
+        Player player = level.getNearestPlayer(this, 50);
+        if (player != null && level.isClientSide) {
+            player.displayClientMessage(ANU_DEATH, false);
+        }
         super.die(damageSource);
+    }
+
+    @Override
+    protected void dropCustomDeathLoot(DamageSource damageSource, int looting, boolean hitByPlayer) {
+        super.dropCustomDeathLoot(damageSource, looting, hitByPlayer);
+        ItemEntity itemEntity = spawnAtLocation(ModItems.ANCIENT_KEY.get());
+        if (itemEntity != null) {
+            itemEntity.setExtendedLifetime();
+        }
+    }
+
+    @Override
+    public boolean causeFallDamage(float fallDistance, float multiplier, DamageSource source) {
+        return false;
     }
 
     @Override
@@ -221,6 +282,28 @@ public class Anu extends PathfinderMob implements RangedAttackMob {
         Vec3 look = getLookAngle();
         largeFireball.setPos(getX() + look.x * 4, getY() + (getBbHeight() / 2) + 0.5, getZ() + look.z * 4);
         level.addFreshEntity(largeFireball);
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        if (getAttackMode() == AttackMode.MELEE) {
+            return ModSounds.ANU_LAUGH.get();
+        } else {
+            return ModSounds.ANU_COUGH.get();
+        }
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return SoundEvents.ITEM_BREAK;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return SoundEvents.IRON_GOLEM_DEATH;
     }
 
     @Nullable

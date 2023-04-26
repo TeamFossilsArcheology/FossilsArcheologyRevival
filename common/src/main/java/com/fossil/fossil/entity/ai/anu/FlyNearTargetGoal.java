@@ -1,6 +1,6 @@
 package com.fossil.fossil.entity.ai.anu;
 
-import com.fossil.fossil.entity.Anu;
+import com.fossil.fossil.entity.AnuBoss;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
@@ -9,10 +9,10 @@ import software.bernie.shadowed.eliotlash.mclib.utils.MathHelper;
 import java.util.Random;
 
 public class FlyNearTargetGoal extends Goal {
-    private final Anu anu;
+    private final AnuBoss anu;
     private Entity target;
 
-    public FlyNearTargetGoal(Anu anu) {
+    public FlyNearTargetGoal(AnuBoss anu) {
         this.anu = anu;
     }
 

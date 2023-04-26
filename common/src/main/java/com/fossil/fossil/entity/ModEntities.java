@@ -64,8 +64,10 @@ public class ModEntities {
             () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).build("tar_slime"));
     public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
             () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
-    public static final RegistrySupplier<EntityType<Anu>> ANU = ENTITIES.register("anu",
-            () -> EntityType.Builder.of(Anu::new, MobCategory.MONSTER).sized(1, 1.8f).fireImmune().build("anu"));
+    public static final RegistrySupplier<EntityType<AnuBoss>> ANU_BOSS = ENTITIES.register("anu_boss",
+            () -> EntityType.Builder.of(AnuBoss::new, MobCategory.MONSTER).sized(1, 1.8f).fireImmune().build("anu_boss"));
+    public static final RegistrySupplier<EntityType<AnuDead>> ANU_DEAD = ENTITIES.register("anu_dead",
+            () -> EntityType.Builder.of(AnuDead::new, MobCategory.MONSTER).sized(1.8f, 0.8f).fireImmune().build("anu_dead"));
 
     public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = ENTITIES.register("stone_tablet",
             () -> EntityType.Builder.<StoneTablet>of(StoneTablet::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(10)
@@ -88,7 +90,8 @@ public class ModEntities {
         EntityAttributeRegistry.register(THERIZINOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TROPEOGNATHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DINOSAUR_EGG, DinosaurEgg::createAttributes);
-        EntityAttributeRegistry.register(ANU, Anu::createAttributes);
+        EntityAttributeRegistry.register(ANU_BOSS, AnuBoss::createAttributes);
+        EntityAttributeRegistry.register(ANU_DEAD, AnuDead::createAttributes);
         EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
         EntityAttributeRegistry.register(TOY_BALL, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TOY_TETHERED_LOG, ToyBase::createAttributes);
