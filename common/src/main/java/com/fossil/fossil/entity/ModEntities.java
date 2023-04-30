@@ -1,7 +1,9 @@
 package com.fossil.fossil.entity;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.entity.monster.AnuBoss;
 import com.fossil.fossil.entity.monster.FriendlyPiglin;
+import com.fossil.fossil.entity.monster.SentryPiglin;
 import com.fossil.fossil.entity.monster.TarSlime;
 import com.fossil.fossil.entity.prehistoric.Dilophosaurus;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
@@ -68,6 +70,8 @@ public class ModEntities {
             () -> EntityType.Builder.of(AnuBoss::new, MobCategory.MONSTER).sized(1, 1.8f).fireImmune().build("anu_boss"));
     public static final RegistrySupplier<EntityType<AnuDead>> ANU_DEAD = ENTITIES.register("anu_dead",
             () -> EntityType.Builder.of(AnuDead::new, MobCategory.MONSTER).sized(1.8f, 0.8f).fireImmune().build("anu_dead"));
+    public static final RegistrySupplier<EntityType<SentryPiglin>> SENTRY_PIGLIN = ENTITIES.register("sentry_piglin",
+            () -> EntityType.Builder.of(SentryPiglin::new, MobCategory.MONSTER).sized(1.8f, 0.8f).fireImmune().build("sentry_piglin"));
 
     public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = ENTITIES.register("stone_tablet",
             () -> EntityType.Builder.<StoneTablet>of(StoneTablet::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(10)
@@ -93,6 +97,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(ANU_BOSS, AnuBoss::createAttributes);
         EntityAttributeRegistry.register(ANU_DEAD, AnuDead::createAttributes);
         EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
+        EntityAttributeRegistry.register(SENTRY_PIGLIN, SentryPiglin::createAttributes);
         EntityAttributeRegistry.register(TOY_BALL, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TOY_TETHERED_LOG, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TOY_SCRATCHING_POST, ToyBase::createAttributes);

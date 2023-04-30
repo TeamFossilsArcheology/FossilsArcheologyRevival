@@ -1,6 +1,8 @@
-package com.fossil.fossil.entity;
+package com.fossil.fossil.entity.monster;
 
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.entity.AnuDead;
+import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ai.anu.AnuAvoidEntityGoal;
 import com.fossil.fossil.entity.ai.anu.AnuMeleeAttackGoal;
 import com.fossil.fossil.entity.ai.anu.FireballAttackGoal;
@@ -69,7 +71,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     private int songTick;
 
     public static AttributeSupplier.Builder createAttributes() {
-        return createMobAttributes().add(Attributes.FOLLOW_RANGE, 40).add(Attributes.MAX_HEALTH, 600).add(Attributes.MOVEMENT_SPEED, 0.35);
+        return createMobAttributes().add(Attributes.FOLLOW_RANGE, 40).add(Attributes.MAX_HEALTH, 600).add(Attributes.MOVEMENT_SPEED, 0.35).add(Attributes.ATTACK_DAMAGE);
     }
 
     public static TranslatableComponent getRandomGreeting(Random random) {
@@ -178,11 +180,12 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             }
             Player player = level.getNearestPlayer(this, 50);
             if (summonPiglin) {
-                playSound(SoundEvents.STONE_HIT, 1, 1);
+                SentryPiglin sentryPiglin = ModEntities.SENTRY_PIGLIN.get().create(level);
+                sentryPiglin.moveTo(getX() + random.nextInt(4), getY(), getZ() + random.nextInt(4), getYRot(), getXRot());
+                level.addFreshEntity(sentryPiglin);
                 if (player != null && level.isClientSide) {
                     player.displayClientMessage(ANU_COMBAT_BRUTES, false);
                 }
-                //TODO: Spawn Sentry
             }
             if (summonWitherSkeleton) {
                 WitherSkeleton witherSkeleton = EntityType.WITHER_SKELETON.create(level);

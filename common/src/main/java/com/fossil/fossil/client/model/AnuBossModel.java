@@ -1,7 +1,7 @@
 package com.fossil.fossil.client.model;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.AnuBoss;
+import com.fossil.fossil.entity.monster.AnuBoss;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.ArmedModel;

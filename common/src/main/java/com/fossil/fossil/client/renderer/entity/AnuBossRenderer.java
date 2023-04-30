@@ -2,7 +2,7 @@ package com.fossil.fossil.client.renderer.entity;
 
 import com.fossil.fossil.client.model.AnuBossModel;
 import com.fossil.fossil.client.renderer.RendererFabricFix;
-import com.fossil.fossil.entity.AnuBoss;
+import com.fossil.fossil.entity.monster.AnuBoss;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.MobRenderer;
 import net.minecraft.client.renderer.entity.layers.ItemInHandLayer;

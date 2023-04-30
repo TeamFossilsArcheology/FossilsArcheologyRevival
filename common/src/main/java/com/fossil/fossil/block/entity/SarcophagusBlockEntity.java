@@ -1,7 +1,8 @@
 package com.fossil.fossil.block.entity;
 
-import com.fossil.fossil.entity.AnuBoss;
+import com.fossil.fossil.block.custom_blocks.SarcophagusBlock;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.entity.monster.AnuBoss;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
@@ -32,7 +33,8 @@ public class SarcophagusBlockEntity extends BlockEntity {
                 if (!level.isClientSide) {
                     AnuBoss anuBoss = ModEntities.ANU_BOSS.get().create(level);
                     anuBoss.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(pos), MobSpawnType.NATURAL, null, null);
-                    anuBoss.moveTo(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, 0, 0);
+                    BlockPos anuPos = pos.offset(state.getValue(SarcophagusBlock.FACING).getNormal());
+                    anuBoss.moveTo(anuPos.getX() + 0.5, anuPos.getY() + 0.1, anuPos.getZ() + 0.5, 0, 0);
                     Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
                     player.displayClientMessage(AnuBoss.getRandomGreeting(level.random), false);
                     level.addFreshEntity(anuBoss);

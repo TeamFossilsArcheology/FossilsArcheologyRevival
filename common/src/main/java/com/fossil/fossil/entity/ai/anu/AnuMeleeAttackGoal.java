@@ -1,6 +1,6 @@
 package com.fossil.fossil.entity.ai.anu;
 
-import com.fossil.fossil.entity.AnuBoss;
+import com.fossil.fossil.entity.monster.AnuBoss;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 
 public class AnuMeleeAttackGoal extends MeleeAttackGoal {

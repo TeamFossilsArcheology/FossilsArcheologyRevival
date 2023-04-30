@@ -134,6 +134,10 @@ public class ModItems {
             () -> new ArchitecturySpawnEggItem(ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B, new Item.Properties().tab(ModTabs.FAITEMTAB))
     );
 
+    public static final RegistrySupplier<SpawnEggItem> SENTRY_PIGLIN_SPAWN_EGG = ITEMS.register("sentry_piglin_spawn_egg",
+            () -> new ArchitecturySpawnEggItem(ModEntities.SENTRY_PIGLIN, 15373203, 0XD0A750, new Item.Properties().tab(ModTabs.FAITEMTAB))
+    );
+
     public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = Arrays.stream(DyeColor.values()).collect(Collectors.toMap(Function.identity(), ModItems::registerBall));
     public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
     public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));
