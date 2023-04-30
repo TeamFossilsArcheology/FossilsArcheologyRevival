@@ -41,6 +41,7 @@ val clothConfigVersion: String by rootProject
 val reiVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 val cardinalComponentsVersion: String by project
+val midnightConfigVersion: String by rootProject
 
 dependencies {
     "mappings"(loom.layered {
@@ -87,7 +88,7 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury-fabric:${architecturyVersion}")
     modRuntimeOnly("curse.maven:modmenu-308702:4145213")
-    modImplementation("me.shedaniel.cloth:cloth-config-fabric:${clothConfigVersion}")
+    //modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:${clothConfigVersion}")
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.80")
     modImplementation("com.github.glitchfiend:TerraBlender-fabric:${minecraftVersion}-${terraBlenderVersion}")
@@ -95,6 +96,8 @@ dependencies {
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinalComponentsVersion}")
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
+    modImplementation("maven.modrinth:midnightlib:${midnightConfigVersion}")
+    include("maven.modrinth:midnightlib:${midnightConfigVersion}")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }

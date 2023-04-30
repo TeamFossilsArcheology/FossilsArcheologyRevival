@@ -24,8 +24,6 @@ public class Fossil {
     public static final String MOD_ID = "fossil";
     public static final Logger LOGGER = LogUtils.getLogger();
 
-    public static final RevivalConfig CONFIG_OPTIONS = new RevivalConfig();
-
     public static void init() {
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();

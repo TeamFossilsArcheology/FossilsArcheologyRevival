@@ -1,6 +1,7 @@
 package com.fossil.fossil.fabric.capabilities;
 
 import com.fossil.fossil.capabilities.ModCapabilities;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.event.ModEvents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
@@ -25,7 +26,7 @@ public class MammalComponent implements IMammalComponent, AutoSyncedComponent, C
         if (embryoProgress == 0) {
             return;
         }
-        if (embryoProgress >= 10000) {
+        if (embryoProgress >= FossilConfig.getInt("pregnancyDuration")) {
             if (!animal.level.isClientSide) {
                 ModEvents.growEntity(embryo, animal);
                 ModCapabilities.stopPregnancy(animal);

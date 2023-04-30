@@ -5,6 +5,7 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.fossil.fossil.client.renderer.OverlayRenderer;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.event.ModEvents;
@@ -56,7 +57,7 @@ public class ForgeModEvents {
             if (currentProgress == 0) {
                 return;
             }
-            if (currentProgress >= 10000) {
+            if (currentProgress >= FossilConfig.getInt("pregnancyDuration")) {
                 if (!animal.level.isClientSide) {
                     ModEvents.growEntity(ModCapabilitiesImpl.getEmbryo(animal), animal);
                     ModCapabilities.stopPregnancy(animal);

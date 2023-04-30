@@ -1,6 +1,7 @@
 package com.fossil.fossil.material;
 
 import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.monster.TarSlime;
 import com.fossil.fossil.sounds.ModSounds;
@@ -38,10 +39,9 @@ public class TarFluid {
     }
 
     private static void trySpawnTarSlime(Level level, BlockPos pos, boolean isSource) {
-        boolean config = true;
-        int tarSlimeSpawnRate = 75;
-        if (level.getDifficulty() != Difficulty.PEACEFUL && config && level.random.nextInt(
-                isSource ? tarSlimeSpawnRate : tarSlimeSpawnRate * 15) == 0) {
+        int tarSlimeSpawnRate = FossilConfig.getInt("tarSlimesSpawnRate");
+        if (level.getDifficulty() != Difficulty.PEACEFUL && FossilConfig.isEnabled("spawnTarSlimes") &&
+                level.random.nextInt(isSource ? tarSlimeSpawnRate : tarSlimeSpawnRate * 15) == 0) {
             double spawnRange = 16;
             int k = level.getEntities(ModEntities.TAR_SLIME.get(), new AABB(pos, pos.offset(1, 1, 1)).inflate(spawnRange), Entity::isAlive).size();
             if (k < 6) {

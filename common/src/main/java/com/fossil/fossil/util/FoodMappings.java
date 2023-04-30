@@ -1,6 +1,7 @@
 package com.fossil.fossil.util;
 
 
+import com.fossil.fossil.config.FossilConfig;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -148,7 +149,7 @@ public abstract class FoodMappings {
         if (entity != null) {
             int mappingsPoints = getFoodAmount(entity.getType(), diet);
             int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
-            if (mappingsPoints == 0 && true) {//TODO Config options
+            if (mappingsPoints == 0 && FossilConfig.isEnabled("dinoEatModdedMobs")) {
                 if (entity instanceof Animal && !isAquaticMob(entity)) {
                     if (diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCI_CARNIVORE) {
                         return widthPoints;

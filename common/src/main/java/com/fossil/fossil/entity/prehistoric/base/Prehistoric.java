@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.IDinoUnbreakable;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.CacheMoveToBlockGoal;
 import com.fossil.fossil.entity.ai.DinoAIMating;
@@ -813,7 +814,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (this.getRidingPlayer() != null) {
             this.maxUpStep = 1;
         }
-        if (Fossil.CONFIG_OPTIONS.healingDinos && !this.level.isClientSide) {
+        if (FossilConfig.isEnabled("healingDinos") && !this.level.isClientSide) {
             if (this.random.nextInt(500) == 0 && this.deathTime == 0) {
                 this.heal(1.0F);
             }
@@ -913,7 +914,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     this.grow(0);
                 }
             }
-            if (this.tickCount % 1200 == 0 && this.getHunger() > 0 && Fossil.CONFIG_OPTIONS.starvingDinos) {
+            if (this.tickCount % 1200 == 0 && this.getHunger() > 0 && FossilConfig.isEnabled("starvingDinos")) {
                 this.setHunger(this.getHunger() - 1);
             }
             if (this.getHealth() > this.getMaxHealth() / 2 && this.getHunger() == 0 && this.tickCount % 40 == 0) {
@@ -1087,7 +1088,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public void breakBlock(float maxHardness) {
-        if (!Fossil.CONFIG_OPTIONS.dinoBlockBreaking) return;
+        if (!FossilConfig.isEnabled("dinosBreakBlocks")) return;
         if (isSkeleton()) return;
         if (!this.isAdult()) return;
         if (!this.isHungry()) return;
@@ -1489,10 +1490,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
                 if (FoodMappings.getFoodAmount(itemstack.getItem(), this.type().diet) > 0) {
                     if (!level.isClientSide) {
-                        if (this.getHunger() < this.getMaxHunger() || this.getHealth() < this.getMaxHealth() && Fossil.CONFIG_OPTIONS.healingDinos || !this.isTame() && this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
+                        if (this.getHunger() < this.getMaxHunger() || this.getHealth() < this.getMaxHealth() && FossilConfig.isEnabled("healingDinos") || !this.isTame() && this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
                             this.setHunger(this.getHunger() + FoodMappings.getFoodAmount(itemstack.getItem(), this.type().diet));
                             this.eatItem(itemstack);
-                            if (Fossil.CONFIG_OPTIONS.healingDinos) {
+                            if (FossilConfig.isEnabled("healingDinos")) {
                                 this.heal(3);
                             }
                             if (this.getHunger() >= this.getMaxHunger()) {
@@ -1740,7 +1741,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     @Override
-    protected PathNavigation createNavigation(Level levelIn) {
+    protected @NotNull PathNavigation createNavigation(Level levelIn) {
         return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
     }
 

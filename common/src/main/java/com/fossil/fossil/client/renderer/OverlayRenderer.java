@@ -1,6 +1,7 @@
 package com.fossil.fossil.client.renderer;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.item.ModItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -22,7 +23,7 @@ public class OverlayRenderer {
     private static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "tar"));
     public static void renderHelmet(int screenWidth, int screenHeight) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.options.getCameraType().isFirstPerson()) {
+        if (FossilConfig.isEnabled("helmetOverlays") && mc.options.getCameraType().isFirstPerson()) {
             ItemStack helmet = mc.player.getItemBySlot(EquipmentSlot.HEAD);
             boolean ancient = helmet.is(ModItems.ANCIENT_HELMET.get());
             if (ancient || helmet.is(ModItems.BONE_HELMET.get())) {

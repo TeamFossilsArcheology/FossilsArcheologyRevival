@@ -1,5 +1,6 @@
 package com.fossil.fossil.world.feature.placement;
 
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.world.feature.ModOreFeatures;
 import com.fossil.fossil.world.feature.configuration.ModConfiguredFeatures;
 import dev.architectury.registry.level.biome.BiomeModifications;
@@ -35,24 +36,32 @@ public class ModPlacedFeatures {
                 RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
         coneVolcano = PlacementUtils.register("volcano_cone", ModConfiguredFeatures.VOLCANO_CONE,
                 RarityFilter.onAverageOnceEvery(30), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome());
-        var tarPitPlaced = PlacementUtils.register("tar_pit_placed", ModConfiguredFeatures.TAR_PIT, RarityFilter.onAverageOnceEvery(100),
+        var tarPitPlaced = PlacementUtils.register("tar_pit_placed", ModConfiguredFeatures.TAR_PIT,
+                RarityFilter.onAverageOnceEvery(FossilConfig.getInt("tarSiteRarity")),
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
-        var fossilBlockPlaced = PlacementUtils.register("fossil_block_placed", ModOreFeatures.FOSSIL_BLOCK, commonOrePlacement(17, // VeinsPerChunk
+        var fossilBlockPlaced = PlacementUtils.register("fossil_block_placed", ModOreFeatures.FOSSIL_BLOCK,
+                commonOrePlacement(FossilConfig.getInt("fossilOreRarity"), // VeinsPerChunk
                 HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-0), VerticalAnchor.aboveBottom(256))));
 
         var volcanicRockPlaced = PlacementUtils.register("volcanic_rock_placed", ModOreFeatures.VOLCANIC_ROCK,
                 commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0))));
 
         var permafrostBlockPlaced = PlacementUtils.register("permafrost_block_placed", ModOreFeatures.PERMAFROST_BLOCK,
-                commonOrePlacement(3, // VeinsPerChunk
+                commonOrePlacement(FossilConfig.getInt("permafrostRarity"), // VeinsPerChunk
                         HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(100), VerticalAnchor.aboveBottom(256))));
 
         BiomeModifications.addProperties((context, mutable) -> {
-            mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, fossilBlockPlaced);
-            mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, volcanicRockPlaced);
-            mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, permafrostBlockPlaced);
-            if (mutable.getCategory() == Biome.BiomeCategory.SWAMP) {
+            if (FossilConfig.isEnabled("generateFossils")) {
+                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, fossilBlockPlaced);
+            }
+            if (FossilConfig.isEnabled("generateVolcanicRock")) {
+                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, volcanicRockPlaced);
+            }
+            if (FossilConfig.isEnabled("generatePermafrost")) {
+                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, permafrostBlockPlaced);
+            }
+            if (FossilConfig.isEnabled("generateTarSites") && mutable.getCategory() == Biome.BiomeCategory.SWAMP) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.LAKES, tarPitPlaced);
             }
         });

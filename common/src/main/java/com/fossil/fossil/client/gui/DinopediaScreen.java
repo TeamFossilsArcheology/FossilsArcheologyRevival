@@ -2,6 +2,7 @@ package com.fossil.fossil.client.gui;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.capabilities.ModCapabilities;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.FoodMappings;
 import com.mojang.blaze3d.platform.Lighting;
@@ -160,7 +161,7 @@ public class DinopediaScreen extends Screen {
         if (entity instanceof Animal animal) {
             int embryoProgress = ModCapabilities.getEmbryoProgress(animal);
             if (embryoProgress > 0) {
-                int quot = (int) Math.floor(((float) embryoProgress / (10000 + 1) * 100f));
+                int quot = (int) Math.floor(((float) embryoProgress / (FossilConfig.getInt("pregnancyDuration") + 1) * 100f));
                 var progress = new TranslatableComponent("pedia.fossil.pregnantTime", quot);
                 font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos+135, col);
                 poseStack.pushPose();

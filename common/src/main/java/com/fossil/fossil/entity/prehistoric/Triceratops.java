@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
@@ -92,7 +93,7 @@ public class Triceratops extends Prehistoric {
         var tail = PrehistoricPart.get(this, 2.2f, 2f);
         this.parts = new Entity[]{body, head, tail};
         this.hasFeatherToggle = true;
-        this.featherToggle = Fossil.CONFIG_OPTIONS.quilledTriceratops;
+        this.featherToggle = FossilConfig.isEnabled("quilledTriceratops");
         this.nearByMobsAllowed = 7;
         breaksBlocks = true;
         this.ridingXZ = -0.05F;

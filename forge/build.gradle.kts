@@ -23,7 +23,6 @@ val forgeVersion: String by rootProject
 val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
-val clothConfigVersion: String by rootProject
 val reiVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 
@@ -40,7 +39,6 @@ dependencies {
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionForge")) { isTransitive = false }
 
-    modImplementation("me.shedaniel.cloth:cloth-config-forge:${clothConfigVersion}")
     modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
     modImplementation("com.github.glitchfiend:TerraBlender-forge:${minecraftVersion}-${terraBlenderVersion}")

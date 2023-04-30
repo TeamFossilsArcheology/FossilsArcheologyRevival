@@ -1,6 +1,7 @@
 package com.fossil.fossil.world.feature.structures;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.config.FossilConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.block.Block;
@@ -24,6 +25,9 @@ public class HellBoatFeature extends StructureFeature<RangeConfiguration> {
     }
 
     private static Optional<PieceGenerator<RangeConfiguration>> pieceGeneratorSupplier(PieceGeneratorSupplier.Context<RangeConfiguration> context) {
+        if (!FossilConfig.isEnabled("generateHellShips")) {
+            return Optional.empty();
+        }
         BlockPos origin = context.chunkPos().getMiddleBlockPosition(0);
         NoiseColumn noiseColumn = context.chunkGenerator().getBaseColumn(origin.getX(), origin.getZ(), context.heightAccessor());
         Fossil.LOGGER.debug("Hellboat: Trying to place at " + origin.atY(30));

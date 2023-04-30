@@ -2,6 +2,7 @@ package com.fossil.fossil.world.feature.configuration;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.world.feature.ModFeatures;
 import com.fossil.fossil.world.feature.structures.ModStructures;
 import net.minecraft.core.Holder;
@@ -52,7 +53,8 @@ public class ModConfiguredFeatures {
             .configured(new RangeConfiguration(ConstantHeight.of(VerticalAnchor.absolute(30))), BiomeTags.IS_NETHER));
     static {
         StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
-                HELL_BOAT, new RandomSpreadStructurePlacement(24, 5, RandomSpreadType.LINEAR, 92182587));
+                HELL_BOAT, new RandomSpreadStructurePlacement(FossilConfig.getInt("hellShipSpacing"),
+                        FossilConfig.getInt("hellShipSeperation"), RandomSpreadType.LINEAR, 92182587));
     }
     public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> TAR_PIT = register("tar_pit", Feature.LAKE,
             new LakeFeature.Configuration(BlockStateProvider.simple(ModBlocks.TAR.get()),

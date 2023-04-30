@@ -3,8 +3,8 @@ package com.fossil.fossil.forge;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.ClientInit;
 import com.fossil.fossil.client.renderer.OverlayRenderer;
+import com.fossil.fossil.config.forge.ForgeConfig;
 import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
-import com.fossil.fossil.forge.config.ForgeConfig;
 import com.fossil.fossil.forge.world.biome.ForgeFossilRegion;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.util.FossilFoodMappings;
@@ -46,9 +46,7 @@ public class FossilForge {
 
     public void onClient(FMLClientSetupEvent event) {
         OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HELMET_ELEMENT, "fossil_helmets",
-                (gui, poseStack, partialTick, screenWidth, screenHeight) -> {
-                    OverlayRenderer.renderHelmet(screenWidth, screenHeight);
-                });
+                (gui, poseStack, partialTick, screenWidth, screenHeight) -> OverlayRenderer.renderHelmet(screenWidth, screenHeight));
         ClientInit.later();
     }
 

@@ -1,6 +1,6 @@
 package com.fossil.fossil.entity.ai;
 
-import com.fossil.fossil.Fossil;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.world.entity.ai.goal.BreedGoal;
@@ -17,7 +17,7 @@ public class DinoAIMating extends BreedGoal {
 
     @Override
     public boolean canUse() {
-        if (!Fossil.CONFIG_OPTIONS.dinosaurBreeding) return false;
+        if (!FossilConfig.isEnabled("breedingDinos")) return false;
         Prehistoric dinosaur = (Prehistoric) animal;
         if (!dinosaur.isAdult()) return false;
         if (dinosaur.ticksTillMate > 0) return false;

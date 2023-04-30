@@ -160,5 +160,21 @@
   "pedia.fossil.temperament.desc.territorial": "This mob will attack other mobs that are close.",
   "pedia.fossil.temperament.desc.water_aggressive": "This mob attacks other mobs.",
   "pedia.fossil.temperament.desc.water_calm": "This mob is not scared by other mobs.",
-  "pedia.fossil.untamed": "Untamed"
+  "pedia.fossil.untamed": "Untamed",
+
+  "fossil.midnightconfig.title": "Title test",
+  "fossil.midnightconfig.generate": "Generation Config",
+  "fossil.midnightconfig.generateHellShips": "Generate Hell Ships",
+  "fossil.midnightconfig.generateAcademy": "Generate Desert Academies",
+  "fossil.midnightconfig.generateAcademy.tooltip": "True if Desert Academies are to generate naturally",
+  "fossil.midnightconfig.generateTemple": "Generate Aztec Temple",
+  "fossil.midnightconfig.generateTemple.tooltip": "I am a tooltip uwu \nI am a new line",
+  "fossil.midnightconfig.generateFossils": "Generate Fossil Ores",
+  "fossil.midnightconfig.generatePermafrost": "Generate Permafrost",
+  "fossil.midnightconfig.generateVolcanicRock": "Generation Volcanic Rock",
+  "fossil.midnightconfig.generateAztecWeaponShops": "Generate Aztec Weapon Shops",
+  "fossil.midnightconfig.generateMoai": "Generate Moai",
+  "fossil.midnightconfig.generateTarSites": "Generate Tar Dig Sites",
+  "fossil.midnightconfig.generateFossilSites": "Generate Fossil Dig Sites",
+  "fossil.midnightconfig.generateVolcanoBiome": "Generate Volcano Biome"
 }
