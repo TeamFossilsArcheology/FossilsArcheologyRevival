@@ -66,6 +66,11 @@
   "block.fossil.vase_volute_red_figure": "Red Figure Volute",
   "block.fossil.vase_volute_restored": "Restored Volute",
 
+  "enchantment.fossil.archeology": "Archeology",
+  "enchantment.fossil.archeology.desc": "Placeholder description for Archeology",
+  "enchantment.fossil.paleontology": "Paleontology",
+  "enchantment.fossil.paleontology.desc": "Placeholder description for Paleontology",
+
   "entity.fossil.anu": "Anu",
   "entity.fossil.anu.ancient": "=Anu: Trying to use my magic against me? Bad Idea.",
   "entity.fossil.anu.archers": "Anu: Archers, fire!",
