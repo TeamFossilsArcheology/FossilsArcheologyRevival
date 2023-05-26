@@ -67,6 +67,15 @@ public class AnuDead extends LivingEntity {
 
     @Override
     public void tick() {
+        if (tickCount == 1 && !level.isClientSide) {
+            ServerLevel treasureLevel = ((ServerLevel) level).getServer().getLevel(ModDimensions.TREASURE_ROOM);
+            if (treasureLevel.getDataStorage().get(c -> new TreasureRoom(), "treasure_spawned") == null) {
+                StructureTemplate structure = treasureLevel.getStructureManager().getOrCreate(new ResourceLocation(Fossil.MOD_ID, "treasure_room"));
+                BlockPos pos = new BlockPos(0, 70, 0);
+                structure.placeInWorld(treasureLevel, pos, pos, new StructurePlaceSettings(), treasureLevel.random, 2);
+                treasureLevel.getDataStorage().set("treasure_spawned", new TreasureRoom());
+            }
+        }
         if (tickCount == MAX_LIFESPAN) {
             kill();
         }
@@ -112,5 +121,17 @@ public class AnuDead extends LivingEntity {
     @Override
     public @NotNull HumanoidArm getMainArm() {
         return HumanoidArm.RIGHT;
+    }
+
+    static class TreasureRoom extends SavedData {
+
+        public static TreasureRoom load(CompoundTag compoundTag) {
+            return new TreasureRoom();
+        }
+        @Override
+        public @NotNull CompoundTag save(CompoundTag compoundTag) {
+            compoundTag.putBoolean("Spawned", true);
+            return compoundTag;
+        }
     }
 }

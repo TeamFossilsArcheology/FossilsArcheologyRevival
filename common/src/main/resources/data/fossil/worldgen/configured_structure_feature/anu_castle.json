@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:bastion_remnant",
+  "biomes": "fossil:anu_lair",
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "config": {
+    "start_pool": "fossil:anu_castle/starts",
+    "size": 1
+  }
+}

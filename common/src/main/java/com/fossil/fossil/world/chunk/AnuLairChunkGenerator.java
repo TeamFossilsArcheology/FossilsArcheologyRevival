@@ -1,12 +1,15 @@
 package com.fossil.fossil.world.chunk;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.world.biome.ModBiomes;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryOps;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
 import net.minecraft.world.level.StructureFeatureManager;
@@ -22,8 +25,10 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
+import net.minecraft.world.level.levelgen.structure.placement.ConcentricRingsStructurePlacement;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -41,6 +46,34 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     public AnuLairChunkGenerator(Registry<StructureSet> registry, Registry<Biome> registry2) {
         super(registry, Optional.empty(), new FixedBiomeSource(registry2.getOrCreateHolder(ModBiomes.ANU_LAIR_KEY)));
         biomes = registry2;
+    }
+
+    /**
+     * Copy of
+     */
+    private void generatePositions() {
+        StructureSet structureSet = structureSets.get(new ResourceLocation(Fossil.MOD_ID, "anu_castle"));
+        if (structureSet != null) {
+            for (StructureSet.StructureSelectionEntry structure : structureSet.structures()) {
+                placementsForFeature.computeIfAbsent(structure.structure().value(), configuredStructureFeature -> new ArrayList<>()).add(structureSet.placement());
+            }
+            if (structureSet.placement() instanceof ConcentricRingsStructurePlacement placement) {
+                ringPositions.put(placement, generateRingPositions());
+            }
+        }
+    }
+
+
+    private CompletableFuture<List<ChunkPos>> generateRingPositions() {
+        return CompletableFuture.completedFuture(List.of(new ChunkPos(0, 0)));
+    }
+
+    @Override
+    public void ensureStructuresGenerated() {
+        if (!this.hasGeneratedPositions) {
+            this.generatePositions();
+            this.hasGeneratedPositions = true;
+        }
     }
 
     @Override

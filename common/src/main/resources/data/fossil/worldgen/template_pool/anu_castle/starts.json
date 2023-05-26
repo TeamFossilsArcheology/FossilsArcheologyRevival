@@ -1,0 +1,26 @@
+{
+  "name": "fossil:anu_castle/starts",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "fossil:anu_castle",
+        "processors": {
+          "processors": [
+            {
+              "processor_type": "minecraft:block_ignore",
+              "blocks": [
+                {
+                  "Name": "minecraft:oak_sign"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

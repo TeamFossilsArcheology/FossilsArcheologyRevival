@@ -14,3 +14,6 @@ accessible field net/minecraft/world/item/Item$Properties maxStackSize I
 accessible method net/minecraft/world/entity/animal/horse/Horse setTypeVariant (I)V
 accessible field net/minecraft/world/entity/Entity portalTime I
 accessible field net/minecraft/world/entity/Entity portalEntrancePos Lnet/minecraft/core/BlockPos;
+accessible field net/minecraft/world/level/chunk/ChunkGenerator ringPositions Ljava/util/Map;
+accessible field net/minecraft/world/level/chunk/ChunkGenerator placementsForFeature Ljava/util/Map;
+accessible field net/minecraft/world/level/chunk/ChunkGenerator hasGeneratedPositions Z
