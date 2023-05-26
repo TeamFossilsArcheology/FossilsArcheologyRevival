@@ -1,7 +1,13 @@
 package com.fossil.fossil.entity;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.world.dimension.ModDimensions;
+import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -15,6 +21,9 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
+import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -43,9 +52,10 @@ public class AnuDead extends LivingEntity {
 
             if (player.portalTime > 0) {
                 player.portalTime = 10;
-            } else if (player.level.dimension().location().getPath() == "") {//TODO: Config
+            } else if (!player.level.dimension().equals(ModDimensions.TREASURE_ROOM)) {
                 player.portalTime = 10;
-                //serverPlayer.teleportTo(, );
+                ServerLevel treasureLevel = serverPlayer.server.getLevel(ModDimensions.TREASURE_ROOM);
+                serverPlayer.teleportTo(treasureLevel, 6.5, 72.5, 6.5, 0, 0);
             } else {
                 player.portalTime = 10;
                 serverPlayer.teleportTo(serverPlayer.server.getLevel(Level.OVERWORLD), 0, 60, 0, 0, 0);

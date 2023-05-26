@@ -11,6 +11,8 @@ import net.minecraft.world.level.biome.Biome;
  */
 public class ModBiomes {
     public static final ResourceKey<Biome> VOLCANO_KEY = resource("volcano");
+    public static final ResourceKey<Biome> TREASURE_ROOM_KEY = resource("treasure_room");
+    public static final ResourceKey<Biome> ANU_LAIR_KEY = resource("anu_lair");
 
     private static ResourceKey<Biome> resource(String name) {
         return ResourceKey.create(Registry.BIOME_REGISTRY, new ResourceLocation(Fossil.MOD_ID, name));

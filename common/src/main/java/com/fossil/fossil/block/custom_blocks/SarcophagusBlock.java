@@ -28,7 +28,7 @@ import org.jetbrains.annotations.Nullable;
 public class SarcophagusBlock extends BaseEntityBlock {
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 43, 16);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-
+    //TODO: Can fall in from the top
     public SarcophagusBlock(Properties properties) {
         super(properties);
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH));

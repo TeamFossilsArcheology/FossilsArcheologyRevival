@@ -13,6 +13,7 @@ import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.DisposableTask;
 import com.fossil.fossil.villager.ModVillagers;
+import com.fossil.fossil.world.dimension.ModDimensions;
 import com.fossil.fossil.world.feature.ModFeatures;
 import com.fossil.fossil.world.feature.structures.ModStructures;
 import com.mojang.logging.LogUtils;
@@ -33,6 +34,7 @@ public class Fossil {
         ModBlockEntities.register();
         ModFeatures.register();
         ModStructures.register();
+        ModDimensions.register();
         ModRecipes.register();
         ModSounds.register();
         ModEnchantments.register();

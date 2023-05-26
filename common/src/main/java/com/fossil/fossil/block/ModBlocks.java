@@ -62,8 +62,8 @@ public class ModBlocks {
             block -> AnubiteStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
     public static final RegistrySupplier<AnuPortal> ANU_PORTAL = registerBlock("anu_portal",
             () -> new AnuPortal(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL).noDrops()));
-    public static final RegistrySupplier<AnuPortal> HOME_PORTAL = registerBlock("home_portal",
-            () -> new AnuPortal(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL).noDrops()));
+    public static final RegistrySupplier<HomePortal> HOME_PORTAL = registerBlock("home_portal",
+            () -> new HomePortal(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL).noDrops()));
     public static final RegistrySupplier<AncientChestBlock> ANCIENT_CHEST = registerBlockWithCustomBlockItem("ancient_chest",
             () -> new AncientChestBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().strength(-1, 3600000).noDrops()),
             block -> AncientChestBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));

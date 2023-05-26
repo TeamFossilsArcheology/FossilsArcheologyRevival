@@ -13,14 +13,15 @@ import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.portal.PortalInfo;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class AnuPortal extends Block {
-    public AnuPortal(Properties properties) {
+public class HomePortal extends Block {
+    public HomePortal(Properties properties) {
         super(properties);
     }
 
@@ -37,9 +38,10 @@ public class AnuPortal extends Block {
             Level entityLevel = entity.level;
             MinecraftServer server = entityLevel.getServer();
             if (server != null) {
-                ServerLevel anuLair = server.getLevel(ModDimensions.ANU_LAIR);
+                ServerLevel overworld = server.getLevel(Level.OVERWORLD);
                 entity.setPortalCooldown();
-                ModDimensions.changeDimension(entity, anuLair, new PortalInfo(new Vec3(0, 35, 0), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot()));
+                BlockPos blockPos = overworld.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, overworld.getSharedSpawnPos());
+                ModDimensions.changeDimension(entity, overworld, new PortalInfo(new Vec3(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot()));
             }
         }
     }

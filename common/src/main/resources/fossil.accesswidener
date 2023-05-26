@@ -13,3 +13,4 @@ accessible method net/minecraft/world/entity/npc/VillagerProfession <init> (Ljav
 accessible field net/minecraft/world/item/Item$Properties maxStackSize I
 accessible method net/minecraft/world/entity/animal/horse/Horse setTypeVariant (I)V
 accessible field net/minecraft/world/entity/Entity portalTime I
+accessible field net/minecraft/world/entity/Entity portalEntrancePos Lnet/minecraft/core/BlockPos;

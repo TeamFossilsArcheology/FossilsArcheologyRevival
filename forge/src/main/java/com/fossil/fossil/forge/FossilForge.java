@@ -8,8 +8,12 @@ import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
 import com.fossil.fossil.forge.world.biome.ForgeFossilRegion;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.util.FossilFoodMappings;
+import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
+import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
 import com.fossil.fossil.world.surfacerules.ModSurfaceRules;
 import dev.architectury.platform.forge.EventBuses;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.gui.ForgeIngameGui;
 import net.minecraftforge.client.gui.OverlayRegistry;
@@ -56,6 +60,8 @@ public class FossilForge {
         event.enqueueWork(() -> {
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Fossil.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
+            Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "treasure_room"), TreasureChunkGenerator.CODEC);
+            Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "anu_lair"), AnuLairChunkGenerator.CODEC);
         });
     }
 

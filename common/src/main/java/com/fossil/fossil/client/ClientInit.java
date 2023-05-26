@@ -92,6 +92,8 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANCIENT_GLASS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.REINFORCED_GLASS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CULTIVATE.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANU_PORTAL.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.HOME_PORTAL.get());
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
         MenuScreens.register(ModMenus.CULTIVATE.get(), CultivateScreen::new);
