@@ -31,7 +31,7 @@ public class AnuDeadRenderer extends EntityRenderer<AnuDead> implements Renderer
         VertexConsumer vertexConsumer = buffer.getBuffer(model.renderType(getTextureLocation(entity)));
         int m = LivingEntityRenderer.getOverlayCoords(entity, 0);
         if (entity.tickCount > 40) {
-            float alpha = (float) Math.min(0.05, 1 - (entity.tickCount + 25) / 63f * 0.01f);
+            float alpha = (float) Math.max(0.05, 1 - (entity.tickCount + 25) / 63f * 0.01f);
             model.renderToBuffer(poseStack, vertexConsumer, packedLight, m, 1, 1, 1, alpha);
         } else {
             model.renderToBuffer(poseStack, vertexConsumer, packedLight, m, 1, 1, 1, 1);
