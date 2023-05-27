@@ -3,10 +3,11 @@
   "package": "com.fossil.fossil.forge.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "TerrainParticleMixin",
-    "ParticleAccessor"
+    "ParticleAccessor",
+    "TerrainParticleMixin"
   ],
   "mixins": [
+    "JigsawPlacementMixin",
     "PrehistoricMixin"
   ],
   "injectors": {

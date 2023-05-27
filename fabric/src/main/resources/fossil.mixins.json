@@ -11,6 +11,7 @@
   "mixins": [
     "ChunkMapMixin",
     "EntityCallbacksMixin",
+    "JigsawPlacementMixin",
     "LevelMixin",
     "LivingEntityMixin",
     "MobMixin",

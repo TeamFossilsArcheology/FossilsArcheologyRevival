@@ -6,20 +6,9 @@
       "weight": 1,
       "element": {
         "element_type": "minecraft:single_pool_element",
+        "processors": "minecraft:empty",
         "projection": "rigid",
-        "location": "fossil:anu_castle",
-        "processors": {
-          "processors": [
-            {
-              "processor_type": "minecraft:block_ignore",
-              "blocks": [
-                {
-                  "Name": "minecraft:oak_sign"
-                }
-              ]
-            }
-          ]
-        }
+        "location": "fossil:anu_castle_nw"
       }
     }
   ]

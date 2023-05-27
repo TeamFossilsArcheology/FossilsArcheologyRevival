@@ -48,31 +48,24 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
         biomes = registry2;
     }
 
-    /**
-     * Copy of
-     */
     private void generatePositions() {
+        //Bit of a hack but this way we can ensure a fixed position for the castle without having to place it ourselves
         StructureSet structureSet = structureSets.get(new ResourceLocation(Fossil.MOD_ID, "anu_castle"));
         if (structureSet != null) {
             for (StructureSet.StructureSelectionEntry structure : structureSet.structures()) {
                 placementsForFeature.computeIfAbsent(structure.structure().value(), configuredStructureFeature -> new ArrayList<>()).add(structureSet.placement());
             }
             if (structureSet.placement() instanceof ConcentricRingsStructurePlacement placement) {
-                ringPositions.put(placement, generateRingPositions());
+                ringPositions.put(placement, CompletableFuture.completedFuture(List.of(new ChunkPos(0, 0))));
             }
         }
     }
 
-
-    private CompletableFuture<List<ChunkPos>> generateRingPositions() {
-        return CompletableFuture.completedFuture(List.of(new ChunkPos(0, 0)));
-    }
-
     @Override
     public void ensureStructuresGenerated() {
-        if (!this.hasGeneratedPositions) {
-            this.generatePositions();
-            this.hasGeneratedPositions = true;
+        if (!hasGeneratedPositions) {
+            generatePositions();
+            hasGeneratedPositions = true;
         }
     }
 

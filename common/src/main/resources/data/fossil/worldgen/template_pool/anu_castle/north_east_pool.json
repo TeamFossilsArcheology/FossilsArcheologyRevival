@@ -1,5 +1,5 @@
 {
-  "name": "fossil:archeo_plains/basement_pool",
+  "name": "fossil:anu_castle/north_east_pool",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -8,7 +8,7 @@
         "element_type": "minecraft:single_pool_element",
         "processors": "minecraft:empty",
         "projection": "rigid",
-        "location": "fossil:archeologist_house_plains_base"
+        "location": "fossil:anu_castle_ne"
       }
     }
   ]
