@@ -1,7 +1,6 @@
 package com.fossil.fossil.client.renderer.entity;
 
 import com.fossil.fossil.client.model.ToyScratchingPostModel;
-import com.fossil.fossil.client.model.ToyTetheredLogModel;
 import com.fossil.fossil.client.renderer.RendererFabricFix;
 import com.fossil.fossil.entity.ToyScratchingPost;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -10,6 +9,7 @@ import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import org.jetbrains.annotations.NotNull;
 
 public class ToyScratchingPostRenderer extends LivingEntityRenderer<ToyScratchingPost, ToyScratchingPostModel> implements RendererFabricFix {
 
@@ -27,7 +27,7 @@ public class ToyScratchingPostRenderer extends LivingEntityRenderer<ToyScratchin
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ToyScratchingPost entity) {
+    public @NotNull ResourceLocation getTextureLocation(ToyScratchingPost entity) {
         if (!ToyScratchingPostModel.TEXTURES.containsKey(entity.getWoodTypeName())) {
             return ToyScratchingPostModel.TEXTURES.get(WoodType.OAK.name());
         }

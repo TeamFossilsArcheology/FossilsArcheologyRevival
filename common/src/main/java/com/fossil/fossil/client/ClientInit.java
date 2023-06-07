@@ -16,6 +16,7 @@ import com.fossil.fossil.entity.prehistoric.Dilophosaurus;
 import com.fossil.fossil.entity.prehistoric.Therizinosaurus;
 import com.fossil.fossil.entity.prehistoric.Triceratops;
 import com.fossil.fossil.entity.prehistoric.Tropeognathus;
+import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
@@ -36,6 +37,7 @@ import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 
 public class ClientInit {
@@ -55,6 +57,7 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.TROPEOGNATHUS,
                 context -> new RenderPrehistoricGeo<>(context, "fa.tropeognathus.geo.json", Tropeognathus.ANIMATIONS)
         );
+        EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, context -> new DinosaurEggRenderer(context, new DinosaurEggModel()));
 
         EntityRendererRegistry.register(ModEntities.ANU_BOSS, context -> new AnuBossRenderer(context, new AnuBossModel()));
         EntityRendererRegistry.register(ModEntities.ANU_DEAD, context -> new AnuDeadRenderer(context, new AnuDeadModel()));
@@ -104,9 +107,11 @@ public class ClientInit {
                 if (PrehistoricPart.isMultiPart(entity)) {
                     entity = PrehistoricPart.getParent(entity);
                 }
-                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get()) && entity instanceof Animal animal) {
-                    if (entity instanceof Prehistoric || (PrehistoricEntityType.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0)) {
+                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
+                    if (entity instanceof Animal animal && PrehistoricEntityType.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
+                    } else if (entity instanceof DinosaurEgg || entity instanceof Prehistoric) {
+                        Minecraft.getInstance().setScreen(new DinopediaScreen((LivingEntity) entity));
                     }
                     return EventResult.interruptTrue();
                 }

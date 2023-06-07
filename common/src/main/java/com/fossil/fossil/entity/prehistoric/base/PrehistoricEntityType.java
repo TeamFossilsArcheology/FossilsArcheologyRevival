@@ -1,9 +1,6 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
-import com.fossil.fossil.item.DNAItem;
-import com.fossil.fossil.item.MammalEmbryoItem;
-import com.fossil.fossil.item.ModItems;
-import com.fossil.fossil.item.ModTabs;
+import com.fossil.fossil.item.*;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.TimePeriod;
@@ -17,10 +14,7 @@ import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -40,21 +34,21 @@ public enum PrehistoricEntityType {
     ANKYLOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     ARTHROPLEURA(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.HERBIVORE),
     BRACHIOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
-    CERATOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
-    CITIPATI(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.OMNIVORE),
+    CERATOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, Map.of("eggScale", 0.6f)),
+    CITIPATI(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.OMNIVORE, Map.of("eggScale", 0.6f)),
     COELACANTH(PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE),
-    COMPSOGNATHUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
+    COMPSOGNATHUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, Map.of("eggScale", 0.2f)),
     CONFUCIUSORNIS(PrehistoricMobType.BIRD, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     CRASSIGYRINUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE),
-    DEINONYCHUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG),
-    DILOPHOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
+    DEINONYCHUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, Map.of("eggScale", 0.6f)),
+    DILOPHOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, Map.of("eggScale", 0.5f)),
     DIPLOCAULUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE),
     DIPLODOCUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
-    DRYOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
+    DRYOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of("eggScale", 0.6f)),
     DODO(PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.HERBIVORE),
     EDAPHOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.PALEOZOIC, Diet.HERBIVORE),
     ELASMOTHERIUM(PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE),
-    GALLIMIMUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.OMNIVORE),
+    GALLIMIMUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.OMNIVORE, Map.of("eggScale", 0.5f)),
     GASTORNIS(PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.HERBIVORE),
     HENODUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     ICHTYOSAURUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE),
@@ -68,14 +62,14 @@ public enum PrehistoricEntityType {
     MEGANEURA(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCI_CARNIVORE),
     MOSASAURUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCI_CARNIVORE),
     NAUTILUS(PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE),
-    ORNITHOLESTES(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG),
+    ORNITHOLESTES(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, Map.of("eggScale", 0.5f)),
     PACHYCEPHALOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     PARASAUROLOPHUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     PHORUSRHACOS(PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.CARNIVORE),
     PLATYBELODON(PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE),
     PLESIOSAURUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE),
     PTERANODON(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE),
-    PTEROSAUR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE),
+    PTEROSAUR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE, Map.of("eggScale", 0.54f)),
     QUAGGA(PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE),
     SARCOSUCHUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCI_CARNIVORE),
     SMILODON(PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.CARNIVORE),
@@ -85,15 +79,16 @@ public enum PrehistoricEntityType {
     THERIZINOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     TIKTAALIK(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCI_CARNIVORE),
     TITANIS(PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.CARNIVORE),
-    TRICERATOPS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, true),
+    TRICERATOPS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of("hasBoneItems", true)),
     TYRANNOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
-    VELOCIRAPTOR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG);
+    VELOCIRAPTOR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, Map.of("eggScale", 0.5f));
     public final EntityType<? extends Entity> entity;
     public final PrehistoricMobType mobType;
     public final TimePeriod timePeriod;
     public final Diet diet;
     public final String resourceName;
     private final boolean hasBoneItems;
+    public final float eggScale;
     public Item dnaItem;
     public Item eggItem;
     public Item embryoItem;
@@ -117,15 +112,17 @@ public enum PrehistoricEntityType {
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
         this.hasBoneItems = false;
+        this.eggScale = 1;
     }
 
-    PrehistoricEntityType(PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, boolean hasBoneItems) {
+    PrehistoricEntityType(PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, Map<String, Object> attributes) {
         this.entity = null;
         this.mobType = mobType;
         this.timePeriod = timePeriod;
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
-        this.hasBoneItems = hasBoneItems;
+        this.hasBoneItems = (boolean) attributes.getOrDefault("hasBoneItems", false);
+        this.eggScale = (float) attributes.getOrDefault("eggScale", (float) 1.0f);
     }
 
     PrehistoricEntityType(EntityType<? extends Entity> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet) {
@@ -135,6 +132,7 @@ public enum PrehistoricEntityType {
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
         this.hasBoneItems = false;
+        this.eggScale = 1;
     }
 
     public static void register() {
@@ -152,10 +150,10 @@ public enum PrehistoricEntityType {
             if (type.mobType == PrehistoricMobType.FISH) {
                 FoodMappings.addFish(type.entity, 100);//TODO: Define value somewhere. Also should all dinos be added here?
                 registerItem("fish", type, Item::new, item -> type.fishItem = item);
-                registerItem("egg", type, Item::new, item -> type.eggItem = item);
+                registerItem("egg_item", type, Item::new, item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.DINOSAUR) {
                 FoodMappings.addMeat(type.entity, 100);
-                registerItem("egg_item", type, Item::new, item -> type.eggItem = item);
+                registerItem("egg_item", type, p -> new DinoEggItem(type), item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.MAMMAL || type.mobType == PrehistoricMobType.VANILLA) {
                 registerItem("syringe", type, properties -> new MammalEmbryoItem(type), item -> type.embryoItem = item);
             } else if (type.mobType == PrehistoricMobType.BIRD || type.mobType == PrehistoricMobType.CHICKEN) {
@@ -163,7 +161,7 @@ public enum PrehistoricEntityType {
                 if (type.mobType == PrehistoricMobType.BIRD) {
                     registerItem("egg", type, Item::new, item -> type.birdEggItem = item);
                 }
-                registerItem("egg_cultivated", type, Item::new, item -> type.cultivatedBirdEggItem = item);
+                registerItem("egg_item", type, Item::new, item -> type.cultivatedBirdEggItem = item);
             }
             if (type.timePeriod != TimePeriod.CURRENT) {
                 if (type.mobType != PrehistoricMobType.FISH) {
@@ -205,6 +203,10 @@ public enum PrehistoricEntityType {
             }
         }
         return list;
+    }
+
+    public boolean isVivariousAquatic() {
+        return this.mobType == PrehistoricMobType.DINOSAUR_AQUATIC && this != SARCOSUCHUS;
     }
 
     private static List<PrehistoricEntityType> boneCache;

@@ -20,6 +20,8 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -91,7 +93,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private static final EntityDataAccessor<Integer> SUBSPECIES = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<String> OWNERDISPLAYNAME = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<Component> OWNER_DISPLAY_NAME = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPONENT);
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> AGINGDISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<ItemStack> HOLDING_IN_MOUTH = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.ITEM_STACK);
@@ -372,7 +374,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.entityData.define(SLEEPING, false);
         this.entityData.define(CLIMBING, (byte) 0);
         this.entityData.define(MOOD, 0);
-        this.entityData.define(OWNERDISPLAYNAME, "");
+        this.entityData.define(OWNER_DISPLAY_NAME, TextComponent.EMPTY);
         this.entityData.define(AGINGDISABLED, false);
         this.entityData.define(HOLDING_IN_MOUTH, ItemStack.EMPTY);
         var idle = nextIdleAnimation();
@@ -421,7 +423,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         compound.putInt("TicksTillMate", this.ticksTillMate);
         compound.putInt("TicksClimbing", this.ticksClimbing);
         compound.putByte("currentOrder", (byte) this.currentOrder.ordinal());
-        compound.putString("OwnerDisplayName", this.getOwnerDisplayName());
+        compound.putString("OwnerDisplayName", Component.Serializer.toJson(this.getOwnerDisplayName()));
         compound.putFloat("YawRotation", this.yBodyRot);
         compound.putFloat("HeadRotation", this.yHeadRot);
         compound.putBoolean("AgingDisabled", this.isAgingDisabled());
@@ -458,10 +460,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.yBodyRot = compound.getInt("YawRotation");
         this.yHeadRot = compound.getInt("HeadRotation");
         if (compound.contains("Owner", 8)) {
-            String s = compound.getString("Owner");
-            this.setOwnerDisplayName(s);
+            this.setOwnerDisplayName(Component.Serializer.fromJson(compound.getString("Owner")));
         } else {
-            this.setOwnerDisplayName(compound.getString("OwnerDisplayName"));
+            this.setOwnerDisplayName(Component.Serializer.fromJson(compound.getString("OwnerDisplayName")));
         }
         this.cathermalSleepCooldown = compound.getInt("CathermalTimer");
         refreshTexturePath();
@@ -469,12 +470,12 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public abstract PrehistoricEntityType type();
 
-    public String getOwnerDisplayName() {
-        return this.entityData.get(OWNERDISPLAYNAME);
+    public Component getOwnerDisplayName() {
+        return this.entityData.get(OWNER_DISPLAY_NAME);
     }
 
-    public void setOwnerDisplayName(String displayName) {
-        this.entityData.set(OWNERDISPLAYNAME, displayName);
+    public void setOwnerDisplayName(Component displayName) {
+        this.entityData.set(OWNER_DISPLAY_NAME, displayName);
     }
 
     public AABB getAttackBounds() {
@@ -491,14 +492,18 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         @Nullable CompoundTag dataTag
     ) {
         spawnDataIn = super.finalizeSpawn(levelIn, difficultyIn, reason, spawnDataIn, dataTag);
-        this.setAgeInDays(this.adultAgeDays);
-        this.updateAbilities();
+        if (spawnDataIn instanceof PrehistoricGroupData prehistoricGroupData) {
+            setAgeInDays(prehistoricGroupData.ageInDays());
+        } else {
+            setAgeInDays(this.adultAgeDays);
+        }
+        updateAbilities();
         ticksTillPlay = 0;
         ticksTillMate = 24000;
-        this.onGround = true;
-        this.heal(this.getMaxHealth());
-        this.currentOrder = OrderType.WANDER;
-        this.setNoAi(false);
+        onGround = true;
+        heal(getMaxHealth());
+        currentOrder = OrderType.WANDER;
+        setNoAi(false);
         if (gender == null) gender = Gender.random(random);
 
         return spawnDataIn;
@@ -790,8 +795,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if ((this.getTarget() != null) && this.isSleeping()) {
             this.setSleeping(false);
         }
-        if (this.getOwner() != null && this.getOwnerDisplayName().equals("")) {
-            this.setOwnerDisplayName(this.getOwner().getDisplayName().toString());
+        if (this.getOwner() != null && this.getOwnerDisplayName().getString().isBlank()) {
+            this.setOwnerDisplayName(this.getOwner().getDisplayName());
         }
         if (this.getHunger() > this.getMaxHunger()) {
             this.setHunger(this.getMaxHunger());
@@ -2140,4 +2145,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public static final int MOVING_PRIORITY = 1;
     public static final int DEFAULT_PRIORITY = 2;
     public static final int ATTACKING_PRIORITY = 3;
+
+    public record PrehistoricGroupData(int ageInDays) implements SpawnGroupData {
+    }
 }

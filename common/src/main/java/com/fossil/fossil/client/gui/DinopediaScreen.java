@@ -3,6 +3,7 @@ package com.fossil.fossil.client.gui;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.FoodMappings;
 import com.mojang.blaze3d.platform.Lighting;
@@ -10,6 +11,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
@@ -26,6 +28,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.Item;
@@ -203,7 +206,28 @@ public class DinopediaScreen extends Screen {
                     col);
             var activityText = new TranslatableComponent("pedia.fossil.activity", dino.aiActivityType().getName());
             renderHoverInfo(poseStack, x, y + 110, mouseX, mouseY, activityText, dino.aiActivityType().getDescription());
+        } else if (entity instanceof DinosaurEgg egg) {
+            poseStack.pushPose();
+            float scale = 1.5f;
+            poseStack.scale(scale, scale, scale);
+            var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityType().resourceName);
+            font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
+            poseStack.popPose();
+            int time = Mth.floor((float) egg.getHatchingTime() / DinosaurEgg.TOTAL_HATCHING_TIME * 100);
+            var progress = new TranslatableComponent("pedia.fossil.egg.time", Math.max(time, 0));
+            font.draw(poseStack, progress, getScaledX(true, font.width(name), 1), (topPos + 125) / scale, (157 << 16) | (126 << 8) | 103);
 
+            Component status;
+            if (egg.isInWater()) {
+                status = new TranslatableComponent("pedia.fossil.egg.status.wet").withStyle(style -> style.withColor(ChatFormatting.AQUA));
+            } else {
+                if (egg.isTooCold()) {
+                    status = new TranslatableComponent("pedia.fossil.egg.status.cold").withStyle(style -> style.withColor(ChatFormatting.BLUE));
+                } else {
+                    status = new TranslatableComponent("pedia.fossil.egg.status.warm").withStyle(style -> style.withColor(ChatFormatting.GOLD));
+                }
+            }
+            font.draw(poseStack, status, getScaledX(true, font.width(name), 1), (topPos + 140) / scale, (157 << 16) | (126 << 8) | 103);
         }
     }
 
