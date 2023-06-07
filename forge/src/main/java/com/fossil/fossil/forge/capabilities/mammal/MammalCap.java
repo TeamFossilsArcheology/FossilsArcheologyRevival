@@ -1,22 +1,11 @@
 package com.fossil.fossil.forge.capabilities.mammal;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.common.util.LazyOptional;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public class MammalCap implements IMammalCap {
     private int embryoProgress;
     private PrehistoricEntityType embryo;
-
-    @NotNull
-    @Override
-    public <T> LazyOptional<T> getCapability(@NotNull Capability<T> capability, @Nullable Direction arg) {
-        return null;
-    }
 
     @Override
     public CompoundTag serializeNBT() {
@@ -45,7 +34,7 @@ public class MammalCap implements IMammalCap {
 
     @Override
     public void setEmbryoProgress(int progress) {
-        this.embryoProgress=progress;
+        this.embryoProgress = progress;
     }
 
     @Override
