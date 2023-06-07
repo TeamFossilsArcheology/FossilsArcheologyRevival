@@ -3,6 +3,11 @@ package com.fossil.fossil.forge.data.providers;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.item.ToyBallItem;
+import com.fossil.fossil.item.ToyScratchingPostItem;
+import com.fossil.fossil.item.ToyTetheredLogItem;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
@@ -19,8 +24,28 @@ public class ModItemProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        boolean dinoItems = false;
+        boolean dinoItems = true;
         boolean plantItems = true;
+        boolean toyItems = true;
+
+        if (toyItems) {
+            for (RegistrySupplier<ToyBallItem> toy : ModItems.TOY_BALLS.values()) {
+                var item = toy.get();
+                var resourceLocation = new ResourceLocation(item.getRegistryName().getNamespace(), "item/" + item.getRegistryName().getPath());
+                builder(resourceLocation, item.getRegistryName());
+            }
+            for (RegistrySupplier<ToyScratchingPostItem> toy : ModItems.TOY_SCRATCHING_POSTS.values()) {
+                var item = toy.get();
+                var resourceLocation = new ResourceLocation(item.getRegistryName().getNamespace(), "item/" + item.getRegistryName().getPath());
+                builder(resourceLocation, item.getRegistryName());
+            }
+            for (RegistrySupplier<ToyTetheredLogItem> toy : ModItems.TOY_TETHERED_LOGS.values()) {
+                var item = toy.get();
+                var resourceLocation = new ResourceLocation(item.getRegistryName().getNamespace(), "item/" + item.getRegistryName().getPath());
+                builder(resourceLocation, item.getRegistryName());
+            }
+        }
+
 
         if (dinoItems) {
             for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
@@ -35,6 +60,18 @@ public class ModItemProvider extends ItemModelProvider {
                 }
                 if (type.cookedFoodItem != null) {
                     foodItem(Objects.requireNonNull(type.cookedFoodItem.getRegistryName()), type, "cooked");
+                }
+                if (type.eggItem != null) {
+                    eggItem(type.eggItem.getRegistryName());
+                }
+                if (type.birdEggItem != null) {
+                    eggItem(type.birdEggItem.getRegistryName());
+                }
+                if (type.cultivatedBirdEggItem != null) {
+                    eggItem(type.cultivatedBirdEggItem.getRegistryName());
+                }
+                if (type.embryoItem != null) {
+                    embyroItem(type.embryoItem.getRegistryName());
                 }
             }
             for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
@@ -62,7 +99,7 @@ public class ModItemProvider extends ItemModelProvider {
 
     public void plantBlockItem(Block block, String suffix) {
         ResourceLocation resourceLocation = new ResourceLocation(block.getRegistryName().getNamespace(),
-                "block/plants/plant_" + block.getRegistryName().getPath()+suffix);
+                "block/plants/plant_" + block.getRegistryName().getPath() + suffix);
         builder(resourceLocation, block.getRegistryName());
     }
 
@@ -83,6 +120,16 @@ public class ModItemProvider extends ItemModelProvider {
 
     public void fishItem(ResourceLocation item, PrehistoricEntityType type) {
         ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/meat/" + type.resourceName);
+        builder(resourceLocation, item);
+    }
+
+    public void eggItem(ResourceLocation item) {
+        ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/eggs/" + item.getPath());
+        builder(resourceLocation, item);
+    }
+
+    public void embyroItem(ResourceLocation item) {
+        ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/embryo/" + item.getPath());
         builder(resourceLocation, item);
     }
 

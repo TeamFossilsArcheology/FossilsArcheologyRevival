@@ -1,0 +1,41 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "fossil:fossil_seed_fern"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "fossil:skull"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "fossil:frozen_meat"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "minecraft:bone"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 20,
+          "name": "minecraft:book"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ]
+    }
+  ]
+}

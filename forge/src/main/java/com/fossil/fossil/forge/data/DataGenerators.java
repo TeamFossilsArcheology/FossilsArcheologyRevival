@@ -1,9 +1,6 @@
 package com.fossil.fossil.forge.data;
 
-import com.fossil.fossil.forge.data.providers.ModBlockStateProvider;
-import com.fossil.fossil.forge.data.providers.ModItemProvider;
-import com.fossil.fossil.forge.data.providers.ModLootProvider;
-import com.fossil.fossil.forge.data.providers.ModRecipeProvider;
+import com.fossil.fossil.forge.data.providers.*;
 import net.minecraft.data.DataGenerator;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,6 +14,7 @@ public class DataGenerators {
         DataGenerator generator = event.getGenerator();
         generator.addProvider(new ModBlockStateProvider(generator, event.getExistingFileHelper()));
         generator.addProvider(new ModItemProvider(generator, event.getExistingFileHelper()));
+        generator.addProvider(new ModItemTagsProvider(generator, event.getExistingFileHelper()));
         generator.addProvider(new ModLootProvider(generator));
         generator.addProvider(new ModRecipeProvider(generator));
     }

@@ -9,9 +9,6 @@
           "type": "minecraft:item",
           "conditions": [
             {
-              "condition": "minecraft:survives_explosion"
-            },
-            {
               "condition": "minecraft:block_state_property",
               "block": "fossil:duisbergia",
               "properties": {
@@ -20,6 +17,11 @@
             }
           ],
           "name": "fossil:duisbergia"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
         }
       ]
     }

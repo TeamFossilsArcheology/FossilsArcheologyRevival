@@ -7,12 +7,12 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "conditions": [
-            {
-              "condition": "minecraft:survives_explosion"
-            }
-          ],
           "name": "fossil:vaccinium"
+        }
+      ],
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
         }
       ]
     }
