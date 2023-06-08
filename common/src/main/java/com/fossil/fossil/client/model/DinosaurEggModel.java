@@ -20,9 +20,9 @@ public class DinosaurEggModel extends EntityModel<DinosaurEgg> {
     public static final Map<String, ResourceLocation> TEXTURES = new HashMap<>();
 
     private final ModelPart model = createBodyLayer().bakeRoot();
-    private final float defaultYRot = model.yRot;
-    private final float defaultZRot = model.zRot;
-    private final float defaultY = model.y;
+    private final float defaultYRot = model.getChild("Egg1").yRot;
+    private final float defaultZRot = model.getChild("Egg1").zRot;
+    private final float defaultY = model.getChild("Egg1").y;
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
@@ -37,11 +37,14 @@ public class DinosaurEggModel extends EntityModel<DinosaurEgg> {
 
     @Override
     public void setupAnim(DinosaurEgg entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        ModelPart egg1 = model.getChild("Egg1");
+        egg1.yRot = defaultYRot;
+        egg1.zRot = defaultZRot;
+        egg1.y = defaultY;
         if (entity.getHatchingTime() > DinosaurEgg.TOTAL_HATCHING_TIME * 0.9) {
-            ModelPart egg1 = model.getChild("Egg1");
-            egg1.yRot = defaultYRot + calcRotation(0.3F, 0.5F, false, 0.25F, 0, ageInTicks, 1);
-            egg1.zRot = defaultZRot + calcRotation(0.3F, 0.5F, true, 0.25F, 0, ageInTicks, 1);
-            egg1.y = defaultY + calcBob(0.3F, 0.9F, true, ageInTicks, 1);
+            egg1.yRot += calcRotation(0.3F, 0.5F, false, 0.25F, 0, ageInTicks, 1);
+            egg1.zRot += calcRotation(0.3F, 0.5F, true, 0.25F, 0, ageInTicks, 1);
+            egg1.y += calcBob(0.3F, 0.9F, true, ageInTicks, 1);
         }
     }
 

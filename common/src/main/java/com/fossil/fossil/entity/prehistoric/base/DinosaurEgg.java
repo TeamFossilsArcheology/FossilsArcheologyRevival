@@ -3,15 +3,18 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.mojang.logging.LogUtils;
 import dev.architectury.extensions.network.EntitySpawnExtension;
+import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
@@ -63,7 +66,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     @Override
     public boolean isPushable() {
-        return false;
+        return true;
     }
 
     @Override
@@ -83,9 +86,8 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
             setHatchingTime(currentHatchingTime + 1);
         }
         if (getHatchingTime() >= TOTAL_HATCHING_TIME && !level.isClientSide) {
-            Entity entity = prehistoricEntityType.entity.create(level);
             Player player = level.getNearestPlayer(this, 16);
-            hatchEgg(level, getX(), getY(), getZ(), player, prehistoricEntityType, true);
+            hatchEgg(level, getX(), getY(), getZ(), (ServerPlayer) player, prehistoricEntityType, true);
             for (int i = 0; i < 4; i++) {
                 double x = getX() + (random.nextFloat() - 0.5) * getBbWidth();
                 double y = getBoundingBox().minY + 0.1;
@@ -99,7 +101,6 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     }
 
     /**
-     *
      * @param level
      * @param x
      * @param y
@@ -108,7 +109,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
      * @param type
      * @param hatchMessage
      */
-    public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable Player player, PrehistoricEntityType type, boolean hatchMessage) {
+    public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable ServerPlayer player, PrehistoricEntityType type, boolean hatchMessage) {
         Entity entity = type.entity.create(level);
         if (entity instanceof Prehistoric prehistoric) {
             if (prehistoric.isTameable() && player != null && prehistoric.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
@@ -130,7 +131,8 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     public boolean isTooCold() {
         Holder<Biome> biome = level.getBiome(blockPosition());
-        float light = level.getLightEmission(blockPosition());
+        level.updateSkyBrightness();
+        float light = level.getBrightness(blockPosition());
         if (biome.value().warmEnoughToRain(blockPosition())) {
             return light < 0.5f;
         } else {
@@ -147,7 +149,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public boolean hurt(DamageSource source, float amount) {
         if (!level.isClientSide && amount > 0 && isAlive()) {
             ItemEntity itemEntity = new ItemEntity(level, getX() + 0.5, getY() + 1, getZ() + 0.5,
-                    new ItemStack(prehistoricEntityType.eggItem), 0, 0.1, 0);
+                    new ItemStack(getPrehistoricEntityType().eggItem), 0, 0.1, 0);
             level.addFreshEntity(itemEntity);
             level.playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
                     ((random.nextFloat() - random.nextFloat()) * 0.7f + 1) * 2);
@@ -159,7 +161,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     @Override
     public @NotNull InteractionResult interact(Player player, InteractionHand hand) {
         if (player.getInventory().getSelected().isEmpty()) {
-            if (!player.isCreative() && player.getInventory().add(new ItemStack(prehistoricEntityType.eggItem))) {
+            if (!player.isCreative() && player.getInventory().add(new ItemStack(getPrehistoricEntityType().eggItem))) {
                 level.playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
                         ((random.nextFloat() - random.nextFloat()) * 0.7f + 1) * 2);
                 kill();
@@ -169,18 +171,24 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
         return InteractionResult.PASS;
     }
 
+    @Nullable
+    @Override
+    public ItemStack getPickResult() {
+        return new ItemStack(prehistoricEntityType.eggItem);
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("HatchingTime", getHatchingTime());
-        compound.putString("PrehistoricType", prehistoricEntityType.name());
+        compound.putString("PrehistoricType", getPrehistoricEntityType().name());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         setHatchingTime(compound.getInt("HatchingTime"));
-        prehistoricEntityType = PrehistoricEntityType.valueOf(prehistoricEntityType.name());
+        setPrehistoricEntityType(PrehistoricEntityType.valueOf(compound.getString("PrehistoricType")));
     }
 
     public void setHatchingTime(int time) {
@@ -200,17 +208,20 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     }
 
     @Override
+    public @NotNull Packet<?> getAddEntityPacket() {
+        return NetworkManager.createAddEntityPacket(this);
+    }
+
+    @Override
     public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
-        buf.writeFloat(scale);
-        buf.writeUtf(prehistoricEntityType.name());
+        buf.writeUtf(getPrehistoricEntityType().name());
     }
 
     @Override
     public void loadAdditionalSpawnData(FriendlyByteBuf buf) {
-        scale = buf.readFloat();
         String type = buf.readUtf();
         try {
-            prehistoricEntityType = PrehistoricEntityType.valueOf(type);
+            setPrehistoricEntityType(PrehistoricEntityType.valueOf(type));
         } catch (IllegalArgumentException e) {
             LOGGER.error("Dinosaur egg " + stringUUID + " has invalid dinosaur specified: " + type);
         }

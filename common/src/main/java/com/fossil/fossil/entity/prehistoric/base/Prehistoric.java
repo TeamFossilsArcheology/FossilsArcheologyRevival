@@ -39,6 +39,7 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.EntityDamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
@@ -491,7 +492,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         @Nullable SpawnGroupData spawnDataIn,
         @Nullable CompoundTag dataTag
     ) {
-        spawnDataIn = super.finalizeSpawn(levelIn, difficultyIn, reason, spawnDataIn, dataTag);
+        this.getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
         if (spawnDataIn instanceof PrehistoricGroupData prehistoricGroupData) {
             setAgeInDays(prehistoricGroupData.ageInDays());
         } else {

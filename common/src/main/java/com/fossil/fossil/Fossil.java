@@ -28,8 +28,8 @@ public class Fossil {
     public static void init() {
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
-        ModItems.register();
         ModEntities.register();
+        ModItems.register();
         ModMenus.register();
         ModBlockEntities.register();
         ModFeatures.register();

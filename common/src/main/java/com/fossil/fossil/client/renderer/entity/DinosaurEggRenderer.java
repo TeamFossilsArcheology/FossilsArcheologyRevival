@@ -25,6 +25,11 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
     }
 
     @Override
+    protected boolean shouldShowName(DinosaurEgg entity) {
+        return false;
+    }
+
+    @Override
     public ResourceLocation _getTextureLocation(Entity entity) {
         return getTextureLocation((DinosaurEgg) entity);
     }

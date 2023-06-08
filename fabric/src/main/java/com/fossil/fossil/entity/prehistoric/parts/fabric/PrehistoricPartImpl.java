@@ -10,6 +10,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
     public final T parent;
@@ -31,11 +32,11 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
     }
 
     public static Prehistoric getParent(Object object) {
-        return ((PrehistoricPartImpl<?>)object).parent;
+        return ((PrehistoricPartImpl<?>) object).parent;
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand) {
         return parent.interact(player, hand);
     }
 
@@ -45,11 +46,11 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         if (isInvulnerableTo(source)) {
             return false;
         }
-        return this.parent.hurt(this, source, amount);
+        return parent.hurt(this, source, amount);
     }
 
     @Override
@@ -58,12 +59,12 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
     }
 
     @Override
-    public boolean is(Entity entity) {
+    public boolean is(@NotNull Entity entity) {
         return this == entity || parent == entity;
     }
 
     @Override
-    public EntityDimensions getDimensions(Pose pose) {
+    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
         return size;
     }
 
@@ -88,17 +89,17 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
     }
 
     @Override
-    protected void readAdditionalSaveData(CompoundTag compound) {
+    protected void readAdditionalSaveData(@NotNull CompoundTag compound) {
 
     }
 
     @Override
-    protected void addAdditionalSaveData(CompoundTag compound) {
+    protected void addAdditionalSaveData(@NotNull CompoundTag compound) {
 
     }
 
     @Override
-    public Packet<?> getAddEntityPacket() {
+    public @NotNull Packet<?> getAddEntityPacket() {
         throw new UnsupportedOperationException();
     }
 }

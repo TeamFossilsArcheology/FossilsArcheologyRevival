@@ -9,7 +9,6 @@ import com.fossil.fossil.util.FoodMappings;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.CycleOption;
@@ -210,12 +209,12 @@ public class DinopediaScreen extends Screen {
             poseStack.pushPose();
             float scale = 1.5f;
             poseStack.scale(scale, scale, scale);
-            var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityType().resourceName);
+            var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityType().displayName);
             font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
             poseStack.popPose();
             int time = Mth.floor((float) egg.getHatchingTime() / DinosaurEgg.TOTAL_HATCHING_TIME * 100);
             var progress = new TranslatableComponent("pedia.fossil.egg.time", Math.max(time, 0));
-            font.draw(poseStack, progress, getScaledX(true, font.width(name), 1), (topPos + 125) / scale, (157 << 16) | (126 << 8) | 103);
+            font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 120, (157 << 16) | (126 << 8) | 103);
 
             Component status;
             if (egg.isInWater()) {
@@ -227,7 +226,8 @@ public class DinopediaScreen extends Screen {
                     status = new TranslatableComponent("pedia.fossil.egg.status.warm").withStyle(style -> style.withColor(ChatFormatting.GOLD));
                 }
             }
-            font.draw(poseStack, status, getScaledX(true, font.width(name), 1), (topPos + 140) / scale, (157 << 16) | (126 << 8) | 103);
+            status = new TranslatableComponent("pedia.fossil.egg.status", status);
+            font.draw(poseStack, status, getScaledX(true, font.width(status), 1), topPos + 140, (157 << 16) | (126 << 8) | 103);
         }
     }
 
@@ -307,22 +307,24 @@ public class DinopediaScreen extends Screen {
         PoseStack poseStack = RenderSystem.getModelViewStack();
         poseStack.pushPose();
         poseStack.translate(posX, posY, 1050);
-        int scale = 40;//TODO: Different dinos probably will need different values
-        if (entity instanceof Prehistoric) {
-            scale = 15;
-        }
         poseStack.scale(1, 1, -1);
         RenderSystem.applyModelViewMatrix();
         PoseStack poseStack2 = new PoseStack();
         poseStack2.translate(0.0, 0.0, 1000.0);
+        int scale = 40;//TODO: Different dinos probably will need different values
+        if (entity instanceof Prehistoric) {
+            scale = 15;
+        } else if (entity instanceof DinosaurEgg) {
+            scale = 110;
+        }
         poseStack2.scale(scale, scale, scale);
-        Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0f);
-        poseStack2.mulPose(quaternion);
+        poseStack2.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
         Lighting.setupForEntityInInventory();
         EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
         entityRenderDispatcher.setRenderShadow(false);
+        float rotation = entity instanceof DinosaurEgg ? entity.tickCount : entity.yBodyRot - 110;
+        poseStack2.mulPose(Vector3f.YP.rotationDegrees(rotation));
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        poseStack2.mulPose(Vector3f.YP.rotationDegrees(entity.yBodyRot - 110));
         RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, poseStack2, bufferSource, 0xF000F0));
         bufferSource.endBatch();
         entityRenderDispatcher.setRenderShadow(true);

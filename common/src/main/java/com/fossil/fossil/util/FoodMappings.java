@@ -149,7 +149,7 @@ public abstract class FoodMappings {
         if (entity != null) {
             int mappingsPoints = getFoodAmount(entity.getType(), diet);
             int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
-            if (mappingsPoints == 0 && FossilConfig.isEnabled("dinoEatModdedMobs")) {
+            if (mappingsPoints == 0 && FossilConfig.isEnabled("dinosEatModdedMobs")) {
                 if (entity instanceof Animal && !isAquaticMob(entity)) {
                     if (diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCI_CARNIVORE) {
                         return widthPoints;
