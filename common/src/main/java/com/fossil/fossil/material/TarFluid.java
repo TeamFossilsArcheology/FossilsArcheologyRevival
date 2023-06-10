@@ -9,7 +9,6 @@ import dev.architectury.core.fluid.ArchitecturyFlowingFluid;
 import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
@@ -98,7 +97,7 @@ public class TarFluid {
             if (!state.getValue(FALLING)) {
                 if (random.nextInt(64) == 0) {
                     level.playLocalSound((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5,
-                            new SoundEvent(ModSounds.TAR), SoundSource.BLOCKS, 0.3f, random.nextFloat() * 0.4f + 0.8f, false);
+                            ModSounds.TAR.get(), SoundSource.BLOCKS, 0.3f, random.nextFloat() * 0.4f + 0.8f, false);
                 }
             }
             animateParticle(level, pos, state, random);

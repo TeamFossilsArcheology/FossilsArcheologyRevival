@@ -2,7 +2,6 @@ package com.fossil.fossil.block.custom_blocks;
 
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -37,7 +36,7 @@ public class DrumBlock extends Block {
         } else {
             level.setBlock(pos, state.setValue(DRUMS, 0), 3);
         }
-        level.playSound(player, pos, new SoundEvent(ModSounds.DRUM_SINGLE), SoundSource.BLOCKS, 1, 1);
+        level.playSound(player, pos, ModSounds.DRUM_SINGLE.get(), SoundSource.BLOCKS, 1, 1);
         return InteractionResult.SUCCESS;
     }
 }

@@ -9,6 +9,7 @@ import com.fossil.fossil.entity.ai.DinoAIMating;
 import com.fossil.fossil.entity.ai.WhipSteering;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.Gender;
