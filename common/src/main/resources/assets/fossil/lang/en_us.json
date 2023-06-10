@@ -90,6 +90,7 @@
   "entity.fossil.friendly_piglin": "Friendly Zombie Piglin",
   "entity.fossil.friendly_piglin.kill": "I have killed another creature for you!",
   "entity.fossil.friendly_piglin.summon": "My Lord! I will fight for you till the death!",
+  "entity.fossil.prehistoric.tamed": "You have tamed this %s",
 
   "itemGroup.fa_block_tab": "Fossil Revival Blocks",
   "itemGroup.fa_item_tab": "Fossil Revival Items",

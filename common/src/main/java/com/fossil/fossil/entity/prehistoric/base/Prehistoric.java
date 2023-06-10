@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.CacheMoveToBlockGoal;
 import com.fossil.fossil.entity.ai.DinoAIMating;
@@ -49,7 +50,6 @@ import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BlockItem;
@@ -666,7 +666,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         } else {
             overallMoodAddition -= 50;
         }
-        if (!this.isThereNearbyTypes()) {
+        if (this.getNearbySpeciesMembers(40).size() <= getMaxPopulation()) {
             overallMoodAddition += 50;
         } else {
             overallMoodAddition -= 50;
@@ -1122,31 +1122,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                 }
             }
         }
-    }
-
-
-    @Nullable
-    public Entity createChild() {
-        if (level.isClientSide) return null;
-        Entity baby = null;
-        if (this instanceof Mammal mammal) {
-            baby = mammal.createChild((ServerLevel) level);
-        }
-        if (this instanceof FlyingAnimal) {
-            baby = new ItemEntity(this.level, this.getX(), this.getY(), this.getZ(), new ItemStack(type().cultivatedBirdEggItem));
-        }
-        /*
-        For now disable this behavior as egg model does not exist yet.
-        if (Fossil.CONFIG_OPTIONS.eggsLikeChickens || this.isVivariousAquatic()) {
-        } else {
-            baby = new DinosaurEgg(this.level, (EntityType<? extends Prehistoric>) this.getType(), eggScale);
-        }
-        */
-        return baby;
-    }
-
-    public boolean isVivariousAquatic() {
-        return false;
     }
 
     public boolean isAdult() {
@@ -1757,13 +1732,14 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean canMate(Animal otherAnimal) {
-        return otherAnimal != this &&
-            otherAnimal.getClass() == this.getClass() &&
-            this.isAdult() &&
-            this.getMood() > 50 &&
-            this.ticksTillMate == 0 &&
-            ((Prehistoric) otherAnimal).gender != this.gender &&
-            (this.matingGoal.getPartner() == null || this.matingGoal.getPartner() == otherAnimal);
+        if (otherAnimal == this || otherAnimal.getClass() != getClass() || getMood() <= 50 ||  !isAdult() || getMatingTick() > 0) {
+            return false;
+        }
+        Prehistoric other = ((Prehistoric)otherAnimal);
+        if (other.gender == gender || other.getMatingTick() > 0 || matingGoal.getPartner() != null && matingGoal.getPartner() != otherAnimal) {
+            return false;
+        }
+        return true;
     }
 
     @Override
@@ -1780,41 +1756,35 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public void procreate(Prehistoric mob) {
-        for (int i = 0; i < 7; ++i) {
-            double dd = this.random.nextGaussian() * 0.02D;
-            double dd1 = this.random.nextGaussian() * 0.02D;
-            double dd2 = this.random.nextGaussian() * 0.02D;
-            //      Revival.PROXY.spawnPacketHeartParticles(this.level, (float) (this.getX() + (this.random.nextFloat() * this.getBbWidth() * 2.0F) - this.getBbWidth()), (float) (this.getY() + 0.5D + (this.random.nextFloat() * this.height)), (float) (this.getZ() + (this.random.nextFloat() * this.getBbWidth() * 2.0F) - this.getBbWidth()), dd, dd1, dd2);
-            //      Revival.PROXY.spawnPacketHeartParticles(mob.level, (float) (mob.posX + (mob.random.nextFloat() * mob.width * 2.0F) - mob.width), (float) (mob.posY + 0.5D + (mob.random.nextFloat() * mob.height)), (float) (mob.posZ + (mob.random.nextFloat() * mob.width * 2.0F) - mob.width), dd, dd1, dd2);
-        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
-        if (this.random.nextInt(100) == 0 || calendar.get(2) + 1 == 4 && calendar.get(5) == 1) {
-            //   this.playSound(FASoundRegistry.MUSIC_MATING, 1, 1);
+        if (random.nextInt(100) == 0 || calendar.get(Calendar.MONTH) + 1 == 4 && calendar.get(Calendar.DATE) == 1) {
+            playSound(ModSounds.MATING_MUSIC.get(), 1, 1);
         }
         if (!level.isClientSide) {
-            Entity hatchling = this.createChild();
-            this.setTarget(null);
-            mob.setTarget(null);
-            hatchling.moveTo(mob.getX(), mob.getY() + 1, mob.getZ(), mob.yBodyRot, 0);
-            if (hatchling instanceof DinosaurEgg) {
-                //      Revival.NETWORK_WRAPPER.sendToAll(new MessageUpdateEgg(hatchling.getEntityId(), this.dinoType.ordinal()));
+            Entity hatchling;
+            if (this instanceof Mammal mammal) {
+                hatchling = mammal.createChild((ServerLevel) level);
+            } else if (type().cultivatedBirdEggItem != null) {
+                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().cultivatedBirdEggItem));
             } else {
-                if (hatchling instanceof Prehistoric) {
-                    ((Prehistoric) hatchling).grow(1);
-                    ((Prehistoric) hatchling).setHealth((float) this.baseHealth);
-                }
+                hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
+                ((DinosaurEgg) hatchling).setPrehistoricEntityType(type());
             }
-            this.level.addFreshEntity(hatchling);
+            setTarget(null);
+            mob.setTarget(null);
+            hatchling.moveTo(mob.getX(), mob.getY(), mob.getZ(), mob.yBodyRot, 0);
+            if (hatchling instanceof Prehistoric prehistoric) {
+                prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
+                        MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
+                prehistoric.grow(0);
+            }
+            level.addFreshEntity(hatchling);
         }
     }
 
-    public boolean isThereNearbyTypes() {
-        double d0 = 40;
-        List<? extends Prehistoric> list = level.getEntitiesOfClass(this.getClass(), this.getBoundingBox().inflate(d0, 4.0D, d0), Prehistoric::isAdult);
-        list.remove(this);
-        return list.size() > this.nearByMobsAllowed;
-
+    public List<? extends Prehistoric> getNearbySpeciesMembers(int range) {
+        return level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(range, 4.0D, range), prehistoric -> prehistoric != this);
     }
 
     public void doFoodEffect(Item item) {

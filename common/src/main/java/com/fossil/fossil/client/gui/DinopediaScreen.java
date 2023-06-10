@@ -209,7 +209,7 @@ public class DinopediaScreen extends Screen {
             poseStack.pushPose();
             float scale = 1.5f;
             poseStack.scale(scale, scale, scale);
-            var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityType().displayName);
+            var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityType().displayName.get());
             font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
             poseStack.popPose();
             int time = Mth.floor((float) egg.getHatchingTime() / DinosaurEgg.TOTAL_HATCHING_TIME * 100);

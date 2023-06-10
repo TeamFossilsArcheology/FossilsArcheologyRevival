@@ -34,13 +34,13 @@ public class DinoEggItem extends PrehistoricEntityItem {
         if (!level.isEmptyBlock(offset) && !level.getBlockState(offset).canBeReplaced(new BlockPlaceContext(context))) {
             return InteractionResult.FAIL;
         }
-        if (spawnEgg(level, offset.getX() + 0.5, offset.getY(), offset.getZ() + 0.5, context.getPlayer())) {
+        if (spawnEgg(level, type, offset.getX() + 0.5, offset.getY(), offset.getZ() + 0.5, context.getPlayer())) {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
     }
 
-    private boolean spawnEgg(Level level, double x, double y, double z, Player player) {
+    public static boolean spawnEgg(Level level, PrehistoricEntityType type, double x, double y, double z, Player player) {
         if (level.isClientSide) {
             return true;
         }
@@ -53,7 +53,6 @@ public class DinoEggItem extends PrehistoricEntityItem {
             egg.setPrehistoricEntityType(type);
             level.addFreshEntity(egg);
             level.gameEvent(player, GameEvent.ENTITY_PLACE, egg);
-            //TODO: Message
             return true;
         } else {
             return DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, type, false) != null;
