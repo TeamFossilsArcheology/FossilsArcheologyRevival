@@ -1,4 +1,4 @@
-package com.fossil.fossil.network;
+package com.fossil.fossil.network.debug;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import dev.architectury.networking.NetworkManager;

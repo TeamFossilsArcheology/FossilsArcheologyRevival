@@ -5,6 +5,7 @@ import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.client.gui.*;
+import com.fossil.fossil.client.gui.debug.DebugScreen;
 import com.fossil.fossil.client.gui.filters.CreativeTabFilters;
 import com.fossil.fossil.client.model.*;
 import com.fossil.fossil.client.particle.BubbleParticle;

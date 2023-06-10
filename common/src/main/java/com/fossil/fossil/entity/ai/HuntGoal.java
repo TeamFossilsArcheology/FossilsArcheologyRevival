@@ -23,7 +23,7 @@ public class HuntGoal extends NearestAttackableTargetGoal<LivingEntity> {
         if (dino.isVehicle() || dino.isImmobile() || !super.canUse() || target == null || target.getClass().equals(dino.getClass())) {
             return false;
         }
-        if (target instanceof ToyBase && dino.ticksTillPlay <= 0) {
+        if (target instanceof ToyBase && dino.getPlayingTick() <= 0) {
             return true;
         }
         double targetWidth = target.getBoundingBox().getSize();

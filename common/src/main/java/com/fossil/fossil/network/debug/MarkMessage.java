@@ -1,6 +1,6 @@
-package com.fossil.fossil.network;
+package com.fossil.fossil.network.debug;
 
-import com.fossil.fossil.client.gui.DebugScreen;
+import com.fossil.fossil.client.gui.debug.DebugScreen;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;

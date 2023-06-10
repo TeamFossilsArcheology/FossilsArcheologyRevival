@@ -88,6 +88,8 @@ import java.util.*;
 public abstract class Prehistoric extends TamableAnimal implements IPrehistoricAI, PlayerRideableJumping, EntitySpawnExtension, IAnimatable {
 
     private static final EntityDataAccessor<Integer> AGETICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> MATING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> ANGRY = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
@@ -180,9 +182,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.pediaScale = 1.0F;
         this.nearByMobsAllowed = 15;
         this.currentOrder = OrderType.WANDER;
-        if (ticksTillMate == 0) {
-            ticksTillMate = this.random.nextInt(6000) + 6000;
-        }
         this.isCannibalistic = isCannibalistic;
         this.minScale = minScale;
         this.maxScale = maxScale;
@@ -368,6 +367,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(AGETICK, 0);
+        this.entityData.define(MATING_TICK, random.nextInt(6000) + 6000);
+        this.entityData.define(PLAYING_TICK, random.nextInt(6000) + 6000);
         this.entityData.define(HUNGER, 0);
         this.entityData.define(MODELIZED, false);
         this.entityData.define(ANGRY, false);
@@ -420,9 +421,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         compound.putInt("SubSpecies", this.getSubSpecies());
         compound.putString("Gender", this.gender.toString());
         compound.putInt("Mood", this.getMood());
-        compound.putInt("TicksTillPlay", this.ticksTillPlay);
+        compound.putInt("TicksTillPlay", getPlayingTick());
         compound.putInt("TicksSlept", this.ticksSlept);
-        compound.putInt("TicksTillMate", this.ticksTillMate);
+        compound.putInt("TicksTillMate", getMatingTick());
         compound.putInt("TicksClimbing", this.ticksClimbing);
         compound.putByte("currentOrder", (byte) this.currentOrder.ordinal());
         compound.putString("OwnerDisplayName", Component.Serializer.toJson(this.getOwnerDisplayName()));
@@ -455,9 +456,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (compound.contains("currentOrder")) {
             this.setOrder(OrderType.values()[compound.getByte("currentOrder")]);
         }
-        this.ticksTillPlay = compound.getInt("TicksTillPlay");
+        setPlayingTick(compound.getInt("TicksTillPlay"));
         this.ticksClimbing = compound.getInt("TicksClimbing");
-        this.ticksTillMate = compound.getInt("TicksTillMate");
+        setPlayingTick(compound.getInt("TicksTillMate"));
         this.ticksSlept = compound.getInt("TicksSlept");
         this.yBodyRot = compound.getInt("YawRotation");
         this.yHeadRot = compound.getInt("HeadRotation");
@@ -500,8 +501,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             setAgeInDays(this.adultAgeDays);
         }
         updateAbilities();
-        ticksTillPlay = 0;
-        ticksTillMate = 24000;
+        setPlayingTick(0);
+        setMatingTick(24000);
         onGround = true;
         heal(getMaxHealth());
         currentOrder = OrderType.WANDER;
@@ -517,9 +518,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public void useToy(int playBonus) {
-        if (ticksTillPlay == 0) {
-            this.setMood(this.getMood() + playBonus);
-            ticksTillPlay = this.random.nextInt(600) + 600;
+        if (getPlayingTick() == 0) {
+            this.setMood(getMood() + playBonus);
+            setPlayingTick(random.nextInt(600) + 600);
         }
     }
 
@@ -812,11 +813,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (this.isDeadlyHungry() && this.getMood() > -50) {
             this.setMood(-50);
         }
-        if (this.ticksTillPlay > 0) {
-            this.ticksTillPlay--;
+        if (getPlayingTick() > 0) {
+            setPlayingTick(getPlayingTick()-1);
         }
-        if (this.ticksTillMate > 0) {
-            this.ticksTillMate--;
+        if (getMatingTick() > 0) {
+            setMatingTick(getMatingTick()-1);
         }
         if (this.getRidingPlayer() != null) {
             this.maxUpStep = 1;
@@ -897,7 +898,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
         if (this.getTarget() != null &&
             this.getTarget() instanceof ToyBase &&
-            (isPreyBlocked(this.getTarget()) || this.ticksTillPlay > 0)) {
+            (isPreyBlocked(this.getTarget()) || getPlayingTick() > 0)) {
             this.setTarget(null);
         }
         if (isFleeing()) {
@@ -1175,7 +1176,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return this.entityData.get(AGETICK) / 24000;
     }
 
-    public void setAgeInDays(int days) {
+    public void setAgeInDays(int days) {//TODO: Use vanill age system?
         this.entityData.set(AGETICK, days * 24000);
         refreshDimensions();
         if (!level.isClientSide) {
@@ -1191,6 +1192,24 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         refreshTexturePath();
         refreshDimensions();
         this.entityData.set(AGETICK, ticks);
+    }
+
+    public int getMatingTick() {
+        return entityData.get(MATING_TICK);
+    }
+
+    public void setMatingTick(int ticks) {
+        entityData.set(MATING_TICK, ticks);
+        ticksTillMate = ticks;
+    }
+
+    public int getPlayingTick() {
+        return entityData.get(PLAYING_TICK);
+    }
+
+    public void setPlayingTick(int ticks) {
+        entityData.set(PLAYING_TICK, ticks);
+        ticksTillPlay = ticks;
     }
 
     public int getHunger() {
@@ -1547,7 +1566,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                         } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
                             setMood(getMood() - 5);
                             if (getRandom().nextInt(5) == 0) {
-                                player.displayClientMessage(new TranslatableComponent("prehistoric.autotame", getName().getString()), true);
+                                player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
                                 setMood(getMood() - 25);
                                 tame(player);
                             }
