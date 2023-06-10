@@ -1,10 +1,14 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.TimePeriod;
+import dev.architectury.registry.registries.Registries;
+import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
@@ -20,18 +24,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public enum PrehistoricEntityType {
-    CHICKEN(EntityType.CHICKEN, PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
-    COW(EntityType.COW, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
-    DONKEY(EntityType.DONKEY, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
-    HORSE(EntityType.HORSE, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
-    LLAMA(EntityType.LLAMA, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
-    PARROT(EntityType.PARROT, PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
-    PIG(EntityType.PIG, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.OMNIVORE, Map.of()),
-    POLARBEAR(EntityType.POLAR_BEAR, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
-    RABBIT(EntityType.RABBIT, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
-    SHEEP(EntityType.SHEEP, PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    CHICKEN(vanilla(EntityType.CHICKEN), PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    COW(vanilla(EntityType.COW), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    DONKEY(vanilla(EntityType.DONKEY), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    HORSE(vanilla(EntityType.HORSE), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    LLAMA(vanilla(EntityType.LLAMA), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    PARROT(vanilla(EntityType.PARROT), PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    PIG(vanilla(EntityType.PIG), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.OMNIVORE, Map.of()),
+    POLARBEAR(vanilla(EntityType.POLAR_BEAR), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    RABBIT(vanilla(EntityType.RABBIT), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
+    SHEEP(vanilla(EntityType.SHEEP), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
     ALLIGATOR_GAR(PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE),
     ALLOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
     ANKYLOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
@@ -44,7 +49,7 @@ public enum PrehistoricEntityType {
     CONFUCIUSORNIS(PrehistoricMobType.BIRD, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     CRASSIGYRINUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE),
     DEINONYCHUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, Map.of("eggScale", 0.6f)),
-    DILOPHOSAURUS(ModEntities.DILOPHOSAURUS.get(), PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, Map.of("eggScale", 0.5f)),
+    DILOPHOSAURUS(ModEntities.DILOPHOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, Map.of("eggScale", 0.5f)),
     DIPLOCAULUS(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE),
     DIPLODOCUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     DRYOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of("eggScale", 0.6f)),
@@ -79,18 +84,18 @@ public enum PrehistoricEntityType {
     SPINOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCI_CARNIVORE),
     STEGOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     STURGEON(PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE),
-    THERIZINOSAURUS(ModEntities.THERIZINOSAURUS.get(), PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of()),
+    THERIZINOSAURUS(ModEntities.THERIZINOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of()),
     TIKTAALIK(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCI_CARNIVORE),
     TITANIS(PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.CARNIVORE),
-    TRICERATOPS(ModEntities.TRICERATOPS.get(), PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of("hasBoneItems", true)),
+    TRICERATOPS(ModEntities.TRICERATOPS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of("hasBoneItems", true)),
     TYRANNOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
     VELOCIRAPTOR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, Map.of("eggScale", 0.5f));
-    public final EntityType<? extends Entity> entity;
+    private final RegistrySupplier<? extends EntityType<? extends Entity>> entitySupplier;
     public final PrehistoricMobType mobType;
     public final TimePeriod timePeriod;
     public final Diet diet;
     public final String resourceName;
-    public final Component displayName;
+    public final Supplier<Component> displayName;
     private final boolean hasBoneItems;
     public final float eggScale;
     public Item dnaItem;
@@ -110,34 +115,34 @@ public enum PrehistoricEntityType {
     public Item fishItem;
 
     PrehistoricEntityType(PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet) {
-        this.entity = null;
+        this.entitySupplier = null;//TODO: Should not be null in final version
         this.mobType = mobType;
         this.timePeriod = timePeriod;
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
-        this.displayName = new TranslatableComponent("entity.fossil." + resourceName);
+        this.displayName = () -> new TranslatableComponent("entity.fossil." + resourceName);
         this.hasBoneItems = false;
         this.eggScale = 1;
     }
 
     PrehistoricEntityType(PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, Map<String, Object> attributes) {
-        this.entity = null;
+        this.entitySupplier = null;
         this.mobType = mobType;
         this.timePeriod = timePeriod;
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
-        this.displayName = new TranslatableComponent("entity.fossil." + resourceName);
+        this.displayName = () -> new TranslatableComponent("entity.fossil." + resourceName);
         this.hasBoneItems = (boolean) attributes.getOrDefault("hasBoneItems", false);
         this.eggScale = (float) attributes.getOrDefault("eggScale", (float) 1.0f);
     }
 
-    PrehistoricEntityType(EntityType<? extends Entity> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, Map<String, Object> attributes) {
-        this.entity = entity;
+    PrehistoricEntityType(RegistrySupplier<? extends EntityType<? extends Entity>> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, Map<String, Object> attributes) {
+        this.entitySupplier = entity;
         this.mobType = mobType;
         this.timePeriod = timePeriod;
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
-        this.displayName = entity.getDescription();
+        this.displayName = () -> entitySupplier.get().getDescription();
         this.hasBoneItems = (boolean) attributes.getOrDefault("hasBoneItems", false);
         this.eggScale = (float) attributes.getOrDefault("eggScale", (float) 1.0f);
     }
@@ -155,16 +160,16 @@ public enum PrehistoricEntityType {
                 registerItem("bone_unique_item", type, Item::new, item -> type.uniqueBoneItem = item);
             }
             if (type.mobType == PrehistoricMobType.FISH) {
-                FoodMappings.addFish(type.entity, 100);//TODO: Define value somewhere. Also should all dinos be added here?
+                if (type.entitySupplier != null) type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?
                 registerItem("fish", type, Item::new, item -> type.fishItem = item);
                 registerItem("egg_item", type, Item::new, item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.DINOSAUR) {
-                FoodMappings.addMeat(type.entity, 100);
+                if (type.entitySupplier != null) type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 registerItem("egg_item", type, p -> new DinoEggItem(type), item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.MAMMAL || type.mobType == PrehistoricMobType.VANILLA) {
                 registerItem("syringe", type, properties -> new MammalEmbryoItem(type), item -> type.embryoItem = item);
             } else if (type.mobType == PrehistoricMobType.BIRD || type.mobType == PrehistoricMobType.CHICKEN) {
-                FoodMappings.addMeat(type.entity, 100);
+                if (type.entitySupplier != null) type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 if (type.mobType == PrehistoricMobType.BIRD) {
                     registerItem("egg", type, Item::new, item -> type.birdEggItem = item);
                 }
@@ -187,6 +192,10 @@ public enum PrehistoricEntityType {
 
     private static void registerItem(String name, PrehistoricEntityType type, Function<Item.Properties, Item> item, Consumer<Item> listener) {
         ModItems.ITEMS.register(name + "_" + type.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FAITEMTAB))).listen(listener);
+    }
+
+    public EntityType<? extends Entity> entityType() {
+        return entitySupplier.get();
     }
 
     public @Nullable Item getDNAResult() {
@@ -248,5 +257,9 @@ public enum PrehistoricEntityType {
                 || mob instanceof Bat || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig")
                 || className.contains("Rabbit") || className.contains("Goat") || className.contains("Ferret") || className.contains("Hedgehog")
                 || className.contains("Sow") || className.contains("Hog"));
+    }
+
+    private static RegistrySupplier<EntityType<?>> vanilla(EntityType<? extends Entity> entity) {
+        return Registries.get(Fossil.MOD_ID).get(Registry.ENTITY_TYPE_REGISTRY).delegate(entity.arch$registryName());
     }
 }

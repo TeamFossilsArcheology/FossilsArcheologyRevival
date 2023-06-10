@@ -59,7 +59,7 @@ public class ModEvents {
             return;
         }
         ServerLevel level = (ServerLevel) parent.level;
-        Entity newEntity = embryo.entity.create(level);
+        Entity newEntity = embryo.entityType().create(level);
         int result = random.nextInt(100);
         if (newEntity instanceof AbstractHorse newHorse) {
             if (parent instanceof AbstractHorse parentHorse && parent.getClass().equals(newEntity.getClass())) {

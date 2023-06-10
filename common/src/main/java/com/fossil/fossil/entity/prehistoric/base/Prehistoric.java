@@ -1934,15 +1934,15 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob ageableMob) {
-        if (ageableMob instanceof Prehistoric) {
-            Entity baby = this.createChild();
-            Prehistoric prehistoric = (Prehistoric) baby;
-            prehistoric.setAgeInDays(0);
-            prehistoric.grow(0);
-            prehistoric.updateAbilities();
-            prehistoric.setNoAi(false);
-            return ((Prehistoric) baby);
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob otherParent) {
+        if (otherParent instanceof Prehistoric) {
+            Entity baby = type().entityType().create(level);
+            if (baby instanceof Prehistoric prehistoric) {
+                prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
+                        MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
+                prehistoric.grow(0);
+                return prehistoric;
+            }
         }
         return null;
     }
