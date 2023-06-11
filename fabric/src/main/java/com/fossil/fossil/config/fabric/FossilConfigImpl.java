@@ -3,7 +3,6 @@ package com.fossil.fossil.config.fabric;
 import eu.midnightdust.lib.config.MidnightConfig;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,22 +114,14 @@ public class FossilConfigImpl extends MidnightConfig {
     }
 
     public static void initFabricConfig() {
-        try {
-            Field entries = MidnightConfig.class.getDeclaredField("entries");
-            entries.setAccessible(true);
-            ArrayList<?> list = ((ArrayList<?>)entries.get(null));
-            Class<?> entryClass = Class.forName("eu.midnightdust.lib.config.MidnightConfig$EntryInfo");
-            Field entryField = entryClass.getDeclaredField("field");
-            entryField.setAccessible(true);
-            for (Object entryInfo : list) {
-                Field configField = (Field) entryField.get(entryInfo);
-                mappedEntries.put(configField.getName(), configField);
+        Field[] allFields = FossilConfigImpl.class.getDeclaredFields();
+        for (Field field : allFields) {
+            if (field.getAnnotation(Entry.class) != null) {
+                mappedEntries.put(field.getName(), field);
             }
-        } catch (IllegalAccessException | NoSuchFieldException | ClassNotFoundException e) {
-            throw new RuntimeException(e);
         }
-
     }
+
     public static boolean isEnabled(String field) {
         try {
             return (boolean) mappedEntries.get(field).get(null);
