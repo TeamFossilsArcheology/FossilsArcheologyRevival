@@ -9,6 +9,7 @@ import com.fossil.fossil.entity.ai.CacheMoveToBlockGoal;
 import com.fossil.fossil.entity.ai.DinoAIMating;
 import com.fossil.fossil.entity.ai.WhipSteering;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
+import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
@@ -76,7 +77,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
@@ -2109,8 +2109,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             if (attackDelays.length == 0) throw new IllegalArgumentException("Attack delays must not be empty");
         }
 
-        public ServerAttackAnimationInfo(Animation animation, int priority, int... attackDelays) {
-            this(animation.animationName, priority, (int) Math.round(animation.animationLength), attackDelays);
+        public ServerAttackAnimationInfo(AnimationManager.Animation animation, int priority, int... attackDelays) {
+            this(animation.animationId(), priority, (int) Math.round(animation.animationLength()), attackDelays);
         }
     }
 
@@ -2127,8 +2127,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             this.isLoop = isLoop;
         }
 
-        public ServerAnimationInfo(Animation animation, int priority) {
-            this(animation.animationName, priority, (int) Math.round(animation.animationLength), animation.loop == ILoopType.EDefaultLoopTypes.LOOP);
+        public ServerAnimationInfo(AnimationManager.Animation animation, int priority) {
+            this(animation.animationId(), priority, (int) Math.round(animation.animationLength()), animation.loop() == ILoopType.EDefaultLoopTypes.LOOP);
         }
     }
 

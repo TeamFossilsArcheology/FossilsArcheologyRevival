@@ -120,12 +120,12 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
                     player.displayClientMessage(EGG_HATCHED, false);
                 }
             }
-            prehistoric.moveTo(Mth.floor(x), Mth.floor(y) + 1, Mth.floor(z), level.random.nextFloat() * 360, 0);
             prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
                     MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
             prehistoric.grow(0);
-            level.addFreshEntity(entity);
         }
+        entity.moveTo(Mth.floor(x), Mth.floor(y) + 1, Mth.floor(z), level.random.nextFloat() * 360, 0);
+        level.addFreshEntity(entity);
         return entity;
     }
 

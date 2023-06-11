@@ -195,6 +195,9 @@ public enum PrehistoricEntityType {
     }
 
     public EntityType<? extends Entity> entityType() {
+        if (entitySupplier == null) {
+            return EntityType.SHEEP;
+        }
         return entitySupplier.get();
     }
 

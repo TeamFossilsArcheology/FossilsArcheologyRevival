@@ -5,6 +5,7 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.event.ModEvents;
@@ -16,6 +17,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraftforge.event.AddReloadListenerEvent;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -25,6 +27,11 @@ import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Fossil.MOD_ID)
 public class ForgeModEvents {
+
+    @SubscribeEvent
+    public void addCustomReloadListeners(AddReloadListenerEvent event) {
+        event.addListener(AnimationManager.ANIMATIONS);
+    }
 
     @SubscribeEvent
     public static void onKnockBack(LivingKnockBackEvent event) {

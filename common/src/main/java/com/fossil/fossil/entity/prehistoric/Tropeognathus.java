@@ -1,12 +1,11 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.entity.prehistoric.base.Pterosaurs;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -16,10 +15,10 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.resource.GeckoLibCache;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Tropeognathus extends Pterosaurs {
@@ -46,20 +45,20 @@ public class Tropeognathus extends Pterosaurs {
     public static final String SLEEP = "fa.tropeognathus.sleep";
 
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        var file = GeckoLibCache.getInstance().getAnimations().get(new ResourceLocation(Fossil.MOD_ID, "animations/" + ANIMATIONS));
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
-        file.animations().forEach((key, value) -> {
+        List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
+        for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
-            switch (key) {
-                case BITE_ATTACK -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 20);
-                case BITE_ATTACK_WATER -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 11);
-                case BITE_IN_AIR -> info = new ServerAttackAnimationInfo(value, ATTACKING_PRIORITY, 15);
-                case SWIM, WALK, RUN, FLY -> info = new ServerAnimationInfo(value, MOVING_PRIORITY);
-                case IDLE, IDLE_CALL, IDLE_LOOKAROUND, IDLE_PREEN, IDLE_SWIM -> info = new ServerAnimationInfo(value, IDLE_PRIORITY);
-                default -> info = new ServerAnimationInfo(value, DEFAULT_PRIORITY);
+            switch (animation.animationId()) {
+                case BITE_ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 20);
+                case BITE_ATTACK_WATER -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 11);
+                case BITE_IN_AIR -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 15);
+                case SWIM, WALK, RUN, FLY -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
+                case IDLE, IDLE_CALL, IDLE_LOOKAROUND, IDLE_PREEN, IDLE_SWIM -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
+                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
-            newMap.put(key, info);
-        });
+            newMap.put(animation.animationId(), info);
+        }
         return newMap;
     });
 
