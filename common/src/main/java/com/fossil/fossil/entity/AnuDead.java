@@ -32,13 +32,13 @@ import java.util.Collections;
 public class AnuDead extends LivingEntity {
     private static final int MAX_LIFESPAN = 5960;
 
-    public static AttributeSupplier.Builder createAttributes() {
-        return createLivingAttributes().add(Attributes.MAX_HEALTH, 300);
-    }
-
     public AnuDead(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
         noCulling = true;
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return createLivingAttributes().add(Attributes.MAX_HEALTH, 300);
     }
 
     @Override
@@ -128,6 +128,7 @@ public class AnuDead extends LivingEntity {
         public static TreasureRoom load(CompoundTag compoundTag) {
             return new TreasureRoom();
         }
+
         @Override
         public @NotNull CompoundTag save(CompoundTag compoundTag) {
             compoundTag.putBoolean("Spawned", true);

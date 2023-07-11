@@ -26,6 +26,11 @@ public class TarBlock extends ArchitecturyLiquidBlock {
         super(fluid, properties);
     }
 
+    @ExpectPlatform
+    public static TarBlock get(Supplier<? extends FlowingFluid> fluid, Properties properties) {
+        throw new NotImplementedException();
+    }
+
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
         if (entity instanceof TarSlime) {
@@ -50,10 +55,5 @@ public class TarBlock extends ArchitecturyLiquidBlock {
     @Override
     public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
         return false;
-    }
-
-    @ExpectPlatform
-    public static TarBlock get(Supplier<? extends FlowingFluid> fluid, Properties properties) {
-        throw new NotImplementedException();
     }
 }

@@ -63,6 +63,10 @@ public class CultivateMenu extends AbstractContainerMenu {
         this.addDataSlots(containerData);
     }
 
+    public static int getItemFuelTime(ItemStack stack) {
+        return 40;
+    }
+
     public boolean canPutStackInInput(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
             WorktableRecipe recipe = ModRecipes.getCultivateRecipeForItem(stack, level);
@@ -80,24 +84,24 @@ public class CultivateMenu extends AbstractContainerMenu {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
             if (index == OUTPUT_SLOT_ID) {
-                if (!moveItemStackTo(current, 3, inventorySlots+3, true)) {
+                if (!moveItemStackTo(current, 3, inventorySlots + 3, true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index != INPUT_SLOT_ID && index != FUEL_SLOT_ID) {
                 if (ModRecipes.getCultivateRecipeForItem(current, level) != null) {
-                    if (!this.moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID+1, false)) {
+                    if (!this.moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (ModRecipes.CULTIVATE_FUEL_VALUES.containsKey(current.getItem())) {
-                    if (!this.moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID+1, false)) {
+                    if (!this.moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 3 && index < 30 && !this.moveItemStackTo(current, 30, inventorySlots+3, false)) {
+                } else if (index >= 3 && index < 30 && !this.moveItemStackTo(current, 30, inventorySlots + 3, false)) {
                     return ItemStack.EMPTY;
-                } else if (index >= 30 && index < inventorySlots+3 && !this.moveItemStackTo(current, 3, 30, false)) {
+                } else if (index >= 30 && index < inventorySlots + 3 && !this.moveItemStackTo(current, 3, 30, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(current, 3, inventorySlots+3, false)) {
+            } else if (!this.moveItemStackTo(current, 3, inventorySlots + 3, false)) {
                 return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {
@@ -125,10 +129,6 @@ public class CultivateMenu extends AbstractContainerMenu {
 
     public int getCultivationTime() {
         return containerData.get(2);
-    }
-
-    public static int getItemFuelTime(ItemStack stack) {
-        return 40;
     }
 
     @Override

@@ -28,6 +28,26 @@ public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements 
         super(context);
     }
 
+    private static int getLightColor(StoneTablet entity, float centerX, float centerY) {
+        int x = entity.getBlockX();
+        int y = Mth.floor(entity.getY() + centerY / 16);
+        int z = entity.getBlockZ();
+        Direction direction = entity.getDirection();
+        if (direction == Direction.NORTH) {
+            x = Mth.floor(entity.getX() + centerX / 16);
+        }
+        if (direction == Direction.WEST) {
+            z = Mth.floor(entity.getZ() - centerX / 16);
+        }
+        if (direction == Direction.SOUTH) {
+            x = Mth.floor(entity.getX() - centerX / 16);
+        }
+        if (direction == Direction.EAST) {
+            z = Mth.floor(entity.getZ() + centerX / 16);
+        }
+        return LevelRenderer.getLightColor(entity.level, new BlockPos(x, y, z));
+    }
+
     @Override
     public void render(StoneTablet entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         poseStack.pushPose();
@@ -73,26 +93,6 @@ public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements 
                         int l, int m, int n) {
         vertexConsumer.vertex(matrix4f, x, y, z).color(255, 255, 255, 255).uv(u, v).overlayCoords(OverlayTexture.NO_OVERLAY)
                 .uv2(n).normal(matrix3f, k, l, m).endVertex();
-    }
-
-    private static int getLightColor(StoneTablet entity, float centerX, float centerY) {
-        int x = entity.getBlockX();
-        int y = Mth.floor(entity.getY() + centerY / 16);
-        int z = entity.getBlockZ();
-        Direction direction = entity.getDirection();
-        if (direction == Direction.NORTH) {
-            x = Mth.floor(entity.getX() + centerX / 16);
-        }
-        if (direction == Direction.WEST) {
-            z = Mth.floor(entity.getZ() - centerX / 16);
-        }
-        if (direction == Direction.SOUTH) {
-            x = Mth.floor(entity.getX() - centerX / 16);
-        }
-        if (direction == Direction.EAST) {
-            z = Mth.floor(entity.getZ() + centerX / 16);
-        }
-        return LevelRenderer.getLightColor(entity.level, new BlockPos(x, y, z));
     }
 
     @Override

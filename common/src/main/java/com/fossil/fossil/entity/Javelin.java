@@ -38,13 +38,6 @@ public class Javelin extends AbstractArrow {
         setBaseDamage(getDamage(tier, ancient));
     }
 
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        entityData.define(ANCIENT, false);
-        entityData.define(TIER_ID, 0);
-    }
-
     private static double getDamage(Tier tier, boolean ancient) {
         if (ancient) {
             return 10;
@@ -71,6 +64,13 @@ public class Javelin extends AbstractArrow {
     }
 
     @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(ANCIENT, false);
+        entityData.define(TIER_ID, 0);
+    }
+
+    @Override
     public void tick() {
         if (isAncient() && inGround && !lightning) {
             if (random.nextInt(100) < 30) {
@@ -91,15 +91,15 @@ public class Javelin extends AbstractArrow {
 
     }
 
-    public void setTier(Tiers tier) {
-        entityData.set(TIER_ID, tier.ordinal());
-    }
-
     public Tier getTier() {
         if (!entityData.get(ANCIENT)) {
             return Tiers.values()[entityData.get(TIER_ID)];
         }
         return Tiers.WOOD;
+    }
+
+    public void setTier(Tiers tier) {
+        entityData.set(TIER_ID, tier.ordinal());
     }
 
     public boolean isAncient() {

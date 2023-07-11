@@ -33,8 +33,8 @@ public class AshDiskFeature extends Feature<AshDiskConfiguration> {
         AshDiskConfiguration config = context.config();
         boolean placed = false;
         int radius = config.radius().sample(context.random());
-        for (int x = blockPos.getX() - radius - (int)(context.random().nextFloat() * radius); x <= blockPos.getX() + radius + (int)(context.random().nextFloat() * radius); ++x) {
-            for (int z = blockPos.getZ() - radius - (int)(context.random().nextFloat() * radius); z <= blockPos.getZ() + radius + (int)(context.random().nextFloat() * radius); ++z) {
+        for (int x = blockPos.getX() - radius - (int) (context.random().nextFloat() * radius); x <= blockPos.getX() + radius + (int) (context.random().nextFloat() * radius); ++x) {
+            for (int z = blockPos.getZ() - radius - (int) (context.random().nextFloat() * radius); z <= blockPos.getZ() + radius + (int) (context.random().nextFloat() * radius); ++z) {
                 int zOffset = z - blockPos.getZ();
                 int xOffset = x - blockPos.getX();
                 if (xOffset * xOffset + zOffset * zOffset > radius * radius) continue;

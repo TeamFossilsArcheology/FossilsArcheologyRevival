@@ -62,7 +62,9 @@
   },
   "custom": {
     "injected_interfaces": {
-      "net/minecraft/class_3218": ["com/fossil/fossil/fabric/MultiPartServerLevel"]
+      "net/minecraft/class_3218": [
+        "com/fossil/fossil/fabric/MultiPartServerLevel"
+      ]
     },
     "cardinal-components": [
       "fossil:mammal"

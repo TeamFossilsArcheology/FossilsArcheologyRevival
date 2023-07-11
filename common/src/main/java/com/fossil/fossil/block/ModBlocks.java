@@ -32,11 +32,6 @@ import java.util.function.ToIntFunction;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS =
             DeferredRegister.create(Fossil.MOD_ID, Registry.BLOCK_REGISTRY);
-
-    private static ToIntFunction<BlockState> activeBlockEmission(int lightValue) {
-        return arg -> arg.getValue(CustomEntityBlock.ACTIVE) ? lightValue : 0;
-    }
-
     public static final RegistrySupplier<BubbleBlowerBlock> BUBBLE_BLOWER = registerBlock("bubble_blower",
             () -> new BubbleBlowerBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3).sound(SoundType.METAL).requiresCorrectToolForDrops())
     );
@@ -107,15 +102,6 @@ public class ModBlocks {
             () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())));
     public static final RegistrySupplier<StairBlock> ANCIENT_WOOD_STAIRS = registerBlock("ancient_wood_stairs",
             () -> new StairBlock(ANCIENT_WOOD.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())));
-
-    private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
-        return false;
-    }
-
-    private static boolean always(BlockState state, BlockGetter blockGetter, BlockPos pos) {
-        return true;
-    }
-
     public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",
             () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(3f, 25f).noOcclusion()
                     .isViewBlocking(ModBlocks::never)));
@@ -137,7 +123,6 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_BRICKS = registerBlock("volcanic_bricks",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1.5f).requiresCorrectToolForDrops()));
-
     public static final RegistrySupplier<Block> VOLCANIC_BRICK_SLAB = registerBlock("volcanic_brick_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())));
     public static final RegistrySupplier<Block> VOLCANIC_BRICK_STAIRS = registerBlock("volcanic_brick_stairs",
@@ -152,7 +137,6 @@ public class ModBlocks {
             () -> new StairBlock(VOLCANIC_TILES.get().defaultBlockState(), BlockBehaviour.Properties.copy(VOLCANIC_TILES.get())));
     public static final RegistrySupplier<Block> VOLCANIC_TILE_WALL = registerBlock("volcanic_tile_wall",
             () -> new WallBlock(BlockBehaviour.Properties.copy(VOLCANIC_TILES.get())));
-
     public static final RegistrySupplier<Block> CORDAITES_PLANKS = registerBlock("cordaites_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> CORDAITES_STAIRS = registerBlock("cordaites_stairs",
@@ -173,7 +157,6 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> CORDAITES_PRESSURE_PLATE = registerBlock("cordaites_pressure_plate",
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
-
     public static final RegistrySupplier<Block> CORDAITES_LOG = registerBlock("cordaites_log",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
     public static final RegistrySupplier<Block> CORDAITES_WOOD = registerBlock("cordaites_wood",
@@ -182,12 +165,10 @@ public class ModBlocks {
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
     public static final RegistrySupplier<Block> STRIPPED_CORDAITES_WOOD = registerBlock("stripped_cordaites_wood",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
-
     public static final RegistrySupplier<Block> CORDAITES_LEAVES = registerBlock("cordaites_leaves",
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> CORDAITES_SAPLING = registerBlock("cordaites_sapling",
             () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
-
     public static final RegistrySupplier<Block> SIGILLARIA_PLANKS = registerBlock("sigillaria_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> SIGILLARIA_STAIRS = registerBlock("sigillaria_stairs",
@@ -208,7 +189,6 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SIGILLARIA_PRESSURE_PLATE = registerBlock("sigillaria_pressure_plate",
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
-
     public static final RegistrySupplier<Block> SIGILLARIA_LOG = registerBlock("sigillaria_log",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
     public static final RegistrySupplier<Block> SIGILLARIA_WOOD = registerBlock("sigillaria_wood",
@@ -217,30 +197,55 @@ public class ModBlocks {
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
     public static final RegistrySupplier<Block> STRIPPED_SIGILLARIA_WOOD = registerBlock("stripped_sigillaria_wood",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
-
     public static final RegistrySupplier<Block> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> SIGILLARIA_SAPLING = registerBlock("sigillaria_sapling",
             () -> new SaplingBlock(new SigillariaTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
-
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RED_FIGURE = registerVolute(VaseBlock.VaseVariant.RED_FIGURE);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_BLACK_FIGURE = registerVolute(VaseBlock.VaseVariant.BLACK_FIGURE);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_PORCELAIN = registerVolute(VaseBlock.VaseVariant.PORCELAIN);
-
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_DAMAGED = registerKylix(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RESTORED = registerKylix(VaseBlock.VaseVariant.RESTORED);
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RED_FIGURE = registerKylix(VaseBlock.VaseVariant.RED_FIGURE);
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_BLACK_FIGURE = registerKylix(VaseBlock.VaseVariant.BLACK_FIGURE);
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_PORCELAIN = registerKylix(VaseBlock.VaseVariant.PORCELAIN);
-
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = registerAmphora(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = registerAmphora(VaseBlock.VaseVariant.RESTORED);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RED_FIGURE = registerAmphora(VaseBlock.VaseVariant.RED_FIGURE);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_BLACK_FIGURE = registerAmphora(VaseBlock.VaseVariant.BLACK_FIGURE);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_PORCELAIN = registerAmphora(VaseBlock.VaseVariant.PORCELAIN);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFigurine("steve_broken");
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFigurine("steve_damaged");
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFigurine("steve_pristine");
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_BROKEN = registerFigurine("skeleton_broken");
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DAMAGED = registerFigurine("skeleton_damaged");
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerFigurine("skeleton_pristine");
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_BROKEN = registerFigurine("zombie_broken");
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DAMAGED = registerFigurine("zombie_damaged");
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerFigurine("zombie_pristine");
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_BROKEN = registerFigurine("enderman_broken");
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DAMAGED = registerFigurine("enderman_damaged");
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerFigurine("enderman_pristine");
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_BROKEN = registerFigurine("piglin_zombie_broken");
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_DAMAGED = registerFigurine("piglin_zombie_damaged");
+    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_PRISTINE = registerFigurine("piglin_zombie_pristine");
+    public static final RegistrySupplier<FigurineBlock> MYSTERIOUS_FIGURINE = registerFigurine("mysterious");
+    public static final RegistrySupplier<Block> FERNS = registerBlockWithoutBlockItem("ferns", FernsBlock::new);
+
+    private static ToIntFunction<BlockState> activeBlockEmission(int lightValue) {
+        return arg -> arg.getValue(CustomEntityBlock.ACTIVE) ? lightValue : 0;
+    }
+
+    private static boolean never(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return false;
+    }
+
+    private static boolean always(BlockState state, BlockGetter blockGetter, BlockPos pos) {
+        return true;
+    }
 
     private static RegistrySupplier<VaseBlock> registerVolute(VaseBlock.VaseVariant variant) {
         return registerVase("volute", variant, () -> new VoluteVaseBlock(variant));
@@ -260,23 +265,6 @@ public class ModBlocks {
         return toReturn;
     }
 
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFigurine("steve_broken");
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFigurine("steve_damaged");
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFigurine("steve_pristine");
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_BROKEN = registerFigurine("skeleton_broken");
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DAMAGED = registerFigurine("skeleton_damaged");
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerFigurine("skeleton_pristine");
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_BROKEN = registerFigurine("zombie_broken");
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DAMAGED = registerFigurine("zombie_damaged");
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerFigurine("zombie_pristine");
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_BROKEN = registerFigurine("enderman_broken");
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DAMAGED = registerFigurine("enderman_damaged");
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerFigurine("enderman_pristine");
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_BROKEN = registerFigurine("piglin_zombie_broken");
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_DAMAGED = registerFigurine("piglin_zombie_damaged");
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_PRISTINE = registerFigurine("piglin_zombie_pristine");
-    public static final RegistrySupplier<FigurineBlock> MYSTERIOUS_FIGURINE = registerFigurine("mysterious");
-
     private static RegistrySupplier<FigurineBlock> registerFigurine(String name) {
         return registerBlock("figurine_" + name, FigurineBlock::new);
     }
@@ -285,8 +273,6 @@ public class ModBlocks {
         return registerBlock(name,
                 () -> new ShortFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
     }
-
-    public static final RegistrySupplier<Block> FERNS = registerBlockWithoutBlockItem("ferns", FernsBlock::new);
 
     public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape... shapes) {
         return registerBlock(name,

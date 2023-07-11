@@ -9,6 +9,7 @@ import java.util.EnumSet;
 public class FlyAroundGoal extends Goal {
     private AnuBoss anu;
     private BlockPos targetPos;
+
     public FlyAroundGoal(AnuBoss anu) {
         this.anu = anu;
         targetPos = anu.blockPosition();
@@ -25,7 +26,7 @@ public class FlyAroundGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-       // if ()
+        // if ()
         if (!anu.level.isEmptyBlock(targetPos) || targetPos.getY() < anu.level.getMinBuildHeight()) {
             return false;
         }

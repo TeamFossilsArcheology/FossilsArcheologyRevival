@@ -23,8 +23,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-
     public static final String ANIMATIONS = "dilophosaurus.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String SIT1 = "animation.dilophosaurus.sit1";
@@ -45,7 +43,6 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
     public static final String CALL = "animation.dilophosaurus.call";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     public static final String ATTACK2 = "animation.dilophosaurus.attack2";
-
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
@@ -61,6 +58,8 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
         }
         return newMap;
     });
+    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+
     public Dilophosaurus(EntityType<Dilophosaurus> type, Level level) {
         super(type, level, false, false, 0.18f, 1.4f, 0, 0, 4, 8, 1, 8, 8, 40, 0.25, 0.35, 0, 5);
     }

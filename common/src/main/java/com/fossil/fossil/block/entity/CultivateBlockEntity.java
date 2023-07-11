@@ -37,8 +37,6 @@ public class CultivateBlockEntity extends CustomBlockEntity {
     public static final TagKey<Item> LIMBLESS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_limbless"));
     public static final TagKey<Item> INSECTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_insects"));
     public static final TagKey<Item> PLANTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_plants"));
-
-    protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
     private final ContainerData dataAccess = new ContainerData() {
 
         @Override
@@ -71,6 +69,7 @@ public class CultivateBlockEntity extends CustomBlockEntity {
             return 3;
         }
     };
+    protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
 
     public CultivateBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.CULTIVATE.get(), blockPos, blockState);
@@ -134,6 +133,20 @@ public class CultivateBlockEntity extends CustomBlockEntity {
         }
     }
 
+    public static CultivateBlock.EmbryoType getDNAType(CultivateBlockEntity blockEntity) {
+        ItemStack input = blockEntity.items.get(CultivateMenu.INPUT_SLOT_ID);
+        if (!input.isEmpty()) {
+            if (input.is(PLANTS)) {
+                return CultivateBlock.EmbryoType.PLANT;
+            } else if (input.is(LIMBLESS)) {
+                return CultivateBlock.EmbryoType.LIMBLESS;
+            } else if (input.is(INSECTS)) {
+                return CultivateBlock.EmbryoType.INSECT;
+            }
+        }
+        return CultivateBlock.EmbryoType.GENERIC;
+    }
+
     protected boolean canProcess() {
         ItemStack inputStack = items.get(CultivateMenu.INPUT_SLOT_ID);
         if (!inputStack.isEmpty()) {
@@ -170,20 +183,6 @@ public class CultivateBlockEntity extends CustomBlockEntity {
     @Override
     protected @NotNull Component getDefaultName() {
         return new TranslatableComponent("container.fossil.cultivate");
-    }
-
-    public static CultivateBlock.EmbryoType getDNAType(CultivateBlockEntity blockEntity) {
-        ItemStack input = blockEntity.items.get(CultivateMenu.INPUT_SLOT_ID);
-        if (!input.isEmpty()) {
-            if (input.is(PLANTS)) {
-                return CultivateBlock.EmbryoType.PLANT;
-            } else if (input.is(LIMBLESS)) {
-                return CultivateBlock.EmbryoType.LIMBLESS;
-            } else if (input.is(INSECTS)) {
-                return CultivateBlock.EmbryoType.INSECT;
-            }
-        }
-        return CultivateBlock.EmbryoType.GENERIC;
     }
 
     @Override

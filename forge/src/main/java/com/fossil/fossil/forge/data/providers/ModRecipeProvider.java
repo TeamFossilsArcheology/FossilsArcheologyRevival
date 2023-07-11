@@ -49,12 +49,12 @@ public class ModRecipeProvider extends RecipeProvider {
             ToyBallItem ball = entry.getValue().get();
             if (color == DyeColor.WHITE) continue;
             ShapelessRecipeBuilder.shapeless(ball).requires(colorToDye(color)).requires(white).unlockedBy("has_ball",
-                    RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID+":toy_ball_white_to_" + color.getName());
+                    RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID + ":toy_ball_white_to_" + color.getName());
             ShapelessRecipeBuilder.shapeless(white).requires(Items.WHITE_DYE).requires(ball).unlockedBy("has_ball",
-                    RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID+":toy_ball_" + color.getName() + "_to_white");
+                    RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID + ":toy_ball_" + color.getName() + "_to_white");
         }
         for (Map.Entry<String, RegistrySupplier<ToyTetheredLogItem>> entry : ModItems.TOY_TETHERED_LOGS.entrySet()) {
-            var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:"+entry.getKey()+"_log"));
+            var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_log"));
             block.ifPresent(log -> ShapedRecipeBuilder.shaped(entry.getValue().get()).define('S', Items.STRING).define('L', log)
                     .pattern("S").pattern("S").pattern("L").unlockedBy("has_log", RecipeProvider.has(log)).save(consumer));
         }
@@ -65,7 +65,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .define('L', Blocks.WARPED_STEM).pattern("S").pattern("S").pattern("L").unlockedBy("has_log",
                         RecipeProvider.has(Blocks.WARPED_STEM)).save(consumer);
         for (Map.Entry<String, RegistrySupplier<ToyScratchingPostItem>> entry : ModItems.TOY_SCRATCHING_POSTS.entrySet()) {
-            var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:"+entry.getKey()+"_slab"));
+            var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_slab"));
             block.ifPresent(slab -> ShapedRecipeBuilder.shaped(entry.getValue().get()).define('S', Items.STICK).define('X', slab)
                     .define('W', ItemTags.WOOL).pattern("WWW").pattern("WSW").pattern(" X ").unlockedBy("has_slab",
                             RecipeProvider.has(slab)).save(consumer));

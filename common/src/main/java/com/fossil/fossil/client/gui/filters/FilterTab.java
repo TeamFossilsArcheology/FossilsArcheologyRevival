@@ -34,6 +34,12 @@ public class FilterTab {
         }
     }
 
+    public static FilterTab build(int i, int j, List<Filter> filters, ScreenAccess access) {
+        FilterTab tab = new FilterTab(i, j, filters);
+        tab.buttons.forEach(access::addWidget);
+        return tab;
+    }
+
     public List<Item> getItems() {
         List<Item> list = new ArrayList<>();
         var enabledButton = buttons.stream().filter(button -> button.filter.enabled).findFirst();
@@ -72,12 +78,6 @@ public class FilterTab {
 
     public void disableButtons() {
         buttons.forEach(FilterButton::setInActive);
-    }
-
-    public static FilterTab build(int i, int j, List<Filter> filters, ScreenAccess access) {
-        FilterTab tab = new FilterTab(i, j, filters);
-        tab.buttons.forEach(access::addWidget);
-        return tab;
     }
 
     public static class FilterButton extends Button {

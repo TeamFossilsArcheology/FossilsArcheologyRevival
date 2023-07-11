@@ -87,6 +87,11 @@ import java.util.*;
 
 public abstract class Prehistoric extends TamableAnimal implements IPrehistoricAI, PlayerRideableJumping, EntitySpawnExtension, IAnimatable {
 
+    public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
+    public static final int IDLE_PRIORITY = 0;
+    public static final int MOVING_PRIORITY = 1;
+    public static final int DEFAULT_PRIORITY = 2;
+    public static final int ATTACKING_PRIORITY = 3;
     private static final EntityDataAccessor<Integer> AGETICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MATING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
@@ -102,9 +107,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private static final EntityDataAccessor<Boolean> AGINGDISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<ItemStack> HOLDING_IN_MOUTH = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
-
-    private Gender gender; // should be effectively final
-    private final boolean isMultiPart;
     public final double baseDamage;
     public final double maxDamage;
     public final double baseHealth;
@@ -120,6 +122,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public final float maxKnockBackResistance;
     public final int teenAgeDays;
     public final int adultAgeDays;
+    // public final Item uncultivatedEggItem;
+    public final boolean isCannibalistic;
+    private final boolean isMultiPart;
+    private final WhipSteering steering = new WhipSteering();
     public OrderType currentOrder;
     public boolean hasFeatherToggle = false;
     public boolean featherToggle;
@@ -138,10 +144,13 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public boolean isDaytime;
     public float ridingXZ;
     public boolean shouldWander = true;
+    public ResourceLocation textureLocation;
+    public DinoAIMating matingGoal;
     protected boolean breaksBlocks;
     protected int nearByMobsAllowed;
     protected float playerJumpPendingScale;
     protected boolean isJumping;
+    private Gender gender; // should be effectively final
     // private Animation currentAnimation;
     private boolean droppedBiofossil = false;
     private int changedAnimationAt;
@@ -150,11 +159,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private int cathermalSleepCooldown = 0;
     private int ticksClimbing = 0;
     private float eggScale = 1.0F;
-    // public final Item uncultivatedEggItem;
-    public final boolean isCannibalistic;
-    public ResourceLocation textureLocation;
-    public DinoAIMating matingGoal;
-    private final WhipSteering steering = new WhipSteering();
 
     public Prehistoric(
             EntityType<? extends Prehistoric> entityType,
@@ -205,122 +209,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         setPersistenceRequired();
     }
 
-
-    public boolean isCustomMultiPart() {
-        return isMultiPart;
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-        for (int i = 0; i < getCustomParts().length; ++i) {
-            this.getCustomParts()[i].setId(id + i + 1);
-        }
-    }
-
-    /**
-     *
-     * @return The child parts of this entity.
-     * @implSpec On the forge classpath this implementation should return objects that inherit from PartEntity instead of Entity.
-     */
-    public abstract Entity[] getCustomParts();
-
-    @Override
-    public boolean isPickable() {
-        return !isCustomMultiPart();
-    }
-    @Override
-    public boolean canBeCollidedWith() {
-        return !isCustomMultiPart();
-    }
-    @Override
-    protected void doPush(Entity entity) {
-        if (!isCustomMultiPart()) {
-            super.doPush(entity);
-        }
-    }
-
-    @Override
-    public boolean isColliding(BlockPos pos, BlockState state) {
-        if (isCustomMultiPart()) {
-            VoxelShape voxelShape = state.getCollisionShape(this.level, pos, CollisionContext.of(this));
-            VoxelShape voxelShape2 = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
-            return Shapes.joinIsNotEmpty(voxelShape2, Shapes.create(getCustomParts()[0].getBoundingBox()), BooleanOp.AND);
-        }
-        return super.isColliding(pos, state);
-    }
-
-    @Override
-    public float getPickRadius() {
-        if (isCustomMultiPart()) {
-            //return Math.max(getDimensions(Pose.STANDING).width - getBbWidth(), 0);
-            return getType().getWidth()*getScale() - getBbWidth();
-        }
-        return super.getPickRadius();
-    }
-
-    @Override
-    protected AABB makeBoundingBox() {
-        if (isCustomMultiPart()) {
-            //Using the position of the custom part will not work because its behind by 1 tick?
-            // return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(getCustomParts()[0].position());
-            return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(position());
-        }
-        return super.makeBoundingBox();
-    }
-
-
-    @Override
-    public void remove(RemovalReason reason) {
-        super.remove(reason);
-        for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
-            if (availableGoal.getGoal() instanceof CacheMoveToBlockGoal goal) {
-                goal.stop();
-            }
-        }
-    }
-    public boolean hurt(Entity part, DamageSource source, float damage) {
-        return super.hurt(source, damage);
-    }
-
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-            .add(Attributes.MAX_HEALTH, 20D)
-            .add(Attributes.ATTACK_DAMAGE, 2D);
-    }
-
-    public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
-
-    public void disableCustomAI(byte type, boolean disableAI) {
-        CompoundTag tag = entityData.get(DEBUG).copy();
-        switch (type) {
-            case 0 -> setNoAi(disableAI);
-            case 1 -> {
-                tag.putBoolean("disableGoalAI", disableAI);
-            }
-            case 2 -> {
-                tag.putBoolean("disableMoveAI", disableAI);
-            }
-            case 3 -> {
-                tag.putBoolean("disableLookAI", disableAI);
-            }
-        }
-        entityData.set(DEBUG, tag);
-    }
-
-
-    @Override
-    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
-        //return this.getType().getDimensions().scale(this.getScale());
-        return this.getType().getDimensions();
-    }
-
-    @Override
-    protected void registerGoals() {
-        this.matingGoal = new DinoAIMating(this, getAttributeValue(Attributes.MOVEMENT_SPEED));
-        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(2, matingGoal);
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0f));
+                .add(Attributes.MAX_HEALTH, 20D)
+                .add(Attributes.ATTACK_DAMAGE, 2D);
     }
 
     public static boolean isEntitySmallerThan(Entity entity, float size) {
@@ -347,9 +239,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public static void knockBackMob(Entity entity, double xMotion, double yMotion, double zMotion) {
         double horizontalSpeed = Math.sqrt(xMotion * xMotion + zMotion * zMotion);
         Vec3 knockBack = entity.getDeltaMovement().scale(0.5).add(
-            -xMotion / horizontalSpeed,
-            yMotion,
-            -zMotion / horizontalSpeed
+                -xMotion / horizontalSpeed,
+                yMotion,
+                -zMotion / horizontalSpeed
         );
         entity.setDeltaMovement(knockBack);
         entity.hurtMarked = true;
@@ -361,6 +253,115 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (!state.requiresCorrectToolForDrops()) return false;
         if (state.is(BlockTags.NEEDS_DIAMOND_TOOL)) return false;
         return true;
+    }
+
+    public boolean isCustomMultiPart() {
+        return isMultiPart;
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        for (int i = 0; i < getCustomParts().length; ++i) {
+            this.getCustomParts()[i].setId(id + i + 1);
+        }
+    }
+
+    /**
+     * @return The child parts of this entity.
+     * @implSpec On the forge classpath this implementation should return objects that inherit from PartEntity instead of Entity.
+     */
+    public abstract Entity[] getCustomParts();
+
+    @Override
+    public boolean isPickable() {
+        return !isCustomMultiPart();
+    }
+
+    @Override
+    public boolean canBeCollidedWith() {
+        return !isCustomMultiPart();
+    }
+
+    @Override
+    protected void doPush(Entity entity) {
+        if (!isCustomMultiPart()) {
+            super.doPush(entity);
+        }
+    }
+
+    @Override
+    public boolean isColliding(BlockPos pos, BlockState state) {
+        if (isCustomMultiPart()) {
+            VoxelShape voxelShape = state.getCollisionShape(this.level, pos, CollisionContext.of(this));
+            VoxelShape voxelShape2 = voxelShape.move(pos.getX(), pos.getY(), pos.getZ());
+            return Shapes.joinIsNotEmpty(voxelShape2, Shapes.create(getCustomParts()[0].getBoundingBox()), BooleanOp.AND);
+        }
+        return super.isColliding(pos, state);
+    }
+
+    @Override
+    public float getPickRadius() {
+        if (isCustomMultiPart()) {
+            //return Math.max(getDimensions(Pose.STANDING).width - getBbWidth(), 0);
+            return getType().getWidth() * getScale() - getBbWidth();
+        }
+        return super.getPickRadius();
+    }
+
+    @Override
+    protected AABB makeBoundingBox() {
+        if (isCustomMultiPart()) {
+            //Using the position of the custom part will not work because its behind by 1 tick?
+            // return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(getCustomParts()[0].position());
+            return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(position());
+        }
+        return super.makeBoundingBox();
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+        for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
+            if (availableGoal.getGoal() instanceof CacheMoveToBlockGoal goal) {
+                goal.stop();
+            }
+        }
+    }
+
+    public boolean hurt(Entity part, DamageSource source, float damage) {
+        return super.hurt(source, damage);
+    }
+
+    public void disableCustomAI(byte type, boolean disableAI) {
+        CompoundTag tag = entityData.get(DEBUG).copy();
+        switch (type) {
+            case 0 -> setNoAi(disableAI);
+            case 1 -> {
+                tag.putBoolean("disableGoalAI", disableAI);
+            }
+            case 2 -> {
+                tag.putBoolean("disableMoveAI", disableAI);
+            }
+            case 3 -> {
+                tag.putBoolean("disableLookAI", disableAI);
+            }
+        }
+        entityData.set(DEBUG, tag);
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
+        //return this.getType().getDimensions().scale(this.getScale());
+        return this.getType().getDimensions();
+    }
+
+    @Override
+    protected void registerGoals() {
+        this.matingGoal = new DinoAIMating(this, getAttributeValue(Attributes.MOVEMENT_SPEED));
+        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+        this.goalSelector.addGoal(2, matingGoal);
+        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0f));
     }
 
     @Override
@@ -433,7 +434,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         compound.putInt("CathermalTimer", this.cathermalSleepCooldown);
     }
 
-
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
@@ -488,11 +488,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public SpawnGroupData finalizeSpawn(
-        ServerLevelAccessor levelIn,
-        DifficultyInstance difficultyIn,
-        MobSpawnType reason,
-        @Nullable SpawnGroupData spawnDataIn,
-        @Nullable CompoundTag dataTag
+            ServerLevelAccessor levelIn,
+            DifficultyInstance difficultyIn,
+            MobSpawnType reason,
+            @Nullable SpawnGroupData spawnDataIn,
+            @Nullable CompoundTag dataTag
     ) {
         this.getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
         if (spawnDataIn instanceof PrehistoricGroupData prehistoricGroupData) {
@@ -531,11 +531,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     @Override
     public boolean isImmobile() {
         return this.getHealth() <= 0.0F ||
-            isOrderedToSit() ||
-            this.isSkeleton() ||
-            this.isActuallyWeak() ||
-            this.isVehicle() ||
-            this.isSleeping();
+                isOrderedToSit() ||
+                this.isSkeleton() ||
+                this.isActuallyWeak() ||
+                this.isVehicle() ||
+                this.isSleeping();
     }
 
     @Override
@@ -561,16 +561,16 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     int y = Mth.floor(this.getY() + dy);
                     int z = Mth.floor(this.getZ() - r);
                     if (this.getY() + dy >= 0 &&
-                        this.getY() + dy <= this.level.getHeight() &&
-                        FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type().diet) != 0
+                            this.getY() + dy <= this.level.getHeight() &&
+                            FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type().diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
                     }
 
                     if (this.getY() + dy >= 0 &&
-                        this.getY() + dy <= this.level.getHeight() &&
-                        FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type().diet) != 0
+                            this.getY() + dy <= this.level.getHeight() &&
+                            FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type().diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -585,16 +585,16 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     int z = Mth.floor(this.getZ() - r);
 
                     if (this.getY() + dy >= 0 &&
-                        this.getY() + dy <= this.level.getHeight() &&
-                        FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type().diet) != 0
+                            this.getY() + dy <= this.level.getHeight() &&
+                            FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type().diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
                     }
 
                     if (this.getY() + dy >= 0 &&
-                        this.getY() + dy <= this.level.getHeight() &&
-                        FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type().diet) != 0
+                            this.getY() + dy <= this.level.getHeight() &&
+                            FoodMappings.getFoodAmount(this.level.getBlockState(new BlockPos(x, y, z)).getBlock(), type().diet) != 0
                     ) {
                         pos = new BlockPos(x, y, z);
                         return pos;
@@ -631,10 +631,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public boolean isPlantBlock(BlockState block) {
         return block.getMaterial() == Material.CACTUS ||
-            block.getMaterial() == Material.PLANT ||
-            block.getMaterial() == Material.LEAVES ||
-            block.getMaterial() == Material.MOSS ||
-            block.getMaterial() == Material.VEGETABLE;
+                block.getMaterial() == Material.PLANT ||
+                block.getMaterial() == Material.LEAVES ||
+                block.getMaterial() == Material.MOSS ||
+                block.getMaterial() == Material.VEGETABLE;
     }
 
     public boolean canSleep() {
@@ -683,21 +683,21 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     public boolean wantsToSleep() {
         if (!level.isClientSide &&
-            this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH &&
-            this.ticksSlept > 8000
+                this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH &&
+                this.ticksSlept > 8000
         ) {
             return false;
         }
         return !level.isClientSide &&
-            this.getTarget() == null &&
-            this.getLastHurtByMob() == null &&
-            !this.isInWater() &&
-            !this.isVehicle() &&
-            !this.isActuallyWeak() &&
-            this.canSleep() &&
-            canSleepWhileHunting() &&
-            // (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) &&
-            this.getOrderType() != OrderType.FOLLOW;
+                this.getTarget() == null &&
+                this.getLastHurtByMob() == null &&
+                !this.isInWater() &&
+                !this.isVehicle() &&
+                !this.isActuallyWeak() &&
+                this.canSleep() &&
+                canSleepWhileHunting() &&
+                // (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) &&
+                this.getOrderType() != OrderType.FOLLOW;
     }
 
     private boolean canSleepWhileHunting() {
@@ -755,8 +755,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             setIsJumping(true);
             hasImpulse = true;
             if (newForwardMovement > 0) {
-                float h = Mth.sin(getYRot() * ((float)Math.PI / 180));
-                float i = Mth.cos(getYRot() * ((float)Math.PI / 180));
+                float h = Mth.sin(getYRot() * ((float) Math.PI / 180));
+                float i = Mth.cos(getYRot() * ((float) Math.PI / 180));
                 this.setDeltaMovement(getDeltaMovement().add(-0.4f * h * playerJumpPendingScale, 0.0, 0.4f * i * playerJumpPendingScale));
             }
             playerJumpPendingScale = 0;
@@ -764,7 +764,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         flyingSpeed = getSpeed() * 0.1f;
         fallDistance = 0;
         if (this.isControlledByLocalInstance()) {
-            setSpeed((float)getAttributeValue(Attributes.MOVEMENT_SPEED));
+            setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
             steering.travel(this, rider, travelVector);
             super.travel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement));
         } else {
@@ -814,10 +814,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             this.setMood(-50);
         }
         if (getPlayingTick() > 0) {
-            setPlayingTick(getPlayingTick()-1);
+            setPlayingTick(getPlayingTick() - 1);
         }
         if (getMatingTick() > 0) {
-            setMatingTick(getMatingTick()-1);
+            setMatingTick(getMatingTick() - 1);
         }
         if (this.getRidingPlayer() != null) {
             this.maxUpStep = 1;
@@ -848,21 +848,21 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             }
         }
         if (!level.isClientSide &&
-            !this.isInWater() &&
-            this.isVehicle() &&
-            !this.isOrderedToSit() &&
-            this.getRandom().nextInt(1000) == 1 &&
-            !this.isPassenger() &&
-            // (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) &&
-            !this.isSleeping()) {
+                !this.isInWater() &&
+                this.isVehicle() &&
+                !this.isOrderedToSit() &&
+                this.getRandom().nextInt(1000) == 1 &&
+                !this.isPassenger() &&
+                // (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) &&
+                !this.isSleeping()) {
             this.setOrderedToSit(true);
             ticksSat = 0;
         }
 
         if (!level.isClientSide &&
-            !this.isInWater() &&
-            (this.isOrderedToSit() && ticksSat > 100 && this.getRandom().nextInt(100) == 1 || this.getTarget() != null) &&
-            !this.isSleeping()) {
+                !this.isInWater() &&
+                (this.isOrderedToSit() && ticksSat > 100 && this.getRandom().nextInt(100) == 1 || this.getTarget() != null) &&
+                !this.isSleeping()) {
             this.setOrderedToSit(false);
             ticksSat = 0;
         }
@@ -897,8 +897,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             this.breakBlock(5);
         }
         if (this.getTarget() != null &&
-            this.getTarget() instanceof ToyBase &&
-            (isPreyBlocked(this.getTarget()) || getPlayingTick() > 0)) {
+                this.getTarget() instanceof ToyBase &&
+                (isPreyBlocked(this.getTarget()) || getPlayingTick() > 0)) {
             this.setTarget(null);
         }
         if (isFleeing()) {
@@ -955,8 +955,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
 
         boolean climbing = this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD &&
-            this.isBesideClimbableBlock() &&
-            !this.onGround;
+                this.isBesideClimbableBlock() &&
+                !this.onGround;
 
         if (climbing && climbProgress < 20.0F) {
             climbProgress += 2F;
@@ -981,9 +981,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
         if (!this.level.isClientSide) {
             if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD &&
-                !this.wantsToSleep() &&
-                !this.isSleeping() &&
-                ticksClimbing >= 0 && ticksClimbing < 100) {
+                    !this.wantsToSleep() &&
+                    !this.isSleeping() &&
+                    ticksClimbing >= 0 && ticksClimbing < 100) {
                 this.setBesideClimbableBlock(this.horizontalCollision);
             } else {
                 this.setBesideClimbableBlock(false);
@@ -1075,8 +1075,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     @Override
     protected int getExperienceReward(Player player) {
         float base = 6 * this.getBbWidth() * (this.type().diet == Diet.HERBIVORE ? 1.0F : 2.0F)
-            * (this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM ? 1.0F : 2.0F)
-            * (this.aiAttackType() == PrehistoricEntityTypeAI.Attacking.BASIC ? 1.0F : 1.25F);
+                * (this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM ? 1.0F : 2.0F)
+                * (this.aiAttackType() == PrehistoricEntityTypeAI.Attacking.BASIC ? 1.0F : 1.25F);
         return Mth.floor((float) Math.min(this.adultAgeDays, this.getAgeInDays()) * base);
     }
 
@@ -1243,11 +1243,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             this.setHunger(this.getMaxHunger());
         }
         this.level.playSound(null,
-            this.blockPosition(),
-            SoundEvents.GENERIC_EAT,
-            SoundSource.NEUTRAL,
-            this.getSoundVolume(),
-            this.getVoicePitch()
+                this.blockPosition(),
+                SoundEvents.GENERIC_EAT,
+                SoundSource.NEUTRAL,
+                this.getSoundVolume(),
+                this.getVoicePitch()
         );
         return true;
     }
@@ -1273,11 +1273,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     @Override
     public boolean onClimbable() {
         if (this.aiMovingType() == PrehistoricEntityTypeAI.Moving.AQUATIC ||
-            this.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMIAQUATIC) {
+                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMIAQUATIC) {
             return false;
         } else {
             return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD &&
-                this.isBesideClimbableBlock() && !this.isImmobile();
+                    this.isBesideClimbableBlock() && !this.isImmobile();
         }
     }
 
@@ -1340,11 +1340,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
         if (amount > 0 && this.isSkeleton()) {
             this.level.playSound(null,
-                this.blockPosition(),
-                SoundEvents.SKELETON_HURT,
-                SoundSource.NEUTRAL,
-                this.getSoundVolume(),
-                this.getVoicePitch()
+                    this.blockPosition(),
+                    SoundEvents.SKELETON_HURT,
+                    SoundSource.NEUTRAL,
+                    this.getSoundVolume(),
+                    this.getVoicePitch()
             );
             if (!level.isClientSide && !droppedBiofossil) {
                 if (type().timePeriod == TimePeriod.CENOZOIC) {
@@ -1402,8 +1402,8 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
         if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ||
-            this.aiMovingType() == PrehistoricEntityTypeAI.Moving.WALKANDGLIDE ||
-            this.aiMovingType() == PrehistoricEntityTypeAI.Moving.FLIGHT
+                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.WALKANDGLIDE ||
+                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.FLIGHT
         ) {
             return false;
         } else {
@@ -1439,7 +1439,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         } else {
             if (!itemstack.isEmpty()) {
                 if ((this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM && itemstack.is(ModItems.SCARAB_GEM.get())) ||
-                    (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUEGEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
+                        (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUEGEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
                     if (!this.isTame() && !this.isOwnedBy(player) && this.isActuallyWeak()) {
                         this.triggerTamingAcheivement(player);
                         this.heal(200);
@@ -1567,6 +1567,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return true;
     }
 
+    /*protected void setPedia() {
+        Revival.PROXY.setPediaObject(this);
+        // Currently there's only empty implementation for `ServerProxy#setPediaObject`
+    }*/
+
     public abstract Item getOrderItem();
 
     private void triggerTamingAcheivement(Player player) {
@@ -1600,11 +1605,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public boolean isWeak() {
         return (this.getHealth() < 8) && (this.getAgeInDays() >= this.adultAgeDays) && !this.isTame();
     }
-
-    /*protected void setPedia() {
-        Revival.PROXY.setPediaObject(this);
-        // Currently there's only empty implementation for `ServerProxy#setPediaObject`
-    }*/
 
     private void sendOrderMessage(OrderType var1) {
         String s = "dino.order." + var1.name().toLowerCase();
@@ -1732,10 +1732,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public boolean canMate(Animal otherAnimal) {
-        if (otherAnimal == this || otherAnimal.getClass() != getClass() || getMood() <= 50 ||  !isAdult() || getMatingTick() > 0) {
+        if (otherAnimal == this || otherAnimal.getClass() != getClass() || getMood() <= 50 || !isAdult() || getMatingTick() > 0) {
             return false;
         }
-        Prehistoric other = ((Prehistoric)otherAnimal);
+        Prehistoric other = ((Prehistoric) otherAnimal);
         if (other.gender == gender || other.getMatingTick() > 0 || matingGoal.getPartner() != null && matingGoal.getPartner() != otherAnimal) {
             return false;
         }
@@ -1746,7 +1746,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     protected @NotNull PathNavigation createNavigation(Level levelIn) {
         return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
     }
-
 
     public abstract boolean canBeRidden();
 
@@ -1787,6 +1786,29 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(range, 4.0D, range), prehistoric -> prehistoric != this);
     }
 
+    // This method uses Forge-specific API and needs porting. However, it's currently unused so I'm commenting it for now.
+    /*public boolean isInWaterMaterial() {
+        double d0 = this.getY();
+        int i = Mth.floor(this.getX());
+        int j = Mth.floor((float) Mth.floor(d0));
+        int k = Mth.floor(this.getZ());
+        BlockState blockState = this.level.getBlockState(new BlockPos(i, j, k));
+        if (blockState.getMaterial() == Material.WATER) {
+            double filled = 1.0f;
+            if (blockState.getBlock() instanceof IFluidBlock) {
+                filled = ((IFluidBlock) blockState.getBlock()).getFilledPercentage(level, new BlockPos(i, j, k));
+            }
+            if (filled < 0) {
+                filled *= -1;
+                return d0 > j + (1 - filled);
+            } else {
+                return d0 < j + filled;
+            }
+        } else {
+            return false;
+        }
+    }*/
+
     public void doFoodEffect(Item item) {
         this.level.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, this.getSoundVolume(), this.getVoicePitch());
         if (item != null) {
@@ -1826,7 +1848,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
     }
 
-
     public void spawnItemParticle(Item item, boolean itemBlock) {
         if (!level.isClientSide) {
             double motionX = random.nextGaussian() * 0.07D;
@@ -1843,29 +1864,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
            */
         }
     }
-
-    // This method uses Forge-specific API and needs porting. However, it's currently unused so I'm commenting it for now.
-    /*public boolean isInWaterMaterial() {
-        double d0 = this.getY();
-        int i = Mth.floor(this.getX());
-        int j = Mth.floor((float) Mth.floor(d0));
-        int k = Mth.floor(this.getZ());
-        BlockState blockState = this.level.getBlockState(new BlockPos(i, j, k));
-        if (blockState.getMaterial() == Material.WATER) {
-            double filled = 1.0f;
-            if (blockState.getBlock() instanceof IFluidBlock) {
-                filled = ((IFluidBlock) blockState.getBlock()).getFilledPercentage(level, new BlockPos(i, j, k));
-            }
-            if (filled < 0) {
-                filled *= -1;
-                return d0 > j + (1 - filled);
-            } else {
-                return d0 < j + filled;
-            }
-        } else {
-            return false;
-        }
-    }*/
 
     public void eatItem(ItemStack stack) {
         if (stack != null) {
@@ -1940,6 +1938,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public boolean isAquatic() {
         return this.getMobType() == MobType.WATER;
     }
+
     public boolean canReachPrey() {
         return this.getTarget() != null && getAttackBounds().intersects(this.getTarget().getBoundingBox()) && !isPreyBlocked(this.getTarget());
     }
@@ -1953,6 +1952,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         BlockHitResult rayTrace = level.clip(new ClipContext(position(), target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, this));
         return rayTrace.getType() != HitResult.Type.MISS;
     }
+
     public float getDeathRotation() {
         return 90.0F;
     }
@@ -2030,7 +2030,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public void onPlayerJump(int jumpPower) {
-        playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * (float)jumpPower / 90.0f;
+        playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * (float) jumpPower / 90.0f;
     }
 
     public float getProximityToNextPathSkip() {
@@ -2058,13 +2058,13 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return 100;
     }
 
+    public Gender getGender() {
+        return gender == null ? Gender.MALE : gender;
+    }
+
     public void setGender(@NotNull Gender gender) {
         this.gender = gender;
         refreshTexturePath();
-    }
-
-    public Gender getGender() {
-        return gender == null ? Gender.MALE : gender;
     }
 
     protected PlayState onFrame(AnimationEvent<? extends Prehistoric> event, ServerAnimationInfo currentAnimation) {
@@ -2131,11 +2131,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             this(animation.animationId(), priority, (int) Math.round(animation.animationLength()), animation.loop() == ILoopType.EDefaultLoopTypes.LOOP);
         }
     }
-
-    public static final int IDLE_PRIORITY = 0;
-    public static final int MOVING_PRIORITY = 1;
-    public static final int DEFAULT_PRIORITY = 2;
-    public static final int ATTACKING_PRIORITY = 3;
 
     public record PrehistoricGroupData(int ageInDays) implements SpawnGroupData {
     }

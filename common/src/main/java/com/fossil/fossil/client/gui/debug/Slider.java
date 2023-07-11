@@ -10,17 +10,13 @@ import java.text.DecimalFormat;
 
 public class Slider extends AbstractSliderButton {
 
+    private final DecimalFormat format;
     protected Component prefix;
     protected Component suffix;
-
     protected double minValue;
     protected double maxValue;
-
     protected double stepSize;
-
     protected boolean drawString;
-
-    private final DecimalFormat format;
 
     Slider(int x, int y, int width, int height, Component prefix, Component suffix, double minValue, double maxValue, double currentValue,
            double stepSize, int precision, boolean drawString) {

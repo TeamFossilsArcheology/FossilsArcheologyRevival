@@ -70,18 +70,18 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     private final ServerBossEvent bossEvent = (ServerBossEvent) new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setDarkenScreen(true);
     private int songTick;
 
+    public AnuBoss(EntityType<? extends PathfinderMob> entityType, Level level) {
+        super(entityType, level);
+        setPersistenceRequired();
+        xpReward = 50;
+    }
+
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes().add(Attributes.FOLLOW_RANGE, 40).add(Attributes.MAX_HEALTH, 600).add(Attributes.MOVEMENT_SPEED, 0.35).add(Attributes.ATTACK_DAMAGE);
     }
 
     public static TranslatableComponent getRandomGreeting(Random random) {
         return random.nextInt(2) == 0 ? SPAWN_1 : SPAWN_2;
-    }
-
-    public AnuBoss(EntityType<? extends PathfinderMob> entityType, Level level) {
-        super(entityType, level);
-        setPersistenceRequired();
-        xpReward = 50;
     }
 
     @Override
@@ -355,6 +355,11 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
         MELEE(1), FLIGHT(0.66f), DEFENSE(0.33f);
 
         private static final List<AttackMode> BY_DAMAGE;
+
+        static {
+            BY_DAMAGE = Stream.of(AttackMode.values()).sorted(Comparator.comparingDouble(mode -> mode.fraction)).collect(ImmutableList.toImmutableList());
+        }
+
         private final float fraction;
 
         AttackMode(float f) {
@@ -367,10 +372,6 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
                 return mode;
             }
             return MELEE;
-        }
-
-        static {
-            BY_DAMAGE = Stream.of(AttackMode.values()).sorted(Comparator.comparingDouble(mode -> mode.fraction)).collect(ImmutableList.toImmutableList());
         }
     }
 }

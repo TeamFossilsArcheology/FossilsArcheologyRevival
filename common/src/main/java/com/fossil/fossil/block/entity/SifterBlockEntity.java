@@ -24,8 +24,6 @@ import org.jetbrains.annotations.Nullable;
 public class SifterBlockEntity extends CustomBlockEntity {
     private static final int[] SLOTS_FOR_DOWN = new int[]{1, 2, 3, 4, 5};
     private static final int[] SLOTS_FOR_UP = new int[]{0};
-
-    protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
     private final ContainerData dataAccess = new ContainerData() {
 
         @Override
@@ -58,6 +56,7 @@ public class SifterBlockEntity extends CustomBlockEntity {
             return 3;
         }
     };
+    protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
 
     public SifterBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.SIFTER.get(), blockPos, blockState);

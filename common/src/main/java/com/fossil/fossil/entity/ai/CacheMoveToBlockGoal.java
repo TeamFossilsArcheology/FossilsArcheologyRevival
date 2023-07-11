@@ -24,17 +24,23 @@ import java.util.EnumSet;
  * cleared after if it is full and a necessary amount of ticks has passed.
  */
 public abstract class CacheMoveToBlockGoal extends Goal {
-    private static final int GIVE_UP_TICKS = 1200;
-    private static final int STAY_TICKS = 1200;
-    private static final int INTERVAL_TICKS = 200;
-    protected static final int CLEAR_TICKS = 1200;
     /**
      * How much distance the entity must have moved since the last time it was stuck for the {@link CacheMoveToBlockGoal#stuckTicks stuckTicks} to be
      * reset
      */
     public static final int STUCK_DISTANCE = 2;
-    protected final Prehistoric entity;
+    protected static final int CLEAR_TICKS = 1200;
+    private static final int GIVE_UP_TICKS = 1200;
+    private static final int STAY_TICKS = 1200;
+    private static final int INTERVAL_TICKS = 200;
     public final double speedModifier;
+    protected final Prehistoric entity;
+    protected final int searchRange;
+    /**
+     * Cache that contains all block positions that should be avoided
+     */
+    protected final LongList cache = new LongArrayList();
+    private final int verticalSearchRange;
     /**
      * Controls task execution delay
      */
@@ -49,16 +55,10 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      * Block to move to
      */
     protected BlockPos targetPos = BlockPos.ZERO;
-    private boolean reachedTarget;
-    protected final int searchRange;
-    private final int verticalSearchRange;
     protected int verticalSearchStart;
+    private boolean reachedTarget;
     private Path path;
     private BlockPos lastStuckPos;
-    /**
-     * Cache that contains all block positions that should be avoided
-     */
-    protected final LongList cache = new LongArrayList();
 
     public CacheMoveToBlockGoal(Prehistoric entity, double speedModifier, int searchRange) {
         this(entity, speedModifier, searchRange, 1);
@@ -102,8 +102,8 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     /**
      * Returns an integer that is used to the delay between two goal executions.
      *
-     * @implSpec Returns a random integer between {@link CacheMoveToBlockGoal#INTERVAL_TICKS} and 2x {@link CacheMoveToBlockGoal#INTERVAL_TICKS}
      * @return an integer that is used to the delay between two goal executions
+     * @implSpec Returns a random integer between {@link CacheMoveToBlockGoal#INTERVAL_TICKS} and 2x {@link CacheMoveToBlockGoal#INTERVAL_TICKS}
      */
     protected int nextStartTick() {
         return reducedTickDelay(INTERVAL_TICKS + entity.getRandom().nextInt(INTERVAL_TICKS));

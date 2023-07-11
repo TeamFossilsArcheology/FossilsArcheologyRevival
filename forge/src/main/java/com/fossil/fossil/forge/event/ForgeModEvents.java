@@ -29,11 +29,6 @@ import net.minecraftforge.fml.common.Mod;
 public class ForgeModEvents {
 
     @SubscribeEvent
-    public void addCustomReloadListeners(AddReloadListenerEvent event) {
-        event.addListener(AnimationManager.ANIMATIONS);
-    }
-
-    @SubscribeEvent
     public static void onKnockBack(LivingKnockBackEvent event) {
         double newStrength = Prehistoric.beforeKnockBack(
                 event.getEntityLiving(),
@@ -43,7 +38,6 @@ public class ForgeModEvents {
         );
         event.setStrength((float) newStrength);
     }
-
 
     @SubscribeEvent
     public static void addCustomTrades(VillagerTradesEvent event) {
@@ -80,5 +74,10 @@ public class ForgeModEvents {
             event.addListener(mammalProvider::invalidate);
             event.addCapability(MammalCapProvider.IDENTIFIER, mammalProvider);
         }
+    }
+
+    @SubscribeEvent
+    public void addCustomReloadListeners(AddReloadListenerEvent event) {
+        event.addListener(AnimationManager.ANIMATIONS);
     }
 }

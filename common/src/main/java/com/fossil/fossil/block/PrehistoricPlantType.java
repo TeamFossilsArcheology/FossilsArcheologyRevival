@@ -41,6 +41,7 @@ public enum PrehistoricPlantType {
     WELWITSCHIA(Size.SINGLE, Block.box(3, 0, 3, 13, 5, 13)),
     ZAMITES(Size.SINGLE, Block.box(5, 0, 5, 11, 10, 11));
 
+    private static List<PrehistoricPlantType> seedsCache;
     private final Size size;
     private final String resourceName;
     private final VoxelShape[] shapes;
@@ -87,6 +88,13 @@ public enum PrehistoricPlantType {
         }
     }
 
+    public static List<PrehistoricPlantType> plantsWithSeeds() {
+        if (seedsCache == null) {
+            seedsCache = Arrays.stream(values()).filter(type -> type.plantSeedItem != null).toList();
+        }
+        return seedsCache;
+    }
+
     private void registerPlantSeed(String name) {
         this.fossilPlantSeedItem = ModItems.ITEMS.register("fossil_seed_" + name,
                 () -> new FossilFlowerSeedsItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
@@ -104,15 +112,6 @@ public enum PrehistoricPlantType {
 
     public FlowerSeedsItem getPlantSeedItem() {
         return plantSeedItem.get();
-    }
-
-    private static List<PrehistoricPlantType> seedsCache;
-
-    public static List<PrehistoricPlantType> plantsWithSeeds() {
-        if (seedsCache == null) {
-            seedsCache = Arrays.stream(values()).filter(type -> type.plantSeedItem != null).toList();
-        }
-        return seedsCache;
     }
 
     enum Size {

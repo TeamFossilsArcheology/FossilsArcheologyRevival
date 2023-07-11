@@ -1,6 +1,7 @@
 {
   "variants": {
-    "":
-    { "model": "fossil:block/sigillaria_planks" }
+    "": {
+      "model": "fossil:block/sigillaria_planks"
+    }
   }
 }

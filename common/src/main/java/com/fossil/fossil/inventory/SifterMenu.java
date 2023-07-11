@@ -41,6 +41,7 @@ public class SifterMenu extends AbstractContainerMenu {
     public int getSiftProgress() {
         return containerData.get(2);
     }
+
     @Override
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -50,7 +51,7 @@ public class SifterMenu extends AbstractContainerMenu {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
             if (index >= 1 && index <= 5) {
-                if (!moveItemStackTo(current, 6, inventorySlots+6, true)) {
+                if (!moveItemStackTo(current, 6, inventorySlots + 6, true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index > 0) {
@@ -60,10 +61,10 @@ public class SifterMenu extends AbstractContainerMenu {
                     }
                 } else if (index < inventorySlots + 6 - 9 && !this.moveItemStackTo(current, inventorySlots + 6 - 9, inventorySlots + 6, false)) {
                     return ItemStack.EMPTY;
-                } else if (index >= inventorySlots+6-9 && index < inventorySlots+6 && !this.moveItemStackTo(current, 6, inventorySlots+6-9, false)) {
+                } else if (index >= inventorySlots + 6 - 9 && index < inventorySlots + 6 && !this.moveItemStackTo(current, 6, inventorySlots + 6 - 9, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(current, 6, inventorySlots+6, false)) {
+            } else if (!this.moveItemStackTo(current, 6, inventorySlots + 6, false)) {
                 return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {

@@ -66,6 +66,39 @@ public class DinopediaScreen extends Screen {
         this.entity = entity;
     }
 
+    /**
+     * Renders the entity in the dinopedia with a fixed y-rotation and a scale
+     */
+    public static void renderEntityInDinopedia(int posX, int posY, LivingEntity entity) {
+        PoseStack poseStack = RenderSystem.getModelViewStack();
+        poseStack.pushPose();
+        poseStack.translate(posX, posY, 1050);
+        poseStack.scale(1, 1, -1);
+        RenderSystem.applyModelViewMatrix();
+        PoseStack poseStack2 = new PoseStack();
+        poseStack2.translate(0.0, 0.0, 1000.0);
+        int scale = 40;//TODO: Different dinos probably will need different values
+        if (entity instanceof Prehistoric) {
+            scale = 15;
+        } else if (entity instanceof DinosaurEgg) {
+            scale = 110;
+        }
+        poseStack2.scale(scale, scale, scale);
+        poseStack2.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
+        Lighting.setupForEntityInInventory();
+        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        entityRenderDispatcher.setRenderShadow(false);
+        float rotation = entity instanceof DinosaurEgg ? entity.tickCount : entity.yBodyRot - 110;
+        poseStack2.mulPose(Vector3f.YP.rotationDegrees(rotation));
+        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, poseStack2, bufferSource, 0xF000F0));
+        bufferSource.endBatch();
+        entityRenderDispatcher.setRenderShadow(true);
+        poseStack.popPose();
+        RenderSystem.applyModelViewMatrix();
+        Lighting.setupFor3DItems();
+    }
+
     @Override
     protected void init() {
         leftPos = (width - xSize) / 2;
@@ -165,7 +198,7 @@ public class DinopediaScreen extends Screen {
             if (embryoProgress > 0) {
                 int quot = (int) Math.floor(((float) embryoProgress / (FossilConfig.getInt("pregnancyDuration") + 1) * 100f));
                 var progress = new TranslatableComponent("pedia.fossil.pregnantTime", quot);
-                font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos+135, col);
+                font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 135, col);
                 poseStack.pushPose();
                 float scale = 1.5f;
                 poseStack.scale(scale, scale, scale);
@@ -298,39 +331,6 @@ public class DinopediaScreen extends Screen {
             }
 
         }
-    }
-
-    /**
-     * Renders the entity in the dinopedia with a fixed y-rotation and a scale
-     */
-    public static void renderEntityInDinopedia(int posX, int posY, LivingEntity entity) {
-        PoseStack poseStack = RenderSystem.getModelViewStack();
-        poseStack.pushPose();
-        poseStack.translate(posX, posY, 1050);
-        poseStack.scale(1, 1, -1);
-        RenderSystem.applyModelViewMatrix();
-        PoseStack poseStack2 = new PoseStack();
-        poseStack2.translate(0.0, 0.0, 1000.0);
-        int scale = 40;//TODO: Different dinos probably will need different values
-        if (entity instanceof Prehistoric) {
-            scale = 15;
-        } else if (entity instanceof DinosaurEgg) {
-            scale = 110;
-        }
-        poseStack2.scale(scale, scale, scale);
-        poseStack2.mulPose(Vector3f.ZP.rotationDegrees(180.0f));
-        Lighting.setupForEntityInInventory();
-        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        entityRenderDispatcher.setRenderShadow(false);
-        float rotation = entity instanceof DinosaurEgg ? entity.tickCount : entity.yBodyRot - 110;
-        poseStack2.mulPose(Vector3f.YP.rotationDegrees(rotation));
-        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, poseStack2, bufferSource, 0xF000F0));
-        bufferSource.endBatch();
-        entityRenderDispatcher.setRenderShadow(true);
-        poseStack.popPose();
-        RenderSystem.applyModelViewMatrix();
-        Lighting.setupFor3DItems();
     }
 
     private void renderPrehistoricBio(PoseStack poseStack) {

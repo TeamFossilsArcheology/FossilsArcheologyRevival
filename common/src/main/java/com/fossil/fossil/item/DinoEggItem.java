@@ -20,6 +20,25 @@ public class DinoEggItem extends PrehistoricEntityItem {
         super(type);
     }
 
+    public static boolean spawnEgg(Level level, PrehistoricEntityType type, double x, double y, double z, Player player) {
+        if (level.isClientSide) {
+            return true;
+        }
+        if (!type.isVivariousAquatic()) {
+            DinosaurEgg egg = ModEntities.DINOSAUR_EGG.get().create(level);
+            if (egg == null) {
+                return false;
+            }
+            egg.moveTo(x, y + 0.5, z, 0, 0);
+            egg.setPrehistoricEntityType(type);
+            level.addFreshEntity(egg);
+            level.gameEvent(player, GameEvent.ENTITY_PLACE, egg);
+            return true;
+        } else {
+            return DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, type, false) != null;
+        }
+    }
+
     @Override
     public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
         if (!level.isClientSide && entity instanceof ServerPlayer) {
@@ -38,24 +57,5 @@ public class DinoEggItem extends PrehistoricEntityItem {
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;
-    }
-
-    public static boolean spawnEgg(Level level, PrehistoricEntityType type, double x, double y, double z, Player player) {
-        if (level.isClientSide) {
-            return true;
-        }
-        if (!type.isVivariousAquatic()) {
-            DinosaurEgg egg = ModEntities.DINOSAUR_EGG.get().create(level);
-            if (egg == null) {
-                return false;
-            }
-            egg.moveTo(x, y + 0.5, z, 0, 0);
-            egg.setPrehistoricEntityType(type);
-            level.addFreshEntity(egg);
-            level.gameEvent(player, GameEvent.ENTITY_PLACE, egg);
-            return true;
-        } else {
-            return DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, type, false) != null;
-        }
     }
 }

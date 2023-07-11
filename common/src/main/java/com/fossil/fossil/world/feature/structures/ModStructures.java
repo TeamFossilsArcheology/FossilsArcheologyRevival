@@ -18,7 +18,8 @@ public class ModStructures {
     public static void register() {
     }
 
-    public record Tuple<C extends FeatureConfiguration, F extends StructureFeature<C>>(ResourceLocation location, F feature) {
+    public record Tuple<C extends FeatureConfiguration, F extends StructureFeature<C>>(ResourceLocation location,
+                                                                                       F feature) {
 
     }
 }

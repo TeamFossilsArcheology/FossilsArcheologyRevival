@@ -13,9 +13,9 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 
 public class MammalComponent implements IMammalComponent, AutoSyncedComponent, CommonTickingComponent {
+    private final Animal animal;
     private int embryoProgress;
     private PrehistoricEntityType embryo;
-    private final Animal animal;
 
     public MammalComponent(Animal provider) {
         this.animal = provider;

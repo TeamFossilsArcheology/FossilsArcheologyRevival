@@ -13,9 +13,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class LivingEntityMixin {
     @Unique
     float pass = Float.NaN;
+
     @Inject(method = "knockback(DDD)V", at = @At(value = "HEAD"))
     public void onKnockBack(double strength, double x, double z, CallbackInfo ci) {
-        pass = (float) Prehistoric.beforeKnockBack((LivingEntity) ((Object)this), strength, x, z);
+        pass = (float) Prehistoric.beforeKnockBack((LivingEntity) ((Object) this), strength, x, z);
     }
 
     @ModifyVariable(

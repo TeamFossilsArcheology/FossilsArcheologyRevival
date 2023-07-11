@@ -58,19 +58,19 @@ public class SarcophagusBlockEntity extends BlockEntity {
         tick(level, pos, state, blockEntity);
     }
 
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public void setDoorTimer(int doorTimer) {
-        this.doorTimer = doorTimer;
-    }
-
     public int getState() {
         return state;
     }
 
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public int getDoorTimer() {
         return doorTimer;
+    }
+
+    public void setDoorTimer(int doorTimer) {
+        this.doorTimer = doorTimer;
     }
 }

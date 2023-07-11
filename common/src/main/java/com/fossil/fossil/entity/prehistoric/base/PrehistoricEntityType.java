@@ -90,14 +90,16 @@ public enum PrehistoricEntityType {
     TRICERATOPS(ModEntities.TRICERATOPS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of("hasBoneItems", true)),
     TYRANNOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
     VELOCIRAPTOR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, Map.of("eggScale", 0.5f));
-    private final RegistrySupplier<? extends EntityType<? extends Entity>> entitySupplier;
+    private static List<PrehistoricEntityType> boneCache;
+    private static List<PrehistoricEntityType> dnaCache;
     public final PrehistoricMobType mobType;
     public final TimePeriod timePeriod;
     public final Diet diet;
     public final String resourceName;
     public final Supplier<Component> displayName;
-    private final boolean hasBoneItems;
     public final float eggScale;
+    private final RegistrySupplier<? extends EntityType<? extends Entity>> entitySupplier;
+    private final boolean hasBoneItems;
     public Item dnaItem;
     public Item eggItem;
     public Item embryoItem;
@@ -160,16 +162,19 @@ public enum PrehistoricEntityType {
                 registerItem("bone_unique_item", type, Item::new, item -> type.uniqueBoneItem = item);
             }
             if (type.mobType == PrehistoricMobType.FISH) {
-                if (type.entitySupplier != null) type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?
+                if (type.entitySupplier != null)
+                    type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?
                 registerItem("fish", type, Item::new, item -> type.fishItem = item);
                 registerItem("egg_item", type, Item::new, item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.DINOSAUR) {
-                if (type.entitySupplier != null) type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
+                if (type.entitySupplier != null)
+                    type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 registerItem("egg_item", type, p -> new DinoEggItem(type), item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.MAMMAL || type.mobType == PrehistoricMobType.VANILLA) {
                 registerItem("syringe", type, properties -> new MammalEmbryoItem(type), item -> type.embryoItem = item);
             } else if (type.mobType == PrehistoricMobType.BIRD || type.mobType == PrehistoricMobType.CHICKEN) {
-                if (type.entitySupplier != null) type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
+                if (type.entitySupplier != null)
+                    type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 if (type.mobType == PrehistoricMobType.BIRD) {
                     registerItem("egg", type, Item::new, item -> type.birdEggItem = item);
                 }
@@ -194,24 +199,6 @@ public enum PrehistoricEntityType {
         ModItems.ITEMS.register(name + "_" + type.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FAITEMTAB))).listen(listener);
     }
 
-    public EntityType<? extends Entity> entityType() {
-        if (entitySupplier == null) {
-            return EntityType.SHEEP;
-        }
-        return entitySupplier.get();
-    }
-
-    public @Nullable Item getDNAResult() {
-        if (eggItem != null) {
-            return eggItem;
-        } else if (embryoItem != null) {
-            return embryoItem;
-        } else if (cultivatedBirdEggItem != null) {
-            return cultivatedBirdEggItem;
-        }
-        return null;
-    }
-
     public static List<PrehistoricEntityType> getTimePeriodList(TimePeriod... periods) {
         List<PrehistoricEntityType> list = new ArrayList<>();
         for (PrehistoricEntityType entity : PrehistoricEntityType.values()) {
@@ -223,13 +210,6 @@ public enum PrehistoricEntityType {
         }
         return list;
     }
-
-    public boolean isVivariousAquatic() {
-        return this.mobType == PrehistoricMobType.DINOSAUR_AQUATIC && this != SARCOSUCHUS;
-    }
-
-    private static List<PrehistoricEntityType> boneCache;
-    private static List<PrehistoricEntityType> dnaCache;
 
     public static List<PrehistoricEntityType> entitiesWithBones() {
         if (boneCache == null) {
@@ -264,5 +244,27 @@ public enum PrehistoricEntityType {
 
     private static RegistrySupplier<EntityType<?>> vanilla(EntityType<? extends Entity> entity) {
         return Registries.get(Fossil.MOD_ID).get(Registry.ENTITY_TYPE_REGISTRY).delegate(entity.arch$registryName());
+    }
+
+    public EntityType<? extends Entity> entityType() {
+        if (entitySupplier == null) {
+            return EntityType.SHEEP;
+        }
+        return entitySupplier.get();
+    }
+
+    public @Nullable Item getDNAResult() {
+        if (eggItem != null) {
+            return eggItem;
+        } else if (embryoItem != null) {
+            return embryoItem;
+        } else if (cultivatedBirdEggItem != null) {
+            return cultivatedBirdEggItem;
+        }
+        return null;
+    }
+
+    public boolean isVivariousAquatic() {
+        return this.mobType == PrehistoricMobType.DINOSAUR_AQUATIC && this != SARCOSUCHUS;
     }
 }

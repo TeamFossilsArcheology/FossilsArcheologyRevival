@@ -37,6 +37,7 @@ public class TreasureChunkGenerator extends ChunkGenerator {
                     .apply(instance, instance.stable(TreasureChunkGenerator::new)));
 
     private final Registry<Biome> biomes;
+
     public TreasureChunkGenerator(Registry<StructureSet> registry, Registry<Biome> registry2) {
         super(registry, Optional.empty(), new FixedBiomeSource(registry2.getOrCreateHolder(ModBiomes.TREASURE_ROOM_KEY)));
         biomes = registry2;

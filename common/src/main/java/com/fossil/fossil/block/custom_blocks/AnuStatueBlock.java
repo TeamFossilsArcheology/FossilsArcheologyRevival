@@ -20,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class AnuStatueBlock extends BaseEntityBlock {
-    private static final VoxelShape SHAPE = Block.box(1, 0, 2, 16, 30, 16);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    private static final VoxelShape SHAPE = Block.box(1, 0, 2, 16, 30, 16);
 
     public AnuStatueBlock(Properties properties) {
         super(properties);

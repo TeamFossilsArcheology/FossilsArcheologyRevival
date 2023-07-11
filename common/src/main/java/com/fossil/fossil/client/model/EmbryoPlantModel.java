@@ -10,6 +10,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class EmbryoPlantModel {
     public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/block/cultivate/embryo_plant.png");
+
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
         PartDefinition partDefinition = meshDefinition.getRoot();

@@ -16,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(ChunkMap.class)
 public abstract class ChunkMapMixin {
 
-    @Inject(method = "addEntity", at=@At("HEAD"), cancellable = true)
+    @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
     public void doNotAddMultiPart(Entity entity, CallbackInfo ci) {
         if (PrehistoricPart.isMultiPart(entity)) {
             ci.cancel();

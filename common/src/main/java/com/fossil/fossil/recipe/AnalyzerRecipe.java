@@ -91,10 +91,10 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
     }
 
     public static class Type implements RecipeType<AnalyzerRecipe> {
+        public static final Type INSTANCE = new Type();
+
         private Type() {
         }
-
-        public static final Type INSTANCE = new Type();
 /*
         @Override
         public <C extends Container> Optional<AnalyzerRecipe> tryMatch(Recipe<C> recipe, Level level, C container) {
@@ -105,15 +105,6 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
 
     public static class Serializer extends AbstractRecipeSerializer<AnalyzerRecipe> {
         public static final Serializer INSTANCE = new Serializer();
-
-        @Override
-        public @NotNull AnalyzerRecipe fromJson(ResourceLocation id, JsonObject json) {
-            JsonElement jsonelement = GsonHelper.isArrayNode(json, "ingredient") ? GsonHelper.getAsJsonArray(json,
-                    "ingredient") : GsonHelper.getAsJsonObject(json, "ingredient");
-            Ingredient ingredient = Ingredient.fromJson(jsonelement);
-            NavigableMap<Double, ItemStack> outputs = weightedItemsFromJson(GsonHelper.getAsJsonArray(json, "outputs"));
-            return new AnalyzerRecipe(id, ingredient, outputs);
-        }
 
         private static NavigableMap<Double, ItemStack> weightedItemsFromJson(JsonArray outputsArray) {
             NavigableMap<Double, ItemStack> items = new TreeMap<>();
@@ -126,6 +117,15 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
                 items.put(total, item);
             }
             return items;
+        }
+
+        @Override
+        public @NotNull AnalyzerRecipe fromJson(ResourceLocation id, JsonObject json) {
+            JsonElement jsonelement = GsonHelper.isArrayNode(json, "ingredient") ? GsonHelper.getAsJsonArray(json,
+                    "ingredient") : GsonHelper.getAsJsonObject(json, "ingredient");
+            Ingredient ingredient = Ingredient.fromJson(jsonelement);
+            NavigableMap<Double, ItemStack> outputs = weightedItemsFromJson(GsonHelper.getAsJsonArray(json, "outputs"));
+            return new AnalyzerRecipe(id, ingredient, outputs);
         }
 
         @Override

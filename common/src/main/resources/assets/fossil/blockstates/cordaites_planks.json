@@ -1,6 +1,7 @@
 {
   "variants": {
-    "":
-    { "model": "fossil:block/cordaites_planks" }
+    "": {
+      "model": "fossil:block/cordaites_planks"
+    }
   }
 }

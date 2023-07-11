@@ -37,11 +37,6 @@ import java.util.concurrent.Executor;
 public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComponentInitializer {
     private static boolean initialized = false;
 
-    @Override
-    public void onInitialize() {
-        init();
-    }
-
     public static void init() {
         if (initialized) {
             return;
@@ -68,6 +63,11 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
         ModRecipes.initRecipes();
         ModRegistries.register();
         FossilFoodMappings.register();
+    }
+
+    @Override
+    public void onInitialize() {
+        init();
     }
 
     @Override

@@ -14,6 +14,7 @@ public class DisposableTask implements TimerCallback<MinecraftServer> {
     public DisposableTask(TriConsumer<MinecraftServer, TimerQueue<MinecraftServer>, Long> handler) {
         this.handler = handler;
     }
+
     @Override
     public void handle(MinecraftServer obj, TimerQueue<MinecraftServer> manager, long gameTime) {
         handler.accept(obj, manager, gameTime);
@@ -31,7 +32,8 @@ public class DisposableTask implements TimerCallback<MinecraftServer> {
 
         @Override
         public DisposableTask deserialize(CompoundTag tag) {
-            return new DisposableTask((u1, u2, u3) -> {});
+            return new DisposableTask((u1, u2, u3) -> {
+            });
         }
     }
 }

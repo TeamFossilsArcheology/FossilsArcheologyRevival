@@ -26,8 +26,6 @@ public class WorktableBlockEntity extends CustomBlockEntity {
     private static final int[] SLOTS_FOR_UP = new int[]{WorktableMenu.INPUT_SLOT_ID}; //Input
     private static final int[] SLOTS_FOR_SIDES = new int[]{WorktableMenu.FUEL_SLOT_ID, WorktableMenu.OUTPUT_SLOT_ID}; //Fuel+Output
     private static final int[] SLOTS_FOR_DOWN = new int[]{WorktableMenu.OUTPUT_SLOT_ID}; //Output
-
-    protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
     private final ContainerData dataAccess = new ContainerData() {
 
         @Override
@@ -64,6 +62,7 @@ public class WorktableBlockEntity extends CustomBlockEntity {
             return 4;
         }
     };
+    protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
 
     public WorktableBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.WORKTABLE.get(), blockPos, blockState);
@@ -120,6 +119,14 @@ public class WorktableBlockEntity extends CustomBlockEntity {
         }
     }
 
+    public static int getItemFuelTime(ItemStack stack) {
+        Integer fuel = ModRecipes.WORKTABLE_FUEL_VALUES.get(stack.getItem());
+        if (fuel != null) {
+            return fuel;
+        }
+        return 0;
+    }
+
     private ItemStack checkSmelt(ItemStack itemstack) {
         WorktableRecipe recipeWorktable = ModRecipes.getWorktableRecipeForItem(itemstack, level);
         if (recipeWorktable != null) {
@@ -162,14 +169,6 @@ public class WorktableBlockEntity extends CustomBlockEntity {
                 items.set(WorktableMenu.INPUT_SLOT_ID, ItemStack.EMPTY);
             }
         }
-    }
-
-    public static int getItemFuelTime(ItemStack stack) {
-        Integer fuel = ModRecipes.WORKTABLE_FUEL_VALUES.get(stack.getItem());
-        if (fuel != null) {
-            return fuel;
-        }
-        return 0;
     }
 
     private int getItemBurnTime(ItemStack itemstack) {

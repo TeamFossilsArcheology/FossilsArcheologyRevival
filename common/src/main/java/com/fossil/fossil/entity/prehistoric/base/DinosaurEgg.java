@@ -37,9 +37,9 @@ import org.slf4j.Logger;
 import java.util.Collections;
 
 public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
+    public static final int TOTAL_HATCHING_TIME = 3000;
     private static final EntityDataAccessor<Integer> HATCHING_TIME = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.INT);
     private static final Logger LOGGER = LogUtils.getLogger();
-    public static final int TOTAL_HATCHING_TIME = 3000;
     private static final TranslatableComponent EGG_HATCHED = new TranslatableComponent("entity.fossil.dinosaur_egg.hatched");
 
     public float scale;
@@ -51,6 +51,35 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 2D);
+    }
+
+    /**
+     * @param level
+     * @param x
+     * @param y
+     * @param z
+     * @param player
+     * @param type
+     * @param hatchMessage
+     */
+    public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable ServerPlayer player, PrehistoricEntityType type, boolean hatchMessage) {
+        Entity entity = type.entityType().create(level);
+        if (entity instanceof Prehistoric prehistoric) {
+            if (prehistoric.isTameable() && player != null && prehistoric.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
+                prehistoric.tame(player);
+                //TODO: First Hatch music
+                prehistoric.setOwnerDisplayName(player.getDisplayName());
+                if (hatchMessage) {
+                    player.displayClientMessage(EGG_HATCHED, false);
+                }
+            }
+            prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
+                    MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
+            prehistoric.grow(0);
+        }
+        entity.moveTo(Mth.floor(x), Mth.floor(y) + 1, Mth.floor(z), level.random.nextFloat() * 360, 0);
+        level.addFreshEntity(entity);
+        return entity;
     }
 
     @Override
@@ -98,35 +127,6 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
             }
             kill();
         }
-    }
-
-    /**
-     * @param level
-     * @param x
-     * @param y
-     * @param z
-     * @param player
-     * @param type
-     * @param hatchMessage
-     */
-    public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable ServerPlayer player, PrehistoricEntityType type, boolean hatchMessage) {
-        Entity entity = type.entityType().create(level);
-        if (entity instanceof Prehistoric prehistoric) {
-            if (prehistoric.isTameable() && player != null && prehistoric.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
-                prehistoric.tame(player);
-                //TODO: First Hatch music
-                prehistoric.setOwnerDisplayName(player.getDisplayName());
-                if (hatchMessage) {
-                    player.displayClientMessage(EGG_HATCHED, false);
-                }
-            }
-            prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),
-                    MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
-            prehistoric.grow(0);
-        }
-        entity.moveTo(Mth.floor(x), Mth.floor(y) + 1, Mth.floor(z), level.random.nextFloat() * 360, 0);
-        level.addFreshEntity(entity);
-        return entity;
     }
 
     public boolean isTooCold() {
@@ -191,20 +191,20 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
         setPrehistoricEntityType(PrehistoricEntityType.valueOf(compound.getString("PrehistoricType")));
     }
 
-    public void setHatchingTime(int time) {
-        entityData.set(HATCHING_TIME, time);
-    }
-
     public int getHatchingTime() {
         return entityData.get(HATCHING_TIME);
     }
 
-    public void setPrehistoricEntityType(PrehistoricEntityType prehistoricEntityType) {
-        this.prehistoricEntityType = prehistoricEntityType;
+    public void setHatchingTime(int time) {
+        entityData.set(HATCHING_TIME, time);
     }
 
     public PrehistoricEntityType getPrehistoricEntityType() {
         return prehistoricEntityType;
+    }
+
+    public void setPrehistoricEntityType(PrehistoricEntityType prehistoricEntityType) {
+        this.prehistoricEntityType = prehistoricEntityType;
     }
 
     @Override

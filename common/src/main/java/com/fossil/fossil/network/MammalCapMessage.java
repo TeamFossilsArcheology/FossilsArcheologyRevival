@@ -33,22 +33,22 @@ public class MammalCapMessage {
         this.embryo = embryo;
     }
 
+    @ExpectPlatform
+    public static void applyCap(Level level, int entityId, int embryoProgress, PrehistoricEntityType embryo) {
+
+    }
+
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeInt(embryoProgress);
         if (embryo != null) {
             buf.writeUtf(embryo.name());
-        } else{
+        } else {
             buf.writeUtf("null");
         }
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> applyCap(contextSupplier.get().getPlayer().level, entityId, embryoProgress, embryo));
-    }
-
-    @ExpectPlatform
-    public static void applyCap(Level level, int entityId, int embryoProgress, PrehistoricEntityType embryo) {
-
     }
 }

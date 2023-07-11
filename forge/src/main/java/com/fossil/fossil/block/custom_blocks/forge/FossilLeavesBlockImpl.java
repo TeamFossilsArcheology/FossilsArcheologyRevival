@@ -16,6 +16,7 @@ public class FossilLeavesBlockImpl {
             public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
                 return true;
             }
+
             @Override
             public int getFlammability(BlockState state, BlockGetter world, BlockPos pos, Direction face) {
                 return 60;

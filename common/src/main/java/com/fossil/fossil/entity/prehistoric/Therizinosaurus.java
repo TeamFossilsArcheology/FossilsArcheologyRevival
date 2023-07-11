@@ -23,7 +23,6 @@ import java.util.Map;
 // TODO Accurately adjust values here, for now setting it identical to Triceratops
 public class Therizinosaurus extends Prehistoric {
     public static final String ANIMATIONS = "fa.therizinosaurus.animations.json";
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public static final String IDLE = "fa.therizinosaurus.idle";
     public static final String WALK = "fa.therizinosaurus.walk";
     public static final String SLEEP = "fa.therizinosaurus.sleep";
@@ -32,7 +31,6 @@ public class Therizinosaurus extends Prehistoric {
     public static final String ATTACK1 = "fa.therizinosaurus.attack1";
     public static final String ATTACK2 = "fa.therizinosaurus.attack2";
     public static final String EAT = "fa.therizinosaurus.eat";
-
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
@@ -49,27 +47,28 @@ public class Therizinosaurus extends Prehistoric {
         }
         return newMap;
     });
+    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Therizinosaurus(EntityType<Therizinosaurus> entityType, Level level) {
         super(
-            entityType,
-            level,
-            false,
-            false,
-            0.4F,
-            2.0F,
-            2F,
-            2F,
-            5,
-            6,
-            12,
-            12,
-            12,
-            64,
-            0.2,
-            0.35,
-            5,
-            15
+                entityType,
+                level,
+                false,
+                false,
+                0.4F,
+                2.0F,
+                2F,
+                2F,
+                5,
+                6,
+                12,
+                12,
+                12,
+                64,
+                0.2,
+                0.35,
+                5,
+                15
         );
     }
 
@@ -224,7 +223,7 @@ public class Therizinosaurus extends Prehistoric {
         if (getRandom().nextBoolean()) {
             key = ATTACK1;
         } else {
-            key =ATTACK2;
+            key = ATTACK2;
         }
 
         return (ServerAttackAnimationInfo) allAnimations.get().get(key);

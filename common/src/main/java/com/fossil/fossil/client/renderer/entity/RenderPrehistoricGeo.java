@@ -17,8 +17,8 @@ public class RenderPrehistoricGeo<T extends Prehistoric> extends GeoEntityRender
 
     public RenderPrehistoricGeo(EntityRendererProvider.Context renderManager, String model, String animation) {
         super(renderManager, new GeoDinosaurModel<>(
-            new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + model),
-            new ResourceLocation(Fossil.MOD_ID, "animations/" + animation)
+                new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + model),
+                new ResourceLocation(Fossil.MOD_ID, "animations/" + animation)
         ));
     }
 

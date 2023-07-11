@@ -18,6 +18,11 @@ public enum ModArmorMaterials implements ArmorMaterial {
     BONE("bone", 25, new int[]{2, 7, 6, 2}, 15, SoundEvents.ARMOR_EQUIP_CHAIN, 0.0f, 0.0f, () -> Ingredient.of(Items.BONE));
 
     private static final int[] HEALTH_PER_SLOT;
+
+    static {
+        HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
+    }
+
     private final String name;
     private final int durabilityMultiplier;
     private final int[] slotProtections;
@@ -76,9 +81,5 @@ public enum ModArmorMaterials implements ArmorMaterial {
     @Override
     public float getKnockbackResistance() {
         return this.knockbackResistance;
-    }
-
-    static {
-        HEALTH_PER_SLOT = new int[]{13, 15, 16, 11};
     }
 }

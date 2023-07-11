@@ -22,8 +22,6 @@ import org.jetbrains.annotations.Nullable;
 public class AnalyzerBlockEntity extends CustomBlockEntity {
     private static final int[] SLOTS_FOR_UP = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8};
     private static final int[] SLOTS_FOR_DOWN = new int[]{9, 10, 11, 12};
-    private int rawIndex = -1;
-    protected NonNullList<ItemStack> items = NonNullList.withSize(13, ItemStack.EMPTY);
     private final ContainerData dataAccess = new ContainerData() {
 
         @Override
@@ -56,6 +54,12 @@ public class AnalyzerBlockEntity extends CustomBlockEntity {
             return 3;
         }
     };
+    protected NonNullList<ItemStack> items = NonNullList.withSize(13, ItemStack.EMPTY);
+    private int rawIndex = -1;
+
+    public AnalyzerBlockEntity(BlockPos blockPos, BlockState blockState) {
+        super(ModBlockEntities.ANALYZER.get(), blockPos, blockState);
+    }
 
     private static int getFuelTime(ItemStack stack) {
         return 100;
@@ -63,10 +67,6 @@ public class AnalyzerBlockEntity extends CustomBlockEntity {
 
     public static boolean isFuel(ItemStack stack) {
         return getFuelTime(stack) > 0;
-    }
-
-    public AnalyzerBlockEntity(BlockPos blockPos, BlockState blockState) {
-        super(ModBlockEntities.ANALYZER.get(), blockPos, blockState);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, AnalyzerBlockEntity blockEntity) {

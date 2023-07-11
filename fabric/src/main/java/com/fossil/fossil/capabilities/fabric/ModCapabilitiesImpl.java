@@ -12,6 +12,7 @@ import org.jetbrains.annotations.Nullable;
 public class ModCapabilitiesImpl {
     public static final ComponentKey<MammalComponent> MAMMAL =
             ComponentRegistry.getOrCreate(new ResourceLocation(Fossil.MOD_ID, "mammal"), MammalComponent.class);
+
     public static int getEmbryoProgress(Animal animal) {
         return MAMMAL.get(animal).getEmbryoProgress();
     }

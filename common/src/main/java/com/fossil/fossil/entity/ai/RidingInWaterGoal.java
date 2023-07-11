@@ -65,7 +65,7 @@ public class RidingInWaterGoal extends Goal {
             float speedZ = rider.zza / PLAYER_SPEED * (rider.isSprinting() ? 4 : 1);
             float playerSpeed = Math.max(Math.abs(speedX), Math.abs(speedZ));
             Vec3 look = rider.getLookAngle();
-            double dir = (speedZ/(speedX * 2 + (speedX < 0 ? -2 : 2)))- Math.min(speedX, 0);
+            double dir = (speedZ / (speedX * 2 + (speedX < 0 ? -2 : 2))) - Math.min(speedX, 0);
             if (dir != 0) {
                 look.yRot((float) (Math.PI * dir));
             }

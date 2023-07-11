@@ -25,6 +25,7 @@ public class MovementMessage {
         this.y = y;
         this.z = z;
     }
+
     public MovementMessage(int entityId, Vec3 target) {
         this.entityId = entityId;
         this.x = target.x();

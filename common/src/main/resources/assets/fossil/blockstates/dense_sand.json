@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "fossil:block/dense_sand" }
+    "": {
+      "model": "fossil:block/dense_sand"
+    }
   }
 }

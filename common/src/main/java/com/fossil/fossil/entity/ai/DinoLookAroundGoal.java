@@ -13,7 +13,7 @@ public class DinoLookAroundGoal extends RandomLookAroundGoal {
 
     @Override
     public boolean canUse() {
-        if (prehistoric.isSleeping() ) { //TODO: Megalania: prehistoric instanceof EntityMegalania && this.prehistoric.getAnimation() == EntityMegalania.ANIMATION_FIGHT
+        if (prehistoric.isSleeping()) { //TODO: Megalania: prehistoric instanceof EntityMegalania && this.prehistoric.getAnimation() == EntityMegalania.ANIMATION_FIGHT
             return false;
         }
         return super.canUse();

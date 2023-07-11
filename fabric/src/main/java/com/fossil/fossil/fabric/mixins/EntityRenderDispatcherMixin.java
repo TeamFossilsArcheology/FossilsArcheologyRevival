@@ -36,7 +36,7 @@ public abstract class EntityRenderDispatcherMixin {
             double e = -Mth.lerp(partialTicks, entity.yOld, entity.getY());
             double f = -Mth.lerp(partialTicks, entity.zOld, entity.getZ());
             int kj = 0;
-            for (Entity part : ((Prehistoric)entity).getCustomParts()) {
+            for (Entity part : ((Prehistoric) entity).getCustomParts()) {
                 matrixStack.pushPose();
                 double g = d + Mth.lerp(partialTicks, part.xOld, part.getX());
                 double h = e + Mth.lerp(partialTicks, part.yOld, part.getY());
@@ -57,8 +57,8 @@ public abstract class EntityRenderDispatcherMixin {
             Vec3 vec3 = entity.getViewVector(partialTicks);
             Matrix4f matrix4f = matrixStack.last().pose();
             Matrix3f matrix3f = matrixStack.last().normal();
-            buffer.vertex(matrix4f, 0.0f, entity.getEyeHeight(), 0.0f).color(0, 0, 255, 255).normal(matrix3f, (float)vec3.x, (float)vec3.y, (float)vec3.z).endVertex();
-            buffer.vertex(matrix4f, (float)(vec3.x * 2.0), (float)((double)entity.getEyeHeight() + vec3.y * 2.0), (float)(vec3.z * 2.0)).color(0, 0, 255, 255).normal(matrix3f, (float)vec3.x, (float)vec3.y, (float)vec3.z).endVertex();
+            buffer.vertex(matrix4f, 0.0f, entity.getEyeHeight(), 0.0f).color(0, 0, 255, 255).normal(matrix3f, (float) vec3.x, (float) vec3.y, (float) vec3.z).endVertex();
+            buffer.vertex(matrix4f, (float) (vec3.x * 2.0), (float) ((double) entity.getEyeHeight() + vec3.y * 2.0), (float) (vec3.z * 2.0)).color(0, 0, 255, 255).normal(matrix3f, (float) vec3.x, (float) vec3.y, (float) vec3.z).endVertex();
         }
     }
 }

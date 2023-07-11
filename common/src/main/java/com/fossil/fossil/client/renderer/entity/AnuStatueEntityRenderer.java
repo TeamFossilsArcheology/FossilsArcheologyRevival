@@ -19,9 +19,27 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Random;
 
 public class AnuStatueEntityRenderer extends MobRenderer<AnuStatueEntity, AnuStatueModel> implements RendererFabricFix {
+    private static final float HALF_SQRT_3 = (float) (Math.sqrt(3.0) / 2.0);
+
     public AnuStatueEntityRenderer(EntityRendererProvider.Context context, AnuStatueModel entityModel) {
         super(context, entityModel, 0.5f);
         addLayer(new AnuStatueOverlayLayer(this));
+    }
+
+    private static void vertex01(VertexConsumer vertexConsumer, Matrix4f matrix4f, int alpha) {
+        vertexConsumer.vertex(matrix4f, 0.0f, 0.0f, 0.0f).color(66, 0, 176, alpha).endVertex();
+    }
+
+    private static void vertex2(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
+        vertexConsumer.vertex(matrix4f, -HALF_SQRT_3 * g, y, -0.5f * g).color(255, 0, 0, 0).endVertex();
+    }
+
+    private static void vertex3(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
+        vertexConsumer.vertex(matrix4f, HALF_SQRT_3 * g, y, -0.5f * g).color(255, 0, 0, 0).endVertex();
+    }
+
+    private static void vertex4(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
+        vertexConsumer.vertex(matrix4f, 0.0f, y, g).color(255, 0, 0, 0).endVertex();
     }
 
     @Override
@@ -75,24 +93,6 @@ public class AnuStatueEntityRenderer extends MobRenderer<AnuStatueEntity, AnuSta
             passes++;
         }
         poseStack.popPose();
-    }
-
-    private static final float HALF_SQRT_3 = (float) (Math.sqrt(3.0) / 2.0);
-
-    private static void vertex01(VertexConsumer vertexConsumer, Matrix4f matrix4f, int alpha) {
-        vertexConsumer.vertex(matrix4f, 0.0f, 0.0f, 0.0f).color(66, 0, 176, alpha).endVertex();
-    }
-
-    private static void vertex2(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
-        vertexConsumer.vertex(matrix4f, -HALF_SQRT_3 * g, y, -0.5f * g).color(255, 0, 0, 0).endVertex();
-    }
-
-    private static void vertex3(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
-        vertexConsumer.vertex(matrix4f, HALF_SQRT_3 * g, y, -0.5f * g).color(255, 0, 0, 0).endVertex();
-    }
-
-    private static void vertex4(VertexConsumer vertexConsumer, Matrix4f matrix4f, float y, float g) {
-        vertexConsumer.vertex(matrix4f, 0.0f, y, g).color(255, 0, 0, 0).endVertex();
     }
 
 }

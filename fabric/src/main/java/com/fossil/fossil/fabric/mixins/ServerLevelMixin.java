@@ -27,11 +27,11 @@ import java.util.Collection;
  */
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin implements MultiPartServerLevel {
-    @Shadow
-    protected abstract LevelEntityGetter<Entity> getEntities();
-
     @Unique
     private Int2ObjectMap<Entity> parts = new Int2ObjectOpenHashMap<>();
+
+    @Shadow
+    protected abstract LevelEntityGetter<Entity> getEntities();
 
     @Override
     public Collection<Entity> getMultiParts() {

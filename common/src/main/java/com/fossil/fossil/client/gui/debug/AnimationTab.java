@@ -39,6 +39,34 @@ public class AnimationTab extends DebugTab {
         }
     }
 
+    public static void renderEntityInDebug(int posX, int posY, LivingEntity entity, float scale) {
+        float g = -entity.getXRot() / 20f;
+        PoseStack poseStack = RenderSystem.getModelViewStack();
+        poseStack.pushPose();
+        poseStack.translate(posX, posY, 1050);
+        poseStack.scale(1, 1, -1);
+        RenderSystem.applyModelViewMatrix();
+        PoseStack poseStack2 = new PoseStack();
+        poseStack2.translate(0.0, 0.0, 1000.0);
+        poseStack2.scale(scale, scale, scale);
+        Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0f);
+        Quaternion quaternion2 = Vector3f.XP.rotationDegrees(g * 20.0f);
+        quaternion.mul(quaternion2);
+        poseStack2.mulPose(quaternion);
+        Lighting.setupForEntityInInventory();
+        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
+        quaternion2.conj();
+        entityRenderDispatcher.overrideCameraOrientation(quaternion2);
+        entityRenderDispatcher.setRenderShadow(false);
+        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
+        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, poseStack2, bufferSource, 0xF000F0));
+        bufferSource.endBatch();
+        entityRenderDispatcher.setRenderShadow(true);
+        poseStack.popPose();
+        RenderSystem.applyModelViewMatrix();
+        Lighting.setupFor3DItems();
+    }
+
     @Override
     protected void init(int width, int height) {
         super.init(width, height);
@@ -97,34 +125,6 @@ public class AnimationTab extends DebugTab {
             drawString(poseStack, minecraft.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Start Animation:"), width - width / 4 + 20, 30, 16777215);
         }
-    }
-
-    public static void renderEntityInDebug(int posX, int posY, LivingEntity entity, float scale) {
-        float g = -entity.getXRot() / 20f;
-        PoseStack poseStack = RenderSystem.getModelViewStack();
-        poseStack.pushPose();
-        poseStack.translate(posX, posY, 1050);
-        poseStack.scale(1, 1, -1);
-        RenderSystem.applyModelViewMatrix();
-        PoseStack poseStack2 = new PoseStack();
-        poseStack2.translate(0.0, 0.0, 1000.0);
-        poseStack2.scale(scale, scale, scale);
-        Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0f);
-        Quaternion quaternion2 = Vector3f.XP.rotationDegrees(g * 20.0f);
-        quaternion.mul(quaternion2);
-        poseStack2.mulPose(quaternion);
-        Lighting.setupForEntityInInventory();
-        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        quaternion2.conj();
-        entityRenderDispatcher.overrideCameraOrientation(quaternion2);
-        entityRenderDispatcher.setRenderShadow(false);
-        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, poseStack2, bufferSource, 0xF000F0));
-        bufferSource.endBatch();
-        entityRenderDispatcher.setRenderShadow(true);
-        poseStack.popPose();
-        RenderSystem.applyModelViewMatrix();
-        Lighting.setupFor3DItems();
     }
 
     private class AnimationsList extends ContainerObjectSelectionList<AnimationsList.AnimationEntry> {

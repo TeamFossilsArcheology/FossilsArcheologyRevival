@@ -61,6 +61,7 @@ public class WorktableMenu extends AbstractContainerMenu {
         }
         return containerData.get(0) * 12 / i;
     }
+
     @Override
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -74,11 +75,11 @@ public class WorktableMenu extends AbstractContainerMenu {
                 }
             } else if (index != INPUT_SLOT_ID && index != FUEL_SLOT_ID) {
                 if (ModRecipes.getWorktableRecipeForItem(current, player.level) != null) {
-                    if (!this.moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID+1, false)) {
+                    if (!this.moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (ModRecipes.WORKTABLE_FUEL_VALUES.containsKey(current.getItem())) {
-                    if (!this.moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID+1, false)) {
+                    if (!this.moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (index >= 3 && index < 30 && !this.moveItemStackTo(current, 30, 39, false)) {

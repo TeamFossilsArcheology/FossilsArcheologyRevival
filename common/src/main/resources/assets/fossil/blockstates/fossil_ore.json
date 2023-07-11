@@ -1,5 +1,7 @@
 {
-    "variants": {
-        "": { "model": "fossil:block/fossil_ore" }
+  "variants": {
+    "": {
+      "model": "fossil:block/fossil_ore"
     }
+  }
 }

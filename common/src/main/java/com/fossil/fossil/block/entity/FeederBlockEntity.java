@@ -26,12 +26,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class FeederBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
     private static final int[] SLOTS_TOP = new int[]{0, 1};
+    protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
     private int meat;
     private int plant;
-    private int prevMeat;
-    private int prevPlant;
-    private int ticksExisted;
-    protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
     private final ContainerData dataAccess = new ContainerData() {
 
         @Override
@@ -60,6 +57,9 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
             return 2;
         }
     };
+    private int prevMeat;
+    private int prevPlant;
+    private int ticksExisted;
 
     public FeederBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.FEEDER.get(), blockPos, blockState);

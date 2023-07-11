@@ -138,15 +138,15 @@ public class ForgeConfig {
         SPEC = BUILDER.build();
     }
 
+    private ForgeConfig() {
+    }
+
     private static ForgeConfigSpec.BooleanValue boolEntry(String comment, String path, boolean defaultValue) {
         return BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).define(path, defaultValue);
     }
 
     private static ForgeConfigSpec.IntValue intEntry(String comment, String path, int defaultValue, int min, int max) {
         return BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
-    }
-
-    private ForgeConfig() {
     }
 
     public static boolean isRuleEnabled(ForgeConfigSpec.BooleanValue rule) {

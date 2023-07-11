@@ -21,6 +21,7 @@ public class OverlayRenderer {
     private static final ResourceLocation BONE_HELMET = new ResourceLocation(Fossil.MOD_ID, "textures/gui/bone_helmet_blur.png");
     private static final ResourceLocation TAR = new ResourceLocation(Fossil.MOD_ID, "textures/block/tar_still.png");
     private static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "tar"));
+
     public static void renderHelmet(int screenWidth, int screenHeight) {
         Minecraft mc = Minecraft.getInstance();
         if (FossilConfig.isEnabled("helmetOverlays") && mc.options.getCameraType().isFirstPerson()) {

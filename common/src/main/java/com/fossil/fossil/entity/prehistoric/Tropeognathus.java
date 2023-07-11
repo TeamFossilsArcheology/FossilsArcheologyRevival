@@ -23,7 +23,6 @@ import java.util.Map;
 
 public class Tropeognathus extends Pterosaurs {
     public static final String ANIMATIONS = "fa.tropeognathus.animations.json";
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     public static final String FLY = "fa.tropeognathus.fly";
     public static final String GROUND_TAKEOFF = "fa.tropeognathus.groundtakeoff";
     public static final String RUN = "fa.tropeognathus.run";
@@ -43,7 +42,6 @@ public class Tropeognathus extends Pterosaurs {
     public static final String IDLE_LOOKAROUND = "fa.tropeognathus.idlelookaround";
     public static final String WATER_TAKEOFF = "fa.tropeognathus.watertakeoff";
     public static final String SLEEP = "fa.tropeognathus.sleep";
-
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
@@ -54,33 +52,35 @@ public class Tropeognathus extends Pterosaurs {
                 case BITE_ATTACK_WATER -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 11);
                 case BITE_IN_AIR -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 15);
                 case SWIM, WALK, RUN, FLY -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
-                case IDLE, IDLE_CALL, IDLE_LOOKAROUND, IDLE_PREEN, IDLE_SWIM -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
+                case IDLE, IDLE_CALL, IDLE_LOOKAROUND, IDLE_PREEN, IDLE_SWIM ->
+                        info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
         }
         return newMap;
     });
+    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tropeognathus(EntityType<Tropeognathus> entityType, Level level) {
         super(
-            entityType,
-            level,
-            false,
-            0.4F,
-            2.0F,
-            2F,
-            2F,
-            5,
-            6,
-            12,
-            12,
-            12,
-            64,
-            0.2,
-            0.35,
-            5,
-            15
+                entityType,
+                level,
+                false,
+                0.4F,
+                2.0F,
+                2F,
+                2F,
+                5,
+                6,
+                12,
+                12,
+                12,
+                64,
+                0.2,
+                0.35,
+                5,
+                15
         );
     }
 
@@ -192,8 +192,7 @@ public class Tropeognathus extends Pterosaurs {
 
         if (isInWater()) {
             key = IDLE_SWIM;
-        }
-        else {
+        } else {
             int number = random.nextInt(10);
             switch (number) {
                 case 0, 1, 2, 3, 4, 5, 6 -> key = IDLE;

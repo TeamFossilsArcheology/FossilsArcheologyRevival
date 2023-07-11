@@ -51,11 +51,6 @@ public class ModConfiguredFeatures {
                     new TwoLayersFeatureSize(1, 0, 2)).build());
     public static final Holder<ConfiguredStructureFeature<?, ?>> HELL_BOAT = register(createKey("hell_boat"), ModStructures.HELL_BOAT.feature()
             .configured(new RangeConfiguration(ConstantHeight.of(VerticalAnchor.absolute(30))), BiomeTags.IS_NETHER));
-    static {
-        StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
-                HELL_BOAT, new RandomSpreadStructurePlacement(FossilConfig.getInt("hellShipSpacing"),
-                        FossilConfig.getInt("hellShipSeperation"), RandomSpreadType.LINEAR, 92182587));
-    }
     public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> TAR_PIT = register("tar_pit", Feature.LAKE,
             new LakeFeature.Configuration(BlockStateProvider.simple(ModBlocks.TAR.get()),
                     BlockStateProvider.simple(Blocks.STONE)));
@@ -66,12 +61,20 @@ public class ModConfiguredFeatures {
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> VOLCANO_CONE = register("volcano_cone",
             ModFeatures.VOLCANO_CONE.feature(), NoneFeatureConfiguration.INSTANCE);
 
+    static {
+        StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
+                HELL_BOAT, new RandomSpreadStructurePlacement(FossilConfig.getInt("hellShipSpacing"),
+                        FossilConfig.getInt("hellShipSeperation"), RandomSpreadType.LINEAR, 92182587));
+    }
+
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {
         return FeatureUtils.register(Fossil.MOD_ID + ":" + name, feature, config);
     }
+
     private static <FC extends FeatureConfiguration, F extends StructureFeature<FC>> Holder<ConfiguredStructureFeature<?, ?>> register(ResourceKey<ConfiguredStructureFeature<?, ?>> id, ConfiguredStructureFeature<FC, F> configuredStructureFeature) {
         return BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, id, configuredStructureFeature);
     }
+
     private static ResourceKey<ConfiguredStructureFeature<?, ?>> createKey(String name) {
         return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, new ResourceLocation(Fossil.MOD_ID, name));
     }

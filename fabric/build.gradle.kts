@@ -50,14 +50,14 @@ dependencies {
 
         addLayer(object : MappingsSpec<MappingLayer> {
             val getClasses = MappingTreeView::class.java.getDeclaredMethod("getClasses")
-                .apply { isAccessible = true }
+                    .apply { isAccessible = true }
             val getMethods = MappingTreeView.ClassMappingView::class.java.getDeclaredMethod("getMethods")
-                .apply { isAccessible = true }
+                    .apply { isAccessible = true }
             val getName = MappingTreeView.ElementMappingView::class.java.getDeclaredMethod("getName", String::class.java)
-                .apply { isAccessible = true }
+                    .apply { isAccessible = true }
             val entryClass = Class.forName("net.fabricmc.mappingio.tree.MemoryMappingTree\$Entry")
             val srcNameField = entryClass.getDeclaredField("srcName")
-                .apply { isAccessible = true }
+                    .apply { isAccessible = true }
 
             val METHOD_NAME_MAP = mapOf("getTextureLocation" to "_getTextureLocation")
             override fun createLayer(context: MappingContext?): MappingLayer {

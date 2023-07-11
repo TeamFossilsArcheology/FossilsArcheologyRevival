@@ -8,7 +8,6 @@
   "item.fossil.fossil_bio": "Bio Fossil",
   "item.fossil.fossil_plant": "Plant Fossil",
   "item.fossil.fossil_tar": "Tar Fossil",
-
   "block.fossil.feeder": "Feeder",
   "block.fossil.amber_ore": "Amber Ore",
   "block.fossil.analyzer": "Analyzer",
@@ -49,7 +48,6 @@
   "block.fossil.reinforced_glass": "Reinforced Glass",
   "block.fossil.skull": "Skull Block",
   "block.fossil.skull_lantern": "Skull Lantern",
-
   "block.fossil.vase_amphora_black_figure": "Black Figure Amphora",
   "block.fossil.vase_amphora_damaged": "Damaged Amphora",
   "block.fossil.vase_amphora_porcelain": "Porcelain Amphora",
@@ -65,12 +63,10 @@
   "block.fossil.vase_volute_porcelain": "Porcelain Volute",
   "block.fossil.vase_volute_red_figure": "Red Figure Volute",
   "block.fossil.vase_volute_restored": "Restored Volute",
-
   "enchantment.fossil.archeology": "Archeology",
   "enchantment.fossil.archeology.desc": "Placeholder description for Archeology",
   "enchantment.fossil.paleontology": "Paleontology",
   "enchantment.fossil.paleontology.desc": "Placeholder description for Paleontology",
-
   "entity.fossil.anu": "Anu",
   "entity.fossil.anu.ancient": "=Anu: Trying to use my magic against me? Bad Idea.",
   "entity.fossil.anu.archers": "Anu: Archers, fire!",
@@ -91,20 +87,15 @@
   "entity.fossil.friendly_piglin.kill": "I have killed another creature for you!",
   "entity.fossil.friendly_piglin.summon": "My Lord! I will fight for you till the death!",
   "entity.fossil.prehistoric.tamed": "You have tamed this %s",
-
   "itemGroup.fa_block_tab": "Fossil Revival Blocks",
   "itemGroup.fa_item_tab": "Fossil Revival Items",
-
   "prehistoric.essencefail": "This prehistoric mob is fully grown!",
-
   "cultivate.outBreak": "Cultivation has failed!",
-
   "container.fossil.feeder": "Feeder",
   "container.fossil.cultivate": "Culture Vat",
   "container.fossil.sifter": "Sifter",
   "container.fossil.analyzer": "Analyzer",
   "container.fossil.worktable": "Archeology Workbench",
-
   "pedia.fossil.activity": "Activity: %s",
   "pedia.fossil.activity.both": "Cathemeral",
   "pedia.fossil.activity.diurnal": "Diurnal",
@@ -175,7 +166,6 @@
   "pedia.fossil.temperament.desc.water_aggressive": "This mob attacks other mobs.",
   "pedia.fossil.temperament.desc.water_calm": "This mob is not scared by other mobs.",
   "pedia.fossil.untamed": "Untamed",
-
   "fossil.midnightconfig.title": "Title test",
   "fossil.midnightconfig.generate": "Generation Config",
   "fossil.midnightconfig.generateHellShips": "Generate Hell Ships",

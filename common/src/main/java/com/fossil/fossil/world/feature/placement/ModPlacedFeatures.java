@@ -18,15 +18,15 @@ import net.minecraft.world.level.levelgen.placement.*;
 import java.util.List;
 
 public class ModPlacedFeatures {
-    private static Holder<PlacedFeature> ashDiskVolcano;
-    private static Holder<PlacedFeature> magmaDiskVolcano;
-    private static Holder<PlacedFeature> coneVolcano;
     public static final Holder<PlacedFeature> LAKE_LAVA_VOLCANO = PlacementUtils.register("volcano_lake_lava", MiscOverworldFeatures.LAKE_LAVA,
             RarityFilter.onAverageOnceEvery(6), CountPlacement.of(6), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE,
             BiomeFilter.biome());
     public static final Holder<PlacedFeature> FOSSIL_VOLCANO = PlacementUtils.register("volcano_fossil", CaveFeatures.FOSSIL_COAL,
             RarityFilter.onAverageOnceEvery(10), InSquarePlacement.spread(), HeightmapPlacement.onHeightmap(Heightmap.Types.WORLD_SURFACE_WG),
             RandomOffsetPlacement.vertical(ClampedNormalInt.of(-9, 4, -16, -5)), BiomeFilter.biome());
+    private static Holder<PlacedFeature> ashDiskVolcano;
+    private static Holder<PlacedFeature> magmaDiskVolcano;
+    private static Holder<PlacedFeature> coneVolcano;
 
     public static void register() {
         //Features that depend on ModConfiguredFeatures can't be called before the block registries have been initialized
@@ -42,7 +42,7 @@ public class ModPlacedFeatures {
 
         var fossilBlockPlaced = PlacementUtils.register("fossil_block_placed", ModOreFeatures.FOSSIL_BLOCK,
                 commonOrePlacement(FossilConfig.getInt("fossilOreRarity"), // VeinsPerChunk
-                HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-0), VerticalAnchor.aboveBottom(256))));
+                        HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-0), VerticalAnchor.aboveBottom(256))));
 
         var volcanicRockPlaced = PlacementUtils.register("volcanic_rock_placed", ModOreFeatures.VOLCANIC_ROCK,
                 commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0))));

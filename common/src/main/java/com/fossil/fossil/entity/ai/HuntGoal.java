@@ -13,6 +13,7 @@ import net.minecraft.world.phys.AABB;
 
 public class HuntGoal extends NearestAttackableTargetGoal<LivingEntity> {
     private final Prehistoric dino;
+
     public HuntGoal(Prehistoric prehistoric) {
         super(prehistoric, LivingEntity.class, true);
         this.dino = prehistoric;

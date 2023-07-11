@@ -39,11 +39,11 @@ public class ModFlammableRotatedPillarBlockImpl {
             public BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
                 ItemStack stack = context.getItemInHand();
 
-                if(!simulate && stack.getItem() instanceof AxeItem) {
-                    if(state.is(ModBlocks.CORDAITES_LOG.get())) {
+                if (!simulate && stack.getItem() instanceof AxeItem) {
+                    if (state.is(ModBlocks.CORDAITES_LOG.get())) {
                         return ModBlocks.STRIPPED_CORDAITES_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
                     }
-                    if(state.is(ModBlocks.CORDAITES_WOOD.get())) {
+                    if (state.is(ModBlocks.CORDAITES_WOOD.get())) {
                         return ModBlocks.STRIPPED_CORDAITES_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
                     }
                 }

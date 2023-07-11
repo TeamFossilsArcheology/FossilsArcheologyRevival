@@ -16,9 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModVillages {
-    private static final ResourceKey<StructureProcessorList> EMPTY_PROCESSOR_LIST_KEY = ResourceKey.create(
-            Registry.PROCESSOR_LIST_REGISTRY, new ResourceLocation("minecraft", "empty"));
-
     public static final Tuple ARCHEOLOGIST_HOUSE_DESERT = createStructure("houses/archeologist_house_desert", 25);
     public static final Tuple PALEONTOLOGIST_HOUSE_DESERT = createStructure("houses/archeologist_house_desert", 25);
     public static final Tuple ARCHEOLOGIST_HOUSE_PLAINS = createStructure("houses/archeologist_house_plains_top", 25);
@@ -29,6 +26,8 @@ public class ModVillages {
     public static final Tuple PALEONTOLOGIST_HOUSE_SNOWY = createStructure("houses/archeologist_house_snowy", 25);
     public static final Tuple ARCHEOLOGIST_HOUSE_TAIGA = createStructure("houses/archeologist_house_taiga_top", 25);
     public static final Tuple PALEONTOLOGIST_HOUSE_TAIGA = createStructure("houses/archeologist_house_taiga_top", 25);
+    private static final ResourceKey<StructureProcessorList> EMPTY_PROCESSOR_LIST_KEY = ResourceKey.create(
+            Registry.PROCESSOR_LIST_REGISTRY, new ResourceLocation("minecraft", "empty"));
 
     private static Tuple createStructure(String name, int weight) {
         return new Tuple(Fossil.MOD_ID + ":" + name, weight);

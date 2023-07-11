@@ -1,65 +1,65 @@
-modLoader="javafml"
+modLoader = "javafml"
 
-loaderVersion="[40,)"
+loaderVersion = "[40,)"
 
-license="April 26, 2014 the Fossils and Archeology Revival was put under the Creative Commons Attribution license (http://creativecommons.org/licenses/by/4.0/). The source is now home in a public organization found here: https://github.com/FossilsArcheologyRevival."
+license = "April 26, 2014 the Fossils and Archeology Revival was put under the Creative Commons Attribution license (http://creativecommons.org/licenses/by/4.0/). The source is now home in a public organization found here: https://github.com/FossilsArcheologyRevival."
 
-issueTrackerURL="https://github.com/FossilsArcheologyRevival/FossilsArcheologyRevival/issues"
+issueTrackerURL = "https://github.com/FossilsArcheologyRevival/FossilsArcheologyRevival/issues"
 
 [[mods]]
-modId="fossil"
+modId = "fossil"
 
-version="${version}"
+version = "${version}"
 
-displayName="Fossils and Archeology: Revival"
-displayURL="https://www.curseforge.com/minecraft/mc-mods/fossils"
+displayName = "Fossils and Archeology: Revival"
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/fossils"
 
-logoFile="fossils.png"
+logoFile = "fossils.png"
 
-credits="Original mod by Flammarilva and Team July!"
+credits = "Original mod by Flammarilva and Team July!"
 
-authors=" 4f6f3b, Alexthe666, ASDFGirlS7, Cannibal Vox, Elyasisly, gegy1000, iLexiconn,Javaraptor, JTGhawk137, LeHotApe,Microjunk, Robberto08, Shadowbeast007, Sunconure11, TheSleepySpino, TotallyNotAHobo, Totemaster, Tyranno66"
+authors = " 4f6f3b, Alexthe666, ASDFGirlS7, Cannibal Vox, Elyasisly, gegy1000, iLexiconn,Javaraptor, JTGhawk137, LeHotApe,Microjunk, Robberto08, Shadowbeast007, Sunconure11, TheSleepySpino, TotallyNotAHobo, Totemaster, Tyranno66"
 
-description="Adding dinosaurs, fossils, and more to Minecraft. If you have downloaded this mod from a source that is not Minecraft Forums or Curse, be aware you might be using an out of date or unofficial version."
-
-[[dependencies.fossil]]
-    modId="forge"
-    mandatory=true
-    versionRange="[40,)"
-    ordering="NONE"
-    side="BOTH"
+description = "Adding dinosaurs, fossils, and more to Minecraft. If you have downloaded this mod from a source that is not Minecraft Forums or Curse, be aware you might be using an out of date or unofficial version."
 
 [[dependencies.fossil]]
-    modId="minecraft"
-    mandatory=true
-    versionRange="[1.18.2,1.19)"
-    ordering="NONE"
-    side="BOTH"
+modId = "forge"
+mandatory = true
+versionRange = "[40,)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.fossil]]
-    modId="architectury"
-    mandatory=true
-    versionRange="[4.10.86,)"
-    ordering="AFTER"
-    side="BOTH"
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18.2,1.19)"
+ordering = "NONE"
+side = "BOTH"
 
 [[dependencies.fossil]]
-    modId="geckolib3"
-    mandatory=true
-    versionRange="[3.0.55,)"
-    ordering="AFTER"
-    side="BOTH"
+modId = "architectury"
+mandatory = true
+versionRange = "[4.10.86,)"
+ordering = "AFTER"
+side = "BOTH"
 
 [[dependencies.fossil]]
-    modId="roughlyenoughitems"
-    mandatory=false
-    versionRange="[8.3.495,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "geckolib3"
+mandatory = true
+versionRange = "[3.0.55,)"
+ordering = "AFTER"
+side = "BOTH"
 
 [[dependencies.fossil]]
-    modId="terrablender"
-    mandatory=true
-    versionRange="[1.2.0,)"
-    ordering="NONE"
-    side="BOTH"
+modId = "roughlyenoughitems"
+mandatory = false
+versionRange = "[8.3.495,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.fossil]]
+modId = "terrablender"
+mandatory = true
+versionRange = "[1.2.0,)"
+ordering = "NONE"
+side = "BOTH"

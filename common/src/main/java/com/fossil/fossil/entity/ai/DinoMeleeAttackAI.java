@@ -51,7 +51,7 @@ public class DinoMeleeAttackAI extends MeleeAttackGoal {
             resetAttackCooldown();
             dinosaur.setCurrentAnimation(attackAnimations);
 
-            TimerQueue<MinecraftServer> queue = ((ServerLevelData)dinosaur.level.getLevelData()).getScheduledEvents();
+            TimerQueue<MinecraftServer> queue = ((ServerLevelData) dinosaur.level.getLevelData()).getScheduledEvents();
             long gameTime = dinosaur.level.getGameTime();
             for (int attackDelay : attackAnimations.attackDelays) {
                 queue.schedule(dinosaur.getStringUUID(), gameTime + attackDelay, new DisposableTask((unused1, unused2, unused3) -> {

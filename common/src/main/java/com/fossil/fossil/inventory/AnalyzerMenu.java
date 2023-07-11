@@ -42,6 +42,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         }
         this.addDataSlots(containerData);
     }
+
     @Override
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
@@ -51,7 +52,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
             if (index >= 9 && index <= 12) {
-                if (!moveItemStackTo(current, 13, inventorySlots+13, true)) {
+                if (!moveItemStackTo(current, 13, inventorySlots + 13, true)) {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 13) {
@@ -59,12 +60,12 @@ public class AnalyzerMenu extends AbstractContainerMenu {
                     if (!this.moveItemStackTo(current, 0, 9, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 13 && index < inventorySlots+13-9 && !this.moveItemStackTo(current, inventorySlots+13-9, inventorySlots+13, false)) {
+                } else if (index >= 13 && index < inventorySlots + 13 - 9 && !this.moveItemStackTo(current, inventorySlots + 13 - 9, inventorySlots + 13, false)) {
                     return ItemStack.EMPTY;
-                } else if (index >= inventorySlots+13-9 && index < inventorySlots+13 && !this.moveItemStackTo(current, 13, inventorySlots+13-9, false)) {
+                } else if (index >= inventorySlots + 13 - 9 && index < inventorySlots + 13 && !this.moveItemStackTo(current, 13, inventorySlots + 13 - 9, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(current, 13, inventorySlots+13, false)) {
+            } else if (!this.moveItemStackTo(current, 13, inventorySlots + 13, false)) {
                 return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {

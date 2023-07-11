@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FigurineBlock extends Block {
-    private static final VoxelShape SHAPE = Block.box(4, 0, 6, 12, 8, 10);
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
+    private static final VoxelShape SHAPE = Block.box(4, 0, 6, 12, 8, 10);
 
     public FigurineBlock() {
         super(Properties.of(Material.DECORATION).sound(SoundType.STONE));
@@ -48,6 +48,7 @@ public class FigurineBlock extends Block {
     public @NotNull RenderShape getRenderShape(BlockState state) {
         return RenderShape.MODEL;
     }
+
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;

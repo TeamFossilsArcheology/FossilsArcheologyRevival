@@ -52,19 +52,19 @@ public class AncientChestBlockEntity extends BlockEntity {
         tick(level, pos, state, blockEntity);
     }
 
-    public void setState(int state) {
-        this.state = state;
-    }
-
-    public void setLidTimer(int lidTimer) {
-        this.lidTimer = lidTimer;
-    }
-
     public int getState() {
         return state;
     }
 
+    public void setState(int state) {
+        this.state = state;
+    }
+
     public int getLidTimer() {
         return lidTimer;
+    }
+
+    public void setLidTimer(int lidTimer) {
+        this.lidTimer = lidTimer;
     }
 }

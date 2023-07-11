@@ -60,10 +60,10 @@ public class InfoTab extends DebugTab {
         });
 
         addWidget(CycleOption.create("Gender", () -> Arrays.stream(Gender.values()).toList(),
-                Gender::getName, options -> gender, (options, option, gender) -> this.gender = gender)
+                        Gender::getName, options -> gender, (options, option, gender) -> this.gender = gender)
                 .createButton(Minecraft.getInstance().options, 20, 150, 150));
         addWidget(new Button(20, 180, 150, 20, new TextComponent("Set Info"), button -> {
-            ((Prehistoric)entity).setGender(gender);
+            ((Prehistoric) entity).setGender(gender);
             MessageHandler.DEBUG_CHANNEL.sendToServer(new InfoMessage(entity.getId(), gender.name(), ageInTicks, ticksTillMate, ticksTillPlay, mood));
         }));
     }

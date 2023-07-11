@@ -39,7 +39,7 @@ public abstract class ToyBase extends LivingEntity {
                 return true;
             }
             if (source.getEntity() instanceof Player) {
-                if (!((Player)source.getEntity()).getAbilities().mayBuild) {
+                if (!((Player) source.getEntity()).getAbilities().mayBuild) {
                     return false;
                 }
                 Block.popResource(level, blockPosition(), getPickResult());

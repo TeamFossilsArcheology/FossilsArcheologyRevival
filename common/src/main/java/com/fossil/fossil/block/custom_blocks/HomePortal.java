@@ -49,26 +49,27 @@ public class HomePortal extends Block {
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
         if (random.nextInt(100) == 0) {
-            level.playLocalSound((double)pos.getX() + 0.5, (double)pos.getY() + 0.5, (double)pos.getZ() + 0.5, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5f, random.nextFloat() * 0.4f + 0.8f, false);
+            level.playLocalSound((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5, SoundEvents.PORTAL_AMBIENT, SoundSource.BLOCKS, 0.5f, random.nextFloat() * 0.4f + 0.8f, false);
         }
         for (int i = 0; i < 4; ++i) {
-            double d = (double)pos.getX() + random.nextDouble();
-            double e = (double)pos.getY() + random.nextDouble();
-            double f = (double)pos.getZ() + random.nextDouble();
-            double g = ((double)random.nextFloat() - 0.5) * 0.5;
-            double h = ((double)random.nextFloat() - 0.5) * 0.5;
-            double j = ((double)random.nextFloat() - 0.5) * 0.5;
+            double d = (double) pos.getX() + random.nextDouble();
+            double e = (double) pos.getY() + random.nextDouble();
+            double f = (double) pos.getZ() + random.nextDouble();
+            double g = ((double) random.nextFloat() - 0.5) * 0.5;
+            double h = ((double) random.nextFloat() - 0.5) * 0.5;
+            double j = ((double) random.nextFloat() - 0.5) * 0.5;
             int k = random.nextInt(2) * 2 - 1;
             if (level.getBlockState(pos.west()).is(this) || level.getBlockState(pos.east()).is(this)) {
-                f = (double)pos.getZ() + 0.5 + 0.25 * (double)k;
-                j = random.nextFloat() * 2.0f * (float)k;
+                f = (double) pos.getZ() + 0.5 + 0.25 * (double) k;
+                j = random.nextFloat() * 2.0f * (float) k;
             } else {
-                d = (double)pos.getX() + 0.5 + 0.25 * (double)k;
-                g = random.nextFloat() * 2.0f * (float)k;
+                d = (double) pos.getX() + 0.5 + 0.25 * (double) k;
+                g = random.nextFloat() * 2.0f * (float) k;
             }
             level.addParticle(ParticleTypes.PORTAL, d, e, f, g, h, j);
         }
     }
+
     @Override
     public @NotNull ItemStack getCloneItemStack(BlockGetter level, BlockPos pos, BlockState state) {
         return ItemStack.EMPTY;

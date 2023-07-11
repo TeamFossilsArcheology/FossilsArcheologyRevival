@@ -28,8 +28,6 @@ import java.util.List;
 import java.util.Map;
 
 public class Triceratops extends Prehistoric {
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-
     public static final String ANIMATIONS = "triceratops.animation.json";
     public static final String IDLE = "animation.triceratops.idle";
     public static final String WALK = "animation.triceratops.walk";
@@ -48,8 +46,6 @@ public class Triceratops extends Prehistoric {
     public static final String CALL = "animation.triceratops.call";
     public static final String ATTACK1 = "animation.triceratops.attack1";
     public static final String ATTACK2 = "animation.triceratops.attack2";
-    private final Entity[] parts;
-
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
@@ -65,6 +61,8 @@ public class Triceratops extends Prehistoric {
         }
         return newMap;
     });
+    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final Entity[] parts;
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(

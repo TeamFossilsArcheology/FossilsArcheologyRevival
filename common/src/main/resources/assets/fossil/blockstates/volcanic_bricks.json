@@ -1,6 +1,7 @@
 {
   "variants": {
-    "":
-    { "model": "fossil:block/volcanic_bricks" }
+    "": {
+      "model": "fossil:block/volcanic_bricks"
+    }
   }
 }

@@ -19,11 +19,11 @@ import java.util.EnumSet;
  */
 public class DinoFollowOwnerGoal extends Goal {
     private final Prehistoric dino;
-    private LivingEntity owner;
     private final double speedModifier;
     private final float startDistance;
     private final float stopDistance;
     private final boolean canFly;
+    private LivingEntity owner;
     private float oldWaterCost;
     private int timeToRecalcPath;
 

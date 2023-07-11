@@ -1,6 +1,7 @@
 {
   "variants": {
-    "":
-    { "model": "fossil:block/sigillaria_leaves" }
+    "": {
+      "model": "fossil:block/sigillaria_leaves"
+    }
   }
 }

@@ -19,14 +19,15 @@ import org.jetbrains.annotations.NotNull;
 public class ModItemTagsProvider extends TagsProvider<Item> {
     private static final ResourceKey<? extends Registry<Item>> key = ModItems.ITEMS.getRegistrar().key();
     public static final TagKey<Item> FOSSIL_SEEDS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "fossil_seeds"));
-    public ModItemTagsProvider(DataGenerator arg,  ExistingFileHelper exFileHelper) {
+
+    public ModItemTagsProvider(DataGenerator arg, ExistingFileHelper exFileHelper) {
         super(arg, Registry.ITEM, Fossil.MOD_ID, exFileHelper);
     }
 
     @Override
     protected void addTags() {
         for (Block block : ForgeRegistries.BLOCKS.tags().getTag(BlockTags.LEAVES)) {
-            
+
         }
         var fossilSeeds = tag(FOSSIL_SEEDS);
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {

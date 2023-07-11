@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class TarSlimeRenderer extends SlimeRenderer implements RendererFabricFix {
     private static final ResourceLocation TAR_SLIME_LOCATION = new ResourceLocation(Fossil.MOD_ID, "textures/entity/tar_slime.png");
+
     public TarSlimeRenderer(EntityRendererProvider.Context context) {
         super(context);
     }

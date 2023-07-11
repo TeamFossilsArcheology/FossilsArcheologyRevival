@@ -76,12 +76,12 @@ public class ToyBall extends ToyBase {
         return new ItemStack(ModItems.TOY_BALLS.get(getColor()).get());
     }
 
-    public void setColor(DyeColor color) {
-        entityData.set(COLOR_ID, color.getId());
-    }
-
     public DyeColor getColor() {
         return DyeColor.byId(entityData.get(COLOR_ID));
+    }
+
+    public void setColor(DyeColor color) {
+        entityData.set(COLOR_ID, color.getId());
     }
 
     @Override
