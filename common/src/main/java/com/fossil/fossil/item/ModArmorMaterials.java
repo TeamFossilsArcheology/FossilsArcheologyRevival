@@ -1,6 +1,5 @@
 package com.fossil.fossil.item;
 
-import com.fossil.fossil.Fossil;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.LazyLoadedValue;

@@ -1,7 +1,6 @@
 package com.fossil.fossil.util;
 
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricMobType;
 import com.fossil.fossil.item.ModItems;

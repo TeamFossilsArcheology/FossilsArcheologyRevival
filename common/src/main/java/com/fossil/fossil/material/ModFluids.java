@@ -18,7 +18,9 @@ public class ModFluids {
 
     public static void register() {
         FLUIDS.register();
-    }    public static final ArchitecturyFluidAttributes TAR_ATTRIBUTES =
+    }
+
+    public static final ArchitecturyFluidAttributes TAR_ATTRIBUTES =
             SimpleArchitecturyFluidAttributes.ofSupplier(() -> ModFluids.TAR_FLOWING, () -> ModFluids.TAR).blockSupplier(() -> ModBlocks.TAR)
                     .bucketItemSupplier(() -> ModItems.TAR_BUCKET).sourceTexture(new ResourceLocation(Fossil.MOD_ID, "block/tar_still"))
                     .flowingTexture(new ResourceLocation(Fossil.MOD_ID, "block/tar_flowing")).temperature(400).density(3000).viscosity(8000).tickDelay(40);
