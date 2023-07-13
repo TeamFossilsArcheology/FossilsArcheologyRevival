@@ -2,9 +2,9 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.entity.prehistoric.base.Pterosaurs;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
@@ -60,28 +60,11 @@ public class Tropeognathus extends Pterosaurs {
         }
         return newMap;
     });
+    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("tropeognathus");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tropeognathus(EntityType<Tropeognathus> entityType, Level level) {
-        super(
-                entityType,
-                level,
-                false,
-                0.4F,
-                2.0F,
-                2F,
-                2F,
-                5,
-                6,
-                12,
-                12,
-                12,
-                64,
-                0.2,
-                0.35,
-                5,
-                15
-        );
+        super(entityType, level, false);
     }
 
     @Override
@@ -109,67 +92,6 @@ public class Tropeognathus extends Pterosaurs {
         return PrehistoricEntityType.PTERANODON;
     }
 
-    // TODO These may not be correct, should be adjusted
-    @Override
-    public PrehistoricEntityTypeAI.Activity aiActivityType() {
-        return PrehistoricEntityTypeAI.Activity.DIURNAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Attacking aiAttackType() {
-        return PrehistoricEntityTypeAI.Attacking.BASIC;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Climbing aiClimbType() {
-        return PrehistoricEntityTypeAI.Climbing.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Following aiFollowType() {
-        return PrehistoricEntityTypeAI.Following.NORMAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Jumping aiJumpType() {
-        return PrehistoricEntityTypeAI.Jumping.BASIC;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return PrehistoricEntityTypeAI.Response.CALM;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Stalking aiStalkType() {
-        return PrehistoricEntityTypeAI.Stalking.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Taming aiTameType() {
-        return PrehistoricEntityTypeAI.Taming.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Untaming aiUntameType() {
-        return PrehistoricEntityTypeAI.Untaming.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Moving aiMovingType() {
-        return PrehistoricEntityTypeAI.Moving.FLIGHT;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType() {
-        return PrehistoricEntityTypeAI.WaterAbility.ATTACK;
-    }
-
-    @Override
-    public int getMaxHunger() {
-        return 175;
-    }
-
     @Override
     public Map<String, ServerAnimationInfo> getAllAnimations() {
         return allAnimations.get();
@@ -183,6 +105,11 @@ public class Tropeognathus extends Pterosaurs {
     @Override
     public boolean canBeRidden() {
         return false;
+    }
+
+    @Override
+    public EntityDataManager.Data data() {
+        return data;
     }
 
     @Override

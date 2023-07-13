@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
@@ -52,6 +53,7 @@ public class Triceratops extends Prehistoric {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
+                //TODO: Move this descision to the animation data file
                 case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
@@ -61,30 +63,12 @@ public class Triceratops extends Prehistoric {
         }
         return newMap;
     });
+    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("triceratops");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final Entity[] parts;
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
-        super(
-                type,
-                level,
-                true,
-                false,
-                0.4F,
-                1.4F,
-                0.5F,
-                2F,
-                5,
-                12,
-                1,
-                12,
-                12,
-                64,
-                0.1,
-                0.25,
-                5,
-                15
-        );
+        super(type, level, true, false);
         var head = PrehistoricPart.get(this, 2.5f, 2.5f);
         var body = PrehistoricPart.get(this, 3.2f, 3.3f);
         var tail = PrehistoricPart.get(this, 2.2f, 2f);
@@ -183,84 +167,14 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Activity aiActivityType() {
-
-        return PrehistoricEntityTypeAI.Activity.DIURNAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Attacking aiAttackType() {
-
-        return PrehistoricEntityTypeAI.Attacking.KNOCKUP;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Climbing aiClimbType() {
-
-        return PrehistoricEntityTypeAI.Climbing.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Following aiFollowType() {
-
-        return PrehistoricEntityTypeAI.Following.NORMAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Jumping aiJumpType() {
-
-        return PrehistoricEntityTypeAI.Jumping.BASIC;
-    }
-
-    @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
 
         return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Stalking aiStalkType() {
-
-        return PrehistoricEntityTypeAI.Stalking.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Taming aiTameType() {
-
-        return PrehistoricEntityTypeAI.Taming.IMPRINTING;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Untaming aiUntameType() {
-
-        return PrehistoricEntityTypeAI.Untaming.STARVE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Moving aiMovingType() {
-
-        return PrehistoricEntityTypeAI.Moving.WALK;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType() {
-
-        return PrehistoricEntityTypeAI.WaterAbility.NONE;
-    }
-
-    @Override
-    public boolean doesFlock() {
-        return false;
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public int getMaxHunger() {
-        return 175;
     }
 
     @Override
@@ -287,6 +201,11 @@ public class Triceratops extends Prehistoric {
     @Override
     public boolean canBeRidden() {
         return true;
+    }
+
+    @Override
+    public EntityDataManager.Data data() {
+        return data;
     }
 
     @Override

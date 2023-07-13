@@ -4,6 +4,7 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.capabilities.fabric.ModCapabilitiesImpl;
 import com.fossil.fossil.config.fabric.FossilConfigImpl;
 import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.fabric.capabilities.MammalComponent;
 import com.fossil.fossil.fabric.world.biome.FabricFossilRegion;
 import com.fossil.fossil.fabric.world.biome.FabricModBiomes;
@@ -51,6 +52,17 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
             @Override
             public ResourceLocation getFabricId() {
                 return new ResourceLocation(Fossil.MOD_ID, "animations");
+            }
+        });
+        ResourceManagerHelper.get(PackType.SERVER_DATA).registerReloadListener(new IdentifiableResourceReloadListener() {
+            @Override
+            public @NotNull CompletableFuture<Void> reload(@NotNull PreparationBarrier barrier, @NotNull ResourceManager manager, @NotNull ProfilerFiller preparationsProfiler, @NotNull ProfilerFiller reloadProfiler, @NotNull Executor backgroundExecutor, @NotNull Executor gameExecutor) {
+                return EntityDataManager.ENTITY_DATA.reload(barrier, manager, preparationsProfiler, reloadProfiler, backgroundExecutor, gameExecutor);
+            }
+
+            @Override
+            public ResourceLocation getFabricId() {
+                return new ResourceLocation(Fossil.MOD_ID, "entities");
             }
         });
         MidnightConfig.init(Fossil.MOD_ID, FossilConfigImpl.class);

@@ -10,6 +10,9 @@ import com.fossil.fossil.entity.ai.DinoAIMating;
 import com.fossil.fossil.entity.ai.WhipSteering;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.data.AI;
+import com.fossil.fossil.entity.data.EntityDataManager;
+import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
@@ -107,21 +110,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private static final EntityDataAccessor<Boolean> AGINGDISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<ItemStack> HOLDING_IN_MOUTH = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.ITEM_STACK);
     private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
-    public final double baseDamage;
-    public final double maxDamage;
-    public final double baseHealth;
-    public final double maxHealth;
-    public final double baseSpeed;
-    public final double maxSpeed;
-    public final double baseArmor;
-    public final double maxArmor;
-    // public Animation ATTACK_ANIMATION;
-    public final float minScale;
-    public final float maxScale;
-    public final float baseKnockBackResistance;
-    public final float maxKnockBackResistance;
-    public final int teenAgeDays;
-    public final int adultAgeDays;
     // public final Item uncultivatedEggItem;
     public final boolean isCannibalistic;
     private final boolean isMultiPart;
@@ -160,26 +148,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private int ticksClimbing = 0;
     private float eggScale = 1.0F;
 
-    public Prehistoric(
-            EntityType<? extends Prehistoric> entityType,
-            Level level,
-            boolean isMultiPart,
-            boolean isCannibalistic,
-            float minScale,
-            float maxScale,
-            float baseKnockBackResistance,
-            float maxKnockBackResistance,
-            int teenAgeDays,
-            int adultAgeDays,
-            double baseDamage,
-            double maxDamage,
-            double baseHealth,
-            double maxHealth,
-            double baseSpeed,
-            double maxSpeed,
-            double baseArmor,
-            double maxArmor
-    ) {
+    public Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart, boolean isCannibalistic) {
         super(entityType, level);
         this.isMultiPart = isMultiPart;
         this.setHunger(this.getMaxHunger() / 2);
@@ -187,20 +156,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.nearByMobsAllowed = 15;
         this.currentOrder = OrderType.WANDER;
         this.isCannibalistic = isCannibalistic;
-        this.minScale = minScale;
-        this.maxScale = maxScale;
-        this.baseKnockBackResistance = baseKnockBackResistance;
-        this.maxKnockBackResistance = maxKnockBackResistance;
-        this.teenAgeDays = teenAgeDays;
-        this.adultAgeDays = adultAgeDays;
-        this.baseDamage = baseDamage;
-        this.maxDamage = maxDamage;
-        this.baseHealth = baseHealth;
-        this.maxHealth = maxHealth;
-        this.baseSpeed = baseSpeed;
-        this.maxSpeed = maxSpeed;
-        this.baseArmor = baseArmor;
-        this.maxArmor = maxArmor;
         this.updateAbilities();
         if (this.getMobType() == MobType.WATER) {
             this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
@@ -310,7 +265,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     @Override
-    protected AABB makeBoundingBox() {
+    protected @NotNull AABB makeBoundingBox() {
         if (isCustomMultiPart()) {
             //Using the position of the custom part will not work because its behind by 1 tick?
             // return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(getCustomParts()[0].position());
@@ -498,7 +453,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         if (spawnDataIn instanceof PrehistoricGroupData prehistoricGroupData) {
             setAgeInDays(prehistoricGroupData.ageInDays());
         } else {
-            setAgeInDays(this.adultAgeDays);
+            setAgeInDays(data().adultAgeDays());
         }
         updateAbilities();
         setPlayingTick(0);
@@ -1023,37 +978,59 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Activity aiActivityType();
+    public PrehistoricEntityTypeAI.Activity aiActivityType() {
+        return ai().activity();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Attacking aiAttackType();
+    public PrehistoricEntityTypeAI.Attacking aiAttackType() {
+        return ai().attacking();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Climbing aiClimbType();
+    public PrehistoricEntityTypeAI.Climbing aiClimbType() {
+        return ai().climbing();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Following aiFollowType();
+    public PrehistoricEntityTypeAI.Following aiFollowType() {
+        return ai().following();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Jumping aiJumpType();
+    public PrehistoricEntityTypeAI.Jumping aiJumpType() {
+        return ai().jumping();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Response aiResponseType();
+    public PrehistoricEntityTypeAI.Response aiResponseType() {
+        return ai().response();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Stalking aiStalkType();
+    public PrehistoricEntityTypeAI.Stalking aiStalkType() {
+        return ai().stalking();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Taming aiTameType();
+    public PrehistoricEntityTypeAI.Taming aiTameType() {
+        return ai().taming();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Untaming aiUntameType();
+    public PrehistoricEntityTypeAI.Untaming aiUntameType() {
+        return ai().untaming();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.Moving aiMovingType();
+    public PrehistoricEntityTypeAI.Moving aiMovingType() {
+        return ai().moving();
+    }
 
     @Override
-    public abstract PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType();
+    public PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType() {
+        return ai().waterAbility();
+    }
 
     public boolean doesFlock() {
         return false;
@@ -1061,11 +1038,11 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
 
     @Override
     public float getScale() {
-        float step = ((this.maxScale * getFemaleScale()) - this.minScale) / ((this.adultAgeDays * 24000) + 1);
-        if (this.getAgeInTicks() > this.adultAgeDays * 24000) {
-            return this.minScale + ((step) * this.adultAgeDays * 24000);
+        float step = ((data().maxScale() * getFemaleScale()) - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
+        if (this.getAgeInTicks() > data().adultAgeDays() * 24000) {
+            return data().minScale() + ((step) * data().adultAgeDays() * 24000);
         }
-        return this.minScale + ((step * this.getAgeInTicks()));
+        return data().minScale() + ((step * this.getAgeInTicks()));
     }
 
     public float getModelScale() {
@@ -1077,20 +1054,20 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         float base = 6 * this.getBbWidth() * (this.type().diet == Diet.HERBIVORE ? 1.0F : 2.0F)
                 * (this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM ? 1.0F : 2.0F)
                 * (this.aiAttackType() == PrehistoricEntityTypeAI.Attacking.BASIC ? 1.0F : 1.25F);
-        return Mth.floor((float) Math.min(this.adultAgeDays, this.getAgeInDays()) * base);
+        return Mth.floor((float) Math.min(data().adultAgeDays(), this.getAgeInDays()) * base);
     }
 
     public void updateAbilities() {
-        double percent = Math.min((1.0 / this.adultAgeDays) * this.getAgeInDays(), 1.0);
+        double percent = Math.min((1.0 / data().adultAgeDays()) * this.getAgeInDays(), 1.0);
 
         double healthDifference = this.getAttributeValue(Attributes.MAX_HEALTH);
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, baseHealth, maxHealth)));
+        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, stats().baseHealth(), stats().maxHealth())));
         healthDifference = this.getAttributeValue(Attributes.MAX_HEALTH) - healthDifference;
 
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, baseDamage, maxDamage)));
-        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Mth.lerp(percent, baseSpeed, maxSpeed));
-        this.getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, baseArmor, maxArmor));
-        this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, baseKnockBackResistance, maxKnockBackResistance));
+        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, stats().baseDamage(), stats().maxDamage())));
+        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Mth.lerp(percent, stats().baseSpeed(), stats().maxSpeed()));
+        this.getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, stats().baseArmor(), stats().maxArmor()));
+        this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, stats().baseKnockBackResistance(), stats().maxKnockBackResistance()));
 
         this.heal((float) healthDifference);
     }
@@ -1125,19 +1102,21 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public boolean isAdult() {
-        return this.getAgeInDays() >= adultAgeDays;
+        return this.getAgeInDays() >= data().adultAgeDays();
     }
 
     public boolean isTeen() {
-        return this.getAgeInDays() >= teenAgeDays && this.getAgeInDays() < adultAgeDays;
+        return this.getAgeInDays() >= data().teenAgeDays() && this.getAgeInDays() < data().adultAgeDays();
     }
 
     @Override
     public boolean isBaby() {
-        return this.getAgeInDays() < teenAgeDays && !this.isSkeleton();
+        return this.getAgeInDays() < data().teenAgeDays() && !this.isSkeleton();
     }
 
-    public abstract int getMaxHunger();
+    public int getMaxHunger() {
+        return data().maxHunger();
+    }
 
     public boolean isSkeleton() {
         return this.entityData.get(MODELIZED);
@@ -1352,7 +1331,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                 } else {
                     this.spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
                 }
-                this.spawnAtLocation(new ItemStack(Items.BONE, Math.min(this.getAgeInDays(), this.adultAgeDays)), 1);
+                this.spawnAtLocation(new ItemStack(Items.BONE, Math.min(this.getAgeInDays(), data().adultAgeDays())), 1);
                 droppedBiofossil = true;
             }
             this.dead = true;
@@ -1427,7 +1406,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                 }
                 return InteractionResult.SUCCESS;
             } else {
-                if (itemstack.is(Items.BONE) && this.getAgeInDays() < this.adultAgeDays) {
+                if (itemstack.is(Items.BONE) && this.getAgeInDays() < data().adultAgeDays()) {
                     this.level.playSound(null, this.blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.NEUTRAL, 0.8F, 1);
                     this.setAgeInDays(this.getAgeInDays() + 1);
                     if (!player.isCreative()) {
@@ -1456,7 +1435,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                 }
 
                 if (itemstack.is(ModItems.CHICKEN_ESSENCE.get()) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && this.aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && !player.level.isClientSide) {
-                    if (this.getAgeInDays() < this.adultAgeDays && this.getHunger() > 0) {
+                    if (this.getAgeInDays() < data().adultAgeDays() && this.getHunger() > 0) {
                         if (this.getHunger() > 0) {
                             itemstack.shrink(1);
                             if (!player.isCreative()) {
@@ -1603,7 +1582,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public boolean isWeak() {
-        return (this.getHealth() < 8) && (this.getAgeInDays() >= this.adultAgeDays) && !this.isTame();
+        return (this.getHealth() < 8) && (this.getAgeInDays() >= data().adultAgeDays()) && !this.isTame();
     }
 
     private void sendOrderMessage(OrderType var1) {
@@ -2056,6 +2035,16 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             return i - j;
         }
         return 100;
+    }
+
+    public abstract EntityDataManager.Data data();
+
+    private Stat stats() {
+        return data().stats();
+    }
+
+    private AI ai() {
+        return data().ai();
     }
 
     public Gender getGender() {

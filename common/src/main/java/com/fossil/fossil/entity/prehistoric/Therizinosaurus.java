@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
@@ -47,29 +48,11 @@ public class Therizinosaurus extends Prehistoric {
         }
         return newMap;
     });
+    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("therizinosaurus");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Therizinosaurus(EntityType<Therizinosaurus> entityType, Level level) {
-        super(
-                entityType,
-                level,
-                false,
-                false,
-                0.4F,
-                2.0F,
-                2F,
-                2F,
-                5,
-                6,
-                12,
-                12,
-                12,
-                64,
-                0.2,
-                0.35,
-                5,
-                15
-        );
+        super(entityType, level, false, false);
     }
 
     @Override
@@ -98,73 +81,9 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Activity aiActivityType() {
-        return PrehistoricEntityTypeAI.Activity.DIURNAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Attacking aiAttackType() {
-
-        return PrehistoricEntityTypeAI.Attacking.KNOCKUP;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Climbing aiClimbType() {
-
-        return PrehistoricEntityTypeAI.Climbing.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Following aiFollowType() {
-
-        return PrehistoricEntityTypeAI.Following.NORMAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Jumping aiJumpType() {
-
-        return PrehistoricEntityTypeAI.Jumping.BASIC;
-    }
-
-    @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
 
         return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Stalking aiStalkType() {
-
-        return PrehistoricEntityTypeAI.Stalking.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Taming aiTameType() {
-
-        return PrehistoricEntityTypeAI.Taming.IMPRINTING;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Untaming aiUntameType() {
-
-        return PrehistoricEntityTypeAI.Untaming.STARVE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Moving aiMovingType() {
-
-        return PrehistoricEntityTypeAI.Moving.WALK;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType() {
-
-        return PrehistoricEntityTypeAI.WaterAbility.NONE;
-    }
-
-    @Override
-    public int getMaxHunger() {
-        return 175;
     }
 
     @Override
@@ -180,6 +99,11 @@ public class Therizinosaurus extends Prehistoric {
     @Override
     public boolean canBeRidden() {
         return false;
+    }
+
+    @Override
+    public EntityDataManager.Data data() {
+        return data;
     }
 
     @Override

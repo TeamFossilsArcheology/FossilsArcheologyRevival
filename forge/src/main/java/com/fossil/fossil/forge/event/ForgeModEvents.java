@@ -6,6 +6,7 @@ import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.event.ModEvents;
@@ -79,5 +80,6 @@ public class ForgeModEvents {
     @SubscribeEvent
     public void addCustomReloadListeners(AddReloadListenerEvent event) {
         event.addListener(AnimationManager.ANIMATIONS);
+        event.addListener(EntityDataManager.ENTITY_DATA);
     }
 }

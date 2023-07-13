@@ -2,9 +2,9 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -58,10 +58,11 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
         }
         return newMap;
     });
+    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("dilophosaurus");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Dilophosaurus(EntityType<Dilophosaurus> type, Level level) {
-        super(type, level, false, false, 0.18f, 1.4f, 0, 0, 4, 8, 1, 8, 8, 40, 0.25, 0.35, 0, 5);
+        super(type, level, false, false);
     }
 
     @Override
@@ -91,66 +92,6 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Activity aiActivityType() {
-        return PrehistoricEntityTypeAI.Activity.DIURNAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Attacking aiAttackType() {
-        return PrehistoricEntityTypeAI.Attacking.CHARGE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Climbing aiClimbType() {
-        return PrehistoricEntityTypeAI.Climbing.NONE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Following aiFollowType() {
-        return PrehistoricEntityTypeAI.Following.AGRESSIVE;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Jumping aiJumpType() {
-        return PrehistoricEntityTypeAI.Jumping.BASIC;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return PrehistoricEntityTypeAI.Response.TERRITORIAL;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Stalking aiStalkType() {
-        return PrehistoricEntityTypeAI.Stalking.STEALTH;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Taming aiTameType() {
-        return PrehistoricEntityTypeAI.Taming.IMPRINTING;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Untaming aiUntameType() {
-        return PrehistoricEntityTypeAI.Untaming.ATTACK;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.Moving aiMovingType() {
-        return PrehistoricEntityTypeAI.Moving.WALK;
-    }
-
-    @Override
-    public PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType() {
-        return PrehistoricEntityTypeAI.WaterAbility.NONE;
-    }
-
-    @Override
-    public int getMaxHunger() {
-        return 100;
-    }
-
-    @Override
     public Map<String, ServerAnimationInfo> getAllAnimations() {
         return allAnimations.get();
     }
@@ -163,6 +104,11 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
     @Override
     public boolean canBeRidden() {
         return true;
+    }
+
+    @Override
+    public EntityDataManager.Data data() {
+        return data;
     }
 
     @Override

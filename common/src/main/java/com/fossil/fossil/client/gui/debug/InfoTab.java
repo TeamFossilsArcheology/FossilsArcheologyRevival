@@ -23,7 +23,7 @@ public class InfoTab extends DebugTab {
 
     protected InfoTab(DebugScreen debugScreen, Prehistoric prehistoric) {
         super(debugScreen, prehistoric);
-        this.maxAgeInTicks = prehistoric.adultAgeDays * 24000;
+        this.maxAgeInTicks = prehistoric.data().adultAgeDays() * 24000;
         this.gender = prehistoric.getGender();
         this.ageInTicks = prehistoric.getAgeInTicks();
         this.ticksTillMate = prehistoric.getMatingTick();

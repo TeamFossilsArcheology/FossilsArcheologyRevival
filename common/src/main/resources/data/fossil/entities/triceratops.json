@@ -1,0 +1,34 @@
+{
+  "name": "",
+  "diet": "",
+  "minScale": 0.4,
+  "maxScale": 1.4,
+  "teenAgeDays": 5,
+  "adultAgeDays": 12,
+  "stats": {
+    "baseDamage": 1,
+    "maxDamage": 12,
+    "baseHealth": 12,
+    "maxHealth": 64,
+    "baseSpeed": 0.1,
+    "maxSpeed": 0.25,
+    "baseArmor": 5,
+    "maxArmor": 15,
+    "baseKnockBackResistance": 0.5,
+    "maxKnockBackResistance": 2
+  },
+  "maxHunger": 175,
+  "ai": {
+    "activity": "DIRUNAL",
+    "attacking": "KNOCKUP",
+    "climbing": "NONE",
+    "following": "NORMAL",
+    "jumping": "BASIC",
+    "response": "",
+    "stalking": "NONE",
+    "taming": "IMPRINTING",
+    "untaming": "STARVE",
+    "moving": "WALK",
+    "waterAbility": "NONE"
+  }
+}
