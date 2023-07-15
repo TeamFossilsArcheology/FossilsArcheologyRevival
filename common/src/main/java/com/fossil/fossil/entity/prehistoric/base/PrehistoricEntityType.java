@@ -88,7 +88,7 @@ public enum PrehistoricEntityType {
     THERIZINOSAURUS(ModEntities.THERIZINOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of()),
     TIKTAALIK(PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCI_CARNIVORE),
     TITANIS(PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.CARNIVORE),
-    TRICERATOPS(ModEntities.TRICERATOPS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of("hasBoneItems", true)),
+    TRICERATOPS(ModEntities.TRICERATOPS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, Map.of()),
     TYRANNOSAURUS(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
     VELOCIRAPTOR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, Map.of("eggScale", 0.5f));
     private static List<PrehistoricEntityType> boneCache;
@@ -100,7 +100,6 @@ public enum PrehistoricEntityType {
     public final Supplier<Component> displayName;
     public final float eggScale;
     private final RegistrySupplier<? extends EntityType<? extends Entity>> entitySupplier;
-    private final boolean hasBoneItems;
     public Item dnaItem;
     public Item eggItem;
     public Item embryoItem;
@@ -124,7 +123,6 @@ public enum PrehistoricEntityType {
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
         this.displayName = () -> new TranslatableComponent("entity.fossil." + resourceName);
-        this.hasBoneItems = false;
         this.eggScale = 1;
     }
 
@@ -135,7 +133,6 @@ public enum PrehistoricEntityType {
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
         this.displayName = () -> new TranslatableComponent("entity.fossil." + resourceName);
-        this.hasBoneItems = (boolean) attributes.getOrDefault("hasBoneItems", false);
         this.eggScale = (float) attributes.getOrDefault("eggScale", (float) 1.0f);
     }
 
@@ -146,14 +143,13 @@ public enum PrehistoricEntityType {
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
         this.displayName = () -> entitySupplier.get().getDescription();
-        this.hasBoneItems = (boolean) attributes.getOrDefault("hasBoneItems", false);
         this.eggScale = (float) attributes.getOrDefault("eggScale", (float) 1.0f);
     }
 
     public static void register() {
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             ModItems.ITEMS.register(type.resourceName + "_dna", () -> new DNAItem(type)).listen(item -> type.dnaItem = item);
-            if (type.hasBoneItems) {
+            if (type.hasBones()) {
                 registerItem("bone_leg", type, Item::new, item -> type.legBoneItem = item);
                 registerItem("bone_arm", type, Item::new, item -> type.armBoneItem = item);
                 registerItem("bone_foot", type, Item::new, item -> type.footBoneItem = item);
@@ -167,7 +163,7 @@ public enum PrehistoricEntityType {
                     type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?
                 registerItem("fish", type, Item::new, item -> type.fishItem = item);
                 registerItem("egg_item", type, Item::new, item -> type.eggItem = item);
-            } else if (type.mobType == PrehistoricMobType.DINOSAUR) {
+            } else if (type.mobType == PrehistoricMobType.DINOSAUR || type.mobType == PrehistoricMobType.DINOSAUR_AQUATIC) {
                 if (type.entitySupplier != null)
                     type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 registerItem("egg_item", type, p -> new DinoEggItem(type), item -> type.eggItem = item);
@@ -214,7 +210,7 @@ public enum PrehistoricEntityType {
 
     public static List<PrehistoricEntityType> entitiesWithBones() {
         if (boneCache == null) {
-            boneCache = Arrays.stream(values()).filter(type -> type.hasBoneItems).toList();
+            boneCache = Arrays.stream(values()).filter(PrehistoricEntityType::hasBones).toList();
         }
         return boneCache;
     }
@@ -263,6 +259,10 @@ public enum PrehistoricEntityType {
             return cultivatedBirdEggItem;
         }
         return null;
+    }
+
+    public boolean hasBones() {
+        return timePeriod != TimePeriod.CURRENT && mobType != PrehistoricMobType.FISH;
     }
 
     public boolean isVivariousAquatic() {
