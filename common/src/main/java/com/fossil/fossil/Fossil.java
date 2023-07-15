@@ -4,6 +4,8 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
@@ -19,6 +21,8 @@ import com.fossil.fossil.world.dimension.ModDimensions;
 import com.fossil.fossil.world.feature.ModFeatures;
 import com.fossil.fossil.world.feature.structures.ModStructures;
 import com.mojang.logging.LogUtils;
+import dev.architectury.registry.ReloadListenerRegistry;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.timers.TimerCallbacks;
 import org.slf4j.Logger;
 
@@ -28,6 +32,8 @@ public class Fossil {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationManager.ANIMATIONS);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
         ModEntities.register();

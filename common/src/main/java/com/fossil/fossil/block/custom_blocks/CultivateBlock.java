@@ -47,7 +47,7 @@ public class CultivateBlock extends CustomEntityBlock {
         dropIron(level, pos);
         dropInventory(level, pos);
 
-        CultivateBlockEntity blockEntity = (CultivateBlockEntity) level.getBlockEntity(pos);
+        BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!level.isClientSide && blockEntity != null) {
             level.destroyBlock(pos, false);
             level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1, false);
@@ -109,7 +109,7 @@ public class CultivateBlock extends CustomEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new CultivateBlockEntity(pos, state);
+        return CultivateBlockEntity.get(pos, state);
     }
 
     public enum EmbryoType implements StringRepresentable {

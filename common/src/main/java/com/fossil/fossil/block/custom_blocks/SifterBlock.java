@@ -26,6 +26,6 @@ public class SifterBlock extends CustomEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return new SifterBlockEntity(pos, state);
+        return SifterBlockEntity.get(pos, state);
     }
 }

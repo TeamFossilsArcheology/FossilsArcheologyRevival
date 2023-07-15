@@ -1,7 +1,6 @@
 package com.fossil.fossil.client.renderer.blockentity;
 
 import com.fossil.fossil.block.custom_blocks.CultivateBlock;
-import com.fossil.fossil.block.entity.CultivateBlockEntity;
 import com.fossil.fossil.client.model.EmbryoGenericModel;
 import com.fossil.fossil.client.model.EmbryoPlantModel;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -12,8 +11,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
+import net.minecraft.world.level.block.entity.BlockEntity;
 
-public class CultivateRenderer implements BlockEntityRenderer<CultivateBlockEntity> {
+public class CultivateRenderer implements BlockEntityRenderer<BlockEntity> {
     private final ModelPart modelGeneric;
     private final ModelPart modelPlant;
 
@@ -23,7 +23,7 @@ public class CultivateRenderer implements BlockEntityRenderer<CultivateBlockEnti
     }
 
     @Override
-    public void render(CultivateBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight,
+    public void render(BlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight,
                        int packedOverlay) {
         if (blockEntity.getBlockState().getValue(CultivateBlock.ACTIVE)) {
             float rot = Minecraft.getInstance().player.tickCount + partialTick;

@@ -14,6 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Map;
@@ -62,7 +63,10 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
 
     @Override
     public @NotNull ItemStack assemble(CustomBlockEntity container) {
-        return weightedOutputs.higherEntry(container.getLevel().random.nextDouble() * weightedOutputs.lastKey()).getValue().copy();
+        if (container instanceof BlockEntity blockEntity) {
+            return weightedOutputs.higherEntry(blockEntity.getLevel().random.nextDouble() * weightedOutputs.lastKey()).getValue().copy();
+        }
+        return ItemStack.EMPTY;
     }
 
     @Override

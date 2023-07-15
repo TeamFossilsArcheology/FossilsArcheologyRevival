@@ -1,6 +1,5 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.block.entity.CustomBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
@@ -36,7 +35,7 @@ public abstract class CustomEntityBlock extends BaseEntityBlock {
             return InteractionResult.SUCCESS;
         }
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (blockEntity instanceof CustomBlockEntity) {
+        if (blockEntity instanceof MenuProvider) {
             player.openMenu((MenuProvider) blockEntity);
         }
         return InteractionResult.CONSUME;
