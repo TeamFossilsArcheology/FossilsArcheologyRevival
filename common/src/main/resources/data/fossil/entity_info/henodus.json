@@ -1,0 +1,33 @@
+{
+  "stats": {
+    "baseDamage": 1.0,
+    "maxDamage": 2.0,
+    "baseHealth": 10.0,
+    "maxHealth": 30.0,
+    "baseSpeed": 0.1,
+    "maxSpeed": 0.2,
+    "baseArmor": 5.0,
+    "maxArmor": 10.0,
+    "baseKnockBackResistance": 0,
+    "maxKnockBackResistance": 0
+  },
+  "ai": {
+    "activity": "BOTH",
+    "attacking": "BASIC",
+    "climbing": "NONE",
+    "following": "NORMAL",
+    "jumping": "BASIC",
+    "response": "WATER_CALM",
+    "stalking": "NONE",
+    "taming": "IMPRINTING",
+    "untaming": "STARVE",
+    "moving": "AQUATIC",
+    "waterAbility": "IGNORE_AND_FISH"
+  },
+  "minScale": 0.25,
+  "maxScale": 0.48,
+  "teenAgeDays": 2,
+  "adultAgeDays": 4,
+  "maxHunger": 50.0,
+  "canBeRidden": false
+}

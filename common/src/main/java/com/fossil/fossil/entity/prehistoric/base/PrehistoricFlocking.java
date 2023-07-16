@@ -15,8 +15,8 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     private int groupSize = 1;
     private PrehistoricFlocking groupLeader;
 
-    public PrehistoricFlocking(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart, boolean isCannibalistic) {
-        super(entityType, level, isMultiPart, isCannibalistic);
+    public PrehistoricFlocking(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
+        super(entityType, level, isMultiPart);
     }
 
     public void leaveGroup() {

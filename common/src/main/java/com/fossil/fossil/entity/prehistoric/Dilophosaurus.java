@@ -59,10 +59,10 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
         return newMap;
     });
     private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("dilophosaurus");
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Dilophosaurus(EntityType<Dilophosaurus> type, Level level) {
-        super(type, level, false, false);
+        super(type, level, false);
     }
 
     @Override
@@ -102,11 +102,6 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
     }
 
     @Override
-    public boolean canBeRidden() {
-        return true;
-    }
-
-    @Override
     public EntityDataManager.Data data() {
         return data;
     }
@@ -117,7 +112,7 @@ public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
     }
 
     @Override
-    public ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull ServerAnimationInfo nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 

@@ -68,7 +68,7 @@ public class Triceratops extends Prehistoric {
     private final Entity[] parts;
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
-        super(type, level, true, false);
+        super(type, level, true);
         var head = PrehistoricPart.get(this, 2.5f, 2.5f);
         var body = PrehistoricPart.get(this, 3.2f, 3.3f);
         var tail = PrehistoricPart.get(this, 2.2f, 2f);
@@ -199,11 +199,6 @@ public class Triceratops extends Prehistoric {
     }*/
 
     @Override
-    public boolean canBeRidden() {
-        return true;
-    }
-
-    @Override
     public EntityDataManager.Data data() {
         return data;
     }
@@ -246,7 +241,7 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull ServerAnimationInfo nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 

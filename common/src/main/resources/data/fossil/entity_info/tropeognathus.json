@@ -1,10 +1,4 @@
 {
-  "name": "",
-  "diet": "",
-  "minScale": 0.4,
-  "maxScale": 2,
-  "teenAgeDays": 5,
-  "adultAgeDays": 6,
   "stats": {
     "baseDamage": 12,
     "maxDamage": 12,
@@ -17,9 +11,8 @@
     "baseKnockBackResistance": 2,
     "maxKnockBackResistance": 2
   },
-  "maxHunger": 175,
   "ai": {
-    "activity": "DIRUNAL",
+    "activity": "DIURNAL",
     "attacking": "BASIC",
     "climbing": "NONE",
     "following": "NORMAL",
@@ -30,5 +23,11 @@
     "untaming": "NONE",
     "moving": "FLIGHT",
     "waterAbility": "ATTACK"
-  }
+  },
+  "minScale": 0.4,
+  "maxScale": 2,
+  "teenAgeDays": 5,
+  "adultAgeDays": 6,
+  "maxHunger": 175,
+  "canBeRidden": false
 }

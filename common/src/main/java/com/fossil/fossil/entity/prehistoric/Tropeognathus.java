@@ -101,12 +101,7 @@ public class Tropeognathus extends Pterosaurs {
     public Item getOrderItem() {
         return Items.STICK;
     }
-
-    @Override
-    public boolean canBeRidden() {
-        return false;
-    }
-
+    
     @Override
     public EntityDataManager.Data data() {
         return data;
@@ -156,7 +151,7 @@ public class Tropeognathus extends Pterosaurs {
     }
 
     @Override
-    public ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull ServerAnimationInfo nextEatingAnimation() {
         return getAllAnimations().get(IDLE);
         //return getAllAnimations().get(EAT);
     }

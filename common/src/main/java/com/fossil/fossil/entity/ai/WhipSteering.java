@@ -39,7 +39,7 @@ public class WhipSteering {
             //TODO: Figure out if this is needed
         }
         if (Math.abs(look.y) > 0.4 && (prehistoric.aiMovingType() == PrehistoricEntityTypeAI.Moving.AQUATIC
-                || prehistoric.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMIAQUATIC)) {
+                || prehistoric.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMI_AQUATIC)) {
             double waterAddition = look.y > 0 ? Math.min(0.15, look.y) : Math.max(-0.15, look.y);
             newTravelVector = new Vec3(travelVector.x, waterAddition, travelVector.z);
         }

@@ -1,18 +1,18 @@
 {
   "stats": {
     "baseDamage": 1.0,
-    "maxDamage": 8.0,
-    "baseHealth": 8.0,
-    "maxHealth": 40.0,
+    "maxDamage": 3.0,
+    "baseHealth": 5.0,
+    "maxHealth": 20.0,
     "baseSpeed": 0.25,
-    "maxSpeed": 0.35,
+    "maxSpeed": 0.4,
     "baseArmor": 0.0,
-    "maxArmor": 5.0,
+    "maxArmor": 0.0,
     "baseKnockBackResistance": 0,
     "maxKnockBackResistance": 0
   },
   "ai": {
-    "activity": "DIURNAL",
+    "activity": "NOCTURNAL",
     "attacking": "CHARGE",
     "climbing": "NONE",
     "following": "AGGRESSIVE",
@@ -25,9 +25,9 @@
     "waterAbility": "NONE"
   },
   "minScale": 0.18,
-  "maxScale": 1.4,
-  "teenAgeDays": 4,
-  "adultAgeDays": 8,
+  "maxScale": 0.5,
+  "teenAgeDays": 3,
+  "adultAgeDays": 6,
   "maxHunger": 100.0,
   "canBeRidden": true
 }

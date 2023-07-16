@@ -110,7 +110,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private static final EntityDataAccessor<Boolean> AGINGDISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
     // public final Item uncultivatedEggItem;
-    public final boolean isCannibalistic;
     private final boolean isMultiPart;
     private final WhipSteering steering = new WhipSteering();
     public OrderType currentOrder;
@@ -144,14 +143,13 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private int cathermalSleepCooldown = 0;
     private int ticksClimbing = 0;
 
-    public Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart, boolean isCannibalistic) {
+    public Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
         super(entityType, level);
         this.isMultiPart = isMultiPart;
         this.setHunger(this.getMaxHunger() / 2);
         this.pediaScale = 1.0F;
         this.nearByMobsAllowed = 15;
         this.currentOrder = OrderType.WANDER;
-        this.isCannibalistic = isCannibalistic;
         this.updateAbilities();
         if (this.getMobType() == MobType.WATER) {
             this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
@@ -1165,7 +1163,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     @Override
     public boolean onClimbable() {
         if (this.aiMovingType() == PrehistoricEntityTypeAI.Moving.AQUATIC ||
-                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMIAQUATIC) {
+                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMI_AQUATIC) {
             return false;
         } else {
             return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD &&
@@ -1294,7 +1292,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
         if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ||
-                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.WALKANDGLIDE ||
+                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.WALK_AND_GLIDE ||
                 this.aiMovingType() == PrehistoricEntityTypeAI.Moving.FLIGHT
         ) {
             return false;
@@ -1331,7 +1329,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         } else {
             if (!itemstack.isEmpty()) {
                 if ((this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM && itemstack.is(ModItems.SCARAB_GEM.get())) ||
-                        (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUEGEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
+                        (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUE_GEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
                     if (!this.isTame() && !this.isOwnedBy(player) && this.isActuallyWeak()) {
                         this.triggerTamingAcheivement(player);
                         this.heal(200);
@@ -1347,7 +1345,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     }
                 }
 
-                if (itemstack.is(ModItems.CHICKEN_ESSENCE.get()) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && this.aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && !player.level.isClientSide) {
+                if (itemstack.is(ModItems.CHICKEN_ESSENCE.get()) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && this.aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && !player.level.isClientSide) {
                     if (this.getAgeInDays() < data().adultAgeDays() && this.getHunger() > 0) {
                         if (this.getHunger() > 0) {
                             itemstack.shrink(1);
@@ -1430,7 +1428,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                                 setSprinting(true);
                                 setMood(getMood() - 5);
                             }
-                        } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUEGEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
+                        } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
                             setMood(getMood() - 5);
                             if (getRandom().nextInt(5) == 0) {
                                 player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
@@ -1536,7 +1534,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public boolean isActuallyWeak() {
-        return (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUEGEM || this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM) && this.isWeak();
+        return (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUE_GEM || this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM) && this.isWeak();
     }
 
     public float getFemaleScale() {
@@ -1608,7 +1606,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
     }
 
-    public abstract boolean canBeRidden();
+    public boolean canBeRidden() {
+        return data().canBeRidden();
+    }
 
     @Override
     public boolean canBeControlledByRider() {
@@ -1907,6 +1907,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         data.addAnimationController(new AnimationController<>(this, "controller", 4, event -> this.onFrame(event, getCurrentAnimation())));
     }
 
+    @NotNull
     public abstract ServerAnimationInfo nextEatingAnimation();
 
     @NotNull

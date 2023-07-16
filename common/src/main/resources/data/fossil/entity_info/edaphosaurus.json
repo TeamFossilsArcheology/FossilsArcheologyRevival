@@ -1,33 +1,33 @@
 {
   "stats": {
     "baseDamage": 1.0,
-    "maxDamage": 12.0,
-    "baseHealth": 12.0,
-    "maxHealth": 64.0,
+    "maxDamage": 5.0,
+    "baseHealth": 8.0,
+    "maxHealth": 30.0,
     "baseSpeed": 0.2,
-    "maxSpeed": 0.35,
-    "baseArmor": 5.0,
-    "maxArmor": 15.0,
+    "maxSpeed": 0.3,
+    "baseArmor": 0.0,
+    "maxArmor": 4.0,
     "baseKnockBackResistance": 0,
     "maxKnockBackResistance": 0
   },
   "ai": {
     "activity": "DIURNAL",
-    "attacking": "KNOCK_UP",
+    "attacking": "BASIC",
     "climbing": "NONE",
     "following": "NORMAL",
     "jumping": "BASIC",
     "response": "TERRITORIAL",
     "stalking": "NONE",
-    "taming": "IMPRINTING",
-    "untaming": "STARVE",
+    "taming": "FEEDING",
+    "untaming": "NONE",
     "moving": "WALK",
     "waterAbility": "NONE"
   },
-  "minScale": 0.4,
-  "maxScale": 5.0,
-  "teenAgeDays": 5,
-  "adultAgeDays": 12,
-  "maxHunger": 175.0,
-  "canBeRidden": true
+  "teenAgeDays": 2,
+  "minScale": 0.2,
+  "maxScale": 1.0,
+  "adultAgeDays": 8,
+  "maxHunger": 80.0,
+  "canBeRidden": false
 }

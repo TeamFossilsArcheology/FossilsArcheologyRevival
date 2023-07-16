@@ -52,7 +52,7 @@ public class Therizinosaurus extends Prehistoric {
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Therizinosaurus(EntityType<Therizinosaurus> entityType, Level level) {
-        super(entityType, level, false, false);
+        super(entityType, level, false);
     }
 
     @Override
@@ -82,7 +82,6 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
-
         return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
     }
 
@@ -95,12 +94,7 @@ public class Therizinosaurus extends Prehistoric {
     public Item getOrderItem() {
         return Items.STICK;
     }
-
-    @Override
-    public boolean canBeRidden() {
-        return false;
-    }
-
+    
     @Override
     public EntityDataManager.Data data() {
         return data;
@@ -135,7 +129,7 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    public ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull ServerAnimationInfo nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 

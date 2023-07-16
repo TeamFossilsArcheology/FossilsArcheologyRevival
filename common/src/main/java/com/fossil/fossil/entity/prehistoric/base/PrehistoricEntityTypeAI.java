@@ -6,7 +6,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 
 public class PrehistoricEntityTypeAI {
     public enum Moving {
-        WALK, FLIGHT, AQUATIC, SEMIAQUATIC, WALKANDGLIDE
+        WALK, FLIGHT, AQUATIC, SEMI_AQUATIC, WALK_AND_GLIDE
     }
 
     public enum Response implements DinopediaInfo {
@@ -26,11 +26,11 @@ public class PrehistoricEntityTypeAI {
     }
 
     public enum Following {
-        NONE, NORMAL, SKITTISH, AGRESSIVE
+        NONE, NORMAL, SKITTISH, AGGRESSIVE
     }
 
     public enum Taming {
-        IMPRINTING, FEEDING, GEM, BLUEGEM, NONE
+        IMPRINTING, FEEDING, GEM, BLUE_GEM, NONE
     }
 
     public enum Untaming {
@@ -66,10 +66,10 @@ public class PrehistoricEntityTypeAI {
     }
 
     public enum Attacking {
-        BASIC, KNOCKUP, GRAB, TAILSWING, CHARGE, DROWN, DROP, STOMP, JUMP
+        BASIC, KNOCK_UP, GRAB, TAIL_SWING, CHARGE, DROWN, DROP, STOMP, JUMP
     }
 
     public enum WaterAbility {
-        NONE, FLEE, ATTACK, IGNOREANDFISH
+        NONE, FLEE, ATTACK, IGNORE_AND_FISH
     }
 }
