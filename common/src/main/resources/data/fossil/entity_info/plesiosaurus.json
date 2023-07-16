@@ -8,8 +8,8 @@
     "maxSpeed": 0.3,
     "baseArmor": 0.0,
     "maxArmor": 0.0,
-    "baseKnockBackResistance": 0,
-    "maxKnockBackResistance": 0
+    "baseKnockBackResistance": 0.5,
+    "maxKnockBackResistance": 2
   },
   "ai": {
     "activity": "BOTH",
@@ -29,5 +29,7 @@
   "teenAgeDays": 3,
   "adultAgeDays": 7,
   "maxHunger": 125.0,
-  "canBeRidden": false
+  "canBeRidden": false,
+  "maxPopulation": 15,
+  "breaksBlocks": false
 }

@@ -130,8 +130,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     public boolean shouldWander = true;
     public ResourceLocation textureLocation;
     public DinoAIMating matingGoal;
-    protected boolean breaksBlocks;
-    protected int nearByMobsAllowed;
     protected float playerJumpPendingScale;
     protected boolean isJumping;
     private Gender gender; // should be effectively final
@@ -148,7 +146,6 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.isMultiPart = isMultiPart;
         this.setHunger(this.getMaxHunger() / 2);
         this.pediaScale = 1.0F;
-        this.nearByMobsAllowed = 15;
         this.currentOrder = OrderType.WANDER;
         this.updateAbilities();
         if (this.getMobType() == MobType.WATER) {
@@ -564,7 +561,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         How many dinosaurs of this type can exist in the same small, enclosed space.
      */
     public int getMaxPopulation() {
-        return nearByMobsAllowed;
+        return data().maxPopulation();
     }
 
     public boolean wantsToSleep() {
@@ -779,7 +776,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
             this.setOrderedToSit(true);
             this.setSleeping(false);
         }
-        if (breaksBlocks && this.getMood() < 0) {
+        if (data().breaksBlocks() && this.getMood() < 0) {
             this.breakBlock(5);
         }
         if (this.getTarget() != null &&

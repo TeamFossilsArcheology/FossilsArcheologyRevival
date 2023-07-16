@@ -3,8 +3,10 @@ package com.fossil.fossil.client.gui;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.entity.prehistoric.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.util.FoodMappings;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -178,7 +180,7 @@ public class DinopediaScreen extends Screen {
         if (currentPage == PAGE_1) {
             renderFirstPage(poseStack, mouseX, mouseY);
         } else if (currentPage == PAGE_2) {
-            if (entity instanceof Prehistoric) {
+            if (entity instanceof Prehistoric || entity instanceof PrehistoricFish) {
                 renderPrehistoricBio(poseStack);
             }
         }
@@ -261,6 +263,13 @@ public class DinopediaScreen extends Screen {
             }
             status = new TranslatableComponent("pedia.fossil.egg.status", status);
             font.draw(poseStack, status, getScaledX(true, font.width(status), 1), topPos + 140, (157 << 16) | (126 << 8) | 103);
+        } else if (entity instanceof PrehistoricFish || entity instanceof Quagga) {
+            poseStack.pushPose();
+            float scale = 1.5f;
+            poseStack.scale(scale, scale, scale);
+            Component name = entity.getType().getDescription();
+            font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
+            poseStack.popPose();
         }
     }
 

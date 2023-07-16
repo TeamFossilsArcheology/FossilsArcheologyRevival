@@ -24,6 +24,8 @@
     "moving": "FLIGHT",
     "waterAbility": "ATTACK"
   },
+  "maxPopulation": 7,
+  "breaksBlocks": true,
   "minScale": 0.4,
   "maxScale": 2,
   "teenAgeDays": 5,

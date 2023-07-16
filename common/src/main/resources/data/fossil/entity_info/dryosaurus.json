@@ -24,9 +24,11 @@
     "moving": "WALK",
     "waterAbility": "NONE"
   },
+  "maxPopulation": 10,
   "minScale": 0.2,
   "maxScale": 1.2,
   "teenAgeDays": 2,
+  "breaksBlocks": false,
   "adultAgeDays": 5,
   "maxHunger": 50.0,
   "canBeRidden": false

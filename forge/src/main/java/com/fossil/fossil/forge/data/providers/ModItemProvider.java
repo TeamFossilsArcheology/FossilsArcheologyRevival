@@ -7,6 +7,7 @@ import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ToyBallItem;
 import com.fossil.fossil.item.ToyScratchingPostItem;
 import com.fossil.fossil.item.ToyTetheredLogItem;
+import com.fossil.fossil.util.TimePeriod;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -73,6 +74,9 @@ public class ModItemProvider extends ItemModelProvider {
                 if (type.embryoItem != null) {
                     embyroItem(type.embryoItem.getRegistryName());
                 }
+                if (type.timePeriod != TimePeriod.CURRENT) {
+                    spawnEggItem(type.resourceName);
+                }
             }
             for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
                 boneItem(Objects.requireNonNull(type.armBoneItem.getRegistryName()), type, "arm_bone");
@@ -126,6 +130,10 @@ public class ModItemProvider extends ItemModelProvider {
     public void eggItem(ResourceLocation item) {
         ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/eggs/" + item.getPath());
         builder(resourceLocation, item);
+    }
+
+    public void spawnEggItem(String item) {
+        getBuilder(item + "_spawn_egg").parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
     }
 
     public void embyroItem(ResourceLocation item) {

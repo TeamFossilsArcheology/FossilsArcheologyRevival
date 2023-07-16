@@ -29,5 +29,7 @@
   "teenAgeDays": 4,
   "adultAgeDays": 9,
   "maxHunger": 50.0,
-  "canBeRidden": false
+  "canBeRidden": false,
+  "maxPopulation": 15,
+  "breaksBlocks": false
 }

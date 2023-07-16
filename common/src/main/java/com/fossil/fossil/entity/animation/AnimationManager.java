@@ -62,7 +62,7 @@ public class AnimationManager extends SimpleJsonResourceReloadListener {
     }
 
     public List<Animation> getAnimation(String animationFile) {
-        return animations.get(animationFile);
+        return animations.getOrDefault(animationFile, ImmutableList.of());
     }
 
     public record Animation(String animationId, double animationLength, ILoopType loop) {

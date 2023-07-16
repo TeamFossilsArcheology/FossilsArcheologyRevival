@@ -41,8 +41,11 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
             int teenAgeDays = root.get("teenAgeDays").getAsInt();
             int adultAgeDays = root.get("adultAgeDays").getAsInt();
             int maxHunger = root.get("maxHunger").getAsInt();
-            boolean canBeRidden = root.get("canBeRidden").getAsBoolean();
-            builder.put(fileEntry.getKey().getPath(), new Data(stat, ai, minScale, maxScale, teenAgeDays, adultAgeDays, maxHunger, canBeRidden));
+            int maxPopulation = root.has("maxPopulation") ? root.get("maxPopulation").getAsInt() : 15;
+            boolean canBeRidden = root.has("canBeRidden") && root.get("canBeRidden").getAsBoolean();
+            boolean breaksBlocks = root.has("breaksBlocks") && root.get("breaksBlocks").getAsBoolean();
+            builder.put(fileEntry.getKey().getPath(), new Data(stat, ai, minScale, maxScale, teenAgeDays, adultAgeDays,
+                    maxHunger, maxPopulation, canBeRidden, breaksBlocks));
         }
         entities = builder.build();
     }
@@ -52,6 +55,6 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
     }
 
     public record Data(Stat stats, AI ai, float minScale, float maxScale, int teenAgeDays, int adultAgeDays,
-                       int maxHunger, boolean canBeRidden) {
+                       int maxHunger, int maxPopulation, boolean canBeRidden, boolean breaksBlocks) {
     }
 }

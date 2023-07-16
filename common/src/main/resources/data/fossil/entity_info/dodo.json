@@ -24,9 +24,11 @@
     "moving": "WALK_AND_GLIDE",
     "waterAbility": "NONE"
   },
+  "maxPopulation": 10,
   "minScale": 0.4,
   "maxScale": 0.9,
   "teenAgeDays": 3,
+  "breaksBlocks": false,
   "adultAgeDays": 5,
   "maxHunger": 50.0,
   "canBeRidden": false

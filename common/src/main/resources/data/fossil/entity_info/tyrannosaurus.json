@@ -8,8 +8,8 @@
     "maxSpeed": 0.3,
     "baseArmor": 0.0,
     "maxArmor": 7.0,
-    "baseKnockBackResistance": 0,
-    "maxKnockBackResistance": 0
+    "baseKnockBackResistance": 0.5,
+    "maxKnockBackResistance": 2
   },
   "ai": {
     "activity": "DIURNAL",
@@ -27,6 +27,8 @@
   "minScale": 0.2,
   "maxScale": 2.8,
   "teenAgeDays": 5,
+  "breaksBlocks": true,
+  "maxPopulation": 2,
   "adultAgeDays": 12,
   "maxHunger": 150.0,
   "canBeRidden": true
