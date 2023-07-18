@@ -26,15 +26,21 @@ import java.util.Map;
 
 public class Velociraptor extends Prehistoric implements PrehistoricLeaping, IScaryDinosaur {
     public static final String ANIMATIONS = "velociraptor.animation.json";
-    //TODO: Add correct animations
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String IDLE = "animation.velociraptor.idle";
+    public static final String WALK = "animation.velociraptor.walk";
+    public static final String RUN = "animation.velociraptor.run";
+    public static final String SPEAK = "animation.velociraptor.speak";
+    public static final String CALL = "animation.velociraptor.call";
+    public static final String ATTACK1 = "animation.velociraptor.attack1";
+    public static final String DISPLAY = "animation.velociraptor.display";
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
+                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
+                case WALK, RUN -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
                 case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
@@ -100,7 +106,7 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, ISc
 
     @Override
     public @NotNull ServerAnimationInfo nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(DISPLAY);
     }
 
     @Override
@@ -110,12 +116,12 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, ISc
 
     @Override
     public @NotNull ServerAnimationInfo nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
@@ -125,7 +131,7 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, ISc
 
     @Override
     public @NotNull Prehistoric.ServerAttackAnimationInfo nextLeapAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get("attack");
+        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
     }
 
     @Override
