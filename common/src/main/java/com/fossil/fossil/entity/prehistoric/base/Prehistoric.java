@@ -78,23 +78,18 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Random;
 
-public abstract class Prehistoric extends TamableAnimal implements IPrehistoricAI, PlayerRideableJumping, EntitySpawnExtension, IAnimatable {
+public abstract class Prehistoric extends TamableAnimal implements IPrehistoricAI, PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable {
 
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
-    public static final int IDLE_PRIORITY = 0;
-    public static final int MOVING_PRIORITY = 1;
-    public static final int DEFAULT_PRIORITY = 2;
-    public static final int ATTACKING_PRIORITY = 3;
     private static final EntityDataAccessor<Integer> AGETICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MATING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
@@ -110,6 +105,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     private static final EntityDataAccessor<Boolean> AGINGDISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
     // public final Item uncultivatedEggItem;
+    private final AnimationComponent<Prehistoric> animations = new AnimationComponent<>(this);
     private final boolean isMultiPart;
     private final WhipSteering steering = new WhipSteering();
     public OrderType currentOrder;
@@ -133,9 +129,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     protected float playerJumpPendingScale;
     protected boolean isJumping;
     private Gender gender; // should be effectively final
-    // private Animation currentAnimation;
     private boolean droppedBiofossil = false;
-    private int changedAnimationAt;
     private int fleeTicks = 0;
     private int moodCheckCooldown = 0;
     private int cathermalSleepCooldown = 0;
@@ -319,9 +313,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.entityData.define(MOOD, 0);
         this.entityData.define(OWNER_DISPLAY_NAME, TextComponent.EMPTY);
         this.entityData.define(AGINGDISABLED, false);
-        var idle = nextIdleAnimation();
-        this.entityData.define(CURRENT_ANIMATION, idle.animationId);
-        changedAnimationAt = tickCount;
+        this.entityData.define(CURRENT_ANIMATION, initialAnimation().animationId);
 
         CompoundTag tag = new CompoundTag();
         tag.putDouble("x", position().x);
@@ -880,20 +872,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
                     ticksClimbing = 200;
                 }
             }
-
-            if (isAnimationFrozen()) {
-                setCurrentAnimation(nextIdleAnimation());
-            }
-
-            if (getCurrentAnimation().priority <= MOVING_PRIORITY) {
-                ServerAnimationInfo next;
-                if (navigation.isInProgress()) {
-                    next = nextMovingAnimation();
-                } else {
-                    next = nextIdleAnimation();
-                }
-                setCurrentAnimation(next);
-            }
+            animations.tick();
         }
     }
 
@@ -1102,24 +1081,22 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.entityData.set(AGINGDISABLED, isAgingDisabled);
     }
 
-    public abstract Map<String, ServerAnimationInfo> getAllAnimations();
-
+    @Override
     public ServerAnimationInfo getCurrentAnimation() {
-        return getAllAnimations().get(this.entityData.get(CURRENT_ANIMATION));
+        return getAllAnimations().get(entityData.get(CURRENT_ANIMATION));
     }
 
     public void setCurrentAnimation(@NotNull Prehistoric.ServerAnimationInfo newAnimation) {
         if (this.entityData.get(CURRENT_ANIMATION).equals(newAnimation.animationId)) return;
         this.entityData.set(CURRENT_ANIMATION, newAnimation.animationId);
-        changedAnimationAt = tickCount;
+        animations.setCurrentAnimation(newAnimation);
     }
 
-    public boolean isAnimationFrozen() {
-        var current = getCurrentAnimation();
-        if (current.isLoop) return false;
+    public abstract @NotNull Prehistoric.ServerAnimationInfo nextEatingAnimation();
 
-        return changedAnimationAt + current.length < tickCount;
-    }
+    public abstract @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation();
+
+    public abstract @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation();
 
     public boolean increaseHunger(int hunger) {
         if (this.getHunger() >= this.getMaxHunger()) {
@@ -1893,31 +1870,10 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         refreshTexturePath();
     }
 
-    protected PlayState onFrame(AnimationEvent<? extends Prehistoric> event, ServerAnimationInfo currentAnimation) {
-        var controller = event.getController();
-        controller.setAnimation(new AnimationBuilder().addAnimation(currentAnimation.animationId));
-        return PlayState.CONTINUE;
-    }
-
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 4, event -> this.onFrame(event, getCurrentAnimation())));
+        data.addAnimationController(new AnimationController<>(this, "controller", 4, animations::onFrame));
     }
-
-    @NotNull
-    public abstract ServerAnimationInfo nextEatingAnimation();
-
-    @NotNull
-    public abstract ServerAnimationInfo nextIdleAnimation();
-
-    @NotNull
-    public abstract ServerAnimationInfo nextMovingAnimation();
-
-    @NotNull
-    public abstract Prehistoric.ServerAnimationInfo nextChasingAnimation();
-
-    @NotNull
-    public abstract Prehistoric.ServerAttackAnimationInfo nextAttackAnimation();
 
     /**
      * Some animations attack multiple times in single animation, so it holds var int.

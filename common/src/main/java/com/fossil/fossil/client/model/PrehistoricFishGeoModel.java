@@ -1,16 +1,18 @@
 package com.fossil.fossil.client.model;
 
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
-public class GeoDinosaurModel<T extends Prehistoric> extends AnimatedGeoModel<T> {
+public class PrehistoricFishGeoModel<T extends PrehistoricFish> extends AnimatedGeoModel<T> {
     private final ResourceLocation modelLocation;
     private final ResourceLocation animationLocation;
+    private final ResourceLocation textureLocation;
 
-    public GeoDinosaurModel(ResourceLocation modelLocation, ResourceLocation animationLocation) {
+    public PrehistoricFishGeoModel(ResourceLocation modelLocation, ResourceLocation animationLocation, ResourceLocation textureLocation) {
         this.modelLocation = modelLocation;
         this.animationLocation = animationLocation;
+        this.textureLocation = textureLocation;
     }
 
     @Override
@@ -20,7 +22,7 @@ public class GeoDinosaurModel<T extends Prehistoric> extends AnimatedGeoModel<T>
 
     @Override
     public ResourceLocation getTextureLocation(T object) {
-        return object.textureLocation;
+        return textureLocation;
     }
 
     @Override

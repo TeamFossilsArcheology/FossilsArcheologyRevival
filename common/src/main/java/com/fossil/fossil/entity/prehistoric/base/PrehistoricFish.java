@@ -2,6 +2,9 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -16,19 +19,40 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.List;
 
-public abstract class PrehistoricFish extends AbstractFish {
+public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable {
+    private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.STRING);
+    protected final AnimationComponent<PrehistoricFish> animations = new AnimationComponent<>(this);
     private int absoluteEggCooldown = 0;
+
     public PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
         super(entityType, level);
     }
 
-    public @NotNull abstract PrehistoricEntityType type();
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.entityData.define(CURRENT_ANIMATION, initialAnimation().animationId);
+    }
+
+    @NotNull
+    public abstract PrehistoricEntityType type();
 
     public static AttributeSupplier.@NotNull Builder createAttributes() {
         return AbstractFish.createAttributes().add(Attributes.MOVEMENT_SPEED, 0.25);
+    }
+
+    @Override
+    public float getScale() {
+        return super.getScale();
+    }
+
+    public float getModelScale() {
+        return getScale();
     }
 
     @Override
@@ -56,13 +80,24 @@ public abstract class PrehistoricFish extends AbstractFish {
     @Override
     public void tick() {
         super.tick();
-        if (absoluteEggCooldown > 0) {
-            absoluteEggCooldown--;
+        if (!level.isClientSide) {
+            if (absoluteEggCooldown > 0) {
+                absoluteEggCooldown--;
+            }
+            PrehistoricFish closestMate = getClosestMate();
+            if (closestMate != null && isInWater() && absoluteEggCooldown <= 0) {
+                absoluteEggCooldown = 48000 + random.nextInt(48000);
+                level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem)));
+            }
+            animations.tick();
         }
-        PrehistoricFish closestMate = getClosestMate();
-        if (closestMate != null && isInWater() && absoluteEggCooldown <= 0) {
-            absoluteEggCooldown = 48000 + random.nextInt(48000);
-            level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem)));
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!isInWater()) {
+            setCurrentAnimation(nextFloppingAnimation());
         }
     }
 
@@ -79,6 +114,24 @@ public abstract class PrehistoricFish extends AbstractFish {
         }
         return other;
     }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "controller", 4, animations::onFrame));
+    }
+
+    @Override
+    public Prehistoric.ServerAnimationInfo getCurrentAnimation() {
+        return getAllAnimations().get(entityData.get(CURRENT_ANIMATION));
+    }
+
+    public void setCurrentAnimation(@NotNull Prehistoric.ServerAnimationInfo newAnimation) {
+        if (this.entityData.get(CURRENT_ANIMATION).equals(newAnimation.animationId)) return;
+        this.entityData.set(CURRENT_ANIMATION, newAnimation.animationId);
+        animations.setCurrentAnimation(newAnimation);
+    }
+
+    public abstract @NotNull Prehistoric.ServerAnimationInfo nextFloppingAnimation();
 
     public static boolean canSpawn(Level level, BlockPos pos) {
         return pos.getY() < level.getSeaLevel() && level.getFluidState(pos.below()).is(FluidTags.WATER) && level.getBlockState(pos.above()).is(Blocks.WATER);
