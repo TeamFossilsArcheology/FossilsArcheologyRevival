@@ -1,96 +1,79 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dilophosaurus.idle": {
+    "animation.ichtyosaurus.idle": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 8
     },
-    "animation.dilophosaurus.sit1": {
+    "animation.ichtyosaurus.sit": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 8
     },
-    "animation.dilophosaurus.sit2": {
+    "animation.ichtyosaurus.sleep1": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 8
     },
-    "animation.dilophosaurus.sleep1": {
+    "animation.ichtyosaurus.sleep2": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 8
     },
-    "animation.dilophosaurus.sleep2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.walk": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.run": {
-      "loop": true,
-      "animation_length": 0.75
-    },
-    "animation.dilophosaurus.jump/fall": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.swim": {
+    "animation.ichtyosaurus.swim": {
       "loop": true,
       "animation_length": 4
     },
-    "animation.dilophosaurus.drink": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.eat": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.inflate_start": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_hold": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_end": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.dilophosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.dilophosaurus.speak": {
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.call": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.attack1": {
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.attack2": {
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.WalkSpeedDemo": {
+    "animation.ichtyosaurus.swim_fast": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.RunSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
+    "animation.ichtyosaurus.jump_start": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 3
     },
-    "animation.dilophosaurus.SwimSpeedDemo": {
+    "animation.ichtyosaurus.jump_hold": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "animation.ichtyosaurus.jump_end": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 3
+    },
+    "animation.ichtyosaurus.beached1": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.ichtyosaurus.beached2": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.ichtyosaurus.eat": {
+      "animation_length": 2
+    },
+    "animation.ichtyosaurus.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.ichtyosaurus.turn_right": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.ichtyosaurus.speak": {
+      "animation_length": 2
+    },
+    "animation.ichtyosaurus.emote1": {
+      "animation_length": 3
+    },
+    "animation.ichtyosaurus.emote2": {
+      "animation_length": 3
+    },
+    "animation.ichtyosaurus.attack": {
+      "animation_length": 0.5
+    },
+    "animation.ichtyosaurus.ontogeny_baby": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.ichtyosaurus.new": {
       "loop": true
     },
-    "animation.dilophosaurus.TurningRadiusDemo": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.dilophosaurus.InflateDemo": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 6
+    "animation.ichtyosaurus.new2": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

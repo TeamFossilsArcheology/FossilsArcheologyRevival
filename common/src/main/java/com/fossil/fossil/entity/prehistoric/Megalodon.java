@@ -24,16 +24,18 @@ import java.util.Map;
 
 public class Megalodon extends PrehistoricSwimming {
     public static final String ANIMATIONS = "megalodon.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String SWIM = "animation.megalodon.swim";
+    public static final String SWIM_FAST = "animation.megalodon.swim_fast";
+    public static final String EAT = "animation.megalodon.eat";
+    public static final String ATTACK = "animation.megalodon.attack";
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
-                case IDLE -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case SWIM, SWIM_FAST -> info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
+                case ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
@@ -82,7 +84,7 @@ public class Megalodon extends PrehistoricSwimming {
     public Item getOrderItem() {
         return ModItems.SKULL_STICK.get();
     }
-    
+
     @Override
     public EntityDataManager.Data data() {
         return data;
@@ -90,27 +92,27 @@ public class Megalodon extends PrehistoricSwimming {
 
     @Override
     public @NotNull ServerAnimationInfo nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull ServerAnimationInfo nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull ServerAnimationInfo nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
+        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK);
     }
 
     @Override

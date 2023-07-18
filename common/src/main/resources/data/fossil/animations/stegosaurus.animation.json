@@ -1,96 +1,93 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dilophosaurus.idle": {
+    "animation.stegosaurus.idle": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sit1": {
+    "animation.stegosaurus.sit1": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sit2": {
+    "animation.stegosaurus.sit2": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sleep1": {
+    "animation.stegosaurus.sleep1": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sleep2": {
+    "animation.stegosaurus.sleep2": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.walk": {
+    "animation.stegosaurus.walk": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.dilophosaurus.run": {
+    "animation.stegosaurus.run": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "animation.stegosaurus.run_baby": {
       "loop": true,
       "animation_length": 0.75
     },
-    "animation.dilophosaurus.jump/fall": {
+    "animation.stegosaurus.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.dilophosaurus.swim": {
+    "animation.stegosaurus.swim": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 6
     },
-    "animation.dilophosaurus.drink": {
+    "animation.stegosaurus.drink": {
       "animation_length": 3
     },
-    "animation.dilophosaurus.eat": {
+    "animation.stegosaurus.eat": {
       "animation_length": 3
     },
-    "animation.dilophosaurus.inflate_start": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_hold": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_end": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.turn_right": {
+    "animation.stegosaurus.turn_left": {
       "loop": "hold_on_last_frame"
     },
-    "animation.dilophosaurus.turn_left": {
+    "animation.stegosaurus.turn_right": {
       "loop": "hold_on_last_frame"
     },
-    "animation.dilophosaurus.speak": {
+    "animation.stegosaurus.speak": {
       "animation_length": 2
     },
-    "animation.dilophosaurus.call": {
+    "animation.stegosaurus.call1": {
       "animation_length": 3
     },
-    "animation.dilophosaurus.attack1": {
+    "animation.stegosaurus.call2": {
+      "animation_length": 3
+    },
+    "animation.stegosaurus.attack_front1": {
       "animation_length": 1
     },
-    "animation.dilophosaurus.attack2": {
+    "animation.stegosaurus.attack_front2": {
       "animation_length": 1
     },
-    "animation.dilophosaurus.WalkSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
+    "animation.stegosaurus.attack_front_strong1": {
+      "animation_length": 3
     },
-    "animation.dilophosaurus.RunSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
+    "animation.stegosaurus.attack_front_strong2": {
+      "animation_length": 3
     },
-    "animation.dilophosaurus.SwimSpeedDemo": {
+    "animation.stegosaurus.attack_back1": {
+      "animation_length": 1
+    },
+    "animation.stegosaurus.attack_back2": {
+      "animation_length": 1
+    },
+    "animation.stegosaurus.ontogeny_baby": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.stegosaurus.ontogeny_teen": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.stegosaurus.new": {
       "loop": true
-    },
-    "animation.dilophosaurus.TurningRadiusDemo": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.dilophosaurus.InflateDemo": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 6
     }
   },
   "geckolib_format_version": 2

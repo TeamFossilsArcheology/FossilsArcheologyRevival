@@ -24,16 +24,20 @@ import java.util.Map;
 
 public class Ichtyosaurus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "ichtyosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String IDLE = "animation.ichtyosaurus.idle";
+    public static final String SWIM = "animation.ichtyosaurus.swim";
+    public static final String SWIM_FAST = "animation.ichtyosaurus.swim_fast";
+    public static final String EAT = "animation.ichtyosaurus.eat";
+    public static final String ATTACK = "animation.ichtyosaurus.attack";
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
-                case IDLE -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
+                case SWIM, SWIM_FAST -> info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
+                case ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
@@ -90,7 +94,7 @@ public class Ichtyosaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull ServerAnimationInfo nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -100,17 +104,17 @@ public class Ichtyosaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull ServerAnimationInfo nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
+        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK);
     }
 
     @Override

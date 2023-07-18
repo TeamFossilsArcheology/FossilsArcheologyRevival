@@ -26,7 +26,7 @@
   },
   "maxPopulation": 7,
   "minScale": 0.4,
-  "maxScale": 5.0,
+  "maxScale": 1.4,
   "teenAgeDays": 5,
   "breaksBlocks": true,
   "adultAgeDays": 12,

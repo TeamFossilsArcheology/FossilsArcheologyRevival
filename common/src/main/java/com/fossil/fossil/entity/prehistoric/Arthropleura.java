@@ -33,7 +33,7 @@ public class Arthropleura extends Prehistoric {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
                 case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
-                case IDLE -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);

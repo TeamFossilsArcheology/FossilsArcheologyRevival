@@ -24,16 +24,31 @@ import java.util.Map;
 public class
 Stegosaurus extends Prehistoric {
     public static final String ANIMATIONS = "stegosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String IDLE = "animation.stegosaurus.idle";
+    public static final String SIT1 = "animation.stegosaurus.sit1";
+    public static final String SIT2 = "animation.stegosaurus.sit2";
+    public static final String SLEEP1 = "animation.stegosaurus.sleep1";
+    public static final String SLEEP2 = "animation.stegosaurus.sleep2";
+    public static final String WALK = "animation.stegosaurus.walk";
+    public static final String RUN = "animation.stegosaurus.run";
+    public static final String JUMP_FALL = "animation.stegosaurus.jump/fall";
+    public static final String SWIM = "animation.stegosaurus.swim";
+    public static final String EAT = "animation.stegosaurus.eat";
+    public static final String TURN_RIGHT = "animation.stegosaurus.turn_right";
+    public static final String TURN_LEFT = "animation.stegosaurus.turn_left";
+    public static final String SPEAK = "animation.stegosaurus.speak";
+    public static final String CALL1 = "animation.stegosaurus.call1";
+    public static final String ATTACK_FRONT1 = "animation.stegosaurus.attack_front1";
+    public static final String ATTACK_FRONT2 = "animation.stegosaurus.attack_front2";
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
-                case IDLE -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
+                case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
+                case ATTACK_FRONT1, ATTACK_FRONT2 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
@@ -90,7 +105,7 @@ Stegosaurus extends Prehistoric {
 
     @Override
     public @NotNull ServerAnimationInfo nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -100,17 +115,17 @@ Stegosaurus extends Prehistoric {
 
     @Override
     public @NotNull ServerAnimationInfo nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
+        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK_FRONT1);
     }
 
     @Override
