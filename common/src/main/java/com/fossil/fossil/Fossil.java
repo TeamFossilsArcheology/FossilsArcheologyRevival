@@ -36,6 +36,11 @@ public class Fossil {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
+        LOGGER.info("Archaean horizon");
+        LOGGER.info("The first sunrise");
+        LOGGER.info("On a pristine Gaea");
+        LOGGER.info("Opus perfectum");
+        LOGGER.info("Somewhere there, us sleeping");
         ModEntities.register();
         ModItems.register();
         ModMenus.register();
@@ -45,6 +50,11 @@ public class Fossil {
         ModDimensions.register();
         ModRecipes.register();
         ModSounds.register();
+        LOGGER.info("After a billion years");
+        LOGGER.info("The show is still here");
+        LOGGER.info("Not a single one of your fathers died young");
+        LOGGER.info("The handy travelers out of Africa");
+        LOGGER.info("Little Lucy of the Afar");
         ModEnchantments.register();
         ModVillagers.register();
         ModEvents.init();
