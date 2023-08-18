@@ -1,7 +1,11 @@
 package com.fossil.fossil.client.model;
 
+import com.fossil.fossil.entity.prehistoric.Megalodon;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
 public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel<T> {
@@ -11,6 +15,17 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel
     public PrehistoricGeoModel(ResourceLocation modelLocation, ResourceLocation animationLocation) {
         this.modelLocation = modelLocation;
         this.animationLocation = animationLocation;
+    }
+
+    @Override
+    public void setCustomAnimations(T animatable, int instanceId, AnimationEvent animationEvent) {
+        super.setCustomAnimations(animatable, instanceId, animationEvent);
+        IBone root = getAnimationProcessor().getBone("root");
+        if (root != null && animatable instanceof Megalodon megalodon) {
+            float partial = animationEvent.getPartialTick();
+            float pitch = Mth.lerp(partial, megalodon.prevBreachPitch, megalodon.getBreachPitch());
+            root.setRotationX(animatable.getXRot() * Mth.DEG_TO_RAD);
+        }
     }
 
     @Override

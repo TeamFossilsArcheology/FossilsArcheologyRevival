@@ -16,8 +16,13 @@
 					"pivot": [0, 0, 0]
 				},
 				{
-					"name": "shell",
+					"name": "shell2",
 					"parent": "root",
+					"pivot": [0, 5, 0]
+				},
+				{
+					"name": "shell",
+					"parent": "shell2",
 					"pivot": [0, 5, 0],
 					"cubes": [
 						{"origin": [-3.5, 1, 0], "size": [7, 14, 11], "uv": [0, 2], "mirror": true},

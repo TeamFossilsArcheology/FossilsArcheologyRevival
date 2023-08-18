@@ -55,6 +55,16 @@ public class Tiktaalik extends PrehistoricSwimming {
     }
 
     @Override
+    public boolean isAmphibious() {
+        return false;
+    }
+
+    @Override
+    public double swimSpeed() {
+        return 1;
+    }
+
+    @Override
     public PrehistoricEntityType type() {
         return PrehistoricEntityType.TIKTAALIK;
     }

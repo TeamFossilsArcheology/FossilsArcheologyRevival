@@ -8,9 +8,10 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.item.ModItems;
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -57,10 +58,9 @@ public class Megalodon extends PrehistoricSwimming {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
-        goalSelector.addGoal(1, new FloatGoal(this));
-        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
+        goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0, 10));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
@@ -68,6 +68,38 @@ public class Megalodon extends PrehistoricSwimming {
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
+    }
+
+    @Override
+    public boolean isAmphibious() {
+        return false;
+    }
+
+    @Override
+    public double swimSpeed() {
+        return 1;
+    }
+    @Override
+    public boolean doesBreachAttack() {
+        return true;
+    }
+
+    @Override
+    protected void handleAirSupply(int airSupply) {
+        if (isAlive() && !isInWaterOrBubble()) {
+            setAirSupply(airSupply - 1);
+            if (getAirSupply() == -20) {
+                setAirSupply(0);
+                hurt(DamageSource.DROWN, 2.0f);
+            }
+        } else {
+            setAirSupply(1000);
+        }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
     }
 
     @Override

@@ -25,7 +25,7 @@
     "waterAbility": "ATTACK"
   },
   "minScale": 0.9,
-  "maxScale": 4.4,
+  "maxScale": 1,
   "teenAgeDays": 7,
   "breaksBlocks": true,
   "adultAgeDays": 13,

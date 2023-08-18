@@ -55,11 +55,11 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Mammoth>> MAMMOTH = registerDino("mammoth", Mammoth::new, 2, 1);
     public static final RegistrySupplier<EntityType<Megalania>> MEGALANIA = registerDino("megalania", Megalania::new, 2, 1);
     public static final RegistrySupplier<EntityType<Megaloceros>> MEGALOCEROS = registerDino("megaloceros", Megaloceros::new, 2, 1);
-    public static final RegistrySupplier<EntityType<Megalodon>> MEGALODON = registerDino("megalodon", Megalodon::new, 2, 1);
+    public static final RegistrySupplier<EntityType<Megalodon>> MEGALODON = registerDino("megalodon", Megalodon::new, 4, 2);
     public static final RegistrySupplier<EntityType<Megalograptus>> MEGALOGRAPTUS = registerDino("megalograptus", Megalograptus::new, 2, 1);
     public static final RegistrySupplier<EntityType<Meganeura>> MEGANEURA = registerDino("meganeura", Meganeura::new, 2, 1);
     public static final RegistrySupplier<EntityType<Mosasaurus>> MOSASAURUS = registerDino("mosasaurus", Mosasaurus::new, 2, 1);
-    public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerDino("nautilus", Nautilus::new, 2, 1);
+    public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerDino("nautilus", Nautilus::new, 0.8f, 1);
     public static final RegistrySupplier<EntityType<Ornitholestes>> ORNITHOLESTES = registerDino("ornitholestes", Ornitholestes::new, 2, 1);
     public static final RegistrySupplier<EntityType<Pachycephalosaurus>> PACHYCEPHALOSAURUS = registerDino("pachycephalosaurus", Pachycephalosaurus::new, 2, 1);
     public static final RegistrySupplier<EntityType<Parasaurolophus>> PARASAUROLOPHUS = registerDino("parasaurolophus", Parasaurolophus::new, 2, 1);

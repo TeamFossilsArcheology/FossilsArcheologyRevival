@@ -4,12 +4,14 @@ import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricMoodType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
+import org.jetbrains.annotations.NotNull;
 
 public class HuntGoal extends NearestAttackableTargetGoal<LivingEntity> {
     private final Prehistoric dino;
@@ -50,8 +52,11 @@ public class HuntGoal extends NearestAttackableTargetGoal<LivingEntity> {
     }
 
     @Override
-    protected AABB getTargetSearchArea(double targetDistance) {
+    protected @NotNull AABB getTargetSearchArea(double targetDistance) {
         double yDist = 4;
+        if (dino instanceof PrehistoricSwimming swimming) {
+            yDist = swimming.doesBreachAttack() ? 50 : targetDistance;
+        }
         //TODO: If flying
         //TODO: If Swimming
         return mob.getBoundingBox().inflate(targetDistance, yDist, targetDistance);

@@ -276,10 +276,6 @@
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
-				"shell": {
-					"rotation": [0, 0, -90],
-					"position": [0, -1.5, 0]
-				},
 				"head": {
 					"rotation": [0, 0, 0],
 					"position": ["-1+math.cos(query.anim_time*180)*0.2", 0, 0],
@@ -296,6 +292,10 @@
 				},
 				"lowerLeftTentacle": {
 					"rotation": [0, "20+math.cos(query.anim_time*180)*2", 0]
+				},
+				"shell2": {
+					"rotation": [0, 0, -90],
+					"position": [0, -1.5, 0]
 				}
 			}
 		},

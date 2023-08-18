@@ -8,11 +8,14 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -116,6 +119,21 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     public CompoundTag getDebugTag() {
         return entityData.get(DEBUG);
     }
+
+    @Override
+    protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.isEmpty() && isAlive()) {
+            playSound(SoundEvents.ITEM_PICKUP, 1, random.nextFloat() + 0.8f);
+            if (!level.isClientSide) {
+                spawnAtLocation(new ItemStack(type().fishItem), 0.1f);
+            }
+            discard();
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return super.mobInteract(player, hand);
+    }
+
     private @Nullable PrehistoricFish getClosestMate() {
         List<? extends PrehistoricFish> sameTypes = level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(2, 2, 2), fish -> fish != this);
         double shortestDistance = Double.MAX_VALUE;

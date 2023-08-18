@@ -10,13 +10,24 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.AnimationState;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
@@ -50,7 +61,6 @@ public class Nautilus extends PrehistoricFish {
     });
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
-    private float shellProgress = 0;
     private float ticksToShell = 0;
 
     public Nautilus(EntityType<Nautilus> entityType, Level level) {
@@ -72,7 +82,7 @@ public class Nautilus extends PrehistoricFish {
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        setInShell(compound.getBoolean("InShell"));
+        hideInShell(compound.getBoolean("InShell"));
     }
 
     @Override
@@ -81,27 +91,64 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public void tick() {
-        super.tick();
-        boolean inShell = isInShell();
-        if (level.isClientSide) {
-            if (inShell && shellProgress < 20) {
-                shellProgress += 0.5;
-            } else if (!inShell && shellProgress > 0) {
-                shellProgress -= 0.5;
-            }
+    public void travel(Vec3 travelVector) {
+        if (isInShell()) {
+            super.travel(Vec3.ZERO);
         } else {
-            if (ticksToShell > 0) {
-                ticksToShell--;
+            super.travel(travelVector);
+        }
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        //TODO: Is needed?
+        //return source == DamageSource.IN_WALL || super.isInvulnerableTo(source);
+        return super.isInvulnerableTo(source);
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (!isInWater()) {
+            setDeltaMovement(Vec3.ZERO);
+            travel(Vec3.ZERO);//Apply gravity
+            onGround = true;
+            hasImpulse = false;
+        }
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        if (ticksToShell > 0) {
+            ticksToShell--;
+        }
+        List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
+        if (nearbyMobs.size() > 1 || !isInWater()) {
+            if (ticksToShell == 0 && !isInShell()) {
+                hideInShell(true);
             }
-            List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
-            if (nearbyMobs.size() > 1 || !isInWater() && isOnGround()) {
-                if (ticksToShell == 0 && !isInShell()) {
-                    setInShell(true);
-                }
-            } else if (isInShell() && ticksToShell == 0) {
-                setInShell(false);
+        } else if (isInShell() && ticksToShell == 0) {
+            hideInShell(false);
+        }
+    }
+
+    @Override
+    protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.is(Items.FLINT)) {
+            if (!level.isClientSide) {
+                hideInShell(false);
             }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    @Override
+    protected void handleAirSupply(int airSupply) {
+        if (!isInShell()) {
+            super.handleAirSupply(airSupply);
         }
     }
 
@@ -115,16 +162,21 @@ public class Nautilus extends PrehistoricFish {
             return false;
         }
         if (!isInShell()) {
-            setInShell(true);
+            hideInShell(true);
         }
         return super.hurt(source, amount);
+    }
+
+    @Override
+    public boolean isPushedByFluid() {
+        return isInShell();
     }
 
     public boolean isInShell() {
         return entityData.get(IS_IN_SHELL);
     }
 
-    public void setInShell(boolean inShell) {
+    public void hideInShell(boolean inShell) {
         entityData.set(IS_IN_SHELL, inShell);
         ticksToShell = 60;
         if (inShell) {
@@ -140,23 +192,38 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
+    public void registerControllers(AnimationData data) {
+        super.registerControllers(data);
+        data.addAnimationController(new AnimationController<>(this, "Shell", 4, Nautilus::shellPredicate));
+    }
+
+    private static PlayState shellPredicate(AnimationEvent<Nautilus> event) {
+        var ctrl = event.getController();
+        var anim = ctrl.getCurrentAnimation();
+        if (event.getAnimatable().isInShell()) {
+            if (anim == null || anim.animationName.equals(SHELL_EMERGE) && ctrl.getAnimationState() == AnimationState.Stopped) {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_RETRACT).addAnimation(SHELL_HOLD));
+            }
+        } else {
+            if (anim != null && anim.animationName.equals(SHELL_HOLD)) {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_EMERGE));
+            }
+        }
+        return PlayState.CONTINUE;
+    }
+
+    @Override
     public @NotNull Prehistoric.ServerAnimationInfo initialAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAnimationInfo nextIdleAnimation() {
-        if (isInShell()) {
-            return getAllAnimations().get(SHELL_HOLD);
-        }
         return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Prehistoric.ServerAnimationInfo nextMovingAnimation() {
-        if (isInShell()) {
-            return getAllAnimations().get(SHELL_HOLD);
-        }
         return getAllAnimations().get(SWIM_BACKWARDS);//TODO: SWIM_FAST
     }
 
