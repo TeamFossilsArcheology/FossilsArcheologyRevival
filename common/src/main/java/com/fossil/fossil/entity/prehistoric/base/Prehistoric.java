@@ -1868,6 +1868,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "controller", 4, animations::onFrame));
+        data.addAnimationController(new AnimationController<>(this, "Walk", 4, animations::walkPredicate));
     }
 
     /**

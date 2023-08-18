@@ -131,7 +131,6 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     @Override
     public void stop() {
         resetBlocks();
-        entity.setCurrentAnimation(entity.nextIdleAnimation());
     }
 
     protected void moveMobToBlock() {

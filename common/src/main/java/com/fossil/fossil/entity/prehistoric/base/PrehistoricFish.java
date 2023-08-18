@@ -19,6 +19,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -130,7 +132,18 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 4, animations::onFrame));
+        //data.addAnimationController(new AnimationController<>(this, "controller", 4, animations::onFrame));
+        data.addAnimationController(new AnimationController<>(this, "Walk", 4, event -> {
+            if (!isInWater()) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation(nextFloppingAnimation().animationId));
+            } else if (event.isMoving()) {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation(nextMovingAnimation().animationId));
+            } else {
+                event.getController().setAnimation(new AnimationBuilder().addAnimation(nextIdleAnimation().animationId));
+            }
+            return PlayState.CONTINUE;
+        }));
+        //data.addAnimationController(new AnimationController<>(this, "Walk", 4, animations::walkPredicate));
     }
 
     @Override

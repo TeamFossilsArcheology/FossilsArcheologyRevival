@@ -50,9 +50,18 @@ public class AnimationComponent<T extends Mob & PrehistoricAnimatable> {
         return changedAnimationAt + current.length < entity.tickCount;
     }
 
+    public PlayState walkPredicate(AnimationEvent<T> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(entity.nextMovingAnimation().animationId));
+        } else {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(entity.nextIdleAnimation().animationId));
+        }
+        return PlayState.CONTINUE;
+    }
+
     public PlayState onFrame(AnimationEvent<T> event) {
         var controller = event.getController();
-        controller.setAnimation(new AnimationBuilder().addAnimation(getCurrentAnimation().animationId));
+        //controller.setAnimation(new AnimationBuilder().addAnimation(getCurrentAnimation().animationId));
         return PlayState.CONTINUE;
     }
 }
