@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -22,7 +23,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Dilophosaurus extends Prehistoric implements IScaryDinosaur {
+public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "dilophosaurus.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String SIT1 = "animation.dilophosaurus.sit1";

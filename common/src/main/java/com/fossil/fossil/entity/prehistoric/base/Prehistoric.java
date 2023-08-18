@@ -87,7 +87,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
-public abstract class Prehistoric extends TamableAnimal implements IPrehistoricAI, PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable {
+public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable, PrehistoricDebug {
 
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Integer> AGETICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
@@ -272,6 +272,12 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         return super.hurt(source, damage);
     }
 
+    @Override
+    public CompoundTag getDebugTag() {
+        return entityData.get(DEBUG);
+    }
+
+    @Override
     public void disableCustomAI(byte type, boolean disableAI) {
         CompoundTag tag = entityData.get(DEBUG).copy();
         switch (type) {
@@ -350,7 +356,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         compound.putBoolean("DinoTamed", this.isTame());
         compound.putBoolean("Fleeing", this.isFleeing());
         compound.putInt("SubSpecies", this.getSubSpecies());
-        compound.putString("Gender", this.gender.toString());
+        compound.putString("Gender", getGender().toString());
         compound.putInt("Mood", this.getMood());
         compound.putInt("TicksTillPlay", getPlayingTick());
         compound.putInt("TicksSlept", this.ticksSlept);
@@ -375,9 +381,9 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         this.setTame(compound.getBoolean("DinoTamed"));
         this.setSubSpecies(compound.getInt("SubSpecies"));
         if ("female".equalsIgnoreCase(compound.getString("Gender"))) {
-            gender = Gender.FEMALE;
+            setGender(Gender.FEMALE);
         } else {
-            gender = Gender.MALE;
+            setGender(Gender.MALE);
         }
         this.setSleeping(compound.getBoolean("Sleeping"));
         this.setOrderedToSit(compound.getBoolean("Sitting"));
@@ -437,7 +443,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         heal(getMaxHealth());
         currentOrder = OrderType.WANDER;
         setNoAi(false);
-        if (gender == null) gender = Gender.random(random);
+        setGender(Gender.random(random));
 
         return spawnDataIn;
     }
@@ -876,57 +882,46 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
         }
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Activity aiActivityType() {
         return ai().activity();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Attacking aiAttackType() {
         return ai().attacking();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Climbing aiClimbType() {
         return ai().climbing();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Following aiFollowType() {
         return ai().following();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Jumping aiJumpType() {
         return ai().jumping();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
         return ai().response();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Stalking aiStalkType() {
         return ai().stalking();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Taming aiTameType() {
         return ai().taming();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Untaming aiUntameType() {
         return ai().untaming();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.Moving aiMovingType() {
         return ai().moving();
     }
 
-    @Override
     public PrehistoricEntityTypeAI.WaterAbility aiWaterAbilityType() {
         return ai().waterAbility();
     }
@@ -1747,7 +1742,7 @@ public abstract class Prehistoric extends TamableAnimal implements IPrehistoricA
     }
 
     public boolean canReachPrey() {
-        return this.getTarget() != null && getAttackBounds().intersects(this.getTarget().getBoundingBox()) && !isPreyBlocked(this.getTarget());
+        return getTarget() != null && getAttackBounds().intersects(getTarget().getBoundingBox()) && !isPreyBlocked(getTarget());
     }
 
     public boolean isPreyBlocked(Entity prey) {

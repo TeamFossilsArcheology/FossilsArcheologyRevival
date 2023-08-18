@@ -1,6 +1,5 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.base;
 
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import org.jetbrains.annotations.NotNull;
 
 public interface PrehistoricLeaping {

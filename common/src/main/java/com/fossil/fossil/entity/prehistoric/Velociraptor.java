@@ -3,9 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.entity.prehistoric.base.*;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -24,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Velociraptor extends Prehistoric implements PrehistoricLeaping, IScaryDinosaur {
+public class Velociraptor extends Prehistoric implements PrehistoricLeaping, PrehistoricScary {
     public static final String ANIMATIONS = "velociraptor.animation.json";
     public static final String IDLE = "animation.velociraptor.idle";
     public static final String WALK = "animation.velociraptor.walk";

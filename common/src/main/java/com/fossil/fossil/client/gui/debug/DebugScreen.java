@@ -1,6 +1,8 @@
 package com.fossil.fossil.client.gui.debug;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.AIMessage;
 import com.fossil.fossil.network.debug.MovementMessage;
@@ -14,6 +16,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.block.state.BlockState;
@@ -65,24 +68,6 @@ public class DebugScreen extends Screen {
         var builder = CycleButton.booleanBuilder(new TextComponent("On"), new TextComponent("Off")).withValues(
                 List.of(Boolean.TRUE, Boolean.FALSE));
         if (entity instanceof Prehistoric prehistoric) {
-            builder.withInitialValue(prehistoric.isNoAi());
-            disableAI = builder.create(20, height - 130, width / 6, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
-            });
-            this.addRenderableWidget(disableAI);
-            builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableGoalAI"));
-            this.addRenderableWidget(builder.create(20, height - 100, width / 6, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
-            }));
-            builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableMoveAI"));
-            this.addRenderableWidget(builder.create(20, height - 70, width / 6, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
-            }));
-            builder.withInitialValue(entity.getEntityData().get(Prehistoric.DEBUG).getBoolean("disableLookAI"));
-            this.addRenderableWidget(builder.create(20, height - 40, width / 6, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
-            }));
-            tabs.add(addWidget(new AnimationTab(this, prehistoric)));
             tabs.add(addWidget(new InfoTab(this, prehistoric)));
            /* xPosInput = this.addRenderableWidget(new EditBox(this.font, 280, height - 40, 50, 20, new TextComponent("")));
             xPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(mob.getX()));
@@ -97,6 +82,28 @@ public class DebugScreen extends Screen {
                 Player player = Minecraft.getInstance().player;
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new MovementMessage(entity.getId(), player.getX(), player.getY(), player.getZ()));
             }));
+        }
+        if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {
+            builder.withInitialValue(mob.isNoAi());
+            disableAI = builder.create(20, height - 130, width / 6, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
+            });
+            this.addRenderableWidget(disableAI);
+            builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableGoalAI"));
+            this.addRenderableWidget(builder.create(20, height - 100, width / 6, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
+            }));
+            builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableMoveAI"));
+            this.addRenderableWidget(builder.create(20, height - 70, width / 6, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
+            }));
+            builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableLookAI"));
+            this.addRenderableWidget(builder.create(20, height - 40, width / 6, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
+            }));
+        }
+        if (entity instanceof PrehistoricAnimatable) {
+            tabs.add(addWidget(new AnimationTab(this, entity)));
         }
         builder.withInitialValue(showPaths);
         this.addRenderableWidget(builder.create(240, height - 40, 200, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {

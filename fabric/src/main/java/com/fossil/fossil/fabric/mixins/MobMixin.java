@@ -1,6 +1,6 @@
 package com.fossil.fossil.fabric.mixins;
 
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -23,8 +23,8 @@ public abstract class MobMixin extends LivingEntity {
     @Redirect(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;tick()V"))
     protected final void disableGoalAI(GoalSelector instance) {
         Mob entity = ((Mob) (Object) this);
-        if (entity instanceof Prehistoric prehistoric) {
-            CompoundTag tag = prehistoric.getEntityData().get(Prehistoric.DEBUG);
+        if (entity instanceof PrehistoricDebug prehistoric) {
+            CompoundTag tag = prehistoric.getDebugTag();
             if (!tag.getBoolean("disableGoalAI")) {
                 instance.tick();
             }
@@ -36,8 +36,8 @@ public abstract class MobMixin extends LivingEntity {
     @Redirect(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;tickRunningGoals(Z)V"))
     protected final void disableGoalAI(GoalSelector instance, boolean tickAllRunning) {
         Mob entity = ((Mob) (Object) this);
-        if (entity instanceof Prehistoric prehistoric) {
-            CompoundTag tag = prehistoric.getEntityData().get(Prehistoric.DEBUG);
+        if (entity instanceof PrehistoricDebug prehistoric) {
+            CompoundTag tag = prehistoric.getDebugTag();
             if (!tag.getBoolean("disableGoalAI")) {
                 instance.tickRunningGoals(tickAllRunning);
             }
@@ -49,8 +49,8 @@ public abstract class MobMixin extends LivingEntity {
     @Redirect(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/control/MoveControl;tick()V"))
     protected final void disableMoveAI(MoveControl instance) {
         Mob entity = ((Mob) (Object) this);
-        if (entity instanceof Prehistoric prehistoric) {
-            CompoundTag tag = prehistoric.getEntityData().get(Prehistoric.DEBUG);
+        if (entity instanceof PrehistoricDebug prehistoric) {
+            CompoundTag tag = prehistoric.getDebugTag();
             if (!tag.getBoolean("disableMoveAI")) {
                 instance.tick();
             }
@@ -62,8 +62,8 @@ public abstract class MobMixin extends LivingEntity {
     @Redirect(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/control/LookControl;tick()V"))
     protected final void disableLookAI(LookControl instance) {
         Mob entity = ((Mob) (Object) this);
-        if (entity instanceof Prehistoric prehistoric) {
-            CompoundTag tag = prehistoric.getEntityData().get(Prehistoric.DEBUG);
+        if (entity instanceof PrehistoricDebug prehistoric) {
+            CompoundTag tag = prehistoric.getDebugTag();
             if (!tag.getBoolean("disableLookAI")) {
                 instance.tick();
             }

@@ -1,6 +1,6 @@
 package com.fossil.fossil.network.debug;
 
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -31,7 +31,7 @@ public class AIMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(id);
         contextSupplier.get().queue(() -> {
-            if (entity instanceof Prehistoric prehistoric) {
+            if (entity instanceof PrehistoricDebug prehistoric) {
                 prehistoric.disableCustomAI(type, disableAI);
             }
         });

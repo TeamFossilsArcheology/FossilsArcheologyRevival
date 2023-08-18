@@ -106,7 +106,7 @@ public class AnuBossModel extends EntityModel<AnuBoss> implements ArmedModel {
             rightLeg.xRot = Mth.cos(limbSwing * 0.6662f + 1) * limbSwingAmount;
             leftLeg.xRot = Mth.cos(limbSwing * 0.6662f + Mth.PI + 2) * limbSwingAmount;
             if (entity.getAttackMode() == AnuBoss.AttackMode.DEFENSE) {
-                head.setRotation(headPitch / (180 / Mth.PI), netHeadYaw / (180 / Mth.PI), head.zRot);
+                head.setRotation(headPitch * Mth.DEG_TO_RAD, netHeadYaw * Mth.DEG_TO_RAD, head.zRot);
             }
         }
         if (entity.getAttackMode() == AnuBoss.AttackMode.FLIGHT) {

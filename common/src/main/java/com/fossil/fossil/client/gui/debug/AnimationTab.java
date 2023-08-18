@@ -1,6 +1,6 @@
 package com.fossil.fossil.client.gui.debug;
 
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.AnimationMessage;
 import com.fossil.fossil.network.debug.RotationMessage;
@@ -110,7 +110,7 @@ public class AnimationTab extends DebugTab {
             sliderY.setSliderValue(0, true);
             sliderX.setSliderValue(0, true);
         }));
-        if (entity instanceof Prehistoric prehistoric) {
+        if (entity instanceof PrehistoricAnimatable prehistoric) {
             animations = addWidget(new AnimationsList(entity.getId(), prehistoric.getAllAnimations().keySet()));
         }
     }

@@ -24,7 +24,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.List;
 
-public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable {
+public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable, PrehistoricDebug {
+    public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.STRING);
     protected final AnimationComponent<PrehistoricFish> animations = new AnimationComponent<>(this);
     private int absoluteEggCooldown = 0;
@@ -37,6 +38,14 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     protected void defineSynchedData() {
         super.defineSynchedData();
         this.entityData.define(CURRENT_ANIMATION, initialAnimation().animationId);
+        CompoundTag tag = new CompoundTag();
+        tag.putDouble("x", position().x);
+        tag.putDouble("y", position().y);
+        tag.putDouble("z", position().z);
+        tag.putBoolean("disableGoalAI", false);
+        tag.putBoolean("disableMoveAI", false);
+        tag.putBoolean("disableLookAI", false);
+        entityData.define(DEBUG, tag);
     }
 
     @NotNull
@@ -101,6 +110,10 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         }
     }
 
+    @Override
+    public CompoundTag getDebugTag() {
+        return entityData.get(DEBUG);
+    }
     private @Nullable PrehistoricFish getClosestMate() {
         List<? extends PrehistoricFish> sameTypes = level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(2, 2, 2), fish -> fish != this);
         double shortestDistance = Double.MAX_VALUE;
@@ -135,5 +148,9 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     public static boolean canSpawn(Level level, BlockPos pos) {
         return pos.getY() < level.getSeaLevel() && level.getFluidState(pos.below()).is(FluidTags.WATER) && level.getBlockState(pos.above()).is(Blocks.WATER);
+    }
+
+    public void disableCustomAI(byte type, boolean disableAI) {
+        setNoAi(disableAI);
     }
 }

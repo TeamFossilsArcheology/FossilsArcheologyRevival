@@ -2,9 +2,9 @@ package com.fossil.fossil.event;
 
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.AnimalFearGoal;
-import com.fossil.fossil.entity.prehistoric.IScaryDinosaur;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.util.Gender;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.EntityEvent;
@@ -25,7 +25,7 @@ public class ModEvents {
         EntityEvent.ADD.register((entity, level) -> {
             if (entity instanceof PathfinderMob mob && isLivestock(mob) && FossilConfig.isEnabled("animalsFearDinos")) {
                 mob.goalSelector.addGoal(1, new AnimalFearGoal(mob, Prehistoric.class, 12, 1.2, 1.5,
-                        living -> living instanceof IScaryDinosaur));
+                        living -> living instanceof PrehistoricScary));
             }
             return EventResult.pass();
         });
