@@ -45,6 +45,7 @@ public class Mosasaurus extends PrehistoricSwimming {
 
     public Mosasaurus(EntityType<Mosasaurus> entityType, Level level) {
         super(entityType, level, false);
+        hasTeenTexture = false;
     }
 
     @Override

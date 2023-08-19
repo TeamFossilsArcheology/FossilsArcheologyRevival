@@ -45,6 +45,7 @@ public class Mammoth extends PrehistoricFlocking {
 
     public Mammoth(EntityType<Mammoth> entityType, Level level) {
         super(entityType, level, false);
+        hasTeenTexture = false;
     }
 
     @Override

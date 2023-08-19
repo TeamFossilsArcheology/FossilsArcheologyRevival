@@ -45,6 +45,7 @@ public class Megalograptus extends PrehistoricSwimming {
 
     public Megalograptus(EntityType<Megalograptus> entityType, Level level) {
         super(entityType, level, false);
+        hasTeenTexture = false;
     }
 
     @Override

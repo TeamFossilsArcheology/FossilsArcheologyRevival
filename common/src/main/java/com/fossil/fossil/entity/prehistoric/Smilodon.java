@@ -45,6 +45,7 @@ public class Smilodon extends Prehistoric implements PrehistoricScary {
 
     public Smilodon(EntityType<Smilodon> entityType, Level level) {
         super(entityType, level, false);
+        hasTeenTexture = false;
     }
 
     @Override

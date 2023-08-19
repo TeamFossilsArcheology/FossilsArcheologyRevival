@@ -24,16 +24,18 @@ import java.util.Map;
 
 public class Diplocaulus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "diplocaulus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String IDLE = "animation.diplocaulus.idle";
+    public static final String SWIM = "animation.diplocaulus.swim";
+    public static final String SWIM_FAST = "animation.diplocaulus.swim_fast";
+    public static final String LAND = "animation.diplocaulus.dance";
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
-                case IDLE -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new Prehistoric.ServerAnimationInfo(animation, IDLE_PRIORITY);
+                case SWIM, SWIM_FAST -> info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
@@ -45,6 +47,7 @@ public class Diplocaulus extends PrehistoricSwimming {
 
     public Diplocaulus(EntityType<Diplocaulus> entityType, Level level) {
         super(entityType, level, false);
+        hasBabyTexture = false;
     }
 
     @Override
@@ -120,7 +123,7 @@ public class Diplocaulus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
+        return ServerAttackAnimationInfo.EMPTY;
     }
 
     @Override

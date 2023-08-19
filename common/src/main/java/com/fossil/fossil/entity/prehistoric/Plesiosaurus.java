@@ -45,6 +45,7 @@ public class Plesiosaurus extends PrehistoricSwimming {
 
     public Plesiosaurus(EntityType<Plesiosaurus> entityType, Level level) {
         super(entityType, level, false);
+        hasTeenTexture = false;
     }
 
     @Override

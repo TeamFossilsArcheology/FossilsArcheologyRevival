@@ -44,6 +44,7 @@ public class Edaphosaurus extends Prehistoric {
 
     public Edaphosaurus(EntityType<Edaphosaurus> entityType, Level level) {
         super(entityType, level, false);
+        hasTeenTexture = false;
     }
 
     @Override

@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.alligatorgar.idle": {
+		"animation.alligator_gar.idle": {
 			"loop": true,
 			"animation_length": 6,
 			"bones": {
@@ -41,7 +41,7 @@
 				}
 			}
 		},
-		"animation.alligatorgar.swim": {
+		"animation.alligator_gar.swim": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -81,7 +81,7 @@
 				}
 			}
 		},
-		"animation.alligatorgar.swim_fast": {
+		"animation.alligator_gar.swim_fast": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -193,7 +193,7 @@
 				}
 			}
 		},
-		"animation.alligatorgar.land": {
+		"animation.alligator_gar.land": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -293,7 +293,7 @@
 				}
 			}
 		},
-		"animation.alligatorgar.turn_left": {
+		"animation.alligator_gar.turn_left": {
 			"loop": "hold_on_last_frame",
 			"bones": {
 				"body": {
@@ -331,7 +331,7 @@
 				}
 			}
 		},
-		"animation.alligatorgar.turn_right": {
+		"animation.alligator_gar.turn_right": {
 			"loop": "hold_on_last_frame",
 			"bones": {
 				"body": {
@@ -369,7 +369,7 @@
 				}
 			}
 		},
-		"animation.alligatorgar.new": {
+		"animation.alligator_gar.new": {
 			"loop": true
 		}
 	},

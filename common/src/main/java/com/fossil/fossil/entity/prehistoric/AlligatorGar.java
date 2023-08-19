@@ -17,10 +17,12 @@ import java.util.Map;
 
 public class AlligatorGar extends PrehistoricFish {
     public static final String ANIMATIONS = "alligator_gar.animation.json";
-    public static final String IDLE = "animation.alligatorgar.idle";
-    public static final String SWIM = "animation.alligatorgar.swim";
-    public static final String SWIM_FAST = "animation.alligatorgar.swim_fast";
-    public static final String LAND = "animation.alligatorgar.land";//TODO: What animation priority should these have?
+    public static final String IDLE = "animation.alligator_gar.idle";
+    public static final String SWIM = "animation.alligator_gar.swim";
+    public static final String SWIM_FAST = "animation.alligator_gar.swim_fast";
+    public static final String LAND = "animation.alligator_gar.land";//TODO: What animation priority should these have?
+    public static final String TURN_LEFT = "animation.alligator_gar.turn_left";
+    public static final String TURN_RIGHT = "animation.alligator_gar.turn_right";
     private static final LazyLoadedValue<Map<String, Prehistoric.ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, Prehistoric.ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);

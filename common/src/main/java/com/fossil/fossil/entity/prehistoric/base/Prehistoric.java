@@ -1877,6 +1877,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
      * dinosaur will attack.
      */
     public static final class ServerAttackAnimationInfo extends ServerAnimationInfo {
+        public static final ServerAttackAnimationInfo EMPTY = new ServerAttackAnimationInfo("empty", 0, 0, 0);
         public final int[] attackDelays;
 
         /**
@@ -1894,6 +1895,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public static class ServerAnimationInfo {
+        public static final ServerAnimationInfo EMPTY = new ServerAnimationInfo("empty", 0, 0, false);
         public final @NotNull String animationId;
         public final int length;
         public final int priority;

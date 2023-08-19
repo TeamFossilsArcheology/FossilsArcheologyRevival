@@ -45,6 +45,9 @@ public class DinoMeleeAttackAI extends MeleeAttackGoal {
 
         if (!(currentAttackAnimation instanceof Prehistoric.ServerAttackAnimationInfo)) {
             var attackAnimations = dinosaur.nextAttackAnimation();
+            if (attackAnimations == Prehistoric.ServerAttackAnimationInfo.EMPTY) {
+                return;
+            }
             double distanceSqr = this.mob.getBbWidth() * this.mob.getBbWidth() * 2 + enemy.getBbWidth();
             if (distToEnemySqr > distanceSqr || !isTimeToAttack()) return;
 

@@ -1,15 +1,18 @@
 package com.fossil.fossil.entity.prehistoric;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -53,10 +56,27 @@ public class Arthropleura extends Prehistoric {
     }
 
     @Override
+    public void refreshTexturePath() {
+        String name = getType().arch$registryName().getPath();
+        StringBuilder builder = new StringBuilder();
+        builder.append("textures/entity/");
+        builder.append(name);
+        builder.append("/");
+        builder.append(name);
+        if (hasBabyTexture && isBaby()) builder.append("_baby");
+        if (hasTeenTexture && isTeen()) builder.append("_teen");
+        if (isAdult()) builder.append("_adult");
+        builder.append(".png");
+        String path = builder.toString();
+        textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
+    }
+
+    @Override
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
+        goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));

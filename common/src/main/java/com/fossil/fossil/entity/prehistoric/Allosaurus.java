@@ -11,6 +11,7 @@ import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -24,8 +25,8 @@ import java.util.Map;
 
 public class Allosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "allosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String IDLE = "animation.allosaurus.walk";
+    public static final String ATTACK1 = "animation.allosaurus.attack";
     private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
         Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
@@ -57,6 +58,7 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
         super.registerGoals();
         goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
+        goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
@@ -74,11 +76,6 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return ModItems.SKULL_STICK.get();
     }
@@ -86,6 +83,11 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override
