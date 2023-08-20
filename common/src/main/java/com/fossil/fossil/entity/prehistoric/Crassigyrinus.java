@@ -10,7 +10,6 @@ import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -59,7 +58,6 @@ public class Crassigyrinus extends PrehistoricSwimming {
         super.registerGoals();
         goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
-        goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));

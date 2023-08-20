@@ -9,10 +9,10 @@ import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
@@ -59,22 +59,24 @@ public class Dodo extends Prehistoric {
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        goalSelector.addGoal(5, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
-        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
-        targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        Vec3 movement = getDeltaMovement();
+        if (!isOnGround() && movement.y < 0) {
+            setDeltaMovement(movement.x, movement.y * 0.6, movement.z);
+        }
     }
 
     @Override
     public PrehistoricEntityType type() {
         return PrehistoricEntityType.DODO;
-    }
-
-    @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
     }
 
     @Override
@@ -85,6 +87,11 @@ public class Dodo extends Prehistoric {
     @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

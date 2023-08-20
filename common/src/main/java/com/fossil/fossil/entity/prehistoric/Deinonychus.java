@@ -5,11 +5,14 @@ import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.FleeSunGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -22,7 +25,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Deinonychus extends Prehistoric implements PrehistoricScary {
+public class Deinonychus extends Prehistoric implements PrehistoricLeaping, PrehistoricScary {
     public static final String ANIMATIONS = "deinonychus.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
@@ -56,12 +59,15 @@ public class Deinonychus extends Prehistoric implements PrehistoricScary {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
+        goalSelector.addGoal(0, new DinoLeapAtTargetGoal<>(this));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
+        goalSelector.addGoal(5, new RestrictSunGoal(this));
+        goalSelector.addGoal(6, new FleeSunGoal(this, 1));
+        goalSelector.addGoal(7, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
@@ -110,6 +116,11 @@ public class Deinonychus extends Prehistoric implements PrehistoricScary {
 
     @Override
     public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
+    }
+
+    @Override
+    public @NotNull Prehistoric.ServerAttackAnimationInfo nextLeapAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
     }
 

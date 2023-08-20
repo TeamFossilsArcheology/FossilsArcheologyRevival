@@ -131,27 +131,19 @@ public class Triceratops extends Prehistoric {
         super.registerGoals();
 
         double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
-        this.goalSelector.addGoal(0, new FleeBattleGoal(this, 1.5 * speed));
-        this.goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed * 1.5, false));
-        this.goalSelector.addGoal(1, new FloatGoal(this));
-        this.goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        this.goalSelector.addGoal(4, new EatItemEntityGoal(this));
-        this.goalSelector.addGoal(5, new EatPlantGoal(this));
-        goalSelector.addGoal(4, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(0, new FleeBattleGoal(this, 1.5 * speed));
+        goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed * 1.5, false));
+        goalSelector.addGoal(1, new FloatGoal(this));
+        goalSelector.addGoal(3, new EatFromFeederGoal(this));
+        goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        goalSelector.addGoal(5, new EatPlantGoal(this));
+        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoWanderGoal(this, speed));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
-        this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
+        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
+        targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
-        /*
-        this.goalSelector.addGoal(4, new DinoAIRiding(this, 1.0F));
-        this.goalSelector.addGoal(4, new DinoAIFollowOwner(this, 1.0D, 10.0F, 2.0F));
-        this.goalSelector.addGoal(7, new DinoAIWatchClosest(this, EntityPlayer.class, 8.0F));
-        this.goalSelector.addGoal(7, new DinoAILookIdle(this));
-
-        this.targetSelector.addGoal(1, new DinoAIOwnerHurtByTarget(this));
-        this.targetSelector.addGoal(2, new DinoAIOwnerHurtTarget(this));
-        this.targetSelector.addGoal(3, new DinoAIHurtByTarget(this));
-        this.targetSelector.addGoal(4, new DinoAIHunt(this, LivingEntity.class, true, entity -> entity instanceof LivingEntity));*/
     }
 
     @Override

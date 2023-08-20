@@ -70,7 +70,8 @@ Stegosaurus extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
+        goalSelector.addGoal(0, new FleeBattleGoal(this, 1));
+        goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
