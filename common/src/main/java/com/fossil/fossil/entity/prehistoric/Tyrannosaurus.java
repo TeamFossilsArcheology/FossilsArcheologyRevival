@@ -7,7 +7,10 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.sounds.ModSounds;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -15,6 +18,7 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
@@ -48,7 +52,8 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
             switch (animation.animationId()) {
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
-                case ATTACK_NORMAL1, ATTACK_NORMAL2 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
+                case ATTACK_NORMAL1, ATTACK_NORMAL2 ->
+                        info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
@@ -128,5 +133,23 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return isWeak() ? ModSounds.TYRANNOSAURUS_WEAK.get() : ModSounds.TYRANNOSAURUS_AMBIENT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return ModSounds.TYRANNOSAURUS_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.TYRANNOSAURUS_DEATH.get();
     }
 }

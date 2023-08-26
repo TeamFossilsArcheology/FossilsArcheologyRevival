@@ -6,7 +6,10 @@ import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
+import com.fossil.fossil.sounds.ModSounds;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.LazyLoadedValue;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FleeSunGoal;
@@ -17,6 +20,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
@@ -84,7 +88,7 @@ public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
     public Item getOrderItem() {
         return Items.BONE;
     }
-    
+
     @Override
     public EntityDataManager.Data data() {
         return data;
@@ -123,5 +127,23 @@ public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSounds.COMPSOGNATHUS_AMBIENT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return ModSounds.COMPSOGNATHUS_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.COMPSOGNATHUS_DEATH.get();
     }
 }
