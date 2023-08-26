@@ -175,10 +175,10 @@ public enum PrehistoricEntityType {
                 registerItem("egg_item", type, Item::new, item -> type.cultivatedBirdEggItem = item);
             }
             if (type.timePeriod != TimePeriod.CURRENT) {
+                ModItems.ITEMS.register("meat_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
+                                .food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3f).build())))
+                        .listen(item -> type.foodItem = item);
                 if (type != NAUTILUS) {
-                    ModItems.ITEMS.register("meat_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
-                                    .food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3f).build())))
-                            .listen(item -> type.foodItem = item);
                     ModItems.ITEMS.register("cooked_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
                                     .food(new FoodProperties.Builder().nutrition(8).saturationMod(0.8f).build())))
                             .listen(item -> type.cookedFoodItem = item);

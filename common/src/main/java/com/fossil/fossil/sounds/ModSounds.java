@@ -10,6 +10,16 @@ import net.minecraft.sounds.SoundEvent;
 public class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(Fossil.MOD_ID, Registry.SOUND_EVENT_REGISTRY);
 
+    public static final RegistrySupplier<SoundEvent> MUSIC_BONES = SOUND_EVENTS.register("music_bones",
+            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "record_bones")));
+    public static final RegistrySupplier<SoundEvent> MUSIC_FIRST_DINOSAUR = SOUND_EVENTS.register("music_first_dinosaur",
+            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_first_dinosaur")));
+    public static final RegistrySupplier<SoundEvent> MUSIC_SCARAB = SOUND_EVENTS.register("music_scarab",
+            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_scarab")));
+    public static final RegistrySupplier<SoundEvent> MUSIC_DISCOVERY = SOUND_EVENTS.register("record_discovery",
+            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "record_discovery")));
+    public static final RegistrySupplier<SoundEvent> MUSIC_MATING = SOUND_EVENTS.register("music_mating",
+            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_mating")));
     public static final RegistrySupplier<SoundEvent> ANU_TOTEM = SOUND_EVENTS.register("anu_totem",
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "anu_totem")));
     public static final RegistrySupplier<SoundEvent> ANU_COUGH = SOUND_EVENTS.register("anu_cough",

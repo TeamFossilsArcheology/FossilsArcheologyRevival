@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "fossil:fish_coelacanth"
+    "item": "fossil:meat_coelacanth"
   },
   "result": "fossil:cooked_coelacanth",
   "experience": 1.5,

@@ -94,14 +94,14 @@ public class ModBlocks {
             () -> new StairBlock(ANCIENT_STONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_STONE.get())));
     public static final RegistrySupplier<Block> ANCIENT_STONE_WALL = registerBlock("ancient_stone_wall",
             () -> new WallBlock(BlockBehaviour.Properties.copy(ANCIENT_STONE.get())));
-    public static final RegistrySupplier<Block> ANCIENT_WOOD = registerBlock("ancient_wood",
+    public static final RegistrySupplier<Block> ANCIENT_WOOD_PLANKS = registerBlock("ancient_wood_planks",
             () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2f, 3f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<SlabBlock> ANCIENT_WOOD_SLAB = registerBlock("ancient_wood_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())));
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<RotatedPillarBlock> ANCIENT_WOOD_PILLAR = registerBlock("ancient_wood_pillar",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<StairBlock> ANCIENT_WOOD_STAIRS = registerBlock("ancient_wood_stairs",
-            () -> new StairBlock(ANCIENT_WOOD.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_WOOD.get())));
+            () -> new StairBlock(ANCIENT_WOOD_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",
             () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(3f, 25f).noOcclusion()
                     .isViewBlocking(ModBlocks::never)));

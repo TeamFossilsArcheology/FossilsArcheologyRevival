@@ -119,11 +119,6 @@ public class ModItemProvider extends ItemModelProvider {
         builder(resourceLocation, item);
     }
 
-    public void fishItem(ResourceLocation item, PrehistoricEntityType type) {
-        ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/meat/" + type.resourceName);
-        builder(resourceLocation, item);
-    }
-
     public void eggItem(ResourceLocation item) {
         ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/eggs/" + item.getPath());
         builder(resourceLocation, item);

@@ -37,6 +37,59 @@
       "fossil:whip"
     ]
   },
+  "music_bones": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "fossil:music_bones",
+        "stream": true
+      }
+    ]
+  },
+  "music_discovery": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "fossil:music_discovery",
+        "stream": true
+      }
+    ]
+  },
+  "music_scarab": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "fossil:music_scarab",
+        "stream": true
+      }
+    ]
+  },
+  "music_first_dinosaur": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "fossil:music_first_dinosaur",
+        "stream": true
+      }
+    ]
+  },
+  "music_mating": {
+    "category": "record",
+    "sounds": [
+      {
+        "name": "fossil:music_mating_0",
+        "stream": true
+      },
+      {
+        "name": "fossil:music_mating_1",
+        "stream": true
+      },
+      {
+        "name": "fossil:music_mating_2",
+        "stream": true
+      }
+    ]
+  },
   "allosaurus_ambient": {
     "category": "neutral",
     "sounds": [

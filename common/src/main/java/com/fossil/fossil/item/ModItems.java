@@ -5,6 +5,7 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.material.ModFluids;
+import com.fossil.fossil.sounds.ModSounds;
 import dev.architectury.core.item.ArchitecturyBucketItem;
 import dev.architectury.core.item.ArchitecturySpawnEggItem;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -30,6 +31,14 @@ public class ModItems {
             () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> TAR_DROP = ITEMS.register("tar_drop",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<RecordItem> RECORD_BONES = ITEMS.register("record_bones",
+            () -> CustomRecordItem.get(0, ModSounds.MUSIC_BONES, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<RecordItem> RECORD_ANU = ITEMS.register("record_anu",
+            () -> CustomRecordItem.get(1, ModSounds.ANU_MUSIC, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<RecordItem> RECORD_SCARAB = ITEMS.register("record_scarab",
+            () -> CustomRecordItem.get(2, ModSounds.MUSIC_SCARAB, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<RecordItem> RECORD_DISCOVERY = ITEMS.register("record_discovery",
+            () -> CustomRecordItem.get(3, ModSounds.MUSIC_DISCOVERY, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> AMBER = ITEMS.register("amber",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> DOMINICAN_AMBER = ITEMS.register("amber_dominican",
@@ -66,7 +75,9 @@ public class ModItems {
     public static final RegistrySupplier<Item> BONE_BOOTS = ITEMS.register("bone_boots",
             () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.FEET, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> WHIP = ITEMS.register("whip", () -> new WhipItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("chicken_essence",
+    public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("essence_chicken",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> STUNTED_ESSENCE = ITEMS.register("essence_stunted",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> COOKED_NAUTILUS = ITEMS.register("nautilus_cooked",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));

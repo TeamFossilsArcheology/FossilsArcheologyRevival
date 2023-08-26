@@ -1,7 +1,7 @@
 {
   "type": "minecraft:smelting",
   "ingredient": {
-    "item": "fossil:fish_alligator_gar"
+    "item": "fossil:meat_alligator_gar"
   },
   "result": "fossil:cooked_alligator_gar",
   "experience": 1.5,

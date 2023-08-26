@@ -42,6 +42,7 @@ public class Fossil {
         LOGGER.info("Opus perfectum");
         LOGGER.info("Somewhere there, us sleeping");
         ModEntities.register();
+        ModSounds.register();
         ModItems.register();
         ModMenus.register();
         ModBlockEntities.register();
@@ -49,7 +50,6 @@ public class Fossil {
         ModStructures.register();
         ModDimensions.register();
         ModRecipes.register();
-        ModSounds.register();
         LOGGER.info("After a billion years");
         LOGGER.info("The show is still here");
         LOGGER.info("Not a single one of your fathers died young");

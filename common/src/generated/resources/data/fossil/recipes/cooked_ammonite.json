@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "ingredient": {
-    "item": "fossil:fish_ammonite"
-  },
-  "result": "fossil:cooked_ammonite",
-  "experience": 1.5,
-  "cookingtime": 200
-}
