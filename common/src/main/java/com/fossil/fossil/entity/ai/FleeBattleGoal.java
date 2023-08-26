@@ -7,6 +7,9 @@ import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * A Goal that will move a fleeing entity to a random spot away from its attacker
+ */
 public class FleeBattleGoal extends Goal {
     private final Prehistoric dino;
     private final double speedModifier;

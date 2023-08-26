@@ -76,6 +76,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         timeInWater = compound.getInt("TimeInWater");
         timeOnLand = compound.getInt("TimeOnLand");
     }
+
     @Override
     protected @NotNull PathNavigation createNavigation(Level level) {
         return new WaterBoundPathNavigation(this, level);

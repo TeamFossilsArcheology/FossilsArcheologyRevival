@@ -63,7 +63,6 @@ public class Brachiosaurus extends Prehistoric {
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        targetSelector.addGoal(4, new HuntGoal(this));
     }
 
     @Override

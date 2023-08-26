@@ -22,16 +22,23 @@ public class DinoFollowOwnerGoal extends Goal {
     private final double speedModifier;
     private final float startDistance;
     private final float stopDistance;
+    private final float teleportDistance;
     private final boolean canFly;
     private LivingEntity owner;
     private float oldWaterCost;
     private int timeToRecalcPath;
 
     public DinoFollowOwnerGoal(Prehistoric dino, double speedModifier, float startDistance, float stopDistance, boolean canFly) {
+        this(dino, speedModifier, startDistance, stopDistance, 144, canFly);
+    }
+
+
+    public DinoFollowOwnerGoal(Prehistoric dino, double speedModifier, float startDistance, float stopDistance, float teleportDistance, boolean canFly) {
         this.dino = dino;
         this.speedModifier = speedModifier;
         this.startDistance = startDistance;
         this.stopDistance = stopDistance;
+        this.teleportDistance = teleportDistance;
         this.canFly = canFly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
@@ -89,7 +96,7 @@ public class DinoFollowOwnerGoal extends Goal {
         if (move) {
             return;
         }
-        if (!dino.isLeashed() && dino.distanceToSqr(owner) >= 144) {
+        if (!dino.isLeashed() && dino.distanceToSqr(owner) >= teleportDistance) {
             teleportToOwner();
         }
     }

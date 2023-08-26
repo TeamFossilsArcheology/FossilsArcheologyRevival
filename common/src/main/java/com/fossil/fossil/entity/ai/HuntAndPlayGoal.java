@@ -1,23 +1,24 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.ToyBase;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricMoodType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.prehistoric.base.*;
 import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 
-public class HuntGoal extends NearestAttackableTargetGoal<LivingEntity> {
+/**
+ * A Goal that will set the target of an entity to either a huntable creature or a toy
+ */
+public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
     private final Prehistoric dino;
 
-    public HuntGoal(Prehistoric prehistoric) {
-        super(prehistoric, LivingEntity.class, true);
+    public HuntAndPlayGoal(Prehistoric prehistoric) {
+        super(prehistoric, LivingEntity.class, true, livingEntity -> livingEntity instanceof Chicken);
         this.dino = prehistoric;
     }
 
@@ -54,11 +55,11 @@ public class HuntGoal extends NearestAttackableTargetGoal<LivingEntity> {
     @Override
     protected @NotNull AABB getTargetSearchArea(double targetDistance) {
         double yDist = 4;
-        if (dino instanceof PrehistoricSwimming swimming) {
+        if (dino instanceof Pterosaurs) {
+            yDist = targetDistance;
+        } else if (dino instanceof PrehistoricSwimming swimming) {
             yDist = swimming.doesBreachAttack() ? 50 : targetDistance;
         }
-        //TODO: If flying
-        //TODO: If Swimming
         return mob.getBoundingBox().inflate(targetDistance, yDist, targetDistance);
     }
 }

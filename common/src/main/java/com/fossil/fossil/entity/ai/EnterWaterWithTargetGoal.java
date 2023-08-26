@@ -10,17 +10,20 @@ import java.util.Random;
 
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_ON_LAND;
 
-public class EnterWaterGoal extends Goal {
+/**
+ * A Goal that will move an amphibious entity to a random spot in water if its target is also in water
+ */
+public class EnterWaterWithTargetGoal extends Goal {
     protected final PrehistoricSwimming dino;
     private final int searchRange;
     private final float speedModifier;
     private BlockPos shelterPos;
 
-    public EnterWaterGoal(PrehistoricSwimming dino, float speedModifier) {
+    public EnterWaterWithTargetGoal(PrehistoricSwimming dino, float speedModifier) {
         this(dino, 20, speedModifier);
     }
 
-    public EnterWaterGoal(PrehistoricSwimming dino, int searchRange, float speedModifier) {
+    public EnterWaterWithTargetGoal(PrehistoricSwimming dino, int searchRange, float speedModifier) {
         this.dino = dino;
         this.searchRange = searchRange;
         this.speedModifier = speedModifier;

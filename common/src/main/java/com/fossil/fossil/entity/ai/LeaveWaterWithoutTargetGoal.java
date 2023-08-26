@@ -10,12 +10,15 @@ import java.util.Random;
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_IN_WATER;
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_ON_LAND;
 
-public class LeaveWaterGoal extends Goal {
+/**
+ * A Goal that will move an amphibious entity out of the water if it has been in there for too long
+ */
+public class LeaveWaterWithoutTargetGoal extends Goal {
     private final PrehistoricSwimming dino;
     private final double speedModifier;
     private BlockPos shelterPos;
 
-    public LeaveWaterGoal(PrehistoricSwimming dino, double speedModifier) {
+    public LeaveWaterWithoutTargetGoal(PrehistoricSwimming dino, double speedModifier) {
         this.dino = dino;
         this.speedModifier = speedModifier;
     }

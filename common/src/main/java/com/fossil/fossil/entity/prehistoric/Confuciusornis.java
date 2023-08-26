@@ -62,7 +62,6 @@ public class Confuciusornis extends Pterosaurs implements PrehistoricLeaping {
         goalSelector.addGoal(6, new DinoLeapAtTargetGoal<>(this));
         goalSelector.addGoal(7, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(4, new HuntGoal(this));
     }
 
     @Override

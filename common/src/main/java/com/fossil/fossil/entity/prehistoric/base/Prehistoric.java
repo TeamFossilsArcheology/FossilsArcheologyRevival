@@ -302,6 +302,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(5, new EatBlockGoal(this));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0f));
+        targetSelector.addGoal(4, new HuntAndPlayGoal(this));
     }
 
     @Override

@@ -68,7 +68,6 @@ public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
-        targetSelector.addGoal(4, new HuntGoal(this));
     }
 
     @Override

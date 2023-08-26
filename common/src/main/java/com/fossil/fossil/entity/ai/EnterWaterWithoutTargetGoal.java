@@ -9,12 +9,15 @@ import net.minecraft.world.level.material.Material;
 
 import java.util.Random;
 
-public class FindWaterTargetGoal extends Goal {
+/**
+ * A Goal that will move an entity to a random spot in water if it is not in combat
+ */
+public class EnterWaterWithoutTargetGoal extends Goal {
     private final Prehistoric dino;
     private final double speedModifier;
     private BlockPos targetPos;
 
-    public FindWaterTargetGoal(Prehistoric dino, double speedModifier) {
+    public EnterWaterWithoutTargetGoal(Prehistoric dino, double speedModifier) {
         this.dino = dino;
         this.speedModifier = speedModifier;
     }
@@ -55,9 +58,6 @@ public class FindWaterTargetGoal extends Goal {
                     return true;
                 }
             }
-        } else {
-            targetPos = new BlockPos(dino.getTarget().position());
-            return true;
         }
         return false;
     }

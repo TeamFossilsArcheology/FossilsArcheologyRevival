@@ -60,7 +60,6 @@ public class Dryosaurus extends Prehistoric {
         goalSelector.addGoal(5, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(4, new HuntGoal(this));
     }
 
     @Override
