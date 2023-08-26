@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -73,16 +72,13 @@ public class Arthropleura extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
+        goalSelector.addGoal(0, new FleeBattleGoal(this, 1));
+        goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        goalSelector.addGoal(5, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
-        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
-        targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
     }
 

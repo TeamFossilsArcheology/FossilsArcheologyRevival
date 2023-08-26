@@ -9,6 +9,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -63,15 +64,15 @@ public class Therizinosaurus extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        this.goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
-        this.goalSelector.addGoal(2, new DinoMeleeAttackAI(this, 1.0, true));
-        this.goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        this.goalSelector.addGoal(4, new EatItemEntityGoal(this));
-        this.goalSelector.addGoal(5, new EatPlantGoal(this));
+        goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
+        goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1.0, true));
+        goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(5, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        this.goalSelector.addGoal(7, new DinoWanderGoal(this, 1.0));
+        goalSelector.addGoal(7, new DinoWanderGoal(this, 1.0));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
-        this.targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
+        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
+        targetSelector.addGoal(2, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
     }
 

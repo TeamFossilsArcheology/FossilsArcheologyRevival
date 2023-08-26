@@ -58,14 +58,13 @@ public class Megalodon extends PrehistoricSwimming {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        goalSelector.addGoal(0, new FindWaterTargetGoal(this, 1));
+        goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0, 10));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
-        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
         targetSelector.addGoal(4, new HuntGoal(this));
     }
@@ -85,6 +84,11 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
+    public boolean canBreatheOnLand() {
+        return false;
+    }
+
+    @Override
     protected void handleAirSupply(int airSupply) {
         if (isAlive() && !isInWaterOrBubble()) {
             setAirSupply(airSupply - 1);
@@ -95,11 +99,6 @@ public class Megalodon extends PrehistoricSwimming {
         } else {
             setAirSupply(1000);
         }
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
     }
 
     @Override

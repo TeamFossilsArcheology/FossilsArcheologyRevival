@@ -8,11 +8,11 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * A Goal that will move the entity to the closest plant if the entity is hungry, it can eat the plant and the entity can see it. Afterwards it will
- * destroy the plant and feed the entity.
+ * A Goal that will move the entity to the closest block if the entity is hungry, it can eat the plant and the entity can see it. Afterwards it will
+ * destroy the block and feed the entity.
  */
-public class EatPlantGoal extends MoveToFoodGoal {
-    public EatPlantGoal(Prehistoric entity) {
+public class EatBlockGoal extends MoveToFoodGoal {
+    public EatBlockGoal(Prehistoric entity) {
         super(entity, 1, 32);
     }
 

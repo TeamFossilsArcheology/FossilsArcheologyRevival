@@ -5,9 +5,7 @@ import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ToyBase;
-import com.fossil.fossil.entity.ai.CacheMoveToBlockGoal;
-import com.fossil.fossil.entity.ai.DinoAIMating;
-import com.fossil.fossil.entity.ai.WhipSteering;
+import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.AI;
@@ -297,10 +295,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     protected void registerGoals() {
-        this.matingGoal = new DinoAIMating(this, getAttributeValue(Attributes.MOVEMENT_SPEED));
-        this.goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
-        this.goalSelector.addGoal(2, matingGoal);
-        this.goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0f));
+        matingGoal = new DinoAIMating(this, getAttributeValue(Attributes.MOVEMENT_SPEED));
+        goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+        goalSelector.addGoal(2, matingGoal);
+        goalSelector.addGoal(3, new EatFromFeederGoal(this));
+        goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        goalSelector.addGoal(5, new EatBlockGoal(this));
+        goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0f));
     }
 
     @Override
@@ -671,8 +672,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public void tick() {
-        super.tick();
+    public void aiStep() {
+        super.aiStep();
         if (this.isSkeleton()) {
             this.setDeltaMovement(Vec3.ZERO);
         }
@@ -789,6 +790,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 fleeTicks = 0;
             }
         }
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
 
         //don't use the vanilla system
         if (this.age < 0) {

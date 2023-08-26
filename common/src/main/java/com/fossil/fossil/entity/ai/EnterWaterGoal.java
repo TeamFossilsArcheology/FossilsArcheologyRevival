@@ -11,12 +11,18 @@ import java.util.Random;
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_ON_LAND;
 
 public class EnterWaterGoal extends Goal {
-    private final PrehistoricSwimming dino;
-    private final double speedModifier;
+    protected final PrehistoricSwimming dino;
+    private final int searchRange;
+    private final float speedModifier;
     private BlockPos shelterPos;
 
-    public EnterWaterGoal(PrehistoricSwimming dino, double speedModifier) {
+    public EnterWaterGoal(PrehistoricSwimming dino, float speedModifier) {
+        this(dino, 20, speedModifier);
+    }
+
+    public EnterWaterGoal(PrehistoricSwimming dino, int searchRange, float speedModifier) {
         this.dino = dino;
+        this.searchRange = searchRange;
         this.speedModifier = speedModifier;
     }
 
@@ -53,7 +59,7 @@ public class EnterWaterGoal extends Goal {
         BlockPos.MutableBlockPos mutable = original.mutable();
 
         for (int i = 0; i < 10; i++) {
-            mutable.move(random.nextInt(20) - 10, random.nextInt(6) - 3, random.nextInt(20) - 10);
+            mutable.move(random.nextInt(searchRange) - 10, random.nextInt(6) - 3, random.nextInt(searchRange) - 10);
             if (level.getBlockState(mutable).getMaterial() == Material.WATER) {
                 shelterPos = mutable.immutable();
                 return true;

@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
+import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -8,6 +9,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -30,7 +32,8 @@ public class Tiktaalik extends PrehistoricSwimming {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
                 case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
-                case IDLE -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
+                //TODO: IDLE PRIO IN ALLEN DINOs
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
@@ -52,6 +55,17 @@ public class Tiktaalik extends PrehistoricSwimming {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
+        goalSelector.addGoal(1, new FindWaterTargetGoal(this, 1));
+        goalSelector.addGoal(1, new EnterWaterGoal(this, 1));
+        goalSelector.addGoal(1, new LeaveWaterGoal(this, 1));
+        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
+        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
+        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
+        targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        targetSelector.addGoal(4, new HuntGoal(this));
     }
 
     @Override

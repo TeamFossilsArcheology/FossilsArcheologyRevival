@@ -11,7 +11,6 @@ import com.fossil.fossil.item.ModItems;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -34,7 +33,7 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
             ServerAnimationInfo info;
             switch (animation.animationId()) {
                 case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
-                case IDLE -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
@@ -58,10 +57,10 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
-        goalSelector.addGoal(1, new FloatGoal(this));
+        goalSelector.addGoal(1, new FindWaterTargetGoal(this, 1));
+        goalSelector.addGoal(1, new EnterWaterGoal(this, 1));
+        goalSelector.addGoal(1, new LeaveWaterGoal(this, 1));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));

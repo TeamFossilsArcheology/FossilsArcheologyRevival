@@ -129,11 +129,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return isInWater();
     }
 
-    @Override
-    public void tick() {
-        super.tick();
-    }
-
     private static boolean isOverWater(LivingEntity entity) {
         if (entity.level.getBlockState(entity.blockPosition().below()).getMaterial() == Material.WATER) {
             return true;

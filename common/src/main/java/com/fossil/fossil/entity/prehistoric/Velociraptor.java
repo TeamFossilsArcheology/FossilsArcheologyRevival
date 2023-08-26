@@ -65,8 +65,6 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
         goalSelector.addGoal(0, new DinoLeapAtTargetGoal<>(this));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(4, new RestrictSunGoal(this));
         goalSelector.addGoal(4, new FleeSunGoal(this, 1));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
