@@ -91,7 +91,7 @@ public class FossilFoodMappings {
                     FoodMappings.addMeat(entityType.cookedFoodItem, 35);
                 } else {
                     FoodMappings.addFish(entityType.eggItem, 35);
-                    FoodMappings.addFish(entityType.fishItem, 35);
+                    FoodMappings.addFish(entityType.foodItem, 35);
                     FoodMappings.addFish(entityType.cookedFoodItem, 75);
                 }
             }

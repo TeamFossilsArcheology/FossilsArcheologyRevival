@@ -130,7 +130,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         if (itemStack.isEmpty() && isAlive()) {
             playSound(SoundEvents.ITEM_PICKUP, 1, random.nextFloat() + 0.8f);
             if (!level.isClientSide) {
-                spawnAtLocation(new ItemStack(type().fishItem), 0.1f);
+                spawnAtLocation(new ItemStack(type().foodItem), 0.1f);
             }
             discard();
             return InteractionResult.sidedSuccess(level.isClientSide);

@@ -36,9 +36,6 @@ public class ModRecipeProvider extends RecipeProvider {
             if (type.foodItem != null && type.cookedFoodItem != null) {
                 fullCooking(type.foodItem, type.cookedFoodItem, type.resourceName, consumer);
             }
-            if (type.fishItem != null && type.cookedFoodItem != null) {
-                fullCooking(type.fishItem, type.cookedFoodItem, type.resourceName, consumer);
-            }
         }
         ToyBallItem white = ModItems.TOY_BALLS.get(DyeColor.WHITE).get();
         ShapedRecipeBuilder.shaped(white).define('W', ItemTags.WOOL).define('S', Items.STRING)

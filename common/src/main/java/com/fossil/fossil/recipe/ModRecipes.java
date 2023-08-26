@@ -134,9 +134,6 @@ public class ModRecipes {
             if (type.cultivatedBirdEggItem != null) {
                 registerAnalyzer(new AnalyzerRecipe.Builder(type.cultivatedBirdEggItem).addOutput(type.dnaItem, 100));
             }
-            if (type.fishItem != null) {
-                registerAnalyzer(new AnalyzerRecipe.Builder(type.fishItem).addOutput(type.dnaItem, 100));
-            }
             if (type.embryoItem != null) {
                 registerAnalyzer(new AnalyzerRecipe.Builder(type.embryoItem).addOutput(type.dnaItem, 100));
             }

@@ -56,9 +56,6 @@ public class ModItemProvider extends ItemModelProvider {
                 if (type.foodItem != null) {
                     foodItem(Objects.requireNonNull(type.foodItem.getRegistryName()), type, "meat");
                 }
-                if (type.fishItem != null) {
-                    fishItem(Objects.requireNonNull(type.fishItem.getRegistryName()), type);
-                }
                 if (type.cookedFoodItem != null) {
                     foodItem(Objects.requireNonNull(type.cookedFoodItem.getRegistryName()), type, "cooked");
                 }
