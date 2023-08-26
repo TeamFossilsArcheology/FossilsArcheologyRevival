@@ -77,7 +77,7 @@ public enum PrehistoricEntityType {
     PHORUSRHACOS(ModEntities.PHORUSRHACOS, PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.CARNIVORE),
     PLATYBELODON(ModEntities.PLATYBELODON, PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE),
     PLESIOSAURUS(ModEntities.PLESIOSAURUS, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE),
-    PTERANODON(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE, Map.of()),
+    PTERANODON(ModEntities.PTERANODON, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE),
     PTEROSAUR(PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE, Map.of("eggScale", 0.54f)),
     QUAGGA(ModEntities.QUAGGA, PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE),
     SARCOSUCHUS(ModEntities.SARCOSUCHUS, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCI_CARNIVORE),

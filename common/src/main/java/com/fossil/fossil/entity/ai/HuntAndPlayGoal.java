@@ -55,7 +55,7 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
     @Override
     protected @NotNull AABB getTargetSearchArea(double targetDistance) {
         double yDist = 4;
-        if (dino instanceof Pterosaurs) {
+        if (dino instanceof PrehistoricFlying) {
             yDist = targetDistance;
         } else if (dino instanceof PrehistoricSwimming swimming) {
             yDist = swimming.doesBreachAttack() ? 50 : targetDistance;

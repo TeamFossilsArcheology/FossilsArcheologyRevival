@@ -1,7 +1,7 @@
 package com.fossil.fossil.entity.ai;
 
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
-import com.fossil.fossil.entity.prehistoric.base.Pterosaurs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.phys.Vec3;
@@ -10,10 +10,10 @@ import net.minecraft.world.phys.Vec3;
  * A Goal that will find a visible empty block the entity can fly to
  */
 public class FindAirTargetGoal extends Goal {
-    protected final Pterosaurs dino;
-    private BlockPos targetPos;
+    protected final PrehistoricFlying dino;
+    public BlockPos targetPos;
 
-    public FindAirTargetGoal(Pterosaurs dino) {
+    public FindAirTargetGoal(PrehistoricFlying dino) {
         this.dino = dino;
     }
 

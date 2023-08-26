@@ -5,7 +5,7 @@ import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import com.fossil.fossil.entity.prehistoric.base.Pterosaurs;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Tropeognathus extends Pterosaurs {
+public class Tropeognathus extends PrehistoricFlying {
     public static final String ANIMATIONS = "fa.tropeognathus.animations.json";
     public static final String FLY = "fa.tropeognathus.fly";
     public static final String GROUND_TAKEOFF = "fa.tropeognathus.groundtakeoff";
