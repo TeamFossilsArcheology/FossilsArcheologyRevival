@@ -8,17 +8,13 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "fossil:ancient_glass",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 4
-              }
-            }
-          ]
+          "weight": 5,
+          "name": "fossil:figurine_mysterious"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 1,
+          "name": "fossil:scarab_gem"
         },
         {
           "type": "minecraft:item",
@@ -36,14 +32,57 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 20,
-          "name": "minecraft:iron_ingot",
+          "weight": 15,
+          "name": "fossil:stone_tablet",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 2
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 70,
+          "name": "fossil:pottery_shard",
           "functions": [
             {
               "function": "minecraft:set_count",
               "count": {
                 "min": 1,
                 "max": 10
+              }
+            }
+          ]
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "fossil:vase_amphora_damaged"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "fossil:vase_kylix_damaged"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "fossil:vase_volute_damaged"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 25,
+          "name": "fossil:gold_javelin",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "min": 1,
+                "max": 3
               }
             }
           ]
@@ -79,7 +118,7 @@
         {
           "type": "minecraft:item",
           "weight": 30,
-          "name": "minecraft:gold_ingot",
+          "name": "minecraft:lapis_lazuli",
           "functions": [
             {
               "function": "minecraft:set_count",
@@ -111,80 +150,13 @@
         },
         {
           "type": "minecraft:item",
-          "weight": 15,
-          "name": "minecraft:cobweb",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 6
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:iron_sword"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:iron_helmet"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:iron_chestplate"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:iron_leggings"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 5,
-          "name": "minecraft:iron_boots"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 7,
-          "name": "minecraft:obsidian",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 6
-              }
-            }
-          ]
+          "weight": 1,
+          "name": "fossil:record_discovery"
         },
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "minecraft:experience_bottle",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "min": 1,
-                "max": 5
-              }
-            }
-          ]
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "fossil:record_anu"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 1,
-          "name": "fossil:record_scarab"
+          "name": "fossil:record_bones"
         }
       ]
     }
