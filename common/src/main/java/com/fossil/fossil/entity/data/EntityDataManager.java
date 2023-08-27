@@ -16,14 +16,14 @@ import java.util.Map;
  * Loads static dino information from data/entity_info files
  */
 public class EntityDataManager extends SimpleJsonResourceReloadListener {
-    public static final EntityDataManager ENTITY_DATA = new EntityDataManager();
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(Stat.class, new Stat.Supplier())
             .registerTypeAdapter(AI.class, new AI.Supplier())
             .disableHtmlEscaping().create();
+    public static final EntityDataManager ENTITY_DATA = new EntityDataManager(GSON);
     private ImmutableMap<String, Data> entities = ImmutableMap.of();
 
-    public EntityDataManager() {
-        super(GSON, "entity_info");
+    public EntityDataManager(Gson gson) {
+        super(gson, "entity_info");
     }
 
     @Override

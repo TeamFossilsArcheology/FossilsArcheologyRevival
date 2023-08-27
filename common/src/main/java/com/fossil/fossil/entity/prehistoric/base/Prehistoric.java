@@ -119,7 +119,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
     protected boolean isJumping;
-    private Gender gender; // should be effectively final
+    private Gender gender = Gender.random(random);
     private boolean droppedBiofossil = false;
     private int fleeTicks = 0;
     private int cathermalSleepCooldown = 0;
@@ -137,6 +137,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             this.getNavigation().getNodeEvaluator().setCanFloat(true);
         }
         setPersistenceRequired();
+        refreshTexturePath();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -301,7 +302,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(AGE_TICK, 0);
+        entityData.define(AGE_TICK, data().adultAgeDays() * 24000);
         entityData.define(MATING_TICK, random.nextInt(6000) + 6000);
         entityData.define(PLAYING_TICK, random.nextInt(6000) + 6000);
         entityData.define(HUNGER, 0);
@@ -415,8 +416,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         heal(getMaxHealth());
         currentOrder = OrderType.WANDER;
         setNoAi(false);
-        setGender(Gender.random(random));
-
         return spawnDataIn;
     }
 
@@ -1323,7 +1322,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return false;
         }
         Prehistoric other = ((Prehistoric) otherAnimal);
-        if (other.gender == gender || other.getMatingTick() > 0 || matingGoal.getPartner() != null && matingGoal.getPartner() != otherAnimal) {
+        if (other.gender == gender || other.getMatingTick() > 0 || (matingGoal.getPartner() != null && matingGoal.getPartner() != otherAnimal)) {
             return false;
         }
         return true;

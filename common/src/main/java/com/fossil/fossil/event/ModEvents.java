@@ -6,7 +6,6 @@ import com.fossil.fossil.entity.prehistoric.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
-import com.fossil.fossil.util.Gender;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.EntityEvent;
 import net.minecraft.core.particles.ParticleTypes;
@@ -88,7 +87,6 @@ public class ModEvents {
             if (player != null) {
                 prehistoric.tame(player);
             }
-            prehistoric.setGender(Gender.random(level.random));
             prehistoric.setAgeInDays(0);
         } else if (newEntity instanceof Animal) {
             ((Animal) newEntity).setAge(-24000);

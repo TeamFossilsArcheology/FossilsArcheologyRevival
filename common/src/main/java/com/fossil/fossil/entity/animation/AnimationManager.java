@@ -23,13 +23,13 @@ import java.util.Map;
  * Loads dino animation server information from data/animations files
  */
 public class AnimationManager extends SimpleJsonResourceReloadListener {
-    public static final AnimationManager ANIMATIONS = new AnimationManager();
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
+    public static final AnimationManager ANIMATIONS = new AnimationManager(GSON);
     private static final Logger LOGGER = LogUtils.getLogger();
     private ImmutableMap<String, ImmutableList<Animation>> animations = ImmutableMap.of();
 
-    public AnimationManager() {
-        super(GSON, "animations");
+    public AnimationManager(Gson gson) {
+        super(gson, "animations");
     }
 
     @Override
