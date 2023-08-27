@@ -23,6 +23,10 @@ public class LeaveWaterWithoutTargetGoal extends Goal {
         this.speedModifier = speedModifier;
     }
 
+    private static boolean shouldLeaveWater(PrehistoricSwimming dino) {
+        return dino.isAmphibious() && dino.timeInWater > MAX_TIME_IN_WATER && dino.timeOnLand < MAX_TIME_ON_LAND;
+    }
+
     @Override
     public boolean canUse() {
         if (!dino.isInWater() || !shouldLeaveWater(dino)) {
@@ -61,9 +65,5 @@ public class LeaveWaterWithoutTargetGoal extends Goal {
             }
         }
         return false;
-    }
-
-    private static boolean shouldLeaveWater(PrehistoricSwimming dino) {
-        return dino.isAmphibious() && dino.timeInWater > MAX_TIME_IN_WATER && dino.timeOnLand < MAX_TIME_ON_LAND;
     }
 }

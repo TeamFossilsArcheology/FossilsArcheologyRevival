@@ -85,22 +85,22 @@ import java.util.List;
 public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable, PrehistoricDebug {
 
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
+    public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MATING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
+    public final MoodSystem moodSystem = new MoodSystem(this);
     // public final Item uncultivatedEggItem;
     private final AnimationComponent<Prehistoric> animations = new AnimationComponent<>(this);
     private final boolean isMultiPart;
     private final WhipSteering steering = new WhipSteering();
-    public final MoodSystem moodSystem = new MoodSystem(this);
     public OrderType currentOrder;
     public boolean hasFeatherToggle = false;
     public boolean featherToggle;
@@ -938,6 +938,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return entityData.get(AGE_TICK);
     }
 
+    @Override
+    public void setAge(int age) {
+    }
+
     public void setAgeInTicks(int age) {
         if (isAgingDisabled()) {
             return;
@@ -947,10 +951,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             refreshTexturePath();
             refreshDimensions();
         }
-    }
-
-    @Override
-    public void setAge(int age) {
     }
 
     public boolean isAgingDisabled() {

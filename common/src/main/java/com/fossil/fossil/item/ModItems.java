@@ -183,14 +183,13 @@ public class ModItems {
     public static final RegistrySupplier<SpawnEggItem> TAR_SLIME_SPAWN_EGG = registerSpawnEgg("tar_slime_spawn_egg", ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B);
 
     public static final RegistrySupplier<SpawnEggItem> SENTRY_PIGLIN_SPAWN_EGG = registerSpawnEgg("sentry_piglin_spawn_egg", ModEntities.SENTRY_PIGLIN, 15373203, 0XD0A750);
+    public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = Arrays.stream(DyeColor.values()).collect(Collectors.toMap(Function.identity(), ModItems::registerBall));
+    public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
+    public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));
 
     private static <T extends Mob> RegistrySupplier<SpawnEggItem> registerSpawnEgg(String id, RegistrySupplier<EntityType<T>> type, int color1, int color2) {
         return ITEMS.register(id, () -> new ArchitecturySpawnEggItem(type, color1, color2, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     }
-
-    public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = Arrays.stream(DyeColor.values()).collect(Collectors.toMap(Function.identity(), ModItems::registerBall));
-    public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
-    public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));
 
     private static RegistrySupplier<ToyBallItem> registerBall(DyeColor color) {
         return ITEMS.register("toy_ball_" + color.getName(), () -> new ToyBallItem(color, new Item.Properties().tab(ModTabs.FAPARKTAB)));

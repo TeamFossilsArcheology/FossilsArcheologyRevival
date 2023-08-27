@@ -42,13 +42,13 @@ public class Coelacanth extends PrehistoricFish {
         super(entityType, level);
     }
 
+    public static boolean canSpawn(Level level, BlockPos pos) {
+        return pos.getY() < 35 && PrehistoricFish.canSpawn(level, pos);
+    }
+
     @Override
     public @NotNull PrehistoricEntityType type() {
         return PrehistoricEntityType.COELACANTH;
-    }
-
-    public static boolean canSpawn(Level level, BlockPos pos) {
-        return pos.getY() < 35 && PrehistoricFish.canSpawn(level, pos);
     }
 
     @Override

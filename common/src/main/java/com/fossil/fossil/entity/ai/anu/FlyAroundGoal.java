@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import java.util.EnumSet;
 
 public class FlyAroundGoal extends Goal {
-    private AnuBoss anu;
+    private final AnuBoss anu;
     private BlockPos targetPos;
 
     public FlyAroundGoal(AnuBoss anu) {

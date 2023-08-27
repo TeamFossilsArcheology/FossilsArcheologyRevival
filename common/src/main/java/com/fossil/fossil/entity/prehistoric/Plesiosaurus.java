@@ -132,19 +132,22 @@ public class Plesiosaurus extends PrehistoricSwimming {
     public AnimationFactory getFactory() {
         return factory;
     }
-@Nullable
-@Override
-protected SoundEvent getAmbientSound() {
-    return isInWater() ? ModSounds.PLESIOSAURUS_AMBIENT_INSIDE.get() : ModSounds.PLESIOSAURUS_AMBIENT_OUTSIDE.get();
-}
-@Nullable
-@Override
-protected SoundEvent getHurtSound(DamageSource damageSource) {
-return ModSounds.PLESIOSAURUS_HURT.get();
-}
-@Nullable
-@Override
-protected SoundEvent getDeathSound() {
-return ModSounds.PLESIOSAURUS_DEATH.get();
-}
+
+    @Nullable
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return isInWater() ? ModSounds.PLESIOSAURUS_AMBIENT_INSIDE.get() : ModSounds.PLESIOSAURUS_AMBIENT_OUTSIDE.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return ModSounds.PLESIOSAURUS_HURT.get();
+    }
+
+    @Nullable
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSounds.PLESIOSAURUS_DEATH.get();
+    }
 }

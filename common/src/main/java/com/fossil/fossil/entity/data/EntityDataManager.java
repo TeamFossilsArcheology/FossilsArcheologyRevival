@@ -16,10 +16,10 @@ import java.util.Map;
  * Loads static dino information from data/entity_info files
  */
 public class EntityDataManager extends SimpleJsonResourceReloadListener {
+    public static final EntityDataManager ENTITY_DATA = new EntityDataManager();
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(Stat.class, new Stat.Supplier())
             .registerTypeAdapter(AI.class, new AI.Supplier())
             .disableHtmlEscaping().create();
-    public static final EntityDataManager ENTITY_DATA = new EntityDataManager();
     private ImmutableMap<String, Data> entities = ImmutableMap.of();
 
     public EntityDataManager() {
@@ -30,10 +30,9 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
         ImmutableMap.Builder<String, Data> builder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
-            if (!(fileEntry.getValue() instanceof JsonObject)) {
+            if (!(fileEntry.getValue() instanceof JsonObject root)) {
                 continue;
             }
-            JsonObject root = (JsonObject) fileEntry.getValue();
             Stat stat = GSON.getAdapter(Stat.class).fromJsonTree(root.getAsJsonObject("stats"));
             AI ai = GSON.getAdapter(AI.class).fromJsonTree(root.getAsJsonObject("ai"));
             float minScale = root.get("minScale").getAsFloat();

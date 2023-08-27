@@ -7,7 +7,6 @@ import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
 /**
- *
  * @param <T>
  */
 //TODO: Rename Class and write javadoc

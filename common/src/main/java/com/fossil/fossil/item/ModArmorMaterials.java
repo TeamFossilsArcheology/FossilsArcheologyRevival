@@ -31,7 +31,7 @@ public enum ModArmorMaterials implements ArmorMaterial {
     private final float knockbackResistance;
     private final LazyLoadedValue<Ingredient> repairIngredient;
 
-    private ModArmorMaterials(String string2, int j, int[] is, int k, SoundEvent soundEvent, float f, float g, Supplier<Ingredient> supplier) {
+    ModArmorMaterials(String string2, int j, int[] is, int k, SoundEvent soundEvent, float f, float g, Supplier<Ingredient> supplier) {
         this.name = string2;
         this.durabilityMultiplier = j;
         this.slotProtections = is;

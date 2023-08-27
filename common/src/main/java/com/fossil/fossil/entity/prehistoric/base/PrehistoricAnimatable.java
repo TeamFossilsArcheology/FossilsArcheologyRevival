@@ -27,7 +27,7 @@ public interface PrehistoricAnimatable extends IAnimatable {
      * Returns the idle animation by default. Should be overriden if the implementation of {@link #nextIdleAnimation} requires
      * the entities {@link SynchedEntityData} to be defined
      */
-    @NotNull default Prehistoric.ServerAnimationInfo initialAnimation() {
+    default @NotNull Prehistoric.ServerAnimationInfo initialAnimation() {
         return nextIdleAnimation();
     }
 

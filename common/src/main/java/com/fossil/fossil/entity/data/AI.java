@@ -10,6 +10,15 @@ import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI.
 public record AI(Activity activity, Attacking attacking, Climbing climbing, Following following, Jumping jumping,
                  Response response, Stalking stalking, Taming taming, Untaming untaming, Moving moving,
                  WaterAbility waterAbility) {
+    public static <T extends Enum<T>> T getInstance(Class<T> enumClass, JsonObject jsonObject, String fallback) {
+        try {
+            return Enum.valueOf(enumClass, GsonHelper.getAsString(jsonObject, enumClass.getSimpleName().toLowerCase(), fallback).toUpperCase());
+        } catch (IllegalArgumentException e) {
+            return Enum.valueOf(enumClass, fallback.toUpperCase());
+        }
+
+    }
+
     public static class Supplier implements JsonDeserializer<AI> {
 
         @Override
@@ -28,14 +37,5 @@ public record AI(Activity activity, Attacking attacking, Climbing climbing, Foll
             WaterAbility waterAbility = getInstance(WaterAbility.class, jsonobject, WaterAbility.NONE.name());
             return new AI(activity, attacking, climbing, following, jumping, response, stalking, taming, untaming, moving, waterAbility);
         }
-    }
-
-    public static <T extends Enum<T>> T getInstance(Class<T> enumClass, JsonObject jsonObject, String fallback) {
-        try {
-            return Enum.valueOf(enumClass, GsonHelper.getAsString(jsonObject, enumClass.getSimpleName().toLowerCase(), fallback).toUpperCase());
-        } catch (IllegalArgumentException e) {
-            return Enum.valueOf(enumClass, fallback.toUpperCase());
-        }
-
     }
 }

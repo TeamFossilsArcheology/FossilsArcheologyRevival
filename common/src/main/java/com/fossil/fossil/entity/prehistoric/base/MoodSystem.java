@@ -10,6 +10,10 @@ public class MoodSystem {
     private final Prehistoric prehistoric;
     private int moodCheckCooldown = 0;
 
+    public MoodSystem(Prehistoric prehistoric) {
+        this.prehistoric = prehistoric;
+    }
+
     public static boolean arePlantsNearby(Entity entity, int range) {
         for (int i = Mth.floor(entity.getX() - range); i < Mth.ceil(entity.getX() + range); i++) {
             for (int j = Mth.floor(entity.getY() - range / 2.0); j < Mth.ceil(entity.getY() + range / 2.0); j++) {
@@ -27,10 +31,6 @@ public class MoodSystem {
         Material material = block.getMaterial();
         return material == Material.CACTUS || material == Material.PLANT || material == Material.LEAVES ||
                 material == Material.MOSS || material == Material.VEGETABLE;
-    }
-
-    public MoodSystem(Prehistoric prehistoric) {
-        this.prehistoric = prehistoric;
     }
 
     public PrehistoricMoodType getMoodFace() {

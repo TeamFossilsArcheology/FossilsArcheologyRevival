@@ -6,7 +6,8 @@ import net.minecraft.util.GsonHelper;
 import java.lang.reflect.Type;
 
 public record Stat(double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed,
-                   double maxSpeed, double baseArmor, double maxArmor, double baseKnockBackResistance, double maxKnockBackResistance) {
+                   double maxSpeed, double baseArmor, double maxArmor, double baseKnockBackResistance,
+                   double maxKnockBackResistance) {
     public static class Supplier implements JsonDeserializer<Stat> {
 
         @Override

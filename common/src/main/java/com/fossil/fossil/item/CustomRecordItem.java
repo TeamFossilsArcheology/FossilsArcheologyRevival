@@ -11,6 +11,7 @@ public class CustomRecordItem extends RecordItem {
     private CustomRecordItem(int i, SoundEvent soundEvent, Properties properties) {
         super(i, soundEvent, properties);
     }
+
     @ExpectPlatform
     public static RecordItem get(int analogOutput, RegistrySupplier<SoundEvent> sound, Item.Properties properties) {
         throw new NotImplementedException();

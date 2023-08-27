@@ -35,17 +35,17 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class PrehistoricSwimming extends Prehistoric {
-    private static final EntityDataAccessor<Boolean> IS_BREACHING = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Float> BREACHING_PITCH = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.FLOAT);
     public static final int MAX_TIME_IN_WATER = 1000;
     public static final int MAX_TIME_ON_LAND = 1000;
+    private static final EntityDataAccessor<Boolean> IS_BREACHING = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Float> BREACHING_PITCH = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.FLOAT);
     public int timeInWater = 0;
     public int timeOnLand = 0;
+    public float prevBreachPitch;
     /**
      * Cache check for current navigator
      */
     protected boolean isLandNavigator = true;
-    public float prevBreachPitch;
     protected int breachCooldown = 0;
     protected boolean isGoingDownAfterBreach = false;
     private Vec3 targetPos;
@@ -54,6 +54,16 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         super(entityType, level, isMultiPart);
         setPathfindingMalus(BlockPathTypes.WATER, 0);
         switchNavigator(true);
+    }
+
+    public static boolean isOverWater(LivingEntity entity) {
+        if (entity.level.getBlockState(entity.blockPosition().below()).getMaterial() == Material.WATER) {
+            return true;
+        }
+        if (entity.level.getBlockState(entity.blockPosition().below(2)).getMaterial() == Material.WATER) {
+            return true;
+        }
+        return entity.level.getBlockState(entity.blockPosition().below(3)).getMaterial() == Material.WATER;
     }
 
     @Override
@@ -132,19 +142,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     protected boolean useSwimAI() {
         return isInWater();
-    }
-
-    public static boolean isOverWater(LivingEntity entity) {
-        if (entity.level.getBlockState(entity.blockPosition().below()).getMaterial() == Material.WATER) {
-            return true;
-        }
-        if (entity.level.getBlockState(entity.blockPosition().below(2)).getMaterial() == Material.WATER) {
-            return true;
-        }
-        if (entity.level.getBlockState(entity.blockPosition().below(3)).getMaterial() == Material.WATER) {
-            return true;
-        }
-        return false;
     }
 
     @Override

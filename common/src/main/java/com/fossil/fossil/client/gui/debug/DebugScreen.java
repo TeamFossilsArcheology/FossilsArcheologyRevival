@@ -30,10 +30,10 @@ import java.util.List;
 public class DebugScreen extends Screen {
     public static CycleButton<Boolean> disableAI;
     public static boolean showPaths;
+    private static final List<PathInfo> pathTargets = new ArrayList<>();
     private final LivingEntity entity;
     private final List<DebugTab> tabs = new ArrayList<>();
     private DebugTab currentTab;
-    private static List<PathInfo> pathTargets = new ArrayList<>();
 
     public DebugScreen(LivingEntity entity) {
         super(entity == null ? new TextComponent("Debug Screen") : entity.getDisplayName());
@@ -71,9 +71,6 @@ public class DebugScreen extends Screen {
             Minecraft.getInstance().level.setBlock(below ? pathTargets.get(i).targetPos.below() : pathTargets.get(i).targetPos, pathTargets.get(i).blockState, 3);
         }
         pathTargets.clear();
-    }
-
-    record PathInfo(BlockPos targetPos, BlockState blockState, boolean below) {
     }
 
     @Override
@@ -146,5 +143,8 @@ public class DebugScreen extends Screen {
         if (currentTab != null) {
             currentTab.render(poseStack, mouseX, mouseY, partialTick);
         }
+    }
+
+    record PathInfo(BlockPos targetPos, BlockState blockState, boolean below) {
     }
 }

@@ -60,8 +60,8 @@ public class CenteredNodeEvaluator extends WalkNodeEvaluator {
             Vec3 center = aABB.setMinY(i).setMaxY(i).getCenter();
             if (hasPositiveMalus(mutableBlockPos.set(center.x, center.y, center.z)) || hasPositiveMalus(
                     mutableBlockPos.set(aABB.minX, i, aABB.maxZ)) || hasPositiveMalus(
-                    mutableBlockPos.set(aABB.maxX, (double) i, aABB.minZ)) || this.hasPositiveMalus(
-                    mutableBlockPos.set(aABB.maxX, (double) i, aABB.maxZ))) {
+                    mutableBlockPos.set(aABB.maxX, i, aABB.minZ)) || this.hasPositiveMalus(
+                    mutableBlockPos.set(aABB.maxX, i, aABB.maxZ))) {
                 Node node = this.getNode(mutableBlockPos);
                 BlockPos nodePos = node.asBlockPos();
                 node.type = this.getCachedBlockType(this.mob, nodePos.getX(), nodePos.getY(), nodePos.getZ());

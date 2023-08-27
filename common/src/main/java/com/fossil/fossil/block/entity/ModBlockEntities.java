@@ -20,24 +20,20 @@ public class ModBlockEntities {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(Fossil.MOD_ID, Registry.PARTICLE_TYPE_REGISTRY);
     public static final RegistrySupplier<BubbleParticle.Type> BUBBLE = PARTICLE_TYPES.register("bubble", () -> new BubbleParticle.Type(false));
     public static final RegistrySupplier<TarBubbleParticle.Type> TAR_BUBBLE = PARTICLE_TYPES.register("tar_bubble", () -> new TarBubbleParticle.Type(false));
-
-    public static void register() {
-        BLOCK_ENTITIES.register();
-        PARTICLE_TYPES.register();
-    }    public static final RegistrySupplier<BlockEntityType<BubbleBlowerBlockEntity>> BUBBLE_BLOWER = BLOCK_ENTITIES.register("bubble_blower",
-            () -> BlockEntityType.Builder.of(BubbleBlowerBlockEntity::new, ModBlocks.BUBBLE_BLOWER.get()).build(null));
-    public static final RegistrySupplier<BlockEntityType<VaseBlockEntity>> VASE = BLOCK_ENTITIES.register("vase",
-            () -> BlockEntityType.Builder.of(VaseBlockEntity::new, ModBlocks.VASES.stream().map(Supplier::get).toArray(Block[]::new)).build(null));
-    public static final RegistrySupplier<BlockEntityType<FeederBlockEntity>> FEEDER = BLOCK_ENTITIES.register("feeder",
-            () -> BlockEntityType.Builder.of(FeederBlockEntity::new, ModBlocks.FEEDER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> SIFTER = BLOCK_ENTITIES.register("sifter",
             () -> BlockEntityType.Builder.of(SifterBlockEntity::get, ModBlocks.SIFTER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> ANALYZER = BLOCK_ENTITIES.register("analyzer",
             () -> BlockEntityType.Builder.of(AnalyzerBlockEntity::get, ModBlocks.ANALYZER.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<BubbleBlowerBlockEntity>> BUBBLE_BLOWER = BLOCK_ENTITIES.register("bubble_blower",
+            () -> BlockEntityType.Builder.of(BubbleBlowerBlockEntity::new, ModBlocks.BUBBLE_BLOWER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> CULTIVATE = BLOCK_ENTITIES.register("cultivate",
             () -> BlockEntityType.Builder.of(CultivateBlockEntity::get, ModBlocks.CULTIVATE.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<VaseBlockEntity>> VASE = BLOCK_ENTITIES.register("vase",
+            () -> BlockEntityType.Builder.of(VaseBlockEntity::new, ModBlocks.VASES.stream().map(Supplier::get).toArray(Block[]::new)).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> WORKTABLE = BLOCK_ENTITIES.register("worktable",
             () -> BlockEntityType.Builder.of(WorktableBlockEntity::get, ModBlocks.WORKTABLE.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<FeederBlockEntity>> FEEDER = BLOCK_ENTITIES.register("feeder",
+            () -> BlockEntityType.Builder.of(FeederBlockEntity::new, ModBlocks.FEEDER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<AnuStatueBlockEntity>> ANU_STATUE = BLOCK_ENTITIES.register("anu_statue",
             () -> BlockEntityType.Builder.of(AnuStatueBlockEntity::new, ModBlocks.ANU_STATUE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<AnubiteStatueBlockEntity>> ANUBITE_STATUE = BLOCK_ENTITIES.register("anubite_statue",
@@ -47,5 +43,8 @@ public class ModBlockEntities {
     public static final RegistrySupplier<BlockEntityType<SarcophagusBlockEntity>> SARCOPHAGUS = BLOCK_ENTITIES.register("sarcophagus",
             () -> BlockEntityType.Builder.of(SarcophagusBlockEntity::new, ModBlocks.SARCOPHAGUS.get()).build(null));
 
-
+    public static void register() {
+        BLOCK_ENTITIES.register();
+        PARTICLE_TYPES.register();
+    }
 }

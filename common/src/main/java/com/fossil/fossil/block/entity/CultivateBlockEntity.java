@@ -16,9 +16,9 @@ public interface CultivateBlockEntity {
         throw new AssertionError();
     }
 
-    void serverTick(Level level, BlockPos pos, BlockState state);
-
     static void serverTick(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        ((CultivateBlockEntity)blockEntity).serverTick(level, pos, state);
+        ((CultivateBlockEntity) blockEntity).serverTick(level, pos, state);
     }
+
+    void serverTick(Level level, BlockPos pos, BlockState state);
 }

@@ -121,6 +121,7 @@ public class ClientInit {
     private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String modelFileName, String animFileName) {
         EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, modelFileName, animFileName));
     }
+
     private static <T extends PrehistoricFish> void registerFish(RegistrySupplier<EntityType<T>> type, String modelFileName, String animFileName, String textureFileName) {
         EntityRendererRegistry.register(type, context -> new PrehistoricFishGeoRenderer<>(context, modelFileName, animFileName, textureFileName));
     }

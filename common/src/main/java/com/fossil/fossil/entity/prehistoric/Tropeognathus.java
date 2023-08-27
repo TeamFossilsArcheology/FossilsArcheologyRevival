@@ -92,7 +92,7 @@ public class Tropeognathus extends PrehistoricFlying {
     public Item getOrderItem() {
         return Items.STICK;
     }
-    
+
     @Override
     public EntityDataManager.Data data() {
         return data;

@@ -15,9 +15,9 @@ public interface WorktableBlockEntity {
         throw new AssertionError();
     }
 
-    void serverTick(Level level, BlockPos pos, BlockState state);
-
     static void serverTick(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        ((WorktableBlockEntity)blockEntity).serverTick(level, pos, state);
+        ((WorktableBlockEntity) blockEntity).serverTick(level, pos, state);
     }
+
+    void serverTick(Level level, BlockPos pos, BlockState state);
 }

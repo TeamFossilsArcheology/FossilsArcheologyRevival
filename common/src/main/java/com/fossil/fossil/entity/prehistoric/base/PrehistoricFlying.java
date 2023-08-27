@@ -18,6 +18,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     private final FindAirTargetGoal findAirTargetGoal = new FindAirTargetGoal(this);
 
     private int flyingTicks = 0;
+
     public PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level, boolean isMultiPart) {
         super(entityType, level, isMultiPart);
     }
@@ -90,6 +91,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     protected void startFlying() {
 
     }
+
     public void flyTowardsTarget() {
 
     }
@@ -97,6 +99,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     protected void onReachAirTarget(BlockPos target) {
 
     }
+
     private boolean isTargetInAir() {
         return findAirTargetGoal.targetPos != null && level.isEmptyBlock(findAirTargetGoal.targetPos);
     }

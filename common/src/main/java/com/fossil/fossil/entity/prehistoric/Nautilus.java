@@ -59,12 +59,40 @@ public class Nautilus extends PrehistoricFish {
         }
         return newMap;
     });
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private float ticksToShell = 0;
 
     public Nautilus(EntityType<Nautilus> entityType, Level level) {
         super(entityType, level);
+    }
+
+    private static PlayState shellPredicate(AnimationEvent<Nautilus> event) {
+        var ctrl = event.getController();
+        var anim = ctrl.getCurrentAnimation();
+        if (event.getAnimatable().isInShell()) {
+            if (anim == null || anim.animationName.equals(SHELL_EMERGE) && ctrl.getAnimationState() == AnimationState.Stopped) {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_RETRACT).addAnimation(SHELL_HOLD));
+            }
+        } else {
+            if (anim != null && anim.animationName.equals(SHELL_HOLD)) {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_EMERGE));
+            }
+        }
+        return PlayState.CONTINUE;
+    }
+
+    private static boolean getsScaredBy(Entity entity) {
+        if (entity instanceof Player player && !player.isCreative()) {
+            return true;
+        }
+        if (entity instanceof Prehistoric prehistoric) {
+            return prehistoric.type().diet.getFearIndex() >= 2;
+        }
+        if (entity instanceof Nautilus) {
+            return false;
+        }
+        return entity.getBbWidth() >= 1.2;
     }
 
     @Override
@@ -197,21 +225,6 @@ public class Nautilus extends PrehistoricFish {
         data.addAnimationController(new AnimationController<>(this, "Shell", 4, Nautilus::shellPredicate));
     }
 
-    private static PlayState shellPredicate(AnimationEvent<Nautilus> event) {
-        var ctrl = event.getController();
-        var anim = ctrl.getCurrentAnimation();
-        if (event.getAnimatable().isInShell()) {
-            if (anim == null || anim.animationName.equals(SHELL_EMERGE) && ctrl.getAnimationState() == AnimationState.Stopped) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_RETRACT).addAnimation(SHELL_HOLD));
-            }
-        } else {
-            if (anim != null && anim.animationName.equals(SHELL_HOLD)) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_EMERGE));
-            }
-        }
-        return PlayState.CONTINUE;
-    }
-
     @Override
     public @NotNull Prehistoric.ServerAnimationInfo initialAnimation() {
         return getAllAnimations().get(IDLE);
@@ -235,18 +248,5 @@ public class Nautilus extends PrehistoricFish {
     @Override
     public AnimationFactory getFactory() {
         return factory;
-    }
-
-    private static boolean getsScaredBy(Entity entity) {
-        if (entity instanceof Player player && !player.isCreative()) {
-            return true;
-        }
-        if (entity instanceof Prehistoric prehistoric) {
-            return prehistoric.type().diet.getFearIndex() >= 2;
-        }
-        if (entity instanceof Nautilus) {
-            return false;
-        }
-        return entity.getBbWidth() >= 1.2;
     }
 }

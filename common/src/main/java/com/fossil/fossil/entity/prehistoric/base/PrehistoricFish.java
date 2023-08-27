@@ -43,6 +43,14 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
+    public static AttributeSupplier.@NotNull Builder createAttributes() {
+        return AbstractFish.createAttributes().add(Attributes.MOVEMENT_SPEED, 0.25);
+    }
+
+    public static boolean canSpawn(Level level, BlockPos pos) {
+        return pos.getY() < level.getSeaLevel() && level.getFluidState(pos.below()).is(FluidTags.WATER) && level.getBlockState(pos.above()).is(Blocks.WATER);
+    }
+
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
@@ -59,10 +67,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @NotNull
     public abstract PrehistoricEntityType type();
-
-    public static AttributeSupplier.@NotNull Builder createAttributes() {
-        return AbstractFish.createAttributes().add(Attributes.MOVEMENT_SPEED, 0.25);
-    }
 
     @Override
     public float getScale() {
@@ -180,10 +184,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     public abstract @NotNull Prehistoric.ServerAnimationInfo nextFloppingAnimation();
-
-    public static boolean canSpawn(Level level, BlockPos pos) {
-        return pos.getY() < level.getSeaLevel() && level.getFluidState(pos.below()).is(FluidTags.WATER) && level.getBlockState(pos.above()).is(Blocks.WATER);
-    }
 
     public void disableCustomAI(byte type, boolean disableAI) {
         setNoAi(disableAI);

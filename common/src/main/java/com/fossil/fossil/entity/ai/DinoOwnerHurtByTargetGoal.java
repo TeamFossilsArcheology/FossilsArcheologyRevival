@@ -11,7 +11,7 @@ public class DinoOwnerHurtByTargetGoal extends OwnerHurtByTargetGoal {
 
     @Override
     public boolean canUse() {
-        if (mob.isBaby() || ((Prehistoric)mob).aiResponseType() == PrehistoricEntityTypeAI.Response.SCARED) {
+        if (mob.isBaby() || ((Prehistoric) mob).aiResponseType() == PrehistoricEntityTypeAI.Response.SCARED) {
             return false;
         }
         return super.canUse();

@@ -20,10 +20,8 @@ public interface SifterBlockEntity {
         throw new AssertionError();
     }
 
-    void serverTick(Level level, BlockPos pos, BlockState state);
-
     static void serverTick(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        ((SifterBlockEntity)blockEntity).serverTick(level, pos, state);
+        ((SifterBlockEntity) blockEntity).serverTick(level, pos, state);
     }
 
     static EnumSiftType getSiftTypeFromStack(ItemStack stack) {
@@ -38,6 +36,8 @@ public interface SifterBlockEntity {
         }
         return EnumSiftType.NONE;
     }
+
+    void serverTick(Level level, BlockPos pos, BlockState state);
 
     enum EnumSiftType {
         NONE, GROUND, SAND

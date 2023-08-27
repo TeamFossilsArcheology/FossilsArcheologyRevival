@@ -16,9 +16,9 @@ public interface AnalyzerBlockEntity {
         throw new AssertionError();
     }
 
-    void serverTick(Level level, BlockPos pos, BlockState state);
-
     static void serverTick(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        ((AnalyzerBlockEntity)blockEntity).serverTick(level, pos, state);
+        ((AnalyzerBlockEntity) blockEntity).serverTick(level, pos, state);
     }
+
+    void serverTick(Level level, BlockPos pos, BlockState state);
 }
