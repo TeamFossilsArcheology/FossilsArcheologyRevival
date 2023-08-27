@@ -14,27 +14,30 @@ import java.util.function.Supplier;
 public class MarkMessage {
     private final List<BlockPos> targets;
     private final List<BlockState> blocks;
+    private final boolean below;
 
     public MarkMessage(FriendlyByteBuf buf) {
-        this(buf.readVarIntArray());
+        this(buf.readVarIntArray(), buf.readBoolean());
     }
 
-    public MarkMessage(int[] targetArray) {
+    public MarkMessage(int[] targetArray, boolean below) {
         this.targets = new ArrayList<>();
         this.blocks = new ArrayList<>();
         for (int i = 0; i < targetArray.length / 4; i++) {
             this.targets.add(new BlockPos(targetArray[4 * i], targetArray[4 * i + 1], targetArray[4 * i + 2]));
             this.blocks.add(Block.stateById(targetArray[4 * i + 3]));
         }
+        this.below = below;
     }
 
-    public MarkMessage(int[] targetArray, BlockState[] blocks) {
+    public MarkMessage(int[] targetArray, BlockState[] blocks, boolean below) {
         this.targets = new ArrayList<>();
         this.blocks = new ArrayList<>();
         for (int i = 0; i < blocks.length; i++) {
             this.targets.add(new BlockPos(targetArray[3 * i], targetArray[3 * i + 1], targetArray[3 * i + 2]));
             this.blocks.add(blocks[i]);
         }
+        this.below = below;
     }
 
     public void write(FriendlyByteBuf buf) {
@@ -46,11 +49,12 @@ public class MarkMessage {
             targetsOut[4 * i + 3] = Block.getId(blocks.get(i));
         }
         buf.writeVarIntArray(targetsOut);
+        buf.writeBoolean(below);
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
-            DebugScreen.showPath(contextSupplier.get().getPlayer(), targets, blocks);
+            DebugScreen.showPath(contextSupplier.get().getPlayer(), targets, blocks, below);
         });
     }
 }

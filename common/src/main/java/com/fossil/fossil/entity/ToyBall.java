@@ -61,7 +61,7 @@ public class ToyBall extends ToyBase {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getEntity() instanceof Prehistoric prehistoric) {
-            prehistoric.useToy(moodBonus);
+            prehistoric.moodSystem.useToy(moodBonus);
             playSound(attackNoise, getSoundVolume(), getVoicePitch());
             setRot(prehistoric.getYRot(), getXRot());
             push(-Mth.sin((float) (getYRot() * Math.PI / 180.0f)) * 0.5f, 0.1, Mth.cos((float) (getYRot() * Math.PI / 180.0f)) * 0.5f);

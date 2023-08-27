@@ -121,6 +121,10 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return true;
     }
 
+    public boolean canBreatheOnLand() {
+        return true;
+    }
+
     @Override
     protected @NotNull MovementEmission getMovementEmission() {
         return MovementEmission.EVENTS;
@@ -204,8 +208,8 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                     targets[2] = blockPos.getZ();
                     BlockState[] blocks = new BlockState[1];
                     blocks[0] = Blocks.GOLD_BLOCK.defaultBlockState();
-                    MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel)level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
-                            new MarkMessage(targets, blocks));
+                    MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
+                            new MarkMessage(targets, blocks, false));
                 }
                 if (!level.isClientSide) {
                     if (Mth.abs((float) vec3.y) < 1.0E-4) {
@@ -258,7 +262,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     protected void handleAirSupply(int airSupply) {
-        if (isAlive() && !isInWaterOrBubble()) {
+        if (!canBreatheOnLand() && isAlive() && !isInWaterOrBubble()) {
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -40) {
                 setAirSupply(0);
@@ -302,7 +306,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                     }
                     f4 = f4 * 0.900000011920929f;
                     move(MoverType.SELF, getDeltaMovement());
-                    setDeltaMovement(getDeltaMovement().x*f4, getDeltaMovement().y*f4+0.1185, getDeltaMovement().z*f4);
+                    setDeltaMovement(getDeltaMovement().x * f4, getDeltaMovement().y * f4 + 0.1185, getDeltaMovement().z * f4);
                 } else {
                     setSpeed(1);
                     super.travel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement));
@@ -411,7 +415,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
         @Override
         protected @NotNull PathFinder createPathFinder(int maxVisitedNodes) {
-            nodeEvaluator = new LargeSwimNodeEvaluator(((PrehistoricSwimming)mob).doesBreachAttack());
+            nodeEvaluator = new LargeSwimNodeEvaluator(((PrehistoricSwimming) mob).doesBreachAttack());
             return new PathFinder(nodeEvaluator, maxVisitedNodes);
         }
 

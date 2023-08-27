@@ -27,7 +27,8 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
         if (dino.isVehicle() || dino.isImmobile() || !super.canUse() || target == null || target.getClass().equals(dino.getClass())) {
             return false;
         }
-        if (target instanceof ToyBase && dino.getPlayingTick() <= 0) {
+        MoodSystem moodSystem = dino.moodSystem;
+        if (target instanceof ToyBase && moodSystem.getPlayingTick() <= 0) {
             return true;
         }
         double targetWidth = target.getBoundingBox().getSize();
@@ -38,9 +39,9 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
             if (player.isCreative() || player.level.getDifficulty() == Difficulty.PEACEFUL) {
                 return false;
             }
-            if (dino.getMoodFace() == PrehistoricMoodType.HAPPY || dino.getMoodFace() == PrehistoricMoodType.CONTENT) {
+            if (moodSystem.getMoodFace() == PrehistoricMoodType.HAPPY || moodSystem.getMoodFace() == PrehistoricMoodType.CONTENT) {
                 return false;
-            } else if (dino.getMoodFace() == PrehistoricMoodType.ANGRY || (dino.getMoodFace() == PrehistoricMoodType.SAD && !dino.isOwnedBy(target))) {
+            } else if (moodSystem.getMoodFace() == PrehistoricMoodType.ANGRY || (moodSystem.getMoodFace() == PrehistoricMoodType.SAD && !dino.isOwnedBy(target))) {
                 return true;
             } else {
                 return !dino.isOwnedBy(target) && dino.canDinoHunt(target, true);

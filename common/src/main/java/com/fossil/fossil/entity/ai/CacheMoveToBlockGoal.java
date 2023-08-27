@@ -278,7 +278,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
                 targets[3 * i + 2] = node.z;
             }
             MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) entity.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(entity)),
-                    new MarkMessage(targets, blocks));
+                    new MarkMessage(targets, blocks, true));
         }
     }
 
@@ -294,7 +294,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
                 targets[3 * i + 2] = node.z;
             }
             MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) entity.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(entity)),
-                    new MarkMessage(targets, blocks));
+                    new MarkMessage(targets, blocks, true));
         }
     }
 }

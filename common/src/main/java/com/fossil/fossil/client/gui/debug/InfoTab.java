@@ -25,10 +25,10 @@ public class InfoTab extends DebugTab {
         super(debugScreen, prehistoric);
         this.maxAgeInTicks = prehistoric.data().adultAgeDays() * 24000;
         this.gender = prehistoric.getGender();
-        this.ageInTicks = prehistoric.getAgeInTicks();
+        this.ageInTicks = prehistoric.getAge();
         this.ticksTillMate = prehistoric.getMatingTick();
-        this.ticksTillPlay = prehistoric.getPlayingTick();
-        this.mood = prehistoric.getMood();
+        this.ticksTillPlay = prehistoric.moodSystem.getPlayingTick();
+        this.mood = prehistoric.moodSystem.getMood();
     }
 
     @Override
@@ -72,10 +72,10 @@ public class InfoTab extends DebugTab {
     protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
         if (entity instanceof Prehistoric prehistoric) {
-            drawString(poseStack, minecraft.font, new TextComponent("Age: " + prehistoric.getAgeInTicks()), 175, 35, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("Age: " + prehistoric.getAge()), 175, 35, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Mate: " + (prehistoric.getMatingTick() / 20)), 175, 65, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Play: " + (prehistoric.getPlayingTick() / 20)), 175, 95, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Mood: " + prehistoric.getMood()), 175, 125, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("Play: " + (prehistoric.moodSystem.getPlayingTick() / 20)), 175, 95, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("Mood: " + prehistoric.moodSystem.getMood()), 175, 125, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Gender: " + prehistoric.getGender().name()), 175, 155, 16777215);
         }
     }

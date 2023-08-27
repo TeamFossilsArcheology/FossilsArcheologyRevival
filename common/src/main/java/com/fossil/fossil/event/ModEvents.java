@@ -83,7 +83,6 @@ public class ModEvents {
                 prehistoric.tame(player);
             }
             prehistoric.setGender(Gender.random(level.random));
-            prehistoric.setAgeinTicks(0);
             prehistoric.setAgeInDays(0);
         } else if (newEntity instanceof Animal) {
             ((Animal) newEntity).setAge(-24000);

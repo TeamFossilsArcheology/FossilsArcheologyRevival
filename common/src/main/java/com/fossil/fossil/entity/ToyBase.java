@@ -47,7 +47,7 @@ public abstract class ToyBase extends LivingEntity {
                 playSound(attackNoise, getSoundVolume(), getVoicePitch());
                 return true;
             } else if (source.getEntity() instanceof Prehistoric prehistoric) {
-                prehistoric.useToy(moodBonus);
+                prehistoric.moodSystem.useToy(moodBonus);
                 playSound(attackNoise, getSoundVolume(), getVoicePitch());
                 return false;
             }

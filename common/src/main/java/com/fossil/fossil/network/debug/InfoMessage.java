@@ -43,10 +43,10 @@ public class InfoMessage {
         if (entity instanceof Prehistoric prehistoric) {
             contextSupplier.get().queue(() -> {
                 prehistoric.setGender(Gender.valueOf(gender));
-                prehistoric.setAgeinTicks(ageInTicks);
+                prehistoric.setAge(ageInTicks);
                 prehistoric.setMatingTick(ticksTillMate);
-                prehistoric.setPlayingTick(ticksTillPlay);
-                prehistoric.setMood(mood);
+                prehistoric.moodSystem.setPlayingTick(ticksTillPlay);
+                prehistoric.moodSystem.setMood(mood);
             });
         }
     }

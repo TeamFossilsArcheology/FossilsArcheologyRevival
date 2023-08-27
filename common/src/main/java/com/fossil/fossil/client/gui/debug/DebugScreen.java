@@ -33,6 +33,7 @@ public class DebugScreen extends Screen {
     private final LivingEntity entity;
     private final List<DebugTab> tabs = new ArrayList<>();
     private DebugTab currentTab;
+    private static List<PathInfo> pathTargets = new ArrayList<>();
 
     public DebugScreen(LivingEntity entity) {
         super(entity == null ? new TextComponent("Debug Screen") : entity.getDisplayName());
@@ -50,12 +51,29 @@ public class DebugScreen extends Screen {
         return (entityHitResult != null) ? (LivingEntity) entityHitResult.getEntity() : null;
     }
 
-    public static void showPath(Player player, List<BlockPos> targets, List<BlockState> blocks) {
+    public static void showPath(Player player, List<BlockPos> targets, List<BlockState> blocks, boolean below) {
         if (showPaths) {
             for (int i = 0; i < targets.size(); i++) {
-                player.level.setBlock(targets.get(i).below(), blocks.get(i), 3);
+                if (below) {
+                    pathTargets.add(new PathInfo(targets.get(i), player.level.getBlockState(targets.get(i).below()), true));
+                    player.level.setBlock(targets.get(i).below(), blocks.get(i), 3);
+                } else {
+                    pathTargets.add(new PathInfo(targets.get(i), player.level.getBlockState(targets.get(i)), false));
+                    player.level.setBlock(targets.get(i), blocks.get(i), 3);
+                }
             }
         }
+    }
+
+    public static void clearPaths() {
+        for (int i = pathTargets.size() - 1; i >= 0; i--) {
+            boolean below = pathTargets.get(i).below;
+            Minecraft.getInstance().level.setBlock(below ? pathTargets.get(i).targetPos.below() : pathTargets.get(i).targetPos, pathTargets.get(i).blockState, 3);
+        }
+        pathTargets.clear();
+    }
+
+    record PathInfo(BlockPos targetPos, BlockState blockState, boolean below) {
     }
 
     @Override
@@ -106,10 +124,11 @@ public class DebugScreen extends Screen {
             tabs.add(addWidget(new AnimationTab(this, entity)));
         }
         builder.withInitialValue(showPaths);
-        this.addRenderableWidget(builder.create(240, height - 40, 200, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
+        addRenderableWidget(builder.create(240, height - 40, 100, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
             showPaths = (boolean) cycleButton.getValue();
         }));
-        if (tabs.size() > 0) {
+        addRenderableWidget(new Button(340, height - 40, 100, 20, new TextComponent("Clear Paths"), button -> clearPaths()));
+        if (!tabs.isEmpty()) {
             tabs.forEach(tab -> tab.init(width, height));
             currentTab = addWidget(tabs.get(0));
             addRenderableWidget(CycleOption.create("Tab", () -> tabs, debugTab -> new TextComponent(debugTab.getClass().getSimpleName()),

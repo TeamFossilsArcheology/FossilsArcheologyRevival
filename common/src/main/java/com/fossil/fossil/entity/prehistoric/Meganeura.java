@@ -37,7 +37,7 @@ public class Meganeura extends PrehistoricSwimming {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case IDLE -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 case WALK -> info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
                 case ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);

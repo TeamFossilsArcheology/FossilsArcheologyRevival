@@ -24,8 +24,6 @@ import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -59,12 +57,12 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
+import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -83,29 +81,24 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Random;
 
 public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable, PrehistoricDebug {
 
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
-    private static final EntityDataAccessor<Integer> AGETICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MATING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> ANGRY = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> SUBSPECIES = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Component> OWNER_DISPLAY_NAME = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPONENT);
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
-    private static final EntityDataAccessor<Boolean> AGINGDISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
     // public final Item uncultivatedEggItem;
     private final AnimationComponent<Prehistoric> animations = new AnimationComponent<>(this);
     private final boolean isMultiPart;
     private final WhipSteering steering = new WhipSteering();
+    public final MoodSystem moodSystem = new MoodSystem(this);
     public OrderType currentOrder;
     public boolean hasFeatherToggle = false;
     public boolean featherToggle;
@@ -118,8 +111,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public float climbProgress;
     public int ticksSlept;
     public float pediaScale;
-    public int ticksTillPlay;
-    public int ticksTillMate;
     public float ridingXZ;
     public boolean shouldWander = true;
     public ResourceLocation textureLocation;
@@ -129,7 +120,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private Gender gender; // should be effectively final
     private boolean droppedBiofossil = false;
     private int fleeTicks = 0;
-    private int moodCheckCooldown = 0;
     private int cathermalSleepCooldown = 0;
     private int ticksClimbing = 0;
 
@@ -186,6 +176,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public static boolean canBreak(Block block) {
+        //TODO: Big break Test
         if (block instanceof IDinoUnbreakable) return false;
         BlockState state = block.defaultBlockState();
         if (!state.requiresCorrectToolForDrops()) return false;
@@ -261,7 +252,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         super.remove(reason);
         for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
             if (availableGoal.getGoal() instanceof CacheMoveToBlockGoal goal) {
-                goal.stop();
+                goal.stop();//Only for the debug message
             }
         }
     }
@@ -308,19 +299,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(AGETICK, 0);
+        this.entityData.define(AGE_TICK, 0);
         this.entityData.define(MATING_TICK, random.nextInt(6000) + 6000);
-        this.entityData.define(PLAYING_TICK, random.nextInt(6000) + 6000);
+        entityData.define(moodSystem.PLAYING_TICK, random.nextInt(6000) + 6000);
         this.entityData.define(HUNGER, 0);
         this.entityData.define(MODELIZED, false);
-        this.entityData.define(ANGRY, false);
         this.entityData.define(FLEEING, false);
-        this.entityData.define(SUBSPECIES, 0);
         this.entityData.define(SLEEPING, false);
         this.entityData.define(CLIMBING, (byte) 0);
-        this.entityData.define(MOOD, 0);
-        this.entityData.define(OWNER_DISPLAY_NAME, TextComponent.EMPTY);
-        this.entityData.define(AGINGDISABLED, false);
+        entityData.define(moodSystem.MOOD, 0);
+        this.entityData.define(AGING_DISABLED, false);
         this.entityData.define(CURRENT_ANIMATION, initialAnimation().animationId);
 
         CompoundTag tag = new CompoundTag();
@@ -351,21 +339,17 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("AgeTick", this.getAgeInTicks());
         compound.putInt("Hunger", this.getHunger());
         compound.putBoolean("isModelized", this.isSkeleton());
-        compound.putBoolean("Angry", this.isAngry());
         compound.putBoolean("DinoTamed", this.isTame());
         compound.putBoolean("Fleeing", this.isFleeing());
-        compound.putInt("SubSpecies", this.getSubSpecies());
         compound.putString("Gender", getGender().toString());
-        compound.putInt("Mood", this.getMood());
-        compound.putInt("TicksTillPlay", getPlayingTick());
+        compound.putInt("Mood", moodSystem.getMood());
+        compound.putInt("TicksTillPlay", moodSystem.getPlayingTick());
         compound.putInt("TicksSlept", this.ticksSlept);
         compound.putInt("TicksTillMate", getMatingTick());
         compound.putInt("TicksClimbing", this.ticksClimbing);
         compound.putByte("currentOrder", (byte) this.currentOrder.ordinal());
-        compound.putString("OwnerDisplayName", Component.Serializer.toJson(this.getOwnerDisplayName()));
         compound.putFloat("YawRotation", this.yBodyRot);
         compound.putFloat("HeadRotation", this.yHeadRot);
         compound.putBoolean("AgingDisabled", this.isAgingDisabled());
@@ -375,13 +359,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setAgeinTicks(compound.getInt("AgeTick"));
         this.setHunger(compound.getInt("Hunger"));
         this.setFleeing(compound.getBoolean("Fleeing"));
         this.setSkeleton(compound.getBoolean("isModelized"));
-        this.setAngry(compound.getBoolean("Angry"));
         this.setTame(compound.getBoolean("DinoTamed"));
-        this.setSubSpecies(compound.getInt("SubSpecies"));
         if ("female".equalsIgnoreCase(compound.getString("Gender"))) {
             setGender(Gender.FEMALE);
         } else {
@@ -390,34 +371,21 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         this.setSleeping(compound.getBoolean("Sleeping"));
         this.setOrderedToSit(compound.getBoolean("Sitting"));
         this.setAgingDisabled(compound.getBoolean("AgingDisabled"));
-        this.setMood(compound.getInt("Mood"));
+        moodSystem.setMood(compound.getInt("Mood"));
         if (compound.contains("currentOrder")) {
-            this.setOrder(OrderType.values()[compound.getByte("currentOrder")]);
+            setOrder(OrderType.values()[compound.getByte("currentOrder")]);
         }
-        setPlayingTick(compound.getInt("TicksTillPlay"));
+        moodSystem.setPlayingTick(compound.getInt("TicksTillPlay"));
         this.ticksClimbing = compound.getInt("TicksClimbing");
-        setPlayingTick(compound.getInt("TicksTillMate"));
+        setMatingTick(compound.getInt("TicksTillMate"));
         this.ticksSlept = compound.getInt("TicksSlept");
         this.yBodyRot = compound.getInt("YawRotation");
         this.yHeadRot = compound.getInt("HeadRotation");
-        if (compound.contains("Owner", 8)) {
-            this.setOwnerDisplayName(Component.Serializer.fromJson(compound.getString("Owner")));
-        } else {
-            this.setOwnerDisplayName(Component.Serializer.fromJson(compound.getString("OwnerDisplayName")));
-        }
         this.cathermalSleepCooldown = compound.getInt("CathermalTimer");
         refreshTexturePath();
     }
 
     public abstract PrehistoricEntityType type();
-
-    public Component getOwnerDisplayName() {
-        return this.entityData.get(OWNER_DISPLAY_NAME);
-    }
-
-    public void setOwnerDisplayName(Component displayName) {
-        this.entityData.set(OWNER_DISPLAY_NAME, displayName);
-    }
 
     public AABB getAttackBounds() {
         float size = (float) (this.getBoundingBox().getSize() * 0.25F);
@@ -439,7 +407,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             setAgeInDays(data().adultAgeDays());
         }
         updateAbilities();
-        setPlayingTick(0);
+        moodSystem.setPlayingTick(0);
         setMatingTick(24000);
         onGround = true;
         heal(getMaxHealth());
@@ -455,34 +423,22 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return this.isSkeleton() || super.isNoAi();
     }
 
-    public void useToy(int playBonus) {
-        if (getPlayingTick() == 0) {
-            this.setMood(getMood() + playBonus);
-            setPlayingTick(random.nextInt(600) + 600);
-        }
-    }
-
     public OrderType getOrderType() {
         return this.currentOrder;
     }
 
     @Override
     public boolean isImmobile() {
-        return this.getHealth() <= 0.0F ||
-                isOrderedToSit() ||
-                this.isSkeleton() ||
-                this.isActuallyWeak() ||
-                this.isVehicle() ||
-                this.isSleeping();
+        return getHealth() <= 0 || isOrderedToSit() || isSkeleton() || isActuallyWeak() || isVehicle() || isSleeping();
     }
 
     @Override
     public boolean isSleeping() {
-        return this.entityData.get(SLEEPING);
+        return entityData.get(SLEEPING);
     }
 
     public void setSleeping(boolean sleeping) {
-        this.entityData.set(SLEEPING, sleeping);
+        entityData.set(SLEEPING, sleeping);
         if (!sleeping) {
             cathermalSleepCooldown = 10000 + random.nextInt(6000);
         }
@@ -490,20 +446,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void setOrder(OrderType newOrder) {
-        this.currentOrder = newOrder;
-    }
-
-    public boolean arePlantsNearby(int range) {
-        for (int i = Mth.floor(this.getX() - range); i < Mth.ceil(this.getX() + range); i++) {
-            for (int j = Mth.floor(this.getY() - range / 2.0); j < Mth.ceil(this.getY() + range / 2.0); j++) {
-                for (int k = Mth.floor(this.getZ() - range); k < Mth.ceil(this.getZ() + range); k++) {
-                    if (j <= this.level.getHeight() + 1D && isPlantBlock(this.level.getBlockState(new BlockPos(i, j, k)))) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return false;
+        currentOrder = newOrder;
     }
 
     @Override
@@ -512,84 +455,36 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return !this.isSkeleton() && super.isPushable();
     }
 
-    public boolean isPlantBlock(BlockState block) {
-        return block.getMaterial() == Material.CACTUS ||
-                block.getMaterial() == Material.PLANT ||
-                block.getMaterial() == Material.LEAVES ||
-                block.getMaterial() == Material.MOSS ||
-                block.getMaterial() == Material.VEGETABLE;
-    }
-
     public boolean canSleep() {
-        if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURNAL) {
-            return !this.isDaytime();
-        } else if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
-            return this.isDaytime() && !this.level.canSeeSky(this.blockPosition().above());
-        } else return this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH;
+        if (aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURNAL) {
+            return !level.isDay();
+        } else if (aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
+            return level.isDay() && !level.canSeeSky(blockPosition().above());
+        }
+        return aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH;
     }
 
     public boolean canWakeUp() {
-        if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURNAL) {
-            return this.isDaytime();
-        } else if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
-            return !this.isDaytime() || this.level.canSeeSky(this.blockPosition().above());
+        if (aiActivityType() == PrehistoricEntityTypeAI.Activity.DIURNAL) {
+            return level.isDay();
+        } else if (aiActivityType() == PrehistoricEntityTypeAI.Activity.NOCTURNAL) {
+            return !level.isDay() || level.canSeeSky(blockPosition().above());
         } else {
-            return this.ticksSlept > 4000;
+            return ticksSlept > 4000;
         }
-    }
-
-    public boolean isDaytime() {
-        return this.level.isDay();
-    }
-
-    protected void doMoodCheck() {
-        int overallMoodAddition = 0;
-        if (this.arePlantsNearby(16)) {
-            overallMoodAddition += 50;
-        } else {
-            overallMoodAddition -= 50;
-        }
-        if (this.getNearbySpeciesMembers(40).size() <= getMaxPopulation()) {
-            overallMoodAddition += 50;
-        } else {
-            overallMoodAddition -= 50;
-        }
-        this.setMood(this.getMood() + overallMoodAddition);
-    }
-
-    /*
-        How many dinosaurs of this type can exist in the same small, enclosed space.
-     */
-    public int getMaxPopulation() {
-        return data().maxPopulation();
     }
 
     public boolean wantsToSleep() {
-        if (!level.isClientSide &&
-                this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH &&
-                this.ticksSlept > 8000
-        ) {
+        if (level.isClientSide) {
+            return true;
+        }
+        if (aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH && ticksSlept > 8000) {
             return false;
         }
-        return !level.isClientSide &&
-                this.getTarget() == null &&
-                this.getLastHurtByMob() == null &&
-                !this.isInWater() &&
-                !this.isVehicle() &&
-                !this.isActuallyWeak() &&
-                this.canSleep() &&
-                canSleepWhileHunting() &&
-                // (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) &&
-                this.getOrderType() != OrderType.FOLLOW;
-    }
-
-    private boolean canSleepWhileHunting() {
-        return this.getTarget() == null || this.getTarget() instanceof ToyBase;
-    }
-
-    @Override
-    public @NotNull Packet<?> getAddEntityPacket() {
-        return NetworkManager.createAddEntityPacket(this);
+        if ((getTarget() == null || getTarget() instanceof ToyBase) && getLastHurtByMob() == null && !isInWater() && !isVehicle() && !isActuallyWeak() && canSleep()) {
+            return getOrderType() != OrderType.FOLLOW;
+        }
+        return false;
     }
 
     @Override
@@ -675,114 +570,84 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void aiStep() {
         super.aiStep();
-        if (this.isSkeleton()) {
-            this.setDeltaMovement(Vec3.ZERO);
+        if (isSkeleton()) {
+            setDeltaMovement(Vec3.ZERO);
         }
-        if ((this.getTarget() != null) && this.isSleeping()) {
-            this.setSleeping(false);
+        if ((getTarget() != null || getLastHurtByMob() != null) && isSleeping()) {
+            setSleeping(false);
         }
-        if (this.getOwner() != null && this.getOwnerDisplayName().getString().isBlank()) {
-            this.setOwnerDisplayName(this.getOwner().getDisplayName());
+        if (getHunger() > getMaxHunger()) {
+            setHunger(getMaxHunger());
         }
-        if (this.getHunger() > this.getMaxHunger()) {
-            this.setHunger(this.getMaxHunger());
-        }
-        if (this.getMood() > 100) {
-            this.setMood(100);
-        }
-        if (this.getMood() < -100) {
-            this.setMood(-100);
-        }
-        if (this.isDeadlyHungry() && this.getMood() > -50) {
-            this.setMood(-50);
-        }
-        if (getPlayingTick() > 0) {
-            setPlayingTick(getPlayingTick() - 1);
-        }
+        moodSystem.tick();
         if (getMatingTick() > 0) {
             setMatingTick(getMatingTick() - 1);
         }
-        if (this.getRidingPlayer() != null) {
-            this.maxUpStep = 1;
+        if (getRidingPlayer() != null) {
+            maxUpStep = 1;//TODO: Vehicle
         }
-        if (FossilConfig.isEnabled("healingDinos") && !this.level.isClientSide) {
-            if (this.random.nextInt(500) == 0 && this.deathTime == 0) {
-                this.heal(1.0F);
+        if (FossilConfig.isEnabled("healingDinos") && !level.isClientSide) {
+            if (random.nextInt(500) == 0 && deathTime == 0) {
+                heal(1);
             }
-        }
-        if (this.moodCheckCooldown-- <= 0) {
-            this.doMoodCheck();
-            this.moodCheckCooldown = 3000 + this.getRandom().nextInt(5000);
         }
 
-        if (this.isSleeping()) {
-            if ((this.getTarget() != null && this.getTarget().isAlive()) || (this.getLastHurtByMob() != null && this.getLastHurtByMob().isAlive())) {
-                this.setSleeping(false);
+        if (isSleeping()) {
+            if ((getTarget() != null && getTarget().isAlive()) || (getLastHurtByMob() != null && getLastHurtByMob().isAlive())) {
+                setSleeping(false);
             }
         }
-        if (this.isOrderedToSit()) {
+        if (isOrderedToSit()) {
             ticksSat++;
-        }
-        if (!level.isClientSide) {
-            if (this.isSleeping()) {
-                ticksSlept++;
-            } else {
-                ticksSlept = 0;
-            }
-        }
-        if (!level.isClientSide &&
-                !this.isInWater() &&
-                this.isVehicle() &&
-                !this.isOrderedToSit() &&
-                this.getRandom().nextInt(1000) == 1 &&
-                !this.isPassenger() &&
-                // (this.getAnimation() == NO_ANIMATION || this.getAnimation() == SPEAK_ANIMATION) &&
-                !this.isSleeping()) {
-            this.setOrderedToSit(true);
-            ticksSat = 0;
-        }
-
-        if (!level.isClientSide &&
-                !this.isInWater() &&
-                (this.isOrderedToSit() && ticksSat > 100 && this.getRandom().nextInt(100) == 1 || this.getTarget() != null) &&
-                !this.isSleeping()) {
-            this.setOrderedToSit(false);
-            ticksSat = 0;
         }
         if (cathermalSleepCooldown > 0) {
             cathermalSleepCooldown--;
         }
-        if (!this.level.isClientSide && this.wantsToSleep()) {
-            if (this.aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH) {
-                if (cathermalSleepCooldown == 0) {
-                    if (this.getRandom().nextInt(1200) == 1 && !this.isSleeping()) {
-                        this.setOrderedToSit(false);
-                        this.setSleeping(true);
+        if (!level.isClientSide) {
+            if (isSleeping()) {
+                ticksSlept++;
+            } else {
+                ticksSlept = 0;
+                if (!isInWater()) {
+                    if (!isOrderedToSit() && !isVehicle() && random.nextInt(1000) == 1 && !isPassenger()) {
+                        setOrderedToSit(true);
+                        ticksSat = 0;
+                    }
+                    if (isOrderedToSit() && ticksSat > 100 && random.nextInt(100) == 1 || getTarget() != null) {
+                        setOrderedToSit(false);
                     }
                 }
-            } else if (this.aiActivityType() != PrehistoricEntityTypeAI.Activity.NO_SLEEP) {
-                if (this.getRandom().nextInt(200) == 1 && !this.isSleeping()) {
-                    this.setOrderedToSit(false);
-                    this.setSleeping(true);
+                if (wantsToSleep()) {
+                    if (aiActivityType() == PrehistoricEntityTypeAI.Activity.BOTH) {
+                        if (cathermalSleepCooldown == 0) {
+                            if (random.nextInt(1200) == 1) {
+                                setOrderedToSit(false);
+                                setSleeping(true);
+                            }
+                        }
+                    } else if (aiActivityType() != PrehistoricEntityTypeAI.Activity.NO_SLEEP) {
+                        if (random.nextInt(200) == 1) {
+                            setOrderedToSit(false);
+                            setSleeping(true);
+                        }
+                    }
                 }
             }
+            if (!wantsToSleep() || !canSleep() || canWakeUp()) {
+                setOrderedToSit(false);
+                setSleeping(false);
+            }
+            if (currentOrder == OrderType.STAY && !isOrderedToSit() && !isActuallyWeak()) {
+                setOrderedToSit(true);
+                ticksSat = 0;
+                setSleeping(false);
+            }
         }
-        if (!this.level.isClientSide && (!this.wantsToSleep() || !this.canSleep() || canWakeUp())) {
-            this.setOrderedToSit(false);
-            this.setSleeping(false);
+        if (data().breaksBlocks() && moodSystem.getMood() < 0) {
+            breakBlock(5);//TODO: Check if only server side
         }
-
-        if (this.currentOrder == OrderType.STAY && !this.isOrderedToSit() && !this.isActuallyWeak()) {
-            this.setOrderedToSit(true);
-            this.setSleeping(false);
-        }
-        if (data().breaksBlocks() && this.getMood() < 0) {
-            this.breakBlock(5);
-        }
-        if (this.getTarget() != null &&
-                this.getTarget() instanceof ToyBase &&
-                (isPreyBlocked(this.getTarget()) || getPlayingTick() > 0)) {
-            this.setTarget(null);
+        if (getTarget() instanceof ToyBase && (isPreyBlocked(getTarget()) || moodSystem.getPlayingTick() > 0)) {
+            setTarget(null);
         }
         if (isFleeing()) {
             fleeTicks++;
@@ -797,24 +662,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void tick() {
         super.tick();
 
-        //don't use the vanilla system
-        if (this.age < 0) {
-            this.age = 0;
-        }
         refreshDimensions();
-        if (!this.isSkeleton()) {
-            if (!this.isAgingDisabled()) {
-                this.setAgeinTicks(this.getAgeInTicks() + 1);
-                if (this.getAgeInTicks() % 24000 == 0) {
-                    this.updateAbilities();
-                    this.grow(0);
+        if (!isSkeleton()) {
+            if (!isAgingDisabled()) {
+                setAge(getAge() + 1);
+                if (getAge() % 24000 == 0) {
+                    grow(0);
                 }
             }
-            if (this.tickCount % 1200 == 0 && this.getHunger() > 0 && FossilConfig.isEnabled("starvingDinos")) {
-                this.setHunger(this.getHunger() - 1);
+            if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled("starvingDinos")) {
+                setHunger(getHunger() - 1);
             }
-            if (this.getHealth() > this.getMaxHealth() / 2 && this.getHunger() == 0 && this.tickCount % 40 == 0) {
-                this.hurt(DamageSource.STARVE, 1);
+            if (getHealth() > getMaxHealth() / 2 && getHunger() == 0 && tickCount % 40 == 0) {
+                hurt(DamageSource.STARVE, 1);
             }
         }
         boolean sitting = isOrderedToSit();
@@ -842,7 +702,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
         }
 
-        boolean climbing = this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD &&
+        boolean climbing = aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD &&
                 this.isBesideClimbableBlock() &&
                 !this.onGround;
 
@@ -886,6 +746,45 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 }
             }
             animations.tick();
+        }
+    }
+
+    @Override
+    public boolean onClimbable() {
+        if (this.aiMovingType() == PrehistoricEntityTypeAI.Moving.AQUATIC ||
+                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMI_AQUATIC) {
+            return false;
+        } else {
+            return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD &&
+                    this.isBesideClimbableBlock() && !this.isImmobile();
+        }
+    }
+
+    public boolean isBesideClimbableBlock() {
+        return (this.entityData.get(CLIMBING) & 1) != 0;
+    }
+
+    public void setBesideClimbableBlock(boolean climbing) {
+        byte b0 = this.entityData.get(CLIMBING);
+
+        if (climbing) {
+            b0 = (byte) (b0 | 1);
+        } else {
+            b0 = (byte) (b0 & -2);
+        }
+
+        this.entityData.set(CLIMBING, b0);
+    }
+
+    @Override
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+        if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ||
+                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.WALK_AND_GLIDE ||
+                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.FLIGHT
+        ) {
+            return false;
+        } else {
+            return super.causeFallDamage(distance, damageMultiplier, source);
         }
     }
 
@@ -935,11 +834,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public float getScale() {
-        float step = ((data().maxScale() * getFemaleScale()) - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
-        if (this.getAgeInTicks() > data().adultAgeDays() * 24000) {
-            return data().minScale() + ((step) * data().adultAgeDays() * 24000);
+        float step = (data().maxScale() - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
+        if (getAgeInDays() > data().adultAgeDays()) {
+            return data().minScale() + (step * data().adultAgeDays() * 24000);
         }
-        return data().minScale() + ((step * this.getAgeInTicks()));
+        return data().minScale() + (step * getAge());
     }
 
     public float getModelScale() {
@@ -948,50 +847,47 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     protected int getExperienceReward(Player player) {
-        float base = 6 * this.getBbWidth() * (this.type().diet == Diet.HERBIVORE ? 1.0F : 2.0F)
-                * (this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM ? 1.0F : 2.0F)
-                * (this.aiAttackType() == PrehistoricEntityTypeAI.Attacking.BASIC ? 1.0F : 1.25F);
-        return Mth.floor((float) Math.min(data().adultAgeDays(), this.getAgeInDays()) * base);
+        float base = 6 * getBbWidth() * (type().diet == Diet.HERBIVORE ? 1 : 2)
+                * (aiTameType() == PrehistoricEntityTypeAI.Taming.GEM ? 1 : 2)
+                * (aiAttackType() == PrehistoricEntityTypeAI.Attacking.BASIC ? 1 : 1.25f);
+        return Mth.floor((float) Math.min(data().adultAgeDays(), getAgeInDays()) * base);
     }
 
     public void updateAbilities() {
-        double percent = Math.min((1.0 / data().adultAgeDays()) * this.getAgeInDays(), 1.0);
+        double percent = Math.min((1f / data().adultAgeDays()) * getAgeInDays(), 1);
 
-        double healthDifference = this.getAttributeValue(Attributes.MAX_HEALTH);
-        this.getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, stats().baseHealth(), stats().maxHealth())));
-        healthDifference = this.getAttributeValue(Attributes.MAX_HEALTH) - healthDifference;
-
-        this.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, stats().baseDamage(), stats().maxDamage())));
-        this.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Mth.lerp(percent, stats().baseSpeed(), stats().maxSpeed()));
-        this.getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, stats().baseArmor(), stats().maxArmor()));
-        this.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, stats().baseKnockBackResistance(), stats().maxKnockBackResistance()));
-
-        this.heal((float) healthDifference);
+        double healthDifference = getAttributeValue(Attributes.MAX_HEALTH);
+        getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, stats().baseHealth(), stats().maxHealth())));
+        healthDifference = getAttributeValue(Attributes.MAX_HEALTH) - healthDifference;
+        heal((float) healthDifference);
+        getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, stats().baseDamage(), stats().maxDamage())));
+        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Mth.lerp(percent, stats().baseSpeed(), stats().maxSpeed()));
+        getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, stats().baseArmor(), stats().maxArmor()));
+        getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, stats().baseKnockBackResistance(), stats().maxKnockBackResistance()));
     }
 
     public void breakBlock(float maxHardness) {
-        if (!FossilConfig.isEnabled("dinosBreakBlocks")) return;
-        if (isSkeleton()) return;
-        if (!this.isAdult()) return;
-        if (!this.isHungry()) return;
-        // if (!net.minecraftforge.event.ForgeEventFactory.getMobGriefingEvent(this.level, this)) return;
-        // how do we respect other handlers canceling it?
-
-        for (int a = (int) Math.round(this.getBoundingBox().minX) - 1; a <= (int) Math.round(this.getBoundingBox().maxX) + 1; a++) {
-            for (int b = (int) Math.round(this.getBoundingBox().minY) + 1; (b <= (int) Math.round(this.getBoundingBox().maxY) + 2) && (b <= 127); b++) {
-                for (int c = (int) Math.round(this.getBoundingBox().minZ) - 1; c <= (int) Math.round(this.getBoundingBox().maxZ) + 1; c++) {
-                    BlockPos pos = new BlockPos(a, b, c);
-                    if (level.getBlockState(pos).isAir()) continue;
-                    BlockState state = level.getBlockState(pos);
+        if (!FossilConfig.isEnabled("dinosBreakBlocks") || !level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
+            return;
+        }
+        if (isSkeleton() || !isAdult() || !isHungry()) {
+            return;
+        }
+        for (int a = (int) Math.round(getBoundingBox().minX) - 1; a <= (int) Math.round(getBoundingBox().maxX) + 1; a++) {
+            for (int b = (int) Math.round(getBoundingBox().minY) + 1; (b <= (int) Math.round(getBoundingBox().maxY) + 2) && (b <= 127); b++) {
+                for (int c = (int) Math.round(getBoundingBox().minZ) - 1; c <= (int) Math.round(getBoundingBox().maxZ) + 1; c++) {
+                    BlockPos targetPos = new BlockPos(a, b, c);
+                    if (level.isEmptyBlock(targetPos)) continue;
+                    BlockState state = level.getBlockState(targetPos);
                     Block block = state.getBlock();
 
                     if (block instanceof BushBlock) continue;
                     if (!state.getFluidState().isEmpty()) continue;
-                    if (state.getDestroySpeed(level, pos) >= maxHardness) continue;
+                    if (state.getDestroySpeed(level, targetPos) >= maxHardness) continue;
                     if (!canBreak(state.getBlock())) continue;
-                    this.setDeltaMovement(this.getDeltaMovement().multiply(0.6F, 1F, 0.6F));
+                    setDeltaMovement(getDeltaMovement().multiply(0.6, 1, 0.6));
                     if (!level.isClientSide) {
-                        level.destroyBlock(new BlockPos(a, b, c), true);
+                        level.destroyBlock(targetPos, true);
                     }
                 }
             }
@@ -999,16 +895,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isAdult() {
-        return this.getAgeInDays() >= data().adultAgeDays();
+        return getAgeInDays() >= data().adultAgeDays();
     }
 
     public boolean isTeen() {
-        return this.getAgeInDays() >= data().teenAgeDays() && this.getAgeInDays() < data().adultAgeDays();
+        return getAgeInDays() >= data().teenAgeDays() && getAgeInDays() < data().adultAgeDays();
     }
 
     @Override
     public boolean isBaby() {
-        return this.getAgeInDays() < data().teenAgeDays() && !this.isSkeleton();
+        return getAgeInDays() < data().teenAgeDays() && !isSkeleton();
     }
 
     public int getMaxHunger() {
@@ -1020,29 +916,41 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void setSkeleton(boolean skeleton) {
-        this.entityData.set(MODELIZED, skeleton);
+        entityData.set(MODELIZED, skeleton);
     }
 
     public int getAgeInDays() {
-        return this.entityData.get(AGETICK) / 24000;
+        return this.entityData.get(AGE_TICK) / 24000;
     }
 
-    public void setAgeInDays(int days) {//TODO: Use vanill age system?
-        this.entityData.set(AGETICK, days * 24000);
-        refreshDimensions();
-        if (!level.isClientSide) {
-            updateAbilities();
+    public void setAgeInDays(int days) {
+        setAge(days * 24000);
+    }
+
+    @Override
+    public int getAge() {
+        return entityData.get(AGE_TICK);
+    }
+
+    @Override
+    public void setAge(int age) {
+        if (isAgingDisabled()) {
+            return;
         }
+        entityData.set(AGE_TICK, age);
+        if (age % 20 == 0) {
+            refreshTexturePath();
+            refreshDimensions();
+        }
+        super.setAge(age);
     }
 
-    public int getAgeInTicks() {
-        return this.entityData.get(AGETICK);
+    public boolean isAgingDisabled() {
+        return this.entityData.get(AGING_DISABLED);
     }
 
-    public void setAgeinTicks(int ticks) {
-        refreshTexturePath();
-        refreshDimensions();
-        this.entityData.set(AGETICK, ticks);
+    public void setAgingDisabled(boolean isAgingDisabled) {
+        this.entityData.set(AGING_DISABLED, isAgingDisabled);
     }
 
     public int getMatingTick() {
@@ -1051,16 +959,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public void setMatingTick(int ticks) {
         entityData.set(MATING_TICK, ticks);
-        ticksTillMate = ticks;
     }
 
-    public int getPlayingTick() {
-        return entityData.get(PLAYING_TICK);
+    public boolean isHungry() {
+        return getHunger() < getMaxHunger() * 0.75F;
     }
 
-    public void setPlayingTick(int ticks) {
-        entityData.set(PLAYING_TICK, ticks);
-        ticksTillPlay = ticks;
+    public boolean isDeadlyHungry() {
+        return getHunger() < getMaxHunger() * 0.25F;
     }
 
     public int getHunger() {
@@ -1068,53 +974,34 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void setHunger(int hunger) {
-        if (this.getHunger() > this.getMaxHunger()) {
-            this.entityData.set(HUNGER, this.getMaxHunger());
+        if (getHunger() > getMaxHunger()) {
+            entityData.set(HUNGER, getMaxHunger());
         } else {
-            this.entityData.set(HUNGER, hunger);
+            entityData.set(HUNGER, hunger);
         }
     }
 
-    public boolean isAgingDisabled() {
-        return this.entityData.get(AGINGDISABLED);
+    public void eatItem(ItemStack stack) {
+        if (stack != null) {
+            if (FoodMappings.getFoodAmount(stack.getItem(), type().diet) != 0) {
+                moodSystem.increaseMood(5);
+                doFoodEffect(stack.getItem());
+                setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
+                stack.shrink(1);
+                setCurrentAnimation(nextEatingAnimation());
+            }
+        }
     }
 
-    public void setAgingDisabled(boolean isAgingDisabled) {
-        this.entityData.set(AGINGDISABLED, isAgingDisabled);
-    }
-
-    @Override
-    public ServerAnimationInfo getCurrentAnimation() {
-        return getAllAnimations().get(entityData.get(CURRENT_ANIMATION));
-    }
-
-    public void setCurrentAnimation(@NotNull Prehistoric.ServerAnimationInfo newAnimation) {
-        if (this.entityData.get(CURRENT_ANIMATION).equals(newAnimation.animationId)) return;
-        this.entityData.set(CURRENT_ANIMATION, newAnimation.animationId);
-        animations.setCurrentAnimation(newAnimation);
-    }
-
-    public abstract @NotNull Prehistoric.ServerAnimationInfo nextEatingAnimation();
-
-    public abstract @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation();
-
-    public abstract @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation();
-
-    public boolean increaseHunger(int hunger) {
-        if (this.getHunger() >= this.getMaxHunger()) {
+    public boolean feed(int hunger) {
+        if (getHunger() >= getMaxHunger()) {
             return false;
         }
-        this.setHunger(this.getHunger() + hunger);
-        if (this.getHunger() > this.getMaxHunger()) {
-            this.setHunger(this.getMaxHunger());
+        setHunger(getHunger() + hunger);
+        if (getHunger() > getMaxHunger()) {
+            setHunger(getMaxHunger());
         }
-        this.level.playSound(null,
-                this.blockPosition(),
-                SoundEvents.GENERIC_EAT,
-                SoundSource.NEUTRAL,
-                this.getSoundVolume(),
-                this.getVoicePitch()
-        );
+        level.playSound(null, blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, getSoundVolume(), getVoicePitch());
         return true;
     }
 
@@ -1122,71 +1009,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void killed(ServerLevel level, LivingEntity killedEntity) {
         super.killed(level, killedEntity);
         if (type().diet != Diet.HERBIVORE) {
-            increaseHunger(FoodMappings.getMobFoodPoints(killedEntity, type().diet));
+            feed(FoodMappings.getMobFoodPoints(killedEntity, type().diet));
             heal(FoodMappings.getMobFoodPoints(killedEntity, type().diet) / 3F);
-            setMood(getMood() + 25);
+            moodSystem.increaseMood(25);
         }
-    }
-
-    public boolean isHungry() {
-        return this.getHunger() < this.getMaxHunger() * 0.75F;
-    }
-
-    public boolean isDeadlyHungry() {
-        return this.getHunger() < this.getMaxHunger() * 0.25F;
-    }
-
-    @Override
-    public boolean onClimbable() {
-        if (this.aiMovingType() == PrehistoricEntityTypeAI.Moving.AQUATIC ||
-                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMI_AQUATIC) {
-            return false;
-        } else {
-            return this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD &&
-                    this.isBesideClimbableBlock() && !this.isImmobile();
-        }
-    }
-
-    public boolean isAngry() {
-        return this.entityData.get(ANGRY);
-    }
-
-    public void setAngry(boolean angry) {
-        this.entityData.set(ANGRY, angry);
-    }
-
-    public int getSubSpecies() {
-        return this.entityData.get(SUBSPECIES);
-    }
-
-    public void setSubSpecies(int subspecies) {
-        this.entityData.set(SUBSPECIES, subspecies);
-    }
-
-    public int getMood() {
-        return Mth.clamp(this.entityData.get(MOOD), -100, 100);
-    }
-
-    public void setMood(int mood) {
-        this.entityData.set(MOOD, Mth.clamp(mood, -100, 100));
-    }
-
-    public PrehistoricMoodType getMoodFace() {
-        if (this.getMood() == 100) {
-            return PrehistoricMoodType.HAPPY;
-        } else if (this.getMood() >= 50) {
-            return PrehistoricMoodType.CONTENT;
-        } else if (this.getMood() == -100) {
-            return PrehistoricMoodType.ANGRY;
-        } else if (this.getMood() <= -50) {
-            return PrehistoricMoodType.SAD;
-        } else {
-            return PrehistoricMoodType.CALM;
-        }
-    }
-
-    public int getMoodPosition() {
-        return (int) (71 * -(this.getMood() * 0.01));
     }
 
     @Override
@@ -1204,86 +1030,45 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (source == DamageSource.IN_WALL) {
             return false;
         }
-        if (amount > 0 && this.isSkeleton()) {
-            this.level.playSound(null,
-                    this.blockPosition(),
-                    SoundEvents.SKELETON_HURT,
-                    SoundSource.NEUTRAL,
-                    this.getSoundVolume(),
-                    this.getVoicePitch()
-            );
+        if (amount > 0 && isSkeleton()) {
+            level.playSound(null, blockPosition(), SoundEvents.SKELETON_HURT, SoundSource.NEUTRAL, getSoundVolume(), getVoicePitch());
             if (!level.isClientSide && !droppedBiofossil) {
                 if (type().timePeriod == TimePeriod.CENOZOIC) {
-                    this.spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
+                    spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
                 } else {
-                    this.spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
+                    spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
                 }
-                this.spawnAtLocation(new ItemStack(Items.BONE, Math.min(this.getAgeInDays(), data().adultAgeDays())), 1);
+                spawnAtLocation(new ItemStack(Items.BONE, Math.min(getAgeInDays(), data().adultAgeDays())), 1);
                 droppedBiofossil = true;
             }
-            this.dead = true;
+            dead = true;
             return true;
         }
-        if (this.getLastHurtByMob() instanceof Player) {
-            if (this.getOwner() == this.getLastHurtByMob()) {
+        if (getLastHurtByMob() instanceof Player) {
+            if (getOwner() == getLastHurtByMob()) {
                 setTame(false);
                 setOwnerUUID(null);
-                this.setMood(this.getMood() - 15);
+                moodSystem.increaseMood(-15);
             }
         }
 
         if (amount > 0) {
-            this.setOrderedToSit(false);
-            this.setSleeping(false);
+            setOrderedToSit(false);
+            setSleeping(false);
         }
         if (source.getEntity() != null) {
-            this.setMood(this.getMood() - 5);
+            moodSystem.increaseMood(-5);
         }
-        /*if (this.getHurtSound(DamageSource.GENERIC) != null && amount >= 1 && dmg != DamageSource.IN_WALL) {
-            if (this.getAnimation() != null) {
-                if (this.getAnimation() == NO_ANIMATION && level.isClientSide) {
-                    this.setAnimation(SPEAK_ANIMATION);
-                }
-            }
-        }*/
         return super.hurt(source, amount);
-    }
-
-    public boolean isBesideClimbableBlock() {
-        return (this.entityData.get(CLIMBING) & 1) != 0;
-    }
-
-    public void setBesideClimbableBlock(boolean climbing) {
-        byte b0 = this.entityData.get(CLIMBING);
-
-        if (climbing) {
-            b0 = (byte) (b0 | 1);
-        } else {
-            b0 = (byte) (b0 & -2);
-        }
-
-        this.entityData.set(CLIMBING, b0);
-    }
-
-    @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
-        if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ||
-                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.WALK_AND_GLIDE ||
-                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.FLIGHT
-        ) {
-            return false;
-        } else {
-            return super.causeFallDamage(distance, damageMultiplier, source);
-        }
     }
 
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemstack = player.getItemInHand(hand);
-        if (this.isSkeleton()) {
+        if (isSkeleton()) {
             if (itemstack.isEmpty()) {
                 if (player.isShiftKeyDown()) {
-                    this.nudgeEntity(player);
+                    teleportTo(getX() + (player.getX() - getX()) * 0.01, getY(), getZ() + (player.getZ() - getZ()) * 0.01);
                 } else {
                     double d0 = player.getX() - this.getX();
                     double d2 = player.getZ() - this.getZ();
@@ -1296,191 +1081,165 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 if (itemstack.is(Items.BONE) && this.getAgeInDays() < data().adultAgeDays()) {
                     this.level.playSound(null, this.blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.NEUTRAL, 0.8F, 1);
                     this.setAgeInDays(this.getAgeInDays() + 1);
-                    if (!player.isCreative()) {
-                        itemstack.shrink(1);
-                    }
+                    usePlayerItem(player, hand, itemstack);
                     return InteractionResult.SUCCESS;
                 }
             }
         } else {
-            if (!itemstack.isEmpty()) {
-                if ((this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM && itemstack.is(ModItems.SCARAB_GEM.get())) ||
-                        (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUE_GEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
-                    if (!this.isTame() && !this.isOwnedBy(player) && this.isActuallyWeak()) {
-                        this.triggerTamingAcheivement(player);
-                        this.heal(200);
-                        this.setMood(100);
-                        this.increaseHunger(500);
-                        this.getNavigation().stop();
-                        this.setTarget(null);
-                        this.setLastHurtByMob(null);
-                        tame(player);
-                        this.level.broadcastEntityEvent(this, (byte) 35);
-                        itemstack.shrink(1);
-                        return InteractionResult.SUCCESS;
-                    }
-                }
-
-                if (itemstack.is(ModItems.CHICKEN_ESSENCE.get()) && this.aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && this.aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && !player.level.isClientSide) {
-                    if (this.getAgeInDays() < data().adultAgeDays() && this.getHunger() > 0) {
-                        if (this.getHunger() > 0) {
-                            itemstack.shrink(1);
-                            if (!player.isCreative()) {
-                                player.addItem(new ItemStack(Items.GLASS_BOTTLE, 1));
-                            }
-                            //Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(getEntityId(), Item.getIdFromItem(ModItems.CHICKEN_ESSENCE)));
-                            this.grow(1);
-                            this.setHunger(1 + (new Random()).nextInt(this.getHunger()));
-                            return InteractionResult.SUCCESS;
-                        }
-                    }
-                    if (!this.level.isClientSide) {
-                        player.displayClientMessage(new TranslatableComponent("prehistoric.essencefail"), true);
-                    }
+            if (itemstack.isEmpty()) {
+                return InteractionResult.PASS;
+            }
+            if ((aiTameType() == PrehistoricEntityTypeAI.Taming.GEM && itemstack.is(ModItems.SCARAB_GEM.get())) ||
+                    (aiTameType() == PrehistoricEntityTypeAI.Taming.BLUE_GEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
+                if (!isTame() && !isOwnedBy(player) && isActuallyWeak()) {
+                    heal(200);
+                    moodSystem.setMood(100);
+                    feed(500);
+                    getNavigation().stop();
+                    setTarget(null);
+                    setLastHurtByMob(null);
+                    tame(player);
+                    level.broadcastEntityEvent(this, (byte) 35);
+                    usePlayerItem(player, hand, itemstack);
                     return InteractionResult.SUCCESS;
                 }
-                /*if (itemstack.is(ModItems.STUNTED_ESSENCE) && !isAgingDisabled()) { // TODO Add STUNTED_ESSENCE
-                    this.setHunger(this.getHunger() + 20);
-                    this.heal(this.getMaxHealth());
-                    this.playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, this.getSoundVolume(), this.getVoicePitch());
-                    spawnItemCrackParticles(itemstack.getItem());
-                    spawnItemCrackParticles(itemstack.getItem());
-                    spawnItemCrackParticles(Items.POISONOUS_POTATO);
-                    spawnItemCrackParticles(Items.POISONOUS_POTATO);
-                    spawnItemCrackParticles(Items.EGG);
-                    this.setAgingDisabled(true);
+            }
+
+            if (itemstack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && !level.isClientSide) {
+                if (getAgeInDays() < data().adultAgeDays() && getHunger() > 0) {
+                    usePlayerItem(player, hand, itemstack);
                     if (!player.isCreative()) {
-                        itemstack.shrink(1);
+                        player.addItem(new ItemStack(Items.GLASS_BOTTLE, 1));
                     }
+                    grow(1);
+                    setHunger(1 + random.nextInt(getHunger()));
                     return InteractionResult.SUCCESS;
-                }*/
-
-                if (FoodMappings.getFoodAmount(itemstack.getItem(), this.type().diet) > 0) {
-                    if (!level.isClientSide) {
-                        if (this.getHunger() < this.getMaxHunger() || this.getHealth() < this.getMaxHealth() && FossilConfig.isEnabled("healingDinos") || !this.isTame() && this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
-                            this.setHunger(this.getHunger() + FoodMappings.getFoodAmount(itemstack.getItem(), this.type().diet));
-                            this.eatItem(itemstack);
-                            if (FossilConfig.isEnabled("healingDinos")) {
-                                this.heal(3);
-                            }
-                            if (this.getHunger() >= this.getMaxHunger()) {
-                                if (this.isTame()) {
-                                }
-                            }
-                            usePlayerItem(player, hand, itemstack);
-                            if (this.aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
-                                if (!this.isTame() && this.isTameable() && (new Random()).nextInt(10) == 1) {
-                                    this.tame(player);
-                                    this.level.broadcastEntityEvent(this, (byte) 35);
-                                }
-                            }
-
-                            return InteractionResult.SUCCESS;
-                        } else {
-                            return InteractionResult.PASS;
+                }
+                if (!level.isClientSide) {
+                    player.displayClientMessage(new TranslatableComponent("prehistoric.essencefail"), true);
+                }
+                return InteractionResult.PASS;
+            }
+            if (itemstack.is(ModItems.STUNTED_ESSENCE.get()) && !isAgingDisabled()) {
+                setHunger(getHunger() + 20);
+                heal(getMaxHealth());
+                playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, getSoundVolume(), getVoicePitch());
+                spawnItemCrackParticles(itemstack.getItem());
+                spawnItemCrackParticles(itemstack.getItem());
+                spawnItemCrackParticles(Items.POISONOUS_POTATO);
+                spawnItemCrackParticles(Items.POISONOUS_POTATO);
+                spawnItemCrackParticles(Items.EGG);
+                setAgingDisabled(true);
+                usePlayerItem(player, hand, itemstack);
+                return InteractionResult.SUCCESS;
+            }
+            if (FoodMappings.getFoodAmount(itemstack.getItem(), type().diet) > 0) {
+                if (!level.isClientSide) {
+                    if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled("healingDinos") || !isTame() && aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
+                        setHunger(getHunger() + FoodMappings.getFoodAmount(itemstack.getItem(), type().diet));
+                        eatItem(itemstack);
+                        if (FossilConfig.isEnabled("healingDinos")) {
+                            heal(3);
                         }
-                    }
-
-                    return InteractionResult.PASS;
-                } else {
-                    if (itemstack.is(Items.LEAD) && this.isTame()) {
-                        if (this.isOwnedBy(player)) {
-                            this.setLeashedTo(player, true);
-                            itemstack.shrink(1);
-                            return InteractionResult.SUCCESS;
+                        if (getHunger() >= getMaxHunger() && isTame()) {
+                            player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.full", type().displayName.get()), true);
                         }
-                    }
-
-                    if (itemstack.is(ModItems.WHIP.get()) && aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && isAdult()) {
-                        if (isTame() && isOwnedBy(player) && canBeRidden()) {
-                            if (getRidingPlayer() == null) {
-                                if (!this.level.isClientSide) {
-                                    setRidingPlayer(player);
-                                }
-                                setOrder(OrderType.WANDER);
-                                setOrderedToSit(false);
-                                setSleeping(false);
-                            } else if (getRidingPlayer() == player) {
-                                setSprinting(true);
-                                setMood(getMood() - 5);
-                            }
-                        } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
-                            setMood(getMood() - 5);
-                            if (getRandom().nextInt(5) == 0) {
-                                player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
-                                setMood(getMood() - 25);
+                        usePlayerItem(player, hand, itemstack);
+                        if (aiTameType() == PrehistoricEntityTypeAI.Taming.FEEDING) {
+                            if (!isTame() && isTameable() && random.nextInt(10) == 1) {
                                 tame(player);
+                                level.broadcastEntityEvent(this, (byte) 35);
                             }
-                        }
-                        this.setOrderedToSit(false);
-                    }
-                    if (this.getOrderItem() != null && itemstack.is(this.getOrderItem()) && this.isTame() && this.isOwnedBy(player) && !player.isPassenger()) {
-                        if (!this.level.isClientSide) {
-                            this.jumping = false;
-                            this.getNavigation().stop();
-                            this.currentOrder = OrderType.values()[(this.currentOrder.ordinal() + 1) % 3];
-                            this.sendOrderMessage(this.currentOrder);
                         }
                         return InteractionResult.SUCCESS;
                     }
+                }
+                return InteractionResult.PASS;
+            } else {
+                if (itemstack.is(Items.LEAD) && isTame()) {
+                    if (isOwnedBy(player)) {
+                        setLeashedTo(player, true);
+                        usePlayerItem(player, hand, itemstack);
+                        return InteractionResult.SUCCESS;
+                    }
+                }
+
+                if (itemstack.is(ModItems.WHIP.get()) && aiTameType() != PrehistoricEntityTypeAI.Taming.NONE && isAdult()) {
+                    if (isTame() && isOwnedBy(player) && canBeRidden()) {
+                        if (getRidingPlayer() == null) {
+                            if (!level.isClientSide) {
+                                setRidingPlayer(player);
+                            }
+                            setOrder(OrderType.WANDER);
+                            setOrderedToSit(false);
+                            setSleeping(false);
+                        } else if (getRidingPlayer() == player) {
+                            setSprinting(true);
+                            moodSystem.increaseMood(-5);
+                        }
+                    } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
+                        moodSystem.increaseMood(-5);
+                        if (random.nextInt(5) == 0) {
+                            player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
+                            moodSystem.increaseMood(-25);
+                            tame(player);
+                        }
+                    }
+                    setOrderedToSit(false);
+                }
+                if (itemstack.is(getOrderItem()) && isTame() && isOwnedBy(player) && !player.isPassenger()) {
+                    if (!level.isClientSide) {
+                        jumping = false;
+                        getNavigation().stop();
+                        currentOrder = OrderType.values()[(this.currentOrder.ordinal() + 1) % 3];
+                        sendOrderMessage(this.currentOrder);
+                    }
+                    return InteractionResult.SUCCESS;
                 }
             }
         }
-        return super.mobInteract(player, hand);
+        return InteractionResult.PASS;
     }
 
     protected boolean isTameable() {
-        return true;
+        return true;//TOOD: set in data() via old PrehistoriCentityType
     }
-
-    /*protected void setPedia() {
-        Revival.PROXY.setPediaObject(this);
-        // Currently there's only empty implementation for `ServerProxy#setPediaObject`
-    }*/
 
     public abstract Item getOrderItem();
 
-    private void triggerTamingAcheivement(Player player) {
-        // player.triggerAchievement(FossilAchievementHandler.theKing);
-
-    }
-
     public void grow(int ageInDays) {
-        if (this.isAgingDisabled()) {
+        if (isAgingDisabled()) {
             return;
         }
-        this.setAgeInDays(this.getAgeInDays() + ageInDays);
-        for (int i = 0; i < this.getScale() * 4; i++) {
-            double motionX = getRandom().nextGaussian() * 0.07D;
-            double motionY = getRandom().nextGaussian() * 0.07D;
-            double motionZ = getRandom().nextGaussian() * 0.07D;
-            double minX = this.getBoundingBox().minX;
-            double minY = this.getBoundingBox().minY;
-            double minZ = this.getBoundingBox().minZ;
-
-
-            float x = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxX - minX) + minX);
-            float y = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxY - minY) + minY);
-            float z = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxZ - minZ) + minZ);
-            this.level.addParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, motionX, motionY, motionZ);
-
+        setAgeInDays(getAgeInDays() + ageInDays);
+        for (int i = 0; i < getScale() * 4; i++) {
+            double motionX = getRandom().nextGaussian() * 0.07;
+            double motionY = getRandom().nextGaussian() * 0.07;
+            double motionZ = getRandom().nextGaussian() * 0.07;
+            double minX = getBoundingBox().minX;
+            double minY = getBoundingBox().minY;
+            double minZ = getBoundingBox().minZ;
+            float x = (float) (getRandom().nextFloat() * (getBoundingBox().maxX - minX) + minX);
+            float y = (float) (getRandom().nextFloat() * (getBoundingBox().maxY - minY) + minY);
+            float z = (float) (getRandom().nextFloat() * (getBoundingBox().maxZ - minZ) + minZ);
+            level.addParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, motionX, motionY, motionZ);
         }
-        this.updateAbilities();
+        updateAbilities();
     }
 
     public boolean isWeak() {
-        return (this.getHealth() < 8) && (this.getAgeInDays() >= data().adultAgeDays()) && !this.isTame();
+        return (getHealth() < 8) && (getAgeInDays() >= data().adultAgeDays()) && !isTame();
     }
 
-    private void sendOrderMessage(OrderType var1) {
-        String s = "dino.order." + var1.name().toLowerCase();
-        if (this.getOwner() instanceof Player player) {
-            player.displayClientMessage(new TranslatableComponent(s, this.getName()), true);
+    public boolean isActuallyWeak() {
+        return (aiTameType() == PrehistoricEntityTypeAI.Taming.BLUE_GEM || aiTameType() == PrehistoricEntityTypeAI.Taming.GEM) && isWeak();
+    }
+
+    private void sendOrderMessage(OrderType orderType) {
+        String s = "dino.order." + orderType.name().toLowerCase();
+        if (getOwner() instanceof Player player) {
+            player.displayClientMessage(new TranslatableComponent(s, getName()), true);
         }
-    }
-
-    public void nudgeEntity(Player player) {
-        this.teleportTo(this.getX() + (player.getX() - this.getX()) * 0.01F, this.getY(), this.getZ() + (player.getZ() - this.getZ()) * 0.01F);
     }
 
     public void refreshTexturePath() {
@@ -1490,7 +1249,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         builder.append(name);
         builder.append("/");
         builder.append(name);
-        if (this.isSkeleton()) {
+        if (isSkeleton()) {
             builder.append("_skeleton.png");
         } else {
             if (hasBabyTexture && isBaby()) builder.append("_baby");
@@ -1509,23 +1268,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
     }
 
-    public boolean isActuallyWeak() {
-        return (this.aiTameType() == PrehistoricEntityTypeAI.Taming.BLUE_GEM || this.aiTameType() == PrehistoricEntityTypeAI.Taming.GEM) && this.isWeak();
-    }
-
     public float getFemaleScale() {
         return 1.0F;
     }
 
     @Override
     public void playAmbientSound() {
-        if (!this.isSleeping() && !this.isSkeleton()) {
+        if (!isSleeping() && !isSkeleton()) {
             super.playAmbientSound();
-            /*if (this.getAnimation() != null) {
-                if (this.getAnimation() == NO_ANIMATION && !level.isClientSide) {
-                    this.setAnimation(SPEAK_ANIMATION);
-                }
-            }*/
         }
     }
 
@@ -1567,7 +1317,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean canMate(Animal otherAnimal) {
-        if (otherAnimal == this || otherAnimal.getClass() != getClass() || getMood() <= 50 || !isAdult() || getMatingTick() > 0) {
+        if (otherAnimal == this || otherAnimal.getClass() != getClass() || moodSystem.getMood() <= 50 || !isAdult() || getMatingTick() > 0) {
             return false;
         }
         Prehistoric other = ((Prehistoric) otherAnimal);
@@ -1694,18 +1444,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    public void eatItem(ItemStack stack) {
-        if (stack != null) {
-            if (FoodMappings.getFoodAmount(stack.getItem(), type().diet) != 0) {
-                this.setMood(this.getMood() + 5);
-                doFoodEffect(stack.getItem());
-                this.setHunger(this.getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
-                stack.shrink(1);
-                setCurrentAnimation(nextEatingAnimation());
-            }
-        }
-    }
-
     @Override
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
@@ -1753,7 +1491,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isPreyBlocked(Entity prey) {
-        return this.hasLineOfSight(prey);
+        return getSensing().hasLineOfSight(prey);
     }
 
     public boolean canSeeFood(BlockPos position) {
@@ -1763,7 +1501,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     protected float getSoundVolume() {
-        return this.isBaby() ? super.getSoundVolume() * 0.75F : 1.0F;
+        return isBaby() ? super.getSoundVolume() * 0.75f : 1;
     }
 
     @Override
@@ -1811,7 +1549,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean canJump() {
-        return this.isVehicle();
+        return isVehicle();
     }
 
     @Override
@@ -1853,6 +1591,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return 100;
     }
 
+    @Override
+    public @NotNull Packet<?> getAddEntityPacket() {
+        return NetworkManager.createAddEntityPacket(this);
+    }
+
     public abstract EntityDataManager.Data data();
 
     private Stat stats() {
@@ -1871,6 +1614,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         this.gender = gender;
         refreshTexturePath();
     }
+
+    @Override
+    public ServerAnimationInfo getCurrentAnimation() {
+        return getAllAnimations().get(entityData.get(CURRENT_ANIMATION));
+    }
+
+    public void setCurrentAnimation(@NotNull Prehistoric.ServerAnimationInfo newAnimation) {
+        if (this.entityData.get(CURRENT_ANIMATION).equals(newAnimation.animationId)) return;
+        this.entityData.set(CURRENT_ANIMATION, newAnimation.animationId);
+        animations.setCurrentAnimation(newAnimation);
+    }
+
+    public abstract @NotNull Prehistoric.ServerAnimationInfo nextEatingAnimation();
+
+    public abstract @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation();
+
+    public abstract @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation();
 
     @Override
     public void registerControllers(AnimationData data) {

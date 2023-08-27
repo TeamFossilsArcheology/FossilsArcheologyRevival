@@ -23,11 +23,11 @@ public class DinoAIMating extends Goal {
         if (!FossilConfig.isEnabled("breedingDinos")) {
             return false;
         }
-        if (male.getGender() != Gender.MALE || !male.isAdult() || male.getMatingTick() > 0 || male.getMood() <= 50) {
+        if (male.getGender() != Gender.MALE || !male.isAdult() || male.getMatingTick() > 0 || male.moodSystem.getMood() <= 50) {
             return false;
         }
         List<? extends Prehistoric> sameTypes = male.getNearbySpeciesMembers(64);
-        if (sameTypes.size() > male.getMaxPopulation()) {
+        if (sameTypes.size() > male.data().maxPopulation()) {
             male.setMatingTick(male.getRandom().nextInt(6000) + 6000);
             return false;
         }

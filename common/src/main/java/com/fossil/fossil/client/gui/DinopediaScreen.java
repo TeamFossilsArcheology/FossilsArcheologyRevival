@@ -5,6 +5,7 @@ import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.prehistoric.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
+import com.fossil.fossil.entity.prehistoric.base.MoodSystem;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.util.FoodMappings;
@@ -294,13 +295,14 @@ public class DinopediaScreen extends Screen {
             poseStack.scale(scale, scale, scale);
             int x = (int) getScaledX(false, MOOD_FACE_WIDTH, scale);
             int y = (int) ((topPos + 16) / scale);
-            blit(poseStack, x, y, dino.getMoodFace().uOffset, 10, MOOD_FACE_WIDTH, MOOD_FACE_HEIGHT);
+            MoodSystem moodSystem = dino.moodSystem;
+            blit(poseStack, x, y, moodSystem.getMoodFace().uOffset, 10, MOOD_FACE_WIDTH, MOOD_FACE_HEIGHT);
             poseStack.popPose();
             x = (int) (x * scale);
             y = (int) (y * scale);
             if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + MOOD_FACE_WIDTH * scale && mouseY < y + MOOD_FACE_HEIGHT * scale) {
-                toolTipList.add(dino.getMoodFace().getName());
-                toolTipList.add(dino.getMoodFace().getDescription());
+                toolTipList.add(moodSystem.getMoodFace().getName());
+                toolTipList.add(moodSystem.getMoodFace().getDescription());
             }
 
             poseStack.pushPose();
@@ -313,14 +315,14 @@ public class DinopediaScreen extends Screen {
             x = (int) (x * scale);
             y = (int) (y * scale);
             if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + MOOD_BAR_WIDTH * scale && mouseY < y + MOOD_BAR_HEIGHT * scale) {
-                var mood = new TextComponent(String.valueOf(dino.getMood())).withStyle(style -> style.withColor(dino.getMoodFace().color));
+                var mood = new TextComponent(String.valueOf(moodSystem.getMood())).withStyle(style -> style.withColor(moodSystem.getMoodFace().color));
                 toolTipList.add(new TranslatableComponent("pedia.fossil.mood_status", mood));
             }
 
             poseStack.pushPose();
             x = (int) getScaledX(false, 4, 1);
             y = topPos + 9 + 38;
-            blit(poseStack, x - dino.getMoodPosition(), y, 0, 26, 4, 10);
+            blit(poseStack, x - moodSystem.getMoodPosition(), y, 0, 26, 4, 10);
             poseStack.popPose();
 
             var foodMap = FoodMappings.getFoodRenderList(dino.type().diet);
