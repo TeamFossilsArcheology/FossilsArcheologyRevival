@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
+import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
@@ -84,13 +85,8 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
-    }
-
-    @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
+    public boolean canAttackType(EntityType<?> entityType) {
+        return !entityType.equals(ModEntities.DEINONYCHUS.get()) && super.canAttackType(entityType);
     }
 
     @Override
@@ -99,8 +95,23 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
     }
 
     @Override
+    public float getTargetScale() {
+        return 2;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public PrehistoricEntityTypeAI.Response aiResponseType() {
+        return isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

@@ -77,17 +77,12 @@ public class Megalograptus extends PrehistoricSwimming {
 
     @Override
     public double swimSpeed() {
-        return 1;
+        return 0.5;
     }
 
     @Override
     public PrehistoricEntityType type() {
         return PrehistoricEntityType.MEGALOGRAPTUS;
-    }
-
-    @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
     }
 
     @Override
@@ -99,6 +94,11 @@ public class Megalograptus extends PrehistoricSwimming {
     @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

@@ -72,11 +72,6 @@ public class Dryosaurus extends Prehistoric {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.STICK;
     }
@@ -84,6 +79,11 @@ public class Dryosaurus extends Prehistoric {
     @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

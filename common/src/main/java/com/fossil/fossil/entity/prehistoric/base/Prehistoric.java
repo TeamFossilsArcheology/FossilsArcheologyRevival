@@ -88,6 +88,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MATING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
@@ -114,7 +116,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public float ridingXZ;
     public boolean shouldWander = true;
     public ResourceLocation textureLocation;
-    public DinoAIMating matingGoal;
+    public DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
     protected boolean isJumping;
     private Gender gender; // should be effectively final
@@ -208,7 +210,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean canBeCollidedWith() {
-        return !isCustomMultiPart();
+        return false;
     }
 
     @Override
@@ -280,13 +282,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
-        //return this.getType().getDimensions().scale(this.getScale());
-        return this.getType().getDimensions();
+        return this.getType().getDimensions().scale(this.getScale());
+        //return this.getType().getDimensions();
     }
 
     @Override
     protected void registerGoals() {
-        matingGoal = new DinoAIMating(this, getAttributeValue(Attributes.MOVEMENT_SPEED));
+        matingGoal = new DinoMatingGoal(this, getAttributeValue(Attributes.MOVEMENT_SPEED));
         goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(2, matingGoal);
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
@@ -299,17 +301,17 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(AGE_TICK, 0);
-        this.entityData.define(MATING_TICK, random.nextInt(6000) + 6000);
-        entityData.define(moodSystem.PLAYING_TICK, random.nextInt(6000) + 6000);
-        this.entityData.define(HUNGER, 0);
-        this.entityData.define(MODELIZED, false);
-        this.entityData.define(FLEEING, false);
-        this.entityData.define(SLEEPING, false);
-        this.entityData.define(CLIMBING, (byte) 0);
-        entityData.define(moodSystem.MOOD, 0);
-        this.entityData.define(AGING_DISABLED, false);
-        this.entityData.define(CURRENT_ANIMATION, initialAnimation().animationId);
+        entityData.define(AGE_TICK, 0);
+        entityData.define(MATING_TICK, random.nextInt(6000) + 6000);
+        entityData.define(PLAYING_TICK, random.nextInt(6000) + 6000);
+        entityData.define(HUNGER, 0);
+        entityData.define(MODELIZED, false);
+        entityData.define(FLEEING, false);
+        entityData.define(SLEEPING, false);
+        entityData.define(CLIMBING, (byte) 0);
+        entityData.define(MOOD, 0);
+        entityData.define(AGING_DISABLED, false);
+        entityData.define(CURRENT_ANIMATION, initialAnimation().animationId);
 
         CompoundTag tag = new CompoundTag();
         tag.putDouble("x", position().x);
@@ -665,7 +667,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         refreshDimensions();
         if (!isSkeleton()) {
             if (!isAgingDisabled()) {
-                setAge(getAge() + 1);
+                setAgeInTicks(getAge() + 1);
                 if (getAge() % 24000 == 0) {
                     grow(0);
                 }
@@ -835,14 +837,18 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public float getScale() {
         float step = (data().maxScale() - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
-        if (getAgeInDays() > data().adultAgeDays()) {
-            return data().minScale() + (step * data().adultAgeDays() * 24000);
+        if (getAgeInDays() >= data().adultAgeDays()) {
+            return data().maxScale();
         }
         return data().minScale() + (step * getAge());
     }
 
+    protected float getGenderedScale() {
+        return 1;
+    }
+
     public float getModelScale() {
-        return getScale();
+        return getScale() * getGenderedScale();
     }
 
     @Override
@@ -924,7 +930,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void setAgeInDays(int days) {
-        setAge(days * 24000);
+        setAgeInTicks(days * 24000);
     }
 
     @Override
@@ -932,17 +938,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return entityData.get(AGE_TICK);
     }
 
-    @Override
-    public void setAge(int age) {
+    public void setAgeInTicks(int age) {
         if (isAgingDisabled()) {
             return;
         }
         entityData.set(AGE_TICK, age);
-        if (age % 20 == 0) {
+        if (tickCount % 20 == 0) {
             refreshTexturePath();
             refreshDimensions();
         }
-        super.setAge(age);
+    }
+
+    @Override
+    public void setAge(int age) {
     }
 
     public boolean isAgingDisabled() {
@@ -1290,21 +1298,15 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    public boolean canDinoHunt(LivingEntity target, boolean hunger) {
+    public boolean canDinoHunt(LivingEntity target) {
         if (target instanceof ToyBase) {
             return true;
         }
-        boolean b = true;
         if (target != null) {
-            b = FoodMappings.getMobFoodPoints(target, type().diet) > 0;
-        }
-        if (this.type().diet != Diet.HERBIVORE && this.type().diet != Diet.NONE && b && canAttack(target)) {
-            //target instanceof Prehistoric dino ? getBbWidth() * getTargetScale() >= dino.getActualWidth() : getBbWidth() * getTargetScale() >= target.getBbWidth()
-            if (this.getBbWidth() * getTargetScale() >= target.getBbWidth()) {
-                if (hunger) {
+            boolean isFood = FoodMappings.getMobFoodPoints(target, type().diet) > 0;
+            if (type().diet != Diet.HERBIVORE && type().diet != Diet.NONE && isFood && canAttack(target)) {
+                if (getBbWidth() * getTargetScale() >= target.getBbWidth()) {
                     return isHungry();
-                } else {
-                    return true;
                 }
             }
         }
@@ -1312,7 +1314,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public float getTargetScale() {
-        return 1.0F;
+        return 1;
     }
 
     @Override
@@ -1345,7 +1347,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         if (random.nextInt(100) == 0 || calendar.get(Calendar.MONTH) + 1 == 4 && calendar.get(Calendar.DATE) == 1) {
-            playSound(ModSounds.MATING_MUSIC.get(), 1, 1);
+            playSound(ModSounds.MUSIC_MATING.get(), 1, 1);
         }
         if (!level.isClientSide) {
             Entity hatchling;

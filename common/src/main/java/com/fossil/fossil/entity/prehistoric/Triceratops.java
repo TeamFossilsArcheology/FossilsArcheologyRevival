@@ -157,42 +157,20 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Response aiResponseType() {
-
-        return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.STICK;
     }
-
-    @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-
-   /* @Override
-    protected SoundEvent getAmbientSound() {
-        return FASoundRegistry.TRICERATOPS_LIVING;
-    }
-
-    @Override
-    protected SoundEvent getHurtSound(DamageSource source) {
-        return FASoundRegistry.TRICERATOPS_HURT;
-    }
-
-    @Override
-    protected SoundEvent getDeathSound() {
-        return FASoundRegistry.TRICERATOPS_DEATH;
-    }*/
 
     @Override
     public EntityDataManager.Data data() {
         return data;
     }
 
+    @Override
+    public PrehistoricEntityTypeAI.Response aiResponseType() {
+
+        return isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
+    }
     @Override
     public double getPassengersRidingOffset() {
         return super.getPassengersRidingOffset() + 0.5;
@@ -201,6 +179,11 @@ public class Triceratops extends Prehistoric {
     @Override
     public AnimationFactory getFactory() {
         return factory;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

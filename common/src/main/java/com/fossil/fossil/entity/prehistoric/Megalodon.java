@@ -8,6 +8,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
@@ -110,18 +111,33 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return ModItems.SKULL_STICK.get();
     }
 
     @Override
+    protected float getGenderedScale() {
+        return getGender() == Gender.MALE ? 0.8f : super.getGenderedScale();
+    }
+
+    @Override
+    public float getTargetScale() {
+        return 2;
+    }
+
+    @Override
+    public boolean canHuntMobsOnLand() {
+        return false;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

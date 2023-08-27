@@ -8,6 +8,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.util.Gender;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
@@ -85,6 +86,12 @@ public class Pteranodon extends PrehistoricFlying implements PrehistoricLeaping 
     public Item getOrderItem() {
         return Items.ARROW;
     }
+
+    @Override
+    protected float getGenderedScale() {
+        return getGender() == Gender.MALE ? 1.3f : super.getGenderedScale();
+    }
+
 
     @Override
     public EntityDataManager.Data data() {

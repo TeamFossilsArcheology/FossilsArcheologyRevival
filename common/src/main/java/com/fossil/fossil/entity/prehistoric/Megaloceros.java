@@ -5,7 +5,9 @@ import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
@@ -76,11 +78,6 @@ public class Megaloceros extends Prehistoric {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.STICK;
     }
@@ -88,6 +85,16 @@ public class Megaloceros extends Prehistoric {
     @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public PrehistoricEntityTypeAI.Response aiResponseType() {
+        return getGender() == Gender.MALE && !isBaby() ? PrehistoricEntityTypeAI.Response.TERRITORIAL : PrehistoricEntityTypeAI.Response.SCARED;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

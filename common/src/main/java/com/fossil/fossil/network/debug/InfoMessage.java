@@ -43,7 +43,7 @@ public class InfoMessage {
         if (entity instanceof Prehistoric prehistoric) {
             contextSupplier.get().queue(() -> {
                 prehistoric.setGender(Gender.valueOf(gender));
-                prehistoric.setAge(ageInTicks);
+                prehistoric.setAgeInTicks(ageInTicks);
                 prehistoric.setMatingTick(ticksTillMate);
                 prehistoric.moodSystem.setPlayingTick(ticksTillPlay);
                 prehistoric.moodSystem.setMood(mood);

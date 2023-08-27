@@ -2,6 +2,7 @@ package com.fossil.fossil.event;
 
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.AnimalFearGoal;
+import com.fossil.fossil.entity.prehistoric.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
@@ -13,6 +14,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
@@ -76,8 +78,12 @@ public class ModEvents {
                 newEntity = newHorse.getBreedOffspring(level, newHorse);
             }
         }
-        //TODO: Quagga
-        if (newEntity instanceof Prehistoric prehistoric) {
+        if (newEntity instanceof Quagga newQuagga) {
+            double health = parent.getAttribute(Attributes.MAX_HEALTH).getBaseValue() + newQuagga.getAttribute(Attributes.MAX_HEALTH).getBaseValue() + newQuagga.getAttribute(Attributes.MAX_HEALTH).getBaseValue();
+            newQuagga.getAttribute(Attributes.MAX_HEALTH).setBaseValue(health / 3);
+            double speed = parent.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() + newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() + newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
+            newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed / 3);
+        } else if (newEntity instanceof Prehistoric prehistoric) {
             Player player = level.getNearestPlayer(parent, 15);
             if (player != null) {
                 prehistoric.tame(player);

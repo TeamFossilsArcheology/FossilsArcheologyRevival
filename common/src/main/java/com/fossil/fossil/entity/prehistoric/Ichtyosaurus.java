@@ -80,7 +80,7 @@ public class Ichtyosaurus extends PrehistoricSwimming {
 
     @Override
     public double swimSpeed() {
-        return 1;
+        return 0.75;
     }
 
     @Override
@@ -89,18 +89,23 @@ public class Ichtyosaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.NAUTILUS_SHELL;
     }
 
     @Override
+    protected boolean canHuntMobsOnLand() {
+        return false;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

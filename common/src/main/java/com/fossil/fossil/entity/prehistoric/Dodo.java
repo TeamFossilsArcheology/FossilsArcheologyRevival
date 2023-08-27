@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
@@ -83,6 +84,11 @@ public class Dodo extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
+    }
+
+    @Override
+    protected float getGenderedScale() {
+        return getGender() == Gender.MALE ? 1.25f : super.getGenderedScale();
     }
 
     @Override

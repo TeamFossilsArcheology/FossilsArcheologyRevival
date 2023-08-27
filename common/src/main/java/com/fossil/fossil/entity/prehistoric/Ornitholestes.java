@@ -75,18 +75,23 @@ public class Ornitholestes extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.BONE;
     }
 
     @Override
+    public float getTargetScale() {
+        return 1.5f;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

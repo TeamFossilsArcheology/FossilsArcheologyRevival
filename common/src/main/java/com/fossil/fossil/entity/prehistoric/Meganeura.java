@@ -86,11 +86,6 @@ public class Meganeura extends PrehistoricSwimming {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.ARROW;
     }
@@ -98,6 +93,11 @@ public class Meganeura extends PrehistoricSwimming {
     @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

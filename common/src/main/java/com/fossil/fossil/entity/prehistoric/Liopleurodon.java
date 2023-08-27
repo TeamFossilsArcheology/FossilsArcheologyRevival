@@ -74,8 +74,13 @@ public class Liopleurodon extends PrehistoricSwimming {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
+    public void aiStep() {
+        super.aiStep();
+        if (getTarget() != null) {
+            if (canReachPrey()) {
+                //
+            }
+        }
     }
 
     @Override
@@ -84,8 +89,28 @@ public class Liopleurodon extends PrehistoricSwimming {
     }
 
     @Override
+    protected boolean canHuntMobsOnLand() {
+        return false;
+    }
+
+    @Override
+    public boolean isAmphibious() {
+        return false;
+    }
+
+    @Override
+    public double swimSpeed() {
+        return 6;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override
@@ -116,16 +141,6 @@ public class Liopleurodon extends PrehistoricSwimming {
     @Override
     public AnimationFactory getFactory() {
         return factory;
-    }
-
-    @Override
-    public boolean isAmphibious() {
-        return false;
-    }
-
-    @Override
-    public double swimSpeed() {
-        return 6;
     }
 
     @Nullable

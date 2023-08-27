@@ -124,13 +124,13 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
                 songTick = 0;
             }
             if (songTick == 1) {
-                MusicHandler.startMusic(ModSounds.ANU_MUSIC.get());
+                MusicHandler.startMusic(ModSounds.MUSIC_ANU.get());
             }
             if (!isAlive()) {
-                MusicHandler.stopMusic(ModSounds.ANU_MUSIC.get());
+                MusicHandler.stopMusic(ModSounds.MUSIC_ANU.get());
             }
             if (lastHurtByPlayer != null && !lastHurtByPlayer.isAlive()) {
-                MusicHandler.stopMusic(ModSounds.ANU_MUSIC.get());
+                MusicHandler.stopMusic(ModSounds.MUSIC_ANU.get());
             }
         }
         super.aiStep();

@@ -80,6 +80,11 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
+    public float getTargetScale() {
+        return 2;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
     }

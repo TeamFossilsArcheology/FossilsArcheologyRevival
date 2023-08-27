@@ -74,7 +74,12 @@ public class Mosasaurus extends PrehistoricSwimming {
 
     @Override
     public double swimSpeed() {
-        return 1;
+        return 1.2;
+    }
+
+    @Override
+    public boolean doesBreachAttack() {
+        return true;
     }
 
     @Override
@@ -83,18 +88,28 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return ModItems.SKULL_STICK.get();
     }
 
     @Override
+    public float getTargetScale() {
+        return 2;
+    }
+
+    @Override
+    protected boolean canHuntMobsOnLand() {
+        return false;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

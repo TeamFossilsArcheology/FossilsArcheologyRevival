@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
+import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
@@ -81,8 +82,8 @@ public class Deinonychus extends Prehistoric implements PrehistoricLeaping, Preh
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
+    public boolean canAttackType(EntityType<?> entityType) {
+        return !entityType.equals(ModEntities.VELOCIRAPTOR.get()) && super.canAttackType(entityType);
     }
 
     @Override
@@ -91,8 +92,18 @@ public class Deinonychus extends Prehistoric implements PrehistoricLeaping, Preh
     }
 
     @Override
+    public float getTargetScale() {
+        return 2;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

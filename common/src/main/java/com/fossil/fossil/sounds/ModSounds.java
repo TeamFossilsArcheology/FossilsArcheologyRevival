@@ -16,8 +16,8 @@ public class ModSounds {
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_first_dinosaur")));
     public static final RegistrySupplier<SoundEvent> MUSIC_SCARAB = SOUND_EVENTS.register("music_scarab",
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_scarab")));
-    public static final RegistrySupplier<SoundEvent> MUSIC_DISCOVERY = SOUND_EVENTS.register("record_discovery",
-            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "record_discovery")));
+    public static final RegistrySupplier<SoundEvent> MUSIC_DISCOVERY = SOUND_EVENTS.register("music_discovery",
+            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_discovery")));
     public static final RegistrySupplier<SoundEvent> MUSIC_MATING = SOUND_EVENTS.register("music_mating",
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_mating")));
     public static final RegistrySupplier<SoundEvent> ANU_TOTEM = SOUND_EVENTS.register("anu_totem",
@@ -28,12 +28,10 @@ public class ModSounds {
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "anu_death")));
     public static final RegistrySupplier<SoundEvent> ANU_LAUGH = SOUND_EVENTS.register("anu_laugh",
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "anu_laugh")));
-    public static final RegistrySupplier<SoundEvent> ANU_MUSIC = SOUND_EVENTS.register("anu_music",
-            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "anu_music")));
+    public static final RegistrySupplier<SoundEvent> MUSIC_ANU = SOUND_EVENTS.register("music_anu",
+            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_anu")));
     public static final RegistrySupplier<SoundEvent> DRUM_SINGLE = SOUND_EVENTS.register("drum_single",
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "drum_single")));
-    public static final RegistrySupplier<SoundEvent> MATING_MUSIC = SOUND_EVENTS.register("mating_music",
-            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "mating_music")));
     public static final RegistrySupplier<SoundEvent> TAR = SOUND_EVENTS.register("tar",
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "tar")));
     public static final RegistrySupplier<SoundEvent> WHIP = SOUND_EVENTS.register("whip",

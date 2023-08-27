@@ -1,17 +1,12 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
 public class MoodSystem {
-    public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private final Prehistoric prehistoric;
     private int moodCheckCooldown = 0;
 
@@ -57,11 +52,11 @@ public class MoodSystem {
     }
 
     public int getMood() {
-        return Mth.clamp(prehistoric.getEntityData().get(MOOD), -100, 100);
+        return Mth.clamp(prehistoric.getEntityData().get(Prehistoric.MOOD), -100, 100);
     }
 
     public void setMood(int mood) {
-        prehistoric.getEntityData().set(MOOD, Mth.clamp(mood, -100, 100));
+        prehistoric.getEntityData().set(Prehistoric.MOOD, Mth.clamp(mood, -100, 100));
     }
 
     public void increaseMood(int mood) {
@@ -84,11 +79,11 @@ public class MoodSystem {
     }
 
     public int getPlayingTick() {
-        return prehistoric.getEntityData().get(PLAYING_TICK);
+        return prehistoric.getEntityData().get(Prehistoric.PLAYING_TICK);
     }
 
     public void setPlayingTick(int ticks) {
-        prehistoric.getEntityData().set(PLAYING_TICK, ticks);
+        prehistoric.getEntityData().set(Prehistoric.PLAYING_TICK, ticks);
     }
 
     public void useToy(int playBonus) {

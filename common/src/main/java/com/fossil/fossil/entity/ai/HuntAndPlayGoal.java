@@ -31,8 +31,7 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
         if (target instanceof ToyBase && moodSystem.getPlayingTick() <= 0) {
             return true;
         }
-        double targetWidth = target.getBoundingBox().getSize();
-        if (dino.getBoundingBox().getSize() * dino.getTargetScale() < targetWidth) {
+        if (dino.getBoundingBox().getSize() * dino.getTargetScale() < target.getBoundingBox().getSize()) {
             return false;
         }
         if (target instanceof Player player) {
@@ -44,11 +43,11 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
             } else if (moodSystem.getMoodFace() == PrehistoricMoodType.ANGRY || (moodSystem.getMoodFace() == PrehistoricMoodType.SAD && !dino.isOwnedBy(target))) {
                 return true;
             } else {
-                return !dino.isOwnedBy(target) && dino.canDinoHunt(target, true);
+                return !dino.isOwnedBy(target) && dino.canDinoHunt(target);
             }
         }
         if (FoodMappings.getMobFoodPoints(target, dino.type().diet) > 0 || dino.aiResponseType() == PrehistoricEntityTypeAI.Response.AGGRESSIVE) {
-            return !dino.isOwnedBy(target) && dino.canDinoHunt(target, true);
+            return !dino.isOwnedBy(target) && dino.canDinoHunt(target);
         }
         return false;
     }

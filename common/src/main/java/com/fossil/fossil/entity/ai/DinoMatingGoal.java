@@ -6,16 +6,18 @@ import com.fossil.fossil.util.Gender;
 import net.minecraft.world.entity.ai.goal.Goal;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.EnumSet;
 import java.util.List;
 
-public class DinoAIMating extends Goal {
+public class DinoMatingGoal extends Goal {
     private final double speedModifier;
     private final Prehistoric male;
     private Prehistoric female;
 
-    public DinoAIMating(Prehistoric dinosaur, double speed) {
+    public DinoMatingGoal(Prehistoric dinosaur, double speed) {
         this.male = dinosaur;
         this.speedModifier = speed;
+        setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     @Override

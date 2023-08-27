@@ -1,6 +1,8 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 
+import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.sounds.MusicHandler;
 import com.mojang.logging.LogUtils;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
@@ -45,12 +47,12 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public float scale;
     private PrehistoricEntityType prehistoricEntityType;
 
-    public DinosaurEgg(EntityType<? extends DinosaurEgg> type, Level level) {
+    public DinosaurEgg(EntityType<DinosaurEgg> type, Level level) {
         super(type, level);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 2D);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 2);
     }
 
     /**
@@ -68,7 +70,9 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
             if (prehistoric.isTameable() && player != null && prehistoric.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
                 prehistoric.tame(player);
                 //TODO: First Hatch music
-                prehistoric.setOwnerDisplayName(player.getDisplayName());
+                if (false) {
+                    MusicHandler.startMusic(ModSounds.MUSIC_FIRST_DINOSAUR.get());
+                }
                 if (hatchMessage) {
                     player.displayClientMessage(EGG_HATCHED, false);
                 }
@@ -155,7 +159,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
                     ((random.nextFloat() - random.nextFloat()) * 0.7f + 1) * 2);
             kill();
         }
-        return super.hurt(source, amount);//TODO: Needed?
+        return super.hurt(source, amount);
     }
 
     @Override

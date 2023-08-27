@@ -34,7 +34,7 @@ public class ModItems {
     public static final RegistrySupplier<RecordItem> RECORD_BONES = ITEMS.register("record_bones",
             () -> CustomRecordItem.get(0, ModSounds.MUSIC_BONES, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<RecordItem> RECORD_ANU = ITEMS.register("record_anu",
-            () -> CustomRecordItem.get(1, ModSounds.ANU_MUSIC, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+            () -> CustomRecordItem.get(1, ModSounds.MUSIC_ANU, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<RecordItem> RECORD_SCARAB = ITEMS.register("record_scarab",
             () -> CustomRecordItem.get(2, ModSounds.MUSIC_SCARAB, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<RecordItem> RECORD_DISCOVERY = ITEMS.register("record_discovery",

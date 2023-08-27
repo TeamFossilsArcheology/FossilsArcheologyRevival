@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
@@ -75,18 +76,23 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.STICK;
     }
 
     @Override
+    protected float getGenderedScale() {
+        return getGender() == Gender.MALE ? 1.15f : super.getGenderedScale();
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

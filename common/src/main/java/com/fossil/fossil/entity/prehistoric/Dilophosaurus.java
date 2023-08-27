@@ -95,11 +95,6 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.BONE;
     }
@@ -107,6 +102,11 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

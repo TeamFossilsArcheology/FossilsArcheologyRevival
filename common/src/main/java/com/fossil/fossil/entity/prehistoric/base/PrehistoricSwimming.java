@@ -342,15 +342,15 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     @Override
-    public boolean canDinoHunt(LivingEntity target, boolean hunger) {
+    public boolean canDinoHunt(LivingEntity target) {
         if (doesBreachAttack() && isOverWater(target)) {
-            return super.canDinoHunt(target, hunger);
+            return super.canDinoHunt(target);
         }
-        return super.canDinoHunt(target, hunger) && (target.isInWater() || canHuntMobsOnLand());
+        return super.canDinoHunt(target) && (target.isInWater() || canHuntMobsOnLand());
     }
 
     protected boolean canHuntMobsOnLand() {
-        return false;
+        return true;
     }
 
     public boolean doesBreachAttack() {

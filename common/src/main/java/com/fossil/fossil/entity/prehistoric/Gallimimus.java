@@ -12,6 +12,7 @@ import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
@@ -89,6 +90,11 @@ public class Gallimimus extends PrehistoricFlocking {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
+    }
+
+    @Override
+    public boolean canDinoHunt(LivingEntity target) {
+        return isEntitySmallerThan(target, 0.6f) && super.canDinoHunt(target);
     }
 
     @Override

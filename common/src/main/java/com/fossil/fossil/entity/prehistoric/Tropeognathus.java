@@ -89,11 +89,6 @@ public class Tropeognathus extends PrehistoricFlying {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return Items.STICK;
     }
@@ -121,6 +116,11 @@ public class Tropeognathus extends PrehistoricFlying {
         }
 
         return getAllAnimations().get(key);
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override

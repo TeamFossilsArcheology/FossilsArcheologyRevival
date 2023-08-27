@@ -88,18 +88,23 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public Item getOrderItem() {
         return ModItems.SKULL_STICK.get();
     }
 
     @Override
+    public float getTargetScale() {
+        return 2;
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
+    }
+
+    @Override
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
+        return allAnimations.get();
     }
 
     @Override
