@@ -16,9 +16,15 @@ public class ModBlockModelProvider extends BlockModelProvider {
 
     }
 
-    public void registerExisting(ResourceLocation... resourceLocation) {
+    public void registerExistingTexture(ResourceLocation... resourceLocation) {
         for (ResourceLocation location : resourceLocation) {
             existingFileHelper.trackGenerated(location, TEXTURE);
+        }
+    }
+
+    public void registerExistingModel(ResourceLocation... resourceLocation) {
+        for (ResourceLocation location : resourceLocation) {
+            existingFileHelper.trackGenerated(location, MODEL);
         }
     }
 }

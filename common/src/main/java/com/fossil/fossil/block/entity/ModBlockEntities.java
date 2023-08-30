@@ -8,11 +8,8 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-
-import java.util.function.Supplier;
 
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
@@ -28,8 +25,6 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(BubbleBlowerBlockEntity::new, ModBlocks.BUBBLE_BLOWER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> CULTIVATE = BLOCK_ENTITIES.register("cultivate",
             () -> BlockEntityType.Builder.of(CultivateBlockEntity::get, ModBlocks.CULTIVATE.get()).build(null));
-    public static final RegistrySupplier<BlockEntityType<VaseBlockEntity>> VASE = BLOCK_ENTITIES.register("vase",
-            () -> BlockEntityType.Builder.of(VaseBlockEntity::new, ModBlocks.VASES.stream().map(Supplier::get).toArray(Block[]::new)).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> WORKTABLE = BLOCK_ENTITIES.register("worktable",
             () -> BlockEntityType.Builder.of(WorktableBlockEntity::get, ModBlocks.WORKTABLE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<FeederBlockEntity>> FEEDER = BLOCK_ENTITIES.register("feeder",

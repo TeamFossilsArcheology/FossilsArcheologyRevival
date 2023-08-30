@@ -14,6 +14,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.*;
@@ -65,10 +66,16 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SARCOPHAGUS = registerBlockWithCustomBlockItem("sarcophagus",
             () -> new SarcophagusBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
             block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+    public static final RegistrySupplier<Block> SHELL= registerBlock("shell",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE)));
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> AMBER_BLOCK = registerBlock("amber_block",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
+                    .isViewBlocking(ModBlocks::never)));
+    public static final RegistrySupplier<Block> AMBER_CHUNK = registerBlock("amber_chunk",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
+                    .isViewBlocking(ModBlocks::never)));
     public static final RegistrySupplier<IcedStoneBlock> ICED_STONE = registerBlock("iced_stone",
             () -> new IcedStoneBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 10f).requiresCorrectToolForDrops()
                     .sound(SoundType.GLASS).randomTicks()));
@@ -214,9 +221,6 @@ public class ModBlocks {
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_PORCELAIN = registerKylix(VaseBlock.VaseVariant.PORCELAIN);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = registerAmphora(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = registerAmphora(VaseBlock.VaseVariant.RESTORED);
-    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RED_FIGURE = registerAmphora(VaseBlock.VaseVariant.RED_FIGURE);
-    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_BLACK_FIGURE = registerAmphora(VaseBlock.VaseVariant.BLACK_FIGURE);
-    public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_PORCELAIN = registerAmphora(VaseBlock.VaseVariant.PORCELAIN);
     public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFigurine("steve_broken");
     public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFigurine("steve_damaged");
     public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFigurine("steve_pristine");
@@ -248,19 +252,27 @@ public class ModBlocks {
     }
 
     private static RegistrySupplier<VaseBlock> registerVolute(VaseBlock.VaseVariant variant) {
-        return registerVase("volute", variant, () -> new VoluteVaseBlock(variant));
+        return registerVase("volute", variant.getSerializedName(), VoluteVaseBlock::new);
     }
 
     private static RegistrySupplier<VaseBlock> registerKylix(VaseBlock.VaseVariant variant) {
-        return registerVase("kylix", variant, () -> new KylixVaseBlock(variant));
+        return registerVase("kylix", variant.getSerializedName(), KylixVaseBlock::new);
     }
 
     private static RegistrySupplier<VaseBlock> registerAmphora(VaseBlock.VaseVariant variant) {
-        return registerVase("amphora", variant, () -> new AmphoraVaseBlock(variant));
+        return registerVase("amphora", variant.getSerializedName(), AmphoraVaseBlock::new);
+    }
+    static {
+        for (DyeColor color : DyeColor.values()) {
+            registerAmphora(color);
+        }
     }
 
-    private static RegistrySupplier<VaseBlock> registerVase(String name, VaseBlock.VaseVariant variant, Supplier<VaseBlock> supplier) {
-        var toReturn = registerBlock("vase_" + name + "_" + variant.getSerializedName(), supplier);
+    private static RegistrySupplier<VaseBlock> registerAmphora(DyeColor color) {
+        return registerVase("amphora", color.getSerializedName(), AmphoraVaseBlock::new);
+    }
+    private static RegistrySupplier<VaseBlock> registerVase(String name, String variant, Supplier<VaseBlock> supplier) {
+        var toReturn = registerBlock("vase_" + name + "_" + variant, supplier);
         VASES.add(toReturn);
         return toReturn;
     }

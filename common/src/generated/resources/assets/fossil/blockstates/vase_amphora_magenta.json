@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/vases/vase_amphora_magenta"
+    },
+    "facing=south": {
+      "model": "fossil:block/vases/vase_amphora_magenta",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/vases/vase_amphora_magenta",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "fossil:block/vases/vase_amphora_magenta",
+      "y": 90
+    }
+  }
+}

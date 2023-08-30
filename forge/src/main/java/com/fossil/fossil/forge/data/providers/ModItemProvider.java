@@ -133,6 +133,11 @@ public class ModItemProvider extends ItemModelProvider {
         builder(resourceLocation, item);
     }
 
+    public void vaseItem(ResourceLocation blockLocation) {
+        ResourceLocation resourceLocation = new ResourceLocation(blockLocation.getNamespace(), "item/vases/" + blockLocation.getPath());
+        builder(resourceLocation, blockLocation);
+    }
+
     private void builder(ResourceLocation resourceLocation, ResourceLocation item) {
         existingFileHelper.trackGenerated(resourceLocation, TEXTURE);//hack because I cant find if and how architectury does --existing
         getBuilder(item.toString())

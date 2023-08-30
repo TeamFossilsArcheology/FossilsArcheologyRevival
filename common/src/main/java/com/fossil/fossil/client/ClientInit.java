@@ -2,6 +2,7 @@ package com.fossil.fossil.client;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.custom_blocks.VaseBlock;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.client.gui.*;
@@ -131,10 +132,9 @@ public class ClientInit {
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
             RenderTypeRegistry.register(RenderType.cutout(), type.getPlantBlock());
         }
-        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.AMPHORA_VASE_DAMAGED.get());
-        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.KYLIX_VASE_DAMAGED.get());
-        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.VOLUTE_VASE_DAMAGED.get());
-
+        for (RegistrySupplier<VaseBlock> vase : ModBlocks.VASES) {
+            RenderTypeRegistry.register(RenderType.cutout(), vase.get());
+        }
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CORDAITES_DOOR.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CORDAITES_TRAPDOOR.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CORDAITES_LEAVES.get());
@@ -148,6 +148,9 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CULTIVATE.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANU_PORTAL.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.HOME_PORTAL.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_BLOCK.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SHELL.get());
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
         MenuScreens.register(ModMenus.CULTIVATE.get(), CultivateScreen::new);
@@ -169,7 +172,6 @@ public class ClientInit {
             }
             return EventResult.pass();
         });
-        BlockEntityRendererRegistry.register(ModBlockEntities.VASE.get(), VaseRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_STATUE.get(), AnuStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.SARCOPHAGUS.get(), SarcophagusRenderer::new);
