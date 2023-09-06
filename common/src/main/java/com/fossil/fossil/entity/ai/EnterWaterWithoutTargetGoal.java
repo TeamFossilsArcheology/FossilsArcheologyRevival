@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.material.Material;
 
+import java.util.EnumSet;
 import java.util.Random;
 
 /**
@@ -20,6 +21,7 @@ public class EnterWaterWithoutTargetGoal extends Goal {
     public EnterWaterWithoutTargetGoal(Prehistoric dino, double speedModifier) {
         this.dino = dino;
         this.speedModifier = speedModifier;
+        setFlags(EnumSet.of(Flag.MOVE));
     }
 
     @Override

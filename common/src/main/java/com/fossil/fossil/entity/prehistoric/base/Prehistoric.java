@@ -293,6 +293,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, getAttributeValue(Attributes.MOVEMENT_SPEED));
+        goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(2, matingGoal);
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
@@ -365,29 +366,30 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        this.setHunger(compound.getInt("Hunger"));
-        this.setFleeing(compound.getBoolean("Fleeing"));
-        this.setSkeleton(compound.getBoolean("isModelized"));
-        this.setTame(compound.getBoolean("DinoTamed"));
+        setAgeInTicks(compound.getInt("Age"));
+        setHunger(compound.getInt("Hunger"));
+        setFleeing(compound.getBoolean("Fleeing"));
+        setSkeleton(compound.getBoolean("isModelized"));
+        setTame(compound.getBoolean("DinoTamed"));
         if ("female".equalsIgnoreCase(compound.getString("Gender"))) {
             setGender(Gender.FEMALE);
         } else {
             setGender(Gender.MALE);
         }
-        this.setSleeping(compound.getBoolean("Sleeping"));
-        this.setOrderedToSit(compound.getBoolean("Sitting"));
-        this.setAgingDisabled(compound.getBoolean("AgingDisabled"));
+        setSleeping(compound.getBoolean("Sleeping"));
+        setOrderedToSit(compound.getBoolean("Sitting"));
+        setAgingDisabled(compound.getBoolean("AgingDisabled"));
         moodSystem.setMood(compound.getInt("Mood"));
         if (compound.contains("currentOrder")) {
             setOrder(OrderType.values()[compound.getByte("currentOrder")]);
         }
         moodSystem.setPlayingTick(compound.getInt("TicksTillPlay"));
-        this.ticksClimbing = compound.getInt("TicksClimbing");
+        ticksClimbing = compound.getInt("TicksClimbing");
         setMatingTick(compound.getInt("TicksTillMate"));
-        this.ticksSlept = compound.getInt("TicksSlept");
-        this.yBodyRot = compound.getInt("YawRotation");
-        this.yHeadRot = compound.getInt("HeadRotation");
-        this.cathermalSleepCooldown = compound.getInt("CathermalTimer");
+        ticksSlept = compound.getInt("TicksSlept");
+        yBodyRot = compound.getInt("YawRotation");
+        yHeadRot = compound.getInt("HeadRotation");
+        cathermalSleepCooldown = compound.getInt("CathermalTimer");
         refreshTexturePath();
     }
 

@@ -6,6 +6,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Material;
 
+import java.util.EnumSet;
 import java.util.Random;
 
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_ON_LAND;
@@ -27,6 +28,7 @@ public class EnterWaterWithTargetGoal extends Goal {
         this.dino = dino;
         this.searchRange = searchRange;
         this.speedModifier = speedModifier;
+        setFlags(EnumSet.of(Flag.MOVE));
     }
 
     private static boolean shouldEnterWater(PrehistoricSwimming dino) {

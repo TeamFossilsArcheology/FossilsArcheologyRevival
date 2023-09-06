@@ -7,6 +7,8 @@ import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.phys.Vec3;
 
+import java.util.EnumSet;
+
 /**
  * A Goal that will move a fleeing entity to a random spot away from its attacker
  */
@@ -18,6 +20,7 @@ public class FleeBattleGoal extends Goal {
     public FleeBattleGoal(Prehistoric dino, double speedModifier) {
         this.dino = dino;
         this.speedModifier = speedModifier;
+        setFlags(EnumSet.of(Flag.MOVE));
     }
 
     @Override

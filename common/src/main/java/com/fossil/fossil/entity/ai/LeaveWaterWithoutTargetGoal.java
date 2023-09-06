@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 
+import java.util.EnumSet;
 import java.util.Random;
 
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_IN_WATER;
@@ -21,6 +22,7 @@ public class LeaveWaterWithoutTargetGoal extends Goal {
     public LeaveWaterWithoutTargetGoal(PrehistoricSwimming dino, double speedModifier) {
         this.dino = dino;
         this.speedModifier = speedModifier;
+        setFlags(EnumSet.of(Flag.MOVE));
     }
 
     private static boolean shouldLeaveWater(PrehistoricSwimming dino) {

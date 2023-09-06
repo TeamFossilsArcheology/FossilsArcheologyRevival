@@ -4,7 +4,6 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import net.minecraft.world.entity.ai.goal.PanicGoal;
 
-//TODO: Should this be added to all dinos with babies?
 public class DinoPanicGoal extends PanicGoal {
 
     public DinoPanicGoal(Prehistoric dino, double speedModifier) {
