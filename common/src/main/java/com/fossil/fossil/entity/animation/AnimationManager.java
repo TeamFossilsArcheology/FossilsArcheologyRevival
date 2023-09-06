@@ -51,7 +51,9 @@ public class AnimationManager extends SimpleJsonResourceReloadListener {
                     ILoopType loop = loopElement == null ? ILoopType.EDefaultLoopTypes.PLAY_ONCE :
                             "true".equals(loopElement.getAsString()) ? ILoopType.EDefaultLoopTypes.LOOP : ILoopType.EDefaultLoopTypes.valueOf(loopElement.getAsString().toUpperCase());
 
-                    innerBuilder.add(new Animation(animationEntry.getKey(), animationLength, loop));
+                    JsonElement delayElement = animationJsonObject.get("attack_delay");
+                    int attackDelay = delayElement == null ? 0 : delayElement.getAsInt();
+                    innerBuilder.add(new Animation(animationEntry.getKey(), animationLength, loop, attackDelay));
                 }
                 builder.put(fileEntry.getKey().getPath() + ".json", innerBuilder.build());
             } catch (Exception e) {
@@ -65,6 +67,6 @@ public class AnimationManager extends SimpleJsonResourceReloadListener {
         return animations.getOrDefault(animationFile, ImmutableList.of());
     }
 
-    public record Animation(String animationId, double animationLength, ILoopType loop) {
+    public record Animation(String animationId, double animationLength, ILoopType loop, int attackDelay) {
     }
 }

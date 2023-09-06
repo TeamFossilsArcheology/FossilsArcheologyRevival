@@ -53,7 +53,7 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
                 case ATTACK_NORMAL1, ATTACK_NORMAL2 ->
-                        info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
+                        info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);

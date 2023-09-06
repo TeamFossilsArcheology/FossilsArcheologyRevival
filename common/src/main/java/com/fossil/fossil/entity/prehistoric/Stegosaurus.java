@@ -53,7 +53,7 @@ Stegosaurus extends Prehistoric {
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
                 case ATTACK_FRONT1, ATTACK_FRONT2 ->
-                        info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
+                        info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);

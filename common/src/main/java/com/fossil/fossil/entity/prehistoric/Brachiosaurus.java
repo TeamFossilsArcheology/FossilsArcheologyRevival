@@ -35,7 +35,7 @@ public class Brachiosaurus extends Prehistoric {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
+                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }

@@ -21,10 +21,12 @@
       "animation_length": 2.6
     },
     "fa.therizinosaurus.attack1": {
-      "animation_length": 1.04
+      "animation_length": 1.04,
+      "attack_delay": 15
     },
     "fa.therizinosaurus.attack2": {
-      "animation_length": 1.28
+      "animation_length": 1.28,
+      "attack_delay": 16
     },
     "fa.therizinosaurus.eat": {
       "animation_length": 3.12

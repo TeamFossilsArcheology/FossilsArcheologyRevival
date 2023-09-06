@@ -20,7 +20,8 @@
       "animation_length": 2.04
     },
     "fa.tropeognathus.biteattack": {
-      "animation_length": 1.24
+      "animation_length": 1.24,
+      "attack_delay": 16
     },
     "fa.tropeognathus.biteeatwater": {
       "animation_length": 2.48
@@ -34,10 +35,12 @@
       "animation_length": 2.08
     },
     "fa.tropeognathus.biteattackwater": {
-      "animation_length": 2.08
+      "animation_length": 2.08,
+      "attack_delay": 25
     },
     "fa.tropeognathus.bitefly": {
-      "animation_length": 2.08
+      "animation_length": 2.08,
+      "attack_delay": 19
     },
     "fa.tropeognathus.display": {
       "animation_length": 6.24

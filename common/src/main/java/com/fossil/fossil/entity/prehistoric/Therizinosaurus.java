@@ -28,7 +28,7 @@ import java.util.Map;
 
 // TODO Accurately adjust values here, for now setting it identical to Triceratops
 public class Therizinosaurus extends Prehistoric {
-    public static final String ANIMATIONS = "fa.therizinosaurus.animations.json";
+    public static final String ANIMATIONS = "therizinosaurus.animations.json";
     public static final String IDLE = "fa.therizinosaurus.idle";
     public static final String WALK = "fa.therizinosaurus.walk";
     public static final String SLEEP = "fa.therizinosaurus.sleep";
@@ -43,8 +43,7 @@ public class Therizinosaurus extends Prehistoric {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
-                case ATTACK2 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12, 25);
+                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 case WALK -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);

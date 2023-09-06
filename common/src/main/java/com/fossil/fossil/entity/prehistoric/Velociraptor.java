@@ -44,7 +44,7 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
             switch (animation.animationId()) {
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 case WALK, RUN -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
+                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);
@@ -77,6 +77,11 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
+    }
+
+    @Override
+    public boolean useLeapAttack() {
+        return true;//TODO: Implement
     }
 
     @Override

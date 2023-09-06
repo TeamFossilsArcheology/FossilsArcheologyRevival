@@ -211,7 +211,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 if (!level.isClientSide) {
                     if (Mth.abs((float) vec3.y) < 1.0E-4) {
                         setXRot(Mth.rotlerp(getXRot(), 0, 0.2f));
-                    } else if (vec3.length() > 1.0E-5) {
+                    } else if (vec3.length() > Mth.EPSILON) {
                         float angle = (float) (Math.atan2(vec3.y, vec3.horizontalDistance()) * Mth.RAD_TO_DEG);
                         setXRot(angle * 0.5f);
                     }

@@ -68,10 +68,12 @@
       "animation_length": 3
     },
     "animation.dilophosaurus.attack1": {
-      "animation_length": 1
+      "animation_length": 1,
+      "attack_delay": 9
     },
     "animation.dilophosaurus.attack2": {
-      "animation_length": 1
+      "animation_length": 1,
+      "attack_delay": 9
     },
     "animation.dilophosaurus.WalkSpeedDemo": {
       "loop": true,

@@ -38,7 +38,7 @@ public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
+                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
@@ -72,6 +72,11 @@ public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new HurtByTargetGoal(this));
+    }
+
+    @Override
+    public boolean useLeapAttack() {
+        return true;
     }
 
     @Override

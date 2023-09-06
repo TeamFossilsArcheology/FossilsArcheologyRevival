@@ -1,6 +1,9 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.DinoFollowOwnerGoal;
+import com.fossil.fossil.entity.ai.DinoLookAroundGoal;
+import com.fossil.fossil.entity.ai.DinoMeleeAttackAI;
+import com.fossil.fossil.entity.ai.DinoWanderGoal;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -37,7 +40,7 @@ public class Confuciusornis extends PrehistoricFlying implements PrehistoricLeap
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
+                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
@@ -63,7 +66,6 @@ public class Confuciusornis extends PrehistoricFlying implements PrehistoricLeap
         goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoLeapAtTargetGoal<>(this));
         goalSelector.addGoal(7, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
     }

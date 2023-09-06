@@ -43,7 +43,8 @@
       "animation_length": 8
     },
     "animation.megalodon.attack": {
-      "animation_length": 1
+      "animation_length": 1,
+      "attack_delay": 12
     },
     "animation.megalodon.new": {
       "loop": true

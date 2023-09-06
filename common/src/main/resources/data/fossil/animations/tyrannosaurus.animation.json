@@ -67,19 +67,23 @@
     },
     "animation.tyrannosaurus.attack_normal1": {
       "loop": true,
-      "animation_length": 1.5
+      "animation_length": 1.5,
+      "attack_delay": 17
     },
     "animation.tyrannosaurus.attack_normal2": {
       "loop": true,
-      "animation_length": 1.5
+      "animation_length": 1.5,
+      "attack_delay": 17
     },
     "animation.tyrannosaurus.attack_heavy": {
       "loop": true,
-      "animation_length": 2.5
+      "animation_length": 2.5,
+      "attack_delay": 16
     },
     "animation.tyrannosaurus.attack_log": {
       "loop": true,
-      "animation_length": 2.5
+      "animation_length": 2.5,
+      "attack_delay": 16
     },
     "animation.tyrannosaurus.ontogeny_baby": {
       "loop": "hold_on_last_frame"

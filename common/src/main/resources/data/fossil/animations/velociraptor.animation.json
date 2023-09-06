@@ -20,7 +20,8 @@
       "animation_length": 1
     },
     "animation.velociraptor.attack1": {
-      "animation_length": 1.25
+      "animation_length": 1.25,
+      "attack_delay": 16
     },
     "animation.velociraptor.speak": {
       "loop": true

@@ -74,8 +74,11 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.Calendar;
@@ -1571,7 +1574,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return this.getBbWidth() > 0.75F ? this.getBbWidth() / 2.0F : 0.75F - this.getBbWidth() / 2.0F;
     }
 
-    public boolean useSpecialAttack() {
+    public boolean useLeapAttack() {
         return false;
     }
 
@@ -1637,6 +1640,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "controller", 4, animations::onFrame));
         data.addAnimationController(new AnimationController<>(this, "Walk", 4, animations::walkPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Attack", 0, this::attackPredicate));
+    }
+
+    public int getAttackDelay() {
+        if (getCurrentAnimation() instanceof ServerAttackAnimationInfo attackAnimationInfo) {
+            return attackAnimationInfo.attackDelays[0];
+        }
+        return 0;
+    }
+
+    protected PlayState attackPredicate(AnimationEvent<Prehistoric> event) {
+        if (swinging) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation(nextAttackAnimation().animationId));
+        } else {
+            event.getController().markNeedsReload();
+        }
+        return PlayState.CONTINUE;
     }
 
     /**

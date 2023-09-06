@@ -40,7 +40,7 @@ public class Ichtyosaurus extends PrehistoricSwimming {
             switch (animation.animationId()) {
                 case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
                 case SWIM, SWIM_FAST -> info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
-                case ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 12);
+                case ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
             }
             newMap.put(animation.animationId(), info);

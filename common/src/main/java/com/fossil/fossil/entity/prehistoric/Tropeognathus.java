@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Tropeognathus extends PrehistoricFlying {
-    public static final String ANIMATIONS = "fa.tropeognathus.animations.json";
+    public static final String ANIMATIONS = "tropeognathus.animations.json";
     public static final String FLY = "fa.tropeognathus.fly";
     public static final String GROUND_TAKEOFF = "fa.tropeognathus.groundtakeoff";
     public static final String RUN = "fa.tropeognathus.run";
@@ -48,9 +48,7 @@ public class Tropeognathus extends PrehistoricFlying {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case BITE_ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 20);
-                case BITE_ATTACK_WATER -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 11);
-                case BITE_IN_AIR -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, 15);
+                case BITE_ATTACK, BITE_ATTACK_WATER, BITE_IN_AIR -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
                 case SWIM, WALK, RUN, FLY -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
                 case IDLE, IDLE_CALL, IDLE_LOOKAROUND, IDLE_PREEN, IDLE_SWIM ->
                         info = new ServerAnimationInfo(animation, IDLE_PRIORITY);

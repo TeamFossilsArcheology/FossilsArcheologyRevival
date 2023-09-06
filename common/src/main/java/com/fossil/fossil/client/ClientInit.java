@@ -96,11 +96,9 @@ public class ClientInit {
         registerDino(ModEntities.TIKTAALIK, "tiktaalik.geo.json", Tiktaalik.ANIMATIONS);
         registerDino(ModEntities.TITANIS, "titanis.geo.json", Titanis.ANIMATIONS);
         registerDino(ModEntities.TRICERATOPS, "triceratops.geo.json", Triceratops.ANIMATIONS);
+        registerDino(ModEntities.TROPEOGNATHUS, "tropeognathus.geo.json", Tropeognathus.ANIMATIONS);
         registerDino(ModEntities.TYRANNOSAURUS, "tyrannosaurus.geo.json", Tyrannosaurus.ANIMATIONS);
         registerDino(ModEntities.VELOCIRAPTOR, "velociraptor.geo.json", Velociraptor.ANIMATIONS);
-        EntityRendererRegistry.register(ModEntities.TROPEOGNATHUS,
-                context -> new PrehistoricGeoRenderer<>(context, "fa.tropeognathus.geo.json", Tropeognathus.ANIMATIONS)
-        );
         EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, context -> new DinosaurEggRenderer(context, new DinosaurEggModel()));
 
         EntityRendererRegistry.register(ModEntities.ANU_BOSS, context -> new AnuBossRenderer(context, new AnuBossModel()));
