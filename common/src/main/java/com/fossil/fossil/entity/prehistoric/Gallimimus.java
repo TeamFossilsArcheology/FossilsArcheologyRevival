@@ -64,7 +64,7 @@ public class Gallimimus extends PrehistoricFlocking {
         super.registerGoals();
         goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
-        //TODO: Flock Wander
+        goalSelector.addGoal(2, new FlockWanderGoal(this, 1));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
