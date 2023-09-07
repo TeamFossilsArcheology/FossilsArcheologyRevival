@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
+
 public class Velociraptor extends Prehistoric implements PrehistoricLeaping, PrehistoricScary {
     public static final String ANIMATIONS = "velociraptor.animation.json";
     public static final String IDLE = "animation.velociraptor.idle";
@@ -42,10 +45,10 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
-                case WALK, RUN -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation);
+                case WALK, RUN -> info = new ServerAnimationInfo(animation);
+                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -135,17 +138,17 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull ServerAnimationInfo nextChasingAnimation() {
         return getAllAnimations().get(RUN);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAttackAnimationInfo nextLeapAnimation() {
+    public @NotNull ServerAttackAnimationInfo nextLeapAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
     }
 

@@ -27,6 +27,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
+
 public class Titanis extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "titanis.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
@@ -37,9 +40,9 @@ public class Titanis extends Prehistoric implements PrehistoricScary {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                case IDLE -> info = new ServerAnimationInfo(animation);
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -112,12 +115,12 @@ public class Titanis extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull ServerAnimationInfo nextChasingAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
     }
 

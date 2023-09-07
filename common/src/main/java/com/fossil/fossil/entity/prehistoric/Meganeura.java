@@ -21,9 +21,10 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
 
 public class Meganeura extends PrehistoricSwimming {
     public static final String ANIMATIONS = "meganeura.animation.json";
@@ -37,10 +38,10 @@ public class Meganeura extends PrehistoricSwimming {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
-                case WALK -> info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
-                case ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE, VERTICAL_IDLE -> info = new ServerAnimationInfo(animation);
+                case WALK, FLY -> info = new ServerAnimationInfo(animation);
+                case ATTACK -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -116,12 +117,12 @@ public class Meganeura extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull ServerAnimationInfo nextChasingAnimation() {
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK);
     }
 

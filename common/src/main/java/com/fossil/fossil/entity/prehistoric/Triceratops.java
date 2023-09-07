@@ -32,6 +32,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
+
 public class Triceratops extends Prehistoric {
     public static final String ANIMATIONS = "triceratops.animation.json";
     public static final String IDLE = "animation.triceratops.idle";
@@ -58,10 +61,10 @@ public class Triceratops extends Prehistoric {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
                 //TODO: Move this descision to the animation data file
-                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
-                case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                case IDLE -> info = new ServerAnimationInfo(animation);
+                case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation);
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -234,8 +237,7 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    @NotNull
-    public ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull ServerAnimationInfo nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 

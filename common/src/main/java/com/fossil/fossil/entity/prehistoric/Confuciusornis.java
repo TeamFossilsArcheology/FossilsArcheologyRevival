@@ -6,7 +6,6 @@ import com.fossil.fossil.entity.ai.DinoMeleeAttackAI;
 import com.fossil.fossil.entity.ai.DinoWanderGoal;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
@@ -30,6 +29,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
+
 public class Confuciusornis extends PrehistoricFlying implements PrehistoricLeaping {
     public static final String ANIMATIONS = "confuciusornis.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
@@ -40,9 +42,9 @@ public class Confuciusornis extends PrehistoricFlying implements PrehistoricLeap
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                case IDLE -> info = new ServerAnimationInfo(animation);
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -111,17 +113,17 @@ public class Confuciusornis extends PrehistoricFlying implements PrehistoricLeap
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull ServerAnimationInfo nextChasingAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAttackAnimationInfo nextLeapAnimation() {
+    public @NotNull ServerAttackAnimationInfo nextLeapAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
     }
 

@@ -26,7 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO Accurately adjust values here, for now setting it identical to Triceratops
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
+
 public class Therizinosaurus extends Prehistoric {
     public static final String ANIMATIONS = "therizinosaurus.animations.json";
     public static final String IDLE = "fa.therizinosaurus.idle";
@@ -43,10 +45,10 @@ public class Therizinosaurus extends Prehistoric {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
-                case WALK -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                case IDLE -> info = new ServerAnimationInfo(animation);
+                case WALK -> info = new ServerAnimationInfo(animation);
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -114,8 +116,7 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    @NotNull
-    public ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull ServerAnimationInfo nextIdleAnimation() {
         return allAnimations.get().get(IDLE);
     }
 
@@ -127,7 +128,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     @NotNull
-    public Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public ServerAnimationInfo nextChasingAnimation() {
         return nextMovingAnimation();
     }
 
@@ -138,7 +139,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     @NotNull
-    public Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public ServerAttackAnimationInfo nextAttackAnimation() {
         String key;
 
         if (getRandom().nextBoolean()) {

@@ -3,7 +3,6 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.item.ModItems;
@@ -27,8 +26,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
+
 public class Megalodon extends PrehistoricSwimming {
     public static final String ANIMATIONS = "megalodon.animation.json";
+    public static final String IDLE = "animation.megalodon.swim_idle";
     public static final String SWIM = "animation.megalodon.swim";
     public static final String SWIM_FAST = "animation.megalodon.swim_fast";
     public static final String EAT = "animation.megalodon.eat";
@@ -39,9 +42,10 @@ public class Megalodon extends PrehistoricSwimming {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case SWIM, SWIM_FAST -> info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
-                case ATTACK -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation);
+                case SWIM, SWIM_FAST -> info = new ServerAnimationInfo(animation);
+                case ATTACK -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -147,7 +151,7 @@ public class Megalodon extends PrehistoricSwimming {
 
     @Override
     public @NotNull ServerAnimationInfo nextIdleAnimation() {
-        return getAllAnimations().get(SWIM);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
@@ -156,12 +160,12 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull ServerAnimationInfo nextChasingAnimation() {
         return getAllAnimations().get(SWIM);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK);
     }
 

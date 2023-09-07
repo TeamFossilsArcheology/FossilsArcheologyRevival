@@ -3,7 +3,6 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.util.LazyLoadedValue;
@@ -20,6 +19,9 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
 
 public class Tropeognathus extends PrehistoricFlying {
     public static final String ANIMATIONS = "tropeognathus.animations.json";
@@ -48,11 +50,11 @@ public class Tropeognathus extends PrehistoricFlying {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case BITE_ATTACK, BITE_ATTACK_WATER, BITE_IN_AIR -> info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                case SWIM, WALK, RUN, FLY -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
+                case BITE_ATTACK, BITE_ATTACK_WATER, BITE_IN_AIR -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                case SWIM, WALK, RUN, FLY -> info = new ServerAnimationInfo(animation);
                 case IDLE, IDLE_CALL, IDLE_LOOKAROUND, IDLE_PREEN, IDLE_SWIM ->
-                        info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                        info = new ServerAnimationInfo(animation);
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -97,8 +99,7 @@ public class Tropeognathus extends PrehistoricFlying {
     }
 
     @Override
-    @NotNull
-    public ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull ServerAnimationInfo nextIdleAnimation() {
         String key = IDLE;
 
         if (isInWater()) {
@@ -136,7 +137,7 @@ public class Tropeognathus extends PrehistoricFlying {
 
     @Override
     @NotNull
-    public Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public ServerAnimationInfo nextChasingAnimation() {
         String key = RUN;
         if (isInWater()) key = SWIM;
         if (isFlying()) key = FLY;
@@ -152,7 +153,7 @@ public class Tropeognathus extends PrehistoricFlying {
 
     @Override
     @NotNull
-    public Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public ServerAttackAnimationInfo nextAttackAnimation() {
         String key = BITE_ATTACK;
         if (isInWater()) key = BITE_ATTACK_WATER;
         if (isFlying()) key = BITE_IN_AIR;

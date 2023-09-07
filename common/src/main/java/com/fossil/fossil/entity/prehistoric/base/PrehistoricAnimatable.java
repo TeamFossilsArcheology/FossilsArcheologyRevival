@@ -1,37 +1,27 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
-import net.minecraft.network.syncher.SynchedEntityData;
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 
 import java.util.Map;
 
 public interface PrehistoricAnimatable extends IAnimatable {
-    int IDLE_PRIORITY = 0;
-    int MOVING_PRIORITY = 1;
-    int DEFAULT_PRIORITY = 2;
-    int ATTACKING_PRIORITY = 3;
 
-    /**
-     *
-     * @return
-     */
-    Map<String, Prehistoric.ServerAnimationInfo> getAllAnimations();
+    Map<String, AnimationLogic.ServerAnimationInfo> getAllAnimations();
 
-    Prehistoric.ServerAnimationInfo getCurrentAnimation();
+    @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller);
 
-    void setCurrentAnimation(@NotNull Prehistoric.ServerAnimationInfo newAnimation);
+    void addActiveAnimation(String controller, AnimationLogic.ServerAnimationInfo animation);
 
+    @NotNull AnimationLogic.ServerAnimationInfo nextIdleAnimation();
 
-    /**
-     * Returns the idle animation by default. Should be overriden if the implementation of {@link #nextIdleAnimation} requires
-     * the entities {@link SynchedEntityData} to be defined
-     */
-    default @NotNull Prehistoric.ServerAnimationInfo initialAnimation() {
-        return nextIdleAnimation();
-    }
+    @NotNull AnimationLogic.ServerAnimationInfo nextEatingAnimation();
 
-    @NotNull Prehistoric.ServerAnimationInfo nextIdleAnimation();
+    @NotNull AnimationLogic.ServerAnimationInfo nextMovingAnimation();
 
-    @NotNull Prehistoric.ServerAnimationInfo nextMovingAnimation();
+    boolean shouldStartEatAnimation();
+
+    void setStartEatAnimation(boolean start);
 }

@@ -27,7 +27,7 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
                 if (feedingTicks == 0 || feedingTicks % 4 == 0) {
                     entity.doFoodEffect();
                 }
-                entity.setCurrentAnimation(entity.nextEatingAnimation());
+                entity.setStartEatAnimation(true);
             }
         }
     }

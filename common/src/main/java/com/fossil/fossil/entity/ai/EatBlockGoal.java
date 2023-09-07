@@ -26,7 +26,7 @@ public class EatBlockGoal extends MoveToFoodGoal {
             entity.setHealth((int) Math.min(entity.getMaxHealth(), entity.getHealth() + foodAmount / 10f));
             entity.playSound(SoundEvents.GENERIC_EAT, 1, 1);
             entity.level.destroyBlock(targetPos, false);
-            entity.setCurrentAnimation(entity.nextEatingAnimation());
+            entity.setStartEatAnimation(true);
         }
     }
 

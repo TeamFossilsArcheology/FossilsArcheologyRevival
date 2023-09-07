@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,10 +32,11 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.List;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+
 public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable, PrehistoricDebug {
+    private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
-    private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.STRING);
-    protected final AnimationComponent<PrehistoricFish> animations = new AnimationComponent<>(this);
     private int absoluteEggCooldown = 0;
 
     public PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
@@ -54,7 +56,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        this.entityData.define(CURRENT_ANIMATION, initialAnimation().animationId);
+        entityData.define(ACTIVE_ANIMATIONS, new CompoundTag());
         CompoundTag tag = new CompoundTag();
         tag.putDouble("x", position().x);
         tag.putDouble("y", position().y);
@@ -111,15 +113,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
                 absoluteEggCooldown = 48000 + random.nextInt(48000);
                 level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem)));
             }
-            animations.tick();
-        }
-    }
-
-    @Override
-    public void aiStep() {
-        super.aiStep();
-        if (!isInWater()) {
-            setCurrentAnimation(nextFloppingAnimation());
         }
     }
 
@@ -157,33 +150,63 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
+    public boolean shouldStartEatAnimation() {
+        return false;
+    }
+
+    @Override
+    public void setStartEatAnimation(boolean start) {
+
+    }
+
+    @Override
     public void registerControllers(AnimationData data) {
-        //data.addAnimationController(new AnimationController<>(this, "controller", 4, animations::onFrame));
-        data.addAnimationController(new AnimationController<>(this, "Walk", 4, event -> {
+        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 4, event -> {
+            AnimationController<PrehistoricFish> controller = event.getController();
             if (!isInWater()) {
+                addActiveAnimation(controller.getName(), nextFloppingAnimation());
                 event.getController().setAnimation(new AnimationBuilder().addAnimation(nextFloppingAnimation().animationId));
             } else if (event.isMoving()) {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation(nextMovingAnimation().animationId));
+                addActiveAnimation(controller.getName(), nextMovingAnimation());
             } else {
-                event.getController().setAnimation(new AnimationBuilder().addAnimation(nextIdleAnimation().animationId));
+                addActiveAnimation(controller.getName(), nextIdleAnimation());
+            }
+            AnimationLogic.ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
+            if (activeAnimation != null) {
+                controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationId()));
             }
             return PlayState.CONTINUE;
         }));
         //data.addAnimationController(new AnimationController<>(this, "Walk", 4, animations::walkPredicate));
     }
 
+    public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
+        CompoundTag animationTag = entityData.get(ACTIVE_ANIMATIONS).getCompound(controller);
+        if (animationTag.contains("Animation")) {
+            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getLong("EndTick"));
+        }
+        return null;
+    }
+
+    public void addActiveAnimation(String controller, ServerAnimationInfo animation) {
+        CompoundTag allAnimations = new CompoundTag().merge(entityData.get(ACTIVE_ANIMATIONS));
+        CompoundTag animationTag = new CompoundTag();
+        animationTag.putString("Animation", animation.animationId);
+        animationTag.putLong("EndTick", level.getGameTime() + animation.length);
+        allAnimations.put(controller, animationTag);
+        entityData.set(ACTIVE_ANIMATIONS, allAnimations);
+    }
+
     @Override
-    public Prehistoric.ServerAnimationInfo getCurrentAnimation() {
-        return getAllAnimations().get(entityData.get(CURRENT_ANIMATION));
+    public @NotNull ServerAnimationInfo nextEatingAnimation() {
+        return nextIdleAnimation();
     }
 
-    public void setCurrentAnimation(@NotNull Prehistoric.ServerAnimationInfo newAnimation) {
-        if (this.entityData.get(CURRENT_ANIMATION).equals(newAnimation.animationId)) return;
-        this.entityData.set(CURRENT_ANIMATION, newAnimation.animationId);
-        animations.setCurrentAnimation(newAnimation);
-    }
+    public abstract @NotNull ServerAnimationInfo nextFloppingAnimation();
 
-    public abstract @NotNull Prehistoric.ServerAnimationInfo nextFloppingAnimation();
+    public @Nullable ServerAnimationInfo nextTurningAnimation() {
+        return null;
+    }
 
     public void disableCustomAI(byte type, boolean disableAI) {
         setNoAi(disableAI);

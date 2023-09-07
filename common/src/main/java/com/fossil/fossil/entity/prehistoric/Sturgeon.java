@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.animation.AnimationManager;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import net.minecraft.util.LazyLoadedValue;
@@ -15,21 +14,23 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+
 public class Sturgeon extends PrehistoricFish {
     public static final String ANIMATIONS = "sturgeon.animation.json";
     public static final String IDLE = "animation.sturgeon.idle";
     public static final String SWIM = "animation.sturgeon.swim";
     public static final String SWIM_FAST = "animation.sturgeon.swim_fast";
     public static final String LAND = "animation.sturgeon.land";
-    private static final LazyLoadedValue<Map<String, Prehistoric.ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, Prehistoric.ServerAnimationInfo> newMap = new HashMap<>();
+    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
+        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
         for (AnimationManager.Animation animation : animations) {
-            Prehistoric.ServerAnimationInfo info;
+            ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case IDLE -> info = new Prehistoric.ServerAnimationInfo(animation, IDLE_PRIORITY);
-                case SWIM, SWIM_FAST -> info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
-                default -> info = new Prehistoric.ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation);
+                case SWIM, SWIM_FAST -> info = new ServerAnimationInfo(animation);
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -47,22 +48,22 @@ public class Sturgeon extends PrehistoricFish {
     }
 
     @Override
-    public Map<String, Prehistoric.ServerAnimationInfo> getAllAnimations() {
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
         return allAnimations.get();
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull ServerAnimationInfo nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextMovingAnimation() {
+    public @NotNull ServerAnimationInfo nextMovingAnimation() {
         return getAllAnimations().get(SWIM);//TODO: SWIM_FAST
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextFloppingAnimation() {
+    public @NotNull ServerAnimationInfo nextFloppingAnimation() {
         return getAllAnimations().get(LAND);
     }
 

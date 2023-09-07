@@ -1,5 +1,7 @@
 package com.fossil.fossil.network.debug;
 
+import com.fossil.fossil.entity.animation.AttackAnimationLogic;
+import com.fossil.fossil.entity.prehistoric.Nautilus;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
@@ -29,7 +31,13 @@ public class AnimationMessage {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
         if (entity instanceof PrehistoricAnimatable prehistoric) {
             contextSupplier.get().queue(() -> {
-                prehistoric.setCurrentAnimation(prehistoric.getAllAnimations().get(animation));
+                if (prehistoric instanceof Nautilus && animation.startsWith("shell")) {
+                    prehistoric.addActiveAnimation("Shell", prehistoric.getAllAnimations().get(animation));
+                } else if (prehistoric.getAllAnimations().get(animation) instanceof AttackAnimationLogic.ServerAttackAnimationInfo) {
+                    prehistoric.addActiveAnimation("Attack", prehistoric.getAllAnimations().get(animation));
+                } else {
+                    prehistoric.addActiveAnimation("Movement/Idle/Eat", prehistoric.getAllAnimations().get(animation));
+                }
             });
         }
     }

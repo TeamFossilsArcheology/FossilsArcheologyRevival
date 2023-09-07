@@ -35,6 +35,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+
 public class Nautilus extends PrehistoricFish {
     public static final String ANIMATIONS = "nautilus.animation.json";
     public static final String IDLE = "animation.nautilus.idle";
@@ -44,16 +46,16 @@ public class Nautilus extends PrehistoricFish {
     public static final String SHELL_HOLD = "animation.nautilus.shell_hold";
     public static final String SHELL_EMERGE = "animation.nautilus.shell_emerge";
     public static final String LAND = "animation.nautilus.land";
-    private static final LazyLoadedValue<Map<String, Prehistoric.ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, Prehistoric.ServerAnimationInfo> newMap = new HashMap<>();
+    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
+        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
         List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
         for (AnimationManager.Animation animation : animations) {
-            Prehistoric.ServerAnimationInfo info;
+            ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case IDLE -> info = new Prehistoric.ServerAnimationInfo(animation, IDLE_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation);
                 case SWIM_BACKWARDS, SWIM_FORWARDS ->
-                        info = new Prehistoric.ServerAnimationInfo(animation, MOVING_PRIORITY);
-                default -> info = new Prehistoric.ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                        info = new ServerAnimationInfo(animation);
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -65,21 +67,6 @@ public class Nautilus extends PrehistoricFish {
 
     public Nautilus(EntityType<Nautilus> entityType, Level level) {
         super(entityType, level);
-    }
-
-    private static PlayState shellPredicate(AnimationEvent<Nautilus> event) {
-        var ctrl = event.getController();
-        var anim = ctrl.getCurrentAnimation();
-        if (event.getAnimatable().isInShell()) {
-            if (anim == null || anim.animationName.equals(SHELL_EMERGE) && ctrl.getAnimationState() == AnimationState.Stopped) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_RETRACT).addAnimation(SHELL_HOLD));
-            }
-        } else {
-            if (anim != null && anim.animationName.equals(SHELL_HOLD)) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_EMERGE));
-            }
-        }
-        return PlayState.CONTINUE;
     }
 
     private static boolean getsScaredBy(Entity entity) {
@@ -207,41 +194,46 @@ public class Nautilus extends PrehistoricFish {
     public void hideInShell(boolean inShell) {
         entityData.set(IS_IN_SHELL, inShell);
         ticksToShell = 60;
-        if (inShell) {
-            setCurrentAnimation(getAllAnimations().get(SHELL_RETRACT));
-        } else {
-            setCurrentAnimation(getAllAnimations().get(SHELL_EMERGE));
-        }
     }
 
     @Override
-    public Map<String, Prehistoric.ServerAnimationInfo> getAllAnimations() {
+    public Map<String, ServerAnimationInfo> getAllAnimations() {
         return allAnimations.get();
     }
 
     @Override
     public void registerControllers(AnimationData data) {
         super.registerControllers(data);
-        data.addAnimationController(new AnimationController<>(this, "Shell", 4, Nautilus::shellPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Shell", 4, this::shellPredicate));
+    }
+
+    private PlayState shellPredicate(AnimationEvent<Nautilus> event) {
+        var ctrl = event.getController();
+        var anim = ctrl.getCurrentAnimation();
+        if (event.getAnimatable().isInShell()) {
+            if (anim == null || anim.animationName.equals(SHELL_EMERGE) && ctrl.getAnimationState() == AnimationState.Stopped) {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_RETRACT).addAnimation(SHELL_HOLD));
+            }
+        } else {
+            if (anim != null && anim.animationName.equals(SHELL_HOLD)) {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(SHELL_EMERGE));
+            }
+        }
+        return PlayState.CONTINUE;
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo initialAnimation() {
+    public @NotNull ServerAnimationInfo nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextMovingAnimation() {
+    public @NotNull ServerAnimationInfo nextMovingAnimation() {
         return getAllAnimations().get(SWIM_BACKWARDS);//TODO: SWIM_FAST
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextFloppingAnimation() {
+    public @NotNull ServerAnimationInfo nextFloppingAnimation() {
         return getAllAnimations().get(LAND);
     }
 

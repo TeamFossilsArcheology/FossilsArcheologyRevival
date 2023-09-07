@@ -13,6 +13,8 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+
 public abstract class PrehistoricFlying extends Prehistoric implements FlyingAnimal {
 
     private final FindAirTargetGoal findAirTargetGoal = new FindAirTargetGoal(this);

@@ -32,6 +32,6 @@ public class DinoLeapAtTargetGoal<T extends Prehistoric & PrehistoricLeaping> ex
     public void start() {
         super.start();
         dino.lookAt(dino.getTarget(), 100, 100);
-        dino.setCurrentAnimation(dino.nextLeapAnimation());
+        //dino.setCurrentAnimation(dino.nextLeapAnimation());
     }
 }

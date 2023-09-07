@@ -1,8 +1,9 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.entity.animation.AttackAnimationLogic;
 import org.jetbrains.annotations.NotNull;
 
 public interface PrehistoricLeaping {
 
-    @NotNull Prehistoric.ServerAttackAnimationInfo nextLeapAnimation();
+    @NotNull AttackAnimationLogic.ServerAttackAnimationInfo nextLeapAnimation();
 }

@@ -7,7 +7,8 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
-import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.animation.AnimationLogic;
+import com.fossil.fossil.entity.animation.AttackAnimationLogic;
 import com.fossil.fossil.entity.data.AI;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.data.Stat;
@@ -74,16 +75,15 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
 
 public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable, PrehistoricDebug {
 
@@ -96,12 +96,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> START_EAT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<String> CURRENT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.STRING);
+    private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
     public final MoodSystem moodSystem = new MoodSystem(this);
-    // public final Item uncultivatedEggItem;
-    private final AnimationComponent<Prehistoric> animations = new AnimationComponent<>(this);
+    private final AttackAnimationLogic<Prehistoric> animations = new AttackAnimationLogic<>(this);
     private final boolean isMultiPart;
     private final WhipSteering steering = new WhipSteering();
     public OrderType currentOrder;
@@ -168,17 +168,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         double reversed = 1 - resistance;
         entity.setDeltaMovement(entity.getDeltaMovement().add(0, 0.4 * reversed + 0.1, 0));
         return strength * 2.0;
-    }
-
-    public static void knockBackMob(Entity entity, double xMotion, double yMotion, double zMotion) {
-        double horizontalSpeed = Math.sqrt(xMotion * xMotion + zMotion * zMotion);
-        Vec3 knockBack = entity.getDeltaMovement().scale(0.5).add(
-                -xMotion / horizontalSpeed,
-                yMotion,
-                -zMotion / horizontalSpeed
-        );
-        entity.setDeltaMovement(knockBack);
-        entity.hurtMarked = true;
     }
 
     public static boolean canBreak(Block block) {
@@ -312,11 +301,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         entityData.define(HUNGER, 0);
         entityData.define(MODELIZED, false);
         entityData.define(FLEEING, false);
+        entityData.define(START_EAT_ANIMATION, false);
         entityData.define(SLEEPING, false);
         entityData.define(CLIMBING, (byte) 0);
         entityData.define(MOOD, 0);
         entityData.define(AGING_DISABLED, false);
-        entityData.define(CURRENT_ANIMATION, initialAnimation().animationId);
+        entityData.define(ACTIVE_ANIMATIONS, new CompoundTag());
 
         CompoundTag tag = new CompoundTag();
         tag.putDouble("x", position().x);
@@ -575,6 +565,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void aiStep() {
+        updateSwingTime();
         super.aiStep();
         if (isSkeleton()) {
             setDeltaMovement(Vec3.ZERO);
@@ -751,7 +742,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                     ticksClimbing = 200;
                 }
             }
-            animations.tick();
         }
     }
 
@@ -1000,7 +990,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 doFoodEffect(stack.getItem());
                 setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
                 stack.shrink(1);
-                setCurrentAnimation(nextEatingAnimation());
+                setStartEatAnimation(true);
             }
         }
     }
@@ -1291,17 +1281,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    public void knockbackEntity(Entity knockBackMob, float knockbackStrength, float knockbackStrengthUp) {
-        if (!(knockBackMob instanceof ToyBase) && knockBackMob instanceof LivingEntity) {
-            double resistance = ((LivingEntity) knockBackMob).getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue();
-            double reversed = 1 - resistance;
-            knockBackMob.setDeltaMovement(knockBackMob.getDeltaMovement().add(0, 0.4000000059604645D * reversed + 0.1D, 0));
-            if (resistance < 1) {
-                knockBackMob(knockBackMob, 0.25D, 0.2D, 0.25D);
-            }
-        }
-    }
-
     public boolean canDinoHunt(LivingEntity target) {
         if (target instanceof ToyBase) {
             return true;
@@ -1497,7 +1476,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isPreyBlocked(Entity prey) {
-        return getSensing().hasLineOfSight(prey);
+        return !getSensing().hasLineOfSight(prey);
     }
 
     public boolean canSeeFood(BlockPos position) {
@@ -1581,11 +1560,20 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isFleeing() {
-        return this.entityData.get(FLEEING);
+        return entityData.get(FLEEING);
     }
 
     public void setFleeing(boolean fleeing) {
-        this.entityData.set(FLEEING, fleeing);
+        entityData.set(FLEEING, fleeing);
+    }
+
+    public boolean shouldStartEatAnimation() {
+        return entityData.get(START_EAT_ANIMATION);
+    }
+
+    public void setStartEatAnimation(boolean start) {
+        //TODO: There is still a delay between the feeding start and the animation start. Maybe do it similar to attack delay?
+        entityData.set(START_EAT_ANIMATION, start);
     }
 
     protected int getFleeingCooldown() {
@@ -1621,86 +1609,35 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         refreshTexturePath();
     }
 
-    @Override
-    public ServerAnimationInfo getCurrentAnimation() {
-        return getAllAnimations().get(entityData.get(CURRENT_ANIMATION));
+    public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
+        CompoundTag animationTag = entityData.get(ACTIVE_ANIMATIONS).getCompound(controller);
+        if (animationTag.contains("Animation")) {
+            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getLong("EndTick"));
+        }
+        return null;
     }
 
-    public void setCurrentAnimation(@NotNull Prehistoric.ServerAnimationInfo newAnimation) {
-        if (this.entityData.get(CURRENT_ANIMATION).equals(newAnimation.animationId)) return;
-        this.entityData.set(CURRENT_ANIMATION, newAnimation.animationId);
-        animations.setCurrentAnimation(newAnimation);
+    public void addActiveAnimation(String controller, ServerAnimationInfo animation) {
+        CompoundTag allAnimations = new CompoundTag().merge(entityData.get(ACTIVE_ANIMATIONS));
+        CompoundTag animationTag = new CompoundTag();
+        animationTag.putString("Animation", animation.animationId);
+        animationTag.putLong("EndTick", level.getGameTime() + animation.length);
+        allAnimations.put(controller, animationTag);
+        entityData.set(ACTIVE_ANIMATIONS, allAnimations);
     }
 
-    public abstract @NotNull Prehistoric.ServerAnimationInfo nextEatingAnimation();
+    public abstract @NotNull ServerAnimationInfo nextChasingAnimation();
 
-    public abstract @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation();
-
-    public abstract @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation();
+    public abstract @NotNull ServerAttackAnimationInfo nextAttackAnimation();
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "controller", 4, animations::onFrame));
-        data.addAnimationController(new AnimationController<>(this, "Walk", 4, animations::walkPredicate));
-        data.addAnimationController(new AnimationController<>(this, "Attack", 0, this::attackPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, animations::movementPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Attack", 5, animations::attackPredicate));
     }
 
-    public int getAttackDelay() {
-        if (getCurrentAnimation() instanceof ServerAttackAnimationInfo attackAnimationInfo) {
-            return attackAnimationInfo.attackDelays[0];
-        }
-        return 0;
-    }
-
-    protected PlayState attackPredicate(AnimationEvent<Prehistoric> event) {
-        if (swinging) {
-            event.getController().setAnimation(new AnimationBuilder().addAnimation(nextAttackAnimation().animationId));
-        } else {
-            event.getController().markNeedsReload();
-        }
-        return PlayState.CONTINUE;
-    }
-
-    /**
-     * Some animations attack multiple times in single animation, so it holds var int.
-     * When current gameTime equals to {@link Level#getGameTime()} + {@code any of supplied delays},
-     * dinosaur will attack.
-     */
-    public static final class ServerAttackAnimationInfo extends ServerAnimationInfo {
-        public static final ServerAttackAnimationInfo EMPTY = new ServerAttackAnimationInfo("empty", 0, 0, 0);
-        public final int[] attackDelays;
-
-        /**
-         * @param attackDelays array of delays to attack target.
-         */
-        public ServerAttackAnimationInfo(String animationId, int priority, int lengthInTicks, int... attackDelays) {
-            super(animationId, priority, lengthInTicks, false);
-            this.attackDelays = attackDelays;
-            if (attackDelays.length == 0) throw new IllegalArgumentException("Attack delays must not be empty");
-        }
-
-        public ServerAttackAnimationInfo(AnimationManager.Animation animation, int priority, int... attackDelays) {
-            this(animation.animationId(), priority, (int) Math.round(animation.animationLength()), attackDelays);
-        }
-    }
-
-    public static class ServerAnimationInfo {
-        public static final ServerAnimationInfo EMPTY = new ServerAnimationInfo("empty", 0, 0, false);
-        public final @NotNull String animationId;
-        public final int length;
-        public final int priority;
-        public final boolean isLoop;
-
-        public ServerAnimationInfo(@NotNull String animationId, int priority, int lengthInTicks, boolean isLoop) {
-            this.animationId = animationId;
-            this.priority = priority;
-            this.length = lengthInTicks;
-            this.isLoop = isLoop;
-        }
-
-        public ServerAnimationInfo(AnimationManager.Animation animation, int priority) {
-            this(animation.animationId(), priority, (int) Math.round(animation.animationLength()), animation.loop() == ILoopType.EDefaultLoopTypes.LOOP);
-        }
+    public AttackAnimationLogic<Prehistoric> getAnimations() {
+        return animations;
     }
 
     public record PrehistoricGroupData(int ageInDays) implements SpawnGroupData {

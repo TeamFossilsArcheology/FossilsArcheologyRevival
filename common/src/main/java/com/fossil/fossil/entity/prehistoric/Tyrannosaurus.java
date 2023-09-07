@@ -26,6 +26,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
+
 public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "tyrannosaurus.animation.json";
     public static final String IDLE = "animation.tyrannosaurus.idle";
@@ -50,11 +53,11 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
         for (AnimationManager.Animation animation : animations) {
             ServerAnimationInfo info;
             switch (animation.animationId()) {
-                case IDLE -> info = new ServerAnimationInfo(animation, IDLE_PRIORITY);
-                case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation, MOVING_PRIORITY);
+                case IDLE -> info = new ServerAnimationInfo(animation);
+                case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation);
                 case ATTACK_NORMAL1, ATTACK_NORMAL2 ->
-                        info = new ServerAttackAnimationInfo(animation, ATTACKING_PRIORITY, animation.attackDelay());
-                default -> info = new ServerAnimationInfo(animation, DEFAULT_PRIORITY);
+                        info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
+                default -> info = new ServerAnimationInfo(animation);
             }
             newMap.put(animation.animationId(), info);
         }
@@ -126,12 +129,12 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull ServerAnimationInfo nextChasingAnimation() {
         return getAllAnimations().get(RUN);
     }
 
     @Override
-    public @NotNull Prehistoric.ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
         return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK_NORMAL1);
     }
 

@@ -6,7 +6,6 @@ import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.animal.Chicken;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
@@ -18,7 +17,7 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
     private final Prehistoric dino;
 
     public HuntAndPlayGoal(Prehistoric prehistoric) {
-        super(prehistoric, LivingEntity.class, true, livingEntity -> livingEntity instanceof Chicken);
+        super(prehistoric, LivingEntity.class, true);
         this.dino = prehistoric;
     }
 
