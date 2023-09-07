@@ -56,7 +56,7 @@ public class AlligatorGar extends PrehistoricFish {
 
     @Override
     public @NotNull ServerAnimationInfo nextIdleAnimation() {
-        return (ServerAnimationInfo) getAllAnimations().get(IDLE);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override

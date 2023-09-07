@@ -11,6 +11,7 @@ import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -74,7 +75,7 @@ public class Megalograptus extends PrehistoricSwimming {
 
     @Override
     public boolean isAmphibious() {
-        return false;
+        return true;
     }
 
     @Override
@@ -85,6 +86,11 @@ public class Megalograptus extends PrehistoricSwimming {
     @Override
     public PrehistoricEntityType type() {
         return PrehistoricEntityType.MEGALOGRAPTUS;
+    }
+
+    @Override
+    public @NotNull MobType getMobType() {
+        return MobType.ARTHROPOD;
     }
 
     @Override

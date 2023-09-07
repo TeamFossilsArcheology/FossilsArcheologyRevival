@@ -72,7 +72,7 @@ public class Henodus extends PrehistoricSwimming {
 
     @Override
     public boolean isAmphibious() {
-        return false;
+        return true;
     }
 
     @Override

@@ -31,5 +31,6 @@
   "breaksBlocks": false,
   "adultAgeDays": 10,
   "maxHunger": 100.0,
-  "canBeRidden": false
+  "canBeRidden": false,
+  "developsResistance": false
 }

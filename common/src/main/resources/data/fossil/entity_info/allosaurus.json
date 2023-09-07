@@ -31,5 +31,6 @@
   "teenAgeDays": 5,
   "adultAgeDays": 10,
   "maxHunger": 125.0,
-  "canBeRidden": true
+  "canBeRidden": true,
+  "developsResistance": true
 }

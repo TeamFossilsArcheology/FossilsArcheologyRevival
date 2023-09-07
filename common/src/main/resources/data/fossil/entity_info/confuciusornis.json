@@ -31,5 +31,6 @@
   "adultAgeDays": 4,
   "maxHunger": 25.0,
   "canBeRidden": false,
+  "developsResistance": false,
   "maxPopulation": 15
 }

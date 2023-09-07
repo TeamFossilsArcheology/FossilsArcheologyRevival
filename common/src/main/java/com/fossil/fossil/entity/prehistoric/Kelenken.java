@@ -63,7 +63,7 @@ public class Kelenken extends Prehistoric implements PrehistoricScary {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DinoMeleeAttackAI(this, 1, false));
+        goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));

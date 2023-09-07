@@ -88,18 +88,18 @@ import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAtta
 public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable, PrehistoricDebug {
 
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> START_EAT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> MATING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
+    public static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> START_EAT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
     public final MoodSystem moodSystem = new MoodSystem(this);
     private final AttackAnimationLogic<Prehistoric> animations = new AttackAnimationLogic<>(this);
     private final boolean isMultiPart;
@@ -295,18 +295,18 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
+        entityData.define(ACTIVE_ANIMATIONS, new CompoundTag());
+        entityData.define(START_EAT_ANIMATION, false);
+        entityData.define(MOOD, 0);
         entityData.define(AGE_TICK, data().adultAgeDays() * 24000);
         entityData.define(MATING_TICK, random.nextInt(6000) + 6000);
         entityData.define(PLAYING_TICK, random.nextInt(6000) + 6000);
         entityData.define(HUNGER, 0);
         entityData.define(MODELIZED, false);
         entityData.define(FLEEING, false);
-        entityData.define(START_EAT_ANIMATION, false);
         entityData.define(SLEEPING, false);
         entityData.define(CLIMBING, (byte) 0);
-        entityData.define(MOOD, 0);
         entityData.define(AGING_DISABLED, false);
-        entityData.define(ACTIVE_ANIMATIONS, new CompoundTag());
 
         CompoundTag tag = new CompoundTag();
         tag.putDouble("x", position().x);
@@ -336,50 +336,48 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("Hunger", this.getHunger());
-        compound.putBoolean("isModelized", this.isSkeleton());
-        compound.putBoolean("DinoTamed", this.isTame());
-        compound.putBoolean("Fleeing", this.isFleeing());
-        compound.putString("Gender", getGender().toString());
         compound.putInt("Mood", moodSystem.getMood());
-        compound.putInt("TicksTillPlay", moodSystem.getPlayingTick());
-        compound.putInt("TicksSlept", this.ticksSlept);
         compound.putInt("TicksTillMate", getMatingTick());
-        compound.putInt("TicksClimbing", this.ticksClimbing);
-        compound.putByte("currentOrder", (byte) this.currentOrder.ordinal());
-        compound.putFloat("YawRotation", this.yBodyRot);
-        compound.putFloat("HeadRotation", this.yHeadRot);
-        compound.putBoolean("AgingDisabled", this.isAgingDisabled());
-        compound.putInt("CathermalTimer", this.cathermalSleepCooldown);
+        compound.putInt("TicksTillPlay", moodSystem.getPlayingTick());
+        compound.putInt("Hunger", getHunger());
+        compound.putBoolean("isModelized", isSkeleton());
+        compound.putBoolean("Fleeing", isFleeing());
+        compound.putBoolean("Sleeping", isSleeping());
+        compound.putInt("TicksSlept", ticksSlept);
+        compound.putInt("TicksClimbing", ticksClimbing);
+        compound.putByte("currentOrder", (byte) currentOrder.ordinal());
+        compound.putFloat("YBodyRot", yBodyRot);
+        compound.putFloat("YHeadRot", yHeadRot);
+        compound.putBoolean("AgingDisabled", isAgingDisabled());
+        compound.putInt("CathermalTimer", cathermalSleepCooldown);
+        compound.putString("Gender", getGender().toString());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        moodSystem.setMood(compound.getInt("Mood"));
         setAgeInTicks(compound.getInt("Age"));
+        setMatingTick(compound.getInt("TicksTillMate"));
+        moodSystem.setPlayingTick(compound.getInt("TicksTillPlay"));
         setHunger(compound.getInt("Hunger"));
-        setFleeing(compound.getBoolean("Fleeing"));
         setSkeleton(compound.getBoolean("isModelized"));
-        setTame(compound.getBoolean("DinoTamed"));
+        setFleeing(compound.getBoolean("Fleeing"));
+        setSleeping(compound.getBoolean("Sleeping"));
+        ticksSlept = compound.getInt("TicksSlept");
+        ticksClimbing = compound.getInt("TicksClimbing");
+        if (compound.contains("currentOrder")) {
+            setOrder(OrderType.values()[compound.getByte("currentOrder")]);
+        }
+        yBodyRot = compound.getInt("YBodyRot");
+        yHeadRot = compound.getInt("YHeadRot");
+        setAgingDisabled(compound.getBoolean("AgingDisabled"));
+        cathermalSleepCooldown = compound.getInt("CathermalTimer");
         if ("female".equalsIgnoreCase(compound.getString("Gender"))) {
             setGender(Gender.FEMALE);
         } else {
             setGender(Gender.MALE);
         }
-        setSleeping(compound.getBoolean("Sleeping"));
-        setOrderedToSit(compound.getBoolean("Sitting"));
-        setAgingDisabled(compound.getBoolean("AgingDisabled"));
-        moodSystem.setMood(compound.getInt("Mood"));
-        if (compound.contains("currentOrder")) {
-            setOrder(OrderType.values()[compound.getByte("currentOrder")]);
-        }
-        moodSystem.setPlayingTick(compound.getInt("TicksTillPlay"));
-        ticksClimbing = compound.getInt("TicksClimbing");
-        setMatingTick(compound.getInt("TicksTillMate"));
-        ticksSlept = compound.getInt("TicksSlept");
-        yBodyRot = compound.getInt("YawRotation");
-        yHeadRot = compound.getInt("HeadRotation");
-        cathermalSleepCooldown = compound.getInt("CathermalTimer");
         refreshTexturePath();
     }
 
@@ -391,13 +389,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public SpawnGroupData finalizeSpawn(
-            ServerLevelAccessor levelIn,
-            DifficultyInstance difficultyIn,
-            MobSpawnType reason,
-            @Nullable SpawnGroupData spawnDataIn,
-            @Nullable CompoundTag dataTag
-    ) {
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         this.getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
         if (spawnDataIn instanceof PrehistoricGroupData prehistoricGroupData) {
             setAgeInDays(prehistoricGroupData.ageInDays());

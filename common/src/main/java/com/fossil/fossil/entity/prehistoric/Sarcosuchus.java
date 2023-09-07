@@ -76,7 +76,7 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public boolean isAmphibious() {
-        return false;
+        return true;
     }
 
     @Override

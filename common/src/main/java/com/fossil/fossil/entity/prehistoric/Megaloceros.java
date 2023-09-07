@@ -85,6 +85,11 @@ public class Megaloceros extends Prehistoric {
     }
 
     @Override
+    protected float getGenderedScale() {
+        return getGender() == Gender.MALE ? 1.2f : super.getGenderedScale();
+    }
+
+    @Override
     public EntityDataManager.Data data() {
         return data;
     }
