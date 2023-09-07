@@ -146,7 +146,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20D)
-                .add(Attributes.ATTACK_DAMAGE, 2D);
+                .add(Attributes.ATTACK_DAMAGE, 2D)
+                .add(Attributes.FLYING_SPEED, 0.4f);
     }
 
     public static boolean isEntitySmallerThan(Entity entity, float size) {

@@ -57,7 +57,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Megaloceros>> MEGALOCEROS = registerDino("megaloceros", Megaloceros::new, 1.9f, 1.7f);
     public static final RegistrySupplier<EntityType<Megalodon>> MEGALODON = registerDino("megalodon", Megalodon::new, 4, 2);
     public static final RegistrySupplier<EntityType<Megalograptus>> MEGALOGRAPTUS = registerDino("megalograptus", Megalograptus::new, 0.9f, 0.5f);
-    public static final RegistrySupplier<EntityType<Meganeura>> MEGANEURA = registerDino("meganeura", Meganeura::new, 2.2f, 1.95f);
+    public static final RegistrySupplier<EntityType<Meganeura>> MEGANEURA = registerDino("meganeura", Meganeura::new, 0.5f, 0.5f);
     public static final RegistrySupplier<EntityType<Mosasaurus>> MOSASAURUS = registerDino("mosasaurus", Mosasaurus::new, 1.5f, 0.6f);
     public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerDino("nautilus", Nautilus::new, 0.8f, 1);
     public static final RegistrySupplier<EntityType<Ornitholestes>> ORNITHOLESTES = registerDino("ornitholestes", Ornitholestes::new, 2, 1.9f);
@@ -109,6 +109,7 @@ public class ModEntities {
             () -> EntityType.Builder.of(FriendlyPiglin::new, MobCategory.MONSTER).sized(0.6f, 1.95f).fireImmune().clientTrackingRange(8)
                     .build("friendly_piglin"));
 
+    //TODO: Change clientTrackingRange etc
     private static <T extends Entity> RegistrySupplier<EntityType<T>> registerDino(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.CREATURE).sized(width, height).build(name));
     }

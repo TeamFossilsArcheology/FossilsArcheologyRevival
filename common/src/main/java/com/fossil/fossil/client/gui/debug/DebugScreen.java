@@ -65,12 +65,24 @@ public class DebugScreen extends Screen {
         }
     }
 
+    private static PathInfo currentVision;
+    public static void showVision(Player player, BlockPos target, BlockState block) {
+        if (currentVision != null) {
+            player.level.setBlock(currentVision.targetPos, currentVision.blockState, 3);
+        }
+        currentVision = new PathInfo(target, player.level.getBlockState(target), false);
+        player.level.setBlock(target, block, 3);
+    }
+
     public static void clearPaths() {
         for (int i = pathTargets.size() - 1; i >= 0; i--) {
             boolean below = pathTargets.get(i).below;
             Minecraft.getInstance().level.setBlock(below ? pathTargets.get(i).targetPos.below() : pathTargets.get(i).targetPos, pathTargets.get(i).blockState, 3);
         }
         pathTargets.clear();
+        if (currentVision != null) {
+            Minecraft.getInstance().level.setBlock(currentVision.targetPos, currentVision.blockState, 3);
+        }
     }
 
     @Override
