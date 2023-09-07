@@ -11,6 +11,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -89,6 +90,13 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         absoluteEggCooldown = compound.getInt("absoluteEggCooldown");
+    }
+
+    @Override
+    public boolean isInvulnerableTo(DamageSource source) {
+        //TODO: Is needed?
+        //return source == DamageSource.IN_WALL || super.isInvulnerableTo(source);
+        return super.isInvulnerableTo(source);
     }
 
     @Override

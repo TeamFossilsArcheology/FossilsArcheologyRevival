@@ -146,7 +146,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(MEGALODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(MEGALOGRAPTUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(MEGANEURA, Prehistoric::createAttributes);
-        EntityAttributeRegistry.register(MOSASAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(MOSASAURUS, Mosasaurus::createAttributes);
         EntityAttributeRegistry.register(NAUTILUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(ORNITHOLESTES, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PACHYCEPHALOSAURUS, Prehistoric::createAttributes);

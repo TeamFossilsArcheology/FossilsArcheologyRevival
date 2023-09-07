@@ -68,7 +68,7 @@ public class Ichtyosaurus extends PrehistoricSwimming {
         goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
         goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1, false));
-        //TODO: DinoAIMakeFish
+        goalSelector.addGoal(4, new MakeFishGoal(this));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));

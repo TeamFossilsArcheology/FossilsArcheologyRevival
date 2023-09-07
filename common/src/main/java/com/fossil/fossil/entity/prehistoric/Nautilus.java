@@ -115,13 +115,6 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        //TODO: Is needed?
-        //return source == DamageSource.IN_WALL || super.isInvulnerableTo(source);
-        return super.isInvulnerableTo(source);
-    }
-
-    @Override
     public void aiStep() {
         super.aiStep();
         if (!isInWater()) {

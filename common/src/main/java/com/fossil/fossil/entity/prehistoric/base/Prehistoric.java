@@ -1484,6 +1484,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public boolean doHurtTarget(Entity target) {
         // TODO Implement this properly, all dinosaurs may run away after attacking player if pvp is disabled
+        //Not to be affected: Compso, Lio, Megalodon, Mosa, Nautilus, Spino. Why? Who knows
         // Should the check be based on size?
         boolean wasEffective = super.doHurtTarget(target);
         if (!wasEffective) setFleeing(true);
