@@ -84,7 +84,6 @@ public class Triceratops extends Prehistoric {
         this.featherToggle = FossilConfig.isEnabled("quilledTriceratops");
         this.ridingXZ = -0.05F;
         this.pediaScale = 55;
-        this.maxUpStep = 1.5F;
     }
 
     @Override

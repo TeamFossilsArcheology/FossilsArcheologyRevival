@@ -94,6 +94,16 @@ public class Gallimimus extends PrehistoricFlocking {
     }
 
     @Override
+    public void aiStep() {
+        super.aiStep();
+        if (getRidingPlayer() != null) {
+            maxUpStep = 2;
+        } else {
+            maxUpStep = 0;
+        }
+    }
+
+    @Override
     public boolean canDinoHunt(LivingEntity target) {
         return isEntitySmallerThan(target, 0.6f) && super.canDinoHunt(target);
     }

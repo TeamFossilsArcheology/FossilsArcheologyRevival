@@ -103,7 +103,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public final MoodSystem moodSystem = new MoodSystem(this);
     private final AttackAnimationLogic<Prehistoric> animations = new AttackAnimationLogic<>(this);
     private final boolean isMultiPart;
-    private final WhipSteering steering = new WhipSteering();
+    protected final WhipSteering steering = new WhipSteering(this);
     public OrderType currentOrder;
     public boolean hasFeatherToggle = false;
     public boolean featherToggle;
@@ -121,7 +121,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public ResourceLocation textureLocation;
     public DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
-    protected boolean isJumping;
     private Gender gender = Gender.random(random);
     private boolean droppedBiofossil = false;
     private int fleeTicks = 0;
@@ -492,65 +491,72 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         player.startRiding(this);
     }
 
+    private void doJump(double upwardMovement, double forwardMovement) {
+        hasImpulse = true;
+        if (forwardMovement > 0) {
+            float h = Mth.sin(getYRot() * ((float) Math.PI / 180));
+            float i = Mth.cos(getYRot() * ((float) Math.PI / 180));
+            setDeltaMovement(getDeltaMovement().add(-0.4f * h * playerJumpPendingScale, upwardMovement, 0.4f * i * playerJumpPendingScale));
+        } else {
+            setDeltaMovement(getDeltaMovement().x, upwardMovement, getDeltaMovement().z);
+        }
+    }
+
     @Override
     public void travel(Vec3 travelVector) {
-        if ((this.isOrderedToSit() || this.isImmobile()) && !this.isVehicle()) {
+        if (isImmobile() && !isVehicle()) {
             super.travel(Vec3.ZERO);
             return;
         }
-        if (!isVehicle() || !canBeControlledByRider()) {
-            flyingSpeed = 0.02f;
+        LivingEntity rider = (LivingEntity) getControllingPassenger();
+        if (rider == null || !canBeControlledByRider() || !steering.trySteer(rider)) {
             super.travel(travelVector);
             return;
-        }
-        Player rider = getRidingPlayer();
-        if (getTarget() != null) {
-            setTarget(null);
-            getNavigation().stop();
         }
         setYRot(rider.getYRot());
         yRotO = getYRot();
         setXRot(rider.getXRot() * 0.5f);
         setRot(getYRot(), getXRot());
-        yHeadRot = yBodyRot = getYRot();
+        yBodyRot = getYRot();
+        yHeadRot = getYRot();
         float newStrafeMovement = rider.xxa * 0.5f;
         float newForwardMovement = rider.zza;
-        if (onGround && playerJumpPendingScale > 0 && !isJumping()) {
+        boolean fastInWater = aiMovingType() == PrehistoricEntityTypeAI.Moving.AQUATIC || aiMovingType() == PrehistoricEntityTypeAI.Moving.SEMI_AQUATIC;
+        if (playerJumpPendingScale > 0) {
             double newYMovement = getJumpStrength() * playerJumpPendingScale * getBlockJumpFactor() + getJumpBoostPower();
-            Vec3 currentMovement = getDeltaMovement();
-            setDeltaMovement(currentMovement.x, newYMovement, currentMovement.z);
-            setIsJumping(true);
-            hasImpulse = true;
-            if (newForwardMovement > 0) {
-                float h = Mth.sin(getYRot() * ((float) Math.PI / 180));
-                float i = Mth.cos(getYRot() * ((float) Math.PI / 180));
-                this.setDeltaMovement(getDeltaMovement().add(-0.4f * h * playerJumpPendingScale, 0.0, 0.4f * i * playerJumpPendingScale));
+            if (isInWater()) {//TODO: Fix use in swimming?
+                if (fastInWater) {
+                    doJump(newYMovement, newForwardMovement);
+                } else {
+                    doJump(newYMovement / 2, newForwardMovement / 2);
+                }
+            } else if (isOnGround()) {
+                doJump(newYMovement, newForwardMovement);
             }
             playerJumpPendingScale = 0;
         }
-        flyingSpeed = getSpeed() * 0.1f;
-        fallDistance = 0;
-        if (this.isControlledByLocalInstance()) {
+        if (isControlledByLocalInstance()) {
             setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
-            steering.travel(this, rider, travelVector);
-            super.travel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement));
+            Vec3 newMovement = new Vec3(newStrafeMovement, travelVector.y, newForwardMovement).scale(0.5);
+            if (isInWater()) {
+                steering.slowWaterTravel(newMovement);
+            } else {
+                super.travel(newMovement);
+            }
         } else {
             setDeltaMovement(Vec3.ZERO);
         }
-        if (onGround) {
+        if (isOnGround()) {
             playerJumpPendingScale = 0;
-            setIsJumping(false);
         }
     }
 
     @Override
     @Nullable
     public Entity getControllingPassenger() {
-        for (Entity passenger : this.getPassengers()) {
-            if (passenger instanceof Player player && this.getTarget() != passenger) {
-                if (this.isTame() && this.isOwnedBy(player)) {
-                    return player;
-                }
+        for (Entity passenger : getPassengers()) {
+            if (passenger instanceof Player player && isOwnedBy(player) && getTarget() != passenger) {
+                return player;
             }
         }
         return null;
@@ -574,7 +580,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             setMatingTick(getMatingTick() - 1);
         }
         if (getRidingPlayer() != null) {
-            maxUpStep = 1;//TODO: Vehicle
+            maxUpStep = 1;
+        } else {
+            maxUpStep = 0;
         }
         if (FossilConfig.isEnabled("healingDinos") && !level.isClientSide) {
             if (random.nextInt(500) == 0 && deathTime == 0) {
@@ -767,10 +775,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
-        if (this.aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD ||
-                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.WALK_AND_GLIDE ||
-                this.aiMovingType() == PrehistoricEntityTypeAI.Moving.FLIGHT
-        ) {
+        if (aiClimbType() == PrehistoricEntityTypeAI.Climbing.ARTHROPOD || aiMovingType() == PrehistoricEntityTypeAI.Moving.WALK_AND_GLIDE || aiMovingType() == PrehistoricEntityTypeAI.Moving.FLIGHT) {
             return false;
         } else {
             return super.causeFallDamage(distance, damageMultiplier, source);
@@ -1067,7 +1072,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 } else {
                     double d0 = player.getX() - this.getX();
                     double d2 = player.getZ() - this.getZ();
-                    float f = (float) (Mth.atan2(d2, d0) * (180D / Math.PI)) - 90.0F;
+                    float f = (float) (Mth.atan2(d2, d0) * Mth.RAD_TO_DEG) - 90.0F;
                     this.yHeadRot = f;
                     this.yBodyRot = f;
                 }
@@ -1174,7 +1179,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                         }
                     } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
                         moodSystem.increaseMood(-5);
-                        if (random.nextInt(5) == 0) {
+                        if (random.nextInt(5) == 0) {//TODO: Shouldnt be clientside. Check others things here as well
                             player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
                             moodSystem.increaseMood(-25);
                             tame(player);
@@ -1316,7 +1321,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean canBeControlledByRider() {
-        return canBeRidden() && this.getControllingPassenger() instanceof LivingEntity rider && this.isOwnedBy(rider);
+        return canBeRidden() && this.getControllingPassenger() instanceof LivingEntity rider && isOwnedBy(rider);
     }
 
     public void procreate(Prehistoric mob) {
@@ -1351,7 +1356,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(range, 4.0D, range), prehistoric -> prehistoric != this);
     }
 
-    // This method uses Forge-specific API and needs porting. However, it's currently unused so I'm commenting it for now.
+    //TODO: This method uses Forge-specific API and needs porting.
     /*public boolean isInWaterMaterial() {
         double d0 = this.getY();
         int i = Mth.floor(this.getX());
@@ -1440,14 +1445,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     protected double getJumpStrength() {
         return 1;//TODO: Jump Strength for all rideable dinos
-    }
-
-    protected boolean isJumping() {
-        return isJumping;
-    }
-
-    protected void setIsJumping(boolean jumping) {
-        isJumping = jumping;
     }
 
     @Override
