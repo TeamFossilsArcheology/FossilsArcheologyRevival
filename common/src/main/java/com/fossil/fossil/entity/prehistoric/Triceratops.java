@@ -81,7 +81,7 @@ public class Triceratops extends Prehistoric {
         var tail = PrehistoricPart.get(this, 2.2f, 2f);
         this.parts = new Entity[]{body, head, tail};
         this.hasFeatherToggle = true;
-        this.featherToggle = FossilConfig.isEnabled("quilledTriceratops");
+        this.featherToggle = FossilConfig.isEnabled(FossilConfig.QUILLED_TRICERATOPS);
         this.ridingXZ = -0.05F;
         this.pediaScale = 55;
     }

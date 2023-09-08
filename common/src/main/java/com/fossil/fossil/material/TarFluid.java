@@ -38,8 +38,8 @@ public class TarFluid {
     }
 
     private static void trySpawnTarSlime(Level level, BlockPos pos, boolean isSource) {
-        int tarSlimeSpawnRate = FossilConfig.getInt("tarSlimesSpawnRate");
-        if (level.getDifficulty() != Difficulty.PEACEFUL && FossilConfig.isEnabled("spawnTarSlimes") &&
+        int tarSlimeSpawnRate = FossilConfig.getInt(FossilConfig.TAR_SLIMES_SPAWN_RATE);
+        if (level.getDifficulty() != Difficulty.PEACEFUL && FossilConfig.isEnabled(FossilConfig.SPAWN_TAR_SLIMES) &&
                 level.random.nextInt(isSource ? tarSlimeSpawnRate : tarSlimeSpawnRate * 15) == 0) {
             double spawnRange = 16;
             int k = level.getEntities(ModEntities.TAR_SLIME.get(), new AABB(pos, pos.offset(1, 1, 1)).inflate(spawnRange), Entity::isAlive).size();

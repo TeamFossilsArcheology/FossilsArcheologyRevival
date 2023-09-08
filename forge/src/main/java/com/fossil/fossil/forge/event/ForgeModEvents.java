@@ -54,7 +54,7 @@ public class ForgeModEvents {
             if (currentProgress == 0) {
                 return;
             }
-            if (currentProgress >= FossilConfig.getInt("pregnancyDuration")) {
+            if (currentProgress >= FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION)) {
                 if (!animal.level.isClientSide) {
                     ModEvents.growEntity(ModCapabilitiesImpl.getEmbryo(animal), animal);
                     ModCapabilities.stopPregnancy(animal);

@@ -26,7 +26,7 @@ public class MammalComponent implements IMammalComponent, AutoSyncedComponent, C
         if (embryoProgress == 0) {
             return;
         }
-        if (embryoProgress >= FossilConfig.getInt("pregnancyDuration")) {
+        if (embryoProgress >= FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION)) {
             if (!animal.level.isClientSide) {
                 ModEvents.growEntity(embryo, animal);
                 ModCapabilities.stopPregnancy(animal);

@@ -115,7 +115,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         BlockPos radialPos = new BlockPos(getX() + extraX, 0, getZ() + extraZ);
         BlockPos ground = level.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING, radialPos);
         int distFromGround = (int) getY() - ground.getY();
-        BlockPos newPos = radialPos.above(distFromGround > 16 ? (int) Math.min(FossilConfig.getInt("flyingTargetMaxHeight"), getY() + random.nextInt(16) - 8) : (int) getY() + random.nextInt(16) + 1);
+        BlockPos newPos = radialPos.above(distFromGround > 16 ? (int) Math.min(FossilConfig.getInt(FossilConfig.FLYING_TARGET_MAX_HEIGHT), getY() + random.nextInt(16) - 8) : (int) getY() + random.nextInt(16) + 1);
         if (!isTargetBlocked(Vec3.atCenterOf(newPos)) && distanceToSqr(Vec3.atCenterOf(newPos)) > 6) {
             return newPos;
         }

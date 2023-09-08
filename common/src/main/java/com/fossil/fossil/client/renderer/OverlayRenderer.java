@@ -24,7 +24,7 @@ public class OverlayRenderer {
 
     public static void renderHelmet(int screenWidth, int screenHeight) {
         Minecraft mc = Minecraft.getInstance();
-        if (FossilConfig.isEnabled("helmetOverlays") && mc.options.getCameraType().isFirstPerson()) {
+        if (FossilConfig.isEnabled(FossilConfig.HELMET_OVERLAYS) && mc.options.getCameraType().isFirstPerson()) {
             ItemStack helmet = mc.player.getItemBySlot(EquipmentSlot.HEAD);
             boolean ancient = helmet.is(ModItems.ANCIENT_HELMET.get());
             if (ancient || helmet.is(ModItems.BONE_HELMET.get())) {

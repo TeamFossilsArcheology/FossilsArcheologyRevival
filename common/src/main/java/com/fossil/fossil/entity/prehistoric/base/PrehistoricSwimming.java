@@ -263,7 +263,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -40) {
                 setAirSupply(0);
-                hurt(DamageSource.DROWN, 2.0f);
+                hurt(DamageSource.DROWN, 2);
             }
         } else {
             setAirSupply(500);
@@ -309,7 +309,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public boolean onClimbable() {
-        return super.onClimbable();
+        return false;
     }
 
     public abstract float swimSpeed();

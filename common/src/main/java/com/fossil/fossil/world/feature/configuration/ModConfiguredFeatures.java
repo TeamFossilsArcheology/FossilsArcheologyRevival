@@ -63,8 +63,8 @@ public class ModConfiguredFeatures {
 
     static {
         StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
-                HELL_BOAT, new RandomSpreadStructurePlacement(FossilConfig.getInt("hellShipSpacing"),
-                        FossilConfig.getInt("hellShipSeperation"), RandomSpreadType.LINEAR, 92182587));
+                HELL_BOAT, new RandomSpreadStructurePlacement(FossilConfig.getInt(FossilConfig.HELL_SHIP_SPACING),
+                        FossilConfig.getInt(FossilConfig.HELL_SHIP_SEPERATION), RandomSpreadType.LINEAR, 92182587));
     }
 
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {

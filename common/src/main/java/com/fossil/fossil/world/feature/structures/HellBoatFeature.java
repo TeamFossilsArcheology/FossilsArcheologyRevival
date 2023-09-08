@@ -25,7 +25,7 @@ public class HellBoatFeature extends StructureFeature<RangeConfiguration> {
     }
 
     private static Optional<PieceGenerator<RangeConfiguration>> pieceGeneratorSupplier(PieceGeneratorSupplier.Context<RangeConfiguration> context) {
-        if (!FossilConfig.isEnabled("generateHellShips")) {
+        if (!FossilConfig.isEnabled(FossilConfig.GENERATE_HELL_SHIPS)) {
             return Optional.empty();
         }
         BlockPos origin = context.chunkPos().getMiddleBlockPosition(0);

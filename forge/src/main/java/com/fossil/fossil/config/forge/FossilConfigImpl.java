@@ -1,5 +1,6 @@
 package com.fossil.fossil.config.forge;
 
+import com.fossil.fossil.config.FossilConfig;
 import net.minecraftforge.common.ForgeConfigSpec;
 
 public class FossilConfigImpl {
@@ -9,16 +10,16 @@ public class FossilConfigImpl {
             return booleanValue.get();
         } else {
             switch (field) {//The forge config will not be initialized before worldgen
-                case "generateFossils" -> {
+                case FossilConfig.GENERATE_FOSSILS -> {
                     return ForgeConfig.GENERATE_FOSSILS.get();
                 }
-                case "generatePermafrost" -> {
+                case FossilConfig.GENERATE_PERMAFROST -> {
                     return ForgeConfig.GENERATE_PERMAFROST.get();
                 }
-                case "generateVolcanicRock" -> {
+                case FossilConfig.GENERATE_VOLCANIC_ROCK ->{
                     return ForgeConfig.GENERATE_VOLCANIC_ROCK.get();
                 }
-                case "generateTarSites" -> {
+                case FossilConfig.GENERATE_TAR_SITES -> {
                     return ForgeConfig.GENERATE_TAR_SITES.get();
                 }
                 default -> {
@@ -34,19 +35,19 @@ public class FossilConfigImpl {
             return intValue.get();
         } else {
             switch (field) {
-                case "hellShipSpacing" -> {
+                case FossilConfig.HELL_SHIP_SPACING -> {
                     return ForgeConfig.HELL_SHIP_SPACING.get();
                 }
-                case "hellShipSeperation" -> {
+                case FossilConfig.HELL_SHIP_SEPERATION -> {
                     return ForgeConfig.HELL_SHIP_SEPERATION.get();
                 }
-                case "tarSiteRarity" -> {
+                case FossilConfig.TAR_SITE_RARITY -> {
                     return ForgeConfig.TAR_SITE_RARITY.get();
                 }
-                case "fossilOreRarity" -> {
+                case FossilConfig.FOSSIL_ORE_RARITY -> {
                     return ForgeConfig.FOSSIL_ORE_RARITY.get();
                 }
-                case "permafrostOreRarity" -> {
+                case FossilConfig.PERMAFROST_RARITY -> {
                     return ForgeConfig.PERMAFROST_RARITY.get();
                 }
                 default -> {

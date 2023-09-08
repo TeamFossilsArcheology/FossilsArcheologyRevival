@@ -22,7 +22,7 @@ public class DinoMatingGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!FossilConfig.isEnabled("breedingDinos")) {
+        if (!FossilConfig.isEnabled(FossilConfig.BREEDING_DINOS)) {
             return false;
         }
         if (male.getGender() != Gender.MALE || !male.isAdult() || male.getMatingTick() > 0 || male.moodSystem.getMood() <= 50) {
