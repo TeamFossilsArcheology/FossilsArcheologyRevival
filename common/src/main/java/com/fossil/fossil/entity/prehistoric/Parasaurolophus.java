@@ -7,6 +7,10 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
@@ -47,8 +51,10 @@ public class Parasaurolophus extends Prehistoric {
         }
         return newMap;
     });
+    private static final EntityDataAccessor<Boolean> STANDING = SynchedEntityData.defineId(Parasaurolophus.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("parasaurolophus");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private int ticksStanding;
 
     public Parasaurolophus(EntityType<Parasaurolophus> entityType, Level level) {
         super(entityType, level, false);
@@ -74,6 +80,24 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(STANDING, false);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putBoolean("Standing", isStanding());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        setStanding(compound.getBoolean("Standing"));
+    }
+
+    @Override
     public PrehistoricEntityType type() {
         return PrehistoricEntityType.PARASAUROLOPHUS;
     }
@@ -81,6 +105,48 @@ public class Parasaurolophus extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (isStanding()) {
+            ticksStanding++;
+        } else {
+            ticksStanding = 0;
+        }
+        if (!level.isClientSide) {
+            if (!isStanding() && !isImmobile() && random.nextInt(100) == 0) {
+                setStanding(true);
+            }
+            if (isStanding() && ticksStanding > 800 && random.nextInt(800) == 0) {
+                setStanding(false);
+            }
+        }
+    }
+
+    public boolean isStanding() {
+        return entityData.get(STANDING);
+    }
+
+    public void setStanding(boolean standing) {
+        entityData.set(STANDING, standing);
+    }
+
+    @Override
+    public void setSleeping(boolean sleeping) {
+        if (sleeping) {
+            setStanding(false);
+        }
+        super.setSleeping(sleeping);
+    }
+
+    @Override
+    public void setOrderedToSit(boolean orderedToSit) {
+        if (orderedToSit) {
+            setStanding(false);
+        }
+        super.setOrderedToSit(orderedToSit);
     }
 
     @Override

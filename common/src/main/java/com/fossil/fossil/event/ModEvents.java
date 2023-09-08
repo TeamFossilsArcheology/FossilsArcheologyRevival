@@ -64,12 +64,12 @@ public class ModEvents {
         int result = random.nextInt(100);
         if (newEntity instanceof AbstractHorse newHorse) {
             if (parent instanceof AbstractHorse parentHorse && parent.getClass().equals(newEntity.getClass())) {
+                //10% chance to tame the offspring if its an instance of AbstractHorse
                 if (result < 10) {
                     if (parentHorse.getOwnerUUID() != null) {
                         newHorse.setOwnerUUID(parentHorse.getOwnerUUID());
                         newHorse.setTamed(true);
                     }
-                    //TODO: Horse Variants and Markings
                 } else {
                     newEntity = parentHorse.getBreedOffspring(level, parentHorse);
                 }
@@ -83,6 +83,7 @@ public class ModEvents {
             double speed = parent.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() + newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue() + newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).getBaseValue();
             newQuagga.getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed / 3);
         } else if (newEntity instanceof Prehistoric prehistoric) {
+            //Always tame offspring if its an instance of Prehistoric
             Player player = level.getNearestPlayer(parent, 15);
             if (player != null) {
                 prehistoric.tame(player);

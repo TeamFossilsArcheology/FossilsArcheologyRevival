@@ -15,6 +15,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 
 public class ModEntities {
     private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Fossil.MOD_ID, Registry.ENTITY_TYPE_REGISTRY);
@@ -156,7 +157,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(PLATYBELODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PLESIOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PTERANODON, Prehistoric::createAttributes);
-        EntityAttributeRegistry.register(QUAGGA, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(QUAGGA, AbstractChestedHorse::createBaseChestedHorseAttributes);
         EntityAttributeRegistry.register(SARCOSUCHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(SMILODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(SPINOSAURUS, Prehistoric::createAttributes);
