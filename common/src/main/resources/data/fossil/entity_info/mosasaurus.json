@@ -19,7 +19,7 @@
     "jumping": "BASIC",
     "response": "AGGRESSIVE",
     "stalking": "NONE",
-    "taming": "BLUE_GEM",
+    "taming": "AQUATIC_GEM",
     "untaming": "NONE",
     "moving": "AQUATIC",
     "waterAbility": "ATTACK"

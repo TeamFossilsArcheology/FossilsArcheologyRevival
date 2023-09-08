@@ -79,7 +79,7 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     }
 
     @Override
-    public double swimSpeed() {
+    public float swimSpeed() {
         return 1;
     }
 

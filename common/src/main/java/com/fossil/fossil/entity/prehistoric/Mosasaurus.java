@@ -82,8 +82,8 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public double swimSpeed() {
-        return 1.2;
+    public float swimSpeed() {
+        return 1.2f;
     }
 
     @Override

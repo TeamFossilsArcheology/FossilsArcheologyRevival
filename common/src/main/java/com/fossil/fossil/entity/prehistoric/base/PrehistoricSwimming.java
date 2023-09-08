@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.ai.navigation.LargeSwimNodeEvaluator;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.MarkMessage;
 import com.fossil.fossil.util.Gender;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -18,7 +19,6 @@ import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
@@ -283,48 +283,28 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             super.travel(Vec3.ZERO);
             return;
         }
-        if (isVehicle() && canBeControlledByRider()) {
-            Player rider = getRidingPlayer();
-            if (rider != null) {
-                float newStrafeMovement = rider.xxa * 0.5f;
-                float newForwardMovement = rider.zza;
-                fallDistance = 0;
-                newStrafeMovement = newStrafeMovement * 0.125f;
-                newForwardMovement = newForwardMovement * 0.25f;
-                if (isInWater()) {
-                    moveRelative(1, new Vec3(newStrafeMovement, travelVector.y, newForwardMovement));
-                    float f4 = 0.01f;
-                    double d0 = getScaledSwimSpeed() * 0.5;
-                    if (!isOnGround()) {
-                        d0 *= 0.5;
-                    }
-                    if (d0 > 0) {
-                        f4 += (0.54600006 - f4) * d0 / 3.0;
-                    }
-                    f4 = f4 * 0.900000011920929f;
-                    move(MoverType.SELF, getDeltaMovement());
-                    setDeltaMovement(getDeltaMovement().x * f4, getDeltaMovement().y * f4 + 0.1185, getDeltaMovement().z * f4);
-                } else {
-                    setSpeed(1);
-                    super.travel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement));
-                    return;
-                }
-                setSpeed(1);
-                super.travel(new Vec3(newStrafeMovement, 0, newForwardMovement));
-                //TODO: copy from existing ride code
-            }
-        }
-        if (isEffectiveAi() && isInWater()) {
-            moveRelative(getSpeed(), travelVector);//TOOD: Figure out amount
-            move(MoverType.SELF, getDeltaMovement());
-            setDeltaMovement(getDeltaMovement().scale(0.9));
-            if (getTarget() == null) {
-                setDeltaMovement(getDeltaMovement().add(0.0, -0.005, 0.0));
-            }
-        } else {
+        LivingEntity rider = (LivingEntity) getControllingPassenger();
+        if (rider == null || !canBeControlledByRider() || !steering.trySteer(rider)) {
             super.travel(travelVector);
+            return;
         }
-        super.travel(travelVector);
+        if (!isInWater()) {
+            super.travel(travelVector);
+            return;
+        }
+        setYRot(rider.getYRot());
+        yRotO = getYRot();
+        setXRot(rider.getXRot() * 0.5f);
+        setRot(getYRot(), getXRot());
+        yBodyRot = getYRot();
+        yHeadRot = getYRot();
+        float newStrafeMovement = rider.xxa * 0.5f;
+        float newForwardMovement = rider.zza;
+        if (isControlledByLocalInstance()) {
+            steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (LocalPlayer) rider);
+        } else {
+            setDeltaMovement(Vec3.ZERO);
+        }
     }
 
     @Override
@@ -332,7 +312,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return super.onClimbable();
     }
 
-    public abstract double swimSpeed();
+    public abstract float swimSpeed();
 
     private double getScaledSwimSpeed() {
         return getScale() / data().maxScale() * swimSpeed();

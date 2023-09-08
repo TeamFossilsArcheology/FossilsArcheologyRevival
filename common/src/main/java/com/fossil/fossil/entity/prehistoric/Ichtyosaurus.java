@@ -81,8 +81,8 @@ public class Ichtyosaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public double swimSpeed() {
-        return 0.75;
+    public float swimSpeed() {
+        return 0.75f;
     }
 
     @Override

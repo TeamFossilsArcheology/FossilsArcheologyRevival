@@ -30,7 +30,7 @@ public class PrehistoricEntityTypeAI {
     }
 
     public enum Taming {
-        IMPRINTING, FEEDING, GEM, BLUE_GEM, NONE
+        IMPRINTING, FEEDING, GEM, AQUATIC_GEM, NONE
     }
 
     public enum Untaming {

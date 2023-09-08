@@ -1,7 +1,9 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.item.ModItems;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -40,6 +42,21 @@ public class WhipSteering {
         if (dino.horizontalCollision) {
             dino.setDeltaMovement(dino.getDeltaMovement().add(0, 0.1, 0));
         }
+        dino.move(MoverType.SELF, dino.getDeltaMovement());
+    }
+
+    public void waterTravel(Vec3 travelVector, LocalPlayer rider) {
+        Vec3 look = rider.getLookAngle();
+        boolean movement = Math.abs(travelVector.x) > 0 || Math.abs(travelVector.z) > 0;
+        double downwardMovement = !rider.input.jumping && look.y < -0.4 ? -0.15 : 0;
+        if (movement) {
+            dino.setDeltaMovement(0, downwardMovement, 0);
+        } else {
+            dino.setDeltaMovement(dino.getDeltaMovement().x / 2, downwardMovement, dino.getDeltaMovement().z / 2);
+        }
+        double upwardMovement = rider.input.jumping ? dino.getJumpStrength() * 0.15 : 0;
+        float speed = dino instanceof PrehistoricSwimming swimming ? swimming.swimSpeed() : dino.getSpeed();
+        dino.moveRelative(speed, new Vec3(travelVector.x, upwardMovement, travelVector.z));
         dino.move(MoverType.SELF, dino.getDeltaMovement());
     }
 }

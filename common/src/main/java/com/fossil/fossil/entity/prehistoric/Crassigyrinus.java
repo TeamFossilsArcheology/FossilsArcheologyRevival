@@ -77,8 +77,8 @@ public class Crassigyrinus extends PrehistoricSwimming {
     }
 
     @Override
-    public double swimSpeed() {
-        return 0.5;
+    public float swimSpeed() {
+        return 0.5f;
     }
 
     @Override

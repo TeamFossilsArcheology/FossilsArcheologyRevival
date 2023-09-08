@@ -76,8 +76,8 @@ public class Henodus extends PrehistoricSwimming {
     }
 
     @Override
-    public double swimSpeed() {
-        return 0.2;
+    public float swimSpeed() {
+        return 0.2f;
     }
 
     @Override

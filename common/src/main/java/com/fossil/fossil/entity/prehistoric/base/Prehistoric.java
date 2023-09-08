@@ -1090,7 +1090,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 return InteractionResult.PASS;
             }
             if ((aiTameType() == PrehistoricEntityTypeAI.Taming.GEM && itemstack.is(ModItems.SCARAB_GEM.get())) ||
-                    (aiTameType() == PrehistoricEntityTypeAI.Taming.BLUE_GEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
+                    (aiTameType() == PrehistoricEntityTypeAI.Taming.AQUATIC_GEM && itemstack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
                 if (!isTame() && !isOwnedBy(player) && isActuallyWeak()) {
                     heal(200);
                     moodSystem.setMood(100);
@@ -1105,7 +1105,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 }
             }
 
-            if (itemstack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && !level.isClientSide) {
+            if (itemstack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.AQUATIC_GEM && !level.isClientSide) {
                 if (getAgeInDays() < data().adultAgeDays() && getHunger() > 0) {
                     usePlayerItem(player, hand, itemstack);
                     if (!player.isCreative()) {
@@ -1177,7 +1177,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                             setSprinting(true);
                             moodSystem.increaseMood(-5);
                         }
-                    } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.BLUE_GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
+                    } else if (!isTame() && aiTameType() != PrehistoricEntityTypeAI.Taming.AQUATIC_GEM && aiTameType() != PrehistoricEntityTypeAI.Taming.GEM) {
                         moodSystem.increaseMood(-5);
                         if (random.nextInt(5) == 0) {//TODO: Shouldnt be clientside. Check others things here as well
                             player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
@@ -1232,7 +1232,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isActuallyWeak() {
-        return (aiTameType() == PrehistoricEntityTypeAI.Taming.BLUE_GEM || aiTameType() == PrehistoricEntityTypeAI.Taming.GEM) && isWeak();
+        return (aiTameType() == PrehistoricEntityTypeAI.Taming.AQUATIC_GEM || aiTameType() == PrehistoricEntityTypeAI.Taming.GEM) && isWeak();
     }
 
     private void sendOrderMessage(OrderType orderType) {
@@ -1443,7 +1443,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    protected double getJumpStrength() {
+    public double getJumpStrength() {
         return 1;//TODO: Jump Strength for all rideable dinos
     }
 
