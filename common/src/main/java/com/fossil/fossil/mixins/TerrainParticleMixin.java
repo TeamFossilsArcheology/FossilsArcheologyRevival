@@ -1,4 +1,4 @@
-package com.fossil.fossil.fabric.mixins;
+package com.fossil.fossil.mixins;
 
 import com.fossil.fossil.block.ModBlocks;
 import net.minecraft.client.multiplayer.ClientLevel;

@@ -11,6 +11,8 @@ public class ModSurfaceRules {
     public static final SurfaceRules.RuleSource STONE_RULE = SurfaceRules.sequence(SurfaceRules.ifTrue(SurfaceRules.noiseCondition(
                     Noises.GRAVEL, -0.05, 0.05), SurfaceRules.state(Blocks.ANDESITE.defaultBlockState())),
             SurfaceRules.state(Blocks.STONE.defaultBlockState()));
+
+    //TODO: Something is replacing bedrock at y= -64
     public static final SurfaceRules.RuleSource VOLCANIC_SURFACE_RULE = SurfaceRules.sequence(
             SurfaceRules.ifTrue(SurfaceRules.isBiome(ModBiomes.VOLCANO_KEY),
                     SurfaceRules.sequence(

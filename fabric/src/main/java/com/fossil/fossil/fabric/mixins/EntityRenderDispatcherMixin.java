@@ -24,7 +24,7 @@ public abstract class EntityRenderDispatcherMixin {
 
 
     @Inject(method = "renderHitbox", at = @At(value = "HEAD"), cancellable = true)
-    private static void renderMultipart(PoseStack matrixStack, VertexConsumer buffer, Entity entity, float partialTicks, CallbackInfo ci) {
+    private static void renderMultipartHitbox(PoseStack matrixStack, VertexConsumer buffer, Entity entity, float partialTicks, CallbackInfo ci) {
         if (entity instanceof Prehistoric) {
             ci.cancel();
             //Unchanged original code

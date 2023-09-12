@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.LocalCapture;
 public class ScreenEffectRendererMixin {
 
     @Inject(method = "renderScreenEffect", locals = LocalCapture.CAPTURE_FAILHARD, at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/ScreenEffectRenderer;renderTex(Lnet/minecraft/client/renderer/texture/TextureAtlasSprite;Lcom/mojang/blaze3d/vertex/PoseStack;)V"), cancellable = true)
-    private static void a(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci, Player player, BlockState blockState) {
+    private static void renderTarOverlay(Minecraft minecraft, PoseStack poseStack, CallbackInfo ci, Player player, BlockState blockState) {
         if (blockState.is(ModBlocks.TAR.get())) {
             ci.cancel();
             OverlayRenderer.renderTar(poseStack);

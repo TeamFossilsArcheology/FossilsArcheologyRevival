@@ -2,6 +2,13 @@
   "required": true,
   "package": "com.fossil.fossil.mixins",
   "compatibilityLevel": "JAVA_17",
+  "client": [
+    "ParticleAccessor",
+    "TerrainParticleMixin"
+  ],
+  "mixins": [
+    "MobMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }
