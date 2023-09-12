@@ -92,9 +92,103 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     @Override
     public void buildSurface(WorldGenRegion level, StructureFeatureManager structureFeatureManager, ChunkAccess chunk) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-        for (int x = 0; x < 16; x++) {
-            for (int z = 0; z < 16; z++) {
-                chunk.setBlockState(mutable.set(x, getMinY(), z), Blocks.BEDROCK.defaultBlockState(), false);
+        int chunkX = chunk.getPos().x;
+        int chunkZ = chunk.getPos().z;
+        BlockState netherrack = Blocks.NETHERRACK.defaultBlockState();
+        int anuCastleMinY = 62;
+        int islandMinY = anuCastleMinY-16;
+        if (chunkX > -1 && chunkX < 9 && chunkZ > -1 && chunkZ < 9) {
+            for (int y = islandMinY; y < anuCastleMinY; y++) {
+                for (int x = 0; x < 16; x++) {
+                    for (int z = 0; z < 16; z++) {
+                        chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                    }
+                }
+            }
+        }
+        int offset = 0;
+        if (chunkX == -1) {
+            if (chunkZ >= 0 && chunkZ < 9) {
+                for (int y = islandMinY; y < anuCastleMinY; y++) {
+                    for (int x = offset; x < 16; x++) {
+                        for (int z = 0; z < 16; z++) {
+                            chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                        }
+                    }
+                    offset++;
+                }
+            } else if (chunkZ == -1) {
+                for (int y = islandMinY; y < anuCastleMinY; y++) {
+                    for (int x = offset; x < 16; x++) {
+                        for (int z = offset; z < 16; z++) {
+                            chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                        }
+                    }
+                    offset++;
+                }
+            }
+        }
+        if (chunkZ == -1) {
+            if (chunkX >= 0 && chunkX < 9) {
+                for (int y = islandMinY; y < anuCastleMinY; y++) {
+                    for (int x = 0; x < 16; x++) {
+                        for (int z = offset; z < 16; z++) {
+                            chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                        }
+                    }
+                    offset++;
+                }
+            } else if (chunkX == 9) {
+                for (int y = islandMinY; y < anuCastleMinY; y++) {
+                    for (int x = 15 - offset; x >= 0; x--) {
+                        for (int z = offset; z < 16; z++) {
+                            chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                        }
+                    }
+                    offset++;
+                }
+            }
+        }
+        if (chunkX == 9) {
+            if (chunkZ >= 0 && chunkZ < 9) {
+                for (int y = islandMinY; y < anuCastleMinY; y++) {
+                    for (int x = 15 - offset; x >= 0; x--) {
+                        for (int z = 0; z < 16; z++) {
+                            chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                        }
+                    }
+                    offset++;
+                }
+            } else if (chunkZ == 9) {
+                for (int y = islandMinY; y < anuCastleMinY; y++) {
+                    for (int x = 15 - offset; x >= 0; x--) {
+                        for (int z = 15 - offset; z >= 0; z--) {
+                            chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                        }
+                    }
+                    offset++;
+                }
+            }
+        }
+        if (chunkZ == 9) {
+            if (chunkX >= 0 && chunkX < 9) {
+                for (int y = islandMinY; y < anuCastleMinY; y++) {
+                    for (int x = 0; x < 16; x++) {
+                        for (int z = 15 - offset; z >= 0; z--) {
+                            chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                        }
+                    }
+                    offset++;
+                }
+            } else if (chunkX == -1) {
+                for (int y = islandMinY; y < anuCastleMinY; y++) {
+                    for (int x = offset; x < 16; x++) {
+                        for (int z = 15 - offset; z >= 0; z--) {
+                            chunk.setBlockState(mutable.set(x, y, z), netherrack, false);
+                        }
+                    }
+                    offset++;
+                }
             }
         }
     }

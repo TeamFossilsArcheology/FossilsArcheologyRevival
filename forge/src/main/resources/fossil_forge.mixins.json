@@ -7,7 +7,6 @@
     "TerrainParticleMixin"
   ],
   "mixins": [
-    "JigsawPlacementMixin",
     "PrehistoricMixin"
   ],
   "injectors": {
