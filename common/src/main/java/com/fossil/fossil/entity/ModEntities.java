@@ -1,10 +1,7 @@
 package com.fossil.fossil.entity;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.monster.AnuBoss;
-import com.fossil.fossil.entity.monster.FriendlyPiglin;
-import com.fossil.fossil.entity.monster.SentryPiglin;
-import com.fossil.fossil.entity.monster.TarSlime;
+import com.fossil.fossil.entity.monster.*;
 import com.fossil.fossil.entity.prehistoric.*;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -87,12 +84,14 @@ public class ModEntities {
 
     public static final RegistrySupplier<EntityType<TarSlime>> TAR_SLIME = ENTITIES.register("tar_slime",
             () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).build("tar_slime"));
-    public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
-            () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
+    public static final RegistrySupplier<EntityType<Anubite>> ANUBITE = ENTITIES.register("anubite",
+            () -> EntityType.Builder.of(Anubite::new, MobCategory.MONSTER).sized(1, 2.3f).fireImmune().build("anubite"));
     public static final RegistrySupplier<EntityType<AnuBoss>> ANU_BOSS = ENTITIES.register("anu_boss",
             () -> EntityType.Builder.of(AnuBoss::new, MobCategory.MONSTER).sized(1, 1.8f).fireImmune().build("anu_boss"));
     public static final RegistrySupplier<EntityType<AnuDead>> ANU_DEAD = ENTITIES.register("anu_dead",
             () -> EntityType.Builder.of(AnuDead::new, MobCategory.MONSTER).sized(1.8f, 0.8f).fireImmune().build("anu_dead"));
+    public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
+            () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
     public static final RegistrySupplier<EntityType<SentryPiglin>> SENTRY_PIGLIN = ENTITIES.register("sentry_piglin",
             () -> EntityType.Builder.of(SentryPiglin::new, MobCategory.MONSTER).sized(1.8f, 0.8f).fireImmune().build("sentry_piglin"));
 
@@ -170,6 +169,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(TROPEOGNATHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TYRANNOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(VELOCIRAPTOR, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(ANUBITE, Anubite::createAttributes);
         EntityAttributeRegistry.register(ANU_BOSS, AnuBoss::createAttributes);
         EntityAttributeRegistry.register(ANU_DEAD, AnuDead::createAttributes);
         EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
