@@ -39,7 +39,7 @@ public class ModDimensions {
         int z = (int) spawnPoint.z;
         BlockPos.betweenClosed(x - 2, y + 1, z - 2, x + 2, y + 3, z + 2).forEach(blockPos -> anuLair.setBlockAndUpdate(blockPos, Blocks.AIR.defaultBlockState()));
         BlockPos.betweenClosed(x - 2, y, z - 2, x + 2, y, z + 2).forEach(blockPos -> anuLair.setBlockAndUpdate(blockPos, Blocks.OBSIDIAN.defaultBlockState()));
-        changeDimension(entity, anuLair, new PortalInfo(spawnPoint, entity.getDeltaMovement(), entity.getYRot(), entity.getXRot()));
+        changeDimension(entity, anuLair, new PortalInfo(spawnPoint, entity.getDeltaMovement(), 0, 90));
     }
 
     @ExpectPlatform

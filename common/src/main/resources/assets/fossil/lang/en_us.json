@@ -71,6 +71,7 @@
   "entity.fossil.anu.ancient": "=Anu: Trying to use my magic against me? Bad Idea.",
   "entity.fossil.anu.archers": "Anu: Archers, fire!",
   "entity.fossil.anu.blazes": "Anu: Blazes! Destroy the enemy!",
+  "entity.fossil.anu.break_block": "You cannot break blocks here without defeating Anu.",
   "entity.fossil.anu.brutes": "Anu: Brutes, wake up your wisdom.",
   "entity.fossil.anu.coward": "Anu: Bow using coward! Stop hiding!",
   "entity.fossil.anu.death": "Anu: NO!!!",

@@ -1,12 +1,8 @@
 package com.fossil.fossil.entity;
 
-import com.fossil.fossil.Fossil;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.world.dimension.ModDimensions;
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -21,9 +17,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlaceSettings;
-import net.minecraft.world.level.levelgen.structure.templatesystem.StructureTemplate;
-import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -67,15 +60,6 @@ public class AnuDead extends LivingEntity {
 
     @Override
     public void tick() {
-        if (tickCount == 1 && !level.isClientSide) {
-            ServerLevel treasureLevel = ((ServerLevel) level).getServer().getLevel(ModDimensions.TREASURE_ROOM);
-            if (treasureLevel.getDataStorage().get(c -> new TreasureRoom(), "treasure_spawned") == null) {
-                StructureTemplate structure = treasureLevel.getStructureManager().getOrCreate(new ResourceLocation(Fossil.MOD_ID, "treasure_room"));
-                BlockPos pos = new BlockPos(0, 70, 0);
-                structure.placeInWorld(treasureLevel, pos, pos, new StructurePlaceSettings(), treasureLevel.random, 2);
-                treasureLevel.getDataStorage().set("treasure_spawned", new TreasureRoom());
-            }
-        }
         if (tickCount == MAX_LIFESPAN) {
             kill();
         }
@@ -121,18 +105,5 @@ public class AnuDead extends LivingEntity {
     @Override
     public @NotNull HumanoidArm getMainArm() {
         return HumanoidArm.RIGHT;
-    }
-
-    static class TreasureRoom extends SavedData {
-
-        public static TreasureRoom load(CompoundTag compoundTag) {
-            return new TreasureRoom();
-        }
-
-        @Override
-        public @NotNull CompoundTag save(CompoundTag compoundTag) {
-            compoundTag.putBoolean("Spawned", true);
-            return compoundTag;
-        }
     }
 }

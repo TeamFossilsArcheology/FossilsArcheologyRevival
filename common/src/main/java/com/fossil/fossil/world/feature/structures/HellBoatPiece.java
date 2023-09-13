@@ -5,7 +5,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.structure.BoundingBox;
 import net.minecraft.world.level.levelgen.structure.TemplateStructurePiece;
@@ -29,7 +28,7 @@ public class HellBoatPiece extends TemplateStructurePiece {
     }
 
     private static StructurePlaceSettings makeSettings(Rotation rotation) {
-        return new StructurePlaceSettings().setRotation(rotation).setMirror(Mirror.NONE);
+        return new StructurePlaceSettings().setRotation(rotation);
     }
 
     @Override

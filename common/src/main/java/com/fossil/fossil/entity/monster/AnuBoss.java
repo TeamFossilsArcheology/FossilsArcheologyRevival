@@ -10,6 +10,7 @@ import com.fossil.fossil.entity.ai.anu.FlyNearTargetGoal;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.sounds.MusicHandler;
+import com.fossil.fossil.world.dimension.ModDimensions;
 import com.fossil.fossil.world.feature.structures.AnuDefenseHut;
 import com.google.common.collect.ImmutableList;
 import net.minecraft.core.BlockPos;
@@ -19,6 +20,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerBossEvent;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -48,7 +50,9 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Comparator;
@@ -241,12 +245,14 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             AnuDead anuDead = ModEntities.ANU_DEAD.get().create(level);
             anuDead.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
             level.addFreshEntity(anuDead);
-        }
-
-        //unlockDimensionAbilities();
-        Player player = level.getNearestPlayer(this, 50);
-        if (player != null && level.isClientSide) {
-            player.displayClientMessage(ANU_DEATH, false);
+            if (level.dimension() == ModDimensions.ANU_LAIR) {
+                ((ServerLevel) level).getDataStorage().computeIfAbsent(AnuLair::load, AnuLair::new, "anu_killed");
+            }
+        } else {
+            Player player = level.getNearestPlayer(this, 50);
+            if (player != null) {
+                player.displayClientMessage(ANU_DEATH, false);
+            }
         }
         super.die(damageSource);
     }
@@ -374,4 +380,19 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             return MELEE;
         }
     }
+
+
+    public static class AnuLair extends SavedData {
+
+        public static AnuLair load(CompoundTag compoundTag) {
+            return new AnuLair();
+        }
+
+        @Override
+        public @NotNull CompoundTag save(CompoundTag compoundTag) {
+            compoundTag.putBoolean("AnuKilled", true);
+            return compoundTag;
+        }
+    }
+
 }

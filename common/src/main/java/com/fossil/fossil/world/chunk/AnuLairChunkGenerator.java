@@ -1,13 +1,12 @@
 package com.fossil.fossil.world.chunk;
 
-import com.fossil.fossil.Fossil;
 import com.fossil.fossil.world.biome.ModBiomes;
+import com.fossil.fossil.world.feature.structures.ModStructures;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.RegistryOps;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
@@ -50,7 +49,7 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
 
     private void generatePositions() {
         //Bit of a hack but this way we can ensure a fixed position for the castle without having to place it ourselves
-        StructureSet structureSet = structureSets.get(new ResourceLocation(Fossil.MOD_ID, "anu_castle"));
+        StructureSet structureSet = structureSets.get(ModStructures.ANU_CASTLE.location());
         if (structureSet != null) {
             for (StructureSet.StructureSelectionEntry structure : structureSet.structures()) {
                 placementsForFeature.computeIfAbsent(structure.structure().value(), configuredStructureFeature -> new ArrayList<>()).add(structureSet.placement());
@@ -205,7 +204,6 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
 
     @Override
     public @NotNull CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunk) {
-
         return CompletableFuture.completedFuture(chunk);
     }
 

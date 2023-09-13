@@ -2,13 +2,17 @@ package com.fossil.fossil.event;
 
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.AnimalFearGoal;
+import com.fossil.fossil.entity.monster.AnuBoss;
 import com.fossil.fossil.entity.prehistoric.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
+import com.fossil.fossil.world.dimension.ModDimensions;
 import dev.architectury.event.EventResult;
+import dev.architectury.event.events.common.BlockEvent;
 import dev.architectury.event.events.common.EntityEvent;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,11 +21,13 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
 public class ModEvents {
-
+    private static final TranslatableComponent ANU_BREAK_BLOCK = new TranslatableComponent("entity.fossil.anu.break_block");
     public static void init() {
         EntityEvent.ADD.register((entity, level) -> {
             if (entity instanceof PathfinderMob mob && isLivestock(mob) && FossilConfig.isEnabled(FossilConfig.ANIMALS_FEAR_DINOS)) {
@@ -30,6 +36,20 @@ public class ModEvents {
             }
             return EventResult.pass();
         });
+        BlockEvent.BREAK.register((level, pos, state, player, xp) -> {
+            if (level.dimension() == ModDimensions.ANU_LAIR && level instanceof ServerLevel serverLevel) {
+                boolean anuKilled = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_killed") != null;
+                if (!anuKilled && !isBreakableInAnuLair(state)) {
+                    player.displayClientMessage(ANU_BREAK_BLOCK, true);
+                    return EventResult.interruptFalse();
+                }
+            }
+            return EventResult.pass();
+        });
+    }
+
+    private static boolean isBreakableInAnuLair(BlockState state) {
+        return state.getBlock().getDescriptionId().toLowerCase().contains("grave") || state.is(Blocks.OBSIDIAN);
     }
 
     private static boolean isLivestock(PathfinderMob mob) {
