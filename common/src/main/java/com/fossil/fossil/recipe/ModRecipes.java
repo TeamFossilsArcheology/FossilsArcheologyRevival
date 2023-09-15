@@ -166,10 +166,6 @@ public class ModRecipes {
                 registerSifter(item, outputs);
             }
         }
-        registerWorktable(ModItems.BROKEN_SWORD.get(), ModItems.ANCIENT_SWORD.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.BROKEN_HELMET.get(), ModItems.ANCIENT_HELMET.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.ANCIENT_SWORD.get(), ModItems.ANCIENT_SWORD.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.ANCIENT_HELMET.get(), ModItems.ANCIENT_HELMET.get(), ModItems.RELIC_SCRAP.get());
         registerWorktable(ModBlocks.AMPHORA_VASE_DAMAGED.get(), ModBlocks.AMPHORA_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.VOLUTE_VASE_DAMAGED.get(), ModBlocks.VOLUTE_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.KYLIX_VASE_DAMAGED.get(), ModBlocks.KYLIX_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
@@ -183,6 +179,15 @@ public class ModRecipes {
         registerWorktable(ModBlocks.ZOMBIE_FIGURINE_DAMAGED.get(), ModBlocks.ZOMBIE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.ENDERMAN_FIGURINE_DAMAGED.get(), ModBlocks.ENDERMAN_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
         registerWorktable(ModBlocks.PIGZOMBIE_FIGURINE_DAMAGED.get(), ModBlocks.PIGZOMBIE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
+        registerWorktable(ModItems.BROKEN_SWORD.get(), ModItems.ANCIENT_SWORD.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.BROKEN_HELMET.get(), ModItems.ANCIENT_HELMET.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.ANCIENT_SWORD.get(), ModItems.ANCIENT_SWORD.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.ANCIENT_HELMET.get(), ModItems.ANCIENT_HELMET.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.SCARAB_SWORD.get(), ModItems.SCARAB_SWORD.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.SCARAB_PICKAXE.get(), ModItems.SCARAB_PICKAXE.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.SCARAB_AXE.get(), ModItems.SCARAB_AXE.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.SCARAB_SHOVEL.get(), ModItems.SCARAB_SHOVEL.get(), ModItems.RELIC_SCRAP.get());
+        registerWorktable(ModItems.SCARAB_HOE.get(), ModItems.SCARAB_HOE.get(), ModItems.RELIC_SCRAP.get());
         registerWorktable(ModItems.WOODEN_JAVELIN.get(), ModItems.WOODEN_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
         registerWorktable(ModItems.STONE_JAVELIN.get(), ModItems.STONE_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
         registerWorktable(ModItems.IRON_JAVELIN.get(), ModItems.IRON_JAVELIN.get(), ModItems.RELIC_SCRAP.get());

@@ -4,12 +4,14 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
 public enum ModToolTiers implements Tier {
-    TOOTH_DAGGER(3, 250, 70, 1.5f, 25, () -> Ingredient.of(PrehistoricEntityType.TYRANNOSAURUS.uniqueBoneItem)),
-    FROZEN_MEAT(1, 2, 1, 3, 10, Ingredient::of);
+    FROZEN_MEAT(1, 2, 1, 3, 10, Ingredient::of),
+    SCARAB(3, 1861, 8, 4, 25, Ingredient::of),
+    TOOTH_DAGGER(3, 250, 6.4f, 2, 25, () -> Ingredient.of(PrehistoricEntityType.TYRANNOSAURUS.uniqueBoneItem));
 
     private final int level;
     private final int uses;
@@ -53,7 +55,7 @@ public enum ModToolTiers implements Tier {
     }
 
     @Override
-    public Ingredient getRepairIngredient() {
+    public @NotNull Ingredient getRepairIngredient() {
         return this.repairIngredient.get();
     }
 }

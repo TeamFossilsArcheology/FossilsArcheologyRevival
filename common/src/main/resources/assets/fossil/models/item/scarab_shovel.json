@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "fossil:item/tooth_dagger"
+    "layer0": "fossil:item/scarab_shovel"
   }
 }

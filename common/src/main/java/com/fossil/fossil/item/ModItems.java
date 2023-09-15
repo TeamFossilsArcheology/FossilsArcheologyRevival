@@ -57,6 +57,12 @@ public class ModItems {
             () -> new StoneTabletItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> SKULL_STICK = ITEMS.register("skull_stick",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BROKEN_SWORD = ITEMS.register("broken_sword", () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BROKEN_HELMET = ITEMS.register("broken_helmet", () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> ANCIENT_SWORD = ITEMS.register("ancient_sword", () -> new AncientSwordItem(Tiers.IRON, 3, -2.4f));
+    public static final RegistrySupplier<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet", () -> new ArmorItem(ModArmorMaterials.ANCIENT_ARMOR, EquipmentSlot.HEAD, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> FROZEN_MEAT = ITEMS.register("frozen_meat",
+            () -> new SwordItem(ModToolTiers.FROZEN_MEAT, 3, -2.4f, new Item.Properties().stacksTo(64).defaultDurability(4).tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> TOOTH_DAGGER = ITEMS.register("tooth_dagger",
             () -> new SwordItem(ModToolTiers.TOOTH_DAGGER, 3, -2.4f, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<JavelinItem> WOODEN_JAVELIN = ITEMS.register("wooden_javelin", () -> new JavelinItem(Tiers.WOOD));
@@ -66,6 +72,12 @@ public class ModItems {
     public static final RegistrySupplier<JavelinItem> DIAMOND_JAVELIN = ITEMS.register("diamond_javelin", () -> new JavelinItem(Tiers.DIAMOND));
     public static final RegistrySupplier<JavelinItem> ANCIENT_JAVELIN = ITEMS.register("ancient_javelin",
             () -> new JavelinItem(Tiers.WOOD, true));
+    public static final RegistrySupplier<SwordItem> SCARAB_SWORD = ITEMS.register("scarab_sword", () -> new SwordItem(ModToolTiers.SCARAB, 3, -2.4f, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<PickaxeItem> SCARAB_PICKAXE = ITEMS.register("scarab_pickaxe", () -> new PickaxeItem(ModToolTiers.SCARAB, 1, -2.8f, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<AxeItem> SCARAB_AXE = ITEMS.register("scarab_axe", () -> new AxeItem(ModToolTiers.SCARAB, 4, -3, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<ShovelItem> SCARAB_SHOVEL = ITEMS.register("scarab_shovel", () -> new ShovelItem(ModToolTiers.SCARAB, 1.5f, -3, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<HoeItem> SCARAB_HOE = ITEMS.register("scarab_hoe", () -> new HoeItem(ModToolTiers.SCARAB, -2, -1, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+
     public static final RegistrySupplier<Item> BONE_HELMET = ITEMS.register("bone_helmet",
             () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.HEAD, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BONE_CHESTPLATE = ITEMS.register("bone_chestplate",
@@ -105,16 +117,6 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(4).saturationMod(2).build())));
 
 
-    public static final RegistrySupplier<Item> BROKEN_SWORD = ITEMS.register("broken_sword",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> BROKEN_HELMET = ITEMS.register("broken_helmet",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> ANCIENT_SWORD = ITEMS.register("ancient_sword",
-            () -> new AncientSwordItem(Tiers.IRON, 3, -2.4f));
-    public static final RegistrySupplier<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet",
-            () -> new ArmorItem(ModArmorMaterials.ANCIENT_ARMOR, EquipmentSlot.HEAD, new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> FROZEN_MEAT = ITEMS.register("frozen_meat",
-            () -> new SwordItem(ModToolTiers.FROZEN_MEAT, 3, -2.4f, new Item.Properties().stacksTo(64).tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> FERN_SEED_FOSSIL = ITEMS.register("fossil_seed_fern",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> FERN_SEED = ITEMS.register("fern_seed",
