@@ -1,4 +1,4 @@
-package com.fossil.fossil.world.feature;
+package com.fossil.fossil.world.feature.structures;
 
 import com.fossil.fossil.Fossil;
 import net.minecraft.core.BlockPos;

@@ -1,8 +1,6 @@
 package com.fossil.fossil.world.feature.structures;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.world.feature.CastleFeature;
-import com.fossil.fossil.world.feature.TreasureRoomFeature;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
