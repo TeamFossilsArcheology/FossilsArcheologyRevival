@@ -171,6 +171,7 @@ public class ClientInit {
             }
             return EventResult.pass();
         });
+        BlockEntityRendererRegistry.register(ModBlockEntities.FIGURINE.get(), context -> new FigurineRenderer());
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_STATUE.get(), AnuStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.SARCOPHAGUS.get(), SarcophagusRenderer::new);

@@ -66,7 +66,7 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SARCOPHAGUS = registerBlockWithCustomBlockItem("sarcophagus",
             () -> new SarcophagusBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
             block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
-    public static final RegistrySupplier<Block> SHELL= registerBlock("shell",
+    public static final RegistrySupplier<Block> SHELL = registerBlock("shell",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE)));
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
@@ -221,22 +221,22 @@ public class ModBlocks {
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_PORCELAIN = registerKylix(VaseBlock.VaseVariant.PORCELAIN);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = registerAmphora(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = registerAmphora(VaseBlock.VaseVariant.RESTORED);
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_BROKEN = registerFigurine("steve_broken");
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DAMAGED = registerFigurine("steve_damaged");
-    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerFigurine("steve_pristine");
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_BROKEN = registerFigurine("skeleton_broken");
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DAMAGED = registerFigurine("skeleton_damaged");
-    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerFigurine("skeleton_pristine");
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_BROKEN = registerFigurine("zombie_broken");
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DAMAGED = registerFigurine("zombie_damaged");
-    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerFigurine("zombie_pristine");
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_BROKEN = registerFigurine("enderman_broken");
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DAMAGED = registerFigurine("enderman_damaged");
-    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerFigurine("enderman_pristine");
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_BROKEN = registerFigurine("piglin_zombie_broken");
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_DAMAGED = registerFigurine("piglin_zombie_damaged");
-    public static final RegistrySupplier<FigurineBlock> PIGZOMBIE_FIGURINE_PRISTINE = registerFigurine("piglin_zombie_pristine");
-    public static final RegistrySupplier<FigurineBlock> MYSTERIOUS_FIGURINE = registerFigurine("mysterious");
+    public static final List<RegistrySupplier<FigurineBlock>> FIGURINES = new ArrayList<>();
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DESTROYED = registerEnderman(FigurineBlock.FigurineVariant.DESTROYED);
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_RESTORED = registerEnderman(FigurineBlock.FigurineVariant.RESTORED);
+    public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerEnderman(FigurineBlock.FigurineVariant.PRISTINE);
+    public static final RegistrySupplier<FigurineBlock> PIGLIN_FIGURINE_DESTROYED = registerPiglin(FigurineBlock.FigurineVariant.DESTROYED);
+    public static final RegistrySupplier<FigurineBlock> PIGLIN_FIGURINE_RESTORED = registerPiglin(FigurineBlock.FigurineVariant.RESTORED);
+    public static final RegistrySupplier<FigurineBlock> PIGLIN_FIGURINE_PRISTINE = registerPiglin(FigurineBlock.FigurineVariant.PRISTINE);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_DESTROYED = registerSkeleton(FigurineBlock.FigurineVariant.DESTROYED);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_RESTORED = registerSkeleton(FigurineBlock.FigurineVariant.RESTORED);
+    public static final RegistrySupplier<FigurineBlock> SKELETON_FIGURINE_PRISTINE = registerSkeleton(FigurineBlock.FigurineVariant.PRISTINE);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_DESTROYED = registerSteve(FigurineBlock.FigurineVariant.DESTROYED);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_RESTORED = registerSteve(FigurineBlock.FigurineVariant.RESTORED);
+    public static final RegistrySupplier<FigurineBlock> STEVE_FIGURINE_PRISTINE = registerSteve(FigurineBlock.FigurineVariant.PRISTINE);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DESTROYED = registerZombie(FigurineBlock.FigurineVariant.DESTROYED);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_RESTORED = registerZombie(FigurineBlock.FigurineVariant.RESTORED);
+    public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerZombie(FigurineBlock.FigurineVariant.PRISTINE);
     public static final RegistrySupplier<Block> FERNS = registerBlockWithoutBlockItem("ferns", FernsBlock::new);
 
     private static ToIntFunction<BlockState> activeBlockEmission(int lightValue) {
@@ -262,6 +262,7 @@ public class ModBlocks {
     private static RegistrySupplier<VaseBlock> registerAmphora(VaseBlock.VaseVariant variant) {
         return registerVase("amphora", variant.getSerializedName(), AmphoraVaseBlock::new);
     }
+
     static {
         for (DyeColor color : DyeColor.values()) {
             registerAmphora(color);
@@ -271,14 +272,32 @@ public class ModBlocks {
     private static RegistrySupplier<VaseBlock> registerAmphora(DyeColor color) {
         return registerVase("amphora", color.getSerializedName(), AmphoraVaseBlock::new);
     }
+
     private static RegistrySupplier<VaseBlock> registerVase(String name, String variant, Supplier<VaseBlock> supplier) {
         var toReturn = registerBlock("vase_" + name + "_" + variant, supplier);
         VASES.add(toReturn);
         return toReturn;
     }
 
-    private static RegistrySupplier<FigurineBlock> registerFigurine(String name) {
-        return registerBlock("figurine_" + name, FigurineBlock::new);
+    private static RegistrySupplier<FigurineBlock> registerEnderman(FigurineBlock.FigurineVariant variant) {
+        return registerFigurine("enderman", variant, () -> new FigurineEndermanBlock(variant));
+    }
+    private static RegistrySupplier<FigurineBlock> registerPiglin(FigurineBlock.FigurineVariant variant) {
+        return registerFigurine("piglin", variant, () -> new FigurinePiglinBlock(variant));
+    }
+    private static RegistrySupplier<FigurineBlock> registerSkeleton(FigurineBlock.FigurineVariant variant) {
+        return registerFigurine("skeleton", variant, () -> new FigurineSkeletonBlock(variant));
+    }
+    private static RegistrySupplier<FigurineBlock> registerSteve(FigurineBlock.FigurineVariant variant) {
+        return registerFigurine("steve", variant, () -> new FigurineSteveBlock(variant));
+    }
+    private static RegistrySupplier<FigurineBlock> registerZombie(FigurineBlock.FigurineVariant variant) {
+        return registerFigurine("zombie", variant, () -> new FigurineZombieBlock(variant));
+    }
+    private static RegistrySupplier<FigurineBlock> registerFigurine(String name, FigurineBlock.FigurineVariant variant, Supplier<FigurineBlock> supplier) {
+        var toReturn = registerBlock("figurine_" + name + "_" + variant.getSerializedName(), supplier);
+        FIGURINES.add(toReturn);
+        return toReturn;
     }
 
     public static RegistrySupplier<ShortFlowerBlock> registerShortFlower(String name, VoxelShape shape) {
