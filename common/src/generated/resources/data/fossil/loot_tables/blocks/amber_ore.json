@@ -39,7 +39,7 @@
                   "function": "minecraft:explosion_decay"
                 }
               ],
-              "name": "fossil:amber"
+              "name": "fossil:amber_chunk"
             }
           ]
         }

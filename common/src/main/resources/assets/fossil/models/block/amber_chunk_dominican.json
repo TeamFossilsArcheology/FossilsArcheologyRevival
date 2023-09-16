@@ -1,5 +1,5 @@
 {
-	"parent": "amber_chunk",
+	"parent": "fossil:block/amber_chunk_template",
 	"textures": {
 		"all": "fossil:block/amber_chunk_dominican"
 	}
