@@ -1,4 +1,4 @@
-package com.fossil.fossil.mixins;
+package com.fossil.fossil.forge.mixins;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import net.minecraft.nbt.CompoundTag;

@@ -46,7 +46,6 @@
     ]
   },
   "mixins": [
-    "fossil.mixins.json",
     "fossil_fabric.mixins.json"
   ],
   "depends": {

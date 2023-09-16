@@ -1,4 +1,4 @@
-package com.fossil.fossil.mixins;
+package com.fossil.fossil.forge.mixins;
 
 import net.minecraft.client.particle.Particle;
 import org.spongepowered.asm.mixin.Mixin;
