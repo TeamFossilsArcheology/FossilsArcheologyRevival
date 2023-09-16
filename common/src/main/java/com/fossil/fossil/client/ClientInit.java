@@ -149,6 +149,8 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.HOME_PORTAL.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_BLOCK.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK_DOMINICAN.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK_MOSQUITO.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SHELL.get());
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);

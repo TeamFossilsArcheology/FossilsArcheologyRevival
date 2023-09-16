@@ -76,6 +76,12 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> AMBER_CHUNK = registerBlock("amber_chunk",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
                     .isViewBlocking(ModBlocks::never)));
+    public static final RegistrySupplier<Block> AMBER_CHUNK_DOMINICAN = registerBlock("amber_chunk_dominican",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
+                    .isViewBlocking(ModBlocks::never)));
+    public static final RegistrySupplier<Block> AMBER_CHUNK_MOSQUITO = registerBlock("amber_chunk_mosquito",
+            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
+                    .isViewBlocking(ModBlocks::never)));
     public static final RegistrySupplier<IcedStoneBlock> ICED_STONE = registerBlock("iced_stone",
             () -> new IcedStoneBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 10f).requiresCorrectToolForDrops()
                     .sound(SoundType.GLASS).randomTicks()));

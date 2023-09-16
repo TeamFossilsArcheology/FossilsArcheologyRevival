@@ -39,10 +39,6 @@ public class ModItems {
             () -> CustomRecordItem.get(2, ModSounds.MUSIC_SCARAB, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<RecordItem> RECORD_DISCOVERY = ITEMS.register("record_discovery",
             () -> CustomRecordItem.get(3, ModSounds.MUSIC_DISCOVERY, new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> AMBER = ITEMS.register("amber",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> DOMINICAN_AMBER = ITEMS.register("amber_dominican",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BIO_FOSSIL = ITEMS.register("fossil_bio",
             () -> new BioFossilItem(false));
 

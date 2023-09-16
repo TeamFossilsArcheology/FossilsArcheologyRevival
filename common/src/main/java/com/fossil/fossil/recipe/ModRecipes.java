@@ -156,7 +156,7 @@ public class ModRecipes {
         outputs.add(new Tuple<>(Items.POTATO, 15d));
         outputs.add(new Tuple<>(Items.CARROT, 10d));
         outputs.add(new Tuple<>(Items.BONE_MEAL, 20d));
-        outputs.add(new Tuple<>(ModItems.DOMINICAN_AMBER.get(), 1d));
+        outputs.add(new Tuple<>(ModBlocks.AMBER_CHUNK_DOMINICAN.get(), 1d));
         outputs.add(new Tuple<>(ModItems.FERN_SEED_FOSSIL.get(), 10d));
         outputs.add(new Tuple<>(ModItems.PlANT_FOSSIL.get(), 14d));
         outputs.add(new Tuple<>(ModItems.BIO_FOSSIL.get(), 2d));

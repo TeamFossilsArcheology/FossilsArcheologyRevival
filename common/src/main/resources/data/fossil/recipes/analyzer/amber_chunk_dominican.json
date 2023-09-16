@@ -1,7 +1,7 @@
 {
   "type": "fossil:analyzer",
   "ingredient": {
-    "item": "fossil:amber_dominican"
+    "item": "fossil:amber_chunk_dominican"
   },
   "outputs": [
     {
