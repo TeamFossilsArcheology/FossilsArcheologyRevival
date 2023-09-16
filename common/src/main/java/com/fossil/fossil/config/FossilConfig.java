@@ -32,10 +32,10 @@ public class FossilConfig {
     public static final String SPAWN_ALLIGATOR_GAR = "spawnAlligatorGar";
     public static final String SPAWN_STURGEON = "spawnSturgeon";
     public static final String TAR_SLIMES_SPAWN_RATE = "tarSlimesSpawnRate";
-    public static final String NAUTILUS_SPAWN_RATE = "nautilusSpawnRate";
-    public static final String COELACANTH_SPAWN_RATE = "coelacanthSpawnRate";
-    public static final String ALLIGATOR_GAR_SPAWN_RATE = "alligatorGarSpawnRate";
-    public static final String STURGEON_SPAWN_RATE = "sturgeonSpawnRate";
+    public static final String ALLIGATOR_GAR_SPAWN_WEIGHT = "alligatorGarSpawnWeight";
+    public static final String COELACANTH_SPAWN_WEIGHT = "coelacanthSpawnWeight";
+    public static final String NAUTILUS_SPAWN_WEIGHT = "nautilusSpawnWeight";
+    public static final String STURGEON_SPAWN_WEIGHT = "sturgeonSpawnWeight";
     public static final String HEALING_DINOS = "healingDinos";
     public static final String STARVING_DINOS = "starvingDinos";
     public static final String BREEDING_DINOS = "breedingDinos";

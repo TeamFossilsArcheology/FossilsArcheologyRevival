@@ -76,14 +76,14 @@ public class FossilConfigImpl extends MidnightConfig {
     public static boolean spawnSturgeon = true;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int tarSlimesSpawnRate = 75;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int nautilusSpawnRate = 6;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int coelacanthSpawnRate = 4;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int alligatorGarSpawnRate = 3;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int sturgeonSpawnRate = 4;
+    @MidnightConfig.Entry(min = 0, max = 1000000)
+    public static int alligatorGarSpawnWeight = 4;
+    @MidnightConfig.Entry(min = 0, max = 1000000)
+    public static int coelacanthSpawnWeight = 3;
+    @MidnightConfig.Entry(min = 0, max = 1000000)
+    public static int nautilusSpawnWeight = 2;
+    @MidnightConfig.Entry(min = 0, max = 1000000)
+    public static int sturgeonSpawnWeight = 5;
     @MidnightConfig.Entry
     public static boolean healingDinos = true;
     @MidnightConfig.Entry

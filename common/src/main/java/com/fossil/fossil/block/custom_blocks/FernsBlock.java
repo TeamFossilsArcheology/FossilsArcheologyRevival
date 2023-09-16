@@ -1,5 +1,6 @@
 package com.fossil.fossil.block.custom_blocks;
 
+import com.fossil.fossil.config.FossilConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
@@ -55,8 +56,7 @@ public class FernsBlock extends BushBlock {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         int age = state.getValue(AGE);
-        int fernTickRate = 10;
-        if (isUnderTree(level, pos) && age < UPPER_MAX_AGE && random.nextInt(fernTickRate) == 0) {
+        if (isUnderTree(level, pos) && age < UPPER_MAX_AGE && random.nextInt(FossilConfig.getInt(FossilConfig.FERN_TICK_RATE)) == 0) {
             if (!level.getBlockState(pos.below()).is(this) || age > LOWER_MAX_AGE) {
                 age++;
                 if (age == LOWER_MAX_AGE - 1) {

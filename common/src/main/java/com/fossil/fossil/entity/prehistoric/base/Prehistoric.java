@@ -1173,7 +1173,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                             setSprinting(true);
                             moodSystem.increaseMood(-5);
                         }
-                    } else if (!isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {
+                    } else if (FossilConfig.isEnabled(FossilConfig.WHIP_TO_TAME_DINO) && !isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {
                         moodSystem.increaseMood(-5);
                         if (random.nextInt(5) == 0) {//TODO: Shouldnt be clientside. Check others things here as well(including the returned results)
                             player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
@@ -1333,8 +1333,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             } else if (type().cultivatedBirdEggItem != null) {
                 hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().cultivatedBirdEggItem));
             } else {
-                hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
-                ((DinosaurEgg) hatchling).setPrehistoricEntityType(type());
+                if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || type().isVivariousAquatic()) {
+                    hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem));
+                } else {
+                    hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
+                    ((DinosaurEgg) hatchling).setPrehistoricEntityType(type());
+                }
             }
             setTarget(null);
             mob.setTarget(null);
