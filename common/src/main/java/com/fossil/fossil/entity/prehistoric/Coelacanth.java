@@ -1,24 +1,18 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import net.minecraft.core.BlockPos;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Random;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
 
 public class Coelacanth extends PrehistoricFish {
     public static final String ANIMATIONS = "coelacanth.animation.json";
@@ -26,20 +20,6 @@ public class Coelacanth extends PrehistoricFish {
     public static final String SWIM = "animation.coelacanth.swim";
     public static final String SWIM_FAST = "animation.coelacanth.swim_fast";
     public static final String LAND = "animation.coelacanth.land";
-    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
-        List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
-        for (AnimationManager.Animation animation : animations) {
-            ServerAnimationInfo info;
-            switch (animation.animationId()) {
-                case IDLE -> info = new ServerAnimationInfo(animation);
-                case SWIM, SWIM_FAST -> info = new ServerAnimationInfo(animation);
-                default -> info = new ServerAnimationInfo(animation);
-            }
-            newMap.put(animation.animationId(), info);
-        }
-        return newMap;
-    });
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Coelacanth(EntityType<Coelacanth> entityType, Level level) {
@@ -56,22 +36,17 @@ public class Coelacanth extends PrehistoricFish {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
-    public @NotNull ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextMovingAnimation() {
+    public @NotNull Animation nextMovingAnimation() {
         return getAllAnimations().get(SWIM);//TODO: SWIM_FAST
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextFloppingAnimation() {
+    public @NotNull Animation nextFloppingAnimation() {
         return getAllAnimations().get(LAND);
     }
 

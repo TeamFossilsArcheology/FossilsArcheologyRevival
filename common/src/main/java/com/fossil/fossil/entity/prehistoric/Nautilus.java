@@ -1,6 +1,5 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
@@ -9,7 +8,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +22,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
@@ -31,11 +30,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
 
 public class Nautilus extends PrehistoricFish {
     public static final String ANIMATIONS = "nautilus.animation.json";
@@ -46,21 +41,6 @@ public class Nautilus extends PrehistoricFish {
     public static final String SHELL_HOLD = "animation.nautilus.shell_hold";
     public static final String SHELL_EMERGE = "animation.nautilus.shell_emerge";
     public static final String LAND = "animation.nautilus.land";
-    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
-        List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
-        for (AnimationManager.Animation animation : animations) {
-            ServerAnimationInfo info;
-            switch (animation.animationId()) {
-                case IDLE -> info = new ServerAnimationInfo(animation);
-                case SWIM_BACKWARDS, SWIM_FORWARDS ->
-                        info = new ServerAnimationInfo(animation);
-                default -> info = new ServerAnimationInfo(animation);
-            }
-            newMap.put(animation.animationId(), info);
-        }
-        return newMap;
-    });
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private float ticksToShell = 0;
@@ -190,11 +170,6 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public void registerControllers(AnimationData data) {
         super.registerControllers(data);
         data.addAnimationController(new AnimationController<>(this, "Shell", 4, this::shellPredicate));
@@ -216,17 +191,17 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextMovingAnimation() {
+    public @NotNull Animation nextMovingAnimation() {
         return getAllAnimations().get(SWIM_BACKWARDS);//TODO: SWIM_FAST
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextFloppingAnimation() {
+    public @NotNull Animation nextFloppingAnimation() {
         return getAllAnimations().get(LAND);
     }
 

@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
+import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.animation.AttackAnimationLogic;
 import com.fossil.fossil.entity.data.AI;
@@ -75,15 +76,16 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.resource.GeckoLibCache;
 
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
-import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI.*;
 
 public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable, PrehistoricDebug {
@@ -102,7 +104,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public final MoodSystem moodSystem = new MoodSystem(this);
-    private final AttackAnimationLogic<Prehistoric> animations = new AttackAnimationLogic<>(this);
+    private final AttackAnimationLogic<Prehistoric> animationLogic = new AttackAnimationLogic<>(this);
+    private final ResourceLocation animationLocation;
     private final boolean isMultiPart;
     protected final WhipSteering steering = new WhipSteering(this);
     public OrderType currentOrder;
@@ -130,6 +133,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
         super(entityType, level);
+        this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.isMultiPart = isMultiPart;
         this.setHunger(this.getMaxHunger() / 2);
         this.pediaScale = 1.0F;
@@ -1308,7 +1312,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     protected @NotNull PathNavigation createNavigation(Level levelIn) {
-        return this.aiClimbType() == Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
+        return aiClimbType() == Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
     }
 
     public boolean canBeRidden() {
@@ -1581,7 +1585,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return NetworkManager.createAddEntityPacket(this);
     }
 
-    public abstract EntityDataManager.Data data();
+    public EntityDataManager.Data data() {
+        return EntityDataManager.ENTITY_DATA.getData(EntityType.getKey(getType()).getPath());
+    }
 
     private Stat stats() {
         return data().stats();
@@ -1600,35 +1606,49 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         refreshTexturePath();
     }
 
+    @Override
+    public Map<String, Animation> getAllAnimations() {
+        return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
+    }
+
+    @Override
+    public Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos() {
+        return AnimationInfoManager.ANIMATIONS.getAnimation(animationLocation.getPath());
+    }
+
     public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
         CompoundTag animationTag = entityData.get(ACTIVE_ANIMATIONS).getCompound(controller);
         if (animationTag.contains("Animation")) {
-            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getLong("EndTick"));
+            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getDouble("EndTick"));
         }
         return null;
     }
 
-    public void addActiveAnimation(String controller, ServerAnimationInfo animation) {
+    public void addActiveAnimation(String controller, Animation animation) {
         CompoundTag allAnimations = new CompoundTag().merge(entityData.get(ACTIVE_ANIMATIONS));
         CompoundTag animationTag = new CompoundTag();
-        animationTag.putString("Animation", animation.animationId);
-        animationTag.putLong("EndTick", level.getGameTime() + animation.length);
-        allAnimations.put(controller, animationTag);
-        entityData.set(ACTIVE_ANIMATIONS, allAnimations);
+        if (animation != null) {
+            animationTag.putString("Animation", animation.animationName);
+            animationTag.putDouble("EndTick", level.getGameTime() + animation.animationLength);
+            allAnimations.put(controller, animationTag);
+            entityData.set(ACTIVE_ANIMATIONS, allAnimations);
+        } else {
+            Fossil.LOGGER.error("Prehistoric Animation is null: " + controller);
+        }
     }
 
-    public abstract @NotNull ServerAnimationInfo nextChasingAnimation();
+    public abstract @NotNull Animation nextChasingAnimation();
 
-    public abstract @NotNull ServerAttackAnimationInfo nextAttackAnimation();
+    public abstract @NotNull Animation nextAttackAnimation();
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, animations::movementPredicate));
-        data.addAnimationController(new AnimationController<>(this, "Attack", 5, animations::attackPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, animationLogic::movementPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Attack", 5, animationLogic::attackPredicate));
     }
 
-    public AttackAnimationLogic<Prehistoric> getAnimations() {
-        return animations;
+    public AttackAnimationLogic<Prehistoric> getAnimationLogic() {
+        return animationLogic;
     }
 
     public record PrehistoricGroupData(int ageInDays) implements SpawnGroupData {

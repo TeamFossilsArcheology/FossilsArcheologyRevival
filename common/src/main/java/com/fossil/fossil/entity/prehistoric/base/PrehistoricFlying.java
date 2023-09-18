@@ -12,12 +12,11 @@ import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
+import software.bernie.geckolib3.core.builder.Animation;
 
 public abstract class PrehistoricFlying extends Prehistoric implements FlyingAnimal {
 
-    private final FindAirTargetGoal findAirTargetGoal = new FindAirTargetGoal(this);
+    private FindAirTargetGoal findAirTargetGoal;
 
     private int flyingTicks = 0;
 
@@ -28,6 +27,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        findAirTargetGoal = new FindAirTargetGoal(this);
         goalSelector.addGoal(5, findAirTargetGoal);
     }
 
@@ -141,5 +141,5 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         return pos;
     }
 
-    public abstract ServerAnimationInfo getTakeOffAnimation();
+    public abstract Animation getTakeOffAnimation();
 }

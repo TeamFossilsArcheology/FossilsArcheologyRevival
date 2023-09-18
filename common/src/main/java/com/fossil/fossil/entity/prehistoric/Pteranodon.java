@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
@@ -12,7 +11,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -25,34 +23,14 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.material.Material;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
-import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
 
 public class Pteranodon extends PrehistoricFlying implements PrehistoricLeaping {
     public static final String ANIMATIONS = "pteranodon.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
-        List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
-        for (AnimationManager.Animation animation : animations) {
-            ServerAnimationInfo info;
-            switch (animation.animationId()) {
-                case ATTACK1 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
-                case IDLE -> info = new ServerAnimationInfo(animation);
-                default -> info = new ServerAnimationInfo(animation);
-            }
-            newMap.put(animation.animationId(), info);
-        }
-        return newMap;
-    });
     private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("pteranodon");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -151,42 +129,37 @@ public class Pteranodon extends PrehistoricFlying implements PrehistoricLeaping 
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
-    public @NotNull ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextMovingAnimation() {
+    public @NotNull Animation nextMovingAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull Animation nextChasingAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK1);
     }
 
     @Override
-    public @NotNull ServerAttackAnimationInfo nextLeapAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK1);
+    public @NotNull Animation nextLeapAnimation() {
+        return getAllAnimations().get(ATTACK1);
     }
 
     @Override
-    public ServerAnimationInfo getTakeOffAnimation() {
+    public Animation getTakeOffAnimation() {
         return null;
     }
 

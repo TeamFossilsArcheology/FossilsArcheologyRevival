@@ -2,7 +2,6 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
@@ -12,7 +11,6 @@ import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -25,15 +23,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
-import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
 
 public class Triceratops extends Prehistoric {
     public static final String ANIMATIONS = "triceratops.animation.json";
@@ -54,22 +46,6 @@ public class Triceratops extends Prehistoric {
     public static final String CALL = "animation.triceratops.call";
     public static final String ATTACK1 = "animation.triceratops.attack1";
     public static final String ATTACK2 = "animation.triceratops.attack2";
-    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
-        List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
-        for (AnimationManager.Animation animation : animations) {
-            ServerAnimationInfo info;
-            switch (animation.animationId()) {
-                //TODO: Move this descision to the animation data file
-                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
-                case IDLE -> info = new ServerAnimationInfo(animation);
-                case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation);
-                default -> info = new ServerAnimationInfo(animation);
-            }
-            newMap.put(animation.animationId(), info);
-        }
-        return newMap;
-    });
     private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("triceratops");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final Entity[] parts;
@@ -185,13 +161,7 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
-    @NotNull
-    public ServerAnimationInfo nextMovingAnimation() {
+    public @NotNull Animation nextMovingAnimation() {
         String key = WALK;
         boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackAI);
 
@@ -205,8 +175,7 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    @NotNull
-    public ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull Animation nextChasingAnimation() {
         String key;
         if (isInWater()) {
             key = SWIM;
@@ -217,13 +186,12 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 
     @Override
-    @NotNull
-    public ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull Animation nextAttackAnimation() {
         int random = getRandom().nextInt(2);
         String key;
         if (random == 0) {
@@ -232,11 +200,11 @@ public class Triceratops extends Prehistoric {
             key = ATTACK2;
         }
 
-        return (ServerAttackAnimationInfo) getAllAnimations().get(key);
+        return getAllAnimations().get(key);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 

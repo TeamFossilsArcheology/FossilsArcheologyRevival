@@ -1,11 +1,14 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.Fossil;
+import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
@@ -29,22 +32,26 @@ import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.resource.GeckoLibCache;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
 
 public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable, PrehistoricDebug {
     private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
+    private final ResourceLocation animationLocation;
+
     private int absoluteEggCooldown = 0;
 
     public PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
         super(entityType, level);
+        this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02f, 0.1f, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
@@ -171,12 +178,20 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
+    public Map<String, Animation> getAllAnimations() {
+        return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
+    }
+    @Override
+    public Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos() {
+        return AnimationInfoManager.ANIMATIONS.getAnimation(animationLocation.getPath());
+    }
+
+    @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 4, event -> {
             AnimationController<PrehistoricFish> controller = event.getController();
             if (!isInWater()) {
                 addActiveAnimation(controller.getName(), nextFloppingAnimation());
-                event.getController().setAnimation(new AnimationBuilder().addAnimation(nextFloppingAnimation().animationId));
             } else if (event.isMoving()) {
                 addActiveAnimation(controller.getName(), nextMovingAnimation());
             } else {
@@ -184,7 +199,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
             }
             AnimationLogic.ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
             if (activeAnimation != null) {
-                controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationId()));
+                controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));
             }
             return PlayState.CONTINUE;
         }));
@@ -194,28 +209,33 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
         CompoundTag animationTag = entityData.get(ACTIVE_ANIMATIONS).getCompound(controller);
         if (animationTag.contains("Animation")) {
-            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getLong("EndTick"));
+            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getDouble("EndTick"));
         }
         return null;
     }
 
-    public void addActiveAnimation(String controller, ServerAnimationInfo animation) {
+    @Override
+    public void addActiveAnimation(String controller, Animation animation) {
         CompoundTag allAnimations = new CompoundTag().merge(entityData.get(ACTIVE_ANIMATIONS));
         CompoundTag animationTag = new CompoundTag();
-        animationTag.putString("Animation", animation.animationId);
-        animationTag.putLong("EndTick", level.getGameTime() + animation.length);
-        allAnimations.put(controller, animationTag);
-        entityData.set(ACTIVE_ANIMATIONS, allAnimations);
+        if (animation != null) {
+            animationTag.putString("Animation", animation.animationName);
+            animationTag.putDouble("EndTick", level.getGameTime() + animation.animationLength);
+            allAnimations.put(controller, animationTag);
+            entityData.set(ACTIVE_ANIMATIONS, allAnimations);
+        } else {
+            Fossil.LOGGER.error("PrehistoricFish Animation is null: " + controller);
+        }
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull Animation nextEatingAnimation() {
         return nextIdleAnimation();
     }
 
-    public abstract @NotNull ServerAnimationInfo nextFloppingAnimation();
+    public abstract @NotNull Animation nextFloppingAnimation();
 
-    public @Nullable ServerAnimationInfo nextTurningAnimation() {
+    public @Nullable Animation nextTurningAnimation() {
         return null;
     }
 

@@ -14,7 +14,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 public class Quagga extends AbstractChestedHorse {
-    public static final String ANIMATIONS = "quagga.animation.json";
 
     public Quagga(EntityType<Quagga> entityType, Level level) {
         super(entityType, level);

@@ -1,14 +1,12 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -20,15 +18,9 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
-import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
 
 public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "dilophosaurus.animation.json";
@@ -51,21 +43,6 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public static final String CALL = "animation.dilophosaurus.call";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     public static final String ATTACK2 = "animation.dilophosaurus.attack2";
-    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
-        List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
-        for (AnimationManager.Animation animation : animations) {
-            ServerAnimationInfo info;
-            switch (animation.animationId()) {
-                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
-                case IDLE -> info = new ServerAnimationInfo(animation);
-                case WALK, RUN, SWIM -> info = new ServerAnimationInfo(animation);
-                default -> info = new ServerAnimationInfo(animation);
-            }
-            newMap.put(animation.animationId(), info);
-        }
-        return newMap;
-    });
     private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("dilophosaurus");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -103,32 +80,22 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public EntityDataManager.Data data() {
-        return data;
-    }
-
-    @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
     public double getPassengersRidingOffset() {
         return super.getPassengersRidingOffset() + 0.1;
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextMovingAnimation() {
+    public @NotNull Animation nextMovingAnimation() {
         String key = WALK;
         boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackAI);
         if (isInWater()) {
@@ -140,7 +107,7 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull Animation nextChasingAnimation() {
         String key = RUN;
         if (isInWater()) {
             key = SWIM;
@@ -149,14 +116,14 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull Animation nextAttackAnimation() {
         String key;
         if (getRandom().nextInt(2) == 0) {
             key = ATTACK1;
         } else {
             key = ATTACK2;
         }
-        return (ServerAttackAnimationInfo) getAllAnimations().get(key);
+        return getAllAnimations().get(key);
     }
 
     @Override

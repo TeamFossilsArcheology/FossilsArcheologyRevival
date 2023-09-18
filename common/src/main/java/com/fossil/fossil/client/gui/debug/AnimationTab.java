@@ -10,6 +10,7 @@ import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
@@ -30,6 +31,7 @@ public class AnimationTab extends DebugTab {
     private float rotXBase;
     private float scale = 15;
     private AnimationsList animations;
+    private String currentController;
 
     protected AnimationTab(DebugScreen debugScreen, LivingEntity entity) {
         super(debugScreen, entity);
@@ -112,6 +114,13 @@ public class AnimationTab extends DebugTab {
         }));
         if (entity instanceof PrehistoricAnimatable prehistoric) {
             animations = addWidget(new AnimationsList(entity.getId(), prehistoric.getAllAnimations().keySet()));
+            List<String> controllers = prehistoric.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
+            if (!controllers.isEmpty()) {
+                currentController = controllers.get(0);
+                addWidget(CycleOption.create("Controller", () -> controllers, TextComponent::new,
+                                options -> currentController, (options, option, controller) -> currentController = controller)
+                        .createButton(Minecraft.getInstance().options, width / 2, 90, 100));
+            }
         }
     }
 
@@ -151,7 +160,7 @@ public class AnimationTab extends DebugTab {
 
             AnimationEntry(int id, String text) {
                 changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
-                    MessageHandler.DEBUG_CHANNEL.sendToServer(new AnimationMessage(id, button.getMessage().getContents()));
+                    MessageHandler.DEBUG_CHANNEL.sendToServer(new AnimationMessage(currentController, id, button.getMessage().getContents()));
                 });
             }
 

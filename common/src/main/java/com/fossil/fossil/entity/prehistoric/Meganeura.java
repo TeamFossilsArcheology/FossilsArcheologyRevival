@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
@@ -21,7 +20,6 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -49,13 +47,13 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.*;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
-import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
+import java.util.EnumSet;
+import java.util.Optional;
+import java.util.Random;
 
 
 public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
@@ -66,21 +64,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     public static final String FLY = "animation.meganeura.fly";
     public static final String EAT = "animation.meganeura.eat";
     public static final String ATTACK = "animation.meganeura.attack";
-    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
-        List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
-        for (AnimationManager.Animation animation : animations) {
-            ServerAnimationInfo info;
-            switch (animation.animationId()) {
-                case IDLE, VERTICAL_IDLE -> info = new ServerAnimationInfo(animation);
-                case WALK, FLY -> info = new ServerAnimationInfo(animation);
-                case ATTACK -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
-                default -> info = new ServerAnimationInfo(animation);
-            }
-            newMap.put(animation.animationId(), info);
-        }
-        return newMap;
-    });
     private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("meganeura");
     private static final EntityDataAccessor<Optional<BlockPos>> ATTACHED_BLOCK_POS = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.DIRECTION);
@@ -293,17 +276,12 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
-    }
-
-    @Override
-    public @NotNull ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextIdleAnimation() {
+    public @NotNull Animation nextIdleAnimation() {
         if (attachTicks > 0) {
             return getAllAnimations().get(VERTICAL_IDLE);
         }
@@ -311,7 +289,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextMovingAnimation() {
+    public @NotNull Animation nextMovingAnimation() {
         if (isFlying()) {
             return getAllAnimations().get(FLY);
         }
@@ -319,13 +297,13 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull Animation nextChasingAnimation() {
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull ServerAttackAnimationInfo nextAttackAnimation() {
-        return (ServerAttackAnimationInfo) getAllAnimations().get(ATTACK);
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

@@ -1,25 +1,29 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.Map;
 
 public interface PrehistoricAnimatable extends IAnimatable {
 
-    Map<String, AnimationLogic.ServerAnimationInfo> getAllAnimations();
+    Map<String, Animation> getAllAnimations();
+
+    Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos();
 
     @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller);
 
-    void addActiveAnimation(String controller, AnimationLogic.ServerAnimationInfo animation);
+    void addActiveAnimation(String controller, Animation animation);
 
-    @NotNull AnimationLogic.ServerAnimationInfo nextIdleAnimation();
+    @NotNull Animation nextIdleAnimation();
 
-    @NotNull AnimationLogic.ServerAnimationInfo nextEatingAnimation();
+    @NotNull Animation nextEatingAnimation();
 
-    @NotNull AnimationLogic.ServerAnimationInfo nextMovingAnimation();
+    @NotNull Animation nextMovingAnimation();
 
     boolean shouldStartEatAnimation();
 

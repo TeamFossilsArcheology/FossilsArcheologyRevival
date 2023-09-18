@@ -1,6 +1,5 @@
 package com.fossil.fossil.entity.animation;
 
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,61 +11,51 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.slf4j.Logger;
-import software.bernie.geckolib3.core.builder.ILoopType;
-import software.bernie.geckolib3.util.AnimationUtils;
 import software.bernie.geckolib3.util.json.JsonAnimationUtils;
 
-import java.util.List;
 import java.util.Map;
 
 /**
  * Loads dino animation server information from data/animations files
  */
-public class AnimationManager extends SimpleJsonResourceReloadListener {
+public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    public static final AnimationManager ANIMATIONS = new AnimationManager(GSON);
+    public static final AnimationInfoManager ANIMATIONS = new AnimationInfoManager(GSON);
     private static final Logger LOGGER = LogUtils.getLogger();
-    private ImmutableMap<String, ImmutableList<Animation>> animations = ImmutableMap.of();
+    private ImmutableMap<String, ImmutableMap<String, ServerAnimationInfo>> animationInfos = ImmutableMap.of();
 
-    public AnimationManager(Gson gson) {
+    public AnimationInfoManager(Gson gson) {
         super(gson, "animations");
     }
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        ImmutableMap.Builder<String, ImmutableList<Animation>> builder = ImmutableMap.builder();
+        ImmutableMap.Builder<String, ImmutableMap<String, ServerAnimationInfo>> builder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
             if (!(fileEntry.getValue() instanceof JsonObject)) {
                 continue;
             }
             try {
-                ImmutableList.Builder<Animation> innerBuilder = ImmutableList.builder();
+                ImmutableMap.Builder<String, ServerAnimationInfo> innerBuilder = ImmutableMap.builder();
                 for (Map.Entry<String, JsonElement> animationEntry : JsonAnimationUtils.getAnimations((JsonObject) fileEntry.getValue())) {
                     JsonObject animationJsonObject = animationEntry.getValue().getAsJsonObject();
 
-                    JsonElement lengthElement = animationJsonObject.get("animation_length");
-                    double animationLength = lengthElement == null ? -1 : AnimationUtils.convertSecondsToTicks(lengthElement.getAsDouble());
-
-                    JsonElement loopElement = animationJsonObject.get("loop");
-                    ILoopType loop = loopElement == null ? ILoopType.EDefaultLoopTypes.PLAY_ONCE :
-                            "true".equals(loopElement.getAsString()) ? ILoopType.EDefaultLoopTypes.LOOP : ILoopType.EDefaultLoopTypes.valueOf(loopElement.getAsString().toUpperCase());
-
                     JsonElement delayElement = animationJsonObject.get("attack_delay");
                     int attackDelay = delayElement == null ? 0 : delayElement.getAsInt();
-                    innerBuilder.add(new Animation(animationEntry.getKey(), animationLength, loop, attackDelay));
+                    innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), attackDelay));
                 }
                 builder.put(fileEntry.getKey().getPath() + ".json", innerBuilder.build());
             } catch (Exception e) {
                 LOGGER.error("Could not load animations {} due to: {}", fileEntry, e);
             }
         }
-        animations = builder.build();
+        animationInfos = builder.build();
     }
 
-    public List<Animation> getAnimation(String animationFile) {
-        return animations.getOrDefault(animationFile, ImmutableList.of());
+    public Map<String, ServerAnimationInfo> getAnimation(String animationFile) {
+        return animationInfos.getOrDefault(animationFile, ImmutableMap.of());
     }
 
-    public record Animation(String animationId, double animationLength, ILoopType loop, int attackDelay) {
+    public record ServerAnimationInfo(String animationName, int attackDelay) {
     }
 }

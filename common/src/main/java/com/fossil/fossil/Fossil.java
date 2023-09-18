@@ -4,7 +4,7 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
-import com.fossil.fossil.entity.animation.AnimationManager;
+import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.inventory.ModMenus;
@@ -33,7 +33,7 @@ public class Fossil {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationManager.ANIMATIONS);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoManager.ANIMATIONS);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();

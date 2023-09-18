@@ -1,14 +1,12 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.animation.AnimationManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -19,18 +17,12 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static com.fossil.fossil.entity.animation.AnimationLogic.ServerAnimationInfo;
-import static com.fossil.fossil.entity.animation.AttackAnimationLogic.ServerAttackAnimationInfo;
-
 public class Therizinosaurus extends Prehistoric {
-    public static final String ANIMATIONS = "therizinosaurus.animations.json";
+    public static final String ANIMATIONS = "therizinosaurus.animation.json";
     public static final String IDLE = "fa.therizinosaurus.idle";
     public static final String WALK = "fa.therizinosaurus.walk";
     public static final String SLEEP = "fa.therizinosaurus.sleep";
@@ -39,21 +31,6 @@ public class Therizinosaurus extends Prehistoric {
     public static final String ATTACK1 = "fa.therizinosaurus.attack1";
     public static final String ATTACK2 = "fa.therizinosaurus.attack2";
     public static final String EAT = "fa.therizinosaurus.eat";
-    private static final LazyLoadedValue<Map<String, ServerAnimationInfo>> allAnimations = new LazyLoadedValue<>(() -> {
-        Map<String, ServerAnimationInfo> newMap = new HashMap<>();
-        List<AnimationManager.Animation> animations = AnimationManager.ANIMATIONS.getAnimation(ANIMATIONS);
-        for (AnimationManager.Animation animation : animations) {
-            ServerAnimationInfo info;
-            switch (animation.animationId()) {
-                case ATTACK1, ATTACK2 -> info = new ServerAttackAnimationInfo(animation, animation.attackDelay());
-                case IDLE -> info = new ServerAnimationInfo(animation);
-                case WALK -> info = new ServerAnimationInfo(animation);
-                default -> info = new ServerAnimationInfo(animation);
-            }
-            newMap.put(animation.animationId(), info);
-        }
-        return newMap;
-    });
     private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("therizinosaurus");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -111,35 +88,27 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    public Map<String, ServerAnimationInfo> getAllAnimations() {
-        return allAnimations.get();
+    public @NotNull Animation nextIdleAnimation() {
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextIdleAnimation() {
-        return allAnimations.get().get(IDLE);
+    public @NotNull Animation nextMovingAnimation() {
+        return getAllAnimations().get(WALK);
     }
 
     @Override
-    @NotNull
-    public ServerAnimationInfo nextMovingAnimation() {
-        return allAnimations.get().get(WALK);
-    }
-
-    @Override
-    @NotNull
-    public ServerAnimationInfo nextChasingAnimation() {
+    public @NotNull Animation nextChasingAnimation() {
         return nextMovingAnimation();
     }
 
     @Override
-    public @NotNull ServerAnimationInfo nextEatingAnimation() {
+    public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 
     @Override
-    @NotNull
-    public ServerAttackAnimationInfo nextAttackAnimation() {
+    public @NotNull Animation nextAttackAnimation() {
         String key;
 
         if (getRandom().nextBoolean()) {
@@ -148,7 +117,7 @@ public class Therizinosaurus extends Prehistoric {
             key = ATTACK2;
         }
 
-        return (ServerAttackAnimationInfo) allAnimations.get().get(key);
+        return getAllAnimations().get(key);
     }
 
     @Nullable
