@@ -4,7 +4,9 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.model.PrehistoricFishGeoModel;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
@@ -17,6 +19,11 @@ public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends GeoEn
                 new ResourceLocation(Fossil.MOD_ID, "animations/" + animation),
                 new ResourceLocation(Fossil.MOD_ID, "textures/entity/" + texture + "/texturemap.png")
         ));
+    }
+
+    @Override
+    public RenderType getRenderType(T animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, ResourceLocation texture) {
+        return RenderType.entityCutoutNoCull(texture);
     }
 
     @Override
