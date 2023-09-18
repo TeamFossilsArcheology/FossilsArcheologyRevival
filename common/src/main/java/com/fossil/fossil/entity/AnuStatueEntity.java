@@ -32,7 +32,7 @@ public class AnuStatueEntity extends Mob {
         super.tick();
         setDeltaMovement(getDeltaMovement().add(0, 0.095f, 0).multiply(1, 0.6f, 1));
         if (tickCount > 200) {
-            level.explode(this, position().x, position().y, position().z, 5f, false, this.level.getGameRules()
+            level.explode(this, position().x, position().y, position().z, 5f, false, level.getGameRules()
                     .getBoolean(GameRules.RULE_MOBGRIEFING) ? Explosion.BlockInteraction.DESTROY : Explosion.BlockInteraction.NONE);
             createPortal();
         }

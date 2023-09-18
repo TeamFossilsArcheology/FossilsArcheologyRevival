@@ -1,5 +1,6 @@
 package com.fossil.fossil.event;
 
+import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.AnimalFearGoal;
 import com.fossil.fossil.entity.monster.AnuBoss;
@@ -49,7 +50,7 @@ public class ModEvents {
     }
 
     private static boolean isBreakableInAnuLair(BlockState state) {
-        return state.getBlock().getDescriptionId().toLowerCase().contains("grave") || state.is(Blocks.OBSIDIAN);
+        return state.getBlock().getDescriptionId().toLowerCase().contains("grave") || state.is(Blocks.OBSIDIAN) || state.is(ModBlocks.FAKE_OBSIDIAN.get());
     }
 
     private static boolean isLivestock(PathfinderMob mob) {

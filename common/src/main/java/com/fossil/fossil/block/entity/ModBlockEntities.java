@@ -42,6 +42,8 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(AncientChestBlockEntity::new, ModBlocks.ANCIENT_CHEST.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<SarcophagusBlockEntity>> SARCOPHAGUS = BLOCK_ENTITIES.register("sarcophagus",
             () -> BlockEntityType.Builder.of(SarcophagusBlockEntity::new, ModBlocks.SARCOPHAGUS.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<FakeObsidianBlockEntity>> FAKE_OBSIDIAN = BLOCK_ENTITIES.register("fake_obsidian",
+            () -> BlockEntityType.Builder.of(FakeObsidianBlockEntity::new, ModBlocks.FAKE_OBSIDIAN.get()).build(null));
 
     public static void register() {
         BLOCK_ENTITIES.register();
