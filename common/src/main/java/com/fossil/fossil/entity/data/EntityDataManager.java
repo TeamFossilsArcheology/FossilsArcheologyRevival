@@ -5,6 +5,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -54,7 +55,26 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
         return entities.get(entityName);
     }
 
+    public ImmutableMap<String, Data> getEntities() {
+        return entities;
+    }
+
+    public void replaceData(Map<String, Data> dataMap) {
+        entities = ImmutableMap.copyOf(dataMap);
+    }
+
     public record Data(Stat stats, AI ai, float minScale, float maxScale, int teenAgeDays, int adultAgeDays,
                        int maxHunger, int maxPopulation, boolean canBeRidden, boolean breaksBlocks) {
+
+        public static Data readBuf(FriendlyByteBuf buf) {
+            return new Data(Stat.readBuf(buf), AI.readBuf(buf), buf.readFloat(), buf.readFloat(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readBoolean(), buf.readBoolean());
+        }
+
+        public static void writeBuf(FriendlyByteBuf buf, Data data) {
+            Stat.writeBuf(buf, data.stats);
+            AI.writeBuf(buf, data.ai);
+            buf.writeFloat(data.minScale).writeFloat(data.maxScale).writeInt(data.teenAgeDays).writeInt(data.adultAgeDays)
+                    .writeInt(data.maxHunger).writeInt(data.maxPopulation).writeBoolean(data.canBeRidden).writeBoolean(data.breaksBlocks);
+        }
     }
 }

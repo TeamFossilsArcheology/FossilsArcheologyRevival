@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.data;
 
 import com.google.gson.*;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
@@ -37,5 +38,18 @@ public record AI(Activity activity, Attacking attacking, Climbing climbing, Foll
             WaterAbility waterAbility = getInstance(WaterAbility.class, jsonobject, WaterAbility.NONE.name());
             return new AI(activity, attacking, climbing, following, jumping, response, stalking, taming, untaming, moving, waterAbility);
         }
+    }
+
+    public static AI readBuf(FriendlyByteBuf buf) {
+        return new AI(Activity.valueOf(buf.readUtf()), Attacking.valueOf(buf.readUtf()), Climbing.valueOf(buf.readUtf()),
+                Following.valueOf(buf.readUtf()), Jumping.valueOf(buf.readUtf()), Response.valueOf(buf.readUtf()),
+                Stalking.valueOf(buf.readUtf()), Taming.valueOf(buf.readUtf()), Untaming.valueOf(buf.readUtf()),
+                Moving.valueOf(buf.readUtf()), WaterAbility.valueOf(buf.readUtf()));
+    }
+
+    public static void writeBuf(FriendlyByteBuf buf, AI ai) {
+        buf.writeUtf(ai.activity.name()).writeUtf(ai.attacking.name()).writeUtf(ai.climbing.name()).writeUtf(ai.following.name())
+                .writeUtf(ai.jumping.name()).writeUtf(ai.response.name()).writeUtf(ai.stalking.name()).writeUtf(ai.taming.name())
+                .writeUtf(ai.untaming.name()).writeUtf(ai.moving.name()).writeUtf(ai.waterAbility.name());
     }
 }

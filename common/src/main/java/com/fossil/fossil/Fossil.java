@@ -12,6 +12,7 @@ import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.material.ModFluids;
 import com.fossil.fossil.network.MammalCapMessage;
 import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.SyncEntityInfoMessage;
 import com.fossil.fossil.network.debug.*;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
@@ -68,6 +69,7 @@ public class Fossil {
         MessageHandler.DEBUG_CHANNEL.register(NewMarkMessage.class, NewMarkMessage::write, NewMarkMessage::new, NewMarkMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(InfoMessage.class, InfoMessage::write, InfoMessage::new, InfoMessage::apply);
         MessageHandler.CAP_CHANNEL.register(MammalCapMessage.class, MammalCapMessage::write, MammalCapMessage::new, MammalCapMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(SyncEntityInfoMessage.class, SyncEntityInfoMessage::write, SyncEntityInfoMessage::new, SyncEntityInfoMessage::apply);
 
         TimerCallbacks.SERVER_CALLBACKS.register(new DisposableTask.Serializer());
     }

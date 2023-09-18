@@ -5,18 +5,24 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.SyncEntityInfoMessage;
 import com.fossil.fossil.villager.ModVillagers;
+import dev.architectury.platform.Platform;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.trading.MerchantOffer;
+import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
+import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
@@ -71,6 +77,13 @@ public class ForgeModEvents {
             MammalCapProvider mammalProvider = new MammalCapProvider();
             event.addListener(mammalProvider::invalidate);
             event.addCapability(MammalCapProvider.IDENTIFIER, mammalProvider);
+        }
+    }
+
+    @SubscribeEvent
+    public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
+        if (Platform.getEnv() == Dist.DEDICATED_SERVER) {//TODO: How exactly does this work with LAN-Servers?
+            MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new SyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
         }
     }
 }
