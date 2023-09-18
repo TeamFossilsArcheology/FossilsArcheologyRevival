@@ -7,7 +7,7 @@ c779ccdaad156d9f770f467b48f7061840be71df assets/fossil/blockstates/dictyophyllum
 861f9f2982aec0699b2f565ca1d755aa03ce69ec assets/fossil/blockstates/dillhoffia.json
 5b479cd636c774a137efe48253b8ea61f749310a assets/fossil/blockstates/dipteris.json
 19d33c5420db1ad09512676956b1cbac8013c2fe assets/fossil/blockstates/duisbergia.json
-c37c9db39d8f3e217fabf6e4efd2543e030a6622 assets/fossil/blockstates/ependra.json
+c37c9db39d8f3e217fabf6e4efd2543e030a6622 assets/fossil/blockstates/ephedra.json
 d6f57e4004d01414ed038473329f02fe30f0f3ce assets/fossil/blockstates/florissantia.json
 6a2a1720501f97693ed39efd2a41ef6b309b04d4 assets/fossil/blockstates/foozia.json
 5451bb59c8f0d09c5f9f9be9fc4bc98e609cac1b assets/fossil/blockstates/horsetail_large.json
@@ -55,7 +55,7 @@ bff4f5f0f7226005f8d1b6fe66cabfe77e79cd2f assets/fossil/models/block/plants/dipte
 4393576d371af82855eec038bfc1ca86088e8d6a assets/fossil/models/block/plants/dipteris_2.json
 0f86a54323404a91fba517d668c9a675d9e934c4 assets/fossil/models/block/plants/duisbergia_1.json
 2547f04e440dacd4301d6922c6419d46722aae01 assets/fossil/models/block/plants/duisbergia_2.json
-37ab4a6df98ea10be641313ea3adc3ac1e04086e assets/fossil/models/block/plants/ependra.json
+37ab4a6df98ea10be641313ea3adc3ac1e04086e assets/fossil/models/block/plants/ephedra.json
 08e3b323d320cd904ba29a2af21950918a0a3a09 assets/fossil/models/block/plants/florissantia.json
 f6bfb4a3f239f07fa2162ac8d304f3bf323d2155 assets/fossil/models/block/plants/foozia_1.json
 820376dbb47f8cc5c488a317e471c1a19ac90f85 assets/fossil/models/block/plants/foozia_2.json
@@ -561,7 +561,7 @@ ff9f9f7cddfcb0ce759ebd0f033ad8d0ff3764e4 assets/fossil/models/item/egg_phorusrha
 b3ab91010585ade608472c26cd74840d07bafe03 assets/fossil/models/item/egg_titanis.json
 c5ce430fa5e2402ca9b0ea1519df8bc00ba309f8 assets/fossil/models/item/elasmotherium_dna.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/elasmotherium_spawn_egg.json
-8f0be2a076480906b4d57d46f3964c6be24e3bd7 assets/fossil/models/item/ependra.json
+8f0be2a076480906b4d57d46f3964c6be24e3bd7 assets/fossil/models/item/ephedra.json
 2e28397c9fb55406124800d0ac44d541431edf97 assets/fossil/models/item/florissantia.json
 a4f40f36ce159563f29534507e388c73748ddd86 assets/fossil/models/item/foozia.json
 9f155e3bd72c24e06b4086ab5892f71677904e72 assets/fossil/models/item/fossil_seed_bennettitales.json
@@ -572,7 +572,7 @@ e898da9e10347c8f3e23d82894232a483b77e6ff assets/fossil/models/item/fossil_seed_c
 9ef24f281d7a80c8e897e218d209bc60394c5ce9 assets/fossil/models/item/fossil_seed_dillhoffia.json
 33ae6452c9f109ba323056caccbc3586e2d0cec7 assets/fossil/models/item/fossil_seed_dipteris.json
 b4542658a3161a53a4de2b776cdcc824ff566ef8 assets/fossil/models/item/fossil_seed_duisbergia.json
-125d3179c422c2b5d65f2d3823f497c707fdc5fd assets/fossil/models/item/fossil_seed_ependra.json
+125d3179c422c2b5d65f2d3823f497c707fdc5fd assets/fossil/models/item/fossil_seed_ephedra.json
 7723719c018d105c84b29a20b07656b807dda984 assets/fossil/models/item/fossil_seed_florissantia.json
 aedb84e57a6da56fa6bf2611a95baf3eebf64a03 assets/fossil/models/item/fossil_seed_foozia.json
 4e513e18856a0f5cdd7a20f2d8ac4adda5a82f4d assets/fossil/models/item/fossil_seed_horsetail.json
@@ -704,7 +704,7 @@ b0f8723847de2fb3fe7882f2ef4e9d8a03e960a8 assets/fossil/models/item/seed_cyathea.
 39ee6cf4eac311bf6d9e7856711219bc60e27076 assets/fossil/models/item/seed_dillhoffia.json
 b5dd1892cfbb9fe0ea2fc46a37b49d44120f760e assets/fossil/models/item/seed_dipteris.json
 03d85bbf595571901bd0fca42251c3845d59b0bd assets/fossil/models/item/seed_duisbergia.json
-4b6681fbc4d75f7ab2365c3a3583a5f6327277c9 assets/fossil/models/item/seed_ependra.json
+4b6681fbc4d75f7ab2365c3a3583a5f6327277c9 assets/fossil/models/item/seed_ephedra.json
 acdeb68a882c37299b977a7314df20e8a69cfb28 assets/fossil/models/item/seed_florissantia.json
 af4723f10f32a2f063caf6c304e293e5c4137cdb assets/fossil/models/item/seed_foozia.json
 36fd091c3422a3125dd700c87195bd2bea8c78fc assets/fossil/models/item/seed_horsetail.json
@@ -1052,7 +1052,7 @@ f9835063e7e6e9852f751dd5d1c078f3182c7d28 data/fossil/loot_tables/blocks/cyathea.
 e0ffc180e81085f5658c778fc3cb796cdbc431c3 data/fossil/loot_tables/blocks/dipteris.json
 6c2534e4758ef66301a09108dd7763f0d067c4e3 data/fossil/loot_tables/blocks/drum.json
 da79f4dbf1b8bf895ecf4af79fb246fe36194b69 data/fossil/loot_tables/blocks/duisbergia.json
-c0af3d5a99ede397d0ce206d28159ded19625df3 data/fossil/loot_tables/blocks/ependra.json
+c0af3d5a99ede397d0ce206d28159ded19625df3 data/fossil/loot_tables/blocks/ephedra.json
 6fe46ff487bf5393302b5b81bdc2f71de2d1a33c data/fossil/loot_tables/blocks/feeder.json
 1484d5ff742d91044e92f728d7acea8069423510 data/fossil/loot_tables/blocks/ferns.json
 5a9a3175840329d5278dc1755c1b2f7889546a06 data/fossil/loot_tables/blocks/figurine_enderman_broken.json

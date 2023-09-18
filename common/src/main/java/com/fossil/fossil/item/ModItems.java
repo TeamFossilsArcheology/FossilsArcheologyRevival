@@ -56,7 +56,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> BROKEN_SWORD = ITEMS.register("broken_sword", () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BROKEN_HELMET = ITEMS.register("broken_helmet", () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> ANCIENT_SWORD = ITEMS.register("ancient_sword", () -> new AncientSwordItem(Tiers.IRON, 3, -2.4f));
-    public static final RegistrySupplier<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet", () -> new ArmorItem(ModArmorMaterials.ANCIENT_ARMOR, EquipmentSlot.HEAD, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> ANCIENT_HELMET = ITEMS.register("ancient_helmet", () -> new ArmorItem(ModArmorMaterials.ANCIENT, EquipmentSlot.HEAD, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> FROZEN_MEAT = ITEMS.register("frozen_meat",
             () -> new SwordItem(ModToolTiers.FROZEN_MEAT, 3, -2.4f, new Item.Properties().stacksTo(64).defaultDurability(4).tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> TOOTH_DAGGER = ITEMS.register("tooth_dagger",

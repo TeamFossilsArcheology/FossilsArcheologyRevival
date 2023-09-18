@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fossil:block/plants/plant_ependra"
+    "layer0": "fossil:item/seeds/fossil_seed_ephedra"
   }
 }

@@ -26,7 +26,7 @@ public enum PrehistoricPlantType {
     DILLHOFFIA(Size.SINGLE, Block.box(5, 0, 5, 11, 14, 11)),
     DIPTERIS(Size.DOUBLE, Block.box(1, 0, 1, 15, 16, 15)),
     DUISBERGIA(Size.DOUBLE, Block.box(3, 0, 3, 13, 16, 13)),
-    EPENDRA(Size.SINGLE, Block.box(3, 0, 3, 13, 8, 13)),
+    EPHEDRA(Size.SINGLE, Block.box(3, 0, 3, 13, 8, 13)),
     FLORISSANTIA(Size.SINGLE, Block.box(4, 0, 4, 12, 11, 12)),
     FOOZIA(Size.DOUBLE, Block.box(2, 0, 2, 14, 16, 14)),
     HORSETAIL_LARGE(Size.DOUBLE_GROWABLE, Block.box(2, 0, 2, 14, 16, 14)),
