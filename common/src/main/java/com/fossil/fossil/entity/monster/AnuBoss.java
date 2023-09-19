@@ -274,8 +274,8 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public boolean doHurtTarget(Entity target) {
         if (random.nextInt(4) == 0) {
-            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
-            lightningBolt.moveTo(Vec3.atBottomCenterOf(target.blockPosition()));
+            LightningBolt lightningBolt = ModEntities.ANCIENT_LIGHTNING_BOLT.get().create(level);
+            lightningBolt.moveTo(target.position());
             level.addFreshEntity(lightningBolt);
         }
         return super.doHurtTarget(target);

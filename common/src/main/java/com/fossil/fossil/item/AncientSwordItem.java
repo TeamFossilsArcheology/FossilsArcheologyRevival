@@ -13,7 +13,6 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.phys.Vec3;
 
 public class AncientSwordItem extends SwordItem {
     public AncientSwordItem(Tier tier, int damage, float attackSpeed) {
@@ -40,12 +39,12 @@ public class AncientSwordItem extends SwordItem {
                     target.discard();
                     level.addFreshEntity(piglin);
                     LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
-                    lightningBolt.moveTo(Vec3.atBottomCenterOf(target.blockPosition()));
+                    lightningBolt.moveTo(target.position());
                     lightningBolt.setCause(player);
                     level.addFreshEntity(lightningBolt);
                 } else if (attacker.getRandom().nextInt(5) == 0) {
                     LightningBolt lightningBolt = ModEntities.ANCIENT_LIGHTNING_BOLT.get().create(level);
-                    lightningBolt.moveTo(Vec3.atBottomCenterOf(target.blockPosition()));
+                    lightningBolt.moveTo(target.position());
                     lightningBolt.setCause(player);
                     level.addFreshEntity(lightningBolt);
                 }
