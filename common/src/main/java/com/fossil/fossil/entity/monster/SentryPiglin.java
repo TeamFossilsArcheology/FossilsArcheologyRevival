@@ -20,7 +20,7 @@ public class SentryPiglin extends PiglinBrute {
     }
 
     public static AttributeSupplier.@NotNull Builder createAttributes() {
-        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 20.0).add(Attributes.MOVEMENT_SPEED, 0.3f).add(Attributes.ATTACK_DAMAGE, 5).add(Attributes.ARMOR, 8);
+        return Monster.createMonsterAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.3f).add(Attributes.ATTACK_DAMAGE, 5).add(Attributes.ARMOR, 8);
     }
 
     @Override

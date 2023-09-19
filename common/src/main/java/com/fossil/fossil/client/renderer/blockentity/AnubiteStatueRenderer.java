@@ -28,7 +28,7 @@ public class AnubiteStatueRenderer implements BlockEntityRenderer<AnubiteStatueB
         poseStack.pushPose();
         poseStack.translate(0.5f, 1.5f, 0.5f);
         poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnubiteStatueBlock.FACING).toYRot() + 180));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnubiteStatueBlock.FACING).getOpposite().toYRot()));
         var c = bufferSource.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
         anubiteModel.render(poseStack, c, packedLight, packedOverlay);
         poseStack.popPose();

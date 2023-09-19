@@ -40,8 +40,7 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
         poseStack.translate(0.5f, -0.5f, 0.5f);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
 
-        float f1 = blockEntity.getDoorTimer();
-        sarcophagusModel.getChild("hinge").setRotation(0, -f1 * Mth.DEG_TO_RAD, 0);
+        sarcophagusModel.getChild("hinge").setRotation(0, -blockEntity.getDoorTimer() * Mth.DEG_TO_RAD, 0);
 
         var vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(SarcophagusModel.TEXTURE));
         sarcophagusModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);

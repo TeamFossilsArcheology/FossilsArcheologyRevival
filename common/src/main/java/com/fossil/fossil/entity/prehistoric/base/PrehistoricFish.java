@@ -45,9 +45,9 @@ import java.util.Map;
 import java.util.Random;
 
 public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable, PrehistoricDebug {
+    public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.BOOLEAN);
-    public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     private final ResourceLocation animationLocation;
 
     private int absoluteEggCooldown = 0;
@@ -210,6 +210,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     public Map<String, Animation> getAllAnimations() {
         return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
     }
+
     @Override
     public Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos() {
         return AnimationInfoManager.ANIMATIONS.getAnimation(animationLocation.getPath());

@@ -8,6 +8,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
+import org.jetbrains.annotations.NotNull;
 
 public class ToyBallRenderer extends LivingEntityRenderer<ToyBall, ToyBallModel> implements RendererFabricFix {
 
@@ -26,7 +27,7 @@ public class ToyBallRenderer extends LivingEntityRenderer<ToyBall, ToyBallModel>
     }
 
     @Override
-    public ResourceLocation getTextureLocation(ToyBall entity) {
+    public @NotNull ResourceLocation getTextureLocation(ToyBall entity) {
         return ToyBallModel.TEXTURE;
     }
 

@@ -12,8 +12,8 @@ import net.minecraft.world.phys.Vec3;
 
 public class WhipSteering {
     private static final int FOLLOW_TIME_WITHOUT_WHIP = 120;
-    private int lastSeenWhipTicks = -1;
     private final Prehistoric dino;
+    private int lastSeenWhipTicks = -1;
 
     public WhipSteering(Prehistoric dino) {
         this.dino = dino;

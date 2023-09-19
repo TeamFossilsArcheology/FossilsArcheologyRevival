@@ -12,8 +12,6 @@ import com.fossil.fossil.fabric.world.biome.FabricFossilRegion;
 import com.fossil.fossil.fabric.world.biome.FabricModBiomes;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.SyncEntityInfoMessage;
-import com.fossil.fossil.recipe.ModRecipes;
-import com.fossil.fossil.util.FossilFoodMappings;
 import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
 import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
 import com.fossil.fossil.world.feature.placement.ModPlacedFeatures;
@@ -56,9 +54,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "anu_lair"), AnuLairChunkGenerator.CODEC);
         ModPlacedFeatures.register();
         FabricModBiomes.register();
-        ModRecipes.initRecipes();
         ModRegistries.register();
-        FossilFoodMappings.register();
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (joined && Platform.getEnv() == EnvType.SERVER) {
                 MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new SyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));

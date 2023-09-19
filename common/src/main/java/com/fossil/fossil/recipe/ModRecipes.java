@@ -59,7 +59,7 @@ public class ModRecipes {
 
         double seedWeight = (100F - plantFossil.total) / (double) PrehistoricPlantType.plantsWithSeeds().size();
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-            plantFossil.addOutput(type.getFossilPlantSeedItem(), seedWeight);
+            plantFossil.addOutput(type.getFossilizedPlantSeedItem(), seedWeight);
         }
         registerAnalyzer(plantFossil);
         AnalyzerRecipe.Builder bioFossil = new AnalyzerRecipe.Builder(ModItems.BIO_FOSSIL.get())
@@ -204,7 +204,7 @@ public class ModRecipes {
         //registerCultivate(ModItems.PALAE_SAPLING_FOSSIL.get(), ModBlocks.PALAE_SAPLING.get(), ModItems.BIO_GOO.get());
         //registerCultivate(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModBlocks.CALAMITES_SAPLING.get(), ModItems.BIO_GOO.get());
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-            registerCultivate(type.getFossilPlantSeedItem(), type.getPlantSeedItem(), ModItems.BIO_GOO.get());
+            registerCultivate(type.getFossilizedPlantSeedItem(), type.getPlantSeedItem(), ModItems.BIO_GOO.get());
         }
     }
 

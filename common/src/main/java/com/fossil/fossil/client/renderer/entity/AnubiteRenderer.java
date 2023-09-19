@@ -14,7 +14,7 @@ public class AnubiteRenderer extends MobRenderer<Anubite, AnubiteModel> implemen
     public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anubite.png");
 
     public AnubiteRenderer(EntityRendererProvider.Context context, AnubiteModel entityModel) {
-        super(context, entityModel, 0.5f);
+        super(context, entityModel, 0.3f);
     }
 
     @Override

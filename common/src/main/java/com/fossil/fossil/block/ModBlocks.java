@@ -247,6 +247,12 @@ public class ModBlocks {
     public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerZombie(FigurineBlock.FigurineVariant.PRISTINE);
     public static final RegistrySupplier<Block> FERNS = registerBlockWithoutBlockItem("ferns", FernsBlock::new);
 
+    static {
+        for (DyeColor color : DyeColor.values()) {
+            registerAmphora(color);
+        }
+    }
+
     private static ToIntFunction<BlockState> activeBlockEmission(int lightValue) {
         return arg -> arg.getValue(CustomEntityBlock.ACTIVE) ? lightValue : 0;
     }
@@ -271,12 +277,6 @@ public class ModBlocks {
         return registerVase("amphora", variant.getSerializedName(), AmphoraVaseBlock::new);
     }
 
-    static {
-        for (DyeColor color : DyeColor.values()) {
-            registerAmphora(color);
-        }
-    }
-
     private static RegistrySupplier<VaseBlock> registerAmphora(DyeColor color) {
         return registerVase("amphora", color.getSerializedName(), AmphoraVaseBlock::new);
     }
@@ -290,18 +290,23 @@ public class ModBlocks {
     private static RegistrySupplier<FigurineBlock> registerEnderman(FigurineBlock.FigurineVariant variant) {
         return registerFigurine("enderman", variant, () -> new FigurineEndermanBlock(variant));
     }
+
     private static RegistrySupplier<FigurineBlock> registerPiglin(FigurineBlock.FigurineVariant variant) {
         return registerFigurine("piglin", variant, () -> new FigurinePiglinBlock(variant));
     }
+
     private static RegistrySupplier<FigurineBlock> registerSkeleton(FigurineBlock.FigurineVariant variant) {
         return registerFigurine("skeleton", variant, () -> new FigurineSkeletonBlock(variant));
     }
+
     private static RegistrySupplier<FigurineBlock> registerSteve(FigurineBlock.FigurineVariant variant) {
         return registerFigurine("steve", variant, () -> new FigurineSteveBlock(variant));
     }
+
     private static RegistrySupplier<FigurineBlock> registerZombie(FigurineBlock.FigurineVariant variant) {
         return registerFigurine("zombie", variant, () -> new FigurineZombieBlock(variant));
     }
+
     private static RegistrySupplier<FigurineBlock> registerFigurine(String name, FigurineBlock.FigurineVariant variant, Supplier<FigurineBlock> supplier) {
         var toReturn = registerBlock("figurine_" + name + "_" + variant.getSerializedName(), supplier);
         FIGURINES.add(toReturn);

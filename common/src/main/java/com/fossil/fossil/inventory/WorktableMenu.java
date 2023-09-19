@@ -29,16 +29,15 @@ public class WorktableMenu extends AbstractContainerMenu {
         addSlot(new Slot(container, INPUT_SLOT_ID, 49, 20));
         addSlot(new Slot(container, FUEL_SLOT_ID, 81, 54));
         addSlot(new FurnaceResultSlot(playerInventory.player, container, OUTPUT_SLOT_ID, 116, 21));
-        int l;
-        for (l = 0; l < 3; ++l) {
-            for (int m = 0; m < 9; ++m) {
-                this.addSlot(new Slot(playerInventory, m + l * 9 + 9, 8 + m * 18, 84 + l * 18));
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 9; x++) {
+                addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
             }
         }
-        for (l = 0; l < 9; ++l) {
-            this.addSlot(new Slot(playerInventory, l, 8 + l * 18, 142));
+        for (int x = 0; x < 9; x++) {
+            addSlot(new Slot(playerInventory, x, 8 + x * 18, 142));
         }
-        this.addDataSlots(containerData);
+        addDataSlots(containerData);
     }
 
     public int getBurnProgress() {
@@ -75,19 +74,19 @@ public class WorktableMenu extends AbstractContainerMenu {
                 }
             } else if (index != INPUT_SLOT_ID && index != FUEL_SLOT_ID) {
                 if (ModRecipes.getWorktableRecipeForItem(current, player.level) != null) {
-                    if (!this.moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
+                    if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
                 } else if (ModRecipes.WORKTABLE_FUEL_VALUES.containsKey(current.getItem())) {
-                    if (!this.moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
+                    if (!moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 3 && index < 30 && !this.moveItemStackTo(current, 30, 39, false)) {
+                } else if (index >= 3 && index < 30 && !moveItemStackTo(current, 30, 39, false)) {
                     return ItemStack.EMPTY;
-                } else if (index >= 30 && index < 39 && !this.moveItemStackTo(current, 3, 30, false)) {
+                } else if (index >= 30 && index < 39 && !moveItemStackTo(current, 3, 30, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(current, 3, 39, false)) {
+            } else if (!moveItemStackTo(current, 3, 39, false)) {
                 return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {
@@ -110,6 +109,4 @@ public class WorktableMenu extends AbstractContainerMenu {
     public boolean stillValid(Player player) {
         return container.stillValid(player);
     }
-
-
 }

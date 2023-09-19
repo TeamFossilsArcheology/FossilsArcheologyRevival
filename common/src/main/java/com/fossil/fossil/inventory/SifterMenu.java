@@ -23,17 +23,16 @@ public class SifterMenu extends AbstractContainerMenu {
         this.container = container;
         this.containerData = containerData;
         addSlot(new Slot(container, 0, 80, 10));
-        for (int i = 0; i < 5; i++) {
-            addSlot(new FurnaceResultSlot(playerInventory.player, container, 1 + i, 44 + 18 * i, 62));
+        for (int slot = 0; slot < 5; slot++) {
+            addSlot(new FurnaceResultSlot(playerInventory.player, container, 1 + slot, 44 + 18 * slot, 62));
         }
-        int l;
-        for (l = 0; l < 3; ++l) {
-            for (int m = 0; m < 9; ++m) {
-                addSlot(new Slot(playerInventory, m + l * 9 + 9, 8 + m * 18, 84 + l * 18));
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 9; x++) {
+                addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
             }
         }
-        for (l = 0; l < 9; ++l) {
-            addSlot(new Slot(playerInventory, l, 8 + l * 18, 142));
+        for (int x = 0; x < 9; x++) {
+            addSlot(new Slot(playerInventory, x, 8 + x * 18, 142));
         }
         addDataSlots(containerData);
     }
@@ -86,6 +85,4 @@ public class SifterMenu extends AbstractContainerMenu {
     public boolean stillValid(Player player) {
         return container.stillValid(player);
     }
-
-
 }

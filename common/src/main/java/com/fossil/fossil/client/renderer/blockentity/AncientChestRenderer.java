@@ -37,11 +37,11 @@ public class AncientChestRenderer implements BlockEntityRenderer<AncientChestBlo
         PartDefinition partDefinition = meshDefinition.getRoot();
 
         partDefinition.addOrReplaceChild("bottom", CubeListBuilder.create().texOffs(0, 19)
-                .addBox(1.0f, 0.0f, 1.0f, 14.0f, 10.0f, 14.0f), PartPose.ZERO);
+                .addBox(1, 0, 1, 14, 10, 14), PartPose.ZERO);
         partDefinition.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(0, 0)
-                .addBox(1.0f, 0.0f, 0.0f, 14.0f, 5.0f, 14.0f), PartPose.offset(0.0f, 9.0f, 1.0f));
+                .addBox(1, 0, 0, 14, 5, 14), PartPose.offset(0, 9, 1));
         partDefinition.addOrReplaceChild("lock", CubeListBuilder.create().texOffs(0, 0)
-                .addBox(7.0f, -1.0f, 15.0f, 2.0f, 4.0f, 1.0f), PartPose.offset(0.0f, 8.0f, 0.0f));
+                .addBox(7, -1, 15, 2, 4, 1), PartPose.offset(0, 8, 0));
         return LayerDefinition.create(meshDefinition, 64, 64);
     }
 
@@ -53,8 +53,7 @@ public class AncientChestRenderer implements BlockEntityRenderer<AncientChestBlo
         poseStack.translate(0.5f, 0.5f, 0.5f);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(-direction.toYRot()));
         poseStack.translate(-0.5f, -0.5f, -0.5f);
-        float f1 = blockEntity.getLidTimer();
-        chestModel.getChild("lid").setRotation(-f1 * Mth.DEG_TO_RAD, 0, 0);
+        chestModel.getChild("lid").setRotation(-blockEntity.getLidTimer() * Mth.DEG_TO_RAD, 0, 0);
         var c = bufferSource.getBuffer(RenderType.entityCutout(TEXTURE));
         chestModel.render(poseStack, c, packedLight, packedOverlay);
         poseStack.popPose();

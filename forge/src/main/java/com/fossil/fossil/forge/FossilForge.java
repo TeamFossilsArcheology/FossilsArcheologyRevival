@@ -9,8 +9,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
 import com.fossil.fossil.forge.client.ClientModEvents;
 import com.fossil.fossil.forge.world.biome.ForgeFossilRegion;
-import com.fossil.fossil.recipe.ModRecipes;
-import com.fossil.fossil.util.FossilFoodMappings;
 import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
 import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
 import com.fossil.fossil.world.surfacerules.ModSurfaceRules;
@@ -57,8 +55,6 @@ public class FossilForge {
     }
 
     public void onCommon(FMLCommonSetupEvent event) {
-        ModRecipes.initRecipes();
-        FossilFoodMappings.register();
         event.enqueueWork(() -> {
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Fossil.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);

@@ -39,16 +39,15 @@ public class FeederMenu extends AbstractContainerMenu {
                 return FoodMappings.getFoodAmount(stack.getItem(), Diet.HERBIVORE) > 0;
             }
         });
-        int l;
-        for (l = 0; l < 3; ++l) {
-            for (int m = 0; m < 9; ++m) {
-                this.addSlot(new Slot(playerInventory, m + l * 9 + 9, 8 + m * 18, 84 + l * 18));
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 9; x++) {
+                addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
             }
         }
-        for (l = 0; l < 9; ++l) {
-            this.addSlot(new Slot(playerInventory, l, 8 + l * 18, 142));
+        for (int x = 0; x < 9; x++) {
+            addSlot(new Slot(playerInventory, x, 8 + x * 18, 142));
         }
-        this.addDataSlots(containerData);
+        addDataSlots(containerData);
     }
 
     public int getMeat() {
@@ -74,9 +73,9 @@ public class FeederMenu extends AbstractContainerMenu {
             } else {
                 if (!moveItemStackTo(current, 0, 2, false)) {
                     return ItemStack.EMPTY;
-                } else if (index < inventorySlots + 2 - 9 && !this.moveItemStackTo(current, inventorySlots + 2 - 9, inventorySlots + 2, false)) {
+                } else if (index < inventorySlots + 2 - 9 && !moveItemStackTo(current, inventorySlots + 2 - 9, inventorySlots + 2, false)) {
                     return ItemStack.EMPTY;
-                } else if (index >= inventorySlots + 2 - 9 && index < inventorySlots + 3 && !this.moveItemStackTo(current, 2, inventorySlots + 2 - 9,
+                } else if (index >= inventorySlots + 2 - 9 && index < inventorySlots + 3 && !moveItemStackTo(current, 2, inventorySlots + 2 - 9,
                         false)) {
                     return ItemStack.EMPTY;
                 }
@@ -94,6 +93,4 @@ public class FeederMenu extends AbstractContainerMenu {
     public boolean stillValid(Player player) {
         return container.stillValid(player);
     }
-
-
 }

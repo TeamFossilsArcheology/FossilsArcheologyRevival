@@ -101,7 +101,7 @@ public enum PrehistoricEntityType {
     public final String resourceName;
     public final Supplier<Component> displayName;
     public final float eggScale;
-    private final RegistrySupplier<? extends EntityType<? extends Entity>> entitySupplier;
+    private final @NotNull RegistrySupplier<? extends EntityType<? extends Entity>> entitySupplier;
     public Item dnaItem;
     public Item eggItem;
     public Item embryoItem;
@@ -128,16 +128,6 @@ public enum PrehistoricEntityType {
         this.eggScale = 1;
     }
 
-    PrehistoricEntityType(PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, Map<String, Object> attributes) {
-        this.entitySupplier = null;
-        this.mobType = mobType;
-        this.timePeriod = timePeriod;
-        this.diet = diet;
-        this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
-        this.displayName = () -> new TranslatableComponent("entity.fossil." + resourceName);
-        this.eggScale = (float) attributes.getOrDefault("eggScale", (float) 1.0f);
-    }
-
     PrehistoricEntityType(RegistrySupplier<? extends EntityType<? extends Entity>> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, Map<String, Object> attributes) {
         this.entitySupplier = entity;
         this.mobType = mobType;
@@ -161,19 +151,16 @@ public enum PrehistoricEntityType {
                 registerItem("bone_unique_item", type, Item::new, item -> type.uniqueBoneItem = item);
             }
             if (type.mobType == PrehistoricMobType.FISH) {
-                if (type.entitySupplier != null)
-                    type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?
+                type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?
                 registerItem("egg_item", type, properties -> new FishEggItem(type), item -> type.eggItem = item);
                 registerItem("bucket_item", type, properties -> new ArchitecturyMobBucketItem(type.entitySupplier, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, properties.stacksTo(1)), item -> type.bucketItem = item);
             } else if (type.mobType == PrehistoricMobType.DINOSAUR || type.mobType == PrehistoricMobType.DINOSAUR_AQUATIC) {
-                if (type.entitySupplier != null)
-                    type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
+                type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 registerItem("egg_item", type, p -> new DinoEggItem(type), item -> type.eggItem = item);
             } else if (type.mobType == PrehistoricMobType.MAMMAL || type.mobType == PrehistoricMobType.VANILLA) {
                 registerItem("syringe", type, properties -> new MammalEmbryoItem(type), item -> type.embryoItem = item);
             } else if (type.mobType == PrehistoricMobType.BIRD || type.mobType == PrehistoricMobType.CHICKEN) {
-                if (type.entitySupplier != null)
-                    type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
+                type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 if (type.mobType == PrehistoricMobType.BIRD) {
                     registerItem("egg", type, properties -> new BirdEggItem(type, false), item -> type.birdEggItem = item);
                 }
@@ -244,9 +231,6 @@ public enum PrehistoricEntityType {
     }
 
     public EntityType<? extends Entity> entityType() {
-        if (entitySupplier == null) {
-            return EntityType.SHEEP;
-        }
         return entitySupplier.get();
     }
 

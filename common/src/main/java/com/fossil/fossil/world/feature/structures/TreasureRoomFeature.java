@@ -36,7 +36,7 @@ public class TreasureRoomFeature extends StructureFeature<NoneFeatureConfigurati
     public GenerationStep.@NotNull Decoration step() {
         return GenerationStep.Decoration.SURFACE_STRUCTURES;
     }
-    
+
     static class TreasureRoomPiece extends TemplateStructurePiece {
         private static final ResourceLocation STRUCTURE = new ResourceLocation(Fossil.MOD_ID, "treasure_room");
 

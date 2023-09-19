@@ -24,10 +24,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implements AnalyzerBlockEntity {
 
-    public static BlockEntity get(BlockPos pos, BlockState state) {
-        return new AnalyzerBlockEntityImpl(pos, state);
-    }
-
     private static final int[] SLOTS_FOR_UP = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8}; //Input
     private static final int[] SLOTS_FOR_DOWN = new int[]{9, 10, 11, 12}; //Output
     private final ContainerData dataAccess = new ContainerData() {
@@ -64,9 +60,12 @@ public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implemen
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(13, ItemStack.EMPTY);
     private int rawIndex = -1;
-
     public AnalyzerBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.ANALYZER.get(), blockPos, blockState);
+    }
+
+    public static BlockEntity get(BlockPos pos, BlockState state) {
+        return new AnalyzerBlockEntityImpl(pos, state);
     }
 
     private static int getFuelTime(ItemStack stack) {

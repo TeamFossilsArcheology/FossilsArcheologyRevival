@@ -2,7 +2,6 @@ package com.fossil.fossil.block;
 
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.item.FlowerSeedsItem;
-import com.fossil.fossil.item.FossilFlowerSeedsItem;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ModTabs;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -48,7 +47,7 @@ public enum PrehistoricPlantType {
     private PrehistoricPlantType tallPlant;
     private String commonName;
     private RegistrySupplier<? extends BushBlock> plantBlock;
-    private RegistrySupplier<FossilFlowerSeedsItem> fossilPlantSeedItem;
+    private RegistrySupplier<Item> fossilizedPlantSeedItem;
     private RegistrySupplier<FlowerSeedsItem> plantSeedItem;
 
     PrehistoricPlantType(Size size, VoxelShape... shapes) {
@@ -96,8 +95,8 @@ public enum PrehistoricPlantType {
     }
 
     private void registerPlantSeed(String name) {
-        this.fossilPlantSeedItem = ModItems.ITEMS.register("fossil_seed_" + name,
-                () -> new FossilFlowerSeedsItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+        this.fossilizedPlantSeedItem = ModItems.ITEMS.register("fossil_seed_" + name,
+                () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
         this.plantSeedItem = ModItems.ITEMS.register("seed_" + name,
                 () -> new FlowerSeedsItem(new Item.Properties().tab(ModTabs.FAITEMTAB), this.plantBlock));
     }
@@ -106,8 +105,8 @@ public enum PrehistoricPlantType {
         return plantBlock.get();
     }
 
-    public FossilFlowerSeedsItem getFossilPlantSeedItem() {
-        return fossilPlantSeedItem.get();
+    public Item getFossilizedPlantSeedItem() {
+        return fossilizedPlantSeedItem.get();
     }
 
     public FlowerSeedsItem getPlantSeedItem() {

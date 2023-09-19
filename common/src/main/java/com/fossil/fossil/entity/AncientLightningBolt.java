@@ -28,12 +28,12 @@ import java.util.stream.Stream;
 
 public class AncientLightningBolt extends LightningBolt {
     private static final int START_LIFE = 2;
+    private final Set<Entity> hitEntities = Sets.newHashSet();
     private int life;
     private int flashes;
     private boolean visualOnly;
     @Nullable
     private ServerPlayer cause;
-    private final Set<Entity> hitEntities = Sets.newHashSet();
     private int blocksSetOnFire;
 
     public AncientLightningBolt(EntityType<AncientLightningBolt> entityType, Level level) {

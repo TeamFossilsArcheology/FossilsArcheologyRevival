@@ -11,6 +11,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class FigurinePiglinBlock extends FigurineBlock {
     private static final VoxelShape SHAPE = Block.box(2.5, 0, 2.5, 13.5, 18, 13.5);
+
     public FigurinePiglinBlock(FigurineVariant variant) {
         super(variant);
     }

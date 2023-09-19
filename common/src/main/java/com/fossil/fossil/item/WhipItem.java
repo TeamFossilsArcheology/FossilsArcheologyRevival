@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 
 public class WhipItem extends Item {
     public WhipItem(Properties properties) {
@@ -16,7 +17,7 @@ public class WhipItem extends Item {
     }
 
     @Override
-    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
+    public @NotNull InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand usedHand) {
         if (!level.isClientSide && player.isPassenger() && player.getVehicle() instanceof Prehistoric) {
             player.getItemInHand(usedHand).hurtAndBreak(1, player, p -> p.broadcastBreakEvent(usedHand));
             player.getVehicle().playSound(ModSounds.WHIP.get(), 1, 1);

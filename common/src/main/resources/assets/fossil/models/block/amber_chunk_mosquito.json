@@ -1,6 +1,6 @@
 {
-	"parent": "fossil:block/amber_chunk_template",
-	"textures": {
-		"all": "fossil:block/amber_chunk_mosquito"
-	}
+  "parent": "fossil:block/amber_chunk_template",
+  "textures": {
+    "all": "fossil:block/amber_chunk_mosquito"
+  }
 }

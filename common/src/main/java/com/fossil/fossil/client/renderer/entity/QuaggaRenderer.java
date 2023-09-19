@@ -13,6 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class QuaggaRenderer extends AbstractHorseRenderer<Quagga, HorseModel<Quagga>> implements RendererFabricFix {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/quagga/texturemap.png");
+
     public QuaggaRenderer(EntityRendererProvider.Context context) {
         super(context, new HorseModel<>(context.bakeLayer(ModelLayers.HORSE)), 0.75f);
     }

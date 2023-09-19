@@ -95,7 +95,7 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
         int chunkZ = chunk.getPos().z;
         BlockState netherrack = Blocks.NETHERRACK.defaultBlockState();
         int anuCastleMinY = 62;
-        int islandMinY = anuCastleMinY-16;
+        int islandMinY = anuCastleMinY - 16;
         if (chunkX > -1 && chunkX < 9 && chunkZ > -1 && chunkZ < 9) {
             for (int y = islandMinY; y < anuCastleMinY; y++) {
                 for (int x = 0; x < 16; x++) {

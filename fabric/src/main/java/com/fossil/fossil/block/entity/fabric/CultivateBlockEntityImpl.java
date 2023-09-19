@@ -34,10 +34,6 @@ import java.util.Random;
 
 public class CultivateBlockEntityImpl extends FabricContainerBlockEntity implements CultivateBlockEntity {
 
-    public static BlockEntity get(BlockPos pos, BlockState state) {
-        return new CultivateBlockEntityImpl(pos, state);
-    }
-
     private static final int[] SLOTS_FOR_UP = new int[]{CultivateMenu.INPUT_SLOT_ID}; //Input
     private static final int[] SLOTS_FOR_SIDES = new int[]{CultivateMenu.FUEL_SLOT_ID, CultivateMenu.OUTPUT_SLOT_ID}; //Fuel+Output
     private static final int[] SLOTS_FOR_DOWN = new int[]{CultivateMenu.OUTPUT_SLOT_ID}; //Output
@@ -78,9 +74,12 @@ public class CultivateBlockEntityImpl extends FabricContainerBlockEntity impleme
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
-
     public CultivateBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.CULTIVATE.get(), blockPos, blockState);
+    }
+
+    public static BlockEntity get(BlockPos pos, BlockState state) {
+        return new CultivateBlockEntityImpl(pos, state);
     }
 
     public static int getItemFuelTime(ItemStack stack) {

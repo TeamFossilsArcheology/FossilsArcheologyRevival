@@ -9,6 +9,16 @@ import java.lang.reflect.Type;
 public record Stat(double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed,
                    double maxSpeed, double baseArmor, double maxArmor, double baseKnockBackResistance,
                    double maxKnockBackResistance) {
+    public static Stat readBuf(FriendlyByteBuf buf) {
+        return new Stat(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble());
+    }
+
+    public static void writeBuf(FriendlyByteBuf buf, Stat stat) {
+        buf.writeDouble(stat.baseDamage).writeDouble(stat.maxDamage).writeDouble(stat.baseHealth).writeDouble(stat.maxHealth)
+                .writeDouble(stat.baseSpeed).writeDouble(stat.maxSpeed).writeDouble(stat.baseArmor).writeDouble(stat.maxArmor)
+                .writeDouble(stat.baseKnockBackResistance).writeDouble(stat.maxKnockBackResistance);
+    }
+
     public static class Supplier implements JsonDeserializer<Stat> {
 
         @Override
@@ -26,14 +36,5 @@ public record Stat(double baseDamage, double maxDamage, double baseHealth, doubl
             double maxKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "maxKnockBackResistance");
             return new Stat(baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, maxSpeed, baseArmor, maxArmor, baseKnockBackResistance, maxKnockBackResistance);
         }
-    }
-
-    public static Stat readBuf(FriendlyByteBuf buf) {
-        return new Stat(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble());
-    }
-    public static void writeBuf(FriendlyByteBuf buf, Stat stat) {
-        buf.writeDouble(stat.baseDamage).writeDouble(stat.maxDamage).writeDouble(stat.baseHealth).writeDouble(stat.maxHealth)
-                .writeDouble(stat.baseSpeed).writeDouble(stat.maxSpeed).writeDouble(stat.baseArmor).writeDouble(stat.maxArmor)
-                .writeDouble(stat.baseKnockBackResistance).writeDouble(stat.maxKnockBackResistance);
     }
 }

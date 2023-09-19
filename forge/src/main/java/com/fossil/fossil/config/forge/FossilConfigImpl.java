@@ -16,7 +16,7 @@ public class FossilConfigImpl {
                 case FossilConfig.GENERATE_PERMAFROST -> {
                     return ForgeConfig.GENERATE_PERMAFROST.get();
                 }
-                case FossilConfig.GENERATE_VOLCANIC_ROCK ->{
+                case FossilConfig.GENERATE_VOLCANIC_ROCK -> {
                     return ForgeConfig.GENERATE_VOLCANIC_ROCK.get();
                 }
                 case FossilConfig.GENERATE_TAR_SITES -> {

@@ -26,11 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implements WorktableBlockEntity {
-    public static BlockEntity get(BlockPos pos, BlockState state) {
-
-        return new WorktableBlockEntityImpl(pos, state);
-    }
-
     private static final int[] SLOTS_FOR_UP = new int[]{WorktableMenu.INPUT_SLOT_ID}; //Input
     private static final int[] SLOTS_FOR_SIDES = new int[]{WorktableMenu.FUEL_SLOT_ID}; //Fuel
     private static final int[] SLOTS_FOR_DOWN = new int[]{WorktableMenu.OUTPUT_SLOT_ID}; //Output
@@ -71,9 +66,21 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
-
     public WorktableBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.WORKTABLE.get(), blockPos, blockState);
+    }
+
+    public static BlockEntity get(BlockPos pos, BlockState state) {
+
+        return new WorktableBlockEntityImpl(pos, state);
+    }
+
+    public static int getItemFuelTime(ItemStack stack) {
+        Integer fuel = ModRecipes.WORKTABLE_FUEL_VALUES.get(stack.getItem());
+        if (fuel != null) {
+            return fuel;
+        }
+        return 0;
     }
 
     @Override
@@ -126,14 +133,6 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         if (dirty) {
             setChanged(level, pos, state);
         }
-    }
-
-    public static int getItemFuelTime(ItemStack stack) {
-        Integer fuel = ModRecipes.WORKTABLE_FUEL_VALUES.get(stack.getItem());
-        if (fuel != null) {
-            return fuel;
-        }
-        return 0;
     }
 
     private ItemStack checkSmelt(ItemStack itemstack) {

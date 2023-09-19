@@ -12,6 +12,7 @@ import org.jetbrains.annotations.NotNull;
 public class FigurineZombieBlock extends FigurineBlock {
     private static final VoxelShape SHAPE = Block.box(2.5, 0, 2.5, 13.5, 18, 13.5);
     private static final VoxelShape SHAPE_DESTROYED = Block.box(2.5, 0, 2.5, 13.5, 14, 13.5);
+
     public FigurineZombieBlock(FigurineVariant variant) {
         super(variant);
     }

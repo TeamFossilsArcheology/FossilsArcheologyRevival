@@ -23,10 +23,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements SifterBlockEntity {
 
-    public static BlockEntity get(BlockPos pos, BlockState state) {
-        return new SifterBlockEntityImpl(pos, state);
-    }
-
     private static final int[] SLOTS_FOR_UP = new int[]{0}; //Input
     private static final int[] SLOTS_FOR_DOWN = new int[]{1, 2, 3, 4, 5}; //Output
     private final ContainerData dataAccess = new ContainerData() {
@@ -62,11 +58,13 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
-
     public SifterBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.SIFTER.get(), blockPos, blockState);
     }
 
+    public static BlockEntity get(BlockPos pos, BlockState state) {
+        return new SifterBlockEntityImpl(pos, state);
+    }
 
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {

@@ -10,7 +10,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.gameevent.GameEvent;
 
 public class ToyBallItem extends Item {
     private final DyeColor color;
@@ -32,7 +31,6 @@ public class ToyBallItem extends Item {
             entity.setColor(color);
             entity.moveTo(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5, 0, 0);
             level.addFreshEntity(entity);
-            level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, entity);
         }
         context.getItemInHand().shrink(1);
         return InteractionResult.sidedSuccess(level.isClientSide);

@@ -22,25 +22,24 @@ public class AnalyzerMenu extends AbstractContainerMenu {
         super(ModMenus.ANALYZER.get(), id);
         this.container = container;
         this.containerData = containerData;
-        for (int column = 0; column < 3; ++column) {
-            for (int row = 0; row < 3; ++row) {
+        for (int column = 0; column < 3; column++) {
+            for (int row = 0; row < 3; row++) {
                 addSlot(new Slot(container, row + column * 3, 20 + row * 18, 17 + column * 18));
             }
         }
-        this.addSlot(new FurnaceResultSlot(playerInventory.player, container, 9, 116, 21));
-        for (int slot = 0; slot < 3; ++slot) {
-            this.addSlot(new FurnaceResultSlot(playerInventory.player, container, 10 + slot, 111 + 18 * slot, 53));
+        addSlot(new FurnaceResultSlot(playerInventory.player, container, 9, 116, 21));
+        for (int slot = 0; slot < 3; slot++) {
+            addSlot(new FurnaceResultSlot(playerInventory.player, container, 10 + slot, 111 + 18 * slot, 53));
         }
-        int l;
-        for (l = 0; l < 3; ++l) {
-            for (int m = 0; m < 9; ++m) {
-                this.addSlot(new Slot(playerInventory, m + l * 9 + 9, 8 + m * 18, 84 + l * 18));
+        for (int y = 0; y < 3; y++) {
+            for (int x = 0; x < 9; x++) {
+                addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
             }
         }
-        for (l = 0; l < 9; ++l) {
-            this.addSlot(new Slot(playerInventory, l, 8 + l * 18, 142));
+        for (int x = 0; x < 9; x++) {
+            addSlot(new Slot(playerInventory, x, 8 + x * 18, 142));
         }
-        this.addDataSlots(containerData);
+        addDataSlots(containerData);
     }
 
     @Override
@@ -57,15 +56,15 @@ public class AnalyzerMenu extends AbstractContainerMenu {
                 }
             } else if (index >= 13) {
                 if (ModRecipes.getAnalyzerRecipeForItem(current, player.level) != null) {
-                    if (!this.moveItemStackTo(current, 0, 9, false)) {
+                    if (!moveItemStackTo(current, 0, 9, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 13 && index < inventorySlots + 13 - 9 && !this.moveItemStackTo(current, inventorySlots + 13 - 9, inventorySlots + 13, false)) {
+                } else if (index >= 13 && index < inventorySlots + 13 - 9 && !moveItemStackTo(current, inventorySlots + 13 - 9, inventorySlots + 13, false)) {
                     return ItemStack.EMPTY;
-                } else if (index >= inventorySlots + 13 - 9 && index < inventorySlots + 13 && !this.moveItemStackTo(current, 13, inventorySlots + 13 - 9, false)) {
+                } else if (index >= inventorySlots + 13 - 9 && index < inventorySlots + 13 && !moveItemStackTo(current, 13, inventorySlots + 13 - 9, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(current, 13, inventorySlots + 13, false)) {
+            } else if (!moveItemStackTo(current, 13, inventorySlots + 13, false)) {
                 return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {
@@ -91,6 +90,4 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     public boolean stillValid(Player player) {
         return container.stillValid(player);
     }
-
-
 }

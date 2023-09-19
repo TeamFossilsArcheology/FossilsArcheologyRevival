@@ -225,21 +225,21 @@ public class DinopediaScreen extends Screen {
                     y + 30, col);
             font.draw(poseStack, new TranslatableComponent("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x,
                     y + 40, col);
-            var dietText = new TranslatableComponent("pedia.fossil.diet", dino.type().diet.getName());
+            var dietText = dino.type().diet.getName();
             renderHoverInfo(poseStack, x, y + 50, mouseX, mouseY, dietText, dino.type().diet.getDescription());
-            var tempText = new TranslatableComponent("pedia.fossil.temperament", dino.aiResponseType().getName());
+            var tempText = dino.aiResponseType().getName();
             renderHoverInfo(poseStack, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.gender", dino.getGender().getName()), x, y + 70, col);
+            font.draw(poseStack, dino.getGender().getName(), x, y + 70, col);
             if (dino.getOwner() == null) {
                 font.draw(poseStack, new TranslatableComponent("pedia.fossil.untamed"), x, y + 80, col);
             } else {
                 font.draw(poseStack, new TranslatableComponent("pedia.fossil.owner", dino.getOwner().getName()), x, y + 80, col);
             }
-            var orderText = new TranslatableComponent("pedia.fossil.order", dino.getOrderType().getName());
+            var orderText = dino.getOrderType().getName();
             renderHoverInfo(poseStack, x, y + 90, mouseX, mouseY, orderText, dino.getOrderType().getDescription());
             font.draw(poseStack, new TranslatableComponent("pedia.fossil.order.item", dino.getOrderItem().getName(null)), x, y + 100,
                     col);
-            var activityText = new TranslatableComponent("pedia.fossil.activity", dino.aiActivityType().getName());
+            var activityText = dino.aiActivityType().getName();
             renderHoverInfo(poseStack, x, y + 110, mouseX, mouseY, activityText, dino.aiActivityType().getDescription());
         } else if (entity instanceof DinosaurEgg egg) {
             poseStack.pushPose();

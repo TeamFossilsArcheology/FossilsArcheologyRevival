@@ -33,10 +33,10 @@ public class DinoEggItem extends PrehistoricEntityItem {
             egg.setPrehistoricEntityType(type);
             level.addFreshEntity(egg);
             level.gameEvent(player, GameEvent.ENTITY_PLACE, egg);
-            return true;
         } else {
-            return DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, type, false) != null;
+            DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, type, false);
         }
+        return true;
     }
 
     @Override

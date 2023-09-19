@@ -104,10 +104,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public final MoodSystem moodSystem = new MoodSystem(this);
+    protected final WhipSteering steering = new WhipSteering(this);
     private final AttackAnimationLogic<Prehistoric> animationLogic = new AttackAnimationLogic<>(this);
     private final ResourceLocation animationLocation;
     private final boolean isMultiPart;
-    protected final WhipSteering steering = new WhipSteering(this);
     public OrderType currentOrder;
     public boolean hasFeatherToggle = false;
     public boolean featherToggle;
@@ -395,7 +395,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        this.getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
+        //Skip AgeableMob#finalizeSpawn
+        getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
         if (spawnDataIn instanceof PrehistoricGroupData prehistoricGroupData) {
             setAgeInDays(prehistoricGroupData.ageInDays());
         } else {
@@ -404,7 +405,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         updateAbilities();
         moodSystem.setPlayingTick(0);
         setMatingTick(24000);
-        onGround = true;
         heal(getMaxHealth());
         currentOrder = OrderType.WANDER;
         setNoAi(false);
@@ -1049,11 +1049,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             dead = true;
             return true;
         }
-        if (getLastHurtByMob() instanceof Player) {
+        if (getLastHurtByMob() instanceof Player player) {
             if (getOwner() == getLastHurtByMob()) {
                 setTame(false);
                 setOwnerUUID(null);
                 moodSystem.increaseMood(-15);
+                player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.betrayed", getName()), true);
             }
         }
 
@@ -1142,7 +1143,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                             heal(3);
                         }
                         if (getHunger() >= getMaxHunger() && isTame()) {
-                            player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.full", type().displayName.get()), true);
+                            player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.full", getName()), true);
                         }
                         usePlayerItem(player, hand, stack);
                         if (aiTameType() == Taming.FEEDING) {
@@ -1236,9 +1237,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     private void sendOrderMessage(OrderType orderType) {
-        String s = "dino.order." + orderType.name().toLowerCase();
         if (getOwner() instanceof Player player) {
-            player.displayClientMessage(new TranslatableComponent(s, getName()), true);
+            player.displayClientMessage(new TranslatableComponent("entity.fossil.order." + orderType.name().toLowerCase(), getName()), true);
         }
     }
 

@@ -12,9 +12,9 @@ public class TarBubbleParticle extends TextureSheetParticle {
                                 SpriteSet sprites) {
         super(clientLevel, x, y, z, xSpeed, ySpeed, zSpeed);
         this.sprites = sprites;
-        this.xd *= 0.10000000149011612D;
-        this.yd *= 0.10000000149011612D;
-        this.zd *= 0.10000000149011612D;
+        this.xd *= 0.10000000149011612;
+        this.yd *= 0.10000000149011612;
+        this.zd *= 0.10000000149011612;
         this.lifetime = (int) (5 / (Math.random() * 0.8 + 0.2));
         setSpriteFromAge(sprites);
     }

@@ -25,6 +25,7 @@ public class FigurineRenderer implements BlockEntityRenderer<FigurineBlockEntity
         steveModel = FigurineSteveModel.createBodyLayer().bakeRoot();
         zombieModel = FigurineZombieModel.createBodyLayer().bakeRoot();
     }
+
     @Override
     public void render(FigurineBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         poseStack.pushPose();

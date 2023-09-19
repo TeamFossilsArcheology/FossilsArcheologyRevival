@@ -27,7 +27,7 @@ public class ModEntityLootTables extends EntityLoot {
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             if (type.hasBones()) {
                 add(new ResourceLocation(Fossil.MOD_ID, "entities/" + type.resourceName), defaultLoot(type));
-            } else if (type.foodItem != null){
+            } else if (type.foodItem != null) {
                 var meat = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).
                         add(LootItem.lootTableItem(type.foodItem).apply(SetItemCountFunction.setCount(UniformGenerator.between(0, 1)))
                                 .apply(SmeltItemFunction.smelted().when(LootItemEntityPropertyCondition.hasProperties(LootContext.EntityTarget.THIS, ENTITY_ON_FIRE)))

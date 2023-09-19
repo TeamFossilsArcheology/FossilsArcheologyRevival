@@ -4,7 +4,6 @@ import com.fossil.fossil.entity.StoneTablet;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.player.Player;
@@ -27,7 +26,7 @@ public class StoneTabletItem extends Item {
         BlockPos placePos = blockPos.relative(direction);
         Player player = context.getPlayer();
         ItemStack itemStack = context.getItemInHand();
-        if (player != null && !this.mayPlace(player, direction, itemStack, placePos)) {
+        if (player != null && !mayPlace(player, direction, itemStack, placePos)) {
             return InteractionResult.FAIL;
         }
         Level level = context.getLevel();
@@ -37,7 +36,7 @@ public class StoneTabletItem extends Item {
             EntityType.updateCustomEntityTag(level, player, stoneTablet, compoundTag);
         }
         if (stoneTablet.survives()) {
-            if (level instanceof ServerLevel serverLevel) {
+            if (!level.isClientSide) {
                 stoneTablet.playPlacementSound();
                 level.gameEvent(player, GameEvent.ENTITY_PLACE, blockPos);
                 level.addFreshEntity(stoneTablet);

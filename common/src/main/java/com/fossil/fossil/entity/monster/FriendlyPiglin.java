@@ -105,7 +105,7 @@ public class FriendlyPiglin extends TamableAnimal {
             setOrderedToSit(false);
         }
         if (trueSource != null && !(trueSource instanceof Player) && !(trueSource instanceof AbstractArrow)) {
-            amount = (amount + 1.0f) / 2.0f;
+            amount = (amount + 1) / 2;
         }
         return super.hurt(source, amount);
     }
@@ -114,9 +114,8 @@ public class FriendlyPiglin extends TamableAnimal {
     public boolean doHurtTarget(Entity target) {
         boolean hurtTarget = super.doHurtTarget(target);
         if (hurtTarget) {
-            float f = this.level.getCurrentDifficultyAt(this.blockPosition()).getEffectiveDifficulty();
-            if (this.getItemInHand(isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND).isEmpty() && this.isOnFire() &&
-                    this.random.nextFloat() < f * 0.3f) {
+            float f = level.getCurrentDifficultyAt(blockPosition()).getEffectiveDifficulty();
+            if (getItemInHand(isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND).isEmpty() && isOnFire() && random.nextFloat() < f * 0.3f) {
                 target.setSecondsOnFire(2 * (int) f);
             }
             swing(isLeftHanded() ? InteractionHand.OFF_HAND : InteractionHand.MAIN_HAND);
@@ -175,7 +174,7 @@ public class FriendlyPiglin extends TamableAnimal {
         if (isTame()) {
             ItemStack stack = player.getItemInHand(hand);
             if (stack.is(Items.GOLD_NUGGET) && getHealth() < getMaxHealth()) {
-                stack.shrink(1);
+                usePlayerItem(player, hand, stack);
                 heal(2);
                 gameEvent(GameEvent.MOB_INTERACT, eyeBlockPosition());
                 return InteractionResult.SUCCESS;

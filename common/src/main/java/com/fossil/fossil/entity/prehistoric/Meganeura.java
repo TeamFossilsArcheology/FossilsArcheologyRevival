@@ -79,6 +79,14 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         throw new NotImplementedException();
     }
 
+    public static BlockPos getPositionRelativetoGround(LivingEntity entity, double x, double z) {
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, entity.getY(), z);
+        while (entity.level.isEmptyBlock(pos.below()) && pos.getY() > 0) {
+            pos.move(0, -1, 0);
+        }
+        return pos.above(2 + entity.getRandom().nextInt(3));
+    }
+
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
@@ -344,14 +352,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         }
     }
 
-    public static BlockPos getPositionRelativetoGround(LivingEntity entity, double x, double z) {
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, entity.getY(), z);
-        while (entity.level.isEmptyBlock(pos.below()) && pos.getY() > 0) {
-            pos.move(0, -1, 0);
-        }
-        return pos.above(2 + entity.getRandom().nextInt(3));
-    }
-
     static class MeganeuraFlyingMoveControl extends MoveControl {
 
         private final Meganeura meganeura;
@@ -380,7 +380,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
                     return;
                 }
                 if (mob.getTarget() == null) {
-                    float newYRot = (float)(Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG) - 90;
+                    float newYRot = (float) (Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG) - 90;
                     mob.setYRot(newYRot);
                     mob.yBodyRot = newYRot;
                     float speed = (float) mob.getAttributeValue(Attributes.FLYING_SPEED);
@@ -391,7 +391,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
                 } else {
                     xDist = mob.getTarget().getX() - mob.getX();
                     zDist = mob.getTarget().getZ() - mob.getZ();
-                    float newYRot = (float)(Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG) - 90;
+                    float newYRot = (float) (Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG) - 90;
                     mob.setYRot(newYRot);
                     mob.yBodyRot = newYRot;
                 }

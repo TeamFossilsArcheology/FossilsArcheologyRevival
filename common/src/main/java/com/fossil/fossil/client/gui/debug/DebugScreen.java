@@ -28,9 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DebugScreen extends Screen {
+    private static final List<PathInfo> pathTargets = new ArrayList<>();
     public static CycleButton<Boolean> disableAI;
     public static boolean showPaths;
-    private static final List<PathInfo> pathTargets = new ArrayList<>();
+    private static PathInfo currentVision;
     private final LivingEntity entity;
     private final List<DebugTab> tabs = new ArrayList<>();
     private DebugTab currentTab;
@@ -65,7 +66,6 @@ public class DebugScreen extends Screen {
         }
     }
 
-    private static PathInfo currentVision;
     public static void showVision(Player player, BlockPos target, BlockState block) {
         if (currentVision != null) {
             player.level.setBlock(currentVision.targetPos, currentVision.blockState, 3);

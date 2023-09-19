@@ -27,6 +27,10 @@ public class Anubite extends PathfinderMob {
         super(entityType, level);
     }
 
+    public static AttributeSupplier.Builder createAttributes() {
+        return createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.34).add(Attributes.ATTACK_DAMAGE, 4);
+    }
+
     @Override
     protected void registerGoals() {
         super.registerGoals();
@@ -41,10 +45,6 @@ public class Anubite extends PathfinderMob {
         targetSelector.addGoal(3, new NearestAttackableTargetGoal<>(this, Player.class, 1, true, false, this::shouldAttackPlayer));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Animal.class, true));
         targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, Villager.class, true));
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.34).add(Attributes.ATTACK_DAMAGE, 4);
     }
 
     private boolean shouldAttackPlayer(LivingEntity player) {

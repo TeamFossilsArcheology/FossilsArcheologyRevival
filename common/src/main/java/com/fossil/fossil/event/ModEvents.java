@@ -34,6 +34,7 @@ import java.util.Random;
 
 public class ModEvents {
     private static final TranslatableComponent ANU_BREAK_BLOCK = new TranslatableComponent("entity.fossil.anu.break_block");
+
     public static void init() {
         EntityEvent.ADD.register((entity, level) -> {
             if (entity instanceof PathfinderMob mob && isLivestock(mob) && FossilConfig.isEnabled(FossilConfig.ANIMALS_FEAR_DINOS)) {

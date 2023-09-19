@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class ToyScratchingPostRenderer extends LivingEntityRenderer<ToyScratchingPost, ToyScratchingPostModel> implements RendererFabricFix {
 
     public ToyScratchingPostRenderer(EntityRendererProvider.Context context, ToyScratchingPostModel entityModel) {
-        super(context, entityModel, 0.3f);
+        super(context, entityModel, 0.4f);
     }
 
     @Override

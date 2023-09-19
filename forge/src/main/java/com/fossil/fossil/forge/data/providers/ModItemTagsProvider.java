@@ -31,7 +31,7 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
         }
         var fossilSeeds = tag(FOSSIL_SEEDS);
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-            fossilSeeds.add(type.getFossilPlantSeedItem());
+            fossilSeeds.add(type.getFossilizedPlantSeedItem());
         }
     }
 

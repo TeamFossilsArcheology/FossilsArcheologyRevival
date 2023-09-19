@@ -15,7 +15,7 @@ public class ToyTetheredLogRenderer extends LivingEntityRenderer<ToyTetheredLog,
 
 
     public ToyTetheredLogRenderer(EntityRendererProvider.Context context, ToyTetheredLogModel entityModel) {
-        super(context, entityModel, 0.3f);
+        super(context, entityModel, 0.4f);
     }
 
     @Override

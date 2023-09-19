@@ -28,20 +28,6 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
     private PrehistoricEntityType type;
     private boolean cultivated;
 
-    public static AbstractProjectileDispenseBehavior getProjectile(PrehistoricEntityType type, boolean cultivated) {
-        return new AbstractProjectileDispenseBehavior() {
-            @Override
-            protected @NotNull Projectile getProjectile(Level level, Position position, ItemStack stack) {
-                return Util.make(new ThrownBirdEgg(level, position.x(), position.y(), position.z(), cultivated), thrownEgg -> {
-                    thrownEgg.setItem(stack);
-                    thrownEgg.setType(type);
-                });
-            }
-        };
-    }
-    public static ThrownBirdEgg get(Player player, Level level) {
-        return new ThrownBirdEgg(player, level);
-    }
     public ThrownBirdEgg(EntityType<? extends ThrownBirdEgg> entityType, Level level) {
         super(entityType, level);
     }
@@ -53,6 +39,22 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
     private ThrownBirdEgg(Level level, double x, double y, double z, boolean cultivated) {
         super(ModEntities.THROWN_BIRD_EGG.get(), x, y, z, level);
         this.cultivated = cultivated;
+    }
+
+    public static AbstractProjectileDispenseBehavior getProjectile(PrehistoricEntityType type, boolean cultivated) {
+        return new AbstractProjectileDispenseBehavior() {
+            @Override
+            protected @NotNull Projectile getProjectile(Level level, Position position, ItemStack stack) {
+                return Util.make(new ThrownBirdEgg(level, position.x(), position.y(), position.z(), cultivated), thrownEgg -> {
+                    thrownEgg.setItem(stack);
+                    thrownEgg.setType(type);
+                });
+            }
+        };
+    }
+
+    public static ThrownBirdEgg get(Player player, Level level) {
+        return new ThrownBirdEgg(player, level);
     }
 
     public void setType(PrehistoricEntityType type) {

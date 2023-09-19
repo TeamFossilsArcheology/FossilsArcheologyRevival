@@ -58,6 +58,7 @@ public class TreasureChunkGenerator extends ChunkGenerator {
             }
         }
     }
+
     @Override
     public void ensureStructuresGenerated() {
         if (!hasGeneratedPositions) {

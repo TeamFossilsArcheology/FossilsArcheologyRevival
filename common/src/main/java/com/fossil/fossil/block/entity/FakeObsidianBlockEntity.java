@@ -7,6 +7,7 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class FakeObsidianBlockEntity extends BlockEntity {
     private int age;
+
     public FakeObsidianBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.FAKE_OBSIDIAN.get(), blockPos, blockState);
     }

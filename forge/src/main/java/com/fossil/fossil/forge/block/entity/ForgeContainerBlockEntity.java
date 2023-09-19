@@ -22,11 +22,11 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, CustomBlockEntity {
-    LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
     protected int litTime; //fuel goes from x to 0
     protected int litDuration; //fuel x
     protected int cookingProgress; //item goes from 0 to x
     protected int cookingTotalTime; //item x
+    LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 
     protected ForgeContainerBlockEntity(BlockEntityType<?> blockEntityType, BlockPos blockPos, BlockState blockState) {
         super(blockEntityType, blockPos, blockState);
@@ -83,10 +83,12 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
         }
         return true;
     }
+
     @Override
     public @NotNull ItemStack getItem(int slot) {
         return getItems().get(slot);
     }
+
     @Override
     public @NotNull ItemStack removeItem(int slot, int amount) {
         return ContainerHelper.removeItem(getItems(), slot, amount);
@@ -96,6 +98,7 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
     public @NotNull ItemStack removeItemNoUpdate(int slot) {
         return ContainerHelper.takeItem(getItems(), slot);
     }
+
     @Override
     public boolean stillValid(@NotNull Player player) {
         if (this.level.getBlockEntity(this.worldPosition) != this) {
@@ -104,10 +107,12 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
         return player.distanceToSqr((double) this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY() + 0.5,
                 (double) this.worldPosition.getZ() + 0.5) <= 64.0;
     }
+
     @Override
     public void clearContent() {
         getItems().clear();
     }
+
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
