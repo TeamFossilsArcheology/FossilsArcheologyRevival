@@ -6,7 +6,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -52,11 +51,11 @@ public class Tropeognathus extends PrehistoricFlying {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
-        goalSelector.addGoal(2, new DinoMeleeAttackAI(this, 1.0, true));
+        goalSelector.addGoal(2, new DinoMeleeAttackGoal(this, 1.0, true));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, true));
         goalSelector.addGoal(7, new DinoWanderGoal(this, 1.0));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(2, new HurtByTargetGoal(this));
+        targetSelector.addGoal(2, new DinoHurtByTargetGoal(this));
     }
 
     @Override
@@ -96,7 +95,7 @@ public class Tropeognathus extends PrehistoricFlying {
     @Override
     public @NotNull Animation nextMovingAnimation() {
         String key = WALK;
-        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackAI);
+        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
 
         if (isChasing) key = RUN;
         if (isInWater()) key = SWIM;

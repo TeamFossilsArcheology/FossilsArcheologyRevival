@@ -7,10 +7,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.player.Player;
 
-public class DinoMeleeAttackAI extends MeleeAttackGoal {
+public class DinoMeleeAttackGoal extends MeleeAttackGoal {
     private long attackStartTick;
 
-    public DinoMeleeAttackAI(Prehistoric entity, double speed, boolean followTargetEvenIfNotSeen) {
+    public DinoMeleeAttackGoal(Prehistoric entity, double speed, boolean followTargetEvenIfNotSeen) {
         super(entity, speed, followTargetEvenIfNotSeen);
     }
 

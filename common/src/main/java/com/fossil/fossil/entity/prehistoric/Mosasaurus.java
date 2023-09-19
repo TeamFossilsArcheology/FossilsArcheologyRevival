@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -46,10 +45,10 @@ public class Mosasaurus extends PrehistoricSwimming {
         super.registerGoals();
         goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
         goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(1, new DinoMeleeAttackAI(this, 1, false));
+        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
     @Override

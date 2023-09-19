@@ -16,7 +16,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -114,14 +113,14 @@ public class Triceratops extends Prehistoric {
 
         double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1.5 * speed));
-        goalSelector.addGoal(1, new DinoMeleeAttackAI(this, speed * 1.5, false));
+        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, speed * 1.5, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoWanderGoal(this, speed));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
-        targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
     @Override
@@ -163,7 +162,7 @@ public class Triceratops extends Prehistoric {
     @Override
     public @NotNull Animation nextMovingAnimation() {
         String key = WALK;
-        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackAI);
+        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
 
         if (isInWater()) {
             key = SWIM;

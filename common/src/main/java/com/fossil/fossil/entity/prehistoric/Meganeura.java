@@ -30,7 +30,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -112,11 +111,11 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         goalSelector.addGoal(1, new MeganeuraEnterWaterGoal(this, 1));
         goalSelector.addGoal(3, new MeganeuraWanderAndAttachGoal(this));
         goalSelector.addGoal(4, new DinoFollowOwnerGoal(this, 1, 10, 2, 50, false));
-        goalSelector.addGoal(5, new DinoMeleeAttackAI(this, 1, false));
+        goalSelector.addGoal(5, new DinoMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
-        targetSelector.addGoal(3, new HurtByTargetGoal(this));
+        targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
     @Override
