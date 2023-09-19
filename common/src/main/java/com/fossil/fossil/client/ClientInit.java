@@ -40,6 +40,7 @@ import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
+import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -104,6 +105,7 @@ public class ClientInit {
         registerDino(ModEntities.TYRANNOSAURUS, "tyrannosaurus.geo.json", Tyrannosaurus.ANIMATIONS);
         registerDino(ModEntities.VELOCIRAPTOR, "velociraptor.geo.json", Velociraptor.ANIMATIONS);
         EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, context -> new DinosaurEggRenderer(context, new DinosaurEggModel()));
+        EntityRendererRegistry.register(ModEntities.THROWN_BIRD_EGG, ThrownItemRenderer::new);
 
         EntityRendererRegistry.register(ModEntities.ANUBITE, context -> new AnubiteRenderer(context, new AnubiteModel()));
         EntityRendererRegistry.register(ModEntities.ANU_BOSS, context -> new AnuBossRenderer(context, new AnuBossModel()));
@@ -146,6 +148,7 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SIGILLARIA_SAPLING.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SLIME_TRAIL.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.OBSIDIAN_SPIKES.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.FERNS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANCIENT_GLASS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.REINFORCED_GLASS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CULTIVATE.get());

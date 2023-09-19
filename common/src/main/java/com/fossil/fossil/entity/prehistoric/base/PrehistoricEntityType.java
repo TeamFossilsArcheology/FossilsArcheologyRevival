@@ -6,11 +6,13 @@ import com.fossil.fossil.item.*;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.TimePeriod;
+import dev.architectury.core.item.ArchitecturyMobBucketItem;
 import dev.architectury.registry.registries.Registries;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -19,6 +21,8 @@ import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.level.material.Fluids;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -38,7 +42,6 @@ public enum PrehistoricEntityType {
     RABBIT(vanilla(EntityType.RABBIT), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
     SHEEP(vanilla(EntityType.SHEEP), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of()),
     ALLIGATOR_GAR(ModEntities.ALLIGATOR_GAR, PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE),
-    AMMONITE(PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE, Map.of()),
     ALLOSAURUS(ModEntities.ALLOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE),
     ANKYLOSAURUS(ModEntities.ANKYLOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE),
     ARTHROPLEURA(ModEntities.ARTHROPLEURA, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.HERBIVORE),
@@ -113,6 +116,7 @@ public enum PrehistoricEntityType {
     public Item uniqueBoneItem;
     public Item foodItem;
     public Item cookedFoodItem;
+    public Item bucketItem;
 
     PrehistoricEntityType(RegistrySupplier<? extends EntityType<? extends Entity>> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet) {
         this.entitySupplier = entity;
@@ -159,7 +163,8 @@ public enum PrehistoricEntityType {
             if (type.mobType == PrehistoricMobType.FISH) {
                 if (type.entitySupplier != null)
                     type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?
-                registerItem("egg_item", type, Item::new, item -> type.eggItem = item);
+                registerItem("egg_item", type, properties -> new FishEggItem(type), item -> type.eggItem = item);
+                registerItem("bucket_item", type, properties -> new ArchitecturyMobBucketItem(type.entitySupplier, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, properties.stacksTo(1)), item -> type.bucketItem = item);
             } else if (type.mobType == PrehistoricMobType.DINOSAUR || type.mobType == PrehistoricMobType.DINOSAUR_AQUATIC) {
                 if (type.entitySupplier != null)
                     type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
@@ -170,9 +175,9 @@ public enum PrehistoricEntityType {
                 if (type.entitySupplier != null)
                     type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 if (type.mobType == PrehistoricMobType.BIRD) {
-                    registerItem("egg", type, Item::new, item -> type.birdEggItem = item);
+                    registerItem("egg", type, properties -> new BirdEggItem(type, false), item -> type.birdEggItem = item);
                 }
-                registerItem("egg_item", type, Item::new, item -> type.cultivatedBirdEggItem = item);
+                registerItem("egg_item", type, properties -> new BirdEggItem(type, true), item -> type.cultivatedBirdEggItem = item);
             }
             if (type.timePeriod != TimePeriod.CURRENT) {
                 ModItems.ITEMS.register("meat_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)

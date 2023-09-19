@@ -41,11 +41,11 @@ public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends GeoEn
 
     @Override
     public float getWidthScale(T animatable) {
-        return animatable.getModelScale();
+        return animatable.getScale();
     }
 
     @Override
     public float getHeightScale(T entity) {
-        return animatable.getModelScale();
+        return animatable.getScale();
     }
 }

@@ -2,16 +2,20 @@ package com.fossil.fossil.event;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.entity.ThrownBirdEgg;
 import com.fossil.fossil.entity.ai.AnimalFearGoal;
 import com.fossil.fossil.entity.monster.AnuBoss;
 import com.fossil.fossil.entity.prehistoric.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
+import com.fossil.fossil.recipe.ModRecipes;
+import com.fossil.fossil.util.FossilFoodMappings;
 import com.fossil.fossil.world.dimension.ModDimensions;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.BlockEvent;
 import dev.architectury.event.events.common.EntityEvent;
+import dev.architectury.event.events.common.LifecycleEvent;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
@@ -23,6 +27,7 @@ import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
@@ -46,6 +51,18 @@ public class ModEvents {
                 }
             }
             return EventResult.pass();
+        });
+        LifecycleEvent.SETUP.register(() -> {
+            ModRecipes.initRecipes();
+            FossilFoodMappings.register();
+            for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
+                if (type.birdEggItem != null) {
+                    DispenserBlock.registerBehavior(type.birdEggItem, ThrownBirdEgg.getProjectile(type, false));
+                }
+                if (type.cultivatedBirdEggItem != null) {
+                    DispenserBlock.registerBehavior(type.cultivatedBirdEggItem, ThrownBirdEgg.getProjectile(type, true));
+                }
+            }
         });
     }
 

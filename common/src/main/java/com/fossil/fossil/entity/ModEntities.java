@@ -81,6 +81,8 @@ public class ModEntities {
 
     public static final RegistrySupplier<EntityType<DinosaurEgg>> DINOSAUR_EGG = ENTITIES.register(
             "dinosaur_egg", () -> EntityType.Builder.of(DinosaurEgg::new, MobCategory.CREATURE).sized(0.5F, 0.6F).build("dinosaur_egg"));
+    public static final RegistrySupplier<EntityType<ThrownBirdEgg>> THROWN_BIRD_EGG = ENTITIES.register(
+            "thrown_bird_egg", () -> EntityType.Builder.of(ThrownBirdEgg::new, MobCategory.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build("thrown_bird_egg"));
 
     public static final RegistrySupplier<EntityType<TarSlime>> TAR_SLIME = ENTITIES.register("tar_slime",
             () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).build("tar_slime"));

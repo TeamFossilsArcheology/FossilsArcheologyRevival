@@ -12,11 +12,13 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
@@ -25,9 +27,9 @@ import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
+import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -44,10 +46,12 @@ import java.util.Random;
 
 public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable, PrehistoricDebug {
     private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     private final ResourceLocation animationLocation;
 
     private int absoluteEggCooldown = 0;
+    private int age;
 
     public PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
         super(entityType, level);
@@ -68,6 +72,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(ACTIVE_ANIMATIONS, new CompoundTag());
+        entityData.define(BABY, false);
         CompoundTag tag = new CompoundTag();
         tag.putDouble("x", position().x);
         tag.putDouble("y", position().y);
@@ -80,15 +85,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @NotNull
     public abstract PrehistoricEntityType type();
-
-    @Override
-    public float getScale() {
-        return super.getScale();
-    }
-
-    public float getModelScale() {
-        return getScale();
-    }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -116,7 +112,29 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public @NotNull ItemStack getBucketItemStack() {
-        return new ItemStack(Items.COD_BUCKET);//TODO: BUcket
+        return new ItemStack(type().bucketItem);
+    }
+
+    @Override
+    public boolean isBaby() {
+        return entityData.get(BABY);
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+        entityData.set(BABY, age < 0);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (BABY.equals(key)) {
+            refreshDimensions();
+        }
+        super.onSyncedDataUpdated(key);
     }
 
     @Override
@@ -127,30 +145,11 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
                 absoluteEggCooldown--;
             }
             PrehistoricFish closestMate = getClosestMate();
-            if (closestMate != null && isInWater() && absoluteEggCooldown <= 0) {
+            if (closestMate != null && isInWater() && getAge() >= 0 && closestMate.getAge() >= 0 && absoluteEggCooldown <= 0) {
                 absoluteEggCooldown = 48000 + random.nextInt(48000);
                 level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem)));
             }
         }
-    }
-
-    @Override
-    public CompoundTag getDebugTag() {
-        return entityData.get(DEBUG);
-    }
-
-    @Override
-    protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
-        if (itemStack.isEmpty() && isAlive()) {
-            playSound(SoundEvents.ITEM_PICKUP, 1, random.nextFloat() + 0.8f);
-            if (!level.isClientSide) {
-                spawnAtLocation(new ItemStack(type().foodItem), 0.1f);
-            }
-            discard();
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return super.mobInteract(player, hand);
     }
 
     private @Nullable PrehistoricFish getClosestMate() {
@@ -165,6 +164,36 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
             shortestDistance = distanceToSqr(other);
         }
         return other;
+    }
+
+    @Override
+    public CompoundTag getDebugTag() {
+        return entityData.get(DEBUG);
+    }
+
+    @Override
+    protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.isEmpty() && isAlive() && getAge() > 0) {
+            playSound(SoundEvents.ITEM_PICKUP, 1, random.nextFloat() + 0.8f);
+            if (!level.isClientSide) {
+                spawnAtLocation(new ItemStack(type().foodItem), 0.1f);
+            }
+            discard();
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    @Nullable
+    @Override
+    public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
+        if (spawnData instanceof Prehistoric.PrehistoricGroupData prehistoricGroupData) {
+            setAge(prehistoricGroupData.ageInDays() * 24000);
+        } else {
+            setAge(0);
+        }
+        return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
 
     @Override
