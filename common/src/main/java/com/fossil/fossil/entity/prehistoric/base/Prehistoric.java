@@ -144,7 +144,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             this.getNavigation().getNodeEvaluator().setCanFloat(true);
         }
         setPersistenceRequired();
-        refreshTexturePath();
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -383,7 +382,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             setGender(Gender.MALE);
         }
-        refreshTexturePath();
     }
 
     public abstract PrehistoricEntityType type();
@@ -435,7 +433,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (!sleeping) {
             cathermalSleepCooldown = 10000 + random.nextInt(6000);
         }
-        refreshTexturePath();
     }
 
     public void setOrder(OrderType newOrder) {
@@ -1243,6 +1240,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void refreshTexturePath() {
+        if (!level.isClientSide) {
+            return;
+        }
         String name = getType().arch$registryName().getPath();
         StringBuilder builder = new StringBuilder();
         builder.append("textures/entity/");
