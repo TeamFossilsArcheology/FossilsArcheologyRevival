@@ -8,6 +8,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import java.util.EnumSet;
 
 public class FireballAttackGoal extends Goal {
+    private static final int MAX_ATTACK_TIME = 20;
+    private static final int MIN_ATTACK_TIME = 10;
 
     private final AnuBoss anu;
     private final double speedModifier;
@@ -22,7 +24,7 @@ public class FireballAttackGoal extends Goal {
         this.speedModifier = speedModifier;
         this.attackRadius = attackRadius;
         this.attackRadiusSqr = attackRadius * attackRadius;
-        setFlags(EnumSet.of(Goal.Flag.LOOK));
+        setFlags(EnumSet.of(Flag.MOVE, Goal.Flag.LOOK));
     }
 
     @Override
@@ -54,13 +56,10 @@ public class FireballAttackGoal extends Goal {
     public void tick() {
         double dist = anu.distanceToSqr(target.getX(), target.getBoundingBox().minY, target.getZ());
         boolean hasLineOfSight = anu.getSensing().hasLineOfSight(target);
-        if (hasLineOfSight != seeTime > 0) {
-            seeTime = 0;
-        }
         if (hasLineOfSight) {
             seeTime++;
         } else {
-            seeTime--;
+            seeTime = 0;
         }
         if (dist <= attackRadiusSqr && seeTime >= 20) {
             anu.getNavigation().stop();
@@ -69,14 +68,16 @@ public class FireballAttackGoal extends Goal {
         }
         anu.getLookControl().setLookAt(target, 30, 30);
 
-        if (--attackTime <= 0) {
+        if (--attackTime == 0) {
             if (dist > attackRadiusSqr || !hasLineOfSight) {
                 return;
             }
-            float f = Mth.sqrt((float) dist) / attackRadius;
-            double f1 = Math.max(0.1, Math.min(1, f));
-            anu.performRangedAttack(target, (float) f1);
-            attackTime = Mth.floor(f * 10 + 10);
+            anu.performRangedAttack(target, 0);
+            float distanceFactor = (float) (Math.sqrt(dist) / attackRadius);
+            attackTime = (int) Mth.lerp(distanceFactor, MIN_ATTACK_TIME, MAX_ATTACK_TIME);
+        } else if (attackTime < 0) {
+            float distanceFactor = (float) (Math.sqrt(dist) / attackRadius);
+            attackTime = (int) Mth.lerp(distanceFactor, MIN_ATTACK_TIME, MAX_ATTACK_TIME);
         }
     }
 }

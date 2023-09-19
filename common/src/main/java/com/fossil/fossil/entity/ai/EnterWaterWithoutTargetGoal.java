@@ -55,7 +55,7 @@ public class EnterWaterWithoutTargetGoal extends Goal {
         if (dino.getTarget() == null || dino.getTarget().isDeadOrDying()) {
             for (int i = 0; i < 20; i++) {
                 mutableBlockPos.set(random.nextInt(16) - 7, random.nextInt(8) - 4, random.nextInt(16) - 7);
-                if (dino.level.getBlockState(mutableBlockPos).getMaterial() == Material.WATER) {
+                if (dino.level.getBlockState(mutableBlockPos).getMaterial() == Material.WATER) {//TODO: Raytrace
                     targetPos = mutableBlockPos.immutable();
                     return true;
                 }

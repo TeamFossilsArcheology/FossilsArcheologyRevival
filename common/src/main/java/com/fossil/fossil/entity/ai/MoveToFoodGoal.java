@@ -15,11 +15,12 @@ public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
 
     @Override
     public boolean canUse() {
+        if (entity.getHunger() >= entity.getMaxHunger()) {
+            return false;
+        }
         if (entity.getHunger() <= 0.25 * entity.getMaxHunger()) {
             nextStartTick = 0;
             clearTicks = Math.min(clearTicks / 4, 1);
-        } else if (entity.getHunger() >= entity.getMaxHunger()) {
-            return false;
         }
         return super.canUse();
     }
@@ -30,5 +31,17 @@ public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
             return false;
         }
         return super.canContinueToUse();
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        entity.shouldWander = false;
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        entity.shouldWander = true;
     }
 }

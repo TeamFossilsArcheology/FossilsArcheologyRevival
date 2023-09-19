@@ -33,8 +33,7 @@ public class FleeBattleGoal extends Goal {
     }
 
     protected boolean tryFindPlaceToFlee(LivingEntity fleeFrom) {
-        int yRange = 10;
-        if (dino instanceof FlyingAnimal) yRange = 25;
+        int yRange = dino instanceof FlyingAnimal ? 25 : 10;
         Vec3 fleeTo = DefaultRandomPos.getPosAway(dino, 25, yRange, fleeFrom.position());
 
         if (fleeTo == null) {
@@ -57,6 +56,6 @@ public class FleeBattleGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return dino.getNavigation().isDone() || dino.isFleeing();
+        return !dino.getNavigation().isDone() && dino.isFleeing();
     }
 }

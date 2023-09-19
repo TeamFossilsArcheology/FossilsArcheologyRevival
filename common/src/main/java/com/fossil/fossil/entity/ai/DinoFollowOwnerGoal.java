@@ -64,7 +64,7 @@ public class DinoFollowOwnerGoal extends Goal {
         if (dino.getNavigation().isDone()) {
             return false;
         }
-        return !(dino.distanceToSqr(owner) <= (stopDistance * stopDistance));
+        return dino.distanceToSqr(owner) > (stopDistance * stopDistance) && !dino.isOrderedToSit();
     }
 
     @Override
