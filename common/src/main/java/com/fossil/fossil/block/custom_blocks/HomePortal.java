@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.entity.Entity;
@@ -41,8 +42,13 @@ public class HomePortal extends HalfTransparentBlock {
             if (server != null) {
                 ServerLevel overworld = server.getLevel(Level.OVERWORLD);
                 entity.setPortalCooldown();
-                BlockPos blockPos = overworld.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, overworld.getSharedSpawnPos());
-                ModDimensions.changeDimension(entity, overworld, new PortalInfo(new Vec3(blockPos.getX() + 0.5, blockPos.getY(), blockPos.getZ() + 0.5), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot()));
+                BlockPos spawnPoint;
+                if (entity instanceof ServerPlayer player && player.getRespawnPosition() != null) {
+                    spawnPoint = player.getRespawnPosition();
+                } else {
+                    spawnPoint = overworld.getHeightmapPos(Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, overworld.getSharedSpawnPos());
+                }
+                ModDimensions.changeDimension(entity, overworld, new PortalInfo(new Vec3(spawnPoint.getX() + 0.5, spawnPoint.getY(), spawnPoint.getZ() + 0.5), entity.getDeltaMovement(), entity.getYRot(), entity.getXRot()));
             }
         }
     }
