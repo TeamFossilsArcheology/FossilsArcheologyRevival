@@ -25,7 +25,6 @@ public class Tropeognathus extends PrehistoricFlying {
     public static final String BITE_EAT_IN_WATER = "fa.tropeognathus.biteeatwater";
     public static final String IDLE_SWIM = "fa.tropeognathus.idleswim";
     public static final String SWIM = "fa.tropeognathus.swim";
-    public static final String EAT = "fa.tropeognathus.eat";
     public static final String BITE_ATTACK_WATER = "fa.tropeognathus.biteattackwater";
     public static final String BITE_IN_AIR = "fa.tropeognathus.bitefly";
     public static final String DISPLAY = "fa.tropeognathus.display";
@@ -129,20 +128,15 @@ public class Tropeognathus extends PrehistoricFlying {
     }
 
     @Override
-    public boolean isFlying() {
-        return !onGround;
+    public @NotNull Animation nextTakeOffAnimation() {
+        String key = GROUND_TAKEOFF;
+        if (isInWater()) key = WATER_TAKEOFF;
+
+        return getAllAnimations().get(key);
     }
 
     @Override
     public AnimationFactory getFactory() {
         return factory;
-    }
-
-    @Override
-    public Animation getTakeOffAnimation() {
-        String key = GROUND_TAKEOFF;
-        if (isInWater()) key = WATER_TAKEOFF;
-
-        return getAllAnimations().get(key);
     }
 }

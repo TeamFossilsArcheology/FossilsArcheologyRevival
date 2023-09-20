@@ -40,7 +40,7 @@ public class DinoMeleeAttackGoal extends MeleeAttackGoal {
                 attackStartTick = mob.level.getGameTime();
                 mob.swing(InteractionHand.MAIN_HAND);
             }
-            if (attackStartTick >= 0 && mob.level.getGameTime() > attackStartTick + dinosaur.getAnimationLogic().getAttackDelay()) {
+            if (attackStartTick >= 0 && mob.level.getGameTime() > attackStartTick + dinosaur.getAnimationLogic().getAttackDelay("Attack")) {
                 mob.doHurtTarget(enemy);
                 attackStartTick = -1;
             }

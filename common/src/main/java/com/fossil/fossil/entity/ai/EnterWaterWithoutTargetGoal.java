@@ -4,8 +4,8 @@ import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.ai.goal.Goal;
-import net.minecraft.world.level.material.Material;
 
 import java.util.EnumSet;
 import java.util.Random;
@@ -55,7 +55,7 @@ public class EnterWaterWithoutTargetGoal extends Goal {
         if (dino.getTarget() == null || dino.getTarget().isDeadOrDying()) {
             for (int i = 0; i < 20; i++) {
                 mutableBlockPos.set(random.nextInt(16) - 7, random.nextInt(8) - 4, random.nextInt(16) - 7);
-                if (dino.level.getBlockState(mutableBlockPos).getMaterial() == Material.WATER) {//TODO: Raytrace
+                if (dino.level.getFluidState(mutableBlockPos).is(FluidTags.WATER)) {//TODO: Raytrace
                     targetPos = mutableBlockPos.immutable();
                     return true;
                 }

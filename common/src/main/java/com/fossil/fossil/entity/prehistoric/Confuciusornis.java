@@ -1,10 +1,12 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.DinoFollowOwnerGoal;
+import com.fossil.fossil.entity.ai.DinoLookAroundGoal;
+import com.fossil.fossil.entity.ai.DinoMeleeAttackGoal;
+import com.fossil.fossil.entity.ai.DinoWanderGoal;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
@@ -21,7 +23,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Confuciusornis extends PrehistoricFlying implements PrehistoricLeaping {
+public class Confuciusornis extends PrehistoricFlying {
     public static final String ANIMATIONS = "confuciusornis.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
@@ -43,8 +45,6 @@ public class Confuciusornis extends PrehistoricFlying implements PrehistoricLeap
         goalSelector.addGoal(0, new DinoMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(5, new FindAirTargetGoal(this));
-        //goalSelector.addGoal(6, new LeapAtTargetGoal(this));
         goalSelector.addGoal(7, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
     }
@@ -90,24 +90,14 @@ public class Confuciusornis extends PrehistoricFlying implements PrehistoricLeap
     }
 
     @Override
-    public @NotNull Animation nextLeapAnimation() {
-        return getAllAnimations().get(ATTACK1);
-    }
-
-    @Override
     public AnimationFactory getFactory() {
         return factory;
     }
 
     @Override
-    public Animation getTakeOffAnimation() {
+    public @NotNull Animation nextTakeOffAnimation() {
         return null;
-    }
-
-    @Override
-    public boolean isFlying() {
-        return false;
-    }
+    }//TODO: Bad
 
     @Nullable
     @Override

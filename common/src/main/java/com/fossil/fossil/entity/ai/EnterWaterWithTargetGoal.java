@@ -2,9 +2,9 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.core.BlockPos;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.material.Material;
 
 import java.util.EnumSet;
 import java.util.Random;
@@ -72,7 +72,7 @@ public class EnterWaterWithTargetGoal extends Goal {
 
         for (int i = 0; i < 10; i++) {
             mutable.move(random.nextInt(searchRange) - 10, random.nextInt(6) - 3, random.nextInt(searchRange) - 10);
-            if (level.getBlockState(mutable).getMaterial() == Material.WATER) {
+            if (level.getFluidState(mutable).is(FluidTags.WATER)) {
                 shelterPos = mutable.immutable();
                 return true;
             }

@@ -12,6 +12,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
@@ -27,7 +28,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.phys.HitResult;
@@ -57,13 +57,13 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     public static boolean isOverWater(LivingEntity entity) {
-        if (entity.level.getBlockState(entity.blockPosition().below()).getMaterial() == Material.WATER) {
+        if (entity.level.getFluidState(entity.blockPosition().below()).is(FluidTags.WATER)) {
             return true;
         }
-        if (entity.level.getBlockState(entity.blockPosition().below(2)).getMaterial() == Material.WATER) {
+        if (entity.level.getFluidState(entity.blockPosition().below(2)).is(FluidTags.WATER)) {
             return true;
         }
-        return entity.level.getBlockState(entity.blockPosition().below(3)).getMaterial() == Material.WATER;
+        return entity.level.getFluidState(entity.blockPosition().below(3)).is(FluidTags.WATER);
     }
 
     @Override
@@ -356,7 +356,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     private boolean isEntitySubmerged(LivingEntity entity) {
-        return level.getBlockState(entity.blockPosition().above()).getMaterial() == Material.WATER;
+        return level.getFluidState(entity.blockPosition().above()).is(FluidTags.WATER);
     }
 
     public boolean isBreaching() {
