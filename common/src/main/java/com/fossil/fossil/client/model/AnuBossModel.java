@@ -76,15 +76,15 @@ public class AnuBossModel extends EntityModel<AnuBoss> implements ArmedModel {
 
 
         PartDefinition leftWing1 = root.addOrReplaceChild("left_wing_1", CubeListBuilder.create().texOffs(0, 42)
-                .addBox(0, -3, 0, 6, 10, 0), PartPose.offsetAndRotation(2, 7.5f, 1.9f, 0, -0.4363323129985824f, 0));
+                .addBox(0, -3, 0, 6, 10, 0), PartPose.offsetAndRotation(2, 7.5f, 1.9f, 0, -25 * Mth.DEG_TO_RAD, 0));
         PartDefinition leftWing2 = leftWing1.addOrReplaceChild("left_wing_2", CubeListBuilder.create().texOffs(12, 43)
-                .addBox(0, -4, 0, 12, 12, 0), PartPose.offsetAndRotation(6, 0, 0, 0, 0.4363323129985824f, 0));
+                .addBox(0, -4, 0, 12, 12, 0), PartPose.offsetAndRotation(6, 0, 0, 0, 25 * Mth.DEG_TO_RAD, 0));
         leftWing2.addOrReplaceChild("left_wing_3", CubeListBuilder.create().texOffs(36, 43)
                 .addBox(0, -4, 0, 6, 10, 0), PartPose.offset(12, 1, 0));
         PartDefinition rightWing1 = root.addOrReplaceChild("right_wing_1", CubeListBuilder.create().mirror().texOffs(0, 42)
-                .addBox(-6, -3, 0, 6, 10, 0), PartPose.offsetAndRotation(-2, 7.5f, 1.9f, 0, 0.4363323129985824f, 0));
+                .addBox(-6, -3, 0, 6, 10, 0), PartPose.offsetAndRotation(-2, 7.5f, 1.9f, 0, 25 * Mth.DEG_TO_RAD, 0));
         PartDefinition rightWing2 = rightWing1.addOrReplaceChild("right_wing_2", CubeListBuilder.create().mirror().texOffs(12, 43)
-                .addBox(-12, -4, 0, 12, 12, 0), PartPose.offsetAndRotation(-6, 0, 0, 0, -0.4363323129985824f, 0));
+                .addBox(-12, -4, 0, 12, 12, 0), PartPose.offsetAndRotation(-6, 0, 0, 0, -25 * Mth.DEG_TO_RAD, 0));
         rightWing2.addOrReplaceChild("right_wing_3", CubeListBuilder.create().mirror().texOffs(36, 43)
                 .addBox(-6, -4, 0, 6, 10, 0), PartPose.offset(-12, 1, 0));
 

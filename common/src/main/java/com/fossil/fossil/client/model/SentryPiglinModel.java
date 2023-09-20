@@ -1,27 +1,16 @@
 package com.fossil.fossil.client.model;
 
 import com.fossil.fossil.entity.monster.SentryPiglin;
+import net.minecraft.client.model.PiglinModel;
 import net.minecraft.client.model.PlayerModel;
-import net.minecraft.client.model.geom.ModelPart;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.*;
+import net.minecraft.util.Mth;
 
-public class SentryPiglinModel extends PlayerModel<SentryPiglin> {
-    private final ModelPart rightEar;
-    private final ModelPart leftEar;
-    private final PartPose bodyDefault;
-    private final PartPose headDefault;
-    private final PartPose leftArmDefault;
-    private final PartPose rightArmDefault;
+public class SentryPiglinModel extends PiglinModel<SentryPiglin> {
 
     public SentryPiglinModel() {
-        super(createBodyLayer().bakeRoot(), false);
-        rightEar = head.getChild("right_ear");
-        leftEar = head.getChild("left_ear");
-        bodyDefault = body.storePose();
-        headDefault = head.storePose();
-        leftArmDefault = leftArm.storePose();
-        rightArmDefault = rightArm.storePose();
+        super(createBodyLayer().bakeRoot());
     }
 
     public static LayerDefinition createBodyLayer() {
@@ -36,10 +25,10 @@ public class SentryPiglinModel extends PlayerModel<SentryPiglin> {
                 .addBox(-3, -2, -5, 1, 2, 1), PartPose.ZERO);
         head.addOrReplaceChild("left_ear", CubeListBuilder.create().texOffs(51, 6)
                         .addBox(0, 0, -2, 1, 5, 4),
-                PartPose.offsetAndRotation(4.5f, -6, 0, 0, 0, -0.5235988f));
+                PartPose.offsetAndRotation(4.5f, -6, 0, 0, 0, -30 * Mth.DEG_TO_RAD));
         head.addOrReplaceChild("right_ear", CubeListBuilder.create().texOffs(39, 6)
                         .addBox(-1, 0, -2, 1, 5, 4),
-                PartPose.offsetAndRotation(-4.5f, -6, 0, 0, 0, 0.5235988f));
+                PartPose.offsetAndRotation(-4.5f, -6, 0, 0, 0, 30 * Mth.DEG_TO_RAD));
         root.addOrReplaceChild("hat", CubeListBuilder.create(), PartPose.ZERO);
         return LayerDefinition.create(meshDefinition, 64, 64);
     }

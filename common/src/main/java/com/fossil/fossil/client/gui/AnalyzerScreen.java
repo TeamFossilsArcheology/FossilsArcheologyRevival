@@ -25,21 +25,21 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(poseStack);
+        renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTick);
-        this.renderTooltip(poseStack, mouseX, mouseY);
+        renderTooltip(poseStack, mouseX, mouseY);
     }
 
     @Override
     protected void renderBg(PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        int i = (this.width - this.imageWidth) / 2;
-        int j = (this.height - this.imageHeight) / 2;
-        this.blit(poseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+        blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         int progress = menu.getAnalyzeProgress() * 22 / 200;
-        blit(poseStack, i + 80, j + 22, 177, 18, progress, 9);
+        blit(poseStack, x + 80, y + 22, 177, 18, progress, 9);
     }
 
     @Override

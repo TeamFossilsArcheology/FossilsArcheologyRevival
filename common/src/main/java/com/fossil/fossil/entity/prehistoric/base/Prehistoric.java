@@ -1440,8 +1440,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
         Player rider = getRidingPlayer();
         if (isOwnedBy(rider) && getTarget() != rider) {
-            float radius = ridingXZ * (0.7F * getScale()) * -3;
-            float angle = (0.01745329251F * this.yBodyRot);
+            float radius = ridingXZ * 0.7f * getScale() * -3;
+            float angle = (Mth.DEG_TO_RAD * yBodyRot);
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
             rider.setPos(getX() + extraX, getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ() + extraZ);

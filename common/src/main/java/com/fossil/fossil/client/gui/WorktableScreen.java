@@ -25,30 +25,30 @@ public class WorktableScreen extends AbstractContainerScreen<WorktableMenu> {
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(poseStack);
+        renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTick);
-        this.renderTooltip(poseStack, mouseX, mouseY);
+        renderTooltip(poseStack, mouseX, mouseY);
     }
 
     @Override
     protected void renderBg(PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        int i = (this.width - this.imageWidth) / 2;
-        int j = (this.height - this.imageHeight) / 2;
-        this.blit(poseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+        blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         if (menu.isLit()) {
             int progress = menu.getLitProgress();
-            blit(poseStack, i + 82, j + 36 + 12 - progress, 176, 12 - progress, 14, progress + 2);
+            blit(poseStack, x + 82, y + 36 + 12 - progress, 176, 12 - progress, 14, progress + 2);
         }
         int progress = menu.getBurnProgress();
-        blit(poseStack, i + 79, j + 18, 176, 14, progress + 1, 16);
+        blit(poseStack, x + 79, y + 18, 176, 14, progress + 1, 16);
     }
 
     @Override
     protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        this.font.draw(poseStack, this.title, (float) this.titleLabelX, (float) this.titleLabelY, 0x404040);
-        this.font.draw(poseStack, this.playerInventoryTitle, (float) this.inventoryLabelX, (float) this.inventoryLabelY, 0x404040);
+        font.draw(poseStack, title, (float) titleLabelX, (float) titleLabelY, 0x404040);
+        font.draw(poseStack, playerInventoryTitle, (float) inventoryLabelX, (float) inventoryLabelY, 0x404040);
     }
 }

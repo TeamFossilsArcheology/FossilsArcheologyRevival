@@ -19,32 +19,27 @@ public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(poseStack);
+        renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTick);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
-        int x = (this.width - imageWidth) / 2;
-        int y = (this.height - this.imageHeight) / 2;
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
         drawString(poseStack, font, String.valueOf(menu.getMeat()), x + 25, y + 32, 16711680);
         drawString(poseStack, font, String.valueOf(menu.getVeg()), x + 121, y + 32, 0X35AC47);
-        this.renderTooltip(poseStack, mouseX, mouseY);
+        renderTooltip(poseStack, mouseX, mouseY);
     }
 
     @Override
     protected void renderBg(PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        int i = (this.width - this.imageWidth) / 2;
-        int j = (this.height - this.imageHeight) / 2;
-        this.blit(poseStack, i, j, 0, 0, this.imageWidth, this.imageHeight);
-        int var7 = menu.getMeat() * 46 / 10000;
-        blit(poseStack, i + 66, j + 55 - var7, imageWidth, 46 - var7, 3, var7);
-        int var8 = menu.getVeg() * 46 / 10000;
-        blit(poseStack, i + 110, j + 55 - var8, 176, 46 - var8, 3, var8);
-    }
-
-    @Override
-    protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        super.renderLabels(poseStack, mouseX, mouseY);
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+        blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
+        int scaledMeat = menu.getMeat() * 46 / 10000;
+        blit(poseStack, x + 66, y + 55 - scaledMeat, imageWidth, 46 - scaledMeat, 3, scaledMeat);
+        int scaledVeg = menu.getVeg() * 46 / 10000;
+        blit(poseStack, x + 110, y + 55 - scaledVeg, 176, 46 - scaledVeg, 3, scaledVeg);
     }
 }

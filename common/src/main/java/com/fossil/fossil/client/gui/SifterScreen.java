@@ -19,21 +19,21 @@ public class SifterScreen extends AbstractContainerScreen<SifterMenu> {
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        this.renderBackground(poseStack);
+        renderBackground(poseStack);
         super.render(poseStack, mouseX, mouseY, partialTick);
-        this.renderTooltip(poseStack, mouseX, mouseY);
+        renderTooltip(poseStack, mouseX, mouseY);
     }
 
     @Override
     protected void renderBg(PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+        RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.setShaderTexture(0, TEXTURE);
-        int i = (width - imageWidth) / 2;
-        int j = (height - imageHeight) / 2;
-        blit(poseStack, i, j, 0, 0, imageWidth, imageHeight);
+        int x = (width - imageWidth) / 2;
+        int y = (height - imageHeight) / 2;
+        blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         int var7 = menu.getSiftProgress() * 26 / 200;
-        blit(poseStack, i + 75, j + 33, 181, 2, 31, var7 + 1);
+        blit(poseStack, x + 75, y + 33, 181, 2, 31, var7 + 1);
     }
 
     @Override

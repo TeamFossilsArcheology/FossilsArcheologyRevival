@@ -51,17 +51,17 @@ public class AnubiteModel extends EntityModel<Anubite> {
                 .addBox(-4, 0, -2, 8, 13, 4), PartPose.offset(0, -2, 0));
 
         root.addOrReplaceChild("right_leg", CubeListBuilder.create().texOffs(0, 15).mirror()
-                .addBox(-2, 1, -2, 4, 13, 4), PartPose.offsetAndRotation(-2, 10, 0, 0, 0, 0.0174533f));
+                .addBox(-2, 1, -2, 4, 13, 4), PartPose.offsetAndRotation(-2, 10, 0, 0, 0, Mth.DEG_TO_RAD));
         root.addOrReplaceChild("left_leg", CubeListBuilder.create().texOffs(0, 15)
-                .addBox(-2, 1, -2, 4, 13, 4), PartPose.offsetAndRotation(2, 10, 0, 0, 0, -0.0174533f));
+                .addBox(-2, 1, -2, 4, 13, 4), PartPose.offsetAndRotation(2, 10, 0, 0, 0, -Mth.DEG_TO_RAD));
         PartDefinition right_arm = root.addOrReplaceChild("right_arm", CubeListBuilder.create().texOffs(40, 15).mirror()
-                .addBox(-3, -2, -2, 4, 13, 4), PartPose.offsetAndRotation(-5, 0, 0, 0, 0, 0.0349066f));
+                .addBox(-3, -2, -2, 4, 13, 4), PartPose.offsetAndRotation(-5, 0, 0, 0, 0, 2 * Mth.DEG_TO_RAD));
         root.addOrReplaceChild("left_arm", CubeListBuilder.create().texOffs(40, 15).mirror()
-                .addBox(-1, -2, -2, 4, 13, 4), PartPose.offsetAndRotation(5, 0, 0, 0, 0, -0.0349066f));
+                .addBox(-1, -2, -2, 4, 13, 4), PartPose.offsetAndRotation(5, 0, 0, 0, 0, -2 * Mth.DEG_TO_RAD));
 
 
         right_arm.addOrReplaceChild("sword", CubeListBuilder.create().texOffs(0, 16).mirror()
-                .addBox(0, -16, -16, 0, 16, 16), PartPose.offsetAndRotation(-1, 12, 5, 0.4712389f, 0, 0));
+                .addBox(0, -16, -16, 0, 16, 16), PartPose.offsetAndRotation(-1, 12, 5, 27 * Mth.DEG_TO_RAD, 0, 0));
 
 
         return LayerDefinition.create(meshDefinition, 128, 64);
