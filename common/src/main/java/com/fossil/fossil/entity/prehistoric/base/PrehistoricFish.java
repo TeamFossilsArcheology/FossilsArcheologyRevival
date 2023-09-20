@@ -15,8 +15,8 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -61,7 +61,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     public static AttributeSupplier.@NotNull Builder createAttributes() {
-        return AbstractFish.createAttributes().add(Attributes.MOVEMENT_SPEED, 0.25);
+        return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 20).add(Attributes.MOVEMENT_SPEED, 0.25);
     }
 
     public static boolean canSpawn(EntityType<? extends PrehistoricFish> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random rand) {
@@ -89,20 +89,13 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("absoluteEggCooldown", absoluteEggCooldown);
+        compound.putInt("AbsoluteEggCooldown", absoluteEggCooldown);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        absoluteEggCooldown = compound.getInt("absoluteEggCooldown");
-    }
-
-    @Override
-    public boolean isInvulnerableTo(DamageSource source) {
-        //TODO: Is needed?
-        //return source == DamageSource.IN_WALL || super.isInvulnerableTo(source);
-        return super.isInvulnerableTo(source);
+        absoluteEggCooldown = compound.getInt("AbsoluteEggCooldown");
     }
 
     @Override

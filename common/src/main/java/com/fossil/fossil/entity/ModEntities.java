@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.monster.*;
 import com.fossil.fossil.entity.prehistoric.*;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -118,14 +119,14 @@ public class ModEntities {
 
     public static void register() {
         ENTITIES.register();
-        EntityAttributeRegistry.register(ALLIGATOR_GAR, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(ALLIGATOR_GAR, PrehistoricFish::createAttributes);
         EntityAttributeRegistry.register(ALLOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(ANKYLOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(ARTHROPLEURA, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(BRACHIOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(CERATOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(CITIPATI, Prehistoric::createAttributes);
-        EntityAttributeRegistry.register(COELACANTH, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(COELACANTH, PrehistoricFish::createAttributes);
         EntityAttributeRegistry.register(COMPSOGNATHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(CONFUCIUSORNIS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(CRASSIGYRINUS, Prehistoric::createAttributes);
@@ -150,7 +151,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(MEGALOGRAPTUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(MEGANEURA, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(MOSASAURUS, Mosasaurus::createAttributes);
-        EntityAttributeRegistry.register(NAUTILUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(NAUTILUS, PrehistoricFish::createAttributes);
         EntityAttributeRegistry.register(ORNITHOLESTES, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PACHYCEPHALOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PARASAUROLOPHUS, Prehistoric::createAttributes);
@@ -163,7 +164,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(SMILODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(SPINOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(STEGOSAURUS, Prehistoric::createAttributes);
-        EntityAttributeRegistry.register(STURGEON, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(STURGEON, PrehistoricFish::createAttributes);
         EntityAttributeRegistry.register(THERIZINOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TIKTAALIK, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TITANIS, Prehistoric::createAttributes);
