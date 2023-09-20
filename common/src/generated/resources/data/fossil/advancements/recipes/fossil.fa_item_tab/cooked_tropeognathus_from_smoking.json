@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:cooked_ammonite"
+      "fossil:cooked_tropeognathus_from_smoking"
     ]
   },
   "criteria": {
-    "has_ammonite_meat": {
+    "has_tropeognathus_meat": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "fossil:meat_ammonite"
+              "fossil:meat_tropeognathus"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:cooked_ammonite"
+        "recipe": "fossil:cooked_tropeognathus_from_smoking"
       }
     }
   },
   "requirements": [
     [
-      "has_ammonite_meat",
+      "has_tropeognathus_meat",
       "has_the_recipe"
     ]
   ]

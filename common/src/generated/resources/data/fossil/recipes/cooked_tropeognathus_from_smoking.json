@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smoking",
   "ingredient": {
-    "item": "fossil:meat_ammonite"
+    "item": "fossil:meat_tropeognathus"
   },
-  "result": "fossil:cooked_ammonite",
+  "result": "fossil:cooked_tropeognathus",
   "experience": 1.5,
   "cookingtime": 100
 }

@@ -1,6 +1,7 @@
 package com.fossil.fossil.client.gui.filters;
 
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ModTabs;
 import dev.architectury.event.EventResult;
@@ -27,7 +28,7 @@ public class CreativeTabFilters {
         filters.add(new Filter("filter_plants", new ItemStack(ModItems.PlANT_FOSSIL.get())));
         filters.add(new Filter("filter_archaeology", new ItemStack(ModBlocks.WORKTABLE.get())));
         filters.add(new Filter("filter_skeletons", new ItemStack(ModBlocks.FOSSIL.get())));
-        filters.add(new Filter("filter_dinos", new ItemStack(ModItems.THERIZINOSAURUS_SPAWN_EGG.get())));
+        filters.add(new Filter("filter_dinos", new ItemStack(PrehistoricEntityType.THERIZINOSAURUS.spawnEggItem)));
         ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
                 tabs.get(creativeScreen.getSelectedTab()).renderButtons(matrices, mouseX, mouseY, delta);

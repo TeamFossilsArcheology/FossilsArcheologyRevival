@@ -59,7 +59,7 @@ public class Tropeognathus extends PrehistoricFlying {
 
     @Override
     public PrehistoricEntityType type() {
-        return PrehistoricEntityType.PTERANODON;
+        return PrehistoricEntityType.TROPEOGNATHUS;
     }
 
     @Override
