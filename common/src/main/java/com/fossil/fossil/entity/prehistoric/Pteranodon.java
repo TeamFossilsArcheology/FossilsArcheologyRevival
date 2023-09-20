@@ -167,7 +167,7 @@ public class Pteranodon extends PrehistoricFlying {
 
         if (isChasing) key = RUN;
         if (isInWater()) key = SWIM;
-        if (isFlying()) key = FLY;
+        if (isFlying() || !isOnGround()) key = FLY;
 
         return getAllAnimations().get(key);
     }

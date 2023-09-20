@@ -79,14 +79,10 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     @Override
-    public void aiStep() {//TODO: MoveSpeed on ground slower
+    public void aiStep() {
         super.aiStep();
-        boolean flying = level.isEmptyBlock(blockPosition().below());
         if (!isOnGround() && getDeltaMovement().y < 0) {
             setDeltaMovement(getDeltaMovement().multiply(1, 0.6, 1));
-        }
-        if (!isFlying() && !isOnGround()) {
-            //falling
         }
         if (!level.isClientSide) {
             int flyDelay = getAnimationLogic().getAttackDelay("Fly");
@@ -134,9 +130,9 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         entityData.set(TAKING_OFF, false);
     }
 
-    public void flyTowardsTarget() {
+    public void flyTowardsTarget() {//TODO: Move to MoveControl?
         double bbLength = getBoundingBox().getSize() * 2.5;
-        double maxDist = Math.max(3, bbLength * bbLength);
+        double maxDist = Math.min(3, bbLength * bbLength);
         if (isTargetInAir() && isFlying()) {
             Vec3 targetPos = Vec3.atCenterOf(findAirTargetGoal.targetPos);
             if (distanceToSqr(targetPos) > maxDist) {
