@@ -46,9 +46,9 @@ import java.util.Random;
 
 public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable, PrehistoricDebug {
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
-    private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.BOOLEAN);
     private final ResourceLocation animationLocation;
+    private final CompoundTag activeAnimations = new CompoundTag();
 
     private int absoluteEggCooldown = 0;
     private int age;
@@ -71,7 +71,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(ACTIVE_ANIMATIONS, new CompoundTag());
         entityData.define(BABY, false);
         CompoundTag tag = new CompoundTag();
         tag.putDouble("x", position().x);
@@ -230,7 +229,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
-        CompoundTag animationTag = entityData.get(ACTIVE_ANIMATIONS).getCompound(controller);
+        CompoundTag animationTag = activeAnimations.getCompound(controller);
         if (animationTag.contains("Animation")) {
             return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getDouble("EndTick"));
         }
@@ -239,16 +238,17 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public void addActiveAnimation(String controller, Animation animation) {
-        CompoundTag allAnimations = new CompoundTag().merge(entityData.get(ACTIVE_ANIMATIONS));
-        CompoundTag animationTag = new CompoundTag();
         if (animation != null) {
+            CompoundTag animationTag = new CompoundTag();
             animationTag.putString("Animation", animation.animationName);
             animationTag.putDouble("EndTick", level.getGameTime() + animation.animationLength);
-            allAnimations.put(controller, animationTag);
-            entityData.set(ACTIVE_ANIMATIONS, allAnimations);
-        } else {
-            Fossil.LOGGER.error("PrehistoricFish Animation is null: " + controller);
+            activeAnimations.put(controller, animationTag);
         }
+    }
+
+    @Override
+    public void addActiveAnimation(String controller, CompoundTag animationTag) {
+        //Not needed atm
     }
 
     @Override

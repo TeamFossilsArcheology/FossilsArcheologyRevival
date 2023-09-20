@@ -26,8 +26,8 @@ import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public abstract class PrehistoricFlying extends Prehistoric implements FlyingAnimal {
-    private static final EntityDataAccessor<Boolean> TAKING_OFF = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLYING = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> TAKING_OFF = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
 
     private FindAirTargetGoal findAirTargetGoal;
     private int flyingTicks = 0;
@@ -49,6 +49,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(FLYING, false);
+        entityData.define(TAKING_OFF, false);
     }
 
     @Override
@@ -78,7 +79,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     @Override
-    public void aiStep() {
+    public void aiStep() {//TODO: MoveSpeed on ground slower
         super.aiStep();
         boolean flying = level.isEmptyBlock(blockPosition().below());
         if (!isOnGround() && getDeltaMovement().y < 0) {
@@ -88,7 +89,8 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             //falling
         }
         if (!level.isClientSide) {
-            if (isTakingOff() && level.getGameTime() > getAnimationLogic().getAttackDelay("Fly") + takeOffStartTick) {
+            int flyDelay = getAnimationLogic().getAttackDelay("Fly");
+            if (isTakingOff() && flyDelay > -1 && level.getGameTime() > flyDelay + takeOffStartTick) {
                 stopTakeOff();
                 setFlying(true);
             }
@@ -106,16 +108,16 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             if (isFlying() && canSleep() && !level.isEmptyBlock(blockPosition().below(2)) && !PrehistoricSwimming.isOverWater(this)) {
                 setFlying(false);
             }
-        }
-        if (isFlying() && getTarget() == null) {//TODO: Should this be moved serverside?
-            if (findAirTargetGoal.targetPos != null && isFlying()) {
-                if (!isTargetInAir()) {
-                    findAirTargetGoal.targetPos = null;
+            if (isFlying() && getTarget() == null) {
+                if (findAirTargetGoal.targetPos != null && isFlying()) {
+                    if (!isTargetInAir()) {
+                        findAirTargetGoal.targetPos = null;
+                    }
+                    flyTowardsTarget();
                 }
+            } else if (getTarget() != null) {
                 flyTowardsTarget();
             }
-        } else if (getTarget() != null) {
-            flyTowardsTarget();
         }
     }
 

@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
+import net.minecraft.nbt.CompoundTag;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -18,6 +19,8 @@ public interface PrehistoricAnimatable extends IAnimatable {
     @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller);
 
     void addActiveAnimation(String controller, Animation animation);
+
+    void addActiveAnimation(String controller, CompoundTag animationTag);
 
     @NotNull Animation nextIdleAnimation();
 

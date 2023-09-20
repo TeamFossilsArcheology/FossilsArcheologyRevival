@@ -44,7 +44,7 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
                     int attackDelay = delayElement == null ? 0 : delayElement.getAsInt();
                     innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), attackDelay));
                 }
-                builder.put(fileEntry.getKey().getPath() + ".json", innerBuilder.build());
+                builder.put("animations/" + fileEntry.getKey().getPath() + ".json", innerBuilder.build());
             } catch (Exception e) {
                 LOGGER.error("Could not load animations {} due to: {}", fileEntry, e);
             }

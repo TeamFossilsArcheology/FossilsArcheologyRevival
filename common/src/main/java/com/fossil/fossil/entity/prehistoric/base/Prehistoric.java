@@ -14,6 +14,8 @@ import com.fossil.fossil.entity.data.AI;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.SyncActiveAnimationMessage;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
@@ -91,7 +93,6 @@ import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI.
 public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable, PrehistoricDebug {
 
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
-    private static final EntityDataAccessor<CompoundTag> ACTIVE_ANIMATIONS = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Boolean> START_EAT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
@@ -108,6 +109,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private final AttackAnimationLogic<Prehistoric> animationLogic = new AttackAnimationLogic<>(this);
     private final ResourceLocation animationLocation;
     private final boolean isMultiPart;
+    private final CompoundTag activeAnimations = new CompoundTag();
     public OrderType currentOrder;
     public boolean hasFeatherToggle = false;
     public boolean featherToggle;
@@ -299,7 +301,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(ACTIVE_ANIMATIONS, new CompoundTag());
         entityData.define(START_EAT_ANIMATION, false);
         entityData.define(MOOD, 0);
         entityData.define(AGE_TICK, data().adultAgeDays() * 24000);
@@ -1616,25 +1617,29 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return AnimationInfoManager.ANIMATIONS.getAnimation(animationLocation.getPath());
     }
 
+    @Override
     public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
-        CompoundTag animationTag = entityData.get(ACTIVE_ANIMATIONS).getCompound(controller);
+        CompoundTag animationTag = activeAnimations.getCompound(controller);
         if (animationTag.contains("Animation")) {
             return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getDouble("EndTick"));
         }
         return null;
     }
 
+    @Override
     public void addActiveAnimation(String controller, Animation animation) {
-        CompoundTag allAnimations = new CompoundTag().merge(entityData.get(ACTIVE_ANIMATIONS));
-        CompoundTag animationTag = new CompoundTag();
         if (animation != null) {
+            CompoundTag animationTag = new CompoundTag();
             animationTag.putString("Animation", animation.animationName);
             animationTag.putDouble("EndTick", level.getGameTime() + animation.animationLength);
-            allAnimations.put(controller, animationTag);
-            entityData.set(ACTIVE_ANIMATIONS, allAnimations);
-        } else {
-            Fossil.LOGGER.error("Prehistoric Animation is null: " + controller);
+            activeAnimations.put(controller, animationTag);
+            MessageHandler.SYNC_CHANNEL.sendToServer(new SyncActiveAnimationMessage(getId(), controller, animationTag));
         }
+    }
+
+    @Override
+    public void addActiveAnimation(String controller, CompoundTag animationTag) {
+        activeAnimations.put(controller, animationTag);
     }
 
     public abstract @NotNull Animation nextChasingAnimation();
