@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
@@ -25,7 +24,6 @@ public class Megaloceros extends Prehistoric {
     public static final String ANIMATIONS = "megaloceros.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("megaloceros");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Megaloceros(EntityType<Megaloceros> entityType, Level level) {
@@ -64,11 +62,6 @@ public class Megaloceros extends Prehistoric {
     @Override
     protected float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.2f : super.getGenderedScale();
-    }
-
-    @Override
-    public EntityDataManager.Data data() {
-        return data;
     }
 
     @Override

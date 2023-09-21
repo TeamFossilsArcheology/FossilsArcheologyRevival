@@ -1498,10 +1498,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return this.getBbWidth() > 0.75F ? this.getBbWidth() / 2.0F : 0.75F - this.getBbWidth() / 2.0F;
     }
 
-    public boolean useLeapAttack() {
-        return false;
-    }
-
     public boolean isFleeing() {
         return entityData.get(FLEEING);
     }

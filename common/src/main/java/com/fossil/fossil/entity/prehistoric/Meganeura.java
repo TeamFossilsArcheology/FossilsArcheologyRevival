@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.network.MessageHandler;
@@ -63,7 +62,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     public static final String FLY = "animation.meganeura.fly";
     public static final String EAT = "animation.meganeura.eat";
     public static final String ATTACK = "animation.meganeura.attack";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("meganeura");
     private static final EntityDataAccessor<Optional<BlockPos>> ATTACHED_BLOCK_POS = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
     private static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.DIRECTION);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -270,11 +268,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     @Override
     public Item getOrderItem() {
         return Items.ARROW;
-    }
-
-    @Override
-    public EntityDataManager.Data data() {
-        return data;
     }
 
     @Override

@@ -1,8 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.fossil.fossil.sounds.ModSounds;
@@ -15,21 +13,21 @@ import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
+public class Compsognathus extends PrehistoricLeaping {
     public static final String ANIMATIONS = "compsognathus.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("compsognathus");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Compsognathus(EntityType<Compsognathus> entityType, Level level) {
-        super(entityType, level, false);
+        super(entityType, level, false, false);
     }
 
     @Override
@@ -43,13 +41,20 @@ public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
         goalSelector.addGoal(0, new DinoMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(5, new DinoLeapAtTargetGoal<>(this));
+        goalSelector.addGoal(5, new DinoOtherLeapAtTargetGoal(this));
         goalSelector.addGoal(5, new RestrictSunGoal(this));
         goalSelector.addGoal(7, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
+    }
+    @Override
+    public void doLeapMovement() {
+        if (getTarget() != null) {
+            Vec3 offset = getTarget().position().subtract(position().add(0, getTarget().getBbHeight(), 0));
+            setDeltaMovement(offset.normalize());
+        }
     }
 
     @Override
@@ -93,8 +98,8 @@ public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
     }
 
     @Override
-    public @NotNull Animation nextLeapAnimation() {
-        return getAllAnimations().get(ATTACK1);
+    public String getLeapingAnimationName() {
+        return ATTACK1;
     }
 
     @Override

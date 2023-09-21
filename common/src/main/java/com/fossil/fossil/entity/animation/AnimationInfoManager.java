@@ -40,9 +40,9 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
                 for (Map.Entry<String, JsonElement> animationEntry : JsonAnimationUtils.getAnimations((JsonObject) fileEntry.getValue())) {
                     JsonObject animationJsonObject = animationEntry.getValue().getAsJsonObject();
 
-                    JsonElement delayElement = animationJsonObject.get("attack_delay");
-                    int attackDelay = delayElement == null ? 0 : delayElement.getAsInt();
-                    innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), attackDelay));
+                    JsonElement delayElement = animationJsonObject.get("action_delay");
+                    int actionDelay = delayElement == null ? 0 : delayElement.getAsInt();
+                    innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), actionDelay));
                 }
                 builder.put("animations/" + fileEntry.getKey().getPath() + ".json", innerBuilder.build());
             } catch (Exception e) {
@@ -56,6 +56,6 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
         return animationInfos.getOrDefault(animationFile, ImmutableMap.of());
     }
 
-    public record ServerAnimationInfo(String animationName, int attackDelay) {
+    public record ServerAnimationInfo(String animationName, int actionDelay) {
     }
 }

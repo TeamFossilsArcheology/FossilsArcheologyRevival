@@ -3,23 +3,23 @@
   "animations": {
     "fa.tropeognathus.groundtakeoff": {
       "animation_length": 1.56,
-      "attack_delay": 30
+      "action_delay": [30]
     },
     "fa.tropeognathus.biteattack": {
       "animation_length": 1.24,
-      "attack_delay": 16
+      "action_delay": [16]
     },
     "fa.tropeognathus.biteattackwater": {
       "animation_length": 2.08,
-      "attack_delay": 25
+      "action_delay": [25]
     },
     "fa.tropeognathus.bitefly": {
       "animation_length": 2.08,
-      "attack_delay": 19
+      "action_delay": [19]
     },
     "fa.tropeognathus.watertakeoff": {
       "animation_length": 2.6,
-      "attack_delay": 45
+      "action_delay": [45]
     }
   }
 }

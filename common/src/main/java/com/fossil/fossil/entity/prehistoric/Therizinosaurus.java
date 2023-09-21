@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
@@ -30,7 +29,6 @@ public class Therizinosaurus extends Prehistoric {
     public static final String ATTACK1 = "fa.therizinosaurus.attack1";
     public static final String ATTACK2 = "fa.therizinosaurus.attack2";
     public static final String EAT = "fa.therizinosaurus.eat";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("therizinosaurus");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Therizinosaurus(EntityType<Therizinosaurus> entityType, Level level) {
@@ -69,11 +67,6 @@ public class Therizinosaurus extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public EntityDataManager.Data data() {
-        return data;
     }
 
     @Override

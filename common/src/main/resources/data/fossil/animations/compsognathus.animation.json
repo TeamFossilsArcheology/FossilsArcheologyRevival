@@ -68,7 +68,7 @@
       "animation_length": 3
     },
     "animation.dilophosaurus.attack1": {
-      "animation_length": 1
+      "action_delay": [10, 15]
     },
     "animation.dilophosaurus.attack2": {
       "animation_length": 1

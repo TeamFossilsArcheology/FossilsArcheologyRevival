@@ -57,11 +57,11 @@
     },
     "animation.triceratops.attack1": {
       "animation_length": 1,
-      "attack_delay": 7
+      "action_delay": [7]
     },
     "animation.triceratops.attack2": {
       "animation_length": 1,
-      "attack_delay": 7
+      "action_delay": [7]
     },
     "animation.triceratops.TurningRadiusDemo": {
       "loop": true,

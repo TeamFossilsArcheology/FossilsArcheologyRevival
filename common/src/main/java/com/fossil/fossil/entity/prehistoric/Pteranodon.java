@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.sounds.ModSounds;
@@ -44,7 +43,6 @@ public class Pteranodon extends PrehistoricFlying {
     public static final String IDLE_CALL = "fa.tropeognathus.idlecall";
     public static final String IDLE_LOOKAROUND = "fa.tropeognathus.idlelookaround";
     public static final String WATER_TAKEOFF = "fa.tropeognathus.watertakeoff";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("pteranodon");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Pteranodon(EntityType<Pteranodon> entityType, Level level) {
@@ -84,11 +82,6 @@ public class Pteranodon extends PrehistoricFlying {
         return getGender() == Gender.MALE ? 1.3f : super.getGenderedScale();
     }
 
-
-    @Override
-    public EntityDataManager.Data data() {
-        return data;
-    }
 
     @Override
     public void aiStep() {

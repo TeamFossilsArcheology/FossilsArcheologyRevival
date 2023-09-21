@@ -2,8 +2,10 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.*;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -14,13 +16,14 @@ import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Velociraptor extends Prehistoric implements PrehistoricLeaping, PrehistoricScary {
+public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary {
     public static final String ANIMATIONS = "velociraptor.animation.json";
     public static final String IDLE = "animation.velociraptor.idle";
     public static final String WALK = "animation.velociraptor.walk";
@@ -28,12 +31,12 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
     public static final String SPEAK = "animation.velociraptor.speak";
     public static final String CALL = "animation.velociraptor.call";
     public static final String ATTACK1 = "animation.velociraptor.attack1";
+    public static final String LEAP = "animation.velociraptor.leap";
     public static final String DISPLAY = "animation.velociraptor.display";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("velociraptor");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Velociraptor(EntityType<Velociraptor> entityType, Level level) {
-        super(entityType, level, false);
+        super(entityType, level, false, true);
     }
 
     @Override
@@ -45,7 +48,7 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new DinoMeleeAttackGoal(this, 1, false));
-        goalSelector.addGoal(0, new DinoLeapAtTargetGoal<>(this));
+        goalSelector.addGoal(0, new DinoOtherLeapAtTargetGoal(this));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(4, new RestrictSunGoal(this));
@@ -54,6 +57,15 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
+    }
+
+    @Override
+    public void doLeapMovement() {
+        if (getTarget() != null) {
+            lookAt(getTarget(), 100, 100);
+            Vec3 offset = getTarget().position().subtract(position()).add(0, getTarget().getBbHeight(), 0);
+            setDeltaMovement(offset.normalize());
+        }
     }
 
     @Override
@@ -82,15 +94,9 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
     }
 
     @Override
-    public EntityDataManager.Data data() {
-        return data;
-    }
-
-    @Override
     public PrehistoricEntityTypeAI.Response aiResponseType() {
         return isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
     }
-
     @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(DISPLAY);
@@ -117,8 +123,8 @@ public class Velociraptor extends Prehistoric implements PrehistoricLeaping, Pre
     }
 
     @Override
-    public @NotNull Animation nextLeapAnimation() {
-        return getAllAnimations().get(ATTACK1);
+    public String getLeapingAnimationName() {
+        return LEAP;
     }
 
     @Override

@@ -58,7 +58,7 @@
     },
     "animation.meganeura.attack": {
       "animation_length": 0.5,
-      "attack_delay": 4
+      "action_delay": [4]
     },
     "animation.meganeura.new": {
       "loop": true

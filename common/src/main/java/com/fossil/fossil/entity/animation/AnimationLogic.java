@@ -30,7 +30,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable> {
         } else {
             if (entity.shouldStartEatAnimation()) {
                 entity.addActiveAnimation(controller.getName(), entity.nextEatingAnimation());
-                entity.setStartEatAnimation(false);
+                entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
             }
             if (isAnimationDone(controller.getName())) {
                 entity.addActiveAnimation(controller.getName(), entity.nextIdleAnimation());

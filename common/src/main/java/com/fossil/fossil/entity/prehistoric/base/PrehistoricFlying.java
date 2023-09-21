@@ -32,7 +32,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     private FindAirTargetGoal findAirTargetGoal;
     private int flyingTicks = 0;
     private long takeOffStartTick = 0;
-    private boolean takeOffStarted;
+    private boolean takeOffAnimationStarted;
 
     public PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level, boolean isMultiPart) {
         super(entityType, level, isMultiPart);
@@ -85,7 +85,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             setDeltaMovement(getDeltaMovement().multiply(1, 0.6, 1));
         }
         if (!level.isClientSide) {
-            int flyDelay = getAnimationLogic().getAttackDelay("Fly");
+            int flyDelay = getAnimationLogic().getActionDelay("Movement/Idle/Eat");
             if (isTakingOff() && flyDelay > -1 && level.getGameTime() > flyDelay + takeOffStartTick) {
                 stopTakeOff();
                 setFlying(true);
@@ -204,12 +204,12 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     private PlayState flyingPredicate(AnimationEvent<PrehistoricFlying> event) {
         AnimationController<PrehistoricFlying> controller = event.getController();
         if (isTakingOff()) {
-            if (!takeOffStarted) {
+            if (!takeOffAnimationStarted) {
                 addActiveAnimation(controller.getName(), nextTakeOffAnimation());
-                takeOffStarted = true;
+                takeOffAnimationStarted = true;
             }
         } else {
-            takeOffStarted = false;
+            takeOffAnimationStarted = false;
             if (event.isMoving()) {
                 addActiveAnimation(controller.getName(), nextMovingAnimation());
             } else {
@@ -225,7 +225,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Fly", 5, this::flyingPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, this::flyingPredicate));
         data.addAnimationController(new AnimationController<>(this, "Attack", 5, getAnimationLogic()::attackPredicate));
     }
 

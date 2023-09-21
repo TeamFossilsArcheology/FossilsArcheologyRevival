@@ -12,10 +12,10 @@ public class AttackAnimationLogic<T extends Prehistoric> extends AnimationLogic<
         super(entity);
     }
 
-    public int getAttackDelay(String controller) {
+    public int getActionDelay(String controller) {
         ActiveAnimationInfo activeAnimation = entity.getActiveAnimation(controller);
         if (activeAnimation != null && entity.getServerAnimationInfos().containsKey(activeAnimation.animationName())) {
-            return entity.getServerAnimationInfos().get(activeAnimation.animationName()).attackDelay();
+            return entity.getServerAnimationInfos().get(activeAnimation.animationName()).actionDelay();
         }
         return -1;
     }

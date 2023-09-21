@@ -4,7 +4,7 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.Gender;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Supplier;
 
@@ -42,8 +42,8 @@ public class SyncDebugInfoMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
-        if (entity instanceof Prehistoric prehistoric) {
+        Player player = contextSupplier.get().getPlayer();
+        if (player != null && player.level.getEntity(entityId) instanceof Prehistoric prehistoric) {
             contextSupplier.get().queue(() -> {
                 prehistoric.setGender(Gender.valueOf(gender));
                 prehistoric.setAgeInTicks(ageInTicks);

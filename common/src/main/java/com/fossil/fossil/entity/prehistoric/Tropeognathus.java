@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.world.entity.Entity;
@@ -34,7 +33,6 @@ public class Tropeognathus extends PrehistoricFlying {
     public static final String IDLE_LOOKAROUND = "fa.tropeognathus.idlelookaround";
     public static final String WATER_TAKEOFF = "fa.tropeognathus.watertakeoff";
     public static final String SLEEP = "fa.tropeognathus.sleep";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("tropeognathus");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tropeognathus(EntityType<Tropeognathus> entityType, Level level) {
@@ -65,11 +63,6 @@ public class Tropeognathus extends PrehistoricFlying {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public EntityDataManager.Data data() {
-        return data;
     }
 
     @Override

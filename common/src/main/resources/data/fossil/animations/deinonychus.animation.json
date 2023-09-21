@@ -1,96 +1,33 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dilophosaurus.idle": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.sit1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.sit2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.sleep1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.sleep2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.walk": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.run": {
+    "animation.velociraptor.idle": {
       "loop": true,
       "animation_length": 0.75
     },
-    "animation.dilophosaurus.jump/fall": {
+    "animation.velociraptor.walk": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.dilophosaurus.swim": {
+    "animation.velociraptor.run": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 0.75
     },
-    "animation.dilophosaurus.drink": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.eat": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.inflate_start": {
-      "loop": "hold_on_last_frame",
+    "animation.velociraptor.display": {
       "animation_length": 2
     },
-    "animation.dilophosaurus.inflate_hold": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_end": {
-      "loop": "hold_on_last_frame",
+    "animation.velociraptor.call": {
       "animation_length": 1
     },
-    "animation.dilophosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
+    "animation.velociraptor.attack1": {
+      "animation_length": 1.25,
+      "action_delay": [16]
     },
-    "animation.dilophosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
+    "animation.velociraptor.leap": {
+      "action_delay": [15]
     },
-    "animation.dilophosaurus.speak": {
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.call": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.attack1": {
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.attack2": {
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.WalkSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.RunSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.SwimSpeedDemo": {
+    "animation.velociraptor.speak": {
       "loop": true
-    },
-    "animation.dilophosaurus.TurningRadiusDemo": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.dilophosaurus.InflateDemo": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 6
     }
   },
   "geckolib_format_version": 2

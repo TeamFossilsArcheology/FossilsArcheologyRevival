@@ -2,7 +2,6 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
@@ -45,7 +44,6 @@ public class Triceratops extends Prehistoric {
     public static final String CALL = "animation.triceratops.call";
     public static final String ATTACK1 = "animation.triceratops.attack1";
     public static final String ATTACK2 = "animation.triceratops.attack2";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("triceratops");
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final Entity[] parts;
 
@@ -136,11 +134,6 @@ public class Triceratops extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public EntityDataManager.Data data() {
-        return data;
     }
 
     @Override
