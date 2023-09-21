@@ -9,9 +9,11 @@ import net.minecraft.world.level.material.Material;
 public class MoodSystem {
     private final Prehistoric prehistoric;
     private int moodCheckCooldown = 0;
+    private int playingCooldown;
 
     public MoodSystem(Prehistoric prehistoric) {
         this.prehistoric = prehistoric;
+        this.playingCooldown = prehistoric.getRandom().nextInt(6000) + 6000;
     }
 
     public static boolean arePlantsNearby(Entity entity, int range) {
@@ -78,18 +80,18 @@ public class MoodSystem {
         setMood(getMood() + overallMoodAddition);
     }
 
-    public int getPlayingTick() {
-        return prehistoric.getEntityData().get(Prehistoric.PLAYING_TICK);
+    public int getPlayingCooldown() {
+        return playingCooldown;
     }
 
-    public void setPlayingTick(int ticks) {
-        prehistoric.getEntityData().set(Prehistoric.PLAYING_TICK, ticks);
+    public void setPlayingCooldown(int ticks) {
+        this.playingCooldown = ticks;
     }
 
     public void useToy(int playBonus) {
-        if (getPlayingTick() == 0) {
+        if (getPlayingCooldown() == 0) {
             setMood(getMood() + playBonus);
-            setPlayingTick(prehistoric.getRandom().nextInt(600) + 600);
+            setPlayingCooldown(prehistoric.getRandom().nextInt(600) + 600);
         }
     }
 
@@ -103,8 +105,8 @@ public class MoodSystem {
         if (prehistoric.isDeadlyHungry() && getMood() > -50) {
             setMood(-50);
         }
-        if (getPlayingTick() > 0) {
-            setPlayingTick(getPlayingTick() - 1);
+        if (getPlayingCooldown() > 0) {
+            setPlayingCooldown(getPlayingCooldown() - 1);
         }
         if (moodCheckCooldown-- <= 0) {
             doMoodCheck();

@@ -16,6 +16,7 @@ import java.util.List;
  * items at the block position.
  */
 public class EatItemEntityGoal extends MoveToFoodGoal {
+    //TODO: Update for flying entities. Needs to be run without movement. Maybe a separate goal?
 
     private ItemEntity targetItem;
     private boolean recentlyAte;

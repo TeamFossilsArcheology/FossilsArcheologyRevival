@@ -27,7 +27,7 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
             return false;
         }
         MoodSystem moodSystem = dino.moodSystem;
-        if (target instanceof ToyBase && moodSystem.getPlayingTick() <= 0) {
+        if (target instanceof ToyBase && moodSystem.getPlayingCooldown() <= 0) {
             return true;
         }
         if (dino.getBoundingBox().getSize() * dino.getTargetScale() < target.getBoundingBox().getSize()) {

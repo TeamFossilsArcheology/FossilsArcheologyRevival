@@ -8,24 +8,26 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
-public class InfoMessage {
+public class SyncDebugInfoMessage {
     private final int entityId;
     private final String gender;
     private final int ageInTicks;
-    private final int ticksTillMate;
-    private final int ticksTillPlay;
+    private final int matingCooldown;
+    private final int playingCooldown;
+    private final int climbingCooldown;
     private final int mood;
 
-    public InfoMessage(FriendlyByteBuf buf) {
-        this(buf.readInt(), buf.readUtf(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
+    public SyncDebugInfoMessage(FriendlyByteBuf buf) {
+        this(buf.readInt(), buf.readUtf(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
     }
 
-    public InfoMessage(int entityId, String gender, int ageInTicks, int ticksTillMate, int ticksTillPlay, int mood) {
+    public SyncDebugInfoMessage(int entityId, String gender, int ageInTicks, int matingCooldown, int playingCooldown, int climbingCooldown, int mood) {
         this.entityId = entityId;
         this.gender = gender;
         this.ageInTicks = ageInTicks;
-        this.ticksTillMate = ticksTillMate;
-        this.ticksTillPlay = ticksTillPlay;
+        this.matingCooldown = matingCooldown;
+        this.playingCooldown = playingCooldown;
+        this.climbingCooldown = climbingCooldown;
         this.mood = mood;
     }
 
@@ -33,8 +35,9 @@ public class InfoMessage {
         buf.writeInt(entityId);
         buf.writeUtf(gender);
         buf.writeInt(ageInTicks);
-        buf.writeInt(ticksTillMate);
-        buf.writeInt(ticksTillPlay);
+        buf.writeInt(matingCooldown);
+        buf.writeInt(playingCooldown);
+        buf.writeInt(climbingCooldown);
         buf.writeInt(mood);
     }
 
@@ -44,8 +47,9 @@ public class InfoMessage {
             contextSupplier.get().queue(() -> {
                 prehistoric.setGender(Gender.valueOf(gender));
                 prehistoric.setAgeInTicks(ageInTicks);
-                prehistoric.setMatingTick(ticksTillMate);
-                prehistoric.moodSystem.setPlayingTick(ticksTillPlay);
+                prehistoric.setMatingCooldown(matingCooldown);
+                prehistoric.moodSystem.setPlayingCooldown(playingCooldown);
+                prehistoric.setClimbingCooldown(climbingCooldown);
                 prehistoric.moodSystem.setMood(mood);
             });
         }

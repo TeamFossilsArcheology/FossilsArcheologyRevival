@@ -25,12 +25,12 @@ public class DinoMatingGoal extends Goal {
         if (!FossilConfig.isEnabled(FossilConfig.BREEDING_DINOS)) {
             return false;
         }
-        if (male.getGender() != Gender.MALE || !male.isAdult() || male.getMatingTick() > 0 || male.moodSystem.getMood() <= 50) {
+        if (male.getGender() != Gender.MALE || !male.isAdult() || male.getMatingCooldown() > 0 || male.moodSystem.getMood() <= 50) {
             return false;
         }
         List<? extends Prehistoric> sameTypes = male.getNearbySpeciesMembers(64);
         if (sameTypes.size() > male.data().maxPopulation()) {
-            male.setMatingTick(male.getRandom().nextInt(6000) + 6000);
+            male.setMatingCooldown(male.getRandom().nextInt(6000) + 6000);
             return false;
         }
         double shortestDistance = Double.MAX_VALUE;
@@ -60,8 +60,8 @@ public class DinoMatingGoal extends Goal {
         male.getNavigation().moveTo(female, speedModifier);
         if (male.closerThan(female, male.getBbWidth() * 1.5)) {
             female.procreate(male);
-            male.setMatingTick(male.getRandom().nextInt(6000) + 6000);
-            female.setMatingTick(male.getRandom().nextInt(12000) + 24000);
+            male.setMatingCooldown(male.getRandom().nextInt(6000) + 6000);
+            female.setMatingCooldown(male.getRandom().nextInt(12000) + 24000);
         }
     }
 

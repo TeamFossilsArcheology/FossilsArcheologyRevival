@@ -16,6 +16,7 @@ import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.SyncActiveAnimationMessage;
+import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
@@ -96,8 +97,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private static final EntityDataAccessor<Boolean> START_EAT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Integer> MATING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    public static final EntityDataAccessor<Integer> PLAYING_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
@@ -115,11 +114,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public boolean featherToggle;
     public boolean hasTeenTexture = true;
     public boolean hasBabyTexture = true;
-    public float weakProgress;
-    public float sitProgress;
     public int ticksSat;
-    public float sleepProgress;
-    public float climbProgress;
     public int ticksSlept;
     public float pediaScale;
     public float ridingXZ;
@@ -131,6 +126,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private boolean droppedBiofossil = false;
     private int fleeTicks = 0;
     private int cathermalSleepCooldown = 0;
+    private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
 
@@ -305,8 +301,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         entityData.define(START_EAT_ANIMATION, false);
         entityData.define(MOOD, 0);
         entityData.define(AGE_TICK, data().adultAgeDays() * 24000);
-        entityData.define(MATING_TICK, random.nextInt(6000) + 6000);
-        entityData.define(PLAYING_TICK, random.nextInt(6000) + 6000);
         entityData.define(HUNGER, 0);
         entityData.define(MODELIZED, false);
         entityData.define(FLEEING, false);
@@ -343,8 +337,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Mood", moodSystem.getMood());
-        compound.putInt("TicksTillMate", getMatingTick());
-        compound.putInt("TicksTillPlay", moodSystem.getPlayingTick());
+        compound.putInt("MatingCooldown", getMatingCooldown());
+        compound.putInt("PlayingCooldown", moodSystem.getPlayingCooldown());
         compound.putInt("Hunger", getHunger());
         compound.putBoolean("isModelized", isSkeleton());
         compound.putBoolean("Fleeing", isFleeing());
@@ -365,8 +359,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         super.readAdditionalSaveData(compound);
         moodSystem.setMood(compound.getInt("Mood"));
         setAgeInTicks(compound.getInt("Age"));
-        setMatingTick(compound.getInt("TicksTillMate"));
-        moodSystem.setPlayingTick(compound.getInt("TicksTillPlay"));
+        setMatingCooldown(compound.getInt("MatingCooldown"));
+        moodSystem.setPlayingCooldown(compound.getInt("PlayingCooldown"));
         setHunger(compound.getInt("Hunger"));
         setSkeleton(compound.getBoolean("isModelized"));
         setFleeing(compound.getBoolean("Fleeing"));
@@ -405,8 +399,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             setAgeInDays(data().adultAgeDays());
         }
         updateAbilities();
-        moodSystem.setPlayingTick(0);
-        setMatingTick(24000);
+        moodSystem.setPlayingCooldown(0);
+        setMatingCooldown(24000);
         heal(getMaxHealth());
         currentOrder = OrderType.WANDER;
         setNoAi(false);
@@ -582,8 +576,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             setHunger(getMaxHunger());
         }
         moodSystem.tick();
-        if (getMatingTick() > 0) {
-            setMatingTick(getMatingTick() - 1);
+        if (getMatingCooldown() > 0) {
+            setMatingCooldown(getMatingCooldown() - 1);
         }
         if (getRidingPlayer() != null) {
             maxUpStep = 1;
@@ -604,10 +598,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (isOrderedToSit()) {
             ticksSat++;
         }
-        if (cathermalSleepCooldown > 0) {
-            cathermalSleepCooldown--;
-        }
         if (!level.isClientSide) {
+            MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
+                    new SyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, moodSystem.getMood()));
+            if (cathermalSleepCooldown > 0) {
+                cathermalSleepCooldown--;
+            }
             if (isSleeping()) {
                 ticksSlept++;
             } else {
@@ -650,7 +646,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (data().breaksBlocks() && moodSystem.getMood() < 0) {
             breakBlock(5);//TODO: Check if only server side
         }
-        if (getTarget() instanceof ToyBase && (isPreyBlocked(getTarget()) || moodSystem.getPlayingTick() > 0)) {
+        if (getTarget() instanceof ToyBase && (isPreyBlocked(getTarget()) || moodSystem.getPlayingCooldown() > 0)) {
             setTarget(null);
         }
         if (isFleeing()) {
@@ -899,12 +895,20 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         this.entityData.set(AGING_DISABLED, isAgingDisabled);
     }
 
-    public int getMatingTick() {
-        return entityData.get(MATING_TICK);
+    public int getMatingCooldown() {
+        return matingCooldown;
     }
 
-    public void setMatingTick(int ticks) {
-        entityData.set(MATING_TICK, ticks);
+    public void setMatingCooldown(int cooldown) {
+        this.matingCooldown = cooldown;
+    }
+
+    public int getClimbingCooldown() {
+        return climbingCooldown;
+    }
+
+    public void setClimbingCooldown(int cooldown) {
+        this.climbingCooldown = cooldown;
     }
 
     public boolean isHungry() {
@@ -1244,11 +1248,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean canMate(Animal otherAnimal) {
-        if (otherAnimal == this || otherAnimal.getClass() != getClass() || moodSystem.getMood() <= 50 || !isAdult() || getMatingTick() > 0) {
+        if (otherAnimal == this || otherAnimal.getClass() != getClass() || moodSystem.getMood() <= 50 || !isAdult() || getMatingCooldown() > 0) {
             return false;
         }
         Prehistoric other = ((Prehistoric) otherAnimal);
-        if (other.gender == gender || other.getMatingTick() > 0 || (matingGoal.getPartner() != null && matingGoal.getPartner() != otherAnimal)) {
+        if (other.gender == gender || other.getMatingCooldown() > 0 || (matingGoal.getPartner() != null && matingGoal.getPartner() != otherAnimal)) {
             return false;
         }
         return true;
