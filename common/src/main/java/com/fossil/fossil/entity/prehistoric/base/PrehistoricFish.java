@@ -136,16 +136,19 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
             if (absoluteEggCooldown > 0) {
                 absoluteEggCooldown--;
             }
-            PrehistoricFish closestMate = getClosestMate();
-            if (closestMate != null && isInWater() && getAge() >= 0 && closestMate.getAge() >= 0 && absoluteEggCooldown <= 0) {
-                absoluteEggCooldown = 48000 + random.nextInt(48000);
-                level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem)));
+            if (isInWater() && getAge() >= 0 && absoluteEggCooldown <= 0) {
+                PrehistoricFish closestMate = getClosestMate();
+                if (closestMate != null) {
+                    absoluteEggCooldown = 48000 + random.nextInt(48000);
+                    closestMate.absoluteEggCooldown = 48000 + random.nextInt(48000);
+                    level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem)));
+                }
             }
         }
     }
 
     private @Nullable PrehistoricFish getClosestMate() {
-        List<? extends PrehistoricFish> sameTypes = level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(2, 2, 2), fish -> fish != this);
+        List<? extends PrehistoricFish> sameTypes = level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(2, 2, 2), fish -> fish != this && fish.getAge() > 0);
         double shortestDistance = Double.MAX_VALUE;
         PrehistoricFish other = null;
         for (PrehistoricFish sameType : sameTypes) {
