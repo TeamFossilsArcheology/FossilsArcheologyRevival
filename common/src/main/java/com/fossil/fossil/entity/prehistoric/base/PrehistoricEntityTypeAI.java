@@ -42,7 +42,7 @@ public class PrehistoricEntityTypeAI {
     }
 
     public enum Jumping {
-        BASIC, TWOBLOCKS
+        BASIC, TWO_BLOCKS
     }
 
     public enum Stalking {

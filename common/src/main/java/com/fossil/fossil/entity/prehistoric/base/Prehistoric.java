@@ -102,7 +102,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BYTE);
+    private static final EntityDataAccessor<Boolean> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public final MoodSystem moodSystem = new MoodSystem(this);
     protected final WhipSteering steering = new WhipSteering(this);
@@ -132,6 +132,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private int fleeTicks = 0;
     private int cathermalSleepCooldown = 0;
     private int ticksClimbing = 0;
+    private int climbingCooldown = 0;
 
     public Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
         super(entityType, level);
@@ -310,7 +311,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         entityData.define(MODELIZED, false);
         entityData.define(FLEEING, false);
         entityData.define(SLEEPING, false);
-        entityData.define(CLIMBING, (byte) 0);
+        entityData.define(CLIMBING, false);
         entityData.define(AGING_DISABLED, false);
 
         CompoundTag tag = new CompoundTag();
@@ -350,6 +351,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         compound.putBoolean("Sleeping", isSleeping());
         compound.putInt("TicksSlept", ticksSlept);
         compound.putInt("TicksClimbing", ticksClimbing);
+        compound.putInt("ClimbingCooldown", climbingCooldown);
         compound.putByte("currentOrder", (byte) currentOrder.ordinal());
         compound.putFloat("YBodyRot", yBodyRot);
         compound.putFloat("YHeadRot", yHeadRot);
@@ -371,6 +373,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         setSleeping(compound.getBoolean("Sleeping"));
         ticksSlept = compound.getInt("TicksSlept");
         ticksClimbing = compound.getInt("TicksClimbing");
+        climbingCooldown = compound.getInt("ClimbingCooldown");
         if (compound.contains("currentOrder")) {
             setOrder(OrderType.values()[compound.getByte("currentOrder")]);
         }
@@ -678,72 +681,22 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 hurt(DamageSource.STARVE, 1);
             }
         }
-        boolean sitting = isOrderedToSit();
-        if (sitting && sitProgress < 20.0F) {
-            sitProgress += 0.5F;
-            if (sleepProgress != 0) {
-                sleepProgress = 0F;
-            }
-        } else if (!sitting && sitProgress > 0.0F) {
-            sitProgress -= 0.5F;
-            if (sleepProgress != 0) {
-                sleepProgress = 0F;
-            }
-        }
-        boolean sleeping = isSleeping();
-        if (sleeping && sleepProgress < 20.0F) {
-            sleepProgress += 0.5F;
-            if (sitProgress != 0) {
-                sitProgress = 0F;
-            }
-        } else if (!sleeping && sleepProgress > 0.0F) {
-            sleepProgress -= 0.5F;
-            if (sitProgress != 0) {
-                sitProgress = 0F;
-            }
-        }
-
-        boolean climbing = aiClimbType() == Climbing.ARTHROPOD &&
-                this.isBesideClimbableBlock() &&
-                !this.onGround;
-
-        if (climbing && climbProgress < 20.0F) {
-            climbProgress += 2F;
-            if (sitProgress != 0) {
-                sitProgress = 0F;
-            }
-        } else if (!climbing && climbProgress > 0.0F) {
-            climbProgress -= 2F;
-            if (sitProgress != 0) {
-                sitProgress = 0F;
-            }
-        }
-        boolean weak = this.isActuallyWeak();
-        if (weak && weakProgress < 20.0F) {
-            weakProgress += 0.5F;
-            sitProgress = 0F;
-            sleepProgress = 0F;
-        } else if (!weak && weakProgress > 0.0F) {
-            weakProgress -= 0.5F;
-            sitProgress = 0F;
-            sleepProgress = 0F;
-        }
-        if (!this.level.isClientSide) {
-            if (this.aiClimbType() == Climbing.ARTHROPOD &&
-                    !this.wantsToSleep() &&
-                    !this.isSleeping() &&
-                    ticksClimbing >= 0 && ticksClimbing < 100) {
-                this.setBesideClimbableBlock(this.horizontalCollision);
-            } else {
-                this.setBesideClimbableBlock(false);
-                if (ticksClimbing >= 100) {
-                    ticksClimbing = -900;
-                }
-            }
-            if (this.onClimbable() || ticksClimbing < 0) {
+        if (!level.isClientSide && aiClimbType() == Climbing.ARTHROPOD) {
+            if (isClimbing()) {
                 ticksClimbing++;
-                if (level.getBlockState(this.blockPosition().above()).getMaterial().isSolid()) {
-                    ticksClimbing = 200;
+                boolean onCooldown = ticksClimbing >= 100 || level.getBlockState(blockPosition().above()).getMaterial().isSolid();
+                if (isSleeping() || wantsToSleep() || onCooldown || !horizontalCollision) {
+                    setClimbing(false);
+                    ticksClimbing = 0;
+                    if (onCooldown) {
+                        climbingCooldown = 900;
+                    }
+                }
+            } else {
+                climbingCooldown--;
+                if (ticksClimbing == 0 && climbingCooldown <= 0 && horizontalCollision && !wantsToSleep() && !isSleeping()) {
+                    ticksClimbing = 0;
+                    setClimbing(true);
                 }
             }
         }
@@ -751,29 +704,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean onClimbable() {
-        if (this.aiMovingType() == Moving.AQUATIC ||
-                this.aiMovingType() == Moving.SEMI_AQUATIC) {
+        if (aiMovingType() == Moving.AQUATIC || aiMovingType() == Moving.SEMI_AQUATIC) {
             return false;
         } else {
-            return this.aiClimbType() == Climbing.ARTHROPOD &&
-                    this.isBesideClimbableBlock() && !this.isImmobile();
+            return aiClimbType() == Climbing.ARTHROPOD && isClimbing() && !isImmobile();
         }
     }
 
-    public boolean isBesideClimbableBlock() {
-        return (this.entityData.get(CLIMBING) & 1) != 0;
+    public boolean isClimbing() {
+        return entityData.get(CLIMBING);
     }
 
-    public void setBesideClimbableBlock(boolean climbing) {
-        byte b0 = this.entityData.get(CLIMBING);
-
-        if (climbing) {
-            b0 = (byte) (b0 | 1);
-        } else {
-            b0 = (byte) (b0 & -2);
-        }
-
-        this.entityData.set(CLIMBING, b0);
+    public void setClimbing(boolean climbing) {
+        this.entityData.set(CLIMBING, climbing);
     }
 
     @Override

@@ -197,7 +197,7 @@ public class Nautilus extends PrehistoricFish {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(SWIM_BACKWARDS);//TODO: SWIM_FAST
+        return getAllAnimations().get(SWIM_BACKWARDS);
     }
 
     @Override

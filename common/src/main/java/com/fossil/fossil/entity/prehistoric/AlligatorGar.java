@@ -36,7 +36,7 @@ public class AlligatorGar extends PrehistoricFish {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(SWIM);//TODO: SWIM_FAST
+        return getAllAnimations().get(SWIM);
     }
 
     @Override

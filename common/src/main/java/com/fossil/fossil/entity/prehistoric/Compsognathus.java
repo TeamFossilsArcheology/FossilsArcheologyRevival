@@ -10,7 +10,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.FleeSunGoal;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.item.Item;
@@ -46,7 +45,6 @@ public class Compsognathus extends Prehistoric implements PrehistoricLeaping {
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(5, new DinoLeapAtTargetGoal<>(this));
         goalSelector.addGoal(5, new RestrictSunGoal(this));
-        goalSelector.addGoal(6, new FleeSunGoal(this, 1));
         goalSelector.addGoal(7, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
