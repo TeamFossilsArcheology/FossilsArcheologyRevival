@@ -6,6 +6,7 @@ import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
@@ -136,6 +137,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         super(entityType, level);
         this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.isMultiPart = isMultiPart;
+        this.moveControl = new SmoothTurningMoveControl(this);
         this.setHunger(this.getMaxHunger() / 2);
         this.pediaScale = 1.0F;
         this.currentOrder = OrderType.WANDER;
@@ -1477,7 +1479,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public float getMaxTurnDistancePerTick() {
-        return Mth.clamp(90 - this.getBbWidth() * 20, 10, 90);
+        return Mth.clamp(90 - getBbWidth() * 20, 10, 90);
     }
 
     @Override
