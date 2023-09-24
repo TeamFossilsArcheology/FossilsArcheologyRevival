@@ -25,7 +25,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<ToyScratchingPost>> TOY_SCRATCHING_POST = ENTITIES.register("toy_scratching_post",
             () -> EntityType.Builder.of(ToyScratchingPost::new, MobCategory.MISC).sized(0.6f, 2).build("toy_scratching_post"));
 
-    public static final RegistrySupplier<EntityType<AlligatorGar>> ALLIGATOR_GAR = registerDino("alligator_gar", AlligatorGar::new, 2, 1);
+    public static final RegistrySupplier<EntityType<AlligatorGar>> ALLIGATOR_GAR = registerFish("alligator_gar", AlligatorGar::new, 2, 1);
     public static final RegistrySupplier<EntityType<Allosaurus>> ALLOSAURUS = registerDino("allosaurus", Allosaurus::new, 2, 2f);
     //public static final RegistrySupplier<EntityType<Ammonite>> AMMONITE = registerDino("ammonite", Ammonite::new, 2, 1);
     public static final RegistrySupplier<EntityType<Ankylosaurus>> ANKYLOSAURUS = registerDino("ankylosaurus", Ankylosaurus::new, 1.7f, 1);
@@ -33,7 +33,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Brachiosaurus>> BRACHIOSAURUS = registerDino("brachiosaurus", Brachiosaurus::new, 1.35f, 1.7f);
     public static final RegistrySupplier<EntityType<Ceratosaurus>> CERATOSAURUS = registerDino("ceratosaurus", Ceratosaurus::new, 1.55f, 1.3f);
     public static final RegistrySupplier<EntityType<Citipati>> CITIPATI = registerDino("citipati", Citipati::new, 1.5f, 1.8f);
-    public static final RegistrySupplier<EntityType<Coelacanth>> COELACANTH = registerDino("coelacanth", Coelacanth::new, 1.9f, 0.9f);
+    public static final RegistrySupplier<EntityType<Coelacanth>> COELACANTH = registerFish("coelacanth", Coelacanth::new, 1.9f, 0.9f);
     public static final RegistrySupplier<EntityType<Compsognathus>> COMPSOGNATHUS = registerDino("compsognathus", Compsognathus::new, 1.1f, 1.1f);
     public static final RegistrySupplier<EntityType<Confuciusornis>> CONFUCIUSORNIS = registerDino("confuciusornis", Confuciusornis::new, 0.7f, 0.8f);
     public static final RegistrySupplier<EntityType<Crassigyrinus>> CRASSIGYRINUS = registerDino("crassigyrinus", Crassigyrinus::new, 1.1f, 0.5f);
@@ -58,7 +58,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Megalograptus>> MEGALOGRAPTUS = registerDino("megalograptus", Megalograptus::new, 0.9f, 0.5f);
     public static final RegistrySupplier<EntityType<Meganeura>> MEGANEURA = registerDino("meganeura", Meganeura::new, 0.5f, 0.5f);
     public static final RegistrySupplier<EntityType<Mosasaurus>> MOSASAURUS = registerDino("mosasaurus", Mosasaurus::new, 1.5f, 0.6f);
-    public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerDino("nautilus", Nautilus::new, 0.8f, 1);
+    public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerFish("nautilus", Nautilus::new, 0.8f, 1);
     public static final RegistrySupplier<EntityType<Ornitholestes>> ORNITHOLESTES = registerDino("ornitholestes", Ornitholestes::new, 2, 1.9f);
     public static final RegistrySupplier<EntityType<Pachycephalosaurus>> PACHYCEPHALOSAURUS = registerDino("pachycephalosaurus", Pachycephalosaurus::new, 1, 1.5f);
     public static final RegistrySupplier<EntityType<Parasaurolophus>> PARASAUROLOPHUS = registerDino("parasaurolophus", Parasaurolophus::new, 2.2f, 1.9f);
@@ -71,7 +71,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Smilodon>> SMILODON = registerDino("smilodon", Smilodon::new, 1.1f, 1.2f);
     public static final RegistrySupplier<EntityType<Spinosaurus>> SPINOSAURUS = registerDino("spinosaurus", Spinosaurus::new, 1.5f, 1);
     public static final RegistrySupplier<EntityType<Stegosaurus>> STEGOSAURUS = registerDino("stegosaurus", Stegosaurus::new, 1.4f, 1.3f);
-    public static final RegistrySupplier<EntityType<Sturgeon>> STURGEON = registerDino("sturgeon", Sturgeon::new, 1.9f, 1);
+    public static final RegistrySupplier<EntityType<Sturgeon>> STURGEON = registerFish("sturgeon", Sturgeon::new, 1.9f, 1);
     public static final RegistrySupplier<EntityType<Therizinosaurus>> THERIZINOSAURUS = registerDino("therizinosaurus", Therizinosaurus::new, 1.5f, 1.5f);
     public static final RegistrySupplier<EntityType<Tiktaalik>> TIKTAALIK = registerDino("tiktaalik", Tiktaalik::new, 1.45f, 0.5f);
     public static final RegistrySupplier<EntityType<Titanis>> TITANIS = registerDino("titanis", Titanis::new, 1.4f, 2.5f);
@@ -115,6 +115,9 @@ public class ModEntities {
     //TODO: Change clientTrackingRange etc
     private static <T extends Entity> RegistrySupplier<EntityType<T>> registerDino(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.CREATURE).sized(width, height).build(name));
+    }
+    private static <T extends Entity> RegistrySupplier<EntityType<T>> registerFish(String name, EntityType.EntityFactory<T> factory, float width, float height) {
+        return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.WATER_CREATURE).sized(width, height).build(name));
     }
 
     public static void register() {

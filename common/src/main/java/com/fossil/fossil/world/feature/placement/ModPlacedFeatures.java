@@ -10,7 +10,6 @@ import net.minecraft.data.worldgen.features.CaveFeatures;
 import net.minecraft.data.worldgen.features.MiscOverworldFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.util.valueproviders.ClampedNormalInt;
-import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
@@ -68,16 +67,16 @@ public class ModPlacedFeatures {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.LAKES, tarPitPlaced);
             }
             if (FossilConfig.isEnabled(FossilConfig.SPAWN_ALLIGATOR_GAR) && mutable.getCategory() == Biome.BiomeCategory.SWAMP) {
-                mutable.getSpawnProperties().addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.ALLIGATOR_GAR.get(), FossilConfig.getInt(FossilConfig.ALLIGATOR_GAR_SPAWN_WEIGHT), 1, 4));
+                mutable.getSpawnProperties().addSpawn(ModEntities.ALLIGATOR_GAR.get().getCategory(), new MobSpawnSettings.SpawnerData(ModEntities.ALLIGATOR_GAR.get(), FossilConfig.getInt(FossilConfig.ALLIGATOR_GAR_SPAWN_WEIGHT), 1, 4));
             }
             if (FossilConfig.isEnabled(FossilConfig.SPAWN_COELACANTH) && mutable.getCategory() == Biome.BiomeCategory.OCEAN) {
-                mutable.getSpawnProperties().addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.COELACANTH.get(), FossilConfig.getInt(FossilConfig.COELACANTH_SPAWN_WEIGHT), 1, 4));
+                mutable.getSpawnProperties().addSpawn(ModEntities.COELACANTH.get().getCategory(), new MobSpawnSettings.SpawnerData(ModEntities.COELACANTH.get(), FossilConfig.getInt(FossilConfig.COELACANTH_SPAWN_WEIGHT), 1, 4));
             }
             if (FossilConfig.isEnabled(FossilConfig.SPAWN_NAUTILUS) && mutable.getCategory() == Biome.BiomeCategory.OCEAN) {
-                mutable.getSpawnProperties().addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.NAUTILUS.get(), FossilConfig.getInt(FossilConfig.NAUTILUS_SPAWN_WEIGHT), 1, 4));
+                mutable.getSpawnProperties().addSpawn(ModEntities.NAUTILUS.get().getCategory(), new MobSpawnSettings.SpawnerData(ModEntities.NAUTILUS.get(), FossilConfig.getInt(FossilConfig.NAUTILUS_SPAWN_WEIGHT), 1, 4));
             }
             if (FossilConfig.isEnabled(FossilConfig.SPAWN_STURGEON) && mutable.getCategory() == Biome.BiomeCategory.RIVER) {
-                mutable.getSpawnProperties().addSpawn(MobCategory.WATER_CREATURE, new MobSpawnSettings.SpawnerData(ModEntities.STURGEON.get(), FossilConfig.getInt(FossilConfig.STURGEON_SPAWN_WEIGHT), 1, 4));
+                mutable.getSpawnProperties().addSpawn(ModEntities.STURGEON.get().getCategory(), new MobSpawnSettings.SpawnerData(ModEntities.STURGEON.get(), FossilConfig.getInt(FossilConfig.STURGEON_SPAWN_WEIGHT), 1, 4));
             }
         });
     }
