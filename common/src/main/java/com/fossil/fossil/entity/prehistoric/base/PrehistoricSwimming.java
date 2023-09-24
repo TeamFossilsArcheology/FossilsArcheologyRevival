@@ -29,6 +29,8 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.builder.Animation;
 
 public abstract class PrehistoricSwimming extends Prehistoric {
     public static final int MAX_TIME_IN_WATER = 1000;
@@ -415,6 +417,10 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     public void decrementBreachPitch(float pitch) {
         entityData.set(BREACHING_PITCH, getBreachPitch() - pitch);
+    }
+
+    public @Nullable Animation nextFloppingAnimation() {
+        return null;
     }
 
 

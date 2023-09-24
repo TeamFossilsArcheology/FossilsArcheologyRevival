@@ -15,10 +15,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
@@ -31,6 +28,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.PlayState;
@@ -56,7 +54,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     public PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
         super(entityType, level);
         this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
-        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.02f, 0.1f, true);
+        this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.2f, 0.1f, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }
 
@@ -127,6 +125,17 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
             refreshDimensions();
         }
         super.onSyncedDataUpdated(key);
+    }
+
+    @Override
+    public void travel(Vec3 travelVector) {
+        if (isEffectiveAi() && isInWater()) {
+            moveRelative(getSpeed(), travelVector);
+            move(MoverType.SELF, getDeltaMovement());
+            setDeltaMovement(getDeltaMovement().scale(0.9));
+        } else {
+            super.travel(travelVector);
+        }
     }
 
     @Override
@@ -228,7 +237,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
             }
             return PlayState.CONTINUE;
         }));
-        //data.addAnimationController(new AnimationController<>(this, "Walk", 4, animations::walkPredicate));
     }
 
     public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {

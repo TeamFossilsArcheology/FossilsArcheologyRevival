@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.animation;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.world.entity.Mob;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -25,7 +26,9 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable> {
 
     public PlayState movementPredicate(AnimationEvent<T> event) {
         AnimationController<T> controller = event.getController();
-        if (event.isMoving()) {
+        if (entity instanceof PrehistoricSwimming swimming && !swimming.isInWater() && swimming.isOnGround()) {
+            entity.addActiveAnimation(controller.getName(), swimming.nextFloppingAnimation());
+        } else if (event.isMoving()) {
             entity.addActiveAnimation(controller.getName(), entity.nextMovingAnimation());
         } else {
             if (entity.shouldStartEatAnimation()) {

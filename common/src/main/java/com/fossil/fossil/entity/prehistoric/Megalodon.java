@@ -23,9 +23,12 @@ public class Megalodon extends PrehistoricSwimming {
     public static final String IDLE = "animation.megalodon.swim_idle";
     public static final String SWIM = "animation.megalodon.swim";
     public static final String SWIM_FAST = "animation.megalodon.swim_fast";
+    public static final String BEACHED = "animation.megalodon.beached1";
+    public static final String BEACHED2 = "animation.megalodon.beached2";
     public static final String EAT = "animation.megalodon.eat";
     public static final String ATTACK = "animation.megalodon.attack";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private String beachAnimation = "";
 
     public Megalodon(EntityType<Megalodon> entityType, Level level) {
         super(entityType, level, false);
@@ -66,6 +69,16 @@ public class Megalodon extends PrehistoricSwimming {
     @Override
     public boolean canBreatheOnLand() {
         return false;
+    }
+
+    @Override
+    public void aiStep() {
+        super.aiStep();
+        if (level.isClientSide) {
+            if (isInWater() || !isOnGround()) {
+                beachAnimation = "";
+            }
+        }
     }
 
     @Override
@@ -129,6 +142,14 @@ public class Megalodon extends PrehistoricSwimming {
     @Override
     public @NotNull Animation nextAttackAnimation() {
         return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
+    public @Nullable Animation nextFloppingAnimation() {
+        if (beachAnimation.isBlank()) {
+            beachAnimation = random.nextInt() == 0 ? BEACHED : BEACHED2;
+        }
+        return getAllAnimations().get(beachAnimation);
     }
 
     @Override
