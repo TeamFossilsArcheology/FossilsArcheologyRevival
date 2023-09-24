@@ -12,6 +12,6 @@ public class LargeSwimNodeEvaluator extends SwimNodeEvaluator {
     @Override
     public void prepare(PathNavigationRegion level, Mob mob) {
         super.prepare(level, mob);
-        this.entityHeight = 1;
+        //this.entityHeight = 1;
     }
 }

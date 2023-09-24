@@ -1,30 +1,24 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.entity.ToyBase;
+import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
-import com.fossil.fossil.entity.ai.navigation.LargeSwimNodeEvaluator;
-import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.MarkMessage;
-import com.fossil.fossil.util.Gender;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
@@ -32,7 +26,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
-import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
@@ -56,7 +50,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     public PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
         super(entityType, level, isMultiPart);
         setPathfindingMalus(BlockPathTypes.WATER, 0);
-        switchNavigator(true);
+        switchNavigator(false);
     }
 
     public static boolean isOverWater(LivingEntity entity) {
@@ -98,15 +92,11 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected void switchNavigator(boolean onLand) {
         //TODO: Properly implement all four classes
         if (onLand) {
-            moveControl = new MoveControl(this);
+            moveControl = new SmoothTurningMoveControl(this);
             navigation = new AmphibiousPathNavigation(this);
             isLandNavigator = true;
         } else {
-            if (getGender() == Gender.FEMALE) {
-                moveControl = new SwimmingMoveControl(this);
-            } else {
-                moveControl = new SmoothSwimmingMoveControl(this, 90, 5, 0.1f, 0.01f, true);
-            }
+            moveControl = new SwimmingMoveControl(this);
             navigation = new LargeSwimmerPathNavigation(this);
             isLandNavigator = false;
         }
@@ -200,7 +190,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             //Rotate based on direction
             if (isInWater() || !isOnGround()) {
                 Vec3 vec3 = getDeltaMovement();
-                if (!level.isClientSide && navigation.getPath() != null) {
+                if (!level.isClientSide && navigation.getPath() != null && navigation.getPath().getNextNodeIndex() < navigation.getPath().getNodeCount()) {
                     BlockPos blockPos = navigation.getPath().getNextNodePos();
                     int[] targets = new int[3];
                     targets[0] = blockPos.getX();
@@ -208,15 +198,15 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                     targets[2] = blockPos.getZ();
                     BlockState[] blocks = new BlockState[1];
                     blocks[0] = Blocks.GOLD_BLOCK.defaultBlockState();
-                    MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
-                            new MarkMessage(targets, blocks, false));
+                    //MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
+                    //        new MarkMessage(targets, blocks, false));
                 }
-                if (!level.isClientSide) {
+                if (!level.isClientSide) {//TODO: Figure out x rotation and movecontrol: See discord notes
                     if (Mth.abs((float) vec3.y) < 1.0E-4) {
-                        setXRot(Mth.rotlerp(getXRot(), 0, 0.2f));
+                        //setXRot(Mth.rotLerp(0.2f, getXRot(), 0));
                     } else if (vec3.length() > Mth.EPSILON) {
                         float angle = (float) (Math.atan2(vec3.y, vec3.horizontalDistance()) * Mth.RAD_TO_DEG);
-                        setXRot(angle * 0.5f);
+                        //setXRot(angle * 0.5f);
                     }
                 }
                 Vec3 move = position().subtract(xo, yo, zo);
@@ -240,7 +230,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         if (!level.isClientSide) {
             if (isInWater() && useSwimAI() && isLandNavigator) {
                 switchNavigator(false);
-            } else if (!isInWater() && !useSwimAI() && !isLandNavigator) {
+            } else if (!isInWater() && isOnGround() && !useSwimAI() && !isLandNavigator) {
                 switchNavigator(true);
             }
             if (isInWater() && (isOrderedToSit() || isSleeping())) {
@@ -275,7 +265,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     protected void handleAirSupply(int airSupply) {
-        if (!canBreatheOnLand() && isAlive() && !isInWaterOrBubble()) {
+        if (!canBreatheOnLand() && isAlive() && !isInWaterOrBubble() && !isNoAi()) {
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -40) {
                 setAirSupply(0);
@@ -320,7 +310,16 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         }
         LivingEntity rider = (LivingEntity) getControllingPassenger();
         if (rider == null || !canBeControlledByRider() || !steering.trySteer(rider)) {
-            super.travel(travelVector);
+            if (isEffectiveAi() && isInWater()) {
+                moveRelative(getSpeed(), travelVector);
+                move(MoverType.SELF, getDeltaMovement());
+                setDeltaMovement(getDeltaMovement().scale(0.9));
+                if (getTarget() == null && level.getFluidState(blockPosition().below()).is(FluidTags.WATER)) {
+                    setDeltaMovement(getDeltaMovement().add(0.0, -0.005, 0.0));
+                }
+            } else {
+                super.travel(travelVector);
+            }
             return;
         }
         if (!isInWater()) {
@@ -427,27 +426,56 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
         @Override
         protected @NotNull PathFinder createPathFinder(int maxVisitedNodes) {
-            nodeEvaluator = new LargeSwimNodeEvaluator(((PrehistoricSwimming) mob).doesBreachAttack());
+            nodeEvaluator = new SwimNodeEvaluator(true);
             return new PathFinder(nodeEvaluator, maxVisitedNodes);
-        }
-
-        @Override
-        protected @NotNull Vec3 getTempMobPos() {
-            return super.getTempMobPos();
-            //return new Vec3(mob.getX(), mob.getY() + 0.49, mob.getZ());
-        }
-
-        @Override
-        protected boolean canMoveDirectly(Vec3 posVec31, Vec3 posVec32) {
-            Vec3 vec3 = new Vec3(posVec32.x, posVec32.y + 0.49, posVec32.z);
-            return level.clip(new ClipContext(posVec31, vec3, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, mob)).getType() == HitResult.Type.MISS;
         }
     }
 
     static class SwimmingMoveControl extends SmoothSwimmingMoveControl {
 
         public SwimmingMoveControl(Mob mob) {
-            super(mob, 90, 10, 0.02F, 0, true);
+            super(mob, 90, 10, 0.2F, 0, false);
+        }
+
+        @Override
+        public void tick() {
+            if (operation == Operation.MOVE_TO && !mob.getNavigation().isDone()) {
+                double x = wantedX - mob.getX();
+                double y = wantedY - mob.getY();
+                double z = wantedZ - mob.getZ();
+                double dist = x * x + y * y + z * z;
+                if (dist < 2.500000277905201E-7) {
+                    mob.setZza(0.0F);
+                } else {
+                    float h = (float)(Mth.atan2(z, x) * Mth.RAD_TO_DEG) - 90.0F;
+                    mob.setYRot(rotlerp(mob.getYRot(), h, 10));
+                    mob.yBodyRot = mob.getYRot();
+                    mob.yHeadRot = mob.getYRot();
+                    float i = (float)(speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    if (mob.isInWater()) {
+                        mob.setSpeed(i * 0.2f);
+                        double horDist = Math.sqrt(x * x + z * z);
+                        float k;
+                        if (Math.abs(y) > 9.999999747378752E-6 || Math.abs(horDist) > 9.999999747378752E-6) {
+                            k = -((float)(Mth.atan2(y, horDist) * Mth.RAD_TO_DEG));
+                            k = Mth.clamp(Mth.wrapDegrees(k),(-90), 90);
+                            mob.setXRot(rotlerp(mob.getXRot(), k, 5.0F));
+                        }
+                        k = Mth.cos(mob.getXRot() * Mth.DEG_TO_RAD);
+                        float l = Mth.sin(mob.getXRot() * Mth.DEG_TO_RAD);
+                        mob.zza = k * i;
+                        mob.yya = (float) (y/dist * i);
+                    } else {
+                        mob.setSpeed(i * 0.2f);
+                    }
+
+                }
+            } else {
+                mob.setSpeed(0.0F);
+                mob.setXxa(0.0F);
+                mob.setYya(0.0F);
+                mob.setZza(0.0F);
+            }
         }
     }
 }

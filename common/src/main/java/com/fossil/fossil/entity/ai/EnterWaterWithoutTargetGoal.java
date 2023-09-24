@@ -41,7 +41,7 @@ public class EnterWaterWithoutTargetGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        return false;
+        return !dino.getNavigation().isDone() && !dino.isVehicle();
     }
 
     @Override
@@ -54,7 +54,7 @@ public class EnterWaterWithoutTargetGoal extends Goal {
         Random random = dino.getRandom();
         if (dino.getTarget() == null || dino.getTarget().isDeadOrDying()) {
             for (int i = 0; i < 20; i++) {
-                mutableBlockPos.set(random.nextInt(16) - 7, random.nextInt(8) - 4, random.nextInt(16) - 7);
+                mutableBlockPos.setWithOffset(dino.blockPosition(), random.nextInt(16) - 7, random.nextInt(8) - 4, random.nextInt(16) - 7);
                 if (dino.level.getFluidState(mutableBlockPos).is(FluidTags.WATER)) {//TODO: Raytrace
                     targetPos = mutableBlockPos.immutable();
                     return true;
