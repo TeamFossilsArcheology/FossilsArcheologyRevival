@@ -54,7 +54,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Mammoth>> MAMMOTH = registerDino("mammoth", Mammoth::new, 1.2f, 0.7f);
     public static final RegistrySupplier<EntityType<Megalania>> MEGALANIA = registerDino("megalania", Megalania::new, 2.1f, 1.2f);
     public static final RegistrySupplier<EntityType<Megaloceros>> MEGALOCEROS = registerDino("megaloceros", Megaloceros::new, 1.9f, 1.7f);
-    public static final RegistrySupplier<EntityType<Megalodon>> MEGALODON = registerDino("megalodon", Megalodon::new, 4, 2);
+    public static final RegistrySupplier<EntityType<Megalodon>> MEGALODON = registerDino("megalodon", Megalodon::new, 3.7f, 1.1f);
     public static final RegistrySupplier<EntityType<Megalograptus>> MEGALOGRAPTUS = registerDino("megalograptus", Megalograptus::new, 0.9f, 0.5f);
     public static final RegistrySupplier<EntityType<Meganeura>> MEGANEURA = registerDino("meganeura", Meganeura::new, 0.5f, 0.5f);
     public static final RegistrySupplier<EntityType<Mosasaurus>> MOSASAURUS = registerDino("mosasaurus", Mosasaurus::new, 1.5f, 0.6f);
