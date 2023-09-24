@@ -39,7 +39,7 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
         goalSelector.addGoal(1, new LeaveWaterWithoutTargetGoal(this, 1));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));

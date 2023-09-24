@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.fossil.fossil.entity.ai.navigation.LargeSwimNodeEvaluator;
 import com.fossil.fossil.network.MessageHandler;
@@ -16,6 +17,7 @@ import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -49,6 +51,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected int breachCooldown = 0;
     protected boolean isGoingDownAfterBreach = false;
     private Vec3 targetPos;
+    protected long grabStartTick;
 
     public PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
         super(entityType, level, isMultiPart);
@@ -154,7 +157,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
         if (doesBreachAttack()) {
             if (getTarget() != null) {
-                if (canReachPrey() && isBreaching()) {
+                if (canReachPrey(getTarget()) && isBreaching()) {
                     isGoingDownAfterBreach = true;
                     setBreaching(false);
                 }
@@ -240,21 +243,34 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             } else if (!isInWater() && !useSwimAI() && !isLandNavigator) {
                 switchNavigator(true);
             }
-        }
+            if (isInWater() && (isOrderedToSit() || isSleeping())) {
+                setOrderedToSit(false);
+                setSleeping(false);
+            }
+            if (isInWater()) {
+                timeInWater++;
+                timeOnLand = 0;
+            } else if (onGround) {
+                timeInWater = 0;
+                timeOnLand++;
+            }
 
-        if (isInWater() && (isOrderedToSit() || isSleeping())) {
-            setOrderedToSit(false);
-            setSleeping(false);
-        }
-        if (getRidingPlayer() != null && isInWater()) {
-
-        }
-        if (isInWater()) {
-            timeInWater++;
-            timeOnLand = 0;
-        } else if (onGround) {
-            timeInWater = 0;
-            timeOnLand++;
+            for (Entity passenger : getPassengers()) {
+                if (passenger instanceof LivingEntity && passenger != getRidingPlayer()) {
+                    if (passenger instanceof ToyBase toy && level.getGameTime() == grabStartTick + 55) {
+                        passenger.stopRiding();
+                        setTarget(null);
+                        moodSystem.useToy(toy.moodBonus);
+                    } else {
+                        if (tickCount % 20 == 0) {
+                            passenger.hurt(DamageSource.mobAttack(this), (float) getAttributeValue(Attributes.ATTACK_DAMAGE) * 2);
+                            if (random.nextInt(5) > 0) {
+                                passenger.stopRiding();
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
@@ -268,6 +284,25 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         } else {
             setAirSupply(500);
         }
+    }
+
+    @Override
+    public void positionRider(Entity passenger) {
+        super.positionRider(passenger);
+        if (passenger instanceof LivingEntity && passenger != getRidingPlayer()) {//TODO: Need animations
+            float t = 5 * Mth.sin(Mth.PI + tickCount * 0.275f);
+            float radius = 0.35f * 0.7f * getScale() * -3;
+            float angle = Mth.DEG_TO_RAD * yBodyRot + 3.15f + t * 1.75f * 0.05f;
+            double extraX = radius * Mth.sin(Mth.PI + angle);
+            double extraY = 0.065 * getScale();
+            double extraZ = radius * Mth.cos(angle);
+            passenger.setPos(getX() + extraX, getY() + extraY, getZ() + extraZ);
+        }
+    }
+
+    public void startGrabAttack(LivingEntity enemy) {
+        enemy.startRiding(this);
+        grabStartTick = level.getGameTime();
     }
 
     @Override
@@ -334,15 +369,15 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return false;
     }
 
-    protected void destroyBoat(Entity targetSailor) {
+    public void destroyBoat(Entity targetSailor) {
         if (targetSailor.getVehicle() instanceof Boat boat && !level.isClientSide) {
             boat.kill();
             if (level.getGameRules().getBoolean(GameRules.RULE_DOENTITYDROPS)) {
                 int i;
-                for (i = 0; i < 3; ++i) {
+                for (i = 0; i < 3; i++) {
                     spawnAtLocation(boat.getBoatType().getPlanks());
                 }
-                for (i = 0; i < 2; ++i) {
+                for (i = 0; i < 2; i++) {
                     spawnAtLocation(Items.STICK);
                 }
             }

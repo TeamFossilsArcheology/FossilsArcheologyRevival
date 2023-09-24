@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.item.ModItems;
@@ -27,7 +26,6 @@ public class Megalodon extends PrehistoricSwimming {
     public static final String SWIM_FAST = "animation.megalodon.swim_fast";
     public static final String EAT = "animation.megalodon.eat";
     public static final String ATTACK = "animation.megalodon.attack";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("megalodon");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Megalodon(EntityType<Megalodon> entityType, Level level) {
@@ -44,7 +42,7 @@ public class Megalodon extends PrehistoricSwimming {
         super.registerGoals();
         goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
         goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new RandomSwimmingGoal(this, 1.0, 10));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));

@@ -13,6 +13,8 @@ import com.fossil.fossil.entity.animation.AttackAnimationLogic;
 import com.fossil.fossil.entity.data.AI;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.data.Stat;
+import com.fossil.fossil.entity.prehistoric.Deinonychus;
+import com.fossil.fossil.entity.prehistoric.Velociraptor;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.SyncActiveAnimationMessage;
@@ -1382,16 +1384,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
-        if (passenger instanceof Mob mob) {
-            this.yBodyRot = mob.yBodyRot;
+        if (hasPassenger(passenger) && passenger instanceof Mob mob) {
+            yBodyRot = mob.yBodyRot;
         }
         Player rider = getRidingPlayer();
-        if (isOwnedBy(rider) && getTarget() != rider) {
+        if (rider != null && isOwnedBy(rider) && getTarget() != rider) {
             float radius = ridingXZ * 0.7f * getScale() * -3;
             float angle = (Mth.DEG_TO_RAD * yBodyRot);
             double extraX = radius * Mth.sin((float) (Math.PI + angle));
             double extraZ = radius * Mth.cos(angle);
             rider.setPos(getX() + extraX, getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ() + extraZ);
+        }
+        if (passenger instanceof Velociraptor || passenger instanceof Deinonychus) {
+            //TODO: Offset for leap attack
         }
     }
 
@@ -1413,8 +1418,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return null;
     }
 
-    public boolean canReachPrey() {
-        return getTarget() != null && getAttackBounds().intersects(getTarget().getBoundingBox()) && !isPreyBlocked(getTarget());
+    public boolean canReachPrey(Entity target) {
+        return getAttackBounds().intersects(target.getBoundingBox()) && !isPreyBlocked(target);
     }
 
     public boolean isPreyBlocked(Entity prey) {

@@ -18,7 +18,7 @@ import java.util.Collections;
 
 public abstract class ToyBase extends LivingEntity {
 
-    protected final int moodBonus;
+    public final int moodBonus;
     protected final SoundEvent attackNoise;
 
     protected ToyBase(EntityType<? extends ToyBase> type, Level level, int moodBonus, SoundEvent attackNoise) {

@@ -45,7 +45,7 @@ public class Mosasaurus extends PrehistoricSwimming {
         super.registerGoals();
         goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
         goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
