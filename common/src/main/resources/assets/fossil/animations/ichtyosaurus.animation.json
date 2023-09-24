@@ -1368,12 +1368,6 @@
 					"scale": [0.9, 0.9, 1]
 				}
 			}
-		},
-		"animation.ichtyosaurus.new": {
-			"loop": true
-		},
-		"animation.ichtyosaurus.new2": {
-			"loop": true
 		}
 	},
 	"geckolib_format_version": 2
