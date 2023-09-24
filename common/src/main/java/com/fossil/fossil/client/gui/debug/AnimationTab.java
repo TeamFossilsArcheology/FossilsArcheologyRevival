@@ -2,7 +2,6 @@ package com.fossil.fossil.client.gui.debug;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.AnimationMessage;
 import com.fossil.fossil.network.debug.RotationMessage;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.platform.Lighting;
@@ -158,9 +157,11 @@ public class AnimationTab extends DebugTab {
         private class AnimationEntry extends ContainerObjectSelectionList.Entry<AnimationEntry> {
             private final Button changeButton;
 
-            AnimationEntry(int id, String text) {
+            AnimationEntry(int id, String text) {//TODO: For now only clientside. Maybe add a server flag for forced animations with a reset here?
                 changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
-                    MessageHandler.DEBUG_CHANNEL.sendToServer(new AnimationMessage(currentController, id, button.getMessage().getContents()));
+                    if (entity instanceof PrehistoricAnimatable prehistoric) {
+                        prehistoric.addActiveAnimation(currentController, prehistoric.getAllAnimations().get(button.getMessage().getContents()));
+                    }
                 });
             }
 
