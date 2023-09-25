@@ -103,7 +103,6 @@ public class Anubite extends PathfinderMob {
 
     @Override
     public boolean doHurtTarget(Entity target) {
-        super.doHurtTarget(target);//TODO: Should this be called twice?
         if (random.nextInt(5) == 0) {
             teleportRandomly();
         }

@@ -35,7 +35,6 @@ public class TarSlime extends Slime {
 
     @Override
     protected @NotNull ParticleOptions getParticleType() {
-        //TODO: Used to be depthsuspend but that one does not exist anymore
         return ModBlockEntities.TAR_BUBBLE.get();
     }
 
@@ -51,7 +50,7 @@ public class TarSlime extends Slime {
 
     @Override
     public float getVoicePitch() {
-        return 0.5f * ((random.nextFloat() - random.nextFloat()) * 0.2f + 1) / 0.8f;
+        return 0.5f + super.getVoicePitch();
     }
 
     @Override
@@ -67,41 +66,39 @@ public class TarSlime extends Slime {
 
     @Override
     public void remove(RemovalReason reason) {
-        int i = this.getSize();
-        if (!this.level.isClientSide && i > 1 && this.isDeadOrDying()) {
-            Component component = this.getCustomName();
-            boolean bl = this.isNoAi();
+        int i = getSize();
+        if (!level.isClientSide && i > 1 && isDeadOrDying()) {
+            Component component = getCustomName();
+            boolean bl = isNoAi();
             float f = (float) i / 4.0f;
             int j = i / 2;
-            int k = 2 + this.random.nextInt(3);
+            int k = 2 + random.nextInt(3);
             for (int l = 0; l < k; ++l) {
                 float g = ((float) (l % 2) - 0.5f) * f;
                 float h = ((float) (l / 2) - 0.5f) * f;
-                TarSlime slime = ModEntities.TAR_SLIME.get().create(this.level);
+                TarSlime slime = ModEntities.TAR_SLIME.get().create(level);
                 if (getSharedFlag(0)) {
                     slime.setSecondsOnFire(15);
                 }
-                if (this.isPersistenceRequired()) {
+                if (isPersistenceRequired()) {
                     slime.setPersistenceRequired();
                 }
                 slime.setCustomName(component);
                 slime.setNoAi(bl);
-                slime.setInvulnerable(this.isInvulnerable());
+                slime.setInvulnerable(isInvulnerable());
                 slime.setSize(j, true);
-                slime.moveTo(this.getX() + (double) g, this.getY() + 0.5, this.getZ() + (double) h, this.random.nextFloat() * 360.0f, 0.0f);
-                this.level.addFreshEntity(slime);
+                slime.moveTo(getX() + (double) g, getY() + 0.5, getZ() + (double) h, random.nextFloat() * 360.0f, 0.0f);
+                level.addFreshEntity(slime);
             }
         }
-        //Skip Slime#remove
-        this.setRemoved(reason);
+        setRemoved(reason);
         if (reason == RemovalReason.KILLED) {
-            this.gameEvent(GameEvent.ENTITY_KILLED);
+            gameEvent(GameEvent.ENTITY_KILLED);
         }
     }
 
     @Override
     protected void decreaseSquish() {
-        targetSquish *= 1;
     }
 
     @Override
@@ -149,13 +146,13 @@ public class TarSlime extends Slime {
         float f = getBbWidth() * 0.8f;
         AABB aABB = AABB.ofSize(getEyePosition(), f, 1.0E-6, f);
         return BlockPos.betweenClosedStream(aABB).anyMatch(blockPos -> {
-            BlockState blockState = level.getBlockState(blockPos);
-            if (blockState.is(ModBlocks.TAR.get())) {
+            BlockState state = level.getBlockState(blockPos);
+            if (state.is(ModBlocks.TAR.get())) {
                 return false;
             }
-            return !blockState.isAir() && blockState.isSuffocating(this.level, blockPos) && Shapes.joinIsNotEmpty(
-                    blockState.getCollisionShape(this.level,
-                            blockPos).move(blockPos.getX(), blockPos.getY(), blockPos.getZ()), Shapes.create(aABB), BooleanOp.AND);
+            return !state.isAir() && state.isSuffocating(level, blockPos) && Shapes.joinIsNotEmpty(
+                    state.getCollisionShape(level, blockPos).move(blockPos.getX(), blockPos.getY(), blockPos.getZ()),
+                    Shapes.create(aABB), BooleanOp.AND);
         });
     }
 }
