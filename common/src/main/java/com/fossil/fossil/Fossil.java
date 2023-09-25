@@ -10,10 +10,7 @@ import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.material.ModFluids;
-import com.fossil.fossil.network.MammalCapMessage;
-import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.SyncActiveAnimationMessage;
-import com.fossil.fossil.network.SyncEntityInfoMessage;
+import com.fossil.fossil.network.*;
 import com.fossil.fossil.network.debug.*;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
@@ -72,6 +69,7 @@ public class Fossil {
         MessageHandler.CAP_CHANNEL.register(MammalCapMessage.class, MammalCapMessage::write, MammalCapMessage::new, MammalCapMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(SyncEntityInfoMessage.class, SyncEntityInfoMessage::write, SyncEntityInfoMessage::new, SyncEntityInfoMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(SyncActiveAnimationMessage.class, SyncActiveAnimationMessage::write, SyncActiveAnimationMessage::new, SyncActiveAnimationMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(SyncToyAnimationMessage.class, SyncToyAnimationMessage::write, SyncToyAnimationMessage::new, SyncToyAnimationMessage::apply);
 
         TimerCallbacks.SERVER_CALLBACKS.register(new DisposableTask.Serializer());
     }

@@ -1,22 +1,34 @@
 package com.fossil.fossil.entity;
 
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.SyncToyAnimationMessage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-public class ToyTetheredLog extends ToyBase {
-    private static final EntityDataAccessor<String> WOOD_TYPE = SynchedEntityData.defineId(ToyTetheredLog.class, EntityDataSerializers.STRING);
+import java.util.List;
 
-    //TODO: Animations
+public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs because its livingentity
+    private static final EntityDataAccessor<String> WOOD_TYPE = SynchedEntityData.defineId(ToyTetheredLog.class, EntityDataSerializers.STRING);
+    public int animationTick;
+    public boolean animationPlaying;
+    public float animationX;
+    public float animationZ;
+
     public ToyTetheredLog(EntityType<ToyTetheredLog> type, Level level) {
         super(type, level, 30, SoundEvents.WOOD_HIT);
     }
@@ -25,6 +37,26 @@ public class ToyTetheredLog extends ToyBase {
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(WOOD_TYPE, WoodType.OAK.name());
+    }
+
+    public void startAnimation(float animationX, float animationZ) {
+        animationTick = 0;
+        animationPlaying = true;
+        this.animationX = animationX;
+        this.animationZ = animationZ;
+    }
+
+    @Override
+    public boolean hurt(DamageSource source, float amount) {
+        boolean hurt = super.hurt(source, amount);
+        if (!hurt && source.getDirectEntity() != null && !level.isClientSide) {
+            Vec3 direction = source.getDirectEntity().position().vectorTo(position());
+            double dist = direction.horizontalDistance();
+            AABB area = getBoundingBox().inflate(16, 16, 16);
+            List<ServerPlayer> players = ((ServerLevel)level).getPlayers(serverPlayer -> area.contains(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ()));
+            MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new SyncToyAnimationMessage(getId(), (float) (direction.z / dist), (float) (direction.x / dist)));
+        }
+        return hurt;
     }
 
     @Override
@@ -38,6 +70,15 @@ public class ToyTetheredLog extends ToyBase {
             discard();
             playSound(attackNoise, getSoundVolume(), getVoicePitch());
         }
+        if (level.isClientSide) {
+            if (animationPlaying) {
+                animationTick++;
+            }
+            if (animationTick >= 26) {
+                animationPlaying = false;
+                animationTick = 0;
+            }
+        }
     }
 
     private boolean isAttachedToBlock() {
@@ -48,7 +89,6 @@ public class ToyTetheredLog extends ToyBase {
     public boolean isPushable() {
         return false;
     }
-
 
     @Nullable
     @Override

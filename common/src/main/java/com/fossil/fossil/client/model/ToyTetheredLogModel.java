@@ -12,6 +12,7 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.level.block.state.properties.WoodType;
 
 import java.util.Map;
@@ -22,6 +23,7 @@ public class ToyTetheredLogModel extends EntityModel<ToyTetheredLog> {
             woodType -> new ResourceLocation(Fossil.MOD_ID, "textures/entity/toy/log_swing_" + woodType.name() + ".png")));
 
     private final ModelPart model = createBodyLayer().bakeRoot();
+    private final ModelPart rope1 = model.getChild("rope1");
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
@@ -37,8 +39,14 @@ public class ToyTetheredLogModel extends EntityModel<ToyTetheredLog> {
     }
 
     @Override
-    public void setupAnim(ToyTetheredLog entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-
+    public void setupAnim(ToyTetheredLog entity, float partialTick, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+        float rot = 0;
+        if (entity.animationPlaying) {
+            float tick = entity.animationTick + partialTick;
+            rot = Mth.sin(1.5f * tick / Mth.PI) / (3.6f + tick / 10);
+        }
+        rope1.xRot = rot * entity.animationX;
+        rope1.zRot = rot * entity.animationZ;
     }
 
     @Override
