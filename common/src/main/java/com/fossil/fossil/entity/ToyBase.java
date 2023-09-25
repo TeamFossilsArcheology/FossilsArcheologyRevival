@@ -8,6 +8,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -28,7 +29,32 @@ public abstract class ToyBase extends LivingEntity {
     }
 
     public static AttributeSupplier.Builder createAttributes() {
-        return createLivingAttributes();
+        return createLivingAttributes().add(Attributes.MOVEMENT_SPEED, 0);
+    }
+
+    protected boolean skipAI() {
+        return true;
+    }
+
+    @Override
+    public void baseTick() {
+        if (!skipAI()) {
+            super.baseTick();
+        }
+    }
+
+    @Override
+    public void aiStep() {
+        if (!skipAI()) {
+            super.aiStep();
+        }
+    }
+
+    @Override
+    public void tick() {
+        if (!skipAI()) {
+            super.tick();
+        }
     }
 
     @Override

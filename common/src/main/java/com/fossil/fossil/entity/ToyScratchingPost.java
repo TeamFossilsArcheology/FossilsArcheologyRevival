@@ -45,6 +45,11 @@ public class ToyScratchingPost extends ToyBase {
     }
 
     @Override
+    public boolean canBeCollidedWith() {
+        return !isDeadOrDying();
+    }
+
+    @Override
     public boolean isPushable() {
         return false;
     }
@@ -77,5 +82,10 @@ public class ToyScratchingPost extends ToyBase {
             woodType = WoodType.OAK.name();
         }
         setWoodType(woodType);
+    }
+
+    @Override
+    public float getVoicePitch() {
+        return super.getVoicePitch() * 0.2f;
     }
 }

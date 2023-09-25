@@ -19,6 +19,7 @@ public class ToyBallRenderer extends LivingEntityRenderer<ToyBall, ToyBallModel>
 
     @Override
     protected void setupRotations(ToyBall entityLiving, PoseStack matrixStack, float ageInTicks, float rotationYaw, float partialTicks) {
+        super.setupRotations(entityLiving, matrixStack, ageInTicks, rotationYaw, partialTicks);
     }
 
     @Override

@@ -86,6 +86,11 @@ public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs becau
     }
 
     @Override
+    public boolean canBeCollidedWith() {
+        return !isDeadOrDying();
+    }
+
+    @Override
     public boolean isPushable() {
         return false;
     }
@@ -118,5 +123,10 @@ public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs becau
             woodType = WoodType.OAK.name();
         }
         setWoodType(woodType);
+    }
+
+    @Override
+    public float getVoicePitch() {
+        return super.getVoicePitch() * 0.2f;
     }
 }
