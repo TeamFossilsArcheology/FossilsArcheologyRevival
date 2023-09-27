@@ -40,11 +40,6 @@ public class AnubiteStatueBlock extends BaseEntityBlock {
         return level.isClientSide ? null : createTickerHelper(blockEntityType, ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueBlockEntity::serverTick);
     }
 
-    @Override
-    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean isMoving) {
-        super.onRemove(state, level, pos, newState, isMoving);
-    }
-
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {

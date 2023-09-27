@@ -40,7 +40,7 @@ public class TarBlock extends ArchitecturyLiquidBlock {
             living.makeStuckInBlock(state, new Vec3(0.1, 1, 0.1));
         } else if (entity instanceof ItemEntity) {
             entity.makeStuckInBlock(state, new Vec3(0.1, 0.1, 0.1));
-            if (Mth.floor(entity.position().y + 0.875D) == pos.getY()) {
+            if (Mth.floor(entity.position().y + 0.875) == pos.getY()) {
                 entity.playSound(SoundEvents.GENERIC_SWIM, 0.4f, 0.6f + level.random.nextFloat() * 0.4f);
                 entity.discard();
             }

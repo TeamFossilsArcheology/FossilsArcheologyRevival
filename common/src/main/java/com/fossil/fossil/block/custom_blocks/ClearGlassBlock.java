@@ -29,9 +29,8 @@ public class ClearGlassBlock extends AbstractGlassBlock implements IDinoUnbreaka
 
     public ClearGlassBlock(Properties properties) {
         super(properties);
-        registerDefaultState(
-                getStateDefinition().any().setValue(NORTH, false).setValue(EAST, false).setValue(SOUTH, false).setValue(WEST, false).setValue(UP,
-                        false).setValue(DOWN, false));
+        registerDefaultState(getStateDefinition().any().setValue(NORTH, false).setValue(EAST, false)
+                .setValue(SOUTH, false).setValue(WEST, false).setValue(UP, false).setValue(DOWN, false));
     }
 
 
