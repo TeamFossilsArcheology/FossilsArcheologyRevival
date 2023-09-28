@@ -1,0 +1,43 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.pachyrhinosaurus.drink": {
+		},
+		"animation.pachyrhinosaurus.ram": {
+		},
+		"animation.pachyrhinosaurus.sleep1": {
+		},
+		"animation.pachyrhinosaurus.idle": {
+		},
+		"animation.pachyrhinosaurus.sit": {
+		},
+		"animation.pachyrhinosaurus.run": {
+		},
+		"animation.pachyrhinosaurus.turn_right": {
+		},
+		"animation.pachyrhinosaurus.jump/fall": {
+		},
+		"animation.pachyrhinosaurus.sleep2": {
+		},
+		"animation.pachyrhinosaurus.speak": {
+		},
+		"animation.pachyrhinosaurus.eat": {
+		},
+		"animation.pachyrhinosaurus.walk": {
+		},
+		"animation.pachyrhinosaurus.swim": {
+		},
+		"animation.pachyrhinosaurus.attack2": {
+			"action_delay": [14]
+		},
+		"animation.pachyrhinosaurus.call": {
+		},
+		"animation.pachyrhinosaurus.turn_left": {
+		},
+		"animation.pachyrhinosaurus.attack1": {
+			"action_delay": [15]
+		},
+		"animation.pachyrhinosaurus.ram_windup": {
+		}
+	}
+}

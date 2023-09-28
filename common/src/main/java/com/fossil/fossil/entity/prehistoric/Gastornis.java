@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
@@ -24,7 +23,7 @@ public class Gastornis extends Prehistoric {
     public static final String ANIMATIONS = "gastornis.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("gastornis");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Gastornis(EntityType<Gastornis> entityType, Level level) {

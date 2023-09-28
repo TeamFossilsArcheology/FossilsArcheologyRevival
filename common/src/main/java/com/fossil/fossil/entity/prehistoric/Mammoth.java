@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
 import com.fossil.fossil.sounds.ModSounds;
@@ -36,7 +35,7 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(Mammoth.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("mammoth");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private int woolRegenTicks;
 

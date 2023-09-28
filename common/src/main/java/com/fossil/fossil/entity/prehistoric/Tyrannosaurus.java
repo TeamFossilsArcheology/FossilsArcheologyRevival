@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
@@ -38,7 +37,7 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     public static final String CALL1 = "animation.tyrannosaurus.call1";
     public static final String ATTACK_NORMAL1 = "animation.tyrannosaurus.attack_normal1";
     public static final String ATTACK_NORMAL2 = "animation.tyrannosaurus.attack_normal2";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("tyrannosaurus");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tyrannosaurus(EntityType<Tyrannosaurus> entityType, Level level) {

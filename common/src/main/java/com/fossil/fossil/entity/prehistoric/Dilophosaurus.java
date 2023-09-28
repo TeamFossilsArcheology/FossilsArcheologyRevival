@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
@@ -42,7 +41,7 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public static final String CALL = "animation.dilophosaurus.call";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     public static final String ATTACK2 = "animation.dilophosaurus.attack2";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("dilophosaurus");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Dilophosaurus(EntityType<Dilophosaurus> type, Level level) {

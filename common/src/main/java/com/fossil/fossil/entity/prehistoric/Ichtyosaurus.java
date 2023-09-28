@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.sounds.ModSounds;
@@ -25,7 +24,7 @@ public class Ichtyosaurus extends PrehistoricSwimming {
     public static final String SWIM_FAST = "animation.ichtyosaurus.swim_fast";
     public static final String EAT = "animation.ichtyosaurus.eat";
     public static final String ATTACK = "animation.ichtyosaurus.attack";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("ichtyosaurus");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Ichtyosaurus(EntityType<Ichtyosaurus> entityType, Level level) {

@@ -4,7 +4,6 @@ import com.fossil.fossil.entity.ai.DinoFollowOwnerGoal;
 import com.fossil.fossil.entity.ai.DinoLookAroundGoal;
 import com.fossil.fossil.entity.ai.DinoMeleeAttackGoal;
 import com.fossil.fossil.entity.ai.DinoWanderGoal;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.sounds.ModSounds;
@@ -27,7 +26,7 @@ public class Confuciusornis extends PrehistoricFlying {
     public static final String ANIMATIONS = "confuciusornis.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("confuciusornis");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Confuciusornis(EntityType<Confuciusornis> entityType, Level level) {

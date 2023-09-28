@@ -18,29 +18,18 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class
-Stegosaurus extends Prehistoric {
-    public static final String ANIMATIONS = "stegosaurus.animation.json";
-    public static final String IDLE = "animation.stegosaurus.idle";
-    public static final String SIT1 = "animation.stegosaurus.sit1";
-    public static final String SIT2 = "animation.stegosaurus.sit2";
-    public static final String SLEEP1 = "animation.stegosaurus.sleep1";
-    public static final String SLEEP2 = "animation.stegosaurus.sleep2";
-    public static final String WALK = "animation.stegosaurus.walk";
-    public static final String RUN = "animation.stegosaurus.run";
-    public static final String JUMP_FALL = "animation.stegosaurus.jump/fall";
-    public static final String SWIM = "animation.stegosaurus.swim";
-    public static final String EAT = "animation.stegosaurus.eat";
-    public static final String TURN_RIGHT = "animation.stegosaurus.turn_right";
-    public static final String TURN_LEFT = "animation.stegosaurus.turn_left";
-    public static final String SPEAK = "animation.stegosaurus.speak";
-    public static final String CALL1 = "animation.stegosaurus.call1";
-    public static final String ATTACK_FRONT1 = "animation.stegosaurus.attack_front1";
-    public static final String ATTACK_FRONT2 = "animation.stegosaurus.attack_front2";
-    
+public class Pachyrhinosaurus extends Prehistoric {
+    public static final String ANIMATIONS = "pachyrhinosaurus.animation.json";
+    public static final String IDLE = "animation.pachyrhinosaurus.idle";
+    public static final String EAT = "animation.pachyrhinosaurus.eat";
+    public static final String WALK = "animation.pachyrhinosaurus.walk";
+    public static final String SWIM = "animation.pachyrhinosaurus.swim";
+    public static final String RUN = "animation.pachyrhinosaurus.run";
+    public static final String ATTACK1 = "animation.pachyrhinosaurus.attack1";
+    public static final String ATTACK2 = "animation.pachyrhinosaurus.attack2";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Stegosaurus(EntityType<Stegosaurus> entityType, Level level) {
+    public Pachyrhinosaurus(EntityType<Pachyrhinosaurus> entityType, Level level) {
         super(entityType, level, false);
     }
 
@@ -52,8 +41,7 @@ Stegosaurus extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new FleeBattleGoal(this, 1));
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(0, new DinoMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
@@ -65,7 +53,7 @@ Stegosaurus extends Prehistoric {
 
     @Override
     public PrehistoricEntityType type() {
-        return PrehistoricEntityType.STEGOSAURUS;
+        return PrehistoricEntityType.PACHYRHINOSAURUS;
     }
 
     @Override
@@ -85,17 +73,39 @@ Stegosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(WALK);
+        String key = WALK;
+        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
+        if (isInWater()) {
+            key = SWIM;
+        } else if (isChasing) {
+            key = RUN;
+        }
+
+        return getAllAnimations().get(key);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(RUN);
+        String key;
+        if (isInWater()) {
+            key = SWIM;
+        } else {
+            key = RUN;
+        }
+        return getAllAnimations().get(key);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK_FRONT1);
+        int random = getRandom().nextInt(2);
+        String key;
+        if (random == 0) {
+            key = ATTACK1;
+        } else {
+            key = ATTACK2;
+        }
+
+        return getAllAnimations().get(key);
     }
 
     @Override
@@ -106,18 +116,18 @@ Stegosaurus extends Prehistoric {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.STEGOSAURUS_AMBIENT.get();
+        return ModSounds.PACHYCEPHALOSAURUS_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.STEGOSAURUS_HURT.get();
+        return ModSounds.PACHYCEPHALOSAURUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.STEGOSAURUS_DEATH.get();
+        return ModSounds.PACHYCEPHALOSAURUS_DEATH.get();
     }
 }

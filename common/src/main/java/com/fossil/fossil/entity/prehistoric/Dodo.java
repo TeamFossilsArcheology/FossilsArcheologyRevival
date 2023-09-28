@@ -4,7 +4,6 @@ import com.fossil.fossil.entity.ai.DinoFollowOwnerGoal;
 import com.fossil.fossil.entity.ai.DinoLookAroundGoal;
 import com.fossil.fossil.entity.ai.DinoMeleeAttackGoal;
 import com.fossil.fossil.entity.ai.DinoWanderGoal;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
@@ -28,7 +27,7 @@ public class Dodo extends Prehistoric {
     public static final String ANIMATIONS = "dodo.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("dodo");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Dodo(EntityType<Dodo> entityType, Level level) {

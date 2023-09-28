@@ -86,6 +86,7 @@ public class ClientInit {
         registerFish(ModEntities.NAUTILUS, "nautilus.geo.json", Nautilus.ANIMATIONS, "nautilus");
         registerDino(ModEntities.ORNITHOLESTES, "ornitholestes.geo.json", Ornitholestes.ANIMATIONS);
         registerDino(ModEntities.PACHYCEPHALOSAURUS, "pachycephalosaurus.geo.json", Pachycephalosaurus.ANIMATIONS);
+        registerDino(ModEntities.PACHYRHINOSAURUS, "pachyrhinosaurus.geo.json", Pachyrhinosaurus.ANIMATIONS);
         registerDino(ModEntities.PARASAUROLOPHUS, "parasaurolophus.geo.json", Parasaurolophus.ANIMATIONS);
         registerDino(ModEntities.PHORUSRHACOS, "phorusrhacos.geo.json", Phorusrhacos.ANIMATIONS);
         registerDino(ModEntities.PLATYBELODON, "platybelodon.geo.json", Platybelodon.ANIMATIONS);

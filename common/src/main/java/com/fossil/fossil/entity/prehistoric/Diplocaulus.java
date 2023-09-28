@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.sounds.ModSounds;
@@ -24,7 +23,6 @@ public class Diplocaulus extends PrehistoricSwimming {
     public static final String SWIM = "animation.diplocaulus.swim";
     public static final String SWIM_FAST = "animation.diplocaulus.swim_fast";
     public static final String LAND = "animation.diplocaulus.dance";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("diplocaulus");
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Diplocaulus(EntityType<Diplocaulus> entityType, Level level) {

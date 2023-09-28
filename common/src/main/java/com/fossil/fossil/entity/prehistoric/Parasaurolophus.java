@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
@@ -29,7 +28,7 @@ public class Parasaurolophus extends Prehistoric {
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     private static final EntityDataAccessor<Boolean> STANDING = SynchedEntityData.defineId(Parasaurolophus.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("parasaurolophus");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private int ticksStanding;
 

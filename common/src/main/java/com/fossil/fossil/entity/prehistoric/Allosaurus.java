@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
@@ -24,7 +23,7 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "allosaurus.animation.json";
     public static final String IDLE = "animation.allosaurus.walk";
     public static final String ATTACK1 = "animation.allosaurus.attack";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("allosaurus");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Allosaurus(EntityType<Allosaurus> entityType, Level level) {

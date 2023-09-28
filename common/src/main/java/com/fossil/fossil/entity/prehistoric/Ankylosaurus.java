@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
@@ -23,7 +22,7 @@ public class Ankylosaurus extends Prehistoric {
     public static final String ANIMATIONS = "ankylosaurus.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    private static final EntityDataManager.Data data = EntityDataManager.ENTITY_DATA.getData("ankylosaurus");
+    
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Ankylosaurus(EntityType<Ankylosaurus> entityType, Level level) {
