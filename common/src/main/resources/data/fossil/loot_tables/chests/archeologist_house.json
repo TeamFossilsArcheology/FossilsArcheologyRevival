@@ -8,11 +8,6 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "weight": 5,
-          "name": "fossil:figurine_mysterious"
-        },
-        {
-          "type": "minecraft:item",
           "weight": 1,
           "name": "fossil:scarab_gem"
         },

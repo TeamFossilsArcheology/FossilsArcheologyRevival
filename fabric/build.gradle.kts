@@ -88,6 +88,8 @@ dependencies {
     // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury-fabric:${architecturyVersion}")
     modRuntimeOnly("curse.maven:modmenu-308702:4145213")
+    modImplementation("maven.modrinth:Wd844r7Q:1.18.2-02")//Structurized Reborn
+    include("maven.modrinth:Wd844r7Q:1.18.2-02")
     //modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:${clothConfigVersion}")
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.80")

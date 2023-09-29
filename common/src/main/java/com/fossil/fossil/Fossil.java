@@ -19,6 +19,7 @@ import com.fossil.fossil.villager.ModVillagers;
 import com.fossil.fossil.world.dimension.ModDimensions;
 import com.fossil.fossil.world.feature.ModFeatures;
 import com.fossil.fossil.world.feature.structures.ModStructures;
+import com.fossil.fossil.world.feature.village.ModVillages;
 import com.mojang.logging.LogUtils;
 import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.server.packs.PackType;
@@ -47,6 +48,7 @@ public class Fossil {
         ModBlockEntities.register();
         ModFeatures.register();
         ModStructures.register();
+        ModVillages.register();
         ModDimensions.register();
         ModRecipes.register();
         LOGGER.info("After a billion years");

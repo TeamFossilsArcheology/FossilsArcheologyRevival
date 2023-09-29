@@ -5,10 +5,10 @@
     {
       "weight": 1,
       "element": {
-        "element_type": "minecraft:single_pool_element",
+        "location": "fossil:houses/archeologist_house_plains_base",
         "processors": "minecraft:empty",
         "projection": "rigid",
-        "location": "fossil:archeologist_house_plains_base"
+        "element_type": "minecraft:single_pool_element"
       }
     }
   ]

@@ -17,3 +17,5 @@ accessible field net/minecraft/world/entity/Entity portalEntrancePos Lnet/minecr
 accessible field net/minecraft/world/level/chunk/ChunkGenerator ringPositions Ljava/util/Map;
 accessible field net/minecraft/world/level/chunk/ChunkGenerator placementsForFeature Ljava/util/Map;
 accessible field net/minecraft/world/level/chunk/ChunkGenerator hasGeneratedPositions Z
+accessible class net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$PieceState
+accessible method net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$PieceState <init> (Lnet/minecraft/world/level/levelgen/structure/PoolElementStructurePiece;Lorg/apache/commons/lang3/mutable/MutableObject;I)V
