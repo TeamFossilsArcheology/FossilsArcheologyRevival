@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:village",
+  "biomes": "#fossil:has_structure/tar_site",
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "config": {
+    "start_pool": "fossil:tar_site/starts_a",
+    "size": 3
+  }
+}
