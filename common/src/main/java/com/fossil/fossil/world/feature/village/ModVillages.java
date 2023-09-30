@@ -16,16 +16,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ModVillages {
-    public static final Tuple ARCHEOLOGIST_HOUSE_DESERT = createStructure("houses/archeologist_house_desert", 15);
-    public static final Tuple PALEONTOLOGIST_HOUSE_DESERT = createStructure("houses/archeologist_house_desert", 15);
-    public static final Tuple ARCHEOLOGIST_HOUSE_PLAINS = createStructure("houses/archeologist_house_plains_top", 15);
-    public static final Tuple PALEONTOLOGIST_HOUSE_PLAINS = createStructure("houses/archeologist_house_plains_top", 15);
-    public static final Tuple ARCHEOLOGIST_HOUSE_SAVANNA = createStructure("houses/archeologist_house_savanna", 15);
-    public static final Tuple PALEONTOLOGIST_HOUSE_SAVANNA = createStructure("houses/archeologist_house_savanna", 15);
-    public static final Tuple ARCHEOLOGIST_HOUSE_SNOWY = createStructure("houses/archeologist_house_snowy", 15);
-    public static final Tuple PALEONTOLOGIST_HOUSE_SNOWY = createStructure("houses/archeologist_house_snowy", 15);
-    public static final Tuple ARCHEOLOGIST_HOUSE_TAIGA = createStructure("houses/archeologist_house_taiga_top", 15);
-    public static final Tuple PALEONTOLOGIST_HOUSE_TAIGA = createStructure("houses/archeologist_house_taiga_top", 15);
+    public static final Tuple ARCHEOLOGIST_HOUSE_DESERT = createStructure("houses/archeo_house_desert", 15);
+    public static final Tuple PALEONTOLOGIST_HOUSE_DESERT = createStructure("houses/paleo_house_desert", 15);
+    public static final Tuple ARCHEOLOGIST_HOUSE_PLAINS = createStructure("houses/archeo_house_plains_top", 15);
+    public static final Tuple PALEONTOLOGIST_HOUSE_PLAINS = createStructure("houses/paleo_house_plains_top", 15);
+    public static final Tuple ARCHEOLOGIST_HOUSE_SAVANNA = createStructure("houses/archeo_house_savanna", 15);
+    public static final Tuple PALEONTOLOGIST_HOUSE_SAVANNA = createStructure("houses/paleo_house_savanna", 15);
+    public static final Tuple ARCHEOLOGIST_HOUSE_SNOWY = createStructure("houses/archeo_house_snowy", 15);
+    public static final Tuple PALEONTOLOGIST_HOUSE_SNOWY = createStructure("houses/paleo_house_snowy", 15);
+    public static final Tuple ARCHEOLOGIST_HOUSE_TAIGA = createStructure("houses/archeo_house_taiga_top", 15);
+    public static final Tuple PALEONTOLOGIST_HOUSE_TAIGA = createStructure("houses/paleo_house_taiga", 15);
     private static final ResourceKey<StructureProcessorList> EMPTY_PROCESSOR_LIST_KEY = ResourceKey.create(
             Registry.PROCESSOR_LIST_REGISTRY, new ResourceLocation("minecraft", "empty"));
 

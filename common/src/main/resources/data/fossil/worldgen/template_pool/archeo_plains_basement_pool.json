@@ -1,11 +1,11 @@
 {
-  "name": "fossil:archeo_plains/basement_pool",
+  "name": "fossil:archeo_plains_basement_pool",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "fossil:houses/archeologist_house_plains_base",
+        "location": "fossil:houses/archeo_house_plains_base",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"

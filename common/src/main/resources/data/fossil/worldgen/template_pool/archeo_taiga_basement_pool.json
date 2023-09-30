@@ -1,11 +1,11 @@
 {
-  "name": "fossil:archeo_taiga/basement_pool",
+  "name": "fossil:archeo_taiga_basement_pool",
   "fallback": "minecraft:empty",
   "elements": [
     {
       "weight": 1,
       "element": {
-        "location": "fossil:houses/archeologist_house_taiga_base",
+        "location": "fossil:houses/archeo_house_taiga_base",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
