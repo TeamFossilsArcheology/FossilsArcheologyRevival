@@ -10,7 +10,6 @@ import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -26,9 +25,9 @@ import java.util.Random;
 public class TarFluid {
 
     private static void animateParticle(Level level, BlockPos pos, FluidState state, Random random) {
-        if (random.nextInt(3) == 0) {
+        if (random.nextInt(5) == 0 && level.isEmptyBlock(pos.above())) {
             double posX = pos.getX() + random.nextDouble();
-            double posY = pos.getY() + Mth.absMax(1 - state.getHeight(level, pos), 0.25f);
+            double posY = pos.getY() + 1;
             double posZ = pos.getZ() + random.nextDouble();
             double speedX = (random.nextDouble() - 0.5D) * 0.3D;
             double speedY = 0.3D * random.nextDouble() + 0.2D;
