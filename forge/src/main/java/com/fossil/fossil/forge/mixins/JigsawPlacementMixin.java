@@ -1,5 +1,6 @@
 package com.fossil.fossil.forge.mixins;
 
+import com.fossil.fossil.Fossil;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -58,19 +59,20 @@ public abstract class JigsawPlacementMixin {
     @Final
     @Shadow
     private List<? super PoolElementStructurePiece> pieces;
-    
+
     @Inject(method = "tryPlacingChildren", at = @At(value = "HEAD"), cancellable = true)
-    private void addPartEntities(PoolElementStructurePiece poolElementStructurePiece, MutableObject<VoxelShape> mutableObject, int i, boolean bl, LevelHeightAccessor levelHeightAccessor, CallbackInfo ci) {
+    private void addPartEntities(PoolElementStructurePiece structurePiece, MutableObject<VoxelShape> mutableObject, int depth, boolean bl, LevelHeightAccessor levelHeightAccessor, CallbackInfo ci) {
         //Only run for our houses with a basement
-        if (poolElementStructurePiece.getElement() instanceof SinglePoolElement singlePoolElement && singlePoolElement.toString().contains("archeologist") && singlePoolElement.toString().contains("top")) {
+        String name = structurePiece.getElement().toString();
+        if (name.contains(Fossil.MOD_ID) && (name.contains("house_taiga_top") || name.contains("house_plains_top") || name.contains("tent_option"))) {
             ci.cancel();
-            StructurePoolElement structurePoolElement = poolElementStructurePiece.getElement();
-            BlockPos baseStructurePosition = poolElementStructurePiece.getPosition();
-            Rotation baseStructureRotation = poolElementStructurePiece.getRotation();
+            StructurePoolElement structurePoolElement = structurePiece.getElement();
+            BlockPos baseStructurePosition = structurePiece.getPosition();
+            Rotation baseStructureRotation = structurePiece.getRotation();
             StructureTemplatePool.Projection projection = structurePoolElement.getProjection();
             boolean baseIsRigid = projection == StructureTemplatePool.Projection.RIGID;
             MutableObject<VoxelShape> mutableObject2 = new MutableObject<>();
-            BoundingBox baseStructureBoundingBox = poolElementStructurePiece.getBoundingBox();
+            BoundingBox baseStructureBoundingBox = structurePiece.getBoundingBox();
             int baseMinY = baseStructureBoundingBox.minY();
             block0:
             for (StructureTemplate.StructureBlockInfo baseStructureJigSaw : structurePoolElement.getShuffledJigsawBlocks(structureManager, baseStructurePosition, baseStructureRotation, random)) {
@@ -100,7 +102,7 @@ public abstract class JigsawPlacementMixin {
                     mutableObject3 = mutableObject;
                 }
                 ArrayList<StructurePoolElement> list = Lists.newArrayList();
-                if (i != maxDepth) {
+                if (depth != maxDepth) {
                     list.addAll(baseTargetPool.get().getShuffledTemplates(this.random));
                 }
                 list.addAll(baseFallbackPool.get().getShuffledTemplates(this.random));
@@ -150,11 +152,11 @@ public abstract class JigsawPlacementMixin {
                                 boundingBox4.encapsulate(new BlockPos(boundingBox4.minX(), boundingBox4.minY() + s, boundingBox4.minZ()));
                             }
                             //Skip shape test for basement because that one always fails
-                            if (!targetElement.toString().contains("base") && Shapes.joinIsNotEmpty(mutableObject3.getValue(), Shapes.create(AABB.of(boundingBox4).deflate(0.25)), BooleanOp.ONLY_SECOND)) {
+                            if (!(targetElement.toString().contains("base") || targetElement.toString().contains("tent")) && Shapes.joinIsNotEmpty(mutableObject3.getValue(), Shapes.create(AABB.of(boundingBox4).deflate(0.25)), BooleanOp.ONLY_SECOND)) {
                                 continue;
                             }
                             mutableObject3.setValue(Shapes.joinUnoptimized(mutableObject3.getValue(), Shapes.create(AABB.of(boundingBox4)), BooleanOp.ONLY_FIRST));
-                            s = poolElementStructurePiece.getGroundLevelDelta();
+                            s = structurePiece.getGroundLevelDelta();
                             int t = targetIsRigid ? s - p : targetElement.getGroundLevelDelta();
                             PoolElementStructurePiece targetStructurePiece = factory.create(this.structureManager, targetElement, blockPos6, t, targetElementRotation, boundingBox4);
                             if (baseIsRigid) {
@@ -167,11 +169,11 @@ public abstract class JigsawPlacementMixin {
                                 }
                                 u = l + p / 2;
                             }
-                            poolElementStructurePiece.addJunction(new JigsawJunction(expectedJigsawPosition.getX(), u - k + s, expectedJigsawPosition.getZ(), p, targetProjection));
+                            structurePiece.addJunction(new JigsawJunction(expectedJigsawPosition.getX(), u - k + s, expectedJigsawPosition.getZ(), p, targetProjection));
                             targetStructurePiece.addJunction(new JigsawJunction(baseJigsawPosition.getX(), u - targetJigsawY + t, baseJigsawPosition.getZ(), -p, projection));
                             pieces.add(targetStructurePiece);
-                            if (i + 1 > this.maxDepth) continue block0;
-                            placing.addLast(new JigsawPlacement.PieceState(targetStructurePiece, mutableObject3, i + 1));
+                            if (depth + 1 > this.maxDepth) continue block0;
+                            placing.addLast(new JigsawPlacement.PieceState(targetStructurePiece, mutableObject3, depth + 1));
                             continue block0;
                         }
                     }
