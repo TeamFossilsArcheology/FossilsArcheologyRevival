@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:village",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:savanna",
+    "minecraft:swamp"
+  ],
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "config": {
+    "start_pool": "fossil:tar_site/start_large",
+    "size": 2
+  }
+}

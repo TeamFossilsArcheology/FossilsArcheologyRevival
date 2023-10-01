@@ -1,0 +1,26 @@
+{
+  "structures": [
+    {
+      "structure": "fossil:fossil_site_desert",
+      "weight": 1
+    },
+    {
+      "structure": "fossil:fossil_site_badlands",
+      "weight": 1
+    },
+    {
+      "structure": "fossil:fossil_site_normal",
+      "weight": 1
+    },
+    {
+      "structure": "fossil:fossil_site_snowy",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 5,
+    "separation": 2,
+    "salt": 1637066178
+  }
+}

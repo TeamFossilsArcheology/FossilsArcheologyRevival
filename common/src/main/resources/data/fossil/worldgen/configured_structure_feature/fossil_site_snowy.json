@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:village",
+  "biomes": [
+    "minecraft:snowy_taiga",
+    "minecraft:snowy_plains"
+  ],
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "config": {
+    "start_pool": "fossil:fossil_site/start_snowy",
+    "size": 2
+  }
+}

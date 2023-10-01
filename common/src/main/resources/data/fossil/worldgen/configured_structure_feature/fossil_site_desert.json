@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:village",
+  "biomes": [
+    "minecraft:desert"
+  ],
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "config": {
+    "start_pool": "fossil:fossil_site/start_desert",
+    "size": 2
+  }
+}

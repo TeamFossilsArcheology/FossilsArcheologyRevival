@@ -1,0 +1,15 @@
+{
+  "name": "fossil:tar_site/basement_pool_small",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "fossil:sites/tar_site_small_base",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

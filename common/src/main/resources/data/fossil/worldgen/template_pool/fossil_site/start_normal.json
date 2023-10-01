@@ -1,0 +1,15 @@
+{
+  "name": "fossil:fossil_site/start_normal",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "fossil:sites/fossil_site_normal_top",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "name": "fossil:fossil_site/basement_pool_snowy",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "fossil:sites/fossil_site_snowy_base",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

@@ -1,15 +1,19 @@
 {
   "structures": [
     {
-      "structure": "fossil:tar_site",
+      "structure": "fossil:tar_site_small",
+      "weight": 3
+    },
+    {
+      "structure": "fossil:tar_site_small_snowy",
+      "weight": 3
+    },
+    {
+      "structure": "fossil:tar_site_large",
       "weight": 1
     },
     {
-      "structure": "fossil:tar_site_a",
-      "weight": 1
-    },
-    {
-      "structure": "fossil:tar_site_c",
+      "structure": "fossil:tar_site_large_snowy",
       "weight": 1
     }
   ],
@@ -17,6 +21,6 @@
     "type": "minecraft:random_spread",
     "spacing": 5,
     "separation": 2,
-    "salt": 646202410
+    "salt": 1151905941
   }
 }

@@ -1,0 +1,10 @@
+{
+  "type": "minecraft:village",
+  "biomes": "#minecraft:is_badlands",
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "config": {
+    "start_pool": "fossil:fossil_site/start_badlands",
+    "size": 1
+  }
+}

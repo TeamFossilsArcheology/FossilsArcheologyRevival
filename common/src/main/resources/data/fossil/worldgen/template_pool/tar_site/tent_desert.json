@@ -1,0 +1,15 @@
+{
+  "name": "fossil:tar_site/tent_desert",
+  "fallback": "minecraft:empty",
+  "elements": [
+    {
+      "weight": 1,
+      "element": {
+        "element_type": "minecraft:single_pool_element",
+        "projection": "rigid",
+        "location": "fossil:sites/fossil_site_tent_desert",
+        "processors": "minecraft:empty"
+      }
+    }
+  ]
+}

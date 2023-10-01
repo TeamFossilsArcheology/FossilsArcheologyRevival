@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:village",
+  "biomes": [
+    "minecraft:plains",
+    "minecraft:savanna",
+    "minecraft:taiga",
+    "minecraft:old_growth_pine_taiga",
+    "minecraft:old_growth_spruce_taiga"
+  ],
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "config": {
+    "start_pool": "fossil:fossil_site/start_normal",
+    "size": 2
+  }
+}
