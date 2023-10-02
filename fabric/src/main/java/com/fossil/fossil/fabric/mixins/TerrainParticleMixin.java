@@ -17,7 +17,7 @@ public abstract class TerrainParticleMixin {
     @Inject(method = "<init>(Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDDLnet/minecraft/world/level/block/state/BlockState;Lnet/minecraft/core/BlockPos;)V", at = @At(value = "TAIL"))
     private void changeGravity(ClientLevel clientLevel, double d, double e, double f, double g, double h, double i, BlockState blockState,
                                BlockPos blockPos, CallbackInfo ci) {
-        if (blockState.getBlock() == ModBlocks.VOLCANIC_ASH.get()) {
+        if (blockState.is(ModBlocks.VOLCANIC_ASH.get())) {
             ((ParticleAccessor) this).setGravity(-0.15f);
         }
     }

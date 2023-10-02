@@ -1,6 +1,6 @@
 {
   "type": "minecraft:village",
-  "biomes": "#minecraft:is_badlands",
+  "biomes": "minecraft:badlands",
   "adapt_noise": true,
   "spawn_overrides": {},
   "config": {
