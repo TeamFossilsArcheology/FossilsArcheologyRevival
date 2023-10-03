@@ -4,6 +4,9 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.config.FossilConfig;
 import net.minecraftforge.common.ForgeConfigSpec;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ForgeConfig {
 
     public static final ForgeConfigSpec.Builder BUILDER = new ForgeConfigSpec.Builder();
@@ -67,6 +70,8 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue MACHINE_TRANSFER_RATE;
     public static final ForgeConfigSpec.IntValue MACHINE_ENERGY_USAGE;
     public static final ForgeConfigSpec.IntValue FERN_TICK_RATE;
+    public static Map<String, ForgeConfigSpec.BooleanValue> mappedBools = new HashMap<>();
+    public static Map<String, ForgeConfigSpec.IntValue> mappedInts = new HashMap<>();
 
     static {
         FERN_TICK_RATE = intEntry("How often ferns try to grow. Higher number = less growth", FossilConfig.FERN_TICK_RATE, 2, 1, 1000000);
@@ -82,7 +87,7 @@ public class ForgeConfig {
         GENERATE_VOLCANIC_ROCK = boolEntry("True if Volcanic Rock is to generate naturally", FossilConfig.GENERATE_VOLCANIC_ROCK, true);
         GENERATE_AZTEC_WEAPON_SHOPS = boolEntry("True if Aztec Weapon Shops are to generate naturally", FossilConfig.GENERATE_AZTEC_WEAPON_SHOPS, true);
         GENERATE_MOAI = boolEntry("True if Moai are to generate naturally", FossilConfig.GENERATE_MOAI, true);
-        GENERATE_TAR_SITES = boolEntry("True if Tar Dig Sites are to generate naturally", FossilConfig.GENERATE_MOAI, true);
+        GENERATE_TAR_SITES = boolEntry("True if Tar Dig Sites are to generate naturally", FossilConfig.GENERATE_TAR_SITES, true);
         GENERATE_FOSSIL_SITES = boolEntry("True if Fossil Dig Sites are to generate naturally", FossilConfig.GENERATE_FOSSIL_SITES, true);
         GENERATE_VOLCANO_BIOME = boolEntry("Whether to generate volcano biomes or not", FossilConfig.GENERATE_VOLCANO_BIOME, true);
         FOSSIL_ORE_RARITY = intEntry("Rarity of Fossil ore. Higher number = more common", FossilConfig.FOSSIL_ORE_RARITY, 38, 1, 100000000);
@@ -143,14 +148,14 @@ public class ForgeConfig {
     }
 
     private static ForgeConfigSpec.BooleanValue boolEntry(String comment, String path, boolean defaultValue) {
-        return BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).define(path, defaultValue);
+        ForgeConfigSpec.BooleanValue entry = BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).define(path, defaultValue);
+        mappedBools.put(path, entry);
+        return entry;
     }
 
     private static ForgeConfigSpec.IntValue intEntry(String comment, String path, int defaultValue, int min, int max) {
-        return BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
-    }
-
-    public static boolean isRuleEnabled(ForgeConfigSpec.BooleanValue rule) {
-        return Boolean.TRUE.equals(rule.get());
+        ForgeConfigSpec.IntValue entry = BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
+        mappedInts.put(path, entry);
+        return entry;
     }
 }

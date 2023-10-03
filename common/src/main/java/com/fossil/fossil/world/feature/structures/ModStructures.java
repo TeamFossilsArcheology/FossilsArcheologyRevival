@@ -11,6 +11,8 @@ import net.minecraft.world.level.levelgen.feature.configurations.RangeConfigurat
 
 public class ModStructures {
     public static final Tuple<JigsawConfiguration, CastleFeature> ANU_CASTLE = createStructure("anu_castle", new CastleFeature());
+    public static final Tuple<JigsawConfiguration, ConfigurableStructureFeature> CONFIGURABLE_STRUCTURE =
+            createStructure("configurable_structure", new ConfigurableStructureFeature());
     public static final Tuple<RangeConfiguration, HellBoatFeature> HELL_BOAT = createStructure("hell_boat", new HellBoatFeature());
     public static final Tuple<NoneFeatureConfiguration, TreasureRoomFeature> TREASURE_ROOM = createStructure("treasure_room", new TreasureRoomFeature());
 

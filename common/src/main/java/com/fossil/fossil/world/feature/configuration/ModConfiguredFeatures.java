@@ -61,12 +61,6 @@ public class ModConfiguredFeatures {
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> VOLCANO_CONE = register("volcano_cone",
             ModFeatures.VOLCANO_CONE.feature(), NoneFeatureConfiguration.INSTANCE);
 
-    static {
-        StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
-                HELL_BOAT, new RandomSpreadStructurePlacement(FossilConfig.getInt(FossilConfig.HELL_SHIP_SPACING),
-                        FossilConfig.getInt(FossilConfig.HELL_SHIP_SEPERATION), RandomSpreadType.LINEAR, 92182587));
-    }
-
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {
         return FeatureUtils.register(Fossil.MOD_ID + ":" + name, feature, config);
     }

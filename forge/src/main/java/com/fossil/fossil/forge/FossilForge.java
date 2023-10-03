@@ -11,6 +11,7 @@ import com.fossil.fossil.forge.client.ClientModEvents;
 import com.fossil.fossil.forge.world.biome.ForgeFossilRegion;
 import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
 import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
+import com.fossil.fossil.world.feature.placement.ModPlacementTypes;
 import com.fossil.fossil.world.surfacerules.ModSurfaceRules;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.core.Registry;
@@ -56,6 +57,7 @@ public class FossilForge {
 
     public void onCommon(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            ModPlacementTypes.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Fossil.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
             Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "treasure_room"), TreasureChunkGenerator.CODEC);

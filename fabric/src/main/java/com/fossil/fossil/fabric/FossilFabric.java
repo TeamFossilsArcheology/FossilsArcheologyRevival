@@ -15,6 +15,7 @@ import com.fossil.fossil.network.SyncEntityInfoMessage;
 import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
 import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
 import com.fossil.fossil.world.feature.placement.ModPlacedFeatures;
+import com.fossil.fossil.world.feature.placement.ModPlacementTypes;
 import com.fossil.fossil.world.surfacerules.ModSurfaceRules;
 import dev.architectury.platform.Platform;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
@@ -52,6 +53,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
         SpawnRestrictionAccessor.callRegister(ModEntities.STURGEON.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "treasure_room"), TreasureChunkGenerator.CODEC);
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "anu_lair"), AnuLairChunkGenerator.CODEC);
+        ModPlacementTypes.register();
         ModPlacedFeatures.register();
         FabricModBiomes.register();
         ModRegistries.register();

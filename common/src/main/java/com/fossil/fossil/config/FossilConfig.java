@@ -1,6 +1,7 @@
 package com.fossil.fossil.config;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.resources.ResourceLocation;
 
 public class FossilConfig {
     public static final String GENERATE_PREHISTORIC_TREES = "generatePrehistoricTrees";
@@ -62,6 +63,23 @@ public class FossilConfig {
     public static final String MACHINE_TRANSFER_RATE = "machineTransferRate";
     public static final String MACHINE_ENERGY_USAGE = "machineEnergyUsage";
     public static final String FERN_TICK_RATE = "fernTickRate";
+
+    public static boolean isStructurePoolEnabled(ResourceLocation field) {
+        switch (field.getPath()) {
+            case "aztec_weapon_shop" -> {
+                return isEnabled(GENERATE_AZTEC_WEAPON_SHOPS);
+            }
+            case "aztec_temple" -> {
+                return isEnabled(GENERATE_TEMPLE);
+            }//TODO: Check forge side
+            case "egyptian_academy" -> {
+                return isEnabled(GENERATE_ACADEMY);
+            }
+            default -> {
+                return true;
+            }
+        }
+    }
 
     @ExpectPlatform
     public static boolean isEnabled(String field) {

@@ -12,6 +12,7 @@ import static com.fossil.fossil.world.feature.structures.ModStructures.*;
 public class ModStructuresImpl {
     public static void register() {
         HELL_BOAT.feature().setRegistryName(HELL_BOAT.location());
+        CONFIGURABLE_STRUCTURE.feature().setRegistryName(CONFIGURABLE_STRUCTURE.location());
         ANU_CASTLE.feature().setRegistryName(ANU_CASTLE.location());
         TREASURE_ROOM.feature().setRegistryName(TREASURE_ROOM.location());
     }
@@ -20,6 +21,7 @@ public class ModStructuresImpl {
     public static void registerFeatures(RegistryEvent.Register<StructureFeature<?>> event) {
         IForgeRegistry<StructureFeature<?>> registry = event.getRegistry();
         registry.register(HELL_BOAT.feature());
+        registry.register(CONFIGURABLE_STRUCTURE.feature());
         registry.register(ANU_CASTLE.feature());
         registry.register(TREASURE_ROOM.feature());
     }

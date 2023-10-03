@@ -30,6 +30,12 @@ public class ModPlacedFeatures {
     private static Holder<PlacedFeature> magmaDiskVolcano;
     private static Holder<PlacedFeature> coneVolcano;
 
+    static {
+        StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
+                ModConfiguredFeatures.HELL_BOAT, new LazyRandomSpreadPlacement(FossilConfig.HELL_SHIP_SPACING, FossilConfig.HELL_SHIP_SEPERATION,
+                        RandomSpreadType.LINEAR, 92182587));
+    }
+
     public static void register() {
         //Features that depend on ModConfiguredFeatures can't be called before the block registries have been initialized
         ashDiskVolcano = PlacementUtils.register("volcano_ash_disk", ModConfiguredFeatures.ASH_DISK,
@@ -39,18 +45,18 @@ public class ModPlacedFeatures {
         coneVolcano = PlacementUtils.register("volcano_cone", ModConfiguredFeatures.VOLCANO_CONE,
                 RarityFilter.onAverageOnceEvery(30), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome());
         var tarPitPlaced = PlacementUtils.register("tar_pit_placed", ModConfiguredFeatures.TAR_PIT,
-                RarityFilter.onAverageOnceEvery(FossilConfig.getInt(FossilConfig.TAR_SITE_RARITY)),
+                new LazyRarityFilter(FossilConfig.TAR_SITE_RARITY),
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
         var fossilBlockPlaced = PlacementUtils.register("fossil_block_placed", ModOreFeatures.FOSSIL_BLOCK,
-                commonOrePlacement(FossilConfig.getInt(FossilConfig.FOSSIL_ORE_RARITY), // VeinsPerChunk
+                commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
                         HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-0), VerticalAnchor.aboveBottom(256))));
 
         var volcanicRockPlaced = PlacementUtils.register("volcanic_rock_placed", ModOreFeatures.VOLCANIC_ROCK,
                 commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0))));
 
         var permafrostBlockPlaced = PlacementUtils.register("permafrost_block_placed", ModOreFeatures.PERMAFROST_BLOCK,
-                commonOrePlacement(FossilConfig.getInt(FossilConfig.PERMAFROST_RARITY), // VeinsPerChunk
+                commonOrePlacement(FossilConfig.PERMAFROST_RARITY, // VeinsPerChunk
                         HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(100), VerticalAnchor.aboveBottom(256))));
 
         BiomeModifications.addProperties((context, mutable) -> {
@@ -95,6 +101,10 @@ public class ModPlacedFeatures {
 
     private static List<PlacementModifier> orePlacement(PlacementModifier placementModifier, PlacementModifier placementModifier2) {
         return List.of(placementModifier, InSquarePlacement.spread(), placementModifier2, BiomeFilter.biome());
+    }
+
+    private static List<PlacementModifier> commonOrePlacement(String configEntry, PlacementModifier placementModifier) {
+        return orePlacement(new LazyCountPlacement(configEntry), placementModifier);
     }
 
     private static List<PlacementModifier> commonOrePlacement(int count, PlacementModifier placementModifier) {
