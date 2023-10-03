@@ -1,0 +1,10 @@
+{
+  "type": "fossil:configurable_structure",
+  "biomes": "minecraft:jungle",
+  "adapt_noise": true,
+  "spawn_overrides": {},
+  "config": {
+    "start_pool": "fossil:aztec_temple",
+    "size": 1
+  }
+}

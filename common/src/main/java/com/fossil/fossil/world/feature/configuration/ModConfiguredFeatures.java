@@ -2,13 +2,11 @@ package com.fossil.fossil.world.feature.configuration;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.world.feature.ModFeatures;
 import com.fossil.fossil.world.feature.structures.ModStructures;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
-import net.minecraft.data.worldgen.StructureSets;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -27,8 +25,6 @@ import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlac
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
-import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadStructurePlacement;
-import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 
 /**
  * Calling this class before the mod blocks have been initialized will cause a crash at the moment
@@ -54,6 +50,8 @@ public class ModConfiguredFeatures {
     public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> TAR_PIT = register("tar_pit", Feature.LAKE,
             new LakeFeature.Configuration(BlockStateProvider.simple(ModBlocks.TAR.get()),
                     BlockStateProvider.simple(Blocks.STONE)));
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> MOAI_STATUE = register("moai_statue",
+            ModFeatures.MOAI_STATUE.feature(), NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> ASH_DISK = register("ash_disk",
             ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(6, 11), false));
     public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> MAGMA_DISK = register("magma_disk",

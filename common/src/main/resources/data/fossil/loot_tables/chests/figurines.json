@@ -1,0 +1,70 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "bonus_rolls": 1,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_enderman_destroyed"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_enderman_restored"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_enderman_pristine"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_piglin_destroyed"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_piglin_restored"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_piglin_pristine"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_skeleton_destroyed"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_skeleton_restored"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_skeleton_pristine"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_steve_destroyed"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_steve_restored"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_steve_pristine"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_zombie_destroyed"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_zombie_restored"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "fossil:figurine_zombie_pristine"
+        }
+      ]
+    }
+  ]
+}

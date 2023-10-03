@@ -10,6 +10,7 @@ import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConf
 
 public class ModFeatures {
     public static final Tuple<AshDiskConfiguration, AshDiskFeature> ASH_DISK = create("ask_disk", new AshDiskFeature());
+    public static final Tuple<NoneFeatureConfiguration, MoaiStatueFeature> MOAI_STATUE = create("moai_statue", new MoaiStatueFeature());
     public static final Tuple<NoneFeatureConfiguration, VolcanoConeFeature> VOLCANO_CONE = create("volcano_cone", new VolcanoConeFeature());
 
     public static <C extends FeatureConfiguration, F extends Feature<C>> Tuple<C, F> create(String name, F feature) {

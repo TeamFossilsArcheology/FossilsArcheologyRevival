@@ -1,14 +1,19 @@
 package com.fossil.fossil.world.feature.placement;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.world.feature.ModOreFeatures;
 import com.fossil.fossil.world.feature.configuration.ModConfiguredFeatures;
 import dev.architectury.registry.level.biome.BiomeModifications;
 import net.minecraft.core.Holder;
+import net.minecraft.core.Registry;
+import net.minecraft.data.worldgen.StructureSets;
 import net.minecraft.data.worldgen.features.CaveFeatures;
 import net.minecraft.data.worldgen.features.MiscOverworldFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.ClampedNormalInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -16,6 +21,7 @@ import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
 import net.minecraft.world.level.levelgen.placement.*;
+import net.minecraft.world.level.levelgen.structure.placement.RandomSpreadType;
 
 import java.util.List;
 
@@ -47,6 +53,9 @@ public class ModPlacedFeatures {
         var tarPitPlaced = PlacementUtils.register("tar_pit_placed", ModConfiguredFeatures.TAR_PIT,
                 new LazyRarityFilter(FossilConfig.TAR_SITE_RARITY),
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
+        var moaiStatuePlaced = PlacementUtils.register("moai_statue", ModConfiguredFeatures.MOAI_STATUE, BiomeFilter.biome(),
+                new LazyRarityFilter(FossilConfig.MOAI_RARITY), InSquarePlacement.spread(),
+                PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
         var fossilBlockPlaced = PlacementUtils.register("fossil_block_placed", ModOreFeatures.FOSSIL_BLOCK,
                 commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
@@ -71,6 +80,9 @@ public class ModPlacedFeatures {
             }
             if (FossilConfig.isEnabled(FossilConfig.GENERATE_TAR_SITES) && mutable.getCategory() == Biome.BiomeCategory.SWAMP) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.LAKES, tarPitPlaced);
+            }
+            if (FossilConfig.isEnabled(FossilConfig.GENERATE_MOAI) && mutable.getCategory() == Biome.BiomeCategory.BEACH && mutable.getClimateProperties().getTemperature() > 0.2) {
+                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, moaiStatuePlaced);
             }
             if (FossilConfig.isEnabled(FossilConfig.SPAWN_ALLIGATOR_GAR) && mutable.getCategory() == Biome.BiomeCategory.SWAMP) {
                 mutable.getSpawnProperties().addSpawn(ModEntities.ALLIGATOR_GAR.get().getCategory(), new MobSpawnSettings.SpawnerData(ModEntities.ALLIGATOR_GAR.get(), FossilConfig.getInt(FossilConfig.ALLIGATOR_GAR_SPAWN_WEIGHT), 1, 4));

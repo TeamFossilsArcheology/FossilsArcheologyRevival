@@ -1,0 +1,14 @@
+{
+  "structures": [
+    {
+      "structure": "fossil:egyptian_academy",
+      "weight": 1
+    }
+  ],
+  "placement": {
+    "type": "minecraft:random_spread",
+    "spacing": 16,
+    "separation": 8,
+    "salt": 473717084
+  }
+}
