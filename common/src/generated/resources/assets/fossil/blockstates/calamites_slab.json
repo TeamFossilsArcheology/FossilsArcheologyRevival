@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "fossil:block/calamites_slab_top"
+    },
+    "type=bottom": {
+      "model": "fossil:block/calamites_slab"
+    },
+    "type=double": {
+      "model": "fossil:block/calamites_planks"
+    }
+  }
+}

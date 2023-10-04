@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "texture": "fossil:block/ancient_stone_bricks"
+  }
+}

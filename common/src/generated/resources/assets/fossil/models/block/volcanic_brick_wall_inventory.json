@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "texture": "fossil:block/volcanic_bricks"
+  }
+}

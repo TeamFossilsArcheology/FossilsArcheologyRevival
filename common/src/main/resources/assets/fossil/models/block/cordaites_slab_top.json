@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab_top",
-  "textures": {
-    "bottom": "fossil:block/cordaites_planks",
-    "top": "fossil:block/cordaites_planks",
-    "side": "fossil:block/cordaites_planks"
-  }
-}

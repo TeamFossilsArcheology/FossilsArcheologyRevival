@@ -5,7 +5,6 @@ import net.fabricmc.fabric.api.event.registry.RegistryEntryAddedCallback;
 import net.fabricmc.fabric.api.registry.FlammableBlockRegistry;
 import net.fabricmc.fabric.api.registry.StrippableBlockRegistry;
 import net.minecraft.core.Registry;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
@@ -29,8 +28,8 @@ public class ModFlammableRotatedPillarBlockImpl {
         });
     }
 
-    public static Block get(BlockBehaviour.Properties properties) {
-        Block block = new RotatedPillarBlock(properties);
+    public static RotatedPillarBlock get(BlockBehaviour.Properties properties) {
+        RotatedPillarBlock block = new RotatedPillarBlock(properties);
         FlammableBlockRegistry.getDefaultInstance().add(block, 5, 5);
         return block;
     }

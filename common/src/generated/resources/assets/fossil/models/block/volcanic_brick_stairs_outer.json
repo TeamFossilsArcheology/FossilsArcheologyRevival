@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/outer_stairs",
+  "textures": {
+    "side": "fossil:block/volcanic_bricks",
+    "bottom": "fossil:block/volcanic_bricks",
+    "top": "fossil:block/volcanic_bricks"
+  }
+}

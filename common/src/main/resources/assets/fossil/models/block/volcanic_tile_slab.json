@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/slab",
-  "textures": {
-    "bottom": "fossil:block/volcanic_tiles",
-    "top": "fossil:block/volcanic_tiles",
-    "side": "fossil:block/volcanic_tiles"
-  }
-}

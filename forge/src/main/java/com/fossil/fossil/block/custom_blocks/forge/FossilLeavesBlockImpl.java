@@ -3,14 +3,13 @@ package com.fossil.fossil.block.custom_blocks.forge;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class FossilLeavesBlockImpl {
 
-    public static Block get(BlockBehaviour.Properties properties) {
+    public static LeavesBlock get(BlockBehaviour.Properties properties) {
         return new LeavesBlock(properties) {
             @Override
             public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {

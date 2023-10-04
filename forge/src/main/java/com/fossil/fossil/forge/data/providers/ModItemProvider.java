@@ -137,6 +137,22 @@ public class ModItemProvider extends ItemModelProvider {
         builder(resourceLocation, blockLocation);
     }
 
+    public void simpleItem(ResourceLocation blockLocation, boolean block) {
+        ResourceLocation resourceLocation = new ResourceLocation(blockLocation.getNamespace(), (block ? "block/" : "item/") + blockLocation.getPath());
+        builder(resourceLocation, blockLocation);
+    }
+
+    public void blockItem(ResourceLocation blockLocation) {
+        blockItem(blockLocation, "");
+    }
+
+    public void blockItem(ResourceLocation blockLocation, String suffix) {
+        ResourceLocation resourceLocation = new ResourceLocation(blockLocation.getNamespace(), "item/" + blockLocation.getPath());
+        existingFileHelper.trackGenerated(resourceLocation, TEXTURE);
+        getBuilder(blockLocation.toString())
+                .parent(new ModelFile.UncheckedModelFile(blockLocation.getNamespace() + ":block/" + blockLocation.getPath() + suffix));
+    }
+
     private void builder(ResourceLocation resourceLocation, ResourceLocation item) {
         existingFileHelper.trackGenerated(resourceLocation, TEXTURE);//hack because I cant find if and how architectury does --existing
         getBuilder(item.toString())

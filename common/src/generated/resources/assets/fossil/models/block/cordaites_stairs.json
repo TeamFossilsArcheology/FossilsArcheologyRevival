@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/stairs",
+  "textures": {
+    "side": "fossil:block/cordaites_planks",
+    "bottom": "fossil:block/cordaites_planks",
+    "top": "fossil:block/cordaites_planks"
+  }
+}

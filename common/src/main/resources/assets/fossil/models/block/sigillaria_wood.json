@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "fossil:block/sigillaria_log",
-    "side": "fossil:block/sigillaria_log"
-  }
-}

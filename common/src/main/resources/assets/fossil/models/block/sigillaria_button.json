@@ -1,6 +1,0 @@
-{
-  "parent": "block/button",
-  "textures": {
-    "texture": "fossil:block/sigillaria_planks"
-  }
-}

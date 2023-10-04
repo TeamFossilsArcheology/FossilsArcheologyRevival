@@ -7,7 +7,6 @@ import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +16,7 @@ import javax.annotation.Nullable;
 
 public class ModFlammableRotatedPillarBlockImpl {
 
-    public static Block get(BlockBehaviour.Properties properties) {
+    public static RotatedPillarBlock get(BlockBehaviour.Properties properties) {
         return new RotatedPillarBlock(properties) {
             @Override
             public boolean isFlammable(BlockState state, BlockGetter world, BlockPos pos, Direction face) {

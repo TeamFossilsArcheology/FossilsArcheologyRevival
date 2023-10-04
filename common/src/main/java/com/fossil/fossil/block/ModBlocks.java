@@ -105,14 +105,15 @@ public class ModBlocks {
             () -> new SlabBlock(BlockBehaviour.Properties.copy(ANCIENT_STONE.get())));
     public static final RegistrySupplier<StairBlock> ANCIENT_STONE_STAIRS = registerBlock("ancient_stone_stairs",
             () -> new StairBlock(ANCIENT_STONE.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_STONE.get())));
-    public static final RegistrySupplier<Block> ANCIENT_STONE_WALL = registerBlock("ancient_stone_wall",
+    public static final RegistrySupplier<WallBlock> ANCIENT_STONE_WALL = registerBlock("ancient_stone_wall",
             () -> new WallBlock(BlockBehaviour.Properties.copy(ANCIENT_STONE.get())));
     public static final RegistrySupplier<Block> ANCIENT_WOOD_PLANKS = registerBlock("ancient_wood_planks",
             () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2f, 3f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<SlabBlock> ANCIENT_WOOD_SLAB = registerBlock("ancient_wood_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
+    //TODO: Just call it log?
     public static final RegistrySupplier<RotatedPillarBlock> ANCIENT_WOOD_PILLAR = registerBlock("ancient_wood_pillar",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
+            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));//TODO: Check necessary fabric/forge stuff
     public static final RegistrySupplier<StairBlock> ANCIENT_WOOD_STAIRS = registerBlock("ancient_wood_stairs",
             () -> new StairBlock(ANCIENT_WOOD_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",
@@ -138,84 +139,148 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_BRICKS = registerBlock("volcanic_bricks",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1.5f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> VOLCANIC_BRICK_SLAB = registerBlock("volcanic_brick_slab",
+    public static final RegistrySupplier<SlabBlock> VOLCANIC_BRICK_SLAB = registerBlock("volcanic_brick_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())));
-    public static final RegistrySupplier<Block> VOLCANIC_BRICK_STAIRS = registerBlock("volcanic_brick_stairs",
+    public static final RegistrySupplier<StairBlock> VOLCANIC_BRICK_STAIRS = registerBlock("volcanic_brick_stairs",
             () -> new StairBlock(VOLCANIC_BRICKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())));
-    public static final RegistrySupplier<Block> VOLCANIC_BRICK_WALL = registerBlock("volcanic_brick_wall",
+    public static final RegistrySupplier<WallBlock> VOLCANIC_BRICK_WALL = registerBlock("volcanic_brick_wall",
             () -> new WallBlock(BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())));
     public static final RegistrySupplier<Block> VOLCANIC_TILES = registerBlock("volcanic_tiles",
             () -> new Block(BlockBehaviour.Properties.copy(VOLCANIC_BRICKS.get())));
-    public static final RegistrySupplier<Block> VOLCANIC_TILE_SLAB = registerBlock("volcanic_tile_slab",
+    public static final RegistrySupplier<SlabBlock> VOLCANIC_TILE_SLAB = registerBlock("volcanic_tile_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(VOLCANIC_TILES.get())));
-    public static final RegistrySupplier<Block> VOLCANIC_TILE_STAIRS = registerBlock("volcanic_tile_stairs",
+    public static final RegistrySupplier<StairBlock> VOLCANIC_TILE_STAIRS = registerBlock("volcanic_tile_stairs",
             () -> new StairBlock(VOLCANIC_TILES.get().defaultBlockState(), BlockBehaviour.Properties.copy(VOLCANIC_TILES.get())));
-    public static final RegistrySupplier<Block> VOLCANIC_TILE_WALL = registerBlock("volcanic_tile_wall",
+    public static final RegistrySupplier<WallBlock> VOLCANIC_TILE_WALL = registerBlock("volcanic_tile_wall",
             () -> new WallBlock(BlockBehaviour.Properties.copy(VOLCANIC_TILES.get())));
-    public static final RegistrySupplier<Block> CORDAITES_PLANKS = registerBlock("cordaites_planks",
+    public static final RegistrySupplier<Block> CALAMITES_PLANKS = registerBlock("calamites_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_STAIRS = registerBlock("cordaites_stairs",
-            () -> new StairBlock(ModBlocks.CORDAITES_PLANKS.get().defaultBlockState(),
+    public static final RegistrySupplier<StairBlock> CALAMITES_STAIRS = registerBlock("calamites_stairs",
+            () -> new StairBlock(ModBlocks.CALAMITES_PLANKS.get().defaultBlockState(),
                     BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_SLAB = registerBlock("cordaites_slab",
+    public static final RegistrySupplier<SlabBlock> CALAMITES_SLAB = registerBlock("calamites_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_FENCE = registerBlock("cordaites_fence",
+    public static final RegistrySupplier<FenceBlock> CALAMITES_FENCE = registerBlock("calamites_fence",
             () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_FENCE_GATE = registerBlock("cordaites_fence_gate",
+    public static final RegistrySupplier<FenceGateBlock> CALAMITES_FENCE_GATE = registerBlock("calamites_fence_gate",
             () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_DOOR = registerBlock("cordaites_door",
+    public static final RegistrySupplier<DoorBlock> CALAMITES_DOOR = registerBlock("calamites_door",
             () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_TRAPDOOR = registerBlock("cordaites_trapdoor",
+    public static final RegistrySupplier<TrapDoorBlock> CALAMITES_TRAPDOOR = registerBlock("calamites_trapdoor",
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_BUTTON = registerBlock("cordaites_button",
-            () -> new StoneButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_PRESSURE_PLATE = registerBlock("cordaites_pressure_plate",
+    public static final RegistrySupplier<WoodButtonBlock> CALAMITES_BUTTON = registerBlock("calamites_button",
+            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<PressurePlateBlock> CALAMITES_PRESSURE_PLATE = registerBlock("calamites_pressure_plate",
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> CORDAITES_LOG = registerBlock("cordaites_log",
+    public static final RegistrySupplier<RotatedPillarBlock> CALAMITES_LOG = registerBlock("calamites_log",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
-    public static final RegistrySupplier<Block> CORDAITES_WOOD = registerBlock("cordaites_wood",
+    public static final RegistrySupplier<RotatedPillarBlock> CALAMITES_WOOD = registerBlock("calamites_wood",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
-    public static final RegistrySupplier<Block> STRIPPED_CORDAITES_LOG = registerBlock("stripped_cordaites_log",
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_CALAMITES_LOG = registerBlock("stripped_calamites_log",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
-    public static final RegistrySupplier<Block> STRIPPED_CORDAITES_WOOD = registerBlock("stripped_cordaites_wood",
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_CALAMITES_WOOD = registerBlock("stripped_calamites_wood",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
-    public static final RegistrySupplier<Block> CORDAITES_LEAVES = registerBlock("cordaites_leaves",
+    public static final RegistrySupplier<LeavesBlock> CALAMITES_LEAVES = registerBlock("calamites_leaves",
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistrySupplier<Block> CORDAITES_SAPLING = registerBlock("cordaites_sapling",
+    public static final RegistrySupplier<Block> CALAMITES_SAPLING = registerBlock("calamites_sapling",
+            () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistrySupplier<Block> CORDAITES_PLANKS = registerBlock("cordaites_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<StairBlock> CORDAITES_STAIRS = registerBlock("cordaites_stairs",
+            () -> new StairBlock(ModBlocks.CORDAITES_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<SlabBlock> CORDAITES_SLAB = registerBlock("cordaites_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceBlock> CORDAITES_FENCE = registerBlock("cordaites_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceGateBlock> CORDAITES_FENCE_GATE = registerBlock("cordaites_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<DoorBlock> CORDAITES_DOOR = registerBlock("cordaites_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<TrapDoorBlock> CORDAITES_TRAPDOOR = registerBlock("cordaites_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<WoodButtonBlock> CORDAITES_BUTTON = registerBlock("cordaites_button",
+            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<PressurePlateBlock> CORDAITES_PRESSURE_PLATE = registerBlock("cordaites_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
+                    .strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<RotatedPillarBlock> CORDAITES_LOG = registerBlock("cordaites_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> CORDAITES_WOOD = registerBlock("cordaites_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_CORDAITES_LOG = registerBlock("stripped_cordaites_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_CORDAITES_WOOD = registerBlock("stripped_cordaites_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+    public static final RegistrySupplier<LeavesBlock> CORDAITES_LEAVES = registerBlock("cordaites_leaves",
+            () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistrySupplier<SaplingBlock> CORDAITES_SAPLING = registerBlock("cordaites_sapling",
             () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistrySupplier<Block> SIGILLARIA_PLANKS = registerBlock("sigillaria_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_STAIRS = registerBlock("sigillaria_stairs",
+    public static final RegistrySupplier<StairBlock> SIGILLARIA_STAIRS = registerBlock("sigillaria_stairs",
             () -> new StairBlock(ModBlocks.SIGILLARIA_PLANKS.get().defaultBlockState(),
                     BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_SLAB = registerBlock("sigillaria_slab",
+    public static final RegistrySupplier<SlabBlock> SIGILLARIA_SLAB = registerBlock("sigillaria_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_FENCE = registerBlock("sigillaria_fence",
+    public static final RegistrySupplier<FenceBlock> SIGILLARIA_FENCE = registerBlock("sigillaria_fence",
             () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_FENCE_GATE = registerBlock("sigillaria_fence_gate",
+    public static final RegistrySupplier<FenceGateBlock> SIGILLARIA_FENCE_GATE = registerBlock("sigillaria_fence_gate",
             () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_DOOR = registerBlock("sigillaria_door",
+    public static final RegistrySupplier<DoorBlock> SIGILLARIA_DOOR = registerBlock("sigillaria_door",
             () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_TRAPDOOR = registerBlock("sigillaria_trapdoor",
+    public static final RegistrySupplier<TrapDoorBlock> SIGILLARIA_TRAPDOOR = registerBlock("sigillaria_trapdoor",
             () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_BUTTON = registerBlock("sigillaria_button",
-            () -> new StoneButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_PRESSURE_PLATE = registerBlock("sigillaria_pressure_plate",
+    public static final RegistrySupplier<WoodButtonBlock> SIGILLARIA_BUTTON = registerBlock("sigillaria_button",
+            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<PressurePlateBlock> SIGILLARIA_PRESSURE_PLATE = registerBlock("sigillaria_pressure_plate",
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<Block> SIGILLARIA_LOG = registerBlock("sigillaria_log",
+    public static final RegistrySupplier<RotatedPillarBlock> SIGILLARIA_LOG = registerBlock("sigillaria_log",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
-    public static final RegistrySupplier<Block> SIGILLARIA_WOOD = registerBlock("sigillaria_wood",
+    public static final RegistrySupplier<RotatedPillarBlock> SIGILLARIA_WOOD = registerBlock("sigillaria_wood",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
-    public static final RegistrySupplier<Block> STRIPPED_SIGILLARIA_LOG = registerBlock("stripped_sigillaria_log",
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_SIGILLARIA_LOG = registerBlock("stripped_sigillaria_log",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
-    public static final RegistrySupplier<Block> STRIPPED_SIGILLARIA_WOOD = registerBlock("stripped_sigillaria_wood",
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_SIGILLARIA_WOOD = registerBlock("stripped_sigillaria_wood",
             () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
-    public static final RegistrySupplier<Block> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
+    public static final RegistrySupplier<LeavesBlock> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> SIGILLARIA_SAPLING = registerBlock("sigillaria_sapling",
             () -> new SaplingBlock(new SigillariaTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistrySupplier<Block> PALM_PLANKS = registerBlock("palm_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<StairBlock> PALM_STAIRS = registerBlock("palm_stairs",
+            () -> new StairBlock(ModBlocks.PALM_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<SlabBlock> PALM_SLAB = registerBlock("palm_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceBlock> PALM_FENCE = registerBlock("palm_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceGateBlock> PALM_FENCE_GATE = registerBlock("palm_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<DoorBlock> PALM_DOOR = registerBlock("palm_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<TrapDoorBlock> PALM_TRAPDOOR = registerBlock("palm_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<WoodButtonBlock> PALM_BUTTON = registerBlock("palm_button",
+            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<PressurePlateBlock> PALM_PRESSURE_PLATE = registerBlock("palm_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
+                    .strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<RotatedPillarBlock> PALM_LOG = registerBlock("palm_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> PALM_WOOD = registerBlock("palm_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_PALM_LOG = registerBlock("stripped_palm_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_PALM_WOOD = registerBlock("stripped_palm_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+    public static final RegistrySupplier<LeavesBlock> PALM_LEAVES = registerBlock("palm_leaves",
+            () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistrySupplier<Block> PALM_SAPLING = registerBlock("palm_sapling",
+            () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
