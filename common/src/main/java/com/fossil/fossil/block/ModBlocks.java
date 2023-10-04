@@ -6,7 +6,9 @@ import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.material.ModFluids;
+import com.fossil.fossil.world.feature.tree.CalamitesTreeGrower;
 import com.fossil.fossil.world.feature.tree.CordaitesTreeGrower;
+import com.fossil.fossil.world.feature.tree.PalmTreeGrower;
 import com.fossil.fossil.world.feature.tree.SigillariaTreeGrower;
 import dev.architectury.core.block.ArchitecturyLiquidBlock;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -184,7 +186,7 @@ public class ModBlocks {
     public static final RegistrySupplier<LeavesBlock> CALAMITES_LEAVES = registerBlock("calamites_leaves",
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> CALAMITES_SAPLING = registerBlock("calamites_sapling",
-            () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+            () -> new SaplingBlock(new CalamitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistrySupplier<Block> CORDAITES_PLANKS = registerBlock("cordaites_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<StairBlock> CORDAITES_STAIRS = registerBlock("cordaites_stairs",
@@ -280,7 +282,7 @@ public class ModBlocks {
     public static final RegistrySupplier<LeavesBlock> PALM_LEAVES = registerBlock("palm_leaves",
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> PALM_SAPLING = registerBlock("palm_sapling",
-            () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+            () -> new SaplingBlock(new PalmTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);

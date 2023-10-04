@@ -11,7 +11,6 @@ import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
-import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -19,11 +18,7 @@ import net.minecraft.world.level.levelgen.feature.*;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.RangeConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
-import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
-import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
 import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 
 /**
@@ -31,20 +26,28 @@ import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
  */
 public class ModConfiguredFeatures {
 
-    public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> CORDAITES_TREE = FeatureUtils.register("cordaites",
+    /*public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> CORDAITES_TREE = FeatureUtils.register("cordaites",
             Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                     BlockStateProvider.simple(ModBlocks.CORDAITES_LOG.get()),
-                    new StraightTrunkPlacer(5, 6, 3),
+                    new CordaitesTrunkPlacer(10, 7, 0),
                     BlockStateProvider.simple(ModBlocks.CORDAITES_LEAVES.get()),
-                    new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 4),
+                    new CordaitesFoliagePlacer(),
                     new TwoLayersFeatureSize(1, 0, 2)).build());
     public static final Holder<ConfiguredFeature<TreeConfiguration, ?>> SIGILLARIA_TREE = FeatureUtils.register("sigillaria",
             Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                    BlockStateProvider.simple(ModBlocks.CORDAITES_LOG.get()),
+                    BlockStateProvider.simple(ModBlocks.SIGILLARIA_LOG.get()),
                     new StraightTrunkPlacer(5, 6, 3),
-                    BlockStateProvider.simple(ModBlocks.CORDAITES_LEAVES.get()),
+                    BlockStateProvider.simple(ModBlocks.SIGILLARIA_LEAVES.get()),
                     new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 4),
-                    new TwoLayersFeatureSize(1, 0, 2)).build());
+                    new TwoLayersFeatureSize(1, 0, 2)).build());*/
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CALAMITES_TREE = register("calamites_tree", ModFeatures.CALAMITES_TREE.feature(),
+            NoneFeatureConfiguration.INSTANCE);
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CORDAITES_TREE = register("cordaites_tree", ModFeatures.CORDAITES_TREE.feature(),
+            NoneFeatureConfiguration.INSTANCE);
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> PALM_TREE = register("palm_tree", ModFeatures.PALM_TREE.feature(),
+            NoneFeatureConfiguration.INSTANCE);
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> SIGILLARIA_TREE = register("sigillaria_tree", ModFeatures.SIGILLARIA_TREE.feature(),
+            NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredStructureFeature<?, ?>> HELL_BOAT = register(createKey("hell_boat"), ModStructures.HELL_BOAT.feature()
             .configured(new RangeConfiguration(ConstantHeight.of(VerticalAnchor.absolute(30))), BiomeTags.IS_NETHER));
     public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> TAR_PIT = register("tar_pit", Feature.LAKE,
