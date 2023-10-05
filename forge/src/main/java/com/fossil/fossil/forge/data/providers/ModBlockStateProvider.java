@@ -3,8 +3,8 @@ package com.fossil.fossil.forge.data.providers;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantType;
-import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
+import com.fossil.fossil.block.custom_blocks.*;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
@@ -191,7 +191,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     public void wallBlock(WallBlock block, ResourceLocation texture) {
         itemModels().blockItem(block.getRegistryName(), "_inventory");
-        models().singleTexture("block/" + block.getRegistryName().getPath() + "_inventory", mcLoc("wall_inventory"), texture);
+        models().singleTexture("block/" + block.getRegistryName().getPath() + "_inventory", mcLoc("wall_inventory"), "wall", texture);
         super.wallBlock(block, texture);
     }
 
