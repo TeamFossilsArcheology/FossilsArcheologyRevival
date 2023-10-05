@@ -270,8 +270,8 @@
 				},
 				"ventralFin": {
 					"rotation": {
-						"0.0": ["10+", "-10+math.cos(query.anim_time*720+90)*10", "math.cos(query.anim_time*720+90)*-20"],
-						"4.0": ["10+", "-10+math.cos(query.anim_time*720+90)*10", "math.cos(query.anim_time*720+90)*-20"]
+						"0.0": [10, "-10+math.cos(query.anim_time*720+90)*10", "math.cos(query.anim_time*720+90)*-20"],
+						"4.0": [10, "-10+math.cos(query.anim_time*720+90)*10", "math.cos(query.anim_time*720+90)*-20"]
 					}
 				},
 				"tail2": {

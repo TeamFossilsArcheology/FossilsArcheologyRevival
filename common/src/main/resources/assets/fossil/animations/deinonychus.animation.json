@@ -133,7 +133,7 @@
         },
         "tail1": {
           "rotation": {
-            "vector": ["math.sin(query.anim_time*360-60)*+7", "math.sin(query.anim_time*180+160)*-0.5", "math.sin(query.anim_time*180+160)*-3"]
+            "vector": ["math.sin(query.anim_time*360-60)*7", "math.sin(query.anim_time*180+160)*-0.5", "math.sin(query.anim_time*180+160)*-3"]
           }
         },
         "tail2": {
