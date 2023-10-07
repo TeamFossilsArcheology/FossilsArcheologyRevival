@@ -42,7 +42,7 @@ public class FabricPlantUnbakedModel implements UnbakedModel {
 
     @Nullable
     @Override
-    public BakedModel bake(ModelBakery modelBakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState transform, ResourceLocation location) {
+    public BakedModel bake(ModelBakery modelBakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ResourceLocation location) {
         Renderer renderer = RendererAccess.INSTANCE.getRenderer();
         MeshBuilder builder = renderer.meshBuilder();
         QuadEmitter emitter = builder.getEmitter();
@@ -52,9 +52,11 @@ public class FabricPlantUnbakedModel implements UnbakedModel {
                 PlantBlockElementFace face = element.faces().get(direction);
 
                 TextureAtlasSprite texture = spriteGetter.apply(model.materials().get(face.texture().substring(1)));
-                BakedQuad bakedQuad = PlantModelBakery.bakeFace(element, face, texture, direction);
+                BakedQuad bakedQuad = PlantModelBakery.bakeFace(element, face, texture, direction, modelState);
                 //I'm sure that this isn't the best, but it's really easy
                 emitter.fromVanilla(bakedQuad, null, direction);
+                emitter.cullFace(null);
+                emitter.nominalFace(direction);
                 emitter.emit();
             }
         }
