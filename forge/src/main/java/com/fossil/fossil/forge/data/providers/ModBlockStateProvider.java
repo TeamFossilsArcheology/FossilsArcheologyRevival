@@ -152,6 +152,22 @@ public class ModBlockStateProvider extends BlockStateProvider {
         woodBlock(ModBlocks.STRIPPED_SIGILLARIA_WOOD.get(), ModBlocks.STRIPPED_SIGILLARIA_LOG.get());
         leavesBlock(ModBlocks.SIGILLARIA_LEAVES.get());
         crossBlock(ModBlocks.SIGILLARIA_SAPLING.get());
+
+        ResourceLocation tempskya = blockTexture(ModBlocks.TEMPSKYA_PLANKS.get());
+        simpleBlock(ModBlocks.TEMPSKYA_PLANKS.get());
+        stairsBlock(ModBlocks.TEMPSKYA_STAIRS.get(), tempskya);
+        slabBlock(ModBlocks.TEMPSKYA_SLAB.get(), tempskya);
+        fenceBlock(ModBlocks.TEMPSKYA_FENCE.get(), tempskya);
+        fenceGateBlock(ModBlocks.TEMPSKYA_FENCE_GATE.get(), tempskya);
+        doorBlock(ModBlocks.TEMPSKYA_DOOR.get());
+        trapdoorBlock(ModBlocks.TEMPSKYA_TRAPDOOR.get());
+        buttonBlock(ModBlocks.TEMPSKYA_BUTTON.get(), tempskya);
+        pressurePlateBlock(ModBlocks.TEMPSKYA_PRESSURE_PLATE.get(), tempskya);
+        logBlock(ModBlocks.TEMPSKYA_LOG.get());
+        woodBlock(ModBlocks.TEMPSKYA_WOOD.get(), ModBlocks.TEMPSKYA_LOG.get());
+        logBlock(ModBlocks.STRIPPED_TEMPSKYA_LOG.get());
+        woodBlock(ModBlocks.STRIPPED_TEMPSKYA_WOOD.get(), ModBlocks.STRIPPED_TEMPSKYA_LOG.get());
+        crossBlock(ModBlocks.TEMPSKYA_SAPLING.get());
     }
 
     public void registerExistingTextures(Block... blocks) {

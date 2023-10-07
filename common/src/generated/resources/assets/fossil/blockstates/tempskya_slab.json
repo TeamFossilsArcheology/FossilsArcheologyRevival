@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=top": {
+      "model": "fossil:block/tempskya_slab_top"
+    },
+    "type=bottom": {
+      "model": "fossil:block/tempskya_slab"
+    },
+    "type=double": {
+      "model": "fossil:block/tempskya_planks"
+    }
+  }
+}

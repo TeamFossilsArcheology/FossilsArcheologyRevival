@@ -151,15 +151,21 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CORDAITES_SAPLING.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CORDAITES_TRAPDOOR.get());
 
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.PALM_DOOR.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.PALM_LEAVES.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.PALM_SAPLING.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.PALM_TRAPDOOR.get());
+
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.SIGILLARIA_DOOR.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SIGILLARIA_LEAVES.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SIGILLARIA_SAPLING.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.SIGILLARIA_TRAPDOOR.get());
 
-        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.PALM_DOOR.get());
-        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.PALM_LEAVES.get());
-        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.PALM_SAPLING.get());
-        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.PALM_TRAPDOOR.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.TEMPSKYA_DOOR.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.TEMPSKYA_SAPLING.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.TEMPSKYA_TOP.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.TEMPSKYA_LEAF.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.TEMPSKYA_TRAPDOOR.get());
 
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SLIME_TRAIL.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.OBSIDIAN_SPIKES.get());

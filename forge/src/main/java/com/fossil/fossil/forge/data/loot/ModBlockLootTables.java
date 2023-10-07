@@ -47,8 +47,10 @@ public class ModBlockLootTables extends BlockLoot {
 
         ModBlocks.SLIME_TRAIL.ifPresent(block -> addCustom(block, randomItem(Items.SLIME_BALL, 0.33f)));
 
+        ModBlocks.CALAMITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.CALAMITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
         ModBlocks.CORDAITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.CORDAITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
-        ModBlocks.SIGILLARIA_SAPLING.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.SIGILLARIA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        ModBlocks.PALM_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.PALM_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        ModBlocks.SIGILLARIA_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.SIGILLARIA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
 
 
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {

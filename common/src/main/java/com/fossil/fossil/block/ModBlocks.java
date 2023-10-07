@@ -6,10 +6,7 @@ import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.material.ModFluids;
-import com.fossil.fossil.world.feature.tree.CalamitesTreeGrower;
-import com.fossil.fossil.world.feature.tree.CordaitesTreeGrower;
-import com.fossil.fossil.world.feature.tree.PalmTreeGrower;
-import com.fossil.fossil.world.feature.tree.SigillariaTreeGrower;
+import com.fossil.fossil.world.feature.tree.*;
 import dev.architectury.core.block.ArchitecturyLiquidBlock;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -219,38 +216,6 @@ public class ModBlocks {
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<SaplingBlock> CORDAITES_SAPLING = registerBlock("cordaites_sapling",
             () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
-    public static final RegistrySupplier<Block> SIGILLARIA_PLANKS = registerBlock("sigillaria_planks",
-            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<StairBlock> SIGILLARIA_STAIRS = registerBlock("sigillaria_stairs",
-            () -> new StairBlock(ModBlocks.SIGILLARIA_PLANKS.get().defaultBlockState(),
-                    BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<SlabBlock> SIGILLARIA_SLAB = registerBlock("sigillaria_slab",
-            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<FenceBlock> SIGILLARIA_FENCE = registerBlock("sigillaria_fence",
-            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<FenceGateBlock> SIGILLARIA_FENCE_GATE = registerBlock("sigillaria_fence_gate",
-            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<DoorBlock> SIGILLARIA_DOOR = registerBlock("sigillaria_door",
-            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<TrapDoorBlock> SIGILLARIA_TRAPDOOR = registerBlock("sigillaria_trapdoor",
-            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<WoodButtonBlock> SIGILLARIA_BUTTON = registerBlock("sigillaria_button",
-            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<PressurePlateBlock> SIGILLARIA_PRESSURE_PLATE = registerBlock("sigillaria_pressure_plate",
-            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
-                    .strength(1f).requiresCorrectToolForDrops()));
-    public static final RegistrySupplier<RotatedPillarBlock> SIGILLARIA_LOG = registerBlock("sigillaria_log",
-            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
-    public static final RegistrySupplier<RotatedPillarBlock> SIGILLARIA_WOOD = registerBlock("sigillaria_wood",
-            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
-    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_SIGILLARIA_LOG = registerBlock("stripped_sigillaria_log",
-            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
-    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_SIGILLARIA_WOOD = registerBlock("stripped_sigillaria_wood",
-            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
-    public static final RegistrySupplier<LeavesBlock> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
-            () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
-    public static final RegistrySupplier<Block> SIGILLARIA_SAPLING = registerBlock("sigillaria_sapling",
-            () -> new SaplingBlock(new SigillariaTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistrySupplier<Block> PALM_PLANKS = registerBlock("palm_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<StairBlock> PALM_STAIRS = registerBlock("palm_stairs",
@@ -283,6 +248,72 @@ public class ModBlocks {
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> PALM_SAPLING = registerBlock("palm_sapling",
             () -> new SaplingBlock(new PalmTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistrySupplier<Block> SIGILLARIA_PLANKS = registerBlock("sigillaria_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<StairBlock> SIGILLARIA_STAIRS = registerBlock("sigillaria_stairs",
+            () -> new StairBlock(ModBlocks.SIGILLARIA_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<SlabBlock> SIGILLARIA_SLAB = registerBlock("sigillaria_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceBlock> SIGILLARIA_FENCE = registerBlock("sigillaria_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceGateBlock> SIGILLARIA_FENCE_GATE = registerBlock("sigillaria_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<DoorBlock> SIGILLARIA_DOOR = registerBlock("sigillaria_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<TrapDoorBlock> SIGILLARIA_TRAPDOOR = registerBlock("sigillaria_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<WoodButtonBlock> SIGILLARIA_BUTTON = registerBlock("sigillaria_button",
+            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<PressurePlateBlock> SIGILLARIA_PRESSURE_PLATE = registerBlock("sigillaria_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
+                    .strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<RotatedPillarBlock> SIGILLARIA_LOG = registerBlock("sigillaria_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> SIGILLARIA_WOOD = registerBlock("sigillaria_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_SIGILLARIA_LOG = registerBlock("stripped_sigillaria_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_SIGILLARIA_WOOD = registerBlock("stripped_sigillaria_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+    public static final RegistrySupplier<LeavesBlock> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
+            () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistrySupplier<Block> SIGILLARIA_SAPLING = registerBlock("sigillaria_sapling",
+            () -> new SaplingBlock(new SigillariaTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistrySupplier<Block> TEMPSKYA_PLANKS = registerBlock("tempskya_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<StairBlock> TEMPSKYA_STAIRS = registerBlock("tempskya_stairs",
+            () -> new StairBlock(ModBlocks.TEMPSKYA_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<SlabBlock> TEMPSKYA_SLAB = registerBlock("tempskya_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceBlock> TEMPSKYA_FENCE = registerBlock("tempskya_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceGateBlock> TEMPSKYA_FENCE_GATE = registerBlock("tempskya_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<DoorBlock> TEMPSKYA_DOOR = registerBlock("tempskya_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<TrapDoorBlock> TEMPSKYA_TRAPDOOR = registerBlock("tempskya_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<WoodButtonBlock> TEMPSKYA_BUTTON = registerBlock("tempskya_button",
+            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<PressurePlateBlock> TEMPSKYA_PRESSURE_PLATE = registerBlock("tempskya_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
+                    .strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<RotatedPillarBlock> TEMPSKYA_LOG = registerBlock("tempskya_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> TEMPSKYA_WOOD = registerBlock("tempskya_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_TEMPSKYA_LOG = registerBlock("stripped_tempskya_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_TEMPSKYA_WOOD = registerBlock("stripped_tempskya_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+    public static final RegistrySupplier<Block> TEMPSKYA_SAPLING = registerBlock("tempskya_sapling",
+            () -> new SaplingBlock(new TempskyaTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistrySupplier<Block> TEMPSKYA_TOP = registerBlock("tempskya_top",
+            () -> new TempskyaTopBlock(BlockBehaviour.Properties.of(Material.PLANT).noOcclusion().sound(SoundType.GRASS)));
+    public static final RegistrySupplier<Block> TEMPSKYA_LEAF = registerBlock("tempskya_leaf",
+            () -> new TempskyaLeafBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS)));
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
@@ -385,9 +416,9 @@ public class ModBlocks {
                 () -> new ShortFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
     }
 
-    public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape... shapes) {
+    public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape shape) {
         return registerBlock(name,
-                () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shapes));
+                () -> new TallFlowerBlock(BlockBehaviour.Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
     }
 
     public static RegistrySupplier<FourTallFlowerBlock> registerFourTallFlower(String name, VoxelShape shape) {
@@ -403,7 +434,7 @@ public class ModBlocks {
                         tallFlower, shape));
     }
 
-    private static <T extends Block> RegistrySupplier<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {
+    public static <T extends Block> RegistrySupplier<T> registerBlockWithoutBlockItem(String name, Supplier<T> block) {
         return BLOCKS.register(name, block);
     }
 
@@ -414,7 +445,7 @@ public class ModBlocks {
         return toReturn;
     }
 
-    private static <T extends Block> RegistrySupplier<T> registerBlock(String name, Supplier<T> block) {
+    public static <T extends Block> RegistrySupplier<T> registerBlock(String name, Supplier<T> block) {
         RegistrySupplier<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
         return toReturn;

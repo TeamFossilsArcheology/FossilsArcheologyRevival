@@ -48,7 +48,7 @@ public record PlantBlockModel(List<PlantBlockElement> elements, HashMap<String, 
     }
 
     public record PlantBlockElement(Vector3f from, Vector3f to, Vector3f origin, Vector3f rotations,
-                                    Map<Direction, PlantBlockElementFace> faces) {
+                                    Map<Direction, PlantBlockElementFace> faces, String name) {
 
         public static class Deserializer implements JsonDeserializer<PlantBlockElement> {
 
@@ -57,11 +57,11 @@ public record PlantBlockModel(List<PlantBlockElement> elements, HashMap<String, 
                 JsonObject jsonObject = json.getAsJsonObject();
                 Vector3f from = getVector3f(jsonObject, "from");
                 Vector3f to = getVector3f(jsonObject, "to");
-                Vector3f origin = getVector3f(jsonObject, "origin");
+                Vector3f origin = jsonObject.has("origin") ? getVector3f(jsonObject, "origin") : new Vector3f(0, 0, 0);
                 origin.mul(1 / 16f);
                 Vector3f rotations = jsonObject.has("rotation") ? getVector3f(jsonObject, "rotation") : Vector3f.ZERO;
                 Map<Direction, PlantBlockElementFace> map = getFaces(context, jsonObject);
-                return new PlantBlockElement(from, to, origin, rotations, map);
+                return new PlantBlockElement(from, to, origin, rotations, map, jsonObject.has("name") ? jsonObject.get("name").getAsString() : "");
             }
 
             private Map<Direction, PlantBlockElementFace> getFaces(JsonDeserializationContext context, JsonObject json) {

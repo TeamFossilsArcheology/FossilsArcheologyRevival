@@ -1,6 +1,9 @@
 {
   "variants": {
-    "": {
+    "half=upper": {
+      "model": "fossil:block/empty"
+    },
+    "half=lower": {
       "model": "fossil:block/zamites"
     }
   }

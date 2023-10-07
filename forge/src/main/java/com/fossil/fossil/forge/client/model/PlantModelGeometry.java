@@ -27,14 +27,14 @@ public class PlantModelGeometry implements IModelGeometry<PlantModelGeometry> {
     }
 
     @Override
-    public BakedModel bake(IModelConfiguration iModelConfiguration, ModelBakery arg, Function<Material, TextureAtlasSprite> spriteGetter, ModelState arg2, ItemOverrides arg3, ResourceLocation location) {
+    public BakedModel bake(IModelConfiguration iModelConfiguration, ModelBakery arg, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ItemOverrides arg3, ResourceLocation location) {
         List<BakedQuad> list = new ArrayList<>();
         for (PlantBlockElement element : model.elements()) {
             for (Direction direction : element.faces().keySet()) {
                 PlantBlockElementFace face = element.faces().get(direction);
                 //Resolve texture references
                 TextureAtlasSprite texture = spriteGetter.apply(model.materials().get(face.texture().substring(1)));
-                list.add(PlantModelBakery.bakeFace(element, face, texture, direction));
+                list.add(PlantModelBakery.bakeFace(element, face, texture, direction, modelState));
             }
         }
         return new PlantBakedModel(list, model.materials());

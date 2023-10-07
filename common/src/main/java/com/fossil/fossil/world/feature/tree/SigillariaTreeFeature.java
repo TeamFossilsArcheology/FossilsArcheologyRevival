@@ -66,7 +66,7 @@ public class SigillariaTreeFeature extends Feature<NoneFeatureConfiguration> {
         } else {
             genCone(level, top.below(2), random.nextInt(2) + 2, random.nextInt(2) + 6, random);
         }
-        return false;
+        return true;
     }
 
     private void genCone(WorldGenLevel level, BlockPos pos, float size, float height, Random random) {
