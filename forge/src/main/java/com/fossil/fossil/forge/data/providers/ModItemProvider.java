@@ -137,9 +137,9 @@ public class ModItemProvider extends ItemModelProvider {
         builder(resourceLocation, blockLocation);
     }
 
-    public void simpleItem(ResourceLocation blockLocation, boolean block) {
-        ResourceLocation resourceLocation = new ResourceLocation(blockLocation.getNamespace(), (block ? "block/" : "item/") + blockLocation.getPath());
-        builder(resourceLocation, blockLocation);
+    public void simpleItem(ResourceLocation location, boolean block) {
+        ResourceLocation resourceLocation = new ResourceLocation(location.getNamespace(), (block ? "block/" : "item/") + location.getPath());
+        builder(resourceLocation, location);
     }
 
     public void blockItem(ResourceLocation blockLocation) {

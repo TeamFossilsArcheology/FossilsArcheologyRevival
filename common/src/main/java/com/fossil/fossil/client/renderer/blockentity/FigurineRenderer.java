@@ -2,7 +2,7 @@ package com.fossil.fossil.client.renderer.blockentity;
 
 import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.block.entity.FigurineBlockEntity;
-import com.fossil.fossil.client.model.*;
+import com.fossil.fossil.client.model.block.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelPart;
@@ -35,8 +35,14 @@ public class FigurineRenderer implements BlockEntityRenderer<FigurineBlockEntity
         poseStack.mulPose(Vector3f.YP.rotationDegrees(direction.getOpposite().toYRot()));
         FigurineBlock figurineBlock = (FigurineBlock) blockEntity.getBlockState().getBlock();
         if (figurineBlock instanceof FigurineSkeletonBlock) {
-            var consumer = bufferSource.getBuffer(RenderType.entityTranslucent(figurineBlock.getTexture()));
-            skeletonModel.render(poseStack, consumer, packedLight, packedOverlay);
+            int x = 1;
+            if (x == 1) {
+                var consumer = bufferSource.getBuffer(RenderType.entityTranslucent(figurineBlock.getTexture()));
+                skeletonModel.render(poseStack, consumer, packedLight, packedOverlay);
+            } else {
+                var consumer = bufferSource.getBuffer(RenderType.entityTranslucentCull(figurineBlock.getTexture()));
+                skeletonModel.render(poseStack, consumer, packedLight, packedOverlay);
+            }
         } else {
             var consumer = bufferSource.getBuffer(RenderType.entityCutout(figurineBlock.getTexture()));
             if (figurineBlock instanceof FigurineEndermanBlock) {

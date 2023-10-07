@@ -40,6 +40,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     protected void registerStatesAndModels() {
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
+            if (type == PrehistoricPlantType.DIPTERIS || type == PrehistoricPlantType.ZAMITES) {
+                continue;
+            }
             BushBlock flower = type.getPlantBlock();
             if (flower instanceof ShortFlowerBlock shortFlower) {
                 shortFlowerBlock(shortFlower);

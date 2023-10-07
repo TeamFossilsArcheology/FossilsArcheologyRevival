@@ -2,12 +2,14 @@ package com.fossil.fossil.forge;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.ClientInit;
+import com.fossil.fossil.client.model.block.PlantBlockModel;
 import com.fossil.fossil.config.forge.ForgeConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.Coelacanth;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
 import com.fossil.fossil.forge.client.ClientModEvents;
+import com.fossil.fossil.forge.client.model.PlantModelLoader;
 import com.fossil.fossil.forge.world.biome.ForgeFossilRegion;
 import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
 import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
@@ -19,6 +21,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -46,6 +50,7 @@ public class FossilForge {
         modEventBus.addListener(this::onClient);
         modEventBus.addListener(this::onCommon);
         modEventBus.addListener(this::registerCaps);
+        modEventBus.addListener(this::onModelRegistryEvent);
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.SPEC);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientInit::immediate);
     }
@@ -69,7 +74,11 @@ public class FossilForge {
         });
     }
 
-    public void registerCaps(RegisterCapabilitiesEvent event) {
+    private void onModelRegistryEvent(ModelRegistryEvent event) {
+        ModelLoaderRegistry.registerLoader(PlantBlockModel.LOADER, new PlantModelLoader());
+    }
+
+    private void registerCaps(RegisterCapabilitiesEvent event) {
         event.register(IMammalCap.class);
     }
 }

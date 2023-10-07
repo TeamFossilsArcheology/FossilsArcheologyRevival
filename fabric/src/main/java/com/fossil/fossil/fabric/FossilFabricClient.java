@@ -4,8 +4,10 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.client.ClientInit;
 import com.fossil.fossil.client.renderer.OverlayRenderer;
+import com.fossil.fossil.fabric.client.model.PlantModelProvider;
 import com.fossil.fossil.fabric.client.renderer.CustomItemRendererFabricImpl;
 import net.fabricmc.api.ClientModInitializer;
+import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
@@ -18,6 +20,7 @@ public class FossilFabricClient implements ClientModInitializer {
     public void onInitializeClient() {
         ClientInit.immediate();
         ClientInit.later();
+        ModelLoadingRegistry.INSTANCE.registerResourceProvider(PlantModelProvider::new);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANU_STATUE.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANUBITE_STATUE.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANCIENT_CHEST.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);

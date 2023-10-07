@@ -3,7 +3,7 @@ package com.fossil.fossil.client.renderer.blockentity;
 import com.fossil.fossil.block.custom_blocks.SarcophagusBlock;
 import com.fossil.fossil.block.entity.SarcophagusBlockEntity;
 import com.fossil.fossil.client.model.AnuBossModel;
-import com.fossil.fossil.client.model.SarcophagusModel;
+import com.fossil.fossil.client.model.block.SarcophagusModel;
 import com.fossil.fossil.item.ModItems;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;

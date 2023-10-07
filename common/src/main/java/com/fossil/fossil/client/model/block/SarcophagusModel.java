@@ -1,4 +1,4 @@
-package com.fossil.fossil.client.model;
+package com.fossil.fossil.client.model.block;
 
 
 import com.fossil.fossil.Fossil;

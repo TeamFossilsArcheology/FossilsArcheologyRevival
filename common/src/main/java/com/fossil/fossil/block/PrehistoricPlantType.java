@@ -23,7 +23,7 @@ public enum PrehistoricPlantType {
     CYATHEA(Size.FOUR, Block.box(5, 0, 5, 11, 16, 11)),
     DICTYOPHYLLUM(Size.SINGLE, Block.box(3, 0, 3, 13, 14, 13)),
     DILLHOFFIA(Size.SINGLE, Block.box(5, 0, 5, 11, 14, 11)),
-    DIPTERIS(Size.DOUBLE, Block.box(1, 0, 1, 15, 16, 15)),
+    DIPTERIS(Size.SINGLE, Block.box(1, 0, 1, 15, 22, 15)),
     DUISBERGIA(Size.DOUBLE, Block.box(3, 0, 3, 13, 16, 13)),
     EPHEDRA(Size.SINGLE, Block.box(3, 0, 3, 13, 8, 13)),
     FLORISSANTIA(Size.SINGLE, Block.box(4, 0, 4, 12, 11, 12)),
@@ -38,7 +38,7 @@ public enum PrehistoricPlantType {
     TEMPSKYA(Size.FOUR, Block.box(2, 0, 2, 14, 16, 14)),
     VACCINIUM(Size.SINGLE, Block.box(4, 0, 4, 12, 10, 12)),
     WELWITSCHIA(Size.SINGLE, Block.box(3, 0, 3, 13, 5, 13)),
-    ZAMITES(Size.SINGLE, Block.box(5, 0, 5, 11, 10, 11));
+    ZAMITES(Size.SINGLE, Block.box(3, 0, 3, 13, 32, 13));
 
     private static List<PrehistoricPlantType> seedsCache;
     private final Size size;
@@ -65,6 +65,7 @@ public enum PrehistoricPlantType {
     }
 
     public static void register() {
+        //TODO: Double Block for the plants with custom model
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
             if (type == MUTANT_PLANT) {
                 type.plantBlock = ModBlocks.registerTallFlower(type.resourceName, type.shapes);
