@@ -23,25 +23,16 @@ public class FossilConfigImpl extends MidnightConfig {
     public static boolean generateFossils = true;
     @MidnightConfig.Entry
     public static boolean generatePermafrost = true;
-    ;
     @MidnightConfig.Entry
     public static boolean generateVolcanicRock = true;
-    ;
     @MidnightConfig.Entry
     public static boolean generateAztecWeaponShops = true;
-    ;
     @MidnightConfig.Entry
     public static boolean generateMoai = true;
-    ;
     @MidnightConfig.Entry
-    public static boolean generateTarSites = true;
-    ;
-    @MidnightConfig.Entry
-    public static boolean generateFossilSites = true;
-    ;
+    public static boolean generateTarPit = true;
     @MidnightConfig.Entry
     public static boolean generateVolcanoBiome = true;
-    ;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int fossilOreRarity = 38;
     @MidnightConfig.Entry(min = 1, max = 1000000)
@@ -51,17 +42,9 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int hellShipSeperation = 5;
     @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int tarSiteRarity = 100;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int fossilSiteRarity = 900;
+    public static int tarPitRarity = 100;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int moaiRarity = 400;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int aztecWeaponShopRarity = 400;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int templeRarity = 500;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int academyRarity = 3500;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int volcanoBiomeRarity = 1;
     @MidnightConfig.Entry

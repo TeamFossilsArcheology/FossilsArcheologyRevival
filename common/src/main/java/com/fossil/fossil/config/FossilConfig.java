@@ -13,20 +13,15 @@ public class FossilConfig {
     public static final String GENERATE_VOLCANIC_ROCK = "generateVolcanicRock";
     public static final String GENERATE_AZTEC_WEAPON_SHOPS = "generateAztecWeaponShops";
     public static final String GENERATE_MOAI = "generateMoai";
-    public static final String GENERATE_TAR_SITES = "generateTarSites";
-    public static final String GENERATE_FOSSIL_SITES = "generateFossilSites";
+    public static final String GENERATE_TAR_PITS = "generateTarPits";
     public static final String GENERATE_VOLCANO_BIOME = "generateVolcanoBiome";
     public static final String VOLCANO_BIOME_RARITY = "volcanoBiomeRarity";
     public static final String FOSSIL_ORE_RARITY = "fossilOreRarity";
     public static final String PERMAFROST_RARITY = "permafrostRarity";
     public static final String HELL_SHIP_SPACING = "hellShipSpacing";
     public static final String HELL_SHIP_SEPERATION = "hellShipSeperation";
-    public static final String TAR_SITE_RARITY = "tarSiteRarity";
-    public static final String FOSSIL_SITE_RARITY = "fossilSiteRarity";
+    public static final String TAR_PIT_RARITY = "tarPitRarity";
     public static final String MOAI_RARITY = "moaiRarity";
-    public static final String AZTEC_WEAPON_SHOP_RARITY = "aztecWeaponShopRarity";
-    public static final String TEMPLE_RARITY = "templeRarity";
-    public static final String ACADEMY_RARITY = "academyRarity";
     public static final String SPAWN_TAR_SLIMES = "spawnTarSlimes";
     public static final String SPAWN_NAUTILUS = "spawnNautilus";
     public static final String SPAWN_COELACANTH = "spawnCoelacanth";
@@ -71,7 +66,7 @@ public class FossilConfig {
             }
             case "aztec_temple" -> {
                 return isEnabled(GENERATE_TEMPLE);
-            }//TODO: Check forge side
+            }
             case "egyptian_academy" -> {
                 return isEnabled(GENERATE_ACADEMY);
             }
