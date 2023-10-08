@@ -6,6 +6,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+@SuppressWarnings("unused")
 public class FossilConfigImpl extends MidnightConfig {
 
 
@@ -30,7 +31,7 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry
     public static boolean generateMoai = true;
     @MidnightConfig.Entry
-    public static boolean generateTarPit = true;
+    public static boolean generateTarPits = true;
     @MidnightConfig.Entry
     public static boolean generateVolcanoBiome = true;
     @MidnightConfig.Entry(min = 1, max = 1000000)
@@ -120,9 +121,6 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int fernTickRate = 2;
     public static Map<String, Field> mappedEntries = new HashMap<>();
-
-    static {
-    }
 
     public static void initFabricConfig() {
         Field[] allFields = FossilConfigImpl.class.getDeclaredFields();
