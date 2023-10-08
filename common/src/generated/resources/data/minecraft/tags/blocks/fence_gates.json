@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:calamites_fence_gate",
+    "fossil:cordaites_fence_gate",
+    "fossil:palm_fence_gate",
+    "fossil:sigillaria_fence_gate",
+    "fossil:tempskya_fence_gate"
+  ]
+}

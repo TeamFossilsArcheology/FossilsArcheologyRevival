@@ -1,8 +1,8 @@
 {
   "replace": false,
   "values": [
+    "fossil:alligator_gar_dna",
     "fossil:coelacanth_dna",
-    "fossil:sturgeon_dna",
-    "fossil:alligator_gar_dna"
+    "fossil:sturgeon_dna"
   ]
 }

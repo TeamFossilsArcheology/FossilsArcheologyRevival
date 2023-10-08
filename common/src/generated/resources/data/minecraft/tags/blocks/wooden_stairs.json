@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:calamites_stairs",
+    "fossil:cordaites_stairs",
+    "fossil:palm_stairs",
+    "fossil:sigillaria_stairs",
+    "fossil:tempskya_stairs"
+  ]
+}

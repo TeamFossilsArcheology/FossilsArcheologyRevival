@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:calamites_planks",
+    "fossil:cordaites_planks",
+    "fossil:palm_planks",
+    "fossil:sigillaria_planks",
+    "fossil:tempskya_planks"
+  ]
+}

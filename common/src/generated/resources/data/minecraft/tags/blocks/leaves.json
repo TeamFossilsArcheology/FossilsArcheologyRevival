@@ -1,7 +1,9 @@
 {
   "replace": false,
   "values": [
+    "fossil:calamites_leaves",
     "fossil:cordaites_leaves",
+    "fossil:palm_leaves",
     "fossil:sigillaria_leaves"
   ]
 }

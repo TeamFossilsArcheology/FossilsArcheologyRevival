@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:calamites_door",
+    "fossil:cordaites_door",
+    "fossil:palm_door",
+    "fossil:sigillaria_door",
+    "fossil:tempskya_door"
+  ]
+}

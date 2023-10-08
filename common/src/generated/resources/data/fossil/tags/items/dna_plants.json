@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#fossil:fossil_seeds",
+    "#minecraft:saplings"
+  ]
+}

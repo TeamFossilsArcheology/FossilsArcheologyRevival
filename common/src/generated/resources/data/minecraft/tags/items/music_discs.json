@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:record_anu",
+    "fossil:record_discovery",
+    "fossil:record_bones",
+    "fossil:record_scarab"
+  ]
+}

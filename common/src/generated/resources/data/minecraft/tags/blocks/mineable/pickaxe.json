@@ -1,0 +1,29 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:ancient_glass",
+    "fossil:reinforced_glass",
+    "fossil:fake_obsidian",
+    "fossil:cultivate",
+    "fossil:analyzer",
+    "fossil:fossil",
+    "fossil:iced_stone",
+    "fossil:skull",
+    "fossil:skull_lantern",
+    "fossil:bubble_blower",
+    "fossil:ancient_stone",
+    "fossil:ancient_stone_bricks",
+    "fossil:ancient_stone_slab",
+    "fossil:ancient_stone_stairs",
+    "fossil:ancient_stone_wall",
+    "fossil:volcanic_rock",
+    "fossil:volcanic_bricks",
+    "fossil:volcanic_brick_slab",
+    "fossil:volcanic_brick_stairs",
+    "fossil:volcanic_brick_wall",
+    "fossil:volcanic_tiles",
+    "fossil:volcanic_tile_slab",
+    "fossil:volcanic_tile_stairs",
+    "fossil:volcanic_tile_wall"
+  ]
+}
