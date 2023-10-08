@@ -4,25 +4,17 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.custom_blocks.TempskyaLeafBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.Random;
 
-public class TempskyaTreeFeature extends Feature<NoneFeatureConfiguration> {
-
-    public TempskyaTreeFeature() {
-        super(NoneFeatureConfiguration.CODEC);
-    }
+public class TempskyaTreeFeature extends CustomTreeFeature {
 
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    protected boolean placeTree(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         //Redo this correctly after 1.18
         WorldGenLevel level = context.level();
         BlockPos pos = context.origin();
@@ -45,25 +37,5 @@ public class TempskyaTreeFeature extends Feature<NoneFeatureConfiguration> {
         }
         level.setBlock(pos.above(treeHeight), ModBlocks.TEMPSKYA_TOP.get().defaultBlockState(), 3);
         return true;
-    }
-
-    private int getMaxFreeTreeHeight(LevelSimulatedReader level, int trunkHeight, BlockPos topPosition) {
-        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        for (int i = 0; i <= trunkHeight + 1; ++i) {
-            //int j = config.minimumSize.getSizeAtHeight(trunkHeight, i);
-            int j = 0;
-            for (int k = -j; k <= j; ++k) {
-                for (int l = -j; l <= j; ++l) {
-                    mutableBlockPos.setWithOffset(topPosition, k, i, l);
-                    if (TreeFeature.isFree(level, mutableBlockPos) && !isVine(level, mutableBlockPos)) continue;
-                    return i - 2;
-                }
-            }
-        }
-        return trunkHeight;
-    }
-
-    private static boolean isVine(LevelSimulatedReader level, BlockPos pos) {
-        return level.isStateAtPosition(pos, blockState -> blockState.is(Blocks.VINE));
     }
 }

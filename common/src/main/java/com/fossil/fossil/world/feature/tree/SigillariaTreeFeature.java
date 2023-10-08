@@ -3,26 +3,17 @@ package com.fossil.fossil.world.feature.tree;
 import com.fossil.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.WorldGenLevel;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
-import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
 import java.util.Random;
 
-public class SigillariaTreeFeature extends Feature<NoneFeatureConfiguration> {
-
-    public SigillariaTreeFeature() {
-        super(NoneFeatureConfiguration.CODEC);
-    }
-
+public class SigillariaTreeFeature extends CustomTreeFeature {
     @Override
-    public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
+    protected boolean placeTree(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         //Redo this correctly after 1.18
         WorldGenLevel level = context.level();
         BlockPos pos = context.origin();
@@ -39,10 +30,10 @@ public class SigillariaTreeFeature extends Feature<NoneFeatureConfiguration> {
         }
         boolean twins = random.nextInt(4) != 0;
         for (int i = 0; i < treeHeight; i++) {
-            level.setBlock(pos.above(i), log, 3);
+            level.setBlock(pos.above(i), log, 19);
             if (i < (treeHeight - (twins ? -2 : 4)) * 0.65) {
                 for (Direction direction : Direction.Plane.HORIZONTAL) {
-                    level.setBlock(pos.above(i).relative(direction), log, 3);
+                    level.setBlock(pos.above(i).relative(direction), log, 19);
                 }
             }
         }
@@ -55,8 +46,8 @@ public class SigillariaTreeFeature extends Feature<NoneFeatureConfiguration> {
             for (int i = 0; i <= secondHeight; i++) {
                 BlockPos offsetLeft = top.relative(direction, i).above(i);
                 BlockPos offsetRight = top.relative(direction.getOpposite(), i).above(i);
-                level.setBlock(offsetLeft, log, 3);
-                level.setBlock(offsetRight, log, 3);
+                level.setBlock(offsetLeft, log, 19);
+                level.setBlock(offsetRight, log, 19);
                 if (i == secondHeight) {
                     int bushHeight = random.nextInt(2) + 6;
                     genCone(level, offsetLeft.above(bushHeight / 2).relative(direction, -1), bushWidth, bushHeight, random);
@@ -79,34 +70,14 @@ public class SigillariaTreeFeature extends Feature<NoneFeatureConfiguration> {
             int distanceY = Math.abs(blockpos.getY() - pos.getY());
             if (blockpos.distSqr(pos) <= (double) (f * f)) {
                 if (distanceX * distanceX + distanceZ * distanceZ < (f * f * (0.5f + random.nextFloat() * 0.5f)) * ((1 - distanceY % 2) + 0.25f)) {
-                    level.setBlock(blockpos, leaves, 3);
+                    placeLeaf(level, blockpos, leaves);
                 }
             }
         }
         for (BlockPos blockpos : BlockPos.betweenClosed(pos.below((int) height), pos.above((int) height - 4))) {
             if (blockpos.distSqr(pos) <= (double) (f * f)) {
-                level.setBlock(blockpos, log, 3);
+                level.setBlock(blockpos, log, 19);
             }
         }
-    }
-
-    private int getMaxFreeTreeHeight(LevelSimulatedReader level, int trunkHeight, BlockPos topPosition) {
-        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        for (int i = 0; i <= trunkHeight + 1; ++i) {
-            //int j = config.minimumSize.getSizeAtHeight(trunkHeight, i);
-            int j = 0;
-            for (int k = -j; k <= j; ++k) {
-                for (int l = -j; l <= j; ++l) {
-                    mutableBlockPos.setWithOffset(topPosition, k, i, l);
-                    if (TreeFeature.isFree(level, mutableBlockPos) && !isVine(level, mutableBlockPos)) continue;
-                    return i - 2;
-                }
-            }
-        }
-        return trunkHeight;
-    }
-
-    private static boolean isVine(LevelSimulatedReader level, BlockPos pos) {
-        return level.isStateAtPosition(pos, blockState -> blockState.is(Blocks.VINE));
     }
 }
