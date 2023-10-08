@@ -31,6 +31,6 @@ public class FigurinePiglinModel {
                 .texOffs(35, 27).addBox(-2.5F, -3, -0.3F, 1, 2, 1)
                 .texOffs(35, 27).addBox(1.5F, -3, -0.3F, 1, 2, 1)
                 .texOffs(18, 23).addBox(-2, -4, -2, 4, 4, 4), PartPose.offsetAndRotation(0.1F, 11.5F, -1.5F, 0.6829F, -0.2276F, 0));
-        return LayerDefinition.create(meshDefinition, 74, 32);
+        return LayerDefinition.create(meshDefinition, 64, 32);
     }
 }

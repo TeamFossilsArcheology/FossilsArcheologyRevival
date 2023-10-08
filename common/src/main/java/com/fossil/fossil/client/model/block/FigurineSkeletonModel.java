@@ -24,6 +24,6 @@ public class FigurineSkeletonModel {
         root.addOrReplaceChild("headDestroyed", CubeListBuilder.create().texOffs(18, 23).addBox(0.9F, -6, -4.2F, 4, 4, 4), PartPose.offsetAndRotation(0.974F, 24, 0.8888F, 0, 0.3643F, 0));
         root.addOrReplaceChild("leftArmDestroyed", CubeListBuilder.create().texOffs(0, 0).addBox(1.9F, -7, -0.5F, 2, 6, 2), PartPose.offsetAndRotation(0, 16.5F, -6.5F, -1.5708F, 0, 0));
         root.addOrReplaceChild("rightArmDestroyed", CubeListBuilder.create().texOffs(31, 14).addBox(-5.1F, -3, -0.4F, 2, 6, 2), PartPose.offsetAndRotation(-4.0097F, 25.1F, 2.4795F, 1.4114F, 0, 1.5708F));
-        return LayerDefinition.create(meshDefinition, 74, 32);
+        return LayerDefinition.create(meshDefinition, 64, 32);
     }
 }

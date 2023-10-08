@@ -27,6 +27,6 @@ public class FigurineSteveModel {
         bodyWeaponDestroyed.addOrReplaceChild("swordDestroyed", CubeListBuilder.create().texOffs(46, 15).addBox(-0.5f, -1, -5.5f, 1, 2, 5)
                 .texOffs(45, 14).addBox(-0.5f, -2, -0.5f, 1, 4, 1), PartPose.offset(-1, 4, -1.5f));
 
-        return LayerDefinition.create(meshDefinition, 74, 32);
+        return LayerDefinition.create(meshDefinition, 64, 32);
     }
 }

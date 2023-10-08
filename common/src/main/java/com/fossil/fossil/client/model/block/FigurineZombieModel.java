@@ -20,6 +20,6 @@ public class FigurineZombieModel {
         root.addOrReplaceChild("headDestroyed", CubeListBuilder.create().texOffs(18, 23).addBox(0.9F, -6, 0.6F, 4, 4, 4), PartPose.offsetAndRotation(2.2912F, 24, -1.247F, 0, -0.6829F, 0));
         root.addOrReplaceChild("leftArmDestroyed", CubeListBuilder.create().texOffs(0, 0).addBox(2.4F, -3, -0.5F, 2, 6, 2), PartPose.offsetAndRotation(-1.0954F, 20.5F, -0.0929F, -1.5708F, 0.5918F, 0));
         root.addOrReplaceChild("rightArmDestroyed", CubeListBuilder.create().texOffs(31, 14).addBox(-5.1F, -3, -0.4F, 2, 6, 2), PartPose.offsetAndRotation(-2.825F, 25.1F, -1.4699F, -1.4114F, 0, 1.5708F));
-        return LayerDefinition.create(meshDefinition, 74, 32);
+        return LayerDefinition.create(meshDefinition, 64, 32);
     }
 }
