@@ -41,7 +41,7 @@ public class ModBlockLootTables extends BlockLoot {
     @Override
     protected void addTables() {
         ModBlocks.AMBER_ORE.ifPresent(block -> addCustom(block, createOreDrop(block, Item.byBlock(ModBlocks.AMBER_CHUNK.get()))));
-        ModBlocks.ICED_STONE.ifPresent(block -> addCustom(block, createSilkTouchOnlyTable(block)));
+        ModBlocks.ICED_DIRT.ifPresent(block -> addCustom(block, createSilkTouchOnlyTable(block)));
         ModBlocks.PERMAFROST_BLOCK.ifPresent(block -> addCustom(block, multiple(20, ModItems.FERN_SEED_FOSSIL.get(),
                 ModBlocks.SKULL_BLOCK.get(), ModItems.FROZEN_MEAT.get(), Items.BONE, Items.BOOK)));
 

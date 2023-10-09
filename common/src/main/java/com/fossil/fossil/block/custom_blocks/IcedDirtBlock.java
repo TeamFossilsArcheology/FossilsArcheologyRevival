@@ -9,15 +9,15 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.Random;
 
-public class IcedStoneBlock extends Block {
-    public IcedStoneBlock(Properties properties) {
+public class IcedDirtBlock extends Block {
+    public IcedDirtBlock(Properties properties) {
         super(properties);
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(level, pos)) {
-            this.turnIntoRock(level, pos);
+            turnIntoRock(level, pos);
         }
     }
 
@@ -26,7 +26,7 @@ public class IcedStoneBlock extends Block {
             level.removeBlock(pos, false);
             return;
         }
-        level.setBlockAndUpdate(pos, Blocks.STONE.defaultBlockState());
-        level.neighborChanged(pos, Blocks.STONE, pos);
+        level.setBlockAndUpdate(pos, Blocks.DIRT.defaultBlockState());
+        level.neighborChanged(pos, Blocks.DIRT, pos);
     }
 }

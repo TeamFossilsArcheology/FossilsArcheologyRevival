@@ -81,8 +81,8 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> AMBER_CHUNK_MOSQUITO = registerBlock("amber_chunk_mosquito",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
                     .isViewBlocking(ModBlocks::never)));
-    public static final RegistrySupplier<IcedStoneBlock> ICED_STONE = registerBlock("iced_stone",
-            () -> new IcedStoneBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f, 10f).requiresCorrectToolForDrops()
+    public static final RegistrySupplier<IcedDirtBlock> ICED_DIRT = registerBlock("iced_dirt",
+            () -> new IcedDirtBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(1, 4).requiresCorrectToolForDrops()
                     .sound(SoundType.GLASS).randomTicks()));
     public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
             () -> new ObsidianSpikesBlock(BlockBehaviour.Properties.of(Material.STONE).strength(50, 2000).sound(SoundType.STONE)
