@@ -1,23 +1,26 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.HorizontalDirectionalBlock;
+import net.minecraft.world.level.block.Mirror;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class TempskyaLeafBlock extends BushBlock {
+public class TempskyaLeafBlock extends Block {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 16, 16);
 
@@ -27,15 +30,21 @@ public class TempskyaLeafBlock extends BushBlock {
     }
 
     @Override
-    public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        BlockPos attachedPos = pos.relative(state.getValue(FACING).getOpposite());
-        BlockState attachedState = level.getBlockState(attachedPos);
-        return mayPlaceOn(attachedState, level, attachedPos);
+    public @NotNull VoxelShape getBlockSupportShape(BlockState state, BlockGetter reader, BlockPos pos) {
+        return Shapes.empty();
     }
 
     @Override
-    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
-        return state.is(ModBlocks.TEMPSKYA_LOG.get());
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+        return state.getFluidState().isEmpty();
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+        if (type == PathComputationType.AIR && !hasCollision) {
+            return true;
+        }
+        return super.isPathfindable(state, level, pos, type);
     }
 
     @Nullable
@@ -74,10 +83,5 @@ public class TempskyaLeafBlock extends BushBlock {
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
-    }
-
-    @Override
-    public @NotNull BlockBehaviour.OffsetType getOffsetType() {
-        return BlockBehaviour.OffsetType.NONE;
     }
 }

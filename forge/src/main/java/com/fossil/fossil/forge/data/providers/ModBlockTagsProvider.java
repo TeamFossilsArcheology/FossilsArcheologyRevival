@@ -36,7 +36,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.SAPLINGS).add(ModBlocks.CALAMITES_SAPLING.get(), ModBlocks.CORDAITES_SAPLING.get(), ModBlocks.PALM_SAPLING.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModBlocks.TEMPSKYA_SAPLING.get());
         tag(BlockTags.WALLS).add(ModBlocks.ANCIENT_STONE_WALL.get(), ModBlocks.VOLCANIC_BRICK_WALL.get(), ModBlocks.VOLCANIC_TILE_WALL.get());
         //TODO: Small flowers?
-        tag(BlockTags.LEAVES).add(ModBlocks.CALAMITES_LEAVES.get(), ModBlocks.CORDAITES_LEAVES.get(), ModBlocks.PALM_LEAVES.get(), ModBlocks.SIGILLARIA_LEAVES.get());
+        tag(BlockTags.LEAVES).add(ModBlocks.CALAMITES_LEAVES.get(), ModBlocks.CORDAITES_LEAVES.get(), ModBlocks.PALM_LEAVES.get(), ModBlocks.SIGILLARIA_LEAVES.get(), ModBlocks.TEMPSKYA_LEAF.get());
         tag(BlockTags.PORTALS).add(ModBlocks.ANU_PORTAL.get(), ModBlocks.HOME_PORTAL.get());
         tag(BlockTags.SOUL_SPEED_BLOCKS).add(ModBlocks.TARRED_DIRT.get());
         tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.DRUM.get(), ModBlocks.SIFTER.get(), ModBlocks.WORKTABLE.get());
