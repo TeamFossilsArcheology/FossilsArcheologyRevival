@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:dinopedia"
+    ]
+  },
+  "criteria": {
+    "has_bio_fossil": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:fossil_bio"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:dinopedia"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_bio_fossil",
+      "has_the_recipe"
+    ]
+  ]
+}

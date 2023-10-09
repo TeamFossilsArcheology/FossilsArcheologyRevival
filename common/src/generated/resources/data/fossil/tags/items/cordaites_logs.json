@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:cordaites_log",
+    "fossil:cordaites_wood",
+    "fossil:stripped_cordaites_log",
+    "fossil:stripped_cordaites_wood"
+  ]
+}

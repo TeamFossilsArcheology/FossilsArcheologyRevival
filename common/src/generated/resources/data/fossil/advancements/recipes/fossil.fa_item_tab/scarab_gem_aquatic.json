@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:scarab_gem_aquatic"
+    ]
+  },
+  "criteria": {
+    "has_scarab_gem": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:scarab_gem_aquatic"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:scarab_gem_aquatic"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_scarab_gem",
+      "has_the_recipe"
+    ]
+  ]
+}

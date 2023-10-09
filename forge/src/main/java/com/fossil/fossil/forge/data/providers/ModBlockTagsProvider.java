@@ -2,22 +2,15 @@ package com.fossil.fossil.forge.data.providers;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.tags.ModBlockTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ModBlockTagsProvider extends BlockTagsProvider {
-    public static final TagKey<Block> CALAMITES_LOGS = BlockTags.create(new ResourceLocation(Fossil.MOD_ID, "calamites_logs"));
-    public static final TagKey<Block> CORDAITES_LOGS = BlockTags.create(new ResourceLocation(Fossil.MOD_ID, "cordaites_logs"));
-    public static final TagKey<Block> PALM_LOGS = BlockTags.create(new ResourceLocation(Fossil.MOD_ID, "palm_logs"));
-    public static final TagKey<Block> SIGILLARIA_LOGS = BlockTags.create(new ResourceLocation(Fossil.MOD_ID, "sigillaria_logs"));
-    public static final TagKey<Block> TEMPSKYA_LOGS = BlockTags.create(new ResourceLocation(Fossil.MOD_ID, "tempskya_logs"));
 
     public ModBlockTagsProvider(DataGenerator arg, @Nullable ExistingFileHelper existingFileHelper) {
         super(arg, Fossil.MOD_ID, existingFileHelper);
@@ -25,12 +18,12 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags() {
-        tag(CALAMITES_LOGS).add(ModBlocks.CALAMITES_LOG.get(), ModBlocks.CALAMITES_WOOD.get(), ModBlocks.STRIPPED_CALAMITES_LOG.get(), ModBlocks.STRIPPED_CALAMITES_WOOD.get());
-        tag(CORDAITES_LOGS).add(ModBlocks.CORDAITES_LOG.get(), ModBlocks.CORDAITES_WOOD.get(), ModBlocks.STRIPPED_CORDAITES_LOG.get(), ModBlocks.STRIPPED_CORDAITES_WOOD.get());
-        tag(PALM_LOGS).add(ModBlocks.PALM_LOG.get(), ModBlocks.PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_LOG.get(), ModBlocks.STRIPPED_PALM_WOOD.get());
-        tag(SIGILLARIA_LOGS).add(ModBlocks.SIGILLARIA_LOG.get(), ModBlocks.SIGILLARIA_WOOD.get(), ModBlocks.STRIPPED_SIGILLARIA_LOG.get(), ModBlocks.STRIPPED_SIGILLARIA_WOOD.get());
-        tag(TEMPSKYA_LOGS).add(ModBlocks.TEMPSKYA_LOG.get(), ModBlocks.TEMPSKYA_WOOD.get(), ModBlocks.STRIPPED_TEMPSKYA_LOG.get(), ModBlocks.STRIPPED_TEMPSKYA_WOOD.get());
-        tag(BlockTags.LOGS_THAT_BURN).addTags(CALAMITES_LOGS, CORDAITES_LOGS, PALM_LOGS, SIGILLARIA_LOGS, TEMPSKYA_LOGS);
+        tag(ModBlockTags.CALAMITES_LOGS).add(ModBlocks.CALAMITES_LOG.get(), ModBlocks.CALAMITES_WOOD.get(), ModBlocks.STRIPPED_CALAMITES_LOG.get(), ModBlocks.STRIPPED_CALAMITES_WOOD.get());
+        tag(ModBlockTags.CORDAITES_LOGS).add(ModBlocks.CORDAITES_LOG.get(), ModBlocks.CORDAITES_WOOD.get(), ModBlocks.STRIPPED_CORDAITES_LOG.get(), ModBlocks.STRIPPED_CORDAITES_WOOD.get());
+        tag(ModBlockTags.PALM_LOGS).add(ModBlocks.PALM_LOG.get(), ModBlocks.PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_LOG.get(), ModBlocks.STRIPPED_PALM_WOOD.get());
+        tag(ModBlockTags.SIGILLARIA_LOGS).add(ModBlocks.SIGILLARIA_LOG.get(), ModBlocks.SIGILLARIA_WOOD.get(), ModBlocks.STRIPPED_SIGILLARIA_LOG.get(), ModBlocks.STRIPPED_SIGILLARIA_WOOD.get());
+        tag(ModBlockTags.TEMPSKYA_LOGS).add(ModBlocks.TEMPSKYA_LOG.get(), ModBlocks.TEMPSKYA_WOOD.get(), ModBlocks.STRIPPED_TEMPSKYA_LOG.get(), ModBlocks.STRIPPED_TEMPSKYA_WOOD.get());
+        tag(BlockTags.LOGS_THAT_BURN).addTags(ModBlockTags.CALAMITES_LOGS, ModBlockTags.CORDAITES_LOGS, ModBlockTags.PALM_LOGS, ModBlockTags.SIGILLARIA_LOGS, ModBlockTags.TEMPSKYA_LOGS);
         tag(BlockTags.PLANKS).add(ModBlocks.CALAMITES_PLANKS.get(), ModBlocks.CORDAITES_PLANKS.get(), ModBlocks.PALM_PLANKS.get(), ModBlocks.SIGILLARIA_PLANKS.get(), ModBlocks.TEMPSKYA_PLANKS.get());
         tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.CALAMITES_BUTTON.get(), ModBlocks.CORDAITES_BUTTON.get(), ModBlocks.PALM_BUTTON.get(), ModBlocks.SIGILLARIA_BUTTON.get(), ModBlocks.TEMPSKYA_BUTTON.get());
         tag(BlockTags.WOODEN_DOORS).add(ModBlocks.CALAMITES_DOOR.get(), ModBlocks.CORDAITES_DOOR.get(), ModBlocks.PALM_DOOR.get(), ModBlocks.SIGILLARIA_DOOR.get(), ModBlocks.TEMPSKYA_DOOR.get());

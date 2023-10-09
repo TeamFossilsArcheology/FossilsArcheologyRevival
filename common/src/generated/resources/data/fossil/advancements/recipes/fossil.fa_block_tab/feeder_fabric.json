@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:feeder_fabric"
+    ]
+  },
+  "criteria": {
+    "has_dino_egg": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "fossil:dino_egg"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:feeder_fabric"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_dino_egg",
+      "has_the_recipe"
+    ]
+  ]
+}

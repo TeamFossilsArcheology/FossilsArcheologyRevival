@@ -1,0 +1,14 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:book"
+    },
+    {
+      "item": "fossil:fossil_bio"
+    }
+  ],
+  "result": {
+    "item": "fossil:dinopedia"
+  }
+}

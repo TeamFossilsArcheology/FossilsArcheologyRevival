@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:vase_volute_damaged"
+    ]
+  },
+  "criteria": {
+    "has_pottery_shard": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:pottery_shard"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:vase_volute_damaged"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_pottery_shard",
+      "has_the_recipe"
+    ]
+  ]
+}

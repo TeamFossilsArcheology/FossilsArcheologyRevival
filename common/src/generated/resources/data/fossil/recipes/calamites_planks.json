@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "fossil:calamites_logs"
+    }
+  ],
+  "result": {
+    "item": "fossil:calamites_planks",
+    "count": 4
+  }
+}

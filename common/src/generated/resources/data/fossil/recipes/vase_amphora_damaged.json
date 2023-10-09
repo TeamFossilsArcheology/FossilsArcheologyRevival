@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PP",
+    "PP",
+    "PP"
+  ],
+  "key": {
+    "P": {
+      "item": "fossil:pottery_shard"
+    }
+  },
+  "result": {
+    "item": "fossil:vase_amphora_damaged"
+  }
+}

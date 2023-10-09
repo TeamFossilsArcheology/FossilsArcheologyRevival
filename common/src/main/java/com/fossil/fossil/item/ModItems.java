@@ -121,9 +121,13 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> CALAMITES_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_calamites",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> CORDAITES_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_cordaites",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> PALM_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_palm",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> SIGILLARIA_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_sigillaria",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> CORDAITES_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_cordaites",
+    public static final RegistrySupplier<Item> TEMPSKYA_SAPLING_FOSSIL = ITEMS.register("fossil_sapling_tempskya",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
 
     public static final RegistrySupplier<SpawnEggItem> TAR_SLIME_SPAWN_EGG = registerSpawnEgg("tar_slime_spawn_egg", ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B);

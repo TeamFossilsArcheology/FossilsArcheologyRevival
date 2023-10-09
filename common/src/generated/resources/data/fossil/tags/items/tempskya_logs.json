@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:tempskya_log",
+    "fossil:tempskya_wood",
+    "fossil:stripped_tempskya_log",
+    "fossil:stripped_tempskya_wood"
+  ]
+}

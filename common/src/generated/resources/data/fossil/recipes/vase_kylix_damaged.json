@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "PPP",
+    " P "
+  ],
+  "key": {
+    "P": {
+      "item": "fossil:pottery_shard"
+    }
+  },
+  "result": {
+    "item": "fossil:vase_kylix_damaged"
+  }
+}

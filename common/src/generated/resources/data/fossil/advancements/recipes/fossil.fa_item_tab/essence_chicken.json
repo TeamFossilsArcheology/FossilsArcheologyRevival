@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:essence_chicken"
+    ]
+  },
+  "criteria": {
+    "has_cooked_chicken_soup": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:chicken_soup_cooked"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:essence_chicken"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cooked_chicken_soup",
+      "has_the_recipe"
+    ]
+  ]
+}

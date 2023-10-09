@@ -1,25 +1,25 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "XSX",
-    "ZWY",
-    "YYY"
+    "IGI",
+    "BWS",
+    "SSS"
   ],
   "key": {
-    "X": {
+    "I": {
       "item": "minecraft:iron_ingot"
     },
-    "Y": {
+    "S": {
       "item": "minecraft:stone"
     },
-    "Z": {
+    "B": {
       "item": "minecraft:stone_button"
     },
     "W": {
       "item": "minecraft:bucket"
     },
-    "S": {
-      "item": "minecraft:glass"
+    "G": {
+      "tag": "forge:glass"
     }
   },
   "result": {

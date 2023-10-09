@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "YXY",
-    "XZX",
-    "XYX"
+    "SPS",
+    "PIP",
+    "PSP"
   ],
   "key": {
-    "Z": {
+    "I": {
       "item": "minecraft:iron_bars"
     },
-    "Y": {
+    "S": {
       "item": "minecraft:string"
     },
-    "X": {
+    "P": {
       "tag": "minecraft:planks"
     }
   },

@@ -13,7 +13,7 @@
       "item": "minecraft:slime_ball"
     },
     "G": {
-      "item": "minecraft:glass"
+      "tag": "forge:glass"
     },
     "W": {
       "item": "minecraft:water_bucket"

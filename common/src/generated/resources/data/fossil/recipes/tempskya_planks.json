@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "fossil:tempskya_logs"
+    }
+  ],
+  "result": {
+    "item": "fossil:tempskya_planks",
+    "count": 4
+  }
+}

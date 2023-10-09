@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "L L",
+    "F F"
+  ],
+  "key": {
+    "L": {
+      "tag": "fossil:bones_leg"
+    },
+    "F": {
+      "tag": "fossil:bones_foot"
+    }
+  },
+  "result": {
+    "item": "fossil:bone_boots"
+  }
+}

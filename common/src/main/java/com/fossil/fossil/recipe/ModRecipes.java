@@ -52,10 +52,12 @@ public class ModRecipes {
                 .addOutput(Blocks.SAND, 35)
                 .addOutput(Items.GREEN_DYE, 20)
                 .addOutput(ModItems.FERN_SEED_FOSSIL.get(), 5)
-                .addOutput(ModItems.PALAE_SAPLING_FOSSIL.get(), 2.5)
                 .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 2.5)
+                .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5)
+                .addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 2.5)
+                .addOutput(ModItems.PALAE_SAPLING_FOSSIL.get(), 2.5)
                 .addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)
-                .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5);
+                .addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 2.5);
 
         double seedWeight = (100F - plantFossil.total) / (double) PrehistoricPlantType.plantsWithSeeds().size();
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
@@ -199,10 +201,12 @@ public class ModRecipes {
             registerCultivate(type.dnaItem, type.getDNAResult(), ModItems.BIO_GOO.get());
         }
         registerCultivate(ModItems.FERN_SEED_FOSSIL.get(), ModItems.FERN_SEED.get(), ModItems.BIO_GOO.get());
+        registerCultivate(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModBlocks.CALAMITES_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultivate(ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModBlocks.CORDAITES_SAPLING.get(), ModItems.BIO_GOO.get());
+        registerCultivate(ModItems.PALM_SAPLING_FOSSIL.get(), ModBlocks.PALM_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultivate(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
+        registerCultivate(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), ModBlocks.TEMPSKYA_SAPLING.get(), ModItems.BIO_GOO.get());
         //registerCultivate(ModItems.PALAE_SAPLING_FOSSIL.get(), ModBlocks.PALAE_SAPLING.get(), ModItems.BIO_GOO.get());
-        //registerCultivate(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModBlocks.CALAMITES_SAPLING.get(), ModItems.BIO_GOO.get());
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
             registerCultivate(type.getFossilizedPlantSeedItem(), type.getPlantSeedItem(), ModItems.BIO_GOO.get());
         }

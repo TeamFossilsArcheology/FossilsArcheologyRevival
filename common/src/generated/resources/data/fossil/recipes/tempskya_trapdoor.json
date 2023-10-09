@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_trapdoor",
+  "pattern": [
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "fossil:tempskya_planks"
+    }
+  },
+  "result": {
+    "item": "fossil:tempskya_trapdoor",
+    "count": 2
+  }
+}

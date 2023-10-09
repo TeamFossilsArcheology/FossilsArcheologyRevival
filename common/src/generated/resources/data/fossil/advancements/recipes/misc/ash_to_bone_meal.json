@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:ash_to_bone_meal"
+    ]
+  },
+  "criteria": {
+    "has_volcanic_ash": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:volcanic_ash"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:ash_to_bone_meal"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_volcanic_ash",
+      "has_the_recipe"
+    ]
+  ]
+}
