@@ -141,6 +141,8 @@ public class ClientInit {
         for (RegistrySupplier<VaseBlock> vase : ModBlocks.VASES) {
             RenderTypeRegistry.register(RenderType.cutout(), vase.get());
         }
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.SKELETON_FIGURINE_RESTORED.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.SKELETON_FIGURINE_PRISTINE.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CALAMITES_DOOR.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CALAMITES_LEAVES.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CALAMITES_SAPLING.get());
@@ -201,7 +203,6 @@ public class ClientInit {
             }
             return EventResult.pass();
         });
-        BlockEntityRendererRegistry.register(ModBlockEntities.FIGURINE.get(), context -> new FigurineRenderer());
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_STATUE.get(), AnuStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.SARCOPHAGUS.get(), SarcophagusRenderer::new);

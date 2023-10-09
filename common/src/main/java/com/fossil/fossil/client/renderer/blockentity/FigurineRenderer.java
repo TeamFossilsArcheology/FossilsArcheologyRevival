@@ -1,16 +1,6 @@
 package com.fossil.fossil.client.renderer.blockentity;
 
-import com.fossil.fossil.block.custom_blocks.*;
-import com.fossil.fossil.block.entity.FigurineBlockEntity;
-import com.fossil.fossil.client.model.block.*;
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Vector3f;
-import net.minecraft.client.model.geom.ModelPart;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
-import net.minecraft.core.Direction;
-
+/*
 public class FigurineRenderer implements BlockEntityRenderer<FigurineBlockEntity> {
     private final ModelPart endermanModel;
     private final ModelPart piglinModel;
@@ -58,3 +48,4 @@ public class FigurineRenderer implements BlockEntityRenderer<FigurineBlockEntity
         poseStack.popPose();
     }
 }
+*/

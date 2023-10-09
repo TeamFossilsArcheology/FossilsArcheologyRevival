@@ -8,11 +8,8 @@ import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleType;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
-
-import java.util.function.Supplier;
 
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
@@ -32,8 +29,6 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(WorktableBlockEntity::get, ModBlocks.WORKTABLE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<FeederBlockEntity>> FEEDER = BLOCK_ENTITIES.register("feeder",
             () -> BlockEntityType.Builder.of(FeederBlockEntity::new, ModBlocks.FEEDER.get()).build(null));
-    public static final RegistrySupplier<BlockEntityType<FigurineBlockEntity>> FIGURINE = BLOCK_ENTITIES.register("figurine",
-            () -> BlockEntityType.Builder.of(FigurineBlockEntity::new, ModBlocks.FIGURINES.stream().map(Supplier::get).toArray(Block[]::new)).build(null));
     public static final RegistrySupplier<BlockEntityType<AnuStatueBlockEntity>> ANU_STATUE = BLOCK_ENTITIES.register("anu_statue",
             () -> BlockEntityType.Builder.of(AnuStatueBlockEntity::new, ModBlocks.ANU_STATUE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<AnubiteStatueBlockEntity>> ANUBITE_STATUE = BLOCK_ENTITIES.register("anubite_statue",
