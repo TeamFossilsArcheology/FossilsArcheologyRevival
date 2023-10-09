@@ -21,6 +21,9 @@ public class DinoEggItem extends PrehistoricEntityItem {
     }
 
     public static boolean spawnEgg(Level level, PrehistoricEntityType type, double x, double y, double z, Player player) {
+        if (player == null) {
+            return false;
+        }
         if (level.isClientSide) {
             return true;
         }
@@ -54,6 +57,9 @@ public class DinoEggItem extends PrehistoricEntityItem {
             return InteractionResult.FAIL;
         }
         if (spawnEgg(level, type, offset.getX() + 0.5, offset.getY(), offset.getZ() + 0.5, context.getPlayer())) {
+            if (!context.getPlayer().getAbilities().instabuild) {
+                context.getItemInHand().shrink(1);
+            }
             return InteractionResult.SUCCESS;
         }
         return InteractionResult.FAIL;

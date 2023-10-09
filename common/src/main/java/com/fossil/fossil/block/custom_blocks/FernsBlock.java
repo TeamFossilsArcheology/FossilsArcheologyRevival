@@ -3,16 +3,15 @@ package com.fossil.fossil.block.custom_blocks;
 import com.fossil.fossil.config.FossilConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -36,7 +35,7 @@ public class FernsBlock extends BushBlock {
 
     public static boolean isUnderTree(BlockGetter level, BlockPos pos) {
         for (int i = 0; i <= 128; ++i) {
-            if (level.getBlockState(pos.above(i)).getMaterial() == Material.LEAVES) {
+            if (level.getBlockState(pos.above(i)).is(BlockTags.LEAVES)) {
                 return true;
             }
         }
@@ -50,7 +49,11 @@ public class FernsBlock extends BushBlock {
 
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        return (super.mayPlaceOn(level.getBlockState(pos.below()), level, pos.below()) || level.getBlockState(pos.below()).is(this)) && isUnderTree(level, pos.above());
+        if (state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
+            BlockState blockState = level.getBlockState(pos.below());
+            return blockState.is(this) && blockState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER;
+        }
+        return super.mayPlaceOn(level.getBlockState(pos.below()), level, pos.below()) && isUnderTree(level, pos.above());
     }
 
     @Override
