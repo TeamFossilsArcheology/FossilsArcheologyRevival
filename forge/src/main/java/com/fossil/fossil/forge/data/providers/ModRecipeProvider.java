@@ -51,8 +51,8 @@ public class ModRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
-        boolean cookingRecipes = false;
-        boolean craftingRecipes = false;
+        boolean cookingRecipes = true;
+        boolean craftingRecipes = true;
         boolean analyzerRecipes = true;
         if (cookingRecipes) {
             for (PrehistoricEntityType type : PrehistoricEntityType.values()) {

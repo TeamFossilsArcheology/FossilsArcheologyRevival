@@ -5,12 +5,12 @@
   },
   "outputs": [
     {
-      "item": "fossil:polarbear_dna",
-      "weight": 10.0
-    },
-    {
       "item": "minecraft:bone_meal",
       "weight": 75.0
+    },
+    {
+      "item": "fossil:polarbear_dna",
+      "weight": 10.0
     },
     {
       "item": "minecraft:prismarine_crystals",
