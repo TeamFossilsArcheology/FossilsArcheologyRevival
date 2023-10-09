@@ -1,8 +1,7 @@
 package com.fossil.fossil.inventory;
 
+import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.fossil.fossil.recipe.ModRecipes;
-import net.minecraft.world.Container;
-import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.*;
@@ -11,14 +10,14 @@ import org.jetbrains.annotations.NotNull;
 
 public class AnalyzerMenu extends AbstractContainerMenu {
 
-    private final Container container;
+    private final CustomBlockEntity container;
     private final ContainerData containerData;
 
     public AnalyzerMenu(int id, Inventory playerInventory) {
-        this(id, playerInventory, new SimpleContainer(13), new SimpleContainerData(3));
+        this(id, playerInventory, new CustomSimpleContainer(13, 9), new SimpleContainerData(3));
     }
 
-    public AnalyzerMenu(int id, Inventory playerInventory, Container container, ContainerData containerData) {
+    public AnalyzerMenu(int id, Inventory playerInventory, CustomBlockEntity container, ContainerData containerData) {
         super(ModMenus.ANALYZER.get(), id);
         this.container = container;
         this.containerData = containerData;
@@ -55,7 +54,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 13) {
-                if (ModRecipes.getAnalyzerRecipeForItem(current, player.level) != null) {
+                if (ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(9, itemStack), player.level) != null) {
                     if (!moveItemStackTo(current, 0, 9, false)) {
                         return ItemStack.EMPTY;
                     }

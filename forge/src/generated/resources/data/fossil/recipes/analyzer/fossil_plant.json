@@ -1,0 +1,120 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "fossil:fossil_plant"
+  },
+  "outputs": [
+    {
+      "item": "fossil:fossil_sapling_calamites",
+      "weight": 2.5
+    },
+    {
+      "item": "fossil:fossil_sapling_cordaites",
+      "weight": 2.5
+    },
+    {
+      "item": "fossil:fossil_sapling_palae",
+      "weight": 2.5
+    },
+    {
+      "item": "fossil:fossil_sapling_palm",
+      "weight": 2.5
+    },
+    {
+      "item": "fossil:fossil_sapling_sigillaria",
+      "weight": 2.5
+    },
+    {
+      "item": "fossil:fossil_sapling_tempskya",
+      "weight": 2.5
+    },
+    {
+      "item": "fossil:fossil_seed_bennettitales",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_cephalotaxus",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_crataegus",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_cyathea",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_dictyophyllum",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_dillhoffia",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_dipteris",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_duisbergia",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_ephedra",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_fern",
+      "weight": 5.0
+    },
+    {
+      "item": "fossil:fossil_seed_florissantia",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_foozia",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_horsetail",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_licopodiophyta",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_osmunda",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_sagenopteris",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_sarracenia",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_vaccinium",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_welwitschia",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "fossil:fossil_seed_zamites",
+      "weight": 1.3157894736842106
+    },
+    {
+      "item": "minecraft:green_dye",
+      "weight": 20.0
+    },
+    {
+      "item": "minecraft:sand",
+      "weight": 35.0
+    }
+  ]
+}

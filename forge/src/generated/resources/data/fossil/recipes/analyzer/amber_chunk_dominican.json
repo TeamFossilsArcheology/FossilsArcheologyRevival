@@ -1,0 +1,60 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "fossil:amber_chunk_dominican"
+  },
+  "outputs": [
+    {
+      "item": "minecraft:beetroot_seeds",
+      "weight": 1.0
+    },
+    {
+      "item": "minecraft:dirt",
+      "weight": 25.0
+    },
+    {
+      "item": "fossil:fossil_sapling_calamites",
+      "weight": 1.0
+    },
+    {
+      "item": "fossil:fossil_sapling_cordaites",
+      "weight": 1.0
+    },
+    {
+      "item": "fossil:fossil_sapling_palm",
+      "weight": 1.0
+    },
+    {
+      "item": "fossil:fossil_sapling_sigillaria",
+      "weight": 1.0
+    },
+    {
+      "item": "fossil:fossil_sapling_tempskya",
+      "weight": 1.0
+    },
+    {
+      "item": "minecraft:gravel",
+      "weight": 25.0
+    },
+    {
+      "item": "minecraft:melon_seeds",
+      "weight": 1.0
+    },
+    {
+      "item": "minecraft:pumpkin_seeds",
+      "weight": 1.0
+    },
+    {
+      "item": "minecraft:spider_eye",
+      "weight": 9.0
+    },
+    {
+      "item": "minecraft:string",
+      "weight": 10.0
+    },
+    {
+      "item": "minecraft:wheat_seeds",
+      "weight": 1.0
+    }
+  ]
+}

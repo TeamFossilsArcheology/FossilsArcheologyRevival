@@ -6,15 +6,15 @@
   "outputs": [
     {
       "item": "fossil:cow_dna",
-      "weight": 60
+      "weight": 60.0
     },
     {
       "item": "fossil:donkey_dna",
-      "weight": 10
+      "weight": 10.0
     },
     {
       "item": "fossil:horse_dna",
-      "weight": 30
+      "weight": 30.0
     }
   ]
 }

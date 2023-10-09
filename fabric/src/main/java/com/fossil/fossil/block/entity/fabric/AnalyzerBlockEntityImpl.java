@@ -5,6 +5,7 @@ import com.fossil.fossil.block.entity.AnalyzerBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.fabric.block.entity.FabricContainerBlockEntity;
 import com.fossil.fossil.inventory.AnalyzerMenu;
+import com.fossil.fossil.inventory.CustomSimpleContainer;
 import com.fossil.fossil.recipe.AnalyzerRecipe;
 import com.fossil.fossil.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
@@ -110,7 +111,7 @@ public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implemen
     }
 
     private boolean isAnalyzable(ItemStack itemStack) {
-        return ModRecipes.getAnalyzerRecipeForItem(itemStack, level) != null;
+        return ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(9, itemStack), level) != null;
     }
 
     @Override
@@ -142,7 +143,10 @@ public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implemen
     protected void createItem() {
         if (canProcess()) {
             ItemStack input = items.get(rawIndex);
-            AnalyzerRecipe recipe = ModRecipes.getAnalyzerRecipeForItem(input, level);
+            AnalyzerRecipe recipe = ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(9, input), level);
+            if (recipe == null) {
+                return;
+            }
             ItemStack output = recipe.assemble(this).copy();
             if (output.getCount() > 1) {
                 output.setCount(1 + level.random.nextInt(output.getCount() - 1));

@@ -1,12 +1,12 @@
 {
   "type": "fossil:analyzer",
   "ingredient": {
-    "item": "minecraft:rabbit"
+    "item": "minecraft:rabbit_foot"
   },
   "outputs": [
     {
       "item": "fossil:rabbit_dna",
-      "weight": 100
+      "weight": 100.0
     }
   ]
 }

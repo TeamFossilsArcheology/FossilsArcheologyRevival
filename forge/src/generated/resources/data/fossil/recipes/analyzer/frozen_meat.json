@@ -1,0 +1,80 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "fossil:frozen_meat"
+  },
+  "outputs": [
+    {
+      "item": "minecraft:beef",
+      "weight": 15.0
+    },
+    {
+      "item": "minecraft:chicken",
+      "weight": 15.0
+    },
+    {
+      "item": "fossil:dodo_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:elasmotherium_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:fossil_tar",
+      "weight": 20.0
+    },
+    {
+      "item": "fossil:gastornis_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:kelenken_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:mammoth_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:megalania_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:megaloceros_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:megalodon_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "minecraft:mutton",
+      "weight": 15.0
+    },
+    {
+      "item": "fossil:phorusrhacos_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:platybelodon_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "minecraft:porkchop",
+      "weight": 15.0
+    },
+    {
+      "item": "fossil:quagga_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:smilodon_dna",
+      "weight": 1.1538461538461537
+    },
+    {
+      "item": "fossil:titanis_dna",
+      "weight": 1.1538461538461537
+    }
+  ]
+}

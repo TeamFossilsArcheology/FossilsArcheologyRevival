@@ -1,12 +1,12 @@
 {
   "type": "fossil:analyzer",
   "ingredient": {
-    "item": "minecraft:porkchop"
+    "item": "minecraft:egg"
   },
   "outputs": [
     {
-      "item": "fossil:pig_dna",
-      "weight": 100
+      "item": "fossil:chicken_dna",
+      "weight": 100.0
     }
   ]
 }

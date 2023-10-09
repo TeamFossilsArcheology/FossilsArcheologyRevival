@@ -1,0 +1,24 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "fossil:tar_drop"
+  },
+  "outputs": [
+    {
+      "item": "minecraft:charcoal",
+      "weight": 20.0
+    },
+    {
+      "item": "minecraft:coal",
+      "weight": 20.0
+    },
+    {
+      "item": "fossil:fossil_tar",
+      "weight": 45.0
+    },
+    {
+      "item": "fossil:volcanic_rock",
+      "weight": 15.0
+    }
+  ]
+}

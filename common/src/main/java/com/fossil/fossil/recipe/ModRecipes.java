@@ -3,10 +3,10 @@ package com.fossil.fossil.recipe;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.item.ModItems;
-import com.fossil.fossil.util.TimePeriod;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
@@ -48,31 +48,6 @@ public class ModRecipes {
     }
 
     public static void initRecipes() {
-        AnalyzerRecipe.Builder plantFossil = new AnalyzerRecipe.Builder(ModItems.PlANT_FOSSIL.get())
-                .addOutput(Blocks.SAND, 35)
-                .addOutput(Items.GREEN_DYE, 20)
-                .addOutput(ModItems.FERN_SEED_FOSSIL.get(), 5)
-                .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 2.5)
-                .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5)
-                .addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 2.5)
-                .addOutput(ModItems.PALAE_SAPLING_FOSSIL.get(), 2.5)
-                .addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)
-                .addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 2.5);
-
-        double seedWeight = (100F - plantFossil.total) / (double) PrehistoricPlantType.plantsWithSeeds().size();
-        for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-            plantFossil.addOutput(type.getFossilizedPlantSeedItem(), seedWeight);
-        }
-        registerAnalyzer(plantFossil);
-        AnalyzerRecipe.Builder bioFossil = new AnalyzerRecipe.Builder(ModItems.BIO_FOSSIL.get())
-                .addOutput(Blocks.SAND, 35)
-                .addOutput(Items.BONE_MEAL, 50);
-        List<PrehistoricEntityType> bioFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
-        double bioFossilDNAChance = 15F / (double) bioFossilEntityList.size();
-        for (PrehistoricEntityType type : bioFossilEntityList) {
-            bioFossil.addOutput(type.dnaItem, bioFossilDNAChance);
-        }
-        registerAnalyzer(bioFossil);
         for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
             registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
@@ -103,27 +78,7 @@ public class ModRecipes {
                     .addOutput(Items.BONE, 35)
                     .addOutput(type.dnaItem, 35));
         }
-        AnalyzerRecipe.Builder tarDrop = new AnalyzerRecipe.Builder(ModItems.TAR_DROP.get())
-                .addOutput(Items.COAL, 20)
-                .addOutput(Items.CHARCOAL, 20)
-                .addOutput(ModItems.TAR_FOSSIL.get(), 45)
-                .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 15);
-        registerAnalyzer(tarDrop);
-        AnalyzerRecipe.Builder tarFossil = new AnalyzerRecipe.Builder(ModItems.TAR_FOSSIL.get())
-                .addOutput(Items.BONE_MEAL, 15)
-                .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 30);
-        List<PrehistoricEntityType> tarFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.CENOZOIC);
-        double tarFossilDNAChance = 15F / (double) tarFossilEntityList.size();
-        for (PrehistoricEntityType type : tarFossilEntityList) {
-            tarFossil.addOutput(type.dnaItem, tarFossilDNAChance);
-        }
-        registerAnalyzer(tarFossil);
-
-        AnalyzerRecipe.Builder failuresaurusFlesh = new AnalyzerRecipe.Builder(ModItems.FAILURESAURUS_FLESH.get())
-                .addOutput(Items.ROTTEN_FLESH, 33);
-        double failuresaurusDNAChance = 67F / PrehistoricEntityType.values().length;
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
-            failuresaurusFlesh.addOutput(type.dnaItem, failuresaurusDNAChance);
             if (type.foodItem != null) {
                 registerAnalyzer(new AnalyzerRecipe.Builder(type.foodItem).addOutput(type.dnaItem, 100));
             }
@@ -140,18 +95,6 @@ public class ModRecipes {
                 registerAnalyzer(new AnalyzerRecipe.Builder(type.embryoItem).addOutput(type.dnaItem, 100));
             }
         }
-        registerAnalyzer(failuresaurusFlesh);
-        AnalyzerRecipe.Builder frozenMeat = new AnalyzerRecipe.Builder(ModItems.FROZEN_MEAT.get())
-                .addOutput(Items.CHICKEN, 15)
-                .addOutput(Items.MUTTON, 15)
-                .addOutput(Items.BEEF, 15)
-                .addOutput(Items.PORKCHOP, 15)
-                .addOutput(Items.CHICKEN, 15)
-                .addOutput(ModItems.TAR_FOSSIL.get(), 20);
-        for (PrehistoricEntityType type : tarFossilEntityList) {
-            frozenMeat.addOutput(type.dnaItem, tarFossilDNAChance);
-        }
-        registerAnalyzer(frozenMeat);
 
         List<Tuple<ItemLike, Double>> outputs = new ArrayList<>();
         outputs.add(new Tuple<>(Blocks.SAND, 20d));
@@ -245,13 +188,12 @@ public class ModRecipes {
     }
 
     @Nullable
-    public static AnalyzerRecipe getAnalyzerRecipeForItem(ItemStack itemStack, Level level) {
-        if (!ANALYZER_RECIPES.containsKey(itemStack.getItem())) {
-            AnalyzerRecipe recipe = (AnalyzerRecipe) level.getRecipeManager().byKey(
-                    new ResourceLocation(Fossil.MOD_ID, "analyzer/" + itemStack.getItem())).orElse(null);
-            ANALYZER_RECIPES.put(itemStack.getItem(), recipe);
+    public static AnalyzerRecipe getAnalyzerRecipeForItem(CustomBlockEntity container, Level level) {
+        if (ANALYZER_RECIPES.containsKey(container.getItem(0).getItem())) {
+            return ANALYZER_RECIPES.get(container.getItem(0).getItem());
         }
-        return ANALYZER_RECIPES.get(itemStack.getItem());
+        Optional<AnalyzerRecipe> optional = level.getRecipeManager().getRecipeFor(ANALYZER_TYPE.get(), container, level);
+        return optional.orElse(null);
     }
 
     @Nullable
