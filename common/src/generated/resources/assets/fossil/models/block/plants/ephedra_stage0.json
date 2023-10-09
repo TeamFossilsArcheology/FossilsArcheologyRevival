@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:block/cross",
   "textures": {
-    "cross": "fossil:block/plants/plant_crataegus_1"
+    "cross": "fossil:block/plants/plant_ephedra_stage0"
   }
 }

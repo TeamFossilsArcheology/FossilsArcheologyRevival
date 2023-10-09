@@ -9,6 +9,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 
 public class FlowerSeedsItem extends Item {
@@ -37,8 +38,8 @@ public class FlowerSeedsItem extends Item {
         }
         if (flower.get().defaultBlockState().canSurvive(level, pos)) {
             level.setBlock(pos.above(), flower.get().defaultBlockState(), 3);
-            if (flower.get() instanceof TallFlowerBlock tall) {
-                level.setBlock(pos.above(2), tall.defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER), 2);
+            if (flower.get() instanceof DoublePlantBlock tall) {
+                level.setBlock(pos.above(2), tall.defaultBlockState().setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER), 2);
             } else if (flower.get() instanceof FourTallFlowerBlock tall) {
                 level.setBlock(pos.above(2), tall.defaultBlockState().setValue(FourTallFlowerBlock.LAYER, 1), 2);
                 level.setBlock(pos.above(3), tall.defaultBlockState().setValue(FourTallFlowerBlock.LAYER, 2), 2);

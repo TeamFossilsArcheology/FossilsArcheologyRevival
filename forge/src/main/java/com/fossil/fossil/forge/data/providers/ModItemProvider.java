@@ -85,6 +85,12 @@ public class ModItemProvider extends ItemModelProvider {
             }
         }
         if (plantItems) {
+            for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
+                if (type.berryItem != null) {
+                    var resourceLocation = new ResourceLocation(type.berryItem.get().getRegistryName().getNamespace(), "item/" + type.berryItem.get().getRegistryName().getPath());
+                    builder(resourceLocation, type.berryItem.get().getRegistryName());
+                }
+            }
             for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
                 plantSeedItem(type.getPlantSeedItem().getRegistryName());
                 plantSeedItem(type.getFossilizedPlantSeedItem().getRegistryName());

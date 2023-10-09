@@ -1,7 +1,16 @@
 {
   "variants": {
-    "": {
-      "model": "fossil:block/plants/vaccinium"
+    "age=0": {
+      "model": "fossil:block/plants/vaccinium_stage0"
+    },
+    "age=1": {
+      "model": "fossil:block/plants/vaccinium_stage1"
+    },
+    "age=2": {
+      "model": "fossil:block/plants/vaccinium_stage2"
+    },
+    "age=3": {
+      "model": "fossil:block/plants/vaccinium_stage3"
     }
   }
 }

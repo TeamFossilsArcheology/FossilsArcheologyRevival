@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fossil:block/plants/plant_vaccinium"
+    "layer0": "fossil:block/plants/plant_vaccinium_stage3"
   }
 }

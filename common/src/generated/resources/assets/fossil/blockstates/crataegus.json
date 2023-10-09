@@ -1,10 +1,28 @@
 {
   "variants": {
-    "half=upper": {
-      "model": "fossil:block/plants/crataegus_2"
+    "age=0,half=upper": {
+      "model": "fossil:block/plants/crataegus_2_stage0"
     },
-    "half=lower": {
-      "model": "fossil:block/plants/crataegus_1"
+    "age=1,half=upper": {
+      "model": "fossil:block/plants/crataegus_2_stage1"
+    },
+    "age=2,half=upper": {
+      "model": "fossil:block/plants/crataegus_2_stage2"
+    },
+    "age=3,half=upper": {
+      "model": "fossil:block/plants/crataegus_2_stage3"
+    },
+    "age=0,half=lower": {
+      "model": "fossil:block/plants/crataegus_1_stage0"
+    },
+    "age=1,half=lower": {
+      "model": "fossil:block/plants/crataegus_1_stage1"
+    },
+    "age=2,half=lower": {
+      "model": "fossil:block/plants/crataegus_1_stage2"
+    },
+    "age=3,half=lower": {
+      "model": "fossil:block/plants/crataegus_1_stage3"
     }
   }
 }

@@ -17,6 +17,8 @@ import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 
+import java.util.stream.IntStream;
+
 public class ModBlockStateProvider extends BlockStateProvider {
     private final ModBlockModelProvider blockModels;
     private final ModItemProvider itemModels;
@@ -39,135 +41,148 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     @Override
     protected void registerStatesAndModels() {
-        for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-            if (type == PrehistoricPlantType.DIPTERIS || type == PrehistoricPlantType.ZAMITES) {
-                continue;
-            }
-            BushBlock flower = type.getPlantBlock();
-            if (flower instanceof ShortFlowerBlock shortFlower) {
-                shortFlowerBlock(shortFlower);
-            } else if (flower instanceof TallFlowerBlock tallFlower) {
-                tallFlowerBlock(tallFlower);
-            } else if (flower instanceof FourTallFlowerBlock tallFlower) {
-                fourTallFlowerBlock(tallFlower);
+        boolean plantBlocks = true;
+        boolean vases = true;
+        boolean buildingWood = true;
+        if (plantBlocks) {
+            for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
+                if (type == PrehistoricPlantType.DIPTERIS || type == PrehistoricPlantType.ZAMITES) {
+                    continue;
+                }
+                BushBlock flower = type.getPlantBlock();
+                if (flower instanceof ShortBerryBushBlock shortBerry) {
+                    shortBerryBlock(type, shortBerry);
+                } else if (flower instanceof TallBerryBushBlock tallBerry) {
+                    tallBerryBlock(type, tallBerry);
+                } else if (flower instanceof ShortFlowerBlock shortFlower) {
+                    shortFlowerBlock(shortFlower);
+                } else if (flower instanceof TallFlowerBlock tallFlower) {
+                    tallFlowerBlock(tallFlower);
+                } else if (flower instanceof FourTallFlowerBlock tallFlower) {
+                    fourTallFlowerBlock(tallFlower);
+                }
             }
         }
-        ResourceLocation amphoraTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora");
-        models().registerExistingModel(amphoraTemplate);
-        for (RegistrySupplier<VaseBlock> vaseReg : ModBlocks.VASES) {
-            VaseBlock block = vaseReg.get();
-            if (block instanceof AmphoraVaseBlock) {
-                vaseBlock(block, amphoraTemplate);
+        if (vases) {
+            ResourceLocation amphoraTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora");
+            models().registerExistingModel(amphoraTemplate);
+            for (RegistrySupplier<VaseBlock> vaseReg : ModBlocks.VASES) {
+                VaseBlock block = vaseReg.get();
+                if (block instanceof AmphoraVaseBlock) {
+                    vaseBlock(block, amphoraTemplate);
+                }
             }
         }
         ModBlocks.BLOCKS.forEach(supplier -> supplier.ifPresent(this::registerExistingTextures));
-        ResourceLocation ancientStone = blockTexture(ModBlocks.ANCIENT_STONE_BRICKS.get());
-        simpleBlock(ModBlocks.ANCIENT_STONE_BRICKS.get());
-        slabBlock(ModBlocks.ANCIENT_STONE_SLAB.get(), ancientStone);
-        stairsBlock(ModBlocks.ANCIENT_STONE_STAIRS.get(), ancientStone);
-        wallBlock(ModBlocks.ANCIENT_STONE_WALL.get(), ancientStone);
+        if (buildingWood) {
+            ResourceLocation ancientStone = blockTexture(ModBlocks.ANCIENT_STONE_BRICKS.get());
+            simpleBlock(ModBlocks.ANCIENT_STONE_BRICKS.get());
+            slabBlock(ModBlocks.ANCIENT_STONE_SLAB.get(), ancientStone);
+            stairsBlock(ModBlocks.ANCIENT_STONE_STAIRS.get(), ancientStone);
+            wallBlock(ModBlocks.ANCIENT_STONE_WALL.get(), ancientStone);
 
-        ResourceLocation ancientWood = blockTexture(ModBlocks.ANCIENT_WOOD_PLANKS.get());
-        simpleBlock(ModBlocks.ANCIENT_WOOD_PLANKS.get());
-        slabBlock(ModBlocks.ANCIENT_WOOD_SLAB.get(), ancientWood);
-        stairsBlock(ModBlocks.ANCIENT_WOOD_STAIRS.get(), ancientWood);
-        logBlock(ModBlocks.ANCIENT_WOOD_PILLAR.get());
+            ResourceLocation ancientWood = blockTexture(ModBlocks.ANCIENT_WOOD_PLANKS.get());
+            simpleBlock(ModBlocks.ANCIENT_WOOD_PLANKS.get());
+            slabBlock(ModBlocks.ANCIENT_WOOD_SLAB.get(), ancientWood);
+            stairsBlock(ModBlocks.ANCIENT_WOOD_STAIRS.get(), ancientWood);
+            logBlock(ModBlocks.ANCIENT_WOOD_PILLAR.get());
 
-        ResourceLocation volcanicBrick = blockTexture(ModBlocks.VOLCANIC_BRICKS.get());
-        simpleBlock(ModBlocks.VOLCANIC_BRICKS.get());
-        slabBlock(ModBlocks.VOLCANIC_BRICK_SLAB.get(), volcanicBrick);
-        stairsBlock(ModBlocks.VOLCANIC_BRICK_STAIRS.get(), volcanicBrick);
-        wallBlock(ModBlocks.VOLCANIC_BRICK_WALL.get(), volcanicBrick);
+            ResourceLocation volcanicBrick = blockTexture(ModBlocks.VOLCANIC_BRICKS.get());
+            simpleBlock(ModBlocks.VOLCANIC_BRICKS.get());
+            slabBlock(ModBlocks.VOLCANIC_BRICK_SLAB.get(), volcanicBrick);
+            stairsBlock(ModBlocks.VOLCANIC_BRICK_STAIRS.get(), volcanicBrick);
+            wallBlock(ModBlocks.VOLCANIC_BRICK_WALL.get(), volcanicBrick);
 
-        ResourceLocation volcanicTile = blockTexture(ModBlocks.VOLCANIC_TILES.get());
-        simpleBlock(ModBlocks.VOLCANIC_TILES.get());
-        slabBlock(ModBlocks.VOLCANIC_TILE_SLAB.get(), volcanicTile);
-        stairsBlock(ModBlocks.VOLCANIC_TILE_STAIRS.get(), volcanicTile);
-        wallBlock(ModBlocks.VOLCANIC_TILE_WALL.get(), volcanicTile);
+            ResourceLocation volcanicTile = blockTexture(ModBlocks.VOLCANIC_TILES.get());
+            simpleBlock(ModBlocks.VOLCANIC_TILES.get());
+            slabBlock(ModBlocks.VOLCANIC_TILE_SLAB.get(), volcanicTile);
+            stairsBlock(ModBlocks.VOLCANIC_TILE_STAIRS.get(), volcanicTile);
+            wallBlock(ModBlocks.VOLCANIC_TILE_WALL.get(), volcanicTile);
 
-        ResourceLocation calamites = blockTexture(ModBlocks.CALAMITES_PLANKS.get());
-        simpleBlock(ModBlocks.CALAMITES_PLANKS.get());
-        stairsBlock(ModBlocks.CALAMITES_STAIRS.get(), calamites);
-        slabBlock(ModBlocks.CALAMITES_SLAB.get(), calamites);
-        fenceBlock(ModBlocks.CALAMITES_FENCE.get(), calamites);
-        fenceGateBlock(ModBlocks.CALAMITES_FENCE_GATE.get(), calamites);
-        doorBlock(ModBlocks.CALAMITES_DOOR.get());
-        trapdoorBlock(ModBlocks.CALAMITES_TRAPDOOR.get());
-        buttonBlock(ModBlocks.CALAMITES_BUTTON.get(), calamites);
-        pressurePlateBlock(ModBlocks.CALAMITES_PRESSURE_PLATE.get(), calamites);
-        logBlock(ModBlocks.CALAMITES_LOG.get());
-        woodBlock(ModBlocks.CALAMITES_WOOD.get(), ModBlocks.CALAMITES_LOG.get());
-        logBlock(ModBlocks.STRIPPED_CALAMITES_LOG.get());
-        woodBlock(ModBlocks.STRIPPED_CALAMITES_WOOD.get(), ModBlocks.STRIPPED_CALAMITES_LOG.get());
-        leavesBlock(ModBlocks.CALAMITES_LEAVES.get());
-        crossBlock(ModBlocks.CALAMITES_SAPLING.get());
+            ResourceLocation calamites = blockTexture(ModBlocks.CALAMITES_PLANKS.get());
+            simpleBlock(ModBlocks.CALAMITES_PLANKS.get());
+            stairsBlock(ModBlocks.CALAMITES_STAIRS.get(), calamites);
+            slabBlock(ModBlocks.CALAMITES_SLAB.get(), calamites);
+            fenceBlock(ModBlocks.CALAMITES_FENCE.get(), calamites);
+            fenceGateBlock(ModBlocks.CALAMITES_FENCE_GATE.get(), calamites);
+            doorBlock(ModBlocks.CALAMITES_DOOR.get());
+            trapdoorBlock(ModBlocks.CALAMITES_TRAPDOOR.get());
+            buttonBlock(ModBlocks.CALAMITES_BUTTON.get(), calamites);
+            pressurePlateBlock(ModBlocks.CALAMITES_PRESSURE_PLATE.get(), calamites);
+            logBlock(ModBlocks.CALAMITES_LOG.get());
+            woodBlock(ModBlocks.CALAMITES_WOOD.get(), ModBlocks.CALAMITES_LOG.get());
+            logBlock(ModBlocks.STRIPPED_CALAMITES_LOG.get());
+            woodBlock(ModBlocks.STRIPPED_CALAMITES_WOOD.get(), ModBlocks.STRIPPED_CALAMITES_LOG.get());
+            leavesBlock(ModBlocks.CALAMITES_LEAVES.get());
+            crossBlock(ModBlocks.CALAMITES_SAPLING.get());
 
-        ResourceLocation cordaites = blockTexture(ModBlocks.CORDAITES_PLANKS.get());
-        simpleBlock(ModBlocks.CORDAITES_PLANKS.get());
-        stairsBlock(ModBlocks.CORDAITES_STAIRS.get(), cordaites);
-        slabBlock(ModBlocks.CORDAITES_SLAB.get(), cordaites);
-        fenceBlock(ModBlocks.CORDAITES_FENCE.get(), cordaites);
-        fenceGateBlock(ModBlocks.CORDAITES_FENCE_GATE.get(), cordaites);
-        doorBlock(ModBlocks.CORDAITES_DOOR.get());
-        trapdoorBlock(ModBlocks.CORDAITES_TRAPDOOR.get());
-        buttonBlock(ModBlocks.CORDAITES_BUTTON.get(), cordaites);
-        pressurePlateBlock(ModBlocks.CORDAITES_PRESSURE_PLATE.get(), cordaites);
-        logBlock(ModBlocks.CORDAITES_LOG.get());
-        woodBlock(ModBlocks.CORDAITES_WOOD.get(), ModBlocks.CORDAITES_LOG.get());
-        logBlock(ModBlocks.STRIPPED_CORDAITES_LOG.get());
-        woodBlock(ModBlocks.STRIPPED_CORDAITES_WOOD.get(), ModBlocks.STRIPPED_CORDAITES_LOG.get());
-        leavesBlock(ModBlocks.CORDAITES_LEAVES.get());
-        crossBlock(ModBlocks.CORDAITES_SAPLING.get());
+            ResourceLocation cordaites = blockTexture(ModBlocks.CORDAITES_PLANKS.get());
+            simpleBlock(ModBlocks.CORDAITES_PLANKS.get());
+            stairsBlock(ModBlocks.CORDAITES_STAIRS.get(), cordaites);
+            slabBlock(ModBlocks.CORDAITES_SLAB.get(), cordaites);
+            fenceBlock(ModBlocks.CORDAITES_FENCE.get(), cordaites);
+            fenceGateBlock(ModBlocks.CORDAITES_FENCE_GATE.get(), cordaites);
+            doorBlock(ModBlocks.CORDAITES_DOOR.get());
+            trapdoorBlock(ModBlocks.CORDAITES_TRAPDOOR.get());
+            buttonBlock(ModBlocks.CORDAITES_BUTTON.get(), cordaites);
+            pressurePlateBlock(ModBlocks.CORDAITES_PRESSURE_PLATE.get(), cordaites);
+            logBlock(ModBlocks.CORDAITES_LOG.get());
+            woodBlock(ModBlocks.CORDAITES_WOOD.get(), ModBlocks.CORDAITES_LOG.get());
+            logBlock(ModBlocks.STRIPPED_CORDAITES_LOG.get());
+            woodBlock(ModBlocks.STRIPPED_CORDAITES_WOOD.get(), ModBlocks.STRIPPED_CORDAITES_LOG.get());
+            leavesBlock(ModBlocks.CORDAITES_LEAVES.get());
+            crossBlock(ModBlocks.CORDAITES_SAPLING.get());
 
-        ResourceLocation palm = blockTexture(ModBlocks.PALM_PLANKS.get());
-        simpleBlock(ModBlocks.PALM_PLANKS.get());
-        stairsBlock(ModBlocks.PALM_STAIRS.get(), palm);
-        slabBlock(ModBlocks.PALM_SLAB.get(), palm);
-        fenceBlock(ModBlocks.PALM_FENCE.get(), palm);
-        fenceGateBlock(ModBlocks.PALM_FENCE_GATE.get(), palm);
-        doorBlock(ModBlocks.PALM_DOOR.get());
-        trapdoorBlock(ModBlocks.PALM_TRAPDOOR.get());
-        buttonBlock(ModBlocks.PALM_BUTTON.get(), palm);
-        pressurePlateBlock(ModBlocks.PALM_PRESSURE_PLATE.get(), palm);
-        logBlock(ModBlocks.PALM_LOG.get());
-        woodBlock(ModBlocks.PALM_WOOD.get(), ModBlocks.PALM_LOG.get());
-        logBlock(ModBlocks.STRIPPED_PALM_LOG.get());
-        woodBlock(ModBlocks.STRIPPED_PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_LOG.get());
-        leavesBlock(ModBlocks.PALM_LEAVES.get());
-        crossBlock(ModBlocks.PALM_SAPLING.get());
+            ResourceLocation palm = blockTexture(ModBlocks.PALM_PLANKS.get());
+            simpleBlock(ModBlocks.PALM_PLANKS.get());
+            stairsBlock(ModBlocks.PALM_STAIRS.get(), palm);
+            slabBlock(ModBlocks.PALM_SLAB.get(), palm);
+            fenceBlock(ModBlocks.PALM_FENCE.get(), palm);
+            fenceGateBlock(ModBlocks.PALM_FENCE_GATE.get(), palm);
+            doorBlock(ModBlocks.PALM_DOOR.get());
+            trapdoorBlock(ModBlocks.PALM_TRAPDOOR.get());
+            buttonBlock(ModBlocks.PALM_BUTTON.get(), palm);
+            pressurePlateBlock(ModBlocks.PALM_PRESSURE_PLATE.get(), palm);
+            logBlock(ModBlocks.PALM_LOG.get());
+            woodBlock(ModBlocks.PALM_WOOD.get(), ModBlocks.PALM_LOG.get());
+            logBlock(ModBlocks.STRIPPED_PALM_LOG.get());
+            woodBlock(ModBlocks.STRIPPED_PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_LOG.get());
+            leavesBlock(ModBlocks.PALM_LEAVES.get());
+            crossBlock(ModBlocks.PALM_SAPLING.get());
 
-        ResourceLocation sigillaria = blockTexture(ModBlocks.SIGILLARIA_PLANKS.get());
-        simpleBlock(ModBlocks.SIGILLARIA_PLANKS.get());
-        stairsBlock(ModBlocks.SIGILLARIA_STAIRS.get(), sigillaria);
-        slabBlock(ModBlocks.SIGILLARIA_SLAB.get(), sigillaria);
-        fenceBlock(ModBlocks.SIGILLARIA_FENCE.get(), sigillaria);
-        fenceGateBlock(ModBlocks.SIGILLARIA_FENCE_GATE.get(), sigillaria);
-        doorBlock(ModBlocks.SIGILLARIA_DOOR.get());
-        trapdoorBlock(ModBlocks.SIGILLARIA_TRAPDOOR.get());
-        buttonBlock(ModBlocks.SIGILLARIA_BUTTON.get(), sigillaria);
-        pressurePlateBlock(ModBlocks.SIGILLARIA_PRESSURE_PLATE.get(), sigillaria);
-        logBlock(ModBlocks.SIGILLARIA_LOG.get());
-        woodBlock(ModBlocks.SIGILLARIA_WOOD.get(), ModBlocks.SIGILLARIA_LOG.get());
-        logBlock(ModBlocks.STRIPPED_SIGILLARIA_LOG.get());
-        woodBlock(ModBlocks.STRIPPED_SIGILLARIA_WOOD.get(), ModBlocks.STRIPPED_SIGILLARIA_LOG.get());
-        leavesBlock(ModBlocks.SIGILLARIA_LEAVES.get());
-        crossBlock(ModBlocks.SIGILLARIA_SAPLING.get());
+            ResourceLocation sigillaria = blockTexture(ModBlocks.SIGILLARIA_PLANKS.get());
+            simpleBlock(ModBlocks.SIGILLARIA_PLANKS.get());
+            stairsBlock(ModBlocks.SIGILLARIA_STAIRS.get(), sigillaria);
+            slabBlock(ModBlocks.SIGILLARIA_SLAB.get(), sigillaria);
+            fenceBlock(ModBlocks.SIGILLARIA_FENCE.get(), sigillaria);
+            fenceGateBlock(ModBlocks.SIGILLARIA_FENCE_GATE.get(), sigillaria);
+            doorBlock(ModBlocks.SIGILLARIA_DOOR.get());
+            trapdoorBlock(ModBlocks.SIGILLARIA_TRAPDOOR.get());
+            buttonBlock(ModBlocks.SIGILLARIA_BUTTON.get(), sigillaria);
+            pressurePlateBlock(ModBlocks.SIGILLARIA_PRESSURE_PLATE.get(), sigillaria);
+            logBlock(ModBlocks.SIGILLARIA_LOG.get());
+            woodBlock(ModBlocks.SIGILLARIA_WOOD.get(), ModBlocks.SIGILLARIA_LOG.get());
+            logBlock(ModBlocks.STRIPPED_SIGILLARIA_LOG.get());
+            woodBlock(ModBlocks.STRIPPED_SIGILLARIA_WOOD.get(), ModBlocks.STRIPPED_SIGILLARIA_LOG.get());
+            leavesBlock(ModBlocks.SIGILLARIA_LEAVES.get());
+            crossBlock(ModBlocks.SIGILLARIA_SAPLING.get());
 
-        ResourceLocation tempskya = blockTexture(ModBlocks.TEMPSKYA_PLANKS.get());
-        simpleBlock(ModBlocks.TEMPSKYA_PLANKS.get());
-        stairsBlock(ModBlocks.TEMPSKYA_STAIRS.get(), tempskya);
-        slabBlock(ModBlocks.TEMPSKYA_SLAB.get(), tempskya);
-        fenceBlock(ModBlocks.TEMPSKYA_FENCE.get(), tempskya);
-        fenceGateBlock(ModBlocks.TEMPSKYA_FENCE_GATE.get(), tempskya);
-        doorBlock(ModBlocks.TEMPSKYA_DOOR.get());
-        trapdoorBlock(ModBlocks.TEMPSKYA_TRAPDOOR.get());
-        buttonBlock(ModBlocks.TEMPSKYA_BUTTON.get(), tempskya);
-        pressurePlateBlock(ModBlocks.TEMPSKYA_PRESSURE_PLATE.get(), tempskya);
-        logBlock(ModBlocks.TEMPSKYA_LOG.get());
-        woodBlock(ModBlocks.TEMPSKYA_WOOD.get(), ModBlocks.TEMPSKYA_LOG.get());
-        logBlock(ModBlocks.STRIPPED_TEMPSKYA_LOG.get());
-        woodBlock(ModBlocks.STRIPPED_TEMPSKYA_WOOD.get(), ModBlocks.STRIPPED_TEMPSKYA_LOG.get());
-        crossBlock(ModBlocks.TEMPSKYA_SAPLING.get());
+            ResourceLocation tempskya = blockTexture(ModBlocks.TEMPSKYA_PLANKS.get());
+            simpleBlock(ModBlocks.TEMPSKYA_PLANKS.get());
+            stairsBlock(ModBlocks.TEMPSKYA_STAIRS.get(), tempskya);
+            slabBlock(ModBlocks.TEMPSKYA_SLAB.get(), tempskya);
+            fenceBlock(ModBlocks.TEMPSKYA_FENCE.get(), tempskya);
+            fenceGateBlock(ModBlocks.TEMPSKYA_FENCE_GATE.get(), tempskya);
+            doorBlock(ModBlocks.TEMPSKYA_DOOR.get());
+            trapdoorBlock(ModBlocks.TEMPSKYA_TRAPDOOR.get());
+            buttonBlock(ModBlocks.TEMPSKYA_BUTTON.get(), tempskya);
+            pressurePlateBlock(ModBlocks.TEMPSKYA_PRESSURE_PLATE.get(), tempskya);
+            logBlock(ModBlocks.TEMPSKYA_LOG.get());
+            woodBlock(ModBlocks.TEMPSKYA_WOOD.get(), ModBlocks.TEMPSKYA_LOG.get());
+            logBlock(ModBlocks.STRIPPED_TEMPSKYA_LOG.get());
+            woodBlock(ModBlocks.STRIPPED_TEMPSKYA_WOOD.get(), ModBlocks.STRIPPED_TEMPSKYA_LOG.get());
+            crossBlock(ModBlocks.TEMPSKYA_SAPLING.get());
+        }
     }
 
     public void registerExistingTextures(Block... blocks) {
@@ -291,6 +306,32 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .partialState().with(VaseBlock.FACING, Direction.WEST).setModels(ConfiguredModel.builder()
                         .modelFile(file).rotationY(270).buildLast());
     }
+
+    private void shortBerryBlock(PrehistoricPlantType type, ShortBerryBushBlock block) {
+        itemModels().plantBlockItem(block, "_2_stage" + type.maxAge);
+        String name = block.getRegistryName().getPath();
+        var blockState = getVariantBuilder(block);
+        ResourceLocation[] textures = IntStream.rangeClosed(0, type.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
+        models().registerExistingTexture(textures);
+        for (int i = 0; i <= type.maxAge; i++) {
+            blockState.partialState().with(block.ageProperty(), i).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_stage" + i, textures[i])));
+        }
+    }
+
+    private void tallBerryBlock(PrehistoricPlantType type, TallBerryBushBlock block) {
+        itemModels().plantBlockItem(block, "_stage" + type.maxAge);
+        String name = block.getRegistryName().getPath();
+        var blockState = getVariantBuilder(block);
+        ResourceLocation[] lower = IntStream.rangeClosed(0, type.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] upper = IntStream.rangeClosed(0, type.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_2_stage" + age)).toArray(ResourceLocation[]::new);
+        models().registerExistingTexture(lower);
+        models().registerExistingTexture(upper);
+        for (int i = 0; i <= type.maxAge; i++) {
+            blockState.partialState().with(block.ageProperty(), i).with(TallBerryBushBlock.HALF, DoubleBlockHalf.LOWER).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_1_stage" + i, lower[i])))
+                    .partialState().with(block.ageProperty(), i).with(TallBerryBushBlock.HALF, DoubleBlockHalf.UPPER).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_2_stage" + i, upper[i])));
+        }
+    }
+
 
     public void shortFlowerBlock(ShortFlowerBlock block) {
         itemModels().plantBlockItem(block, "");

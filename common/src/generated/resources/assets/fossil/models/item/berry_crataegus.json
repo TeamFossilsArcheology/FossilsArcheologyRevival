@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fossil:block/plants/plant_crataegus_2_stage3"
+    "layer0": "fossil:item/berry_crataegus"
   }
 }
