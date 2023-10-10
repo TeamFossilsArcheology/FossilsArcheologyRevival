@@ -20,9 +20,8 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Diplodocus extends Prehistoric {
     public static final String ANIMATIONS = "diplodocus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    
+    public static final String IDLE = "animation.diplodocus.new";
+
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Diplodocus(EntityType<Diplodocus> entityType, Level level) {
@@ -80,7 +79,7 @@ public class Diplodocus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
