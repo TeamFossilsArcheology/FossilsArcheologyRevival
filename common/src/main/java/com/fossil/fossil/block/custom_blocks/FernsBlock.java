@@ -6,16 +6,19 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
@@ -29,8 +32,7 @@ public class FernsBlock extends BushBlock {
 
     public FernsBlock() {
         super(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP));
-        //TODO: Drops & survive state
-        this.registerDefaultState(this.stateDefinition.any().setValue(AGE, 0));
+        this.registerDefaultState(stateDefinition.any().setValue(AGE, 0));
     }
 
     public static boolean isUnderTree(BlockGetter level, BlockPos pos) {
@@ -47,45 +49,52 @@ public class FernsBlock extends BushBlock {
         return super.mayPlaceOn(state, level, pos) && level.getBlockState(pos.above()).is(Blocks.AIR) && isUnderTree(level, pos);
     }
 
+    public boolean isUpper(BlockState state) {
+        return state.getValue(AGE) > LOWER_MAX_AGE;
+    }
+
     @Override
     public boolean canSurvive(BlockState state, LevelReader level, BlockPos pos) {
-        if (state.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.UPPER) {
+        if (isUpper(state)) {
             BlockState blockState = level.getBlockState(pos.below());
-            return blockState.is(this) && blockState.getValue(DoublePlantBlock.HALF) == DoubleBlockHalf.LOWER;
+            return blockState.is(this) && !isUpper(blockState);
         }
         return super.mayPlaceOn(level.getBlockState(pos.below()), level, pos.below()) && isUnderTree(level, pos.above());
     }
 
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+        super.randomTick(state, level, pos, random);
         int age = state.getValue(AGE);
-        if (isUnderTree(level, pos) && age < UPPER_MAX_AGE && random.nextInt(FossilConfig.getInt(FossilConfig.FERN_TICK_RATE)) == 0) {
-            if (!level.getBlockState(pos.below()).is(this) || age > LOWER_MAX_AGE) {
-                age++;
-                if (age == LOWER_MAX_AGE - 1) {
-                    if (!level.isEmptyBlock(pos.above())) {
-                        age--;
-                    } else {
-                        level.setBlockAndUpdate(pos.above(), defaultBlockState().setValue(AGE, age + 2));
-                    }
-                } else if (age == LOWER_MAX_AGE) {
-                    if (!level.getBlockState(pos.above()).is(this)) {
-                        age = 3;
-                    }
+        if (!isUpper(state) && random.nextInt(FossilConfig.getInt(FossilConfig.FERN_TICK_RATE)) == 0) {
+            age++;
+            if (age == LOWER_MAX_AGE - 1) {
+                if (!level.isEmptyBlock(pos.above())) {
+                    age--;
+                } else {
+                    //Create new upper block
+                    level.setBlockAndUpdate(pos.above(), defaultBlockState().setValue(AGE, LOWER_MAX_AGE + 1));
                 }
-                level.setBlockAndUpdate(pos, defaultBlockState().setValue(AGE, age));
+            } else if (age == LOWER_MAX_AGE) {
+                BlockState upperState = level.getBlockState(pos.above());
+                if (upperState.is(this)) {
+                    level.setBlockAndUpdate(pos.above(), upperState.setValue(AGE, UPPER_MAX_AGE));
+                    age = 3;
+                }
             }
+            level.setBlockAndUpdate(pos, state.setValue(AGE, age));
+            spread(state, level, pos, age);
         }
-        spread(state, level, pos, age);
     }
 
     private void spread(BlockState state, ServerLevel level, BlockPos pos, int age) {
-        if (age % 7 >= 3) {
+        if (age >= 3) {
+            BlockPos.MutableBlockPos mutable = pos.mutable();
             for (int x = -1; x <= 1; x++) {
                 for (int y = -1; y <= 1; ++y) {
                     for (int z = -1; z <= 1; ++z) {
-                        if ((x != 0 || y != 0 || z != 0) && mayPlaceOn(state, level, pos.offset(x, y - 1, z))) {
-                            level.setBlockAndUpdate(pos.offset(x, y, z), defaultBlockState().setValue(AGE, 0));
+                        if ((x != 0 || y != 0 || z != 0) && mayPlaceOn(state, level, mutable.setWithOffset(pos, x, y - 1, z))) {
+                            level.setBlockAndUpdate(mutable, defaultBlockState().setValue(AGE, 0));
                         }
                     }
                 }
@@ -99,7 +108,7 @@ public class FernsBlock extends BushBlock {
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE_BY_AGE[state.getValue(AGE)];
     }
 }
