@@ -51,8 +51,12 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         int i = state.getValue(ageProperty());
         if (i < type.maxAge && random.nextInt(5) == 0 && level.getRawBrightness(pos.above(), 0) >= 9) {
-            level.setBlock(pos, state.setValue(ageProperty(), i + 1), 2);
+            updateAge(level, pos, state, i + 1);
         }
+    }
+
+    private void updateAge(Level level, BlockPos pos, BlockState state, int nextAge) {
+        level.setBlock(pos, state.setValue(ageProperty(), nextAge), 2);
     }
 
     @Override
@@ -63,10 +67,10 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
             return InteractionResult.PASS;
         }
         if (i >= type.berryAge) {
-            int dropAmount = 1 + level.random.nextInt(2);
-            SweetBerryBushBlock.popResource(level, pos, new ItemStack(type.berryItem.get(), dropAmount + (ismaxAge ? 1 : 0)));
+            int dropAmount = 1 + level.random.nextInt(2) + i - type.berryAge;
+            SweetBerryBushBlock.popResource(level, pos, new ItemStack(type.berryItem.get(), dropAmount));
             level.playSound(null, pos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1, 0.8f + level.random.nextFloat() * 0.4f);
-            level.setBlock(pos, state.setValue(ageProperty(), 1), 2);
+            updateAge(level, pos, state, type.berryAge - 1);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return super.use(state, level, pos, player, hand, hit);
@@ -89,6 +93,6 @@ public abstract class ShortBerryBushBlock extends BushBlock implements Bonemeala
 
     @Override
     public void performBonemeal(ServerLevel level, Random random, BlockPos pos, BlockState state) {
-        level.setBlock(pos, state.setValue(ageProperty(), Math.min(type.maxAge, state.getValue(ageProperty()) + 1)), 2);
+        updateAge(level, pos, state, Math.min(type.maxAge, state.getValue(ageProperty()) + 1));
     }
 }

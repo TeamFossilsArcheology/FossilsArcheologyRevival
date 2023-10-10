@@ -85,11 +85,11 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
             if (level.isClientSide) {
                 return InteractionResult.SUCCESS;
             }
-            int dropAmount = 1 + level.random.nextInt(2);
+            int dropAmount = 1 + level.random.nextInt(2) + i - type.berryAge;
             BlockPos sourcePos = state.getValue(HALF) == DoubleBlockHalf.LOWER ? pos.above() : pos;
-            SweetBerryBushBlock.popResource(level, sourcePos, new ItemStack(type.berryItem.get(), dropAmount + (isMaxAge ? 1 : 0)));
+            SweetBerryBushBlock.popResource(level, sourcePos, new ItemStack(type.berryItem.get(), dropAmount));
             level.playSound(null, sourcePos, SoundEvents.SWEET_BERRY_BUSH_PICK_BERRIES, SoundSource.BLOCKS, 1, 0.8f + level.random.nextFloat() * 0.4f);
-            updateAge(level, pos, state, 1);
+            updateAge(level, pos, state, type.berryAge - 1);
             return InteractionResult.CONSUME;
         }
         return super.use(state, level, pos, player, hand, hit);
