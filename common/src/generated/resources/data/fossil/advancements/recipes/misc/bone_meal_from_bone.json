@@ -2,16 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:bubble_blower"
+      "fossil:bone_meal_from_bone"
     ]
   },
   "criteria": {
-    "has_dino_egg": {
+    "has_bone": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "fossil:dino_eggs"
+            "tag": "fossil:bones_all"
           }
         ]
       }
@@ -19,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:bubble_blower"
+        "recipe": "fossil:bone_meal_from_bone"
       }
     }
   },
   "requirements": [
     [
-      "has_dino_egg",
+      "has_bone",
       "has_the_recipe"
     ]
   ]

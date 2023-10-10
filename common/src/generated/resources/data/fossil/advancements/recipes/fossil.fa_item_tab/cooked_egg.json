@@ -2,18 +2,16 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:ash_to_bone_meal"
+      "fossil:cooked_egg"
     ]
   },
   "criteria": {
-    "has_volcanic_ash": {
+    "has_dino_egg": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "fossil:volcanic_ash"
-            ]
+            "tag": "fossil:cookable_eggs"
           }
         ]
       }
@@ -21,13 +19,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:ash_to_bone_meal"
+        "recipe": "fossil:cooked_egg"
       }
     }
   },
   "requirements": [
     [
-      "has_volcanic_ash",
+      "has_dino_egg",
       "has_the_recipe"
     ]
   ]

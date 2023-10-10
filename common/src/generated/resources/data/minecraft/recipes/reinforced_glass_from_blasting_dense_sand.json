@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "ingredient": {
+    "item": "fossil:dense_sand"
+  },
+  "result": "fossil:reinforced_glass",
+  "experience": 3.0,
+  "cookingtime": 100
+}

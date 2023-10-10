@@ -2,16 +2,18 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:bubble_blower"
+      "fossil:reinforced_glass_from_blasting_dense_sand"
     ]
   },
   "criteria": {
-    "has_dino_egg": {
+    "has_dense_sand": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "fossil:dino_eggs"
+            "items": [
+              "fossil:dense_sand"
+            ]
           }
         ]
       }
@@ -19,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:bubble_blower"
+        "recipe": "fossil:reinforced_glass_from_blasting_dense_sand"
       }
     }
   },
   "requirements": [
     [
-      "has_dino_egg",
+      "has_dense_sand",
       "has_the_recipe"
     ]
   ]

@@ -2,16 +2,18 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:bubble_blower"
+      "fossil:bone_meal_from_ash"
     ]
   },
   "criteria": {
-    "has_dino_egg": {
+    "has_volcanic_ash": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "fossil:dino_eggs"
+            "items": [
+              "fossil:volcanic_ash"
+            ]
           }
         ]
       }
@@ -19,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:bubble_blower"
+        "recipe": "fossil:bone_meal_from_ash"
       }
     }
   },
   "requirements": [
     [
-      "has_dino_egg",
+      "has_volcanic_ash",
       "has_the_recipe"
     ]
   ]

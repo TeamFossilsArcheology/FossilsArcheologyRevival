@@ -23,7 +23,7 @@ public enum PrehistoricPlantType {
     BENNETTITALES_LARGE(Size.DOUBLE_GROWABLE, Block.box(2, 0, 2, 14, 32, 14)),
     BENNETTITALES_SMALL(Size.SINGLE_GROWABLE, BENNETTITALES_LARGE, "bennettitales", Block.box(3, 0, 3, 13, 14, 13)),
     CEPHALOTAXUS(Size.SINGLE, Block.box(4, 0, 4, 12, 14, 12)),
-    CRATAEGUS(Size.DOUBLE_BERRY, Block.box(1, 0, 1, 15, 16, 15), 2, 3),
+    CRATAEGUS(Size.DOUBLE_BERRY, Block.box(1, 0, 1, 15, 23, 15), 2, 3),
     CYATHEA(Size.FOUR, Block.box(5, 0, 5, 11, 16, 11)),
     DICTYOPHYLLUM(Size.SINGLE, Block.box(3, 0, 3, 13, 14, 13)),
     DILLHOFFIA(Size.SINGLE, Block.box(5, 0, 5, 11, 14, 11)),

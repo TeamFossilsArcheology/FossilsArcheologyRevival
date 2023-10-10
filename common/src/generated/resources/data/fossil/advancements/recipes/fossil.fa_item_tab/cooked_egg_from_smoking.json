@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:bubble_blower"
+      "fossil:cooked_egg_from_smoking"
     ]
   },
   "criteria": {
@@ -11,7 +11,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "fossil:dino_eggs"
+            "tag": "fossil:cookable_eggs"
           }
         ]
       }
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:bubble_blower"
+        "recipe": "fossil:cooked_egg_from_smoking"
       }
     }
   },

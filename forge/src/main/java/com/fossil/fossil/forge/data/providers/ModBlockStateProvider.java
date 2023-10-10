@@ -308,7 +308,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private void shortBerryBlock(PrehistoricPlantType type, ShortBerryBushBlock block) {
-        itemModels().plantBlockItem(block, "_2_stage" + type.maxAge);
+        itemModels().plantBlockItem(block, "_stage" + type.maxAge);
         String name = block.getRegistryName().getPath();
         var blockState = getVariantBuilder(block);
         ResourceLocation[] textures = IntStream.rangeClosed(0, type.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
@@ -319,7 +319,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     }
 
     private void tallBerryBlock(PrehistoricPlantType type, TallBerryBushBlock block) {
-        itemModels().plantBlockItem(block, "_stage" + type.maxAge);
+        itemModels().plantBlockItem(block, "_2_stage" + type.maxAge);
         String name = block.getRegistryName().getPath();
         var blockState = getVariantBuilder(block);
         ResourceLocation[] lower = IntStream.rangeClosed(0, type.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);

@@ -57,9 +57,11 @@ public class ModRecipeProvider extends RecipeProvider {
         if (cookingRecipes) {
             for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
                 if (type.foodItem != null && type.cookedFoodItem != null) {
-                    fullCooking(type.foodItem, type.cookedFoodItem, type.resourceName, consumer);
+                    fullCooking(type.foodItem, type.cookedFoodItem, type.resourceName, consumer, "_meat", 1.5f);
                 }
             }
+            fullOre(ModBlocks.DENSE_SAND.get(), ModBlocks.REINFORCED_GLASS.get(), consumer, 3);
+            fullCooking(ModItemTags.COOKABLE_EGGS, ModItems.COOKED_EGG.get(), "dino_egg", consumer, "", 1);
         }
         if (craftingRecipes) {
             ToyBallItem white = ModItems.TOY_BALLS.get(DyeColor.WHITE).get();
@@ -106,7 +108,8 @@ public class ModRecipeProvider extends RecipeProvider {
             ShapedRecipeBuilder.shaped(ModItems.BONE_CHESTPLATE.get()).define('B', Items.BONE).define('V', bonesVertebrae).define('R', bonesRibcage).pattern("B B").pattern(" V ").pattern("BRB").unlockedBy("has_bones", RecipeProvider.has(bonesRibcage)).save(consumer);
             ShapedRecipeBuilder.shaped(ModItems.BONE_HELMET.get()).define('B', Items.BONE).define('S', bonesSkull).pattern("BSB").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesSkull)).save(consumer);
             ShapedRecipeBuilder.shaped(ModItems.BONE_LEGGINGS.get()).define('B', Items.BONE).define('L', bonesLeg).pattern("BBB").pattern("L L").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesLeg)).save(consumer);
-            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(ModBlocks.VOLCANIC_ASH.get(), 4).unlockedBy("has_volcanic_ash", RecipeProvider.has(ModBlocks.VOLCANIC_ASH.get())).save(consumer, Fossil.MOD_ID + ":ash_to_bone_meal");
+            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(ModBlocks.VOLCANIC_ASH.get(), 4).unlockedBy("has_volcanic_ash", RecipeProvider.has(ModBlocks.VOLCANIC_ASH.get())).save(consumer, Fossil.MOD_ID + ":bone_meal_from_ash");
+            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(ModItemTags.ALL_BONES).unlockedBy("has_bone", RecipeProvider.has(ModItemTags.ALL_BONES)).save(consumer, Fossil.MOD_ID + ":bone_meal_from_bone");
             ShapedRecipeBuilder.shaped(ModItems.CHICKEN_ESSENCE.get()).define('G', Items.GLASS_BOTTLE).define('C', ModItems.COOKED_CHICKEN_SOUP.get()).pattern("GGG").pattern("GCG").pattern("GGG").unlockedBy("has_cooked_chicken_soup", RecipeProvider.has(ModItems.COOKED_CHICKEN_SOUP.get())).save(consumer);
             ShapedRecipeBuilder.shaped(ModItems.STUNTED_ESSENCE.get()).define('P', Items.POISONOUS_POTATO).define('C', ModItems.CHICKEN_ESSENCE.get()).pattern(" P ").pattern("PCP").pattern(" P ").unlockedBy("has_chicken_essence", RecipeProvider.has(ModItems.CHICKEN_ESSENCE.get())).save(consumer);
 
@@ -117,11 +120,11 @@ public class ModRecipeProvider extends RecipeProvider {
             var forgeGlass = ItemTags.create(new ResourceLocation("forge:glass"));
             ShapedRecipeBuilder.shaped(ModBlocks.CULTIVATE.get()).define('I', Items.IRON_INGOT).define('S', Items.SLIME_BALL).define('G', forgeGlass).define('W', Items.WATER_BUCKET).pattern("GSG").pattern("GWG").pattern("III").unlockedBy("has_dna", RecipeProvider.has(ModItemTags.DNA))
                     .save(consumer, Fossil.MOD_ID + ":cultivate_forge");
-            ShapedRecipeBuilder.shaped(ModBlocks.FEEDER.get()).define('I', Items.IRON_INGOT).define('S', Blocks.STONE).define('B', Blocks.STONE_BUTTON).define('W', Items.BUCKET).define('G', fabricGlass).pattern("IGI").pattern("BWS").pattern("SSS").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGG))
+            ShapedRecipeBuilder.shaped(ModBlocks.FEEDER.get()).define('I', Items.IRON_INGOT).define('S', Blocks.STONE).define('B', Blocks.STONE_BUTTON).define('W', Items.BUCKET).define('G', fabricGlass).pattern("IGI").pattern("BWS").pattern("SSS").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS))
                     .save(consumer, Fossil.MOD_ID + ":feeder_fabric");
-            ShapedRecipeBuilder.shaped(ModBlocks.FEEDER.get()).define('I', Items.IRON_INGOT).define('S', Blocks.STONE).define('B', Blocks.STONE_BUTTON).define('W', Items.BUCKET).define('G', forgeGlass).pattern("IGI").pattern("BWS").pattern("SSS").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGG))
+            ShapedRecipeBuilder.shaped(ModBlocks.FEEDER.get()).define('I', Items.IRON_INGOT).define('S', Blocks.STONE).define('B', Blocks.STONE_BUTTON).define('W', Items.BUCKET).define('G', forgeGlass).pattern("IGI").pattern("BWS").pattern("SSS").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS))
                     .save(consumer, Fossil.MOD_ID + ":feeder_forge");
-            ShapedRecipeBuilder.shaped(ModBlocks.BUBBLE_BLOWER.get()).define('I', Items.GOLD_INGOT).define('N', Items.GOLD_NUGGET).define('W', Items.WATER_BUCKET).pattern("NIN").pattern("IWI").pattern("NIN").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGG)).save(consumer);
+            ShapedRecipeBuilder.shaped(ModBlocks.BUBBLE_BLOWER.get()).define('I', Items.GOLD_INGOT).define('N', Items.GOLD_NUGGET).define('W', Items.WATER_BUCKET).pattern("NIN").pattern("IWI").pattern("NIN").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS)).save(consumer);
 
             ShapedRecipeBuilder.shaped(ModBlocks.SIFTER.get()).define('I', Blocks.IRON_BARS).define('S', Items.STRING).define('P', ItemTags.PLANKS).pattern("SPS").pattern("PIP").pattern("PSP").unlockedBy("has_planks", RecipeProvider.has(ItemTags.PLANKS)).save(consumer);
             ShapedRecipeBuilder.shaped(ModBlocks.WORKTABLE.get()).define('L', Items.LEATHER).define('C', Blocks.CRAFTING_TABLE).pattern("L").pattern("C").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
@@ -161,7 +164,7 @@ public class ModRecipeProvider extends RecipeProvider {
         if (analyzerRecipes) {
             AnalyzerRecipeBuilder plantFossil = analyzed(ModItems.PlANT_FOSSIL.get())
                     .addOutput(Blocks.SAND, 35)
-                    .addOutput(Items.GREEN_DYE, 20)
+                    .addOutput(Blocks.CACTUS, 20)
                     .addOutput(ModItems.FERN_SEED_FOSSIL.get(), 5)
                     .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5)
@@ -223,7 +226,7 @@ public class ModRecipeProvider extends RecipeProvider {
                     .addOutput(Items.BONE_MEAL, 15)
                     .addOutput(ModBlocks.VOLCANIC_ROCK.get(), 30);
             List<PrehistoricEntityType> tarFossilEntityList = PrehistoricEntityType.getTimePeriodList(TimePeriod.CENOZOIC);
-            double tarFossilDNAChance = 15F / (double) tarFossilEntityList.size();
+            double tarFossilDNAChance = 20 / (double) tarFossilEntityList.size();
             for (PrehistoricEntityType type : tarFossilEntityList) {
                 tarFossil.addOutput(type.dnaItem, tarFossilDNAChance);
             }
@@ -277,10 +280,12 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(Items.RABBIT).addOutput(RABBIT.dnaItem, 100).save(consumer);
             analyzed(Items.RABBIT_FOOT).addOutput(RABBIT.dnaItem, 100).save(consumer);
             analyzed(Items.RABBIT_HIDE).addOutput(RABBIT.dnaItem, 100).save(consumer);
-            analyzed(ModItems.RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(ModItems.POTTERY_SHARD.get(), 4).addOutput(ModItems.BROKEN_HELMET.get(), 4).addOutput(ModItems.BROKEN_SWORD.get(), 4).addOutput(ModItems.STONE_TABLET.get(), 30).save(consumer);
+            analyzed(ModItems.RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(ModItems.POTTERY_SHARD.get(), 4).addOutput(ModItems.BROKEN_HELMET.get(), 4).addOutput(ModItems.BROKEN_SWORD.get(), 4).addOutput(ModItems.STONE_TABLET.get(), 30)
+                    .addOutput(ModBlocks.ENDERMAN_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.PIGLIN_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.SKELETON_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.STEVE_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.ZOMBIE_FIGURINE_DESTROYED.get(), 4).save(consumer);
             analyzed(ItemTags.WOOL).addOutput(Items.STRING, 3, 60).addOutput(SHEEP.dnaItem, 27).addOutput(LLAMA.dnaItem, 13).save(consumer);
         }
     }
+
     public AnalyzerRecipeBuilder analyzed(ItemLike itemLike) {
         return new AnalyzerRecipeBuilder(Fossil.MOD_ID, itemLike);
     }
@@ -311,16 +316,36 @@ public class ModRecipeProvider extends RecipeProvider {
 
     }
 
-    private void fullCooking(Item ingredient, Item result, String resourceName, Consumer<FinishedRecipe> consumer) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), result, 1.5f, 200)
-                .unlockedBy("has_" + resourceName + "_meat", inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
+    private void fullCooking(TagKey<Item> ingredient, Item result, String resourceName, Consumer<FinishedRecipe> consumer, String suffix, float exp) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), result, exp, 200)
+                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
                 .save(consumer);
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ingredient), result, 1.5f, 600)
-                .unlockedBy("has_" + resourceName + "_meat", inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ingredient), result, exp, 600)
+                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
                 .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_campfire_cooking");
-        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ingredient), result, 1.5f, 100)
-                .unlockedBy("has_" + resourceName + "_meat", inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ingredient), result, exp, 100)
+                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
                 .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_smoking");
+    }
+
+    private void fullCooking(ItemLike ingredient, ItemLike result, String resourceName, Consumer<FinishedRecipe> consumer, String suffix, float exp) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), result, exp, 200)
+                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
+                .save(consumer);
+        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ingredient), result, exp, 600)
+                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
+                .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_campfire_cooking");
+        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ingredient), result, exp, 100)
+                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
+                .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_smoking");
+    }
+    private void fullOre(ItemLike ingredient, ItemLike result, Consumer<FinishedRecipe> consumer, float exp) {
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), result, exp, 200)
+                .unlockedBy(getHasName(ingredient), has(ingredient))
+                .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_smelting_" + getItemName(ingredient));
+        SimpleCookingRecipeBuilder.blasting(Ingredient.of(ingredient), result, exp, 100)
+                .unlockedBy(getHasName(ingredient), has(ingredient))
+                .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_blasting_" + getItemName(ingredient));
     }
 
     private static void generateFamilyRecipes(BlockFamily family, Consumer<FinishedRecipe> finishedRecipeConsumer) {

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:campfire_cooking",
+  "ingredient": {
+    "tag": "fossil:cookable_eggs"
+  },
+  "result": "fossil:cooked_egg",
+  "experience": 1.0,
+  "cookingtime": 600
+}

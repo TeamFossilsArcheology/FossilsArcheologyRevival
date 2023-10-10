@@ -13,6 +13,26 @@
       "weight": 4.0
     },
     {
+      "item": "fossil:figurine_enderman_destroyed",
+      "weight": 4.0
+    },
+    {
+      "item": "fossil:figurine_piglin_destroyed",
+      "weight": 4.0
+    },
+    {
+      "item": "fossil:figurine_skeleton_destroyed",
+      "weight": 4.0
+    },
+    {
+      "item": "fossil:figurine_steve_destroyed",
+      "weight": 4.0
+    },
+    {
+      "item": "fossil:figurine_zombie_destroyed",
+      "weight": 4.0
+    },
+    {
       "item": "minecraft:flint",
       "weight": 18.0
     },

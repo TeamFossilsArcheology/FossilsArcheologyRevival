@@ -17,7 +17,8 @@ public class ModItemTags {
     public static final TagKey<Item> SIGILLARIA_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "sigillaria_logs"));
     public static final TagKey<Item> TEMPSKYA_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "tempskya_logs"));
     public static final TagKey<Item> FOSSIL_SEEDS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "fossil_seeds"));
-    public static final TagKey<Item> DINO_EGG = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dino_egg"));
+    public static final TagKey<Item> DINO_EGGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dino_eggs"));
+    public static final TagKey<Item> COOKABLE_EGGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "cookable_eggs"));
     public static final TagKey<Item> DNA = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna"));
     public static final TagKey<Item> DNA_INSECTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_insects"));
     public static final TagKey<Item> DNA_LIMBLESS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_limbless"));
@@ -26,5 +27,7 @@ public class ModItemTags {
     public static final TagKey<Item> LEG_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_leg"));
     public static final TagKey<Item> RIBCAGE_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_ribcage"));
     public static final TagKey<Item> SKULL_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_skull"));
+    public static final TagKey<Item> UNIQUE_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_unique"));
     public static final TagKey<Item> VERTEBRAE_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_vertebrae"));
+    public static final TagKey<Item> ALL_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_all"));
 }

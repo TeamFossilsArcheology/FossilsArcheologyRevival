@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    "#fossil:dino_eggs",
+    "minecraft:egg"
+  ]
+}
