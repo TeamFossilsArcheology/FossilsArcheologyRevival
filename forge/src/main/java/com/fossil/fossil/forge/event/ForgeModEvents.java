@@ -1,7 +1,6 @@
 package com.fossil.fossil.forge.event;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.fossil.fossil.config.FossilConfig;
@@ -10,16 +9,13 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
-import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.SyncEntityInfoMessage;
+import com.fossil.fossil.villager.ModTrades;
 import com.fossil.fossil.villager.ModVillagers;
 import dev.architectury.platform.Platform;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.trading.MerchantOffer;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
@@ -47,9 +43,18 @@ public class ForgeModEvents {
     public static void addCustomTrades(VillagerTradesEvent event) {
         if (event.getType() == ModVillagers.ARCHEOLOGIST.get()) {
             var trades = event.getTrades();
-            var price = new ItemStack(Items.EMERALD, 1);
-            trades.get(1).add((trader, random) -> new MerchantOffer(price, new ItemStack(ModItems.RELIC_SCRAP.get(), 1), 4, 12, 0.09f));
-            trades.get(1).add((trader, random) -> new MerchantOffer(price, new ItemStack(ModBlocks.WORKTABLE.get(), 1), 4, 12, 0.09f));
+            trades.get(1).addAll(ModTrades.getArcheoList(1));
+            trades.get(2).addAll(ModTrades.getArcheoList(2));
+            trades.get(3).addAll(ModTrades.getArcheoList(3));
+            trades.get(4).addAll(ModTrades.getArcheoList(4));
+            trades.get(5).addAll(ModTrades.getArcheoList(5));
+        } else if (event.getType() == ModVillagers.PALEONTOLOGIST.get()) {
+            var trades = event.getTrades();
+            trades.get(1).addAll(ModTrades.getPaleoList(1));
+            trades.get(2).addAll(ModTrades.getPaleoList(2));
+            trades.get(3).addAll(ModTrades.getPaleoList(3));
+            trades.get(4).addAll(ModTrades.getPaleoList(4));
+            trades.get(5).addAll(ModTrades.getPaleoList(5));
         }
     }
 
