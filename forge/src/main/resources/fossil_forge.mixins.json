@@ -9,7 +9,8 @@
   "mixins": [
     "JigsawPlacementMixin",
     "MobMixin",
-    "PrehistoricMixin"
+    "PrehistoricMixin",
+    "ProjectileUtilMixin"
   ],
   "injectors": {
     "defaultRequire": 1

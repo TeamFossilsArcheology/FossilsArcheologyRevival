@@ -25,15 +25,15 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<ToyScratchingPost>> TOY_SCRATCHING_POST = ENTITIES.register("toy_scratching_post",
             () -> EntityType.Builder.of(ToyScratchingPost::new, MobCategory.MISC).sized(0.6f, 2).build("toy_scratching_post"));
 
-    public static final RegistrySupplier<EntityType<AlligatorGar>> ALLIGATOR_GAR = registerFish("alligator_gar", AlligatorGar::new, 2, 1);
+    public static final RegistrySupplier<EntityType<AlligatorGar>> ALLIGATOR_GAR = registerFish("alligator_gar", AlligatorGar::new, 2, 0.5f);
     public static final RegistrySupplier<EntityType<Allosaurus>> ALLOSAURUS = registerDino("allosaurus", Allosaurus::new, 2, 2f);
     //public static final RegistrySupplier<EntityType<Ammonite>> AMMONITE = registerDino("ammonite", Ammonite::new, 2, 1);
-    public static final RegistrySupplier<EntityType<Ankylosaurus>> ANKYLOSAURUS = registerDino("ankylosaurus", Ankylosaurus::new, 1.7f, 1);
+    public static final RegistrySupplier<EntityType<Ankylosaurus>> ANKYLOSAURUS = registerDino("ankylosaurus", Ankylosaurus::new, 1.6f, 1.1f);
     public static final RegistrySupplier<EntityType<Arthropleura>> ARTHROPLEURA = registerDino("arthropleura", Arthropleura::new, 3, 1);
     public static final RegistrySupplier<EntityType<Brachiosaurus>> BRACHIOSAURUS = registerDino("brachiosaurus", Brachiosaurus::new, 1.35f, 1.7f);
     public static final RegistrySupplier<EntityType<Ceratosaurus>> CERATOSAURUS = registerDino("ceratosaurus", Ceratosaurus::new, 1.55f, 1.3f);
     public static final RegistrySupplier<EntityType<Citipati>> CITIPATI = registerDino("citipati", Citipati::new, 1.5f, 1.8f);
-    public static final RegistrySupplier<EntityType<Coelacanth>> COELACANTH = registerFish("coelacanth", Coelacanth::new, 1.9f, 0.9f);
+    public static final RegistrySupplier<EntityType<Coelacanth>> COELACANTH = registerFish("coelacanth", Coelacanth::new, 2, 0.5f);
     public static final RegistrySupplier<EntityType<Compsognathus>> COMPSOGNATHUS = registerDino("compsognathus", Compsognathus::new, 1.1f, 1.1f);
     public static final RegistrySupplier<EntityType<Confuciusornis>> CONFUCIUSORNIS = registerDino("confuciusornis", Confuciusornis::new, 0.7f, 0.8f);
     public static final RegistrySupplier<EntityType<Crassigyrinus>> CRASSIGYRINUS = registerDino("crassigyrinus", Crassigyrinus::new, 1.1f, 0.5f);
@@ -76,7 +76,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Therizinosaurus>> THERIZINOSAURUS = registerDino("therizinosaurus", Therizinosaurus::new, 1.5f, 1.5f);
     public static final RegistrySupplier<EntityType<Tiktaalik>> TIKTAALIK = registerDino("tiktaalik", Tiktaalik::new, 1.45f, 0.5f);
     public static final RegistrySupplier<EntityType<Titanis>> TITANIS = registerDino("titanis", Titanis::new, 1.4f, 2.5f);
-    public static final RegistrySupplier<EntityType<Triceratops>> TRICERATOPS = registerDino("triceratops", Triceratops::new, 3.5f, 3);
+    public static final RegistrySupplier<EntityType<Triceratops>> TRICERATOPS = registerDino("triceratops", Triceratops::new, 2.3f, 2.4f);
     public static final RegistrySupplier<EntityType<Tropeognathus>> TROPEOGNATHUS = registerDino("tropeognathus", Tropeognathus::new, 1.25f, 1.1f);
     public static final RegistrySupplier<EntityType<Tyrannosaurus>> TYRANNOSAURUS = registerDino("tyrannosaurus", Tyrannosaurus::new, 1.3f, 1.25f);
     public static final RegistrySupplier<EntityType<Velociraptor>> VELOCIRAPTOR = registerDino("velociraptor", Velociraptor::new, 1.5f, 1.5f);
@@ -87,7 +87,7 @@ public class ModEntities {
             "thrown_bird_egg", () -> EntityType.Builder.of(ThrownBirdEgg::new, MobCategory.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build("thrown_bird_egg"));
 
     public static final RegistrySupplier<EntityType<TarSlime>> TAR_SLIME = ENTITIES.register("tar_slime",
-            () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).build("tar_slime"));
+            () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).sized(2.04f, 2.04f).build("tar_slime"));
     public static final RegistrySupplier<EntityType<Anubite>> ANUBITE = ENTITIES.register("anubite",
             () -> EntityType.Builder.of(Anubite::new, MobCategory.MONSTER).sized(1, 2.3f).fireImmune().build("anubite"));
     public static final RegistrySupplier<EntityType<AnuBoss>> ANU_BOSS = ENTITIES.register("anu_boss",
@@ -97,7 +97,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
             () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
     public static final RegistrySupplier<EntityType<SentryPiglin>> SENTRY_PIGLIN = ENTITIES.register("sentry_piglin",
-            () -> EntityType.Builder.of(SentryPiglin::new, MobCategory.MONSTER).sized(0.8f, 1.8f).fireImmune().build("sentry_piglin"));
+            () -> EntityType.Builder.of(SentryPiglin::new, MobCategory.MONSTER).sized(0.8f, 2).fireImmune().build("sentry_piglin"));
 
     public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = ENTITIES.register("stone_tablet",
             () -> EntityType.Builder.<StoneTablet>of(StoneTablet::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(10)

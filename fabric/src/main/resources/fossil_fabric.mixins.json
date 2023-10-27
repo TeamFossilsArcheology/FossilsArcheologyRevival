@@ -16,6 +16,7 @@
     "LivingEntityMixin",
     "MobMixin",
     "PlayerMixin",
+    "ProjectileUtilMixin",
     "ServerLevelMixin",
     "ServerPlayerMixin"
   ],

@@ -205,7 +205,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean isPickable() {
-        return !isCustomMultiPart();
+        return !isCustomMultiPart() && super.isPickable();
     }
 
     @Override
@@ -244,9 +244,21 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (isCustomMultiPart()) {
             //Using the position of the custom part will not work because its behind by 1 tick?
             // return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(getCustomParts()[0].position());
-            return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(position());
+            //return getCustomParts()[0].getDimensions(Pose.STANDING).makeBoundingBox(position());
         }
         return super.makeBoundingBox();
+    }
+
+    @Override
+    public void refreshDimensions() {
+        if (isCustomMultiPart()) {
+            for (int i = 0; i < getCustomParts().length; i++) {
+                getCustomParts()[i].refreshDimensions();
+            }
+            super.refreshDimensions();
+        } else {
+            super.refreshDimensions();
+        }
     }
 
     @Override
@@ -282,8 +294,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
-        return this.getType().getDimensions().scale(this.getScale());
-        //return this.getType().getDimensions();
+        return getType().getDimensions().scale(getScale());
     }
 
     @Override
@@ -660,13 +671,31 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 fleeTicks = 0;
             }
         }
+        if (isCustomMultiPart()) {
+            Vec3[] vec3s = new Vec3[getCustomParts().length];
+            for (int i = 0; i < getCustomParts().length; i++) {
+                vec3s[i] = getCustomParts()[i].getPosition(1.0f);
+            }
+            tickCustomParts();
+            for (int i = 0; i < getCustomParts().length; i++) {
+                getCustomParts()[i].xo = vec3s[i].x;
+                getCustomParts()[i].yo = vec3s[i].y;
+                getCustomParts()[i].zo = vec3s[i].z;
+                getCustomParts()[i].xOld = vec3s[i].x;
+                getCustomParts()[i].yOld = vec3s[i].y;
+                getCustomParts()[i].zOld = vec3s[i].z;
+            }
+        }
+    }
+
+    protected void tickCustomParts() {
+
     }
 
     @Override
     public void tick() {
         super.tick();
 
-        refreshDimensions();
         if (!isSkeleton()) {
             if (!isAgingDisabled()) {
                 setAgeInTicks(getAge() + 1);
@@ -773,7 +802,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public float getScale() {
+    public float getScale() {//TODO: Refresh Eye Height
         float step = (data().maxScale() - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
         if (getAgeInDays() >= data().adultAgeDays()) {
             return data().maxScale();
@@ -888,6 +917,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (tickCount % 20 == 0) {
             refreshTexturePath();
             refreshDimensions();
+        }
+        if (tickCount % 100 == 0) {
+            updateAbilities();
         }
     }
 

@@ -10,6 +10,7 @@ import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.entity.PartEntity;
+import org.jetbrains.annotations.NotNull;
 
 public class PrehistoricPartImpl<T extends Prehistoric> extends PartEntity<T> {
     private final EntityDimensions size;
@@ -33,7 +34,7 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends PartEntity<T> {
     }
 
     @Override
-    public InteractionResult interact(Player player, InteractionHand hand) {
+    public @NotNull InteractionResult interact(@NotNull Player player, @NotNull InteractionHand hand) {
         return getParent().interact(player, hand);
     }
 
@@ -43,7 +44,7 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends PartEntity<T> {
     }
 
     @Override
-    public boolean hurt(DamageSource source, float amount) {
+    public boolean hurt(@NotNull DamageSource source, float amount) {
         if (isInvulnerableTo(source)) {
             return false;
         }
@@ -56,13 +57,13 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends PartEntity<T> {
     }
 
     @Override
-    public boolean is(Entity entity) {
+    public boolean is(@NotNull Entity entity) {
         return this == entity || getParent() == entity;
     }
 
     @Override
-    public EntityDimensions getDimensions(Pose pose) {
-        return size;
+    public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
+        return size.scale(getParent().getScale());
     }
 
     @Override

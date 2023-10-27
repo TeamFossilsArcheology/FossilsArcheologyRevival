@@ -33,7 +33,7 @@ public class Edaphosaurus extends Prehistoric {
     @Override
     public Entity[] getCustomParts() {
         return new Entity[0];
-    }
+    }//TODO: Maybe tail
 
     @Override
     protected void registerGoals() {

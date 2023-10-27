@@ -48,7 +48,7 @@ public class DebugScreen extends Screen {
         Vec3 end = camera.getEyePosition().add(view.x * range, view.y * range, view.z * range);
         AABB aabb = camera.getBoundingBox().expandTowards(view.scale(range)).inflate(1);
         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(camera, camera.getEyePosition(), end, aabb,
-                entity1 -> entity1 instanceof LivingEntity, range * range);
+                Entity::isPickable, range * range);
         return (entityHitResult != null) ? (LivingEntity) entityHitResult.getEntity() : null;
     }
 
@@ -105,7 +105,7 @@ public class DebugScreen extends Screen {
             this.addRenderableWidget(new Button(210, height - 40, 130, 20, new TextComponent("Move to Target"), button -> {
                 Player player = Minecraft.getInstance().player;
             }));*/
-            this.addRenderableWidget(new Button(470, height - 40, 150, 20, new TextComponent("Move to player"), button -> {
+            this.addRenderableWidget(new Button(370, height - 40, 150, 20, new TextComponent("Move to player"), button -> {
                 Player player = Minecraft.getInstance().player;
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new MovementMessage(entity.getId(), player.getX(), player.getY(), player.getZ()));
             }));

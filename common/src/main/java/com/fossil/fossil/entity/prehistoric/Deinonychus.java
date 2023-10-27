@@ -41,7 +41,7 @@ public class Deinonychus extends PrehistoricLeaping implements PrehistoricScary 
     @Override
     public Entity[] getCustomParts() {
         return new Entity[0];
-    }
+    }//TODO: Maybe tail
 
     @Override
     protected void registerGoals() {

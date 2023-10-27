@@ -33,7 +33,7 @@ public class Megaloceros extends Prehistoric {
     @Override
     public Entity[] getCustomParts() {
         return new Entity[0];
-    }
+    }//TODO: Maybe head
 
     @Override
     protected void registerGoals() {

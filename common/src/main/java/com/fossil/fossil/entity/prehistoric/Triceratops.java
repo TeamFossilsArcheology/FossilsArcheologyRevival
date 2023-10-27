@@ -7,8 +7,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
 import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import com.fossil.fossil.sounds.ModSounds;
-import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -49,9 +47,9 @@ public class Triceratops extends Prehistoric {
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(type, level, true);
-        var head = PrehistoricPart.get(this, 2.5f, 2.5f);
-        var body = PrehistoricPart.get(this, 3.2f, 3.3f);
-        var tail = PrehistoricPart.get(this, 2.2f, 2f);
+        var head = PrehistoricPart.get(this, 1.8f, 1.8f);
+        var body = PrehistoricPart.get(this, 2.3f, 2.4f);
+        var tail = PrehistoricPart.get(this, 1.6f, 1.4f);
         this.parts = new Entity[]{body, head, tail};
         this.hasFeatherToggle = true;
         this.featherToggle = FossilConfig.isEnabled(FossilConfig.QUILLED_TRICERATOPS);
@@ -60,44 +58,16 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public void aiStep() {
-        super.aiStep();
-
-        Vec3[] vec3s = new Vec3[this.parts.length];
-        for (int i = 0; i < this.parts.length; i++) {
-            vec3s[i] = parts[i].getPosition(1.0f);
-        }
-        Vec3 offset = calculateViewVector(getXRot(), yBodyRot).reverse().scale(0.3);
-        //Vec3 offset = new Vec3(1, 1, 1);
-        //body.setPos(getX(), getY(), getZ());
+    protected void tickCustomParts() {
+        Vec3 offset = calculateViewVector(getXRot(), yBodyRot).reverse().scale(0.4 * getScale());
         parts[0].setPos(getX() + offset.x, getY() + offset.y, getZ() + offset.z);
 
-        Vec3 offsetHor = calculateViewVector(0, yBodyRot).scale(1.1 * getScale());
-        Vec3 headOffset = calculateViewVector(0, yBodyRot).with(Direction.Axis.Y, 0).add(0, getScale(), 0);
-        if (level.isClientSide) {
-        } else {
-            CompoundTag tag = entityData.get(DEBUG).copy();
-            tag.putDouble("x", getX() + headOffset.x + offsetHor.x);
-            tag.putDouble("y", getY() + headOffset.y);
-            tag.putDouble("z", getZ() + headOffset.z + offsetHor.z);
-            entityData.set(DEBUG, tag);
-        }
-        parts[1].setPos(getX() + headOffset.x + offsetHor.x, getY() + headOffset.y, getZ() + headOffset.z + offsetHor.z);
-        CompoundTag tag = entityData.get(DEBUG);
-        parts[1].setPos(tag.getDouble("x"), tag.getDouble("y"), tag.getDouble("z"));
+        Vec3 view = calculateViewVector(0, yBodyRot);
+        Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
+        parts[1].setPos(getX()+ offset.x + offsetHor.x, getY() + getScale(), getZ() + offset.z + offsetHor.z);
 
-        offsetHor = offsetHor.yRot((float) Math.toRadians(180));
-        Vec3 tailOffset = calculateViewVector(0, yBodyRot).scale(-1.5).add(0, 1.1D, 0);
-        parts[2].setPos(getX() + tailOffset.x + offsetHor.x, getY() + tailOffset.y, getZ() + tailOffset.z + offsetHor.z);
-
-        for (int i = 0; i < this.parts.length; i++) {
-            this.parts[i].xo = vec3s[i].x;
-            this.parts[i].yo = vec3s[i].y;
-            this.parts[i].zo = vec3s[i].z;
-            this.parts[i].xOld = vec3s[i].x;
-            this.parts[i].yOld = vec3s[i].y;
-            this.parts[i].zOld = vec3s[i].z;
-        }
+        offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
+        parts[2].setPos(getX()+ offset.x + offsetHor.x, getY() + getScale(), getZ() + offset.z + offsetHor.z);
     }
 
     @Override

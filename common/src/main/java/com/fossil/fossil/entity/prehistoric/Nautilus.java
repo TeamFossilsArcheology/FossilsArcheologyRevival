@@ -44,7 +44,8 @@ public class Nautilus extends PrehistoricFish {
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private float ticksToShell = 0;
-
+    //TODO: Cant swim in 1 block water
+    //TODO: Pose for inshell
     public Nautilus(EntityType<Nautilus> entityType, Level level) {
         super(entityType, level);
     }

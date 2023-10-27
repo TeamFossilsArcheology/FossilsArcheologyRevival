@@ -65,7 +65,7 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
 
     @Override
     public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
-        return size;
+        return size.scale(parent.getScale());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.fossil.fossil.client.gui.debug;
 
+import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
@@ -21,6 +22,11 @@ public class InfoTab extends DebugTab {
     private int playingCooldown;
     private int climbingCooldown;
     private int mood;
+    private Slider ageSlider;
+    private Slider matingSlider;
+    private Slider playingSlider;
+    private Slider climbingSlider;
+    private Slider moodSlider;
 
     protected InfoTab(DebugScreen debugScreen, Prehistoric prehistoric) {
         super(debugScreen, prehistoric);
@@ -36,36 +42,48 @@ public class InfoTab extends DebugTab {
     @Override
     protected void init(int width, int height) {
         super.init(width, height);
-        addWidget(new Slider(20, 30, 150, 20, new TextComponent("Age in ticks: "), new TextComponent(""), 0, maxAgeInTicks, ageInTicks, 12000, 0, true) {
+        ageSlider = new Slider(20, 30, 150, 20, new TextComponent("Age in ticks: "), new TextComponent(""), 0, maxAgeInTicks, ageInTicks, 12000, 0, true) {
             @Override
             protected void applyValue() {
                 ageInTicks = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
             }
-        });
-        addWidget(new Slider(20, 60, 150, 20, new TextComponent("Seconds till mating: "), new TextComponent(""), 0, 300, matingCooldown, 1, 0, true) {
+        };
+        addWidget(new Button(375, 30, 150, 20, new TextComponent("Scale 1"), button -> {
+            if (entity instanceof Prehistoric prehistoric) {
+                EntityDataManager.Data data = prehistoric.data();
+                ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeDays() * 24000 + 1)) / (data.maxScale() - data.minScale()));
+                ageSlider.setValue(ageInTicks);
+            }
+        }));
+        matingSlider = new Slider(20, 60, 150, 20, new TextComponent("Seconds till mating: "), new TextComponent(""), 0, 300, matingCooldown, 1, 0, true) {
             @Override
             protected void applyValue() {
                 matingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
-        });
-        addWidget(new Slider(20, 90, 150, 20, new TextComponent("Seconds till playing: "), new TextComponent(""), 0, 120, playingCooldown, 1, 0, true) {
+        };
+        playingSlider = new Slider(20, 90, 150, 20, new TextComponent("Seconds till playing: "), new TextComponent(""), 0, 120, playingCooldown, 1, 0, true) {
             @Override
             protected void applyValue() {
                 playingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
-        });
-        addWidget(new Slider(20, 120, 150, 20, new TextComponent("Seconds till climbing: "), new TextComponent(""), 0, 120, climbingCooldown, 1, 0, true) {
+        };
+        climbingSlider = new Slider(20, 120, 150, 20, new TextComponent("Seconds till climbing: "), new TextComponent(""), 0, 120, climbingCooldown, 1, 0, true) {
             @Override
             protected void applyValue() {
                 climbingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
-        });
-        addWidget(new Slider(20, 150, 150, 20, new TextComponent("Mood: "), new TextComponent(""), -100, 100, mood, 1, 0, true) {
+        };
+        moodSlider = new Slider(20, 150, 150, 20, new TextComponent("Mood: "), new TextComponent(""), -100, 100, mood, 1, 0, true) {
             @Override
             protected void applyValue() {
                 mood = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
             }
-        });
+        };
+        addWidget(ageSlider);
+        addWidget(matingSlider);
+        addWidget(playingSlider);
+        addWidget(climbingSlider);
+        addWidget(moodSlider);
 
         addWidget(CycleOption.create("Gender", () -> Arrays.stream(Gender.values()).toList(),
                         Gender::getName, options -> gender, (options, option, gender) -> this.gender = gender)
