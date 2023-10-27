@@ -89,10 +89,10 @@ public class ModSounds {
     public static final RegistrySupplier<SoundEvent> HENODUS_AMBIENT = registerSound("henodus_ambient");
     public static final RegistrySupplier<SoundEvent> HENODUS_HURT = registerSound("henodus_hurt");
     public static final RegistrySupplier<SoundEvent> HENODUS_DEATH = registerSound("henodus_death");
-    public static final RegistrySupplier<SoundEvent> ICHTYOSAURUS_AMBIENT = registerSound("ichtyosaurus_ambient");
-    public static final RegistrySupplier<SoundEvent> ICHTYOSAURUS_HURT = registerSound("ichtyosaurus_hurt");
-    public static final RegistrySupplier<SoundEvent> ICHTYOSAURUS_DEATH = registerSound("ichtyosaurus_death");
-    public static final RegistrySupplier<SoundEvent> ICHTYOSAURUS_OUTSIDE = registerSound("ichtyosaurus_outside");
+    public static final RegistrySupplier<SoundEvent> ICHTHYOSAURUS_AMBIENT = registerSound("ichthyosaurus_ambient");
+    public static final RegistrySupplier<SoundEvent> ICHTHYOSAURUS_HURT = registerSound("ichthyosaurus_hurt");
+    public static final RegistrySupplier<SoundEvent> ICHTHYOSAURUS_DEATH = registerSound("ichthyosaurus_death");
+    public static final RegistrySupplier<SoundEvent> ICHTHYOSAURUS_OUTSIDE = registerSound("ichthyosaurus_outside");
     public static final RegistrySupplier<SoundEvent> LIOPLEURODON_AMBIENT_OUTSIDE = registerSound("liopleurodon_ambient_outside");
     public static final RegistrySupplier<SoundEvent> LIOPLEURODON_AMBIENT_INSIDE = registerSound("liopleurodon_ambient_inside");
     public static final RegistrySupplier<SoundEvent> LIOPLEURODON_HURT = registerSound("liopleurodon_hurt");

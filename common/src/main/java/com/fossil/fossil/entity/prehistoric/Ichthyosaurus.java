@@ -17,17 +17,17 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Ichtyosaurus extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "ichtyosaurus.animation.json";
-    public static final String IDLE = "animation.ichtyosaurus.idle";
-    public static final String SWIM = "animation.ichtyosaurus.swim";
-    public static final String SWIM_FAST = "animation.ichtyosaurus.swim_fast";
-    public static final String EAT = "animation.ichtyosaurus.eat";
-    public static final String ATTACK = "animation.ichtyosaurus.attack";
+public class Ichthyosaurus extends PrehistoricSwimming {
+    public static final String ANIMATIONS = "ichthyosaurus.animation.json";
+    public static final String IDLE = "animation.ichthyosaurus.idle";
+    public static final String SWIM = "animation.ichthyosaurus.swim";
+    public static final String SWIM_FAST = "animation.ichthyosaurus.swim_fast";
+    public static final String EAT = "animation.ichthyosaurus.eat";
+    public static final String ATTACK = "animation.ichthyosaurus.attack";
     
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Ichtyosaurus(EntityType<Ichtyosaurus> entityType, Level level) {
+    public Ichthyosaurus(EntityType<Ichthyosaurus> entityType, Level level) {
         super(entityType, level, false);
     }
 
@@ -62,7 +62,7 @@ public class Ichtyosaurus extends PrehistoricSwimming {
 
     @Override
     public PrehistoricEntityType type() {
-        return PrehistoricEntityType.ICHTYOSAURUS;
+        return PrehistoricEntityType.ICHTHYOSAURUS;
     }
 
     @Override
@@ -108,18 +108,18 @@ public class Ichtyosaurus extends PrehistoricSwimming {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return isInWater() ? ModSounds.ICHTYOSAURUS_AMBIENT.get() : ModSounds.ICHTYOSAURUS_OUTSIDE.get();
+        return isInWater() ? ModSounds.ICHTHYOSAURUS_AMBIENT.get() : ModSounds.ICHTHYOSAURUS_OUTSIDE.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.ICHTYOSAURUS_HURT.get();
+        return ModSounds.ICHTHYOSAURUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.ICHTYOSAURUS_DEATH.get();
+        return ModSounds.ICHTHYOSAURUS_DEATH.get();
     }
 }

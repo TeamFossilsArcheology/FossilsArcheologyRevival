@@ -73,7 +73,7 @@ public class ClientInit {
         registerDino(ModEntities.GALLIMIMUS, "gallimimus.geo.json", Gallimimus.ANIMATIONS);
         registerDino(ModEntities.GASTORNIS, "gastornis.geo.json", Gastornis.ANIMATIONS);
         registerDino(ModEntities.HENODUS, "henodus.geo.json", Henodus.ANIMATIONS);
-        registerDino(ModEntities.ICHTYOSAURUS, "ichtyosaurus.geo.json", Ichtyosaurus.ANIMATIONS);
+        registerDino(ModEntities.ICHTHYOSAURUS, "ichthyosaurus.geo.json", Ichthyosaurus.ANIMATIONS);
         registerDino(ModEntities.KELENKEN, "kelenken.geo.json", Kelenken.ANIMATIONS);
         registerDino(ModEntities.LIOPLEURODON, "liopleurodon.geo.json", Liopleurodon.ANIMATIONS);
         registerDino(ModEntities.MAMMOTH, "mammoth.geo.json", Mammoth.ANIMATIONS);

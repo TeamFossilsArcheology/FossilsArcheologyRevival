@@ -514,30 +514,30 @@
       "fossil:prehistoric/henodus_death1"
     ]
   },
-  "ichtyosaurus_ambient": {
+  "ichthyosaurus_ambient": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/ichtyosaurus_ambient1",
-      "fossil:prehistoric/ichtyosaurus_ambient2"
+      "fossil:prehistoric/ichthyosaurus_ambient1",
+      "fossil:prehistoric/ichthyosaurus_ambient2"
     ]
   },
-  "ichtyosaurus_hurt": {
+  "ichthyosaurus_hurt": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/ichtyosaurus_hurt1"
+      "fossil:prehistoric/ichthyosaurus_hurt1"
     ]
   },
-  "ichtyosaurus_death": {
+  "ichthyosaurus_death": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/ichtyosaurus_hurt1"
+      "fossil:prehistoric/ichthyosaurus_hurt1"
     ]
   },
-  "ichtyosaurus_outside": {
+  "ichthyosaurus_outside": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/ichtyosaurus_outside1",
-      "fossil:prehistoric/ichtyosaurus_outside2"
+      "fossil:prehistoric/ichthyosaurus_outside1",
+      "fossil:prehistoric/ichthyosaurus_outside2"
     ]
   },
   "liopleurodon_ambient_inside": {

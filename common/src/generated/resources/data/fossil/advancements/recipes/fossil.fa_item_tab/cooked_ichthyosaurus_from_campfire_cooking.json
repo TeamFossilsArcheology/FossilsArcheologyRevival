@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:cooked_ichtyosaurus"
+      "fossil:cooked_ichthyosaurus_from_campfire_cooking"
     ]
   },
   "criteria": {
-    "has_ichtyosaurus_meat": {
+    "has_ichthyosaurus_meat": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "fossil:meat_ichtyosaurus"
+              "fossil:meat_ichthyosaurus"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:cooked_ichtyosaurus"
+        "recipe": "fossil:cooked_ichthyosaurus_from_campfire_cooking"
       }
     }
   },
   "requirements": [
     [
-      "has_ichtyosaurus_meat",
+      "has_ichthyosaurus_meat",
       "has_the_recipe"
     ]
   ]

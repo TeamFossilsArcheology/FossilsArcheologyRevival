@@ -11,7 +11,22 @@
     "grass_color": 9551193,
     "foliage_color": 7842607
   },
-  "spawners": {},
+  "spawners": {
+    "monster": [
+      {
+        "type": "minecraft:piglin",
+        "weight": 2,
+        "minCount": 1,
+        "maxCount": 8
+      },
+      {
+        "type": "fossil:sentry_piglin",
+        "weight": 6,
+        "minCount": 1,
+        "maxCount": 8
+      }
+    ]
+  },
   "spawn_costs": {},
   "carvers": {},
   "features": []

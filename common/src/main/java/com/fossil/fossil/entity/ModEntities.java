@@ -48,7 +48,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Gallimimus>> GALLIMIMUS = registerDino("gallimimus", Gallimimus::new, 1.1f, 2);
     public static final RegistrySupplier<EntityType<Gastornis>> GASTORNIS = registerDino("gastornis", Gastornis::new, 1.4f, 2.5f);
     public static final RegistrySupplier<EntityType<Henodus>> HENODUS = registerDino("henodus", Henodus::new, 1.1f, 1);
-    public static final RegistrySupplier<EntityType<Ichtyosaurus>> ICHTYOSAURUS = registerDino("ichthyosaurus", Ichtyosaurus::new, 1.2f, 1);
+    public static final RegistrySupplier<EntityType<Ichthyosaurus>> ICHTHYOSAURUS = registerDino("ichthyosaurus", Ichthyosaurus::new, 1.2f, 1);
     public static final RegistrySupplier<EntityType<Kelenken>> KELENKEN = registerDino("kelenken", Kelenken::new, 1.4f, 2.5f);
     public static final RegistrySupplier<EntityType<Liopleurodon>> LIOPLEURODON = registerDino("liopleurodon", Liopleurodon::new, 2.25f, 0.7f);
     public static final RegistrySupplier<EntityType<Mammoth>> MAMMOTH = registerDino("mammoth", Mammoth::new, 1.2f, 0.7f);
@@ -145,7 +145,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(GALLIMIMUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(GASTORNIS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(HENODUS, Prehistoric::createAttributes);
-        EntityAttributeRegistry.register(ICHTYOSAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(ICHTHYOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(KELENKEN, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(LIOPLEURODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(MAMMOTH, Prehistoric::createAttributes);

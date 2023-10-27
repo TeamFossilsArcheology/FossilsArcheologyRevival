@@ -40,7 +40,7 @@
               }
             }
           ],
-          "name": "fossil:meat_ichtyosaurus"
+          "name": "fossil:meat_ichthyosaurus"
         }
       ]
     },
@@ -61,7 +61,7 @@
               "add": false
             }
           ],
-          "name": "fossil:bone_arm_ichtyosaurus"
+          "name": "fossil:bone_arm_ichthyosaurus"
         }
       ]
     },
@@ -82,7 +82,7 @@
               "add": false
             }
           ],
-          "name": "fossil:bone_leg_ichtyosaurus"
+          "name": "fossil:bone_leg_ichthyosaurus"
         }
       ]
     },
@@ -103,7 +103,7 @@
               "add": false
             }
           ],
-          "name": "fossil:bone_ribcage_ichtyosaurus"
+          "name": "fossil:bone_ribcage_ichthyosaurus"
         }
       ]
     },
@@ -124,7 +124,7 @@
               "add": false
             }
           ],
-          "name": "fossil:bone_vertebrae_ichtyosaurus"
+          "name": "fossil:bone_vertebrae_ichthyosaurus"
         }
       ]
     },
@@ -145,7 +145,7 @@
               "add": false
             }
           ],
-          "name": "fossil:bone_foot_ichtyosaurus"
+          "name": "fossil:bone_foot_ichthyosaurus"
         }
       ]
     },
@@ -166,7 +166,7 @@
               "add": false
             }
           ],
-          "name": "fossil:bone_unique_item_ichtyosaurus"
+          "name": "fossil:bone_unique_item_ichthyosaurus"
         }
       ]
     }

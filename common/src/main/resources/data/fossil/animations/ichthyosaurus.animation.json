@@ -1,78 +1,78 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.ichtyosaurus.idle": {
+    "animation.ichthyosaurus.idle": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.ichtyosaurus.sit": {
+    "animation.ichthyosaurus.sit": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.ichtyosaurus.sleep1": {
+    "animation.ichthyosaurus.sleep1": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.ichtyosaurus.sleep2": {
+    "animation.ichthyosaurus.sleep2": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.ichtyosaurus.swim": {
+    "animation.ichthyosaurus.swim": {
       "loop": true,
       "animation_length": 4
     },
-    "animation.ichtyosaurus.swim_fast": {
+    "animation.ichthyosaurus.swim_fast": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.ichtyosaurus.jump_start": {
+    "animation.ichthyosaurus.jump_start": {
       "loop": "hold_on_last_frame",
       "animation_length": 3
     },
-    "animation.ichtyosaurus.jump_hold": {
+    "animation.ichthyosaurus.jump_hold": {
       "loop": true,
       "animation_length": 1
     },
-    "animation.ichtyosaurus.jump_end": {
+    "animation.ichthyosaurus.jump_end": {
       "loop": "hold_on_last_frame",
       "animation_length": 3
     },
-    "animation.ichtyosaurus.beached1": {
+    "animation.ichthyosaurus.beached1": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.ichtyosaurus.beached2": {
+    "animation.ichthyosaurus.beached2": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.ichtyosaurus.eat": {
+    "animation.ichthyosaurus.eat": {
       "animation_length": 2
     },
-    "animation.ichtyosaurus.turn_left": {
+    "animation.ichthyosaurus.turn_left": {
       "loop": "hold_on_last_frame"
     },
-    "animation.ichtyosaurus.turn_right": {
+    "animation.ichthyosaurus.turn_right": {
       "loop": "hold_on_last_frame"
     },
-    "animation.ichtyosaurus.speak": {
+    "animation.ichthyosaurus.speak": {
       "animation_length": 2
     },
-    "animation.ichtyosaurus.emote1": {
+    "animation.ichthyosaurus.emote1": {
       "animation_length": 3
     },
-    "animation.ichtyosaurus.emote2": {
+    "animation.ichthyosaurus.emote2": {
       "animation_length": 3
     },
-    "animation.ichtyosaurus.attack": {
+    "animation.ichthyosaurus.attack": {
       "animation_length": 0.5
     },
-    "animation.ichtyosaurus.ontogeny_baby": {
+    "animation.ichthyosaurus.ontogeny_baby": {
       "loop": "hold_on_last_frame"
     },
-    "animation.ichtyosaurus.new": {
+    "animation.ichthyosaurus.new": {
       "loop": true
     },
-    "animation.ichtyosaurus.new2": {
+    "animation.ichthyosaurus.new2": {
       "loop": true
     }
   },

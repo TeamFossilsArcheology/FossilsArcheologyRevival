@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fossil:item/bone/ichtyosaurus/vertebrae"
+    "layer0": "fossil:item/bone/ichthyosaurus/arm_bone"
   }
 }
