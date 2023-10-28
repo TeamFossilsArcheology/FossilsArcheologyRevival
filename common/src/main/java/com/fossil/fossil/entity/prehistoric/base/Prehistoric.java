@@ -16,6 +16,7 @@ import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.entity.prehistoric.Deinonychus;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
+import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.SyncActiveAnimationMessage;
@@ -186,7 +187,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isCustomMultiPart() {
-        return isMultiPart;
+        return getCustomParts() != null && getCustomParts().length > 0;
     }
 
     @Override
@@ -206,6 +207,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public boolean isPickable() {
         return !isCustomMultiPart() && super.isPickable();
+    }
+
+    @Override
+    public boolean canCollideWith(Entity entity) {
+        if (isCustomMultiPart() && PrehistoricPart.isMultiPart(entity)) {
+            return PrehistoricPart.getParent(entity) != this && super.canCollideWith(entity);
+        }
+        return super.canCollideWith(entity);
     }
 
     @Override

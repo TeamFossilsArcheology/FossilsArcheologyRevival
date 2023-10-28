@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -12,6 +13,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
@@ -24,16 +26,29 @@ public class Edaphosaurus extends Prehistoric {
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final Entity[] parts = new Entity[2];
 
     public Edaphosaurus(EntityType<Edaphosaurus> entityType, Level level) {
         super(entityType, level, false);
         hasTeenTexture = false;
+        var body = PrehistoricPart.get(this, 1.3f, 1.7f);
+        var tail = PrehistoricPart.get(this, 1, 1.5f);
+        this.parts[0] = body;
+        this.parts[1] = tail;
+    }
+
+    @Override
+    protected void tickCustomParts() {
+        parts[0].setPos(position());
+        Vec3 view = calculateViewVector(0, yBodyRot);
+        Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2).reverse();
+        parts[1].setPos(getX() + offsetHor.x, getY(), getZ() + offsetHor.z);
     }
 
     @Override
     public Entity[] getCustomParts() {
-        return new Entity[0];
-    }//TODO: Maybe tail
+        return parts;
+    }
 
     @Override
     protected void registerGoals() {

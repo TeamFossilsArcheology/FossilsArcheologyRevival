@@ -48,7 +48,7 @@ public class InfoTab extends DebugTab {
                 ageInTicks = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
             }
         };
-        addWidget(new Button(375, 30, 150, 20, new TextComponent("Scale 1"), button -> {
+        addWidget(new Button(275, 30, 150, 20, new TextComponent("Scale 1"), button -> {
             if (entity instanceof Prehistoric prehistoric) {
                 EntityDataManager.Data data = prehistoric.data();
                 ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeDays() * 24000 + 1)) / (data.maxScale() - data.minScale()));

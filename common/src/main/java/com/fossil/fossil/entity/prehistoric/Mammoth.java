@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
+import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.nbt.CompoundTag;
@@ -24,6 +25,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
@@ -38,16 +40,29 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private int woolRegenTicks;
+    private final Entity[] parts = new Entity[2];
 
     public Mammoth(EntityType<Mammoth> entityType, Level level) {
         super(entityType, level, false);
         hasTeenTexture = false;
+        var body = PrehistoricPart.get(this, 0.65f, 0.8f);
+        var head = PrehistoricPart.get(this, 0.5f, 0.45f);
+        this.parts[0] = body;
+        this.parts[1] = head;
+    }
+
+    @Override
+    protected void tickCustomParts() {
+        Vec3 offset = calculateViewVector(getXRot(), yBodyRot).reverse().scale(0.19 * getScale());
+        parts[0].setPos(position().add(offset));
+        Vec3 offsetHor = calculateViewVector(0, yBodyRot).scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
+        parts[1].setPos(getX() + offset.x + offsetHor.x, getY() + (getBbHeight() + 0.1f * getScale() - parts[1].getBbHeight()), getZ() + offset.z + offsetHor.z);
     }
 
     @Override
     public Entity[] getCustomParts() {
-        return new Entity[0];
-    }//TODO: Maybe head
+        return parts;
+    }
 
     @Override
     protected void registerGoals() {

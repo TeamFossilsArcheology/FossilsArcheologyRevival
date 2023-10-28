@@ -26,14 +26,16 @@ public class Ankylosaurus extends Prehistoric {
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    private final Entity[] parts;
+    private final Entity[] parts = new Entity[3];
 
     public Ankylosaurus(EntityType<Ankylosaurus> entityType, Level level) {
         super(entityType, level, true);
         var head = PrehistoricPart.get(this, 0.8f, 0.5f);
         var body = PrehistoricPart.get(this, 1.6f, 1.1f);
         var tail = PrehistoricPart.get(this, 1, 0.5f);
-        this.parts = new Entity[]{body, head, tail};
+        this.parts[0] = body;
+        this.parts[1] = head;
+        this.parts[2] = tail;
     }
 
     @Override
@@ -42,10 +44,10 @@ public class Ankylosaurus extends Prehistoric {
 
         Vec3 view = calculateViewVector(0, yBodyRot);
         Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
-        parts[1].setPos(getX() + offsetHor.x, getY() + (getBbHeight() - parts[1].getBbHeight()), getZ() + offsetHor.z);
+        parts[1].setPos(getX() + offsetHor.x, getY() + (getBbHeight() - 0.1f * getScale()- parts[1].getBbHeight()), getZ() + offsetHor.z);
 
         offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
-        parts[2].setPos(getX() + offsetHor.x, getY() + (getBbHeight() - parts[2].getBbHeight()), getZ() + offsetHor.z);
+        parts[2].setPos(getX() + offsetHor.x, getY() + (getBbHeight() - 0.1f * getScale() - parts[2].getBbHeight()), getZ() + offsetHor.z);
     }
 
     @Override

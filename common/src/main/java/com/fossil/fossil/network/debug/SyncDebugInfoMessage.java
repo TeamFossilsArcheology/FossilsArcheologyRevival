@@ -51,6 +51,9 @@ public class SyncDebugInfoMessage {
                 prehistoric.moodSystem.setPlayingCooldown(playingCooldown);
                 prehistoric.setClimbingCooldown(climbingCooldown);
                 prehistoric.moodSystem.setMood(mood);
+                prehistoric.refreshTexturePath();
+                prehistoric.refreshDimensions();
+                prehistoric.updateAbilities();
             });
         }
     }

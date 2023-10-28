@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
@@ -14,6 +15,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
@@ -25,15 +27,27 @@ public class Megaloceros extends Prehistoric {
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private final Entity[] parts = new Entity[2];
 
     public Megaloceros(EntityType<Megaloceros> entityType, Level level) {
         super(entityType, level, false);
+        var body = PrehistoricPart.get(this, 1.4f, 1.7f);
+        var head = PrehistoricPart.get(this, 1, 1.5f);
+        this.parts[0] = body;
+        this.parts[1] = head;
+    }
+
+    @Override
+    protected void tickCustomParts() {
+        parts[0].setPos(position());
+        Vec3 offsetHor = calculateViewVector(0, yBodyRot).scale( getBbWidth() - ( getBbWidth() - parts[1].getBbWidth()) / 2);
+        parts[1].setPos(getX() + offsetHor.x, getY() + getBbHeight() - parts[1].getBbHeight() * 0.5, getZ() + offsetHor.z);
     }
 
     @Override
     public Entity[] getCustomParts() {
-        return new Entity[0];
-    }//TODO: Maybe head
+        return parts;
+    }
 
     @Override
     protected void registerGoals() {

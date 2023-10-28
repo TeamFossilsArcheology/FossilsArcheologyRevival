@@ -43,18 +43,20 @@ public class Triceratops extends Prehistoric {
     public static final String ATTACK1 = "animation.triceratops.attack1";
     public static final String ATTACK2 = "animation.triceratops.attack2";
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    private final Entity[] parts;
+    private final Entity[] parts = new Entity[3];
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(type, level, true);
-        var head = PrehistoricPart.get(this, 1.8f, 1.8f);
-        var body = PrehistoricPart.get(this, 2.3f, 2.4f);
-        var tail = PrehistoricPart.get(this, 1.6f, 1.4f);
-        this.parts = new Entity[]{body, head, tail};
         this.hasFeatherToggle = true;
         this.featherToggle = FossilConfig.isEnabled(FossilConfig.QUILLED_TRICERATOPS);
         this.ridingXZ = -0.05F;
         this.pediaScale = 55;
+        var head = PrehistoricPart.get(this, 1.8f, 1.8f);
+        var body = PrehistoricPart.get(this, 2.3f, 2.4f);
+        var tail = PrehistoricPart.get(this, 1.6f, 1.4f);
+        this.parts[0] = body;
+        this.parts[1] = head;
+        this.parts[2] = tail;
     }
 
     @Override
@@ -64,10 +66,10 @@ public class Triceratops extends Prehistoric {
 
         Vec3 view = calculateViewVector(0, yBodyRot);
         Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
-        parts[1].setPos(getX()+ offset.x + offsetHor.x, getY() + getScale(), getZ() + offset.z + offsetHor.z);
+        parts[1].setPos(getX() + offset.x + offsetHor.x, getY() + getScale(), getZ() + offset.z + offsetHor.z);
 
         offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
-        parts[2].setPos(getX()+ offset.x + offsetHor.x, getY() + getScale(), getZ() + offset.z + offsetHor.z);
+        parts[2].setPos(getX() + offset.x + offsetHor.x, getY() + getScale(), getZ() + offset.z + offsetHor.z);
     }
 
     @Override
