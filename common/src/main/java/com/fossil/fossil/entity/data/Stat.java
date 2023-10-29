@@ -24,16 +24,16 @@ public record Stat(double baseDamage, double maxDamage, double baseHealth, doubl
         @Override
         public Stat deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             JsonObject jsonobject = json.getAsJsonObject();
-            double baseDamage = GsonHelper.getAsDouble(jsonobject, "baseDamage");
-            double maxDamage = GsonHelper.getAsDouble(jsonobject, "maxDamage");
-            double baseHealth = GsonHelper.getAsDouble(jsonobject, "baseHealth");
-            double maxHealth = GsonHelper.getAsDouble(jsonobject, "maxHealth");
-            double baseSpeed = GsonHelper.getAsDouble(jsonobject, "baseSpeed");
-            double maxSpeed = GsonHelper.getAsDouble(jsonobject, "maxSpeed");
-            double baseArmor = GsonHelper.getAsDouble(jsonobject, "baseArmor");
-            double maxArmor = GsonHelper.getAsDouble(jsonobject, "maxArmor");
-            double baseKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "baseKnockBackResistance");
-            double maxKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "maxKnockBackResistance");
+            double baseDamage = GsonHelper.getAsDouble(jsonobject, "damageBase");
+            double maxDamage = GsonHelper.getAsDouble(jsonobject, "damageMax");
+            double baseHealth = GsonHelper.getAsDouble(jsonobject, "healthBase");
+            double maxHealth = GsonHelper.getAsDouble(jsonobject, "healthMax");
+            double baseSpeed = GsonHelper.getAsDouble(jsonobject, "speedBase");
+            double maxSpeed = GsonHelper.getAsDouble(jsonobject, "speedMax");
+            double baseArmor = GsonHelper.getAsDouble(jsonobject, "armorBase");
+            double maxArmor = GsonHelper.getAsDouble(jsonobject, "armorMax");
+            double baseKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "knockBackResistanceBase");
+            double maxKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "knockBackResistanceMax");
             return new Stat(baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, maxSpeed, baseArmor, maxArmor, baseKnockBackResistance, maxKnockBackResistance);
         }
     }

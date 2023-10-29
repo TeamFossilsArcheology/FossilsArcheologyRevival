@@ -1,16 +1,4 @@
 {
-  "stats": {
-    "baseDamage": 1.0,
-    "maxDamage": 4.0,
-    "baseHealth": 4.0,
-    "maxHealth": 20.0,
-    "baseSpeed": 0.15,
-    "maxSpeed": 0.3,
-    "baseArmor": 1.0,
-    "maxArmor": 2.0,
-    "baseKnockBackResistance": 0,
-    "maxKnockBackResistance": 0
-  },
   "ai": {
     "activity": "NOCTURNAL",
     "attacking": "BASIC",
@@ -24,13 +12,25 @@
     "moving": "AQUATIC",
     "waterAbility": "ATTACK"
   },
-  "minScale": 0.2,
-  "maxScale": 1.0,
-  "teenAgeDays": 3,
+  "stats": {
+    "damageBase": 1.0,
+    "damageMax": 4.0,
+    "healthBase": 4.0,
+    "healthMax": 20.0,
+    "speedBase": 0.15,
+    "speedMax": 0.3,
+    "armorBase": 1.0,
+    "armorMax": 2.0,
+    "knockBackResistanceBase": 0,
+    "knockBackResistanceMax": 0
+  },
   "adultAgeDays": 6,
-  "maxHunger": 70.0,
+  "breaksBlocks": false,
   "canBeRidden": false,
   "developsResistance": false,
+  "maxHunger": 70.0,
   "maxPopulation": 15,
-  "breaksBlocks": false
+  "scaleBase": 0.2,
+  "scaleMax": 1.0,
+  "teenAgeDays": 3
 }

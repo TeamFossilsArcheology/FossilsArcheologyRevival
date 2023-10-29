@@ -1,16 +1,4 @@
 {
-  "stats": {
-    "baseDamage": 1.0,
-    "maxDamage": 2.0,
-    "baseHealth": 10.0,
-    "maxHealth": 30.0,
-    "baseSpeed": 0.1,
-    "maxSpeed": 0.2,
-    "baseArmor": 5.0,
-    "maxArmor": 10.0,
-    "baseKnockBackResistance": 0.5,
-    "maxKnockBackResistance": 2
-  },
   "ai": {
     "activity": "BOTH",
     "attacking": "BASIC",
@@ -24,13 +12,25 @@
     "moving": "AQUATIC",
     "waterAbility": "IGNORE_AND_FISH"
   },
-  "minScale": 0.25,
-  "maxScale": 0.48,
-  "teenAgeDays": 2,
+  "stats": {
+    "damageBase": 1.0,
+    "damageMax": 2.0,
+    "healthBase": 10.0,
+    "healthMax": 30.0,
+    "speedBase": 0.1,
+    "speedMax": 0.2,
+    "armorBase": 5.0,
+    "armorMax": 10.0,
+    "knockBackResistanceBase": 0.5,
+    "knockBackResistanceMax": 2
+  },
   "adultAgeDays": 4,
-  "maxHunger": 50.0,
+  "breaksBlocks": false,
   "canBeRidden": false,
   "developsResistance": true,
+  "maxHunger": 50.0,
   "maxPopulation": 15,
-  "breaksBlocks": false
+  "scaleBase": 0.25,
+  "scaleMax": 0.48,
+  "teenAgeDays": 2
 }

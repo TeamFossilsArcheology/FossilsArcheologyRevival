@@ -36,8 +36,8 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
             }
             Stat stat = GSON.getAdapter(Stat.class).fromJsonTree(root.getAsJsonObject("stats"));
             AI ai = GSON.getAdapter(AI.class).fromJsonTree(root.getAsJsonObject("ai"));
-            float minScale = root.get("minScale").getAsFloat();
-            float maxScale = root.get("maxScale").getAsFloat();
+            float minScale = root.get("scaleBase").getAsFloat();
+            float maxScale = root.get("scaleMax").getAsFloat();
             int teenAgeDays = root.get("teenAgeDays").getAsInt();
             int adultAgeDays = root.get("adultAgeDays").getAsInt();
             int maxHunger = root.get("maxHunger").getAsInt();

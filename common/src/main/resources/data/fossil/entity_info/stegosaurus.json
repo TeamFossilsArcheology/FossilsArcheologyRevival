@@ -1,16 +1,4 @@
 {
-  "stats": {
-    "baseDamage": 2.0,
-    "maxDamage": 9.0,
-    "baseHealth": 12.0,
-    "maxHealth": 66.0,
-    "baseSpeed": 0.25,
-    "maxSpeed": 0.3,
-    "baseArmor": 10.0,
-    "maxArmor": 30.0,
-    "baseKnockBackResistance": 0.5,
-    "maxKnockBackResistance": 2
-  },
   "ai": {
     "activity": "DIURNAL",
     "attacking": "TAIL_SWING",
@@ -24,13 +12,25 @@
     "moving": "WALK",
     "waterAbility": "NONE"
   },
-  "maxPopulation": 7,
-  "minScale": 0.2,
-  "maxScale": 2.0,
-  "teenAgeDays": 5,
-  "breaksBlocks": true,
+  "stats": {
+    "damageBase": 2.0,
+    "damageMax": 9.0,
+    "healthBase": 12.0,
+    "healthMax": 66.0,
+    "speedBase": 0.25,
+    "speedMax": 0.3,
+    "armorBase": 10.0,
+    "armorMax": 30.0,
+    "knockBackResistanceBase": 0.5,
+    "knockBackResistanceMax": 2
+  },
   "adultAgeDays": 12,
-  "maxHunger": 175.0,
+  "breaksBlocks": true,
   "canBeRidden": false,
-  "developsResistance": true
+  "developsResistance": true,
+  "maxHunger": 175.0,
+  "maxPopulation": 7,
+  "scaleBase": 0.2,
+  "scaleMax": 2.0,
+  "teenAgeDays": 5
 }

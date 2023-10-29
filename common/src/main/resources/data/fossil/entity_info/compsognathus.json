@@ -1,16 +1,4 @@
 {
-  "stats": {
-    "baseDamage": 1.0,
-    "maxDamage": 1.0,
-    "baseHealth": 4.0,
-    "maxHealth": 12.0,
-    "baseSpeed": 0.25,
-    "maxSpeed": 0.4,
-    "baseArmor": 0.0,
-    "maxArmor": 0.0,
-    "baseKnockBackResistance": 0,
-    "maxKnockBackResistance": 0
-  },
   "ai": {
     "activity": "NOCTURNAL",
     "attacking": "BASIC",
@@ -24,13 +12,25 @@
     "moving": "WALK",
     "waterAbility": "NONE"
   },
-  "maxPopulation": 5,
-  "minScale": 0.2,
-  "maxScale": 0.5,
-  "teenAgeDays": 2,
-  "breaksBlocks": false,
+  "stats": {
+    "damageBase": 1.0,
+    "damageMax": 1.0,
+    "healthBase": 4.0,
+    "healthMax": 12.0,
+    "speedBase": 0.25,
+    "speedMax": 0.4,
+    "armorBase": 0.0,
+    "armorMax": 0.0,
+    "knockBackResistanceBase": 0,
+    "knockBackResistanceMax": 0
+  },
   "adultAgeDays": 4,
-  "maxHunger": 50.0,
+  "breaksBlocks": false,
   "canBeRidden": false,
-  "developsResistance": false
+  "developsResistance": false,
+  "maxHunger": 50.0,
+  "maxPopulation": 5,
+  "scaleBase": 0.2,
+  "scaleMax": 0.5,
+  "teenAgeDays": 2
 }
