@@ -261,10 +261,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void refreshDimensions() {
         if (isCustomMultiPart()) {
+            super.refreshDimensions();
             for (int i = 0; i < getCustomParts().length; i++) {
                 getCustomParts()[i].refreshDimensions();
             }
-            super.refreshDimensions();
         } else {
             super.refreshDimensions();
         }
@@ -450,11 +450,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return entityData.get(SLEEPING);
     }
 
+    @Override
+    public void startSleeping(BlockPos pos) {
+        setSleeping(true);
+    }
+
     public void setSleeping(boolean sleeping) {
         entityData.set(SLEEPING, sleeping);
         if (!sleeping) {
             cathermalSleepCooldown = 10000 + random.nextInt(6000);
+            setPose(Pose.STANDING);
+        } else {
+            setPose(Pose.SLEEPING);
         }
+    }
+
+    @Override
+    public void stopSleeping() {
     }
 
     public void setOrder(OrderType newOrder) {
@@ -646,18 +658,18 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                         if (cathermalSleepCooldown == 0) {
                             if (random.nextInt(1200) == 1) {
                                 setOrderedToSit(false);
-                                setSleeping(true);
+                                startSleeping(BlockPos.ZERO);
                             }
                         }
                     } else if (aiActivityType() != Activity.NO_SLEEP) {
                         if (random.nextInt(200) == 1) {
                             setOrderedToSit(false);
-                            setSleeping(true);
+                            startSleeping(BlockPos.ZERO);
                         }
                     }
                 }
             }
-            if (!wantsToSleep() || !canSleep() || canWakeUp()) {
+            if (isSleeping() && (!wantsToSleep() || !canSleep() || canWakeUp())) {
                 setOrderedToSit(false);
                 setSleeping(false);
             }

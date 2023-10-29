@@ -15,15 +15,22 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
+import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
+import java.util.Map;
 
 public class Allosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "allosaurus.animation.json";
-    public static final String IDLE = "animation.allosaurus.walk";
+    public static final String IDLE = "animation.allosaurus.idle";
+    public static final String WALK = "animation.allosaurus.walk";
     public static final String ATTACK1 = "animation.allosaurus.attack";
     
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -75,6 +82,17 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
+    public double getPassengersRidingOffset() {
+        if (level.isClientSide) {
+            AnimationData data = factory.getOrCreateAnimationData(getId());
+            Map<String, Pair<IBone, BoneSnapshot>> map = data.getBoneSnapshotCollection();
+            double offset = 0.5;
+            //return super.getPassengersRidingOffset() + map.get("lowerBody").getRight().positionOffsetY - offset;
+        }
+        return super.getPassengersRidingOffset();
+    }
+
+    @Override
     public Item getOrderItem() {
         return ModItems.SKULL_STICK.get();
     }
@@ -85,23 +103,23 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
+    public @NotNull Animation nextMovingAnimation() {
+        return getAllAnimations().get(WALK);
+    }
+
+    @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override

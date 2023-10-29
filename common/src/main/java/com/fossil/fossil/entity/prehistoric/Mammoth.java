@@ -53,9 +53,10 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
 
     @Override
     protected void tickCustomParts() {
-        Vec3 offset = calculateViewVector(getXRot(), yBodyRot).reverse().scale(0.19 * getScale());
+        Vec3 view = calculateViewVector(0, yBodyRot);
+        Vec3 offset = view.reverse().scale(0.19 * getScale());
         parts[0].setPos(position().add(offset));
-        Vec3 offsetHor = calculateViewVector(0, yBodyRot).scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
+        Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
         parts[1].setPos(getX() + offset.x + offsetHor.x, getY() + (getBbHeight() + 0.1f * getScale() - parts[1].getBbHeight()), getZ() + offset.z + offsetHor.z);
     }
 

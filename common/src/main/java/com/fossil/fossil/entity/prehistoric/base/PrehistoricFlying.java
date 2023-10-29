@@ -74,8 +74,12 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     @Override
-    public void setSleeping(boolean sleeping) {
-        super.setSleeping(!isFlying() && sleeping);
+    public void startSleeping(BlockPos pos) {
+        if (!isFlying()) {
+            super.startSleeping(pos);
+        } else {
+            //stopSleeping();
+        }
     }
 
     @Override

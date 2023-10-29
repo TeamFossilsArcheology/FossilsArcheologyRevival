@@ -28,6 +28,9 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable> {
         AnimationController<T> controller = event.getController();
         if (entity instanceof PrehistoricSwimming swimming && !swimming.isInWater() && swimming.isOnGround()) {
             entity.addActiveAnimation(controller.getName(), swimming.nextFloppingAnimation());
+        } else if (event.getAnimatable().isSleeping()) {
+            //TODO: Add categories to animations. If change in same category -> dont change
+            entity.addActiveAnimation(controller.getName(), entity.nextSleepingAnimation());
         } else if (event.isMoving()) {
             entity.addActiveAnimation(controller.getName(), entity.nextMovingAnimation());
         } else {

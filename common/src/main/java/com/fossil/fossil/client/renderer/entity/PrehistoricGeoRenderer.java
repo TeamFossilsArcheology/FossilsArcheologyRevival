@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.prehistoric.Meganeura;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -81,6 +82,11 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
             return RenderType.entityTranslucent(texture);
         }
         return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
+    }
+
+    @Override
+    protected void applyRotations(T animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(180f - rotationYaw));
     }
 
     @Override

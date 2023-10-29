@@ -15,16 +15,22 @@ import org.jetbrains.annotations.NotNull;
 public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
     public final T parent;
     private final EntityDimensions size;
+    private final boolean body;
 
-    public PrehistoricPartImpl(T parent, float f, float g) {
+    public PrehistoricPartImpl(T parent, float f, float g, boolean body) {
         super(parent.getType(), parent.level);
         this.parent = parent;
         this.size = EntityDimensions.scalable(f, g);
+        this.body = body;
         this.refreshDimensions();
     }
 
     public static <T extends Prehistoric> Entity get(T entity, float f, float g) {
-        return new PrehistoricPartImpl<>(entity, f, g);
+        return new PrehistoricPartImpl<>(entity, f, g, false);
+    }
+
+    public static <T extends Prehistoric> Entity get(T entity, float f, float g, boolean body) {
+        return new PrehistoricPartImpl<>(entity, f, g, body);
     }
 
     public static boolean isMultiPart(Object object) {
@@ -65,6 +71,9 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
 
     @Override
     public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
+        if (body) {
+            return parent.getDimensions(pose);
+        }
         return size.scale(parent.getScale());
     }
 

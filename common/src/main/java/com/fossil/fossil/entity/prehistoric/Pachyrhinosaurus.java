@@ -44,10 +44,10 @@ public class Pachyrhinosaurus extends Prehistoric {
 
     @Override
     protected void tickCustomParts() {
-        Vec3 offset = calculateViewVector(getXRot(), yBodyRot).reverse().scale(0.1 * getScale());
+        Vec3 view = calculateViewVector(0, yBodyRot);
+        Vec3 offset = view.reverse().scale(0.1 * getScale());
         parts[0].setPos(getX() + offset.x, getY() + offset.y, getZ() + offset.z);
 
-        Vec3 view = calculateViewVector(0, yBodyRot);
         Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
         parts[1].setPos(getX()+ offset.x + offsetHor.x, getY() + (getBbHeight() - parts[1].getBbHeight()), getZ() + offset.z + offsetHor.z);
 

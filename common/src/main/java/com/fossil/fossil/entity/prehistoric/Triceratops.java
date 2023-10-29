@@ -10,7 +10,9 @@ import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
@@ -52,7 +54,7 @@ public class Triceratops extends Prehistoric {
         this.ridingXZ = -0.05F;
         this.pediaScale = 55;
         var head = PrehistoricPart.get(this, 1.8f, 1.8f);
-        var body = PrehistoricPart.get(this, 2.3f, 2.4f);
+        var body = PrehistoricPart.get(this, 2.3f, 2.4f, true);
         var tail = PrehistoricPart.get(this, 1.6f, 1.4f);
         this.parts[0] = body;
         this.parts[1] = head;
@@ -61,20 +63,29 @@ public class Triceratops extends Prehistoric {
 
     @Override
     protected void tickCustomParts() {
-        Vec3 offset = calculateViewVector(getXRot(), yBodyRot).reverse().scale(0.4 * getScale());
+        Vec3 view = calculateViewVector(0, yBodyRot);
+        Vec3 offset = view.reverse().scale(0.4 * getScale());
         parts[0].setPos(getX() + offset.x, getY() + offset.y, getZ() + offset.z);
 
-        Vec3 view = calculateViewVector(0, yBodyRot);
         Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
-        parts[1].setPos(getX() + offset.x + offsetHor.x, getY() + getScale(), getZ() + offset.z + offsetHor.z);
+        float offsetVert = getPose() == Pose.SLEEPING ? 0 : getScale();
+        parts[1].setPos(position().add(offset.x + offsetHor.x, offsetVert, offset.z + offsetHor.z));
 
         offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
-        parts[2].setPos(getX() + offset.x + offsetHor.x, getY() + getScale(), getZ() + offset.z + offsetHor.z);
+        parts[2].setPos(position().add(offset.x + offsetHor.x, offsetVert, offset.z + offsetHor.z));
     }
 
     @Override
     public Entity[] getCustomParts() {
         return parts;
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
+        if (poseIn == Pose.SLEEPING) {
+            return super.getDimensions(poseIn).scale(1, 0.65f);
+        }
+        return super.getDimensions(poseIn);
     }
 
     @Override
@@ -125,6 +136,22 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextEatingAnimation() {
+        return getAllAnimations().get(EAT);
+    }
+
+    @Override
+    public @NotNull Animation nextIdleAnimation() {
+        return getAllAnimations().get(IDLE);
+    }
+
+    @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        //return getRandom().nextInt(2) == 0 ? getAllAnimations().get(SLEEP1) : getAllAnimations().get(SLEEP2);
+        return getAllAnimations().get(SLEEP1);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
         String key = WALK;
         boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
@@ -150,11 +177,6 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
     public @NotNull Animation nextAttackAnimation() {
         int random = getRandom().nextInt(2);
         String key;
@@ -165,11 +187,6 @@ public class Triceratops extends Prehistoric {
         }
 
         return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
     }
 
     @Nullable

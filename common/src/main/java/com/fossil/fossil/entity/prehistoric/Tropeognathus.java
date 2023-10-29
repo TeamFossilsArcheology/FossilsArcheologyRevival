@@ -66,6 +66,11 @@ public class Tropeognathus extends PrehistoricFlying {
     }
 
     @Override
+    public @NotNull Animation nextEatingAnimation() {
+        return getAllAnimations().get(IDLE);
+    }
+
+    @Override
     public @NotNull Animation nextIdleAnimation() {
         String key = IDLE;
 
@@ -82,6 +87,11 @@ public class Tropeognathus extends PrehistoricFlying {
         }
 
         return getAllAnimations().get(key);
+    }
+
+    @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override
@@ -103,12 +113,6 @@ public class Tropeognathus extends PrehistoricFlying {
         if (isFlying()) key = FLY;
 
         return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
-        //return getAllAnimations().get(EAT);
     }
 
     @Override

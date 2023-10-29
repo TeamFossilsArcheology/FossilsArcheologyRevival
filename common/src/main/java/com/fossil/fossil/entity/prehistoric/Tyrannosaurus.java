@@ -88,6 +88,12 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        //return getRandom().nextInt(2) == 0 ? getAllAnimations().get(SLEEP1) : getAllAnimations().get(SLEEP2);
+        return getAllAnimations().get(SLEEP1);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
         return getAllAnimations().get(WALK);
     }

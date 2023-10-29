@@ -22,9 +22,13 @@ public interface PrehistoricAnimatable extends IAnimatable {
 
     void addActiveAnimation(String controller, CompoundTag animationTag);
 
+    @NotNull Animation nextEatingAnimation();
+
     @NotNull Animation nextIdleAnimation();
 
-    @NotNull Animation nextEatingAnimation();
+    default @NotNull Animation nextSleepingAnimation() {
+        return nextIdleAnimation();
+    }
 
     @NotNull Animation nextMovingAnimation();
 

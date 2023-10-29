@@ -9,6 +9,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -58,7 +59,8 @@ public class Stegosaurus extends Prehistoric {
 
         Vec3 view = calculateViewVector(0, yBodyRot);
         Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
-        parts[1].setPos(getX() + offsetHor.x, getY() + (getBbHeight() - 0.1f * getScale()- parts[1].getBbHeight()), getZ() + offsetHor.z);
+        float offsetVert = getPose() == Pose.SLEEPING ? 0 : getBbHeight() - 0.1f * getScale()- parts[1].getBbHeight();
+        parts[1].setPos(position().add(offsetHor.x, offsetVert, offsetHor.z));
 
         offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
         parts[2].setPos(getX() + offsetHor.x, getY() + (getBbHeight() - 0.1f * getScale() - parts[2].getBbHeight()), getZ() + offsetHor.z);
@@ -101,6 +103,12 @@ public class Stegosaurus extends Prehistoric {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+
+    @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        //return getRandom().nextInt(2) == 0 ? getAllAnimations().get(SLEEP1) : getAllAnimations().get(SLEEP2);
+        return getAllAnimations().get(SLEEP1);
     }
 
     @Override

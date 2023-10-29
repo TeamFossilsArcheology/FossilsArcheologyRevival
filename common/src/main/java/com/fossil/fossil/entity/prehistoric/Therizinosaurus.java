@@ -10,6 +10,7 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -49,10 +50,18 @@ public class Therizinosaurus extends Prehistoric {
         parts[0].setPos(position());
         Vec3 view = calculateViewVector(0, yBodyRot);
         Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
-        parts[1].setPos(getX() + offsetHor.x, getY() + getBbHeight(), getZ() + offsetHor.z);
+        float offsetVert = getPose() == Pose.SLEEPING ? getBbHeight() - parts[1].getBbHeight() / 1.9f : getBbHeight();
+        parts[1].setPos(position().add(offsetHor.x, offsetVert, offsetHor.z));
 
-        offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
-        parts[2].setPos(getX() + offsetHor.x, getY() + (getBbHeight() - 0.3f * getScale() - parts[2].getBbHeight()), getZ() + offsetHor.z);
+        if (getPose() == Pose.SLEEPING) {
+            offsetHor = view.scale(getBbWidth() - parts[2].getBbWidth() / 2).reverse();
+            offsetVert = getBbHeight()- 0.6f * getScale() - parts[2].getBbHeight();
+            parts[2].setPos(position().add(offsetHor.x, offsetVert, offsetHor.z));
+        } else {
+            offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
+            offsetVert = getBbHeight() - 0.3f * getScale() - parts[2].getBbHeight();
+            parts[2].setPos(position().add(offsetHor.x, offsetVert, offsetHor.z));
+        }
     }
 
     @Override
@@ -100,8 +109,18 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextEatingAnimation() {
+        return getAllAnimations().get(EAT);
+    }
+
+    @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+
+    @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return isBaby() ? getAllAnimations().get(SLEEP_BABY) : getAllAnimations().get(SLEEP);
     }
 
     @Override
@@ -112,11 +131,6 @@ public class Therizinosaurus extends Prehistoric {
     @Override
     public @NotNull Animation nextChasingAnimation() {
         return nextMovingAnimation();
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
     }
 
     @Override
