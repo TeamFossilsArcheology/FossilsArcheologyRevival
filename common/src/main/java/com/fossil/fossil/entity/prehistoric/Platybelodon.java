@@ -60,7 +60,7 @@ public class Platybelodon extends Prehistoric {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.1f : super.getGenderedScale();
     }
 

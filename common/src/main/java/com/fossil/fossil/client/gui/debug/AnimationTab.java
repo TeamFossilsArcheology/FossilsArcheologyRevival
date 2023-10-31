@@ -151,7 +151,7 @@ public class AnimationTab extends DebugTab {
 
         @Override
         protected int getScrollbarPosition() {
-            return x0 + width;
+            return x0 + width - 6;
         }
 
         private class AnimationEntry extends ContainerObjectSelectionList.Entry<AnimationEntry> {

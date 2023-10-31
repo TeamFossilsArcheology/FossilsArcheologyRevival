@@ -102,7 +102,7 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
 
     @Override
     public double getPassengersRidingOffset() {
-        return super.getPassengersRidingOffset() + 0.1;
+        return super.getPassengersRidingOffset() - 0.25;
     }
 
     @Override

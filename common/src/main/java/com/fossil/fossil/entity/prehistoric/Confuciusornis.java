@@ -59,7 +59,7 @@ public class Confuciusornis extends PrehistoricFlying {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 0.8f : super.getGenderedScale();
     }
 

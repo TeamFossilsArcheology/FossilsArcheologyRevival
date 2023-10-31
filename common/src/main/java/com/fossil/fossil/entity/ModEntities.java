@@ -26,7 +26,7 @@ public class ModEntities {
             () -> EntityType.Builder.of(ToyScratchingPost::new, MobCategory.MISC).sized(0.6f, 2).build("toy_scratching_post"));
 
     public static final RegistrySupplier<EntityType<AlligatorGar>> ALLIGATOR_GAR = registerFish("alligator_gar", AlligatorGar::new, 2, 0.5f);
-    public static final RegistrySupplier<EntityType<Allosaurus>> ALLOSAURUS = registerDino("allosaurus", Allosaurus::new, 1.1f, 1.4f);
+    public static final RegistrySupplier<EntityType<Allosaurus>> ALLOSAURUS = registerDino("allosaurus", Allosaurus::new, 1.1f, 1.3f);
     //public static final RegistrySupplier<EntityType<Ammonite>> AMMONITE = registerDino("ammonite", Ammonite::new, 2, 1);
     public static final RegistrySupplier<EntityType<Ankylosaurus>> ANKYLOSAURUS = registerDino("ankylosaurus", Ankylosaurus::new, 1.6f, 1.1f);
     public static final RegistrySupplier<EntityType<Arthropleura>> ARTHROPLEURA = registerDino("arthropleura", Arthropleura::new, 3, 1);
@@ -62,7 +62,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Ornitholestes>> ORNITHOLESTES = registerDino("ornitholestes", Ornitholestes::new, 2, 1.9f);
     public static final RegistrySupplier<EntityType<Pachycephalosaurus>> PACHYCEPHALOSAURUS = registerDino("pachycephalosaurus", Pachycephalosaurus::new, 1, 1.5f);
     public static final RegistrySupplier<EntityType<Pachyrhinosaurus>> PACHYRHINOSAURUS = registerDino("pachyrhinosaurus", Pachyrhinosaurus::new, 1.4f, 1.5f);
-    public static final RegistrySupplier<EntityType<Parasaurolophus>> PARASAUROLOPHUS = registerDino("parasaurolophus", Parasaurolophus::new, 1.7f, 1.9f);
+    public static final RegistrySupplier<EntityType<Parasaurolophus>> PARASAUROLOPHUS = registerDino("parasaurolophus", Parasaurolophus::new, 1.7f, 1.7f);
     public static final RegistrySupplier<EntityType<Phorusrhacos>> PHORUSRHACOS = registerDino("phorusrhacos", Phorusrhacos::new, 1.4f, 2.5f);
     public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.9f, 2.1f);
     public static final RegistrySupplier<EntityType<Plesiosaurus>> PLESIOSAURUS = registerDino("plesiosaurus", Plesiosaurus::new, 1, 1);

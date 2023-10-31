@@ -38,7 +38,7 @@ public class Parasaurolophus extends Prehistoric {
     public Parasaurolophus(EntityType<Parasaurolophus> entityType, Level level) {
         super(entityType, level, false);
         var head = PrehistoricPart.get(this, 1.1f, 0.9f);
-        var body = PrehistoricPart.get(this, 1.7f, 1.9f);
+        var body = PrehistoricPart.get(this, 1.7f, 1.7f);
         var tail = PrehistoricPart.get(this, 0.8f, 0.9f);
         this.parts[0] = body;
         this.parts[1] = head;
@@ -105,6 +105,11 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
+    public double getPassengersRidingOffset() {
+        return super.getPassengersRidingOffset() + 0.4;
+    }
+
+    @Override
     public void aiStep() {
         super.aiStep();
         if (isStanding()) {
@@ -147,7 +152,7 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.15f : super.getGenderedScale();
     }
 

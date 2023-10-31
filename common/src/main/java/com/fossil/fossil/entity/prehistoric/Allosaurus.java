@@ -39,7 +39,7 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     public Allosaurus(EntityType<Allosaurus> entityType, Level level) {
         super(entityType, level, false);
         var head = PrehistoricPart.get(this, 0.7f, 0.5f);
-        var body = PrehistoricPart.get(this, 1.1f, 1.4f);
+        var body = PrehistoricPart.get(this, 1.1f, 1.3f);
         var tail = PrehistoricPart.get(this, 0.7f, 0.5f);
         this.parts[0] = body;
         this.parts[1] = head;

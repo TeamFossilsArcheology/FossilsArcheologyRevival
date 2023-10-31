@@ -14,6 +14,7 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
@@ -87,6 +88,11 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
     @Override
     protected void applyRotations(T animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
         poseStack.mulPose(Vector3f.YP.rotationDegrees(180f - rotationYaw));
+        if (animatable.deathTime > 0) {
+            float deathRotation = (animatable.deathTime + partialTick - 1f) / 20f * 1.6f;
+
+            poseStack.mulPose(Vector3f.ZP.rotationDegrees(Math.min(Mth.sqrt(deathRotation), 1) * getDeathMaxRotation(animatable)));
+        }
     }
 
     @Override

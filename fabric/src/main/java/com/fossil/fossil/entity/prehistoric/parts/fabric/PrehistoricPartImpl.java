@@ -74,7 +74,7 @@ public class PrehistoricPartImpl<T extends Prehistoric> extends Entity {
         if (body) {
             return parent.getDimensions(pose);
         }
-        return size.scale(parent.getScale());
+        return size.scale(parent.getScale() * parent.getGenderedScale());
     }
 
     @Override

@@ -75,7 +75,7 @@ public class Elasmotherium extends Prehistoric {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.2f : super.getGenderedScale();
     }
 

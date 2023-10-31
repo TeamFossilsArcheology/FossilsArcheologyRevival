@@ -78,7 +78,7 @@ public class Pteranodon extends PrehistoricFlying {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.3f : super.getGenderedScale();
     }
 

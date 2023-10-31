@@ -137,6 +137,12 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     }
 
     @Override
+    public double getPassengersRidingOffset() {
+        double d = 0.35;
+        return super.getPassengersRidingOffset() + d;
+    }
+
+    @Override
     public void shear(SoundSource source) {
         level.playSound(null, this, SoundEvents.SHEEP_SHEAR, source, 1, 1);
         setSheared(true);
@@ -162,7 +168,7 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.15f : super.getGenderedScale();
     }
 

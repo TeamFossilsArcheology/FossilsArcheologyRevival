@@ -60,7 +60,7 @@ public class Phorusrhacos extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.2f : super.getGenderedScale();
     }
 

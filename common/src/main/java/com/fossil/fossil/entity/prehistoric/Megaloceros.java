@@ -32,7 +32,7 @@ public class Megaloceros extends Prehistoric {
     public Megaloceros(EntityType<Megaloceros> entityType, Level level) {
         super(entityType, level, false);
         var body = PrehistoricPart.get(this, 1.4f, 1.7f);
-        var head = PrehistoricPart.get(this, 1, 1.5f);
+        var head = PrehistoricPart.get(this, 0.8f, 1.5f);
         this.parts[0] = body;
         this.parts[1] = head;
     }
@@ -74,7 +74,12 @@ public class Megaloceros extends Prehistoric {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public double getPassengersRidingOffset() {
+        return super.getPassengersRidingOffset() - 0.35;
+    }
+
+    @Override
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.2f : super.getGenderedScale();
     }
 

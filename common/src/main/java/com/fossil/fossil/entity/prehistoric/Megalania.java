@@ -60,7 +60,7 @@ public class Megalania extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.15f : super.getGenderedScale();
     }
 

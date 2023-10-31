@@ -105,7 +105,7 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return getGender() == Gender.MALE ? 0.8f : super.getGenderedScale();
     }
 

@@ -303,7 +303,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
-        return getType().getDimensions().scale(getScale());
+        return getType().getDimensions().scale(getScale() * getGenderedScale());
     }
 
     @Override
@@ -525,6 +525,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         player.yBodyRot = this.yBodyRot;
         player.setXRot(getXRot());
         player.startRiding(this);
+    }
+
+    @Override
+    public double getPassengersRidingOffset() {
+        return getBbHeight() * 0.72;
     }
 
     private void doJump(double upwardMovement, double forwardMovement) {
@@ -831,7 +836,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return data().minScale() + (step * getAge());
     }
 
-    protected float getGenderedScale() {
+    public float getGenderedScale() {
         return 1;
     }
 

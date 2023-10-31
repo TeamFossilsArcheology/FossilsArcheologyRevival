@@ -120,14 +120,14 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Response aiResponseType() {
-
-        return isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
+    public double getPassengersRidingOffset() {
+        return super.getPassengersRidingOffset() + 0.15;
     }
 
     @Override
-    public double getPassengersRidingOffset() {
-        return super.getPassengersRidingOffset() + 0.5;
+    public PrehistoricEntityTypeAI.Response aiResponseType() {
+
+        return isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
     }
 
     @Override
