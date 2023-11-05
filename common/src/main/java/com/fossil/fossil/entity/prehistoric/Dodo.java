@@ -25,8 +25,16 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Dodo extends Prehistoric {
     public static final String ANIMATIONS = "dodo.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String IDLE = "animation.dodo.idle";
+    public static final String WALK = "animation.dodo.walk";
+    public static final String RUN = "animation.dodo.run";
+    public static final String SPEAK1 = "animation.dodo.speak1";
+    public static final String SPEAK2 = "animation.dodo.speak2";
+    public static final String SIT = "animation.dodo.sit";
+    public static final String ATTACK1 = "animation.dodo.bite1";
+    public static final String ATTACK2 = "animation.dodo.bite2";
+    public static final String SLEEP1 = "animation.dodo.sleep1";
+    public static final String SLEEP2 = "animation.dodo.sleep2";
     
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -73,9 +81,10 @@ public class Dodo extends Prehistoric {
         return getGender() == Gender.MALE ? 1.25f : super.getGenderedScale();
     }
 
+    //TODO: Animations
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(ATTACK2);
     }
 
     @Override
@@ -85,12 +94,12 @@ public class Dodo extends Prehistoric {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

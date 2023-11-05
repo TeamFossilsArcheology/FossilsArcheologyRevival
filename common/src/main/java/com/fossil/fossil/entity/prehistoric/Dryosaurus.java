@@ -27,6 +27,7 @@ public class Dryosaurus extends Prehistoric {
 
     public Dryosaurus(EntityType<Dryosaurus> entityType, Level level) {
         super(entityType, level, false);
+        hasTeenTexture = false;
     }
 
     @Override
