@@ -53,7 +53,7 @@ allprojects {
                 includeGroup("curse.maven")
             }
         }
-        maven(url = "https://ladysnake.jfrog.io/artifactory/mods")
+        maven(url = "https://maven.ladysnake.org/releases")
         maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
         maven { url = uri("https://maven.shedaniel.me/") }
         maven(url = "https://maven.minecraftforge.net/")
