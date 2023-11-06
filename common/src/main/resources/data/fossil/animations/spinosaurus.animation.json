@@ -1,46 +1,46 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dilophosaurus.idle": {
+    "animation.spinosaurus.idle": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sit1": {
+    "animation.spinosaurus.sit1": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sit2": {
+    "animation.spinosaurus.sit2": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sleep1": {
+    "animation.spinosaurus.sleep1": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sleep2": {
+    "animation.spinosaurus.sleep2": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.walk": {
+    "animation.spinosaurus.walk": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.dilophosaurus.run": {
+    "animation.spinosaurus.run": {
       "loop": true,
       "animation_length": 0.75
     },
-    "animation.dilophosaurus.jump/fall": {
+    "animation.spinosaurus.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.dilophosaurus.swim": {
+    "animation.spinosaurus.swim": {
       "loop": true,
       "animation_length": 4
     },
-    "animation.dilophosaurus.drink": {
+    "animation.spinosaurus.drink": {
       "animation_length": 3
     },
-    "animation.dilophosaurus.eat": {
+    "animation.spinosaurus.eat": {
       "animation_length": 3
     },
     "animation.dilophosaurus.inflate_start": {
