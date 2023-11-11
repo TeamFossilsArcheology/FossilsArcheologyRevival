@@ -50,7 +50,6 @@ public class Tropeognathus extends PrehistoricFlying {
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
         goalSelector.addGoal(2, new DinoMeleeAttackGoal(this, 1.0, true));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, true));
-        goalSelector.addGoal(7, new DinoWanderGoal(this, 1.0));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         targetSelector.addGoal(2, new DinoHurtByTargetGoal(this));
     }

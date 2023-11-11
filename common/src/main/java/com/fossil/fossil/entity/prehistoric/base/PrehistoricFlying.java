@@ -1,7 +1,8 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.config.FossilConfig;
-import com.fossil.fossil.entity.ai.FindAirTargetGoal;
+import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.control.CustomFlightMoveControl;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -10,7 +11,14 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.MoveControl.Operation;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
+import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.FlyingAnimal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -29,20 +37,34 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     private static final EntityDataAccessor<Boolean> FLYING = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> TAKING_OFF = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
 
-    private FindAirTargetGoal findAirTargetGoal;
     private int flyingTicks = 0;
+    private int groundTicks = 0;
     private long takeOffStartTick = 0;
     private boolean takeOffAnimationStarted;
-
     public PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level, boolean isMultiPart) {
         super(entityType, level, isMultiPart);
+        moveControl = new CustomFlightMoveControl(this);
+    }
+
+    public static AttributeSupplier.Builder createAttributes() {
+        return Prehistoric.createAttributes()
+                .add(Attributes.MOVEMENT_SPEED, 0.1)
+                .add(Attributes.FLYING_SPEED, 0.4f);
     }
 
     @Override
     protected void registerGoals() {
-        super.registerGoals();
-        findAirTargetGoal = new FindAirTargetGoal(this);
-        goalSelector.addGoal(5, findAirTargetGoal);
+        matingGoal = new DinoMatingGoal(this, 1);
+        goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
+        goalSelector.addGoal(2, matingGoal);
+        goalSelector.addGoal(3, new EatFromFeederGoal(this));
+        goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        goalSelector.addGoal(5, new FlyingSleepGoal(this));
+        goalSelector.addGoal(6, new FlyingWanderGoal(this));
+        goalSelector.addGoal(6, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8));
+        targetSelector.addGoal(4, new HuntAndPlayGoal(this));
     }
 
     @Override
@@ -89,85 +111,111 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             setDeltaMovement(getDeltaMovement().multiply(1, 0.6, 1));
         }
         if (!level.isClientSide) {
-            int flyDelay = getAnimationLogic().getActionDelay("Movement/Idle/Eat");
-            if (isTakingOff() && flyDelay > -1 && level.getGameTime() > flyDelay + takeOffStartTick) {
-                stopTakeOff();
-                setFlying(true);
-            }
-            if (!isFlying() && !isImmobile() && random.nextInt(250) == 0 && isAdult() && isOnGround() && tickCount > 50) {
-                startTakeOff();
+            if (isTakingOff() && isTakeOffAnimationDone()) {
+                finishTakeOff();
             }
             if (isFlying()) {
                 flyingTicks++;
             } else {
+                groundTicks = 0;
                 flyingTicks = 0;
             }
             if (flyingTicks > 80 && isOnGround()) {
-                setFlying(false);
-            }
-            if (isFlying() && canSleep() && !level.isEmptyBlock(blockPosition().below(2)) && !PrehistoricSwimming.isOverWater(this)) {
-                setFlying(false);
-            }
-            if (isFlying() && getTarget() == null) {
-                if (findAirTargetGoal.targetPos != null && isFlying()) {
-                    if (!isTargetInAir()) {
-                        findAirTargetGoal.targetPos = null;
-                    }
-                    flyTowardsTarget();
+                groundTicks++;
+                if (groundTicks > 80) {
+                    setFlying(false);
                 }
-            } else if (getTarget() != null) {
-                flyTowardsTarget();
+            } else {
+                groundTicks = 0;
+            }
+            boolean debug = false;
+            if (debug || flyingTicks > getMaxExhaustion()) {
+                moveTo(findLandPosition(true), true);
             }
         }
+    }
+
+    @Nullable
+    public BlockPos findLandPosition(boolean force) {
+        int x = blockPosition().getX() - 8 + random.nextInt(16);
+        int z = blockPosition().getZ() - 8 + random.nextInt(16);
+        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
+        if (force || GoalUtils.isSolid(this, new BlockPos(x, y - 1, z))) {
+            return new BlockPos(x, y, z);
+        }
+        return null;
+    }
+
+    private int getMaxExhaustion() {
+        return 20 * 60 * 5;
+    }
+
+    @Override
+    public @NotNull CustomFlightMoveControl getMoveControl() {
+        return (CustomFlightMoveControl) super.getMoveControl();
+    }
+
+    public void moveTo(BlockPos blockPos, boolean shouldLand) {
+        if (isFlying()) {
+            getMoveControl().setWantedPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ(), shouldLand);
+        } else if (isTakingOff()) {
+            getMoveControl().setWantedPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ(), shouldLand);
+            getMoveControl().setOperation(Operation.WAIT);
+        } else if (distanceToSqr(Vec3.atCenterOf(blockPos)) > 10) {
+            //start fly
+            startTakeOff();
+            getMoveControl().setWantedPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ(), shouldLand);
+            getMoveControl().setOperation(Operation.WAIT);
+        } else {
+            //walk
+            getNavigation().moveTo(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1);
+        }
+    }
+
+    @Override
+    public boolean wantsToSleep() {
+        return super.wantsToSleep() && !isFlying();
     }
 
     public boolean isTakingOff() {
         return entityData.get(TAKING_OFF);
     }
 
-    protected void startTakeOff() {
+    public void startTakeOff() {
         entityData.set(TAKING_OFF, true);
         takeOffStartTick = level.getGameTime();
     }
 
-    protected void stopTakeOff() {
+    /**
+     * Finish the take-off process and start flying afterward
+     */
+    public void finishTakeOff() {
         entityData.set(TAKING_OFF, false);
+        takeOffStartTick = -1;
+        setFlying(true);
+        getMoveControl().setOperation(Operation.MOVE_TO);
     }
 
-    public void flyTowardsTarget() {//TODO: Move to MoveControl?
-        double bbLength = getBoundingBox().getSize() * 2.5;
-        double maxDist = Math.min(3, bbLength * bbLength);
-        if (isTargetInAir() && isFlying()) {
-            Vec3 targetPos = Vec3.atCenterOf(findAirTargetGoal.targetPos);
-            if (distanceToSqr(targetPos) > maxDist) {
-                Vec3 offset = targetPos.subtract(position());
-                Vec3 move = getDeltaMovement();
-                move = move.add((Math.signum(offset.x) * 0.5 - move.x) * 0.2, (Math.signum(offset.y) * 0.5 - move.y) * 0.2, (Math.signum(offset.z) * 0.5 - move.z) * 0.2);
-                setDeltaMovement(move);
-                float angle = (float) (Mth.atan2(move.z, move.x) * Mth.RAD_TO_DEG - 90);
-                float rotation = Mth.wrapDegrees(angle - getYRot());
-                zza = 0.5f;
-                if (Math.abs(move.x) > 0.12 || Math.abs(move.z) > 0.12) {
-                    setYRot(getYRot() + rotation);
-                }
-            } else {
-                onReachAirTarget(findAirTargetGoal.targetPos);
-                findAirTargetGoal.targetPos = null;
-            }
-        } else {
-            findAirTargetGoal.targetPos = null;
+    /**
+     * Cancel the take-off process and don't start flying afterward
+     */
+    public void cancelTakeOff() {
+        entityData.set(TAKING_OFF, false);
+        takeOffStartTick = -1;
+    }
+
+    public boolean isTakeOffAnimationDone() {
+        int flyDelay = getAnimationLogic().getActionDelay("Movement/Idle/Eat");
+        if (flyDelay < 0) {
+            //Use animation end for animations without delay
+            AnimationLogic.ActiveAnimationInfo activeAnimation = getActiveAnimation("Movement/Idle/Eat");
+            return activeAnimation == null || level.getGameTime() > activeAnimation.endTick() + takeOffStartTick;
         }
-        if (horizontalCollision) {
-            findAirTargetGoal.targetPos = null;
-        }
+        return level.getGameTime() > flyDelay + takeOffStartTick;
     }
 
-    protected void onReachAirTarget(BlockPos target) {
+    public void onReachAirTarget(BlockPos target) {
 
-    }
-
-    private boolean isTargetInAir() {
-        return findAirTargetGoal.targetPos != null && level.isEmptyBlock(findAirTargetGoal.targetPos);
     }
 
     public @Nullable BlockPos getBlockInView() {
@@ -197,11 +245,22 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public @Nullable BlockPos generateAirTarget() {
         BlockPos pos = null;
         for (int i = 0; i < 10; i++) {
+            float heightMod = (float)(getY() + 1) / (float)(level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int)getX(), (int)getZ()) + 10);
+            double targetX = getX() + (double)((random.nextFloat() * 2 - 1) * 16);
+            double targetY = getY() + (double)((random.nextFloat() * 2 - heightMod) * 16);
+            double targetZ = getZ() + (double)((random.nextFloat() * 2 - 1) * 16);
+            pos = new BlockPos(targetX, targetY, targetZ);
+            if (level.isEmptyBlock(pos)) {
+                return pos;
+            }
+        }
+        //TODO: Use visible location for enclosures
+        /*for (int i = 0; i < 10; i++) {
             pos = getBlockInView();
             if (pos != null && level.isEmptyBlock(pos) && !isTargetBlocked(Vec3.atCenterOf(pos))) {
                 return pos;
             }
-        }
+        }*/
         return pos;
     }
 

@@ -29,6 +29,9 @@ public class DinoWanderGoal extends RandomStrollGoal {
         if (dinosaur instanceof PrehistoricFlocking flocking && !flocking.isGroupLeader() && flocking.hasGroupLeader()) {
             return false;
         }
+        if (dinosaur instanceof PrehistoricFlying flying && (flying.isFlying() || flying.isTakingOff())) {
+            return false;
+        }
         return super.canUse();
     }
 

@@ -60,7 +60,6 @@ public class Pteranodon extends PrehistoricFlying {
         goalSelector.addGoal(0, new DinoMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
@@ -109,7 +108,7 @@ public class Pteranodon extends PrehistoricFlying {
     }
 
     @Override
-    protected void onReachAirTarget(BlockPos target) {
+    public void onReachAirTarget(BlockPos target) {
         if (level.getFluidState(target.below()).is(FluidTags.WATER) && isHungry()) {
             ItemStack stack;
             if (random.nextInt(2) == 0) {

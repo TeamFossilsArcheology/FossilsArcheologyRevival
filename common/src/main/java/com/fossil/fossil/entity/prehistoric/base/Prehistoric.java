@@ -308,7 +308,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     protected void registerGoals() {
-        matingGoal = new DinoMatingGoal(this, getAttributeValue(Attributes.MOVEMENT_SPEED));
+        matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(2, matingGoal);
@@ -453,6 +453,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void startSleeping(BlockPos pos) {
         setSleeping(true);
+        getNavigation().stop();
     }
 
     public void setSleeping(boolean sleeping) {

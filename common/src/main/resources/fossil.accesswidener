@@ -19,3 +19,4 @@ accessible field net/minecraft/world/level/chunk/ChunkGenerator placementsForFea
 accessible field net/minecraft/world/level/chunk/ChunkGenerator hasGeneratedPositions Z
 accessible class net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$PieceState
 accessible method net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$PieceState <init> (Lnet/minecraft/world/level/levelgen/structure/PoolElementStructurePiece;Lorg/apache/commons/lang3/mutable/MutableObject;I)V
+accessible class net/minecraft/world/entity/ai/control/MoveControl$Operation
