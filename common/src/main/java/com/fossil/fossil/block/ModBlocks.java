@@ -116,10 +116,9 @@ public class ModBlocks {
     public static final RegistrySupplier<StairBlock> ANCIENT_WOOD_STAIRS = registerBlock("ancient_wood_stairs",
             () -> new StairBlock(ANCIENT_WOOD_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",
-            () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(3f, 25f).noOcclusion()
-                    .isViewBlocking(ModBlocks::never)));
+            () -> new ClearGlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(3f, 25f)));
     public static final RegistrySupplier<ClearGlassBlock> ANCIENT_GLASS = registerBlock("ancient_glass",
-            () -> new ClearGlassBlock(BlockBehaviour.Properties.of(Material.GLASS).strength(1f).noOcclusion().isViewBlocking(ModBlocks::never)));
+            () -> new ClearGlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(1f)));
     public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
             () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
     public static final RegistrySupplier<Block> FAKE_OBSIDIAN = registerBlockWithoutBlockItem("fake_obsidian",
