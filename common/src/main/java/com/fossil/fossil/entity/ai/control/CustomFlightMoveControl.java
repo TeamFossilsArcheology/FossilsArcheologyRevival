@@ -44,8 +44,8 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
         } else if (operation == Operation.MOVE_TO) {
             double bbLength = mob.getBbWidth();
             double maxDist = Math.min(3, bbLength * bbLength);
-            if (mob.distanceToSqr(flyingWanted) > maxDist){
-                Vec3 offset = flyingWanted.subtract(mob.position());
+            Vec3 offset = flyingWanted.subtract(mob.position());
+            if (offset.lengthSqr() > maxDist){
                 Vec3 move = mob.getDeltaMovement();
                 move = move.add((Math.signum(offset.x) * 0.5 - move.x) * 0.2, (Math.signum(offset.y) * 0.5 - move.y) * 0.2, (Math.signum(offset.z) * 0.5 - move.z) * 0.2);
                 mob.setDeltaMovement(move);
@@ -58,7 +58,7 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
             } else {
                 mob.onReachAirTarget(new BlockPos(flyingWanted));
                 operation = Operation.WAIT;
-                if (shouldLandAtTarget) {//TODO: and isOnGround
+                if (shouldLandAtTarget && mob.isOnGround()) {
                     mob.setFlying(false);
                 }
             }

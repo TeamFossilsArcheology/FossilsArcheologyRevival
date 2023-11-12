@@ -18,6 +18,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
@@ -91,8 +92,8 @@ public class Pteranodon extends PrehistoricFlying {
     }
 
     @Override
-    public @Nullable BlockPos generateAirTarget() {
-        if (isHungry()) {
+    public @Nullable Vec3 generateAirTarget() {
+        if (isHungry() && false) {
             BlockPos groundPos = blockPosition();
             while (groundPos.getY() > 3 && level.isEmptyBlock(groundPos)) {
                 groundPos = groundPos.below();
@@ -100,7 +101,7 @@ public class Pteranodon extends PrehistoricFlying {
             for (int i = 0; i < 10; i++) {
                 BlockPos checkForWaterPos = groundPos.offset(random.nextInt(16) - 8, 0, random.nextInt(16) - 8);
                 if (level.getFluidState(checkForWaterPos).is(FluidTags.WATER)) {
-                    return checkForWaterPos.above();
+                    return Vec3.atCenterOf(checkForWaterPos.above());
                 }
             }
         }
@@ -139,6 +140,8 @@ public class Pteranodon extends PrehistoricFlying {
 
         if (isInWater()) {
             key = IDLE_SWIM;
+        } else if (isFlying()) {
+            key = FLY;
         } else {
             int number = random.nextInt(10);
             switch (number) {

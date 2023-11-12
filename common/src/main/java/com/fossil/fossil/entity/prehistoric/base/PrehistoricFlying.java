@@ -23,7 +23,9 @@ import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.PlayState;
@@ -130,18 +132,28 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             }
             boolean debug = false;
             if (debug || flyingTicks > getMaxExhaustion()) {
-                moveTo(findLandPosition(true), true);
+                moveTo(Vec3.atCenterOf(findLandPosition(true)), true);
             }
         }
     }
 
     @Nullable
+    @Contract("true -> !null")
     public BlockPos findLandPosition(boolean force) {
         int x = blockPosition().getX() - 8 + random.nextInt(16);
         int z = blockPosition().getZ() - 8 + random.nextInt(16);
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y, z);
         if (force || GoalUtils.isSolid(this, new BlockPos(x, y - 1, z))) {
-            return new BlockPos(x, y, z);
+            //TODO: This is somewhat messy
+            BlockHitResult result = level.clip(new ClipContext(position(), Vec3.atCenterOf(pos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+            if (result.getType() != HitResult.Type.MISS) {
+                pos = result.getBlockPos().offset(result.getDirection().getNormal()).mutable();
+                while (level.isEmptyBlock(pos) && pos.getY() > level.getMinBuildHeight()) {
+                    pos.move(0, -1, 0);
+                }
+            }
+            return pos.immutable();
         }
         return null;
     }
@@ -155,20 +167,20 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         return (CustomFlightMoveControl) super.getMoveControl();
     }
 
-    public void moveTo(BlockPos blockPos, boolean shouldLand) {
+    public void moveTo(Vec3 pos, boolean shouldLand) {
         if (isFlying()) {
-            getMoveControl().setWantedPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ(), shouldLand);
+            getMoveControl().setWantedPosition(pos.x, pos.y, pos.z, shouldLand);
         } else if (isTakingOff()) {
-            getMoveControl().setWantedPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ(), shouldLand);
+            getMoveControl().setWantedPosition(pos.x, pos.y, pos.z, shouldLand);
             getMoveControl().setOperation(Operation.WAIT);
-        } else if (distanceToSqr(Vec3.atCenterOf(blockPos)) > 10) {
+        } else if (distanceToSqr(pos) > 40) {
             //start fly
             startTakeOff();
-            getMoveControl().setWantedPosition(blockPos.getX(), blockPos.getY(), blockPos.getZ(), shouldLand);
+            getMoveControl().setWantedPosition(pos.x, pos.y, pos.z, shouldLand);
             getMoveControl().setOperation(Operation.WAIT);
         } else {
             //walk
-            getNavigation().moveTo(blockPos.getX(), blockPos.getY(), blockPos.getZ(), 1);
+            getNavigation().moveTo(pos.x, pos.y, pos.z, 1);
         }
     }
 
@@ -237,31 +249,34 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public boolean isTargetBlocked(Vec3 target) {
         if (target != null) {
             BlockHitResult hitResult = level.clip(new ClipContext(position(), target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-            return !level.isEmptyBlock(new BlockPos(hitResult.getLocation())) || !level.isEmptyBlock(hitResult.getBlockPos());
+            return hitResult.getType() == HitResult.Type.BLOCK;
         }
         return false;
     }
-
-    public @Nullable BlockPos generateAirTarget() {
-        BlockPos pos = null;
+    public @Nullable Vec3 generateAirTarget() {
+        BlockHitResult[] results = new BlockHitResult[10];
         for (int i = 0; i < 10; i++) {
             float heightMod = (float)(getY() + 1) / (float)(level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int)getX(), (int)getZ()) + 10);
             double targetX = getX() + (double)((random.nextFloat() * 2 - 1) * 16);
             double targetY = getY() + (double)((random.nextFloat() * 2 - heightMod) * 16);
             double targetZ = getZ() + (double)((random.nextFloat() * 2 - 1) * 16);
-            pos = new BlockPos(targetX, targetY, targetZ);
-            if (level.isEmptyBlock(pos)) {
+            Vec3 pos = new Vec3(targetX, targetY, targetZ);
+            results[i] = level.clip(new ClipContext(position(), pos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+            if (results[i].getType() == HitResult.Type.MISS) {
                 return pos;
             }
         }
-        //TODO: Use visible location for enclosures
-        /*for (int i = 0; i < 10; i++) {
-            pos = getBlockInView();
-            if (pos != null && level.isEmptyBlock(pos) && !isTargetBlocked(Vec3.atCenterOf(pos))) {
-                return pos;
+        //If there is no direct path to all the targets we instead look for the one farthest away
+        BlockHitResult furthest = null;
+        double distance = 5;
+        for (int i = 1; i < results.length; i++) {
+            double g = position().distanceTo(results[i].getLocation());
+            if (g > distance) {
+                furthest = results[i];
+                distance = g;
             }
-        }*/
-        return pos;
+        }
+        return furthest != null ? Vec3.atCenterOf(furthest.getBlockPos().offset(furthest.getDirection().getNormal())) : null;
     }
 
     private PlayState flyingPredicate(AnimationEvent<PrehistoricFlying> event) {

@@ -10,7 +10,7 @@ import java.util.EnumSet;
 
 public class FlyingWanderGoal extends Goal {
     protected final PrehistoricFlying dino;
-    public BlockPos targetPos;
+    public Vec3 targetPos;
     private boolean land;
 
     public FlyingWanderGoal(PrehistoricFlying dino) {
@@ -23,9 +23,10 @@ public class FlyingWanderGoal extends Goal {
         boolean debugLand = false;
         if (dino.isFlying()) {
             if (debugLand || dino.getRandom().nextInt(50) == 0) {//TODO: Will only land if no predator is nearby?
-                targetPos = dino.findLandPosition(false);
-                if (targetPos != null) {
+                BlockPos landPosition = dino.findLandPosition(false);
+                if (landPosition != null) {
                     land = true;
+                    targetPos = Vec3.atCenterOf(landPosition);
                     return true;
                 }
                 return false;
@@ -55,7 +56,7 @@ public class FlyingWanderGoal extends Goal {
 
     @Override
     public void start() {
-        dino.getLookControl().setLookAt(Vec3.atCenterOf(targetPos));
+        dino.getLookControl().setLookAt(targetPos);
         dino.getNavigation().stop();
         if (dino.isFlying()) {
             dino.moveTo(targetPos, land);
@@ -74,22 +75,19 @@ public class FlyingWanderGoal extends Goal {
             return;
             //continue roam
         } else if(!dino.isTakingOff()) {
-            Vec3 distance = Vec3.atCenterOf(targetPos).subtract(dino.position());
+            Vec3 distance = targetPos.subtract(dino.position());
             float rot = (float) (Mth.atan2(distance.z, distance.x) * Mth.RAD_TO_DEG - 90);
             float diff = Mth.degreesDifference(rot, dino.yBodyRot);
-            //rot = Mth.rotateIfNecessary(dino.getYRot(), rot, 45);
-            if (false || diff > 45) {
-                dino.getLookControl().setLookAt(Vec3.atCenterOf(targetPos));
-                //TODO: Fix
+            if (diff > 45) {
+                dino.getLookControl().setLookAt(targetPos);
             } else {
                 dino.startTakeOff();
                 dino.moveTo(targetPos, false);
-                //takeOffStartTick = dino.level.getGameTime();
             }
         }
     }
 
-    private BlockPos findAirTarget() {
+    private Vec3 findAirTarget() {
         return dino.generateAirTarget();
     }
 }
