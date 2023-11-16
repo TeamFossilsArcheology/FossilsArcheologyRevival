@@ -46,6 +46,7 @@ public class Mosasaurus extends PrehistoricSwimming {
         goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
         goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(2, new BreachAttackGoal(this, 1));
         goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -62,7 +63,7 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean doesBreachAttack() {
+    public boolean canDoBreachAttack() {
         return true;
     }
 

@@ -4,7 +4,6 @@ import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -14,6 +13,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
@@ -22,8 +22,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
@@ -39,14 +37,11 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     private static final EntityDataAccessor<Float> BREACHING_PITCH = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.FLOAT);
     public int timeInWater = 0;
     public int timeOnLand = 0;
-    public float prevBreachPitch;
     /**
      * Cache check for current navigator
      */
     protected boolean isLandNavigator = true;
-    protected int breachCooldown = 0;
-    protected boolean isGoingDownAfterBreach = false;
-    private Vec3 targetPos;
+    protected boolean breachTargetReached = false;
     protected long grabStartTick;
 
     public PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
@@ -100,6 +95,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         } else {
             moveControl = new SwimmingMoveControl(this);
             navigation = new LargeSwimmerPathNavigation(this);
+            lookControl = new SmoothSwimmingLookControl(this, 20);
             isLandNavigator = false;
         }
     }
@@ -142,90 +138,13 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     public void aiStep() {
         super.aiStep();
-        prevBreachPitch = getBreachPitch();
-        if (breachCooldown > 0) {
-            breachCooldown--;
-        }
-
-        if (doesBreachAttack()) {
-            if (getTarget() != null) {
-                if (canReachPrey(getTarget()) && isBreaching()) {
-                    isGoingDownAfterBreach = true;
-                    setBreaching(false);
-                }
-                LivingEntity target = getTarget();
-                if (!isEntitySubmerged(target) && isOverWater(target) && isInWater() && !hasPassenger(target) && breachCooldown == 0) {
-                    setBreaching(true);
-                    isGoingDownAfterBreach = false;
-                    breachCooldown = 120;
-                    targetPos = target.position().add(0, 1, 0);
-                }
-                if (isEntitySubmerged(target) || !isOverWater(target)) {
-                    setBreaching(false);
-                    isGoingDownAfterBreach = false;
-                }
-                if (isBreaching() && !isGoingDownAfterBreach) {
-                    Vec3 distance = targetPos.subtract(position());
-                    Vec3 current = getDeltaMovement();
-                    double movementX = (Mth.sign(distance.x) * 0.5 - current.x) * 0.100000000372529 * 2;
-                    double movementY = (Mth.sign(distance.y) * 0.5 - current.y) * 0.100000000372529 * 5;
-                    double movementZ = (Mth.sign(distance.z) * 0.5 - current.z) * 0.100000000372529 * 2;
-                    Vec3 next = current.add(movementX, movementY, movementZ);
-                    setDeltaMovement(next);
-                    float angle = (float) (Mth.atan2(next.z, next.x) * Mth.RAD_TO_DEG) - 90;
-                    float rotation = Mth.wrapDegrees(angle - getYRot());
-                    zza = 0.5f;
-                    setRot(getYRot() + rotation, getXRot());
-                    double dist = distanceToSqr(targetPos);
-                    if (dist < 2.5) {
-                        setBreaching(false);
-                        isGoingDownAfterBreach = true;
-                    }
-                }
+        if (canDoBreachAttack() && !level.isClientSide) {
+            LivingEntity target = getTarget();
+            if (target != null) {
                 if (!isEntitySubmerged(target) && !isOverWater(target)) {
+                    //If target out of reach
                     setTarget(null);
                 }
-            }
-            if (isInWater()) {
-                isGoingDownAfterBreach = false;
-            }
-            //Rotate based on direction
-            if (isInWater() || !isOnGround()) {
-                Vec3 vec3 = getDeltaMovement();
-                if (!level.isClientSide && navigation.getPath() != null && navigation.getPath().getNextNodeIndex() < navigation.getPath().getNodeCount()) {
-                    BlockPos blockPos = navigation.getPath().getNextNodePos();
-                    int[] targets = new int[3];
-                    targets[0] = blockPos.getX();
-                    targets[1] = blockPos.getY();
-                    targets[2] = blockPos.getZ();
-                    BlockState[] blocks = new BlockState[1];
-                    blocks[0] = Blocks.GOLD_BLOCK.defaultBlockState();
-                    //MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
-                    //        new MarkMessage(targets, blocks, false));
-                }
-                if (!level.isClientSide) {//TODO: Figure out x rotation and movecontrol: See discord notes
-                    if (Mth.abs((float) vec3.y) < 1.0E-4) {
-                        //setXRot(Mth.rotLerp(0.2f, getXRot(), 0));
-                    } else if (vec3.length() > Mth.EPSILON) {
-                        float angle = (float) (Math.atan2(vec3.y, vec3.horizontalDistance()) * Mth.RAD_TO_DEG);
-                        //setXRot(angle * 0.5f);
-                    }
-                }
-                Vec3 move = position().subtract(xo, yo, zo);
-                /*if (move.length() > 1.0E-4) {
-                    float angle = (float) (Mth.atan2(move.y, move.horizontalDistance()) * Mth.RAD_TO_DEG);
-                    float rotation = Mth.wrapDegrees(angle - getXRot());
-                    setRot(getYRot(), getXRot() + rotation);
-                }*/
-                float currentBreachPitch = (float) Mth.clamp(getBreachPitch() + move.y * 15, -60, 60);
-                setBreachPitch(currentBreachPitch);
-                if (currentBreachPitch > 0 && move.y == 0) {
-                    decrementBreachPitch(1);
-                } else if (currentBreachPitch < 0 && move.y == 0) {
-                    incrementBreachPitch(1);
-                }
-            } else {
-                setBreachPitch(0);
             }
         }
 
@@ -305,6 +224,17 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     @Override
+    public void disableCustomAI(byte type, boolean disableAI) {
+        switch (type) {
+            case 0, 2 -> {
+                super.disableCustomAI(type, disableAI);
+                setNoGravity(disableAI);
+            }
+            default -> super.disableCustomAI(type, disableAI);
+        }
+    }
+
+    @Override
     public void travel(Vec3 travelVector) {
         if (isOrderedToSit() || !isAmphibious() && !isInWater()) {
             super.travel(Vec3.ZERO);
@@ -356,7 +286,8 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public boolean canDinoHunt(LivingEntity target) {
-        if (doesBreachAttack() && isOverWater(target)) {
+        //TODO: Update
+        if (canDoBreachAttack() && isOverWater(target)) {
             return super.canDinoHunt(target);
         }
         return super.canDinoHunt(target) && (target.isInWater() || canHuntMobsOnLand());
@@ -366,7 +297,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return true;
     }
 
-    public boolean doesBreachAttack() {
+    public boolean canDoBreachAttack() {
         return false;
     }
 
@@ -391,7 +322,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return type().isVivariousAquatic() ? isInWater() && super.canBeControlledByRider() : super.canBeControlledByRider();
     }
 
-    private boolean isEntitySubmerged(LivingEntity entity) {
+    public boolean isEntitySubmerged(LivingEntity entity) {
         return level.getFluidState(entity.blockPosition().above()).is(FluidTags.WATER);
     }
 
@@ -437,51 +368,98 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         }
     }
 
+    @Override
+    public int getMaxHeadXRot() {
+        return 1;//TODO: Check if needed
+    }
+
+    @Override
+    public int getMaxHeadYRot() {
+        return 1;
+    }
+
     static class SwimmingMoveControl extends SmoothSwimmingMoveControl {
 
-        public SwimmingMoveControl(Mob mob) {
-            super(mob, 90, 10, 0.2F, 0, false);
+        private final PrehistoricSwimming mob;
+
+        public SwimmingMoveControl(PrehistoricSwimming mob) {
+            super(mob, 85, 10, 0.1f, 0.1f, true);
+            this.mob = mob;
         }
 
         @Override
         public void tick() {
-            if (operation == Operation.MOVE_TO && !mob.getNavigation().isDone()) {
+            if (mob.isBreaching()) {
+                double x = wantedX - mob.getX();
+                double y = wantedY - mob.getY();
+                double z = wantedZ - mob.getZ();
+                double dist = x * x + y * y + z * z;
+                if (dist < 2.5) {
+                    operation = Operation.WAIT;//TODO: Same logic needs to be called by the goal
+                    mob.setBreaching(false);
+                    mob.setDeltaMovement(mob.getDeltaMovement().x * 2, mob.getDeltaMovement().y, mob.getDeltaMovement().z * 2);
+                    mob.breachTargetReached = true;
+                } else {
+                    Vec3 current = mob.getDeltaMovement();
+                    double movementX = (Mth.sign(x) * 0.5 - current.x) * 0.1 * 2;
+                    double movementY = (Mth.sign(y) * 0.5 - current.y) * 0.1 * 3;//TODO: figure out best values
+                    double movementZ = (Mth.sign(z) * 0.5 - current.z) * 0.1 * 2;
+                    Vec3 next = current.add(movementX, movementY, movementZ);
+                    mob.setDeltaMovement(next);
+                    float angle = (float) (Mth.atan2(next.z, next.x) * Mth.RAD_TO_DEG) - 90;
+                    float rot = Mth.wrapDegrees(angle - mob.getYRot());
+                    mob.setYRot(mob.getYRot() + rot);
+
+                    float k = (float) (-Mth.atan2(next.y, next.horizontalDistance()) * Mth.RAD_TO_DEG);
+                    mob.setXRot(k);
+
+                    mob.setXxa(0);
+                    mob.setYya(0);
+                    mob.setZza(0);
+                }
+            } else if (operation == Operation.MOVE_TO && !mob.getNavigation().isDone()) {
+                mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0, 0.005, 0.0));
                 double x = wantedX - mob.getX();
                 double y = wantedY - mob.getY();
                 double z = wantedZ - mob.getZ();
                 double dist = x * x + y * y + z * z;
                 if (dist < 2.500000277905201E-7) {
-                    mob.setZza(0.0F);
+                    mob.setZza(0);
                 } else {
-                    float h = (float)(Mth.atan2(z, x) * Mth.RAD_TO_DEG) - 90.0F;
-                    mob.setYRot(rotlerp(mob.getYRot(), h, 10));
+                    float h = floatMod((float) ((Mth.atan2(z, x) * Mth.RAD_TO_DEG) - 90), 360);
+                    float g = rotlerp(floatMod(mob.getYRot(), 360), h, 10);
+                    mob.setYRot(g);
                     mob.yBodyRot = mob.getYRot();
                     mob.yHeadRot = mob.getYRot();
-                    float i = (float)(speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                    float i = (float) (speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
                     if (mob.isInWater()) {
-                        mob.setSpeed(i * 0.2f);
+                        mob.setSpeed(i * 0.1f);
                         double horDist = Math.sqrt(x * x + z * z);
                         float k;
                         if (Math.abs(y) > 9.999999747378752E-6 || Math.abs(horDist) > 9.999999747378752E-6) {
-                            k = -((float)(Mth.atan2(y, horDist) * Mth.RAD_TO_DEG));
-                            k = Mth.clamp(Mth.wrapDegrees(k),(-90), 90);
-                            mob.setXRot(rotlerp(mob.getXRot(), k, 5.0F));
+                            k = (float) (-Mth.atan2(y, horDist) * Mth.RAD_TO_DEG) + 90;
+                            k = Mth.clamp(k, 30, 150);
+                            g = rotlerp(mob.getXRot() + 90, k, 5);
+                            mob.setXRot(g - 90);
                         }
                         k = Mth.cos(mob.getXRot() * Mth.DEG_TO_RAD);
                         float l = Mth.sin(mob.getXRot() * Mth.DEG_TO_RAD);
                         mob.zza = k * i;
-                        mob.yya = (float) (y/dist * i);
+                        mob.yya = -l * i;
                     } else {
-                        mob.setSpeed(i * 0.2f);
+                        mob.setSpeed(i * 0.2f);//TODO: Out of water
                     }
-
                 }
             } else {
-                mob.setSpeed(0.0F);
-                mob.setXxa(0.0F);
-                mob.setYya(0.0F);
-                mob.setZza(0.0F);
+                mob.setSpeed(0);
+                mob.setXxa(0);
+                mob.setYya(0);
+                mob.setZza(0);
             }
+        }
+        private float floatMod(float x, float y){
+            //x mod y behaving the same way as Math.floorMod but with doubles
+            return (float) (x - Math.floor(x/y) * y);
         }
     }
 }

@@ -20,11 +20,11 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel
     @Override
     public void setCustomAnimations(T animatable, int instanceId, AnimationEvent animationEvent) {
         super.setCustomAnimations(animatable, instanceId, animationEvent);
-        IBone root = getAnimationProcessor().getBone("root");
-        if (root != null && animatable instanceof Megalodon megalodon) {
+        if (animatable instanceof Megalodon) {
+            IBone root = getAnimationProcessor().getBone("body");
             float partial = animationEvent.getPartialTick();
-            float pitch = Mth.lerp(partial, megalodon.prevBreachPitch, megalodon.getBreachPitch());
-            root.setRotationX(animatable.getXRot() * Mth.DEG_TO_RAD);
+            float pitch = Mth.lerp(partial, animatable.xRotO, animatable.getXRot());
+            root.setRotationX(-pitch * Mth.DEG_TO_RAD);
         }
     }
 

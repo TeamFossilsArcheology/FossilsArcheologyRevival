@@ -57,7 +57,7 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
         if (dino instanceof PrehistoricFlying) {
             yDist = targetDistance;
         } else if (dino instanceof PrehistoricSwimming swimming) {
-            yDist = swimming.doesBreachAttack() ? 50 : targetDistance;
+            yDist = swimming.canDoBreachAttack() ? 50 : targetDistance;
         }
         return mob.getBoundingBox().inflate(targetDistance, yDist, targetDistance);
     }
