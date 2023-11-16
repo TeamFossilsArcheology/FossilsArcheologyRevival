@@ -19,6 +19,7 @@ import dev.architectury.event.events.common.LifecycleEvent;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
@@ -68,7 +69,7 @@ public class ModEvents {
     }
 
     private static boolean isBreakableInAnuLair(BlockState state) {
-        return state.getBlock().getDescriptionId().toLowerCase().contains("grave") || state.is(Blocks.OBSIDIAN) || state.is(ModBlocks.FAKE_OBSIDIAN.get());
+        return state.getBlock().getDescriptionId().toLowerCase().contains("grave") || state.is(Blocks.OBSIDIAN) || state.is(ModBlocks.FAKE_OBSIDIAN.get()) || state.is(BlockTags.FIRE);
     }
 
     private static boolean isLivestock(PathfinderMob mob) {
