@@ -21,6 +21,7 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
@@ -55,10 +56,9 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
-        //level.setBlock(blockPos, this.defaultBlockState().setValue(LAYER, 0), 3);
-        level.setBlock(pos.above(), this.defaultBlockState().setValue(LAYER, 1), 3);
-        level.setBlock(pos.above(2), this.defaultBlockState().setValue(LAYER, 2), 3);
-        level.setBlock(pos.above(3), this.defaultBlockState().setValue(LAYER, 3), 3);
+        level.setBlock(pos.above(), defaultBlockState().setValue(LAYER, 1), 3);
+        level.setBlock(pos.above(2), defaultBlockState().setValue(LAYER, 2), 3);
+        level.setBlock(pos.above(3), defaultBlockState().setValue(LAYER, 3), 3);
     }
 
     @Override
@@ -114,7 +114,7 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
     }
 
     @Override
-    public BlockBehaviour.OffsetType getOffsetType() {
+    public BlockBehaviour.@NotNull OffsetType getOffsetType() {
         return BlockBehaviour.OffsetType.XZ;
     }
 

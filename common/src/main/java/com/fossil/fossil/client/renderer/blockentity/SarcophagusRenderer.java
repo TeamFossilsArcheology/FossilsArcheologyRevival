@@ -33,43 +33,45 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
     @Override
     public void render(SarcophagusBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight,
                        int packedOverlay) {
-        Direction direction = blockEntity.getBlockState().getValue(SarcophagusBlock.FACING);
-        poseStack.pushPose();
-        poseStack.translate(0f, 1f, 1f);
-        poseStack.scale(1f, -1f, -1f);
-        poseStack.translate(0.5f, -0.5f, 0.5f);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
-
-        sarcophagusModel.getChild("hinge").setRotation(0, -blockEntity.getDoorTimer() * Mth.DEG_TO_RAD, 0);
-
-        var vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(SarcophagusModel.TEXTURE));
-        sarcophagusModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
-        if (blockEntity.getState() == SarcophagusBlockEntity.STATE_OPENING) {
-            poseStack.translate(0, 0, 0.2);
-            vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(AnuBossModel.TEXTURE));
-            anuModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
-        }
-        poseStack.popPose();
-        if (blockEntity.getState() == SarcophagusBlockEntity.STATE_UNLOCKED) {
+        if (blockEntity.getBlockState().getValue(SarcophagusBlock.LAYER) == 0) {
+            Direction direction = blockEntity.getBlockState().getValue(SarcophagusBlock.FACING);
             poseStack.pushPose();
-            if (direction == Direction.NORTH) {
-                poseStack.translate(0.5f, 1.2f, 0);
-            } else if (direction == Direction.WEST) {
-                poseStack.translate(0, 1.2f, 0.5f);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
-            } else if (direction == Direction.SOUTH) {
-                poseStack.translate(0.5f, 1.2f, 1);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(180));
-            } else if (direction == Direction.EAST) {
-                poseStack.translate(1, 1.2f, 0.5f);
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(-90));
+            poseStack.translate(0f, 1f, 1f);
+            poseStack.scale(1f, -1f, -1f);
+            poseStack.translate(0.5f, -0.5f, 0.5f);
+            poseStack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
+
+            sarcophagusModel.getChild("hinge").setRotation(0, -blockEntity.getDoorTimer() * Mth.DEG_TO_RAD, 0);
+
+            var vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(SarcophagusModel.TEXTURE));
+            sarcophagusModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
+            if (blockEntity.getState() == SarcophagusBlockEntity.STATE_OPENING) {
+                poseStack.translate(0, 0, 0.2);
+                vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(AnuBossModel.TEXTURE));
+                anuModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
             }
-            poseStack.scale(1, 1, 2);
-            Minecraft mc = Minecraft.getInstance();
-            ItemRenderer itemRenderer = mc.getItemRenderer();
-            itemRenderer.renderStatic(mc.player, new ItemStack(ModItems.SCARAB_GEM.get()), ItemTransforms.TransformType.FIXED, false, poseStack,
-                    bufferSource, mc.level, packedLight, packedOverlay, 0);
             poseStack.popPose();
+            if (blockEntity.getState() == SarcophagusBlockEntity.STATE_UNLOCKED) {
+                poseStack.pushPose();
+                if (direction == Direction.NORTH) {
+                    poseStack.translate(0.5f, 1.2f, 0);
+                } else if (direction == Direction.WEST) {
+                    poseStack.translate(0, 1.2f, 0.5f);
+                    poseStack.mulPose(Vector3f.YP.rotationDegrees(90));
+                } else if (direction == Direction.SOUTH) {
+                    poseStack.translate(0.5f, 1.2f, 1);
+                    poseStack.mulPose(Vector3f.YP.rotationDegrees(180));
+                } else if (direction == Direction.EAST) {
+                    poseStack.translate(1, 1.2f, 0.5f);
+                    poseStack.mulPose(Vector3f.YP.rotationDegrees(-90));
+                }
+                poseStack.scale(1, 1, 2);
+                Minecraft mc = Minecraft.getInstance();
+                ItemRenderer itemRenderer = mc.getItemRenderer();
+                itemRenderer.renderStatic(mc.player, new ItemStack(ModItems.SCARAB_GEM.get()), ItemTransforms.TransformType.FIXED, false, poseStack,
+                        bufferSource, mc.level, packedLight, packedOverlay, 0);
+                poseStack.popPose();
+            }
         }
     }
 
