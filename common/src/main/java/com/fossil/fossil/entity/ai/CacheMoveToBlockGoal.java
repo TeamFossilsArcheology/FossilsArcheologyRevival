@@ -1,6 +1,5 @@
 package com.fossil.fossil.entity.ai;
 
-import com.fossil.fossil.entity.ai.navigation.CenteredPath;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.MarkMessage;
@@ -138,7 +137,6 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         var old = entity.getAttribute(Attributes.FOLLOW_RANGE).getBaseValue();
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(32);
         path = entity.getNavigation().createPath(getMoveToTarget().getX() + 0.5d, getMoveToTarget().getY(), getMoveToTarget().getZ() + 0.5d, 1);
-        path = CenteredPath.createFromPath(path);
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(old);
         setBlocks(false);
         entity.getNavigation().moveTo(path, speedModifier);
