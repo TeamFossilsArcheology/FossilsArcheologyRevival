@@ -152,13 +152,13 @@ public enum PrehistoricEntityType {
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             ModItems.ITEMS.register(type.resourceName + "_dna", () -> new DNAItem(type)).listen(item -> type.dnaItem = item);
             if (type.hasBones()) {
-                registerItem("bone_leg", type, Item::new, item -> type.legBoneItem = item);
-                registerItem("bone_arm", type, Item::new, item -> type.armBoneItem = item);
-                registerItem("bone_foot", type, Item::new, item -> type.footBoneItem = item);
-                registerItem("bone_skull", type, Item::new, item -> type.skullBoneItem = item);
-                registerItem("bone_ribcage", type, Item::new, item -> type.ribcageBoneItem = item);
-                registerItem("bone_vertebrae", type, Item::new, item -> type.vertebraeBoneItem = item);
-                registerItem("bone_unique_item", type, Item::new, item -> type.uniqueBoneItem = item);
+                DinoBoneItem.registerItem("bone_arm", type, item -> type.armBoneItem = item);
+                DinoBoneItem.registerItem("bone_foot", type, item -> type.footBoneItem = item);
+                DinoBoneItem.registerItem("bone_leg", type, item -> type.legBoneItem = item);
+                DinoBoneItem.registerItem("bone_ribcage", type, item -> type.ribcageBoneItem = item);
+                DinoBoneItem.registerItem("bone_skull", type, item -> type.skullBoneItem = item);
+                DinoBoneItem.registerItem("bone_unique", type, item -> type.uniqueBoneItem = item);
+                DinoBoneItem.registerItem("bone_vertebrae", type, item -> type.vertebraeBoneItem = item);
             }
             if (type.mobType == PrehistoricMobType.FISH) {
                 type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?

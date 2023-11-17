@@ -86,7 +86,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("essence_chicken",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> STUNTED_ESSENCE = ITEMS.register("essence_stunted",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+            () -> new StuntedEssenceItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> COOKED_NAUTILUS = ITEMS.register("nautilus_cooked",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));
     public static final RegistrySupplier<Item> POTTERY_SHARD = ITEMS.register("pottery_shard",
@@ -132,6 +132,7 @@ public class ModItems {
 
     public static final RegistrySupplier<SpawnEggItem> TAR_SLIME_SPAWN_EGG = registerSpawnEgg("tar_slime_spawn_egg", ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B);
 
+    public static final RegistrySupplier<SpawnEggItem> ANU_BOSS_SPAWN_EGG = registerSpawnEgg("anu_boss_spawn_egg", ModEntities.ANU_BOSS, 0X0F0F0F, 0XF72D00);
     public static final RegistrySupplier<SpawnEggItem> SENTRY_PIGLIN_SPAWN_EGG = registerSpawnEgg("sentry_piglin_spawn_egg", ModEntities.SENTRY_PIGLIN, 15373203, 0XD0A750);
     public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = Arrays.stream(DyeColor.values()).collect(Collectors.toMap(Function.identity(), ModItems::registerBall));
     public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
