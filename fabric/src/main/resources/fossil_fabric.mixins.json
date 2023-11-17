@@ -15,6 +15,7 @@
     "LevelMixin",
     "LivingEntityMixin",
     "MobMixin",
+    "NaturalSpawnerMixin",
     "PlayerMixin",
     "ProjectileUtilMixin",
     "ServerLevelMixin",

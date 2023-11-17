@@ -9,6 +9,7 @@
   "mixins": [
     "JigsawPlacementMixin",
     "MobMixin",
+    "NaturalSpawnerMixin",
     "PrehistoricMixin",
     "ProjectileUtilMixin"
   ],

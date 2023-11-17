@@ -199,7 +199,7 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
 
     @Override
     public int getGenDepth() {
-        return 256;//TODO: Height
+        return 0;//Only used in generation but we have no generation
     }
 
     @Override
@@ -209,17 +209,17 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
 
     @Override
     public int getSeaLevel() {
-        return -63;
+        return 0;//Only used in generation but we have no generation
     }
 
     @Override
     public int getMinY() {
-        return 0;
+        return 0;//Only used in generation, but we could later make it match dimension type minY
     }
 
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level) {
-        return 0;//TODO: Height
+        return 0;//Only used in generation but we have no generation
     }
 
     @Override
