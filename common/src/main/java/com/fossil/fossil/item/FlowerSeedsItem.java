@@ -10,7 +10,7 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
-import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import org.jetbrains.annotations.NotNull;
 
 public class FlowerSeedsItem extends Item {
     private final RegistrySupplier<? extends BushBlock> flower;
@@ -21,7 +21,7 @@ public class FlowerSeedsItem extends Item {
     }
 
     @Override
-    public InteractionResult useOn(UseOnContext context) {
+    public @NotNull InteractionResult useOn(UseOnContext context) {
         int clearance = 1;
         if (flower.get() instanceof TallFlowerBlock) {
             clearance = 2;
@@ -39,11 +39,9 @@ public class FlowerSeedsItem extends Item {
         if (flower.get().defaultBlockState().canSurvive(level, pos)) {
             level.setBlock(pos.above(), flower.get().defaultBlockState(), 3);
             if (flower.get() instanceof DoublePlantBlock tall) {
-                level.setBlock(pos.above(2), tall.defaultBlockState().setValue(DoublePlantBlock.HALF, DoubleBlockHalf.UPPER), 2);
+                tall.setPlacedBy(level, pos.above(), null, null, null);
             } else if (flower.get() instanceof FourTallFlowerBlock tall) {
-                level.setBlock(pos.above(2), tall.defaultBlockState().setValue(FourTallFlowerBlock.LAYER, 1), 2);
-                level.setBlock(pos.above(3), tall.defaultBlockState().setValue(FourTallFlowerBlock.LAYER, 2), 2);
-                level.setBlock(pos.above(4), tall.defaultBlockState().setValue(FourTallFlowerBlock.LAYER, 3), 2);
+                tall.setPlacedBy(level, pos.above(), null, null, null);
             }
             context.getItemInHand().shrink(1);
             return InteractionResult.SUCCESS;

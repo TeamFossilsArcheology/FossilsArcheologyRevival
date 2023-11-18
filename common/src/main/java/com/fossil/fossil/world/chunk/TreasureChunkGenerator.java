@@ -104,7 +104,7 @@ public class TreasureChunkGenerator extends ChunkGenerator {
 
     @Override
     public int getGenDepth() {
-        return 256;//TODO: Height
+        return 256;
     }
 
     @Override
@@ -124,7 +124,7 @@ public class TreasureChunkGenerator extends ChunkGenerator {
 
     @Override
     public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level) {
-        return 0;//TODO: Height
+        return 0;
     }
 
     @Override

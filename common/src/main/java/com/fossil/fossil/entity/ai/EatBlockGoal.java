@@ -5,7 +5,6 @@ import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.state.BlockState;
 
 /**
  * A Goal that will move the entity to the closest block if the entity is hungry, it can eat the plant and the entity can see it. Afterwards it will
@@ -20,13 +19,12 @@ public class EatBlockGoal extends MoveToFoodGoal {
     public void tick() {
         super.tick();
         if (isReachedTarget()) {
-            BlockState blockState = entity.level.getBlockState(targetPos);
-            int foodAmount = FoodMappings.getFoodAmount(blockState.getBlock(), entity.type().diet);
-            entity.setHunger(Math.min(entity.getMaxHunger(), entity.getHunger() + foodAmount));
-            entity.setHealth((int) Math.min(entity.getMaxHealth(), entity.getHealth() + foodAmount / 10f));
+            entity.setStartEatAnimation(true);
+            int foodAmount = FoodMappings.getFoodAmount(entity.level.getBlockState(targetPos).getBlock(), entity.type().diet);
+            entity.feed(foodAmount);
+            entity.heal(foodAmount / 10f);
             entity.playSound(SoundEvents.GENERIC_EAT, 1, 1);
             entity.level.destroyBlock(targetPos, false);
-            entity.setStartEatAnimation(true);
         }
     }
 

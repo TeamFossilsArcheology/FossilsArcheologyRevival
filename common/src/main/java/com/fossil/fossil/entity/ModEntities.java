@@ -92,7 +92,8 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Anubite>> ANUBITE = ENTITIES.register("anubite",
             () -> EntityType.Builder.of(Anubite::new, MobCategory.MONSTER).sized(1, 2.3f).fireImmune().build("anubite"));
     public static final RegistrySupplier<EntityType<AnuBoss>> ANU_BOSS = ENTITIES.register("anu_boss",
-            () -> EntityType.Builder.of(AnuBoss::new, MobCategory.MONSTER).sized(1, 1.8f).fireImmune().build("anu_boss"));
+            () -> EntityType.Builder.of(AnuBoss::new, MobCategory.MONSTER).sized(1, 1.8f).fireImmune()
+                    .clientTrackingRange(64).updateInterval(1).build("anu_boss"));
     public static final RegistrySupplier<EntityType<AnuDead>> ANU_DEAD = ENTITIES.register("anu_dead",
             () -> EntityType.Builder.of(AnuDead::new, MobCategory.MONSTER).sized(1.8f, 0.8f).fireImmune().build("anu_dead"));
     public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",

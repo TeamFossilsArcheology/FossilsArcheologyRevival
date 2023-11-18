@@ -97,7 +97,6 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     public boolean shouldShowName(T animatable) {
-        //TODO: Find a more permanent solution
         //Calling super.shouldShowName in fabric crashes the game because the method doesn't exist in GeoEntityRenderer
         return false;
     }

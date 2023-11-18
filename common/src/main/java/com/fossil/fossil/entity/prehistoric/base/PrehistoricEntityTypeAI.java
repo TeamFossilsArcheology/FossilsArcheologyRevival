@@ -50,7 +50,7 @@ public class PrehistoricEntityTypeAI {
     }
 
     public enum Activity implements DinopediaInfo {
-        DIURNAL, NOCTURNAL, BOTH, NO_SLEEP;//TODO: NO_SLEEP is unused in 1.12
+        DIURNAL, NOCTURNAL, BOTH, NO_SLEEP;
         private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase());
         private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.activity.desc." + name().toLowerCase());
 

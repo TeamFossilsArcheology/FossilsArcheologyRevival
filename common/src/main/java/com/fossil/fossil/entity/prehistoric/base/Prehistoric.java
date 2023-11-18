@@ -987,11 +987,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void setHunger(int hunger) {
-        if (getHunger() > getMaxHunger()) {
-            entityData.set(HUNGER, getMaxHunger());
-        } else {
-            entityData.set(HUNGER, hunger);
-        }
+        entityData.set(HUNGER, Math.min(hunger, getMaxHunger()));
     }
 
     public void eatItem(ItemStack stack) {
@@ -1006,16 +1002,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    public boolean feed(int hunger) {
-        if (getHunger() >= getMaxHunger()) {
-            return false;
-        }
-        setHunger(getHunger() + hunger);
-        if (getHunger() > getMaxHunger()) {
-            setHunger(getMaxHunger());
-        }
+    public void feed(int foodAmount) {
+        setHunger(getHunger() + foodAmount);
         level.playSound(null, blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, getSoundVolume(), getVoicePitch());
-        return true;
     }
 
     @Override
@@ -1023,7 +1012,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         super.killed(level, killedEntity);
         if (type().diet != Diet.HERBIVORE) {
             feed(FoodMappings.getMobFoodPoints(killedEntity, type().diet));
-            heal(FoodMappings.getMobFoodPoints(killedEntity, type().diet) / 3F);
+            heal(FoodMappings.getMobFoodPoints(killedEntity, type().diet) / 10f);
             moodSystem.increaseMood(25);
         }
     }

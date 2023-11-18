@@ -16,25 +16,21 @@ public class FossilFoodMappings {
     public static void register() {
         FoodMappings.addPlant(Items.SUGAR_CANE, 15);
         FoodMappings.addPlant(Items.WHEAT, 13);
-        FoodMappings.addPlant(Items.MELON, 10);
-        FoodMappings.addPlant(Items.APPLE, 20);
-        FoodMappings.addPlant(Items.BEETROOT, 20);
-        FoodMappings.addPlant(Items.POTATO, 35);
-        FoodMappings.addPlant(Items.BAKED_POTATO, 35);
+        FoodMappings.addPlant(Items.MELON_SLICE);
+        FoodMappings.addPlant(Items.APPLE);
+        FoodMappings.addPlant(Items.BEETROOT);
+        FoodMappings.addPlant(Items.POTATO);
+        FoodMappings.addPlant(Items.BAKED_POTATO);
         FoodMappings.addPlant(Items.CAKE, 50);
-        FoodMappings.addPlant(Items.CARROT, 15);
-        FoodMappings.addPlant(Items.COOKIE, 10);
-        FoodMappings.addPlant(Items.PUMPKIN_PIE, 25);
+        FoodMappings.addPlant(Items.CARROT);
+        FoodMappings.addPlant(Items.COOKIE);
+        FoodMappings.addPlant(Items.PUMPKIN_PIE);
         FoodMappings.addPlant(Items.SUGAR, 7);
-        FoodMappings.addPlant(Items.BREAD, 25);
+        FoodMappings.addPlant(Items.BREAD);
         FoodMappings.addPlant(Items.WHEAT_SEEDS, 5);
         FoodMappings.addPlant(Items.MELON_SEEDS, 5);
         FoodMappings.addPlant(Items.PUMPKIN_SEEDS, 5);
         FoodMappings.addPlant(Items.BEETROOT_SEEDS, 5);
-        FoodMappings.addPlant(Blocks.CAKE, 35);
-        FoodMappings.addPlant(Blocks.CARROTS, 20);
-        FoodMappings.addPlant(Blocks.WHEAT, 10);
-        FoodMappings.addPlant(Blocks.HAY_BLOCK, 90);
         LifecycleEvent.SERVER_LEVEL_LOAD.register(level -> {
             Registry.BLOCK.getTag(BlockTags.LEAVES).get().stream().map(Holder::value).forEach(block -> {
                 FoodMappings.addPlant(block, 20);
@@ -46,6 +42,10 @@ public class FossilFoodMappings {
                 FoodMappings.addPlant(block, 15);
             });
         });
+        FoodMappings.addPlant(Blocks.CAKE, 35);
+        FoodMappings.addPlant(Blocks.CARROTS, 20);
+        FoodMappings.addPlant(Blocks.WHEAT, 10);
+        FoodMappings.addPlant(Blocks.HAY_BLOCK, 90);
         FoodMappings.addPlant(Blocks.MELON, 65);
         FoodMappings.addPlant(Blocks.BROWN_MUSHROOM, 15);
         FoodMappings.addPlant(Blocks.RED_MUSHROOM, 15);
@@ -58,27 +58,27 @@ public class FossilFoodMappings {
         //FoodMappings.addPlant(ModBlocks.PALM_LEAVES, 40);
         FoodMappings.addPlant(Blocks.CHORUS_FLOWER, 20);
         FoodMappings.addPlant(Blocks.CHORUS_PLANT, 10);
-        FoodMappings.addPlant(Items.CHORUS_FRUIT, 15);
+        FoodMappings.addPlant(Items.CHORUS_FRUIT);
 
-        FoodMappings.addFish(Items.COD, 20);
-        FoodMappings.addFish(Items.SALMON, 20);
-        FoodMappings.addFish(Items.TROPICAL_FISH, 15);
-        FoodMappings.addFish(Items.PUFFERFISH, 15);
-        FoodMappings.addFish(Items.COOKED_COD, 45);
-        FoodMappings.addFish(Items.COOKED_SALMON, 45);
-        FoodMappings.addFish(ModItems.COOKED_NAUTILUS.get(), 65);
+        FoodMappings.addFish(Items.COD);
+        FoodMappings.addFish(Items.SALMON);
+        FoodMappings.addFish(Items.TROPICAL_FISH);
+        FoodMappings.addFish(Items.PUFFERFISH);
+        FoodMappings.addFish(Items.COOKED_COD);
+        FoodMappings.addFish(Items.COOKED_SALMON);
+        FoodMappings.addFish(ModItems.COOKED_NAUTILUS.get());
 
-        FoodMappings.addMeat(Items.COOKED_BEEF, 60);
-        FoodMappings.addMeat(Items.BEEF, 40);
-        FoodMappings.addMeat(Items.COOKED_CHICKEN, 15);
-        FoodMappings.addMeat(Items.CHICKEN, 10);
-        FoodMappings.addMeat(Items.PORKCHOP, 35);
-        FoodMappings.addMeat(Items.COOKED_PORKCHOP, 55);
+        FoodMappings.addMeat(Items.COOKED_BEEF);
+        FoodMappings.addMeat(Items.BEEF);
+        FoodMappings.addMeat(Items.COOKED_CHICKEN);
+        FoodMappings.addMeat(Items.CHICKEN);
+        FoodMappings.addMeat(Items.PORKCHOP);
+        FoodMappings.addMeat(Items.COOKED_PORKCHOP);
         FoodMappings.addMeat(ModItems.FAILURESAURUS_FLESH.get(), 15);
-        FoodMappings.addMeat(Items.MUTTON, 30);
-        FoodMappings.addMeat(Items.COOKED_MUTTON, 50);
-        FoodMappings.addMeat(Items.RABBIT, 13);
-        FoodMappings.addMeat(Items.COOKED_RABBIT, 17);
+        FoodMappings.addMeat(Items.MUTTON);
+        FoodMappings.addMeat(Items.COOKED_MUTTON);
+        FoodMappings.addMeat(Items.RABBIT);
+        FoodMappings.addMeat(Items.COOKED_RABBIT);
         FoodMappings.addMeat(Items.RABBIT_FOOT, 7);
 
         FoodMappings.addEgg(Items.EGG, 7);
@@ -87,12 +87,12 @@ public class FossilFoodMappings {
             PrehistoricEntityType entityType = PrehistoricEntityType.values()[i];
             if (entityType.timePeriod != TimePeriod.CURRENT) {
                 if (entityType.mobType != PrehistoricMobType.FISH) {
-                    FoodMappings.addMeat(entityType.foodItem, 25);
-                    FoodMappings.addMeat(entityType.cookedFoodItem, 35);
+                    if (entityType.foodItem != null) FoodMappings.addMeat(entityType.foodItem);
+                    if (entityType.cookedFoodItem != null) FoodMappings.addMeat(entityType.cookedFoodItem);
                 } else {
-                    FoodMappings.addFish(entityType.eggItem, 35);
-                    FoodMappings.addFish(entityType.foodItem, 35);
-                    FoodMappings.addFish(entityType.cookedFoodItem, 75);
+                    if (entityType.eggItem != null) FoodMappings.addFish(entityType.eggItem, 35);
+                    if (entityType.foodItem != null) FoodMappings.addFish(entityType.foodItem);
+                    if (entityType.cookedFoodItem != null) FoodMappings.addFish(entityType.cookedFoodItem);
                 }
             }
             if (entityType.mobType == PrehistoricMobType.BIRD || entityType.mobType == PrehistoricMobType.CHICKEN) {

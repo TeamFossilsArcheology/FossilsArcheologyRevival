@@ -46,6 +46,7 @@ public abstract class FoodMappings {
     }
 
     public static void addToMappings(EntityType<? extends Entity> entity, int food, Diet diet) {
+        //TODO: Calculate based on bbwidth etc at runtime instead
         switch (diet) {
             case CARNIVORE -> CARNIVORE_ENTITY_DIET.put(entity, food);
             case CARNIVORE_EGG -> CARNIVORE_EGG_ENTITY_DIET.put(entity, food);
@@ -175,6 +176,14 @@ public abstract class FoodMappings {
         addToMappings(entity, food, Diet.PISCI_CARNIVORE);
     }
 
+    public static void addMeat(ItemLike itemLike) {
+        int food = itemLike.asItem().getFoodProperties() != null ? itemLike.asItem().getFoodProperties().getNutrition() * 7 : 20;
+        addToMappings(itemLike, food, Diet.CARNIVORE);
+        addToMappings(itemLike, food, Diet.CARNIVORE_EGG);
+        addToMappings(itemLike, food, Diet.OMNIVORE);
+        addToMappings(itemLike, food, Diet.PISCI_CARNIVORE);
+    }
+
     public static void addMeat(ItemLike itemLike, int food) {
         addToMappings(itemLike, food, Diet.CARNIVORE);
         addToMappings(itemLike, food, Diet.CARNIVORE_EGG);
@@ -185,6 +194,12 @@ public abstract class FoodMappings {
     public static void addFish(EntityType<? extends Entity> entity, int food) {
         addToMappings(entity, food, Diet.PISCIVORE);
         addToMappings(entity, food, Diet.PISCI_CARNIVORE);
+    }
+
+    public static void addFish(Item item) {
+        int food = item.getFoodProperties() != null ? item.getFoodProperties().getNutrition() * 7 : 10;
+        addToMappings(item, food, Diet.PISCIVORE);
+        addToMappings(item, food, Diet.PISCI_CARNIVORE);
     }
 
     public static void addFish(Item item, int food) {
@@ -200,6 +215,14 @@ public abstract class FoodMappings {
     public static void addPlant(Block block, int food) {
         addToBlockMappings(block, food, Diet.HERBIVORE, true);
         addToBlockMappings(block, food, Diet.OMNIVORE, true);
+    }
+
+    public static void addPlant(Item item) {
+        int food = item.getFoodProperties() != null ? item.getFoodProperties().getNutrition() * 7 : 20;
+        addToMappings(item, food, Diet.CARNIVORE);
+        addToMappings(item, food, Diet.CARNIVORE_EGG);
+        addToMappings(item, food, Diet.OMNIVORE);
+        addToMappings(item, food, Diet.PISCI_CARNIVORE);
     }
 
     public static void addPlant(Item item, int food) {

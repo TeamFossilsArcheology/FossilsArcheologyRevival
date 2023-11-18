@@ -23,8 +23,8 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
             if (entity.level.getBlockEntity(targetPos) instanceof FeederBlockEntity feeder) {
                 feedingTicks++;
                 feeder.feedDinosaur(entity);
-                entity.setHealth(Math.min(entity.getMaxHealth(), entity.getHealth() + 0.25f));//TODO: Update healing
-                if (feedingTicks == 0 || feedingTicks % 4 == 0) {
+                entity.heal(0.1f);
+                if (feedingTicks % 4 == 0) {
                     entity.doFoodEffect();
                 }
                 entity.setStartEatAnimation(true);
