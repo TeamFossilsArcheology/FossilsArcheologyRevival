@@ -84,7 +84,7 @@ public class ModEvents {
         }
         return !className.isEmpty() && (mob instanceof Cow || mob instanceof Sheep || mob instanceof Pig || mob instanceof Chicken
                 || mob instanceof Rabbit || mob instanceof AbstractHorse
-                || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig") || className.contains("Chicken")
+                || className.contains("Cow") || className.contains("Sheep") || (className.contains("Pig") && !className.contains("piglin")) || className.contains("Chicken")
                 || className.contains("Rabbit") || className.contains("Peacock") || className.contains("Goat") || className.contains("Ferret")
                 || className.contains("Hedgehog") || className.contains("Peahen") || className.contains("Peafowl") || className.contains("Sow")
                 || className.contains("Hog"));

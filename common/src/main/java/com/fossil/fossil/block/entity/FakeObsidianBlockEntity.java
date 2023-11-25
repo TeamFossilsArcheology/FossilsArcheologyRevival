@@ -13,7 +13,7 @@ public class FakeObsidianBlockEntity extends BlockEntity {
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState blockState, FakeObsidianBlockEntity blockEntity) {
-        if (level.random.nextInt(400) == 0) {
+        if (level.random.nextInt(200) == 0) {
             blockEntity.age++;
             if (blockEntity.age >= 9) {
                 level.removeBlock(pos, false);

@@ -2,12 +2,10 @@ package com.fossil.fossil.entity.monster;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.AnuBarrierBlockEntity;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.AnuDead;
 import com.fossil.fossil.entity.ModEntities;
-import com.fossil.fossil.entity.ai.anu.AnuAvoidEntityGoal;
-import com.fossil.fossil.entity.ai.anu.AnuMeleeAttackGoal;
-import com.fossil.fossil.entity.ai.anu.FireballAttackGoal;
-import com.fossil.fossil.entity.ai.anu.FlyNearTargetGoal;
+import com.fossil.fossil.entity.ai.anu.*;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.sounds.MusicHandler;
@@ -18,6 +16,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerBossEvent;
@@ -38,9 +38,9 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Blaze;
-import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.monster.RangedAttackMob;
 import net.minecraft.world.entity.monster.WitherSkeleton;
 import net.minecraft.world.entity.player.Player;
@@ -51,14 +51,13 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Stream;
 
 public class AnuBoss extends PathfinderMob implements RangedAttackMob {
@@ -74,11 +73,15 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     private static final int SONG_LENGTH = 4041;
     private final ServerBossEvent bossEvent = (ServerBossEvent) new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setDarkenScreen(true);
     private int songTick;
+    private Vec3 spawnPosition;
 
     public AnuBoss(EntityType<? extends PathfinderMob> entityType, Level level) {
         super(entityType, level);
-        setPersistenceRequired();
+        moveControl = new AnuMoveControl(this);
         xpReward = 50;
+        setPathfindingMalus(BlockPathTypes.DANGER_FIRE, 4);
+        setPathfindingMalus(BlockPathTypes.DAMAGE_FIRE, 0);
+        setPathfindingMalus(BlockPathTypes.LAVA, 4);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -94,8 +97,8 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
         super.registerGoals();
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(2, new AnuAvoidEntityGoal<>(this, Player.class, 5, 0.8, 1.33));
-        goalSelector.addGoal(3, new FlyNearTargetGoal(this));
-        goalSelector.addGoal(4, new FireballAttackGoal(this, 1, 15));
+        goalSelector.addGoal(3, new FlyAroundGoal(this));
+        goalSelector.addGoal(4, new FireballAttackGoal(this, 1, 20));
         goalSelector.addGoal(4, new AnuMeleeAttackGoal(this, 1.2, false));
         goalSelector.addGoal(5, new RandomStrollGoal(this, 1));
         goalSelector.addGoal(6, new LookAtPlayerGoal(this, LivingEntity.class, 8));
@@ -107,6 +110,10 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public boolean canChangeDimensions() {
         return false;
+    }
+
+    public Vec3 getSpawnPos() {
+        return spawnPosition;
     }
 
     @Override
@@ -143,12 +150,6 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             if (!onGround && getDeltaMovement().y < 0) {
                 setDeltaMovement(getDeltaMovement().multiply(1, 0.6, 1));
             }
-            if (!level.isClientSide) {
-                Player player = level.getNearestPlayer(this, 100);
-                if (player != null && tickCount % 100 == 0 && getSensing().hasLineOfSight(player) && !player.isCreative()) {
-                    performRangedAttack(player, 1);
-                }
-            }
             for (int i = 0; i < 2; ++i) {
                 level.addParticle(ParticleTypes.SMOKE, this.getRandomX(0.5), this.getRandomY(), this.getRandomZ(0.5), 0, 0, 0);
             }
@@ -159,28 +160,30 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             boolean summonPiglin = random.nextInt(250) == 0;
             boolean summonWitherSkeleton = random.nextInt(350) == 0;
             boolean summonBlaze = random.nextInt(300) == 0;
-            if (summonSpikes) {
-                playSound(SoundEvents.STONE_HIT, 1, 1);
-                BlockPos.MutableBlockPos blockPos = blockPosition().mutable();
-                BlockState blockState = level.getBlockState(blockPos);
-                while ((blockState.isAir() || blockState.is(BlockTags.LEAVES)) && blockPos.getY() > 0) {
-                    blockPos.move(Direction.DOWN);
-                }
-                for (int i = 0; i < 4; ++i) {
-                    blockPos.move(random.nextInt(8) - random.nextInt(8), random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
-                    if (level.isEmptyBlock(blockPos) && ModBlocks.OBSIDIAN_SPIKES.get().canSurvive(level.getBlockState(blockPos.below()), level, blockPos)) {
-                        level.setBlock(blockPos, ModBlocks.OBSIDIAN_SPIKES.get().defaultBlockState(), 2);
+            if (FossilConfig.isEnabled(FossilConfig.ANU_BLOCK_PLACING)) {
+                if (summonSpikes) {
+                    playSound(SoundEvents.STONE_HIT, 1, 1);
+                    BlockPos.MutableBlockPos blockPos = blockPosition().mutable();
+                    BlockState blockState = level.getBlockState(blockPos);
+                    while ((blockState.isAir() || blockState.is(BlockTags.LEAVES)) && blockPos.getY() > 0) {
+                        blockPos.move(Direction.DOWN);
+                    }
+                    for (int i = 0; i < 4; ++i) {
+                        blockPos.move(random.nextInt(8) - random.nextInt(8), random.nextInt(4) - random.nextInt(4), random.nextInt(8) - random.nextInt(8));
+                        if (level.isEmptyBlock(blockPos) && ModBlocks.OBSIDIAN_SPIKES.get().canSurvive(level.getBlockState(blockPos.below()), level, blockPos)) {
+                            level.setBlock(blockPos, ModBlocks.OBSIDIAN_SPIKES.get().defaultBlockState(), 2);
+                        }
                     }
                 }
-            }
-            if (summonDefenses) {
-                playSound(SoundEvents.STONE_HIT, 1, 1);
-                if (!level.isClientSide) {
-                    AnuDefenseHut.generateDefenseHutP1(level, new BlockPos(getX(), getY(), getZ()));
-                    AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(getX(), getY(), getZ()));
-                    AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(getX(), getY() + 1, getZ()));
-                    AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(getX(), getY() + 2, getZ()));
-                    AnuDefenseHut.generateDefenseHutP1(level, new BlockPos(getX(), getY() + 4, getZ()));
+                if (summonDefenses) {
+                    playSound(SoundEvents.STONE_HIT, 1, 1);
+                    if (!level.isClientSide) {
+                        AnuDefenseHut.generateDefenseHutP1(level, new BlockPos(getX(), getY(), getZ()));
+                        AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(getX(), getY(), getZ()));
+                        AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(getX(), getY() + 1, getZ()));
+                        AnuDefenseHut.generateDefenseHutP2(level, new BlockPos(getX(), getY() + 2, getZ()));
+                        AnuDefenseHut.generateDefenseHutP1(level, new BlockPos(getX(), getY() + 4, getZ()));
+                    }
                 }
             }
             Player player = level.getNearestPlayer(this, 50);
@@ -224,7 +227,15 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         Entity trueSource = source.getEntity();
-        if (trueSource instanceof Ghast) {
+        if (source == DamageSource.IN_WALL || source.isExplosion() && trueSource == null) {
+            return false;
+        }
+        if (source.getDirectEntity() instanceof LargeFireball && source.getEntity() instanceof Player) {
+            super.hurt(source, 20.0f);
+            return true;
+        }
+        if (source == DamageSource.OUT_OF_WORLD && getY() < level.getMinBuildHeight()) {
+            moveTo(spawnPosition);
             return false;
         }
         if (level.isClientSide && trueSource instanceof Player player && random.nextInt(10) == 0) {
@@ -258,8 +269,9 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
                 ((ServerLevel) level).getDataStorage().set("anu_lair", AnuLair.killed());
             }
         } else {
-            Player player = level.getNearestPlayer(this, 50);
-            if (player != null) {
+            MusicHandler.stopMusic(ModSounds.MUSIC_ANU.get());
+            List<Player> players = level.getNearbyPlayers(TargetingConditions.forCombat(), this,  getBoundingBox().inflate(30, 15, 30));
+            for (Player player : players) {
                 player.displayClientMessage(ANU_DEATH, false);
             }
         }
@@ -281,6 +293,11 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
+    public boolean isAffectedByPotions() {
+        return false;
+    }
+
+    @Override
     public boolean doHurtTarget(Entity target) {
         if (random.nextInt(4) == 0) {
             LightningBolt lightningBolt = ModEntities.ANCIENT_LIGHTNING_BOLT.get().create(level);
@@ -297,9 +314,12 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
         double z = target.getZ() - getZ();
         playSound(SoundEvents.GHAST_SHOOT, 1, 1);
         LargeFireball largeFireball = new LargeFireball(level, this, x, y, z, 2);
-        Vec3 look = getLookAngle();
-        largeFireball.setPos(getX() + look.x * 4, getY() + (getBbHeight() / 2) + 0.5, getZ() + look.z * 4);
+        largeFireball.setPos(getX() + x * 0.1, getY() + (getBbHeight() / 2) + 0.5, getZ() + z * 0.1);
         level.addFreshEntity(largeFireball);
+    }
+
+    @Override
+    public void checkDespawn() {
     }
 
     @Nullable
@@ -328,6 +348,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
         populateDefaultEquipmentSlots(difficulty);
+        spawnPosition = position();
         return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
 
@@ -337,8 +358,17 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     }
 
     @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putDouble("SpawnPosX", spawnPosition.x);
+        compound.putDouble("SpawnPosY", spawnPosition.y);
+        compound.putDouble("SpawnPosZ", spawnPosition.z);
+    }
+
+    @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
+        spawnPosition = new Vec3(compound.getDouble("SpawnPosX"), compound.getDouble("SpawnPosY"), compound.getDouble("SpawnPosZ"));
         if (this.hasCustomName()) {
             this.bossEvent.setName(getDisplayName());
         }

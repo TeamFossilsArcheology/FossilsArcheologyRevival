@@ -15,4 +15,9 @@ public class AnuMeleeAttackGoal extends MeleeAttackGoal {
     public boolean canUse() {
         return anu.getAttackMode() == AnuBoss.AttackMode.MELEE && super.canUse();
     }
+
+    @Override
+    public boolean canContinueToUse() {
+        return anu.getAttackMode() == AnuBoss.AttackMode.MELEE && super.canContinueToUse();
+    }
 }

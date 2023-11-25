@@ -120,6 +120,8 @@ public class FossilConfigImpl extends MidnightConfig {
     public static int machineEnergyUsage = 1;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int fernTickRate = 2;
+    @MidnightConfig.Entry
+    public static boolean anuBlockPlacing = true;
     public static Map<String, Field> mappedEntries = new HashMap<>();
 
     public static void initFabricConfig() {

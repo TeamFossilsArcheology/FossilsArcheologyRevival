@@ -58,6 +58,7 @@ public class FossilConfig {
     public static final String MACHINE_TRANSFER_RATE = "machineTransferRate";
     public static final String MACHINE_ENERGY_USAGE = "machineEnergyUsage";
     public static final String FERN_TICK_RATE = "fernTickRate";
+    public static final String ANU_BLOCK_PLACING = "anuBlockPlacing";
 
     public static boolean isStructurePoolEnabled(ResourceLocation field) {
         switch (field.getPath()) {

@@ -65,10 +65,12 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue MACHINE_TRANSFER_RATE;
     public static final ForgeConfigSpec.IntValue MACHINE_ENERGY_USAGE;
     public static final ForgeConfigSpec.IntValue FERN_TICK_RATE;
+    public static final ForgeConfigSpec.BooleanValue ANU_BLOCK_PLACING;
     public static Map<String, ForgeConfigSpec.BooleanValue> mappedBools = new HashMap<>();
     public static Map<String, ForgeConfigSpec.IntValue> mappedInts = new HashMap<>();
 
     static {
+        ANU_BLOCK_PLACING = boolEntry("True if Anu should be able to place blocks", FossilConfig.ANU_BLOCK_PLACING, true);
         FERN_TICK_RATE = intEntry("How often ferns try to grow. Higher number = less growth", FossilConfig.FERN_TICK_RATE, 2, 1, 1000000);
         CUSTOM_MAIN_MENU = boolEntry("True if Custom Main Menu is enabled", FossilConfig.CUSTOM_MAIN_MENU, true);
         HELMET_OVERLAYS = boolEntry("True if skull helmet and ancient helmet render overlays like vanilla pumpkin", FossilConfig.HELMET_OVERLAYS, true);

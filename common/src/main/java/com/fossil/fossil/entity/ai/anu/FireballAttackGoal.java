@@ -8,8 +8,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import java.util.EnumSet;
 
 public class FireballAttackGoal extends Goal {
-    private static final int MAX_ATTACK_TIME = 20;
-    private static final int MIN_ATTACK_TIME = 10;
+    private static final int MAX_ATTACK_TIME = 40;
+    private static final int MIN_ATTACK_TIME = 20;
 
     private final AnuBoss anu;
     private final double speedModifier;
@@ -24,7 +24,7 @@ public class FireballAttackGoal extends Goal {
         this.speedModifier = speedModifier;
         this.attackRadius = attackRadius;
         this.attackRadiusSqr = attackRadius * attackRadius;
-        setFlags(EnumSet.of(Flag.MOVE, Goal.Flag.LOOK));
+        setFlags(EnumSet.of(Goal.Flag.LOOK));
     }
 
     @Override
@@ -62,11 +62,11 @@ public class FireballAttackGoal extends Goal {
             seeTime = 0;
         }
         if (dist <= attackRadiusSqr && seeTime >= 20) {
-            anu.getNavigation().stop();
+            //FlyAroundGoal
         } else {
-            anu.getNavigation().moveTo(target, speedModifier);
+            anu.getMoveControl().setWantedPosition(target.getX(), target.getY() + 1, target.getZ(), speedModifier);
         }
-        anu.getLookControl().setLookAt(target, 30, 30);
+        anu.getLookControl().setLookAt(target, 180, 180);
 
         if (--attackTime == 0) {
             if (dist > attackRadiusSqr || !hasLineOfSight) {
