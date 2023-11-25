@@ -435,6 +435,10 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             compoundTag.put("Barriers", barriers);
             return compoundTag;
         }
+
+        public boolean isAnuKilled() {
+            return anuKilled;
+        }
     }
 
 }

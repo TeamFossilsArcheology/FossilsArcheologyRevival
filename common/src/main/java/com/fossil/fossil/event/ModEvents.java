@@ -27,7 +27,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -48,8 +47,8 @@ public class ModEvents {
             //TODO: Prevent explosion damage
             if (level.dimension() == ModDimensions.ANU_LAIR && level instanceof ServerLevel serverLevel) {
                 if (!isBreakableInAnuLair(state) && !player.isCreative() && serverLevel.getServer().getProfilePermissions(player.getGameProfile()) < serverLevel.getServer().getOperatorUserPermissionLevel()) {
-                    boolean anuKilled = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_lair") != null;
-                    if (!anuKilled) {
+                    AnuBoss.AnuLair anuLair = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_lair");
+                    if (anuLair == null || !anuLair.isAnuKilled()) {
                         player.displayClientMessage(ANU_BREAK_BLOCK, true);
                         return EventResult.interruptFalse();
                     }
@@ -72,7 +71,7 @@ public class ModEvents {
     }
 
     private static boolean isBreakableInAnuLair(BlockState state) {
-        return state.getBlock().getDescriptionId().toLowerCase().contains("grave") || state.is(Blocks.OBSIDIAN) || state.is(ModBlocks.FAKE_OBSIDIAN.get()) || state.is(BlockTags.FIRE);
+        return state.getBlock().getDescriptionId().toLowerCase().contains("grave") || state.is(ModBlocks.FAKE_OBSIDIAN.get()) || state.is(BlockTags.FIRE);
     }
 
     private static boolean isLivestock(PathfinderMob mob) {
