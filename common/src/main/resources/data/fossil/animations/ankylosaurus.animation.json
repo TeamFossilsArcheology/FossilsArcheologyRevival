@@ -1,11 +1,11 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dilophosaurus.idle": {
+    "animation.ankylosaurus.idle": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sit1": {
+    "animation.ankylosaurus.sit1": {
       "loop": true,
       "animation_length": 12
     },
@@ -13,7 +13,7 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sleep1": {
+    "animation.ankylosaurus.sleep1": {
       "loop": true,
       "animation_length": 12
     },
@@ -21,26 +21,26 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.walk": {
+    "animation.ankylosaurus.walk": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.dilophosaurus.run": {
+    "animation.ankylosaurus.run": {
       "loop": true,
       "animation_length": 0.75
     },
-    "animation.dilophosaurus.jump/fall": {
+    "animation.ankylosaurus.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.dilophosaurus.swim": {
+    "animation.ankylosaurus.swim": {
       "loop": true,
       "animation_length": 4
     },
-    "animation.dilophosaurus.drink": {
+    "animation.ankylosaurus.drink": {
       "animation_length": 3
     },
-    "animation.dilophosaurus.eat": {
+    "animation.ankylosaurus.eat": {
       "animation_length": 3
     },
     "animation.dilophosaurus.inflate_start": {
@@ -61,10 +61,10 @@
     "animation.dilophosaurus.turn_left": {
       "loop": "hold_on_last_frame"
     },
-    "animation.dilophosaurus.speak": {
+    "animation.ankylosaurus.speak": {
       "animation_length": 2
     },
-    "animation.dilophosaurus.call": {
+    "animation.ankylosaurus.call": {
       "animation_length": 3
     },
     "animation.dilophosaurus.attack1": {

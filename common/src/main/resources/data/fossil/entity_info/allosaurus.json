@@ -14,9 +14,9 @@
   },
   "stats": {
     "damageBase": 2.0,
-    "damageMax": 11.0,
+    "damageMax": 12.0,
     "healthBase": 10.0,
-    "healthMax": 58.0,
+    "healthMax": 62.0,
     "speedBase": 0.25,
     "speedMax": 0.5,
     "armorBase": 0.0,
@@ -31,6 +31,6 @@
   "maxHunger": 125.0,
   "maxPopulation": 5,
   "scaleBase": 0.25,
-  "scaleMax": 2.5,
+  "scaleMax": 1.8,
   "teenAgeDays": 5
 }

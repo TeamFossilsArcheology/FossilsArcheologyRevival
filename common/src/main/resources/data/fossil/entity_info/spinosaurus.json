@@ -30,7 +30,7 @@
   "developsResistance": true,
   "maxHunger": 175.0,
   "maxPopulation": 15,
-  "scaleBase": 0.25,
+  "scaleBase": 2.25,
   "scaleMax": 3.1,
   "teenAgeDays": 5
 }
