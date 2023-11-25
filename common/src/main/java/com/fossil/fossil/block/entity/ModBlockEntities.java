@@ -23,6 +23,8 @@ public class ModBlockEntities {
             () -> BlockEntityType.Builder.of(AnalyzerBlockEntity::get, ModBlocks.ANALYZER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BubbleBlowerBlockEntity>> BUBBLE_BLOWER = BLOCK_ENTITIES.register("bubble_blower",
             () -> BlockEntityType.Builder.of(BubbleBlowerBlockEntity::new, ModBlocks.BUBBLE_BLOWER.get()).build(null));
+    public static final RegistrySupplier<BlockEntityType<AnuBarrierBlockEntity>> ANU_BARRIER = BLOCK_ENTITIES.register("anu_barrier",
+            () -> BlockEntityType.Builder.of(AnuBarrierBlockEntity::new, ModBlocks.ANU_BARRIER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> CULTIVATE = BLOCK_ENTITIES.register("cultivate",
             () -> BlockEntityType.Builder.of(CultivateBlockEntity::get, ModBlocks.CULTIVATE.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> WORKTABLE = BLOCK_ENTITIES.register("worktable",

@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.monster;
 
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.block.entity.AnuBarrierBlockEntity;
 import com.fossil.fossil.entity.AnuDead;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ai.anu.AnuAvoidEntityGoal;
@@ -246,7 +247,15 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             anuDead.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
             level.addFreshEntity(anuDead);
             if (level.dimension() == ModDimensions.ANU_LAIR) {
-                ((ServerLevel) level).getDataStorage().computeIfAbsent(AnuLair::load, AnuLair::new, "anu_killed");
+                AnuLair anuLair = ((ServerLevel) level).getDataStorage().get(AnuLair::load, "anu_lair");
+                if (anuLair != null) {
+                    for (BlockPos barrierPosition : anuLair.barrierPositions) {
+                        if (level.getBlockEntity(barrierPosition) instanceof AnuBarrierBlockEntity blockEntity) {
+                            blockEntity.disable();
+                        }
+                    }
+                }
+                ((ServerLevel) level).getDataStorage().set("anu_lair", AnuLair.killed());
             }
         } else {
             Player player = level.getNearestPlayer(this, 50);
@@ -383,14 +392,47 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
 
 
     public static class AnuLair extends SavedData {
+        private boolean anuKilled;
+        private final Set<BlockPos> barrierPositions = new HashSet<>();
+
+        public static AnuLair killed() {
+            AnuLair anuLair = new AnuLair();
+            anuLair.anuKilled = true;
+            anuLair.setDirty();
+            return anuLair;
+        }
+
+        public static AnuLair spawned(Set<BlockPos> barriers) {
+            AnuLair anuLair = new AnuLair();
+            anuLair.barrierPositions.addAll(barriers);
+            anuLair.setDirty();
+            return anuLair;
+        }
 
         public static AnuLair load(CompoundTag compoundTag) {
-            return new AnuLair();
+            AnuLair anuLair = new AnuLair();
+            anuLair.anuKilled = compoundTag.getBoolean("AnuKilled");
+            ListTag barriers = compoundTag.getList("Barriers", Tag.TAG_COMPOUND);
+            anuLair.barrierPositions.clear();
+            for (int i = 0; i < barriers.size(); i++) {
+                CompoundTag tag = barriers.getCompound(i);
+                anuLair.barrierPositions.add(new BlockPos(tag.getInt("X"), tag.getInt("Y"), tag.getInt("Z")));
+            }
+            return anuLair;
         }
 
         @Override
         public @NotNull CompoundTag save(CompoundTag compoundTag) {
-            compoundTag.putBoolean("AnuKilled", true);
+            compoundTag.putBoolean("AnuKilled", anuKilled);
+            ListTag barriers = new ListTag();
+            for (BlockPos blockPos : barrierPositions) {
+                CompoundTag tag = new CompoundTag();
+                tag.putInt("X", blockPos.getX());
+                tag.putInt("Y", blockPos.getY());
+                tag.putInt("Z", blockPos.getZ());
+                barriers.add(tag);
+            }
+            compoundTag.put("Barriers", barriers);
             return compoundTag;
         }
     }

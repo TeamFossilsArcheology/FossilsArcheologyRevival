@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.util.Mth;
 
 public class PlantModelBakery {
@@ -110,8 +109,7 @@ public class PlantModelBakery {
         Direction direction = null;
         float f = 0;
         for (Direction direction2 : Direction.values()) {
-            Vec3i vec3i = direction2.getNormal();
-            Vector3f vector3f7 = new Vector3f(vec3i.getX(), vec3i.getY(), vec3i.getZ());
+            Vector3f vector3f7 = new Vector3f(direction2.getStepX(), direction2.getStepY(), direction2.getStepZ());
             float g = vector3f6.dot(vector3f7);
             if (!(g >= 0) || !(g > f)) continue;
             f = g;

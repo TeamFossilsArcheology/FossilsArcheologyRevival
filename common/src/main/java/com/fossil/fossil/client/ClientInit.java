@@ -208,6 +208,7 @@ public class ClientInit {
         BlockEntityRendererRegistry.register(ModBlockEntities.SARCOPHAGUS.get(), SarcophagusRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.CULTIVATE.get(), CultivateRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANCIENT_CHEST.get(), AncientChestRenderer::new);
+        BlockEntityRendererRegistry.register(ModBlockEntities.ANU_BARRIER.get(), AnuBarrierRenderer::new);
         CreativeTabFilters.register();
         ClientTickEvent.CLIENT_POST.register(minecraft -> {
             while (DEBUG_SCREEN_KEY.consumeClick()) {

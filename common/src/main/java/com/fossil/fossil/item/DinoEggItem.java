@@ -52,7 +52,7 @@ public class DinoEggItem extends PrehistoricEntityItem {
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        BlockPos offset = context.getClickedPos().offset(context.getClickedFace().getNormal());
+        BlockPos offset = context.getClickedPos().relative(context.getClickedFace());
         if (!level.isEmptyBlock(offset) && !level.getBlockState(offset).canBeReplaced(new BlockPlaceContext(context))) {
             return InteractionResult.FAIL;
         }

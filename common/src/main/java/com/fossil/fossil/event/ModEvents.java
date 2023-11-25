@@ -45,11 +45,14 @@ public class ModEvents {
             return EventResult.pass();
         });
         BlockEvent.BREAK.register((level, pos, state, player, xp) -> {
+            //TODO: Prevent explosion damage
             if (level.dimension() == ModDimensions.ANU_LAIR && level instanceof ServerLevel serverLevel) {
-                boolean anuKilled = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_killed") != null;
-                if (!anuKilled && !isBreakableInAnuLair(state)) {
-                    player.displayClientMessage(ANU_BREAK_BLOCK, true);
-                    return EventResult.interruptFalse();
+                if (!isBreakableInAnuLair(state) && !player.isCreative() && serverLevel.getServer().getProfilePermissions(player.getGameProfile()) < serverLevel.getServer().getOperatorUserPermissionLevel()) {
+                    boolean anuKilled = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_lair") != null;
+                    if (!anuKilled) {
+                        player.displayClientMessage(ANU_BREAK_BLOCK, true);
+                        return EventResult.interruptFalse();
+                    }
                 }
             }
             return EventResult.pass();
@@ -73,7 +76,7 @@ public class ModEvents {
     }
 
     private static boolean isLivestock(PathfinderMob mob) {
-        //TODO: Maybe could be done with tags?
+        //TODO: Maybe could be done with tags? MobType CREATURE
         String className = "";
         try {
             className = mob.getClass().getSimpleName();

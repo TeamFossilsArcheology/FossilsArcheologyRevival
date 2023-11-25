@@ -148,7 +148,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             //TODO: This is somewhat messy
             BlockHitResult result = level.clip(new ClipContext(position(), Vec3.atCenterOf(pos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
             if (result.getType() != HitResult.Type.MISS) {
-                pos = result.getBlockPos().offset(result.getDirection().getNormal()).mutable();
+                pos = result.getBlockPos().relative(result.getDirection()).mutable();
                 while (level.isEmptyBlock(pos) && pos.getY() > level.getMinBuildHeight()) {
                     pos.move(0, -1, 0);
                 }
@@ -276,7 +276,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
                 distance = g;
             }
         }
-        return furthest != null ? Vec3.atCenterOf(furthest.getBlockPos().offset(furthest.getDirection().getNormal())) : null;
+        return furthest != null ? Vec3.atCenterOf(furthest.getBlockPos().relative(furthest.getDirection())) : null;
     }
 
     private PlayState flyingPredicate(AnimationEvent<PrehistoricFlying> event) {
