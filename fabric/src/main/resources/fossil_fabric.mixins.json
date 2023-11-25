@@ -13,7 +13,6 @@
     "EntityCallbacksMixin",
     "JigsawPlacementMixin",
     "LevelMixin",
-    "LivingEntityMixin",
     "MobMixin",
     "NaturalSpawnerMixin",
     "PlayerMixin",

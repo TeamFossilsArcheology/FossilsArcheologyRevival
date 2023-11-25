@@ -5,7 +5,6 @@ import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
@@ -20,24 +19,12 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
-import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
 @Mod.EventBusSubscriber(modid = Fossil.MOD_ID)
 public class ForgeModEvents {
-
-    @SubscribeEvent
-    public static void onKnockBack(LivingKnockBackEvent event) {
-        double newStrength = Prehistoric.beforeKnockBack(
-                event.getEntityLiving(),
-                event.getStrength(),
-                event.getRatioX(),
-                event.getRatioZ()
-        );
-        event.setStrength((float) newStrength);
-    }
 
     @SubscribeEvent
     public static void addCustomTrades(VillagerTradesEvent event) {
