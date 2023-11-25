@@ -142,7 +142,12 @@ public enum PrehistoricEntityType {
         this.timePeriod = timePeriod;
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
-        this.displayName = () -> entitySupplier.get().getDescription();
+        this.displayName = () -> {
+            if (entitySupplier.isPresent()) {
+                return entitySupplier.get().getDescription();
+            }
+            return new TranslatableComponent("entity.fossil." + resourceName);
+        };
         this.eggScale = (float) attributes.getOrDefault("eggScale", (float) 1.0f);
         this.backgroundEggColor = backgroundEggColor;
         this.highlightEggColor = highlightEggColor;
