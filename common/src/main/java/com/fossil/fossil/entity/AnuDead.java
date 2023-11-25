@@ -60,8 +60,8 @@ public class AnuDead extends LivingEntity {
 
     @Override
     public void tick() {
-        if (tickCount == MAX_LIFESPAN) {
-            kill();
+        if (tickCount >= MAX_LIFESPAN) {
+            discard();
         }
         if (tickCount == 40) {
             playSound(ModSounds.ANU_DEATH.get(), 1, 1);
@@ -74,7 +74,11 @@ public class AnuDead extends LivingEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        return source == DamageSource.OUT_OF_WORLD;
+        if (source == DamageSource.OUT_OF_WORLD) {
+            discard();
+            return true;
+        }
+        return false;
     }
 
     @Override
