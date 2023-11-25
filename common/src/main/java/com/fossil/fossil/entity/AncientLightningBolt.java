@@ -1,6 +1,6 @@
 package com.fossil.fossil.entity;
 
-import com.fossil.fossil.entity.monster.FriendlyPiglin;
+import com.fossil.fossil.entity.monster.AnuBoss;
 import com.google.common.collect.Sets;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
@@ -12,8 +12,8 @@ import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
+import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Pig;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
@@ -87,11 +87,21 @@ public class AncientLightningBolt extends LightningBolt {
             } else if (!visualOnly) {
                 nearbyEntities = level.getEntities(this, new AABB(getX() - 3, getY() - 3, getZ() - 3, getX() + 3, getY() + 6 + 3, getZ() + 3), Entity::isAlive);
                 for (Entity entity : nearbyEntities) {
-                    if (!(entity instanceof Player) && !(entity instanceof FriendlyPiglin) && !(entity instanceof Pig)) {
+                    boolean canHit = true;
+                    if (cause == null && entity instanceof AnuBoss) {
+                        canHit = false;
+                    } else if (cause != null) {
+                        if (entity == cause || entity instanceof OwnableEntity ownable && ownable.getOwner() == cause) {
+                            canHit = false;
+                        }
+                    } else if (entity instanceof Pig) {
+                        canHit = false;
+                    }
+                    if (canHit) {
                         entity.thunderHit((ServerLevel) level, this);
+                        hitEntities.add(entity);
                     }
                 }
-                hitEntities.addAll(nearbyEntities);
                 if (cause != null) {
                     CriteriaTriggers.CHANNELED_LIGHTNING.trigger(cause, nearbyEntities);
                 }
