@@ -2,6 +2,7 @@ package com.fossil.fossil.world.feature.structures;
 
 import com.fossil.fossil.Fossil;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.QuartPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -28,8 +29,15 @@ public class TreasureRoomFeature extends StructureFeature<NoneFeatureConfigurati
     }
 
     private static Optional<PieceGenerator<NoneFeatureConfiguration>> generatePiece(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context) {
-        BlockPos blockPos = new BlockPos(context.chunkPos().getMinBlockX(), 70, context.chunkPos().getMinBlockZ());
-        return Optional.of((builder, context1) -> builder.addPiece(new TreasureRoomPiece(context.structureManager(), blockPos, Rotation.NONE)));
+        if (checkLocation(context)) {
+            BlockPos blockPos = new BlockPos(context.chunkPos().getMinBlockX(), 70, context.chunkPos().getMinBlockZ());
+            return Optional.of((builder, context1) -> builder.addPiece(new TreasureRoomPiece(context.structureManager(), blockPos, Rotation.NONE)));
+        }
+        return Optional.empty();
+    }
+
+    private static boolean checkLocation(PieceGeneratorSupplier.Context<NoneFeatureConfiguration> context) {
+        return context.validBiome().test(context.chunkGenerator().getNoiseBiome(QuartPos.fromBlock(context.chunkPos().getMiddleBlockX()), QuartPos.fromBlock(64), QuartPos.fromBlock(context.chunkPos().getMiddleBlockZ())));
     }
 
     @Override
