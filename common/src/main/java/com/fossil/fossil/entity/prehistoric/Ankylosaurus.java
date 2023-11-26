@@ -22,8 +22,11 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Ankylosaurus extends Prehistoric {
     public static final String ANIMATIONS = "ankylosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String EAT = "animation.ankylosaurus.eat";
+    public static final String IDLE = "animation.ankylosaurus.idle";
+    public static final String WALK = "animation.ankylosaurus.walk";
+    public static final String RUN = "animation.ankylosaurus.run";
+    public static final String ATTACK1 = "animation.ankylosaurus.attack_strong1";
     
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final Entity[] parts = new Entity[3];
@@ -81,7 +84,7 @@ public class Ankylosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -91,12 +94,12 @@ public class Ankylosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
