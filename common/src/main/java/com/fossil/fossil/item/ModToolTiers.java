@@ -9,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public enum ModToolTiers implements Tier {
-    FROZEN_MEAT(1, 2, 1, 3, 10, Ingredient::of),
     SCARAB(3, 1861, 8, 4, 25, Ingredient::of),
     TOOTH_DAGGER(3, 250, 6.4f, 2, 25, () -> Ingredient.of(PrehistoricEntityType.TYRANNOSAURUS.uniqueBoneItem));
 
