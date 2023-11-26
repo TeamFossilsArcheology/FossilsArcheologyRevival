@@ -1,0 +1,8 @@
+{
+  "type": "minecraft:stonecutting",
+  "ingredient": {
+    "item": "fossil:ancient_stone_bricks"
+  },
+  "result": "fossil:ancient_stone_slab",
+  "count": 2
+}

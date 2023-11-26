@@ -34,16 +34,17 @@ public class CultivateRenderer implements BlockEntityRenderer<BlockEntity> {
             poseStack.translate(0, 0.5F + bob, 0);
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.mulPose(Vector3f.YP.rotationDegrees(rot));
-            if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.GENERIC) {//generic
+            if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.GENERIC) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_GENERIC));
                 this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
-            } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.PLANT) {//plant
+            } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.PLANT) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoPlantModel.TEXTURE));
+                poseStack.translate(0, 0.3, 0);
                 this.modelPlant.render(poseStack, c, packedLight, packedOverlay);
-            } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.INSECT) {//plant
+            } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.INSECT) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_INSECT));
                 this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
-            } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.LIMBLESS) {//plant
+            } else if (blockEntity.getBlockState().getValue(CultivateBlock.EMBRYO) == CultivateBlock.EmbryoType.LIMBLESS) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_LIMBLESS));
                 this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
             }

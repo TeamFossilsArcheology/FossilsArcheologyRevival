@@ -131,7 +131,7 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT)));
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
             () -> new PermafrostBlock(
-                    BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(1f).requiresCorrectToolForDrops()));
+                    BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(2f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
             () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(
                     SoundType.GRAVEL)));

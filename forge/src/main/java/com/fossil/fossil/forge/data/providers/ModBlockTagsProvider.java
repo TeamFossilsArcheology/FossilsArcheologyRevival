@@ -44,10 +44,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.ANCIENT_STONE.get(), ModBlocks.ANCIENT_STONE_BRICKS.get(), ModBlocks.ANCIENT_STONE_SLAB.get(), ModBlocks.ANCIENT_STONE_STAIRS.get(), ModBlocks.ANCIENT_STONE_WALL.get(),
                 ModBlocks.VOLCANIC_ROCK.get(), ModBlocks.VOLCANIC_BRICKS.get(), ModBlocks.VOLCANIC_BRICK_SLAB.get(), ModBlocks.VOLCANIC_BRICK_STAIRS.get(), ModBlocks.VOLCANIC_BRICK_WALL.get(),
                 ModBlocks.VOLCANIC_TILES.get(), ModBlocks.VOLCANIC_TILE_SLAB.get(), ModBlocks.VOLCANIC_TILE_STAIRS.get(), ModBlocks.VOLCANIC_TILE_WALL.get());
-        tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.DENSE_SAND.get(), ModBlocks.VOLCANIC_ASH.get(), ModBlocks.TARRED_DIRT.get(), ModBlocks.SLIME_TRAIL.get(), ModBlocks.ICED_DIRT.get());
+        tag(BlockTags.MINEABLE_WITH_SHOVEL).add(ModBlocks.DENSE_SAND.get(), ModBlocks.VOLCANIC_ASH.get(), ModBlocks.TARRED_DIRT.get(), ModBlocks.SLIME_TRAIL.get(), ModBlocks.ICED_DIRT.get(), ModBlocks.PERMAFROST_BLOCK.get());
         tag(BlockTags.NEEDS_DIAMOND_TOOL).add(ModBlocks.FAKE_OBSIDIAN.get(), ModBlocks.OBSIDIAN_SPIKES.get());//Time Machine
         tag(BlockTags.NEEDS_IRON_TOOL).add(ModBlocks.FOSSIL.get(), ModBlocks.PERMAFROST_BLOCK.get());
-        tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.ANCIENT_GLASS.get(), ModBlocks.REINFORCED_GLASS.get(), ModBlocks.ICED_DIRT.get());
+        tag(BlockTags.NEEDS_STONE_TOOL).add(ModBlocks.ANCIENT_GLASS.get(), ModBlocks.REINFORCED_GLASS.get(), ModBlocks.ICED_DIRT.get(), ModBlocks.PERMAFROST_BLOCK.get());
     }
 
     @Override

@@ -8,6 +8,6 @@
   "spawn_overrides": {},
   "config": {
     "start_pool": "fossil:tar_site/start_large_snowy",
-    "size": 2
+    "size": 3
   }
 }

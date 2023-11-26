@@ -28,9 +28,10 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
             fossilSeeds.add(type.getFossilizedPlantSeedItem());
         }
+        tag(ModItemTags.FOSSIL_SAPLINGS).add(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModItems.PALM_SAPLING_FOSSIL.get(), ModItems.PALAE_SAPLING_FOSSIL.get(), ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModItems.TEMPSKYA_SAPLING_FOSSIL.get());
         tag(ModItemTags.DNA_INSECTS).add(PrehistoricEntityType.ARTHROPLEURA.dnaItem, PrehistoricEntityType.MEGANEURA.dnaItem, PrehistoricEntityType.NAUTILUS.dnaItem);
         tag(ModItemTags.DNA_LIMBLESS).add(PrehistoricEntityType.ALLIGATOR_GAR.dnaItem, PrehistoricEntityType.COELACANTH.dnaItem, PrehistoricEntityType.STURGEON.dnaItem);
-        tag(ModItemTags.DNA_PLANTS).addTags(ModItemTags.FOSSIL_SEEDS, ItemTags.SAPLINGS);
+        tag(ModItemTags.DNA_PLANTS).addTags(ModItemTags.FOSSIL_SEEDS, ModItemTags.FOSSIL_SAPLINGS);
         var allDNA = tag(ModItemTags.DNA);
         var allEgg = tag(ModItemTags.DINO_EGGS);
         var allFoot = tag(ModItemTags.FOOT_BONES);

@@ -81,7 +81,7 @@ public class ModItemProvider extends ItemModelProvider {
                 boneItem(Objects.requireNonNull(type.skullBoneItem.getRegistryName()), type, "skull");
                 boneItem(Objects.requireNonNull(type.ribcageBoneItem.getRegistryName()), type, "ribcage");
                 boneItem(Objects.requireNonNull(type.vertebraeBoneItem.getRegistryName()), type, "vertebrae");
-                boneItem(Objects.requireNonNull(type.uniqueBoneItem.getRegistryName()), type, "unique_item");
+                boneItem(Objects.requireNonNull(type.uniqueBoneItem.getRegistryName()), type, "unique");
             }
         }
         if (plantItems) {

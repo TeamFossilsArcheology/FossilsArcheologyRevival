@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:volcanic_tile_stairs_from_volcanic_bricks_stonecutting"
+    ]
+  },
+  "criteria": {
+    "has_volcanic_bricks": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:volcanic_bricks"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:volcanic_tile_stairs_from_volcanic_bricks_stonecutting"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_volcanic_bricks",
+      "has_the_recipe"
+    ]
+  ]
+}

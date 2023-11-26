@@ -116,7 +116,7 @@ public class CultivateBlockEntityImpl extends FabricContainerBlockEntity impleme
 
         if (isProcessing() && canProcess()) {
             cookingProgress++;
-            if (cookingProgress >= 100) {
+            if (cookingProgress >= CultivateMenu.CULTIVATION_TIME) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;

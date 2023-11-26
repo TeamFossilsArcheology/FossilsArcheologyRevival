@@ -5,6 +5,6 @@
   "spawn_overrides": {},
   "config": {
     "start_pool": "fossil:fossil_site/start_badlands",
-    "size": 1
+    "size": 2
   }
 }

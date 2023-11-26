@@ -46,7 +46,7 @@ public class CultivateScreen extends AbstractContainerScreen<CultivateMenu> {
         }
 
         int progressWidth = 24;
-        int scaledProgress = menu.getCultivationTime() * progressWidth / 6000;
+        int scaledProgress = menu.getCultivationTime() * progressWidth / CultivateMenu.CULTIVATION_TIME;
         blit(poseStack, x + 79, y + 18, 176, 14, scaledProgress + 1, 16);
     }
 

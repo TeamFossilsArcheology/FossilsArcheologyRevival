@@ -18,6 +18,7 @@ public class CultivateMenu extends AbstractContainerMenu {
     public static final int INPUT_SLOT_ID = 0;
     public static final int FUEL_SLOT_ID = 1;
     public static final int OUTPUT_SLOT_ID = 2;
+    public static final int CULTIVATION_TIME = 100;//TODO: Debug 6000
 
     private final Container container;
     private final ContainerData containerData;

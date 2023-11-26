@@ -159,6 +159,29 @@ public class ModRecipeProvider extends RecipeProvider {
             RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_SIGILLARIA_WOOD.get(), ModBlocks.STRIPPED_SIGILLARIA_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_TEMPSKYA_WOOD.get(), ModBlocks.STRIPPED_TEMPSKYA_LOG.get());
+
+            stonecutter(consumer, ModBlocks.ANCIENT_STONE_SLAB.get(), ModBlocks.ANCIENT_STONE.get(), 2);
+            stonecutter(consumer, ModBlocks.ANCIENT_STONE_STAIRS.get(), ModBlocks.ANCIENT_STONE.get());
+            stonecutter(consumer, ModBlocks.ANCIENT_STONE_WALL.get(), ModBlocks.ANCIENT_STONE.get());
+            stonecutter(consumer, ModBlocks.ANCIENT_STONE_BRICKS.get(), ModBlocks.ANCIENT_STONE.get());
+            stonecutter(consumer, ModBlocks.ANCIENT_STONE_SLAB.get(), ModBlocks.ANCIENT_STONE_BRICKS.get(), 2);
+            stonecutter(consumer, ModBlocks.ANCIENT_STONE_STAIRS.get(), ModBlocks.ANCIENT_STONE_BRICKS.get());
+            stonecutter(consumer, ModBlocks.ANCIENT_STONE_WALL.get(), ModBlocks.ANCIENT_STONE_BRICKS.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_BRICK_SLAB.get(), ModBlocks.VOLCANIC_ROCK.get(), 2);
+            stonecutter(consumer, ModBlocks.VOLCANIC_BRICK_STAIRS.get(), ModBlocks.VOLCANIC_ROCK.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_BRICK_WALL.get(), ModBlocks.VOLCANIC_ROCK.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_BRICKS.get(), ModBlocks.VOLCANIC_ROCK.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_BRICK_SLAB.get(), ModBlocks.VOLCANIC_BRICKS.get(), 2);
+            stonecutter(consumer, ModBlocks.VOLCANIC_BRICK_STAIRS.get(), ModBlocks.VOLCANIC_BRICKS.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_BRICK_WALL.get(), ModBlocks.VOLCANIC_BRICKS.get());
+
+            stonecutter(consumer, ModBlocks.VOLCANIC_TILE_SLAB.get(), ModBlocks.VOLCANIC_BRICKS.get(), 2);
+            stonecutter(consumer, ModBlocks.VOLCANIC_TILE_STAIRS.get(), ModBlocks.VOLCANIC_BRICKS.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_TILE_WALL.get(), ModBlocks.VOLCANIC_BRICKS.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_TILES.get(), ModBlocks.VOLCANIC_BRICKS.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_TILE_SLAB.get(), ModBlocks.VOLCANIC_TILES.get(), 2);
+            stonecutter(consumer, ModBlocks.VOLCANIC_TILE_STAIRS.get(), ModBlocks.VOLCANIC_TILES.get());
+            stonecutter(consumer, ModBlocks.VOLCANIC_TILE_WALL.get(), ModBlocks.VOLCANIC_TILES.get());
         }
 
         if (analyzerRecipes) {
@@ -267,7 +290,7 @@ public class ModRecipeProvider extends RecipeProvider {
             frozenMeat.save(consumer);
             analyzed(ModBlocks.AMBER_CHUNK_DOMINICAN.get()).addOutput(Items.SPIDER_EYE, 9).addOutput(Items.STRING, 10).addOutput(Blocks.DIRT, 25).addOutput(Blocks.GRAVEL, 25)
                     .addOutput(Items.WHEAT_SEEDS, 1).addOutput(Items.BEETROOT_SEEDS, 1).addOutput(Items.PUMPKIN_SEEDS, 1).addOutput(Items.MELON_SEEDS, 1)
-                    .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 1).save(consumer);
+                    .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.PALAE_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 1).save(consumer);
             analyzed(Items.BEEF).addOutput(COW.dnaItem, 100).save(consumer);
             analyzed(Items.CHICKEN).addOutput(CHICKEN.dnaItem, 100).save(consumer);
             analyzed(Items.EGG).addOutput(CHICKEN.dnaItem, 100).save(consumer);
@@ -346,6 +369,15 @@ public class ModRecipeProvider extends RecipeProvider {
         SimpleCookingRecipeBuilder.blasting(Ingredient.of(ingredient), result, exp, 100)
                 .unlockedBy(getHasName(ingredient), has(ingredient))
                 .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_blasting_" + getItemName(ingredient));
+    }
+    protected void stonecutter(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike material) {
+        stonecutter(consumer, result, material, 1);
+    }
+
+    protected void stonecutter(Consumer<FinishedRecipe> finishedRecipeConsumer, ItemLike result, ItemLike material, int resultCount) {
+        SingleItemRecipeBuilder builder = SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), result, resultCount).unlockedBy(getHasName(material), has(material));
+        String id = getConversionRecipeName(result, material);
+        builder.save(finishedRecipeConsumer, Fossil.MOD_ID + ":" + id + "_stonecutting");
     }
 
     private static void generateFamilyRecipes(BlockFamily family, Consumer<FinishedRecipe> finishedRecipeConsumer) {

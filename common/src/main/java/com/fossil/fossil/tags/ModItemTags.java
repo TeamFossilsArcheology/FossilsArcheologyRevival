@@ -17,6 +17,7 @@ public class ModItemTags {
     public static final TagKey<Item> SIGILLARIA_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "sigillaria_logs"));
     public static final TagKey<Item> TEMPSKYA_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "tempskya_logs"));
     public static final TagKey<Item> FOSSIL_SEEDS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "fossil_seeds"));
+    public static final TagKey<Item> FOSSIL_SAPLINGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "fossil_saplings"));
     public static final TagKey<Item> DINO_EGGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dino_eggs"));
     public static final TagKey<Item> COOKABLE_EGGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "cookable_eggs"));
     public static final TagKey<Item> DNA = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna"));

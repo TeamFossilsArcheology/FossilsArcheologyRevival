@@ -2,17 +2,17 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "minecraft:reinforced_glass_from_smelting_dense_sand"
+      "fossil:volcanic_tiles_from_volcanic_bricks_stonecutting"
     ]
   },
   "criteria": {
-    "has_dense_sand": {
+    "has_volcanic_bricks": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "items": [
-              "fossil:dense_sand"
+              "fossil:volcanic_bricks"
             ]
           }
         ]
@@ -21,13 +21,13 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "minecraft:reinforced_glass_from_smelting_dense_sand"
+        "recipe": "fossil:volcanic_tiles_from_volcanic_bricks_stonecutting"
       }
     }
   },
   "requirements": [
     [
-      "has_dense_sand",
+      "has_volcanic_bricks",
       "has_the_recipe"
     ]
   ]
