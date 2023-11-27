@@ -40,6 +40,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         var allSkull = tag(ModItemTags.SKULL_BONES);
         var allUnique = tag(ModItemTags.UNIQUE_BONES);
         var allVertebrae = tag(ModItemTags.VERTEBRAE_BONES);
+        var uncookedMeat = tag(ModItemTags.UNCOOKED_MEAT);
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             if (type.dnaItem != null) {
                 allDNA.add(type.dnaItem);
@@ -64,6 +65,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             }
             if (type.vertebraeBoneItem != null) {
                 allVertebrae.add(type.vertebraeBoneItem);
+            }
+            if (type.foodItem != null) {
+                uncookedMeat.add(type.foodItem);
             }
         }
         tag(ModItemTags.COOKABLE_EGGS).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);

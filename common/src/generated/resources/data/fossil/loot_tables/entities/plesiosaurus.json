@@ -9,27 +9,8 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 1.0
-              },
-              "add": false
-            },
-            {
-              "function": "minecraft:furnace_smelt",
-              "conditions": [
-                {
-                  "condition": "minecraft:entity_properties",
-                  "predicate": {
-                    "flags": {
-                      "is_on_fire": true
-                    }
-                  },
-                  "entity": "this"
-                }
-              ]
+              "function": "fossil:customize_to_dinosaur",
+              "entity": "this"
             },
             {
               "function": "minecraft:looting_enchant",
@@ -62,6 +43,27 @@
             }
           ],
           "name": "fossil:bone_arm_plesiosaurus"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 0.0,
+                "max": 2.0
+              },
+              "add": false
+            }
+          ],
+          "name": "fossil:bone_foot_plesiosaurus"
         }
       ]
     },
@@ -119,33 +121,12 @@
               "count": {
                 "type": "minecraft:uniform",
                 "min": 0.0,
-                "max": 5.0
+                "max": 1.0
               },
               "add": false
             }
           ],
-          "name": "fossil:bone_vertebrae_plesiosaurus"
-        }
-      ]
-    },
-    {
-      "rolls": 1.0,
-      "bonus_rolls": 0.0,
-      "entries": [
-        {
-          "type": "minecraft:item",
-          "functions": [
-            {
-              "function": "minecraft:set_count",
-              "count": {
-                "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 2.0
-              },
-              "add": false
-            }
-          ],
-          "name": "fossil:bone_foot_plesiosaurus"
+          "name": "fossil:bone_skull_plesiosaurus"
         }
       ]
     },
@@ -167,6 +148,27 @@
             }
           ],
           "name": "fossil:bone_unique_plesiosaurus"
+        }
+      ]
+    },
+    {
+      "rolls": 1.0,
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:set_count",
+              "count": {
+                "type": "minecraft:uniform",
+                "min": 0.0,
+                "max": 5.0
+              },
+              "add": false
+            }
+          ],
+          "name": "fossil:bone_vertebrae_plesiosaurus"
         }
       ]
     }

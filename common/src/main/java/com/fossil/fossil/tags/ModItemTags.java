@@ -31,4 +31,5 @@ public class ModItemTags {
     public static final TagKey<Item> UNIQUE_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_unique"));
     public static final TagKey<Item> VERTEBRAE_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_vertebrae"));
     public static final TagKey<Item> ALL_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_all"));
+    public static final TagKey<Item> UNCOOKED_MEAT = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "meat_uncooked"));
 }

@@ -9,6 +9,7 @@ import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.loot.ModLootItemFunctionTypes;
 import com.fossil.fossil.material.ModFluids;
 import com.fossil.fossil.network.*;
 import com.fossil.fossil.network.debug.*;
@@ -50,6 +51,7 @@ public class Fossil {
         ModStructures.register();
         ModVillages.register();
         ModDimensions.register();
+        ModLootItemFunctionTypes.register();
         ModRecipes.register();
         LOGGER.info("After a billion years");
         LOGGER.info("The show is still here");
