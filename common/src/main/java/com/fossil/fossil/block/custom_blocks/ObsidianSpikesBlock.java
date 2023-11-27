@@ -1,6 +1,6 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.entity.AnuStatueEntity;
+import com.fossil.fossil.entity.AnuTotem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.damagesource.DamageSource;
@@ -26,7 +26,7 @@ public class ObsidianSpikesBlock extends Block {
 
     @Override
     public void entityInside(BlockState state, Level level, BlockPos pos, Entity entity) {
-        if (!(entity instanceof AnuStatueEntity)) {
+        if (!(entity instanceof AnuTotem)) {
             entity.hurt(DamageSource.CACTUS, 4.0f);
             if (entity instanceof LivingEntity && entity.getDeltaMovement().x != 0 && entity.getDeltaMovement().z != 0) {
                 ((LivingEntity) entity).knockback(0.5f, entity.getDeltaMovement().x, entity.getDeltaMovement().z);

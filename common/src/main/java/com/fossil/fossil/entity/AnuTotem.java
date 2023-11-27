@@ -10,8 +10,8 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 
-public class AnuStatueEntity extends Mob {
-    public AnuStatueEntity(EntityType<? extends AnuStatueEntity> type, Level level) {
+public class AnuTotem extends Mob {
+    public AnuTotem(EntityType<? extends AnuTotem> type, Level level) {
         super(type, level);
     }
 

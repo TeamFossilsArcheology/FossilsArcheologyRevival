@@ -1,7 +1,7 @@
 package com.fossil.fossil.client.model;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.AnuStatueEntity;
+import com.fossil.fossil.entity.AnuTotem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.model.EntityModel;
@@ -13,8 +13,8 @@ import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
-public class AnuStatueModel extends EntityModel<AnuStatueEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu_statue.png");
+public class AnuTotemModel extends EntityModel<AnuTotem> {
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu_totem.png");
     private final ModelPart model = createBodyLayer().bakeRoot();
 
     public static LayerDefinition createBodyLayer() {
@@ -55,7 +55,7 @@ public class AnuStatueModel extends EntityModel<AnuStatueEntity> {
     }
 
     @Override
-    public void setupAnim(AnuStatueEntity entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(AnuTotem entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
     }
 
     @Override

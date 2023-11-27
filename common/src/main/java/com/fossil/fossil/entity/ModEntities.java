@@ -96,8 +96,8 @@ public class ModEntities {
                     .clientTrackingRange(64).updateInterval(1).build("anu_boss"));
     public static final RegistrySupplier<EntityType<AnuDead>> ANU_DEAD = ENTITIES.register("anu_dead",
             () -> EntityType.Builder.of(AnuDead::new, MobCategory.MONSTER).sized(1.8f, 0.8f).fireImmune().build("anu_dead"));
-    public static final RegistrySupplier<EntityType<AnuStatueEntity>> ANU_STATUE = ENTITIES.register("anu_statue",
-            () -> EntityType.Builder.of(AnuStatueEntity::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_statue"));
+    public static final RegistrySupplier<EntityType<AnuTotem>> ANU_TOTEM = ENTITIES.register("anu_totem",
+            () -> EntityType.Builder.of(AnuTotem::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_totem"));
     public static final RegistrySupplier<EntityType<SentryPiglin>> SENTRY_PIGLIN = ENTITIES.register("sentry_piglin",
             () -> EntityType.Builder.of(SentryPiglin::new, MobCategory.MONSTER).sized(0.8f, 2).fireImmune().build("sentry_piglin"));
 
@@ -182,7 +182,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(ANUBITE, Anubite::createAttributes);
         EntityAttributeRegistry.register(ANU_BOSS, AnuBoss::createAttributes);
         EntityAttributeRegistry.register(ANU_DEAD, AnuDead::createAttributes);
-        EntityAttributeRegistry.register(ANU_STATUE, AnuStatueEntity::createAttributes);
+        EntityAttributeRegistry.register(ANU_TOTEM, AnuTotem::createAttributes);
         EntityAttributeRegistry.register(SENTRY_PIGLIN, SentryPiglin::createAttributes);
         EntityAttributeRegistry.register(TOY_BALL, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TOY_TETHERED_LOG, ToyBase::createAttributes);

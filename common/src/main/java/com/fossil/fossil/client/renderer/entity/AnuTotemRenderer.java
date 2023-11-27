@@ -1,9 +1,9 @@
 package com.fossil.fossil.client.renderer.entity;
 
-import com.fossil.fossil.client.model.AnuStatueModel;
+import com.fossil.fossil.client.model.AnuTotemModel;
 import com.fossil.fossil.client.renderer.RendererFabricFix;
-import com.fossil.fossil.client.renderer.entity.layers.AnuStatueOverlayLayer;
-import com.fossil.fossil.entity.AnuStatueEntity;
+import com.fossil.fossil.client.renderer.entity.layers.AnuTotemOverlayRenderer;
+import com.fossil.fossil.entity.AnuTotem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix4f;
@@ -18,12 +18,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class AnuStatueEntityRenderer extends MobRenderer<AnuStatueEntity, AnuStatueModel> implements RendererFabricFix {
+public class AnuTotemRenderer extends MobRenderer<AnuTotem, AnuTotemModel> implements RendererFabricFix {
     private static final float HALF_SQRT_3 = (float) (Math.sqrt(3.0) / 2.0);
 
-    public AnuStatueEntityRenderer(EntityRendererProvider.Context context, AnuStatueModel entityModel) {
+    public AnuTotemRenderer(EntityRendererProvider.Context context, AnuTotemModel entityModel) {
         super(context, entityModel, 0.5f);
-        addLayer(new AnuStatueOverlayLayer(this));
+        addLayer(new AnuTotemOverlayRenderer(this));
     }
 
     private static void vertex01(VertexConsumer vertexConsumer, Matrix4f matrix4f, int alpha) {
@@ -43,23 +43,23 @@ public class AnuStatueEntityRenderer extends MobRenderer<AnuStatueEntity, AnuSta
     }
 
     @Override
-    public @NotNull ResourceLocation getTextureLocation(AnuStatueEntity entity) {
-        return AnuStatueModel.TEXTURE;
+    public @NotNull ResourceLocation getTextureLocation(AnuTotem entity) {
+        return AnuTotemModel.TEXTURE;
     }
 
     @NotNull
     public ResourceLocation _getTextureLocation(Entity entity) {
-        return getTextureLocation((AnuStatueEntity) entity);
+        return getTextureLocation((AnuTotem) entity);
     }
 
     @Override
-    protected void setupRotations(AnuStatueEntity entityLiving, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
+    protected void setupRotations(AnuTotem entityLiving, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTicks) {
         super.setupRotations(entityLiving, poseStack, ageInTicks, rotationYaw, partialTicks);
         poseStack.mulPose(Vector3f.YP.rotationDegrees(ageInTicks * ageInTicks * 0.15f));
     }
 
     @Override
-    public void render(AnuStatueEntity entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer,
+    public void render(AnuTotem entity, float entityYaw, float partialTicks, PoseStack poseStack, MultiBufferSource buffer,
                        int packedLight) {
         super.render(entity, entityYaw, partialTicks, poseStack, buffer, packedLight);
         float i = (entity.tickCount + partialTicks) / 200f;

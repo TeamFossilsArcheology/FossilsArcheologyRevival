@@ -2,7 +2,7 @@ package com.fossil.fossil.client.renderer.blockentity;
 
 import com.fossil.fossil.block.custom_blocks.AnuStatueBlock;
 import com.fossil.fossil.block.entity.AnuStatueBlockEntity;
-import com.fossil.fossil.client.model.AnuStatueModel;
+import com.fossil.fossil.client.model.AnuTotemModel;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelPart;
@@ -15,7 +15,7 @@ public class AnuStatueRenderer implements BlockEntityRenderer<AnuStatueBlockEnti
     private final ModelPart anuModel;
 
     public AnuStatueRenderer(BlockEntityRendererProvider.Context context) {
-        anuModel = AnuStatueModel.createBodyLayer().bakeRoot();
+        anuModel = AnuTotemModel.createBodyLayer().bakeRoot();
     }
 
     @Override
@@ -25,7 +25,7 @@ public class AnuStatueRenderer implements BlockEntityRenderer<AnuStatueBlockEnti
         poseStack.translate(0.5f, 1.5f, 0.5f);
         poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
         poseStack.mulPose(Vector3f.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnuStatueBlock.FACING).toYRot() + 180));
-        var c = bufferSource.getBuffer(RenderType.entitySolid(AnuStatueModel.TEXTURE));
+        var c = bufferSource.getBuffer(RenderType.entitySolid(AnuTotemModel.TEXTURE));
         anuModel.render(poseStack, c, packedLight, packedOverlay);
         poseStack.popPose();
     }

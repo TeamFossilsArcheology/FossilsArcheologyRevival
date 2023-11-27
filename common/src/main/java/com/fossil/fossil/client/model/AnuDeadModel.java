@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnuDeadModel extends EntityModel<AnuDead> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu.png");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu_boss.png");
     private final ModelPart model = createBodyLayer().bakeRoot();
 
     public AnuDeadModel() {
