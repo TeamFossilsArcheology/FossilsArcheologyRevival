@@ -1,11 +1,11 @@
 {
   "parent": "block/block",
   "textures": {
-    "particle": "fossil:block/cultivate/cultivate_top",
-    "0": "fossil:block/cultivate/cultivate_bottom_side",
-    "1": "fossil:block/cultivate/cultivate_bottom",
-    "2": "fossil:block/cultivate/cultivate_side",
-    "3": "fossil:block/cultivate/cultivate_top",
+    "particle": "fossil:block/culture_vat/culture_vat_top",
+    "0": "fossil:block/culture_vat/culture_vat_bottom_side",
+    "1": "fossil:block/culture_vat/culture_vat_bottom",
+    "2": "fossil:block/culture_vat/culture_vat_side",
+    "3": "fossil:block/culture_vat/culture_vat_top",
     "4": "fossil:block/blank"
   },
   "elements": [

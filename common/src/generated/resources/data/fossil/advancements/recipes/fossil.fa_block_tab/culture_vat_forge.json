@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:cultivate_fabric"
+      "fossil:culture_vat_forge"
     ]
   },
   "criteria": {
@@ -19,7 +19,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:cultivate_fabric"
+        "recipe": "fossil:culture_vat_forge"
       }
     }
   },

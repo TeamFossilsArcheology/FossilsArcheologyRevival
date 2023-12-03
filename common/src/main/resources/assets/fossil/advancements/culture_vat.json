@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:culture_vat"
+    },
+    "title": {
+      "translate": "advancements.fossil.culture_vat.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.culture_vat.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:dna",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:culture_vat"
+          }
+        ]
+      }
+    }
+  }
+}

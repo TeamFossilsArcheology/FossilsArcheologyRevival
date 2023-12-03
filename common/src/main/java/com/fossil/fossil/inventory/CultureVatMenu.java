@@ -14,7 +14,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
-public class CultivateMenu extends AbstractContainerMenu {
+public class CultureVatMenu extends AbstractContainerMenu {
     public static final int INPUT_SLOT_ID = 0;
     public static final int FUEL_SLOT_ID = 1;
     public static final int OUTPUT_SLOT_ID = 2;
@@ -25,12 +25,12 @@ public class CultivateMenu extends AbstractContainerMenu {
 
     private final Level level;
 
-    public CultivateMenu(int id, Inventory playerInventory) {
+    public CultureVatMenu(int id, Inventory playerInventory) {
         this(id, playerInventory, new SimpleContainer(3), new SimpleContainerData(3));
     }
 
-    public CultivateMenu(int id, Inventory playerInventory, Container container, ContainerData containerData) {
-        super(ModMenus.CULTIVATE.get(), id);
+    public CultureVatMenu(int id, Inventory playerInventory, Container container, ContainerData containerData) {
+        super(ModMenus.CULTURE_VAT.get(), id);
         this.container = container;
         this.containerData = containerData;
         this.level = playerInventory.player.level;
@@ -69,7 +69,7 @@ public class CultivateMenu extends AbstractContainerMenu {
 
     public boolean canPutStackInInput(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
-            WorktableRecipe recipe = ModRecipes.getCultivateRecipeForItem(stack, level);
+            WorktableRecipe recipe = ModRecipes.getCultureVatRecipeForItem(stack, level);
             return recipe != null;
         }
         return false;
@@ -88,11 +88,11 @@ public class CultivateMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (index != INPUT_SLOT_ID && index != FUEL_SLOT_ID) {
-                if (ModRecipes.getCultivateRecipeForItem(current, level) != null) {
+                if (ModRecipes.getCultureVatRecipeForItem(current, level) != null) {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (ModRecipes.CULTIVATE_FUEL_VALUES.containsKey(current.getItem())) {
+                } else if (ModRecipes.CULTURE_VAT_FUEL_VALUES.containsKey(current.getItem())) {
                     if (!moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }

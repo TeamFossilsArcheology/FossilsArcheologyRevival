@@ -115,11 +115,11 @@ public class ModRecipeProvider extends RecipeProvider {
 
             ShapedRecipeBuilder.shaped(ModBlocks.ANALYZER.get()).define('I', Items.IRON_INGOT).define('R', ModItems.RELIC_SCRAP.get()).define('B', ModItems.BIO_FOSSIL.get()).pattern("IRI").pattern("IBI").unlockedBy("has_bio_fossil", RecipeProvider.has(ModItems.BIO_FOSSIL.get())).save(consumer);
             var fabricGlass = ItemTags.create(new ResourceLocation("c:glass_blocks"));
-            ShapedRecipeBuilder.shaped(ModBlocks.CULTIVATE.get()).define('I', Items.IRON_INGOT).define('S', Items.SLIME_BALL).define('G', fabricGlass).define('W', Items.WATER_BUCKET).pattern("GSG").pattern("GWG").pattern("III").unlockedBy("has_dna", RecipeProvider.has(ModItemTags.DNA))
-                    .save(consumer, Fossil.MOD_ID + ":cultivate_fabric");
+            ShapedRecipeBuilder.shaped(ModBlocks.CULTURE_VAT.get()).define('I', Items.IRON_INGOT).define('S', Items.SLIME_BALL).define('G', fabricGlass).define('W', Items.WATER_BUCKET).pattern("GSG").pattern("GWG").pattern("III").unlockedBy("has_dna", RecipeProvider.has(ModItemTags.DNA))
+                    .save(consumer, Fossil.MOD_ID + ":culture_vat_fabric");
             var forgeGlass = ItemTags.create(new ResourceLocation("forge:glass"));
-            ShapedRecipeBuilder.shaped(ModBlocks.CULTIVATE.get()).define('I', Items.IRON_INGOT).define('S', Items.SLIME_BALL).define('G', forgeGlass).define('W', Items.WATER_BUCKET).pattern("GSG").pattern("GWG").pattern("III").unlockedBy("has_dna", RecipeProvider.has(ModItemTags.DNA))
-                    .save(consumer, Fossil.MOD_ID + ":cultivate_forge");
+            ShapedRecipeBuilder.shaped(ModBlocks.CULTURE_VAT.get()).define('I', Items.IRON_INGOT).define('S', Items.SLIME_BALL).define('G', forgeGlass).define('W', Items.WATER_BUCKET).pattern("GSG").pattern("GWG").pattern("III").unlockedBy("has_dna", RecipeProvider.has(ModItemTags.DNA))
+                    .save(consumer, Fossil.MOD_ID + ":culture_vat_forge");
             ShapedRecipeBuilder.shaped(ModBlocks.FEEDER.get()).define('I', Items.IRON_INGOT).define('S', Blocks.STONE).define('B', Blocks.STONE_BUTTON).define('W', Items.BUCKET).define('G', fabricGlass).pattern("IGI").pattern("BWS").pattern("SSS").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS))
                     .save(consumer, Fossil.MOD_ID + ":feeder_fabric");
             ShapedRecipeBuilder.shaped(ModBlocks.FEEDER.get()).define('I', Items.IRON_INGOT).define('S', Blocks.STONE).define('B', Blocks.STONE_BUTTON).define('W', Items.BUCKET).define('G', forgeGlass).pattern("IGI").pattern("BWS").pattern("SSS").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS))

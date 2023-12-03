@@ -1,7 +1,7 @@
 package com.fossil.fossil.block.custom_blocks;
 
 import com.fossil.fossil.block.PrehistoricPlantType;
-import com.fossil.fossil.block.entity.CultivateBlockEntity;
+import com.fossil.fossil.block.entity.CultureVatBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -30,11 +30,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class CultivateBlock extends CustomEntityBlock {
+public class CultureVatBlock extends CustomEntityBlock {
 
     public static final EnumProperty<EmbryoType> EMBRYO = EnumProperty.create("embryo", EmbryoType.class);
 
-    public CultivateBlock(Properties properties) {
+    public CultureVatBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(ACTIVE, false).setValue(EMBRYO, EmbryoType.GENERIC));
     }
@@ -42,7 +42,7 @@ public class CultivateBlock extends CustomEntityBlock {
     public void onFailedCultivation(Level level, BlockPos pos) {
         List<Player> nearby = level.getEntitiesOfClass(Player.class, new AABB(pos.offset(-50, -50, -50), pos.offset(50, 50, 50)));
         for (Player player : nearby) {
-            player.displayClientMessage(new TranslatableComponent("cultivate.outBreak"), false);
+            player.displayClientMessage(new TranslatableComponent("culture_vat.outBreak"), false);
         }
         dropIron(level, pos);
         dropInventory(level, pos);
@@ -97,7 +97,7 @@ public class CultivateBlock extends CustomEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide ? null : createTickerHelper(blockEntityType, ModBlockEntities.CULTIVATE.get(), CultivateBlockEntity::serverTick);
+        return level.isClientSide ? null : createTickerHelper(blockEntityType, ModBlockEntities.CULTURE_VAT.get(), CultureVatBlockEntity::serverTick);
     }
 
     @Override
@@ -109,7 +109,7 @@ public class CultivateBlock extends CustomEntityBlock {
     @Nullable
     @Override
     public BlockEntity newBlockEntity(BlockPos pos, BlockState state) {
-        return CultivateBlockEntity.get(pos, state);
+        return CultureVatBlockEntity.get(pos, state);
     }
 
     public enum EmbryoType implements StringRepresentable {

@@ -30,8 +30,7 @@ import java.util.function.Supplier;
 import java.util.function.ToIntFunction;
 
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS =
-            DeferredRegister.create(Fossil.MOD_ID, Registry.BLOCK_REGISTRY);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Fossil.MOD_ID, Registry.BLOCK_REGISTRY);
     public static final RegistrySupplier<BubbleBlowerBlock> BUBBLE_BLOWER = registerBlock("bubble_blower",
             () -> new BubbleBlowerBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3).sound(SoundType.METAL).requiresCorrectToolForDrops())
     );

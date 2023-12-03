@@ -9,7 +9,7 @@ import net.minecraft.world.level.block.state.BlockState;
 /**
  * We split this into forge and fabric because forge containers use item handlers instead of the vanilla Container class
  */
-public interface CultivateBlockEntity {
+public interface CultureVatBlockEntity {
 
     @ExpectPlatform
     static BlockEntity get(BlockPos pos, BlockState state) {
@@ -17,7 +17,7 @@ public interface CultivateBlockEntity {
     }
 
     static void serverTick(Level level, BlockPos pos, BlockState state, BlockEntity blockEntity) {
-        ((CultivateBlockEntity) blockEntity).serverTick(level, pos, state);
+        ((CultureVatBlockEntity) blockEntity).serverTick(level, pos, state);
     }
 
     void serverTick(Level level, BlockPos pos, BlockState state);

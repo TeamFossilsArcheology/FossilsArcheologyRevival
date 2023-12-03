@@ -1,7 +1,7 @@
 package com.fossil.fossil.client.gui;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.inventory.CultivateMenu;
+import com.fossil.fossil.inventory.CultureVatMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
@@ -10,10 +10,10 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
-public class CultivateScreen extends AbstractContainerScreen<CultivateMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/cultivate.png");
+public class CultureVatScreen extends AbstractContainerScreen<CultureVatMenu> {
+    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/culture_vat.png");
 
-    public CultivateScreen(CultivateMenu containerMenu, Inventory inventory, Component component) {
+    public CultureVatScreen(CultureVatMenu containerMenu, Inventory inventory, Component component) {
         super(containerMenu, inventory, component);
     }
 
@@ -46,7 +46,7 @@ public class CultivateScreen extends AbstractContainerScreen<CultivateMenu> {
         }
 
         int progressWidth = 24;
-        int scaledProgress = menu.getCultivationTime() * progressWidth / CultivateMenu.CULTIVATION_TIME;
+        int scaledProgress = menu.getCultivationTime() * progressWidth / CultureVatMenu.CULTIVATION_TIME;
         blit(poseStack, x + 79, y + 18, 176, 14, scaledProgress + 1, 16);
     }
 

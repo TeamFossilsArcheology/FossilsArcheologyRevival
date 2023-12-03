@@ -40,7 +40,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(BlockTags.PORTALS).add(ModBlocks.ANU_PORTAL.get(), ModBlocks.HOME_PORTAL.get());
         tag(BlockTags.SOUL_SPEED_BLOCKS).add(ModBlocks.TARRED_DIRT.get());
         tag(BlockTags.MINEABLE_WITH_AXE).add(ModBlocks.DRUM.get(), ModBlocks.SIFTER.get(), ModBlocks.WORKTABLE.get());
-        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.ANCIENT_GLASS.get(), ModBlocks.REINFORCED_GLASS.get(), ModBlocks.FAKE_OBSIDIAN.get(), ModBlocks.CULTIVATE.get(), ModBlocks.ANALYZER.get(), ModBlocks.FOSSIL.get(), ModBlocks.SKULL_BLOCK.get(), ModBlocks.SKULL_LANTERN.get(), ModBlocks.BUBBLE_BLOWER.get(),
+        tag(BlockTags.MINEABLE_WITH_PICKAXE).add(ModBlocks.ANCIENT_GLASS.get(), ModBlocks.REINFORCED_GLASS.get(), ModBlocks.FAKE_OBSIDIAN.get(), ModBlocks.CULTURE_VAT.get(), ModBlocks.ANALYZER.get(), ModBlocks.FOSSIL.get(), ModBlocks.SKULL_BLOCK.get(), ModBlocks.SKULL_LANTERN.get(), ModBlocks.BUBBLE_BLOWER.get(),
                 ModBlocks.ANCIENT_STONE.get(), ModBlocks.ANCIENT_STONE_BRICKS.get(), ModBlocks.ANCIENT_STONE_SLAB.get(), ModBlocks.ANCIENT_STONE_STAIRS.get(), ModBlocks.ANCIENT_STONE_WALL.get(),
                 ModBlocks.VOLCANIC_ROCK.get(), ModBlocks.VOLCANIC_BRICKS.get(), ModBlocks.VOLCANIC_BRICK_SLAB.get(), ModBlocks.VOLCANIC_BRICK_STAIRS.get(), ModBlocks.VOLCANIC_BRICK_WALL.get(),
                 ModBlocks.VOLCANIC_TILES.get(), ModBlocks.VOLCANIC_TILE_SLAB.get(), ModBlocks.VOLCANIC_TILE_STAIRS.get(), ModBlocks.VOLCANIC_TILE_WALL.get());

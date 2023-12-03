@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "active=false": {
+      "model": "fossil:block/culture_vat"
+    },
+    "active=true": {
+      "model": "fossil:block/culture_vat"
+    }
+  }
+}

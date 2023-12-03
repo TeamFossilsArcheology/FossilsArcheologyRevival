@@ -2,11 +2,11 @@ package com.fossil.fossil.block.entity.forge;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.custom_blocks.CultivateBlock;
-import com.fossil.fossil.block.entity.CultivateBlockEntity;
+import com.fossil.fossil.block.custom_blocks.CultureVatBlock;
+import com.fossil.fossil.block.entity.CultureVatBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.forge.block.entity.ForgeContainerBlockEntity;
-import com.fossil.fossil.inventory.CultivateMenu;
+import com.fossil.fossil.inventory.CultureVatMenu;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.recipe.WorktableRecipe;
@@ -32,11 +32,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implements CultivateBlockEntity {
+public class CultureVatBlockEntityImpl extends ForgeContainerBlockEntity implements CultureVatBlockEntity {
 
-    private static final int[] SLOTS_FOR_UP = new int[]{CultivateMenu.INPUT_SLOT_ID}; //Input
-    private static final int[] SLOTS_FOR_SIDES = new int[]{CultivateMenu.FUEL_SLOT_ID}; //Fuel
-    private static final int[] SLOTS_FOR_DOWN = new int[]{CultivateMenu.OUTPUT_SLOT_ID}; //Output
+    private static final int[] SLOTS_FOR_UP = new int[]{CultureVatMenu.INPUT_SLOT_ID}; //Input
+    private static final int[] SLOTS_FOR_SIDES = new int[]{CultureVatMenu.FUEL_SLOT_ID}; //Fuel
+    private static final int[] SLOTS_FOR_DOWN = new int[]{CultureVatMenu.OUTPUT_SLOT_ID}; //Output
     private static final ResourceKey<? extends Registry<Item>> key = ModItems.ITEMS.getRegistrar().key();
     public static final TagKey<Item> LIMBLESS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_limbless"));
     public static final TagKey<Item> INSECTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_insects"));
@@ -74,16 +74,16 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
-    public CultivateBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
-        super(ModBlockEntities.CULTIVATE.get(), blockPos, blockState);
+    public CultureVatBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
+        super(ModBlockEntities.CULTURE_VAT.get(), blockPos, blockState);
     }
 
     public static BlockEntity get(BlockPos pos, BlockState state) {
-        return new CultivateBlockEntityImpl(pos, state);
+        return new CultureVatBlockEntityImpl(pos, state);
     }
 
     public static int getItemFuelTime(ItemStack stack) {
-        Integer fuel = ModRecipes.CULTIVATE_FUEL_VALUES.get(stack.getItem());
+        Integer fuel = ModRecipes.CULTURE_VAT_FUEL_VALUES.get(stack.getItem());
         if (fuel != null) {
             return fuel;
         }
@@ -99,14 +99,14 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
         }
 
         if (litTime == 0 && canProcess()) {
-            ItemStack fuelStack = items.get(CultivateMenu.FUEL_SLOT_ID);
+            ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
             litDuration = litTime = getItemFuelTime(fuelStack);
 
             if (isProcessing()) {
                 dirty = true;
                 if (!fuelStack.isEmpty()) {
                     if (fuelStack.getItem().hasCraftingRemainingItem()) {
-                        items.set(CultivateMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
+                        items.set(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
                     } else {
                         fuelStack.shrink(1);
                     }
@@ -116,7 +116,7 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
         if (isProcessing() && canProcess()) {
             cookingProgress++;
-            if (cookingProgress >= CultivateMenu.CULTIVATION_TIME) {
+            if (cookingProgress >= CultureVatMenu.CULTIVATION_TIME) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;
@@ -127,8 +127,8 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
         if (wasActive != cookingProgress > 0) {
             dirty = true;
-            state = state.setValue(CultivateBlock.ACTIVE, cookingProgress > 0);
-            state = state.setValue(CultivateBlock.EMBRYO, getDNAType());
+            state = state.setValue(CultureVatBlock.ACTIVE, cookingProgress > 0);
+            state = state.setValue(CultureVatBlock.EMBRYO, getDNAType());
             level.setBlock(pos, state, 3);
         }
 
@@ -137,35 +137,35 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
         }
 
         if (false && cookingProgress == 3001 && new Random().nextInt(100) < 20) {
-            ModBlocks.CULTIVATE.get().onFailedCultivation(level, pos);
+            ModBlocks.CULTURE_VAT.get().onFailedCultivation(level, pos);
         }
     }
 
-    public CultivateBlock.EmbryoType getDNAType() {
-        ItemStack input = items.get(CultivateMenu.INPUT_SLOT_ID);
+    public CultureVatBlock.EmbryoType getDNAType() {
+        ItemStack input = items.get(CultureVatMenu.INPUT_SLOT_ID);
         if (!input.isEmpty()) {
             if (input.is(PLANTS)) {
-                return CultivateBlock.EmbryoType.PLANT;
+                return CultureVatBlock.EmbryoType.PLANT;
             } else if (input.is(LIMBLESS)) {
-                return CultivateBlock.EmbryoType.LIMBLESS;
+                return CultureVatBlock.EmbryoType.LIMBLESS;
             } else if (input.is(INSECTS)) {
-                return CultivateBlock.EmbryoType.INSECT;
+                return CultureVatBlock.EmbryoType.INSECT;
             }
         }
-        return CultivateBlock.EmbryoType.GENERIC;
+        return CultureVatBlock.EmbryoType.GENERIC;
     }
 
     private boolean isValidInput(ItemStack inputStack) {
-        WorktableRecipe recipe = ModRecipes.getCultivateRecipeForItem(inputStack, level);
+        WorktableRecipe recipe = ModRecipes.getCultureVatRecipeForItem(inputStack, level);
         if (recipe != null) {
-            ItemStack output = items.get(CultivateMenu.OUTPUT_SLOT_ID);
+            ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
             return output.isEmpty() || output.sameItem(recipe.getOutput());
         }
         return false;
     }
 
     protected boolean canProcess() {
-        ItemStack inputStack = items.get(CultivateMenu.INPUT_SLOT_ID);
+        ItemStack inputStack = items.get(CultureVatMenu.INPUT_SLOT_ID);
         if (!inputStack.isEmpty()) {
             return isValidInput(inputStack);
         }
@@ -174,17 +174,17 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
     protected void createItem() {
         if (this.canProcess()) {
-            ItemStack inputStack = items.get(CultivateMenu.INPUT_SLOT_ID);
+            ItemStack inputStack = items.get(CultureVatMenu.INPUT_SLOT_ID);
 
-            WorktableRecipe recipe = ModRecipes.getCultivateRecipeForItem(inputStack, level);
+            WorktableRecipe recipe = ModRecipes.getCultureVatRecipeForItem(inputStack, level);
             ItemStack result = recipe.getOutput().copy();
-            ItemStack output = items.get(CultivateMenu.OUTPUT_SLOT_ID);
+            ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
             if (output.isEmpty()) {
-                items.set(CultivateMenu.OUTPUT_SLOT_ID, result);
+                items.set(CultureVatMenu.OUTPUT_SLOT_ID, result);
             } else if (output.sameItem(result)) {
                 output.grow(result.getCount());
             }
-            this.items.get(CultivateMenu.INPUT_SLOT_ID).shrink(1);
+            this.items.get(CultureVatMenu.INPUT_SLOT_ID).shrink(1);
         }
     }
 
@@ -195,12 +195,12 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("container.fossil.cultivate");
+        return new TranslatableComponent("container.fossil.culture_vat");
     }
 
     @Override
     protected @NotNull AbstractContainerMenu createMenu(int containerId, @NotNull Inventory inventory) {
-        return new CultivateMenu(containerId, inventory, this, dataAccess);
+        return new CultureVatMenu(containerId, inventory, this, dataAccess);
     }
 
     @Override
@@ -214,11 +214,11 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
     @Override
     public boolean canPlaceItem(int index, @NotNull ItemStack stack) {
-        if (index == CultivateMenu.OUTPUT_SLOT_ID) {
+        if (index == CultureVatMenu.OUTPUT_SLOT_ID) {
             return false;
         }
-        if (index == CultivateMenu.FUEL_SLOT_ID) {
-            return ModRecipes.CULTIVATE_FUEL_VALUES.containsKey(stack.getItem());
+        if (index == CultureVatMenu.FUEL_SLOT_ID) {
+            return ModRecipes.CULTURE_VAT_FUEL_VALUES.containsKey(stack.getItem());
         }
         return isValidInput(stack);
     }
@@ -235,6 +235,6 @@ public class CultivateBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
     @Override
     public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
-        return direction != Direction.DOWN || index != CultivateMenu.FUEL_SLOT_ID;
+        return direction != Direction.DOWN || index != CultureVatMenu.FUEL_SLOT_ID;
     }
 }

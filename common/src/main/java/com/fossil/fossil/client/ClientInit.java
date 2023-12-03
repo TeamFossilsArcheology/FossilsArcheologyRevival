@@ -174,7 +174,7 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.FERNS.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANCIENT_GLASS.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.REINFORCED_GLASS.get());
-        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CULTIVATE.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CULTURE_VAT.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.ANU_PORTAL.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.HOME_PORTAL.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_BLOCK.get());
@@ -184,7 +184,7 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SHELL.get());
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
-        MenuScreens.register(ModMenus.CULTIVATE.get(), CultivateScreen::new);
+        MenuScreens.register(ModMenus.CULTURE_VAT.get(), CultureVatScreen::new);
         MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
@@ -206,7 +206,7 @@ public class ClientInit {
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_STATUE.get(), AnuStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.SARCOPHAGUS.get(), SarcophagusRenderer::new);
-        BlockEntityRendererRegistry.register(ModBlockEntities.CULTIVATE.get(), CultivateRenderer::new);
+        BlockEntityRendererRegistry.register(ModBlockEntities.CULTURE_VAT.get(), CultureVatRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANCIENT_CHEST.get(), AncientChestRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_BARRIER.get(), AnuBarrierRenderer::new);
         CreativeTabFilters.register();

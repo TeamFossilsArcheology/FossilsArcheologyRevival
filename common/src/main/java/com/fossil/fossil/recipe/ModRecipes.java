@@ -31,8 +31,8 @@ public class ModRecipes {
     public static final Map<Item, AnalyzerRecipe> SIFTER_RECIPES = new HashMap<>();
     public static final Map<Item, WorktableRecipe> WORKTABLE_RECIPES = new HashMap<>();
     public static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new HashMap<>();
-    public static final Map<ItemLike, WorktableRecipe> CULTIVATE_RECIPES = new HashMap<>();
-    public static final Map<ItemLike, Integer> CULTIVATE_FUEL_VALUES = new HashMap<>();
+    public static final Map<ItemLike, WorktableRecipe> CULTURE_VAT_RECIPES = new HashMap<>();
+    public static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new HashMap<>();
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Fossil.MOD_ID,
             Registry.RECIPE_SERIALIZER_REGISTRY);
@@ -141,17 +141,17 @@ public class ModRecipes {
         registerWorktable(ModItems.ANCIENT_JAVELIN.get(), ModItems.ANCIENT_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
 
         for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithDNAResult()) {
-            registerCultivate(type.dnaItem, type.getDNAResult(), ModItems.BIO_GOO.get());
+            registerCultureVat(type.dnaItem, type.getDNAResult(), ModItems.BIO_GOO.get());
         }
-        registerCultivate(ModItems.FERN_SEED_FOSSIL.get(), ModItems.FERN_SEED.get(), ModItems.BIO_GOO.get());
-        registerCultivate(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModBlocks.CALAMITES_SAPLING.get(), ModItems.BIO_GOO.get());
-        registerCultivate(ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModBlocks.CORDAITES_SAPLING.get(), ModItems.BIO_GOO.get());
-        registerCultivate(ModItems.PALM_SAPLING_FOSSIL.get(), ModBlocks.PALM_SAPLING.get(), ModItems.BIO_GOO.get());
-        registerCultivate(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
-        registerCultivate(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), ModBlocks.TEMPSKYA_SAPLING.get(), ModItems.BIO_GOO.get());
-        //registerCultivate(ModItems.PALAE_SAPLING_FOSSIL.get(), ModBlocks.PALAE_SAPLING.get(), ModItems.BIO_GOO.get());
+        registerCultureVat(ModItems.FERN_SEED_FOSSIL.get(), ModItems.FERN_SEED.get(), ModItems.BIO_GOO.get());
+        registerCultureVat(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModBlocks.CALAMITES_SAPLING.get(), ModItems.BIO_GOO.get());
+        registerCultureVat(ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModBlocks.CORDAITES_SAPLING.get(), ModItems.BIO_GOO.get());
+        registerCultureVat(ModItems.PALM_SAPLING_FOSSIL.get(), ModBlocks.PALM_SAPLING.get(), ModItems.BIO_GOO.get());
+        registerCultureVat(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
+        registerCultureVat(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), ModBlocks.TEMPSKYA_SAPLING.get(), ModItems.BIO_GOO.get());
+        //registerCultureVat(ModItems.PALAE_SAPLING_FOSSIL.get(), ModBlocks.PALAE_SAPLING.get(), ModItems.BIO_GOO.get());
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-            registerCultivate(type.getFossilizedPlantSeedItem(), type.getPlantSeedItem(), ModItems.BIO_GOO.get());
+            registerCultureVat(type.getFossilizedPlantSeedItem(), type.getPlantSeedItem(), ModItems.BIO_GOO.get());
         }
     }
 
@@ -172,9 +172,9 @@ public class ModRecipes {
         WORKTABLE_RECIPES.put(item.asItem(), new WorktableRecipe(new ItemStack(item), new ItemStack(output), new ItemStack(fuel)));
     }
 
-    private static void registerCultivate(ItemLike item, ItemLike output, ItemLike fuel) {
-        CULTIVATE_FUEL_VALUES.putIfAbsent(fuel, 6000);
-        CULTIVATE_RECIPES.put(item, new WorktableRecipe(new ItemStack(item), new ItemStack(output), new ItemStack(fuel)));
+    private static void registerCultureVat(ItemLike item, ItemLike output, ItemLike fuel) {
+        CULTURE_VAT_FUEL_VALUES.putIfAbsent(fuel, 6000);
+        CULTURE_VAT_RECIPES.put(item, new WorktableRecipe(new ItemStack(item), new ItemStack(output), new ItemStack(fuel)));
     }
 
     @Nullable
@@ -207,12 +207,12 @@ public class ModRecipes {
     }
 
     @Nullable
-    public static WorktableRecipe getCultivateRecipeForItem(ItemStack itemStack, Level level) {
-        if (!CULTIVATE_RECIPES.containsKey(itemStack.getItem())) {
+    public static WorktableRecipe getCultureVatRecipeForItem(ItemStack itemStack, Level level) {
+        if (!CULTURE_VAT_RECIPES.containsKey(itemStack.getItem())) {
             WorktableRecipe recipe = (WorktableRecipe) level.getRecipeManager().byKey(
-                    new ResourceLocation(Fossil.MOD_ID, "cultivate/" + itemStack.getItem())).orElse(null);
-            CULTIVATE_RECIPES.put(itemStack.getItem(), recipe);
+                    new ResourceLocation(Fossil.MOD_ID, "culture_vat/" + itemStack.getItem())).orElse(null);
+            CULTURE_VAT_RECIPES.put(itemStack.getItem(), recipe);
         }
-        return CULTIVATE_RECIPES.get(itemStack.getItem());
+        return CULTURE_VAT_RECIPES.get(itemStack.getItem());
     }
 }
