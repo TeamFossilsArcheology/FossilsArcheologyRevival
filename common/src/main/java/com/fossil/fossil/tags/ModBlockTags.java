@@ -15,4 +15,5 @@ public class ModBlockTags {
     public static final TagKey<Block> PALM_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "palm_logs"));
     public static final TagKey<Block> SIGILLARIA_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "sigillaria_logs"));
     public static final TagKey<Block> TEMPSKYA_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "tempskya_logs"));
+    public static final TagKey<Block> FIGURINES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "figurines"));
 }

@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:egg_item_triceratops"
+    },
+    "title": {
+      "translate": "advancements.fossil.dna.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.dna.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "minecraft:root",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "fossil:dino_eggs"
+          }
+        ]
+      }
+    }
+  }
+}

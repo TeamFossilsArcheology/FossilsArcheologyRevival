@@ -1,0 +1,86 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:fossil_bio"
+    },
+    "title": {
+      "translate": "advancements.fossil.break_fossil.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.break_fossil.description"
+    }
+  },
+  "parent": "fossil:fossil/root",
+  "criteria": {
+    "fossil_bio": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:fossil_bio"
+          }
+        ]
+      }
+    },
+    "fossil_plant": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:fossil_plant"
+          }
+        ]
+      }
+    },
+    "relic_scrap": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:relic_scrap"
+          }
+        ]
+      }
+    },
+    "skull_block": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:skull"
+          }
+        ]
+      }
+    },
+    "broken_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:broken_sword"
+          }
+        ]
+      }
+    },
+    "broken_helmet": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:broken_helmet"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "fossil_bio",
+      "fossil_plant",
+      "relic_scrap",
+      "skull_block",
+      "broken_sword",
+      "broken_helmet"
+    ]
+  ]
+}

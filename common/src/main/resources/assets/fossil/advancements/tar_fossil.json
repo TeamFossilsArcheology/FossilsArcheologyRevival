@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:fossil_tar"
+    },
+    "title": {
+      "translate": "advancements.fossil.fossil_tar.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.fossil_tar.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:break_fossil",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:fossil_tar"
+          }
+        ]
+      }
+    }
+  }
+}

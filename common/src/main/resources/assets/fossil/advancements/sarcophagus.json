@@ -1,0 +1,22 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:sarcophagus"
+    },
+    "title": {
+      "translate": "advancements.fossil.sarcophagus.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.sarcophagus.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:anu_lair",
+  "criteria": {
+    "requirement": {
+      "trigger": "fossil:scarab"
+    }
+  }
+}

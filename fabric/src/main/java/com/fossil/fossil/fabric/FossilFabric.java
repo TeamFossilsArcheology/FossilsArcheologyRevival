@@ -1,6 +1,7 @@
 package com.fossil.fossil.fabric;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.capabilities.fabric.ModCapabilitiesImpl;
 import com.fossil.fossil.config.fabric.FossilConfigImpl;
 import com.fossil.fossil.entity.ModEntities;
@@ -54,6 +55,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "treasure_room"), TreasureChunkGenerator.CODEC);
         Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "anu_lair"), AnuLairChunkGenerator.CODEC);
         ModPlacementTypes.register();
+        ModTriggers.register();
         ModPlacedFeatures.register();
         FabricModBiomes.register();
         ModRegistries.register();

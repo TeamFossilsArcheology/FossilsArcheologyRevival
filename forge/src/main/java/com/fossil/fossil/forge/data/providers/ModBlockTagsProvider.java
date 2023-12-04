@@ -2,7 +2,9 @@ package com.fossil.fossil.forge.data.providers;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.block.custom_blocks.FigurineBlock;
 import com.fossil.fossil.tags.ModBlockTags;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
@@ -23,6 +25,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         tag(ModBlockTags.PALM_LOGS).add(ModBlocks.PALM_LOG.get(), ModBlocks.PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_LOG.get(), ModBlocks.STRIPPED_PALM_WOOD.get());
         tag(ModBlockTags.SIGILLARIA_LOGS).add(ModBlocks.SIGILLARIA_LOG.get(), ModBlocks.SIGILLARIA_WOOD.get(), ModBlocks.STRIPPED_SIGILLARIA_LOG.get(), ModBlocks.STRIPPED_SIGILLARIA_WOOD.get());
         tag(ModBlockTags.TEMPSKYA_LOGS).add(ModBlocks.TEMPSKYA_LOG.get(), ModBlocks.TEMPSKYA_WOOD.get(), ModBlocks.STRIPPED_TEMPSKYA_LOG.get(), ModBlocks.STRIPPED_TEMPSKYA_WOOD.get());
+        var figurines = tag(ModBlockTags.FIGURINES);
+        for (RegistrySupplier<FigurineBlock> figurine : ModBlocks.FIGURINES) {
+            figurines.add(figurine.get());
+        }
         tag(BlockTags.LOGS_THAT_BURN).addTags(ModBlockTags.CALAMITES_LOGS, ModBlockTags.CORDAITES_LOGS, ModBlockTags.PALM_LOGS, ModBlockTags.SIGILLARIA_LOGS, ModBlockTags.TEMPSKYA_LOGS);
         tag(BlockTags.PLANKS).add(ModBlocks.CALAMITES_PLANKS.get(), ModBlocks.CORDAITES_PLANKS.get(), ModBlocks.PALM_PLANKS.get(), ModBlocks.SIGILLARIA_PLANKS.get(), ModBlocks.TEMPSKYA_PLANKS.get());
         tag(BlockTags.WOODEN_BUTTONS).add(ModBlocks.CALAMITES_BUTTON.get(), ModBlocks.CORDAITES_BUTTON.get(), ModBlocks.PALM_BUTTON.get(), ModBlocks.SIGILLARIA_BUTTON.get(), ModBlocks.TEMPSKYA_BUTTON.get());

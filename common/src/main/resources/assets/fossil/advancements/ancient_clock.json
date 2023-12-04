@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:ancient_clock"
+    },
+    "title": {
+      "translate": "advancements.fossil.ancient_clock.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.ancient_clock.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:kill_anu",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:ancient_clock"
+          }
+        ]
+      }
+    }
+  }
+}

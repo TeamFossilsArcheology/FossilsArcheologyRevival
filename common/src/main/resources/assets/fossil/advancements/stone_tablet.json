@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:stone_tablet"
+    },
+    "title": {
+      "translate": "advancements.fossil.stone_tablet.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.stone_tablet.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:break_fossil",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:stone_tablet"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:tar_drop"
+    },
+    "title": {
+      "translate": "advancements.fossil.tar_drop.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.tar_drop.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:break_fossil",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:tar_drop"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:dinopedia"
+    },
+    "title": {
+      "translate": "advancements.fossil.dinopedia.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.dinopedia.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:dino_egg",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:dinopedia"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,6 +1,7 @@
 package com.fossil.fossil.forge;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.client.ClientInit;
 import com.fossil.fossil.client.model.block.PlantBlockModel;
 import com.fossil.fossil.config.forge.ForgeConfig;
@@ -63,6 +64,7 @@ public class FossilForge {
     public void onCommon(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
             ModPlacementTypes.register();
+            ModTriggers.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
             SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Fossil.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
             Registry.register(Registry.CHUNK_GENERATOR, new ResourceLocation(Fossil.MOD_ID, "treasure_room"), TreasureChunkGenerator.CODEC);

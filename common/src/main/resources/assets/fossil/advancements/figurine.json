@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:figurine"
+    },
+    "title": {
+      "translate": "advancements.fossil.figurine.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.figurine.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:break_fossil",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "fossil:figurines"
+          }
+        ]
+      }
+    }
+  }
+}

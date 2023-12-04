@@ -24,15 +24,18 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags() {
-        var fossilSeeds = tag(ModItemTags.FOSSIL_SEEDS);
+        var fossilSeeds = tag(ModItemTags.FOSSIL_SEEDS).add(ModItems.FERN_SEED_FOSSIL.get());
+        var restoredSeeds = tag(ModItemTags.RESTORED_SEEDS).add(ModItems.FERN_SEED.get());
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
             fossilSeeds.add(type.getFossilizedPlantSeedItem());
+            restoredSeeds.add(type.getPlantSeedItem());
         }
         tag(ModItemTags.FOSSIL_SAPLINGS).add(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModItems.PALM_SAPLING_FOSSIL.get(), ModItems.PALAE_SAPLING_FOSSIL.get(), ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModItems.TEMPSKYA_SAPLING_FOSSIL.get());
         tag(ModItemTags.DNA_INSECTS).add(PrehistoricEntityType.ARTHROPLEURA.dnaItem, PrehistoricEntityType.MEGANEURA.dnaItem, PrehistoricEntityType.NAUTILUS.dnaItem);
         tag(ModItemTags.DNA_LIMBLESS).add(PrehistoricEntityType.ALLIGATOR_GAR.dnaItem, PrehistoricEntityType.COELACANTH.dnaItem, PrehistoricEntityType.STURGEON.dnaItem);
         tag(ModItemTags.DNA_PLANTS).addTags(ModItemTags.FOSSIL_SEEDS, ModItemTags.FOSSIL_SAPLINGS);
         var allDNA = tag(ModItemTags.DNA);
+        var embryos = tag(ModItemTags.EMBRYOS);
         var allEgg = tag(ModItemTags.DINO_EGGS);
         var allFoot = tag(ModItemTags.FOOT_BONES);
         var allLeg = tag(ModItemTags.LEG_BONES);
@@ -44,6 +47,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
             if (type.dnaItem != null) {
                 allDNA.add(type.dnaItem);
+            }
+            if (type.embryoItem != null) {
+                embryos.add(type.embryoItem);
             }
             if (type.eggItem instanceof DinoEggItem || type.eggItem instanceof BirdEggItem) {
                 allEgg.add(type.eggItem);
@@ -78,6 +84,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModBlockTags.PALM_LOGS, ModItemTags.PALM_LOGS);
         copy(ModBlockTags.SIGILLARIA_LOGS, ModItemTags.SIGILLARIA_LOGS);
         copy(ModBlockTags.TEMPSKYA_LOGS, ModItemTags.TEMPSKYA_LOGS);
+        copy(ModBlockTags.FIGURINES, ModItemTags.FIGURINES);
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.fossil.fossil.block.custom_blocks;
 
+import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.block.entity.AnuBarrierBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.block.entity.SarcophagusBlockEntity;
@@ -10,6 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,6 +63,9 @@ public class SarcophagusBlock extends BaseEntityBlock {
                     blockEntity.setState(SarcophagusBlockEntity.STATE_UNLOCKED);
                     if (!player.isCreative()) {
                         itemStack.shrink(1);
+                    }
+                    if (!level.isClientSide) {
+                        ModTriggers.SCARAB_TRIGGER.trigger((ServerPlayer) player);
                     }
                 }
             } else if (blockEntity.getState() == SarcophagusBlockEntity.STATE_UNLOCKED) {

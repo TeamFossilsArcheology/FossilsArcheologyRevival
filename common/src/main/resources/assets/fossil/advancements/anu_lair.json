@@ -1,0 +1,24 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:anu_statue"
+    },
+    "title": {
+      "translate": "advancements.fossil.anu_lair.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.anu_lair.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "criteria": {
+    "entered_nether": {
+      "trigger": "fossil:changed_dimension",
+      "conditions": {
+        "to": "fossil:anu_lair"
+      }
+    }
+  }
+}

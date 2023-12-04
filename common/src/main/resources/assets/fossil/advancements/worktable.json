@@ -1,0 +1,29 @@
+{
+  "display": {
+    "icon": {
+      "item": "fossil:worktable"
+    },
+    "title": {
+      "translate": "advancements.fossil.worktable.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.worktable.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true
+  },
+  "parent": "fossil:broken_sword",
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "fossil:worktable"
+          }
+        ]
+      }
+    }
+  }
+}
