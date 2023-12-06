@@ -153,6 +153,13 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CORDAITES_SAPLING.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.CORDAITES_TRAPDOOR.get());
 
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.MUTANT_TREE_DOOR.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.MUTANT_TREE_LEAVES.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.MUTANT_TREE_SAPLING.get());
+        RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.MUTANT_TREE_TRAPDOOR.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.MUTANT_TREE_TUMOR.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.MUTANT_TREE_VINE.get());
+
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.PALM_DOOR.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.PALM_LEAVES.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.PALM_SAPLING.get());

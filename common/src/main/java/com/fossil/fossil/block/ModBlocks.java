@@ -216,6 +216,42 @@ public class ModBlocks {
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<SaplingBlock> CORDAITES_SAPLING = registerBlock("cordaites_sapling",
             () -> new SaplingBlock(new CordaitesTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistrySupplier<Block> MUTANT_TREE_PLANKS = registerBlock("mutant_tree_planks",
+            () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<StairBlock> MUTANT_TREE_STAIRS = registerBlock("mutant_tree_stairs",
+            () -> new StairBlock(ModBlocks.MUTANT_TREE_PLANKS.get().defaultBlockState(),
+                    BlockBehaviour.Properties.of(Material.WOOD).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<SlabBlock> MUTANT_TREE_SLAB = registerBlock("mutant_tree_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_SLAB).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceBlock> MUTANT_TREE_FENCE = registerBlock("mutant_tree_fence",
+            () -> new FenceBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<FenceGateBlock> MUTANT_TREE_FENCE_GATE = registerBlock("mutant_tree_fence_gate",
+            () -> new FenceGateBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_FENCE_GATE).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<DoorBlock> MUTANT_TREE_DOOR = registerBlock("mutant_tree_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_DOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<TrapDoorBlock> MUTANT_TREE_TRAPDOOR = registerBlock("mutant_tree_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_TRAPDOOR).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<WoodButtonBlock> MUTANT_TREE_BUTTON = registerBlock("mutant_tree_button",
+            () -> new WoodButtonBlock(BlockBehaviour.Properties.copy(Blocks.SPRUCE_BUTTON).strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<PressurePlateBlock> MUTANT_TREE_PRESSURE_PLATE = registerBlock("mutant_tree_pressure_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, BlockBehaviour.Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
+                    .strength(1f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<RotatedPillarBlock> MUTANT_TREE_LOG = registerBlock("mutant_tree_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> MUTANT_TREE_WOOD = registerBlock("mutant_tree_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_WOOD)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_MUTANT_TREE_LOG = registerBlock("stripped_mutant_tree_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+    public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_MUTANT_TREE_WOOD = registerBlock("stripped_mutant_tree_wood",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+    public static final RegistrySupplier<LeavesBlock> MUTANT_TREE_LEAVES = registerBlock("mutant_tree_leaves",
+            () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
+    public static final RegistrySupplier<Block> MUTANT_TREE_SAPLING = registerBlock("mutant_tree_sapling",
+            () -> new SaplingBlock(new MutantTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
+    public static final RegistrySupplier<Block> MUTANT_TREE_TUMOR = registerBlock("mutant_tree_tumor",
+            () -> new MutantTreeTumor(BlockBehaviour.Properties.of(Material.LEAVES).noOcclusion().dynamicShape().sound(SoundType.GRASS)));
+    public static final RegistrySupplier<Block> MUTANT_TREE_VINE = registerBlock("mutant_tree_vine",
+            () -> new VineBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().randomTicks().strength(0.2f).sound(SoundType.VINE)));
     public static final RegistrySupplier<Block> PALM_PLANKS = registerBlock("palm_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<StairBlock> PALM_STAIRS = registerBlock("palm_stairs",

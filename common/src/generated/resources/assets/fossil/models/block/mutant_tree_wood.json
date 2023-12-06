@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "side": "fossil:block/mutant_tree_log",
+    "end": "fossil:block/mutant_tree_log"
+  }
+}

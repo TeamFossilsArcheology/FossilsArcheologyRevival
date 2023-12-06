@@ -1,5 +1,6 @@
 package com.fossil.fossil.block.custom_blocks;
 
+import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.entity.CultureVatBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
@@ -57,6 +58,8 @@ public class CultureVatBlock extends CustomEntityBlock {
                 if (level.getBlockState(pos.above()).getMaterial().isReplaceable()) {
                     level.setBlockAndUpdate(pos.above(), blockState.setValue(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER));
                 }
+            } else if (blockEntity.getBlockState().getValue(EMBRYO) == EmbryoType.TREE) {
+                level.setBlockAndUpdate(pos, ModBlocks.MUTANT_TREE_SAPLING.get().defaultBlockState());
             } else {
                 if (!level.dimensionType().ultraWarm()) {
                     level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
@@ -115,6 +118,7 @@ public class CultureVatBlock extends CustomEntityBlock {
     public enum EmbryoType implements StringRepresentable {
         GENERIC("generic"),
         PLANT("plant"),
+        TREE("tree"),
         LIMBLESS("limbless"),
         INSECT("insect");
 

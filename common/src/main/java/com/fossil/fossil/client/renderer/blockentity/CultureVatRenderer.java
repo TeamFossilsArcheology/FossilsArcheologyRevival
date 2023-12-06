@@ -34,17 +34,18 @@ public class CultureVatRenderer implements BlockEntityRenderer<BlockEntity> {
             poseStack.translate(0, 0.5F + bob, 0);
             poseStack.scale(0.5F, 0.5F, 0.5F);
             poseStack.mulPose(Vector3f.YP.rotationDegrees(rot));
-            if (blockEntity.getBlockState().getValue(CultureVatBlock.EMBRYO) == CultureVatBlock.EmbryoType.GENERIC) {
+            CultureVatBlock.EmbryoType embryoType = blockEntity.getBlockState().getValue(CultureVatBlock.EMBRYO);
+            if (embryoType == CultureVatBlock.EmbryoType.GENERIC) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_GENERIC));
                 this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
-            } else if (blockEntity.getBlockState().getValue(CultureVatBlock.EMBRYO) == CultureVatBlock.EmbryoType.PLANT) {
+            } else if (embryoType == CultureVatBlock.EmbryoType.PLANT || embryoType == CultureVatBlock.EmbryoType.TREE) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoPlantModel.TEXTURE));
                 poseStack.translate(0, 0.3, 0);
                 this.modelPlant.render(poseStack, c, packedLight, packedOverlay);
-            } else if (blockEntity.getBlockState().getValue(CultureVatBlock.EMBRYO) == CultureVatBlock.EmbryoType.INSECT) {
+            } else if (embryoType == CultureVatBlock.EmbryoType.INSECT) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_INSECT));
                 this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
-            } else if (blockEntity.getBlockState().getValue(CultureVatBlock.EMBRYO) == CultureVatBlock.EmbryoType.LIMBLESS) {
+            } else if (embryoType == CultureVatBlock.EmbryoType.LIMBLESS) {
                 var c = bufferSource.getBuffer(RenderType.entityCutout(EmbryoGenericModel.TEXTURE_LIMBLESS));
                 this.modelGeneric.render(poseStack, c, packedLight, packedOverlay);
             }

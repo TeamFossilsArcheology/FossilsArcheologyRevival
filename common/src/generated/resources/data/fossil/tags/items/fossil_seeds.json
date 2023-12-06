@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "fossil:fossil_seed_fern",
     "fossil:fossil_seed_bennettitales",
     "fossil:fossil_seed_cephalotaxus",
     "fossil:fossil_seed_crataegus",

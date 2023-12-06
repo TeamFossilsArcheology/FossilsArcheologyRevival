@@ -133,6 +133,23 @@ public class ModBlockStateProvider extends BlockStateProvider {
             leavesBlock(ModBlocks.CORDAITES_LEAVES.get());
             crossBlock(ModBlocks.CORDAITES_SAPLING.get());
 
+            ResourceLocation mutantTree = blockTexture(ModBlocks.MUTANT_TREE_PLANKS.get());
+            simpleBlock(ModBlocks.MUTANT_TREE_PLANKS.get());
+            stairsBlock(ModBlocks.MUTANT_TREE_STAIRS.get(), mutantTree);
+            slabBlock(ModBlocks.MUTANT_TREE_SLAB.get(), mutantTree);
+            fenceBlock(ModBlocks.MUTANT_TREE_FENCE.get(), mutantTree);
+            fenceGateBlock(ModBlocks.MUTANT_TREE_FENCE_GATE.get(), mutantTree);
+            doorBlock(ModBlocks.MUTANT_TREE_DOOR.get());
+            trapdoorBlock(ModBlocks.MUTANT_TREE_TRAPDOOR.get());
+            buttonBlock(ModBlocks.MUTANT_TREE_BUTTON.get(), mutantTree);
+            pressurePlateBlock(ModBlocks.MUTANT_TREE_PRESSURE_PLATE.get(), mutantTree);
+            logBlock(ModBlocks.MUTANT_TREE_LOG.get());
+            woodBlock(ModBlocks.MUTANT_TREE_WOOD.get(), ModBlocks.MUTANT_TREE_LOG.get());
+            logBlock(ModBlocks.STRIPPED_MUTANT_TREE_LOG.get());
+            woodBlock(ModBlocks.STRIPPED_MUTANT_TREE_WOOD.get(), ModBlocks.STRIPPED_MUTANT_TREE_LOG.get());
+            leavesBlock(ModBlocks.MUTANT_TREE_LEAVES.get());
+            crossBlock(ModBlocks.MUTANT_TREE_SAPLING.get());
+
             ResourceLocation palm = blockTexture(ModBlocks.PALM_PLANKS.get());
             simpleBlock(ModBlocks.PALM_PLANKS.get());
             stairsBlock(ModBlocks.PALM_STAIRS.get(), palm);

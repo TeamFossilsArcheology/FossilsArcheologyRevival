@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/mutant_tree_tumor"
+    },
+    "facing=south": {
+      "model": "fossil:block/mutant_tree_tumor",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/mutant_tree_tumor",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "fossil:block/mutant_tree_tumor",
+      "y": 90
+    }
+  }
+}

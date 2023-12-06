@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "planks",
+  "ingredients": [
+    {
+      "tag": "fossil:mutant_tree_logs"
+    }
+  ],
+  "result": {
+    "item": "fossil:mutant_tree_planks",
+    "count": 4
+  }
+}

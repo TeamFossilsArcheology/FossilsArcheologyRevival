@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:fern_seed",
+    "fossil:seed_bennettitales",
+    "fossil:seed_cephalotaxus",
+    "fossil:seed_crataegus",
+    "fossil:seed_cyathea",
+    "fossil:seed_dictyophyllum",
+    "fossil:seed_dillhoffia",
+    "fossil:seed_dipteris",
+    "fossil:seed_duisbergia",
+    "fossil:seed_ephedra",
+    "fossil:seed_florissantia",
+    "fossil:seed_foozia",
+    "fossil:seed_horsetail",
+    "fossil:seed_licopodiophyta",
+    "fossil:seed_osmunda",
+    "fossil:seed_sagenopteris",
+    "fossil:seed_sarracenia",
+    "fossil:seed_vaccinium",
+    "fossil:seed_welwitschia",
+    "fossil:seed_zamites"
+  ]
+}

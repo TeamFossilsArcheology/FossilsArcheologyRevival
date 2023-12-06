@@ -9,6 +9,7 @@ public class ModFeaturesImpl {
         Registry.register(Registry.FEATURE, ASH_DISK.location(), ASH_DISK.feature());
         Registry.register(Registry.FEATURE, CALAMITES_TREE.location(), CALAMITES_TREE.feature());
         Registry.register(Registry.FEATURE, CORDAITES_TREE.location(), CORDAITES_TREE.feature());
+        Registry.register(Registry.FEATURE, MUTANT_TREE.location(), MUTANT_TREE.feature());
         Registry.register(Registry.FEATURE, PALM_TREE.location(), PALM_TREE.feature());
         Registry.register(Registry.FEATURE, SIGILLARIA_TREE.location(), SIGILLARIA_TREE.feature());
         Registry.register(Registry.FEATURE, TEMPSKYA_TREE.location(), TEMPSKYA_TREE.feature());

@@ -40,6 +40,7 @@ import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType.*;
 public class ModRecipeProvider extends RecipeProvider {
     public static final BlockFamily CALAMITES_PLANKS = new BlockFamily.Builder(ModBlocks.CALAMITES_PLANKS.get()).button(ModBlocks.CALAMITES_BUTTON.get()).fence(ModBlocks.CALAMITES_FENCE.get()).fenceGate(ModBlocks.CALAMITES_FENCE_GATE.get()).pressurePlate(ModBlocks.CALAMITES_PRESSURE_PLATE.get()).slab(ModBlocks.CALAMITES_SLAB.get()).stairs(ModBlocks.CALAMITES_STAIRS.get()).door(ModBlocks.CALAMITES_DOOR.get()).trapdoor(ModBlocks.CALAMITES_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily CORDAITES_PLANKS = new BlockFamily.Builder(ModBlocks.CORDAITES_PLANKS.get()).button(ModBlocks.CORDAITES_BUTTON.get()).fence(ModBlocks.CORDAITES_FENCE.get()).fenceGate(ModBlocks.CORDAITES_FENCE_GATE.get()).pressurePlate(ModBlocks.CORDAITES_PRESSURE_PLATE.get()).slab(ModBlocks.CORDAITES_SLAB.get()).stairs(ModBlocks.CORDAITES_STAIRS.get()).door(ModBlocks.CORDAITES_DOOR.get()).trapdoor(ModBlocks.CORDAITES_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
+    public static final BlockFamily MUTANT_TREE_PLANKS = new BlockFamily.Builder(ModBlocks.MUTANT_TREE_PLANKS.get()).button(ModBlocks.MUTANT_TREE_BUTTON.get()).fence(ModBlocks.MUTANT_TREE_FENCE.get()).fenceGate(ModBlocks.MUTANT_TREE_FENCE_GATE.get()).pressurePlate(ModBlocks.MUTANT_TREE_PRESSURE_PLATE.get()).slab(ModBlocks.MUTANT_TREE_SLAB.get()).stairs(ModBlocks.MUTANT_TREE_STAIRS.get()).door(ModBlocks.MUTANT_TREE_DOOR.get()).trapdoor(ModBlocks.MUTANT_TREE_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily PALM_PLANKS = new BlockFamily.Builder(ModBlocks.PALM_PLANKS.get()).button(ModBlocks.PALM_BUTTON.get()).fence(ModBlocks.PALM_FENCE.get()).fenceGate(ModBlocks.PALM_FENCE_GATE.get()).pressurePlate(ModBlocks.PALM_PRESSURE_PLATE.get()).slab(ModBlocks.PALM_SLAB.get()).stairs(ModBlocks.PALM_STAIRS.get()).door(ModBlocks.PALM_DOOR.get()).trapdoor(ModBlocks.PALM_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily SIGILLARIA_PLANKS = new BlockFamily.Builder(ModBlocks.SIGILLARIA_PLANKS.get()).button(ModBlocks.SIGILLARIA_BUTTON.get()).fence(ModBlocks.SIGILLARIA_FENCE.get()).fenceGate(ModBlocks.SIGILLARIA_FENCE_GATE.get()).pressurePlate(ModBlocks.SIGILLARIA_PRESSURE_PLATE.get()).slab(ModBlocks.SIGILLARIA_SLAB.get()).stairs(ModBlocks.SIGILLARIA_STAIRS.get()).door(ModBlocks.SIGILLARIA_DOOR.get()).trapdoor(ModBlocks.SIGILLARIA_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily TEMPSKYA_PLANKS = new BlockFamily.Builder(ModBlocks.TEMPSKYA_PLANKS.get()).button(ModBlocks.TEMPSKYA_BUTTON.get()).fence(ModBlocks.TEMPSKYA_FENCE.get()).fenceGate(ModBlocks.TEMPSKYA_FENCE_GATE.get()).pressurePlate(ModBlocks.TEMPSKYA_PRESSURE_PLATE.get()).slab(ModBlocks.TEMPSKYA_SLAB.get()).stairs(ModBlocks.TEMPSKYA_STAIRS.get()).door(ModBlocks.TEMPSKYA_DOOR.get()).trapdoor(ModBlocks.TEMPSKYA_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
@@ -141,21 +142,25 @@ public class ModRecipeProvider extends RecipeProvider {
 
             generateFamilyRecipes(CALAMITES_PLANKS, consumer);
             generateFamilyRecipes(CORDAITES_PLANKS, consumer);
+            generateFamilyRecipes(MUTANT_TREE_PLANKS, consumer);
             generateFamilyRecipes(PALM_PLANKS, consumer);
             generateFamilyRecipes(SIGILLARIA_PLANKS, consumer);
             generateFamilyRecipes(TEMPSKYA_PLANKS, consumer);
             RecipeProvider.planksFromLogs(consumer, ModBlocks.CALAMITES_PLANKS.get(), ModItemTags.CALAMITES_LOGS);
             RecipeProvider.planksFromLogs(consumer, ModBlocks.CORDAITES_PLANKS.get(), ModItemTags.CORDAITES_LOGS);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.MUTANT_TREE_PLANKS.get(), ModItemTags.MUTANT_TREE_LOGS);
             RecipeProvider.planksFromLogs(consumer, ModBlocks.PALM_PLANKS.get(), ModItemTags.PALM_LOGS);
             RecipeProvider.planksFromLogs(consumer, ModBlocks.SIGILLARIA_PLANKS.get(), ModItemTags.SIGILLARIA_LOGS);
             RecipeProvider.planksFromLogs(consumer, ModBlocks.TEMPSKYA_PLANKS.get(), ModItemTags.TEMPSKYA_LOGS);
             RecipeProvider.woodFromLogs(consumer, ModBlocks.CALAMITES_WOOD.get(), ModBlocks.CALAMITES_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.CORDAITES_WOOD.get(), ModBlocks.CORDAITES_LOG.get());
+            RecipeProvider.woodFromLogs(consumer, ModBlocks.MUTANT_TREE_WOOD.get(), ModBlocks.MUTANT_TREE_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.PALM_WOOD.get(), ModBlocks.PALM_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.SIGILLARIA_WOOD.get(), ModBlocks.SIGILLARIA_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.TEMPSKYA_WOOD.get(), ModBlocks.TEMPSKYA_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_CALAMITES_WOOD.get(), ModBlocks.STRIPPED_CALAMITES_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_CORDAITES_WOOD.get(), ModBlocks.STRIPPED_CORDAITES_LOG.get());
+            RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_MUTANT_TREE_WOOD.get(), ModBlocks.STRIPPED_MUTANT_TREE_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_PALM_WOOD.get(), ModBlocks.STRIPPED_PALM_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_SIGILLARIA_WOOD.get(), ModBlocks.STRIPPED_SIGILLARIA_LOG.get());
             RecipeProvider.woodFromLogs(consumer, ModBlocks.STRIPPED_TEMPSKYA_WOOD.get(), ModBlocks.STRIPPED_TEMPSKYA_LOG.get());
@@ -191,6 +196,7 @@ public class ModRecipeProvider extends RecipeProvider {
                     .addOutput(ModItems.FERN_SEED_FOSSIL.get(), 5)
                     .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5)
+                    .addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.PALAE_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)

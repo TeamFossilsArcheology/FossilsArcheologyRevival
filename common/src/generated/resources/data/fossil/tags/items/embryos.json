@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:syringe_cow",
+    "fossil:syringe_donkey",
+    "fossil:syringe_horse",
+    "fossil:syringe_llama",
+    "fossil:syringe_pig",
+    "fossil:syringe_polarbear",
+    "fossil:syringe_rabbit",
+    "fossil:syringe_sheep",
+    "fossil:syringe_elasmotherium",
+    "fossil:syringe_mammoth",
+    "fossil:syringe_megaloceros",
+    "fossil:syringe_platybelodon",
+    "fossil:syringe_quagga",
+    "fossil:syringe_smilodon"
+  ]
+}

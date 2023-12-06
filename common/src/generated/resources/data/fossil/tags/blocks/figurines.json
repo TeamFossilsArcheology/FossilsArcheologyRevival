@@ -1,0 +1,20 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:figurine_enderman_destroyed",
+    "fossil:figurine_enderman_restored",
+    "fossil:figurine_enderman_pristine",
+    "fossil:figurine_piglin_destroyed",
+    "fossil:figurine_piglin_restored",
+    "fossil:figurine_piglin_pristine",
+    "fossil:figurine_skeleton_destroyed",
+    "fossil:figurine_skeleton_restored",
+    "fossil:figurine_skeleton_pristine",
+    "fossil:figurine_steve_destroyed",
+    "fossil:figurine_steve_restored",
+    "fossil:figurine_steve_pristine",
+    "fossil:figurine_zombie_destroyed",
+    "fossil:figurine_zombie_restored",
+    "fossil:figurine_zombie_pristine"
+  ]
+}

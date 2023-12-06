@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bark",
+  "pattern": [
+    "##",
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "fossil:mutant_tree_log"
+    }
+  },
+  "result": {
+    "item": "fossil:mutant_tree_wood",
+    "count": 3
+  }
+}

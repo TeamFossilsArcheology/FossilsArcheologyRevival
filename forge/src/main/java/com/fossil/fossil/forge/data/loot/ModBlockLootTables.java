@@ -35,7 +35,8 @@ import java.util.List;
 public class ModBlockLootTables extends BlockLoot {
 
     private static final List<Block> NO_TABLE = List.of(ModBlocks.ANU_PORTAL.get(), ModBlocks.SARCOPHAGUS.get(), ModBlocks.TAR.get(),
-            ModBlocks.ANU_STATUE.get(), ModBlocks.ANUBITE_STATUE.get(), ModBlocks.ANCIENT_CHEST.get());
+            ModBlocks.ANU_STATUE.get(), ModBlocks.ANUBITE_STATUE.get(), ModBlocks.ANCIENT_CHEST.get(), ModBlocks.ANU_BARRIER.get(),
+            ModBlocks.MUTANT_TREE_TUMOR.get());
     private final List<Block> tableDone = new ArrayList<>();
 
     @Override
@@ -49,6 +50,7 @@ public class ModBlockLootTables extends BlockLoot {
 
         ModBlocks.CALAMITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.CALAMITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
         ModBlocks.CORDAITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.CORDAITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        ModBlocks.MUTANT_TREE_LEAVES.ifPresent(block -> addCustom(block, createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(Items.STICK)))));
         ModBlocks.PALM_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.PALM_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
         ModBlocks.SIGILLARIA_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.SIGILLARIA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
 

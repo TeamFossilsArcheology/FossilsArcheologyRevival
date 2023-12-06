@@ -13,6 +13,7 @@ public class ModFeatures {
     public static final Tuple<AshDiskConfiguration, AshDiskFeature> ASH_DISK = create("ask_disk", new AshDiskFeature());
     public static final Tuple<NoneFeatureConfiguration, CalamitesTreeFeature> CALAMITES_TREE = create("calamites_tree", new CalamitesTreeFeature());
     public static final Tuple<NoneFeatureConfiguration, CordaitesTreeFeature> CORDAITES_TREE = create("cordaites_tree", new CordaitesTreeFeature());
+    public static final Tuple<NoneFeatureConfiguration, MutantTreeFeature> MUTANT_TREE = create("mutant_tree", new MutantTreeFeature());
     public static final Tuple<NoneFeatureConfiguration, PalmTreeFeature> PALM_TREE = create("palm_tree", new PalmTreeFeature());
     public static final Tuple<NoneFeatureConfiguration, SigillariaTreeFeature> SIGILLARIA_TREE = create("sigillaria_tree", new SigillariaTreeFeature());
     public static final Tuple<NoneFeatureConfiguration, TempskyaTreeFeature> TEMPSKYA_TREE = create("tempskya_tree", new TempskyaTreeFeature());

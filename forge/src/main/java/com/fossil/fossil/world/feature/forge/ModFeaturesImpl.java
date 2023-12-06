@@ -14,6 +14,7 @@ public class ModFeaturesImpl {
         ASH_DISK.feature().setRegistryName(ASH_DISK.location());
         CALAMITES_TREE.feature().setRegistryName(CALAMITES_TREE.location());
         CORDAITES_TREE.feature().setRegistryName(CORDAITES_TREE.location());
+        MUTANT_TREE.feature().setRegistryName(MUTANT_TREE.location());
         PALM_TREE.feature().setRegistryName(PALM_TREE.location());
         SIGILLARIA_TREE.feature().setRegistryName(SIGILLARIA_TREE.location());
         TEMPSKYA_TREE.feature().setRegistryName(TEMPSKYA_TREE.location());
@@ -27,6 +28,7 @@ public class ModFeaturesImpl {
         registry.register(ASH_DISK.feature());
         registry.register(CALAMITES_TREE.feature());
         registry.register(CORDAITES_TREE.feature());
+        registry.register(MUTANT_TREE.feature());
         registry.register(PALM_TREE.feature());
         registry.register(SIGILLARIA_TREE.feature());
         registry.register(TEMPSKYA_TREE.feature());

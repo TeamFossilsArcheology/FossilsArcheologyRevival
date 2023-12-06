@@ -1,28 +1,22 @@
 package com.fossil.fossil.block.entity.fabric;
 
-import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.custom_blocks.CultureVatBlock;
 import com.fossil.fossil.block.entity.CultureVatBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.fabric.block.entity.FabricContainerBlockEntity;
 import com.fossil.fossil.inventory.CultureVatMenu;
-import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.recipe.WorktableRecipe;
+import com.fossil.fossil.tags.ModItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
-import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -37,10 +31,6 @@ public class CultureVatBlockEntityImpl extends FabricContainerBlockEntity implem
     private static final int[] SLOTS_FOR_UP = new int[]{CultureVatMenu.INPUT_SLOT_ID}; //Input
     private static final int[] SLOTS_FOR_SIDES = new int[]{CultureVatMenu.FUEL_SLOT_ID, CultureVatMenu.OUTPUT_SLOT_ID}; //Fuel+Output
     private static final int[] SLOTS_FOR_DOWN = new int[]{CultureVatMenu.OUTPUT_SLOT_ID}; //Output
-    private static final ResourceKey<? extends Registry<Item>> key = ModItems.ITEMS.getRegistrar().key();
-    public static final TagKey<Item> LIMBLESS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_limbless"));
-    public static final TagKey<Item> INSECTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_insects"));
-    public static final TagKey<Item> PLANTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_plants"));
     private final ContainerData dataAccess = new ContainerData() {
 
         @Override
@@ -136,7 +126,7 @@ public class CultureVatBlockEntityImpl extends FabricContainerBlockEntity implem
             setChanged(level, pos, state);
         }
 
-        if (false && cookingProgress == 3001 && new Random().nextInt(100) < 20) {
+        if (cookingProgress == 3001 && new Random().nextInt(100) < 20) {
             ModBlocks.CULTURE_VAT.get().onFailedCultivation(level, pos);
         }
     }
@@ -144,11 +134,13 @@ public class CultureVatBlockEntityImpl extends FabricContainerBlockEntity implem
     public CultureVatBlock.EmbryoType getDNAType() {
         ItemStack input = items.get(CultureVatMenu.INPUT_SLOT_ID);
         if (!input.isEmpty()) {
-            if (input.is(PLANTS)) {
+            if (input.is(ModItemTags.FOSSIL_SAPLINGS)) {
+                return CultureVatBlock.EmbryoType.TREE;
+            } else if (input.is(ModItemTags.DNA_PLANTS)) {
                 return CultureVatBlock.EmbryoType.PLANT;
-            } else if (input.is(LIMBLESS)) {
+            } else if (input.is(ModItemTags.DNA_LIMBLESS)) {
                 return CultureVatBlock.EmbryoType.LIMBLESS;
-            } else if (input.is(INSECTS)) {
+            } else if (input.is(ModItemTags.DNA_INSECTS)) {
                 return CultureVatBlock.EmbryoType.INSECT;
             }
         }

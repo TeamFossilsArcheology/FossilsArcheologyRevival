@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "fossil:block/mutant_tree_sapling"
+  }
+}

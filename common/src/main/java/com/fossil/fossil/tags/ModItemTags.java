@@ -13,6 +13,7 @@ public class ModItemTags {
 
     public static final TagKey<Item> CALAMITES_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "calamites_logs"));
     public static final TagKey<Item> CORDAITES_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "cordaites_logs"));
+    public static final TagKey<Item> MUTANT_TREE_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "mutant_tree_logs"));
     public static final TagKey<Item> PALM_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "palm_logs"));
     public static final TagKey<Item> SIGILLARIA_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "sigillaria_logs"));
     public static final TagKey<Item> TEMPSKYA_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "tempskya_logs"));
@@ -27,6 +28,7 @@ public class ModItemTags {
     public static final TagKey<Item> DNA_INSECTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_insects"));
     public static final TagKey<Item> DNA_LIMBLESS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_limbless"));
     public static final TagKey<Item> DNA_PLANTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_plants"));
+    public static final TagKey<Item> DNA_TREES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dna_trees"));
     public static final TagKey<Item> FOOT_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_foot"));
     public static final TagKey<Item> LEG_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_leg"));
     public static final TagKey<Item> RIBCAGE_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_ribcage"));

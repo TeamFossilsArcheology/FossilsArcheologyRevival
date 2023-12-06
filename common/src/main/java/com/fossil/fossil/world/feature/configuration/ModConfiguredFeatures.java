@@ -44,6 +44,8 @@ public class ModConfiguredFeatures {
             NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> CORDAITES_TREE = register("cordaites_tree", ModFeatures.CORDAITES_TREE.feature(),
             NoneFeatureConfiguration.INSTANCE);
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> MUTANT_TREE = register("mutant_tree", ModFeatures.MUTANT_TREE.feature(),
+            NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> PALM_TREE = register("palm_tree", ModFeatures.PALM_TREE.feature(),
             NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> SIGILLARIA_TREE = register("sigillaria_tree", ModFeatures.SIGILLARIA_TREE.feature(),

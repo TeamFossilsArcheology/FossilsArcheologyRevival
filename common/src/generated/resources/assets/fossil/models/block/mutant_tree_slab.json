@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/slab",
+  "textures": {
+    "side": "fossil:block/mutant_tree_planks",
+    "bottom": "fossil:block/mutant_tree_planks",
+    "top": "fossil:block/mutant_tree_planks"
+  }
+}

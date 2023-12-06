@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "fossil:block/mutant_tree_leaves"
+  }
+}

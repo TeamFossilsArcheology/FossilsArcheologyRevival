@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "wooden_pressure_plate",
+  "pattern": [
+    "##"
+  ],
+  "key": {
+    "#": {
+      "item": "fossil:mutant_tree_planks"
+    }
+  },
+  "result": {
+    "item": "fossil:mutant_tree_pressure_plate"
+  }
+}
