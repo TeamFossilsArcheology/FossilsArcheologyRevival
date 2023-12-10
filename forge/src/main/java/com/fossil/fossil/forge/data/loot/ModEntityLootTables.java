@@ -49,9 +49,10 @@ public class ModEntityLootTables extends EntityLoot {
         var leg = uniformLoot(type.legBoneItem, 0, 2);
         var rib = uniformLoot(type.ribcageBoneItem, 0, 1);
         var skull = uniformLoot(type.skullBoneItem, 0, 1);
+        var tail = uniformLoot(type.tailBoneItem, 0, 1);
         var unique = uniformLoot(type.uniqueBoneItem, 0, 2);
         var vertebrae = uniformLoot(type.vertebraeBoneItem, 0, 5);
-        return LootTable.lootTable().withPool(meat).withPool(arm).withPool(foot).withPool(leg).withPool(rib).withPool(skull).withPool(unique).withPool(vertebrae);
+        return LootTable.lootTable().withPool(meat).withPool(arm).withPool(foot).withPool(leg).withPool(rib).withPool(skull).withPool(tail).withPool(unique).withPool(vertebrae);
     }
 
     private LootPool.Builder uniformLoot(Item item, int min, int max) {

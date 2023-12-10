@@ -37,10 +37,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         var allDNA = tag(ModItemTags.DNA);
         var embryos = tag(ModItemTags.EMBRYOS);
         var allEgg = tag(ModItemTags.DINO_EGGS);
+        var allArm = tag(ModItemTags.ARM_BONES);
         var allFoot = tag(ModItemTags.FOOT_BONES);
         var allLeg = tag(ModItemTags.LEG_BONES);
         var allRibcage = tag(ModItemTags.RIBCAGE_BONES);
         var allSkull = tag(ModItemTags.SKULL_BONES);
+        var allTails = tag(ModItemTags.TAIL_BONES);
         var allUnique = tag(ModItemTags.UNIQUE_BONES);
         var allVertebrae = tag(ModItemTags.VERTEBRAE_BONES);
         var uncookedMeat = tag(ModItemTags.UNCOOKED_MEAT);
@@ -54,6 +56,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             if (type.eggItem instanceof DinoEggItem || type.eggItem instanceof BirdEggItem) {
                 allEgg.add(type.eggItem);
             }
+            if (type.armBoneItem != null) {
+                allArm.add(type.armBoneItem);
+            }
             if (type.footBoneItem != null) {
                 allFoot.add(type.footBoneItem);
             }
@@ -66,6 +71,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             if (type.skullBoneItem != null) {
                 allSkull.add(type.skullBoneItem);
             }
+            if (type.tailBoneItem != null) {
+                allTails.add(type.tailBoneItem);
+            }
             if (type.uniqueBoneItem != null) {
                 allUnique.add(type.uniqueBoneItem);
             }
@@ -77,7 +85,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             }
         }
         tag(ModItemTags.COOKABLE_EGGS).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);
-        tag(ModItemTags.ALL_BONES).addTags(ModItemTags.FOOT_BONES, ModItemTags.LEG_BONES, ModItemTags.RIBCAGE_BONES, ModItemTags.SKULL_BONES, ModItemTags.UNIQUE_BONES, ModItemTags.VERTEBRAE_BONES);
+        tag(ModItemTags.ALL_BONES).addTags(ModItemTags.ARM_BONES, ModItemTags.FOOT_BONES, ModItemTags.LEG_BONES, ModItemTags.RIBCAGE_BONES, ModItemTags.SKULL_BONES, ModItemTags.TAIL_BONES, ModItemTags.UNIQUE_BONES, ModItemTags.VERTEBRAE_BONES);
         tag(ItemTags.MUSIC_DISCS).add(ModItems.RECORD_ANU.get(), ModItems.RECORD_BONES.get(), ModItems.RECORD_DISCOVERY.get(), ModItems.RECORD_SCARAB.get());
         copy(ModBlockTags.CALAMITES_LOGS, ModItemTags.CALAMITES_LOGS);
         copy(ModBlockTags.CORDAITES_LOGS, ModItemTags.CORDAITES_LOGS);

@@ -76,12 +76,13 @@ public class ModItemProvider extends ItemModelProvider {
             }
             for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
                 boneItem(Objects.requireNonNull(type.armBoneItem.getRegistryName()), type, "arm_bone");
-                boneItem(Objects.requireNonNull(type.legBoneItem.getRegistryName()), type, "leg_bone");
                 boneItem(Objects.requireNonNull(type.footBoneItem.getRegistryName()), type, "foot");
-                boneItem(Objects.requireNonNull(type.skullBoneItem.getRegistryName()), type, "skull");
+                boneItem(Objects.requireNonNull(type.legBoneItem.getRegistryName()), type, "leg_bone");
                 boneItem(Objects.requireNonNull(type.ribcageBoneItem.getRegistryName()), type, "ribcage");
-                boneItem(Objects.requireNonNull(type.vertebraeBoneItem.getRegistryName()), type, "vertebrae");
+                boneItem(Objects.requireNonNull(type.skullBoneItem.getRegistryName()), type, "skull");
+                boneItem(Objects.requireNonNull(type.tailBoneItem.getRegistryName()), type, "tail");
                 boneItem(Objects.requireNonNull(type.uniqueBoneItem.getRegistryName()), type, "unique");
+                boneItem(Objects.requireNonNull(type.vertebraeBoneItem.getRegistryName()), type, "vertebrae");
             }
         }
         if (plantItems) {

@@ -49,10 +49,6 @@ public class ModRecipes {
 
     public static void initRecipes() {
         for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
-                    .addOutput(Items.BONE_MEAL, 30)
-                    .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
             registerAnalyzer(new AnalyzerRecipe.Builder(type.armBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
@@ -61,7 +57,11 @@ public class ModRecipes {
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
                     .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.skullBoneItem)
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
                     .addOutput(type.dnaItem, 35));
@@ -69,11 +69,19 @@ public class ModRecipes {
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
                     .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.vertebraeBoneItem)
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.skullBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.tailBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
                     .addOutput(type.dnaItem, 35));
             registerAnalyzer(new AnalyzerRecipe.Builder(type.uniqueBoneItem)
+                    .addOutput(Items.BONE_MEAL, 30)
+                    .addOutput(Items.BONE, 35)
+                    .addOutput(type.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(type.vertebraeBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
                     .addOutput(type.dnaItem, 35));
@@ -164,7 +172,7 @@ public class ModRecipes {
     }
 
     private static void registerAnalyzer(AnalyzerRecipe.Builder recipe) {
-        ANALYZER_RECIPES.put(recipe.item.asItem(), recipe.build());
+        //ANALYZER_RECIPES.put(recipe.ingredient.asItem(), recipe.build());
     }
 
     private static void registerWorktable(ItemLike item, ItemLike output, ItemLike fuel) {

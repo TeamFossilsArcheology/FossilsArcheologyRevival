@@ -112,13 +112,14 @@ public enum PrehistoricEntityType {
     public Item embryoItem;
     public Item birdEggItem;
     public Item cultivatedBirdEggItem;
-    public Item legBoneItem;
     public Item armBoneItem;
     public Item footBoneItem;
-    public Item skullBoneItem;
+    public Item legBoneItem;
     public Item ribcageBoneItem;
-    public Item vertebraeBoneItem;
+    public Item skullBoneItem;
+    public Item tailBoneItem;
     public Item uniqueBoneItem;
+    public Item vertebraeBoneItem;
     public Item foodItem;
     public Item cookedFoodItem;
     public Item bucketItem;
@@ -162,6 +163,7 @@ public enum PrehistoricEntityType {
                 DinoBoneItem.registerItem("bone_leg", type, item -> type.legBoneItem = item);
                 DinoBoneItem.registerItem("bone_ribcage", type, item -> type.ribcageBoneItem = item);
                 DinoBoneItem.registerItem("bone_skull", type, item -> type.skullBoneItem = item);
+                DinoBoneItem.registerItem("bone_tail", type, item -> type.tailBoneItem = item);
                 DinoBoneItem.registerItem("bone_unique", type, item -> type.uniqueBoneItem = item);
                 DinoBoneItem.registerItem("bone_vertebrae", type, item -> type.vertebraeBoneItem = item);
             }

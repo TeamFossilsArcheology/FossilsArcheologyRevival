@@ -1,10 +1,12 @@
 {
   "replace": false,
   "values": [
+    "#fossil:bones_arm",
     "#fossil:bones_foot",
     "#fossil:bones_leg",
     "#fossil:bones_ribcage",
     "#fossil:bones_skull",
+    "#fossil:bones_tail",
     "#fossil:bones_unique",
     "#fossil:bones_vertebrae"
   ]

@@ -2,11 +2,11 @@ package com.fossil.fossil.forge.data.loot;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantType;
-import com.fossil.fossil.block.custom_blocks.FossilBlock;
 import com.fossil.fossil.block.custom_blocks.FourTallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.tags.ModItemTags;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
@@ -119,13 +119,14 @@ public class ModBlockLootTables extends BlockLoot {
                 lootItem(ModItems.BROKEN_HELMET.get(), weights[2]), lootItem(ModBlocks.SKULL_BLOCK.get(), weights[3]),
                 lootItem(ModItems.BIO_FOSSIL.get(), weights[4]), lootItem(ModItems.RELIC_SCRAP.get(), weights[5]),
                 lootItem(Items.BONE, weights[6]), lootItem(ModItems.PlANT_FOSSIL.get(), weights[7]),
-                DynamicLoot.dynamicEntry(FossilBlock.LEG_BONES).setWeight(weights[8]),
-                DynamicLoot.dynamicEntry(FossilBlock.ARM_BONES).setWeight(weights[9]),
-                DynamicLoot.dynamicEntry(FossilBlock.FOOT_BONES).setWeight(weights[10]),
-                DynamicLoot.dynamicEntry(FossilBlock.SKULL_BONES).setWeight(weights[11]),
-                DynamicLoot.dynamicEntry(FossilBlock.RIBCAGE_BONES).setWeight(weights[12]),
-                DynamicLoot.dynamicEntry(FossilBlock.VERTEBRAE_BONES).setWeight(weights[13]),
-                DynamicLoot.dynamicEntry(FossilBlock.UNIQUE_BONES).setWeight(weights[14]));
+                DynamicLoot.dynamicEntry(ModItemTags.LEG_BONES.location()).setWeight(weights[8]),
+                DynamicLoot.dynamicEntry(ModItemTags.ARM_BONES.location()).setWeight(weights[9]),
+                DynamicLoot.dynamicEntry(ModItemTags.FOOT_BONES.location()).setWeight(weights[10]),
+                DynamicLoot.dynamicEntry(ModItemTags.SKULL_BONES.location()).setWeight(weights[11]),
+                DynamicLoot.dynamicEntry(ModItemTags.RIBCAGE_BONES.location()).setWeight(weights[12]),
+                DynamicLoot.dynamicEntry(ModItemTags.VERTEBRAE_BONES.location()).setWeight(weights[13]),
+                DynamicLoot.dynamicEntry(ModItemTags.UNIQUE_BONES.location()).setWeight(weights[14]));
+        //TODO: Tail bones and fix this entire thing
     }
 
     private LootPoolSingletonContainer.Builder<?> lootItem(ItemLike item, int weight) {
