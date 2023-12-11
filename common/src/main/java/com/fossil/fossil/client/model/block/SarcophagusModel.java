@@ -8,109 +8,50 @@ import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
 
 public class SarcophagusModel {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/sarcophagus.png");
+    public static final ResourceLocation UNAWAKENED = new ResourceLocation(Fossil.MOD_ID, "textures/entity/sarcophagus.png");
+    public static final ResourceLocation AWAKENED = new ResourceLocation(Fossil.MOD_ID, "textures/entity/sarcophagus_awakened.png");
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();
-        PartDefinition root = meshDefinition.getRoot();
+        PartDefinition partdefinition = meshDefinition.getRoot();
+        PartDefinition root = partdefinition.addOrReplaceChild("root", CubeListBuilder.create(), PartPose.offset(0, 0, 6));
+        PartDefinition front = root.addOrReplaceChild("front", CubeListBuilder.create().texOffs(112, 0).addBox(0, 0, -4, 14, 24, 4), PartPose.offset(-7, 0, -10));
+        PartDefinition lid = front.addOrReplaceChild("lid", CubeListBuilder.create().texOffs(52, 32).addBox(0, -11, -4, 18, 24, 4), PartPose.offset(-2, -13, 0));
+        lid.addOrReplaceChild("top_front_roof", CubeListBuilder.create().texOffs(66, 14).addBox(-7, -2, -4, 14, 1, 4), PartPose.offset(9, -10, 0));
+        PartDefinition head = lid.addOrReplaceChild("head", CubeListBuilder.create().texOffs(111, 30).addBox(-4, -3, -1, 8, 8, 4), PartPose.offset(9, -4, -7));
+        PartDefinition nose = head.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(111, 43).addBox(-2, -0.5f, -6, 4, 5, 4), PartPose.offset(0, 0, 1));
+        nose.addOrReplaceChild("tooth_right", CubeListBuilder.create().texOffs(1, 34).addBox(-0.5f, 0, -0.5f, 1, 2, 1), PartPose.offset(2, 2.5f, -4.5f));
+        nose.addOrReplaceChild("tooth_left", CubeListBuilder.create().texOffs(1, 34).addBox(-0.5f, 0, -0.5f, 1, 2, 1), PartPose.offset(-2, 2.5f, -4.5f));
+        head.addOrReplaceChild("ear_right", CubeListBuilder.create().texOffs(129, 44).mirror().addBox(1.5f, -7, 2, 2, 4, 1).mirror(false), PartPose.ZERO);
+        head.addOrReplaceChild("ear_left", CubeListBuilder.create().texOffs(129, 44).addBox(-3.5f, -7, 2, 2, 4, 1), PartPose.ZERO);
+        PartDefinition scarab = lid.addOrReplaceChild("scarab", CubeListBuilder.create().texOffs(78, 27).addBox(-1.5f, -1, -2, 3, 2, 2), PartPose.offsetAndRotation(9, 8, -5, -1.5708f, -3.1416f, 0));
+        PartDefinition abdomen = scarab.addOrReplaceChild("abdomen", CubeListBuilder.create().texOffs(71, 21).addBox(-1.5f, -2, 0, 3, 2, 3), PartPose.offset(0, 1, 0));
+        PartDefinition elythra_right = abdomen.addOrReplaceChild("elythra_right", CubeListBuilder.create().texOffs(87, 21).mirror().addBox(-2, -1, 0, 2, 3, 4).mirror(false), PartPose.offsetAndRotation(0, -2, 0, 0, 0.0002f, 0.0002f));
+        PartDefinition wing1_right = elythra_right.addOrReplaceChild("wing1_right", CubeListBuilder.create().texOffs(61, 23).addBox(-2, 0, 0, 3, 0, 4), PartPose.ZERO);
+        wing1_right.addOrReplaceChild("wing2_right", CubeListBuilder.create().texOffs(63, 19).addBox(-1, 0, -3, 3, 0, 3), PartPose.offset(0, 0, 3.5f));
+        PartDefinition elythra_left = abdomen.addOrReplaceChild("elythra_left", CubeListBuilder.create().texOffs(87, 21).addBox(0, -1, 0, 2, 3, 4), PartPose.offset(0, -2, 0));
+        PartDefinition wing1_left = elythra_left.addOrReplaceChild("wing1_left", CubeListBuilder.create().texOffs(61, 23).mirror().addBox(-1, 0, 0, 3, 0, 4).mirror(false), PartPose.ZERO);
+        wing1_left.addOrReplaceChild("wing2_left", CubeListBuilder.create().texOffs(63, 19).mirror().addBox(-2, 0, -3, 3, 0, 3).mirror(false), PartPose.offset(0, 0, 3.5f));
+        abdomen.addOrReplaceChild("leg2_right", CubeListBuilder.create().texOffs(82, 19).addBox(-2, -0.5f, -0.5f, 3, 1, 1), PartPose.offsetAndRotation(-1.7f, -0.5f, 0.5f, 0, -0.0391f, 0));
+        abdomen.addOrReplaceChild("leg3_right", CubeListBuilder.create().texOffs(82, 19).addBox(-2, -0.5f, -0.5f, 3, 1, 1), PartPose.offsetAndRotation(-1.4f, -0.5f, 1.5f, 0, 0.4691f, 0));
+        abdomen.addOrReplaceChild("leg2_left", CubeListBuilder.create().texOffs(82, 19).mirror().addBox(-1, -0.5f, -0.5f, 3, 1, 1).mirror(false), PartPose.offsetAndRotation(1.7f, -0.5f, 0.5f, 0, 0.0391f, 0));
+        abdomen.addOrReplaceChild("leg3_left", CubeListBuilder.create().texOffs(82, 19).mirror().addBox(-1, -0.5f, -0.5f, 3, 1, 1).mirror(false), PartPose.offsetAndRotation(1.4f, -0.5f, 1.5f, 0, -0.4691f, 0));
+        scarab.addOrReplaceChild("leg1_right", CubeListBuilder.create().texOffs(82, 19).addBox(-2, -0.5f, -0.5f, 3, 1, 1), PartPose.offsetAndRotation(-1.5f, 0.5f, -0.5f, 0, -0.43f, 0));
+        scarab.addOrReplaceChild("leg1_left", CubeListBuilder.create().texOffs(82, 19).mirror().addBox(-1, -0.5f, -0.5f, 3, 1, 1).mirror(false), PartPose.offsetAndRotation(1.5f, 0.5f, -0.5f, 0, 0.43f, 0));
+        PartDefinition back = root.addOrReplaceChild("back", CubeListBuilder.create(), PartPose.ZERO);
+        PartDefinition top = back.addOrReplaceChild("top", CubeListBuilder.create().texOffs(0, 32).addBox(-9, -11, -6, 18, 24, 7), PartPose.offset(0, -13, 0));
+        top.addOrReplaceChild("top_back_roof", CubeListBuilder.create().texOffs(60, 0).addBox(-7, -2, -6, 14, 1, 11), PartPose.offset(0, -10, -4));
+        back.addOrReplaceChild("bottom", CubeListBuilder.create().texOffs(0, 0).addBox(-7, 0, -6, 14, 24, 7), PartPose.ZERO);
+        PartDefinition side = root.addOrReplaceChild("side", CubeListBuilder.create(), PartPose.ZERO);
+        side.addOrReplaceChild("side_bottom_left", CubeListBuilder.create().texOffs(97, 31).addBox(-1, 0, -6, 2, 24, 4), PartPose.offset(-6, 0, -4));
+        side.addOrReplaceChild("side_bottom_right", CubeListBuilder.create().texOffs(97, 31).mirror().addBox(-1, 0, -6, 2, 24, 4).mirror(false), PartPose.offset(6, 0, -4));
+        side.addOrReplaceChild("side_top_left", CubeListBuilder.create().texOffs(45, 0).addBox(-1, -11, -6, 3, 24, 4), PartPose.offset(-8, -13, -4));
+        side.addOrReplaceChild("side_top_right", CubeListBuilder.create().texOffs(45, 0).mirror().addBox(-2, -11, -6, 3, 24, 4).mirror(false), PartPose.offset(8, -13, -4));
+        side.addOrReplaceChild("side_bottom_middle", CubeListBuilder.create().texOffs(129, 51).addBox(-5, 0, -6, 10, 2, 6), PartPose.offset(0, 22, -4));
 
-        root.addOrReplaceChild("bottom_back", CubeListBuilder.create().texOffs(0, 105).addBox(-7, 0, 0, 14, 1, 7),
-                PartPose.offset(0, 23, 0));
-        PartDefinition hinge = root.addOrReplaceChild("hinge", CubeListBuilder.create().texOffs(0, 0).addBox(0, 0, 0, 0, 0, 0),
-                PartPose.offset(8, 0, 0));
-        PartDefinition doorMain = hinge.addOrReplaceChild("door_main", CubeListBuilder.create().texOffs(0, 0).addBox(0, 0, 0, 0, 0, 0),
-                PartPose.offset(-8, 0, 0));
-        PartDefinition face = doorMain.addOrReplaceChild("face", CubeListBuilder.create().texOffs(24, 38).addBox(-4, -8, -7.599999904632568f, 8, 8, 3),
-                PartPose.offset(0, -5, -3));
-        PartDefinition nose = face.addOrReplaceChild("nose", CubeListBuilder.create().texOffs(65, 0).addBox(-3, -2, -2, 6, 3, 2),
-                PartPose.offset(0, -1, -7.5f));
-        nose.addOrReplaceChild("tusk_right", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5f, -1, -0.5f, 1, 1, 1),
-                PartPose.offset(2.5f, -2, -1.5f));
-        nose.addOrReplaceChild("tusk_left", CubeListBuilder.create().texOffs(0, 0).addBox(-0.5f, -1, -0.5f, 1, 1, 1),
-                PartPose.offset(-2.5f, -2, -1.5f));
-        doorMain.addOrReplaceChild("bottom_front", CubeListBuilder.create().texOffs(0, 94).addBox(-7, 0, -7, 14, 1, 7),
-                PartPose.offset(0, 23, 0));
-        doorMain.addOrReplaceChild("ear_left", CubeListBuilder.create().texOffs(24, 17).mirror().addBox(-1, -6, -0.5f, 2, 6, 1),
-                PartPose.offset(-3, -13, -8.600000381469727f));
-        doorMain.addOrReplaceChild("ear_right", CubeListBuilder.create().texOffs(24, 17).addBox(-1, -6, -0.5f, 2, 6, 1),
-                PartPose.offset(3, -13, -8.600000381469727f));
-        doorMain.addOrReplaceChild("snout", CubeListBuilder.create().texOffs(24, 24).addBox(-2, -3, -9, 4, 3, 5),
-                PartPose.offset(0, -13, -4));
-        doorMain.addOrReplaceChild("tooth_right", CubeListBuilder.create().texOffs(24, 32).mirror().addBox(-0.5f, 0, -0.5f, 1, 2, 1),
-                PartPose.offset(1.5f, -13, -12.5f));
-        doorMain.addOrReplaceChild("tooth_left", CubeListBuilder.create().texOffs(24, 32).addBox(-0.5f, 0, -0.5f, 1, 2, 1),
-                PartPose.offset(-1.5f, -13, -12.5f));
-        doorMain.addOrReplaceChild("scarab", CubeListBuilder.create().texOffs(116, 0).addBox(-2, -2.799999952316284f, -2, 4, 6, 2),
-                PartPose.offset(0, 0, -8));
 
-        root.addOrReplaceChild("side_top_back_right", CubeListBuilder.create().texOffs(57, 37).addBox(0, -9, 0, 1, 9, 8),
-                PartPose.offsetAndRotation(7.400000095367432f, 1, 0, 0, -0, -Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("side_top_back_left", CubeListBuilder.create().texOffs(57, 37).mirror().addBox(-1, -11, 0, 1, 9, 8),
-                PartPose.offsetAndRotation(-7.400000095367432f, 3, 0, 0, -0, Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("side_top_front_right", CubeListBuilder.create().texOffs(0, 37).mirror().addBox(0, -9, -8, 1, 9, 8),
-                PartPose.offsetAndRotation(7.400000095367432f, 1, 0, 0, -0, -Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("side_top_front_left", CubeListBuilder.create().texOffs(0, 37).addBox(-1, -11, -8, 1, 9, 8),
-                PartPose.offsetAndRotation(-7.400000095367432f, 3, 0, 0, -0, Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("side_bottom_back_right", CubeListBuilder.create().texOffs(57, 55).addBox(0.23999999463558197f, -12, 0, 1, 23, 8),
-                PartPose.offsetAndRotation(7, 13, 0, 0, -0, Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("side_bottom_back_left", CubeListBuilder.create().texOffs(57, 55).mirror().addBox(-1, -23, 0, 1, 23, 8),
-                PartPose.offsetAndRotation(-7, 24, 0, 0, -0, -Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("side_bottom_front_right", CubeListBuilder.create().texOffs(0, 55).mirror().addBox(0.23999999463558197f, -12, -8, 1, 23, 8),
-                PartPose.offsetAndRotation(7, 13, 0, 0, -0, Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("side_bottom_front_left", CubeListBuilder.create().texOffs(0, 55).addBox(-1, -23, -8, 1, 23, 8),
-                PartPose.offsetAndRotation(-7, 24, 0, 0, -0, -Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("wall_front_1", CubeListBuilder.create().texOffs(20, 55).addBox(-8, -32, -1, 16, 32, 1),
-                PartPose.offset(0, 24, -6.900000095367432f));
-        root.addOrReplaceChild("top_back_right_1", CubeListBuilder.create().texOffs(57, 23).addBox(0, -5, 0, 1, 5, 8),
-                PartPose.offsetAndRotation(7.199999809265137f, -7.900000095367432f, 0, 0, -0, -9 * Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("top_back_left_1", CubeListBuilder.create().texOffs(57, 23).mirror().addBox(-1, -5, 0, 1, 5, 8),
-                PartPose.offsetAndRotation(-7.199999809265137f, -7.900000095367432f, 0, 0, -0, 9 * Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("top_front_right_1", CubeListBuilder.create().texOffs(0, 23).addBox(0, -5, -8, 1, 5, 8),
-                PartPose.offsetAndRotation(7.199999809265137f, -7.900000095367432f, 0, 0, -0, -9 * Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("top_front_left_1", CubeListBuilder.create().texOffs(0, 23).mirror().addBox(-1, -5, -8, 1, 5, 8),
-                PartPose.offsetAndRotation(-7.199999809265137f, -7.900000095367432f, 0, 0, 0, 9 * Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("top_back_left_2", CubeListBuilder.create().texOffs(57, 10).mirror().addBox(-1, -5, 0, 1, 5, 8),
-                PartPose.offsetAndRotation(-6.599999904632568f, -12.5f, 0, 0, -0, 33 * Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("top_back_right_2", CubeListBuilder.create().texOffs(57, 10).addBox(0, -5, 0, 1, 5, 8),
-                PartPose.offsetAndRotation(6.599999904632568f, -12.5f, 0, 0, -0, -33 * Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("top_front_right_2", CubeListBuilder.create().texOffs(0, 10).addBox(0, -5, -8, 1, 5, 8),
-                PartPose.offsetAndRotation(6.599999904632568f, -12.5f, 0, 0, -0, -33 * Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("top_front_left_2", CubeListBuilder.create().texOffs(0, 10).mirror().addBox(-1, -5, -8, 1, 5, 8),
-                PartPose.offsetAndRotation(-6.599999904632568f, -12.5f, 0, 0, -0, 33 * Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("top_back_right_3", CubeListBuilder.create().texOffs(40, 0).addBox(0, -5, 0, 1, 5, 8),
-                PartPose.offsetAndRotation(4.400000095367432f, -16.299999237060547f, 0, 0, -0, -70 * Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("top_back_left_3", CubeListBuilder.create().texOffs(40, 0).mirror().addBox(-1, -5, 0, 1, 5, 8),
-                PartPose.offsetAndRotation(-4.400000095367432f, -16.299999237060547f, 0, 0, -0, 70 * Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("top_front_right_3", CubeListBuilder.create().texOffs(20, 0).addBox(0, -5, -8, 1, 5, 8),
-                PartPose.offsetAndRotation(4.400000095367432f, -16.299999237060547f, 0, 0, 0, -70 * Mth.DEG_TO_RAD));
-        doorMain.addOrReplaceChild("top_front_left_3", CubeListBuilder.create().texOffs(20, 0).mirror().addBox(-1, -5, -8, 1, 5, 8),
-                PartPose.offsetAndRotation(-4.400000095367432f, -16.299999237060547f, 0, 0, -0, 70 * Mth.DEG_TO_RAD));
-        root.addOrReplaceChild("wall_back_2", CubeListBuilder.create().texOffs(81, 44).mirror().addBox(-7.5f, -4, 0, 15, 4, 1),
-                PartPose.offset(0, -8, 6.900000095367432f));
-        doorMain.addOrReplaceChild("wall_front_2", CubeListBuilder.create().texOffs(81, 44).addBox(-7.5f, -4, -1, 15, 4, 1),
-                PartPose.offset(0, -8, -6.900000095367432f));
-        root.addOrReplaceChild("wall_back_1", CubeListBuilder.create().texOffs(80, 53).addBox(-8, -32, 1, 16, 32, 1),
-                PartPose.offset(0, 24, 5.900000095367432f));
-        root.addOrReplaceChild("wall_back_3", CubeListBuilder.create().texOffs(83, 40).mirror().addBox(-6.5f, -2, 0, 13, 2, 1),
-                PartPose.offset(0, -12, 6.900000095367432f));
-        doorMain.addOrReplaceChild("wall_front_3", CubeListBuilder.create().texOffs(83, 40).addBox(-6.5f, -2, -1, 13, 2, 1),
-                PartPose.offset(0, -12, -6.900000095367432f));
-        root.addOrReplaceChild("wall_back_4", CubeListBuilder.create().texOffs(85, 36).addBox(-5.5f, -2, 0, 11, 2, 1),
-                PartPose.offset(0, -14, 6.900000095367432f));
-        doorMain.addOrReplaceChild("wall_front_4", CubeListBuilder.create().texOffs(85, 36).addBox(-5.5f, -2, -1, 11, 2, 1),
-                PartPose.offset(0, -14, -6.900000095367432f));
-        root.addOrReplaceChild("wall_back_5", CubeListBuilder.create().texOffs(87, 33).mirror().addBox(-4.5f, -2, 0, 9, 1, 1),
-                PartPose.offset(0, -15, 6.900000095367432f));
-        doorMain.addOrReplaceChild("wall_front_5", CubeListBuilder.create().texOffs(87, 33).addBox(-4.5f, -2, -1, 9, 1, 1),
-                PartPose.offset(0, -15, -6.900000095367432f));
-        root.addOrReplaceChild("wall_back_6", CubeListBuilder.create().texOffs(91, 30).mirror().addBox(-2.5f, -1, 0, 5, 1, 1),
-                PartPose.offset(0, -17, 6.900000095367432f));
-        doorMain.addOrReplaceChild("wall_front_6", CubeListBuilder.create().texOffs(91, 30).addBox(-2.5f, -1, -1, 5, 1, 1),
-                PartPose.offset(0, -17, -6.900000095367432f));
-
-        return LayerDefinition.create(meshDefinition, 128, 128);
+        return LayerDefinition.create(meshDefinition, 164, 64);
     }
 }

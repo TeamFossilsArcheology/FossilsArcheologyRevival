@@ -136,8 +136,8 @@ public class SarcophagusBlock extends BaseEntityBlock {
 
     @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack stack) {
-        level.setBlock(pos.above(), defaultBlockState().setValue(LAYER, 1), 3);
-        level.setBlock(pos.above(2), defaultBlockState().setValue(LAYER, 2), 3);
+        level.setBlock(pos.above(), defaultBlockState().setValue(LAYER, 1).setValue(FACING, state.getValue(FACING)), 3);
+        level.setBlock(pos.above(2), defaultBlockState().setValue(LAYER, 2).setValue(FACING, state.getValue(FACING)), 3);
     }
 
     @Override
