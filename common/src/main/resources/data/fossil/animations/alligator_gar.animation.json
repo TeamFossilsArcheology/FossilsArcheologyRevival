@@ -16,15 +16,6 @@
     "animation.alligator_gar.land": {
       "loop": true,
       "animation_length": 4
-    },
-    "animation.alligator_gar.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.alligator_gar.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.alligator_gar.new": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2
