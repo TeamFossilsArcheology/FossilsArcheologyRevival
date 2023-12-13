@@ -9,7 +9,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 public class VoluteVaseBlock extends VaseBlock {
-    private static final VoxelShape SHAPE = Block.box(1, 0, 2, 15, 16, 14);
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 18, 16);
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

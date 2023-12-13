@@ -65,11 +65,17 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }
         if (vases) {
             ResourceLocation amphoraTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora");
-            models().registerExistingModel(amphoraTemplate);
+            ResourceLocation kylixTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_kylix");
+            ResourceLocation voluteTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_volute");
+            models().registerExistingModel(amphoraTemplate, kylixTemplate, voluteTemplate);
             for (RegistrySupplier<VaseBlock> vaseReg : ModBlocks.VASES) {
                 VaseBlock block = vaseReg.get();
                 if (block instanceof AmphoraVaseBlock) {
                     vaseBlock(block, amphoraTemplate);
+                } else if (block instanceof KylixVaseBlock) {
+                    vaseBlock(block, kylixTemplate);
+                } else if (block instanceof VoluteVaseBlock) {
+                    vaseBlock(block, voluteTemplate);
                 }
             }
         }

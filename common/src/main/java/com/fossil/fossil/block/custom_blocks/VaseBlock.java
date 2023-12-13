@@ -43,10 +43,7 @@ public abstract class VaseBlock extends Block {
 
     public enum VaseVariant implements StringRepresentable {
         DAMAGED("damaged"),
-        RESTORED("restored"),
-        RED_FIGURE("red_figure"),
-        BLACK_FIGURE("black_figure"),
-        PORCELAIN("porcelain");
+        RESTORED("restored");
 
         private final String name;
 

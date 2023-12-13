@@ -9,7 +9,7 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 public class KylixVaseBlock extends VaseBlock {
-    private static final VoxelShape SHAPE = Block.box(4, 0, 4, 12, 8, 12);
+    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 10, 16);
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {

@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/vases/vase_volute_light_gray"
+    },
+    "facing=south": {
+      "model": "fossil:block/vases/vase_volute_light_gray",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/vases/vase_volute_light_gray",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "fossil:block/vases/vase_volute_light_gray",
+      "y": 90
+    }
+  }
+}

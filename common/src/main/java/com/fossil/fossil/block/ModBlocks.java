@@ -353,14 +353,8 @@ public class ModBlocks {
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
-    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RED_FIGURE = registerVolute(VaseBlock.VaseVariant.RED_FIGURE);
-    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_BLACK_FIGURE = registerVolute(VaseBlock.VaseVariant.BLACK_FIGURE);
-    public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_PORCELAIN = registerVolute(VaseBlock.VaseVariant.PORCELAIN);
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_DAMAGED = registerKylix(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RESTORED = registerKylix(VaseBlock.VaseVariant.RESTORED);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_RED_FIGURE = registerKylix(VaseBlock.VaseVariant.RED_FIGURE);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_BLACK_FIGURE = registerKylix(VaseBlock.VaseVariant.BLACK_FIGURE);
-    public static final RegistrySupplier<VaseBlock> KYLIX_VASE_PORCELAIN = registerKylix(VaseBlock.VaseVariant.PORCELAIN);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = registerAmphora(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = registerAmphora(VaseBlock.VaseVariant.RESTORED);
     public static final List<RegistrySupplier<FigurineBlock>> FIGURINES = new ArrayList<>();
@@ -383,7 +377,9 @@ public class ModBlocks {
 
     static {
         for (DyeColor color : DyeColor.values()) {
-            registerAmphora(color);
+            registerColoredVase("amphora", color, AmphoraVaseBlock::new);
+            registerColoredVase("kylix", color, KylixVaseBlock::new);
+            registerColoredVase("volute", color, VoluteVaseBlock::new);
         }
     }
 
@@ -411,8 +407,8 @@ public class ModBlocks {
         return registerVase("amphora", variant.getSerializedName(), AmphoraVaseBlock::new);
     }
 
-    private static RegistrySupplier<VaseBlock> registerAmphora(DyeColor color) {
-        return registerVase("amphora", color.getSerializedName(), AmphoraVaseBlock::new);
+    private static RegistrySupplier<VaseBlock> registerColoredVase(String name, DyeColor color, Supplier<VaseBlock> supplier) {
+        return registerVase(name, color.getSerializedName(), supplier);
     }
 
     private static RegistrySupplier<VaseBlock> registerVase(String name, String variant, Supplier<VaseBlock> supplier) {
