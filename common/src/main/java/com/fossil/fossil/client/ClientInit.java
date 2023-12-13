@@ -19,7 +19,6 @@ import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
-import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
 import com.mojang.blaze3d.platform.InputConstants;
@@ -51,6 +50,7 @@ public class ClientInit {
             "category.fossil.debug");
 
     public static void immediate() {
+        EntityRendererRegistry.register(ModEntities.MULTIPART, BlankRenderer::new);
         registerFish(ModEntities.ALLIGATOR_GAR, "alligator_gar.geo.json", AlligatorGar.ANIMATIONS, "alligator_gar");
         registerDino(ModEntities.ALLOSAURUS, "allosaurus.geo.json", Allosaurus.ANIMATIONS);
         registerDino(ModEntities.ANKYLOSAURUS, "ankylosaurus.geo.json", Ankylosaurus.ANIMATIONS);
@@ -196,9 +196,6 @@ public class ClientInit {
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             if (player instanceof AbstractClientPlayer) {
-                if (PrehistoricPart.isMultiPart(entity)) {
-                    entity = PrehistoricPart.getParent(entity);
-                }
                 if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
                     if (entity instanceof Animal animal && PrehistoricEntityType.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen(animal));

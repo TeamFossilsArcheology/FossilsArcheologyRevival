@@ -186,16 +186,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return !state.is(BlockTags.NEEDS_DIAMOND_TOOL);
     }
 
-    public boolean isCustomMultiPart() {
-        return getCustomParts() != null && getCustomParts().length > 0;
-    }
+    private boolean enabled;//TODO: Replace this system
 
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-        for (int i = 0; i < getCustomParts().length; ++i) {
-            this.getCustomParts()[i].setId(id + i + 1);
-        }
+    public boolean isCustomMultiPart() {
+        return (!level.isClientSide || enabled) && getCustomParts() != null && getCustomParts().length > 0;
     }
 
     /**
@@ -211,8 +205,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean canCollideWith(Entity entity) {
-        if (isCustomMultiPart() && PrehistoricPart.isMultiPart(entity)) {
-            return PrehistoricPart.getParent(entity) != this && super.canCollideWith(entity);
+        if (isCustomMultiPart() && entity instanceof PrehistoricPart part) {
+            return part.getParent() != this && super.canCollideWith(entity);
         }
         return super.canCollideWith(entity);
     }
@@ -715,6 +709,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
+    public void addPart(PrehistoricPart prehistoricPart, int idx) {
+        getCustomParts()[idx] = prehistoricPart;
+        if (getCustomParts().length - 1 == idx) {
+            enabled = true;
+        }
+    }
+
     protected void tickCustomParts() {
 
     }
@@ -1025,7 +1026,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (isCustomMultiPart() && getCustomParts().length > 0) {
-            if (source instanceof EntityDamageSource && ((EntityDamageSource) source).isThorns() && !this.level.isClientSide) {
+            if (source instanceof EntityDamageSource entitySource && entitySource.isThorns() && !this.level.isClientSide) {
                 return this.hurt(getCustomParts()[0], source, amount);
             }
         }

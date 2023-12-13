@@ -26,8 +26,8 @@ public abstract class ServerPlayerMixin {
     @Redirect(method = "setCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/server/level/ServerPlayer;camera:Lnet/minecraft/world/entity/Entity;", opcode = Opcodes.PUTFIELD))
     public void setCameraNoMultiPart(ServerPlayer instance, Entity entityToSpectate) {
         Entity entity = getCamera();
-        if (PrehistoricPart.isMultiPart(entity)) {
-            camera = PrehistoricPart.getParent(entity);
+        if (entity instanceof PrehistoricPart part) {
+            camera = part.getParent();
         }
         if (camera == null) {
             camera = entityToSpectate == null ? this.getCamera() : entityToSpectate;

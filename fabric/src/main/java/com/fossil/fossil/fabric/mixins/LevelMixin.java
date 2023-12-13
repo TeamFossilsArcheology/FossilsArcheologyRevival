@@ -28,11 +28,12 @@ public abstract class LevelMixin {
 
     @Inject(method = "getEntities(Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/AABB;Ljava/util/function/Predicate;)Ljava/util/List;", at = @At(value = "RETURN"))
     private void addPartEntities(Entity entity, AABB area, Predicate<? super Entity> predicate, CallbackInfoReturnable<List<Entity>> cir) {
+        //TODO: Remove
         getEntities().get(area, entity2 -> {
             if (entity2 instanceof Prehistoric prehistoric) {
                 for (Entity part : prehistoric.getCustomParts()) {
-                    if (part == entity || !part.getBoundingBox().intersects(area) || !predicate.test(part)) continue;
-                    cir.getReturnValue().add(part);
+                    //if (part == entity || !part.getBoundingBox().intersects(area) || !predicate.test(part)) continue;
+                    //cir.getReturnValue().add(part);
                 }
             }
         });
@@ -46,9 +47,9 @@ public abstract class LevelMixin {
         getEntities().get(entityTypeTest, area, entity -> {
             if (entity instanceof Prehistoric prehistoric) {
                 for (Entity part : prehistoric.getCustomParts()) {
-                    T entity2 = entityTypeTest.tryCast(part);
-                    if (entity2 == null || !predicate.test(entity2)) continue;
-                    cir.getReturnValue().add(entity2);
+                    //T entity2 = entityTypeTest.tryCast(part);
+                    //if (entity2 == null || !predicate.test(entity2)) continue;
+                    //cir.getReturnValue().add(entity2);
                 }
             }
         });

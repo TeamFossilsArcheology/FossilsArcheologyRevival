@@ -18,8 +18,9 @@ public abstract class ChunkMapMixin {
 
     @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
     public void doNotAddMultiPart(Entity entity, CallbackInfo ci) {
-        if (PrehistoricPart.isMultiPart(entity)) {
-            ci.cancel();
+        //TODO: Remove
+        if (entity instanceof PrehistoricPart) {
+            //ci.cancel();
         }
     }
 }

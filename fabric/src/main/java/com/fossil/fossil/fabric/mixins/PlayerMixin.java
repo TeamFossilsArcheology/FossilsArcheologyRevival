@@ -17,10 +17,11 @@ public abstract class PlayerMixin {
 
     @ModifyVariable(method = "attack", at = @At(value = "STORE"), ordinal = 1)
 //Can't use the name of the variable because that crashes in production
-    private Entity replaceHurtEntity(Entity value) {
-        if (PrehistoricPart.isMultiPart(value)) {
-            return PrehistoricPart.getParent(value);
+    private Entity replaceHurtEntity(Entity entity) {
+        //TODO: Find more of these cases
+        if (entity instanceof PrehistoricPart part) {
+            return part.getParent();
         }
-        return value;
+        return entity;
     }
 }

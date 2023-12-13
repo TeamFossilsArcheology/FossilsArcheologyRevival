@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
+import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -19,19 +20,16 @@ import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 public class ModEntities {
     private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Fossil.MOD_ID, Registry.ENTITY_TYPE_REGISTRY);
 
-    public static final RegistrySupplier<EntityType<ToyBall>> TOY_BALL = ENTITIES.register("toy_ball",
-            () -> EntityType.Builder.of(ToyBall::new, MobCategory.MISC).sized(0.5f, 0.5f).build("toy_ball"));
-    public static final RegistrySupplier<EntityType<ToyTetheredLog>> TOY_TETHERED_LOG = ENTITIES.register("toy_tethered_log",
-            () -> EntityType.Builder.of(ToyTetheredLog::new, MobCategory.MISC).sized(0.6f, 1.9375f).build("toy_tethered_log"));
-    public static final RegistrySupplier<EntityType<ToyScratchingPost>> TOY_SCRATCHING_POST = ENTITIES.register("toy_scratching_post",
-            () -> EntityType.Builder.of(ToyScratchingPost::new, MobCategory.MISC).sized(0.6f, 2).build("toy_scratching_post"));
-
+    public static final RegistrySupplier<EntityType<ToyBall>> TOY_BALL = registerMisc("toy_ball", ToyBall::new, 0.5f, 0.5f, 5, 3);
+    public static final RegistrySupplier<EntityType<ToyTetheredLog>> TOY_TETHERED_LOG = registerMisc("toy_tethered_log", ToyTetheredLog::new, 0.6f, 1.9375f, 5, 3);
+    public static final RegistrySupplier<EntityType<ToyScratchingPost>> TOY_SCRATCHING_POST = registerMisc("toy_scratching_post", ToyScratchingPost::new, 0.6f, 2, 5, 3);
+    public static final RegistrySupplier<EntityType<PrehistoricPart>> MULTIPART = registerMisc("multipart", PrehistoricPart::new, 1, 1, 5, 200);
     public static final RegistrySupplier<EntityType<AlligatorGar>> ALLIGATOR_GAR = registerFish("alligator_gar", AlligatorGar::new, 2, 0.5f);
     public static final RegistrySupplier<EntityType<Allosaurus>> ALLOSAURUS = registerDino("allosaurus", Allosaurus::new, 1.1f, 1.3f);
     //public static final RegistrySupplier<EntityType<Ammonite>> AMMONITE = registerDino("ammonite", Ammonite::new, 2, 1);
     public static final RegistrySupplier<EntityType<Ankylosaurus>> ANKYLOSAURUS = registerDino("ankylosaurus", Ankylosaurus::new, 1.6f, 1.4f);
     public static final RegistrySupplier<EntityType<Arthropleura>> ARTHROPLEURA = registerDino("arthropleura", Arthropleura::new, 3, 1);
-    public static final RegistrySupplier<EntityType<Brachiosaurus>> BRACHIOSAURUS = registerDino("brachiosaurus", Brachiosaurus::new, 1.35f, 1.7f);
+    public static final RegistrySupplier<EntityType<Brachiosaurus>> BRACHIOSAURUS = registerDino("brachiosaurus", Brachiosaurus::new, 0.95f, 1.3f);
     public static final RegistrySupplier<EntityType<Ceratosaurus>> CERATOSAURUS = registerDino("ceratosaurus", Ceratosaurus::new, 1.55f, 1.3f);
     public static final RegistrySupplier<EntityType<Citipati>> CITIPATI = registerDino("citipati", Citipati::new, 1.5f, 1.8f);
     public static final RegistrySupplier<EntityType<Coelacanth>> COELACANTH = registerFish("coelacanth", Coelacanth::new, 2, 0.5f);
@@ -46,7 +44,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Dryosaurus>> DRYOSAURUS = registerDino("dryosaurus", Dryosaurus::new, 1.3f, 1.2f);
     public static final RegistrySupplier<EntityType<Edaphosaurus>> EDAPHOSAURUS = registerDino("edaphosaurus", Edaphosaurus::new, 1.3f, 1.7f);
     public static final RegistrySupplier<EntityType<Elasmotherium>> ELASMOTHERIUM = registerDino("elasmotherium", Elasmotherium::new, 1, 1);
-    public static final RegistrySupplier<EntityType<Gallimimus>> GALLIMIMUS = registerDino("gallimimus", Gallimimus::new, 1.1f, 2);
+    public static final RegistrySupplier<EntityType<Gallimimus>> GALLIMIMUS = registerDino("gallimimus", Gallimimus::new, 1.2f, 1.5f);
     public static final RegistrySupplier<EntityType<Gastornis>> GASTORNIS = registerDino("gastornis", Gastornis::new, 1.4f, 2.5f);
     public static final RegistrySupplier<EntityType<Henodus>> HENODUS = registerDino("henodus", Henodus::new, 1.1f, 1);
     public static final RegistrySupplier<EntityType<Ichthyosaurus>> ICHTHYOSAURUS = registerDino("ichthyosaurus", Ichthyosaurus::new, 1.2f, 1);
@@ -84,8 +82,7 @@ public class ModEntities {
 
     public static final RegistrySupplier<EntityType<DinosaurEgg>> DINOSAUR_EGG = ENTITIES.register(
             "dinosaur_egg", () -> EntityType.Builder.of(DinosaurEgg::new, MobCategory.CREATURE).sized(0.5F, 0.6F).build("dinosaur_egg"));
-    public static final RegistrySupplier<EntityType<ThrownBirdEgg>> THROWN_BIRD_EGG = ENTITIES.register(
-            "thrown_bird_egg", () -> EntityType.Builder.of(ThrownBirdEgg::new, MobCategory.MISC).sized(0.25f, 0.25f).clientTrackingRange(4).updateInterval(10).build("thrown_bird_egg"));
+    public static final RegistrySupplier<EntityType<ThrownBirdEgg>> THROWN_BIRD_EGG = registerMisc("thrown_bird_egg", ThrownBirdEgg::new, 0.25f, 0.25f, 4, 10);
 
     public static final RegistrySupplier<EntityType<TarSlime>> TAR_SLIME = ENTITIES.register("tar_slime",
             () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).sized(2.04f, 2.04f).build("tar_slime"));
@@ -96,18 +93,13 @@ public class ModEntities {
                     .clientTrackingRange(64).updateInterval(1).build("anu_boss"));
     public static final RegistrySupplier<EntityType<AnuDead>> ANU_DEAD = ENTITIES.register("anu_dead",
             () -> EntityType.Builder.of(AnuDead::new, MobCategory.MONSTER).sized(1.8f, 0.8f).fireImmune().build("anu_dead"));
-    public static final RegistrySupplier<EntityType<AnuTotem>> ANU_TOTEM = ENTITIES.register("anu_totem",
-            () -> EntityType.Builder.of(AnuTotem::new, MobCategory.MISC).sized(0.9f, 1.8f).build("anu_totem"));
+    public static final RegistrySupplier<EntityType<AnuTotem>> ANU_TOTEM = registerMisc("anu_totem", AnuTotem::new, 0.9f, 1.8f, 5, 3);
     public static final RegistrySupplier<EntityType<SentryPiglin>> SENTRY_PIGLIN = ENTITIES.register("sentry_piglin",
             () -> EntityType.Builder.of(SentryPiglin::new, MobCategory.MONSTER).sized(0.8f, 2).fireImmune().build("sentry_piglin"));
 
-    public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = ENTITIES.register("stone_tablet",
-            () -> EntityType.Builder.<StoneTablet>of(StoneTablet::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(10)
-                    .updateInterval(Integer.MAX_VALUE).build("stone_tablet"));
+    public static final RegistrySupplier<EntityType<StoneTablet>> STONE_TABLET = registerMisc("stone_tablet", StoneTablet::new, 0.5f, 0.5f, 10, Integer.MAX_VALUE);
 
-    public static final RegistrySupplier<EntityType<Javelin>> JAVELIN = ENTITIES.register("javelin",
-            () -> EntityType.Builder.<Javelin>of(Javelin::new, MobCategory.MISC).sized(0.5f, 0.5f).clientTrackingRange(4).updateInterval(20)
-                    .build("javelin"));
+    public static final RegistrySupplier<EntityType<Javelin>> JAVELIN = registerMisc("javelin", Javelin::new, 0.5f, 0.5f, 4, 20);
     public static final RegistrySupplier<EntityType<AncientLightningBolt>> ANCIENT_LIGHTNING_BOLT = ENTITIES.register("ancient_lightning_bolt",
             () -> EntityType.Builder.of(AncientLightningBolt::new, MobCategory.MISC).sized(0, 0)
                     .clientTrackingRange(16).updateInterval(Integer.MAX_VALUE).build("ancient_lightning_bolt"));
@@ -116,6 +108,9 @@ public class ModEntities {
                     .build("friendly_piglin"));
 
     //TODO: Change clientTrackingRange etc
+    private static <T extends Entity> RegistrySupplier<EntityType<T>> registerMisc(String name, EntityType.EntityFactory<T> factory, float width, float height, int trackRange, int updateInterval) {
+        return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.MISC).sized(width, height).clientTrackingRange(trackRange).updateInterval(updateInterval).build(name));
+    }
     private static <T extends Entity> RegistrySupplier<EntityType<T>> registerDino(String name, EntityType.EntityFactory<T> factory, float width, float height) {
         return ENTITIES.register(name, () -> EntityType.Builder.of(factory, MobCategory.CREATURE).sized(width, height).build(name));
     }

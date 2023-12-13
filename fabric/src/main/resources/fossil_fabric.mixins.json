@@ -18,6 +18,7 @@
     "NaturalSpawnerMixin",
     "PlayerMixin",
     "ProjectileUtilMixin",
+    "ServerGamePacketListenerImplMixin",
     "ServerLevelMixin",
     "ServerPlayerMixin"
   ],
