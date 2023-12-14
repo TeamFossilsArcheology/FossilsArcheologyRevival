@@ -30,6 +30,7 @@ public abstract class PrehistoricMixin extends Entity {
 
     @Override
     public boolean isMultipartEntity() {
-        return ((Prehistoric) (Object) this).isCustomMultiPart();
+        return false;
+        //return ((Prehistoric) (Object) this).isCustomMultiPart();
     }
 }
