@@ -1053,6 +1053,11 @@ c5ce430fa5e2402ca9b0ea1519df8bc00ba309f8 assets/fossil/models/item/elasmotherium
 3192c8e2ae44e67ee515e87cb71ea935b3d0ddc8 assets/fossil/models/item/ephedra.json
 2e28397c9fb55406124800d0ac44d541431edf97 assets/fossil/models/item/florissantia.json
 a4f40f36ce159563f29534507e388c73748ddd86 assets/fossil/models/item/foozia.json
+a9b2fe3ae02f81dc316684f56f44743379761a8b assets/fossil/models/item/fossil_sapling_calamites.json
+f85ff64689408205edc038d5b65f4c8024a6463a assets/fossil/models/item/fossil_sapling_cordaites.json
+447fd9291f2b87ec651485556a32af1cb8dbc691 assets/fossil/models/item/fossil_sapling_palm.json
+cebf890bcb4cc7907e1330bbb91cf9604578c953 assets/fossil/models/item/fossil_sapling_sigillaria.json
+f934f1de5906e9267b1029e2ac1a568e025ebb6d assets/fossil/models/item/fossil_sapling_tempskya.json
 9f155e3bd72c24e06b4086ab5892f71677904e72 assets/fossil/models/item/fossil_seed_bennettitales.json
 350d0b4d712ae6e0acad5ade1e38744890af93be assets/fossil/models/item/fossil_seed_cephalotaxus.json
 b84dd4195df4a8fe7bf2bdef91d3ab6a659cd053 assets/fossil/models/item/fossil_seed_crataegus.json
@@ -2035,7 +2040,7 @@ ab9357983d405abad30eddad06768cb0b39e67e4 data/fossil/loot_tables/entities/titani
 9fc27590856f83491a5ad8994d7da0d4b02dafd3 data/fossil/loot_tables/entities/tyrannosaurus.json
 852c190ec3fff612ed3bfbffdae7d4ff27dbd809 data/fossil/loot_tables/entities/velociraptor.json
 1bcf06adbcc9a0bfe698befce35d23c99908f232 data/fossil/recipes/analyzer.json
-3f0ffe8d5def2fb2b08c88c4ac1990bf8a29cc51 data/fossil/recipes/analyzer/amber_chunk_dominican.json
+53c2957f06d2d716179bbe7706703290b513f085 data/fossil/recipes/analyzer/amber_chunk_dominican.json
 52c9d7dc0a2626d41597251bafc93ec394a9624b data/fossil/recipes/analyzer/beef.json
 5d55c9092dc3228964aaf0f69e223d16ad9a1335 data/fossil/recipes/analyzer/chicken.json
 4882d951fc54f0544bca2c5702274a849e8446e6 data/fossil/recipes/analyzer/egg.json
@@ -2043,7 +2048,7 @@ ab9357983d405abad30eddad06768cb0b39e67e4 data/fossil/loot_tables/entities/titani
 eb55412510d6e8e54103f2ccd3e1e496b23da572 data/fossil/recipes/analyzer/feather.json
 6d735f79a2868a0d1e9164352e703259ff88f01e data/fossil/recipes/analyzer/fishes.json
 2c4580f84343997efbf035a83263205ebf790353 data/fossil/recipes/analyzer/fossil_bio.json
-3494a2e170ee8b74dadf42ca2e3309507896c426 data/fossil/recipes/analyzer/fossil_plant.json
+b35fa95b7ee929a1542178b8f6d33a1985710484 data/fossil/recipes/analyzer/fossil_plant.json
 625cb2804bfd75e793fc3093a93e72bdc0cf0ca5 data/fossil/recipes/analyzer/fossil_tar.json
 3d51918f74b8a25ff7c43af8a8d4afb2e737425e data/fossil/recipes/analyzer/frozen_meat.json
 2eea5cfd6924972839e86ade51e6708ef6c8c6ba data/fossil/recipes/analyzer/leather.json
@@ -2402,7 +2407,7 @@ f9674824d2c80b5587cde58220951d29e1b12bb6 data/fossil/tags/items/cookable_eggs.js
 14bbd737f0e930f5441e6881b3db4a3d570c3baf data/fossil/tags/items/dna_plants.json
 c8d6039ff317fd626b5de115b41eb20507f7d02f data/fossil/tags/items/embryos.json
 effd7614f483ca8b7a1fc7915aaac76a8ed367a7 data/fossil/tags/items/figurines.json
-3e6987aa691fbe234a15ab441711c369196f16ae data/fossil/tags/items/fossil_saplings.json
+a0acc017da4b89f13b66c6f373e328d76b1e6f25 data/fossil/tags/items/fossil_saplings.json
 0dc37e6307f53036d6b388480e1af5e63066ecf8 data/fossil/tags/items/fossil_seeds.json
 78bc5bd7c052ebe3f092d7d2a040bb74fcb8ed68 data/fossil/tags/items/meat_uncooked.json
 07ddf71d4d8f03aa869b645a414a77df2934ad74 data/fossil/tags/items/palm_logs.json

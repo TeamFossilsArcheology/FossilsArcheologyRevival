@@ -10,6 +10,8 @@ import com.fossil.fossil.client.gui.debug.DebugScreen;
 import com.fossil.fossil.client.gui.filters.CreativeTabFilters;
 import com.fossil.fossil.client.model.*;
 import com.fossil.fossil.client.particle.BubbleParticle;
+import com.fossil.fossil.client.particle.RedstoneExplosionEmitterParticle;
+import com.fossil.fossil.client.particle.RedstoneExplosionParticle;
 import com.fossil.fossil.client.particle.TarBubbleParticle;
 import com.fossil.fossil.client.renderer.blockentity.*;
 import com.fossil.fossil.client.renderer.entity.*;
@@ -123,6 +125,8 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.FRIENDLY_PIGLIN, context -> new FriendlyPiglinRenderer(context, new FriendlyPiglinModel()));
         ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
+        ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION, RedstoneExplosionParticle.Provider::new);
+        ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION_EMITTER, new RedstoneExplosionEmitterParticle.Provider());
     }
 
     private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String modelFileName, String animFileName) {

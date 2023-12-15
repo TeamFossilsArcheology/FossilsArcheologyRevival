@@ -197,8 +197,6 @@ public class ModRecipeProvider extends RecipeProvider {
                     .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(ModItems.PALAE_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)
                     .addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 2.5);
 
@@ -296,7 +294,7 @@ public class ModRecipeProvider extends RecipeProvider {
             frozenMeat.save(consumer);
             analyzed(ModBlocks.AMBER_CHUNK_DOMINICAN.get()).addOutput(Items.SPIDER_EYE, 9).addOutput(Items.STRING, 10).addOutput(Blocks.DIRT, 25).addOutput(Blocks.GRAVEL, 25)
                     .addOutput(Items.WHEAT_SEEDS, 1).addOutput(Items.BEETROOT_SEEDS, 1).addOutput(Items.PUMPKIN_SEEDS, 1).addOutput(Items.MELON_SEEDS, 1)
-                    .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.PALAE_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 1).save(consumer);
+                    .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 1).save(consumer);
             analyzed(Items.BEEF).addOutput(COW.dnaItem, 100).save(consumer);
             analyzed(Items.CHICKEN).addOutput(CHICKEN.dnaItem, 100).save(consumer);
             analyzed(Items.EGG).addOutput(CHICKEN.dnaItem, 100).save(consumer);

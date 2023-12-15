@@ -157,7 +157,6 @@ public class ModRecipes {
         registerCultureVat(ModItems.PALM_SAPLING_FOSSIL.get(), ModBlocks.PALM_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultureVat(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultureVat(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), ModBlocks.TEMPSKYA_SAPLING.get(), ModItems.BIO_GOO.get());
-        //registerCultureVat(ModItems.PALAE_SAPLING_FOSSIL.get(), ModBlocks.PALAE_SAPLING.get(), ModItems.BIO_GOO.get());
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
             registerCultureVat(type.getFossilizedPlantSeedItem(), type.getPlantSeedItem(), ModItems.BIO_GOO.get());
         }

@@ -11,6 +11,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -96,7 +97,17 @@ public class ModItemProvider extends ItemModelProvider {
                 plantSeedItem(type.getPlantSeedItem().getRegistryName());
                 plantSeedItem(type.getFossilizedPlantSeedItem().getRegistryName());
             }
+            basicItem(ModItems.CALAMITES_SAPLING_FOSSIL.get());
+            basicItem(ModItems.CORDAITES_SAPLING_FOSSIL.get());
+            basicItem(ModItems.PALM_SAPLING_FOSSIL.get());
+            basicItem(ModItems.SIGILLARIA_SAPLING_FOSSIL.get());
+            basicItem(ModItems.TEMPSKYA_SAPLING_FOSSIL.get());
         }
+    }
+
+    @Override
+    public ItemModelBuilder basicItem(ResourceLocation item) {
+        return builder(new ResourceLocation(item.getNamespace(), "item/" + item.getPath()), item);
     }
 
     public void plantSeedItem(ResourceLocation item) {
@@ -160,9 +171,9 @@ public class ModItemProvider extends ItemModelProvider {
                 .parent(new ModelFile.UncheckedModelFile(blockLocation.getNamespace() + ":block/" + blockLocation.getPath() + suffix));
     }
 
-    private void builder(ResourceLocation resourceLocation, ResourceLocation item) {
+    private ItemModelBuilder builder(ResourceLocation resourceLocation, ResourceLocation item) {
         existingFileHelper.trackGenerated(resourceLocation, TEXTURE);//hack because I cant find if and how architectury does --existing
-        getBuilder(item.toString())
+        return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", resourceLocation);
     }
