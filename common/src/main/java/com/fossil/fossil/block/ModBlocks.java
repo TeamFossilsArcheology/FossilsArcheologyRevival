@@ -251,7 +251,7 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> MUTANT_TREE_TUMOR = registerBlock("mutant_tree_tumor",
             () -> new MutantTreeTumor(BlockBehaviour.Properties.of(Material.LEAVES).noOcclusion().dynamicShape().sound(SoundType.GRASS)));
     public static final RegistrySupplier<Block> MUTANT_TREE_VINE = registerBlock("mutant_tree_vine",
-            () -> new VineBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().randomTicks().strength(0.2f).sound(SoundType.VINE)));
+            () -> new VineBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().lightLevel(value -> 10).randomTicks().strength(0.2f).sound(SoundType.VINE)));
     public static final RegistrySupplier<Block> PALM_PLANKS = registerBlock("palm_planks",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.SPRUCE_PLANKS).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<StairBlock> PALM_STAIRS = registerBlock("palm_stairs",
