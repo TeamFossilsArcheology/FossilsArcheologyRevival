@@ -101,7 +101,6 @@ public class Nautilus extends PrehistoricFish {
         if (!isInWater()) {
             setDeltaMovement(Vec3.ZERO);
             travel(Vec3.ZERO);//Apply gravity
-            onGround = true;
             hasImpulse = false;
         }
     }
@@ -113,7 +112,7 @@ public class Nautilus extends PrehistoricFish {
             ticksToShell--;
         }
         List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
-        if (nearbyMobs.size() > 1 || !isInWater()) {
+        if (nearbyMobs.size() > 1 || (!isInWater() && isOnGround())) {
             if (ticksToShell == 0 && !isInShell()) {
                 hideInShell(true);
             }
