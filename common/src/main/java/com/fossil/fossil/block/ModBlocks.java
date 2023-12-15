@@ -64,8 +64,8 @@ public class ModBlocks {
             () -> new AncientChestBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().strength(-1, 3600000)),
             block -> AncientChestBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
     public static final RegistrySupplier<Block> SARCOPHAGUS = registerBlockWithCustomBlockItem("sarcophagus",
-            () -> new SarcophagusBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
-            block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+            () -> new SarcophagusBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)
+                    .lightLevel(state -> state.getValue(SarcophagusBlock.LIT) ? 7 : 0)), block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
     public static final RegistrySupplier<Block> SHELL = registerBlock("shell",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).noOcclusion()));
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",

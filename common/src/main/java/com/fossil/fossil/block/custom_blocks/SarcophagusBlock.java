@@ -28,6 +28,8 @@ import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.phys.BlockHitResult;
@@ -42,12 +44,13 @@ import java.util.Set;
 public class SarcophagusBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty LAYER = IntegerProperty.create("layer", 0, 2);
+    public static final BooleanProperty LIT = BlockStateProperties.LIT;
     private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 43, 16);
 
 
     public SarcophagusBlock(Properties properties) {
         super(properties);
-        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LAYER, 0));
+        registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH).setValue(LAYER, 0).setValue(LIT, false));
     }
 
     @Override
@@ -61,6 +64,9 @@ public class SarcophagusBlock extends BaseEntityBlock {
                 ItemStack itemStack = player.getItemInHand(hand);
                 if (itemStack.is(ModItems.SCARAB_GEM.get())) {
                     blockEntity.setState(SarcophagusBlockEntity.STATE_UNLOCKED);
+                    level.setBlockAndUpdate(pos, blockState.setValue(SarcophagusBlock.LIT, true));
+                    level.setBlockAndUpdate(pos.above(), level.getBlockState(pos.above()).setValue(SarcophagusBlock.LIT, true));
+                    level.setBlockAndUpdate(pos.above(2), level.getBlockState(pos.above(2)).setValue(SarcophagusBlock.LIT, true));
                     if (!player.isCreative()) {
                         itemStack.shrink(1);
                     }
@@ -157,7 +163,7 @@ public class SarcophagusBlock extends BaseEntityBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, LAYER);
+        builder.add(FACING, LAYER, LIT);
     }
 
     @Override

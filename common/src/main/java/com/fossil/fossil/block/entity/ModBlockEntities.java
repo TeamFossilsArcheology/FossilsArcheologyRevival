@@ -3,6 +3,8 @@ package com.fossil.fossil.block.entity;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.client.particle.BubbleParticle;
+import com.fossil.fossil.client.particle.RedstoneExplosionEmitterParticle;
+import com.fossil.fossil.client.particle.RedstoneExplosionParticle;
 import com.fossil.fossil.client.particle.TarBubbleParticle;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -17,6 +19,8 @@ public class ModBlockEntities {
     public static final DeferredRegister<ParticleType<?>> PARTICLE_TYPES = DeferredRegister.create(Fossil.MOD_ID, Registry.PARTICLE_TYPE_REGISTRY);
     public static final RegistrySupplier<BubbleParticle.Type> BUBBLE = PARTICLE_TYPES.register("bubble", () -> new BubbleParticle.Type(false));
     public static final RegistrySupplier<TarBubbleParticle.Type> TAR_BUBBLE = PARTICLE_TYPES.register("tar_bubble", () -> new TarBubbleParticle.Type(false));
+    public static final RegistrySupplier<RedstoneExplosionParticle.Type> REDSTONE_EXPLOSION = PARTICLE_TYPES.register("redstone_explosion", () -> new RedstoneExplosionParticle.Type(true));
+    public static final RegistrySupplier<RedstoneExplosionEmitterParticle.Type> REDSTONE_EXPLOSION_EMITTER = PARTICLE_TYPES.register("redstone_explosion_emitter", () -> new RedstoneExplosionEmitterParticle.Type(true));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> SIFTER = BLOCK_ENTITIES.register("sifter",
             () -> BlockEntityType.Builder.of(SifterBlockEntity::get, ModBlocks.SIFTER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> ANALYZER = BLOCK_ENTITIES.register("analyzer",

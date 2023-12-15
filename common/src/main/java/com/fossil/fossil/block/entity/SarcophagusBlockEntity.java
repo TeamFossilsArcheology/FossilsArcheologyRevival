@@ -47,11 +47,17 @@ public class SarcophagusBlockEntity extends BlockEntity {
     }
 
     private static void tick(Level level, BlockPos pos, BlockState state, SarcophagusBlockEntity blockEntity) {
+        if (state.getValue(SarcophagusBlock.LAYER) != 0) {
+            return;
+        }
         if (blockEntity.state != STATE_CLOSING) {
             if (blockEntity.doorTimer > 0) {
                 blockEntity.doorTimer++;
             }
             if (blockEntity.doorTimer >= 91) {
+                level.setBlockAndUpdate(pos, state.setValue(SarcophagusBlock.LIT, false));
+                level.setBlockAndUpdate(pos.above(), level.getBlockState(pos.above()).setValue(SarcophagusBlock.LIT, false));
+                level.setBlockAndUpdate(pos.above(2), level.getBlockState(pos.above(2)).setValue(SarcophagusBlock.LIT, false));
                 blockEntity.setState(STATE_CLOSING);
                 if (!level.isClientSide) {
                     AnuBoss anuBoss = ModEntities.ANU_BOSS.get().create(level);
