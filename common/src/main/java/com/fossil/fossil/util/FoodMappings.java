@@ -219,10 +219,8 @@ public abstract class FoodMappings {
 
     public static void addPlant(Item item) {
         int food = item.getFoodProperties() != null ? item.getFoodProperties().getNutrition() * 7 : 20;
-        addToMappings(item, food, Diet.CARNIVORE);
-        addToMappings(item, food, Diet.CARNIVORE_EGG);
+        addToMappings(item, food, Diet.HERBIVORE);
         addToMappings(item, food, Diet.OMNIVORE);
-        addToMappings(item, food, Diet.PISCI_CARNIVORE);
     }
 
     public static void addPlant(Item item, int food) {
