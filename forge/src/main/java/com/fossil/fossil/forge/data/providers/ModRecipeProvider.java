@@ -3,6 +3,9 @@ package com.fossil.fossil.forge.data.providers;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.custom_blocks.AmphoraVaseBlock;
+import com.fossil.fossil.block.custom_blocks.KylixVaseBlock;
+import com.fossil.fossil.block.custom_blocks.VaseBlock;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.forge.data.recipe.AnalyzerRecipeBuilder;
 import com.fossil.fossil.item.ModItems;
@@ -21,6 +24,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.DyeColor;
+import net.minecraft.world.item.DyeItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -138,7 +142,22 @@ public class ModRecipeProvider extends RecipeProvider {
             ShapedRecipeBuilder.shaped(ModBlocks.AMPHORA_VASE_DAMAGED.get()).define('P', ModItems.POTTERY_SHARD.get()).pattern("PP").pattern("PP").pattern("PP").unlockedBy("has_pottery_shard", RecipeProvider.has(ModItems.POTTERY_SHARD.get())).save(consumer);
             ShapedRecipeBuilder.shaped(ModBlocks.KYLIX_VASE_DAMAGED.get()).define('P', ModItems.POTTERY_SHARD.get()).pattern("PPP").pattern(" P ").unlockedBy("has_pottery_shard", RecipeProvider.has(ModItems.POTTERY_SHARD.get())).save(consumer);
             ShapedRecipeBuilder.shaped(ModBlocks.VOLUTE_VASE_DAMAGED.get()).define('P', ModItems.POTTERY_SHARD.get()).pattern("P P").pattern("P P").pattern("PPP").unlockedBy("has_pottery_shard", RecipeProvider.has(ModItems.POTTERY_SHARD.get())).save(consumer);
-
+            for (RegistrySupplier<VaseBlock> vase : ModBlocks.VASES) {
+                String name = vase.get().getRegistryName().getPath();
+                if (!name.contains("damaged") && !name.contains("restored")) {
+                    VaseBlock restored;
+                    if (vase.get() instanceof AmphoraVaseBlock) {
+                        restored = ModBlocks.AMPHORA_VASE_RESTORED.get();
+                    } else if (vase.get() instanceof KylixVaseBlock) {
+                        restored = ModBlocks.KYLIX_VASE_RESTORED.get();
+                    } else {
+                        restored = ModBlocks.VOLUTE_VASE_RESTORED.get();
+                    }
+                    String[] split = name.split("_");
+                    DyeColor color = DyeColor.byName(split[split.length - 1], DyeColor.BLACK);
+                    ShapelessRecipeBuilder.shapeless(vase.get()).requires(restored).requires(DyeItem.byColor(color)).unlockedBy("has_restored_vase", RecipeProvider.has(restored)).save(consumer);
+                }
+            }
 
             generateFamilyRecipes(CALAMITES_PLANKS, consumer);
             generateFamilyRecipes(CORDAITES_PLANKS, consumer);

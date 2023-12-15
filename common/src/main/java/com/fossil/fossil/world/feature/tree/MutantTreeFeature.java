@@ -86,7 +86,7 @@ public class MutantTreeFeature extends CustomTreeFeature {
         for (Direction direction : Direction.Plane.HORIZONTAL) {
             mutable.setWithOffset(belowFoliage, direction);
             for (int i = 0; i < trunk; i++) {
-                if (level.isEmptyBlock(mutable) && level.isEmptyBlock(mutable.below()) && level.getRandom().nextInt(6) == 0) {
+                if (level.isEmptyBlock(mutable) && level.isEmptyBlock(mutable.below()) && level.getRandom().nextInt(9) == 0) {
                     level.setBlock(mutable, tumor.setValue(MutantTreeTumor.FACING, direction), 19);
                     break;
                 }

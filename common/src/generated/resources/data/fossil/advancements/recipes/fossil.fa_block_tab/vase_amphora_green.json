@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:vase_amphora_green"
+    ]
+  },
+  "criteria": {
+    "has_restored_vase": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:vase_amphora_restored"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:vase_amphora_green"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_restored_vase",
+      "has_the_recipe"
+    ]
+  ]
+}
