@@ -4,6 +4,7 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.client.ClientInit;
 import com.fossil.fossil.client.model.block.PlantBlockModel;
+import com.fossil.fossil.client.renderer.armor.AncientHelmetRenderer;
 import com.fossil.fossil.config.forge.ForgeConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.Coelacanth;
@@ -12,6 +13,7 @@ import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
 import com.fossil.fossil.forge.client.ClientModEvents;
 import com.fossil.fossil.forge.client.model.PlantModelLoader;
 import com.fossil.fossil.forge.world.biome.ForgeFossilRegion;
+import com.fossil.fossil.item.AncientHelmetItem;
 import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
 import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
 import com.fossil.fossil.world.feature.placement.ModPlacementTypes;
@@ -34,6 +36,7 @@ import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 import terrablender.api.RegionType;
 import terrablender.api.Regions;
 import terrablender.api.SurfaceRuleManager;
@@ -59,6 +62,7 @@ public class FossilForge {
     public void onClient(FMLClientSetupEvent event) {
         ClientModEvents.registerOverlays();
         ClientInit.later();
+        GeoArmorRenderer.registerArmorRenderer(AncientHelmetItem.class, AncientHelmetRenderer::new);
     }
 
     public void onCommon(FMLCommonSetupEvent event) {

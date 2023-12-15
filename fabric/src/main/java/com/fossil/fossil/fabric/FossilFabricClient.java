@@ -4,8 +4,10 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.client.ClientInit;
 import com.fossil.fossil.client.renderer.OverlayRenderer;
+import com.fossil.fossil.client.renderer.armor.AncientHelmetRenderer;
 import com.fossil.fossil.fabric.client.model.PlantModelProvider;
 import com.fossil.fossil.fabric.client.renderer.CustomItemRendererFabricImpl;
+import com.fossil.fossil.item.ModItems;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -14,6 +16,7 @@ import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 public class FossilFabricClient implements ClientModInitializer {
     @Override
@@ -21,6 +24,7 @@ public class FossilFabricClient implements ClientModInitializer {
         ClientInit.immediate();
         ClientInit.later();
         ModelLoadingRegistry.INSTANCE.registerResourceProvider(PlantModelProvider::new);
+        GeoArmorRenderer.registerArmorRenderer(new AncientHelmetRenderer(), ModItems.ANCIENT_HELMET.get());
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANU_STATUE.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANUBITE_STATUE.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANCIENT_CHEST.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
