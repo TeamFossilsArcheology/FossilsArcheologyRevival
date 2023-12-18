@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "ingredient": {
-    "item": "fossil:meat_pachyrhinosaurus"
-  },
-  "result": "fossil:cooked_pachyrhinosaurus",
-  "experience": 1.5,
-  "cookingtime": 100
-}
