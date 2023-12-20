@@ -376,7 +376,7 @@ public class ModBlocks {
     public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_DESTROYED = registerZombie(FigurineBlock.FigurineVariant.DESTROYED);
     public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_RESTORED = registerZombie(FigurineBlock.FigurineVariant.RESTORED);
     public static final RegistrySupplier<FigurineBlock> ZOMBIE_FIGURINE_PRISTINE = registerZombie(FigurineBlock.FigurineVariant.PRISTINE);
-    public static final RegistrySupplier<Block> FERNS = registerBlockWithoutBlockItem("ferns", FernsBlock::new);
+    public static final RegistrySupplier<Block> FERNS = registerBlockWithoutBlockItem("plant_ferns", FernsBlock::new);
 
     static {
         for (DyeColor color : DyeColor.values()) {

@@ -1,0 +1,6 @@
+{
+  "parent": "fossil:block/plant_ferns_template",
+  "textures": {
+    "crop": "fossil:block/plants/plant_ferns_stage3"
+  }
+}

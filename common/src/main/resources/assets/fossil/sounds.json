@@ -839,25 +839,25 @@
   "plesiosaurus_ambient_inside": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/plesiosaur_ambient"
+      "fossil:prehistoric/plesiosaurus_ambient"
     ]
   },
   "plesiosaurus_ambient_outside": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/plesiosaur_ambient"
+      "fossil:prehistoric/plesiosaurus_ambient"
     ]
   },
   "plesiosaurus_hurt": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/plesiosaur_hurt"
+      "fossil:prehistoric/plesiosaurus_hurt"
     ]
   },
   "plesiosaurus_death": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/plesiosaur_hurt"
+      "fossil:prehistoric/plesiosaurus_hurt"
     ]
   },
   "pteranodon_ambient": {

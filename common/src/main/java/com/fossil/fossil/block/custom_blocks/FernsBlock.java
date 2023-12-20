@@ -22,7 +22,7 @@ import java.util.Random;
 public class FernsBlock extends BushBlock implements BonemealableBlock {
     public static final int LOWER_MAX_AGE = 4;
     public static final int UPPER_MAX_AGE = 6;
-    public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 7);;
+    public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 6);;
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{Block.box(0, 0, 0, 16, 11, 16), Block.box(0, 0, 0, 16, 12.0,
             16), Block.box(0, 0, 0, 16, 13, 16), Block.box(0, 0, 0, 16, 14, 16), Block.box(0, 0, 0, 16, 15,
             16), Block.box(0, 0, 0, 16, 16, 16), Block.box(0, 0, 0, 16, 2, 16), Block.box(0, 0, 0, 16, 4, 16)};

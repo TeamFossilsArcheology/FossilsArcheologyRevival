@@ -62,6 +62,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
                     fourTallFlowerBlock(tallFlower);
                 }
             }
+            var blockState = getVariantBuilder(ModBlocks.FERNS.get());
+            ResourceLocation[] textures = IntStream.rangeClosed(0, FernsBlock.UPPER_MAX_AGE).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_ferns_stage" + age)).toArray(ResourceLocation[]::new);
+            models().registerExistingTexture(textures);
+            ResourceLocation fernsCrop = new ResourceLocation(Fossil.MOD_ID, "block/plant_ferns_template");
+            models().registerExistingModel(fernsCrop);
+            for (int i = 0; i <= FernsBlock.UPPER_MAX_AGE; i++) {
+                blockState.partialState().with(FernsBlock.AGE, i).setModels(new ConfiguredModel(models().singleTexture("block/plants/plant_ferns_stage" + i, fernsCrop, "crop", textures[i])));
+            }
         }
         if (vases) {
             ResourceLocation amphoraTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora");

@@ -41,6 +41,7 @@ c779ccdaad156d9f770f467b48f7061840be71df assets/fossil/blockstates/dictyophyllum
 861f9f2982aec0699b2f565ca1d755aa03ce69ec assets/fossil/blockstates/dillhoffia.json
 19d33c5420db1ad09512676956b1cbac8013c2fe assets/fossil/blockstates/duisbergia.json
 9284388d1631a44778851b55a0208ce22c758899 assets/fossil/blockstates/ephedra.json
+4d75ef2d733326a00a014f4d275cb105eaaf2ced assets/fossil/blockstates/plant_ferns.json
 d6f57e4004d01414ed038473329f02fe30f0f3ce assets/fossil/blockstates/florissantia.json
 6a2a1720501f97693ed39efd2a41ef6b309b04d4 assets/fossil/blockstates/foozia.json
 5451bb59c8f0d09c5f9f9be9fc4bc98e609cac1b assets/fossil/blockstates/horsetail_large.json
@@ -337,6 +338,13 @@ de86f7f7c9095beb42ed299ef2a495e5df4a9c06 assets/fossil/models/block/plants/cyath
 2547f04e440dacd4301d6922c6419d46722aae01 assets/fossil/models/block/plants/duisbergia_2.json
 c8ffd1259c713fbb54d420d2e07dbb73b25de582 assets/fossil/models/block/plants/ephedra_stage0.json
 82d4628fc05e2a516691279b5951b4fbdd171f1e assets/fossil/models/block/plants/ephedra_stage1.json
+4561818f018740cf1407ea7ec5c43b733b749e5f assets/fossil/models/block/plants/ferns_stage0.json
+339cf3c41e1d6530882415236855e7ee87bc6bd8 assets/fossil/models/block/plants/ferns_stage1.json
+c9bc740b309b7900796e9567d7931527246a45c1 assets/fossil/models/block/plants/ferns_stage2.json
+4c9bef71b10ddf1d3bb0554d39b3cb821a5217a3 assets/fossil/models/block/plants/ferns_stage3.json
+19dea90b1ad76d18d7347a836a4d45e9ddde99ed assets/fossil/models/block/plants/ferns_stage4.json
+1e3f8c55a4a3d2c4aea2b21132aa9285251efa70 assets/fossil/models/block/plants/ferns_stage5.json
+db4d9935f914025391f30688099a86b993c03971 assets/fossil/models/block/plants/ferns_stage6.json
 08e3b323d320cd904ba29a2af21950918a0a3a09 assets/fossil/models/block/plants/florissantia.json
 f6bfb4a3f239f07fa2162ac8d304f3bf323d2155 assets/fossil/models/block/plants/foozia_1.json
 820376dbb47f8cc5c488a317e471c1a19ac90f85 assets/fossil/models/block/plants/foozia_2.json
