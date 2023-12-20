@@ -17,9 +17,9 @@ import java.util.Random;
 public class Coelacanth extends PrehistoricFish {
     public static final String ANIMATIONS = "coelacanth.animation.json";
     public static final String IDLE = "animation.coelacanth.idle";
+    public static final String LAND = "animation.coelacanth.land";
     public static final String SWIM = "animation.coelacanth.swim";
     public static final String SWIM_FAST = "animation.coelacanth.swim_fast";
-    public static final String LAND = "animation.coelacanth.land";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Coelacanth(EntityType<Coelacanth> entityType, Level level) {

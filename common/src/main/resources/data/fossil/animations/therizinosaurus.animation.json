@@ -1,35 +1,96 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "fa.therizinosaurus.idle": {
+    "animation.therizinosaurus.idle": {
       "loop": true,
-      "animation_length": 3.12
+      "animation_length": 12
     },
-    "fa.therizinosaurus.walk": {
+    "animation.therizinosaurus.sit": {
       "loop": true,
-      "animation_length": 2.08
+      "animation_length": 12
     },
-    "fa.therizinosaurus.sleep": {
+    "animation.therizinosaurus.sleep1": {
       "loop": true,
-      "animation_length": 3.12
+      "animation_length": 12
     },
-    "fa.therizinosaurus.sleepbaby": {
+    "animation.therizinosaurus.sleep2": {
       "loop": true,
-      "animation_length": 3.12
+      "animation_length": 12
     },
-    "fa.therizinosaurus.threat": {
-      "animation_length": 2.6
+    "animation.therizinosaurus.walk": {
+      "loop": true,
+      "animation_length": 3
     },
-    "fa.therizinosaurus.attack1": {
-      "animation_length": 1.04,
-      "action_delay": [15]
+    "animation.therizinosaurus.walk_evil": {
+      "loop": true,
+      "animation_length": 3
     },
-    "fa.therizinosaurus.attack2": {
-      "animation_length": 1.28,
-      "action_delay": [16]
+    "animation.therizinosaurus.run": {
+      "loop": true,
+      "animation_length": 1.5
     },
-    "fa.therizinosaurus.eat": {
-      "animation_length": 3.12
+    "animation.therizinosaurus.run_baby": {
+      "loop": true,
+      "animation_length": 0.75
+    },
+    "animation.therizinosaurus.jump/fall": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.therizinosaurus.swim": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.therizinosaurus.drink": {
+      "animation_length": 3
+    },
+    "animation.therizinosaurus.eat1": {
+      "animation_length": 3
+    },
+    "animation.therizinosaurus.eat2": {
+      "animation_length": 3
+    },
+    "animation.therizinosaurus.eat3": {
+      "animation_length": 3
+    },
+    "animation.therizinosaurus.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.therizinosaurus.turn_right": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.therizinosaurus.speak": {
+      "animation_length": 2
+    },
+    "animation.therizinosaurus.call": {
+      "animation_length": 3
+    },
+    "animation.therizinosaurus.threaten": {
+      "animation_length": 3
+    },
+    "animation.therizinosaurus.dance": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.therizinosaurus.WalkSpeedDemo": {
+      "loop": true,
+      "animation_length": 18
+    },
+    "animation.therizinosaurus.RunSpeedDemo": {
+      "loop": true,
+      "animation_length": 18
+    },
+    "animation.therizinosaurus.BabyRunSpeedDemo": {
+      "loop": true,
+      "animation_length": 18
+    },
+    "animation.therizinosaurus.SwimSpeedDemo": {
+      "loop": true
+    },
+    "animation.therizinosaurus.TurningRadiusDemo": {
+      "loop": true,
+      "animation_length": 6
     }
-  }
+  },
+  "geckolib_format_version": 2
 }

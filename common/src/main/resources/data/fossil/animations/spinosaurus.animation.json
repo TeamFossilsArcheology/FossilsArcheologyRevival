@@ -1,47 +1,60 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.spinosaurus.idle": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.spinosaurus.sit1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.spinosaurus.sit2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.spinosaurus.sleep1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.spinosaurus.sleep2": {
-      "loop": true,
-      "animation_length": 12
-    },
     "animation.spinosaurus.walk": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.spinosaurus.run": {
-      "loop": true,
-      "animation_length": 0.75
+    "animation.spinosaurus.speak": {
+      "animation_length": 2
+    },
+    "animation.spinosaurus.attack": {
+      "animation_length": 1.33333,
+      "action_delay": [11]
     },
     "animation.spinosaurus.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.spinosaurus.swim": {
+    "SPINOSAURUSWALKDEMO": {
+      "loop": true,
+      "animation_length": 100
+    },
+    "animation.spinosaurus.swimunderwater": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.spinosaurus.waterwalk": {
       "loop": true,
       "animation_length": 4
     },
-    "animation.spinosaurus.drink": {
-      "animation_length": 3
+    "animation.spinosaurus.swimfloating": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.spinosaurus.swimidle": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.spinosaurus.floatidle": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.spinosaurus.idle": {
+      "loop": true,
+      "animation_length": 4
     },
     "animation.spinosaurus.eat": {
       "animation_length": 3
+    },
+    "animation.spinosaurus.drink": {
+      "animation_length": 4.125
+    },
+    "animation.spinosaurus.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.spinosaurus.turn_right": {
+      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2

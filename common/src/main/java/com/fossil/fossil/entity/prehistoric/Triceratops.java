@@ -24,23 +24,15 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Triceratops extends Prehistoric {
     public static final String ANIMATIONS = "triceratops.animation.json";
-    public static final String IDLE = "animation.triceratops.idle";
-    public static final String WALK = "animation.triceratops.walk";
-    public static final String RUN = "animation.triceratops.run";
-    public static final String SWIM = "animation.triceratops.swim";
-    public static final String DRINK = "animation.triceratops.drink";
-    public static final String EAT = "animation.triceratops.eat";
-    public static final String SIT = "animation.triceratops.sit";
-    public static final String SLEEP1 = "animation.triceratops.sleep1";
-    public static final String SLEEP2 = "animation.triceratops.sleep2";
-    public static final String RAM = "animation.triceratops.ram";
-    public static final String RAM_WINDUP = "animation.triceratops.ram_windup";
-    public static final String TURN_RIGHT = "animation.triceratops.turn_right";
-    public static final String TURN_LEFT = "animation.triceratops.turn_left";
-    public static final String SPEAK = "animation.triceratops.speak";
-    public static final String CALL = "animation.triceratops.call";
     public static final String ATTACK1 = "animation.triceratops.attack1";
     public static final String ATTACK2 = "animation.triceratops.attack2";
+    public static final String EAT = "animation.triceratops.eat";
+    public static final String IDLE = "animation.triceratops.idle";
+    public static final String RUN = "animation.triceratops.run";
+    public static final String SLEEP1 = "animation.triceratops.sleep1";
+    public static final String SLEEP2 = "animation.triceratops.sleep2";
+    public static final String SWIM = "animation.triceratops.swim";
+    public static final String WALK = "animation.triceratops.walk";
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Triceratops(EntityType<Triceratops> type, Level level) {

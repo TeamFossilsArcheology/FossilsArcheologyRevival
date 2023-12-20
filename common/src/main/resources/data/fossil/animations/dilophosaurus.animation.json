@@ -55,10 +55,10 @@
       "loop": "hold_on_last_frame",
       "animation_length": 1
     },
-    "animation.dilophosaurus.turn_right": {
+    "animation.dilophosaurus.turn_left": {
       "loop": "hold_on_last_frame"
     },
-    "animation.dilophosaurus.turn_left": {
+    "animation.dilophosaurus.turn_right": {
       "loop": "hold_on_last_frame"
     },
     "animation.dilophosaurus.speak": {
@@ -79,20 +79,12 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.RunSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
+    "animation.dilophosaurus.attack3": {
+      "animation_length": 2,
+      "action_delay": [9]
     },
-    "animation.dilophosaurus.SwimSpeedDemo": {
-      "loop": true
-    },
-    "animation.dilophosaurus.TurningRadiusDemo": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.dilophosaurus.InflateDemo": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 6
+    "animation.dilophosaurus.ontogeny_baby": {
+      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2

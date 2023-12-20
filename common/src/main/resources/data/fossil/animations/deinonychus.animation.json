@@ -1,33 +1,50 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.velociraptor.idle": {
+    "animation.deinonychus.idle": {
+      "loop": true
+    },
+    "animation.deinonychus.walk": {
+      "loop": true,
+      "animation_length": 1.41667
+    },
+    "animation.deinonychus.run": {
       "loop": true,
       "animation_length": 0.75
     },
-    "animation.velociraptor.walk": {
-      "loop": true,
+    "animation.deinonychus.display": {
       "animation_length": 2
     },
-    "animation.velociraptor.run": {
-      "loop": true,
-      "animation_length": 0.75
-    },
-    "animation.velociraptor.display": {
-      "animation_length": 2
-    },
-    "animation.velociraptor.call": {
+    "animation.deinonychus.call": {
       "animation_length": 1
     },
-    "animation.velociraptor.attack1": {
-      "animation_length": 1.25,
-      "action_delay": [16]
+    "animation.deinonychus.attack": {
+      "animation_length": 1,
+      "action_delay": [14]
     },
-    "animation.velociraptor.leap": {
-      "action_delay": [15]
-    },
-    "animation.velociraptor.speak": {
+    "animation.deinonychus.sit": {
       "loop": true
+    },
+    "animation.deinonychus.sleep": {
+      "loop": true
+    },
+    "animation.deinonychus.swim": {
+      "loop": true
+    },
+    "animation.deinonychus.drink": {
+      "animation_length": 3
+    },
+    "animation.deinonychus.eat": {
+      "animation_length": 3
+    },
+    "animation.deinonychus.jump/fall": {
+      "loop": true
+    },
+    "animation.deinonychus.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.deinonychus.turn_right": {
+      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2

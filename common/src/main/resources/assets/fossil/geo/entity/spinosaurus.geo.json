@@ -3,7 +3,7 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.Model",
+				"identifier": "geometry.spinosaurus",
 				"texture_width": 149,
 				"texture_height": 95,
 				"visible_bounds_width": 9,

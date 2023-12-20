@@ -40,6 +40,7 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public static final String CALL = "animation.dilophosaurus.call";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     public static final String ATTACK2 = "animation.dilophosaurus.attack2";
+    public static final String ATTACK3 = "animation.dilophosaurus.attack3";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -116,10 +117,10 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     @Override
     public @NotNull Animation nextAttackAnimation() {
         String key;
-        if (getRandom().nextInt(2) == 0) {
-            key = ATTACK1;
-        } else {
-            key = ATTACK2;
+        switch (getRandom().nextInt(3)) {
+            case 0 -> key = ATTACK1;
+            case 1 -> key = ATTACK2;
+            default -> key = ATTACK3;
         }
         return getAllAnimations().get(key);
     }

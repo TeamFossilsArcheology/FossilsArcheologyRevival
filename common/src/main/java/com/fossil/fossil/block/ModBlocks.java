@@ -39,7 +39,7 @@ public class ModBlocks {
                     .lightLevel(activeBlockEmission(14))));
     public static final RegistrySupplier<SifterBlock> SIFTER = registerBlock("sifter",
             () -> new SifterBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.METAL)));
-    public static final RegistrySupplier<CultivateBlock> CULTIVATE = registerBlock("cultivate", () -> new CultivateBlock(
+    public static final RegistrySupplier<CultureVatBlock> CULTURE_VAT = registerBlock("culture_vat", () -> new CultureVatBlock(
             BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()
                     .lightLevel(activeBlockEmission(14)).noOcclusion()));
     public static final RegistrySupplier<Block> WORKTABLE = registerBlock("worktable", () -> new WorktableBlock(

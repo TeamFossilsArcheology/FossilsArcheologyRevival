@@ -19,13 +19,15 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megalodon extends PrehistoricSwimming {
     public static final String ANIMATIONS = "megalodon.animation.json";
-    public static final String IDLE = "animation.megalodon.swim_idle";
-    public static final String SWIM = "animation.megalodon.swim";
-    public static final String SWIM_FAST = "animation.megalodon.swim_fast";
+    public static final String ATTACK = "animation.megalodon.attack";
     public static final String BEACHED = "animation.megalodon.beached1";
     public static final String BEACHED2 = "animation.megalodon.beached2";
     public static final String EAT = "animation.megalodon.eat";
-    public static final String ATTACK = "animation.megalodon.attack";
+    public static final String IDLE = "animation.megalodon.swim_idle";
+    public static final String FALL = "animation.megalodon.jump/fall";
+    public static final String RUN = "animation.megalodon.swim_fast";
+    public static final String SLEEP = "animation.megalodon.sleep1";
+    public static final String WALK = "animation.megalodon.swim";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private String beachAnimation = "";
 
@@ -126,12 +128,12 @@ public class Megalodon extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(SWIM);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(SWIM);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

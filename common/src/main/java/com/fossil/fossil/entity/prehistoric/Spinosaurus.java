@@ -19,8 +19,14 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary {
     public static final String ANIMATIONS = "spinosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.spinosaurus.attack";
+    public static final String EAT = "animation.spinosaurus.eat";
+    public static final String IDLE = "animation.spinosaurus.idle";
+    public static final String RUN = "animation.spinosaurus.run";
+    public static final String SLEEP = "animation.spinosaurus.sleep";
+    public static final String SWIM = "animation.spinosaurus.swim";
+    public static final String WALK = "animation.spinosaurus.walk";
+    //TODO: Animations
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -90,7 +96,7 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

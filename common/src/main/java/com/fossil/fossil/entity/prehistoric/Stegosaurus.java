@@ -19,22 +19,16 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Stegosaurus extends Prehistoric {
     public static final String ANIMATIONS = "stegosaurus.animation.json";
-    public static final String IDLE = "animation.stegosaurus.idle";
-    public static final String SIT1 = "animation.stegosaurus.sit1";
-    public static final String SIT2 = "animation.stegosaurus.sit2";
-    public static final String SLEEP1 = "animation.stegosaurus.sleep1";
-    public static final String SLEEP2 = "animation.stegosaurus.sleep2";
-    public static final String WALK = "animation.stegosaurus.walk";
-    public static final String RUN = "animation.stegosaurus.run";
-    public static final String JUMP_FALL = "animation.stegosaurus.jump/fall";
-    public static final String SWIM = "animation.stegosaurus.swim";
-    public static final String EAT = "animation.stegosaurus.eat";
-    public static final String TURN_RIGHT = "animation.stegosaurus.turn_right";
-    public static final String TURN_LEFT = "animation.stegosaurus.turn_left";
-    public static final String SPEAK = "animation.stegosaurus.speak";
-    public static final String CALL1 = "animation.stegosaurus.call1";
     public static final String ATTACK_FRONT1 = "animation.stegosaurus.attack_front1";
     public static final String ATTACK_FRONT2 = "animation.stegosaurus.attack_front2";
+    public static final String EAT = "animation.stegosaurus.eat";
+    public static final String IDLE = "animation.stegosaurus.idle";
+    public static final String FALL = "animation.stegosaurus.jump/fall";
+    public static final String RUN = "animation.stegosaurus.run";
+    public static final String SLEEP1 = "animation.stegosaurus.sleep1";
+    public static final String SLEEP2 = "animation.stegosaurus.sleep2";
+    public static final String SWIM = "animation.stegosaurus.swim";
+    public static final String WALK = "animation.stegosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 

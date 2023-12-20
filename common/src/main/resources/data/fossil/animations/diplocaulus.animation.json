@@ -23,6 +23,10 @@
     "animation.diplocaulus.dance": {
       "loop": true,
       "animation_length": 1
+    },
+    "animation.diplocaulus.swimidle": {
+      "loop": true,
+      "animation_length": 4
     }
   },
   "geckolib_format_version": 2

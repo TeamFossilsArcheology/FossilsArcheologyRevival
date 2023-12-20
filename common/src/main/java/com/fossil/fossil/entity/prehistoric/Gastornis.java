@@ -20,8 +20,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Gastornis extends Prehistoric {
     public static final String ANIMATIONS = "gastornis.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.gastornis.attack";
+    public static final String EAT = "animation.gastornis.eat";
+    public static final String IDLE = "animation.gastornis.idle";
+    public static final String FALL = "animation.gastornis.jump/fall";
+    public static final String SLEEP = "animation.gastornis.sleep";
+    public static final String SWIM = "animation.gastornis.swim";
+    public static final String WALK = "animation.gastornis.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -59,7 +64,7 @@ public class Gastornis extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -69,17 +74,17 @@ public class Gastornis extends Prehistoric {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

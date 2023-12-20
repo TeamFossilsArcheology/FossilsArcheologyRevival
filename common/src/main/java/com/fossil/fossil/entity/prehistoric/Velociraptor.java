@@ -24,14 +24,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary {
     public static final String ANIMATIONS = "velociraptor.animation.json";
+    public static final String ATTACK = "animation.velociraptor.attack";
+    public static final String EAT = "animation.velociraptor.eat";
     public static final String IDLE = "animation.velociraptor.idle";
-    public static final String WALK = "animation.velociraptor.walk";
     public static final String RUN = "animation.velociraptor.run";
-    public static final String SPEAK = "animation.velociraptor.speak";
-    public static final String CALL = "animation.velociraptor.call";
-    public static final String ATTACK1 = "animation.velociraptor.attack1";
-    public static final String LEAP = "animation.velociraptor.leap";
-    public static final String DISPLAY = "animation.velociraptor.display";
+    public static final String SLEEP = "animation.velociraptor.sleep";
+    public static final String SWIM = "animation.velociraptor.swim";
+    public static final String WALK = "animation.velociraptor.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Velociraptor(EntityType<Velociraptor> entityType, Level level) {
@@ -94,7 +93,7 @@ public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(DISPLAY);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -114,12 +113,12 @@ public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override
     public String getLeapingAnimationName() {
-        return LEAP;
+        return IDLE;
     }
 
     @Override

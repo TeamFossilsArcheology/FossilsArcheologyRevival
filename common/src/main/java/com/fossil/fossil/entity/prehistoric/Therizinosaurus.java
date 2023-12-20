@@ -20,14 +20,18 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Therizinosaurus extends Prehistoric {
     public static final String ANIMATIONS = "therizinosaurus.animation.json";
-    public static final String IDLE = "fa.therizinosaurus.idle";
-    public static final String WALK = "fa.therizinosaurus.walk";
-    public static final String SLEEP = "fa.therizinosaurus.sleep";
-    public static final String SLEEP_BABY = "fa.therizinosaurus.sleep_baby";
-    public static final String THREAT = "fa.therizinosaurus.threat";
-    public static final String ATTACK1 = "fa.therizinosaurus.attack1";
-    public static final String ATTACK2 = "fa.therizinosaurus.attack2";
-    public static final String EAT = "fa.therizinosaurus.eat";
+    public static final String ATTACK1 = "animation.therizinosaurus.attack1";
+    public static final String ATTACK2 = "animation.therizinosaurus.attack2";
+    public static final String EAT1 = "animation.therizinosaurus.eat1";
+    public static final String EAT2 = "animation.therizinosaurus.eat2";
+    public static final String EAT3 = "animation.therizinosaurus.eat3";
+    public static final String IDLE = "animation.therizinosaurus.idle";
+    public static final String RUN = "animation.therizinosaurus.run";
+    public static final String RUN_BABY = "animation.therizinosaurus.run_baby";
+    public static final String SLEEP1 = "animation.therizinosaurus.sleep1";
+    public static final String SLEEP2 = "animation.therizinosaurus.sleep2";
+    public static final String SWIM = "animation.therizinosaurus.swim";
+    public static final String WALK = "animation.therizinosaurus.walk";
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Therizinosaurus(EntityType<Therizinosaurus> entityType, Level level) {
@@ -93,7 +97,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
+        return getAllAnimations().get(EAT1);
     }
 
     @Override
@@ -103,7 +107,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return isBaby() ? getAllAnimations().get(SLEEP_BABY) : getAllAnimations().get(SLEEP);
+        return isBaby() ? getAllAnimations().get(SLEEP1) : getAllAnimations().get(SLEEP2);
     }
 
     @Override
@@ -113,7 +117,7 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return nextMovingAnimation();
+        return isBaby() ? getAllAnimations().get(RUN_BABY) : getAllAnimations().get(RUN);
     }
 
     @Override

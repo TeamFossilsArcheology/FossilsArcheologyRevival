@@ -19,11 +19,16 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Ankylosaurus extends Prehistoric {
     public static final String ANIMATIONS = "ankylosaurus.animation.json";
+    public static final String ATTACK1 = "animation.ankylosaurus.attack_strong1";
+    public static final String ATTACK2 = "animation.ankylosaurus.attack_back1";
+    public static final String ATTACK3 = "animation.ankylosaurus.attack_back2";
     public static final String EAT = "animation.ankylosaurus.eat";
     public static final String IDLE = "animation.ankylosaurus.idle";
-    public static final String WALK = "animation.ankylosaurus.walk";
+    public static final String FALL = "animation.ankylosaurus.jump/fall";
     public static final String RUN = "animation.ankylosaurus.run";
-    public static final String ATTACK1 = "animation.ankylosaurus.attack_strong1";
+    public static final String SLEEP = "animation.ankylosaurus.sleep1";
+    public static final String SWIM = "animation.ankylosaurus.swim";
+    public static final String WALK = "animation.ankylosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 

@@ -20,8 +20,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Ceratosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "ceratosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.ceratosaurus.attack";
+    public static final String EAT = "animation.ceratosaurus.eat";
+    public static final String IDLE = "animation.ceratosaurus.idle";
+    public static final String FALL = "animation.ceratosaurus.jump/fall";
+    public static final String RUN = "animation.ceratosaurus.run";
+    public static final String SWIM = "animation.ceratosaurus.swim";
+    public static final String WALK = "animation.ceratosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -59,7 +64,7 @@ public class Ceratosaurus extends Prehistoric implements PrehistoricScary {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -69,17 +74,17 @@ public class Ceratosaurus extends Prehistoric implements PrehistoricScary {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

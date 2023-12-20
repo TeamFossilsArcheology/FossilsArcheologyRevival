@@ -19,8 +19,11 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megalograptus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "megalograptus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.megalograptus.attack";
+    public static final String EAT = "animation.megalograptus.eat";
+    public static final String IDLE = "animation.megalograptus.idle";
+    public static final String SWIM = "animation.megalograptus.swim";
+    public static final String WALK = "animation.megalograptus.walk/crawl";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -71,7 +74,7 @@ public class Megalograptus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -81,17 +84,17 @@ public class Megalograptus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

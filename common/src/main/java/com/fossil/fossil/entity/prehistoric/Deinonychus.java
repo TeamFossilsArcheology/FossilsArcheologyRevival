@@ -23,14 +23,14 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Deinonychus extends PrehistoricLeaping implements PrehistoricScary {
     public static final String ANIMATIONS = "deinonychus.animation.json";
-    public static final String IDLE = "animation.velociraptor.idle";
-    public static final String WALK = "animation.velociraptor.walk";
-    public static final String RUN = "animation.velociraptor.run";
-    public static final String SPEAK = "animation.velociraptor.speak";
-    public static final String CALL = "animation.velociraptor.call";
-    public static final String ATTACK1 = "animation.velociraptor.attack1";
-    public static final String LEAP = "animation.velociraptor.leap";
-    public static final String DISPLAY = "animation.velociraptor.display";
+    public static final String ATTACK = "animation.deinonychus.attack";
+    public static final String EAT = "animation.deinonychus.eat";
+    public static final String IDLE = "animation.deinonychus.idle";
+    public static final String FALL = "animation.deinonychus.jump/fall";
+    public static final String RUN = "animation.deinonychus.run";
+    public static final String SLEEP = "animation.deinonychus.sleep";
+    public static final String SWIM = "animation.deinonychus.swim";
+    public static final String WALK = "animation.deinonychus.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Deinonychus(EntityType<Deinonychus> entityType, Level level) {
@@ -72,7 +72,7 @@ public class Deinonychus extends PrehistoricLeaping implements PrehistoricScary 
 
     @Override
     public boolean canAttackType(EntityType<?> entityType) {
-        return !entityType.equals(ModEntities.VELOCIRAPTOR.get()) && super.canAttackType(entityType);
+        return !entityType.equals(ModEntities.DEINONYCHUS.get()) && super.canAttackType(entityType);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Deinonychus extends PrehistoricLeaping implements PrehistoricScary 
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(DISPLAY);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -107,12 +107,12 @@ public class Deinonychus extends PrehistoricLeaping implements PrehistoricScary 
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override
     public String getLeapingAnimationName() {
-        return LEAP;
+        return IDLE;
     }
 
     @Override

@@ -19,7 +19,14 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Diplodocus extends Prehistoric {
     public static final String ANIMATIONS = "diplodocus.animation.json";
-    public static final String IDLE = "animation.diplodocus.new";
+    public static final String ATTACK = "animation.diplodocus.attack";
+    public static final String EAT = "animation.diplodocus.eat";
+    public static final String IDLE = "animation.diplodocus.idle";
+    public static final String FALL = "animation.diplodocus.jump/fall";
+    public static final String RUN = "animation.diplodocus.sprint";
+    public static final String SLEEP = "animation.diplodocus.sleep";
+    public static final String SWIM = "animation.diplodocus.swim";
+    public static final String WALK = "animation.diplodocus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -53,7 +60,7 @@ public class Diplodocus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -63,17 +70,20 @@ public class Diplodocus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

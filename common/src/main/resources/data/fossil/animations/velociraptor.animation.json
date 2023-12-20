@@ -2,12 +2,7 @@
   "format_version": "1.8.0",
   "animations": {
     "animation.velociraptor.idle": {
-      "loop": true,
-      "animation_length": 0.75
-    },
-    "animation.velociraptor.walk": {
-      "loop": true,
-      "animation_length": 2
+      "loop": true
     },
     "animation.velociraptor.run": {
       "loop": true,
@@ -19,15 +14,37 @@
     "animation.velociraptor.call": {
       "animation_length": 1
     },
-    "animation.velociraptor.attack1": {
-      "animation_length": 1.25,
-      "action_delay": [16]
-    },
-    "animation.velociraptor.leap": {
-      "action_delay": [15]
-    },
-    "animation.velociraptor.speak": {
+    "animation.velociraptor.jump/fall": {
       "loop": true
+    },
+    "animation.velociraptor.eat": {
+      "animation_length": 3
+    },
+    "animation.velociraptor.drink": {
+      "animation_length": 3
+    },
+    "animation.velociraptor.swim": {
+      "loop": true
+    },
+    "animation.velociraptor.sleep": {
+      "loop": true
+    },
+    "animation.velociraptor.sit": {
+      "loop": true
+    },
+    "animation.velociraptor.attack": {
+      "animation_length": 1,
+      "action_delay": [13]
+    },
+    "animation.velociraptor.turn_right": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.velociraptor.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.velociraptor.walk": {
+      "loop": true,
+      "animation_length": 1.41667
     }
   },
   "geckolib_format_version": 2
