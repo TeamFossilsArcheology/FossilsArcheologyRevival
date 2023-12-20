@@ -32,16 +32,26 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 public enum PrehistoricEntityType {
+    AXOLOTL(vanilla(EntityType.AXOLOTL), PrehistoricMobType.VANILLA_FISH, TimePeriod.CURRENT, Diet.INSECTIVORE, Map.of(), 0, 0),
     CHICKEN(vanilla(EntityType.CHICKEN), PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
-    COW(vanilla(EntityType.COW), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
-    DONKEY(vanilla(EntityType.DONKEY), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
-    HORSE(vanilla(EntityType.HORSE), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
-    LLAMA(vanilla(EntityType.LLAMA), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    COD(vanilla(EntityType.COD), PrehistoricMobType.VANILLA_FISH, TimePeriod.CURRENT, Diet.PISCI_CARNIVORE, Map.of(), 0, 0),
+    COW(vanilla(EntityType.COW), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    DOLPHIN(vanilla(EntityType.DOLPHIN), PrehistoricMobType.VANILLA_FISH, TimePeriod.CURRENT, Diet.PISCI_CARNIVORE, Map.of(), 0, 0),
+    DONKEY(vanilla(EntityType.DONKEY), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    FOX(vanilla(EntityType.FOX), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.OMNIVORE, Map.of(), 0, 0),
+    HOGLIN(vanilla(EntityType.HOGLIN), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.OMNIVORE, Map.of(), 0, 0),
+    HORSE(vanilla(EntityType.HORSE), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    LLAMA(vanilla(EntityType.LLAMA), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    PANDA(vanilla(EntityType.PANDA), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
     PARROT(vanilla(EntityType.PARROT), PrehistoricMobType.CHICKEN, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
-    PIG(vanilla(EntityType.PIG), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.OMNIVORE, Map.of(), 0, 0),
-    POLARBEAR(vanilla(EntityType.POLAR_BEAR), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
-    RABBIT(vanilla(EntityType.RABBIT), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
-    SHEEP(vanilla(EntityType.SHEEP), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    PIG(vanilla(EntityType.PIG), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.OMNIVORE, Map.of(), 0, 0),
+    POLARBEAR(vanilla(EntityType.POLAR_BEAR), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    PUFFERFISH(vanilla(EntityType.PUFFERFISH), PrehistoricMobType.VANILLA_FISH, TimePeriod.CURRENT, Diet.OMNIVORE, Map.of(), 0, 0),
+    RABBIT(vanilla(EntityType.RABBIT), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    SALMON(vanilla(EntityType.SALMON), PrehistoricMobType.VANILLA_FISH, TimePeriod.CURRENT, Diet.PISCI_CARNIVORE, Map.of(), 0, 0),
+    SHEEP(vanilla(EntityType.SHEEP), PrehistoricMobType.VANILLA_MAMMAL, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
+    TROPICAL_FISH(vanilla(EntityType.TROPICAL_FISH), PrehistoricMobType.VANILLA_FISH, TimePeriod.CURRENT, Diet.PISCI_CARNIVORE, Map.of(), 0, 0),
+    TURTLE(vanilla(EntityType.TURTLE), PrehistoricMobType.VANILLA, TimePeriod.CURRENT, Diet.HERBIVORE, Map.of(), 0, 0),
     ALLIGATOR_GAR(ModEntities.ALLIGATOR_GAR, PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE, 0X43462A, 0XAF4231),
     ALLOSAURUS(ModEntities.ALLOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0X907B6C, 0X5F422D),
     ANKYLOSAURUS(ModEntities.ANKYLOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, 0X8A5B49, 0X211B13),
@@ -166,14 +176,16 @@ public enum PrehistoricEntityType {
                 DinoBoneItem.registerItem("bone_unique", type, item -> type.uniqueBoneItem = item);
                 DinoBoneItem.registerItem("bone_vertebrae", type, item -> type.vertebraeBoneItem = item);
             }
-            if (type.mobType == PrehistoricMobType.FISH) {
+            if (type.mobType == PrehistoricMobType.FISH || type.mobType == PrehistoricMobType.VANILLA_FISH) {
                 type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));//TODO: Define value somewhere. Also should all dinos be added here?
                 registerItem("egg_item", type, properties -> new FishEggItem(type), item -> type.eggItem = item);
-                registerItem("bucket_item", type, properties -> new ArchitecturyMobBucketItem(type.entitySupplier, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, properties.stacksTo(1)), item -> type.bucketItem = item);
+                if (type.mobType == PrehistoricMobType.FISH) {
+                    registerItem("bucket_item", type, properties -> new ArchitecturyMobBucketItem(type.entitySupplier, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, properties.stacksTo(1)), item -> type.bucketItem = item);
+                }
             } else if (type.mobType == PrehistoricMobType.DINOSAUR || type.mobType == PrehistoricMobType.DINOSAUR_AQUATIC) {
                 type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 registerItem("egg_item", type, p -> new DinoEggItem(type), item -> type.eggItem = item);
-            } else if (type.mobType == PrehistoricMobType.MAMMAL || type.mobType == PrehistoricMobType.VANILLA) {
+            } else if (type.mobType == PrehistoricMobType.MAMMAL || type.mobType == PrehistoricMobType.VANILLA_MAMMAL) {
                 registerItem("syringe", type, properties -> new MammalEmbryoItem(type), item -> type.embryoItem = item);
             } else if (type.mobType == PrehistoricMobType.BIRD || type.mobType == PrehistoricMobType.CHICKEN) {
                 type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));

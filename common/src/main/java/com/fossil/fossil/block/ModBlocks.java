@@ -358,6 +358,9 @@ public class ModBlocks {
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_DAMAGED = registerAmphora(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> AMPHORA_VASE_RESTORED = registerAmphora(VaseBlock.VaseVariant.RESTORED);
     public static final List<RegistrySupplier<FigurineBlock>> FIGURINES = new ArrayList<>();
+    public static final RegistrySupplier<FigurineBlock> ANU_FIGURINE_DESTROYED = registerAnu(FigurineBlock.FigurineVariant.DESTROYED);
+    public static final RegistrySupplier<FigurineBlock> ANU_FIGURINE_RESTORED = registerAnu(FigurineBlock.FigurineVariant.RESTORED);
+    public static final RegistrySupplier<FigurineBlock> ANU_FIGURINE_PRISTINE = registerAnu(FigurineBlock.FigurineVariant.PRISTINE);
     public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_DESTROYED = registerEnderman(FigurineBlock.FigurineVariant.DESTROYED);
     public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_RESTORED = registerEnderman(FigurineBlock.FigurineVariant.RESTORED);
     public static final RegistrySupplier<FigurineBlock> ENDERMAN_FIGURINE_PRISTINE = registerEnderman(FigurineBlock.FigurineVariant.PRISTINE);
@@ -415,6 +418,9 @@ public class ModBlocks {
         var toReturn = registerBlock("vase_" + name + "_" + variant, supplier);
         VASES.add(toReturn);
         return toReturn;
+    }
+    private static RegistrySupplier<FigurineBlock> registerAnu(FigurineBlock.FigurineVariant variant) {
+        return registerFigurine("anu", variant, () -> new FigurineAnuBlock(variant));
     }
 
     private static RegistrySupplier<FigurineBlock> registerEnderman(FigurineBlock.FigurineVariant variant) {

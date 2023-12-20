@@ -42,6 +42,7 @@ public abstract class FigurineBlock extends HorizontalDirectionalBlock {
         PRISTINE("pristine");
 
         private final String name;
+        private final ResourceLocation anuTexture;
         private final ResourceLocation endermanTexture;
         private final ResourceLocation piglinTexture;
         private final ResourceLocation skeletonTexture;
@@ -50,11 +51,16 @@ public abstract class FigurineBlock extends HorizontalDirectionalBlock {
 
         FigurineVariant(String name) {
             this.name = name;
+            this.anuTexture = new ResourceLocation(Fossil.MOD_ID, "textures/block/figurines/figurine_anu_" + name + ".png");
             this.endermanTexture = new ResourceLocation(Fossil.MOD_ID, "textures/block/figurines/figurine_enderman_" + name + ".png");
             this.piglinTexture = new ResourceLocation(Fossil.MOD_ID, "textures/block/figurines/figurine_piglin_" + name + ".png");
             this.skeletonTexture = new ResourceLocation(Fossil.MOD_ID, "textures/block/figurines/figurine_skeleton_" + name + ".png");
             this.steveTexture = new ResourceLocation(Fossil.MOD_ID, "textures/block/figurines/figurine_steve_" + name + ".png");
             this.zombieTexture = new ResourceLocation(Fossil.MOD_ID, "textures/block/figurines/figurine_zombie_" + name + ".png");
+        }
+
+        public ResourceLocation getAnuTexture() {
+            return anuTexture;
         }
 
         public ResourceLocation getEndermanTexture() {

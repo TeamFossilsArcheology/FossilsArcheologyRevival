@@ -327,7 +327,7 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(Items.RABBIT_FOOT).addOutput(RABBIT.dnaItem, 100).save(consumer);
             analyzed(Items.RABBIT_HIDE).addOutput(RABBIT.dnaItem, 100).save(consumer);
             analyzed(ModItems.RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(ModItems.POTTERY_SHARD.get(), 4).addOutput(ModItems.BROKEN_HELMET.get(), 4).addOutput(ModItems.BROKEN_SWORD.get(), 4).addOutput(ModItems.STONE_TABLET.get(), 30)
-                    .addOutput(ModBlocks.ENDERMAN_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.PIGLIN_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.SKELETON_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.STEVE_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.ZOMBIE_FIGURINE_DESTROYED.get(), 4).save(consumer);
+                    .addOutput(ModBlocks.ANU_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.ENDERMAN_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.PIGLIN_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.SKELETON_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.STEVE_FIGURINE_DESTROYED.get(), 4).addOutput(ModBlocks.ZOMBIE_FIGURINE_DESTROYED.get(), 4).save(consumer);
             analyzed(ItemTags.WOOL).addOutput(Items.STRING, 3, 60).addOutput(SHEEP.dnaItem, 27).addOutput(LLAMA.dnaItem, 13).save(consumer);
         }
     }

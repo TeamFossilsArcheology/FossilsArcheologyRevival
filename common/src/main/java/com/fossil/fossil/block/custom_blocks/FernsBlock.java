@@ -5,15 +5,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.shapes.CollisionContext;
@@ -22,10 +19,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class FernsBlock extends BushBlock {
-    public static final int LOWER_MAX_AGE = 5;
-    public static final int UPPER_MAX_AGE = 7;
-    public static final IntegerProperty AGE = BlockStateProperties.AGE_7;
+public class FernsBlock extends BushBlock implements BonemealableBlock {
+    public static final int LOWER_MAX_AGE = 4;
+    public static final int UPPER_MAX_AGE = 6;
+    public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 7);;
     private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{Block.box(0, 0, 0, 16, 11, 16), Block.box(0, 0, 0, 16, 12.0,
             16), Block.box(0, 0, 0, 16, 13, 16), Block.box(0, 0, 0, 16, 14, 16), Block.box(0, 0, 0, 16, 15,
             16), Block.box(0, 0, 0, 16, 16, 16), Block.box(0, 0, 0, 16, 2, 16), Block.box(0, 0, 0, 16, 4, 16)};
@@ -65,6 +62,10 @@ public class FernsBlock extends BushBlock {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         super.randomTick(state, level, pos, random);
+        tryAgeUp(state, level, pos, random);
+    }
+
+    private void tryAgeUp(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         int age = state.getValue(AGE);
         if (!isUpper(state) && random.nextInt(FossilConfig.getInt(FossilConfig.FERN_TICK_RATE)) == 0) {
             age++;
@@ -110,5 +111,20 @@ public class FernsBlock extends BushBlock {
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE_BY_AGE[state.getValue(AGE)];
+    }
+
+    @Override
+    public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean isClient) {
+        return true;
+    }
+
+    @Override
+    public boolean isBonemealSuccess(Level level, Random random, BlockPos pos, BlockState state) {
+        return true;
+    }
+
+    @Override
+    public void performBonemeal(ServerLevel level, Random random, BlockPos pos, BlockState state) {
+        tryAgeUp(state, level, pos, random);
     }
 }

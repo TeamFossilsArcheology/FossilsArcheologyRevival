@@ -144,6 +144,9 @@ public class ClientInit {
         for (RegistrySupplier<VaseBlock> vase : ModBlocks.VASES) {
             RenderTypeRegistry.register(RenderType.cutout(), vase.get());
         }
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.ANU_FIGURINE_DESTROYED.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.ANU_FIGURINE_RESTORED.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.ANU_FIGURINE_PRISTINE.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.SKELETON_FIGURINE_RESTORED.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.SKELETON_FIGURINE_PRISTINE.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.CALAMITES_DOOR.get());
