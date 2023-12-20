@@ -1,6 +1,9 @@
 {
   "replace": false,
   "values": [
+    "fossil:figurine_anu_destroyed",
+    "fossil:figurine_anu_restored",
+    "fossil:figurine_anu_pristine",
     "fossil:figurine_enderman_destroyed",
     "fossil:figurine_enderman_restored",
     "fossil:figurine_enderman_pristine",

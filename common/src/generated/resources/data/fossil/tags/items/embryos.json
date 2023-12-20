@@ -3,8 +3,11 @@
   "values": [
     "fossil:syringe_cow",
     "fossil:syringe_donkey",
+    "fossil:syringe_fox",
+    "fossil:syringe_hoglin",
     "fossil:syringe_horse",
     "fossil:syringe_llama",
+    "fossil:syringe_panda",
     "fossil:syringe_pig",
     "fossil:syringe_polarbear",
     "fossil:syringe_rabbit",
