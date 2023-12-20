@@ -1,6 +1,9 @@
 package com.fossil.fossil.fabric.mixins;
 
 
+import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
+import com.fossil.fossil.fabric.MultiPartServerLevel;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Final;
@@ -23,21 +26,20 @@ public abstract class EntityCallbacksMixin {
     ServerLevel field_26936;
 
     @Inject(method = "onTrackingStart(Lnet/minecraft/world/entity/Entity;)V", at = @At(value = "RETURN"))
-    public void addMultiPart(Entity entity, CallbackInfo ci) {
-        //TODO: Remove
-        /*if (entity instanceof Prehistoric prehistoric) {
-            for (Entity part : prehistoric.getCustomParts()) {
-                ((MultiPartServerLevel) field_26936).addMultiPart(part);
+    public void addMultiPartOnTrackingStart(Entity entity, CallbackInfo ci) {
+        if (entity instanceof Prehistoric prehistoric) {
+            for (MultiPart part : prehistoric.getCustomParts()) {
+                ((MultiPartServerLevel) field_26936).fossilsArcheologyRevival$addMultiPart(part.getEntity());
             }
-        }*/
+        }
     }
 
     @Inject(method = "onTrackingEnd(Lnet/minecraft/world/entity/Entity;)V", at = @At(value = "RETURN"))
-    public void removeMultiPart(Entity entity, CallbackInfo ci) {
-        /*if (entity instanceof Prehistoric prehistoric) {
-            for (Entity part : prehistoric.getCustomParts()) {
-                ((MultiPartServerLevel) field_26936).removeMultiPart(part);
+    public void removeMultiPartOnTrackingEnd(Entity entity, CallbackInfo ci) {
+        if (entity instanceof Prehistoric prehistoric) {
+            for (MultiPart part : prehistoric.getCustomParts()) {
+                ((MultiPartServerLevel) field_26936).fossilsArcheologyRevival$removeMultiPart(part.getEntity());
             }
-        }*/
+        }
     }
 }

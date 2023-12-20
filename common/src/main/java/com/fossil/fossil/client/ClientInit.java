@@ -52,7 +52,6 @@ public class ClientInit {
             "category.fossil.debug");
 
     public static void immediate() {
-        EntityRendererRegistry.register(ModEntities.MULTIPART, BlankRenderer::new);
         registerFish(ModEntities.ALLIGATOR_GAR, "alligator_gar.geo.json", AlligatorGar.ANIMATIONS, "alligator_gar");
         registerDino(ModEntities.ALLOSAURUS, "allosaurus.geo.json", Allosaurus.ANIMATIONS);
         registerDino(ModEntities.ANKYLOSAURUS, "ankylosaurus.geo.json", Ankylosaurus.ANIMATIONS);

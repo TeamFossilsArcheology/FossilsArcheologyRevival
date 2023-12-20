@@ -1,6 +1,6 @@
 package com.fossil.fossil.forge.mixins;
 
-import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
+import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.phys.EntityHitResult;
@@ -18,7 +18,7 @@ public abstract class ProjectileUtilMixin {
             return;
         }
         Entity entity = cir.getReturnValue().getEntity();
-        if (entity instanceof PrehistoricPart part) {
+        if (entity instanceof MultiPart part) {
             cir.setReturnValue(new EntityHitResult(part.getParent(), cir.getReturnValue().getLocation()));
         }
     }

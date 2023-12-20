@@ -12,14 +12,14 @@ import java.util.Collection;
  * @see ServerLevelMixin
  */
 public interface MultiPartServerLevel {
-    default Collection<Entity> getMultiParts() {
+    default Collection<Entity> fossilsArcheologyRevival$getMultiParts() {
         return new ArrayList<>();
     }
 
-    default void addMultiPart(Entity part) {
+    default void fossilsArcheologyRevival$addMultiPart(Entity part) {
     }
 
-    default void removeMultiPart(Entity part) {
+    default void fossilsArcheologyRevival$removeMultiPart(Entity part) {
 
     }
 }

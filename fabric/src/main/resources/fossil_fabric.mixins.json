@@ -20,7 +20,7 @@
     "ProjectileUtilMixin",
     "ServerGamePacketListenerImplMixin",
     "ServerLevelMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin", "TransientEntitySectionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -28,32 +28,32 @@ import java.util.Collection;
 @Mixin(ServerLevel.class)
 public abstract class ServerLevelMixin implements MultiPartServerLevel {
     @Unique
-    private Int2ObjectMap<Entity> parts = new Int2ObjectOpenHashMap<>();
+    private Int2ObjectMap<Entity> prehistoricParts = new Int2ObjectOpenHashMap<>();
 
     @Shadow
     protected abstract LevelEntityGetter<Entity> getEntities();
 
     @Override
-    public Collection<Entity> getMultiParts() {
-        return parts.values();
+    public Collection<Entity> fossilsArcheologyRevival$getMultiParts() {
+        return prehistoricParts.values();
     }
 
     @Override
-    public void addMultiPart(Entity part) {
-        parts.put(part.getId(), part);
+    public void fossilsArcheologyRevival$addMultiPart(Entity part) {
+        prehistoricParts.put(part.getId(), part);
     }
 
     @Override
-    public void removeMultiPart(Entity part) {
-        parts.remove(part.getId());
+    public void fossilsArcheologyRevival$removeMultiPart(Entity part) {
+        prehistoricParts.remove(part.getId());
     }
 
 
     @Inject(method = "getEntityOrPart(I)Lnet/minecraft/world/entity/Entity;", at = @At("TAIL"), cancellable = true)
     private void getEntityOrMultiPart(int id, CallbackInfoReturnable<Entity> cir) {
         if (getEntities().get(id) == null) {
-            if (parts.containsKey(id)) {
-                cir.setReturnValue(parts.get(id));
+            if (prehistoricParts.containsKey(id)) {
+                cir.setReturnValue(prehistoricParts.get(id));
             }
         }
     }

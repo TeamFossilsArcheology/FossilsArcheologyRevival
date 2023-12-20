@@ -1,6 +1,6 @@
 package com.fossil.fossil.fabric.mixins;
 
-import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
+import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import net.minecraft.server.level.ChunkMap;
 import net.minecraft.world.entity.Entity;
 import org.spongepowered.asm.mixin.Mixin;
@@ -18,9 +18,8 @@ public abstract class ChunkMapMixin {
 
     @Inject(method = "addEntity", at = @At("HEAD"), cancellable = true)
     public void doNotAddMultiPart(Entity entity, CallbackInfo ci) {
-        //TODO: Remove
-        if (entity instanceof PrehistoricPart) {
-            //ci.cancel();
+         if (entity instanceof MultiPart) {
+            ci.cancel();
         }
     }
 }

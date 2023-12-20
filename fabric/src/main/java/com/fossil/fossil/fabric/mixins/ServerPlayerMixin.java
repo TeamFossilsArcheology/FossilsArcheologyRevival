@@ -1,6 +1,6 @@
 package com.fossil.fossil.fabric.mixins;
 
-import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
+import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import org.objectweb.asm.Opcodes;
@@ -26,7 +26,7 @@ public abstract class ServerPlayerMixin {
     @Redirect(method = "setCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/server/level/ServerPlayer;camera:Lnet/minecraft/world/entity/Entity;", opcode = Opcodes.PUTFIELD))
     public void setCameraNoMultiPart(ServerPlayer instance, Entity entityToSpectate) {
         Entity entity = getCamera();
-        if (entity instanceof PrehistoricPart part) {
+        if (entity instanceof MultiPart part) {
             camera = part.getParent();
         }
         if (camera == null) {

@@ -7,11 +7,8 @@
     "TerrainParticleMixin"
   ],
   "mixins": [
-    "ExplosionMixin",
-    "JigsawPlacementMixin",
-    "MobMixin",
-    "NaturalSpawnerMixin",
-    "ProjectileUtilMixin"
+    "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "PlayerMixin", "PrehistoricMixin",
+    "ProjectileUtilMixin", "TransientEntitySectionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

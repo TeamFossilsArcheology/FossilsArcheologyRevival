@@ -17,7 +17,7 @@ import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.entity.prehistoric.Deinonychus;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
-import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
+import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.SyncActiveAnimationMessage;
@@ -110,6 +110,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public boolean featherToggle;
     public boolean hasTeenTexture = true;
     public boolean hasBabyTexture = true;
+    private float frustumWidthRadius;
+    private float frustumHeightRadius;
     public int ticksSat;
     public int ticksSlept;
     public float pediaScale;
@@ -125,7 +127,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
-    private final List<PrehistoricPart> parts = new ArrayList<>();
+    private final List<MultiPart> parts = new ArrayList<>();
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
@@ -140,6 +142,30 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             this.getNavigation().getNodeEvaluator().setCanFloat(true);
         }
         setPersistenceRequired();
+        List<EntityHitboxManager.Hitbox> hitboxes = hitboxes();
+        if (hitboxes != null && !hitboxes.isEmpty()) {
+            spawnHitBoxes(hitboxes, entityType);
+        }
+    }
+
+    private void spawnHitBoxes(List<EntityHitboxManager.Hitbox> hitboxes, EntityType<? extends Prehistoric> entityType) {
+        float maxFrustumWidthRadius = 0;
+        float maxFrustumHeightRadius = 0;
+        for (EntityHitboxManager.Hitbox hitbox : hitboxes) {
+            MultiPart part = MultiPart.get(this, hitbox);
+            parts.add(part);
+            //Caching this value might be overkill but this ensures that the entity will be visible even if parts are outside its bounding box
+            float j = hitbox.getFrustumWidthRadius() + entityType.getDimensions().width / 2;
+            if (j > maxFrustumWidthRadius) {
+                maxFrustumWidthRadius = j;
+            }
+            float h = hitbox.getFrustumHeightRadius() + entityType.getDimensions().height;
+            if (h > maxFrustumHeightRadius) {
+                maxFrustumHeightRadius = h;
+            }
+        }
+        frustumWidthRadius = maxFrustumWidthRadius;
+        frustumHeightRadius = maxFrustumHeightRadius;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -170,16 +196,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return strength * 2.0;
     }
 
-    private void spawnHitBoxes(List<EntityHitboxManager.Hitbox> hitboxes) {
-        for (EntityHitboxManager.Hitbox hitbox : hitboxes) {
-            PrehistoricPart part = new PrehistoricPart(this, hitbox);
-            parts.add(part);
-            part.updatePosition();
-            level.addFreshEntity(part);
-        }
-        enabled = true;
-    }
-
     public static boolean canBreak(Block block) {
         //TODO: Big break Test
         if (block instanceof IDinoUnbreakable) return false;
@@ -188,34 +204,46 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return !state.is(BlockTags.NEEDS_DIAMOND_TOOL);
     }
 
-    private boolean enabled;//TODO: Replace this system
-
     public boolean isCustomMultiPart() {
-        return enabled && !parts.isEmpty();
+        return !parts.isEmpty();
     }
 
     /**
      * @return The child parts of this entity.
      * @implSpec On the forge classpath this implementation should return objects that inherit from PartEntity instead of Entity.
      */
-    public List<PrehistoricPart> getCustomParts() {
+    public List<MultiPart> getCustomParts() {
         return parts;
-    }
-
-    @Override
-    public boolean canBeCollidedWith() {
-        return true;
     }
 
     @Override
     public void refreshDimensions() {
         if (isCustomMultiPart()) {
             super.refreshDimensions();
-            for (PrehistoricPart part : parts) {
-                part.refreshDimensions();
+            for (MultiPart part : parts) {
+                part.getEntity().refreshDimensions();
             }
         } else {
             super.refreshDimensions();
+        }
+    }
+
+    @Override
+    public @NotNull AABB getBoundingBoxForCulling() {
+        if (isCustomMultiPart()) {
+            float x = frustumWidthRadius * getScale() / 2;
+            float y = frustumHeightRadius * getScale() / 2;
+            AABB aabb = getBoundingBox();
+            return new AABB(aabb.minX - x, aabb.minY, aabb.minZ - x, aabb.maxX + x, aabb.maxY + y, aabb.maxZ + x);
+        }
+        return super.getBoundingBoxForCulling();
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        for (int i = 0; i < parts.size(); ++i) {
+            parts.get(i).getEntity().setId(id + i + 1);
         }
     }
 
@@ -225,6 +253,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
             if (availableGoal.getGoal() instanceof CacheMoveToBlockGoal goal) {
                 goal.stop();//Only for the debug message
+            }
+        }
+        if (isCustomMultiPart()) {
+            //Ensures that the callbacks get called
+            for (MultiPart part : parts) {
+                part.getEntity().remove(reason);
             }
         }
     }
@@ -647,11 +681,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 fleeTicks = 0;
             }
         }
-    }
-
-    public void addPart(PrehistoricPart prehistoricPart) {
-        parts.add(prehistoricPart);
-        enabled = true;
+        if (isCustomMultiPart()) {
+            for (MultiPart part : parts) {
+                part.updatePosition();
+            }
+        }
     }
 
     public List<EntityHitboxManager.Hitbox> hitboxes() {
@@ -660,13 +694,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void tick() {
-        if (tickCount == 1 && !level.isClientSide) {
-            List<EntityHitboxManager.Hitbox> hitboxes = hitboxes();
-            //We want to ensure that the position of the entity is already set and the entity has been added on the clientside
-            if (hitboxes != null && !hitboxes.isEmpty() && !enabled) {
-                spawnHitBoxes(hitboxes);
-            }
-        }
         super.tick();
 
         if (!isSkeleton()) {
@@ -1421,6 +1448,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return rayTrace.getType() != HitResult.Type.MISS;
     }
 
+    @Override
     protected float getSoundVolume() {
         return isBaby() ? super.getSoundVolume() * 0.75f : 1;
     }

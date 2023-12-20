@@ -1,7 +1,7 @@
 package com.fossil.fossil.fabric.mixins;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
+import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.server.level.ServerLevel;
@@ -31,7 +31,7 @@ public class ServerGamePacketListenerImplMixin {
 
     @Inject(method = "handleInteract", locals = LocalCapture.CAPTURE_FAILHARD, at = @At(value = "INVOKE", target = "Lnet/minecraft/server/level/ServerPlayer;distanceToSqr(Lnet/minecraft/world/entity/Entity;)D"))
     private void replaceHurtEntity(ServerboundInteractPacket packet, CallbackInfo ci, ServerLevel serverLevel, Entity target) {
-        if (!(target instanceof Prehistoric) && !(target instanceof PrehistoricPart)) {
+        if (!(target instanceof Prehistoric) && !(target instanceof MultiPart)) {
             return;
         }
         //Copy forges extended attack and interact range for larger entities

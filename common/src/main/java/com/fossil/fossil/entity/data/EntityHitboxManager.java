@@ -13,6 +13,11 @@ import net.minecraft.world.phys.Vec3;
 import java.util.List;
 import java.util.Map;
 
+
+//TODO: Hitbox system explanation
+/**
+ *
+ */
 public class EntityHitboxManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
     public static final EntityHitboxManager HITBOX_DATA = new EntityHitboxManager(GSON);
@@ -52,5 +57,11 @@ public class EntityHitboxManager extends SimpleJsonResourceReloadListener {
     }
 
     public record Hitbox(String name, Vec3 pos, float width, float height) {
+        public float getFrustumWidthRadius() {
+            return (float) Math.max(Math.abs(pos.x) + width, Math.abs(pos.z) + width);
+        }
+        public float getFrustumHeightRadius() {
+            return (float) pos.y + height;
+        }
     }
 }

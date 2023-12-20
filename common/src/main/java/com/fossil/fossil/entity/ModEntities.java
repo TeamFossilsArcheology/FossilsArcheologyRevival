@@ -7,7 +7,6 @@ import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
-import com.fossil.fossil.entity.prehistoric.parts.PrehistoricPart;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -23,7 +22,6 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<ToyBall>> TOY_BALL = registerMisc("toy_ball", ToyBall::new, 0.5f, 0.5f, 5, 3);
     public static final RegistrySupplier<EntityType<ToyTetheredLog>> TOY_TETHERED_LOG = registerMisc("toy_tethered_log", ToyTetheredLog::new, 0.6f, 1.9375f, 5, 3);
     public static final RegistrySupplier<EntityType<ToyScratchingPost>> TOY_SCRATCHING_POST = registerMisc("toy_scratching_post", ToyScratchingPost::new, 0.6f, 2, 5, 3);
-    public static final RegistrySupplier<EntityType<PrehistoricPart>> MULTIPART = registerMisc("multipart", PrehistoricPart::new, 1, 1, 5, 200);
     public static final RegistrySupplier<EntityType<AlligatorGar>> ALLIGATOR_GAR = registerFish("alligator_gar", AlligatorGar::new, 2, 0.5f);
     public static final RegistrySupplier<EntityType<Allosaurus>> ALLOSAURUS = registerDino("allosaurus", Allosaurus::new, 1.1f, 1.3f);
     //public static final RegistrySupplier<EntityType<Ammonite>> AMMONITE = registerDino("ammonite", Ammonite::new, 2, 1);
