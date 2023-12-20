@@ -44,8 +44,8 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected boolean breachTargetReached = false;
     protected long grabStartTick;
 
-    public PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
-        super(entityType, level, isMultiPart);
+    public PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level) {
+        super(entityType, level);
         setPathfindingMalus(BlockPathTypes.WATER, 0);
         switchNavigator(false);
     }
@@ -457,9 +457,10 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 mob.setZza(0);
             }
         }
-        private float floatMod(float x, float y){
+
+        private float floatMod(float x, float y) {
             //x mod y behaving the same way as Math.floorMod but with doubles
-            return (float) (x - Math.floor(x/y) * y);
+            return (float) (x - Math.floor(x / y) * y);
         }
     }
 }

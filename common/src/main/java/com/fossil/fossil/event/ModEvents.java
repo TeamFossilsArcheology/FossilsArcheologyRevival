@@ -44,7 +44,7 @@ public class ModEvents {
             return EventResult.pass();
         });
         BlockEvent.BREAK.register((level, pos, state, player, xp) -> {
-            //TODO: Prevent explosion damage
+            //TODO: Prevent dino block break?
             if (level.dimension() == ModDimensions.ANU_LAIR && level instanceof ServerLevel serverLevel) {
                 if (!isBreakableInAnuLair(state) && !player.isCreative() && serverLevel.getServer().getProfilePermissions(player.getGameProfile()) < serverLevel.getServer().getOperatorUserPermissionLevel()) {
                     AnuBoss.AnuLair anuLair = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_lair");

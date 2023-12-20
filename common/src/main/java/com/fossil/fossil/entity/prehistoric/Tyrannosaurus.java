@@ -8,7 +8,6 @@ import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
@@ -37,16 +36,11 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     public static final String CALL1 = "animation.tyrannosaurus.call1";
     public static final String ATTACK_NORMAL1 = "animation.tyrannosaurus.attack_normal1";
     public static final String ATTACK_NORMAL2 = "animation.tyrannosaurus.attack_normal2";
-    
+
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tyrannosaurus(EntityType<Tyrannosaurus> entityType, Level level) {
-        super(entityType, level, false);
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
+        super(entityType, level);
     }
 
     @Override

@@ -6,7 +6,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
@@ -27,12 +26,7 @@ public class Compsognathus extends PrehistoricLeaping {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Compsognathus(EntityType<Compsognathus> entityType, Level level) {
-        super(entityType, level, false, false);
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
+        super(entityType, level, false);
     }
 
     @Override
@@ -49,6 +43,7 @@ public class Compsognathus extends PrehistoricLeaping {
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
+
     @Override
     public void doLeapMovement() {
         if (getTarget() != null) {

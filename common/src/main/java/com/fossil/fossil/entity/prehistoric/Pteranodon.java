@@ -11,7 +11,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
@@ -47,12 +46,7 @@ public class Pteranodon extends PrehistoricFlying {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Pteranodon(EntityType<Pteranodon> entityType, Level level) {
-        super(entityType, level, false);
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
+        super(entityType, level);
     }
 
     @Override
@@ -93,7 +87,8 @@ public class Pteranodon extends PrehistoricFlying {
 
     @Override
     public @Nullable Vec3 generateAirTarget() {
-        if (isHungry() && false) {
+        isHungry();
+        if (false) {
             BlockPos groundPos = blockPosition();
             while (groundPos.getY() > 3 && level.isEmptyBlock(groundPos)) {
                 groundPos = groundPos.below();

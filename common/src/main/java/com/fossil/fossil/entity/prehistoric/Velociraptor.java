@@ -9,7 +9,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
@@ -36,12 +35,7 @@ public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Velociraptor(EntityType<Velociraptor> entityType, Level level) {
-        super(entityType, level, false, true);
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
+        super(entityType, level, true);
     }
 
     @Override
@@ -97,6 +91,7 @@ public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary
     public PrehistoricEntityTypeAI.Response aiResponseType() {
         return isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
     }
+
     @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(DISPLAY);

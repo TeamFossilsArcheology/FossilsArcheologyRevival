@@ -8,7 +8,6 @@ import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
@@ -31,12 +30,7 @@ public class Megalodon extends PrehistoricSwimming {
     private String beachAnimation = "";
 
     public Megalodon(EntityType<Megalodon> entityType, Level level) {
-        super(entityType, level, false);
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
+        super(entityType, level);
     }
 
     @Override

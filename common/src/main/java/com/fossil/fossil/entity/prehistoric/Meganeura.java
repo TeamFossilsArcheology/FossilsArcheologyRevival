@@ -21,7 +21,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
@@ -69,7 +68,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     private int attachTicks = 0;
 
     public Meganeura(EntityType<Meganeura> entityType, Level level) {
-        super(entityType, level, false);
+        super(entityType, level);
     }
 
     @ExpectPlatform
@@ -103,11 +102,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         if (compound.contains("AttachPos", Tag.TAG_COMPOUND)) {
             setAttachmentPos(NbtUtils.readBlockPos(compound.getCompound("AttachPos")));
         }
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
     }
 
     @Override
@@ -425,10 +419,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
                 return false;
             }
             findTargetPos();
-            if (!meganeura.isDirectPathBetweenPoints(Vec3.atCenterOf(targetPos)) || meganeura.getAttachmentPos() != null) {
-                return false;
-            }
-            return true;
+            return meganeura.isDirectPathBetweenPoints(Vec3.atCenterOf(targetPos)) && meganeura.getAttachmentPos() == null;
         }
 
         @Override

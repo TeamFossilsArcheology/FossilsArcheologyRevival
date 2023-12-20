@@ -6,7 +6,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -26,13 +25,8 @@ public class Diplocaulus extends PrehistoricSwimming {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Diplocaulus(EntityType<Diplocaulus> entityType, Level level) {
-        super(entityType, level, false);
+        super(entityType, level);
         hasBabyTexture = false;
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
     }
 
     @Override

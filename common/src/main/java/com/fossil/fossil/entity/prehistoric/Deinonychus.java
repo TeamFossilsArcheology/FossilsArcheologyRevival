@@ -8,7 +8,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
@@ -35,13 +34,8 @@ public class Deinonychus extends PrehistoricLeaping implements PrehistoricScary 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Deinonychus(EntityType<Deinonychus> entityType, Level level) {
-        super(entityType, level, false, true);
+        super(entityType, level, true);
     }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
-    }//TODO: Maybe tail
 
     @Override
     protected void registerGoals() {

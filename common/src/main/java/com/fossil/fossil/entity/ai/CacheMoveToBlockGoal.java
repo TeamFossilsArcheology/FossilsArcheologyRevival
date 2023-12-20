@@ -59,11 +59,11 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     private Path path;
     private BlockPos lastStuckPos;
 
-    public CacheMoveToBlockGoal(Prehistoric entity, double speedModifier, int searchRange) {
+    protected CacheMoveToBlockGoal(Prehistoric entity, double speedModifier, int searchRange) {
         this(entity, speedModifier, searchRange, 1);
     }
 
-    public CacheMoveToBlockGoal(Prehistoric entity, double speedModifier, int searchRange, int verticalSearchRange) {
+    protected CacheMoveToBlockGoal(Prehistoric entity, double speedModifier, int searchRange, int verticalSearchRange) {
         this.entity = entity;
         this.speedModifier = speedModifier;
         this.searchRange = searchRange;
@@ -144,7 +144,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
 
     public double acceptedDistance() {
         if (entity.isCustomMultiPart()) {
-            return (entity.getBbWidth() + entity.getCustomParts()[1].getBbWidth()) / 2;
+            //return (entity.getBbWidth() + entity.getCustomParts()[1].getBbWidth()) / 2;
         }
         return entity.getBbWidth() / 2 + 1;
     }

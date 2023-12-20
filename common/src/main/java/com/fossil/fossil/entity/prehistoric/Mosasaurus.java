@@ -27,17 +27,12 @@ public class Mosasaurus extends PrehistoricSwimming {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Mosasaurus(EntityType<Mosasaurus> entityType, Level level) {
-        super(entityType, level, false);
+        super(entityType, level);
         hasTeenTexture = false;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
         return Prehistoric.createAttributes().add(Attributes.FOLLOW_RANGE, 64);
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
     }
 
     @Override

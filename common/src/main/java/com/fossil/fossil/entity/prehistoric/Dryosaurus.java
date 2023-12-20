@@ -6,7 +6,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
@@ -22,17 +21,12 @@ public class Dryosaurus extends Prehistoric {
     public static final String ANIMATIONS = "dryosaurus.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    
+
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Dryosaurus(EntityType<Dryosaurus> entityType, Level level) {
-        super(entityType, level, false);
+        super(entityType, level);
         hasTeenTexture = false;
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
     }
 
     @Override

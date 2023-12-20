@@ -23,8 +23,8 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     private final boolean canAttach;
     private long leapStartTick;
 
-    public PrehistoricLeaping(EntityType<? extends PrehistoricLeaping> entityType, Level level, boolean isMultiPart, boolean canAttach) {
-        super(entityType, level, isMultiPart);
+    public PrehistoricLeaping(EntityType<? extends PrehistoricLeaping> entityType, Level level, boolean canAttach) {
+        super(entityType, level);
         this.canAttach = canAttach;
     }
 
@@ -41,7 +41,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
             if (isLeaping() && isOnGround()) {
                 int leapDelay = getServerAnimationInfos().get(getLeapingAnimationName()).actionDelay();
                 boolean hasTarget = getTarget() != null && getTarget().isAlive();
-                if (hasTarget && level.getGameTime() == leapStartTick + leapDelay)  {
+                if (hasTarget && level.getGameTime() == leapStartTick + leapDelay) {
                     doLeapMovement();
                 } else if (!hasTarget || level.getGameTime() > leapStartTick + leapDelay + 5) {
                     setLeaping(false);

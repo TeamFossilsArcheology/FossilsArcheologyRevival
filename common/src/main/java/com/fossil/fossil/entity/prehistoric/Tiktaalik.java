@@ -6,7 +6,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -21,16 +20,11 @@ public class Tiktaalik extends PrehistoricSwimming {
     public static final String ANIMATIONS = "tiktaalik.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    
+
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tiktaalik(EntityType<Tiktaalik> entityType, Level level) {
-        super(entityType, level, false);
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
+        super(entityType, level);
     }
 
     @Override

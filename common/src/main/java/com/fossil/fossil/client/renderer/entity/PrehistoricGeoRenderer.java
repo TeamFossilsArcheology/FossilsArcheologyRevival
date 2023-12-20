@@ -103,11 +103,11 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     public float getWidthScale(T animatable) {
-        return animatable.getModelScale();
+        return animatable.getScale();
     }
 
     @Override
     public float getHeightScale(T entity) {
-        return animatable.getModelScale();
+        return animatable.getScale();
     }
 }

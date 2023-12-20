@@ -6,6 +6,7 @@ import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
+import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
@@ -35,13 +36,9 @@ public class Fossil {
     public static void init() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoManager.ANIMATIONS);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityHitboxManager.HITBOX_DATA);
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
-        LOGGER.info("Archaean horizon");
-        LOGGER.info("The first sunrise");
-        LOGGER.info("On a pristine Gaea");
-        LOGGER.info("Opus perfectum");
-        LOGGER.info("Somewhere there, us sleeping");
         ModEntities.register();
         ModSounds.register();
         ModItems.register();
@@ -53,11 +50,6 @@ public class Fossil {
         ModDimensions.register();
         ModLootItemFunctionTypes.register();
         ModRecipes.register();
-        LOGGER.info("After a billion years");
-        LOGGER.info("The show is still here");
-        LOGGER.info("Not a single one of your fathers died young");
-        LOGGER.info("The handy travelers out of Africa");
-        LOGGER.info("Little Lucy of the Afar");
         ModEnchantments.register();
         ModVillagers.register();
         ModEvents.init();

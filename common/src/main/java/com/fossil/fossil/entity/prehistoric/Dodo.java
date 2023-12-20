@@ -10,7 +10,6 @@ import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
@@ -35,16 +34,11 @@ public class Dodo extends Prehistoric {
     public static final String ATTACK2 = "animation.dodo.bite2";
     public static final String SLEEP1 = "animation.dodo.sleep1";
     public static final String SLEEP2 = "animation.dodo.sleep2";
-    
+
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Dodo(EntityType<Dodo> entityType, Level level) {
-        super(entityType, level, false);
-    }
-
-    @Override
-    public Entity[] getCustomParts() {
-        return new Entity[0];
+        super(entityType, level);
     }
 
     @Override

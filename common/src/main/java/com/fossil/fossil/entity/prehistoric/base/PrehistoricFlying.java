@@ -43,8 +43,9 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     private int groundTicks = 0;
     private long takeOffStartTick = 0;
     private boolean takeOffAnimationStarted;
-    public PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level, boolean isMultiPart) {
-        super(entityType, level, isMultiPart);
+
+    public PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level) {
+        super(entityType, level);
         moveControl = new CustomFlightMoveControl(this);
     }
 
@@ -253,13 +254,14 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         }
         return false;
     }
+
     public @Nullable Vec3 generateAirTarget() {
         BlockHitResult[] results = new BlockHitResult[10];
         for (int i = 0; i < 10; i++) {
-            float heightMod = (float)(getY() + 1) / (float)(level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int)getX(), (int)getZ()) + 10);
-            double targetX = getX() + (double)((random.nextFloat() * 2 - 1) * 16);
-            double targetY = getY() + (double)((random.nextFloat() * 2 - heightMod) * 16);
-            double targetZ = getZ() + (double)((random.nextFloat() * 2 - 1) * 16);
+            float heightMod = (float) (getY() + 1) / (float) (level.getHeight(Heightmap.Types.MOTION_BLOCKING, (int) getX(), (int) getZ()) + 10);
+            double targetX = getX() + (double) ((random.nextFloat() * 2 - 1) * 16);
+            double targetY = getY() + (double) ((random.nextFloat() * 2 - heightMod) * 16);
+            double targetZ = getZ() + (double) ((random.nextFloat() * 2 - 1) * 16);
             Vec3 pos = new Vec3(targetX, targetY, targetZ);
             results[i] = level.clip(new ClipContext(position(), pos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
             if (results[i].getType() == HitResult.Type.MISS) {
