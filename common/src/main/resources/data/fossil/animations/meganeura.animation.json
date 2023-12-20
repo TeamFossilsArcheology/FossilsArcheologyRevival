@@ -17,14 +17,6 @@
       "loop": true,
       "animation_length": 8
     },
-    "animation.meganeura.vertical_idle": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.meganeura.vertical_sleep": {
-      "loop": true,
-      "animation_length": 8
-    },
     "animation.meganeura.vertical_climb": {
       "loop": true,
       "animation_length": 8
@@ -57,14 +49,7 @@
       "animation_length": 2
     },
     "animation.meganeura.attack": {
-      "animation_length": 0.5,
-      "action_delay": [4]
-    },
-    "animation.meganeura.new": {
-      "loop": true
-    },
-    "animation.meganeura.new2": {
-      "loop": true
+      "animation_length": 0.5
     }
   },
   "geckolib_format_version": 2

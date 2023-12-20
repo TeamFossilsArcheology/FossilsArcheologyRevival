@@ -14,13 +14,15 @@
       "animation_length": 2
     },
     "animation.nautilus.shell_retract": {
+      "loop": "hold_on_last_frame",
       "animation_length": 1
     },
     "animation.nautilus.shell_hold": {
-      "animation_length": 1,
-      "loop": true
+      "loop": true,
+      "animation_length": 1
     },
     "animation.nautilus.shell_emerge": {
+      "loop": "hold_on_last_frame",
       "animation_length": 1
     },
     "animation.nautilus.land": {

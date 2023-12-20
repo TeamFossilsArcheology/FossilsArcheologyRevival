@@ -18,9 +18,6 @@
       "loop": true,
       "animation_length": 4
     },
-    "animation.gastornis.eat": {
-      "animation_length": 4.45833
-    },
     "animation.gastornis.speak": {
       "animation_length": 1
     },
@@ -36,6 +33,9 @@
     },
     "animation.gastornis.idle": {
       "loop": true
+    },
+    "animation.gastornis.eat": {
+      "animation_length": 3
     }
   },
   "geckolib_format_version": 2

@@ -68,20 +68,13 @@
       "animation_length": 3
     },
     "animation.dilophosaurus.attack1": {
-      "animation_length": 1,
-      "action_delay": [9]
+      "animation_length": 1
     },
     "animation.dilophosaurus.attack2": {
-      "animation_length": 1,
-      "action_delay": [9]
-    },
-    "animation.dilophosaurus.WalkSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
+      "animation_length": 1
     },
     "animation.dilophosaurus.attack3": {
-      "animation_length": 2,
-      "action_delay": [9]
+      "animation_length": 2
     },
     "animation.dilophosaurus.ontogeny_baby": {
       "loop": "hold_on_last_frame"

@@ -125,8 +125,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
+    private final List<PrehistoricPart> parts = new ArrayList<>();
 
-    public Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, boolean isMultiPart) {
+    protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
         this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.moveControl = new SmoothTurningMoveControl(this);
