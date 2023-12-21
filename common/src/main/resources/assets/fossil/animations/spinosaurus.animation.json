@@ -936,7 +936,7 @@
 							"vector": ["math.sin(query.anim_time*180/0.5)*5", 0, 0]
 						},
 						"0.5": {
-							"vector": ["math.sin(query.anim_time*360/0.5)*+4", 0, 0]
+							"vector": ["math.sin(query.anim_time*360/0.5)*4", 0, 0]
 						},
 						"2.0": {
 							"vector": [0, 0, 0]

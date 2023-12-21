@@ -23,8 +23,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Confuciusornis extends PrehistoricFlying {
     public static final String ANIMATIONS = "confuciusornis.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.confuciusornis.attack1";
+    public static final String EAT = "animation.confuciusornis.eating";
+    public static final String FLY = "animation.confuciusornis.flying";
+
+    public static final String IDLE = "animation.confuciusornis.extra1";
+    public static final String FLY_FAST = "animation.confuciusornis.flyfast";
+    public static final String WALK = "animation.confuciusornis.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -59,7 +64,7 @@ public class Confuciusornis extends PrehistoricFlying {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -69,17 +74,17 @@ public class Confuciusornis extends PrehistoricFlying {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(FLY_FAST);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

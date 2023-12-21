@@ -6930,7 +6930,7 @@
 							"vector": ["math.sin(query.anim_time*180/1.12)*10", "math.sin(query.anim_time*180/1.12)*-10", 0]
 						},
 						"1.125": {
-							"vector": ["20+math.sin(query.anim_time*180/1.5-120)10", "math.sin(query.anim_time*180/1.5-90)*-20", 0]
+							"vector": ["20+math.sin(query.anim_time*180/1.5-120)*10", "math.sin(query.anim_time*180/1.5-90)*-20", 0]
 						},
 						"1.5": {
 							"vector": ["math.sin(query.anim_time*180/2.25-120)*30", "math.sin(query.anim_time*180/2.25-90)*40", 0]
@@ -7383,7 +7383,7 @@
 							"vector": ["math.sin(query.anim_time*180/1.12)*10", "math.sin(query.anim_time*180/1.12)*10", 0]
 						},
 						"1.125": {
-							"vector": ["20+math.sin(query.anim_time*180/1.5-120)10", "-(math.sin(query.anim_time*180/1.5-90)*-20)", 0]
+							"vector": ["20+math.sin(query.anim_time*180/1.5-120)*10", "-(math.sin(query.anim_time*180/1.5-90)*-20)", 0]
 						},
 						"1.5": {
 							"vector": ["math.sin(query.anim_time*180/2.25-120)*30", "-(math.sin(query.anim_time*180/2.25-90)*40)", 0]

@@ -1,0 +1,78 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.dimorphodon.idle": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.dimorphodon.sit": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.dimorphodon.sleep1": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.dimorphodon.sleep2": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.dimorphodon.walk": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.dimorphodon.run": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.dimorphodon.climb": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.dimorphodon.climb_idle": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.dimorphodon.takeoff": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1.25
+    },
+    "animation.dimorphodon.hover": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.dimorphodon.fly": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.dimorphodon.fly_fast": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.dimorphodon.dive": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.dimorphodon.swim": {
+      "loop": true,
+      "animation_length": 6
+    },
+    "animation.dimorphodon.drink": {
+      "animation_length": 2
+    },
+    "animation.dimorphodon.eat": {
+      "animation_length": 2
+    },
+    "animation.dimorphodon.speak": {
+      "animation_length": 1
+    },
+    "animation.dimorphodon.call": {
+      "animation_length": 3
+    },
+    "animation.dimorphodon.attack": {
+      "animation_length": 0.5,
+      "action_delay": [8]
+    }
+  },
+  "geckolib_format_version": 2
+}

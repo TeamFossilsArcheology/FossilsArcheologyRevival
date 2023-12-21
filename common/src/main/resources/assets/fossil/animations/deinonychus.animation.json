@@ -4173,7 +4173,7 @@
 				},
 				"neck": {
 					"rotation": {
-						"vector": ["math.sin(query.anim_time*1440/12)*+24.5", "10+math.sin(query.anim_time*720/12-90)*10", "math.sin(query.anim_time*360/12-90)*-5"]
+						"vector": ["math.sin(query.anim_time*1440/12)*24.5", "10+math.sin(query.anim_time*720/12-90)*10", "math.sin(query.anim_time*360/12-90)*-5"]
 					}
 				},
 				"head": {

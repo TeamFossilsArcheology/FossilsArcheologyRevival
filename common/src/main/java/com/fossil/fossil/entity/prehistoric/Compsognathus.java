@@ -21,8 +21,12 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Compsognathus extends PrehistoricLeaping {
     public static final String ANIMATIONS = "compsognathus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.compsognathus.attack";
+    public static final String EAT = "animation.compsognathus.eat";
+    public static final String IDLE = "animation.compsognathus.idle";
+    public static final String RUN = "animation.compsognathus.run";
+    public static final String SWIM = "animation.compsognathus.swim";
+    public static final String WALK = "animation.compsognathus.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Compsognathus(EntityType<Compsognathus> entityType, Level level) {
@@ -69,7 +73,7 @@ public class Compsognathus extends PrehistoricLeaping {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -79,22 +83,22 @@ public class Compsognathus extends PrehistoricLeaping {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override
     public String getLeapingAnimationName() {
-        return ATTACK1;
+        return ATTACK;
     }
 
     @Override

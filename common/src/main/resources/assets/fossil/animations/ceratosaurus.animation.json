@@ -1093,7 +1093,7 @@
 				},
 				"upperBody": {
 					"rotation": {
-						"vector": ["+math.sin(query.anim_time*720/0.75-190)*-5", "math.sin(query.anim_time*360/0.75+90)*-5", "math.sin(query.anim_time*360/0.75+90)*-3"]
+						"vector": ["math.sin(query.anim_time*720/0.75-190)*-5", "math.sin(query.anim_time*360/0.75+90)*-5", "math.sin(query.anim_time*360/0.75+90)*-3"]
 					}
 				},
 				"rightUpperArm": {
@@ -1758,7 +1758,7 @@
 							"vector": [0, "math.sin(query.anim_time*180/1.5)*-1", "math.sin(query.anim_time*180/3)*0.5"]
 						},
 						"1.5": {
-							"vector": [0, "-1+math.sin(query.anim_time*360/1-60)*0.5", "math.sin(query.anim_time*360/1-60)*+0.5"]
+							"vector": [0, "-1+math.sin(query.anim_time*360/1-60)*0.5", "math.sin(query.anim_time*360/1-60)*0.5"]
 						},
 						"2.0": {
 							"vector": [0, -0.93, -0.28]
@@ -2473,7 +2473,7 @@
 						"vector": [
 							"-9.9342+math.sin(query.anim_time*720/12-90)*-3",
 							"-13.5447+math.sin(query.anim_time*1440/12-90)*-5",
-							"math.sin(query.anim_time*1440/12-30)*+4.2379"
+							"math.sin(query.anim_time*1440/12-30)*4.2379"
 						]
 					}
 				},
