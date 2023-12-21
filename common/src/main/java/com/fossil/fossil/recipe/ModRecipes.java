@@ -7,6 +7,7 @@ import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.util.Version;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
@@ -182,7 +183,7 @@ public class ModRecipes {
     }
 
     private static void registerCultureVat(ItemLike item, ItemLike output, ItemLike fuel) {
-        CULTURE_VAT_FUEL_VALUES.putIfAbsent(fuel, 6000);
+        CULTURE_VAT_FUEL_VALUES.putIfAbsent(fuel, Version.debugEnabled() ? 300 : 6000);
         CULTURE_VAT_RECIPES.put(item, new WorktableRecipe(new ItemStack(item), new ItemStack(output), new ItemStack(fuel)));
     }
 

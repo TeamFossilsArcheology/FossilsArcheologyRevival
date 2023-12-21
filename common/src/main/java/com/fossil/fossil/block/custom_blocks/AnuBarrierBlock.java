@@ -2,6 +2,7 @@ package com.fossil.fossil.block.custom_blocks;
 
 import com.fossil.fossil.block.entity.AnuBarrierBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.util.Version;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -36,8 +37,7 @@ public class AnuBarrierBlock extends BaseEntityBlock {
         if (level.isClientSide || !level.getBlockState(pos).is(this)) {
             return;
         }
-        if (block instanceof LeverBlock) {
-            //TODO: Debug
+        if (Version.debugEnabled() && block instanceof LeverBlock) {
             ((AnuBarrierBlockEntity) level.getBlockEntity(pos)).setEnabled(level.hasNeighborSignal(pos));
         }
     }
@@ -81,6 +81,9 @@ public class AnuBarrierBlock extends BaseEntityBlock {
         if (level.getBlockEntity(pos) instanceof AnuBarrierBlockEntity anuBarrier && anuBarrier.isEnabled()) {
             return Shapes.block();
         }
-        return state.getValue(FACING).getClockWise().getAxis() == Direction.Axis.Z ? Z_AXIS_AABB : X_AXIS_AABB;
+        if (Version.debugEnabled()) {
+            return state.getValue(FACING).getClockWise().getAxis() == Direction.Axis.Z ? Z_AXIS_AABB : X_AXIS_AABB;
+        }
+        return Shapes.empty();
     }
 }

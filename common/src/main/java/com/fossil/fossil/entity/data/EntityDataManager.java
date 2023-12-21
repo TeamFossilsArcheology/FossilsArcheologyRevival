@@ -46,7 +46,7 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
             boolean breaksBlocks = root.has("breaksBlocks") && root.get("breaksBlocks").getAsBoolean();
             builder.put(fileEntry.getKey().getPath(), new Data(stat, ai, minScale, maxScale, teenAgeDays, adultAgeDays,
                     maxHunger, maxPopulation, canBeRidden, breaksBlocks));
-            //TODO: Use developsResistance
+            //TODO: Use developsResistance, speed
         }
         entities = builder.build();
     }

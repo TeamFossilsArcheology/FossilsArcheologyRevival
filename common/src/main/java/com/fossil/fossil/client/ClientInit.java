@@ -23,9 +23,11 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.util.Version;
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.client.ClientTickEvent;
+import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.InteractionEvent;
 import dev.architectury.registry.client.keymappings.KeyMappingRegistry;
 import dev.architectury.registry.client.level.entity.EntityRendererRegistry;
@@ -34,17 +36,19 @@ import dev.architectury.registry.client.rendering.BlockEntityRendererRegistry;
 import dev.architectury.registry.client.rendering.ColorHandlerRegistry;
 import dev.architectury.registry.client.rendering.RenderTypeRegistry;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screens.MenuScreens;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.BiomeColors;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.FoliageColor;
 
 public class ClientInit {
@@ -136,7 +140,20 @@ public class ClientInit {
     }
 
     public static void later() {
-        KeyMappingRegistry.register(DEBUG_SCREEN_KEY);
+        if (Version.debugEnabled()) {
+            KeyMappingRegistry.register(DEBUG_SCREEN_KEY);
+            ClientTickEvent.CLIENT_POST.register(minecraft -> {
+                while (DEBUG_SCREEN_KEY.consumeClick()) {
+                    minecraft.setScreen(new DebugScreen(DebugScreen.getHitResult(minecraft)));
+                }
+            });
+            EntityEvent.ADD.register((entity, world) -> {
+                if (entity == Minecraft.getInstance().player) {
+                    ((Player)entity).displayClientMessage(new TextComponent("You're running a development build of F/A: Revival").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), false);
+                }
+                return EventResult.pass();
+            });
+        }
         for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
             RenderTypeRegistry.register(RenderType.cutout(), type.getPlantBlock());
         }
@@ -200,7 +217,7 @@ public class ClientInit {
         MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
         MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
-            if (player instanceof AbstractClientPlayer) {
+            if (player.level.isClientSide) {
                 if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
                     if (entity instanceof Animal animal && PrehistoricEntityType.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
@@ -219,11 +236,6 @@ public class ClientInit {
         BlockEntityRendererRegistry.register(ModBlockEntities.ANCIENT_CHEST.get(), AncientChestRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_BARRIER.get(), AnuBarrierRenderer::new);
         CreativeTabFilters.register();
-        ClientTickEvent.CLIENT_POST.register(minecraft -> {
-            while (DEBUG_SCREEN_KEY.consumeClick()) {
-                minecraft.setScreen(new DebugScreen(DebugScreen.getHitResult(minecraft)));
-            }
-        });
         ColorHandlerRegistry.registerBlockColors((blockState, blockAndTintGetter, blockPos, i) -> {
             if (blockAndTintGetter == null || blockPos == null) {
                 return FoliageColor.getDefaultColor();

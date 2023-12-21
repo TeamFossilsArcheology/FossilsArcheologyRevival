@@ -2,6 +2,7 @@ package com.fossil.fossil.fabric.mixins;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
+import com.fossil.fossil.util.Version;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
@@ -29,9 +30,11 @@ public abstract class EntityRenderDispatcherMixin {
             ci.cancel();
             //Unchanged original code
             AABB aABB = entity.getBoundingBox().move(-entity.getX(), -entity.getY(), -entity.getZ());
-            LevelRenderer.renderLineBox(poseStack, buffer, aABB, 1.0f, 1.0f, 1.0f, 1.0f);
-            aABB = entity.getBoundingBoxForCulling().move(-entity.getX(), -entity.getY(), -entity.getZ());
-            LevelRenderer.renderLineBox(poseStack, buffer, aABB, 1.0f, 0, 1.0f, 1.0f);
+            LevelRenderer.renderLineBox(poseStack, buffer, aABB, 1, 1, 1, 1);
+            if (Version.debugEnabled()) {
+                aABB = entity.getBoundingBoxForCulling().move(-entity.getX(), -entity.getY(), -entity.getZ());
+                LevelRenderer.renderLineBox(poseStack, buffer, aABB, 1, 0, 1, 1);
+            }
 
             //Changed code
             double d = -Mth.lerp(partialTicks, entity.xOld, entity.getX());
@@ -45,13 +48,7 @@ public abstract class EntityRenderDispatcherMixin {
                 double h = e + Mth.lerp(partialTicks, part.yOld, part.getY());
                 double i = f + Mth.lerp(partialTicks, part.zOld, part.getZ());
                 poseStack.translate(g, h, i);
-                if (kj == 0) {
-                    LevelRenderer.renderLineBox(poseStack, buffer, part.getBoundingBox().move(-part.getX(), -part.getY(), -part.getZ()), 0f, 1.0f, 1.0f, 1.0f);
-                } else if (kj == 1) {
-                    LevelRenderer.renderLineBox(poseStack, buffer, part.getBoundingBox().move(-part.getX(), -part.getY(), -part.getZ()), 0f, 1.0f, 0.0f, 1.0f);
-                } else {
-                    LevelRenderer.renderLineBox(poseStack, buffer, part.getBoundingBox().move(-part.getX(), -part.getY(), -part.getZ()), 1f, 0f, 0.0f, 1.0f);
-                }
+                LevelRenderer.renderLineBox(poseStack, buffer, part.getBoundingBox().move(-part.getX(), -part.getY(), -part.getZ()), 0, 1, 0, 1);
                 poseStack.popPose();
                 kj++;
             }
@@ -60,8 +57,8 @@ public abstract class EntityRenderDispatcherMixin {
             Vec3 vec3 = entity.getViewVector(partialTicks);
             Matrix4f matrix4f = poseStack.last().pose();
             Matrix3f matrix3f = poseStack.last().normal();
-            buffer.vertex(matrix4f, 0.0f, entity.getEyeHeight(), 0.0f).color(0, 0, 255, 255).normal(matrix3f, (float) vec3.x, (float) vec3.y, (float) vec3.z).endVertex();
-            buffer.vertex(matrix4f, (float) (vec3.x * 2.0), (float) ((double) entity.getEyeHeight() + vec3.y * 2.0), (float) (vec3.z * 2.0)).color(0, 0, 255, 255).normal(matrix3f, (float) vec3.x, (float) vec3.y, (float) vec3.z).endVertex();
+            buffer.vertex(matrix4f, 0, entity.getEyeHeight(), 0).color(0, 0, 255, 255).normal(matrix3f, (float) vec3.x, (float) vec3.y, (float) vec3.z).endVertex();
+            buffer.vertex(matrix4f, (float) (vec3.x * 2), (float) (entity.getEyeHeight() + vec3.y * 2), (float) (vec3.z * 2)).color(0, 0, 255, 255).normal(matrix3f, (float) vec3.x, (float) vec3.y, (float) vec3.z).endVertex();
         }
     }
 }

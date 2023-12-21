@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.sounds.MusicHandler;
+import com.fossil.fossil.util.Version;
 import com.mojang.logging.LogUtils;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
@@ -39,7 +40,7 @@ import org.slf4j.Logger;
 import java.util.Collections;
 
 public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
-    public static final int TOTAL_HATCHING_TIME = 3000;
+    public static final int TOTAL_HATCHING_TIME = Version.debugEnabled() ? 1000 : 3000;
     private static final EntityDataAccessor<Integer> HATCHING_TIME = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.INT);
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final TranslatableComponent EGG_HATCHED = new TranslatableComponent("entity.fossil.dinosaur_egg.hatched");
