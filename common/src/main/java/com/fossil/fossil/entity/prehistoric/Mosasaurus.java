@@ -22,8 +22,15 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Mosasaurus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "mosasaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.mosasaurus.attack";
+    public static final String BEACHED = "animation.mosasaurus.beached";
+    public static final String EAT = "animation.mosasaurus.eat";
+    public static final String IDLE = "animation.mosasaurus.idle";
+    public static final String FALL = "animation.mosasaurus.jump/fall";
+    public static final String GRAB = "animation.mosasaurus.grab";
+    public static final String LEAP = "animation.mosasaurus.leap";
+    public static final String SWIM = "animation.mosasaurus.swim";
+    public static final String SWIM_FAST = "animation.mosasaurus.swimfast";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Mosasaurus(EntityType<Mosasaurus> entityType, Level level) {
@@ -89,7 +96,7 @@ public class Mosasaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -99,17 +106,22 @@ public class Mosasaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
+    public @Nullable Animation nextFloppingAnimation() {
+        return getAllAnimations().get(BEACHED);
     }
 
     @Override

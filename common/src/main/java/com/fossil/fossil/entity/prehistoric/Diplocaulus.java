@@ -19,8 +19,8 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 public class Diplocaulus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "diplocaulus.animation.json";
     public static final String IDLE = "animation.diplocaulus.swimidle";
-    public static final String WALK = "animation.diplocaulus.simslow";
-    public static final String RUN = "animation.diplocaulus.swimfast";
+    public static final String SWIM = "animation.diplocaulus.simslow";
+    public static final String SWIM_FAST = "animation.diplocaulus.swimfast";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Diplocaulus(EntityType<Diplocaulus> entityType, Level level) {
@@ -73,12 +73,12 @@ public class Diplocaulus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(RUN);
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override

@@ -11,10 +11,10 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Sturgeon extends PrehistoricFish {
     public static final String ANIMATIONS = "sturgeon.animation.json";
+    public static final String BEACHED = "animation.sturgeon.land";
     public static final String IDLE = "animation.sturgeon.idle";
     public static final String SWIM = "animation.sturgeon.swim";
     public static final String SWIM_FAST = "animation.sturgeon.swim_fast";
-    public static final String LAND = "animation.sturgeon.land";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Sturgeon(EntityType<Sturgeon> entityType, Level level) {
@@ -38,7 +38,7 @@ public class Sturgeon extends PrehistoricFish {
 
     @Override
     public @NotNull Animation nextFloppingAnimation() {
-        return getAllAnimations().get(LAND);
+        return getAllAnimations().get(BEACHED);
     }
 
     @Override

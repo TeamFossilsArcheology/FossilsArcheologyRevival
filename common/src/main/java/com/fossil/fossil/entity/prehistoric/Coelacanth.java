@@ -17,7 +17,7 @@ import java.util.Random;
 public class Coelacanth extends PrehistoricFish {
     public static final String ANIMATIONS = "coelacanth.animation.json";
     public static final String IDLE = "animation.coelacanth.idle";
-    public static final String LAND = "animation.coelacanth.land";
+    public static final String BEACHED = "animation.coelacanth.land";
     public static final String SWIM = "animation.coelacanth.swim";
     public static final String SWIM_FAST = "animation.coelacanth.swim_fast";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -47,7 +47,7 @@ public class Coelacanth extends PrehistoricFish {
 
     @Override
     public @NotNull Animation nextFloppingAnimation() {
-        return getAllAnimations().get(LAND);
+        return getAllAnimations().get(BEACHED);
     }
 
     @Override

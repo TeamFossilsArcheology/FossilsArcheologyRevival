@@ -26,23 +26,18 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Pteranodon extends PrehistoricFlying {
     public static final String ANIMATIONS = "pteranodon.animation.json";
-    public static final String FLY = "fa.tropeognathus.fly";
-    public static final String GROUND_TAKEOFF = "fa.tropeognathus.groundtakeoff";
-    public static final String RUN = "fa.tropeognathus.run";
-    public static final String WALK = "fa.tropeognathus.walk";
-    public static final String BITE_EAT = "fa.tropeognathus.biteeat";
-    public static final String BITE_ATTACK = "fa.tropeognathus.biteattack";
-    public static final String BITE_EAT_IN_WATER = "fa.tropeognathus.biteeatwater";
-    public static final String IDLE_SWIM = "fa.tropeognathus.idleswim";
-    public static final String SWIM = "fa.tropeognathus.swim";
-    public static final String BITE_ATTACK_WATER = "fa.tropeognathus.biteattackwater";
-    public static final String BITE_IN_AIR = "fa.tropeognathus.bitefly";
-    public static final String DISPLAY = "fa.tropeognathus.display";
-    public static final String IDLE = "fa.tropeognathus.idle";
-    public static final String IDLE_PREEN = "fa.tropeognathus.idlepreen";
-    public static final String IDLE_CALL = "fa.tropeognathus.idlecall";
-    public static final String IDLE_LOOKAROUND = "fa.tropeognathus.idlelookaround";
-    public static final String WATER_TAKEOFF = "fa.tropeognathus.watertakeoff";
+    public static final String ATTACK = "animation.pteranodon.attack";
+    public static final String DIVE = "animation.pteranodon.dive";
+    public static final String EAT = "animation.pteranodon.eat";
+    public static final String FLY = "animation.pteranodon.fly";
+    public static final String FLY_FLAST = "animation.pteranodon.flyfast";
+    public static final String HOVER = "animation.pteranodon.hover";
+    public static final String IDLE = "animation.pteranodon.idle";
+    public static final String IDLE_SWIM = "animation.pteranodon.swimidle";
+    public static final String SLEEP = "animation.pteranodon.sleep";
+    public static final String SWIM = "animation.pteranodon.swim";
+    public static final String TAKEOFF = "animation.pteranodon.takeoff";
+    public static final String WALK = "animation.pteranodon.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Pteranodon(EntityType<Pteranodon> entityType, Level level) {
@@ -136,15 +131,7 @@ public class Pteranodon extends PrehistoricFlying {
         if (isInWater()) {
             key = IDLE_SWIM;
         } else if (isFlying()) {
-            key = FLY;
-        } else {
-            int number = random.nextInt(10);
-            switch (number) {
-                case 0, 1, 2, 3, 4, 5, 6 -> key = IDLE;
-                case 7 -> key = IDLE_PREEN;
-                case 8 -> key = IDLE_LOOKAROUND;
-                case 9 -> key = IDLE_CALL;
-            }
+            key = HOVER;
         }
 
         return getAllAnimations().get(key);
@@ -155,7 +142,7 @@ public class Pteranodon extends PrehistoricFlying {
         String key = WALK;
         boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
 
-        if (isChasing) key = RUN;
+        //if (isChasing) key = RUN;
         if (isInWater()) key = SWIM;
         if (isFlying() || !isOnGround()) key = FLY;
 
@@ -164,33 +151,26 @@ public class Pteranodon extends PrehistoricFlying {
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        String key = RUN;
+        String key = WALK;
         if (isInWater()) key = SWIM;
-        if (isFlying()) key = FLY;
+        if (isFlying()) key = FLY_FLAST;
 
         return getAllAnimations().get(key);
     }
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        String key = BITE_ATTACK;
-        if (isInWater()) key = BITE_ATTACK_WATER;
-        if (isFlying()) key = BITE_IN_AIR;
-
-        return getAllAnimations().get(key);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override
     public @NotNull Animation nextTakeOffAnimation() {
-        String key = GROUND_TAKEOFF;
-        if (isInWater()) key = WATER_TAKEOFF;
-
-        return getAllAnimations().get(key);
+        return getAllAnimations().get(TAKEOFF);
     }
 
     @Override

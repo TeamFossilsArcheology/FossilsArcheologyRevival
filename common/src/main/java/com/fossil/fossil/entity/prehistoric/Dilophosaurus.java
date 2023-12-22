@@ -21,26 +21,26 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "dilophosaurus.animation.json";
+    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK2 = "animation.dilophosaurus.attack2";
+    public static final String ATTACK3 = "animation.dilophosaurus.attack3";
+    public static final String CALL = "animation.dilophosaurus.call";
+    public static final String EAT = "animation.dilophosaurus.eat";
+    public static final String FALL = "animation.dilophosaurus.jump/fall";
     public static final String IDLE = "animation.dilophosaurus.idle";
+    public static final String INFLATE_START = "animation.dilophosaurus.inflate_start";
+    public static final String INFLATE_HOLD = "animation.dilophosaurus.inflate_hold";
+    public static final String INFLATE_END = "animation.dilophosaurus.inflate_end";
+    public static final String RUN = "animation.dilophosaurus.run";
     public static final String SIT1 = "animation.dilophosaurus.sit1";
     public static final String SIT2 = "animation.dilophosaurus.sit2";
     public static final String SLEEP1 = "animation.dilophosaurus.sleep1";
     public static final String SLEEP2 = "animation.dilophosaurus.sleep2";
-    public static final String WALK = "animation.dilophosaurus.walk";
-    public static final String RUN = "animation.dilophosaurus.run";
-    public static final String JUMP_FALL = "animation.dilophosaurus.jump/fall";
+    public static final String SPEAK = "animation.dilophosaurus.speak";
     public static final String SWIM = "animation.dilophosaurus.swim";
-    public static final String EAT = "animation.dilophosaurus.eat";
-    public static final String INFLATE_START = "animation.dilophosaurus.inflate_start";
-    public static final String INFLATE_HOLD = "animation.dilophosaurus.inflate_hold";
-    public static final String INFLATE_END = "animation.dilophosaurus.inflate_end";
     public static final String TURN_RIGHT = "animation.dilophosaurus.turn_right";
     public static final String TURN_LEFT = "animation.dilophosaurus.turn_left";
-    public static final String SPEAK = "animation.dilophosaurus.speak";
-    public static final String CALL = "animation.dilophosaurus.call";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-    public static final String ATTACK2 = "animation.dilophosaurus.attack2";
-    public static final String ATTACK3 = "animation.dilophosaurus.attack3";
+    public static final String WALK = "animation.dilophosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 

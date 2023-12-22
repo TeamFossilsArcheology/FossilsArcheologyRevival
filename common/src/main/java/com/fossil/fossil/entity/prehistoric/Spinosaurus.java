@@ -26,7 +26,6 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     public static final String SLEEP = "animation.spinosaurus.sleep";
     public static final String SWIM = "animation.spinosaurus.swim";
     public static final String WALK = "animation.spinosaurus.walk";
-    //TODO: Animations
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -76,7 +75,7 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -86,12 +85,12 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

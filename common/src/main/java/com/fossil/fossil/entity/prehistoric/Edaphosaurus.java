@@ -19,8 +19,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Edaphosaurus extends Prehistoric {
     public static final String ANIMATIONS = "edaphosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.edaphosaurus.attack";
+    public static final String EAT = "animation.edaphosaurus.eat";
+    public static final String IDLE = "animation.edaphosaurus.idle";
+    public static final String RUN = "animation.edaphosaurus.run";
+    public static final String SLEEP = "animation.edaphosaurus.sleep/sit";
+    public static final String SWIM = "animation.edaphosaurus.swim";
+    public static final String WALK = "animation.edaphosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -52,7 +57,7 @@ public class Edaphosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -62,17 +67,17 @@ public class Edaphosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

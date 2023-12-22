@@ -20,8 +20,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Gallimimus extends PrehistoricFlocking {
     public static final String ANIMATIONS = "gallimimus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.gallimimus.attack1";
+    public static final String EAT = "animation.gallimimus.eat";
+    public static final String FALL = "animation.gallimimus.jump/fall";
+    public static final String RUN = "animation.gallimimus.run";
+    public static final String SLEEP = "animation.gallimimus.sleep/sit";
+    public static final String SWIM = "animation.gallimimus.swim";
+    public static final String WALK = "animation.gallimimus.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Gallimimus(EntityType<Gallimimus> entityType, Level level) {
@@ -74,27 +79,27 @@ public class Gallimimus extends PrehistoricFlocking {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

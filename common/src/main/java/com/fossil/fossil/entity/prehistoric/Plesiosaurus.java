@@ -18,8 +18,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Plesiosaurus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "plesiosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.plesiosaurus.attack";
+    public static final String BEACHED = "animation.plesiosaurus.beached";
+    public static final String EAT = "animation.plesiosaurus.eat";
+    public static final String IDLE = "animation.plesiosaurus.randomidle";
+    public static final String FALL = "animation.plesiosaurus.jump/fall";
+    public static final String SWIM = "animation.plesiosaurus.swim";
+    public static final String SWIM_FAST = "animation.plesiosaurus.swimfast";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -67,7 +72,7 @@ public class Plesiosaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -77,17 +82,22 @@ public class Plesiosaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
+    public @Nullable Animation nextFloppingAnimation() {
+        return getAllAnimations().get(BEACHED);
     }
 
     @Override

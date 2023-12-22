@@ -21,10 +21,10 @@ public class Ichthyosaurus extends PrehistoricSwimming {
     public static final String ATTACK = "animation.ichthyosaurus.attack";
     public static final String EAT = "animation.ichthyosaurus.eat";
     public static final String IDLE = "animation.ichthyosaurus.idle";
-    public static final String RUN = "animation.ichthyosaurus.swim_fast";
     public static final String SLEEP1 = "animation.ichthyosaurus.sleep1";
     public static final String SLEEP2 = "animation.ichthyosaurus.sleep2";
-    public static final String WALK = "animation.ichthyosaurus.swim";
+    public static final String SWIM = "animation.ichthyosaurus.swim";
+    public static final String SWIM_FAST = "animation.ichthyosaurus.swim_fast";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -83,12 +83,12 @@ public class Ichthyosaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(RUN);
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override

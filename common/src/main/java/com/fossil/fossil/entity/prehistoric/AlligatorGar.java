@@ -11,8 +11,8 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class AlligatorGar extends PrehistoricFish {
     public static final String ANIMATIONS = "alligator_gar.animation.json";
+    public static final String BEACHED = "animation.alligator_gar.land";
     public static final String IDLE = "animation.alligator_gar.idle";
-    public static final String LAND = "animation.alligator_gar.land";
     public static final String SWIM = "animation.alligator_gar.swim";
     public static final String SWIM_FAST = "animation.alligator_gar.swim_fast";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -41,7 +41,7 @@ public class AlligatorGar extends PrehistoricFish {
 
     @Override
     public @NotNull Animation nextFloppingAnimation() {
-        return getAllAnimations().get(LAND);
+        return getAllAnimations().get(BEACHED);
     }
 
     @Override

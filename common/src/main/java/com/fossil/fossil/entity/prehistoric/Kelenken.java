@@ -21,13 +21,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Kelenken extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "kelenken.animation.json";
-    public static final String IDLE = "animation.kelenken.idle";
+    public static final String ATTACK = "animation.kelenken.attack";
     public static final String EAT = "animation.kelenken.eat";
-    public static final String WALK = "animation.kelenken.walk";
+    public static final String IDLE = "animation.kelenken.idle";
     public static final String RUN = "animation.kelenken.run";
     public static final String SLEEP = "animation.kelenken.sleep";
     public static final String SWIM = "animation.kelenken.swim";
-    public static final String ATTACK = "animation.kelenken.attack";
+    public static final String WALK = "animation.kelenken.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 

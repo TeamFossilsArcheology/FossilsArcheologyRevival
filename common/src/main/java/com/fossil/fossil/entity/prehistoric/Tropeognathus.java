@@ -14,24 +14,24 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Tropeognathus extends PrehistoricFlying {
     public static final String ANIMATIONS = "tropeognathus.animation.json";
-    public static final String FLY = "fa.tropeognathus.fly";
-    public static final String GROUND_TAKEOFF = "fa.tropeognathus.groundtakeoff";
-    public static final String RUN = "fa.tropeognathus.run";
-    public static final String WALK = "fa.tropeognathus.walk";
-    public static final String BITE_EAT = "fa.tropeognathus.biteeat";
-    public static final String BITE_ATTACK = "fa.tropeognathus.biteattack";
-    public static final String BITE_EAT_IN_WATER = "fa.tropeognathus.biteeatwater";
-    public static final String IDLE_SWIM = "fa.tropeognathus.idleswim";
-    public static final String SWIM = "fa.tropeognathus.swim";
-    public static final String BITE_ATTACK_WATER = "fa.tropeognathus.biteattackwater";
-    public static final String BITE_IN_AIR = "fa.tropeognathus.bitefly";
+    public static final String ATTACK = "fa.tropeognathus.biteattack";
+    public static final String ATTACK_WATER = "fa.tropeognathus.biteattackwater";
+    public static final String ATTACK_AIR = "fa.tropeognathus.bitefly";
     public static final String DISPLAY = "fa.tropeognathus.display";
+    public static final String EAT = "fa.tropeognathus.biteeat";
+    public static final String EAT_WATER = "fa.tropeognathus.biteeatwater";
+    public static final String FLY = "fa.tropeognathus.fly";
     public static final String IDLE = "fa.tropeognathus.idle";
-    public static final String IDLE_PREEN = "fa.tropeognathus.idlepreen";
     public static final String IDLE_CALL = "fa.tropeognathus.idlecall";
     public static final String IDLE_LOOKAROUND = "fa.tropeognathus.idlelookaround";
-    public static final String WATER_TAKEOFF = "fa.tropeognathus.watertakeoff";
+    public static final String IDLE_PREEN = "fa.tropeognathus.idlepreen";
+    public static final String IDLE_SWIM = "fa.tropeognathus.idleswim";
+    public static final String RUN = "fa.tropeognathus.run";
     public static final String SLEEP = "fa.tropeognathus.sleep";
+    public static final String SWIM = "fa.tropeognathus.swim";
+    public static final String TAKEOFF_GROUND = "fa.tropeognathus.groundtakeoff";
+    public static final String TAKEOFF_WATER = "fa.tropeognathus.watertakeoff";
+    public static final String WALK = "fa.tropeognathus.walk";
     public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tropeognathus(EntityType<Tropeognathus> entityType, Level level) {
@@ -110,17 +110,17 @@ public class Tropeognathus extends PrehistoricFlying {
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        String key = BITE_ATTACK;
-        if (isInWater()) key = BITE_ATTACK_WATER;
-        if (isFlying()) key = BITE_IN_AIR;
+        String key = ATTACK;
+        if (isInWater()) key = ATTACK_WATER;
+        if (isFlying()) key = ATTACK_AIR;
 
         return getAllAnimations().get(key);
     }
 
     @Override
     public @NotNull Animation nextTakeOffAnimation() {
-        String key = GROUND_TAKEOFF;
-        if (isInWater()) key = WATER_TAKEOFF;
+        String key = TAKEOFF_GROUND;
+        if (isInWater()) key = TAKEOFF_WATER;
 
         return getAllAnimations().get(key);
     }
