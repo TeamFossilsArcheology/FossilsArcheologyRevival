@@ -8,7 +8,7 @@ import dev.architectury.hooks.client.screen.ScreenAccess;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
@@ -27,15 +27,24 @@ public class FilterTab {
 
     private final List<FilterButton> buttons = new ArrayList<>();
 
-    public FilterTab(int i, int j, List<Filter> filters) {
-        for (Filter filter : filters) {
-            buttons.add(new FilterButton(i, j, filter, button -> enableButton((FilterButton) button)));
-            j += 30;
+    public FilterTab(Screen screen, List<Filter> filters) {
+        int leftPos = (screen.width - 195) / 2;
+        int rightPos = leftPos + 191;
+        int topPos = (screen.height - 136) / 2;
+        int x = leftPos - 28;
+        int y = topPos + 6;
+        for (int i = 0; i < filters.size(); i++) {
+            buttons.add(new FilterButton(x, y, i <= 3, filters.get(i), button -> enableButton((FilterButton) button)));
+            y += 30;
+            if (i == 3) {
+                x = rightPos;
+                y = topPos + 6;
+            }
         }
     }
 
-    public static FilterTab build(int i, int j, List<Filter> filters, ScreenAccess access) {
-        FilterTab tab = new FilterTab(i, j, filters);
+    public static FilterTab build(Screen screen, List<Filter> filters, ScreenAccess access) {
+        FilterTab tab = new FilterTab(screen, filters);
         tab.buttons.forEach(access::addWidget);
         return tab;
     }
@@ -82,9 +91,11 @@ public class FilterTab {
 
     public static class FilterButton extends Button {
         private final Filter filter;
+        private final boolean left;
 
-        public FilterButton(int i, int j, Filter filter, OnPress onPress) {
+        public FilterButton(int i, int j, boolean left, Filter filter, OnPress onPress) {
             super(i, j, 32, 28, TextComponent.EMPTY, onPress);
+            this.left = left;
             this.filter = filter;
             this.active = false;
         }
@@ -99,17 +110,14 @@ public class FilterTab {
 
         @Override
         public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-            RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, FILTER_TEXTURE);
-            if (filter.enabled) {
-                GuiComponent.blit(poseStack, x, y, 0, 32, 0, 32, 28, 128, 128);
-            } else {
-                GuiComponent.blit(poseStack, x, y, 0, 0, 0, 28, 28, 128, 128);
-            }
             ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
-            itemRenderer.blitOffset = 100.0f;
+            float j = left ? 0 : 64;
+            j = filter.enabled ? j + 32 : j;
+            GuiComponent.blit(poseStack, x, y, 0, j, 0, 32, 28, 128, 128);
+            itemRenderer.blitOffset = 100;
             itemRenderer.renderAndDecorateItem(filter.icon, x + 8, y + 6);
-            itemRenderer.blitOffset = 0.0f;
+            itemRenderer.blitOffset = 0;
         }
     }
 

@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "#fossil:fossil_seeds",
+    "#fossil:restored_seeds",
+    "fossil:berry_crataegus",
+    "fossil:berry_ephedra",
+    "fossil:berry_vaccinium"
+  ]
+}

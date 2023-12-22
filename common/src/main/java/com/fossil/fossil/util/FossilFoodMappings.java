@@ -66,7 +66,6 @@ public class FossilFoodMappings {
         FoodMappings.addFish(Items.PUFFERFISH);
         FoodMappings.addFish(Items.COOKED_COD);
         FoodMappings.addFish(Items.COOKED_SALMON);
-        FoodMappings.addFish(ModItems.COOKED_NAUTILUS.get());
 
         FoodMappings.addMeat(Items.COOKED_BEEF);
         FoodMappings.addMeat(Items.BEEF);

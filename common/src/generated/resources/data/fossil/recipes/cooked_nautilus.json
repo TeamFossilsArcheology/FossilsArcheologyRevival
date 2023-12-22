@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_nautilus"
+  },
+  "result": "fossil:cooked_nautilus",
+  "experience": 1.5,
+  "cookingtime": 200
+}

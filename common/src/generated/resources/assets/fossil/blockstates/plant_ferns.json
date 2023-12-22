@@ -1,25 +1,25 @@
 {
   "variants": {
     "age=0": {
-      "model": "fossil:block/plants/ferns_stage0"
+      "model": "fossil:block/plants/plant_ferns_stage0"
     },
     "age=1": {
-      "model": "fossil:block/plants/ferns_stage1"
+      "model": "fossil:block/plants/plant_ferns_stage1"
     },
     "age=2": {
-      "model": "fossil:block/plants/ferns_stage2"
+      "model": "fossil:block/plants/plant_ferns_stage2"
     },
     "age=3": {
-      "model": "fossil:block/plants/ferns_stage3"
+      "model": "fossil:block/plants/plant_ferns_stage3"
     },
     "age=4": {
-      "model": "fossil:block/plants/ferns_stage4"
+      "model": "fossil:block/plants/plant_ferns_stage4"
     },
     "age=5": {
-      "model": "fossil:block/plants/ferns_stage5"
+      "model": "fossil:block/plants/plant_ferns_stage5"
     },
     "age=6": {
-      "model": "fossil:block/plants/ferns_stage6"
+      "model": "fossil:block/plants/plant_ferns_stage6"
     }
   }
 }

@@ -24,11 +24,22 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags() {
+        //Creative Tab Filters
+        tag(ModItemTags.FILTER_BONES).addTags(ModItemTags.ALL_BONES);
+        tag(ModItemTags.FILTER_DNA).addTags(ModItemTags.DNA, ModItemTags.EMBRYOS);
+        var filterEggs = tag(ModItemTags.FILTER_EGGS).addTags(ModItemTags.DINO_EGGS);
+        var filterMeat = tag(ModItemTags.FILTER_MEAT).addTags(ModItemTags.UNCOOKED_MEAT).add(ModItems.FAILURESAURUS_FLESH.get(),
+                ModItems.COOKED_CHICKEN_SOUP.get(), ModItems.RAW_CHICKEN_SOUP.get(), ModItems.COOKED_EGG.get());
+        var filterPlants = tag(ModItemTags.FILTER_PLANTS).addTags(ModItemTags.FOSSIL_SEEDS, ModItemTags.RESTORED_SEEDS);
+
         var fossilSeeds = tag(ModItemTags.FOSSIL_SEEDS).add(ModItems.FERN_SEED_FOSSIL.get());
         var restoredSeeds = tag(ModItemTags.RESTORED_SEEDS).add(ModItems.FERN_SEED.get());
         for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
             fossilSeeds.add(type.getFossilizedPlantSeedItem());
             restoredSeeds.add(type.getPlantSeedItem());
+            if (type.berryItem != null && type.berryItem.isPresent()) {
+                filterPlants.add(type.berryItem.get());
+            }
         }
         tag(ModItemTags.FOSSIL_SAPLINGS).add(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModItems.PALM_SAPLING_FOSSIL.get(), ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModItems.TEMPSKYA_SAPLING_FOSSIL.get());
         tag(ModItemTags.DNA_INSECTS).add(PrehistoricEntityType.ARTHROPLEURA.dnaItem, PrehistoricEntityType.MEGANEURA.dnaItem, PrehistoricEntityType.NAUTILUS.dnaItem);
@@ -82,6 +93,12 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             }
             if (type.foodItem != null) {
                 uncookedMeat.add(type.foodItem);
+            }
+            if (type.cookedFoodItem != null) {
+                filterMeat.add(type.cookedFoodItem);
+            }
+            if (type.spawnEggItem != null) {
+                filterEggs.add(type.spawnEggItem);
             }
         }
         tag(ModItemTags.COOKABLE_EGGS).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);

@@ -1,6 +1,5 @@
 package com.fossil.fossil.client.gui.filters;
 
-import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ModTabs;
@@ -25,10 +24,11 @@ public class CreativeTabFilters {
 
     public static void register() {
         NonNullList<Filter> filters = NonNullList.create();
-        filters.add(new Filter("filter_plants", new ItemStack(ModItems.PlANT_FOSSIL.get())));
-        filters.add(new Filter("filter_archaeology", new ItemStack(ModBlocks.WORKTABLE.get())));
-        filters.add(new Filter("filter_skeletons", new ItemStack(ModBlocks.FOSSIL.get())));
-        filters.add(new Filter("filter_dinos", new ItemStack(PrehistoricEntityType.THERIZINOSAURUS.spawnEggItem)));
+        filters.add(new Filter("filter_bones", new ItemStack(PrehistoricEntityType.TRICERATOPS.skullBoneItem)));
+        filters.add(new Filter("filter_dna", new ItemStack(PrehistoricEntityType.TRICERATOPS.dnaItem)));
+        filters.add(new Filter("filter_eggs", new ItemStack(PrehistoricEntityType.TRICERATOPS.spawnEggItem)));
+        filters.add(new Filter("filter_meat", new ItemStack(PrehistoricEntityType.TRICERATOPS.foodItem)));
+        filters.add(new Filter("filter_plants", new ItemStack(ModItems.FERN_SEED.get())));
         ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
                 tabs.get(creativeScreen.getSelectedTab()).renderButtons(matrices, mouseX, mouseY, delta);
@@ -63,10 +63,7 @@ public class CreativeTabFilters {
         });
         ClientGuiEvent.INIT_POST.register((screen, access) -> {
             if (screen instanceof CreativeModeInventoryScreen) {
-                int leftPos = (screen.width - 195) / 2;
-                int topPos = (screen.height - 136) / 2;
-                tabs.put(ModTabs.FABLOCKTAB.getId(), FilterTab.build(leftPos - 28, topPos + 6, filters, access));
-                tabs.put(ModTabs.FAITEMTAB.getId(), FilterTab.build(leftPos - 28, topPos + 6, filters, access));
+                tabs.put(ModTabs.FAITEMTAB.getId(), FilterTab.build(screen, filters, access));
                 activeTab = -1;
             }
         });

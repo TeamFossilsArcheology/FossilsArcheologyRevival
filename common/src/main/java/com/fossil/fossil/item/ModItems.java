@@ -52,7 +52,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> STONE_TABLET = ITEMS.register("stone_tablet",
             () -> new StoneTabletItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> SKULL_STICK = ITEMS.register("skull_stick",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+            () -> new Item(new Item.Properties().tab(ModTabs.FAPARKTAB)));
     public static final RegistrySupplier<Item> BROKEN_SWORD = ITEMS.register("broken_sword", () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BROKEN_HELMET = ITEMS.register("broken_helmet", () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> ANCIENT_SWORD = ITEMS.register("ancient_sword", () -> new AncientSwordItem(Tiers.IRON, 3, -2.4f));
@@ -82,13 +82,11 @@ public class ModItems {
             () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.LEGS, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BONE_BOOTS = ITEMS.register("bone_boots",
             () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.FEET, new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> WHIP = ITEMS.register("whip", () -> new WhipItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> WHIP = ITEMS.register("whip", () -> new WhipItem(new Item.Properties().tab(ModTabs.FAPARKTAB)));
     public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("essence_chicken",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+            () -> new Item(new Item.Properties().tab(ModTabs.FAPARKTAB)));
     public static final RegistrySupplier<Item> STUNTED_ESSENCE = ITEMS.register("essence_stunted",
-            () -> new StuntedEssenceItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> COOKED_NAUTILUS = ITEMS.register("nautilus_cooked",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));
+            () -> new StuntedEssenceItem(new Item.Properties().tab(ModTabs.FAPARKTAB)));
     public static final RegistrySupplier<Item> POTTERY_SHARD = ITEMS.register("pottery_shard",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> BIO_GOO = ITEMS.register("bio_goo",
@@ -102,7 +100,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> ANCIENT_CLOCK = ITEMS.register("ancient_clock",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> DINOPEDIA = ITEMS.register("dinopedia",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+            () -> new Item(new Item.Properties().tab(ModTabs.FAPARKTAB)));
     public static final RegistrySupplier<Item> FAILURESAURUS_FLESH = ITEMS.register("failuresaurus_flesh",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> RAW_CHICKEN_SOUP = ITEMS.register("chicken_soup_raw",
