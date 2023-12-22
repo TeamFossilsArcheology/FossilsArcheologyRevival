@@ -3,11 +3,11 @@
   "animations": {
     "animation.brachiosaurus.walk": {
       "loop": true,
-      "animation_length": 8.08333
+      "animation_length": 3.625
     },
     "animation.brachiosaurus.sprint": {
       "loop": true,
-      "animation_length": 2.83333
+      "animation_length": 2.16667
     },
     "animation.brachiosaurus.attack": {
       "animation_length": 5.5,

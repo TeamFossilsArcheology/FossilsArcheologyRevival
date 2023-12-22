@@ -3,11 +3,11 @@
   "animations": {
     "animation.diplodocus.walk": {
       "loop": true,
-      "animation_length": 8.08333
+      "animation_length": 4.79167
     },
     "animation.diplodocus.sprint": {
       "loop": true,
-      "animation_length": 4.125
+      "animation_length": 3.41667
     },
     "animation.diplodocus.attack": {
       "animation_length": 5.5,
