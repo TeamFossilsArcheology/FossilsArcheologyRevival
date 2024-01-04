@@ -35,11 +35,11 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     public static final String ANIMATIONS = "mammoth.animation.json";
     public static final String ATTACK = "animation.mammoth.attack1";
     public static final String EAT = "animation.mammoth.eating";
+    public static final String FALL = "animation.mammoth.jump/fall";
     public static final String IDLE = "animation.mammoth.idle1";
     public static final String IDLE2 = "animation.mammoth.idle2";
     public static final String RUN = "animation.mammoth.run";
-    public static final String SLEEP = "animation.mammoth.sleep";
-    public static final String SLEEP2 = "animation.mammoth.rest/sleep";
+    public static final String SLEEP = "animation.mammoth.rest/sleep";
     public static final String WALK = "animation.mammoth.walk";
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(Mammoth.class, EntityDataSerializers.BOOLEAN);
     

@@ -25,8 +25,8 @@ public class Deinonychus extends PrehistoricLeaping implements PrehistoricScary 
     public static final String ANIMATIONS = "deinonychus.animation.json";
     public static final String ATTACK = "animation.deinonychus.attack";
     public static final String EAT = "animation.deinonychus.eat";
-    public static final String IDLE = "animation.deinonychus.idle";
     public static final String FALL = "animation.deinonychus.jump/fall";
+    public static final String IDLE = "animation.deinonychus.idle";
     public static final String RUN = "animation.deinonychus.run";
     public static final String SLEEP = "animation.deinonychus.sleep";
     public static final String SWIM = "animation.deinonychus.swim";

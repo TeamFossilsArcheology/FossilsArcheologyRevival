@@ -16,7 +16,7 @@
     "animation.diplocaulus.leaveground": {
       "animation_length": 1
     },
-    "animation.diplocaulus.idle": {
+    "animation.diplocaulus.idle/beached": {
       "loop": true,
       "animation_length": 4
     },
@@ -27,6 +27,20 @@
     "animation.diplocaulus.swimidle": {
       "loop": true,
       "animation_length": 4
+    },
+    "animation.diplocaulus.attack": {
+      "animation_length": 1.375,
+      "action_delay": [10]
+    },
+    "animation.diplocaulus.jump/fall": {
+      "loop": true
+    },
+    "animation.diplocaulus.sleep/sit": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.diplocaulus.eat/drink": {
+      "animation_length": 1.375
     }
   },
   "geckolib_format_version": 2

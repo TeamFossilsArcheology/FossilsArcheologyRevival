@@ -38,7 +38,13 @@
     "animation.compsognathus.call": {
       "animation_length": 2.25
     },
+    "animation.compsognathus.sleep": {
+      "loop": true
+    },
     "animation.compsognathus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.compsognathus.jump/fall": {
       "loop": true
     },
     "animation.compsognathus.runspeeddemo": {

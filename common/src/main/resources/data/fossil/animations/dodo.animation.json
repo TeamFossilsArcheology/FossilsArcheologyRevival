@@ -57,6 +57,15 @@
     "animation.dodo.idle_logo": {
       "loop": true,
       "animation_length": 8
+    },
+    "animation.dodo.eat": {
+      "animation_length": 3.04167
+    },
+    "animation.dodo.jump/fall": {
+      "loop": true
+    },
+    "animation.dodo.swim": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

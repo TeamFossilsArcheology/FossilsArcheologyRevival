@@ -12,22 +12,17 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
 import software.bernie.geckolib3.util.GeckoLibUtil;
-
-import java.util.Map;
 
 public class Allosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "allosaurus.animation.json";
     public static final String ATTACK = "animation.allosaurus.attack";
     public static final String EAT = "animation.allosaurus.eat";
+    public static final String FALL = "animation.allosaurus.jump/fall2";
     public static final String IDLE = "animation.allosaurus.idle";
     public static final String SLEEP = "animation.allosaurus.sleep";
     public static final String SWIM = "animation.allosaurus.swim";
@@ -55,17 +50,6 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     @Override
     public PrehistoricEntityType type() {
         return PrehistoricEntityType.ALLOSAURUS;
-    }
-
-    @Override
-    public double getPassengersRidingOffset() {
-        if (level.isClientSide) {
-            AnimationData data = factory.getOrCreateAnimationData(getId());
-            Map<String, Pair<IBone, BoneSnapshot>> map = data.getBoneSnapshotCollection();
-            double offset = 0.5;
-            //return super.getPassengersRidingOffset() + map.get("lowerBody").getRight().positionOffsetY - offset;
-        }
-        return super.getPassengersRidingOffset();
     }
 
     @Override

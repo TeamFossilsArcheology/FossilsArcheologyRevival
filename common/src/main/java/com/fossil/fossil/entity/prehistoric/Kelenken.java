@@ -23,6 +23,7 @@ public class Kelenken extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "kelenken.animation.json";
     public static final String ATTACK = "animation.kelenken.attack";
     public static final String EAT = "animation.kelenken.eat";
+    public static final String FALL = "animation.kelenken.jump/fall";
     public static final String IDLE = "animation.kelenken.idle";
     public static final String RUN = "animation.kelenken.run";
     public static final String SLEEP = "animation.kelenken.sleep";

@@ -7,16 +7,16 @@
     },
     "animation.confuciusornis.attack1": {
       "loop": true,
-      "animation_length": 1,
-      "action_delay": [10]
+      "animation_length": 0.54167,
+      "action_delay": [5]
     },
     "animation.confuciusornis.eating": {
       "loop": true,
-      "animation_length": 2.25
+      "animation_length": 1.5
     },
     "animation.confuciusornis.drinking": {
       "loop": true,
-      "animation_length": 3.5
+      "animation_length": 2.04167
     },
     "animation.confuciusornis.extra1": {
       "loop": true,
@@ -28,11 +28,20 @@
     },
     "animation.confuciusornis.call": {
       "loop": true,
-      "animation_length": 1.5
+      "animation_length": 1.29167
     },
     "animation.confuciusornis.flyfast": {
       "loop": true,
-      "animation_length": 0.45833
+      "animation_length": 0.41667
+    },
+    "animation.confuciusornis.jump/fall": {
+      "loop": true
+    },
+    "animation.confuciusornis.swim": {
+      "loop": true
+    },
+    "animation.confuciusornis.sleep/sit": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

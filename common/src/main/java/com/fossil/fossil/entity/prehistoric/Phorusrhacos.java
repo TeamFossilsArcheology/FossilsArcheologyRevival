@@ -23,6 +23,7 @@ public class Phorusrhacos extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "phorusrhacos.animation.json";
     public static final String ATTACK = "animation.phorusrhacos.attack";
     public static final String EAT = "animation.phorusrhacos.eat";
+    public static final String FALL = "animation.phorusrhacos.jump/fall";
     public static final String IDLE = "animation.phorusrhacos.idle";
     public static final String RUN = "animation.phorusrhacos.run";
     public static final String SLEEP = "animation.phorusrhacos.sleep";

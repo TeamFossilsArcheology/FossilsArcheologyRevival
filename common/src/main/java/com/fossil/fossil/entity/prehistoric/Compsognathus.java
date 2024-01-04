@@ -23,8 +23,10 @@ public class Compsognathus extends PrehistoricLeaping {
     public static final String ANIMATIONS = "compsognathus.animation.json";
     public static final String ATTACK = "animation.compsognathus.attack";
     public static final String EAT = "animation.compsognathus.eat";
+    public static final String FALL = "animation.compsognathus.jump/fall2";
     public static final String IDLE = "animation.compsognathus.idle";
     public static final String RUN = "animation.compsognathus.run";
+    public static final String SLEEP = "animation.compsognathus.sleep";
     public static final String SWIM = "animation.compsognathus.swim";
     public static final String WALK = "animation.compsognathus.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

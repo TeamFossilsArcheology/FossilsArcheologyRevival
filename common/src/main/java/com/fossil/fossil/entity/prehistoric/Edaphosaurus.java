@@ -24,7 +24,6 @@ public class Edaphosaurus extends Prehistoric {
     public static final String IDLE = "animation.edaphosaurus.idle";
     public static final String RUN = "animation.edaphosaurus.run";
     public static final String SLEEP = "animation.edaphosaurus.sleep/sit";
-    public static final String SWIM = "animation.edaphosaurus.swim";
     public static final String WALK = "animation.edaphosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

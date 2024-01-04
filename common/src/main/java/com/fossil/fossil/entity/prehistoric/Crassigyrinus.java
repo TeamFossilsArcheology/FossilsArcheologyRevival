@@ -18,8 +18,14 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Crassigyrinus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "crassigyrinus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.crassigyrinus.attack";
+    public static final String BEACHED = "animation.crassigyrinus.idle/beached";
+    public static final String EAT = "animation.crassigyrinus.eat";
+    public static final String FALL = "animation.crassigyrinus.jump/fall";
+    public static final String IDLE = "animation.crassigyrinus.swimidle";
+    public static final String SLEEP = "animation.crassigyrinus.sleep/sit";
+    public static final String SWIM = "animation.crassigyrinus.swim";
+    public static final String SWIM_FAST = "animation.crassigyrinus.swimfast";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -63,7 +69,7 @@ public class Crassigyrinus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -73,17 +79,17 @@ public class Crassigyrinus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

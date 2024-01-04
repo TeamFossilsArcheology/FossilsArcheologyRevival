@@ -1,34 +1,41 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.megalograptus.walk/crawl": {
+    "animation.megalograptus.walk": {
       "loop": true,
       "animation_length": 1
     },
-    "animation.megalograptus.swim": {
+    "animation.megalograptus.Swim": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.megalograptus.idle": {
+    "animation.megalograptus.Idle/sleep/sit": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.megalograptus.basking": {
+    "animation.megalograptus.Basking": {
       "loop": true,
       "animation_length": 3
     },
-    "animation.megalograptus.eat": {
+    "animation.megalograptus.Eating": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.megalograptus.attack": {
+    "animation.megalograptus.Attack1": {
       "loop": true,
       "animation_length": 1,
       "action_delay": [12]
     },
-    "animation.megalograptus.extra1": {
+    "animation.megalograptus.Extra1": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.megalograptus.run": {
+      "loop": true,
+      "animation_length": 0.625
+    },
+    "animation.megalograptus.jump/fall": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

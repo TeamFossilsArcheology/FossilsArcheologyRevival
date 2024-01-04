@@ -19,8 +19,11 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Pachycephalosaurus extends Prehistoric {
     public static final String ANIMATIONS = "pachycephalosaurus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK1 = "animation.pachycephalosaurus.Attack1";
+    public static final String ATTACK2 = "animation.pachycephalosaurus.Attack2";
+    public static final String EAT = "animation.pachycephalosaurus.Eating";
+    public static final String RUN = "animation.pachycephalosaurus.run";
+    public static final String WALK = "animation.pachycephalosaurus.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Pachycephalosaurus(EntityType<Pachycephalosaurus> entityType, Level level) {
@@ -52,22 +55,22 @@ public class Pachycephalosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

@@ -23,6 +23,7 @@ public class Titanis extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "titanis.animation.json";
     public static final String ATTACK = "animation.titanis.attack";
     public static final String EAT = "animation.titanis.eat";
+    public static final String FALL = "animation.titanis.jump/fall";
     public static final String IDLE = "animation.titanis.idle";
     public static final String RUN = "animation.titanis.run";
     public static final String SLEEP = "animation.titanis.sleep";

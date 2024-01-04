@@ -27,6 +27,7 @@ public class Triceratops extends Prehistoric {
     public static final String ATTACK1 = "animation.triceratops.attack1";
     public static final String ATTACK2 = "animation.triceratops.attack2";
     public static final String EAT = "animation.triceratops.eat";
+    public static final String FALL = "animation.triceratops.jump/fall";
     public static final String IDLE = "animation.triceratops.idle";
     public static final String RUN = "animation.triceratops.run";
     public static final String SLEEP1 = "animation.triceratops.sleep1";

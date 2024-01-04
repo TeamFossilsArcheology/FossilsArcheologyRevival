@@ -41,6 +41,9 @@
     },
     "animation.megalania.drink": {
       "animation_length": 4.125
+    },
+    "animation.megalania.jump/fall": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

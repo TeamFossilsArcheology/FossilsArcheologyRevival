@@ -25,10 +25,12 @@ public class Confuciusornis extends PrehistoricFlying {
     public static final String ANIMATIONS = "confuciusornis.animation.json";
     public static final String ATTACK = "animation.confuciusornis.attack1";
     public static final String EAT = "animation.confuciusornis.eating";
+    public static final String FALL = "animation.confuciusornis.jump/fall";
     public static final String FLY = "animation.confuciusornis.flying";
-
     public static final String IDLE = "animation.confuciusornis.extra1";
     public static final String FLY_FAST = "animation.confuciusornis.flyfast";
+    public static final String SLEEP = "animation.confuciusornis.sleep/sit";
+    public static final String SWIM = "animation.confuciusornis.swim";
     public static final String WALK = "animation.confuciusornis.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

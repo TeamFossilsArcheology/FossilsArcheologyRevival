@@ -23,8 +23,8 @@ public class Ankylosaurus extends Prehistoric {
     public static final String ATTACK2 = "animation.ankylosaurus.attack_back1";
     public static final String ATTACK3 = "animation.ankylosaurus.attack_back2";
     public static final String EAT = "animation.ankylosaurus.eat";
-    public static final String IDLE = "animation.ankylosaurus.idle";
     public static final String FALL = "animation.ankylosaurus.jump/fall";
+    public static final String IDLE = "animation.ankylosaurus.idle";
     public static final String RUN = "animation.ankylosaurus.run";
     public static final String SLEEP = "animation.ankylosaurus.sleep1";
     public static final String SWIM = "animation.ankylosaurus.swim";

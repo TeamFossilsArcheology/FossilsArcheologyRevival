@@ -23,8 +23,8 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ATTACK_NORMAL1 = "animation.tyrannosaurus.attack_normal1";
     public static final String ATTACK_NORMAL2 = "animation.tyrannosaurus.attack_normal2";
     public static final String EAT = "animation.tyrannosaurus.eat";
-    public static final String IDLE = "animation.tyrannosaurus.idle";
     public static final String FALL = "animation.tyrannosaurus.jump/fall";
+    public static final String IDLE = "animation.tyrannosaurus.idle";
     public static final String RUN = "animation.tyrannosaurus.run";
     public static final String SLEEP1 = "animation.tyrannosaurus.sleep1";
     public static final String SLEEP2 = "animation.tyrannosaurus.sleep2";

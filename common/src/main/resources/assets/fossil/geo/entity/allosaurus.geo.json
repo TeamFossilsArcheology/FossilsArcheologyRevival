@@ -44,6 +44,11 @@
 					]
 				},
 				{
+					"name": "playerPos",
+					"parent": "upperBody",
+					"pivot": [0, 19.2, 1]
+				},
+				{
 					"name": "neck",
 					"parent": "upperBody",
 					"pivot": [0, 15.9, -6.6],

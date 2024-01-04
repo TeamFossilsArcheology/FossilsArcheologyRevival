@@ -58,6 +58,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Nautilus>> NAUTILUS = registerFish("nautilus", Nautilus::new, 0.8f, 1);
     public static final RegistrySupplier<EntityType<Ornitholestes>> ORNITHOLESTES = registerDino("ornitholestes", Ornitholestes::new, 2, 1.9f);
     public static final RegistrySupplier<EntityType<Pachycephalosaurus>> PACHYCEPHALOSAURUS = registerDino("pachycephalosaurus", Pachycephalosaurus::new, 1, 1.5f);
+    public static final RegistrySupplier<EntityType<Pachyrhinosaurus>> PACHYRHINOSAURUS = registerDino("pachyrhinosaurus", Pachyrhinosaurus::new, 1.4f, 1.5f);
     public static final RegistrySupplier<EntityType<Parasaurolophus>> PARASAUROLOPHUS = registerDino("parasaurolophus", Parasaurolophus::new, 1.7f, 1.7f);
     public static final RegistrySupplier<EntityType<Phorusrhacos>> PHORUSRHACOS = registerDino("phorusrhacos", Phorusrhacos::new, 1.4f, 2.5f);
     public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.9f, 2.1f);
@@ -152,6 +153,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(NAUTILUS, PrehistoricFish::createAttributes);
         EntityAttributeRegistry.register(ORNITHOLESTES, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PACHYCEPHALOSAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(PACHYRHINOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PARASAUROLOPHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PHORUSRHACOS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PLATYBELODON, Prehistoric::createAttributes);

@@ -19,11 +19,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megalograptus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "megalograptus.animation.json";
-    public static final String ATTACK = "animation.megalograptus.attack";
-    public static final String EAT = "animation.megalograptus.eat";
-    public static final String IDLE = "animation.megalograptus.idle";
-    public static final String SWIM = "animation.megalograptus.swim";
-    public static final String WALK = "animation.megalograptus.walk/crawl";
+    public static final String ATTACK = "animation.megalograptus.Attack1";
+    public static final String EAT = "animation.megalograptus.Eating";
+    public static final String FALL = "animation.megalograptus.jump/fall";
+    public static final String IDLE = "animation.megalograptus.Idle/sleep/sit";
+    public static final String SLEEP = IDLE;
+    public static final String SWIM = "animation.megalograptus.Swim";
+    public static final String WALK = "animation.megalograptus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 

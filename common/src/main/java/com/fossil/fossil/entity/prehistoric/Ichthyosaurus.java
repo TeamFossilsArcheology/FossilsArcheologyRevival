@@ -19,6 +19,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 public class Ichthyosaurus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "ichthyosaurus.animation.json";
     public static final String ATTACK = "animation.ichthyosaurus.attack";
+    public static final String BEACHED = "animation.ichthyosaurus.beached";
     public static final String EAT = "animation.ichthyosaurus.eat";
     public static final String IDLE = "animation.ichthyosaurus.idle";
     public static final String SLEEP1 = "animation.ichthyosaurus.sleep1";

@@ -22,8 +22,8 @@ public class Stegosaurus extends Prehistoric {
     public static final String ATTACK_FRONT1 = "animation.stegosaurus.attack_front1";
     public static final String ATTACK_FRONT2 = "animation.stegosaurus.attack_front2";
     public static final String EAT = "animation.stegosaurus.eat";
-    public static final String IDLE = "animation.stegosaurus.idle";
     public static final String FALL = "animation.stegosaurus.jump/fall";
+    public static final String IDLE = "animation.stegosaurus.idle";
     public static final String RUN = "animation.stegosaurus.run";
     public static final String SLEEP1 = "animation.stegosaurus.sleep1";
     public static final String SLEEP2 = "animation.stegosaurus.sleep2";

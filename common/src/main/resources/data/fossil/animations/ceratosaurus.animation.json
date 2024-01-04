@@ -37,6 +37,9 @@
     "animation.ceratosaurus.turn_left": {
       "loop": "hold_on_last_frame"
     },
+    "animation.ceratosaurus.sleep": {
+      "loop": true
+    },
     "animation.ceratosaurus.turn_right": {
       "loop": "hold_on_last_frame"
     }

@@ -22,6 +22,7 @@ public class Liopleurodon extends PrehistoricSwimming {
     public static final String BEACHED = "animation.liopleurodon.beached";
     public static final String EAT = "animation.liopleurodon.eat";
     public static final String IDLE = "animation.liopleurodon.randomidle";
+    public static final String SLEEP = "animation.liopleurodon.idle/sleep";
     public static final String SWIM = "animation.liopleurodon.swim";
     public static final String SWIM_FAST = "animation.liopleurodon.swimfast";
 

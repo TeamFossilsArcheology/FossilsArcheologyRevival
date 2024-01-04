@@ -26,6 +26,7 @@ public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary
     public static final String ANIMATIONS = "velociraptor.animation.json";
     public static final String ATTACK = "animation.velociraptor.attack";
     public static final String EAT = "animation.velociraptor.eat";
+    public static final String FALL = "animation.velociraptor.jump/fall";
     public static final String IDLE = "animation.velociraptor.idle";
     public static final String RUN = "animation.velociraptor.run";
     public static final String SLEEP = "animation.velociraptor.sleep";

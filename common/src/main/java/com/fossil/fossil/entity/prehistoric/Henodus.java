@@ -18,8 +18,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Henodus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "henodus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String EAT = "animation.henodus.drink/eat";
+    public static final String IDLE = "animation.henodus.idle";
+    public static final String RUN = "animation.henodus.run";
+    public static final String SIT = "animation.henodus.sit";
+    public static final String SWIM = "animation.henodus.swim";
+    public static final String SWIM_FAST = "animation.henodus.swimfast";
+    public static final String WALK = "animation.henodus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -67,7 +72,7 @@ public class Henodus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -77,17 +82,17 @@ public class Henodus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override

@@ -4,10 +4,6 @@
     "animation.allosaurus.idle": {
       "loop": true
     },
-    "animation.allosaurus.walk": {
-      "loop": true,
-      "animation_length": 2
-    },
     "animation.allosaurus.run": {
       "loop": true,
       "animation_length": 0.75
@@ -40,8 +36,15 @@
     "animation.allosaurus.turn_left": {
       "loop": "hold_on_last_frame"
     },
+    "animation.allosaurus.jump/fall2": {
+      "loop": true
+    },
     "animation.allosaurus.turn_right": {
       "loop": "hold_on_last_frame"
+    },
+    "animation.allosaurus.walk": {
+      "loop": true,
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

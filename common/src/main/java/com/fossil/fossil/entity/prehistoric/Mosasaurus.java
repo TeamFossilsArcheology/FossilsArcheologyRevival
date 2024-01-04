@@ -29,6 +29,7 @@ public class Mosasaurus extends PrehistoricSwimming {
     public static final String FALL = "animation.mosasaurus.jump/fall";
     public static final String GRAB = "animation.mosasaurus.grab";
     public static final String LEAP = "animation.mosasaurus.leap";
+    public static final String SLEEP = "animation.mosasaurus.sleep";
     public static final String SWIM = "animation.mosasaurus.swim";
     public static final String SWIM_FAST = "animation.mosasaurus.swimfast";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

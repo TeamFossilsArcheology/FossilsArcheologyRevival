@@ -9,10 +9,6 @@
       "loop": true,
       "animation_length": 8
     },
-    "animation.megalodon.swim_idle": {
-      "loop": true,
-      "animation_length": 8
-    },
     "animation.megalodon.swim_fast": {
       "loop": true,
       "animation_length": 8
@@ -36,6 +32,9 @@
     "animation.megalodon.eat": {
       "animation_length": 3
     },
+    "animation.megalodon.grab": {
+      "animation_length": 2.54167
+    },
     "animation.megalodon.turn_left": {
       "loop": "hold_on_last_frame"
     },
@@ -50,9 +49,9 @@
       "animation_length": 1,
       "action_delay": [12]
     },
-    "animation.megalodon.new": {
-      "loop": true
+    "animation.megalodon.sleep": {
+      "loop": true,
+      "animation_length": 8
     }
-  },
-  "geckolib_format_version": 2
+  }
 }

@@ -37,6 +37,10 @@
     "animation.phorusrhacos.idle": {
       "loop": true
     },
+    "animation.phorusrhacos.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
     "animation.phorusrhacos.run": {
       "loop": true,
       "animation_length": 0.95833

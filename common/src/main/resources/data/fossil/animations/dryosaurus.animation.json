@@ -39,6 +39,14 @@
     "animation.dryosaurus.jump/fall": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.dryosaurus.swim": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.dryosaurus.attack": {
+      "animation_length": 1,
+      "action_delay": [14]
     }
   },
   "geckolib_format_version": 2

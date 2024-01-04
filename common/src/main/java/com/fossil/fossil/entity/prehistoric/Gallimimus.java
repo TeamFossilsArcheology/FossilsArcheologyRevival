@@ -23,6 +23,7 @@ public class Gallimimus extends PrehistoricFlocking {
     public static final String ATTACK = "animation.gallimimus.attack1";
     public static final String EAT = "animation.gallimimus.eat";
     public static final String FALL = "animation.gallimimus.jump/fall";
+    public static final String IDLE = "animation.gallimimus.idle";
     public static final String RUN = "animation.gallimimus.run";
     public static final String SLEEP = "animation.gallimimus.sleep/sit";
     public static final String SWIM = "animation.gallimimus.swim";

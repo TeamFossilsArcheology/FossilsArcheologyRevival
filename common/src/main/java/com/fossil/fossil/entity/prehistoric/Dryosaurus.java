@@ -19,11 +19,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Dryosaurus extends Prehistoric {
     public static final String ANIMATIONS = "dryosaurus.animation.json";
+    public static final String ATTACK = "animation.dryosaurus.attack";
     public static final String EAT = "animation.dryosaurus.eat";
-    public static final String IDLE = "animation.dryosaurus.idle";
     public static final String FALL = "animation.dryosaurus.jump/fall";
+    public static final String IDLE = "animation.dryosaurus.idle";
     public static final String RUN = "animation.dryosaurus.run";
     public static final String SLEEP = "animation.dryosaurus.sleep1";
+    public static final String SWIM = "animation.dryosaurus.swim";
     public static final String WALK = "animation.dryosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

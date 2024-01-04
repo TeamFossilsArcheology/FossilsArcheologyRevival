@@ -21,8 +21,8 @@ public class Brachiosaurus extends Prehistoric {
     public static final String ANIMATIONS = "brachiosaurus.animation.json";
     public static final String ATTACK = "animation.brachiosaurus.attack";
     public static final String EAT = "animation.brachiosaurus.eat";
-    public static final String IDLE = "animation.brachiosaurus.idle";
     public static final String FALL = "animation.brachiosaurus.jump/fall";
+    public static final String IDLE = "animation.brachiosaurus.idle";
     public static final String RUN = "animation.brachiosaurus.sprint";
     public static final String SLEEP = "animation.brachiosaurus.sleep";
     public static final String SWIM = "animation.brachiosaurus.swim";

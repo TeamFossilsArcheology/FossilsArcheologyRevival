@@ -21,8 +21,8 @@ public class Diplodocus extends Prehistoric {
     public static final String ANIMATIONS = "diplodocus.animation.json";
     public static final String ATTACK = "animation.diplodocus.attack";
     public static final String EAT = "animation.diplodocus.eat";
-    public static final String IDLE = "animation.diplodocus.idle";
     public static final String FALL = "animation.diplodocus.jump/fall";
+    public static final String IDLE = "animation.diplodocus.idle";
     public static final String RUN = "animation.diplodocus.sprint";
     public static final String SLEEP = "animation.diplodocus.sleep";
     public static final String SWIM = "animation.diplodocus.swim";

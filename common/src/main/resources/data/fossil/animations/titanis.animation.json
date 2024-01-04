@@ -34,12 +34,16 @@
     "animation.titanis.sleep": {
       "loop": true
     },
+    "animation.titanis.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
     "animation.titanis.idle": {
       "loop": true
     },
     "animation.titanis.run": {
       "loop": true,
-      "animation_length": 0.75
+      "animation_length": 0.95833
     }
   },
   "geckolib_format_version": 2

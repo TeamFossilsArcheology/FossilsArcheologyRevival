@@ -1,0 +1,71 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.pachyrhinosaurus.drink": {
+      "animation_length": 3
+    },
+    "animation.pachyrhinosaurus.ram": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "animation.pachyrhinosaurus.sleep1": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.pachyrhinosaurus.idle": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.pachyrhinosaurus.sit": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.pachyrhinosaurus.run": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "animation.pachyrhinosaurus.turn_right": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.pachyrhinosaurus.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.pachyrhinosaurus.sleep2": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.pachyrhinosaurus.speak": {
+      "animation_length": 2
+    },
+    "animation.pachyrhinosaurus.eat": {
+      "animation_length": 3
+    },
+    "animation.pachyrhinosaurus.walk": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.pachyrhinosaurus.swim": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.pachyrhinosaurus.attack2": {
+      "animation_length": 1,
+      "action_delay": [7]
+    },
+    "animation.pachyrhinosaurus.call": {
+      "animation_length": 3
+    },
+    "animation.pachyrhinosaurus.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.pachyrhinosaurus.attack1": {
+      "animation_length": 1,
+      "action_delay": [7]
+    },
+    "animation.pachyrhinosaurus.ram_windup": {
+      "loop": true,
+      "animation_length": 2
+    }
+  }
+}

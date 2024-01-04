@@ -5030,6 +5030,39 @@
         }
       }
     },
+    "animation.gallimimus.idle": {
+      "loop": true,
+      "bones": {
+        "lowerBody": {
+          "rotation": {
+            "vector": ["math.sin(query.anim_time*1440/12)*0.5", 0, 0]
+          },
+          "position": {
+            "vector": [0, "math.sin(query.anim_time*1440/12-90)*0.25", 0]
+          }
+        },
+        "neck1": {
+          "rotation": {
+            "vector": ["math.sin(query.anim_time*1440/12+160)*5", "math.sin(query.anim_time*720/12-90)*-10", "math.sin(query.anim_time*360/12-90)*5"]
+          }
+        },
+        "head": {
+          "rotation": {
+            "vector": ["math.sin(query.anim_time*1440/12+30)*5", "math.sin(query.anim_time*360/12+60)*10", "math.sin(query.anim_time*720/12)*-5"]
+          }
+        },
+        "tail1": {
+          "rotation": {
+            "vector": ["math.sin(query.anim_time*1440/12+60)*-3", "math.sin(query.anim_time*720/12+60)*10", "math.sin(query.anim_time*360/12+60)*-5"]
+          }
+        },
+        "tail2": {
+          "rotation": {
+            "vector": ["math.sin(query.anim_time*1440/12-30)*-5", "math.sin(query.anim_time*720/12-30)*10", "math.sin(query.anim_time*720/12-30)*-5"]
+          }
+        }
+      }
+    },
     "animation.gallimimus.sleep/sit": {
       "loop": true,
       "animation_length": 12,

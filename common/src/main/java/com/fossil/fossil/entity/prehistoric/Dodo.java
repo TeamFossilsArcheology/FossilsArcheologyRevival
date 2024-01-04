@@ -26,10 +26,13 @@ public class Dodo extends Prehistoric {
     public static final String ANIMATIONS = "dodo.animation.json";
     public static final String ATTACK1 = "animation.dodo.bite1";
     public static final String ATTACK2 = "animation.dodo.bite2";
+    public static final String EAT = "animation.dodo.eat";
+    public static final String FALL = "animation.dodo.jump/fall";
     public static final String IDLE = "animation.dodo.idle";
     public static final String RUN = "animation.dodo.run";
     public static final String SLEEP1 = "animation.dodo.sleep1";
     public static final String SLEEP2 = "animation.dodo.sleep2";
+    public static final String SWIM = "animation.dodo.swim";
     public static final String WALK = "animation.dodo.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -37,6 +40,7 @@ public class Dodo extends Prehistoric {
     public Dodo(EntityType<Dodo> entityType, Level level) {
         super(entityType, level);
     }
+    //TODO: Festive texture
 
     @Override
     protected void registerGoals() {
@@ -75,7 +79,7 @@ public class Dodo extends Prehistoric {
     //TODO: Animations
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override

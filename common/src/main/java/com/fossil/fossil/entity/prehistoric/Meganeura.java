@@ -57,8 +57,8 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     public static final String ANIMATIONS = "meganeura.animation.json";
     public static final String ATTACK = "animation.meganeura.attack";
     public static final String EAT = "animation.meganeura.eat";
-    public static final String IDLE = "animation.meganeura.idle";
     public static final String FLY = "animation.meganeura.fly";
+    public static final String IDLE = "animation.meganeura.idle";
     public static final String VERTICAL_IDLE = "animation.meganeura.vertical_idle";
     public static final String WALK = "animation.meganeura.walk";
     private static final EntityDataAccessor<Optional<BlockPos>> ATTACHED_BLOCK_POS = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);

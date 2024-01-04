@@ -20,8 +20,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Elasmotherium extends Prehistoric {
     public static final String ANIMATIONS = "elasmotherium.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.elasmotherium.attack1";
+    public static final String EAT = "animation.elasmotherium.eat/drink";
+    public static final String FALL = "animation.elasmotherium.jump/fall";
+    public static final String IDLE = "animation.elasmotherium.idle";
+    public static final String RUN = "animation.elasmotherium.run";
+    public static final String SLEEP = "animation.elasmotherium.rest/sleep";
+    public static final String WALK = "animation.elasmotherium.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -60,7 +65,7 @@ public class Elasmotherium extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -70,17 +75,17 @@ public class Elasmotherium extends Prehistoric {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override

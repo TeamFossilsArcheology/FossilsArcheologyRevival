@@ -23,9 +23,10 @@ public class Megalodon extends PrehistoricSwimming {
     public static final String BEACHED = "animation.megalodon.beached1";
     public static final String BEACHED2 = "animation.megalodon.beached2";
     public static final String EAT = "animation.megalodon.eat";
-    public static final String IDLE = "animation.megalodon.swim_idle";
     public static final String FALL = "animation.megalodon.jump/fall";
-    public static final String SLEEP = "animation.megalodon.sleep1";
+    public static final String GRAB = "animation.megalodon.grab";
+    public static final String IDLE = "animation.megalodon.swim_idle";
+    public static final String SLEEP = "animation.megalodon.sleep";
     public static final String SWIM = "animation.megalodon.swim";
     public static final String SWIM_FAST = "animation.megalodon.swim_fast";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

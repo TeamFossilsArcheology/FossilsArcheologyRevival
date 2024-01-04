@@ -37,9 +37,13 @@
     "animation.kelenken.idle": {
       "loop": true
     },
+    "animation.kelenken.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
     "animation.kelenken.run": {
       "loop": true,
-      "animation_length": 0.83333
+      "animation_length": 0.95833
     }
   },
   "geckolib_format_version": 2

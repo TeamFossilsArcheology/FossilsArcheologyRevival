@@ -23,6 +23,7 @@ public class Megalania extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "megalania.animation.json";
     public static final String ATTACK = "animation.megalania.attack";
     public static final String EAT = "animation.megalania.eat";
+    public static final String FALL = "animation.megalania.jump/fall";
     public static final String IDLE = "animation.megalania.idle";
     public static final String RUN = "animation.megalania.run";
     public static final String SLEEP = "animation.megalania.sleep1";

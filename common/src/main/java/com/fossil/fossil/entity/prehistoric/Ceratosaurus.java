@@ -25,6 +25,7 @@ public class Ceratosaurus extends Prehistoric implements PrehistoricScary {
     public static final String IDLE = "animation.ceratosaurus.idle";
     public static final String FALL = "animation.ceratosaurus.jump/fall";
     public static final String RUN = "animation.ceratosaurus.run";
+    public static final String SLEEP = "animation.ceratosaurus.sleep";
     public static final String SWIM = "animation.ceratosaurus.swim";
     public static final String WALK = "animation.ceratosaurus.walk";
 
