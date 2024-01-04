@@ -2,10 +2,7 @@
   "required": true,
   "package": "com.fossil.fossil.forge.mixins",
   "compatibilityLevel": "JAVA_17",
-  "client": [
-    "ParticleAccessor",
-    "TerrainParticleMixin"
-  ],
+  "client": ["ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin"],
   "mixins": [
     "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "PlayerMixin", "PrehistoricMixin",
     "ProjectileUtilMixin", "TransientEntitySectionManagerMixin"
