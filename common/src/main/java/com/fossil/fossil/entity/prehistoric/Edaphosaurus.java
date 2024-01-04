@@ -21,6 +21,7 @@ public class Edaphosaurus extends Prehistoric {
     public static final String ANIMATIONS = "edaphosaurus.animation.json";
     public static final String ATTACK = "animation.edaphosaurus.attack";
     public static final String EAT = "animation.edaphosaurus.eat";
+    public static final String FALL = "animation.edaphosaurus.jump/fall";
     public static final String IDLE = "animation.edaphosaurus.idle";
     public static final String RUN = "animation.edaphosaurus.run";
     public static final String SLEEP = "animation.edaphosaurus.sleep/sit";

@@ -29,7 +29,7 @@
 					]
 				},
 				{
-					"name": "playerPos",
+					"name": "riderPos",
 					"parent": "upperBody",
 					"pivot": [0, 21.1, -4]
 				},

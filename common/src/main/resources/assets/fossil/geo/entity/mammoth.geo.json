@@ -7,8 +7,8 @@
 				"texture_width": 180,
 				"texture_height": 200,
 				"visible_bounds_width": 6,
-				"visible_bounds_height": 4.5,
-				"visible_bounds_offset": [0, 1.75, 0]
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
 			},
 			"bones": [
 				{
@@ -311,6 +311,10 @@
 					"cubes": [
 						{"origin": [2.2, -0.2, 6.1], "size": [5, 17, 7], "uv": [34, 67]}
 					]
+				},
+				{
+					"name": "riderPos",
+					"pivot": [0, 33, -5]
 				}
 			]
 		}

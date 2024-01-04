@@ -142,7 +142,7 @@
 					]
 				},
 				{
-					"name": "osteoderm3",
+					"name": "osteoderm2",
 					"parent": "upperBody",
 					"pivot": [0, 18.2, -8.6],
 					"rotation": [0, 0, 0],
@@ -248,6 +248,10 @@
 					"cubes": [
 						{"origin": [-5.4, 0.65, 3.4], "size": [3, 2, 5], "uv": [82, 49]}
 					]
+				},
+				{
+					"name": "riderPos",
+					"pivot": [0, 18, -3.3]
 				}
 			]
 		}

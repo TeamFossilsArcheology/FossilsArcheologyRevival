@@ -12,7 +12,12 @@
 			},
 			"bones": [
 				{
+					"name": "bone",
+					"pivot": [0, 0, 0]
+				},
+				{
 					"name": "upperBody",
+					"parent": "bone",
 					"pivot": [0, 8.9, -12.9],
 					"rotation": [2.61, 0, 0],
 					"cubes": [
@@ -162,6 +167,10 @@
 					"cubes": [
 						{"origin": [4, -6.6, -11.9], "size": [1, 9, 5], "uv": [73, 32], "mirror": true}
 					]
+				},
+				{
+					"name": "riderPos",
+					"pivot": [0, 9, -5]
 				}
 			]
 		}

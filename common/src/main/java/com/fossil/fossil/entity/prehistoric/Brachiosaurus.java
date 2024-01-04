@@ -55,7 +55,7 @@ public class Brachiosaurus extends Prehistoric {
 
     @Override
     public Item getOrderItem() {
-        return Items.BONE;
+        return Items.STICK;
     }
 
     @Override

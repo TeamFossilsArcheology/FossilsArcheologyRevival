@@ -189,6 +189,10 @@
 					"cubes": [
 						{"origin": [3.5, -13.6, -7.5], "size": [2, 19, 8], "uv": [107, 33], "mirror": true}
 					]
+				},
+				{
+					"name": "riderPos",
+					"pivot": [0, 10, -6]
 				}
 			]
 		}

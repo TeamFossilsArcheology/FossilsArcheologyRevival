@@ -77,11 +77,15 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
+import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.resource.GeckoLibCache;
 
 import java.util.*;
@@ -115,7 +119,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public int ticksSat;
     public int ticksSlept;
     public float pediaScale;
-    public float ridingXZ;
     public boolean shouldWander = true;
     public ResourceLocation textureLocation;
     public DinoMatingGoal matingGoal;
@@ -516,6 +519,41 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return getBbHeight() * 0.72;
     }
 
+    @Override
+    public void positionRider(Entity passenger) {
+        super.positionRider(passenger);
+        if (hasPassenger(passenger) && passenger instanceof Mob mob) {
+            yBodyRot = mob.yBodyRot;
+        }
+        Player rider = getRidingPlayer();
+        if (rider != null && isOwnedBy(rider) && getTarget() != rider) {
+            if (level.isClientSide) {
+                AnimationData data = getFactory().getOrCreateAnimationData(getId());
+                Map<String, Pair<IBone, BoneSnapshot>> map = data.getBoneSnapshotCollection();
+                if (map.get("riderPos") != null) {
+                    if (map.get("riderPos").getLeft() instanceof GeoBone geoBone) {
+                        float radius = (geoBone.getPivotZ() * getScale() / 16) * -1;
+                        float angle = (Mth.DEG_TO_RAD * yBodyRot);
+                        double extraX = radius * Mth.sin((float) (Math.PI + angle));
+                        double extraY = geoBone.getPivotY() * getScale() / 16 - 0.2;
+                        double extraZ = radius * Mth.cos(angle);
+                        rider.setPos(getX() + extraX, getY() + extraY + rider.getMyRidingOffset(), getZ() + extraZ);
+                    }
+                }
+            } else {
+                //TODO: Figure out if this needs to be more accurate
+                rider.setPos(getX(), getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ());
+            }
+        }
+        if (passenger instanceof Velociraptor || passenger instanceof Deinonychus) {
+            //TODO: Offset for leap attack
+        }
+    }
+
+    public double getJumpStrength() {
+        return 1;//TODO: Jump Strength for all rideable dinos
+    }
+
     private void doJump(double upwardMovement, double forwardMovement) {
         hasImpulse = true;
         if (forwardMovement > 0) {
@@ -559,6 +597,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 doJump(newYMovement, newForwardMovement);
             }
             playerJumpPendingScale = 0;
+            //TODO: Fall damage reset
         }
         if (isControlledByLocalInstance()) {
             setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
@@ -1395,29 +1434,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
            */
         }
-    }
-
-    @Override
-    public void positionRider(Entity passenger) {
-        super.positionRider(passenger);
-        if (hasPassenger(passenger) && passenger instanceof Mob mob) {
-            yBodyRot = mob.yBodyRot;
-        }
-        Player rider = getRidingPlayer();
-        if (rider != null && isOwnedBy(rider) && getTarget() != rider) {
-            float radius = ridingXZ * 0.7f * getScale() * -3;
-            float angle = (Mth.DEG_TO_RAD * yBodyRot);
-            double extraX = radius * Mth.sin((float) (Math.PI + angle));
-            double extraZ = radius * Mth.cos(angle);
-            rider.setPos(getX() + extraX, getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ() + extraZ);
-        }
-        if (passenger instanceof Velociraptor || passenger instanceof Deinonychus) {
-            //TODO: Offset for leap attack
-        }
-    }
-
-    public double getJumpStrength() {
-        return 1;//TODO: Jump Strength for all rideable dinos
     }
 
     @Override
