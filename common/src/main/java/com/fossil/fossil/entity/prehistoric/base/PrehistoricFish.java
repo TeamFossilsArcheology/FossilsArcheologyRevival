@@ -31,9 +31,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.resource.GeckoLibCache;
@@ -42,11 +40,11 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable, PrehistoricDebug {
+public abstract class PrehistoricFish extends AbstractFish implements PrehistoricAnimatable<PrehistoricFish>, PrehistoricDebug {
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Boolean> BABY = SynchedEntityData.defineId(PrehistoricFish.class, EntityDataSerializers.BOOLEAN);
     private final ResourceLocation animationLocation;
-    private final CompoundTag activeAnimations = new CompoundTag();
+    private final AnimationLogic<PrehistoricFish> animationLogic = new AnimationLogic<>(this);
 
     private int absoluteEggCooldown = 0;
     private int age;
@@ -139,6 +137,12 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        setSprinting(!(getMoveControl().getSpeedModifier() < 1.25));
+    }
+
+    @Override
     public void tick() {
         super.tick();
         if (!level.isClientSide) {
@@ -222,44 +226,12 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 4, event -> {
-            AnimationController<PrehistoricFish> controller = event.getController();
-            if (!isInWater()) {
-                addActiveAnimation(controller.getName(), nextFloppingAnimation());
-            } else if (event.isMoving()) {
-                addActiveAnimation(controller.getName(), nextMovingAnimation());
-            } else {
-                addActiveAnimation(controller.getName(), nextIdleAnimation());
-            }
-            AnimationLogic.ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
-            if (activeAnimation != null) {
-                controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));
-            }
-            return PlayState.CONTINUE;
-        }));
-    }
-
-    public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
-        CompoundTag animationTag = activeAnimations.getCompound(controller);
-        if (animationTag.contains("Animation")) {
-            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getDouble("EndTick"));
-        }
-        return null;
+        data.addAnimationController(new AnimationController<>(this, "Movement/Idle", 4, animationLogic::fishPredicate));
     }
 
     @Override
-    public void addActiveAnimation(String controller, Animation animation) {
-        if (animation != null) {
-            CompoundTag animationTag = new CompoundTag();
-            animationTag.putString("Animation", animation.animationName);
-            animationTag.putDouble("EndTick", level.getGameTime() + animation.animationLength);
-            activeAnimations.put(controller, animationTag);
-        }
-    }
-
-    @Override
-    public void addActiveAnimation(String controller, CompoundTag animationTag) {
-        //Not needed atm
+    public AnimationLogic<PrehistoricFish> getAnimationLogic() {
+        return animationLogic;
     }
 
     @Override
@@ -267,7 +239,12 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         return nextIdleAnimation();
     }
 
-    public abstract @NotNull Animation nextFloppingAnimation();
+    public abstract @NotNull Animation nextBeachedAnimation();
+
+    @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return nextIdleAnimation();
+    }
 
     public @Nullable Animation nextTurningAnimation() {
         return null;

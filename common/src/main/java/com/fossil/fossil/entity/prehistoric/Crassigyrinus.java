@@ -68,6 +68,16 @@ public class Crassigyrinus extends PrehistoricSwimming {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
+    public @NotNull Animation nextBeachedAnimation() {
+        return getAllAnimations().get(BEACHED);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
@@ -78,18 +88,18 @@ public class Crassigyrinus extends PrehistoricSwimming {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
         return getAllAnimations().get(SWIM);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
     }
 
     @Override

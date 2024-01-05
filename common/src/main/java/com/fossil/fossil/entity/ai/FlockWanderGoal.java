@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.ai;
 
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
 import com.mojang.datafixers.DataFixUtils;
 import net.minecraft.world.entity.ai.goal.FollowFlockLeaderGoal;
@@ -31,7 +32,7 @@ public class FlockWanderGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (!entity.shouldWander || entity.isImmobile()) {
+        if (entity.currentOrder != OrderType.WANDER || entity.isImmobile() || entity.getTarget() != null) {
             return false;
         }
         if (entity.isGroupLeader()) {

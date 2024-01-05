@@ -65,6 +65,11 @@ public class Confuciusornis extends PrehistoricFlying {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
@@ -75,18 +80,28 @@ public class Confuciusornis extends PrehistoricFlying {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isFlying()) {
+            return getAllAnimations().get(FLY);
+        } else if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(FLY_FAST);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isFlying()) {
+            return getAllAnimations().get(FLY_FAST);
+        } else if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
+        return getAllAnimations().get(WALK);
     }
 
     @Override

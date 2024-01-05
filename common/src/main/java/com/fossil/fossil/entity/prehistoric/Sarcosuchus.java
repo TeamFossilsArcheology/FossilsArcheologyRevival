@@ -70,6 +70,16 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(IDLE);
+    }
+
+    @Override
+    public @NotNull Animation nextBeachedAnimation() {
+        return nextIdleAnimation();
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(IDLE);
     }
@@ -80,18 +90,24 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(IDLE);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
         return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
     }
 
     @Override

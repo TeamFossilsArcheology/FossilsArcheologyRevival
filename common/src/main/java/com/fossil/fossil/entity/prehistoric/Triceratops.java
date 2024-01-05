@@ -107,6 +107,11 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK1 : ATTACK2);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
@@ -118,46 +123,23 @@ public class Triceratops extends Prehistoric {
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        //return getRandom().nextInt(2) == 0 ? getAllAnimations().get(SLEEP1) : getAllAnimations().get(SLEEP2);
-        return getAllAnimations().get(SLEEP1);
+        return getAllAnimations().get(random.nextInt(2) == 0 ? SLEEP1 : SLEEP2);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        String key = WALK;
-        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
-
         if (isInWater()) {
-            key = SWIM;
-        } else if (isChasing) {
-            key = RUN;
+            return getAllAnimations().get(SWIM);
         }
-
-        return getAllAnimations().get(key);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
-        String key;
+    public @NotNull Animation nextSprintingAnimation() {
         if (isInWater()) {
-            key = SWIM;
-        } else {
-            key = RUN;
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        int random = getRandom().nextInt(2);
-        String key;
-        if (random == 0) {
-            key = ATTACK1;
-        } else {
-            key = ATTACK2;
-        }
-
-        return getAllAnimations().get(key);
+        return getAllAnimations().get(RUN);
     }
 
     @Nullable

@@ -27,21 +27,23 @@ public class AlligatorGar extends PrehistoricFish {
     }
 
     @Override
+    public @NotNull Animation nextBeachedAnimation() {
+        return getAllAnimations().get(BEACHED);
+    }
+
+    @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        if (getMoveControl().getSpeedModifier() < 1.25) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(SWIM_FAST);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
-    public @NotNull Animation nextFloppingAnimation() {
-        return getAllAnimations().get(BEACHED);
+    public @NotNull Animation nextSprintingAnimation() {
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override

@@ -38,8 +38,6 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public static final String SLEEP2 = "animation.dilophosaurus.sleep2";
     public static final String SPEAK = "animation.dilophosaurus.speak";
     public static final String SWIM = "animation.dilophosaurus.swim";
-    public static final String TURN_RIGHT = "animation.dilophosaurus.turn_right";
-    public static final String TURN_LEFT = "animation.dilophosaurus.turn_left";
     public static final String WALK = "animation.dilophosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -78,6 +76,17 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        String key;
+        switch (getRandom().nextInt(3)) {
+            case 0 -> key = ATTACK1;
+            case 1 -> key = ATTACK2;
+            default -> key = ATTACK3;
+        }
+        return getAllAnimations().get(key);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
@@ -88,41 +97,29 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(random.nextInt(2) == 0 ? SIT1 : SIT2);
+    }
+
+    @Override
     public @NotNull Animation nextSleepingAnimation() {
-        //return getRandom().nextInt(2) == 0 ? getAllAnimations().get(SLEEP1) : getAllAnimations().get(SLEEP2);
-        return getAllAnimations().get(SLEEP1);
+        return getAllAnimations().get(random.nextInt(2) == 0 ? SLEEP1 : SLEEP2);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        String key = WALK;
-        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
         if (isInWater()) {
-            key = SWIM;
-        } else if (isChasing) {
-            key = RUN;
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(key);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
-        String key = RUN;
+    public @NotNull Animation nextSprintingAnimation() {
         if (isInWater()) {
-            key = SWIM;
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        String key;
-        switch (getRandom().nextInt(3)) {
-            case 0 -> key = ATTACK1;
-            case 1 -> key = ATTACK2;
-            default -> key = ATTACK3;
-        }
-        return getAllAnimations().get(key);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

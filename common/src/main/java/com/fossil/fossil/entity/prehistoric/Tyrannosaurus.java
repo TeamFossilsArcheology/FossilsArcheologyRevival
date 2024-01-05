@@ -66,6 +66,11 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK_NORMAL1 : ATTACK_NORMAL2);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
@@ -77,23 +82,23 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        //return getRandom().nextInt(2) == 0 ? getAllAnimations().get(SLEEP1) : getAllAnimations().get(SLEEP2);
-        return getAllAnimations().get(SLEEP1);
+        return getAllAnimations().get(random.nextInt(2) == 0 ? SLEEP1 : SLEEP2);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK_NORMAL1);
     }
 
     @Override

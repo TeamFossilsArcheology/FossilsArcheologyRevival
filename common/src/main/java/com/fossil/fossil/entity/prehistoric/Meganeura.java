@@ -270,6 +270,11 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
+    public @NotNull Animation nextBeachedAnimation() {
+        return nextIdleAnimation();
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
@@ -283,6 +288,11 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return nextIdleAnimation();
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
         if (isFlying()) {
             return getAllAnimations().get(FLY);
@@ -291,7 +301,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(WALK);
     }
 

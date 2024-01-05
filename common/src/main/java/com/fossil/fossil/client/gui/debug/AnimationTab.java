@@ -111,7 +111,7 @@ public class AnimationTab extends DebugTab {
             sliderY.setSliderValue(0, true);
             sliderX.setSliderValue(0, true);
         }));
-        if (entity instanceof PrehistoricAnimatable prehistoric) {
+        if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
             animations = addWidget(new AnimationsList(entity.getId(), prehistoric.getAllAnimations().keySet()));
             List<String> controllers = prehistoric.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
             if (!controllers.isEmpty()) {
@@ -159,8 +159,8 @@ public class AnimationTab extends DebugTab {
 
             AnimationEntry(int id, String text) {//TODO: For now only clientside. Maybe add a server flag for forced animations with a reset here?
                 changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
-                    if (entity instanceof PrehistoricAnimatable prehistoric) {
-                        prehistoric.addActiveAnimation(currentController, prehistoric.getAllAnimations().get(button.getMessage().getContents()));
+                    if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
+                        prehistoric.getAnimationLogic().addActiveAnimation(currentController, prehistoric.getAllAnimations().get(button.getMessage().getContents()), "None");
                     }
                 });
             }

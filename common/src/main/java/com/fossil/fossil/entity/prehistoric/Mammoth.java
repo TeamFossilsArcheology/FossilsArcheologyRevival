@@ -42,7 +42,7 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     public static final String SLEEP = "animation.mammoth.rest/sleep";
     public static final String WALK = "animation.mammoth.walk";
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(Mammoth.class, EntityDataSerializers.BOOLEAN);
-    
+
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private int woolRegenTicks;
 
@@ -190,6 +190,11 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
@@ -200,18 +205,24 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
     }
 
     @Override

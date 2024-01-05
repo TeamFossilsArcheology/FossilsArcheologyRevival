@@ -31,8 +31,8 @@ public class AnimationMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
-        if (entity instanceof PrehistoricAnimatable prehistoric && Version.debugEnabled()) {
-            contextSupplier.get().queue(() -> prehistoric.addActiveAnimation(controller, prehistoric.getAllAnimations().get(animation)));
+        if (entity instanceof PrehistoricAnimatable<?> animatable && Version.debugEnabled()) {
+            contextSupplier.get().queue(() -> animatable.getAnimationLogic().addActiveAnimation(controller, animatable.getAllAnimations().get(animation), "None"));
         }
     }
 }

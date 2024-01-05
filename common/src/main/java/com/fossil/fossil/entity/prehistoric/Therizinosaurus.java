@@ -96,8 +96,14 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK1 : ATTACK2);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT1);
+        //TODO: Eat1 and Eat2 are for blocks on head height. Eat3 is for blocks on ground height
+        return getAllAnimations().get(random.nextInt(2) == 0 ? EAT1 : EAT2);
     }
 
     @Override
@@ -107,30 +113,23 @@ public class Therizinosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return isBaby() ? getAllAnimations().get(SLEEP1) : getAllAnimations().get(SLEEP2);
+        return getAllAnimations().get(isBaby() ? SLEEP1 : SLEEP2);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
-        return isBaby() ? getAllAnimations().get(RUN_BABY) : getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        String key;
-
-        if (getRandom().nextBoolean()) {
-            key = ATTACK1;
-        } else {
-            key = ATTACK2;
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
         }
-
-        return getAllAnimations().get(key);
+        return isBaby() ? getAllAnimations().get(RUN_BABY) : getAllAnimations().get(RUN);
     }
 
     @Nullable

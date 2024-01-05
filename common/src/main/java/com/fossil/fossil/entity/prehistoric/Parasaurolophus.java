@@ -117,16 +117,21 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
-    public void setOrderedToSit(boolean orderedToSit) {
-        if (orderedToSit) {
+    public void setSitting(boolean sitting) {
+        if (sitting) {
             setStanding(false);
         }
-        super.setOrderedToSit(orderedToSit);
+        super.setSitting(sitting);
     }
 
     @Override
     public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.15f : super.getGenderedScale();
+    }
+
+    @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
@@ -140,18 +145,24 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(IDLE);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
         return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
     }
 
     @Override

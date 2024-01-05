@@ -111,15 +111,15 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     private PlayState leapingPredicate(AnimationEvent<PrehistoricLeaping> event) {
         AnimationController<PrehistoricLeaping> controller = event.getController();
         if (isLeaping()) {
-            addActiveAnimation(controller.getName(), getLeapingAnimation());
+            getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation(), "Leap");
         } else {
             if (event.isMoving()) {
-                addActiveAnimation(controller.getName(), nextMovingAnimation());
+                getAnimationLogic().addActiveAnimation(controller.getName(), nextMovingAnimation(), "Move");
             } else {
-                addActiveAnimation(controller.getName(), nextIdleAnimation());
+                getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation(), "Idle");
             }
         }
-        AnimationLogic.ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
+        AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
         if (activeAnimation != null) {
             controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));
         }

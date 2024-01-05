@@ -22,8 +22,7 @@ public class DinoMeleeAttackGoal extends MeleeAttackGoal {
             return false;
         } else if (dinosaur.level.getDifficulty() == Difficulty.PEACEFUL && target instanceof Player) {
             return false;
-        }
-        if (dinosaur.isFleeing()) {
+        } else if (dinosaur.isFleeing()) {
             return false;
         }
         return super.canUse();

@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
@@ -19,9 +20,9 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Ankylosaurus extends Prehistoric {
     public static final String ANIMATIONS = "ankylosaurus.animation.json";
-    public static final String ATTACK1 = "animation.ankylosaurus.attack_strong1";
-    public static final String ATTACK2 = "animation.ankylosaurus.attack_back1";
-    public static final String ATTACK3 = "animation.ankylosaurus.attack_back2";
+    public static final String ATTACK_FRONT = "animation.ankylosaurus.attack_strong1";
+    public static final String ATTACK_BACK1 = "animation.ankylosaurus.attack_back1";
+    public static final String ATTACK_BACK2 = "animation.ankylosaurus.attack_back2";
     public static final String EAT = "animation.ankylosaurus.eat";
     public static final String FALL = "animation.ankylosaurus.jump/fall";
     public static final String IDLE = "animation.ankylosaurus.idle";
@@ -61,6 +62,19 @@ public class Ankylosaurus extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        if (getTarget() != null) {
+            double x = getTarget().getX() - getX();
+            double z = getTarget().getZ() - getZ();
+            float yRotD = (float) (-(Mth.atan2(x, z) * Mth.RAD_TO_DEG));
+            if (Math.abs(Mth.degreesDifference(yBodyRot, yRotD)) > 130) {
+                return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK_BACK1 : ATTACK_BACK2);
+            }
+        }
+        return getAllAnimations().get(ATTACK_FRONT);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
@@ -71,18 +85,24 @@ public class Ankylosaurus extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
     }
 
     @Override

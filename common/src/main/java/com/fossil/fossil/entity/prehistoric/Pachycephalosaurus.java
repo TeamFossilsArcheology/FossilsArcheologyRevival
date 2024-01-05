@@ -54,28 +54,39 @@ public class Pachycephalosaurus extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK1 : ATTACK2);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(EAT);
+    }
+
+    @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(EAT);
+        }
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(EAT);
+        }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
     }
 
     @Override

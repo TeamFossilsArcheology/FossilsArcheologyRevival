@@ -15,7 +15,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl.Operation;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -59,7 +58,6 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
-        goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(2, matingGoal);
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
@@ -221,7 +219,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         int flyDelay = getAnimationLogic().getActionDelay("Movement/Idle/Eat");
         if (flyDelay < 0) {
             //Use animation end for animations without delay
-            AnimationLogic.ActiveAnimationInfo activeAnimation = getActiveAnimation("Movement/Idle/Eat");
+            AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation("Movement/Idle/Eat");
             return activeAnimation == null || level.getGameTime() > activeAnimation.endTick() + takeOffStartTick;
         }
         return level.getGameTime() > flyDelay + takeOffStartTick;
@@ -285,18 +283,18 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         AnimationController<PrehistoricFlying> controller = event.getController();
         if (isTakingOff()) {
             if (!takeOffAnimationStarted) {
-                addActiveAnimation(controller.getName(), nextTakeOffAnimation());
+                getAnimationLogic().addActiveAnimation(controller.getName(), nextTakeOffAnimation(), "TakeOff");
                 takeOffAnimationStarted = true;
             }
         } else {
             takeOffAnimationStarted = false;
             if (event.isMoving()) {
-                addActiveAnimation(controller.getName(), nextMovingAnimation());
+                getAnimationLogic().addActiveAnimation(controller.getName(), nextMovingAnimation(), "Walk");
             } else {
-                addActiveAnimation(controller.getName(), nextIdleAnimation());
+                getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation(), "Idle");
             }
         }
-        AnimationLogic.ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
+        AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
         if (activeAnimation != null) {
             controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));
         }

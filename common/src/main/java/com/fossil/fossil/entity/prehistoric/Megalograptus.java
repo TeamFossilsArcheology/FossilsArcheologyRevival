@@ -73,6 +73,15 @@ public class Megalograptus extends PrehistoricSwimming {
         return Items.NAUTILUS_SHELL;
     }
 
+    @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
+    public @NotNull Animation nextBeachedAnimation() {
+        return nextIdleAnimation();
+    }
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
@@ -85,18 +94,24 @@ public class Megalograptus extends PrehistoricSwimming {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
+        return getAllAnimations().get(IDLE);
     }
 
     @Override

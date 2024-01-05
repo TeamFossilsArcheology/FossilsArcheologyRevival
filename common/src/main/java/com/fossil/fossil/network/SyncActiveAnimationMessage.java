@@ -36,8 +36,8 @@ public class SyncActiveAnimationMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
-        if (entity instanceof PrehistoricAnimatable prehistoric) {
-            contextSupplier.get().queue(() -> prehistoric.addActiveAnimation(controller, animationTag));
+        if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
+            contextSupplier.get().queue(() -> prehistoric.getAnimationLogic().addActiveAnimation(controller, animationTag));
         }
     }
 }

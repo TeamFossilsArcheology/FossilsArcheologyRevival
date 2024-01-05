@@ -125,6 +125,16 @@ public class Pteranodon extends PrehistoricFlying {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
+    public @NotNull Animation nextEatingAnimation() {
+        return getAllAnimations().get(EAT);
+    }
+
+    @Override
     public @NotNull Animation nextIdleAnimation() {
         String key = IDLE;
 
@@ -138,11 +148,13 @@ public class Pteranodon extends PrehistoricFlying {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
         String key = WALK;
-        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
-
-        //if (isChasing) key = RUN;
         if (isInWater()) key = SWIM;
         if (isFlying() || !isOnGround()) key = FLY;
 
@@ -150,22 +162,12 @@ public class Pteranodon extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
         String key = WALK;
         if (isInWater()) key = SWIM;
         if (isFlying()) key = FLY_FLAST;
 
         return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
     }
 
     @Override

@@ -32,16 +32,4 @@ public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
         }
         return super.canContinueToUse();
     }
-
-    @Override
-    public void start() {
-        super.start();
-        entity.shouldWander = false;
-    }
-
-    @Override
-    public void stop() {
-        super.stop();
-        entity.shouldWander = true;
-    }
 }

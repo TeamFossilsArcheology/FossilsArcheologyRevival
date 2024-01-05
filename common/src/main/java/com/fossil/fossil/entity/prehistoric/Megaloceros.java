@@ -22,7 +22,7 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 public class Megaloceros extends Prehistoric {
     public static final String ANIMATIONS = "megaloceros.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.dilophosaurus.attack1";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Megaloceros(EntityType<Megaloceros> entityType, Level level) {
@@ -69,6 +69,11 @@ public class Megaloceros extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(IDLE);
     }
@@ -79,18 +84,24 @@ public class Megaloceros extends Prehistoric {
     }
 
     @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(IDLE);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
         return getAllAnimations().get(IDLE);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
         return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
     }
 
     @Override

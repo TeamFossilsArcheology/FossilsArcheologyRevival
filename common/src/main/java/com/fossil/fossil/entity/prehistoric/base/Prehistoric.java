@@ -10,7 +10,6 @@ import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
-import com.fossil.fossil.entity.animation.AttackAnimationLogic;
 import com.fossil.fossil.entity.data.AI;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.data.EntityHitboxManager;
@@ -20,7 +19,6 @@ import com.fossil.fossil.entity.prehistoric.Velociraptor;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.SyncActiveAnimationMessage;
 import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
@@ -54,7 +52,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.SitWhenOrderedToGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
@@ -92,21 +89,22 @@ import java.util.*;
 
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI.*;
 
-public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable, PrehistoricDebug {
+public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable<Prehistoric>, PrehistoricDebug {
 
     public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
-    private static final EntityDataAccessor<Boolean> START_EAT_ANIMATION = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> EATING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public final MoodSystem moodSystem = new MoodSystem(this);
     protected final WhipSteering steering = new WhipSteering(this);
-    private final AttackAnimationLogic<Prehistoric> animationLogic = new AttackAnimationLogic<>(this);
+    private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
     private final ResourceLocation animationLocation;
     private final CompoundTag activeAnimations = new CompoundTag();
     public OrderType currentOrder;
@@ -119,7 +117,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public int ticksSat;
     public int ticksSlept;
     public float pediaScale;
-    public boolean shouldWander = true;
     public ResourceLocation textureLocation;
     public DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
@@ -307,7 +304,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
-        goalSelector.addGoal(2, new SitWhenOrderedToGoal(this));
         goalSelector.addGoal(2, matingGoal);
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
@@ -319,12 +315,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(START_EAT_ANIMATION, false);
+        entityData.define(EATING, false);
         entityData.define(MOOD, 0);
         entityData.define(AGE_TICK, data().adultAgeDays() * 24000);
         entityData.define(HUNGER, 0);
         entityData.define(MODELIZED, false);
         entityData.define(FLEEING, false);
+        entityData.define(SITTING, false);
         entityData.define(SLEEPING, false);
         entityData.define(CLIMBING, false);
         entityData.define(AGING_DISABLED, false);
@@ -363,6 +360,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         compound.putInt("Hunger", getHunger());
         compound.putBoolean("isModelized", isSkeleton());
         compound.putBoolean("Fleeing", isFleeing());
+        compound.putBoolean("Sitting", isSitting());
         compound.putBoolean("Sleeping", isSleeping());
         compound.putInt("TicksSlept", ticksSlept);
         compound.putInt("TicksClimbing", ticksClimbing);
@@ -385,6 +383,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         setHunger(compound.getInt("Hunger"));
         setSkeleton(compound.getBoolean("isModelized"));
         setFleeing(compound.getBoolean("Fleeing"));
+        setSitting(compound.getBoolean("Sitting"));
         setSleeping(compound.getBoolean("Sleeping"));
         ticksSlept = compound.getInt("TicksSlept");
         ticksClimbing = compound.getInt("TicksClimbing");
@@ -438,8 +437,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public boolean isImmobile() {
-        return getHealth() <= 0 || isOrderedToSit() || isSkeleton() || isActuallyWeak() || isVehicle() || isSleeping();
+    public boolean isImmobile() {//TODO: isVehicle not necessary for goals
+        return getHealth() <= 0 || isSitting() || isSkeleton() || isActuallyWeak() || isVehicle() || isSleeping();
+    }
+
+    public boolean isSitting() {
+        return entityData.get(SITTING);
+    }
+
+    public void setSitting(boolean sitting) {
+        entityData.set(SITTING, sitting);
     }
 
     @Override
@@ -638,6 +645,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
+    protected void customServerAiStep() {
+        super.customServerAiStep();
+        setSprinting(!(getMoveControl().getSpeedModifier() < 1.25));
+    }
+
+    @Override
     public void aiStep() {
         updateSwingTime();
         super.aiStep();
@@ -670,7 +683,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 setSleeping(false);
             }
         }
-        if (isOrderedToSit()) {
+        if (isSitting()) {
             ticksSat++;
         }
         if (!level.isClientSide) {
@@ -684,36 +697,36 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             } else {
                 ticksSlept = 0;
                 if (!isInWater()) {
-                    if (!isOrderedToSit() && !isVehicle() && random.nextInt(1000) == 1 && !isPassenger()) {
-                        setOrderedToSit(true);
+                    if (!isSitting() && !isVehicle() && random.nextInt(1000) == 1 && !isPassenger()) {
+                        setSitting(true);
                         ticksSat = 0;
                     }
-                    if (isOrderedToSit() && ticksSat > 100 && random.nextInt(100) == 1 || getTarget() != null) {
-                        setOrderedToSit(false);
+                    if (isSitting() && ticksSat > 100 && random.nextInt(100) == 1 || getTarget() != null) {
+                        setSitting(false);
                     }
                 }
                 if (wantsToSleep()) {
                     if (aiActivityType() == Activity.BOTH) {
                         if (cathermalSleepCooldown == 0) {
                             if (random.nextInt(1200) == 1) {
-                                setOrderedToSit(false);
+                                setSitting(false);
                                 startSleeping(BlockPos.ZERO);
                             }
                         }
                     } else if (aiActivityType() != Activity.NO_SLEEP) {
                         if (random.nextInt(200) == 1) {
-                            setOrderedToSit(false);
+                            setSitting(false);
                             startSleeping(BlockPos.ZERO);
                         }
                     }
                 }
             }
             if (isSleeping() && (!wantsToSleep() || !canSleep() || canWakeUp())) {
-                setOrderedToSit(false);
+                setSitting(false);
                 setSleeping(false);
             }
-            if (currentOrder == OrderType.STAY && !isOrderedToSit() && !isActuallyWeak()) {
-                setOrderedToSit(true);
+            if (currentOrder == OrderType.STAY && !isSitting() && !isActuallyWeak()) {
+                setSitting(true);
                 ticksSat = 0;
                 setSleeping(false);
             }
@@ -1075,7 +1088,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
 
         if (amount > 0) {
-            setOrderedToSit(false);
+            setSitting(false);
             setSleeping(false);
         }
         if (source.getEntity() != null) {
@@ -1188,7 +1201,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                                 setRidingPlayer(player);
                             }
                             setOrder(OrderType.WANDER);
-                            setOrderedToSit(false);
+                            setSitting(false);
                             setSleeping(false);
                         } else if (getRidingPlayer() == player) {
                             setSprinting(true);
@@ -1202,7 +1215,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                             tame(player);
                         }
                     }
-                    setOrderedToSit(false);
+                    setSitting(false);
                 }
                 if (stack.is(getOrderItem()) && isTame() && isOwnedBy(player) && !player.isPassenger()) {
                     if (!level.isClientSide) {
@@ -1556,12 +1569,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean shouldStartEatAnimation() {
-        return entityData.get(START_EAT_ANIMATION);
+        return entityData.get(EATING);
     }
 
     public void setStartEatAnimation(boolean start) {
         //TODO: There is still a delay between the feeding start and the animation start. Maybe do it similar to attack delay?
-        entityData.set(START_EAT_ANIMATION, start);
+        entityData.set(EATING, start);
     }
 
     protected int getFleeingCooldown() {
@@ -1609,42 +1622,15 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return AnimationInfoManager.ANIMATIONS.getAnimation(animationLocation.getPath());
     }
 
-    @Override
-    public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
-        CompoundTag animationTag = activeAnimations.getCompound(controller);
-        if (animationTag.contains("Animation")) {
-            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getDouble("EndTick"));
-        }
-        return null;
-    }
-
-    @Override
-    public void addActiveAnimation(String controller, Animation animation) {
-        if (animation != null) {
-            CompoundTag animationTag = new CompoundTag();
-            animationTag.putString("Animation", animation.animationName);
-            animationTag.putDouble("EndTick", level.getGameTime() + animation.animationLength);
-            activeAnimations.put(controller, animationTag);
-            MessageHandler.SYNC_CHANNEL.sendToServer(new SyncActiveAnimationMessage(getId(), controller, animationTag));
-        }
-    }
-
-    @Override
-    public void addActiveAnimation(String controller, CompoundTag animationTag) {
-        activeAnimations.put(controller, animationTag);
-    }
-
-    public abstract @NotNull Animation nextChasingAnimation();
-
     public abstract @NotNull Animation nextAttackAnimation();
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, animationLogic::movementPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, animationLogic::landPredicate));
         data.addAnimationController(new AnimationController<>(this, "Attack", 5, animationLogic::attackPredicate));
     }
 
-    public AttackAnimationLogic<Prehistoric> getAnimationLogic() {
+    public AnimationLogic<Prehistoric> getAnimationLogic() {
         return animationLogic;
     }
 

@@ -40,7 +40,7 @@ public class Nautilus extends PrehistoricFish {
     public static final String SHELL_RETRACT = "animation.nautilus.shell_retract";
     public static final String SHELL_HOLD = "animation.nautilus.shell_hold";
     public static final String SHELL_EMERGE = "animation.nautilus.shell_emerge";
-    public static final String LAND = "animation.nautilus.land";
+    public static final String BEACHED = "animation.nautilus.land";
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private float ticksToShell = 0;
@@ -192,6 +192,11 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
+    public @NotNull Animation nextBeachedAnimation() {
+        return getAllAnimations().get(BEACHED);
+    }
+
+    @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
@@ -202,8 +207,8 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public @NotNull Animation nextFloppingAnimation() {
-        return getAllAnimations().get(LAND);
+    public @NotNull Animation nextSprintingAnimation() {
+        return getAllAnimations().get(SWIM_FORWARDS);
     }
 
     @Override

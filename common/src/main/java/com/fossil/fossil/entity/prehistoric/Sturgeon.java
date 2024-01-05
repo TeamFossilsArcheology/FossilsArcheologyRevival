@@ -27,6 +27,11 @@ public class Sturgeon extends PrehistoricFish {
     }
 
     @Override
+    public @NotNull Animation nextBeachedAnimation() {
+        return getAllAnimations().get(BEACHED);
+    }
+
+    @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
@@ -37,8 +42,8 @@ public class Sturgeon extends PrehistoricFish {
     }
 
     @Override
-    public @NotNull Animation nextFloppingAnimation() {
-        return getAllAnimations().get(BEACHED);
+    public @NotNull Animation nextSprintingAnimation() {
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override

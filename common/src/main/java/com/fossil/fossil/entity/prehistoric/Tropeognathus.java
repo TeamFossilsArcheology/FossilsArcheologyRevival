@@ -100,7 +100,7 @@ public class Tropeognathus extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
         String key = RUN;
         if (isInWater()) key = SWIM;
         if (isFlying()) key = FLY;

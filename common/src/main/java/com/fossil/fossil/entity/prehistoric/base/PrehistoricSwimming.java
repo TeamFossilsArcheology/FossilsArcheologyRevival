@@ -27,8 +27,9 @@ import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
 public abstract class PrehistoricSwimming extends Prehistoric {
     public static final int MAX_TIME_IN_WATER = 1000;
@@ -43,6 +44,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected boolean isLandNavigator = true;
     protected boolean breachTargetReached = false;
     protected long grabStartTick;
+    private boolean beached;
 
     public PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
@@ -154,8 +156,8 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             } else if (!isInWater() && isOnGround() && !useSwimAI() && !isLandNavigator) {
                 switchNavigator(true);
             }
-            if (isInWater() && (isOrderedToSit() || isSleeping())) {
-                setOrderedToSit(false);
+            if (isInWater() && (isSitting() || isSleeping())) {
+                setSitting(false);
                 setSleeping(false);
             }
             if (isInWater()) {
@@ -174,6 +176,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                         moodSystem.useToy(toy.moodBonus);
                     } else {
                         if (tickCount % 20 == 0) {
+                            //TODO: If hurt returns false: spit out
                             passenger.hurt(DamageSource.mobAttack(this), (float) getAttributeValue(Attributes.ATTACK_DAMAGE) * 2);
                             if (random.nextInt(5) > 0) {
                                 passenger.stopRiding();
@@ -182,6 +185,8 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                     }
                 }
             }
+        } else {
+            beached = !isAmphibious() && !isInWater() && isOnGround();
         }
     }
 
@@ -236,7 +241,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public void travel(Vec3 travelVector) {
-        if (isOrderedToSit() || !isAmphibious() && !isInWater()) {
+        if (isImmobile() && !isVehicle() || !isAmphibious() && !isInWater()) {
             super.travel(Vec3.ZERO);
             return;
         }
@@ -326,6 +331,10 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return level.getFluidState(entity.blockPosition().above()).is(FluidTags.WATER);
     }
 
+    public boolean isBeached() {
+        return beached;
+    }
+
     public boolean isBreaching() {
         return entityData.get(IS_BREACHING);
     }
@@ -350,10 +359,13 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         entityData.set(BREACHING_PITCH, getBreachPitch() - pitch);
     }
 
-    public @Nullable Animation nextFloppingAnimation() {
-        return null;
-    }
+    public abstract @NotNull Animation nextBeachedAnimation();
 
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 0, getAnimationLogic()::waterPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Attack", 5, getAnimationLogic()::attackPredicate));
+    }
 
     static class LargeSwimmerPathNavigation extends WaterBoundPathNavigation {
 

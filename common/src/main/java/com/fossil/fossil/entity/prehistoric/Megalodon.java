@@ -25,12 +25,10 @@ public class Megalodon extends PrehistoricSwimming {
     public static final String EAT = "animation.megalodon.eat";
     public static final String FALL = "animation.megalodon.jump/fall";
     public static final String GRAB = "animation.megalodon.grab";
-    public static final String IDLE = "animation.megalodon.swim_idle";
     public static final String SLEEP = "animation.megalodon.sleep";
     public static final String SWIM = "animation.megalodon.swim";
     public static final String SWIM_FAST = "animation.megalodon.swim_fast";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    private String beachAnimation = "";
 
     public Megalodon(EntityType<Megalodon> entityType, Level level) {
         super(entityType, level);
@@ -67,16 +65,6 @@ public class Megalodon extends PrehistoricSwimming {
     @Override
     public boolean canBreatheOnLand() {
         return false;
-    }
-
-    @Override
-    public void aiStep() {
-        super.aiStep();
-        if (level.isClientSide) {
-            if (isInWater() || !isOnGround()) {
-                beachAnimation = "";
-            }
-        }
     }
 
     @Override
@@ -118,13 +106,28 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
+    }
+
+    @Override
+    public @NotNull Animation nextBeachedAnimation() {
+        return getAllAnimations().get(random.nextInt(2) == 0 ? BEACHED : BEACHED2);
+    }
+
+    @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM);
+    }
+
+    @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override
@@ -133,21 +136,8 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @Nullable Animation nextFloppingAnimation() {
-        if (beachAnimation.isBlank()) {
-            beachAnimation = random.nextInt() == 0 ? BEACHED : BEACHED2;
-        }
-        return getAllAnimations().get(beachAnimation);
     }
 
     @Override

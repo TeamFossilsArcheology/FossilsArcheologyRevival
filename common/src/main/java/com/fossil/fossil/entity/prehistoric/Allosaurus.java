@@ -63,8 +63,8 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
+    public @NotNull Animation nextAttackAnimation() {
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override
@@ -73,18 +73,29 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     }
 
     @Override
+    public @NotNull Animation nextIdleAnimation() {
+        return getAllAnimations().get(IDLE);
+    }
+
+    @Override
+    public @NotNull Animation nextSleepingAnimation() {
+        return getAllAnimations().get(SLEEP);
+    }
+
+    @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(WALK);
     }
 
     @Override
-    public @NotNull Animation nextChasingAnimation() {
+    public @NotNull Animation nextSprintingAnimation() {
+        if (isInWater()) {
+            return getAllAnimations().get(SWIM);
+        }
         return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
     }
 
     @Override
