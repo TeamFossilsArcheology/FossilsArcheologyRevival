@@ -5,7 +5,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.AIMessage;
-import com.fossil.fossil.network.debug.MovementMessage;
+import com.fossil.fossil.network.debug.TameMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
@@ -105,9 +105,8 @@ public class DebugScreen extends Screen {
             this.addRenderableWidget(new Button(210, height - 40, 130, 20, new TextComponent("Move to Target"), button -> {
                 Player player = Minecraft.getInstance().player;
             }));*/
-            this.addRenderableWidget(new Button(370, height - 40, 150, 20, new TextComponent("Move to player"), button -> {
-                Player player = Minecraft.getInstance().player;
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new MovementMessage(entity.getId(), player.getX(), player.getY(), player.getZ()));
+            this.addRenderableWidget(new Button(460, height - 40, 50, 20, new TextComponent("Tame"), button -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new TameMessage(entity.getId()));
             }));
         }
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {

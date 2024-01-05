@@ -1,6 +1,6 @@
 package com.fossil.fossil.network.debug;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
+import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
@@ -8,32 +8,26 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
-public class AIMessage {
+public class TameMessage {
     private final int id;
-    private final boolean disableAI;
-    private final byte type;
 
-    public AIMessage(FriendlyByteBuf buf) {
-        this(buf.readInt(), buf.readBoolean(), buf.readByte());
+    public TameMessage(FriendlyByteBuf buf) {
+        this(buf.readInt());
     }
 
-    public AIMessage(int id, boolean disableAI, byte type) {
+    public TameMessage(int id) {
         this.id = id;
-        this.disableAI = disableAI;
-        this.type = type;
     }
 
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(id);
-        buf.writeBoolean(disableAI);
-        buf.writeByte(type);
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(id);
         contextSupplier.get().queue(() -> {
-            if (entity instanceof PrehistoricDebug prehistoric && Version.debugEnabled()) {
-                prehistoric.disableCustomAI(type, disableAI);
+            if (entity instanceof Prehistoric prehistoric && Version.debugEnabled()) {
+                prehistoric.tame(contextSupplier.get().getPlayer());
             }
         });
     }

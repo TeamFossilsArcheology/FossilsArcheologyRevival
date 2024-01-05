@@ -1,6 +1,7 @@
 package com.fossil.fossil.network.debug;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
+import com.fossil.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
@@ -30,7 +31,7 @@ public class AnimationMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
-        if (entity instanceof PrehistoricAnimatable prehistoric) {
+        if (entity instanceof PrehistoricAnimatable prehistoric && Version.debugEnabled()) {
             contextSupplier.get().queue(() -> prehistoric.addActiveAnimation(controller, prehistoric.getAllAnimations().get(animation)));
         }
     }

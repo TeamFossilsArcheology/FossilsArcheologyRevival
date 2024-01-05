@@ -2,6 +2,7 @@ package com.fossil.fossil.network.debug;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.Gender;
+import com.fossil.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.player.Player;
@@ -43,7 +44,7 @@ public class SyncDebugInfoMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Player player = contextSupplier.get().getPlayer();
-        if (player != null && player.level.getEntity(entityId) instanceof Prehistoric prehistoric) {
+        if (player != null && player.level.getEntity(entityId) instanceof Prehistoric prehistoric && Version.debugEnabled()) {
             contextSupplier.get().queue(() -> {
                 prehistoric.setGender(Gender.valueOf(gender));
                 prehistoric.setAgeInTicks(ageInTicks);

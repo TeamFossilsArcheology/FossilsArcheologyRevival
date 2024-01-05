@@ -1,6 +1,7 @@
 package com.fossil.fossil.network.debug;
 
 import com.fossil.fossil.client.gui.debug.DebugScreen;
+import com.fossil.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
@@ -54,7 +55,9 @@ public class MarkMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
-            DebugScreen.showPath(contextSupplier.get().getPlayer(), targets, blocks, below);
+            if (Version.debugEnabled()) {
+                DebugScreen.showPath(contextSupplier.get().getPlayer(), targets, blocks, below);
+            }
         });
     }
 }
