@@ -68,8 +68,8 @@ public class MultiPartImpl<T extends Prehistoric> extends Entity implements Mult
     }
 
     @Override
-    public boolean canBeCollidedWith() {
-        return true;
+    public void remove(RemovalReason reason) {
+        setRemoved(reason);
     }
 
     @Override

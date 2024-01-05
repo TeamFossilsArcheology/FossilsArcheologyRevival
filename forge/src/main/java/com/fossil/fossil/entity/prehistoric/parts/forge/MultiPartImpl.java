@@ -60,6 +60,11 @@ public class MultiPartImpl<T extends Prehistoric> extends PartEntity<T> implemen
     }
 
     @Override
+    public void remove(RemovalReason reason) {
+        setRemoved(reason);
+    }
+
+    @Override
     public boolean is(@NotNull Entity entity) {
         return this == entity || getParent() == entity;
     }

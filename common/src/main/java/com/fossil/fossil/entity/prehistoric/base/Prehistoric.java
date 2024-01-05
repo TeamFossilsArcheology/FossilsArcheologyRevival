@@ -259,9 +259,20 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
         }
         if (isCustomMultiPart()) {
-            //Ensures that the callbacks get called
+            //Ensures that the callbacks get called. Probably not necessary because the multiparts are not added to the server
             for (MultiPart part : parts) {
                 part.getEntity().remove(reason);
+            }
+        }
+    }
+
+    @Override
+    public void onClientRemoval() {
+        super.onClientRemoval();
+        if (isCustomMultiPart()) {
+            //Ensures that the callbacks get called on the client side
+            for (MultiPart part : parts) {
+                part.getEntity().remove(RemovalReason.DISCARDED);
             }
         }
     }
