@@ -21,13 +21,12 @@
     "speedMax": 0.35,
     "armorBase": 5,
     "armorMax": 15,
-    "knockBackResistanceBase": 2,
-    "knockBackResistanceMax": 2
+    "knockBackResistanceBase": 0.5,
+    "knockBackResistanceMax": 1
   },
   "adultAgeDays": 6,
   "breaksBlocks": true,
   "canBeRidden": false,
-  "developsResistance": false,
   "maxHunger": 175,
   "maxPopulation": 7,
   "scaleBase": 0.4,

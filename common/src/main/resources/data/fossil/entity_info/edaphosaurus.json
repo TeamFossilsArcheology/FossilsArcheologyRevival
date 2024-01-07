@@ -27,7 +27,6 @@
   "adultAgeDays": 8,
   "breaksBlocks": false,
   "canBeRidden": false,
-  "developsResistance": false,
   "maxHunger": 80.0,
   "maxPopulation": 15,
   "scaleBase": 0.2,

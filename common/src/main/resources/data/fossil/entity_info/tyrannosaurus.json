@@ -22,12 +22,11 @@
     "armorBase": 0.0,
     "armorMax": 7.0,
     "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 2
+    "knockBackResistanceMax": 1
   },
   "adultAgeDays": 12,
   "breaksBlocks": true,
   "canBeRidden": true,
-  "developsResistance": true,
   "maxHunger": 150.0,
   "maxPopulation": 2,
   "scaleBase": 0.2,

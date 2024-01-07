@@ -106,19 +106,18 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected final WhipSteering steering = new WhipSteering(this);
     private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
     private final ResourceLocation animationLocation;
-    private final CompoundTag activeAnimations = new CompoundTag();
     public OrderType currentOrder;
-    public boolean hasFeatherToggle = false;
-    public boolean featherToggle;
-    public boolean hasTeenTexture = true;
-    public boolean hasBabyTexture = true;
+    protected boolean hasFeatherToggle = false;
+    protected boolean featherToggle;
+    protected boolean hasTeenTexture = true;
+    protected boolean hasBabyTexture = true;
     private float frustumWidthRadius;
     private float frustumHeightRadius;
-    public int ticksSat;
-    public int ticksSlept;
+    private int ticksSat;
+    private int ticksSlept;
     public float pediaScale;
     public ResourceLocation textureLocation;
-    public DinoMatingGoal matingGoal;
+    protected DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
     private Gender gender = Gender.random(random);
     private boolean droppedBiofossil = false;
@@ -181,19 +180,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             return entity.getBbWidth() <= size;
         }
-    }
-
-    /**
-     * Do things before {@code  LivingEntity#knockBack}
-     * This is supposed to launch up any entities always
-     *
-     * @return newly updated strength value
-     */
-    public static double beforeKnockBack(LivingEntity entity, double strength, double x, double y) {
-        double resistance = entity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).getValue();
-        double reversed = 1 - resistance;
-        entity.setDeltaMovement(entity.getDeltaMovement().add(0, 0.4 * reversed + 0.1, 0));
-        return strength * 2.0;
     }
 
     public static boolean canBreak(Block block) {
@@ -762,9 +748,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (!isSkeleton()) {
             if (!isAgingDisabled()) {
                 setAgeInTicks(getAge() + 1);
-                if (getAge() % 24000 == 0) {
-                    grow(0);
-                }
             }
             if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.STARVING_DINOS)) {
                 if (!isNoAi()) {
@@ -872,7 +855,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public float getScale() {//TODO: Refresh Eye Height
         float step = (data().maxScale() - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
-        if (getAgeInDays() >= data().adultAgeDays()) {
+        if (isAdult()) {
             return data().maxScale() * getGenderedScale();
         }
         return (data().minScale() + step * getAge()) * getGenderedScale();
@@ -957,7 +940,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public int getAgeInDays() {
-        return this.entityData.get(AGE_TICK) / 24000;
+        return getAge() / 24000;
     }
 
     public void setAgeInDays(int days) {
@@ -982,7 +965,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             refreshTexturePath();
             refreshDimensions();
         }
-        if (tickCount % 100 == 0) {
+        if (getAge() > data().adultAgeDays() * 24000 && tickCount % 100 == 0) {
             updateAbilities();
         }
     }
@@ -1028,14 +1011,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void eatItem(ItemStack stack) {
-        if (stack != null) {
-            if (FoodMappings.getFoodAmount(stack.getItem(), type().diet) != 0) {
-                moodSystem.increaseMood(5);
-                doFoodEffect(stack.getItem());
-                setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
-                stack.shrink(1);
-                setStartEatAnimation(true);
-            }
+        if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), type().diet) != 0)) {
+            moodSystem.increaseMood(5);
+            doFoodEffect(stack.getItem());
+            setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
+            stack.shrink(1);
+            setStartEatAnimation(true);
         }
     }
 
@@ -1078,13 +1059,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             dead = true;
             return true;
         }
-        if (getLastHurtByMob() instanceof Player player) {
-            if (getOwner() == getLastHurtByMob()) {
-                setTame(false);
-                setOwnerUUID(null);
-                moodSystem.increaseMood(-15);
-                player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.betrayed", getName()), true);
-            }
+        if (getLastHurtByMob() instanceof Player player && (getOwner() == getLastHurtByMob())) {
+            setTame(false);
+            setOwnerUUID(null);
+            moodSystem.increaseMood(-15);
+            player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.betrayed", getName()), true);
         }
 
         if (amount > 0) {
@@ -1112,13 +1091,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                     this.yBodyRot = f;
                 }
                 return InteractionResult.SUCCESS;
-            } else {
-                if (stack.is(Items.BONE) && this.getAgeInDays() < data().adultAgeDays()) {
-                    this.level.playSound(null, this.blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.NEUTRAL, 0.8F, 1);
-                    this.setAgeInDays(this.getAgeInDays() + 1);
-                    usePlayerItem(player, hand, stack);
-                    return InteractionResult.SUCCESS;
-                }
+            } else if (stack.is(Items.BONE) && !isAdult()) {
+                level.playSound(null, blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.NEUTRAL, 0.8F, 1);
+                setAgeInDays(getAgeInDays() + 1);
+                usePlayerItem(player, hand, stack);
+                return InteractionResult.SUCCESS;
             }
         } else {
             if (stack.isEmpty()) {
@@ -1138,7 +1115,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
 
             if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM && !level.isClientSide) {
-                if (getAgeInDays() < data().adultAgeDays() && getHunger() > 0) {
+                if (!isAdult() && getHunger() > 0) {
                     usePlayerItem(player, hand, stack);
                     if (!player.isCreative()) {
                         player.addItem(new ItemStack(Items.GLASS_BOTTLE, 1));
@@ -1175,23 +1152,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                             player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.full", getName()), true);
                         }
                         usePlayerItem(player, hand, stack);
-                        if (aiTameType() == Taming.FEEDING) {
-                            if (!isTame() && isTameable() && random.nextInt(10) == 1) {
-                                tame(player);
-                                level.broadcastEntityEvent(this, (byte) 35);
-                            }
+                        if (aiTameType() == Taming.FEEDING && !isTame() && random.nextInt(10) == 1) {
+                            tame(player);
+                            level.broadcastEntityEvent(this, (byte) 35);
                         }
                         return InteractionResult.SUCCESS;
                     }
                 }
                 return InteractionResult.PASS;
             } else {
-                if (stack.is(Items.LEAD) && isTame()) {
-                    if (isOwnedBy(player)) {
-                        setLeashedTo(player, true);
-                        usePlayerItem(player, hand, stack);
-                        return InteractionResult.SUCCESS;
-                    }
+                if (stack.is(Items.LEAD) && isTame() && (isOwnedBy(player))) {
+                    setLeashedTo(player, true);
+                    usePlayerItem(player, hand, stack);
+                    return InteractionResult.SUCCESS;
                 }
 
                 if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
@@ -1231,10 +1204,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return InteractionResult.PASS;
     }
 
-    protected boolean isTameable() {
-        return true;//TOOD: set in data() via old PrehistoriCentityType
-    }
-
     public abstract Item getOrderItem();
 
     public void grow(int ageInDays) {
@@ -1258,7 +1227,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isWeak() {
-        return (getHealth() < 8) && (getAgeInDays() >= data().adultAgeDays()) && !isTame();
+        return (getHealth() < 8) && isAdult() && !isTame();
     }
 
     public boolean isActuallyWeak() {
@@ -1298,10 +1267,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
         String path = builder.toString();
         textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
-    }
-
-    public float getFemaleScale() {
-        return 1.0F;
     }
 
     @Override
@@ -1491,6 +1456,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected float getSoundVolume() {
         return isBaby() ? super.getSoundVolume() * 0.75f : 1;
+    }
+
+    public boolean attackTarget(LivingEntity target) {
+        if (getBbWidth() > target.getBbWidth()) {
+            double resistance = 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
+            target.setDeltaMovement(target.getDeltaMovement().add(0, 0.4 * resistance + 0.1, 0));
+        }
+        return doHurtTarget(target);
     }
 
     @Override

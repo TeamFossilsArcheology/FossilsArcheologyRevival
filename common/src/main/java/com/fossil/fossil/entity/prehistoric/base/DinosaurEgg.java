@@ -68,7 +68,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable ServerPlayer player, PrehistoricEntityType type, boolean hatchMessage) {
         Entity entity = type.entityType().create(level);
         if (entity instanceof Prehistoric prehistoric) {
-            if (prehistoric.isTameable() && player != null && prehistoric.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
+            if (player != null && prehistoric.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
                 prehistoric.tame(player);
                 //TODO: First Hatch music
                 if (false) {

@@ -86,11 +86,6 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    public float getFemaleScale() {
-        return 1.12F;
-    }
-
-    @Override
     public AnimationFactory getFactory() {
         return factory;
     }

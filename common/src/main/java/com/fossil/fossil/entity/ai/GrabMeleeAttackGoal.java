@@ -58,7 +58,7 @@ public class GrabMeleeAttackGoal extends DinoMeleeAttackGoal {
             }
             int attackDelay = dino.getAnimationLogic().getActionDelay("Attack");
             if (attackStartTick >= 0 && attackDelay > -1 && mob.level.getGameTime() > attackStartTick + attackDelay) {
-                mob.doHurtTarget(enemy);
+                dino.attackTarget(enemy);
                 dino.destroyBoat(enemy);
                 attackStartTick = -1;
             }

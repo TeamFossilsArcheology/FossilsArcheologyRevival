@@ -85,7 +85,7 @@ public class BreachAttackGoal extends Goal {
             boolean tooBig = !PrehistoricSwimming.isEntitySmallerThan(target, 2 * dino.getScale() / dino.data().maxScale());
             if (tooBig || dino.getRandom().nextInt(5) > 0) {
                 dino.swing(InteractionHand.MAIN_HAND);
-                dino.doHurtTarget(target);
+                dino.attackTarget(target);
             } else {
                 dino.startGrabAttack(target);
             }
