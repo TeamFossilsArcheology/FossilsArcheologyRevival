@@ -22,8 +22,9 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "allosaurus.animation.json";
     public static final String ATTACK = "animation.allosaurus.attack";
     public static final String EAT = "animation.allosaurus.eat";
-    public static final String FALL = "animation.allosaurus.jump/fall2";
+    public static final String FALL = "animation.allosaurus.jump/fall";
     public static final String IDLE = "animation.allosaurus.idle";
+    public static final String RUN = "animation.allosaurus.run";
     public static final String SLEEP = "animation.allosaurus.sleep";
     public static final String SWIM = "animation.allosaurus.swim";
     public static final String WALK = "animation.allosaurus.walk";
@@ -95,7 +96,7 @@ public class Allosaurus extends Prehistoric implements PrehistoricScary {
         if (isInWater()) {
             return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

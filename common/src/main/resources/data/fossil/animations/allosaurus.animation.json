@@ -36,9 +36,6 @@
     "animation.allosaurus.turn_left": {
       "loop": "hold_on_last_frame"
     },
-    "animation.allosaurus.jump/fall2": {
-      "loop": true
-    },
     "animation.allosaurus.turn_right": {
       "loop": "hold_on_last_frame"
     },

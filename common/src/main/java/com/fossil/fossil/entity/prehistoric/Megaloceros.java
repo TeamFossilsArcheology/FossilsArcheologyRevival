@@ -21,8 +21,15 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megaloceros extends Prehistoric {
     public static final String ANIMATIONS = "megaloceros.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.megaloceros.attack";
+    public static final String EAT = "animation.megaloceros.eat";
+    public static final String FALL = "animation.megaloceros.jump/fall";
+    public static final String IDLE = "animation.megaloceros.idle";
+    public static final String IDLE2 = "animation.megaloceros.idle2";
+    public static final String IDLE3 = "animation.megaloceros.idle3";
+    public static final String RUN = "animation.megaloceros.run";
+    public static final String SWIM = "animation.megaloceros.swim";
+    public static final String WALK = "animation.megaloceros.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Megaloceros(EntityType<Megaloceros> entityType, Level level) {

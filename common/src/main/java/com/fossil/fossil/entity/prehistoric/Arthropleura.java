@@ -41,9 +41,13 @@ public class Arthropleura extends Prehistoric {
         builder.append(name);
         builder.append("/");
         builder.append(name);
-        if (hasBabyTexture && isBaby()) builder.append("_baby");
-        if (hasTeenTexture && isTeen()) builder.append("_teen");
-        if (isAdult()) builder.append("_adult");
+        if (isBaby()) {
+            builder.append("_baby");
+        } else if (isAdult()) {
+            builder.append("_adult");
+        } else if (isSkeleton()) {
+            builder.append("_skeleton");
+        }
         builder.append(".png");
         String path = builder.toString();
         textureLocation = new ResourceLocation(Fossil.MOD_ID, path);

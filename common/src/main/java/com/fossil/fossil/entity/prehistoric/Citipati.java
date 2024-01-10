@@ -19,8 +19,14 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Citipati extends Prehistoric {
     public static final String ANIMATIONS = "citipati.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.citipati.attack1";
+    public static final String EAT = "animation.citipati.eat";
+    public static final String FALL = "animation.citipati.jump/fall";
+    public static final String IDLE = "animation.citipati.idle";
+    public static final String RUN = "animation.citipati.run";
+    public static final String SLEEP = "animation.citipati.sit/sleep";
+    public static final String SWIM = "animation.citipati.swim";
+    public static final String WALK = "animation.citipati.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
