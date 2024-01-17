@@ -2,24 +2,24 @@ package com.fossil.fossil.forge.mixins;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
+import com.mojang.authlib.GameProfile;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
-import net.minecraftforge.common.extensions.IForgePlayer;
 import org.spongepowered.asm.mixin.Mixin;
 
-@Mixin(Player.class)
-public abstract class PlayerMixin extends LivingEntity implements IForgePlayer {
+@Mixin(AbstractClientPlayer.class)
+public abstract class AbstractClientPlayerMixin extends Player {
 
-    protected PlayerMixin(EntityType<? extends LivingEntity> arg, Level arg2) {
-        super(arg, arg2);
+    protected AbstractClientPlayerMixin(Level arg, BlockPos arg2, float f, GameProfile gameProfile) {
+        super(arg, arg2, f, gameProfile);
     }
 
     @Override
     public boolean isCloseEnough(Entity entity, double dist) {
-        if (IForgePlayer.super.isCloseEnough(entity, dist)) {
+        if (super.isCloseEnough(entity, dist)) {
             return true;
         }
         if (entity instanceof Prehistoric prehistoric && prehistoric.isCustomMultiPart()) {
