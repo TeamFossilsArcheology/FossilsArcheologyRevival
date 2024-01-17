@@ -69,6 +69,11 @@
 					]
 				},
 				{
+					"name": "grabPos",
+					"parent": "head",
+					"pivot": [0, 4, -26]
+				},
+				{
 					"name": "dorsalFin1",
 					"parent": "body",
 					"pivot": [0, 17.02335, -6.57855],

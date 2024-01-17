@@ -160,7 +160,7 @@ public class AnimationTab extends DebugTab {
             AnimationEntry(int id, String text) {//TODO: For now only clientside. Maybe add a server flag for forced animations with a reset here?
                 changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
                     if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
-                        prehistoric.getAnimationLogic().addActiveAnimation(currentController, prehistoric.getAllAnimations().get(button.getMessage().getContents()), "None");
+                        prehistoric.getAnimationLogic().addActiveAnimation(currentController, prehistoric.getAllAnimations().get(button.getMessage().getContents()), "Idle");
                     }
                 });
             }

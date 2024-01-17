@@ -21,6 +21,7 @@ public class Liopleurodon extends PrehistoricSwimming {
     public static final String ATTACK = "animation.liopleurodon.attack1";
     public static final String BEACHED = "animation.liopleurodon.beached";
     public static final String EAT = "animation.liopleurodon.eat";
+    public static final String GRAB = "animation.liopleurodon.grab";
     public static final String IDLE = "animation.liopleurodon.randomidle";
     public static final String SLEEP = "animation.liopleurodon.idle/sleep";
     public static final String SWIM = "animation.liopleurodon.swim";
@@ -82,6 +83,11 @@ public class Liopleurodon extends PrehistoricSwimming {
     @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
+    }
+
+    @Override
+    public @NotNull Animation nextGrabbingAnimation() {
+        return getAllAnimations().get(GRAB);
     }
 
     @Override

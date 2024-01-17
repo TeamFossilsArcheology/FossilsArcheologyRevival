@@ -53,7 +53,6 @@ public class GrabMeleeAttackGoal extends DinoMeleeAttackGoal {
                     attackType = GRAB;
                     dino.destroyBoat(enemy);
                     dino.startGrabAttack(enemy);
-                    //TODO: Shake animation
                 }
             }
             int attackDelay = dino.getAnimationLogic().getActionDelay("Attack");

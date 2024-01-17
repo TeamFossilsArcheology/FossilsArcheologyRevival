@@ -111,6 +111,11 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
+    public @NotNull Animation nextGrabbingAnimation() {
+        return getAllAnimations().get(GRAB);
+    }
+
+    @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }

@@ -3,6 +3,8 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
+import com.fossil.fossil.entity.animation.AnimationLogic;
+import com.mojang.math.Vector3d;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -26,16 +28,25 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.Animation;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.processor.IBone;
+import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
+import software.bernie.geckolib3.geo.render.built.GeoBone;
+
+import java.util.Map;
 
 public abstract class PrehistoricSwimming extends Prehistoric {
     public static final int MAX_TIME_IN_WATER = 1000;
     public static final int MAX_TIME_ON_LAND = 1000;
     private static final EntityDataAccessor<Boolean> IS_BREACHING = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Float> BREACHING_PITCH = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.FLOAT);
+    private static final EntityDataAccessor<Boolean> GRABBING = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.BOOLEAN);
     public int timeInWater = 0;
     public int timeOnLand = 0;
     /**
@@ -43,7 +54,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
      */
     protected boolean isLandNavigator = true;
     protected boolean breachTargetReached = false;
-    protected long grabStartTick;
+    protected long grabStartTick = -1;
     private boolean beached;
 
     public PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level) {
@@ -67,6 +78,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         super.defineSynchedData();
         entityData.define(IS_BREACHING, false);
         entityData.define(BREACHING_PITCH, 0f);
+        entityData.define(GRABBING, false);
     }
 
     @Override
@@ -74,6 +86,9 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         super.addAdditionalSaveData(compound);
         compound.putInt("TimeInWater", timeInWater);
         compound.putInt("TimeOnLand", timeOnLand);
+        compound.putBoolean("Breaching", isBreaching());
+        compound.putFloat("BreachPitch", getBreachPitch());
+        compound.putBoolean("Grabbing", isDoingGrabAttack());
     }
 
     @Override
@@ -81,6 +96,9 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         super.readAdditionalSaveData(compound);
         timeInWater = compound.getInt("TimeInWater");
         timeOnLand = compound.getInt("TimeOnLand");
+        setBreaching(compound.getBoolean("Breaching"));
+        setBreachPitch(compound.getFloat("BreachPitch"));
+        setDoingGrabAttack(compound.getBoolean("Grabbing"));
     }
 
     @Override
@@ -171,15 +189,14 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             for (Entity passenger : getPassengers()) {
                 if (passenger instanceof LivingEntity && passenger != getRidingPlayer()) {
                     if (passenger instanceof ToyBase toy && level.getGameTime() == grabStartTick + 55) {
-                        passenger.stopRiding();
+                        stopGrabAttack(passenger);
                         setTarget(null);
                         moodSystem.useToy(toy.moodBonus);
                     } else {
                         if (tickCount % 20 == 0) {
-                            //TODO: If hurt returns false: spit out
-                            passenger.hurt(DamageSource.mobAttack(this), (float) getAttributeValue(Attributes.ATTACK_DAMAGE) * 2);
-                            if (random.nextInt(5) > 0) {
-                                passenger.stopRiding();
+                            boolean hurt = passenger.hurt(DamageSource.mobAttack(this), (float) getAttributeValue(Attributes.ATTACK_DAMAGE));
+                            if (!hurt || (level.getGameTime() >= grabStartTick + 55 && random.nextInt(5) == 0)) {
+                                stopGrabAttack(passenger);
                             }
                         }
                     }
@@ -205,20 +222,38 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
-        if (passenger instanceof LivingEntity && passenger != getRidingPlayer()) {//TODO: Need animations
-            float t = 5 * Mth.sin(Mth.PI + tickCount * 0.275f);
-            float radius = 0.35f * 0.7f * getScale() * -3;
-            float angle = Mth.DEG_TO_RAD * yBodyRot + 3.15f + t * 1.75f * 0.05f;
-            double extraX = radius * Mth.sin(Mth.PI + angle);
-            double extraY = 0.065 * getScale();
-            double extraZ = radius * Mth.cos(angle);
-            passenger.setPos(getX() + extraX, getY() + extraY, getZ() + extraZ);
+        if (passenger != getRidingPlayer() && isDoingGrabAttack()) {
+            if (level.isClientSide) {
+                AnimationData data = getFactory().getOrCreateAnimationData(getId());
+                Map<String, Pair<IBone, BoneSnapshot>> map = data.getBoneSnapshotCollection();
+                if (map.get("grabPos") != null) {
+                    if (map.get("grabPos").getLeft() instanceof GeoBone geoBone) {
+                        Vector3d pos = geoBone.getLocalPosition();
+                        passenger.setPos(getX() + pos.x, getY() + pos.y - 0.2 + passenger.getMyRidingOffset(), getZ() + pos.z);
+                    }
+                }
+            } else {
+                float t = 5 * Mth.sin(Mth.PI + tickCount * 0.275f);
+                float radius = 0.35f * 0.7f * getScale() * -3;
+                float angle = Mth.DEG_TO_RAD * yBodyRot + 3.15f + t * 1.75f * 0.05f;
+                double extraX = radius * Mth.sin(Mth.PI + angle);
+                double extraY = 0.065 * getScale();
+                double extraZ = radius * Mth.cos(angle);
+                passenger.setPos(getX() + extraX, getY() + extraY, getZ() + extraZ);
+            }
         }
     }
 
-    public void startGrabAttack(LivingEntity enemy) {
-        enemy.startRiding(this);
+    public void startGrabAttack(LivingEntity target) {
+        target.startRiding(this);
         grabStartTick = level.getGameTime();
+        entityData.set(GRABBING, true);
+    }
+
+    public void stopGrabAttack(Entity target) {
+        target.stopRiding();
+        grabStartTick = -1;
+        entityData.set(GRABBING, false);
     }
 
     @Override
@@ -359,12 +394,42 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         entityData.set(BREACHING_PITCH, getBreachPitch() - pitch);
     }
 
+    public boolean isDoingGrabAttack() {
+        return entityData.get(GRABBING);
+    }
+
+    public void setDoingGrabAttack(boolean grabbing) {
+        entityData.set(GRABBING, grabbing);
+    }
+
     public abstract @NotNull Animation nextBeachedAnimation();
+
+    public @NotNull Animation nextGrabbingAnimation() {
+        return nextIdleAnimation();
+    }
 
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 0, getAnimationLogic()::waterPredicate));
-        data.addAnimationController(new AnimationController<>(this, "Attack", 5, getAnimationLogic()::attackPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Attack", 5, event -> {
+            AnimationController<PrehistoricSwimming> controller = event.getController();
+            AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+            if (swinging) {
+                if (activeAnimation == null || !activeAnimation.category().equals("Attack")) {
+                    getAnimationLogic().addActiveAnimation(controller.getName(), nextAttackAnimation(), "Attack");
+                }
+            } else if (isDoingGrabAttack()) {
+                getAnimationLogic().addActiveAnimation(controller.getName(), nextGrabbingAnimation(), "Grab");
+            }
+            AnimationLogic.ActiveAnimationInfo newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+            if (newAnimation != null) {
+                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.animationName()));
+                return PlayState.CONTINUE;
+            } else {
+                event.getController().markNeedsReload();
+                return PlayState.STOP;
+            }
+        }));
     }
 
     static class LargeSwimmerPathNavigation extends WaterBoundPathNavigation {
