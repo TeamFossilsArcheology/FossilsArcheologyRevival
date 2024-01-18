@@ -15,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -111,6 +112,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         if (onLand) {
             moveControl = new SmoothTurningMoveControl(this);
             navigation = new AmphibiousPathNavigation(this);
+            lookControl = new LookControl(this);
             isLandNavigator = true;
         } else {
             moveControl = new SwimmingMoveControl(this);
@@ -167,7 +169,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 }
             }
         }
-
         if (!level.isClientSide) {
             if (isInWater() && useSwimAI() && isLandNavigator) {
                 switchNavigator(false);
@@ -204,7 +205,18 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             }
         } else {
             beached = !isAmphibious() && !isInWater() && isOnGround();
+            if (beached) {
+                setXRot(0);
+            }
         }
+    }
+
+    @Override
+    protected float tickHeadTurn(float yRot, float animStep) {
+        if (isBeached()) {
+            return animStep;
+        }
+        return super.tickHeadTurn(yRot, animStep);
     }
 
     protected void handleAirSupply(int airSupply) {
