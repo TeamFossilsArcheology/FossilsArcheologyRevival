@@ -47,6 +47,8 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectUtil;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -965,7 +967,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             refreshTexturePath();
             refreshDimensions();
         }
-        if (getAge() > data().adultAgeDays() * 24000 && tickCount % 100 == 0) {
+        if (tickCount % 100 == 0) {
             updateAbilities();
         }
     }
@@ -1023,6 +1025,25 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void feed(int foodAmount) {
         setHunger(getHunger() + foodAmount);
         level.playSound(null, blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, getSoundVolume(), getVoicePitch());
+    }
+
+    @Override
+    public int getCurrentSwingDuration() {
+        int time = 10;
+        var activeAnimation = getAnimationLogic().getActiveAnimation("Attack");
+        if (activeAnimation != null) {
+            time = (int) (getAllAnimations().get(activeAnimation.animationName()).animationLength * 20);
+        }
+
+        if (MobEffectUtil.hasDigSpeed(this)) {
+            time -= 1 + MobEffectUtil.getDigSpeedAmplification(this);
+        }
+
+        if (hasEffect(MobEffects.DIG_SLOWDOWN)) {
+            time += (1 + getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) * 2;
+        }
+
+        return time;
     }
 
     @Override

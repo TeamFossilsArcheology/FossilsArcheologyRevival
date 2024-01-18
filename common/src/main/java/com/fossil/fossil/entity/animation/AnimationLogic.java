@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.SyncActiveAnimationMessage;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.AnimationState;
@@ -113,7 +114,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             } else {
                 addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), "Move");
             }
+            float speed = Mth.lerp(Math.min((1f / event.getAnimatable().data().adultAgeDays()) * event.getAnimatable().getAgeInDays(), 1), 2, 1);
+            event.getController().setAnimationSpeed(speed);
         } else {
+            event.getController().setAnimationSpeed(1);
             if (entity.isSleeping()) {
                 if (activeAnimation == null || !activeAnimation.category.equals("Sleep")) {
                     addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), "Sleep");
