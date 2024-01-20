@@ -19,7 +19,7 @@ public class Version {
         DEVELOP, RELEASE_CANDIDATE, RELEASE;
 
         public static ReleaseType parseVersion(String version) {
-            if (version.endsWith("-develop")) {
+            if (version.contains("-develop")) {
                 return DEVELOP;
             } else if (version.contains("-rc")) {
                 return RELEASE_CANDIDATE;
