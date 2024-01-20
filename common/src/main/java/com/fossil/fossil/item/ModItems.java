@@ -28,7 +28,7 @@ public class ModItems {
             DeferredRegister.create(Fossil.MOD_ID, Registry.ITEM_REGISTRY);
 
     public static final RegistrySupplier<Item> TAR_BUCKET = ITEMS.register("tar_bucket",
-            () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().tab(ModTabs.FAITEMTAB)));
+            () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().craftRemainder(Items.BUCKET).tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> TAR_DROP = ITEMS.register("tar_drop",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<RecordItem> RECORD_BONES = ITEMS.register("record_bones",
