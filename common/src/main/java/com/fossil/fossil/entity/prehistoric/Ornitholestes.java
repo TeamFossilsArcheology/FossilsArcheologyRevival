@@ -33,6 +33,7 @@ public class Ornitholestes extends Prehistoric implements PrehistoricScary {
 
     public Ornitholestes(EntityType<Ornitholestes> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override

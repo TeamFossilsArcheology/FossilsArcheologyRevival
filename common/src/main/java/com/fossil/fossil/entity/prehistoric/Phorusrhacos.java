@@ -34,6 +34,7 @@ public class Phorusrhacos extends Prehistoric implements PrehistoricScary {
 
     public Phorusrhacos(EntityType<Phorusrhacos> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override

@@ -32,6 +32,7 @@ public class Gastornis extends Prehistoric {
 
     public Gastornis(EntityType<Gastornis> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override

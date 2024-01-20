@@ -34,6 +34,7 @@ public class Titanis extends Prehistoric implements PrehistoricScary {
 
     public Titanis(EntityType<Titanis> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override

@@ -36,7 +36,6 @@ public class Mosasaurus extends PrehistoricSwimming {
 
     public Mosasaurus(EntityType<Mosasaurus> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     public static AttributeSupplier.Builder createAttributes() {

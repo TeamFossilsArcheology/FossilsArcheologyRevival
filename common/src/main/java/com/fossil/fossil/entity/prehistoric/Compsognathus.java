@@ -33,6 +33,7 @@ public class Compsognathus extends PrehistoricLeaping {
 
     public Compsognathus(EntityType<Compsognathus> entityType, Level level) {
         super(entityType, level, false);
+        hasTeenTexture = false;
     }
 
     @Override

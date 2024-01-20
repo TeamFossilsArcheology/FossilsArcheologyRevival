@@ -69,6 +69,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
 
     public Meganeura(EntityType<Meganeura> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @ExpectPlatform

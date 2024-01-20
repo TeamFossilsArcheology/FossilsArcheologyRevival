@@ -2480,6 +2480,7 @@
 			}
 		},
 		"animation.mosasaurus.beached": {
+			"loop": true,
 			"animation_length": 8,
 			"bones": {
 				"upperBody": {

@@ -39,6 +39,7 @@ public class Dodo extends Prehistoric {
 
     public Dodo(EntityType<Dodo> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
     //TODO: Festive texture
 

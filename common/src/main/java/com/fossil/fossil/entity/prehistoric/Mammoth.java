@@ -48,7 +48,6 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
 
     public Mammoth(EntityType<Mammoth> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override

@@ -31,7 +31,6 @@ public class Liopleurodon extends PrehistoricSwimming {
 
     public Liopleurodon(EntityType<Liopleurodon> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override

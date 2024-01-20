@@ -31,6 +31,7 @@ public class Ichthyosaurus extends PrehistoricSwimming {
 
     public Ichthyosaurus(EntityType<Ichthyosaurus> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override

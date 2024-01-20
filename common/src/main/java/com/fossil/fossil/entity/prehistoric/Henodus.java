@@ -30,6 +30,7 @@ public class Henodus extends PrehistoricSwimming {
 
     public Henodus(EntityType<Henodus> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override

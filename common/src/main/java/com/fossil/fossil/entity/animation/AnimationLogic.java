@@ -90,29 +90,34 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         AnimationController<PrehistoricSwimming> controller = event.getController();
         ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
         ILoopType loopType = null;
-        if (event.getAnimatable().isBeached()) {
-            if (activeAnimation == null || !activeAnimation.category.equals("Beached")) {
-                addActiveAnimation(controller.getName(), event.getAnimatable().nextBeachedAnimation(), "Beached");
-            }
-        } else if (event.isMoving()) {
-            if (entity.isSprinting()) {
-                addActiveAnimation(controller.getName(), entity.nextSprintingAnimation(), "Move");
-            } else {
-                addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), "Move");
-            }
+
+        if (activeAnimation != null && activeAnimation.forced && !isAnimationDone(controller.getName())) {
+            loopType = PLAY_ONCE;
         } else {
-            if (entity.isSleeping()) {
-                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), "Sleep");
-            } else if (entity.shouldStartEatAnimation()) {
-                addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), "Eat");
-                entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
-                loopType = PLAY_ONCE;
-            } else if (controller.getCurrentAnimation() != null && controller.getCurrentAnimation().loop == PLAY_ONCE) {
-                if (controller.getCurrentAnimation().loop == PLAY_ONCE && controller.getAnimationState() == AnimationState.Stopped) {
+            if (event.getAnimatable().isBeached()) {
+                if (activeAnimation == null || !activeAnimation.category.equals("Beached")) {
+                    addActiveAnimation(controller.getName(), event.getAnimatable().nextBeachedAnimation(), "Beached");
+                }
+            } else if (event.isMoving()) {
+                if (entity.isSprinting()) {
+                    addActiveAnimation(controller.getName(), entity.nextSprintingAnimation(), "Move");
+                } else {
+                    addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), "Move");
+                }
+            } else {
+                if (entity.isSleeping()) {
+                    addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), "Sleep");
+                } else if (entity.shouldStartEatAnimation()) {
+                    addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), "Eat");
+                    entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
+                    loopType = PLAY_ONCE;
+                } else if (controller.getCurrentAnimation() != null && controller.getCurrentAnimation().loop == PLAY_ONCE) {
+                    if (controller.getCurrentAnimation().loop == PLAY_ONCE && controller.getAnimationState() == AnimationState.Stopped) {
+                        addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), "Idle");
+                    }
+                } else if (activeAnimation == null || isAnimationDone(controller.getName()) || activeAnimation.category.equals("Beached")) {
                     addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), "Idle");
                 }
-            } else if (activeAnimation == null || isAnimationDone(controller.getName()) || activeAnimation.category.equals("Beached")) {
-                addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), "Idle");
             }
         }
         ActiveAnimationInfo newAnimation = getActiveAnimation(controller.getName());

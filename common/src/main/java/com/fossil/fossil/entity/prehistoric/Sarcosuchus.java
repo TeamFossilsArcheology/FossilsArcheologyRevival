@@ -26,7 +26,7 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
 
     public Sarcosuchus(EntityType<Sarcosuchus> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
+        //TODO: hasTeenTexture = false;
     }
 
     @Override
