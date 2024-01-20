@@ -174,7 +174,7 @@ public class ModRecipes {
     }
 
     private static void registerAnalyzer(AnalyzerRecipe.Builder recipe) {
-        //ANALYZER_RECIPES.put(recipe.ingredient.asItem(), recipe.build());
+        ANALYZER_RECIPES.put(recipe.item.asItem(), recipe.build());
     }
 
     private static void registerWorktable(ItemLike item, ItemLike output, ItemLike fuel) {
