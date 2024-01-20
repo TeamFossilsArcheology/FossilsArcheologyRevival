@@ -182,7 +182,8 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     @Override
     protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack itemStack = player.getItemInHand(hand);
-        if (itemStack.isEmpty() && isAlive() && getAge() > 0) {
+        //TODO: Maybe remove because bucket of water exists
+        if (itemStack.isEmpty() && isAlive() && !isBaby()) {
             playSound(SoundEvents.ITEM_PICKUP, 1, random.nextFloat() + 0.8f);
             if (!level.isClientSide) {
                 spawnAtLocation(new ItemStack(type().foodItem), 0.1f);
