@@ -21,10 +21,7 @@ import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
 import com.fossil.fossil.sounds.ModSounds;
-import com.fossil.fossil.util.Diet;
-import com.fossil.fossil.util.FoodMappings;
-import com.fossil.fossil.util.Gender;
-import com.fossil.fossil.util.TimePeriod;
+import com.fossil.fossil.util.*;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
@@ -60,7 +57,6 @@ import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -171,123 +167,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
-                .add(Attributes.MAX_HEALTH, 20D)
-                .add(Attributes.ATTACK_DAMAGE, 2D)
+                .add(Attributes.MAX_HEALTH, 20)
+                .add(Attributes.ATTACK_DAMAGE, 2)
                 .add(Attributes.FLYING_SPEED, 0.4f);
     }
-
-    public static boolean isEntitySmallerThan(Entity entity, float size) {
-        if (entity instanceof Prehistoric prehistoric) {
-            return prehistoric.getBbWidth() <= size;
-        } else {
-            return entity.getBbWidth() <= size;
-        }
-    }
-
-    public static boolean canBreak(Block block) {
-        //TODO: Big break Test
-        if (block instanceof IDinoUnbreakable) return false;
-        BlockState state = block.defaultBlockState();
-        if (!state.requiresCorrectToolForDrops()) return false;
-        return !state.is(BlockTags.NEEDS_DIAMOND_TOOL);
-    }
-
-    public boolean isCustomMultiPart() {
-        return !parts.isEmpty();
-    }
-
-    /**
-     * @return The child parts of this entity.
-     * @implSpec On the forge classpath this implementation should return objects that inherit from PartEntity instead of Entity.
-     */
-    public List<MultiPart> getCustomParts() {
-        return parts;
-    }
-
-    @Override
-    public void refreshDimensions() {
-        if (isCustomMultiPart()) {
-            super.refreshDimensions();
-            for (MultiPart part : parts) {
-                part.getEntity().refreshDimensions();
-            }
-        } else {
-            super.refreshDimensions();
-        }
-    }
-
-    @Override
-    public @NotNull AABB getBoundingBoxForCulling() {
-        if (isCustomMultiPart()) {
-            float x = frustumWidthRadius * getScale() / 2;
-            float y = frustumHeightRadius * getScale() / 2;
-            AABB aabb = getBoundingBox();
-            return new AABB(aabb.minX - x, aabb.minY, aabb.minZ - x, aabb.maxX + x, aabb.maxY + y, aabb.maxZ + x);
-        }
-        return super.getBoundingBoxForCulling();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-        for (int i = 0; i < parts.size(); ++i) {
-            parts.get(i).getEntity().setId(id + i + 1);
-        }
-    }
-
-    @Override
-    public void remove(RemovalReason reason) {
-        super.remove(reason);
-        for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
-            if (availableGoal.getGoal() instanceof CacheMoveToBlockGoal goal) {
-                goal.stop();//Only for the debug message
-            }
-        }
-        if (isCustomMultiPart()) {
-            //Ensures that the callbacks get called. Probably not necessary because the multiparts are not added to the server
-            for (MultiPart part : parts) {
-                part.getEntity().remove(reason);
-            }
-        }
-    }
-
-    @Override
-    public void onClientRemoval() {
-        super.onClientRemoval();
-        if (isCustomMultiPart()) {
-            //Ensures that the callbacks get called on the client side
-            for (MultiPart part : parts) {
-                part.getEntity().remove(RemovalReason.DISCARDED);
-            }
-        }
-    }
-
-    public boolean hurt(Entity part, DamageSource source, float damage) {
-        return super.hurt(source, damage);
-    }
-
-    @Override
-    public CompoundTag getDebugTag() {
-        return entityData.get(DEBUG);
-    }
-
-    @Override
-    public void disableCustomAI(byte type, boolean disableAI) {
-        CompoundTag tag = entityData.get(DEBUG).copy();
-        switch (type) {
-            case 0 -> setNoAi(disableAI);
-            case 1 -> tag.putBoolean("disableGoalAI", disableAI);
-            case 2 -> tag.putBoolean("disableMoveAI", disableAI);
-            case 3 -> tag.putBoolean("disableLookAI", disableAI);
-        }
-        entityData.set(DEBUG, tag);
-    }
-
-    @Override
-    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
-        return getType().getDimensions().scale(getScale());
-    }
-
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
@@ -390,6 +273,120 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
+    public static boolean isEntitySmallerThan(Entity entity, float size) {
+        if (entity instanceof Prehistoric prehistoric) {
+            return prehistoric.getBbWidth() <= size;
+        } else {
+            return entity.getBbWidth() <= size;
+        }
+    }
+
+    public static boolean canBreak(Block block) {
+        //TODO: Big break Test
+        if (block instanceof IDinoUnbreakable) return false;
+        BlockState state = block.defaultBlockState();
+        if (!state.requiresCorrectToolForDrops()) return false;
+        return !state.is(BlockTags.NEEDS_DIAMOND_TOOL);
+    }
+
+    public boolean isCustomMultiPart() {
+        return !parts.isEmpty();
+    }
+
+    /**
+     * @return The child parts of this entity.
+     * @implSpec On the forge classpath this implementation should return objects that inherit from PartEntity instead of Entity.
+     */
+    public List<MultiPart> getCustomParts() {
+        return parts;
+    }
+
+    @Override
+    public void refreshDimensions() {
+        if (isCustomMultiPart()) {
+            super.refreshDimensions();
+            for (MultiPart part : parts) {
+                part.getEntity().refreshDimensions();
+            }
+        } else {
+            super.refreshDimensions();
+        }
+    }
+
+    @Override
+    public @NotNull AABB getBoundingBoxForCulling() {
+        if (isCustomMultiPart()) {
+            float x = frustumWidthRadius * getScale() / 2;
+            float y = frustumHeightRadius * getScale() / 2;
+            AABB aabb = getBoundingBox();
+            return new AABB(aabb.minX - x, aabb.minY, aabb.minZ - x, aabb.maxX + x, aabb.maxY + y, aabb.maxZ + x);
+        }
+        return super.getBoundingBoxForCulling();
+    }
+
+    @Override
+    public void setId(int id) {
+        super.setId(id);
+        for (int i = 0; i < parts.size(); ++i) {
+            parts.get(i).getEntity().setId(id + i + 1);
+        }
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+        if (Version.debugEnabled()) {
+            for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
+                if (availableGoal.getGoal() instanceof CacheMoveToBlockGoal goal) {
+                    goal.stop();//Only for the debug message
+                }
+            }
+        }
+        if (isCustomMultiPart()) {
+            //Ensures that the callbacks get called. Probably not necessary because the multiparts are not added to the server
+            for (MultiPart part : parts) {
+                part.getEntity().remove(reason);
+            }
+        }
+    }
+
+    @Override
+    public void onClientRemoval() {
+        super.onClientRemoval();
+        if (isCustomMultiPart()) {
+            //Ensures that the callbacks get called on the client side
+            for (MultiPart part : parts) {
+                part.getEntity().remove(RemovalReason.DISCARDED);
+            }
+        }
+    }
+
+    public boolean hurt(Entity part, DamageSource source, float damage) {
+        return hurt(source, damage);
+    }
+
+    @Override
+    public CompoundTag getDebugTag() {
+        return entityData.get(DEBUG);
+    }
+
+    @Override
+    public void disableCustomAI(byte type, boolean disableAI) {
+        CompoundTag tag = entityData.get(DEBUG).copy();
+        switch (type) {
+            case 0 -> setNoAi(disableAI);
+            case 1 -> tag.putBoolean("disableGoalAI", disableAI);
+            case 2 -> tag.putBoolean("disableMoveAI", disableAI);
+            case 3 -> tag.putBoolean("disableLookAI", disableAI);
+        }
+        entityData.set(DEBUG, tag);
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
+        return getType().getDimensions().scale(getScale());
+    }
+
     public abstract PrehistoricEntityType type();
 
     public AABB getAttackBounds() {
@@ -417,7 +414,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean isNoAi() {
-        return this.isSkeleton() || super.isNoAi();
+        return isSkeleton() || super.isNoAi();
     }
 
     public OrderType getOrderType() {
@@ -463,6 +460,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void setOrder(OrderType newOrder) {
+        //TODO: Look into this
         currentOrder = newOrder;
     }
 
@@ -507,6 +505,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public boolean isFood(ItemStack stack) {
         return false;
+    }
+
+    @Override
+    public boolean canBeLeashed(Player player) {
+        return super.canBeLeashed(player) && isOwnedBy(player);
     }
 
     @Nullable
@@ -635,7 +638,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        setSprinting(!(getMoveControl().getSpeedModifier() < 1.25));
+        setSprinting(getMoveControl().getSpeedModifier() >= 1.25);
     }
 
     @Override
@@ -1080,7 +1083,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             dead = true;
             return true;
         }
-        if (getLastHurtByMob() instanceof Player player && (getOwner() == getLastHurtByMob())) {
+        if (getLastHurtByMob() instanceof Player player && getOwner() == player) {
             setTame(false);
             setOwnerUUID(null);
             moodSystem.increaseMood(-15);
@@ -1107,63 +1110,75 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 } else {
                     double d0 = player.getX() - this.getX();
                     double d2 = player.getZ() - this.getZ();
-                    float f = (float) (Mth.atan2(d2, d0) * Mth.RAD_TO_DEG) - 90.0F;
+                    float f = (float) (Mth.atan2(d2, d0) * Mth.RAD_TO_DEG) - 90;
                     this.yHeadRot = f;
                     this.yBodyRot = f;
                 }
-                return InteractionResult.SUCCESS;
+                return InteractionResult.sidedSuccess(level.isClientSide);
             } else if (stack.is(Items.BONE) && !isAdult()) {
-                level.playSound(null, blockPosition(), SoundEvents.SKELETON_AMBIENT, SoundSource.NEUTRAL, 0.8F, 1);
-                setAgeInDays(getAgeInDays() + 1);
-                usePlayerItem(player, hand, stack);
-                return InteractionResult.SUCCESS;
+                if (!level.isClientSide) {
+                    playSound(SoundEvents.SKELETON_AMBIENT, 0.8f, 1);
+                    setAgeInDays(getAgeInDays() + 1);
+                    stack.shrink(1);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
         } else {
             if (stack.isEmpty()) {
                 return InteractionResult.PASS;
             }
             if (isWeak() && (aiTameType() == Taming.GEM && stack.is(ModItems.SCARAB_GEM.get()) || aiTameType() == Taming.AQUATIC_GEM && stack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
-                heal(200);
-                moodSystem.setMood(100);
-                feed(500);
-                getNavigation().stop();
-                setTarget(null);
-                setLastHurtByMob(null);
-                tame(player);
-                level.broadcastEntityEvent(this, (byte) 35);
-                usePlayerItem(player, hand, stack);
-                return InteractionResult.SUCCESS;
+                //Tame with gem
+                if (!level.isClientSide) {
+                    heal(200);
+                    moodSystem.setMood(100);
+                    feed(500);
+                    getNavigation().stop();
+                    setTarget(null);
+                    setLastHurtByMob(null);
+                    tame(player);
+                    level.broadcastEntityEvent(this, TOTEM_PARTICLES);
+                    stack.shrink(1);
+                }
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
 
-            if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM && !level.isClientSide) {
-                if (!isAdult() && getHunger() > 0) {
-                    usePlayerItem(player, hand, stack);
-                    if (!player.isCreative()) {
+            if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM) {
+                //Grow up with chicken essence
+                if (isAdult() || getHunger() >= getMaxHunger()) {
+                    player.displayClientMessage(new TranslatableComponent("prehistoric.essencefail"), true);
+                    return InteractionResult.PASS;
+                }
+                if (!level.isClientSide) {
+                    if (!player.getAbilities().instabuild) {
+                        stack.shrink(1);
                         player.addItem(new ItemStack(Items.GLASS_BOTTLE, 1));
                     }
                     grow(1);
                     setHunger(1 + random.nextInt(getHunger()));
-                    return InteractionResult.SUCCESS;
                 }
-                player.displayClientMessage(new TranslatableComponent("prehistoric.essencefail"), true);
-                return InteractionResult.PASS;
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
             if (stack.is(ModItems.STUNTED_ESSENCE.get()) && !isAgingDisabled()) {
-                setHunger(getHunger() + 20);
-                heal(getMaxHealth());
-                playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, getSoundVolume(), getVoicePitch());
-                spawnItemCrackParticles(stack.getItem());
-                spawnItemCrackParticles(stack.getItem());
-                spawnItemCrackParticles(Items.POISONOUS_POTATO);
-                spawnItemCrackParticles(Items.POISONOUS_POTATO);
-                spawnItemCrackParticles(Items.EGG);
-                setAgingDisabled(true);
-                usePlayerItem(player, hand, stack);
-                return InteractionResult.SUCCESS;
+                //Stunt growth with stunted essence
+                if (!level.isClientSide) {
+                    setHunger(getHunger() + 20);
+                    heal(getMaxHealth());
+                    setAgingDisabled(true);
+                    stack.shrink(1);
+                    playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, getSoundVolume(), getVoicePitch());
+                }
+                spawnItemParticles(stack.getItem(), 15);
+                spawnItemParticles(stack.getItem(), 15);
+                spawnItemParticles(Items.POISONOUS_POTATO, 15);
+                spawnItemParticles(Items.POISONOUS_POTATO, 15);
+                spawnItemParticles(Items.EGG, 15);
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
             if (FoodMappings.getFoodAmount(stack.getItem(), type().diet) > 0) {
-                if (!level.isClientSide) {
-                    if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
+                //Feed dino
+                if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
+                    if (!level.isClientSide) {
                         setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
                         eatItem(stack);
                         if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS)) {
@@ -1172,24 +1187,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                         if (getHunger() >= getMaxHunger() && isTame()) {
                             player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.full", getName()), true);
                         }
-                        usePlayerItem(player, hand, stack);
                         if (aiTameType() == Taming.FEEDING && !isTame() && random.nextInt(10) == 1) {
                             tame(player);
-                            level.broadcastEntityEvent(this, (byte) 35);
+                            level.broadcastEntityEvent(this, TOTEM_PARTICLES);
                         }
-                        return InteractionResult.SUCCESS;
                     }
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                return InteractionResult.PASS;
             } else {
-                if (stack.is(Items.LEAD) && isTame() && (isOwnedBy(player))) {
-                    setLeashedTo(player, true);
-                    usePlayerItem(player, hand, stack);
-                    return InteractionResult.SUCCESS;
-                }
-
                 if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
-                    if (isTame() && isOwnedBy(player) && canBeRidden()) {
+                    if (isOwnedBy(player) && canBeRidden()) {
                         if (getRidingPlayer() == null) {
                             if (!level.isClientSide) {
                                 setRidingPlayer(player);
@@ -1202,23 +1209,26 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                             moodSystem.increaseMood(-5);
                         }
                     } else if (FossilConfig.isEnabled(FossilConfig.WHIP_TO_TAME_DINO) && !isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {
-                        moodSystem.increaseMood(-5);
-                        if (random.nextInt(5) == 0) {//TODO: Shouldnt be clientside. Check others things here as well(including the returned results)
-                            player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
-                            moodSystem.increaseMood(-25);
-                            tame(player);
+                        if (!level.isClientSide) {
+                            moodSystem.increaseMood(-5);
+                            if (random.nextInt(5) == 0) {
+                                player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
+                                moodSystem.increaseMood(-25);
+                                tame(player);
+                            }
                         }
                     }
                     setSitting(false);
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                if (stack.is(getOrderItem()) && isTame() && isOwnedBy(player) && !player.isPassenger()) {
+                if (stack.is(getOrderItem()) && isOwnedBy(player) && !player.isPassenger()) {
                     if (!level.isClientSide) {
                         jumping = false;
                         getNavigation().stop();
                         currentOrder = OrderType.values()[(this.currentOrder.ordinal() + 1) % 3];
                         sendOrderMessage(this.currentOrder);
                     }
-                    return InteractionResult.SUCCESS;
+                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
             }
         }
@@ -1399,50 +1409,36 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }*/
 
     public void doFoodEffect(Item item) {
-        this.level.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, this.getSoundVolume(), this.getVoicePitch());
+        playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
         if (item != null) {
-            spawnItemParticle(item, item instanceof BlockItem);
+            spawnItemParticles(item, 4);
         }
     }
 
     public void doFoodEffect() {
-        this.level.playSound(null, this.blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, this.getSoundVolume(), this.getVoicePitch());
-        switch (this.type().diet) {
-            case HERBIVORE -> spawnItemParticle(Items.WHEAT_SEEDS, false);
-            case OMNIVORE -> spawnItemParticle(Items.BREAD, false);
-            case PISCIVORE -> spawnItemParticle(Items.COD, false);
-            default -> spawnItemParticle(Items.BEEF, false);
+        playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
+        switch (type().diet) {
+            case HERBIVORE -> spawnItemParticles(Items.WHEAT_SEEDS, 4);
+            case OMNIVORE -> spawnItemParticles(Items.BREAD, 4);
+            case PISCIVORE -> spawnItemParticles(Items.COD, 4);
+            default -> spawnItemParticles(Items.BEEF, 4);
         }
     }
 
-    public void spawnItemCrackParticles(Item item) {
-        for (int i = 0; i < 15; i++) {
-            double motionX = getRandom().nextGaussian() * 0.07D;
-            double motionY = getRandom().nextGaussian() * 0.07D;
-            double motionZ = getRandom().nextGaussian() * 0.07D;
-            float f = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxX - this.getBoundingBox().minX) + this.getBoundingBox().minX);
-            float f1 = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxY - this.getBoundingBox().minY) + this.getBoundingBox().minY);
-            float f2 = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxZ - this.getBoundingBox().minZ) + this.getBoundingBox().minZ);
-            if (level.isClientSide) {
-                this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), f, f1, f2, motionX, motionY, motionZ);
+    public void spawnItemParticles(Item item, int count) {
+        if (level.isClientSide) {
+            for (int i = 0; i < count; i++) {
+                double motionX = getRandom().nextGaussian() * 0.07;
+                double motionY = getRandom().nextGaussian() * 0.07;
+                double motionZ = getRandom().nextGaussian() * 0.07;
+                double minX = getBoundingBox().minX;
+                double minY = getBoundingBox().minY;
+                double minZ = getBoundingBox().minZ;
+                float x = (float) (getRandom().nextFloat() * (getBoundingBox().maxX - minX) + minX);
+                float y = (float) (getRandom().nextFloat() * (getBoundingBox().maxY - minY) + minY);
+                float z = (float) (getRandom().nextFloat() * (getBoundingBox().maxZ - minZ) + minZ);
+                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), x, y, z, motionX, motionY, motionZ);
             }
-        }
-    }
-
-    public void spawnItemParticle(Item item, boolean itemBlock) {
-        if (!level.isClientSide) {
-            double motionX = random.nextGaussian() * 0.07D;
-            double motionY = random.nextGaussian() * 0.07D;
-            double motionZ = random.nextGaussian() * 0.07D;
-            float f = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxX - this.getBoundingBox().minX) + this.getBoundingBox().minX);
-            float f1 = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxY - this.getBoundingBox().minY) + this.getBoundingBox().minY);
-            float f2 = (float) (getRandom().nextFloat() * (this.getBoundingBox().maxZ - this.getBoundingBox().minZ) + this.getBoundingBox().minZ);
-          /*  if (itemBlock && item instanceof ItemBlock) {
-                Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(this.getEntityId(), Block.getIdFromBlock(((ItemBlock) item).getBlock())));
-            } else {
-                Revival.NETWORK_WRAPPER.sendToAll(new MessageFoodParticles(this.getEntityId(), Item.getIdFromItem(item)));
-            }
-           */
         }
     }
 
@@ -1502,17 +1498,22 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return wasEffective;
     }
 
+    private static final byte TOTEM_PARTICLES = 35;
+    private static final byte WHEAT_SEEDS_PARTICLES = 62;
+    private static final byte BREAD_PARTICLES = 63;
+    private static final byte BEEF_PARTICLES = 64;
+
     @Override
     public void handleEntityEvent(byte id) {
-        if (id == 45) {
+        if (id == WHEAT_SEEDS_PARTICLES) {
             spawnItemParticle(Items.WHEAT_SEEDS);
             spawnItemParticle(Items.WHEAT_SEEDS);
             spawnItemParticle(Items.WHEAT_SEEDS);
-        } else if (id == 46) {
+        } else if (id == BREAD_PARTICLES) {
             spawnItemParticle(Items.BREAD);
             spawnItemParticle(Items.BREAD);
             spawnItemParticle(Items.BREAD);
-        } else if (id == 47) {
+        } else if (id == BEEF_PARTICLES) {
             spawnItemParticle(Items.BEEF);
             spawnItemParticle(Items.BEEF);
             spawnItemParticle(Items.BEEF);
