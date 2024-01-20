@@ -3674,6 +3674,7 @@
     },
     "animation.gallimimus.idle": {
       "loop": true,
+      "animation_length": 12,
       "bones": {
         "lowerBody": {
           "rotation": {

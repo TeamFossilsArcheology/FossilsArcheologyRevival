@@ -1,97 +1,32 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dilophosaurus.idle": {
+    "animation.plesiosaurus.swim": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 1.5
     },
-    "animation.dilophosaurus.sit1": {
+    "animation.plesiosaurus.swimfast": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 0.95833
     },
-    "animation.dilophosaurus.sit2": {
-      "loop": true,
-      "animation_length": 12
+    "animation.plesiosaurus.eat": {
+      "animation_length": 1.75
     },
-    "animation.dilophosaurus.sleep1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.sleep2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.walk": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.run": {
-      "loop": true,
-      "animation_length": 0.75
-    },
-    "animation.dilophosaurus.jump/fall": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.swim": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.dilophosaurus.drink": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.eat": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.inflate_start": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_hold": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_end": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.turn_right": {
+    "animation.plesiosaurus.turn_right": {
       "loop": "hold_on_last_frame"
     },
-    "animation.dilophosaurus.turn_left": {
+    "animation.plesiosaurus.turn_left": {
       "loop": "hold_on_last_frame"
     },
-    "animation.dilophosaurus.speak": {
-      "animation_length": 2
+    "animation.plesiosaurus.randomidle": {
+      "animation_length": 1.5
     },
-    "animation.dilophosaurus.call": {
-      "animation_length": 3
+    "animation.plesiosaurus.beached": {
+      "animation_length": 8
     },
-    "animation.dilophosaurus.attack1": {
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.attack2": {
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.WalkSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.RunSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.SwimSpeedDemo": {
-      "loop": true
-    },
-    "animation.dilophosaurus.TurningRadiusDemo": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.dilophosaurus.InflateDemo": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 6
+    "animation.plesiosaurus.attack": {
+      "animation_length": 1.25,
+      "action_delay": [15]
     }
-  },
-  "geckolib_format_version": 2
+  }
 }

@@ -45,7 +45,7 @@
       "loop": true,
       "animation_length": 15.70833
     },
-    "speak": {
+    "animation.diplodocus.speak": {
       "animation_length": 2
     }
   },

@@ -1376,6 +1376,7 @@
 		},
 		"animation.edaphosaurus.idle": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
 				"Neckbase": {
 					"rotation": ["math.sin(query.anim_time*45+60)*3", "math.sin(query.anim_time*45)*3", 0]
@@ -1487,6 +1488,7 @@
 		},
 		"animation.edaphosaurus.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"bodyUpper": {
 					"rotation": {

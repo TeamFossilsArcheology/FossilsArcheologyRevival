@@ -16,13 +16,16 @@
       "action_delay": [14]
     },
     "animation.ornitholestes.sleep": {
-      "loop": true
+      "loop": true,
+      "animation_length": 6
     },
     "animation.ornitholestes.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.ornitholestes.swim": {
-      "loop": true
+      "loop": true,
+      "animation_length": 6
     },
     "animation.ornitholestes.drink": {
       "animation_length": 3
@@ -31,7 +34,8 @@
       "animation_length": 3
     },
     "animation.ornitholestes.jump/fall": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.ornitholestes.call": {
       "animation_length": 1.20833
@@ -41,7 +45,8 @@
       "animation_length": 0.75
     },
     "animation.ornitholestes.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.ornitholestes.display": {
       "animation_length": 2.45833

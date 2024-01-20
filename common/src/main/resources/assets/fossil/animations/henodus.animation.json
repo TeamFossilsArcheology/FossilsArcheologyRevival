@@ -972,6 +972,7 @@
 		},
 		"animation.henodus.idle": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
 				"tail": {
 					"rotation": {
@@ -987,6 +988,7 @@
 		},
 		"animation.henodus.sit": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
 				"tail": {
 					"rotation": {

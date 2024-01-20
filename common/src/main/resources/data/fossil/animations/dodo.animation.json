@@ -2,7 +2,8 @@
   "format_version": "1.8.0",
   "animations": {
     "animation.dodo.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 8
     },
     "animation.dodo.walk": {
       "loop": true,
@@ -38,7 +39,8 @@
       "animation_length": 2
     },
     "animation.dodo.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.dodo.bite1": {
       "animation_length": 1,
@@ -49,10 +51,12 @@
       "action_delay": [9]
     },
     "animation.dodo.sleep1": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.dodo.sleep2": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.dodo.idle_logo": {
       "loop": true,
@@ -62,10 +66,12 @@
       "animation_length": 3.04167
     },
     "animation.dodo.jump/fall": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.dodo.swim": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

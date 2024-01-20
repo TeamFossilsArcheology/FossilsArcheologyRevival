@@ -29,13 +29,16 @@
       "action_delay": [8]
     },
     "animation.phorusrhacos.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.phorusrhacos.sleep": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.phorusrhacos.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.phorusrhacos.jump/fall": {
       "loop": true,

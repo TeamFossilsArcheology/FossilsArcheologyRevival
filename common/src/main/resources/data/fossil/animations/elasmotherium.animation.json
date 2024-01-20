@@ -18,7 +18,8 @@
       "animation_length": 3.125
     },
     "animation.elasmotherium.jump/fall": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.elasmotherium.attack1": {
       "loop": true,

@@ -1,96 +1,48 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dilophosaurus.idle": {
+    "animation.citipati.idle": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sit1": {
+    "animation.citpati.walk": {
+      "loop": true,
+      "animation_length": 1.33333
+    },
+    "animation.citpati.run": {
+      "loop": true,
+      "animation_length": 0.625
+    },
+    "animation.citpati.sit/sleep": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.dilophosaurus.sit2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.sleep1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.sleep2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.walk": {
+    "animation.citipati.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.dilophosaurus.run": {
-      "loop": true,
-      "animation_length": 0.75
-    },
-    "animation.dilophosaurus.jump/fall": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.swim": {
+    "animation.citipati.swim": {
       "loop": true,
       "animation_length": 4
     },
-    "animation.dilophosaurus.drink": {
-      "animation_length": 3
+    "animation.citipati.eat": {
+      "animation_length": 3.04167
     },
-    "animation.dilophosaurus.eat": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.inflate_start": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_hold": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.dilophosaurus.inflate_end": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.turn_right": {
+    "animation.citpati.turn_left": {
       "loop": "hold_on_last_frame"
     },
-    "animation.dilophosaurus.turn_left": {
+    "animation.citpati.attack1": {
+      "animation_length": 1,
+      "action_delay": [8]
+    },
+    "animation.citipati.call": {
+      "animation_length": 1.25
+    },
+    "animation.citpati.turn_right": {
       "loop": "hold_on_last_frame"
     },
-    "animation.dilophosaurus.speak": {
+    "animation.citipati.speak": {
       "animation_length": 2
-    },
-    "animation.dilophosaurus.call": {
-      "animation_length": 3
-    },
-    "animation.dilophosaurus.attack1": {
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.attack2": {
-      "animation_length": 1
-    },
-    "animation.dilophosaurus.WalkSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.RunSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dilophosaurus.SwimSpeedDemo": {
-      "loop": true
-    },
-    "animation.dilophosaurus.TurningRadiusDemo": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.dilophosaurus.InflateDemo": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 6
     }
   },
   "geckolib_format_version": 2

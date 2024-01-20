@@ -2,7 +2,8 @@
   "format_version": "1.8.0",
   "animations": {
     "animation.velociraptor.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.velociraptor.run": {
       "loop": true,
@@ -15,7 +16,8 @@
       "animation_length": 1
     },
     "animation.velociraptor.jump/fall": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.velociraptor.eat": {
       "animation_length": 3
@@ -24,13 +26,16 @@
       "animation_length": 3
     },
     "animation.velociraptor.swim": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.velociraptor.sleep": {
-      "loop": true
+      "loop": true,
+      "animation_length": 6
     },
     "animation.velociraptor.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.velociraptor.attack": {
       "animation_length": 1,

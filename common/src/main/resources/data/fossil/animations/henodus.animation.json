@@ -19,10 +19,12 @@
       "animation_length": 0.70833
     },
     "animation.henodus.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     },
     "animation.henodus.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     }
   },
   "geckolib_format_version": 2

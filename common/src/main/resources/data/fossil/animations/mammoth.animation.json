@@ -31,7 +31,8 @@
       "animation_length": 1.41667
     },
     "animation.mammoth.jump/fall": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.mammoth.rest/sleep": {
       "loop": true,

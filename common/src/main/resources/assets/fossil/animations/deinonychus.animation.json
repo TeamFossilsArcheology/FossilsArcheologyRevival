@@ -3,6 +3,7 @@
 	"animations": {
 		"animation.deinonychus.idle": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
@@ -2497,6 +2498,7 @@
 		},
 		"animation.deinonychus.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
@@ -2508,7 +2510,7 @@
 				},
 				"neck": {
 					"rotation": {
-						"vector": ["math.sin(query.anim_time*1440/12)*24.5", "10+math.sin(query.anim_time*720/12-90)*10", "math.sin(query.anim_time*360/12-90)*-5"]
+						"vector": ["24.5", "10+math.sin(query.anim_time*720/12-90)*10", "math.sin(query.anim_time*360/12-90)*-5"]
 					}
 				},
 				"head": {
@@ -2603,6 +2605,7 @@
 		},
 		"animation.deinonychus.sleep": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"upperBody": {
 					"rotation": {
@@ -2733,6 +2736,7 @@
 		},
 		"animation.deinonychus.swim": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"upperBody": {
 					"rotation": {
@@ -3437,6 +3441,7 @@
 		},
 		"animation.deinonychus.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"upperBody": {
 					"rotation": {

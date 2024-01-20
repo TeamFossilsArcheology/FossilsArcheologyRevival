@@ -3,6 +3,7 @@
 	"animations": {
 		"animation.citipati.idle": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
@@ -2246,16 +2247,6 @@
 						},
 						"1.25": {
 							"vector": [0, 0, 0]
-						}
-					},
-					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
-					},
-					"scale": {
-						"0.0": {
-							"vector": [1, 1, 1]
 						}
 					}
 				},

@@ -2524,6 +2524,7 @@
 		},
 		"animation.kelenken.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body1": {
 					"rotation": {
@@ -2604,6 +2605,7 @@
 		},
 		"animation.kelenken.sleep": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body1": {
 					"rotation": {
@@ -2684,6 +2686,7 @@
 		},
 		"animation.kelenken.idle": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
 				"upperwingL": {
 					"rotation": {

@@ -648,6 +648,7 @@
 		},
 		"animation.diplocaulus.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"body": {
 					"rotation": {

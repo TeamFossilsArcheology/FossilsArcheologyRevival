@@ -29,17 +29,20 @@
       "action_delay": [8]
     },
     "animation.titanis.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.titanis.sleep": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.titanis.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
     "animation.titanis.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 1
     },
     "animation.titanis.run": {
       "loop": true,

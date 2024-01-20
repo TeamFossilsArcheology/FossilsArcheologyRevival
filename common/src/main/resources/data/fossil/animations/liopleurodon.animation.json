@@ -25,6 +25,9 @@
     "animation.liopleurodon.randomidle": {
       "animation_length": 1.5
     },
+    "animation.liopleurodon.idle/sleep": {
+      "animation_length": 20.08333
+    },
     "animation.liopleurodon.beached": {
       "animation_length": 8
     },
@@ -33,9 +36,7 @@
     },
     "animation.liopleurodon.turn_left": {
       "loop": "hold_on_last_frame"
-    },
-    "animation.liopleurodon.idle/sleep": {
-      "animation_length": 20.08333
     }
-  }
+  },
+  "geckolib_format_version": 2
 }

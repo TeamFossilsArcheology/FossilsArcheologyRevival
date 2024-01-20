@@ -1,25 +1,63 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "fa.tropeognathus.groundtakeoff": {
-      "animation_length": 1.56,
-      "action_delay": [30]
+    "animation.pteranodon.takeoff": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 1.5
     },
-    "fa.tropeognathus.biteattack": {
-      "animation_length": 1.24,
-      "action_delay": [16]
+    "animation.pteranodon.idle": {
+      "animation_length": 3.125
     },
-    "fa.tropeognathus.biteattackwater": {
-      "animation_length": 2.08,
-      "action_delay": [25]
+    "animation.pteranodon.fly": {
+      "loop": true,
+      "animation_length": 6.5
     },
-    "fa.tropeognathus.bitefly": {
-      "animation_length": 2.08,
-      "action_delay": [19]
+    "animation.pteranodon.flyfast": {
+      "loop": true,
+      "animation_length": 3.45833
     },
-    "fa.tropeognathus.watertakeoff": {
-      "animation_length": 2.6,
-      "action_delay": [45]
+    "animation.pteranodon.call": {
+      "animation_length": 3
+    },
+    "animation.pteranodon.speak": {
+      "animation_length": 1.04167
+    },
+    "animation.pteranodon.swim": {
+      "loop": true,
+      "animation_length": 1.54167
+    },
+    "animation.pteranodon.swimidle": {
+      "loop": true,
+      "animation_length": 3
+    },
+    "animation.pteranodon.walk": {
+      "loop": true,
+      "animation_length": 2.66667
+    },
+    "animation.pteranodon.eat": {
+      "animation_length": 2
+    },
+    "animation.pteranodon.drink": {
+      "animation_length": 2
+    },
+    "animation.pteranodon.hover": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.pteranodon.sleep": {
+      "loop": true,
+      "animation_length": 3
+    },
+    "animation.pteranodon.sit": {
+      "animation_length": 12
+    },
+    "animation.pteranodon.dive": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "animation.pteranodon.attack": {
+      "animation_length": 0.5,
+      "action_delay": [6]
     }
   }
 }

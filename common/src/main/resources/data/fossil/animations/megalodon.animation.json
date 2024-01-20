@@ -41,6 +41,34 @@
     "animation.megalodon.turn_right": {
       "loop": "hold_on_last_frame"
     },
+    "animation.megalodon.swimSpeedDemo": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.megalodon.swimFastSpeedDemo": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.megalodon.swimRamSpeedDemo": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.megalodon.turningRadiusDemo": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.megalodon.RamDemo1": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.megalodon.RamDemo2": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.megalodon.sizeDemo": {
+      "loop": true,
+      "animation_length": 12
+    },
     "animation.megalodon.threat": {
       "loop": true,
       "animation_length": 8
@@ -53,5 +81,6 @@
       "loop": true,
       "animation_length": 8
     }
-  }
+  },
+  "geckolib_format_version": 2
 }

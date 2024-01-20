@@ -4759,6 +4759,7 @@
 		},
 		"animation.pteranodon.hover": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"Body": {
 					"rotation": ["-7.5+math.cos(query.anim_time*720)*-7.5", 0, "math.cos(query.anim_time*180)*-10"],
@@ -4801,6 +4802,7 @@
 		},
 		"animation.pteranodon.sleep": {
 			"loop": true,
+			"animation_length": 3,
 			"bones": {
 				"Body": {
 					"rotation": ["22.5+math.cos(query.anim_time*720/6)*1", 0, 0],
@@ -4952,6 +4954,7 @@
 		},
 		"animation.pteranodon.dive": {
 			"loop": true,
+			"animation_length": 1,
 			"bones": {
 				"Body": {
 					"rotation": ["40+math.cos(query.anim_time*360+120)*-2.5", 0, "math.cos(query.anim_time*1440)*1"],

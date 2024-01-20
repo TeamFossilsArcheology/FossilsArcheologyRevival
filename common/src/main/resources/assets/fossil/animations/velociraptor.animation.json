@@ -3,6 +3,7 @@
 	"animations": {
 		"animation.velociraptor.idle": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
@@ -879,6 +880,7 @@
 		},
 		"animation.velociraptor.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"bone": {
 					"rotation": {
@@ -1577,6 +1579,7 @@
 		},
 		"animation.velociraptor.swim": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"bone": {
 					"rotation": {
@@ -1677,6 +1680,7 @@
 		},
 		"animation.velociraptor.sleep": {
 			"loop": true,
+			"animation_length": 6,
 			"bones": {
 				"bone": {
 					"rotation": {
@@ -1807,6 +1811,7 @@
 		},
 		"animation.velociraptor.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"bone": {
 					"rotation": {

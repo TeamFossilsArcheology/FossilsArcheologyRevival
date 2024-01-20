@@ -1653,6 +1653,7 @@
 		},
 		"animation.ornitholestes.sleep": {
 			"loop": true,
+			"animation_length": 6,
 			"bones": {
 				"rightLowerArmWing2": {
 					"rotation": [0, 7.5, 0]
@@ -1725,6 +1726,7 @@
 		},
 		"animation.ornitholestes.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"rightLowerArmWing2": {
 					"rotation": [25, 0, 0]
@@ -1783,6 +1785,7 @@
 		},
 		"animation.ornitholestes.swim": {
 			"loop": true,
+			"animation_length": 6,
 			"bones": {
 				"upperBody": {
 					"rotation": ["math.sin(query.anim_time*1440/4-90)*2", "math.sin(query.anim_time*720/4-90)*-7.5", "math.sin(query.anim_time*720/4-90)*3"]
@@ -2049,6 +2052,7 @@
 		},
 		"animation.ornitholestes.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"upperBody": {
 					"rotation": ["5+math.sin(query.anim_time*720+30)*-2", "math.sin(query.anim_time*180-30)*-2", "math.sin(query.anim_time*1440-30)*-1"]
@@ -2485,6 +2489,7 @@
 		},
 		"animation.ornitholestes.idle": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"lowerBody": {
 					"rotation": ["math.sin(query.anim_time*1440/12)*2", 0, 0],

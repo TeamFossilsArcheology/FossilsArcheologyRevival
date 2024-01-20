@@ -2461,6 +2461,7 @@
     },
     "animation.phorusrhacos.sit": {
       "loop": true,
+      "animation_length": 12,
       "bones": {
         "body1": {
           "rotation": {
@@ -2547,6 +2548,7 @@
     },
     "animation.phorusrhacos.sleep": {
       "loop": true,
+      "animation_length": 12,
       "bones": {
         "body1": {
           "rotation": {
@@ -2633,6 +2635,7 @@
     },
     "animation.phorusrhacos.idle": {
       "loop": true,
+      "animation_length": 2,
       "bones": {
         "upperwingL": {
           "rotation": {

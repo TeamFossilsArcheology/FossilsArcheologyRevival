@@ -3,6 +3,7 @@
 	"animations": {
 		"animation.ceratosaurus.idle": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
@@ -2220,6 +2221,7 @@
 		},
 		"animation.ceratosaurus.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"allosaurus": {
 					"rotation": {
@@ -2344,6 +2346,7 @@
 		},
 		"animation.ceratosaurus.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"leftUpperLeg": {
 					"rotation": {
@@ -2498,6 +2501,7 @@
 		},
 		"animation.ceratosaurus.swim": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"allosaurus": {
 					"rotation": {
@@ -2735,6 +2739,7 @@
 		},
 		"animation.ceratosaurus.sleep": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"allosaurus": {
 					"rotation": {

@@ -1071,6 +1071,7 @@
 		},
 		"animation.elasmotherium.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"neck": {
 					"rotation": ["10+math.sin(query.anim_time*720-30)*-2", 0, 0],

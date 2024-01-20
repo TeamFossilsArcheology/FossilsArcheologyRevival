@@ -2130,6 +2130,7 @@
 		},
 		"animation.gastornis.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body1": {
 					"rotation": {
@@ -2210,6 +2211,7 @@
 		},
 		"animation.gastornis.sleep": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body1": {
 					"rotation": {
@@ -2290,6 +2292,7 @@
 		},
 		"animation.gastornis.idle": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
 				"tail1": {
 					"rotation": {

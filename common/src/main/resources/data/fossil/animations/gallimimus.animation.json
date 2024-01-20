@@ -40,7 +40,8 @@
       "loop": "hold_on_last_frame"
     },
     "animation.gallimimus.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.gallimimus.sleep/sit": {
       "loop": true,

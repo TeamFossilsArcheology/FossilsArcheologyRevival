@@ -10,7 +10,8 @@
       "animation_length": 0.91667
     },
     "animation.megalania.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     },
     "animation.megalania.speak": {
       "animation_length": 3
@@ -43,7 +44,8 @@
       "animation_length": 4.125
     },
     "animation.megalania.jump/fall": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

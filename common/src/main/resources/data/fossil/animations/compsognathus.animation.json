@@ -14,13 +14,8 @@
       "animation_length": 0.58333
     },
     "animation.compsognathus.swim": {
-      "loop": true
-    },
-    "animation.compsognathus.turnright": {
-      "loop": true
-    },
-    "animation.compsognathus.turnleft": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.compsognathus.eat": {
       "animation_length": 1.91667
@@ -39,19 +34,12 @@
       "animation_length": 2.25
     },
     "animation.compsognathus.sleep": {
-      "loop": true
-    },
-    "animation.compsognathus.walkspeeddemo": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.compsognathus.jump/fall": {
-      "loop": true
-    },
-    "animation.compsognathus.runspeeddemo": {
-      "loop": true
-    },
-    "animation.compsognathus.turningwalkspeeddemo": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

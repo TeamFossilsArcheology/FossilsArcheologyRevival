@@ -2545,6 +2545,7 @@
 		},
 		"animation.titanis.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body1": {
 					"rotation": {
@@ -2625,6 +2626,7 @@
 		},
 		"animation.titanis.sleep": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body1": {
 					"rotation": {
@@ -2865,6 +2867,7 @@
 		},
 		"animation.titanis.idle": {
 			"loop": true,
+			"animation_length": 1,
 			"bones": {
 				"upperwingL": {
 					"rotation": {

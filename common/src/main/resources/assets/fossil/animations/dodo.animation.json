@@ -3,6 +3,7 @@
 	"animations": {
 		"animation.dodo.idle": {
 			"loop": true,
+			"animation_length": 8,
 			"bones": {
 				"rightWing": {
 					"rotation": {
@@ -598,6 +599,7 @@
 		},
 		"animation.dodo.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body": {
 					"position": {
@@ -641,7 +643,7 @@
 				},
 				"leftLeg": {
 					"rotation": {
-						"vector": ["-90-", 7.5, 0]
+						"vector": [-90, 7.5, 0]
 					}
 				},
 				"leftFoot": {
@@ -776,6 +778,7 @@
 		},
 		"animation.dodo.sleep1": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body": {
 					"position": {
@@ -819,7 +822,7 @@
 				},
 				"leftLeg": {
 					"rotation": {
-						"vector": ["-90-", 7.5, 0]
+						"vector": [-90, 7.5, 0]
 					}
 				},
 				"leftFoot": {
@@ -836,6 +839,7 @@
 		},
 		"animation.dodo.sleep2": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"body": {
 					"position": {
@@ -1112,6 +1116,7 @@
 		},
 		"animation.dodo.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"tailFeathers": {
 					"rotation": {
@@ -1178,6 +1183,7 @@
 		},
 		"animation.dodo.swim": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"rightWing2": {
 					"rotation": {

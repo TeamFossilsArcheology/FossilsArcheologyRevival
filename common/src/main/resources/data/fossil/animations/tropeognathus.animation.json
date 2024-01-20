@@ -1,13 +1,39 @@
 {
   "format_version": "1.8.0",
   "animations": {
+    "fa.tropeognathus.fly": {
+      "loop": true,
+      "animation_length": 8.32
+    },
     "fa.tropeognathus.groundtakeoff": {
       "animation_length": 1.56,
       "action_delay": [30]
     },
+    "fa.tropeognathus.run": {
+      "loop": true,
+      "animation_length": 1.04
+    },
+    "fa.tropeognathus.walk": {
+      "loop": true,
+      "animation_length": 2.08
+    },
+    "fa.tropeognathus.biteeat": {
+      "animation_length": 2.04
+    },
     "fa.tropeognathus.biteattack": {
       "animation_length": 1.24,
       "action_delay": [16]
+    },
+    "fa.tropeognathus.biteeatwater": {
+      "animation_length": 2.48
+    },
+    "fa.tropeognathus.idleswim": {
+      "loop": true,
+      "animation_length": 2.08
+    },
+    "fa.tropeognathus.swim": {
+      "loop": true,
+      "animation_length": 2.08
     },
     "fa.tropeognathus.biteattackwater": {
       "animation_length": 2.08,
@@ -17,9 +43,29 @@
       "animation_length": 2.08,
       "action_delay": [19]
     },
+    "fa.tropeognathus.display": {
+      "animation_length": 6.24
+    },
+    "fa.tropeognathus.idle": {
+      "loop": true,
+      "animation_length": 2.08
+    },
+    "fa.tropeognathus.idlepreen": {
+      "animation_length": 2.32
+    },
+    "fa.tropeognathus.idlecall": {
+      "animation_length": 1.32
+    },
+    "fa.tropeognathus.idlelookaround": {
+      "animation_length": 2.44
+    },
     "fa.tropeognathus.watertakeoff": {
       "animation_length": 2.6,
       "action_delay": [45]
+    },
+    "fa.tropeognathus.sleep": {
+      "loop": true,
+      "animation_length": 3.12
     }
   }
 }
