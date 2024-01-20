@@ -117,6 +117,7 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.ANU_BOSS, context -> new AnuBossRenderer(context, new AnuBossModel()));
         EntityRendererRegistry.register(ModEntities.ANU_DEAD, context -> new AnuDeadRenderer(context, new AnuDeadModel()));
         EntityRendererRegistry.register(ModEntities.ANU_TOTEM, context -> new AnuTotemRenderer(context, new AnuTotemModel()));
+        EntityRendererRegistry.register(ModEntities.FAILURESAURUS, FailuresaurusRenderer::new);
         EntityRendererRegistry.register(ModEntities.SENTRY_PIGLIN, context -> new SentryPiglinRenderer(context, new SentryPiglinModel()));
         EntityRendererRegistry.register(ModEntities.STONE_TABLET, StoneTabletRenderer::new);
         EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);

@@ -4,6 +4,7 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.entity.CultureVatBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.entity.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
@@ -78,7 +79,7 @@ public class CultureVatBlock extends CustomEntityBlock {
                 } else if (random < 20) {
                     entity = EntityType.MOOSHROOM.create(level);
                 } else {
-                    entity = EntityType.CHICKEN.create(level);//TODO: Failuresaurus
+                    entity = ModEntities.FAILURESAURUS.get().create(level);
                 }
                 entity.moveTo(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, level.random.nextFloat() * 360f, 0.0f);
                 level.addFreshEntity(entity);

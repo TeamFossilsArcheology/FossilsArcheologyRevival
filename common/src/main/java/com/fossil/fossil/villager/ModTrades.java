@@ -76,7 +76,7 @@ public class ModTrades {
             }
             case 4: {
                 list.add(new ItemsForEmeralds(ModItems.CHICKEN_ESSENCE.get(), 3, 1, 3));
-                //TODO: list.add(new ItemsForEmeralds(ModBlocks.FAILURESAURUS_FLESH.get(), 5, 1, 3));
+                list.add(new ItemsForEmeralds(ModItems.FAILURESAURUS_FLESH.get(), 5, 1, 3));
                 list.add(new ItemsForEmeralds(ModBlocks.PERMAFROST_BLOCK.get(), 2, 1, 6, 1));
             }
             case 5: {

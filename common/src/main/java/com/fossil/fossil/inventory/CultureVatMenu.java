@@ -2,6 +2,7 @@ package com.fossil.fossil.inventory;
 
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.recipe.WorktableRecipe;
+import com.fossil.fossil.util.Version;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -18,7 +19,7 @@ public class CultureVatMenu extends AbstractContainerMenu {
     public static final int INPUT_SLOT_ID = 0;
     public static final int FUEL_SLOT_ID = 1;
     public static final int OUTPUT_SLOT_ID = 2;
-    public static final int CULTIVATION_TIME = 100;//TODO: Debug 6000
+    public static final int CULTIVATION_TIME = Version.debugEnabled() ? 100 : 6000;
 
     private final Container container;
     private final ContainerData containerData;
