@@ -8,16 +8,16 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
-public class AnimationMessage {
+public class ForceAnimationMessage {
     private final String controller;
     private final int entityId;
     private final String animation;
 
-    public AnimationMessage(FriendlyByteBuf buf) {
+    public ForceAnimationMessage(FriendlyByteBuf buf) {
         this(buf.readUtf(), buf.readInt(), buf.readUtf());
     }
 
-    public AnimationMessage(String controller, int entityId, String animation) {
+    public ForceAnimationMessage(String controller, int entityId, String animation) {
         this.controller = controller;
         this.entityId = entityId;
         this.animation = animation;
@@ -32,7 +32,9 @@ public class AnimationMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
         if (entity instanceof PrehistoricAnimatable<?> animatable && Version.debugEnabled()) {
-            contextSupplier.get().queue(() -> animatable.getAnimationLogic().addActiveAnimation(controller, animatable.getAllAnimations().get(animation), "None"));
+            contextSupplier.get().queue(() -> {
+                animatable.getAnimationLogic().forceActiveAnimation(controller, animatable.getAllAnimations().get(animation), "Idle");
+            });
         }
     }
 }

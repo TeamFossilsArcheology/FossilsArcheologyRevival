@@ -2,7 +2,6 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.world.Difficulty;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.player.Player;
@@ -37,7 +36,7 @@ public class DinoMeleeAttackGoal extends MeleeAttackGoal {
             if (isTimeToAttack()) {
                 resetAttackCooldown();
                 attackStartTick = mob.level.getGameTime();
-                mob.swing(InteractionHand.MAIN_HAND);
+                dinosaur.startAttack();
             }
             int attackDelay = dinosaur.getAnimationLogic().getActionDelay("Attack");
             if (attackStartTick >= 0 && attackDelay > -1 && mob.level.getGameTime() > attackStartTick + attackDelay) {

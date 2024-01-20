@@ -19,6 +19,8 @@ public class SyncActiveAnimationMessage {
         this.animationTag = new CompoundTag();
         animationTag.putString("Animation", buf.readUtf());
         animationTag.putDouble("EndTick", buf.readDouble());
+        animationTag.putString("Category", buf.readUtf());
+        animationTag.putBoolean("Forced", buf.readBoolean());
     }
 
     public SyncActiveAnimationMessage(int entityId, String controller, CompoundTag animationTag) {
@@ -32,6 +34,8 @@ public class SyncActiveAnimationMessage {
         buf.writeUtf(controller);
         buf.writeUtf(animationTag.getString("Animation"));
         buf.writeDouble(animationTag.getDouble("EndTick"));
+        buf.writeUtf(animationTag.getString("Category"));
+        buf.writeBoolean(animationTag.getBoolean("Forced"));
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {

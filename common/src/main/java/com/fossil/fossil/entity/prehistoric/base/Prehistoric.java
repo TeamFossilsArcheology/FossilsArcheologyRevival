@@ -1479,6 +1479,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return isBaby() ? super.getSoundVolume() * 0.75f : 1;
     }
 
+    public void startAttack() {
+        swing(InteractionHand.MAIN_HAND);
+        getAnimationLogic().forceActiveAnimation("Attack", nextAttackAnimation(), "Attack");
+    }
+
     public boolean attackTarget(LivingEntity target) {
         if (getBbWidth() > target.getBbWidth()) {
             double resistance = 1 - target.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE);
