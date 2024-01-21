@@ -242,6 +242,11 @@
 					]
 				},
 				{
+					"name": "grabPos",
+					"parent": "head",
+					"pivot": [0, 12, -41]
+				},
+				{
 					"name": "leftUpperArm",
 					"parent": "upperBody",
 					"pivot": [3, 8.89899, -14.72004],

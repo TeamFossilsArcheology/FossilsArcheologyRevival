@@ -23,6 +23,7 @@ public class Plesiosaurus extends PrehistoricSwimming {
     public static final String EAT = "animation.plesiosaurus.eat";
     public static final String FALL = "animation.plesiosaurus.jump/fall";
     public static final String IDLE = "animation.plesiosaurus.randomidle";
+    public static final String SLEEP = "animation.plesiosaurus.sleep";
     public static final String SWIM = "animation.plesiosaurus.swim";
     public static final String SWIM_FAST = "animation.plesiosaurus.swimfast";
 
@@ -92,7 +93,7 @@ public class Plesiosaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override

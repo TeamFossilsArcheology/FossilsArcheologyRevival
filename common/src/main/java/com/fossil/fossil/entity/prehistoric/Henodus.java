@@ -18,10 +18,12 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Henodus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "henodus.animation.json";
+    public static final String ATTACK = "animation.henodus.attack";
     public static final String EAT = "animation.henodus.drink/eat";
     public static final String IDLE = "animation.henodus.idle";
     public static final String RUN = "animation.henodus.run";
     public static final String SIT = "animation.henodus.sit";
+    public static final String SLEEP = "animation.henodus.sleep";
     public static final String SWIM = "animation.henodus.swim";
     public static final String SWIM_FAST = "animation.henodus.swimfast";
     public static final String WALK = "animation.henodus.walk";
@@ -73,7 +75,7 @@ public class Henodus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override
@@ -98,7 +100,7 @@ public class Henodus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override

@@ -21,6 +21,8 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     public static final String ANIMATIONS = "spinosaurus.animation.json";
     public static final String ATTACK = "animation.spinosaurus.attack";
     public static final String EAT = "animation.spinosaurus.eat";
+    public static final String FALL = "animation.spinosaurus.jump/fall2";
+    public static final String GRAB = "animation.spinosaurus.grab";
     public static final String IDLE = "animation.spinosaurus.idle";
     public static final String RUN = "animation.spinosaurus.run";
     public static final String SLEEP = "animation.spinosaurus.sleep";
@@ -86,6 +88,11 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
+    }
+
+    @Override
+    public @NotNull Animation nextGrabbingAnimation() {
+        return getAllAnimations().get(GRAB);
     }
 
     @Override

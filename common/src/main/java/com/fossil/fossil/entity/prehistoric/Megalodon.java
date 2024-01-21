@@ -25,6 +25,7 @@ public class Megalodon extends PrehistoricSwimming {
     public static final String EAT = "animation.megalodon.eat";
     public static final String FALL = "animation.megalodon.jump/fall";
     public static final String GRAB = "animation.megalodon.grab";
+    public static final String IDLE = "animation.megalodon.idle";
     public static final String SLEEP = "animation.megalodon.sleep";
     public static final String SWIM = "animation.megalodon.swim";
     public static final String SWIM_FAST = "animation.megalodon.swim_fast";
@@ -127,7 +128,7 @@ public class Megalodon extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(SWIM);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override

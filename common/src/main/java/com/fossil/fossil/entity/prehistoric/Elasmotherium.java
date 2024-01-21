@@ -26,6 +26,7 @@ public class Elasmotherium extends Prehistoric {
     public static final String IDLE = "animation.elasmotherium.idle";
     public static final String RUN = "animation.elasmotherium.run";
     public static final String SLEEP = "animation.elasmotherium.rest/sleep";
+    public static final String SWIM = "animation.elasmotherium.swim";
     public static final String WALK = "animation.elasmotherium.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -86,7 +87,7 @@ public class Elasmotherium extends Prehistoric {
     @Override
     public @NotNull Animation nextMovingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(IDLE);
+            return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(WALK);
     }
@@ -94,7 +95,7 @@ public class Elasmotherium extends Prehistoric {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(IDLE);
+            return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
     }

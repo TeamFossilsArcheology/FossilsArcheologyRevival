@@ -23,7 +23,7 @@ public class Megalograptus extends PrehistoricSwimming {
     public static final String EAT = "animation.megalograptus.Eating";
     public static final String FALL = "animation.megalograptus.jump/fall";
     public static final String IDLE = "animation.megalograptus.Idle/sleep/sit";
-    public static final String SLEEP = IDLE;
+    public static final String SLEEP = "animation.megalograptus.Idle/sleep/sit";
     public static final String SWIM = "animation.megalograptus.Swim";
     public static final String WALK = "animation.megalograptus.walk";
 

@@ -22,7 +22,11 @@ public class Pachycephalosaurus extends Prehistoric {
     public static final String ATTACK1 = "animation.pachycephalosaurus.Attack1";
     public static final String ATTACK2 = "animation.pachycephalosaurus.Attack2";
     public static final String EAT = "animation.pachycephalosaurus.Eating";
+    public static final String FALL = "animation.pachycephalosaurus.jump/fall";
+    public static final String IDLE = "animation.pachycephalosaurus.idle";
     public static final String RUN = "animation.pachycephalosaurus.run";
+    public static final String SLEEP = "animation.pachycephalosaurus.sleep1";
+    public static final String SWIM = "animation.pachycephalosaurus.swim";
     public static final String WALK = "animation.pachycephalosaurus.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -65,18 +69,18 @@ public class Pachycephalosaurus extends Prehistoric {
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(EAT);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(EAT);
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(EAT);
+            return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(WALK);
     }
@@ -84,7 +88,7 @@ public class Pachycephalosaurus extends Prehistoric {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(EAT);
+            return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
     }
