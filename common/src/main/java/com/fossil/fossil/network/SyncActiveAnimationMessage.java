@@ -18,7 +18,7 @@ public class SyncActiveAnimationMessage {
         this.controller = buf.readUtf();
         this.animationTag = new CompoundTag();
         animationTag.putString("Animation", buf.readUtf());
-        animationTag.putDouble("EndTick", buf.readDouble());
+        animationTag.putDouble("StartTick", buf.readDouble());
         animationTag.putString("Category", buf.readUtf());
         animationTag.putBoolean("Forced", buf.readBoolean());
     }
@@ -33,7 +33,7 @@ public class SyncActiveAnimationMessage {
         buf.writeInt(entityId);
         buf.writeUtf(controller);
         buf.writeUtf(animationTag.getString("Animation"));
-        buf.writeDouble(animationTag.getDouble("EndTick"));
+        buf.writeDouble(animationTag.getDouble("StartTick"));
         buf.writeUtf(animationTag.getString("Category"));
         buf.writeBoolean(animationTag.getBoolean("Forced"));
     }
@@ -41,6 +41,7 @@ public class SyncActiveAnimationMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
         if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
+            animationTag.putDouble("EndTick", animationTag.getDouble("StartTick") + prehistoric.getAllAnimations().get(animationTag.getString("Animation")).animationLength);
             contextSupplier.get().queue(() -> prehistoric.getAnimationLogic().addActiveAnimation(controller, animationTag));
         }
     }

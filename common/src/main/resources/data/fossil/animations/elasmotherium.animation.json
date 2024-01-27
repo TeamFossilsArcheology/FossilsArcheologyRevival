@@ -26,8 +26,12 @@
       "animation_length": 1.25,
       "action_delay": [10]
     },
+    "animation.elasmotherium.swim": {
+      "loop": true
+    },
     "animation.elasmotherium.eat/drink": {
       "animation_length": 3
     }
-  }
+  },
+  "geckolib_format_version": 2
 }

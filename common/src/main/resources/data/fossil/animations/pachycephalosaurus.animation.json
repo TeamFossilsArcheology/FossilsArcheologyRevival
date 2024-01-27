@@ -35,9 +35,25 @@
       "loop": true,
       "animation_length": 2.70833
     },
+    "animation.pachycephalosaurus.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.pachycephalosaurus.sleep1": {
+      "loop": true,
+      "animation_length": 12
+    },
     "animation.pachycephalosaurus.speak": {
       "loop": true,
       "animation_length": 1
+    },
+    "animation.pachycephalosaurus.swim": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.pachycephalosaurus.idle": {
+      "loop": true,
+      "animation_length": 12
     },
     "animation.pachycephalosaurus.Display": {
       "loop": true,

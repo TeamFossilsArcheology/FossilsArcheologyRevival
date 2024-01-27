@@ -42,6 +42,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         if (animation != null) {
             CompoundTag animationTag = new CompoundTag();
             animationTag.putString("Animation", animation.animationName);
+            animationTag.putDouble("StartTick", entity.level.getGameTime());
             animationTag.putDouble("EndTick", entity.level.getGameTime() + animation.animationLength);
             animationTag.putString("Category", category);
             animationTag.putBoolean("Forced", true);
@@ -81,7 +82,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     public int getActionDelay(String controller) {
         ActiveAnimationInfo activeAnimation = getActiveAnimation(controller);
         if (activeAnimation != null && entity.getServerAnimationInfos().containsKey(activeAnimation.animationName())) {
-            return entity.getServerAnimationInfos().get(activeAnimation.animationName()).actionDelay();
+            return entity.getServerAnimationInfos().get(activeAnimation.animationName()).actionDelay;
         }
         return -1;
     }

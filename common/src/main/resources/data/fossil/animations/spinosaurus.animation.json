@@ -32,6 +32,10 @@
       "loop": true,
       "animation_length": 2
     },
+    "animation.spinosaurus.jump/fall2": {
+      "loop": true,
+      "animation_length": 4
+    },
     "animation.spinosaurus.swimidle": {
       "loop": true,
       "animation_length": 4
@@ -49,6 +53,9 @@
     },
     "animation.spinosaurus.drink": {
       "animation_length": 4.125
+    },
+    "animation.spinosaurus.grab": {
+      "animation_length": 4.41667
     },
     "animation.spinosaurus.turn_left": {
       "loop": "hold_on_last_frame"

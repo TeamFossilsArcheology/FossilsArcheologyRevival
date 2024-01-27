@@ -33,6 +33,14 @@
       "loop": true,
       "animation_length": 0.75
     },
+    "animation.therizinosaurus.attack1": {
+      "animation_length": 1.04,
+      "action_delay": [15]
+    },
+    "animation.therizinosaurus.attack2": {
+      "animation_length": 1.28,
+      "action_delay": [15]
+    },
     "animation.therizinosaurus.jump/fall": {
       "loop": true,
       "animation_length": 4
@@ -42,6 +50,9 @@
       "animation_length": 4
     },
     "animation.therizinosaurus.drink": {
+      "animation_length": 3
+    },
+    "animation.therizinosaurus.eat1": {
       "animation_length": 3
     },
     "animation.therizinosaurus.eat2": {
@@ -87,17 +98,6 @@
     "animation.therizinosaurus.TurningRadiusDemo": {
       "loop": true,
       "animation_length": 6
-    },
-    "animation.therizinosaurus.attack1": {
-      "animation_length": 1.04,
-      "action_delay": [15]
-    },
-    "animation.therizinosaurus.attack2": {
-      "animation_length": 1.28,
-      "action_delay": [15]
-    },
-    "animation.therizinosaurus.eat1": {
-      "animation_length": 3
     }
   },
   "geckolib_format_version": 2

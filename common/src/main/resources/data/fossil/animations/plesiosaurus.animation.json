@@ -21,12 +21,18 @@
     "animation.plesiosaurus.randomidle": {
       "animation_length": 1.5
     },
+    "animation.plesiosaurus.sleep": {
+      "loop": true,
+      "animation_length": 8
+    },
     "animation.plesiosaurus.beached": {
+      "loop": true,
       "animation_length": 8
     },
     "animation.plesiosaurus.attack": {
       "animation_length": 1.25,
       "action_delay": [15]
     }
-  }
+  },
+  "geckolib_format_version": 2
 }

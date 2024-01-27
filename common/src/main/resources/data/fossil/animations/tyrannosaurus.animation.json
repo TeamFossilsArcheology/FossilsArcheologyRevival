@@ -84,18 +84,6 @@
       "loop": true,
       "animation_length": 2.5,
       "action_delay": [16]
-    },
-    "animation.tyrannosaurus.ontogeny_baby": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.tyrannosaurus.ontogeny_teen": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.tyrannosaurus.new": {
-      "loop": true
-    },
-    "animation.tyrannosaurus.new2": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

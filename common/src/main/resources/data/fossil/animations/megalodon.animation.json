@@ -9,6 +9,9 @@
       "loop": true,
       "animation_length": 8
     },
+    "animation.megalodon.idle": {
+      "animation_length": 16.33333
+    },
     "animation.megalodon.swim_fast": {
       "loop": true,
       "animation_length": 8

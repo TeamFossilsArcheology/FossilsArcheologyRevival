@@ -41,6 +41,9 @@
     "animation.mammoth.idle": {
       "loop": true,
       "animation_length": 3.33333
+    },
+    "animation.mammoth.swim": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

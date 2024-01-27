@@ -29,6 +29,7 @@
       "animation_length": 20.08333
     },
     "animation.liopleurodon.beached": {
+      "loop": true,
       "animation_length": 8
     },
     "animation.liopleurodon.turn_right": {

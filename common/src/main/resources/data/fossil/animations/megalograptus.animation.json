@@ -30,13 +30,13 @@
       "loop": true,
       "animation_length": 2
     },
-    "animation.megalograptus.run": {
-      "loop": true,
-      "animation_length": 0.625
-    },
     "animation.megalograptus.jump/fall": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.megalograptus.run": {
+      "loop": true,
+      "animation_length": 0.58333
     }
   },
   "geckolib_format_version": 2
