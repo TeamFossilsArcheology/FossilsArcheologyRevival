@@ -25,12 +25,12 @@ public class ModVillagers {
             () -> new PoiType("archeologist_poi", getBlockStates(ModBlocks.WORKTABLE.get()), 1, 1));
     public static final RegistrySupplier<VillagerProfession> ARCHEOLOGIST = PROFESSIONS.register("archeologist",
             () -> new VillagerProfession("archeologist", ARCHEOLOGIST_POI.get(), ImmutableSet.of(), ImmutableSet.of(),
-                    SoundEvents.VILLAGER_WORK_LEATHERWORKER));
+                    SoundEvents.VILLAGER_WORK_FISHERMAN));
     public static final RegistrySupplier<PoiType> PALEONTOLOGIST_POI = POI_TYPES.register("paleontologist_poi",
             () -> new PoiType("paleontologist_poi", getBlockStates(ModBlocks.ANALYZER.get()), 1, 1));
     public static final RegistrySupplier<VillagerProfession> PALEONTOLOGIST = PROFESSIONS.register("paleontologist",
             () -> new VillagerProfession("paleontologist", PALEONTOLOGIST_POI.get(), ImmutableSet.of(), ImmutableSet.of(),
-                    SoundEvents.VILLAGER_WORK_CARTOGRAPHER));
+                    SoundEvents.VILLAGER_WORK_TOOLSMITH));
 
     public static void register() {
         POI_TYPES.register();
