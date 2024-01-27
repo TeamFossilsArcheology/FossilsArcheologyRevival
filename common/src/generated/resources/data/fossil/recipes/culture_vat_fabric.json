@@ -10,7 +10,7 @@
       "item": "minecraft:iron_ingot"
     },
     "S": {
-      "item": "minecraft:slime_ball"
+      "tag": "c:slime_balls"
     },
     "G": {
       "tag": "c:glass_blocks"

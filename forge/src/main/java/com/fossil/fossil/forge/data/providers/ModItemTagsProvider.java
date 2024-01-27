@@ -11,8 +11,10 @@ import com.fossil.fossil.tags.ModItemTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraftforge.common.Tags;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -110,6 +112,15 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModBlockTags.SIGILLARIA_LOGS, ModItemTags.SIGILLARIA_LOGS);
         copy(ModBlockTags.TEMPSKYA_LOGS, ModItemTags.TEMPSKYA_LOGS);
         copy(ModBlockTags.FIGURINES, ModItemTags.FIGURINES);
+        tag(ModItemTags.BIO_GOO_FLESH).add(ModItems.FAILURESAURUS_FLESH.get(), Items.ROTTEN_FLESH);
+        //Forge Tags
+        tag(Tags.Items.EGGS).addTags(ModItemTags.DINO_EGGS);
+        tag(Tags.Items.SLIMEBALLS).add(ModItems.TAR_DROP.get());
+        //Fabric Tags
+        var fabricEggs = ItemTags.create(new ResourceLocation("c:eggs"));
+        var fabricSlimeBalls = ItemTags.create(new ResourceLocation("c:slime_balls"));
+        tag(fabricEggs).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);
+        tag(fabricSlimeBalls).add(ModItems.TAR_DROP.get(), Items.SLIME_BALL);
     }
 
     @Override

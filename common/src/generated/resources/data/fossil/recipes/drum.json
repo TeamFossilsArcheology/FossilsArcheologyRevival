@@ -1,18 +1,18 @@
 {
   "type": "minecraft:crafting_shaped",
   "pattern": [
-    "ZZZ",
-    "XYX",
-    "XXX"
+    "LLL",
+    "PRP",
+    "PPP"
   ],
   "key": {
-    "Z": {
+    "L": {
       "item": "minecraft:leather"
     },
-    "Y": {
+    "R": {
       "item": "minecraft:redstone"
     },
-    "X": {
+    "P": {
       "tag": "minecraft:planks"
     }
   },
