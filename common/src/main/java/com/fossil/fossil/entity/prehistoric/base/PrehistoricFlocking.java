@@ -1,13 +1,7 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
-import net.minecraft.world.entity.SpawnGroupData;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.ServerLevelAccessor;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.stream.Stream;
 
@@ -77,25 +71,9 @@ public abstract class PrehistoricFlocking extends Prehistoric {
         }
     }
 
-    @Override
-    public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelIn, DifficultyInstance difficultyIn, MobSpawnType reason,
-                                        @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
-        super.finalizeSpawn(levelIn, difficultyIn, reason, spawnDataIn, dataTag);
-        if (spawnDataIn == null) {
-            spawnDataIn = new GroupData(this);
-        } else {
-            startFollowing(((GroupData) spawnDataIn).groupLeader);
-        }
-        return spawnDataIn;
-    }
-
     protected abstract int getMaxGroupSize();
 
     public int getFlockDistance() {
         return 32;
-    }
-
-
-    public record GroupData(PrehistoricFlocking groupLeader) implements SpawnGroupData {
     }
 }

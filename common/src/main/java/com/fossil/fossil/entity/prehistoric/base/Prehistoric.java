@@ -171,6 +171,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 .add(Attributes.ATTACK_DAMAGE, 2)
                 .add(Attributes.FLYING_SPEED, 0.4f);
     }
+
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
@@ -400,8 +401,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         getAttribute(Attributes.FOLLOW_RANGE).addPermanentModifier(new AttributeModifier("Random spawn bonus", this.random.nextGaussian() * 0.05, AttributeModifier.Operation.MULTIPLY_BASE));
         if (spawnDataIn instanceof PrehistoricGroupData prehistoricGroupData) {
             setAgeInDays(prehistoricGroupData.ageInDays());
-        } else {
-            setAgeInDays(data().adultAgeDays());
+        } else if (spawnDataIn == null) {
+            spawnDataIn = new PrehistoricGroupData(data().adultAgeDays());
+            setAgeInDays(((PrehistoricGroupData) spawnDataIn).ageInDays);
         }
         updateAbilities();
         moodSystem.setPlayingCooldown(0);
