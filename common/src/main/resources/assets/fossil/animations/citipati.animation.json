@@ -746,9 +746,6 @@
 					},
 					"position": {
 						"0.6667": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
 							"vector": [0, 0, 0]
 						},
 						"0.75": {
@@ -1275,9 +1272,6 @@
 					},
 					"position": {
 						"0.0833": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
 							"vector": [0, 0, 0]
 						},
 						"0.1667": {
@@ -1443,9 +1437,6 @@
 					},
 					"position": {
 						"0.375": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
 							"vector": [0, 0, 0]
 						},
 						"0.4167": {
@@ -1874,13 +1865,11 @@
 							"vector": ["-22.5+math.sin(query.anim_time*180/1.5-60)*20", "math.sin(query.anim_time*180/1.5+60)*-10", "math.sin(query.anim_time*180/1.5+60)*-5"]
 						},
 						"1.5": {
-							"post": {
-								"vector": [
-									"-2.4332+math.sin(query.anim_time*720/1+60)*-2.5",
-									"math.sin(query.anim_time*180/1.5+60)*-0.0162",
-									"math.sin(query.anim_time*180/1.5+60)*-4.4243"
-								]
-							}
+							"vector": [
+								"-2.4332+math.sin(query.anim_time*720/1+60)*-2.5",
+								"math.sin(query.anim_time*180/1.5+60)*-0.0162",
+								"math.sin(query.anim_time*180/1.5+60)*-4.4243"
+							]
 						},
 						"2.5": {
 							"vector": ["-2.5+math.sin(query.anim_time*360/1+60)*-2.5", "0+math.sin(query.anim_time*180/3+60)*10", "0+math.sin(query.anim_time*180/3+60)*5"]
@@ -2199,9 +2188,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"neck1": {
@@ -2226,9 +2213,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"head": {
@@ -2269,9 +2254,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				}
 			}
