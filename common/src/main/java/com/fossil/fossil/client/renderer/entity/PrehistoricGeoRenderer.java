@@ -76,13 +76,8 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     public RenderType getRenderType(T animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, ResourceLocation texture) {
-        if (animatable.isBaby()) {
-
-        }
-        if (animatable instanceof Meganeura) {
-            return RenderType.entityTranslucent(texture);
-        }
-        return super.getRenderType(animatable, partialTick, poseStack, bufferSource, buffer, packedLight, texture);
+        //TODO: Performance check
+        return RenderType.entityTranslucent(texture);
     }
 
     @Override
