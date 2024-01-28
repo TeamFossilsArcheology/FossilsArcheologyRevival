@@ -11,7 +11,7 @@ public class ModSounds {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(Fossil.MOD_ID, Registry.SOUND_EVENT_REGISTRY);
 
     public static final RegistrySupplier<SoundEvent> MUSIC_BONES = SOUND_EVENTS.register("music_bones",
-            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "record_bones")));
+            () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_bones")));
     public static final RegistrySupplier<SoundEvent> MUSIC_FIRST_DINOSAUR = SOUND_EVENTS.register("music_first_dinosaur",
             () -> new SoundEvent(new ResourceLocation(Fossil.MOD_ID, "music_first_dinosaur")));
     public static final RegistrySupplier<SoundEvent> MUSIC_SCARAB = SOUND_EVENTS.register("music_scarab",
