@@ -45,6 +45,11 @@ public class Quagga extends AbstractChestedHorse {
         return child;
     }
 
+    @Override
+    public double getPassengersRidingOffset() {
+        return super.getPassengersRidingOffset() + 0.25;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

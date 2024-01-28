@@ -64,7 +64,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.9f, 2.1f);
     public static final RegistrySupplier<EntityType<Plesiosaurus>> PLESIOSAURUS = registerDino("plesiosaurus", Plesiosaurus::new, 1, 1);
     public static final RegistrySupplier<EntityType<Pteranodon>> PTERANODON = registerDino("pteranodon", Pteranodon::new, 1.1f, 1.1f);
-    public static final RegistrySupplier<EntityType<Quagga>> QUAGGA = registerDino("quagga", Quagga::new, 1.4f, 1.6f);
+    public static final RegistrySupplier<EntityType<Quagga>> QUAGGA = registerDino("quagga", Quagga::new, 1.3964844f, 1.6f);
     public static final RegistrySupplier<EntityType<Sarcosuchus>> SARCOSUCHUS = registerDino("sarcosuchus", Sarcosuchus::new, 2, 1);
     public static final RegistrySupplier<EntityType<Smilodon>> SMILODON = registerDino("smilodon", Smilodon::new, 1.2f, 1.4f);
     public static final RegistrySupplier<EntityType<Spinosaurus>> SPINOSAURUS = registerDino("spinosaurus", Spinosaurus::new, 1.5f, 1);
