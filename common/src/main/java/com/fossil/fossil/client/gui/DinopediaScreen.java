@@ -2,6 +2,7 @@ package com.fossil.fossil.client.gui;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.capabilities.ModCapabilities;
+import com.fossil.fossil.client.DinopediaBioManager;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.prehistoric.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
@@ -52,6 +53,7 @@ public class DinopediaScreen extends Screen {
     private static final int PAGE_2 = 1;
     private static final int MAX_PAGES = 2;
     private final LivingEntity entity;
+    private List<String> currentBio;
     private final List<Component> toolTipList = new ArrayList<>();
     private final int xSize = 390;
     private final int ySize = 245;
@@ -178,7 +180,10 @@ public class DinopediaScreen extends Screen {
         if (currentPage == PAGE_1) {
             renderFirstPage(poseStack, mouseX, mouseY);
         } else if (currentPage == PAGE_2) {
-            if (entity instanceof Prehistoric || entity instanceof PrehistoricFish) {
+            if (currentBio == null) {
+                currentBio = loadBio(entity);
+            }
+            if (!currentBio.isEmpty()) {
                 renderPrehistoricBio(poseStack);
             }
         }
@@ -341,30 +346,39 @@ public class DinopediaScreen extends Screen {
         }
     }
 
-    private void renderPrehistoricBio(PoseStack poseStack) {
-        String lorem = "What the fuck did you just fucking say about me, you little bitch? I'll have you know I graduated top of my class in the Navy Seals, and I've been involved in numerous secret raids on Al-Quaeda, and I have over 300 confirmed kills. I am trained in gorilla warfare and I'm the top sniper in the entire US armed forces. You are nothing to me but just another target. I will wipe you the fuck out with precision the likes of which has never been seen before on this Earth, mark my fucking words. You think you can get away with saying that shit to me over the Internet? Think again, fucker. As we speak I am contacting my secret network of spies across the USA and your IP is being traced right now so you better prepare for the storm, maggot. The storm that wipes out the pathetic little thing you call your life. You're fucking dead, kid. I can be anywhere, anytime, and I can kill you in over seven hundred ways, and that's just with my bare hands. Not only am I extensively trained in unarmed combat, but I have access to the entire arsenal of the United States Marine Corps and I will use it to its full extent to wipe your miserable ass off the face of the continent, you little shit. If only you could have known what unholy retribution your little \"clever\" comment was about to bring down upon you, maybe you would have held your fucking tongue. But you couldn't, you didn't, and now you're paying the price, you goddamn idiot. I will shit fury all over you and you will drown in it. You're fucking dead, kiddo.";
+    private List<String> loadBio(LivingEntity entity) {
+        String name;
+        if (entity instanceof Prehistoric) {
+            name = ((Prehistoric) entity).type().resourceName;
+        } else if (entity instanceof PrehistoricFish) {
+            name = ((PrehistoricFish) entity).type().resourceName;
+        } else {
+            return List.of();
+        }
+        String bio = DinopediaBioManager.DINOPEDIA.getDinopediaBio(name);
         StringSplitter stringSplitter = font.getSplitter();
         List<String> list = new ArrayList<>();
-        stringSplitter.splitLines(lorem, xSize / 2, Style.EMPTY, true, (style, i, j) -> {
-            String string2 = lorem.substring(i, j);
+        stringSplitter.splitLines(bio, xSize / 2, Style.EMPTY, true, (style, i, j) -> {
+            String string2 = bio.substring(i, j);
             list.add(StringUtils.stripEnd(string2, " \n"));
         });
+        return list;
+    }
 
+    private void renderPrehistoricBio(PoseStack poseStack) {
         poseStack.pushPose();
         float scale = 0.75f;
         poseStack.scale(scale, scale, scale);
         int right = 0;
         int left = 0;
-        for (int i = 0; i < list.size(); i++) {
+        for (int i = 0; i < currentBio.size(); i++) {
             if (i <= 20) {
-                font.draw(poseStack, list.get(i), getScaledX(true, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++left) / scale, 0x9D7E67);
+                font.draw(poseStack, currentBio.get(i), getScaledX(true, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++left) / scale, 0x9D7E67);
             } else {
-                font.draw(poseStack, list.get(i), getScaledX(false, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++right) / scale, 0x9D7E67);
+                font.draw(poseStack, currentBio.get(i), getScaledX(false, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++right) / scale, 0x9D7E67);
             }
         }
         poseStack.popPose();
-
-        //this.fontRenderer.drawString(string, 30 + (left0 ? marginOffset : 121 + marginOffset), 12 * ((left0 ? this.left++ : this.right++) + 1), 0X9D7E67);
     }
 
     @Override

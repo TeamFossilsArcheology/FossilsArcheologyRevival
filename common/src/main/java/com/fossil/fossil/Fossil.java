@@ -2,6 +2,7 @@ package com.fossil.fossil;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.client.DinopediaBioManager;
 import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
@@ -34,6 +35,7 @@ public class Fossil {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
+        ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, DinopediaBioManager.DINOPEDIA);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoManager.ANIMATIONS);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityHitboxManager.HITBOX_DATA);
