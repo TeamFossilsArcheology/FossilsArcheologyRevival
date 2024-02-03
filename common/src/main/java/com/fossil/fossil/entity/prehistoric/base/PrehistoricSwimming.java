@@ -58,7 +58,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected long grabStartTick = -1;
     private boolean beached;
 
-    public PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level) {
+    protected PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
         setPathfindingMalus(BlockPathTypes.WATER, 0);
         switchNavigator(false);

@@ -1,5 +1,6 @@
 package com.fossil.fossil.capabilities;
 
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.entity.animal.Animal;
@@ -24,15 +25,15 @@ public class ModCapabilities {
     }
 
     @ExpectPlatform
-    public static void setEmbryo(Animal animal, @Nullable PrehistoricEntityType embryo) {
+    public static void setEmbryo(Animal animal, @Nullable EntityInfo embryo) {
         throw new NotImplementedException();
     }
 
     @ExpectPlatform
-    public static void syncMammalWithClient(Animal animal, int embryoProgress, PrehistoricEntityType embryo) {
+    public static void syncMammalWithClient(Animal animal, int embryoProgress, EntityInfo embryo) {
     }
 
-    public static void startPregnancy(Animal animal, PrehistoricEntityType embryo) {
+    public static void startPregnancy(Animal animal, EntityInfo embryo) {
         setEmbryo(animal, embryo);
         setEmbryoProgress(animal, 1);
         syncMammalWithClient(animal, 1, embryo);

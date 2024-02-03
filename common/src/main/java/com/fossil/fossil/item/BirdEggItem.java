@@ -1,7 +1,7 @@
 package com.fossil.fossil.item;
 
 import com.fossil.fossil.entity.ThrownBirdEgg;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.stats.Stats;
@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 public class BirdEggItem extends PrehistoricEntityItem {
     private final boolean cultivated;
 
-    public BirdEggItem(PrehistoricEntityType type, boolean cultivated) {
+    public BirdEggItem(EntityInfo type, boolean cultivated) {
         super(type);
         this.cultivated = cultivated;
     }

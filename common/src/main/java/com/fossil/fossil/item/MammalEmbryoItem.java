@@ -1,6 +1,7 @@
 package com.fossil.fossil.item;
 
 import com.fossil.fossil.capabilities.ModCapabilities;
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
@@ -8,18 +9,15 @@ import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
-public class MammalEmbryoItem extends Item {
-    private final PrehistoricEntityType type;
+public class MammalEmbryoItem extends PrehistoricEntityItem {
 
-    public MammalEmbryoItem(PrehistoricEntityType type) {
-        super(new Properties().tab(ModTabs.FAITEMTAB));
-        this.type = type;
+    public MammalEmbryoItem(EntityInfo type) {
+        super(type);
     }
 
     @Override

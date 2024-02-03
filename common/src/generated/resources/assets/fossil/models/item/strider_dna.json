@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fossil:item/eggs/egg_item_dolphin"
+    "layer0": "fossil:item/dna/strider_dna"
   }
 }

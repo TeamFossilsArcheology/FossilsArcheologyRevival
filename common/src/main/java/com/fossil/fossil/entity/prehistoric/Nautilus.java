@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
+import com.fossil.fossil.item.ModItems;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -80,6 +81,11 @@ public class Nautilus extends PrehistoricFish {
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         hideInShell(compound.getBoolean("InShell"));
+    }
+
+    @Override
+    public @NotNull ItemStack getBucketItemStack() {
+        return new ItemStack(ModItems.NAUTILUS_BUCKET.get());
     }
 
     @Override

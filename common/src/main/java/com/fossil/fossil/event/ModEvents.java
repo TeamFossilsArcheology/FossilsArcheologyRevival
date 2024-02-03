@@ -6,9 +6,7 @@ import com.fossil.fossil.entity.ThrownBirdEgg;
 import com.fossil.fossil.entity.ai.AnimalFearGoal;
 import com.fossil.fossil.entity.monster.AnuBoss;
 import com.fossil.fossil.entity.prehistoric.Quagga;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
+import com.fossil.fossil.entity.prehistoric.base.*;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.util.FossilFoodMappings;
 import com.fossil.fossil.world.dimension.ModDimensions;
@@ -67,6 +65,11 @@ public class ModEvents {
                     DispenserBlock.registerBehavior(type.cultivatedBirdEggItem, ThrownBirdEgg.getProjectile(type, true));
                 }
             }
+            for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
+                if (info.cultivatedBirdEggItem != null) {
+                    DispenserBlock.registerBehavior(info.cultivatedBirdEggItem, ThrownBirdEgg.getProjectile(info, true));
+                }
+            }
         });
     }
 
@@ -90,7 +93,7 @@ public class ModEvents {
                 || className.contains("Hog"));
     }
 
-    public static void growEntity(PrehistoricEntityType embryo, LivingEntity parent) {
+    public static void growEntity(EntityInfo embryo, LivingEntity parent) {
         Random random = parent.level.random;
         if (parent.level.isClientSide) {
             for (int i = 0; i < 7; ++i) {

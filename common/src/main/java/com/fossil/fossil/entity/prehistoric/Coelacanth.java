@@ -2,9 +2,11 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
+import com.fossil.fossil.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.NotNull;
@@ -28,6 +30,11 @@ public class Coelacanth extends PrehistoricFish {
 
     public static boolean canCoelacanthSpawn(EntityType<Coelacanth> entityType, LevelAccessor level, MobSpawnType spawnType, BlockPos pos, Random rand) {
         return pos.getY() < 35 && PrehistoricFish.canSpawn(entityType, level, spawnType, pos, rand);
+    }
+
+    @Override
+    public @NotNull ItemStack getBucketItemStack() {
+        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
     }
 
     @Override

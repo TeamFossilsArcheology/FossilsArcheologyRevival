@@ -25,6 +25,7 @@ import com.fossil.fossil.world.feature.structures.ModStructures;
 import com.fossil.fossil.world.feature.village.ModVillages;
 import com.mojang.logging.LogUtils;
 import dev.architectury.registry.ReloadListenerRegistry;
+import net.minecraft.client.Minecraft;
 import net.minecraft.server.packs.PackType;
 import net.minecraft.world.level.timers.TimerCallbacks;
 import org.slf4j.Logger;
@@ -35,10 +36,12 @@ public class Fossil {
     public static final Logger LOGGER = LogUtils.getLogger();
 
     public static void init() {
-        ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, DinopediaBioManager.DINOPEDIA);
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoManager.ANIMATIONS);
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityHitboxManager.HITBOX_DATA);
+        if (Minecraft.getInstance() != null) {
+            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, DinopediaBioManager.DINOPEDIA);
+            ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoManager.ANIMATIONS);
+            ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);
+            ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityHitboxManager.HITBOX_DATA);
+        }
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
         ModEntities.register();

@@ -3,6 +3,7 @@ package com.fossil.fossil.forge.data.providers;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ToyBallItem;
 import com.fossil.fossil.item.ToyScratchingPostItem;
@@ -75,6 +76,20 @@ public class ModItemProvider extends ItemModelProvider {
                     spawnEggItem(type.resourceName);
                 }
             }
+            for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
+                if (info.dnaItem != null) {
+                    dnaItem(Objects.requireNonNull(info.dnaItem.getRegistryName()));
+                }
+                if (info.eggItem != null) {
+                    eggItem(info.eggItem.getRegistryName());
+                }
+                if (info.cultivatedBirdEggItem != null) {
+                    eggItem(info.cultivatedBirdEggItem.getRegistryName());
+                }
+                if (info.embryoItem != null) {
+                    embyroItem(info.embryoItem.getRegistryName());
+                }
+            }
             for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
                 boneItem(Objects.requireNonNull(type.armBoneItem.getRegistryName()), type, "arm_bone");
                 boneItem(Objects.requireNonNull(type.footBoneItem.getRegistryName()), type, "foot");
@@ -85,6 +100,14 @@ public class ModItemProvider extends ItemModelProvider {
                 boneItem(Objects.requireNonNull(type.uniqueBoneItem.getRegistryName()), type, "unique");
                 boneItem(Objects.requireNonNull(type.vertebraeBoneItem.getRegistryName()), type, "vertebrae");
             }
+            basicItem(ModItems.ALLIGATOR_GAR_BUCKET.get().getRegistryName());
+            basicItem(ModItems.COELACANTH_BUCKET.get().getRegistryName());
+            basicItem(ModItems.CRASSIGYRINUS_BUCKET.get().getRegistryName());
+            basicItem(ModItems.DIPLOCAULUS_BUCKET.get().getRegistryName());
+            basicItem(ModItems.ICHTHYOSAURUS_BUCKET.get().getRegistryName());
+            basicItem(ModItems.MEGALOGRAPTUS_BUCKET.get().getRegistryName());
+            basicItem(ModItems.NAUTILUS_BUCKET.get().getRegistryName());
+            basicItem(ModItems.STURGEON_BUCKET.get().getRegistryName());
         }
         if (plantItems) {
             for (PrehistoricPlantType type : PrehistoricPlantType.values()) {

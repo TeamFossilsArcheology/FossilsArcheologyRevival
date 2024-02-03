@@ -2,13 +2,13 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "tag": "c:eggs"
+      "tag": "forge:eggs"
     },
     {
       "item": "minecraft:wheat"
     },
     {
-      "tag": "fossil:bio_goo_flesh"
+      "item": "minecraft:rotten_flesh"
     },
     {
       "item": "minecraft:milk_bucket"

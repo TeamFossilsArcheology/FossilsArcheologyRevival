@@ -6,6 +6,7 @@ import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Version;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -104,6 +105,17 @@ public class ModRecipes {
                 registerAnalyzer(new AnalyzerRecipe.Builder(type.embryoItem).addOutput(type.dnaItem, 100));
             }
         }
+        for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
+            if (info.eggItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(info.eggItem).addOutput(info.dnaItem, 100));
+            }
+            if (info.cultivatedBirdEggItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(info.cultivatedBirdEggItem).addOutput(info.dnaItem, 100));
+            }
+            if (info.embryoItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(info.embryoItem).addOutput(info.dnaItem, 100));
+            }
+        }
 
         List<Tuple<ItemLike, Double>> outputs = new ArrayList<>();
         outputs.add(new Tuple<>(Blocks.SAND, 20d));
@@ -151,8 +163,15 @@ public class ModRecipes {
         registerWorktable(ModItems.DIAMOND_JAVELIN.get(), ModItems.DIAMOND_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
         registerWorktable(ModItems.ANCIENT_JAVELIN.get(), ModItems.ANCIENT_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
 
-        for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithDNAResult()) {
-            registerCultureVat(type.dnaItem, type.getDNAResult(), ModItems.BIO_GOO.get());
+        for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
+            if (type.dnaItem != null) {
+                registerCultureVat(type.dnaItem, type.getDNAResult(), ModItems.BIO_GOO.get());
+            }
+        }
+        for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
+            if (info.dnaItem != null) {
+                registerCultureVat(info.dnaItem, info.getDNAResult(), ModItems.BIO_GOO.get());
+            }
         }
         registerCultureVat(ModItems.FERN_SEED_FOSSIL.get(), ModItems.FERN_SEED.get(), ModItems.BIO_GOO.get());
         registerCultureVat(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModBlocks.CALAMITES_SAPLING.get(), ModItems.BIO_GOO.get());

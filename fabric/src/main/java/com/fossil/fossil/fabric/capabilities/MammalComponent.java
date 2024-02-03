@@ -2,7 +2,7 @@ package com.fossil.fossil.fabric.capabilities;
 
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.config.FossilConfig;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.event.ModEvents;
 import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
@@ -15,7 +15,7 @@ import java.util.Objects;
 public class MammalComponent implements IMammalComponent, AutoSyncedComponent, CommonTickingComponent {
     private final Animal animal;
     private int embryoProgress;
-    private PrehistoricEntityType embryo;
+    private EntityInfo embryo;
 
     public MammalComponent(Animal provider) {
         this.animal = provider;
@@ -40,7 +40,7 @@ public class MammalComponent implements IMammalComponent, AutoSyncedComponent, C
     public void readFromNbt(CompoundTag tag) {
         setEmbryoProgress(tag.getInt("embryoProgress"));
         try {
-            setEmbryo(PrehistoricEntityType.valueOf(tag.getString("embryo")));
+            setEmbryo(EntityInfo.fromNbt(tag.getString("embryo")));
         } catch (IllegalArgumentException e) {
             setEmbryo(null);
         }
@@ -50,7 +50,7 @@ public class MammalComponent implements IMammalComponent, AutoSyncedComponent, C
     public void writeToNbt(CompoundTag tag) {
         tag.putInt("embryoProgress", embryoProgress);
         if (embryo != null) {
-            tag.putString("embryo", embryo.name());
+            tag.putString("embryo", embryo.toNbt());
         }
     }
 
@@ -78,12 +78,12 @@ public class MammalComponent implements IMammalComponent, AutoSyncedComponent, C
     }
 
     @Override
-    public PrehistoricEntityType getEmbryo() {
+    public EntityInfo getEmbryo() {
         return embryo;
     }
 
     @Override
-    public void setEmbryo(@Nullable PrehistoricEntityType embryo) {
+    public void setEmbryo(@Nullable EntityInfo embryo) {
         this.embryo = embryo;
     }
 }

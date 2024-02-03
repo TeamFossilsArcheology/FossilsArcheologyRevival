@@ -1,6 +1,6 @@
 package com.fossil.fossil.capabilities.forge;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
 import com.fossil.fossil.network.MammalCapMessage;
@@ -35,7 +35,7 @@ public class ModCapabilitiesImpl {
         return cap.map(IMammalCap::getEmbryoProgress).orElse(0);
     }
 
-    public static PrehistoricEntityType getEmbryo(Animal animal) {
+    public static EntityInfo getEmbryo(Animal animal) {
         Optional<IMammalCap> cap = getMammalCap(animal);
         return cap.map(IMammalCap::getEmbryo).orElse(null);
     }
@@ -45,12 +45,12 @@ public class ModCapabilitiesImpl {
         cap.ifPresent(iMammalCap -> iMammalCap.setEmbryoProgress(embryoProgress));
     }
 
-    public static void setEmbryo(Animal animal, @Nullable PrehistoricEntityType embryo) {
+    public static void setEmbryo(Animal animal, @Nullable EntityInfo embryo) {
         Optional<IMammalCap> cap = getMammalCap(animal);
         cap.ifPresent(iMammalCap -> iMammalCap.setEmbryo(embryo));
     }
 
-    public static void syncMammalWithClient(Animal animal, int embryoProgress, PrehistoricEntityType embryo) {
+    public static void syncMammalWithClient(Animal animal, int embryoProgress, EntityInfo embryo) {
         MessageHandler.CAP_CHANNEL.sendToPlayers(((ServerLevel) animal.level).getPlayers(serverPlayer -> true),
                 new MammalCapMessage(animal, embryoProgress, embryo));
     }

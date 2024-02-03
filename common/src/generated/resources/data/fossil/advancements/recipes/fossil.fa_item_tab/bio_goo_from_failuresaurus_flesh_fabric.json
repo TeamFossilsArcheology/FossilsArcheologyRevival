@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:bio_goo_forge"
+      "fossil:bio_goo_from_failuresaurus_flesh_fabric"
     ]
   },
   "criteria": {
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:bio_goo_forge"
+        "recipe": "fossil:bio_goo_from_failuresaurus_flesh_fabric"
       }
     }
   },

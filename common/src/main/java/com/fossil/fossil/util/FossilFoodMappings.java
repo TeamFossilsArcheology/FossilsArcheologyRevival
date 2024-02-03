@@ -3,6 +3,7 @@ package com.fossil.fossil.util;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricMobType;
+import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.ModItems;
 import dev.architectury.event.events.common.LifecycleEvent;
 import net.minecraft.core.Holder;
@@ -82,23 +83,23 @@ public class FossilFoodMappings {
 
         FoodMappings.addEgg(Items.EGG, 7);
 
-        for (int i = 0; i < PrehistoricEntityType.values().length; i++) {
-            PrehistoricEntityType entityType = PrehistoricEntityType.values()[i];
-            if (entityType.timePeriod != TimePeriod.CURRENT) {
-                if (entityType.mobType != PrehistoricMobType.FISH) {
-                    if (entityType.foodItem != null) FoodMappings.addMeat(entityType.foodItem);
-                    if (entityType.cookedFoodItem != null) FoodMappings.addMeat(entityType.cookedFoodItem);
-                } else {
-                    if (entityType.eggItem != null) FoodMappings.addFish(entityType.eggItem, 35);
-                    if (entityType.foodItem != null) FoodMappings.addFish(entityType.foodItem);
-                    if (entityType.cookedFoodItem != null) FoodMappings.addFish(entityType.cookedFoodItem);
-                }
+        for (PrehistoricEntityType info : PrehistoricEntityType.values()) {
+            if (info.mobType != PrehistoricMobType.FISH) {
+                if (info.foodItem != null) FoodMappings.addMeat(info.foodItem);
+                if (info.cookedFoodItem != null) FoodMappings.addMeat(info.cookedFoodItem);
+            } else {
+                if (info.eggItem != null) FoodMappings.addFish(info.eggItem, 35);
+                if (info.foodItem != null) FoodMappings.addFish(info.foodItem);
+                if (info.cookedFoodItem != null) FoodMappings.addFish(info.cookedFoodItem);
             }
-            if (entityType.mobType == PrehistoricMobType.BIRD || entityType.mobType == PrehistoricMobType.CHICKEN) {
-                FoodMappings.addEgg(entityType.cultivatedBirdEggItem, 15);
-                if (PrehistoricEntityType.values()[i].mobType != PrehistoricMobType.CHICKEN) {
-                    FoodMappings.addEgg(entityType.birdEggItem, 10);
-                }
+            if (info.mobType == PrehistoricMobType.BIRD) {
+                FoodMappings.addEgg(info.cultivatedBirdEggItem, 15);
+                FoodMappings.addEgg(info.birdEggItem, 10);
+            }
+        }
+        for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
+            if (info.mobType == PrehistoricMobType.VANILLA_BIRD) {
+                FoodMappings.addEgg(info.cultivatedBirdEggItem, 15);
             }
         }
         FoodMappings.addMeat(EntityType.PLAYER, 27);

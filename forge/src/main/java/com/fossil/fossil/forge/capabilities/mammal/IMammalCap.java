@@ -1,6 +1,6 @@
 package com.fossil.fossil.forge.capabilities.mammal;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraftforge.common.util.INBTSerializable;
 import org.jetbrains.annotations.Nullable;
@@ -10,7 +10,7 @@ public interface IMammalCap extends INBTSerializable<CompoundTag> {
 
     void setEmbryoProgress(int progress);
 
-    PrehistoricEntityType getEmbryo();
+    EntityInfo getEmbryo();
 
-    void setEmbryo(@Nullable PrehistoricEntityType embryo);
+    void setEmbryo(@Nullable EntityInfo embryo);
 }

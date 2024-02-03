@@ -1,7 +1,7 @@
 package com.fossil.fossil.item;
 
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class FishEggItem extends PrehistoricEntityItem {
 
-    public FishEggItem(PrehistoricEntityType type) {
+    public FishEggItem(EntityInfo type) {
         super(type);
     }
 

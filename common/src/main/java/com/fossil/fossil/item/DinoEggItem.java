@@ -56,7 +56,7 @@ public class DinoEggItem extends PrehistoricEntityItem {
         if (!level.isEmptyBlock(offset) && !level.getBlockState(offset).canBeReplaced(new BlockPlaceContext(context))) {
             return InteractionResult.FAIL;
         }
-        if (spawnEgg(level, type, offset.getX() + 0.5, offset.getY(), offset.getZ() + 0.5, context.getPlayer())) {
+        if (spawnEgg(level, (PrehistoricEntityType) type, offset.getX() + 0.5, offset.getY(), offset.getZ() + 0.5, context.getPlayer())) {
             if (!context.getPlayer().getAbilities().instabuild) {
                 context.getItemInHand().shrink(1);
             }

@@ -7,6 +7,7 @@ import com.fossil.fossil.block.custom_blocks.AmphoraVaseBlock;
 import com.fossil.fossil.block.custom_blocks.KylixVaseBlock;
 import com.fossil.fossil.block.custom_blocks.VaseBlock;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.forge.data.recipe.AnalyzerRecipeBuilder;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ToyBallItem;
@@ -40,7 +41,7 @@ import java.util.Map;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
-import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType.*;
+import static com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo.*;
 
 public class ModRecipeProvider extends RecipeProvider {
     public static final BlockFamily CALAMITES_PLANKS = new BlockFamily.Builder(ModBlocks.CALAMITES_PLANKS.get()).button(ModBlocks.CALAMITES_BUTTON.get()).fence(ModBlocks.CALAMITES_FENCE.get()).fenceGate(ModBlocks.CALAMITES_FENCE_GATE.get()).pressurePlate(ModBlocks.CALAMITES_PRESSURE_PLATE.get()).slab(ModBlocks.CALAMITES_SLAB.get()).stairs(ModBlocks.CALAMITES_STAIRS.get()).door(ModBlocks.CALAMITES_DOOR.get()).trapdoor(ModBlocks.CALAMITES_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
@@ -119,8 +120,10 @@ public class ModRecipeProvider extends RecipeProvider {
             var fabricEggs = ItemTags.create(new ResourceLocation("c:eggs"));
             var fabricGlass = ItemTags.create(new ResourceLocation("c:glass_blocks"));
             var fabricSlimeBalls = ItemTags.create(new ResourceLocation("c:slime_balls"));
-            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get()).requires(fabricEggs).requires(Items.WHEAT).requires(ModItemTags.BIO_GOO_FLESH).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_fabric");
-            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get()).requires(Tags.Items.EGGS).requires(Items.WHEAT).requires(ModItemTags.BIO_GOO_FLESH).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_forge");
+            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get()).requires(fabricEggs).requires(Items.WHEAT).requires(Items.ROTTEN_FLESH).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_from_rotten_flesh_fabric");
+            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get()).requires(Tags.Items.EGGS).requires(Items.WHEAT).requires(Items.ROTTEN_FLESH).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_from_rotten_flesh_forge");
+            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get(), 4).requires(fabricEggs).requires(Items.WHEAT).requires(ModItems.FAILURESAURUS_FLESH.get()).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_from_failuresaurus_flesh_fabric");
+            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get(), 4).requires(Tags.Items.EGGS).requires(Items.WHEAT).requires(ModItems.FAILURESAURUS_FLESH.get()).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_from_failuresaurus_flesh_forge");
 
             ShapedRecipeBuilder.shaped(ModBlocks.ANALYZER.get()).define('I', Items.IRON_INGOT).define('R', ModItems.RELIC_SCRAP.get()).define('B', ModItems.BIO_FOSSIL.get()).pattern("IRI").pattern("IBI").unlockedBy("has_bio_fossil", RecipeProvider.has(ModItems.BIO_FOSSIL.get())).save(consumer);
             ShapedRecipeBuilder.shaped(ModBlocks.CULTURE_VAT.get()).define('I', Items.IRON_INGOT).define('S', fabricSlimeBalls).define('G', fabricGlass).define('W', Items.WATER_BUCKET).pattern("GSG").pattern("GWG").pattern("III").unlockedBy("has_dna", RecipeProvider.has(ModItemTags.DNA)).save(consumer, Fossil.MOD_ID + ":culture_vat_fabric");
@@ -279,7 +282,7 @@ public class ModRecipeProvider extends RecipeProvider {
 
             AnalyzerRecipeBuilder failuresaurusFlesh = analyzed(ModItems.FAILURESAURUS_FLESH.get())
                     .addOutput(Items.ROTTEN_FLESH, 33);
-            double failuresaurusDNAChance = 67F / PrehistoricEntityType.values().length;
+            double failuresaurusDNAChance = 67F / (PrehistoricEntityType.values().length + VanillaEntityInfo.values().length);
             for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
                 failuresaurusFlesh.addOutput(type.dnaItem, failuresaurusDNAChance);
                 /*if (type.foodItem != null) {
@@ -297,6 +300,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 if (type.embryoItem != null) {
                     analyzed(type.embryoItem).addOutput(type.dnaItem, 100).save(consumer);
                 }*/
+            }
+            for (VanillaEntityInfo info : values()) {
+                failuresaurusFlesh.addOutput(info.dnaItem, failuresaurusDNAChance);
             }
             failuresaurusFlesh.save(consumer);
             AnalyzerRecipeBuilder frozenMeat = analyzed(ModItems.FROZEN_MEAT.get())
@@ -384,6 +390,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
                 .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_smoking");
     }
+
     private void fullOre(ItemLike ingredient, ItemLike result, Consumer<FinishedRecipe> consumer, float exp) {
         SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), result, exp, 200)
                 .unlockedBy(getHasName(ingredient), has(ingredient))
@@ -392,6 +399,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 .unlockedBy(getHasName(ingredient), has(ingredient))
                 .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_blasting_" + getItemName(ingredient));
     }
+
     protected void stonecutter(Consumer<FinishedRecipe> consumer, ItemLike result, ItemLike material) {
         stonecutter(consumer, result, material, 1);
     }

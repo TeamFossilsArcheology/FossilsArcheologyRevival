@@ -3,6 +3,7 @@ package com.fossil.fossil.forge.data.providers;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.PrehistoricPlantType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.BirdEggItem;
 import com.fossil.fossil.item.DinoEggItem;
 import com.fossil.fossil.item.ModItems;
@@ -103,6 +104,14 @@ public class ModItemTagsProvider extends ItemTagsProvider {
                 filterEggs.add(type.spawnEggItem);
             }
         }
+        for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
+            if (info.dnaItem != null) {
+                allDNA.add(info.dnaItem);
+            }
+            if (info.embryoItem != null) {
+                embryos.add(info.embryoItem);
+            }
+        }
         tag(ModItemTags.COOKABLE_EGGS).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);
         tag(ModItemTags.ALL_BONES).addTags(ModItemTags.ARM_BONES, ModItemTags.FOOT_BONES, ModItemTags.LEG_BONES, ModItemTags.RIBCAGE_BONES, ModItemTags.SKULL_BONES, ModItemTags.TAIL_BONES, ModItemTags.UNIQUE_BONES, ModItemTags.VERTEBRAE_BONES);
         tag(ItemTags.MUSIC_DISCS).add(ModItems.RECORD_ANU.get(), ModItems.RECORD_BONES.get(), ModItems.RECORD_DISCOVERY.get(), ModItems.RECORD_SCARAB.get());
@@ -112,7 +121,6 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModBlockTags.SIGILLARIA_LOGS, ModItemTags.SIGILLARIA_LOGS);
         copy(ModBlockTags.TEMPSKYA_LOGS, ModItemTags.TEMPSKYA_LOGS);
         copy(ModBlockTags.FIGURINES, ModItemTags.FIGURINES);
-        tag(ModItemTags.BIO_GOO_FLESH).add(ModItems.FAILURESAURUS_FLESH.get(), Items.ROTTEN_FLESH);
         //Forge Tags
         tag(Tags.Items.EGGS).addTags(ModItemTags.DINO_EGGS);
         tag(Tags.Items.SLIMEBALLS).add(ModItems.TAR_DROP.get());

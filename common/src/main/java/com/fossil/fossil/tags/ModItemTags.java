@@ -39,7 +39,6 @@ public class ModItemTags {
     public static final TagKey<Item> VERTEBRAE_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_vertebrae"));
     public static final TagKey<Item> ALL_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_all"));
     public static final TagKey<Item> UNCOOKED_MEAT = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "meat_uncooked"));
-    public static final TagKey<Item> BIO_GOO_FLESH = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bio_goo_flesh"));
     public static final TagKey<Item> FILTER_BONES = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "filter_bones"));
     public static final TagKey<Item> FILTER_DNA = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "filter_dna"));
     public static final TagKey<Item> FILTER_EGGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "filter_eggs"));

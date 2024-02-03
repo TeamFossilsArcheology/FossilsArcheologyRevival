@@ -1,18 +1,18 @@
 package com.fossil.fossil.forge.capabilities.mammal;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import net.minecraft.nbt.CompoundTag;
 
 public class MammalCap implements IMammalCap {
     private int embryoProgress;
-    private PrehistoricEntityType embryo;
+    private EntityInfo embryo;
 
     @Override
     public CompoundTag serializeNBT() {
         CompoundTag tag = new CompoundTag();
         tag.putInt("embryoProgress", embryoProgress);
         if (embryo != null) {
-            tag.putString("embryo", embryo.name());
+            tag.putString("embryo", embryo.toNbt());
         }
         return tag;
     }
@@ -21,7 +21,7 @@ public class MammalCap implements IMammalCap {
     public void deserializeNBT(CompoundTag tag) {
         setEmbryoProgress(tag.getInt("embryoProgress"));
         try {
-            setEmbryo(PrehistoricEntityType.valueOf(tag.getString("embryo")));
+            setEmbryo(EntityInfo.fromNbt(tag.getString("embryo")));
         } catch (IllegalArgumentException e) {
             setEmbryo(null);
         }
@@ -38,12 +38,12 @@ public class MammalCap implements IMammalCap {
     }
 
     @Override
-    public PrehistoricEntityType getEmbryo() {
+    public EntityInfo getEmbryo() {
         return embryo;
     }
 
     @Override
-    public void setEmbryo(PrehistoricEntityType embryo) {
+    public void setEmbryo(EntityInfo embryo) {
         this.embryo = embryo;
     }
 }

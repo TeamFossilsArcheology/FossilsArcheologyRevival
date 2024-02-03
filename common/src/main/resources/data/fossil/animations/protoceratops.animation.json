@@ -1,0 +1,46 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.protoceratops.walk": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.protoceratops.swim": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.protoceratops.speak": {
+      "animation_length": 2
+    },
+    "animation.protoceratops.attack1": {
+      "animation_length": 1
+    },
+    "animation.protoceratops.eat": {
+      "animation_length": 3
+    },
+    "animation.protoceratops.drink": {
+      "animation_length": 3
+    },
+    "animation.protoceratops.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.protoceratops.sleep/sit": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.protoceratops.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.protoceratops.turn_right": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.protoceratops.call": {
+      "animation_length": 3
+    },
+    "animation.protoceratops.run": {
+      "animation_length": 1
+    }
+  },
+  "geckolib_format_version": 2
+}

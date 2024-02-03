@@ -1,7 +1,7 @@
 package com.fossil.fossil.capabilities.fabric;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.fabric.capabilities.MammalComponent;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
@@ -17,7 +17,7 @@ public class ModCapabilitiesImpl {
         return MAMMAL.get(animal).getEmbryoProgress();
     }
 
-    public static PrehistoricEntityType getEmbryo(Animal animal) {
+    public static EntityInfo getEmbryo(Animal animal) {
         return MAMMAL.get(animal).getEmbryo();
     }
 
@@ -25,11 +25,11 @@ public class ModCapabilitiesImpl {
         MAMMAL.get(animal).setEmbryoProgress(embryoProgress);
     }
 
-    public static void setEmbryo(Animal animal, @Nullable PrehistoricEntityType embryo) {
+    public static void setEmbryo(Animal animal, @Nullable EntityInfo embryo) {
         MAMMAL.get(animal).setEmbryo(embryo);
     }
 
-    public static void syncMammalWithClient(Animal animal, int embryoProgress, PrehistoricEntityType embryo) {
+    public static void syncMammalWithClient(Animal animal, int embryoProgress, EntityInfo embryo) {
         MAMMAL.sync(animal);
     }
 }

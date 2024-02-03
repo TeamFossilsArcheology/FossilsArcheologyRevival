@@ -57,6 +57,12 @@ public class Crassigyrinus extends PrehistoricSwimming {
         return 0.5f;
     }
 
+    //TODO: Bucket
+    /*@Override
+    public @NotNull ItemStack getBucketItemStack() {
+        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
+    }*/
+
     @Override
     public PrehistoricEntityType type() {
         return PrehistoricEntityType.CRASSIGYRINUS;

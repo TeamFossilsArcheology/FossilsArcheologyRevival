@@ -58,6 +58,12 @@ public class Ichthyosaurus extends PrehistoricSwimming {
         return 0.75f;
     }
 
+    //TODO: Bucket
+    /*@Override
+    public @NotNull ItemStack getBucketItemStack() {
+        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
+    }*/
+
     @Override
     public PrehistoricEntityType type() {
         return PrehistoricEntityType.ICHTHYOSAURUS;
