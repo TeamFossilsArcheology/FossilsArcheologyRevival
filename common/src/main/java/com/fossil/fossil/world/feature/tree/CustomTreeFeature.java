@@ -11,11 +11,11 @@ import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.TreeFeature;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
 
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public abstract class CustomTreeFeature extends Feature<NoneFeatureConfiguration> {
-    private final Map<BlockPos, BlockState> placedLeaves = new HashMap<>();
+    private final Map<BlockPos, BlockState> placedLeaves = new LinkedHashMap<>();
 
     public CustomTreeFeature() {
         super(NoneFeatureConfiguration.CODEC);

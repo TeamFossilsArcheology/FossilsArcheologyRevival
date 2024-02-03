@@ -22,6 +22,7 @@ public class CalamitesTreeFeature extends CustomTreeFeature {
             return false;
         }
         BlockState log = ModBlocks.CALAMITES_LOG.get().defaultBlockState();
+        BlockState leaves = ModBlocks.CALAMITES_LEAVES.get().defaultBlockState();
 
         BlockPos canopyCenter = pos.above();
         int minWidth = 2;
@@ -30,10 +31,10 @@ public class CalamitesTreeFeature extends CustomTreeFeature {
         while (canopyCenter.getY() < pos.above(treeHeight - 1).getY()) {
             int difference = pos.above(treeHeight).getY() - canopyCenter.getY();
             float canopyWidth = minWidth + (widthStep * difference);
-            canopyCenter = canopyCenter.above(4);
-            genCircle(level, canopyCenter, canopyWidth - 2, false);
-            genCircle(level, canopyCenter.above(), canopyWidth - 1, false);
             if (difference > 4) {
+                canopyCenter = canopyCenter.above(4);
+                genCircle(level, canopyCenter, canopyWidth - 2, false);
+                genCircle(level, canopyCenter.above(), canopyWidth - 1, false);
                 level.setBlock(canopyCenter.north(), log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.Z), 19);
                 level.setBlock(canopyCenter.west(), log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
                 level.setBlock(canopyCenter.east(), log.setValue(RotatedPillarBlock.AXIS, Direction.Axis.X), 19);
@@ -41,9 +42,16 @@ public class CalamitesTreeFeature extends CustomTreeFeature {
                 genCircle(level, canopyCenter.above(2), canopyWidth, true);
                 genCircle(level, canopyCenter.above(3), canopyWidth + 1, true);
             } else {
-                level.setBlock(canopyCenter, log, 19);
-                level.setBlock(canopyCenter.above(), log, 19);
-                level.setBlock(canopyCenter.below(), log, 19);
+                BlockPos.MutableBlockPos topBlocks = canopyCenter.above(difference).mutable();
+                level.setBlock(topBlocks, log, 19);
+                level.setBlock(topBlocks.move(Direction.UP, 1), log, 19);
+                level.setBlock(topBlocks.move(Direction.UP, 1), log, 19);
+                placeLeaf(level, topBlocks.north(), leaves);
+                placeLeaf(level, topBlocks.west(), leaves);
+                placeLeaf(level, topBlocks.east(), leaves);
+                placeLeaf(level, topBlocks.south(), leaves);
+                placeLeaf(level, topBlocks.move(Direction.UP, 1), leaves);
+                canopyCenter = canopyCenter.above(4);
             }
         }
         for (int i = 0; i < treeHeight; ++i) {
@@ -54,17 +62,16 @@ public class CalamitesTreeFeature extends CustomTreeFeature {
 
     private void genCircle(WorldGenLevel level, BlockPos pos, float size, boolean spikes) {
         BlockState leaves = ModBlocks.CALAMITES_LEAVES.get().defaultBlockState();
-        float f = size;
         for (BlockPos blockpos : BlockPos.betweenClosed(pos.offset(-size, 0, -size), pos.offset(size, 0, size))) {
             int distanceX = Math.abs(blockpos.getX() - pos.getX());
             int distanceZ = Math.abs(blockpos.getZ() - pos.getZ());
-            boolean corner = blockpos.getX() == pos.getX() || blockpos.getZ() == pos.getZ() || distanceX == distanceZ;
             if (spikes) {
-                if (corner && blockpos.distSqr(pos) > (double) (f - 1) * (f - 1) && blockpos.distSqr(pos) <= (double) (f * f)) {
+                boolean corner = blockpos.getX() == pos.getX() || blockpos.getZ() == pos.getZ() || distanceX == distanceZ;
+                if (corner && blockpos.distSqr(pos) > (double) (size - 1) * (size - 1) && blockpos.distSqr(pos) <= size * size) {
                     placeLeaf(level, blockpos, leaves);
                 }
             } else {
-                if (blockpos.distSqr(pos) <= (double) (f * f)) {
+                if (blockpos.distSqr(pos) <= size * size) {
                     placeLeaf(level, blockpos, leaves);
                 }
             }
