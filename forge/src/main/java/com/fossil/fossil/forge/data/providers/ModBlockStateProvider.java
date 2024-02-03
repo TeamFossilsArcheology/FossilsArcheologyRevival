@@ -120,7 +120,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
             fenceBlock(ModBlocks.CALAMITES_FENCE.get(), calamites);
             fenceGateBlock(ModBlocks.CALAMITES_FENCE_GATE.get(), calamites);
             doorBlock(ModBlocks.CALAMITES_DOOR.get());
-            trapdoorBlock(ModBlocks.CALAMITES_TRAPDOOR.get());
+            trapdoorBlock(ModBlocks.CALAMITES_TRAPDOOR.get(), true);
             buttonBlock(ModBlocks.CALAMITES_BUTTON.get(), calamites);
             pressurePlateBlock(ModBlocks.CALAMITES_PRESSURE_PLATE.get(), calamites);
             logBlock(ModBlocks.CALAMITES_LOG.get());
@@ -137,7 +137,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
             fenceBlock(ModBlocks.CORDAITES_FENCE.get(), cordaites);
             fenceGateBlock(ModBlocks.CORDAITES_FENCE_GATE.get(), cordaites);
             doorBlock(ModBlocks.CORDAITES_DOOR.get());
-            trapdoorBlock(ModBlocks.CORDAITES_TRAPDOOR.get());
+            trapdoorBlock(ModBlocks.CORDAITES_TRAPDOOR.get(), true);
             buttonBlock(ModBlocks.CORDAITES_BUTTON.get(), cordaites);
             pressurePlateBlock(ModBlocks.CORDAITES_PRESSURE_PLATE.get(), cordaites);
             logBlock(ModBlocks.CORDAITES_LOG.get());
@@ -154,7 +154,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
             fenceBlock(ModBlocks.MUTANT_TREE_FENCE.get(), mutantTree);
             fenceGateBlock(ModBlocks.MUTANT_TREE_FENCE_GATE.get(), mutantTree);
             doorBlock(ModBlocks.MUTANT_TREE_DOOR.get());
-            trapdoorBlock(ModBlocks.MUTANT_TREE_TRAPDOOR.get());
+            trapdoorBlock(ModBlocks.MUTANT_TREE_TRAPDOOR.get(), true);
             buttonBlock(ModBlocks.MUTANT_TREE_BUTTON.get(), mutantTree);
             pressurePlateBlock(ModBlocks.MUTANT_TREE_PRESSURE_PLATE.get(), mutantTree);
             logBlock(ModBlocks.MUTANT_TREE_LOG.get());
@@ -171,7 +171,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
             fenceBlock(ModBlocks.PALM_FENCE.get(), palm);
             fenceGateBlock(ModBlocks.PALM_FENCE_GATE.get(), palm);
             doorBlock(ModBlocks.PALM_DOOR.get());
-            trapdoorBlock(ModBlocks.PALM_TRAPDOOR.get());
+            trapdoorBlock(ModBlocks.PALM_TRAPDOOR.get(), true);
             buttonBlock(ModBlocks.PALM_BUTTON.get(), palm);
             pressurePlateBlock(ModBlocks.PALM_PRESSURE_PLATE.get(), palm);
             logBlock(ModBlocks.PALM_LOG.get());
@@ -188,7 +188,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
             fenceBlock(ModBlocks.SIGILLARIA_FENCE.get(), sigillaria);
             fenceGateBlock(ModBlocks.SIGILLARIA_FENCE_GATE.get(), sigillaria);
             doorBlock(ModBlocks.SIGILLARIA_DOOR.get());
-            trapdoorBlock(ModBlocks.SIGILLARIA_TRAPDOOR.get());
+            trapdoorBlock(ModBlocks.SIGILLARIA_TRAPDOOR.get(), true);
             buttonBlock(ModBlocks.SIGILLARIA_BUTTON.get(), sigillaria);
             pressurePlateBlock(ModBlocks.SIGILLARIA_PRESSURE_PLATE.get(), sigillaria);
             logBlock(ModBlocks.SIGILLARIA_LOG.get());
@@ -205,7 +205,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
             fenceBlock(ModBlocks.TEMPSKYA_FENCE.get(), tempskya);
             fenceGateBlock(ModBlocks.TEMPSKYA_FENCE_GATE.get(), tempskya);
             doorBlock(ModBlocks.TEMPSKYA_DOOR.get());
-            trapdoorBlock(ModBlocks.TEMPSKYA_TRAPDOOR.get());
+            trapdoorBlock(ModBlocks.TEMPSKYA_TRAPDOOR.get(), true);
             buttonBlock(ModBlocks.TEMPSKYA_BUTTON.get(), tempskya);
             pressurePlateBlock(ModBlocks.TEMPSKYA_PRESSURE_PLATE.get(), tempskya);
             logBlock(ModBlocks.TEMPSKYA_LOG.get());
@@ -228,12 +228,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
         axisBlock(block, wood, wood);
     }
 
+    @Override
     public void logBlock(RotatedPillarBlock block) {
         itemModels().blockItem(block.getRegistryName());
         models().registerExistingTexture(new ResourceLocation(Fossil.MOD_ID, blockTexture(block).getPath() + "_top"));
         super.logBlock(block);
     }
 
+    @Override
     public void simpleBlock(Block block) {
         itemModels().blockItem(block.getRegistryName());
         super.simpleBlock(block);
@@ -254,6 +256,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .partialState().with(SlabBlock.TYPE, SlabType.DOUBLE).addModels(new ConfiguredModel(models().getExistingFile(texture)));
     }
 
+    @Override
     public void wallBlock(WallBlock block, ResourceLocation texture) {
         itemModels().blockItem(block.getRegistryName(), "_inventory");
         models().singleTexture("block/" + block.getRegistryName().getPath() + "_inventory", mcLoc("wall_inventory"), "wall", texture);
@@ -286,10 +289,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         super.doorBlock(block, bottom, top);
     }
 
-    public void trapdoorBlock(TrapDoorBlock block) {
+    public void trapdoorBlock(TrapDoorBlock block, boolean orientable) {
         itemModels().blockItem(block.getRegistryName(), "_bottom");
         models().registerExistingTexture(blockTexture(block));
-        super.trapdoorBlock(block, blockTexture(block), false);
+        super.trapdoorBlock(block, blockTexture(block), orientable);
     }
 
     @Override
