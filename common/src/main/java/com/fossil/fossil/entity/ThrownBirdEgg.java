@@ -26,7 +26,7 @@ import net.minecraft.world.phys.HitResult;
 import org.jetbrains.annotations.NotNull;
 
 public class ThrownBirdEgg extends ThrowableItemProjectile {
-    private EntityInfo type;
+    private EntityInfo info;
     private boolean cultivated;
 
     public ThrownBirdEgg(EntityType<? extends ThrownBirdEgg> entityType, Level level) {
@@ -42,13 +42,13 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
         this.cultivated = cultivated;
     }
 
-    public static AbstractProjectileDispenseBehavior getProjectile(EntityInfo type, boolean cultivated) {
+    public static AbstractProjectileDispenseBehavior getProjectile(EntityInfo info, boolean cultivated) {
         return new AbstractProjectileDispenseBehavior() {
             @Override
             protected @NotNull Projectile getProjectile(Level level, Position position, ItemStack stack) {
                 return Util.make(new ThrownBirdEgg(level, position.x(), position.y(), position.z(), cultivated), thrownEgg -> {
                     thrownEgg.setItem(stack);
-                    thrownEgg.setType(type);
+                    thrownEgg.setType(info);
                 });
             }
         };
@@ -58,8 +58,8 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
         return new ThrownBirdEgg(player, level);
     }
 
-    public void setType(EntityInfo type) {
-        this.type = type;
+    public void setType(EntityInfo info) {
+        this.info = info;
     }
 
     public void setCultivated(boolean cultivated) {
@@ -94,9 +94,9 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
     }
 
     private void spawnAnimal(int amount) {
-        if (type.mobType() != PrehistoricMobType.VANILLA_BIRD) {
+        if (info.mobType() != PrehistoricMobType.VANILLA_BIRD) {
             for (int i = 0; i < amount; ++i) {
-                Prehistoric entity = (Prehistoric) type.entityType().create(level);
+                Prehistoric entity = (Prehistoric) info.entityType().create(level);
                 entity.setAgeInDays(0);
                 entity.moveTo(getX(), getY(), getZ(), getYRot(), 0);
                 level.addFreshEntity(entity);
@@ -108,7 +108,7 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
         } else {
             for (int i = 0; i < amount; ++i) {
                 AgeableMob entity;
-                if (type == VanillaEntityInfo.PARROT) {
+                if (info == VanillaEntityInfo.PARROT) {
                     entity = EntityType.PARROT.create(level);
                     entity.finalizeSpawn((ServerLevel) level, level.getCurrentDifficultyAt(blockPosition()), MobSpawnType.BREEDING, null, null);
                 } else {

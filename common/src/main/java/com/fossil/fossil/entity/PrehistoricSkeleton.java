@@ -2,7 +2,7 @@ package com.fossil.fossil.entity;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.TimePeriod;
 import dev.architectury.networking.NetworkManager;
@@ -49,7 +49,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     @Override
     protected void defineSynchedData() {
         entityData.define(AGE, 0);
-        entityData.define(TYPE, PrehistoricEntityType.TRICERATOPS.name());
+        entityData.define(TYPE, PrehistoricEntityInfo.TRICERATOPS.name());
     }
 
     @Override
@@ -69,12 +69,12 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
 
     @Override
     protected @NotNull AABB makeBoundingBox() {
-        return type().entityType().getDimensions().scale(getScale()).makeBoundingBox(position());
+        return info().entityType().getDimensions().scale(getScale()).makeBoundingBox(position());
     }
 
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
-        return type().entityType().getDimensions().scale(getScale());
+        return info().entityType().getDimensions().scale(getScale());
     }
 
     @Override
@@ -105,7 +105,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
         if (amount > 0) {
             level.playSound(null, blockPosition(), SoundEvents.SKELETON_HURT, SoundSource.NEUTRAL, 1, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.5f);
             if (!level.isClientSide && !droppedBiofossil) {
-                if (type().timePeriod == TimePeriod.CENOZOIC) {
+                if (info().timePeriod == TimePeriod.CENOZOIC) {
                     spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
                 } else {
                     spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
@@ -132,7 +132,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
         if (!level.isClientSide) {
             return;
         }
-        String name = type().resourceName;
+        String name = info().resourceName;
         textureLocation = new ResourceLocation(Fossil.MOD_ID, "textures/entity/" + name + "/" + name + "_skeleton.png");
         modelLocation = new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + name + ".geo.json");
     }
@@ -167,17 +167,17 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
         entityData.set(AGE, age);
     }
 
-    public void setType(PrehistoricEntityType type) {
-        entityData.set(TYPE, type.name());
+    public void setType(PrehistoricEntityInfo info) {
+        entityData.set(TYPE, info.name());
     }
 
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.valueOf(entityData.get(TYPE));
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.valueOf(entityData.get(TYPE));
     }
 
 
     public EntityDataManager.Data data() {
-        return EntityDataManager.ENTITY_DATA.getData(type().resourceName);
+        return EntityDataManager.ENTITY_DATA.getData(info().resourceName);
     }
 
     @Override

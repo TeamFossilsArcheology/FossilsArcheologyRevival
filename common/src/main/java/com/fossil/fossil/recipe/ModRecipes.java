@@ -2,10 +2,10 @@ package com.fossil.fossil.recipe;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Version;
@@ -50,59 +50,59 @@ public class ModRecipes {
     }
 
     public static void initRecipes() {
-        for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.armBoneItem)
+        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.entitiesWithBones()) {
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.armBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.footBoneItem)
+                    .addOutput(info.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.footBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
+                    .addOutput(info.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.legBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.legBoneItem)
+                    .addOutput(info.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.legBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.ribcageBoneItem)
+                    .addOutput(info.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.ribcageBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.skullBoneItem)
+                    .addOutput(info.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.skullBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.tailBoneItem)
+                    .addOutput(info.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.tailBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.uniqueBoneItem)
+                    .addOutput(info.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.uniqueBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
-            registerAnalyzer(new AnalyzerRecipe.Builder(type.vertebraeBoneItem)
+                    .addOutput(info.dnaItem, 35));
+            registerAnalyzer(new AnalyzerRecipe.Builder(info.vertebraeBoneItem)
                     .addOutput(Items.BONE_MEAL, 30)
                     .addOutput(Items.BONE, 35)
-                    .addOutput(type.dnaItem, 35));
+                    .addOutput(info.dnaItem, 35));
         }
-        for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
-            if (type.foodItem != null) {
-                registerAnalyzer(new AnalyzerRecipe.Builder(type.foodItem).addOutput(type.dnaItem, 100));
+        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
+            if (info.foodItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(info.foodItem).addOutput(info.dnaItem, 100));
             }
-            if (type.eggItem != null) {
-                registerAnalyzer(new AnalyzerRecipe.Builder(type.eggItem).addOutput(type.dnaItem, 100));
+            if (info.eggItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(info.eggItem).addOutput(info.dnaItem, 100));
             }
-            if (type.birdEggItem != null) {
-                registerAnalyzer(new AnalyzerRecipe.Builder(type.birdEggItem).addOutput(type.dnaItem, 100));
+            if (info.birdEggItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(info.birdEggItem).addOutput(info.dnaItem, 100));
             }
-            if (type.cultivatedBirdEggItem != null) {
-                registerAnalyzer(new AnalyzerRecipe.Builder(type.cultivatedBirdEggItem).addOutput(type.dnaItem, 100));
+            if (info.cultivatedBirdEggItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(info.cultivatedBirdEggItem).addOutput(info.dnaItem, 100));
             }
-            if (type.embryoItem != null) {
-                registerAnalyzer(new AnalyzerRecipe.Builder(type.embryoItem).addOutput(type.dnaItem, 100));
+            if (info.embryoItem != null) {
+                registerAnalyzer(new AnalyzerRecipe.Builder(info.embryoItem).addOutput(info.dnaItem, 100));
             }
         }
         for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
@@ -163,9 +163,9 @@ public class ModRecipes {
         registerWorktable(ModItems.DIAMOND_JAVELIN.get(), ModItems.DIAMOND_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
         registerWorktable(ModItems.ANCIENT_JAVELIN.get(), ModItems.ANCIENT_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
 
-        for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
-            if (type.dnaItem != null) {
-                registerCultureVat(type.dnaItem, type.getDNAResult(), ModItems.BIO_GOO.get());
+        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
+            if (info.dnaItem != null) {
+                registerCultureVat(info.dnaItem, info.getDNAResult(), ModItems.BIO_GOO.get());
             }
         }
         for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
@@ -179,8 +179,8 @@ public class ModRecipes {
         registerCultureVat(ModItems.PALM_SAPLING_FOSSIL.get(), ModBlocks.PALM_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultureVat(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
         registerCultureVat(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), ModBlocks.TEMPSKYA_SAPLING.get(), ModItems.BIO_GOO.get());
-        for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-            registerCultureVat(type.getFossilizedPlantSeedItem(), type.getPlantSeedItem(), ModItems.BIO_GOO.get());
+        for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
+            registerCultureVat(info.getFossilizedPlantSeedItem(), info.getPlantSeedItem(), ModItems.BIO_GOO.get());
         }
     }
 

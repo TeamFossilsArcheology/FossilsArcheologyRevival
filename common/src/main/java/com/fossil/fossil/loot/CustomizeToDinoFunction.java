@@ -33,7 +33,7 @@ public class CustomizeToDinoFunction extends LootItemConditionalFunction {
             if (entity instanceof Prehistoric prehistoric) {
                 if (stack.is(ModItemTags.UNCOOKED_MEAT)) {
                     stack.setCount(Math.min(prehistoric.getAgeInDays(), prehistoric.data().adultAgeDays()));
-                    return prehistoric.isOnFire() ? new ItemStack(prehistoric.type().cookedFoodItem, stack.getCount()) : stack;
+                    return prehistoric.isOnFire() ? new ItemStack(prehistoric.info().cookedFoodItem, stack.getCount()) : stack;
                 }
             }
         }

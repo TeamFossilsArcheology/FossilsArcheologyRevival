@@ -1,6 +1,6 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.item.ModItems;
 import net.minecraft.world.entity.EntityType;
@@ -29,8 +29,8 @@ public class Sturgeon extends PrehistoricFish {
     }
 
     @Override
-    public @NotNull PrehistoricEntityType type() {
-        return PrehistoricEntityType.STURGEON;
+    public @NotNull PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.STURGEON;
     }
 
     @Override

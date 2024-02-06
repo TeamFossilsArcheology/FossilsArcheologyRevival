@@ -4,7 +4,7 @@ import com.fossil.fossil.util.DinopediaInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
-public class PrehistoricEntityTypeAI {
+public class PrehistoricEntityInfoAI {
     public enum Moving {
         WALK, FLIGHT, AQUATIC, SEMI_AQUATIC, WALK_AND_GLIDE
     }

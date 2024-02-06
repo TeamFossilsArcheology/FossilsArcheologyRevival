@@ -1,6 +1,6 @@
 package com.fossil.fossil.client.gui.filters;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ModTabs;
 import dev.architectury.event.EventResult;
@@ -24,10 +24,10 @@ public class CreativeTabFilters {
 
     public static void register() {
         NonNullList<Filter> filters = NonNullList.create();
-        filters.add(new Filter("filter_bones", new ItemStack(PrehistoricEntityType.TRICERATOPS.skullBoneItem)));
-        filters.add(new Filter("filter_dna", new ItemStack(PrehistoricEntityType.TRICERATOPS.dnaItem)));
-        filters.add(new Filter("filter_eggs", new ItemStack(PrehistoricEntityType.TRICERATOPS.spawnEggItem)));
-        filters.add(new Filter("filter_meat", new ItemStack(PrehistoricEntityType.TRICERATOPS.foodItem)));
+        filters.add(new Filter("filter_bones", new ItemStack(PrehistoricEntityInfo.TRICERATOPS.skullBoneItem)));
+        filters.add(new Filter("filter_dna", new ItemStack(PrehistoricEntityInfo.TRICERATOPS.dnaItem)));
+        filters.add(new Filter("filter_eggs", new ItemStack(PrehistoricEntityInfo.TRICERATOPS.spawnEggItem)));
+        filters.add(new Filter("filter_meat", new ItemStack(PrehistoricEntityInfo.TRICERATOPS.foodItem)));
         filters.add(new Filter("filter_plants", new ItemStack(ModItems.FERN_SEED.get())));
         ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {

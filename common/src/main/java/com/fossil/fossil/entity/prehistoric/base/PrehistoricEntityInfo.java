@@ -28,7 +28,7 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public enum PrehistoricEntityType implements EntityInfo {
+public enum PrehistoricEntityInfo implements EntityInfo {
     ALLIGATOR_GAR(ModEntities.ALLIGATOR_GAR, PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE, 0X43462A, 0XAF4231),
     ALLOSAURUS(ModEntities.ALLOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0X907B6C, 0X5F422D),
     ANKYLOSAURUS(ModEntities.ANKYLOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, 0X8A5B49, 0X211B13),
@@ -84,8 +84,8 @@ public enum PrehistoricEntityType implements EntityInfo {
     TROPEOGNATHUS(ModEntities.TROPEOGNATHUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0XD6D6D6, 0X3B3B3B),
     TYRANNOSAURUS(ModEntities.TYRANNOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0X9D8A74, 0X4C3116),
     VELOCIRAPTOR(ModEntities.VELOCIRAPTOR, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, 0.5f, 0X4A0D04, 0XC9C9C9);
-    private static List<PrehistoricEntityType> boneCache;
-    private static List<PrehistoricEntityType> dnaCache;
+    private static List<PrehistoricEntityInfo> boneCache;
+    private static List<PrehistoricEntityInfo> dnaCache;
     public final PrehistoricMobType mobType;
     public final TimePeriod timePeriod;
     public final Diet diet;
@@ -112,11 +112,11 @@ public enum PrehistoricEntityType implements EntityInfo {
     public Item cookedFoodItem;
     public Item spawnEggItem;
 
-    PrehistoricEntityType(@NotNull RegistrySupplier<? extends EntityType<? extends Mob>> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, int backgroundEggColor, int highlightEggColor) {
+    PrehistoricEntityInfo(@NotNull RegistrySupplier<? extends EntityType<? extends Mob>> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, int backgroundEggColor, int highlightEggColor) {
         this(entity, mobType, timePeriod, diet, 1, backgroundEggColor, highlightEggColor);
     }
 
-    PrehistoricEntityType(@NotNull RegistrySupplier<? extends EntityType<? extends Mob>> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, float eggScale, int backgroundEggColor, int highlightEggColor) {
+    PrehistoricEntityInfo(@NotNull RegistrySupplier<? extends EntityType<? extends Mob>> entity, PrehistoricMobType mobType, TimePeriod timePeriod, Diet diet, float eggScale, int backgroundEggColor, int highlightEggColor) {
         this.entitySupplier = entity;
         this.mobType = mobType;
         this.timePeriod = timePeriod;
@@ -129,67 +129,67 @@ public enum PrehistoricEntityType implements EntityInfo {
     }
 
     public static void register() {
-        for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
-            ModItems.ITEMS.register(type.resourceName + "_dna", () -> new DNAItem(type)).listen(item -> type.dnaItem = item);
-            if (type.hasBones()) {
-                DinoBoneItem.registerItem("bone_arm", type, item -> type.armBoneItem = item);
-                DinoBoneItem.registerItem("bone_foot", type, item -> type.footBoneItem = item);
-                DinoBoneItem.registerItem("bone_leg", type, item -> type.legBoneItem = item);
-                DinoBoneItem.registerItem("bone_ribcage", type, item -> type.ribcageBoneItem = item);
-                DinoBoneItem.registerItem("bone_skull", type, item -> type.skullBoneItem = item);
-                DinoBoneItem.registerItem("bone_tail", type, item -> type.tailBoneItem = item);
-                DinoBoneItem.registerItem("bone_unique", type, item -> type.uniqueBoneItem = item);
-                DinoBoneItem.registerItem("bone_vertebrae", type, item -> type.vertebraeBoneItem = item);
+        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
+            ModItems.ITEMS.register(info.resourceName + "_dna", () -> new DNAItem(info)).listen(item -> info.dnaItem = item);
+            if (info.hasBones()) {
+                DinoBoneItem.registerItem("bone_arm", info, item -> info.armBoneItem = item);
+                DinoBoneItem.registerItem("bone_foot", info, item -> info.footBoneItem = item);
+                DinoBoneItem.registerItem("bone_leg", info, item -> info.legBoneItem = item);
+                DinoBoneItem.registerItem("bone_ribcage", info, item -> info.ribcageBoneItem = item);
+                DinoBoneItem.registerItem("bone_skull", info, item -> info.skullBoneItem = item);
+                DinoBoneItem.registerItem("bone_tail", info, item -> info.tailBoneItem = item);
+                DinoBoneItem.registerItem("bone_unique", info, item -> info.uniqueBoneItem = item);
+                DinoBoneItem.registerItem("bone_vertebrae", info, item -> info.vertebraeBoneItem = item);
             }
-            if (type.mobType == PrehistoricMobType.FISH) {
+            if (info.mobType == PrehistoricMobType.FISH) {
                 //TODO: Define value somewhere. Also should all dinos be added here?
-                type.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));
-                registerItem("egg_item", type, properties -> new FishEggItem(type), item -> type.eggItem = item);
-            } else if (type.mobType == PrehistoricMobType.DINOSAUR || type.mobType == PrehistoricMobType.DINOSAUR_AQUATIC) {
-                type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
-                registerItem("egg_item", type, p -> new DinoEggItem(type), item -> type.eggItem = item);
-            } else if (type.mobType == PrehistoricMobType.MAMMAL) {
-                registerItem("syringe", type, properties -> new MammalEmbryoItem(type), item -> type.embryoItem = item);
-            } else if (type.mobType == PrehistoricMobType.BIRD) {
-                type.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
-                registerItem("egg", type, properties -> new BirdEggItem(type, false), item -> type.birdEggItem = item);
-                registerItem("egg_item", type, properties -> new BirdEggItem(type, true), item -> type.cultivatedBirdEggItem = item);
+                info.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));
+                registerItem("egg_item", info, properties -> new FishEggItem(info), item -> info.eggItem = item);
+            } else if (info.mobType == PrehistoricMobType.DINOSAUR || info.mobType == PrehistoricMobType.DINOSAUR_AQUATIC) {
+                info.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
+                registerItem("egg_item", info, p -> new DinoEggItem(info), item -> info.eggItem = item);
+            } else if (info.mobType == PrehistoricMobType.MAMMAL) {
+                registerItem("syringe", info, properties -> new MammalEmbryoItem(info), item -> info.embryoItem = item);
+            } else if (info.mobType == PrehistoricMobType.BIRD) {
+                info.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
+                registerItem("egg", info, properties -> new BirdEggItem(info, false), item -> info.birdEggItem = item);
+                registerItem("egg_item", info, properties -> new BirdEggItem(info, true), item -> info.cultivatedBirdEggItem = item);
             }
-            ModItems.ITEMS.register("meat_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
+            ModItems.ITEMS.register("meat_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
                             .food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3f).build())))
-                    .listen(item -> type.foodItem = item);
+                    .listen(item -> info.foodItem = item);
 
-            ModItems.ITEMS.register("cooked_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
-                            .food(new FoodProperties.Builder().nutrition(8).saturationMod(type == NAUTILUS ? 2 : 0.8f).build())))
-                    .listen(item -> type.cookedFoodItem = item);
-            registerItem("spawn_egg", type, properties -> new ArchitecturySpawnEggItem(type.entitySupplier, type.backgroundEggColor, type.highlightEggColor, properties), item -> type.spawnEggItem = item);
+            ModItems.ITEMS.register("cooked_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
+                            .food(new FoodProperties.Builder().nutrition(8).saturationMod(info == NAUTILUS ? 2 : 0.8f).build())))
+                    .listen(item -> info.cookedFoodItem = item);
+            registerItem("spawn_egg", info, properties -> new ArchitecturySpawnEggItem(info.entitySupplier, info.backgroundEggColor, info.highlightEggColor, properties), item -> info.spawnEggItem = item);
         }
     }
 
-    private static void registerItem(String name, PrehistoricEntityType type, Function<Item.Properties, Item> item, Consumer<Item> listener) {
-        ModItems.ITEMS.register(name + "_" + type.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FAITEMTAB))).listen(listener);
+    private static void registerItem(String name, PrehistoricEntityInfo info, Function<Item.Properties, Item> item, Consumer<Item> listener) {
+        ModItems.ITEMS.register(name + "_" + info.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FAITEMTAB))).listen(listener);
     }
 
-    public static List<PrehistoricEntityType> getTimePeriodList(TimePeriod... periods) {
-        List<PrehistoricEntityType> list = new ArrayList<>();
-        for (PrehistoricEntityType entity : PrehistoricEntityType.values()) {
+    public static List<PrehistoricEntityInfo> getTimePeriodList(TimePeriod... periods) {
+        List<PrehistoricEntityInfo> list = new ArrayList<>();
+        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
             for (TimePeriod period : periods) {
-                if (entity.timePeriod == period) {
-                    list.add(entity);
+                if (info.timePeriod == period) {
+                    list.add(info);
                 }
             }
         }
         return list;
     }
 
-    public static List<PrehistoricEntityType> entitiesWithBones() {
+    public static List<PrehistoricEntityInfo> entitiesWithBones() {
         if (boneCache == null) {
-            boneCache = Arrays.stream(values()).filter(PrehistoricEntityType::hasBones).toList();
+            boneCache = Arrays.stream(values()).filter(PrehistoricEntityInfo::hasBones).toList();
         }
         return boneCache;
     }
 
-    public static List<PrehistoricEntityType> entitiesWithSkeleton(TimePeriod... periods) {
+    public static List<PrehistoricEntityInfo> entitiesWithSkeleton(TimePeriod... periods) {
         return Arrays.stream(values()).filter(type -> {
             if (type.mobType == PrehistoricMobType.FISH || type == QUAGGA) {
                 return false;
@@ -208,7 +208,7 @@ public enum PrehistoricEntityType implements EntityInfo {
         }
         return !className.isEmpty() && (mob instanceof Cow || mob instanceof Sheep || mob instanceof Pig || mob instanceof Chicken
                 || mob instanceof Rabbit || mob instanceof AbstractHorse || mob instanceof Prehistoric prehistoric &&
-                prehistoric.type().mobType == PrehistoricMobType.MAMMAL || mob instanceof PolarBear || mob instanceof Wolf || mob instanceof Ocelot
+                prehistoric.info().mobType == PrehistoricMobType.MAMMAL || mob instanceof PolarBear || mob instanceof Wolf || mob instanceof Ocelot
                 || mob instanceof Bat || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig")
                 || className.contains("Rabbit") || className.contains("Goat") || className.contains("Ferret") || className.contains("Hedgehog")
                 || className.contains("Sow") || className.contains("Hog"));
@@ -234,11 +234,6 @@ public enum PrehistoricEntityType implements EntityInfo {
             return cultivatedBirdEggItem;
         }
         return null;
-    }
-
-    @Override
-    public String toNbt() {
-        return name();
     }
 
     public boolean hasBones() {

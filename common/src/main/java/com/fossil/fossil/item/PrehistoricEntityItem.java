@@ -4,10 +4,10 @@ import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import net.minecraft.world.item.Item;
 
 public class PrehistoricEntityItem extends Item {
-    protected final EntityInfo type;
+    protected final EntityInfo info;
 
-    public PrehistoricEntityItem(EntityInfo type) {
+    public PrehistoricEntityItem(EntityInfo info) {
         super(new Properties().tab(ModTabs.FAITEMTAB));
-        this.type = type;
+        this.info = info;
     }
 }

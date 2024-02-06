@@ -371,7 +371,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public boolean canBeControlledByRider() {
-        return type().isVivariousAquatic() ? isInWater() && super.canBeControlledByRider() : super.canBeControlledByRider();
+        return info().isVivariousAquatic() ? isInWater() && super.canBeControlledByRider() : super.canBeControlledByRider();
     }
 
     public boolean isEntitySubmerged(LivingEntity entity) {

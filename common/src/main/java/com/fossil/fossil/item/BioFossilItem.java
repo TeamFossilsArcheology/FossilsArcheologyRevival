@@ -3,7 +3,7 @@ package com.fossil.fossil.item;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.PrehistoricSkeleton;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.util.TimePeriod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -38,19 +38,19 @@ public class BioFossilItem extends Item {
             return InteractionResult.FAIL;
         }
         Level level = context.getLevel();
-        List<PrehistoricEntityType> entityTypes;
+        List<PrehistoricEntityInfo> entityInfos;
         if (isTar) {
-            entityTypes = PrehistoricEntityType.entitiesWithSkeleton(TimePeriod.CENOZOIC);
+            entityInfos = PrehistoricEntityInfo.entitiesWithSkeleton(TimePeriod.CENOZOIC);
         } else {
-            entityTypes = PrehistoricEntityType.entitiesWithSkeleton(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
+            entityInfos = PrehistoricEntityInfo.entitiesWithSkeleton(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
         }
-        PrehistoricEntityType type = entityTypes.get(level.getRandom().nextInt(entityTypes.size()));
-        if (type == null) {
+        PrehistoricEntityInfo info = entityInfos.get(level.getRandom().nextInt(entityInfos.size()));
+        if (info == null) {
             return InteractionResult.FAIL;
         }
         BlockPos blockPos = new BlockPlaceContext(context).getClickedPos();
         Vec3 vec3 = Vec3.atBottomCenterOf(blockPos);
-        AABB aABB = type.entityType().getDimensions().scale(EntityDataManager.ENTITY_DATA.getData(type.resourceName).minScale()).makeBoundingBox(vec3.x, vec3.y, vec3.z);
+        AABB aABB = info.entityType().getDimensions().scale(EntityDataManager.ENTITY_DATA.getData(info.resourceName).minScale()).makeBoundingBox(vec3.x, vec3.y, vec3.z);
         if (!level.noCollision(null, aABB) || !level.getEntities(null, aABB).isEmpty()) {
             return InteractionResult.FAIL;
         }
@@ -60,7 +60,7 @@ public class BioFossilItem extends Item {
                 return InteractionResult.FAIL;
             }
             fossil.moveTo(fossil.getX(), fossil.getY(), fossil.getZ(), -context.getPlayer().yHeadRot, 0);
-            fossil.setType(type);
+            fossil.setType(info);
             serverLevel.addFreshEntity(fossil);
             level.playSound(null, fossil.getX(), fossil.getY(), fossil.getZ(), SoundEvents.SKELETON_AMBIENT, SoundSource.BLOCKS, 0.75f, 0.8f);
             level.gameEvent(context.getPlayer(), GameEvent.ENTITY_PLACE, fossil);

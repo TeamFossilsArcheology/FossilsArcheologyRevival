@@ -88,7 +88,7 @@ import software.bernie.geckolib3.resource.GeckoLibCache;
 
 import java.util.*;
 
-import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI.*;
+import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.*;
 
 public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable<Prehistoric>, PrehistoricDebug {
 
@@ -386,7 +386,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return getType().getDimensions().scale(getScale());
     }
 
-    public abstract PrehistoricEntityType type();
+    public abstract PrehistoricEntityInfo info();
 
     public AABB getAttackBounds() {
         float size = (float) (this.getBoundingBox().getSize() * 0.25F);
@@ -864,7 +864,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     protected int getExperienceReward(Player player) {
-        float base = 6 * getBbWidth() * (type().diet == Diet.HERBIVORE ? 1 : 2)
+        float base = 6 * getBbWidth() * (info().diet == Diet.HERBIVORE ? 1 : 2)
                 * (aiTameType() == Taming.GEM ? 1 : 2)
                 * (aiAttackType() == Attacking.BASIC ? 1 : 1.25f);
         return Mth.floor((float) Math.min(data().adultAgeDays(), getAgeInDays()) * base);
@@ -1000,10 +1000,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void eatItem(ItemStack stack) {
-        if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), type().diet) != 0)) {
+        if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), info().diet) != 0)) {
             moodSystem.increaseMood(5);
             doFoodEffect(stack.getItem());
-            setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
+            setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), info().diet));
             stack.shrink(1);
             setStartEatAnimation(true);
         }
@@ -1036,9 +1036,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void killed(ServerLevel level, LivingEntity killedEntity) {
         super.killed(level, killedEntity);
-        if (type().diet != Diet.HERBIVORE) {
-            feed(FoodMappings.getMobFoodPoints(killedEntity, type().diet));
-            heal(FoodMappings.getMobFoodPoints(killedEntity, type().diet) / 10f);
+        if (info().diet != Diet.HERBIVORE) {
+            feed(FoodMappings.getMobFoodPoints(killedEntity, info().diet));
+            heal(FoodMappings.getMobFoodPoints(killedEntity, info().diet) / 10f);
             moodSystem.increaseMood(25);
         }
     }
@@ -1124,11 +1124,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             spawnItemParticles(Items.EGG, 15);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (FoodMappings.getFoodAmount(stack.getItem(), type().diet) > 0) {
+        if (FoodMappings.getFoodAmount(stack.getItem(), info().diet) > 0) {
             //Feed dino
             if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
                 if (!level.isClientSide) {
-                    setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
+                    setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), info().diet));
                     eatItem(stack);
                     if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS)) {
                         heal(3);
@@ -1161,7 +1161,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                     if (!level.isClientSide) {
                         moodSystem.increaseMood(-5);
                         if (random.nextInt(5) == 0) {
-                            player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
+                            player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", info().displayName.get()), true);
                             moodSystem.increaseMood(-25);
                             tame(player);
                         }
@@ -1256,8 +1256,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return true;
         }
         if (target != null) {
-            boolean isFood = FoodMappings.getMobFoodPoints(target, type().diet) > 0;
-            if (type().diet != Diet.HERBIVORE && type().diet != Diet.NONE && isFood && canAttack(target)) {
+            boolean isFood = FoodMappings.getMobFoodPoints(target, info().diet) > 0;
+            if (info().diet != Diet.HERBIVORE && info().diet != Diet.NONE && isFood && canAttack(target)) {
                 if (getBbWidth() * getTargetScale() >= target.getBbWidth()) {
                     return isHungry();
                 }
@@ -1303,14 +1303,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             Entity hatchling;
             if (this instanceof Mammal mammal) {
                 hatchling = mammal.createChild((ServerLevel) level);
-            } else if (type().cultivatedBirdEggItem != null) {
-                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().cultivatedBirdEggItem));
+            } else if (info().cultivatedBirdEggItem != null) {
+                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().cultivatedBirdEggItem));
             } else {
-                if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || type().isVivariousAquatic()) {
-                    hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem));
+                if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || info().isVivariousAquatic()) {
+                    hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem));
                 } else {
                     hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
-                    ((DinosaurEgg) hatchling).setPrehistoricEntityType(type());
+                    ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
                 }
             }
             setTarget(null);
@@ -1361,7 +1361,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public void doFoodEffect() {
         playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
-        switch (type().diet) {
+        switch (info().diet) {
             case HERBIVORE -> spawnItemParticles(Items.WHEAT_SEEDS, 4);
             case OMNIVORE -> spawnItemParticles(Items.BREAD, 4);
             case PISCIVORE -> spawnItemParticles(Items.COD, 4);
@@ -1389,7 +1389,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob otherParent) {
         if (otherParent instanceof Prehistoric) {
-            Entity baby = type().entityType().create(level);
+            Entity baby = info().entityType().create(level);
             if (baby instanceof Prehistoric prehistoric) {
                 prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
                         MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);

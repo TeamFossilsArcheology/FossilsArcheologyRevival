@@ -42,7 +42,7 @@ public class MammalCapMessage {
         buf.writeInt(entityId);
         buf.writeInt(embryoProgress);
         if (embryo != null) {
-            buf.writeUtf(embryo.toNbt());
+            buf.writeUtf(embryo.name());
         } else {
             buf.writeUtf("null");
         }

@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 public class BirdEggItem extends PrehistoricEntityItem {
     private final boolean cultivated;
 
-    public BirdEggItem(EntityInfo type, boolean cultivated) {
-        super(type);
+    public BirdEggItem(EntityInfo info, boolean cultivated) {
+        super(info);
         this.cultivated = cultivated;
     }
 
@@ -26,7 +26,7 @@ public class BirdEggItem extends PrehistoricEntityItem {
         level.playSound(null, player.getX(), player.getY(), player.getZ(), SoundEvents.EGG_THROW, SoundSource.PLAYERS, 0.5f, 0.4f / (level.getRandom().nextFloat() * 0.4f + 0.8f));
         if (!level.isClientSide) {
             ThrownBirdEgg thrownEgg = ThrownBirdEgg.get(player, level);
-            thrownEgg.setType(type);
+            thrownEgg.setType(info);
             thrownEgg.setCultivated(cultivated);
             thrownEgg.setItem(stack);
             thrownEgg.shootFromRotation(player, player.getXRot(), player.getYRot(), 0, 1.5f, 1);

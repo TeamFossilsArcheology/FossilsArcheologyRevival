@@ -1,7 +1,7 @@
 package com.fossil.fossil.util;
 
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricMobType;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.ModItems;
@@ -83,7 +83,7 @@ public class FossilFoodMappings {
 
         FoodMappings.addEgg(Items.EGG, 7);
 
-        for (PrehistoricEntityType info : PrehistoricEntityType.values()) {
+        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
             if (info.mobType != PrehistoricMobType.FISH) {
                 if (info.foodItem != null) FoodMappings.addMeat(info.foodItem);
                 if (info.cookedFoodItem != null) FoodMappings.addMeat(info.cookedFoodItem);

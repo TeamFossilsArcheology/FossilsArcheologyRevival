@@ -2,7 +2,7 @@ package com.fossil.fossil.item;
 
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -16,18 +16,18 @@ import java.util.Random;
 
 public class MammalEmbryoItem extends PrehistoricEntityItem {
 
-    public MammalEmbryoItem(EntityInfo type) {
-        super(type);
+    public MammalEmbryoItem(EntityInfo info) {
+        super(info);
     }
 
     @Override
     public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand usedHand) {
-        if (interactionTarget instanceof Animal animal && PrehistoricEntityType.isMammal(animal) && !animal.isBaby()) {
+        if (interactionTarget instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && !animal.isBaby()) {
             if (ModCapabilities.getEmbryoProgress(animal) > 0) {
                 return InteractionResult.PASS;
             }
             if (!player.level.isClientSide) {
-                ModCapabilities.startPregnancy(animal, type);
+                ModCapabilities.startPregnancy(animal, info);
                 stack.shrink(1);
             }
             Random random = player.getRandom();

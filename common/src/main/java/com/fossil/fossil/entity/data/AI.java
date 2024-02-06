@@ -6,7 +6,7 @@ import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
 
-import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI.*;
+import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.*;
 
 public record AI(Activity activity, Attacking attacking, Climbing climbing, Following following, Jumping jumping,
                  Response response, Stalking stalking, Taming taming, Untaming untaming, Moving moving,

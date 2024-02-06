@@ -1,7 +1,7 @@
 package com.fossil.fossil.forge.data.loot;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.loot.CustomizeToDinoFunction;
 import net.minecraft.data.loot.EntityLoot;
 import net.minecraft.resources.ResourceLocation;
@@ -24,34 +24,34 @@ public class ModEntityLootTables extends EntityLoot {
 
     @Override
     protected void addTables() {
-        for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
-            if (type.hasBones()) {
-                add(new ResourceLocation(Fossil.MOD_ID, "entities/" + type.resourceName), defaultLoot(type));
-            } else if (type.foodItem != null) {
+        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
+            if (info.hasBones()) {
+                add(new ResourceLocation(Fossil.MOD_ID, "entities/" + info.resourceName), defaultLoot(info));
+            } else if (info.foodItem != null) {
                 var meat = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).
-                        add(LootItem.lootTableItem(type.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS))
+                        add(LootItem.lootTableItem(info.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS))
                                 .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 2))));
-                add(new ResourceLocation(Fossil.MOD_ID, "entities/" + type.resourceName), LootTable.lootTable().withPool(meat));
+                add(new ResourceLocation(Fossil.MOD_ID, "entities/" + info.resourceName), LootTable.lootTable().withPool(meat));
             }
         }
         var wool = uniformLoot(Items.BROWN_WOOL, 6, 8);
-        add(new ResourceLocation(Fossil.MOD_ID, "entities/" + PrehistoricEntityType.MAMMOTH.resourceName), defaultLoot(PrehistoricEntityType.MAMMOTH).withPool(wool));
+        add(new ResourceLocation(Fossil.MOD_ID, "entities/" + PrehistoricEntityInfo.MAMMOTH.resourceName), defaultLoot(PrehistoricEntityInfo.MAMMOTH).withPool(wool));
         var shell = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(Items.NAUTILUS_SHELL));
-        add(new ResourceLocation(Fossil.MOD_ID, "entities/" + PrehistoricEntityType.NAUTILUS.resourceName), LootTable.lootTable().withPool(shell));
+        add(new ResourceLocation(Fossil.MOD_ID, "entities/" + PrehistoricEntityInfo.NAUTILUS.resourceName), LootTable.lootTable().withPool(shell));
     }
 
-    private LootTable.Builder defaultLoot(PrehistoricEntityType type) {
+    private LootTable.Builder defaultLoot(PrehistoricEntityInfo info) {
         var meat = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).
-                add(LootItem.lootTableItem(type.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS))
+                add(LootItem.lootTableItem(info.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS))
                         .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 2))));
-        var arm = uniformLoot(type.armBoneItem, 0, 2);
-        var foot = uniformLoot(type.footBoneItem, 0, 2);
-        var leg = uniformLoot(type.legBoneItem, 0, 2);
-        var rib = uniformLoot(type.ribcageBoneItem, 0, 1);
-        var skull = uniformLoot(type.skullBoneItem, 0, 1);
-        var tail = uniformLoot(type.tailBoneItem, 0, 1);
-        var unique = uniformLoot(type.uniqueBoneItem, 0, 2);
-        var vertebrae = uniformLoot(type.vertebraeBoneItem, 0, 5);
+        var arm = uniformLoot(info.armBoneItem, 0, 2);
+        var foot = uniformLoot(info.footBoneItem, 0, 2);
+        var leg = uniformLoot(info.legBoneItem, 0, 2);
+        var rib = uniformLoot(info.ribcageBoneItem, 0, 1);
+        var skull = uniformLoot(info.skullBoneItem, 0, 1);
+        var tail = uniformLoot(info.tailBoneItem, 0, 1);
+        var unique = uniformLoot(info.uniqueBoneItem, 0, 2);
+        var vertebrae = uniformLoot(info.vertebraeBoneItem, 0, 5);
         return LootTable.lootTable().withPool(meat).withPool(arm).withPool(foot).withPool(leg).withPool(rib).withPool(skull).withPool(tail).withPool(unique).withPool(vertebrae);
     }
 

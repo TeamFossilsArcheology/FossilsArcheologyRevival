@@ -50,7 +50,7 @@ public class MammalComponent implements IMammalComponent, AutoSyncedComponent, C
     public void writeToNbt(CompoundTag tag) {
         tag.putInt("embryoProgress", embryoProgress);
         if (embryo != null) {
-            tag.putString("embryo", embryo.toNbt());
+            tag.putString("embryo", embryo.name());
         }
     }
 

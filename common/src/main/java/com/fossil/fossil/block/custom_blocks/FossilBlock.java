@@ -1,6 +1,6 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.tags.ModItemTags;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -19,17 +19,17 @@ public class FossilBlock extends Block {
 
     @Override
     public @NotNull List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
-        int i = builder.getLevel().random.nextInt(PrehistoricEntityType.entitiesWithBones().size());
-        PrehistoricEntityType type = PrehistoricEntityType.entitiesWithBones().get(i);
+        int i = builder.getLevel().random.nextInt(PrehistoricEntityInfo.entitiesWithBones().size());
+        PrehistoricEntityInfo info = PrehistoricEntityInfo.entitiesWithBones().get(i);
         builder = builder
-                .withDynamicDrop(ModItemTags.ARM_BONES.location(), (a, c) -> c.accept(new ItemStack(type.armBoneItem)))
-                .withDynamicDrop(ModItemTags.FOOT_BONES.location(), (a, c) -> c.accept(new ItemStack(type.footBoneItem)))
-                .withDynamicDrop(ModItemTags.LEG_BONES.location(), (a, c) -> c.accept(new ItemStack(type.legBoneItem)))
-                .withDynamicDrop(ModItemTags.RIBCAGE_BONES.location(), (a, c) -> c.accept(new ItemStack(type.ribcageBoneItem)))
-                .withDynamicDrop(ModItemTags.SKULL_BONES.location(), (a, c) -> c.accept(new ItemStack(type.skullBoneItem)))
-                .withDynamicDrop(ModItemTags.TAIL_BONES.location(), (a, c) -> c.accept(new ItemStack(type.tailBoneItem)))
-                .withDynamicDrop(ModItemTags.UNIQUE_BONES.location(), (a, c) -> c.accept(new ItemStack(type.uniqueBoneItem)))
-                .withDynamicDrop(ModItemTags.VERTEBRAE_BONES.location(), (a, c) -> c.accept(new ItemStack(type.vertebraeBoneItem)));
+                .withDynamicDrop(ModItemTags.ARM_BONES.location(), (a, c) -> c.accept(new ItemStack(info.armBoneItem)))
+                .withDynamicDrop(ModItemTags.FOOT_BONES.location(), (a, c) -> c.accept(new ItemStack(info.footBoneItem)))
+                .withDynamicDrop(ModItemTags.LEG_BONES.location(), (a, c) -> c.accept(new ItemStack(info.legBoneItem)))
+                .withDynamicDrop(ModItemTags.RIBCAGE_BONES.location(), (a, c) -> c.accept(new ItemStack(info.ribcageBoneItem)))
+                .withDynamicDrop(ModItemTags.SKULL_BONES.location(), (a, c) -> c.accept(new ItemStack(info.skullBoneItem)))
+                .withDynamicDrop(ModItemTags.TAIL_BONES.location(), (a, c) -> c.accept(new ItemStack(info.tailBoneItem)))
+                .withDynamicDrop(ModItemTags.UNIQUE_BONES.location(), (a, c) -> c.accept(new ItemStack(info.uniqueBoneItem)))
+                .withDynamicDrop(ModItemTags.VERTEBRAE_BONES.location(), (a, c) -> c.accept(new ItemStack(info.vertebraeBoneItem)));
         return super.getDrops(state, builder);
     }
 

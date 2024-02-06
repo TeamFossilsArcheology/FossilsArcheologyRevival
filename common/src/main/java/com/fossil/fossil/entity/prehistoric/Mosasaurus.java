@@ -2,7 +2,7 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
@@ -70,8 +70,8 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.MOSASAURUS;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.MOSASAURUS;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package com.fossil.fossil.item;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.ItemStack;
@@ -12,12 +12,12 @@ import java.util.function.Consumer;
 public class DinoBoneItem extends PrehistoricEntityItem {
     private final Component name;
 
-    public DinoBoneItem(PrehistoricEntityType type, String boneType) {
-        super(type);
+    public DinoBoneItem(PrehistoricEntityInfo info, String boneType) {
+        super(info);
         if ("bone_unique".equals(boneType)) {
-            this.name = new TranslatableComponent("item." + Fossil.MOD_ID + ".bone_unique_" + type.resourceName, type.displayName.get());
+            this.name = new TranslatableComponent("item." + Fossil.MOD_ID + ".bone_unique_" + info.resourceName, info.displayName.get());
         } else {
-            this.name =  new TranslatableComponent("item." + Fossil.MOD_ID + "." + boneType, type.displayName.get());
+            this.name =  new TranslatableComponent("item." + Fossil.MOD_ID + "." + boneType, info.displayName.get());
         }
     }
 
@@ -26,7 +26,7 @@ public class DinoBoneItem extends PrehistoricEntityItem {
         return name;
     }
 
-    public static void registerItem(String boneType, PrehistoricEntityType type, Consumer<DinoBoneItem> listener){
-        ModItems.ITEMS.register(boneType + "_" + type.resourceName, () -> new DinoBoneItem(type, boneType)).listen(listener);
+    public static void registerItem(String boneType, PrehistoricEntityInfo info, Consumer<DinoBoneItem> listener){
+        ModItems.ITEMS.register(boneType + "_" + info.resourceName, () -> new DinoBoneItem(info, boneType)).listen(listener);
     }
 }

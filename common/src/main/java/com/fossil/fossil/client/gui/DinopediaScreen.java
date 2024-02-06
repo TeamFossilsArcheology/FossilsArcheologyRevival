@@ -227,8 +227,8 @@ public class DinopediaScreen extends Screen {
                     y + 30, col);
             font.draw(poseStack, new TranslatableComponent("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x,
                     y + 40, col);
-            var dietText = dino.type().diet.getName();
-            renderHoverInfo(poseStack, x, y + 50, mouseX, mouseY, dietText, dino.type().diet.getDescription());
+            var dietText = dino.info().diet.getName();
+            renderHoverInfo(poseStack, x, y + 50, mouseX, mouseY, dietText, dino.info().diet.getDescription());
             var tempText = dino.aiResponseType().getName();
             renderHoverInfo(poseStack, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
             font.draw(poseStack, dino.getGender().getName(), x, y + 70, col);
@@ -247,7 +247,7 @@ public class DinopediaScreen extends Screen {
             poseStack.pushPose();
             float scale = 1.5f;
             poseStack.scale(scale, scale, scale);
-            var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityType().displayName.get());
+            var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityInfo().displayName.get());
             font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
             poseStack.popPose();
             int time = Mth.floor((float) egg.getHatchingTime() / DinosaurEgg.TOTAL_HATCHING_TIME * 100);
@@ -327,7 +327,7 @@ public class DinopediaScreen extends Screen {
             blit(poseStack, x - moodSystem.getMoodPosition(), y, 0, 26, 4, 10);
             poseStack.popPose();
 
-            var foodMap = FoodMappings.getFoodRenderList(dino.type().diet);
+            var foodMap = FoodMappings.getFoodRenderList(dino.info().diet);
             var keys = foodMap.keySet().stream().filter(itemLike -> itemLike instanceof Item).sorted(
                     Comparator.comparingInt(item -> Item.getId(item.asItem()))).limit(64).toList();
             int itemCount = 0;
@@ -349,9 +349,9 @@ public class DinopediaScreen extends Screen {
     private List<String> loadBio(LivingEntity entity) {
         String name;
         if (entity instanceof Prehistoric) {
-            name = ((Prehistoric) entity).type().resourceName;
+            name = ((Prehistoric) entity).info().resourceName;
         } else if (entity instanceof PrehistoricFish) {
-            name = ((PrehistoricFish) entity).type().resourceName;
+            name = ((PrehistoricFish) entity).info().resourceName;
         } else {
             return List.of();
         }

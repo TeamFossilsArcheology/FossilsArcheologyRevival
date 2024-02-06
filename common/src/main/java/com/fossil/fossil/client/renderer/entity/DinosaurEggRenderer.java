@@ -19,7 +19,7 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
 
     @Override
     protected void scale(DinosaurEgg egg, PoseStack poseStack, float partialTickTime) {
-        float scale = egg.getPrehistoricEntityType().eggScale;
+        float scale = egg.getPrehistoricEntityInfo().eggScale;
         poseStack.scale(scale, scale, scale);
         super.scale(egg, poseStack, partialTickTime);
     }
@@ -36,7 +36,7 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(DinosaurEgg entity) {
-        return DinosaurEggModel.TEXTURES.computeIfAbsent(entity.getPrehistoricEntityType().resourceName,
+        return DinosaurEggModel.TEXTURES.computeIfAbsent(entity.getPrehistoricEntityInfo().resourceName,
                 name -> new ResourceLocation(Fossil.MOD_ID, "textures/entity/egg/egg_" + name + ".png"));
     }
 }

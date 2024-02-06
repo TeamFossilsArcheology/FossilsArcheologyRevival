@@ -2,8 +2,8 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.sounds.ModSounds;
@@ -68,8 +68,8 @@ public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.VELOCIRAPTOR;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.VELOCIRAPTOR;
     }
 
     @Override
@@ -88,8 +88,8 @@ public class Velociraptor extends PrehistoricLeaping implements PrehistoricScary
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
+    public PrehistoricEntityInfoAI.Response aiResponseType() {
+        return isBaby() ? PrehistoricEntityInfoAI.Response.SCARED : PrehistoricEntityInfoAI.Response.TERRITORIAL;
     }
 
     @Override

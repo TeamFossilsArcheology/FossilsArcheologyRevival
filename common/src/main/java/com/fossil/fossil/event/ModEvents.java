@@ -57,12 +57,12 @@ public class ModEvents {
         LifecycleEvent.SETUP.register(() -> {
             ModRecipes.initRecipes();
             FossilFoodMappings.register();
-            for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
-                if (type.birdEggItem != null) {
-                    DispenserBlock.registerBehavior(type.birdEggItem, ThrownBirdEgg.getProjectile(type, false));
+            for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
+                if (info.birdEggItem != null) {
+                    DispenserBlock.registerBehavior(info.birdEggItem, ThrownBirdEgg.getProjectile(info, false));
                 }
-                if (type.cultivatedBirdEggItem != null) {
-                    DispenserBlock.registerBehavior(type.cultivatedBirdEggItem, ThrownBirdEgg.getProjectile(type, true));
+                if (info.cultivatedBirdEggItem != null) {
+                    DispenserBlock.registerBehavior(info.cultivatedBirdEggItem, ThrownBirdEgg.getProjectile(info, true));
                 }
             }
             for (VanillaEntityInfo info : VanillaEntityInfo.values()) {

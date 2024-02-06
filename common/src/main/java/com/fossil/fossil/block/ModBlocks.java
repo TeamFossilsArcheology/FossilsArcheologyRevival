@@ -495,7 +495,7 @@ public class ModBlocks {
     }
 
     public static void register() {
-        PrehistoricPlantType.register();
+        PrehistoricPlantInfo.register();
         BLOCKS.register();
     }
 }

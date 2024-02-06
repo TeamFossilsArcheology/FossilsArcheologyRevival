@@ -1,8 +1,8 @@
 package com.fossil.fossil.forge.data.providers;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.PrehistoricPlantType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.block.PrehistoricPlantInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ToyBallItem;
@@ -50,30 +50,30 @@ public class ModItemProvider extends ItemModelProvider {
 
 
         if (dinoItems) {
-            for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
-                if (type.dnaItem != null) {
-                    dnaItem(Objects.requireNonNull(type.dnaItem.getRegistryName()));
+            for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
+                if (info.dnaItem != null) {
+                    dnaItem(Objects.requireNonNull(info.dnaItem.getRegistryName()));
                 }
-                if (type.foodItem != null) {
-                    foodItem(Objects.requireNonNull(type.foodItem.getRegistryName()), type, "meat");
+                if (info.foodItem != null) {
+                    foodItem(Objects.requireNonNull(info.foodItem.getRegistryName()), info, "meat");
                 }
-                if (type.cookedFoodItem != null) {
-                    foodItem(Objects.requireNonNull(type.cookedFoodItem.getRegistryName()), type, "cooked");
+                if (info.cookedFoodItem != null) {
+                    foodItem(Objects.requireNonNull(info.cookedFoodItem.getRegistryName()), info, "cooked");
                 }
-                if (type.eggItem != null) {
-                    eggItem(type.eggItem.getRegistryName());
+                if (info.eggItem != null) {
+                    eggItem(info.eggItem.getRegistryName());
                 }
-                if (type.birdEggItem != null) {
-                    eggItem(type.birdEggItem.getRegistryName());
+                if (info.birdEggItem != null) {
+                    eggItem(info.birdEggItem.getRegistryName());
                 }
-                if (type.cultivatedBirdEggItem != null) {
-                    eggItem(type.cultivatedBirdEggItem.getRegistryName());
+                if (info.cultivatedBirdEggItem != null) {
+                    eggItem(info.cultivatedBirdEggItem.getRegistryName());
                 }
-                if (type.embryoItem != null) {
-                    embyroItem(type.embryoItem.getRegistryName());
+                if (info.embryoItem != null) {
+                    embyroItem(info.embryoItem.getRegistryName());
                 }
-                if (type.spawnEggItem != null) {
-                    spawnEggItem(type.resourceName);
+                if (info.spawnEggItem != null) {
+                    spawnEggItem(info.resourceName);
                 }
             }
             for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
@@ -90,15 +90,15 @@ public class ModItemProvider extends ItemModelProvider {
                     embyroItem(info.embryoItem.getRegistryName());
                 }
             }
-            for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
-                boneItem(Objects.requireNonNull(type.armBoneItem.getRegistryName()), type, "arm_bone");
-                boneItem(Objects.requireNonNull(type.footBoneItem.getRegistryName()), type, "foot");
-                boneItem(Objects.requireNonNull(type.legBoneItem.getRegistryName()), type, "leg_bone");
-                boneItem(Objects.requireNonNull(type.ribcageBoneItem.getRegistryName()), type, "ribcage");
-                boneItem(Objects.requireNonNull(type.skullBoneItem.getRegistryName()), type, "skull");
-                boneItem(Objects.requireNonNull(type.tailBoneItem.getRegistryName()), type, "tail");
-                boneItem(Objects.requireNonNull(type.uniqueBoneItem.getRegistryName()), type, "unique");
-                boneItem(Objects.requireNonNull(type.vertebraeBoneItem.getRegistryName()), type, "vertebrae");
+            for (PrehistoricEntityInfo info : PrehistoricEntityInfo.entitiesWithBones()) {
+                boneItem(Objects.requireNonNull(info.armBoneItem.getRegistryName()), info, "arm_bone");
+                boneItem(Objects.requireNonNull(info.footBoneItem.getRegistryName()), info, "foot");
+                boneItem(Objects.requireNonNull(info.legBoneItem.getRegistryName()), info, "leg_bone");
+                boneItem(Objects.requireNonNull(info.ribcageBoneItem.getRegistryName()), info, "ribcage");
+                boneItem(Objects.requireNonNull(info.skullBoneItem.getRegistryName()), info, "skull");
+                boneItem(Objects.requireNonNull(info.tailBoneItem.getRegistryName()), info, "tail");
+                boneItem(Objects.requireNonNull(info.uniqueBoneItem.getRegistryName()), info, "unique");
+                boneItem(Objects.requireNonNull(info.vertebraeBoneItem.getRegistryName()), info, "vertebrae");
             }
             basicItem(ModItems.ALLIGATOR_GAR_BUCKET.get().getRegistryName());
             basicItem(ModItems.COELACANTH_BUCKET.get().getRegistryName());
@@ -110,15 +110,15 @@ public class ModItemProvider extends ItemModelProvider {
             basicItem(ModItems.STURGEON_BUCKET.get().getRegistryName());
         }
         if (plantItems) {
-            for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-                if (type.berryItem != null) {
-                    var resourceLocation = new ResourceLocation(type.berryItem.get().getRegistryName().getNamespace(), "item/" + type.berryItem.get().getRegistryName().getPath());
-                    builder(resourceLocation, type.berryItem.get().getRegistryName());
+            for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
+                if (info.berryItem != null) {
+                    var resourceLocation = new ResourceLocation(info.berryItem.get().getRegistryName().getNamespace(), "item/" + info.berryItem.get().getRegistryName().getPath());
+                    builder(resourceLocation, info.berryItem.get().getRegistryName());
                 }
             }
-            for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-                plantSeedItem(type.getPlantSeedItem().getRegistryName());
-                plantSeedItem(type.getFossilizedPlantSeedItem().getRegistryName());
+            for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
+                plantSeedItem(info.getPlantSeedItem().getRegistryName());
+                plantSeedItem(info.getFossilizedPlantSeedItem().getRegistryName());
             }
             basicItem(ModItems.CALAMITES_SAPLING_FOSSIL.get());
             basicItem(ModItems.CORDAITES_SAPLING_FOSSIL.get());
@@ -149,13 +149,13 @@ public class ModItemProvider extends ItemModelProvider {
         builder(resourceLocation, item);
     }
 
-    public void boneItem(ResourceLocation item, PrehistoricEntityType type, String bone) {
-        ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/bone/" + type.resourceName + "/" + bone);
+    public void boneItem(ResourceLocation item, PrehistoricEntityInfo info, String bone) {
+        ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/bone/" + info.resourceName + "/" + bone);
         builder(resourceLocation, item);
     }
 
-    public void foodItem(ResourceLocation item, PrehistoricEntityType type, String meat) {
-        ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/meat/" + type.resourceName + "_" + meat);
+    public void foodItem(ResourceLocation item, PrehistoricEntityInfo info, String meat) {
+        ResourceLocation resourceLocation = new ResourceLocation(item.getNamespace(), "item/meat/" + info.resourceName + "_" + meat);
         builder(resourceLocation, item);
     }
 

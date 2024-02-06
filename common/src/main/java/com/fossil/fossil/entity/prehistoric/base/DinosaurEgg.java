@@ -46,7 +46,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     private static final TranslatableComponent EGG_HATCHED = new TranslatableComponent("entity.fossil.dinosaur_egg.hatched");
 
     public float scale;
-    private PrehistoricEntityType prehistoricEntityType;
+    private PrehistoricEntityInfo prehistoricEntityInfo;
 
     public DinosaurEgg(EntityType<DinosaurEgg> type, Level level) {
         super(type, level);
@@ -62,13 +62,13 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
      * @param y
      * @param z
      * @param player
-     * @param type
+     * @param info
      * @param hatchMessage
      */
-    public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable ServerPlayer player, PrehistoricEntityType type, boolean hatchMessage) {
-        Entity entity = type.entityType().create(level);
+    public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable ServerPlayer player, PrehistoricEntityInfo info, boolean hatchMessage) {
+        Entity entity = info.entityType().create(level);
         if (entity instanceof Prehistoric prehistoric) {
-            if (player != null && prehistoric.aiTameType() == PrehistoricEntityTypeAI.Taming.IMPRINTING) {
+            if (player != null && prehistoric.aiTameType() == PrehistoricEntityInfoAI.Taming.IMPRINTING) {
                 prehistoric.tame(player);
                 //TODO: First Hatch music
                 if (false) {
@@ -121,14 +121,14 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
         }
         if (getHatchingTime() >= TOTAL_HATCHING_TIME && !level.isClientSide) {
             Player player = level.getNearestPlayer(this, 16);
-            hatchEgg(level, getX(), getY(), getZ(), (ServerPlayer) player, prehistoricEntityType, true);
+            hatchEgg(level, getX(), getY(), getZ(), (ServerPlayer) player, prehistoricEntityInfo, true);
             for (int i = 0; i < 4; i++) {
                 double x = getX() + (random.nextFloat() - 0.5) * getBbWidth();
                 double y = getBoundingBox().minY + 0.1;
                 double z = getZ() + (random.nextFloat() - 0.5) * getBbWidth();
                 double motionX = random.nextFloat() - 0.5;
                 double motionZ = random.nextFloat() - 0.5;
-                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(prehistoricEntityType.eggItem)), x, y, z, motionX, 0.5, motionZ);
+                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(prehistoricEntityInfo.eggItem)), x, y, z, motionX, 0.5, motionZ);
             }
             kill();
         }
@@ -154,7 +154,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public boolean hurt(DamageSource source, float amount) {
         if (!level.isClientSide && amount > 0 && isAlive()) {
             ItemEntity itemEntity = new ItemEntity(level, getX() + 0.5, getY() + 1, getZ() + 0.5,
-                    new ItemStack(getPrehistoricEntityType().eggItem), 0, 0.1, 0);
+                    new ItemStack(getPrehistoricEntityInfo().eggItem), 0, 0.1, 0);
             level.addFreshEntity(itemEntity);
             level.playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
                     ((random.nextFloat() - random.nextFloat()) * 0.7f + 1) * 2);
@@ -166,7 +166,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     @Override
     public @NotNull InteractionResult interact(Player player, InteractionHand hand) {
         if (player.getInventory().getSelected().isEmpty()) {
-            if (!player.isCreative() && player.getInventory().add(new ItemStack(getPrehistoricEntityType().eggItem))) {
+            if (!player.isCreative() && player.getInventory().add(new ItemStack(getPrehistoricEntityInfo().eggItem))) {
                 level.playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
                         ((random.nextFloat() - random.nextFloat()) * 0.7f + 1) * 2);
                 kill();
@@ -179,21 +179,21 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     @Nullable
     @Override
     public ItemStack getPickResult() {
-        return new ItemStack(prehistoricEntityType.eggItem);
+        return new ItemStack(prehistoricEntityInfo.eggItem);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("HatchingTime", getHatchingTime());
-        compound.putString("PrehistoricType", getPrehistoricEntityType().name());
+        compound.putString("PrehistoricEntityInfo", getPrehistoricEntityInfo().name());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         setHatchingTime(compound.getInt("HatchingTime"));
-        setPrehistoricEntityType(PrehistoricEntityType.valueOf(compound.getString("PrehistoricType")));
+        setPrehistoricEntityInfo(PrehistoricEntityInfo.valueOf(compound.getString("PrehistoricEntityInfo")));
     }
 
     public int getHatchingTime() {
@@ -204,12 +204,12 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
         entityData.set(HATCHING_TIME, time);
     }
 
-    public PrehistoricEntityType getPrehistoricEntityType() {
-        return prehistoricEntityType;
+    public PrehistoricEntityInfo getPrehistoricEntityInfo() {
+        return prehistoricEntityInfo;
     }
 
-    public void setPrehistoricEntityType(PrehistoricEntityType prehistoricEntityType) {
-        this.prehistoricEntityType = prehistoricEntityType;
+    public void setPrehistoricEntityInfo(PrehistoricEntityInfo prehistoricEntityInfo) {
+        this.prehistoricEntityInfo = prehistoricEntityInfo;
     }
 
     @Override
@@ -219,14 +219,14 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     @Override
     public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
-        buf.writeUtf(getPrehistoricEntityType().name());
+        buf.writeUtf(getPrehistoricEntityInfo().name());
     }
 
     @Override
     public void loadAdditionalSpawnData(FriendlyByteBuf buf) {
         String type = buf.readUtf();
         try {
-            setPrehistoricEntityType(PrehistoricEntityType.valueOf(type));
+            setPrehistoricEntityInfo(PrehistoricEntityInfo.valueOf(type));
         } catch (IllegalArgumentException e) {
             LOGGER.error("Dinosaur egg " + stringUUID + " has invalid dinosaur specified: " + type);
         }

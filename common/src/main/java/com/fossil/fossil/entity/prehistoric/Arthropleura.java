@@ -3,7 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -63,8 +63,8 @@ public class Arthropleura extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.ARTHROPLEURA;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.ARTHROPLEURA;
     }
 
     @Override

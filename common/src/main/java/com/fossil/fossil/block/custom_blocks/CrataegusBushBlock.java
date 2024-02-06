@@ -1,6 +1,6 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.PrehistoricPlantInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -15,8 +15,8 @@ import org.jetbrains.annotations.NotNull;
 public class CrataegusBushBlock extends TallBerryBushBlock {
     private static final VoxelShape EMPTY = Block.box(0, 0, 0, 0, 0, 0);
     public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
-    public CrataegusBushBlock(VoxelShape shape, PrehistoricPlantType type) {
-        super(shape, type);
+    public CrataegusBushBlock(VoxelShape shape, PrehistoricPlantInfo info) {
+        super(shape, info);
     }
 
     @Override

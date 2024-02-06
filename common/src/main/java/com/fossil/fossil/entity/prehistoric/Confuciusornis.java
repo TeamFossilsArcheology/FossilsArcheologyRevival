@@ -4,7 +4,7 @@ import com.fossil.fossil.entity.ai.DinoFollowOwnerGoal;
 import com.fossil.fossil.entity.ai.DinoLookAroundGoal;
 import com.fossil.fossil.entity.ai.DinoMeleeAttackGoal;
 import com.fossil.fossil.entity.ai.DinoWanderGoal;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
@@ -50,8 +50,8 @@ public class Confuciusornis extends PrehistoricFlying {
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.CONFUCIUSORNIS;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.CONFUCIUSORNIS;
     }
 
     @Override

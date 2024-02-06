@@ -3,8 +3,8 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -81,8 +81,8 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.TRICERATOPS;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.TRICERATOPS;
     }
 
     @Override
@@ -96,9 +96,9 @@ public class Triceratops extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Response aiResponseType() {
+    public PrehistoricEntityInfoAI.Response aiResponseType() {
 
-        return isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
+        return isBaby() ? PrehistoricEntityInfoAI.Response.SCARED : PrehistoricEntityInfoAI.Response.TERRITORIAL;
     }
 
     @Override

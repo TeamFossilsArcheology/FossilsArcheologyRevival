@@ -1,6 +1,6 @@
 package com.fossil.fossil.item;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import net.minecraft.util.LazyLoadedValue;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -10,7 +10,7 @@ import java.util.function.Supplier;
 
 public enum ModToolTiers implements Tier {
     SCARAB(3, 1861, 8, 4, 25, Ingredient::of),
-    TOOTH_DAGGER(3, 250, 6.4f, 2, 25, () -> Ingredient.of(PrehistoricEntityType.TYRANNOSAURUS.uniqueBoneItem));
+    TOOTH_DAGGER(3, 250, 6.4f, 2, 25, () -> Ingredient.of(PrehistoricEntityInfo.TYRANNOSAURUS.uniqueBoneItem));
 
     private final int level;
     private final int uses;

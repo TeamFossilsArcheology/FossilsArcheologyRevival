@@ -1,8 +1,8 @@
 package com.fossil.fossil.forge.data.providers;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.PrehistoricPlantType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.block.PrehistoricPlantInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.BirdEggItem;
 import com.fossil.fossil.item.DinoEggItem;
@@ -37,16 +37,16 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
         var fossilSeeds = tag(ModItemTags.FOSSIL_SEEDS).add(ModItems.FERN_SEED_FOSSIL.get());
         var restoredSeeds = tag(ModItemTags.RESTORED_SEEDS).add(ModItems.FERN_SEED.get());
-        for (PrehistoricPlantType type : PrehistoricPlantType.plantsWithSeeds()) {
-            fossilSeeds.add(type.getFossilizedPlantSeedItem());
-            restoredSeeds.add(type.getPlantSeedItem());
-            if (type.berryItem != null && type.berryItem.isPresent()) {
-                filterPlants.add(type.berryItem.get());
+        for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
+            fossilSeeds.add(info.getFossilizedPlantSeedItem());
+            restoredSeeds.add(info.getPlantSeedItem());
+            if (info.berryItem != null && info.berryItem.isPresent()) {
+                filterPlants.add(info.berryItem.get());
             }
         }
         tag(ModItemTags.FOSSIL_SAPLINGS).add(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModItems.PALM_SAPLING_FOSSIL.get(), ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModItems.TEMPSKYA_SAPLING_FOSSIL.get());
-        tag(ModItemTags.DNA_INSECTS).add(PrehistoricEntityType.ARTHROPLEURA.dnaItem, PrehistoricEntityType.MEGANEURA.dnaItem, PrehistoricEntityType.NAUTILUS.dnaItem);
-        tag(ModItemTags.DNA_LIMBLESS).add(PrehistoricEntityType.ALLIGATOR_GAR.dnaItem, PrehistoricEntityType.COELACANTH.dnaItem, PrehistoricEntityType.STURGEON.dnaItem);
+        tag(ModItemTags.DNA_INSECTS).add(PrehistoricEntityInfo.ARTHROPLEURA.dnaItem, PrehistoricEntityInfo.MEGANEURA.dnaItem, PrehistoricEntityInfo.NAUTILUS.dnaItem);
+        tag(ModItemTags.DNA_LIMBLESS).add(PrehistoricEntityInfo.ALLIGATOR_GAR.dnaItem, PrehistoricEntityInfo.COELACANTH.dnaItem, PrehistoricEntityInfo.STURGEON.dnaItem);
         tag(ModItemTags.DNA_PLANTS).addTags(ModItemTags.FOSSIL_SEEDS, ModItemTags.FOSSIL_SAPLINGS);
         var allDNA = tag(ModItemTags.DNA);
         var embryos = tag(ModItemTags.EMBRYOS);
@@ -60,48 +60,48 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         var allUnique = tag(ModItemTags.UNIQUE_BONES);
         var allVertebrae = tag(ModItemTags.VERTEBRAE_BONES);
         var uncookedMeat = tag(ModItemTags.UNCOOKED_MEAT);
-        for (PrehistoricEntityType type : PrehistoricEntityType.values()) {
-            if (type.dnaItem != null) {
-                allDNA.add(type.dnaItem);
+        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
+            if (info.dnaItem != null) {
+                allDNA.add(info.dnaItem);
             }
-            if (type.embryoItem != null) {
-                embryos.add(type.embryoItem);
+            if (info.embryoItem != null) {
+                embryos.add(info.embryoItem);
             }
-            if (type.eggItem instanceof DinoEggItem || type.eggItem instanceof BirdEggItem) {
-                allEgg.add(type.eggItem);
+            if (info.eggItem instanceof DinoEggItem || info.eggItem instanceof BirdEggItem) {
+                allEgg.add(info.eggItem);
             }
-            if (type.armBoneItem != null) {
-                allArm.add(type.armBoneItem);
+            if (info.armBoneItem != null) {
+                allArm.add(info.armBoneItem);
             }
-            if (type.footBoneItem != null) {
-                allFoot.add(type.footBoneItem);
+            if (info.footBoneItem != null) {
+                allFoot.add(info.footBoneItem);
             }
-            if (type.legBoneItem != null) {
-                allLeg.add(type.legBoneItem);
+            if (info.legBoneItem != null) {
+                allLeg.add(info.legBoneItem);
             }
-            if (type.ribcageBoneItem != null) {
-                allRibcage.add(type.ribcageBoneItem);
+            if (info.ribcageBoneItem != null) {
+                allRibcage.add(info.ribcageBoneItem);
             }
-            if (type.skullBoneItem != null) {
-                allSkull.add(type.skullBoneItem);
+            if (info.skullBoneItem != null) {
+                allSkull.add(info.skullBoneItem);
             }
-            if (type.tailBoneItem != null) {
-                allTails.add(type.tailBoneItem);
+            if (info.tailBoneItem != null) {
+                allTails.add(info.tailBoneItem);
             }
-            if (type.uniqueBoneItem != null) {
-                allUnique.add(type.uniqueBoneItem);
+            if (info.uniqueBoneItem != null) {
+                allUnique.add(info.uniqueBoneItem);
             }
-            if (type.vertebraeBoneItem != null) {
-                allVertebrae.add(type.vertebraeBoneItem);
+            if (info.vertebraeBoneItem != null) {
+                allVertebrae.add(info.vertebraeBoneItem);
             }
-            if (type.foodItem != null) {
-                uncookedMeat.add(type.foodItem);
+            if (info.foodItem != null) {
+                uncookedMeat.add(info.foodItem);
             }
-            if (type.cookedFoodItem != null) {
-                filterMeat.add(type.cookedFoodItem);
+            if (info.cookedFoodItem != null) {
+                filterMeat.add(info.cookedFoodItem);
             }
-            if (type.spawnEggItem != null) {
-                filterEggs.add(type.spawnEggItem);
+            if (info.spawnEggItem != null) {
+                filterEggs.add(info.spawnEggItem);
             }
         }
         for (VanillaEntityInfo info : VanillaEntityInfo.values()) {

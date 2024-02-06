@@ -2,7 +2,7 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -48,8 +48,8 @@ public class Pachycephalosaurus extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.PACHYCEPHALOSAURUS;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.PACHYCEPHALOSAURUS;
     }
 
     @Override

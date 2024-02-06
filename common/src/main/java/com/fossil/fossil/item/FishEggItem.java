@@ -13,12 +13,12 @@ import org.jetbrains.annotations.NotNull;
 
 public class FishEggItem extends PrehistoricEntityItem {
 
-    public FishEggItem(EntityInfo type) {
-        super(type);
+    public FishEggItem(EntityInfo info) {
+        super(info);
     }
 
     private boolean spawnFish(ServerLevel level, BlockPos pos) {
-        Entity entity = type.entityType().create(level);
+        Entity entity = info.entityType().create(level);
         if (entity instanceof PrehistoricFish fish) {
             entity.moveTo(pos.getX(), pos.getY() + 1, pos.getZ(), level.random.nextFloat() * 360, 0);
             fish.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(-1), null);

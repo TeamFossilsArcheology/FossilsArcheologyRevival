@@ -79,7 +79,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @NotNull
-    public abstract PrehistoricEntityType type();
+    public abstract PrehistoricEntityInfo info();
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
@@ -149,7 +149,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
                 if (closestMate != null) {
                     absoluteEggCooldown = 48000 + random.nextInt(48000);
                     closestMate.absoluteEggCooldown = 48000 + random.nextInt(48000);
-                    level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(type().eggItem)));
+                    level.addFreshEntity(new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem)));
                 }
             }
         }
@@ -181,7 +181,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         if (itemStack.isEmpty() && isAlive() && !isBaby()) {
             playSound(SoundEvents.ITEM_PICKUP, 1, random.nextFloat() + 0.8f);
             if (!level.isClientSide) {
-                spawnAtLocation(new ItemStack(type().foodItem), 0.1f);
+                spawnAtLocation(new ItemStack(info().foodItem), 0.1f);
             }
             discard();
             return InteractionResult.sidedSuccess(level.isClientSide);

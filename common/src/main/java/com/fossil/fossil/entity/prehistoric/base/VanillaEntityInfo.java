@@ -70,8 +70,8 @@ public enum VanillaEntityInfo implements EntityInfo {
         }
     }
 
-    private static void registerItem(String name, VanillaEntityInfo type, Function<Item.Properties, Item> item, Consumer<Item> listener) {
-        ModItems.ITEMS.register(name + "_" + type.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FAITEMTAB))).listen(listener);
+    private static void registerItem(String name, VanillaEntityInfo info, Function<Item.Properties, Item> item, Consumer<Item> listener) {
+        ModItems.ITEMS.register(name + "_" + info.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FAITEMTAB))).listen(listener);
     }
 
     @Override
@@ -94,10 +94,5 @@ public enum VanillaEntityInfo implements EntityInfo {
             return cultivatedBirdEggItem;
         }
         return null;
-    }
-
-    @Override
-    public String toNbt() {
-        return name();
     }
 }

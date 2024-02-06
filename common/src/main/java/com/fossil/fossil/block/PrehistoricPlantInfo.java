@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
-public enum PrehistoricPlantType {
+public enum PrehistoricPlantInfo {
 
     BENNETTITALES_LARGE(Size.DOUBLE_GROWABLE, Block.box(2, 0, 2, 14, 32, 14)),
     BENNETTITALES_SMALL(Size.SINGLE_GROWABLE, BENNETTITALES_LARGE, "bennettitales", Block.box(3, 0, 3, 13, 14, 13)),
@@ -44,11 +44,11 @@ public enum PrehistoricPlantType {
     WELWITSCHIA(Size.SINGLE, Block.box(3, 0, 3, 13, 5, 13)),
     ZAMITES(Size.DOUBLE, Block.box(3, 0, 3, 13, 32, 13));
 
-    private static List<PrehistoricPlantType> seedsCache;
+    private static List<PrehistoricPlantInfo> seedsCache;
     private final Size size;
     private final String resourceName;
     private final VoxelShape shape;
-    private PrehistoricPlantType tallPlant;
+    private PrehistoricPlantInfo tallPlant;
     public int berryAge;
     public int maxAge;
     public RegistrySupplier<Item> berryItem;
@@ -57,13 +57,13 @@ public enum PrehistoricPlantType {
     private RegistrySupplier<Item> fossilizedPlantSeedItem;
     private RegistrySupplier<FlowerSeedsItem> plantSeedItem;
 
-    PrehistoricPlantType(Size size, VoxelShape shape) {
+    PrehistoricPlantInfo(Size size, VoxelShape shape) {
         this.size = size;
         this.shape = shape;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
     }
 
-    PrehistoricPlantType(Size size, PrehistoricPlantType tallPlant, String commonName, VoxelShape shape) {
+    PrehistoricPlantInfo(Size size, PrehistoricPlantInfo tallPlant, String commonName, VoxelShape shape) {
         this.size = size;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
         this.tallPlant = tallPlant;
@@ -71,7 +71,7 @@ public enum PrehistoricPlantType {
         this.shape = shape;
     }
 
-    PrehistoricPlantType(Size size, VoxelShape shape, int berryAge, int maxAge) {
+    PrehistoricPlantInfo(Size size, VoxelShape shape, int berryAge, int maxAge) {
         this.size = size;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
         this.berryAge = berryAge;
@@ -80,41 +80,41 @@ public enum PrehistoricPlantType {
     }
 
     public static void register() {
-        for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-            if (type == CRATAEGUS) {
-                type.plantBlock = ModBlocks.registerBlock(type.resourceName, () -> new CrataegusBushBlock(type.shape, type));
-                type.berryItem = ModItems.ITEMS.register("berry_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(Foods.SWEET_BERRIES)));
-                type.registerPlantSeed(type.resourceName);
-            } else if (type == EPHEDRA) {
-                type.plantBlock = ModBlocks.registerBlock(type.resourceName, () -> new EphedraBushBlock(type.shape,  type));
-                type.berryItem = ModItems.ITEMS.register("berry_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(Foods.SWEET_BERRIES)));
-                type.registerPlantSeed(type.resourceName);
-            } else if (type == VACCINIUM) {
-                type.plantBlock = ModBlocks.registerBlock(type.resourceName, () -> new VacciniumBushBlock(type.shape,  type));
-                type.berryItem = ModItems.ITEMS.register("berry_" + type.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(Foods.SWEET_BERRIES)));
-                type.registerPlantSeed(type.resourceName);
-            } else if (type == MUTANT_PLANT) {
-                type.plantBlock = ModBlocks.registerTallFlower(type.resourceName, type.shape);
-            } else if (type.size == Size.SINGLE) {
-                type.plantBlock = ModBlocks.registerShortFlower(type.resourceName, type.shape);
-                type.registerPlantSeed(type.resourceName);
-            } else if (type.size == Size.DOUBLE) {
-                type.plantBlock = ModBlocks.registerTallFlower(type.resourceName, type.shape);
-                type.registerPlantSeed(type.resourceName);
-            } else if (type.size == Size.SINGLE_GROWABLE) {
-                type.plantBlock = ModBlocks.registerGrowableFlower(type.resourceName, (RegistrySupplier<TallFlowerBlock>) type.tallPlant.plantBlock,
-                        type.shape);
-                type.registerPlantSeed(type.commonName);
-            } else if (type.size == Size.DOUBLE_GROWABLE) {
-                type.plantBlock = ModBlocks.registerTallFlower(type.resourceName, type.shape);
-            } else if (type.size == Size.FOUR) {
-                type.plantBlock = ModBlocks.registerFourTallFlower(type.resourceName, type.shape);
-                type.registerPlantSeed(type.resourceName);
+        for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
+            if (info == CRATAEGUS) {
+                info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new CrataegusBushBlock(info.shape, info));
+                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(Foods.SWEET_BERRIES)));
+                info.registerPlantSeed(info.resourceName);
+            } else if (info == EPHEDRA) {
+                info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new EphedraBushBlock(info.shape,  info));
+                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(Foods.SWEET_BERRIES)));
+                info.registerPlantSeed(info.resourceName);
+            } else if (info == VACCINIUM) {
+                info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new VacciniumBushBlock(info.shape,  info));
+                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(Foods.SWEET_BERRIES)));
+                info.registerPlantSeed(info.resourceName);
+            } else if (info == MUTANT_PLANT) {
+                info.plantBlock = ModBlocks.registerTallFlower(info.resourceName, info.shape);
+            } else if (info.size == Size.SINGLE) {
+                info.plantBlock = ModBlocks.registerShortFlower(info.resourceName, info.shape);
+                info.registerPlantSeed(info.resourceName);
+            } else if (info.size == Size.DOUBLE) {
+                info.plantBlock = ModBlocks.registerTallFlower(info.resourceName, info.shape);
+                info.registerPlantSeed(info.resourceName);
+            } else if (info.size == Size.SINGLE_GROWABLE) {
+                info.plantBlock = ModBlocks.registerGrowableFlower(info.resourceName, (RegistrySupplier<TallFlowerBlock>) info.tallPlant.plantBlock,
+                        info.shape);
+                info.registerPlantSeed(info.commonName);
+            } else if (info.size == Size.DOUBLE_GROWABLE) {
+                info.plantBlock = ModBlocks.registerTallFlower(info.resourceName, info.shape);
+            } else if (info.size == Size.FOUR) {
+                info.plantBlock = ModBlocks.registerFourTallFlower(info.resourceName, info.shape);
+                info.registerPlantSeed(info.resourceName);
             }
         }
     }
 
-    public static List<PrehistoricPlantType> plantsWithSeeds() {
+    public static List<PrehistoricPlantInfo> plantsWithSeeds() {
         if (seedsCache == null) {
             seedsCache = Arrays.stream(values()).filter(type -> type.plantSeedItem != null).toList();
         }

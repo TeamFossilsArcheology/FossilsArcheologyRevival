@@ -3,7 +3,7 @@ package com.fossil.fossil.client.gui.debug;
 import com.fossil.fossil.entity.PrehistoricSkeleton;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
 import com.fossil.fossil.util.TimePeriod;
@@ -22,14 +22,14 @@ import java.util.List;
 public class SkeletonEditTab extends DebugTab {
     private final int maxAge;
     private int age;
-    private PrehistoricEntityType type;
+    private PrehistoricEntityInfo info;
 
 
     protected SkeletonEditTab(DebugScreen debugScreen, PrehistoricSkeleton entity) {
         super(debugScreen, entity);
         this.maxAge = entity.data().adultAgeDays();
         this.age = entity.getAge();
-        this.type = entity.type();
+        this.info = entity.info();
     }
 
     @Override
@@ -45,8 +45,8 @@ public class SkeletonEditTab extends DebugTab {
         addWidget(ageSlider);
         addWidget(new AnimationsList());
         addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), type.name(), age, 0, 0, 0, 0));
-            ageSlider.maxValue = EntityDataManager.ENTITY_DATA.getData(type.resourceName).adultAgeDays();
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0));
+            ageSlider.maxValue = EntityDataManager.ENTITY_DATA.getData(info.resourceName).adultAgeDays();
             age = (int) Math.min(age, ageSlider.maxValue);
             ageSlider.setValue(age);
         }));
@@ -57,7 +57,7 @@ public class SkeletonEditTab extends DebugTab {
         super.render(poseStack, mouseX, mouseY, partialTick);
         if (entity instanceof Prehistoric prehistoric) {
             drawString(poseStack, minecraft.font, new TextComponent("Age: " + prehistoric.getAge()), 175, 35, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Type: " + prehistoric.type().name()), 175, 185, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("Type: " + prehistoric.info().name()), 175, 185, 16777215);
         }
     }
 
@@ -65,7 +65,7 @@ public class SkeletonEditTab extends DebugTab {
 
         public AnimationsList() {
             super(SkeletonEditTab.this.minecraft, 200, SkeletonEditTab.this.height, 60, SkeletonEditTab.this.height, 25);
-            List<String> sortedAnimations = PrehistoricEntityType.entitiesWithSkeleton(TimePeriod.values()).stream().map(Enum::name).toList();
+            List<String> sortedAnimations = PrehistoricEntityInfo.entitiesWithSkeleton(TimePeriod.values()).stream().map(Enum::name).toList();
             for (String typeName : sortedAnimations) {
                 addEntry(new AnimationsList.AnimationEntry(typeName));
             }
@@ -85,7 +85,7 @@ public class SkeletonEditTab extends DebugTab {
 
             AnimationEntry(String text) {
                 changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
-                    SkeletonEditTab.this.type = PrehistoricEntityType.valueOf(button.getMessage().getContents());
+                    SkeletonEditTab.this.info = PrehistoricEntityInfo.valueOf(button.getMessage().getContents());
                 });
             }
 

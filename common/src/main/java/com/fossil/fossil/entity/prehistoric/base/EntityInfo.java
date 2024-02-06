@@ -12,13 +12,13 @@ public interface EntityInfo {
 
     @Nullable Item getDNAResult();
 
-    String toNbt();
+    String name();
 
     static EntityInfo fromNbt(String name) throws IllegalArgumentException {
         //Somewhat cursed, but I want to separate vanilla and our mobs, and I am to lazy to do this properly
         EntityInfo toReturn;
         try {
-            toReturn = PrehistoricEntityType.valueOf(name);
+            toReturn = PrehistoricEntityInfo.valueOf(name);
         } catch (IllegalArgumentException e) {
             toReturn = VanillaEntityInfo.valueOf(name);
         }

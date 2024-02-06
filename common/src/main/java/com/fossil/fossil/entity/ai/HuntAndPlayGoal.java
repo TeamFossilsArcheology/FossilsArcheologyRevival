@@ -45,7 +45,7 @@ public class HuntAndPlayGoal extends NearestAttackableTargetGoal<LivingEntity> {
                 return !dino.isOwnedBy(target) && dino.canDinoHunt(target);
             }
         }
-        if (FoodMappings.getMobFoodPoints(target, dino.type().diet) > 0 || dino.aiResponseType() == PrehistoricEntityTypeAI.Response.AGGRESSIVE) {
+        if (FoodMappings.getMobFoodPoints(target, dino.info().diet) > 0 || dino.aiResponseType() == PrehistoricEntityInfoAI.Response.AGGRESSIVE) {
             return !dino.isOwnedBy(target) && dino.canDinoHunt(target);
         }
         return false;

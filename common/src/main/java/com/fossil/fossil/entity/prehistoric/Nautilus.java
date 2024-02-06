@@ -1,7 +1,7 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.item.ModItems;
 import net.minecraft.nbt.CompoundTag;
@@ -57,7 +57,7 @@ public class Nautilus extends PrehistoricFish {
             return true;
         }
         if (entity instanceof Prehistoric prehistoric) {
-            return prehistoric.type().diet.getFearIndex() >= 2;
+            return prehistoric.info().diet.getFearIndex() >= 2;
         }
         if (entity instanceof Nautilus) {
             return false;
@@ -89,8 +89,8 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public @NotNull PrehistoricEntityType type() {
-        return PrehistoricEntityType.NAUTILUS;
+    public @NotNull PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.NAUTILUS;
     }
 
     @Override

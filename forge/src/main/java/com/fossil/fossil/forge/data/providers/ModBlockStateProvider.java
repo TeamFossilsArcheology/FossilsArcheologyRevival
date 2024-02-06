@@ -2,7 +2,7 @@ package com.fossil.fossil.forge.data.providers;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.*;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -45,15 +45,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
         boolean vases = true;
         boolean buildingWood = true;
         if (plantBlocks) {
-            for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-                if (type == PrehistoricPlantType.DIPTERIS || type == PrehistoricPlantType.ZAMITES) {
+            for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
+                if (info == PrehistoricPlantInfo.DIPTERIS || info == PrehistoricPlantInfo.ZAMITES) {
                     continue;
                 }
-                BushBlock flower = type.getPlantBlock();
+                BushBlock flower = info.getPlantBlock();
                 if (flower instanceof ShortBerryBushBlock shortBerry) {
-                    shortBerryBlock(type, shortBerry);
+                    shortBerryBlock(info, shortBerry);
                 } else if (flower instanceof TallBerryBushBlock tallBerry) {
-                    tallBerryBlock(type, tallBerry);
+                    tallBerryBlock(info, tallBerry);
                 } else if (flower instanceof ShortFlowerBlock shortFlower) {
                     shortFlowerBlock(shortFlower);
                 } else if (flower instanceof TallFlowerBlock tallFlower) {
@@ -341,26 +341,26 @@ public class ModBlockStateProvider extends BlockStateProvider {
                         .modelFile(file).rotationY(270).buildLast());
     }
 
-    private void shortBerryBlock(PrehistoricPlantType type, ShortBerryBushBlock block) {
-        itemModels().plantBlockItem(block, "_stage" + type.maxAge);
+    private void shortBerryBlock(PrehistoricPlantInfo info, ShortBerryBushBlock block) {
+        itemModels().plantBlockItem(block, "_stage" + info.maxAge);
         String name = block.getRegistryName().getPath();
         var blockState = getVariantBuilder(block);
-        ResourceLocation[] textures = IntStream.rangeClosed(0, type.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] textures = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
         models().registerExistingTexture(textures);
-        for (int i = 0; i <= type.maxAge; i++) {
+        for (int i = 0; i <= info.maxAge; i++) {
             blockState.partialState().with(block.ageProperty(), i).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_stage" + i, textures[i])));
         }
     }
 
-    private void tallBerryBlock(PrehistoricPlantType type, TallBerryBushBlock block) {
-        itemModels().plantBlockItem(block, "_2_stage" + type.maxAge);
+    private void tallBerryBlock(PrehistoricPlantInfo info, TallBerryBushBlock block) {
+        itemModels().plantBlockItem(block, "_2_stage" + info.maxAge);
         String name = block.getRegistryName().getPath();
         var blockState = getVariantBuilder(block);
-        ResourceLocation[] lower = IntStream.rangeClosed(0, type.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);
-        ResourceLocation[] upper = IntStream.rangeClosed(0, type.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_2_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] lower = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] upper = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_2_stage" + age)).toArray(ResourceLocation[]::new);
         models().registerExistingTexture(lower);
         models().registerExistingTexture(upper);
-        for (int i = 0; i <= type.maxAge; i++) {
+        for (int i = 0; i <= info.maxAge; i++) {
             blockState.partialState().with(block.ageProperty(), i).with(TallBerryBushBlock.HALF, DoubleBlockHalf.LOWER).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_1_stage" + i, lower[i])))
                     .partialState().with(block.ageProperty(), i).with(TallBerryBushBlock.HALF, DoubleBlockHalf.UPPER).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_2_stage" + i, upper[i])));
         }

@@ -5,7 +5,7 @@ import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
 import com.fossil.fossil.network.MessageHandler;
@@ -65,7 +65,7 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void attachEntityCapabilities(AttachCapabilitiesEvent<Entity> event) {
-        if (event.getObject() instanceof Animal animal && PrehistoricEntityType.isMammal(animal)) {
+        if (event.getObject() instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal)) {
             MammalCapProvider mammalProvider = new MammalCapProvider();
             event.addListener(mammalProvider::invalidate);
             event.addCapability(MammalCapProvider.IDENTIFIER, mammalProvider);

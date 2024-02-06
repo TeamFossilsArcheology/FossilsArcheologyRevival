@@ -1,7 +1,7 @@
 package com.fossil.fossil.client;
 
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.custom_blocks.VaseBlock;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.capabilities.ModCapabilities;
@@ -19,7 +19,7 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.*;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
@@ -157,8 +157,8 @@ public class ClientInit {
                 return EventResult.pass();
             });
         }
-        for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-            RenderTypeRegistry.register(RenderType.cutout(), type.getPlantBlock());
+        for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
+            RenderTypeRegistry.register(RenderType.cutout(), info.getPlantBlock());
         }
         for (RegistrySupplier<VaseBlock> vase : ModBlocks.VASES) {
             RenderTypeRegistry.register(RenderType.cutout(), vase.get());
@@ -222,7 +222,7 @@ public class ClientInit {
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             if (player.level.isClientSide) {
                 if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
-                    if (entity instanceof Animal animal && PrehistoricEntityType.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0) {
+                    if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
                     } else if (entity instanceof DinosaurEgg || entity instanceof Prehistoric) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen((LivingEntity) entity));

@@ -3,7 +3,7 @@ package com.fossil.fossil.network.debug;
 import com.fossil.fossil.client.gui.debug.DebugScreen;
 import com.fossil.fossil.entity.PrehistoricSkeleton;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.util.Gender;
 import com.fossil.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
@@ -68,7 +68,7 @@ public class SyncDebugInfoMessage {
                 });
             } else if (player.level.getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
                 contextSupplier.get().queue(() -> {
-                    fossil.setType(PrehistoricEntityType.valueOf(enumString));
+                    fossil.setType(PrehistoricEntityInfo.valueOf(enumString));
                     fossil.setAge(age);
                 });
             }

@@ -3,7 +3,7 @@ package com.fossil.fossil.item;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.entity.ModEntities;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.material.ModFluids;
 import com.fossil.fossil.sounds.ModSounds;
@@ -173,7 +173,7 @@ public class ModItems {
 
     public static void register() {
         VanillaEntityInfo.register();
-        PrehistoricEntityType.register();
+        PrehistoricEntityInfo.register();
 
         ITEMS.register();
     }

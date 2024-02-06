@@ -1,7 +1,7 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -59,8 +59,8 @@ public class Henodus extends PrehistoricSwimming {
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.HENODUS;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.HENODUS;
     }
 
     @Override

@@ -2,8 +2,8 @@ package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityTypeAI;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -71,13 +71,13 @@ public class Therizinosaurus extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.THERIZINOSAURUS;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.THERIZINOSAURUS;
     }
 
     @Override
-    public PrehistoricEntityTypeAI.Response aiResponseType() {
-        return this.isBaby() ? PrehistoricEntityTypeAI.Response.SCARED : PrehistoricEntityTypeAI.Response.TERRITORIAL;
+    public PrehistoricEntityInfoAI.Response aiResponseType() {
+        return this.isBaby() ? PrehistoricEntityInfoAI.Response.SCARED : PrehistoricEntityInfoAI.Response.TERRITORIAL;
     }
 
     @Override

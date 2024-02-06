@@ -1,7 +1,7 @@
 package com.fossil.fossil.block.custom_blocks;
 
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.entity.CultureVatBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.entity.ModEntities;
@@ -54,7 +54,7 @@ public class CultureVatBlock extends CustomEntityBlock {
             level.destroyBlock(pos, false);
             level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1, false);
             if (blockEntity.getBlockState().getValue(EMBRYO) == EmbryoType.PLANT) {
-                BlockState blockState = PrehistoricPlantType.MUTANT_PLANT.getPlantBlock().defaultBlockState();
+                BlockState blockState = PrehistoricPlantInfo.MUTANT_PLANT.getPlantBlock().defaultBlockState();
                 level.setBlockAndUpdate(pos, blockState);
                 if (level.getBlockState(pos.above()).getMaterial().isReplaceable()) {
                     level.setBlockAndUpdate(pos.above(), blockState.setValue(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER));

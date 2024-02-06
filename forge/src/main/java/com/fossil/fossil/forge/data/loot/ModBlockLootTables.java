@@ -1,7 +1,7 @@
 package com.fossil.fossil.forge.data.loot;
 
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.PrehistoricPlantType;
+import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.custom_blocks.FourTallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.enchantment.ModEnchantments;
@@ -55,8 +55,8 @@ public class ModBlockLootTables extends BlockLoot {
         ModBlocks.SIGILLARIA_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.SIGILLARIA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
 
 
-        for (PrehistoricPlantType type : PrehistoricPlantType.values()) {
-            BushBlock flower = type.getPlantBlock();
+        for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
+            BushBlock flower = info.getPlantBlock();
             var condition = LootItem.lootTableItem(flower.asItem());
             if (flower instanceof TallFlowerBlock) {
                 condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(

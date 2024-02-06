@@ -12,7 +12,7 @@ public class MammalCap implements IMammalCap {
         CompoundTag tag = new CompoundTag();
         tag.putInt("embryoProgress", embryoProgress);
         if (embryo != null) {
-            tag.putString("embryo", embryo.toNbt());
+            tag.putString("embryo", embryo.name());
         }
         return tag;
     }

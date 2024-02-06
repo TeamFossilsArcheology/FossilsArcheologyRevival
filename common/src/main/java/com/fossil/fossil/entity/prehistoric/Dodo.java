@@ -5,7 +5,7 @@ import com.fossil.fossil.entity.ai.DinoLookAroundGoal;
 import com.fossil.fossil.entity.ai.DinoMeleeAttackGoal;
 import com.fossil.fossil.entity.ai.DinoWanderGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
@@ -63,8 +63,8 @@ public class Dodo extends Prehistoric {
     }
 
     @Override
-    public PrehistoricEntityType type() {
-        return PrehistoricEntityType.DODO;
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.DODO;
     }
 
     @Override

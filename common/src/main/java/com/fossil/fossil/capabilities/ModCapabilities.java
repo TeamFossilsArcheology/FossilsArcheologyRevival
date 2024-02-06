@@ -1,7 +1,7 @@
 package com.fossil.fossil.capabilities;
 
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.entity.animal.Animal;
 import org.apache.commons.lang3.NotImplementedException;
@@ -15,7 +15,7 @@ public class ModCapabilities {
     }
 
     @ExpectPlatform
-    public static PrehistoricEntityType getEmbryo(Animal animal) {
+    public static PrehistoricEntityInfo getEmbryo(Animal animal) {
         return null;
     }
 
