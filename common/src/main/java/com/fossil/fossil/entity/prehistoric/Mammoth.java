@@ -72,21 +72,17 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
         }
         StringBuilder builder = new StringBuilder();
         builder.append("textures/entity/mammoth/mammoth");
-        if (isSkeleton()) {
-            builder.append("_skeleton.png");
-        } else {
-            if (hasBabyTexture && isBaby()) builder.append("_baby");
-            if (isAdult()) {
-                if (getGender() == Gender.MALE) {
-                    builder.append("_male");
-                } else {
-                    builder.append("_female");
-                }
+        if (hasBabyTexture && isBaby()) builder.append("_baby");
+        if (isAdult()) {
+            if (getGender() == Gender.MALE) {
+                builder.append("_male");
+            } else {
+                builder.append("_female");
             }
-            if (isSleeping()) builder.append("_sleeping");
-            if (isSheared()) builder.append("_shaved");
-            builder.append(".png");
         }
+        if (isSleeping()) builder.append("_sleeping");
+        if (isSheared()) builder.append("_shaved");
+        builder.append(".png");
         String path = builder.toString();
         textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
     }
@@ -124,7 +120,7 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     @Override
     public void aiStep() {
         boolean tooWarm = level.getBiome(blockPosition()).value().shouldSnowGolemBurn(blockPosition());
-        if (tooWarm && getEffect(MobEffects.WEAKNESS) != null && !isSheared() && !isSkeleton()) {
+        if (tooWarm && getEffect(MobEffects.WEAKNESS) != null && !isSheared()) {
             addEffect(new MobEffectInstance(MobEffects.WEAKNESS, 60, 1));
         }
         super.aiStep();
@@ -167,7 +163,7 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
 
     @Override
     public boolean readyForShearing() {
-        return !isSheared() && !isBaby() && !isSkeleton();
+        return !isSheared() && !isBaby();
     }
 
     public boolean isSheared() {

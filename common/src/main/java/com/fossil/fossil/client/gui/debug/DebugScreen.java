@@ -1,5 +1,6 @@
 package com.fossil.fossil.client.gui.debug;
 
+import com.fossil.fossil.entity.PrehistoricSkeleton;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
@@ -15,7 +16,6 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -32,16 +32,16 @@ public class DebugScreen extends Screen {
     public static CycleButton<Boolean> disableAI;
     public static boolean showPaths;
     private static PathInfo currentVision;
-    private final LivingEntity entity;
+    public final Entity entity;
     private final List<DebugTab> tabs = new ArrayList<>();
     private DebugTab currentTab;
 
-    public DebugScreen(LivingEntity entity) {
+    public DebugScreen(Entity entity) {
         super(entity == null ? new TextComponent("Debug Screen") : entity.getDisplayName());
         this.entity = entity;
     }
 
-    public static LivingEntity getHitResult(Minecraft mc) {
+    public static Entity getHitResult(Minecraft mc) {
         Entity camera = mc.getCameraEntity();
         Vec3 view = camera.getViewVector(1.0f);
         double range = 30;
@@ -49,7 +49,7 @@ public class DebugScreen extends Screen {
         AABB aabb = camera.getBoundingBox().expandTowards(view.scale(range)).inflate(1);
         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(camera, camera.getEyePosition(), end, aabb,
                 Entity::isPickable, range * range);
-        return (entityHitResult != null) ? (LivingEntity) entityHitResult.getEntity() : null;
+        return (entityHitResult != null) ? (Entity) entityHitResult.getEntity() : null;
     }
 
     public static void showPath(Player player, List<BlockPos> targets, List<BlockState> blocks, boolean below) {
@@ -108,6 +108,8 @@ public class DebugScreen extends Screen {
             this.addRenderableWidget(new Button(460, height - 40, 50, 20, new TextComponent("Tame"), button -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new TameMessage(entity.getId()));
             }));
+        } else if (entity instanceof PrehistoricSkeleton skeleton) {
+            tabs.add(addWidget(new SkeletonEditTab(this, skeleton)));
         }
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {
             builder.withInitialValue(mob.isNoAi());

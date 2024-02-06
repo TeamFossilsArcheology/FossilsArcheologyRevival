@@ -45,8 +45,6 @@ public class Arthropleura extends Prehistoric {
             builder.append("_baby");
         } else if (isAdult()) {
             builder.append("_adult");
-        } else if (isSkeleton()) {
-            builder.append("_skeleton");
         }
         builder.append(".png");
         String path = builder.toString();

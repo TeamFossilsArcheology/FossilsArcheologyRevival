@@ -106,6 +106,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<FriendlyPiglin>> FRIENDLY_PIGLIN = ENTITIES.register("friendly_piglin",
             () -> EntityType.Builder.of(FriendlyPiglin::new, MobCategory.MONSTER).sized(0.6f, 1.95f).fireImmune().clientTrackingRange(8)
                     .build("friendly_piglin"));
+    public static final RegistrySupplier<EntityType<PrehistoricSkeleton>> SKELETON = registerMisc("skeleton", PrehistoricSkeleton::new, 1, 1, 10, 3);
 
     //TODO: Change clientTrackingRange etc
     private static <T extends Entity> RegistrySupplier<EntityType<T>> registerMisc(String name, EntityType.EntityFactory<T> factory, float width, float height, int trackRange, int updateInterval) {

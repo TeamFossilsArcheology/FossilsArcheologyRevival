@@ -189,6 +189,15 @@ public enum PrehistoricEntityType implements EntityInfo {
         return boneCache;
     }
 
+    public static List<PrehistoricEntityType> entitiesWithSkeleton(TimePeriod... periods) {
+        return Arrays.stream(values()).filter(type -> {
+            if (type.mobType == PrehistoricMobType.FISH || type == QUAGGA) {
+                return false;
+            }
+            return Arrays.stream(periods).anyMatch(timePeriod -> timePeriod == type.timePeriod);
+        }).toList();
+    }
+
     public static boolean isMammal(Mob mob) {
         //TODO: Maybe could be done with tags?
         String className = "";

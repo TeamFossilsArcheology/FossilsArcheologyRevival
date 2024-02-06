@@ -21,7 +21,10 @@ import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
 import com.fossil.fossil.sounds.ModSounds;
-import com.fossil.fossil.util.*;
+import com.fossil.fossil.util.Diet;
+import com.fossil.fossil.util.FoodMappings;
+import com.fossil.fossil.util.Gender;
+import com.fossil.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.BlockPos;
@@ -94,7 +97,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
-    private static final EntityDataAccessor<Boolean> MODELIZED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
@@ -118,7 +120,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
     private Gender gender = Gender.random(random);
-    private boolean droppedBiofossil = false;
     private int fleeTicks = 0;
     private int cathermalSleepCooldown = 0;
     private int matingCooldown = random.nextInt(6000) + 6000;
@@ -191,7 +192,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         entityData.define(MOOD, 0);
         entityData.define(AGE_TICK, data().adultAgeDays() * 24000);
         entityData.define(HUNGER, 0);
-        entityData.define(MODELIZED, false);
         entityData.define(FLEEING, false);
         entityData.define(SITTING, false);
         entityData.define(SLEEPING, false);
@@ -230,14 +230,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         compound.putInt("MatingCooldown", getMatingCooldown());
         compound.putInt("PlayingCooldown", moodSystem.getPlayingCooldown());
         compound.putInt("Hunger", getHunger());
-        compound.putBoolean("isModelized", isSkeleton());
         compound.putBoolean("Fleeing", isFleeing());
         compound.putBoolean("Sitting", isSitting());
         compound.putBoolean("Sleeping", isSleeping());
         compound.putInt("TicksSlept", ticksSlept);
         compound.putInt("TicksClimbing", ticksClimbing);
         compound.putInt("ClimbingCooldown", climbingCooldown);
-        compound.putByte("currentOrder", (byte) currentOrder.ordinal());
+        compound.putByte("CurrentOrder", (byte) currentOrder.ordinal());
         compound.putFloat("YBodyRot", yBodyRot);
         compound.putFloat("YHeadRot", yHeadRot);
         compound.putBoolean("AgingDisabled", isAgingDisabled());
@@ -253,15 +252,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         setMatingCooldown(compound.getInt("MatingCooldown"));
         moodSystem.setPlayingCooldown(compound.getInt("PlayingCooldown"));
         setHunger(compound.getInt("Hunger"));
-        setSkeleton(compound.getBoolean("isModelized"));
         setFleeing(compound.getBoolean("Fleeing"));
         setSitting(compound.getBoolean("Sitting"));
         setSleeping(compound.getBoolean("Sleeping"));
         ticksSlept = compound.getInt("TicksSlept");
         ticksClimbing = compound.getInt("TicksClimbing");
         climbingCooldown = compound.getInt("ClimbingCooldown");
-        if (compound.contains("currentOrder")) {
-            setOrder(OrderType.values()[compound.getByte("currentOrder")]);
+        if (compound.contains("CurrentOrder", CompoundTag.TAG_BYTE)) {
+            setOrder(OrderType.values()[compound.getByte("CurrentOrder")]);
         }
         yBodyRot = compound.getInt("YBodyRot");
         yHeadRot = compound.getInt("YHeadRot");
@@ -414,18 +412,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return spawnDataIn;
     }
 
-    @Override
-    public boolean isNoAi() {
-        return isSkeleton() || super.isNoAi();
-    }
-
     public OrderType getOrderType() {
         return this.currentOrder;
     }
 
     @Override
     public boolean isImmobile() {//TODO: isVehicle not necessary for goals
-        return getHealth() <= 0 || isSitting() || isSkeleton() || isActuallyWeak() || isVehicle() || isSleeping();
+        return getHealth() <= 0 || isSitting() || isActuallyWeak() || isVehicle() || isSleeping();
     }
 
     public boolean isSitting() {
@@ -469,7 +462,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public boolean isPushable() {
         //TODO: Maybe also !isVehicle()?
-        return !this.isSkeleton() && super.isPushable();
+        return super.isPushable();
     }
 
     public boolean canSleep() {
@@ -647,9 +640,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void aiStep() {
         updateSwingTime();
         super.aiStep();
-        if (isSkeleton()) {
-            setDeltaMovement(Vec3.ZERO);
-        }
         if ((getTarget() != null || getLastHurtByMob() != null) && isSleeping()) {
             setSleeping(false);
         }
@@ -680,8 +670,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             ticksSat++;
         }
         if (!level.isClientSide) {
-            MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
-                    new SyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, moodSystem.getMood()));
+            if (Version.debugEnabled()) {
+                MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
+                        new SyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, moodSystem.getMood()));
+            }
             if (cathermalSleepCooldown > 0) {
                 cathermalSleepCooldown--;
             }
@@ -752,21 +744,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void tick() {
         super.tick();
 
-        if (!isSkeleton()) {
-            if (!isAgingDisabled()) {
-                setAgeInTicks(getAge() + 1);
+        if (!isAgingDisabled()) {
+            setAgeInTicks(getAge() + 1);
+        }
+        if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.STARVING_DINOS)) {
+            if (!isNoAi()) {
+                setHunger(getHunger() - 1);
+            } else {
+                setHunger(getMaxHunger());
+                setHealth(getMaxHealth());
             }
-            if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.STARVING_DINOS)) {
-                if (!isNoAi()) {
-                    setHunger(getHunger() - 1);
-                } else {
-                    setHunger(getMaxHunger());
-                    setHealth(getMaxHealth());
-                }
-            }
-            if (getHealth() > getMaxHealth() / 2 && getHunger() == 0 && tickCount % 40 == 0) {
-                hurt(DamageSource.STARVE, 1);
-            }
+        }
+        if (getHealth() > getMaxHealth() / 2 && getHunger() == 0 && tickCount % 40 == 0) {
+            hurt(DamageSource.STARVE, 1);
         }
         if (!level.isClientSide && aiClimbType() == Climbing.ARTHROPOD) {
             if (isClimbing()) {
@@ -861,10 +851,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public float getScale() {//TODO: Refresh Eye Height
-        float step = (data().maxScale() - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
         if (isAdult()) {
             return data().maxScale() * getGenderedScale();
         }
+        float step = (data().maxScale() - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
         return (data().minScale() + step * getAge()) * getGenderedScale();
     }
 
@@ -897,7 +887,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (!FossilConfig.isEnabled(FossilConfig.DINOS_BREAK_BLOCKS) || !level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return;
         }
-        if (isSkeleton() || !isAdult() || !isHungry()) {
+        if (!isAdult() || !isHungry()) {
             return;
         }
         for (int a = (int) Math.round(getBoundingBox().minX) - 1; a <= (int) Math.round(getBoundingBox().maxX) + 1; a++) {
@@ -931,19 +921,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean isBaby() {
-        return getAgeInDays() < data().teenAgeDays() && !isSkeleton();
+        return getAgeInDays() < data().teenAgeDays();
     }
 
     public int getMaxHunger() {
         return data().maxHunger();
-    }
-
-    public boolean isSkeleton() {
-        return this.entityData.get(MODELIZED);
-    }
-
-    public void setSkeleton(boolean skeleton) {
-        entityData.set(MODELIZED, skeleton);
     }
 
     public int getAgeInDays() {
@@ -1071,20 +1053,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (source == DamageSource.IN_WALL) {
             return false;
         }
-        if (amount > 0 && isSkeleton()) {
-            level.playSound(null, blockPosition(), SoundEvents.SKELETON_HURT, SoundSource.NEUTRAL, getSoundVolume(), getVoicePitch());
-            if (!level.isClientSide && !droppedBiofossil) {
-                if (type().timePeriod == TimePeriod.CENOZOIC) {
-                    spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
-                } else {
-                    spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
-                }
-                spawnAtLocation(new ItemStack(Items.BONE, Math.min(getAgeInDays(), data().adultAgeDays())), 1);
-                droppedBiofossil = true;
-            }
-            dead = true;
-            return true;
-        }
         if (getLastHurtByMob() instanceof Player player && getOwner() == player) {
             setTame(false);
             setOwnerUUID(null);
@@ -1105,133 +1073,111 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
-        if (isSkeleton()) {
-            if (stack.isEmpty()) {
-                if (player.isShiftKeyDown()) {
-                    teleportTo(getX() + (player.getX() - getX()) * 0.01, getY(), getZ() + (player.getZ() - getZ()) * 0.01);
-                } else {
-                    double d0 = player.getX() - this.getX();
-                    double d2 = player.getZ() - this.getZ();
-                    float f = (float) (Mth.atan2(d2, d0) * Mth.RAD_TO_DEG) - 90;
-                    this.yHeadRot = f;
-                    this.yBodyRot = f;
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            } else if (stack.is(Items.BONE) && !isAdult()) {
-                if (!level.isClientSide) {
-                    playSound(SoundEvents.SKELETON_AMBIENT, 0.8f, 1);
-                    setAgeInDays(getAgeInDays() + 1);
+        if (stack.isEmpty()) {
+            return InteractionResult.PASS;
+        }
+        if (isWeak() && (aiTameType() == Taming.GEM && stack.is(ModItems.SCARAB_GEM.get()) || aiTameType() == Taming.AQUATIC_GEM && stack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
+            //Tame with gem
+            if (!level.isClientSide) {
+                heal(200);
+                moodSystem.setMood(100);
+                feed(500);
+                getNavigation().stop();
+                setTarget(null);
+                setLastHurtByMob(null);
+                tame(player);
+                level.broadcastEntityEvent(this, TOTEM_PARTICLES);
+                stack.shrink(1);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+
+        if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM) {
+            //Grow up with chicken essence
+            if (isAdult() || getHunger() >= getMaxHunger()) {
+                player.displayClientMessage(new TranslatableComponent("prehistoric.essencefail"), true);
+                return InteractionResult.PASS;
+            }
+            if (!level.isClientSide) {
+                if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
+                    player.addItem(new ItemStack(Items.GLASS_BOTTLE, 1));
+                }
+                grow(1);
+                setHunger(1 + random.nextInt(getHunger()));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (stack.is(ModItems.STUNTED_ESSENCE.get()) && !isAgingDisabled()) {
+            //Stunt growth with stunted essence
+            if (!level.isClientSide) {
+                setHunger(getHunger() + 20);
+                heal(getMaxHealth());
+                setAgingDisabled(true);
+                stack.shrink(1);
+                playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, getSoundVolume(), getVoicePitch());
+            }
+            spawnItemParticles(stack.getItem(), 15);
+            spawnItemParticles(stack.getItem(), 15);
+            spawnItemParticles(Items.POISONOUS_POTATO, 15);
+            spawnItemParticles(Items.POISONOUS_POTATO, 15);
+            spawnItemParticles(Items.EGG, 15);
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        if (FoodMappings.getFoodAmount(stack.getItem(), type().diet) > 0) {
+            //Feed dino
+            if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
+                if (!level.isClientSide) {
+                    setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
+                    eatItem(stack);
+                    if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS)) {
+                        heal(3);
+                    }
+                    if (getHunger() >= getMaxHunger() && isTame()) {
+                        player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.full", getName()), true);
+                    }
+                    if (aiTameType() == Taming.FEEDING && !isTame() && random.nextInt(10) == 1) {
+                        tame(player);
+                        level.broadcastEntityEvent(this, TOTEM_PARTICLES);
+                    }
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         } else {
-            if (stack.isEmpty()) {
-                return InteractionResult.PASS;
-            }
-            if (isWeak() && (aiTameType() == Taming.GEM && stack.is(ModItems.SCARAB_GEM.get()) || aiTameType() == Taming.AQUATIC_GEM && stack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
-                //Tame with gem
-                if (!level.isClientSide) {
-                    heal(200);
-                    moodSystem.setMood(100);
-                    feed(500);
-                    getNavigation().stop();
-                    setTarget(null);
-                    setLastHurtByMob(null);
-                    tame(player);
-                    level.broadcastEntityEvent(this, TOTEM_PARTICLES);
-                    stack.shrink(1);
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-
-            if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM) {
-                //Grow up with chicken essence
-                if (isAdult() || getHunger() >= getMaxHunger()) {
-                    player.displayClientMessage(new TranslatableComponent("prehistoric.essencefail"), true);
-                    return InteractionResult.PASS;
-                }
-                if (!level.isClientSide) {
-                    if (!player.getAbilities().instabuild) {
-                        stack.shrink(1);
-                        player.addItem(new ItemStack(Items.GLASS_BOTTLE, 1));
-                    }
-                    grow(1);
-                    setHunger(1 + random.nextInt(getHunger()));
-                }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (stack.is(ModItems.STUNTED_ESSENCE.get()) && !isAgingDisabled()) {
-                //Stunt growth with stunted essence
-                if (!level.isClientSide) {
-                    setHunger(getHunger() + 20);
-                    heal(getMaxHealth());
-                    setAgingDisabled(true);
-                    stack.shrink(1);
-                    playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, getSoundVolume(), getVoicePitch());
-                }
-                spawnItemParticles(stack.getItem(), 15);
-                spawnItemParticles(stack.getItem(), 15);
-                spawnItemParticles(Items.POISONOUS_POTATO, 15);
-                spawnItemParticles(Items.POISONOUS_POTATO, 15);
-                spawnItemParticles(Items.EGG, 15);
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (FoodMappings.getFoodAmount(stack.getItem(), type().diet) > 0) {
-                //Feed dino
-                if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
-                    if (!level.isClientSide) {
-                        setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), type().diet));
-                        eatItem(stack);
-                        if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS)) {
-                            heal(3);
-                        }
-                        if (getHunger() >= getMaxHunger() && isTame()) {
-                            player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.full", getName()), true);
-                        }
-                        if (aiTameType() == Taming.FEEDING && !isTame() && random.nextInt(10) == 1) {
-                            tame(player);
-                            level.broadcastEntityEvent(this, TOTEM_PARTICLES);
-                        }
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
-                }
-            } else {
-                if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
-                    if (isOwnedBy(player) && canBeRidden()) {
-                        if (getRidingPlayer() == null) {
-                            if (!level.isClientSide) {
-                                setRidingPlayer(player);
-                            }
-                            setOrder(OrderType.WANDER);
-                            setSitting(false);
-                            setSleeping(false);
-                        } else if (getRidingPlayer() == player) {
-                            setSprinting(true);
-                            moodSystem.increaseMood(-5);
-                        }
-                    } else if (FossilConfig.isEnabled(FossilConfig.WHIP_TO_TAME_DINO) && !isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {
+            if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
+                if (isOwnedBy(player) && canBeRidden()) {
+                    if (getRidingPlayer() == null) {
                         if (!level.isClientSide) {
-                            moodSystem.increaseMood(-5);
-                            if (random.nextInt(5) == 0) {
-                                player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
-                                moodSystem.increaseMood(-25);
-                                tame(player);
-                            }
+                            setRidingPlayer(player);
+                        }
+                        setOrder(OrderType.WANDER);
+                        setSitting(false);
+                        setSleeping(false);
+                    } else if (getRidingPlayer() == player) {
+                        setSprinting(true);
+                        moodSystem.increaseMood(-5);
+                    }
+                } else if (FossilConfig.isEnabled(FossilConfig.WHIP_TO_TAME_DINO) && !isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {
+                    if (!level.isClientSide) {
+                        moodSystem.increaseMood(-5);
+                        if (random.nextInt(5) == 0) {
+                            player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", type().displayName.get()), true);
+                            moodSystem.increaseMood(-25);
+                            tame(player);
                         }
                     }
-                    setSitting(false);
-                    return InteractionResult.sidedSuccess(level.isClientSide);
                 }
-                if (stack.is(getOrderItem()) && isOwnedBy(player) && !player.isPassenger()) {
-                    if (!level.isClientSide) {
-                        jumping = false;
-                        getNavigation().stop();
-                        currentOrder = OrderType.values()[(this.currentOrder.ordinal() + 1) % 3];
-                        sendOrderMessage(this.currentOrder);
-                    }
-                    return InteractionResult.sidedSuccess(level.isClientSide);
+                setSitting(false);
+                return InteractionResult.sidedSuccess(level.isClientSide);
+            }
+            if (stack.is(getOrderItem()) && isOwnedBy(player) && !player.isPassenger()) {
+                if (!level.isClientSide) {
+                    jumping = false;
+                    getNavigation().stop();
+                    currentOrder = OrderType.values()[(this.currentOrder.ordinal() + 1) % 3];
+                    sendOrderMessage(this.currentOrder);
                 }
+                return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
         return InteractionResult.PASS;
@@ -1283,28 +1229,24 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         builder.append(name);
         builder.append("/");
         builder.append(name);
-        if (isSkeleton()) {
-            builder.append("_skeleton.png");
-        } else {
-            if (hasBabyTexture && isBaby()) builder.append("_baby");
-            if (hasTeenTexture && isTeen()) builder.append("_teen");
-            if (isAdult()) {
-                if (gender == Gender.MALE) {
-                    builder.append("_male");
-                } else {
-                    builder.append("_female");
-                }
+        if (hasBabyTexture && isBaby()) builder.append("_baby");
+        if (hasTeenTexture && isTeen()) builder.append("_teen");
+        if (isAdult()) {
+            if (gender == Gender.MALE) {
+                builder.append("_male");
+            } else {
+                builder.append("_female");
             }
-            if (isSleeping()) builder.append("_sleeping");
-            builder.append(".png");
         }
+        if (isSleeping()) builder.append("_sleeping");
+        builder.append(".png");
         String path = builder.toString();
         textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
     }
 
     @Override
     public void playAmbientSound() {
-        if (!isSleeping() && !isSkeleton()) {
+        if (!isSleeping()) {
             super.playAmbientSound();
         }
     }

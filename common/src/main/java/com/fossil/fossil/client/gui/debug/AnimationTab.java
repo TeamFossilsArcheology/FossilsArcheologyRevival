@@ -21,6 +21,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
 
@@ -34,15 +35,15 @@ public class AnimationTab extends DebugTab {
     private AnimationsList animations;
     private String currentController;
 
-    protected AnimationTab(DebugScreen debugScreen, LivingEntity entity) {
+    protected AnimationTab(DebugScreen debugScreen, Entity entity) {
         super(debugScreen, entity);
         if (entity != null) {
-            this.rotYBase = entity.yBodyRot;
+            this.rotYBase = entity instanceof LivingEntity livingEntity ? livingEntity.yBodyRot : entity.getYRot();
             this.rotXBase = entity.getXRot();
         }
     }
 
-    public static void renderEntityInDebug(int posX, int posY, LivingEntity entity, float scale) {
+    public static void renderEntityInDebug(int posX, int posY, Entity entity, float scale) {
         float g = -entity.getXRot() / 20f;
         PoseStack poseStack = RenderSystem.getModelViewStack();
         poseStack.pushPose();
@@ -131,7 +132,7 @@ public class AnimationTab extends DebugTab {
         if (entity != null) {
             renderEntityInDebug(70, 280, entity, scale);
             drawString(poseStack, minecraft.font, new TextComponent("Rotation: " + entity.getYRot()), 20, 160, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Rotation Body: " + entity.yBodyRot), 20, 180, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("Rotation Body: " + (entity instanceof LivingEntity livingEntity ? livingEntity.yBodyRot : entity.getYRot())), 20, 180, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Start Animation:"), width - width / 4 + 20, 30, 16777215);
         }

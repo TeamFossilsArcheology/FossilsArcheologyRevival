@@ -4,6 +4,7 @@ import com.fossil.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 
 import java.util.function.Supplier;
 
@@ -36,9 +37,11 @@ public class RotationMessage {
             if (Version.debugEnabled()) {
                 switch (flag) {
                     case 0 -> {
-                        if (entity != null) {
+                        if (entity instanceof LivingEntity) {
                             entity.setYBodyRot((float) rotation);
                             entity.setYHeadRot((float) rotation);
+                        } else {
+                            entity.setYRot((float) rotation);
                         }
                     }
                     case 1 -> {

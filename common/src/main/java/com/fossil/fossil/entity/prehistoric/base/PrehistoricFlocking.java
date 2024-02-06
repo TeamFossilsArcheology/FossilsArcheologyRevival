@@ -9,7 +9,7 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     private int groupSize = 1;
     private PrehistoricFlocking groupLeader;
 
-    public PrehistoricFlocking(EntityType<? extends Prehistoric> entityType, Level level) {
+    protected PrehistoricFlocking(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
     }
 

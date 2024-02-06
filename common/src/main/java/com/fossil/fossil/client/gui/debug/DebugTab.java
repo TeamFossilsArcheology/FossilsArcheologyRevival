@@ -8,7 +8,7 @@ import net.minecraft.client.gui.components.events.ContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,7 +18,7 @@ import java.util.List;
 public abstract class DebugTab extends GuiComponent implements ContainerEventHandler, NarratableEntry {
     protected final DebugScreen debugScreen;
     protected final Minecraft minecraft;
-    protected final LivingEntity entity;
+    protected final Entity entity;
     protected final List<Widget> widgets = new ArrayList<>();
     protected final List<GuiEventListener> renderables = new ArrayList<>();
     protected int width;
@@ -27,7 +27,7 @@ public abstract class DebugTab extends GuiComponent implements ContainerEventHan
     private GuiEventListener focused;
     private boolean isDragging;
 
-    protected DebugTab(DebugScreen debugScreen, LivingEntity entity) {
+    protected DebugTab(DebugScreen debugScreen, Entity entity) {
         this.debugScreen = debugScreen;
         this.minecraft = Minecraft.getInstance();
         this.entity = entity;
