@@ -90,7 +90,7 @@ public class ForgeConfig {
         PERMAFROST_RARITY = intEntry("Rarity of Permafrost ore. Higher number = more common", FossilConfig.PERMAFROST_RARITY, 4, 1, 100000000);
         HELL_SHIP_SPACING = intEntry("Maximum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SPACING, 24, 1, 100000000);
         HELL_SHIP_SEPERATION = intEntry("Minimum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SEPERATION, 5, 1, 100000000);
-        TAR_POOL_RARITY = intEntry("Rarity of Tar Pools. Higher number = more rare", FossilConfig.TAR_PIT_RARITY, 100, 1, 100000000);
+        TAR_POOL_RARITY = intEntry("Rarity of Tar Pools. Higher number = more rare", FossilConfig.TAR_PIT_RARITY, 900, 1, 100000000);
         MOAI_RARITY = intEntry("Rarity of Moai Structure. Higher number = more rare", FossilConfig.MOAI_RARITY, 400, 1, 100000000);
         VOLCANO_BIOME_RARITY = intEntry("Volcano Spawn Weight. Higher number = more common", FossilConfig.VOLCANO_BIOME_RARITY, 1, 1, 10000);
         //BUILDER.pop();

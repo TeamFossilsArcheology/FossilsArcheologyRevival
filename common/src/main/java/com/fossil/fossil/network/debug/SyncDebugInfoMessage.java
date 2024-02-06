@@ -50,7 +50,7 @@ public class SyncDebugInfoMessage {
         Player player = contextSupplier.get().getPlayer();
         if (Version.debugEnabled() && player != null) {
             if (player.level.isClientSide && Minecraft.getInstance().screen instanceof DebugScreen debugScreen) {
-                if (debugScreen.entity.getId() != entityId) {
+                if (debugScreen.entity == null || debugScreen.entity.getId() != entityId) {
                     return;
                 }
             }
