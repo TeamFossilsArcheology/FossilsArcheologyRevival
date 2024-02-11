@@ -58,7 +58,6 @@ public abstract class TransientEntitySectionManagerMixin<T extends EntityAccess>
 
                     @Override
                     public void onRemove(Entity.RemovalReason reason) {
-                        System.out.println("Test2");
                         if (!currentSection.remove(partEntity)) {
                             Fossil.LOGGER.warn("PrehistoricPart {} wasn't found in section {} (destroying due to {})", partEntity, SectionPos.of(currentSectionKey), reason);
                         }

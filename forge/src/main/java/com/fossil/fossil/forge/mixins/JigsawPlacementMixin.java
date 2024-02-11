@@ -61,8 +61,8 @@ public abstract class JigsawPlacementMixin {
     private List<? super PoolElementStructurePiece> pieces;
 
     @Inject(method = "tryPlacingChildren", at = @At(value = "HEAD"), cancellable = true)
-    private void addPartEntities(PoolElementStructurePiece structurePiece, MutableObject<VoxelShape> mutableObject, int depth, boolean bl, LevelHeightAccessor levelHeightAccessor, CallbackInfo ci) {
-        //Only run for our houses with a basement
+    private void tryPlacingCustomStructures(PoolElementStructurePiece structurePiece, MutableObject<VoxelShape> mutableObject, int depth, boolean bl, LevelHeightAccessor levelHeightAccessor, CallbackInfo ci) {
+        //This is a copy of the base method that allows us to place some of our structures
         String name = structurePiece.getElement().toString();
         if (name.contains(Fossil.MOD_ID) && (name.contains("house_taiga_top") || name.contains("house_plains_top") || name.contains("tent_option"))) {
             ci.cancel();
@@ -152,7 +152,8 @@ public abstract class JigsawPlacementMixin {
                                 boundingBox4.encapsulate(new BlockPos(boundingBox4.minX(), boundingBox4.minY() + s, boundingBox4.minZ()));
                             }
                             //Skip shape test for basement because that one always fails
-                            if (!(targetElement.toString().contains("base") || targetElement.toString().contains("tent")) && Shapes.joinIsNotEmpty(mutableObject3.getValue(), Shapes.create(AABB.of(boundingBox4).deflate(0.25)), BooleanOp.ONLY_SECOND)) {
+                            boolean shouldSkip = targetElement.toString().contains("base") || targetElement.toString().contains("tent");
+                            if (!shouldSkip && Shapes.joinIsNotEmpty(mutableObject3.getValue(), Shapes.create(AABB.of(boundingBox4).deflate(0.25)), BooleanOp.ONLY_SECOND)) {
                                 continue;
                             }
                             mutableObject3.setValue(Shapes.joinUnoptimized(mutableObject3.getValue(), Shapes.create(AABB.of(boundingBox4)), BooleanOp.ONLY_FIRST));
@@ -172,7 +173,8 @@ public abstract class JigsawPlacementMixin {
                             structurePiece.addJunction(new JigsawJunction(expectedJigsawPosition.getX(), u - k + s, expectedJigsawPosition.getZ(), p, targetProjection));
                             targetStructurePiece.addJunction(new JigsawJunction(baseJigsawPosition.getX(), u - targetJigsawY + t, baseJigsawPosition.getZ(), -p, projection));
                             pieces.add(targetStructurePiece);
-                            if (depth + 1 > this.maxDepth) continue block0;
+                            //Always place basement even if limit is reached
+                            if (!shouldSkip && depth + 1 > this.maxDepth) continue block0;
                             placing.addLast(new JigsawPlacement.PieceState(targetStructurePiece, mutableObject3, depth + 1));
                             continue block0;
                         }

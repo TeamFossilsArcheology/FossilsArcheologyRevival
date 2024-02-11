@@ -190,11 +190,11 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     }
 
     public static List<PrehistoricEntityInfo> entitiesWithSkeleton(TimePeriod... periods) {
-        return Arrays.stream(values()).filter(type -> {
-            if (type.mobType == PrehistoricMobType.FISH || type == QUAGGA) {
+        return Arrays.stream(values()).filter(info -> {
+            if (info.mobType == PrehistoricMobType.FISH || info == QUAGGA) {
                 return false;
             }
-            return Arrays.stream(periods).anyMatch(timePeriod -> timePeriod == type.timePeriod);
+            return Arrays.stream(periods).anyMatch(timePeriod -> timePeriod == info.timePeriod);
         }).toList();
     }
 
