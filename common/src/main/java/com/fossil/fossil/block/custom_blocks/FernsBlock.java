@@ -2,6 +2,7 @@ package com.fossil.fossil.block.custom_blocks;
 
 import com.fossil.fossil.config.FossilConfig;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.BlockGetter;
@@ -23,9 +24,9 @@ public class FernsBlock extends BushBlock implements BonemealableBlock {
     public static final int LOWER_MAX_AGE = 4;
     public static final int UPPER_MAX_AGE = 6;
     public static final IntegerProperty AGE = IntegerProperty.create("age", 0, 6);;
-    private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{Block.box(0, 0, 0, 16, 11, 16), Block.box(0, 0, 0, 16, 12.0,
-            16), Block.box(0, 0, 0, 16, 13, 16), Block.box(0, 0, 0, 16, 14, 16), Block.box(0, 0, 0, 16, 15,
-            16), Block.box(0, 0, 0, 16, 16, 16), Block.box(0, 0, 0, 16, 2, 16), Block.box(0, 0, 0, 16, 4, 16)};
+    private static final VoxelShape[] SHAPE_BY_AGE = new VoxelShape[]{Block.box(0, 0, 0, 16, 11, 16), Block.box(0, 0, 0, 16, 15,
+            16), Block.box(0, 0, 0, 16, 15, 16), Block.box(0, 0, 0, 16, 16, 16), Block.box(0, 0, 0, 16, 15,
+            16), Block.box(0, 0, 0, 16, 3, 16), Block.box(0, 0, 0, 16, 3, 16), Block.box(0, 0, 0, 16, 4, 16)};
 
     public FernsBlock() {
         super(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.CROP));
@@ -33,7 +34,7 @@ public class FernsBlock extends BushBlock implements BonemealableBlock {
     }
 
     public static boolean isUnderTree(BlockGetter level, BlockPos pos) {
-        for (int i = 0; i <= 128; ++i) {
+        for (int i = 0; i <= 32; ++i) {
             if (level.getBlockState(pos.above(i)).is(BlockTags.LEAVES)) {
                 return true;
             }
@@ -68,10 +69,10 @@ public class FernsBlock extends BushBlock implements BonemealableBlock {
     private void tryAgeUp(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         int age = state.getValue(AGE);
         if (!isUpper(state) && random.nextInt(FossilConfig.getInt(FossilConfig.FERN_TICK_RATE)) == 0) {
-            age++;
+            int newAge = Math.min(age + 1, LOWER_MAX_AGE);
             if (age == LOWER_MAX_AGE - 1) {
                 if (!level.isEmptyBlock(pos.above())) {
-                    age--;
+                    newAge--;
                 } else {
                     //Create new upper block
                     level.setBlockAndUpdate(pos.above(), defaultBlockState().setValue(AGE, LOWER_MAX_AGE + 1));
@@ -80,22 +81,23 @@ public class FernsBlock extends BushBlock implements BonemealableBlock {
                 BlockState upperState = level.getBlockState(pos.above());
                 if (upperState.is(this)) {
                     level.setBlockAndUpdate(pos.above(), upperState.setValue(AGE, UPPER_MAX_AGE));
-                    age = 3;
+                } else {
+                    newAge = 3;
                 }
             }
-            level.setBlockAndUpdate(pos, state.setValue(AGE, age));
-            spread(state, level, pos, age);
+            level.setBlockAndUpdate(pos, state.setValue(AGE, newAge));
+            spread(state, level, pos, newAge);
         }
     }
 
     private void spread(BlockState state, ServerLevel level, BlockPos pos, int age) {
-        if (age >= 3) {
+        if (age >= LOWER_MAX_AGE) {
             BlockPos.MutableBlockPos mutable = pos.mutable();
             for (int x = -1; x <= 1; x++) {
                 for (int y = -1; y <= 1; ++y) {
                     for (int z = -1; z <= 1; ++z) {
-                        if ((x != 0 || y != 0 || z != 0) && mayPlaceOn(state, level, mutable.setWithOffset(pos, x, y - 1, z))) {
-                            level.setBlockAndUpdate(mutable, defaultBlockState().setValue(AGE, 0));
+                        if ((x != 0 || y != 0 || z != 0) && mayPlaceOn(level.getBlockState(mutable.setWithOffset(pos, x, y - 1, z)), level, mutable)) {
+                            level.setBlockAndUpdate(mutable.move(Direction.UP), defaultBlockState().setValue(AGE, 0));
                         }
                     }
                 }
