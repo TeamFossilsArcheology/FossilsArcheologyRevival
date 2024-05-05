@@ -17,7 +17,7 @@
     },
     "animation.dimetrodon.attack": {
       "animation_length": 0.45833,
-      "action_delay": [8]
+      "action_delay": [0.33]
     },
     "animation.dimetrodon.sleep/sit": {
       "animation_length": 3

@@ -33,7 +33,7 @@
     },
     "animation.citpati.attack1": {
       "animation_length": 1,
-      "action_delay": [8]
+      "action_delay": [0.58]
     },
     "animation.citipati.call": {
       "animation_length": 1.25

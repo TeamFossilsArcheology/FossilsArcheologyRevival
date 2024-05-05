@@ -20,7 +20,7 @@
     "animation.liopleurodon.attack1": {
       "loop": true,
       "animation_length": 1.25,
-      "action_delay": [14]
+      "action_delay": [0.58]
     },
     "animation.liopleurodon.randomidle": {
       "animation_length": 1.5

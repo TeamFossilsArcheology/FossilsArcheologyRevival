@@ -39,7 +39,7 @@
     },
     "animation.velociraptor.attack": {
       "animation_length": 1,
-      "action_delay": [13]
+      "action_delay": [0.58]
     },
     "animation.velociraptor.turn_right": {
       "loop": "hold_on_last_frame"

@@ -46,7 +46,7 @@
     },
     "animation.dryosaurus.attack": {
       "animation_length": 1,
-      "action_delay": [14]
+      "action_delay": [0.58]
     }
   },
   "geckolib_format_version": 2

@@ -78,7 +78,7 @@
     },
     "animation.megalodon.attack": {
       "animation_length": 1,
-      "action_delay": [12]
+      "action_delay": [0.75]
     },
     "animation.megalodon.sleep": {
       "loop": true,

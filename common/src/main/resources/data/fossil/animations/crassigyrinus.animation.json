@@ -26,7 +26,7 @@
     },
     "animation.crassigyrinus.attack": {
       "animation_length": 1.375,
-      "action_delay": [10]
+      "action_delay": [0.42]
     },
     "animation.crassigyrinus.jump/fall": {
       "loop": true,

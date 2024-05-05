@@ -64,17 +64,19 @@
     },
     "animation.stegosaurus.attack_front1": {
       "animation_length": 1,
-      "action_delay": [9]
+      "action_delay": [0.54]
     },
     "animation.stegosaurus.attack_front2": {
       "animation_length": 1,
-      "action_delay": [9]
+      "action_delay": [0.54]
     },
     "animation.stegosaurus.attack_front_strong1": {
-      "animation_length": 3
+      "animation_length": 3,
+      "action_delay": [1.5]
     },
     "animation.stegosaurus.attack_front_strong2": {
-      "animation_length": 3
+      "animation_length": 3,
+      "action_delay": [1.5]
     },
     "animation.stegosaurus.attack_back1": {
       "animation_length": 1

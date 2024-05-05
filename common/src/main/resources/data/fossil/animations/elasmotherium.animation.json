@@ -24,7 +24,7 @@
     "animation.elasmotherium.attack1": {
       "loop": true,
       "animation_length": 1.25,
-      "action_delay": [10]
+      "action_delay": [0.42]
     },
     "animation.elasmotherium.swim": {
       "loop": true

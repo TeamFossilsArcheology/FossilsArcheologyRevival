@@ -26,7 +26,7 @@
     },
     "animation.kelenken.attack": {
       "animation_length": 0.5,
-      "action_delay": [8]
+      "action_delay": [0.38]
     },
     "animation.kelenken.sit": {
       "loop": true,

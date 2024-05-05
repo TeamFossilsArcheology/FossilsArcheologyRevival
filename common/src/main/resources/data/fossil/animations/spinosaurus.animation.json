@@ -10,7 +10,7 @@
     },
     "animation.spinosaurus.attack": {
       "animation_length": 1.33333,
-      "action_delay": [11]
+      "action_delay": [0.46]
     },
     "animation.spinosaurus.jump/fall": {
       "loop": true,

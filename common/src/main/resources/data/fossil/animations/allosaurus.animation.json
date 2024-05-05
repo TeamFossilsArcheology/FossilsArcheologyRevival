@@ -17,7 +17,7 @@
     },
     "animation.allosaurus.attack": {
       "animation_length": 1,
-      "action_delay": [14]
+      "action_delay": [0.58]
     },
     "animation.allosaurus.sit": {
       "loop": true,

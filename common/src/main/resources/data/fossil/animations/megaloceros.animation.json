@@ -20,7 +20,7 @@
     "animation.megaloceros.attack": {
       "loop": true,
       "animation_length": 1,
-      "action_delay": [11]
+      "action_delay": [0.46]
     },
     "animation.megaloceros.eat": {
       "loop": true,

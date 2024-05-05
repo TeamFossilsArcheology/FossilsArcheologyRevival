@@ -21,7 +21,7 @@
     },
     "animation.ceratosaurus.attack": {
       "animation_length": 1,
-      "action_delay": [14]
+      "action_delay": [0.58]
     },
     "animation.ceratosaurus.speak": {
       "animation_length": 1.5

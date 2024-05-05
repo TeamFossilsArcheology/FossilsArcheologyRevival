@@ -1566,7 +1566,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos() {
-        return AnimationInfoManager.ANIMATIONS.getAnimation(animationLocation.getPath());
+        return AnimationInfoManager.ANIMATIONS.getServerAnimations(animationLocation.getPath());
     }
 
     public abstract @NotNull Animation nextAttackAnimation();

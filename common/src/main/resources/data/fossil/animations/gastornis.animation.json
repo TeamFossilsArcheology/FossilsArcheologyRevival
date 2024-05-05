@@ -23,7 +23,7 @@
     },
     "animation.gastornis.attack": {
       "animation_length": 0.5,
-      "action_delay": [5]
+      "action_delay": [0.38]
     },
     "animation.gastornis.sit": {
       "loop": true,

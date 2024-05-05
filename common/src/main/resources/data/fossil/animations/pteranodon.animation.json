@@ -3,7 +3,8 @@
   "animations": {
     "animation.pteranodon.takeoff": {
       "loop": "hold_on_last_frame",
-      "animation_length": 1.5
+      "animation_length": 1.5,
+      "action_delay": [1]
     },
     "animation.pteranodon.idle": {
       "animation_length": 3.125
@@ -57,7 +58,7 @@
     },
     "animation.pteranodon.attack": {
       "animation_length": 0.5,
-      "action_delay": [6]
+      "action_delay": [0.38]
     }
   }
 }

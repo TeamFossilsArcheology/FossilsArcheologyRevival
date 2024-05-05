@@ -35,11 +35,11 @@
     },
     "animation.therizinosaurus.attack1": {
       "animation_length": 1.04,
-      "action_delay": [15]
+      "action_delay": [0.6]
     },
     "animation.therizinosaurus.attack2": {
       "animation_length": 1.28,
-      "action_delay": [15]
+      "action_delay": [0.6]
     },
     "animation.therizinosaurus.jump/fall": {
       "loop": true,

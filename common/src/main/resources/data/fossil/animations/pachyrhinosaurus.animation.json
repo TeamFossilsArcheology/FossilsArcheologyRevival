@@ -51,7 +51,7 @@
     },
     "animation.pachyrhinosaurus.attack2": {
       "animation_length": 1,
-      "action_delay": [7]
+      "action_delay": [0.58]
     },
     "animation.pachyrhinosaurus.call": {
       "animation_length": 3
@@ -61,7 +61,7 @@
     },
     "animation.pachyrhinosaurus.attack1": {
       "animation_length": 1,
-      "action_delay": [7]
+      "action_delay": [0.58]
     },
     "animation.pachyrhinosaurus.ram_windup": {
       "loop": true,

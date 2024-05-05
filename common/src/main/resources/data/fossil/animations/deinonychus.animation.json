@@ -21,7 +21,7 @@
     },
     "animation.deinonychus.attack": {
       "animation_length": 1,
-      "action_delay": [14]
+      "action_delay": [0.58]
     },
     "animation.deinonychus.sit": {
       "loop": true,

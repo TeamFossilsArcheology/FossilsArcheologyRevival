@@ -43,7 +43,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     private long takeOffStartTick = 0;
     private boolean takeOffAnimationStarted;
 
-    public PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level) {
+    protected PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level) {
         super(entityType, level);
         moveControl = new CustomFlightMoveControl(this);
     }
@@ -195,6 +195,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public void startTakeOff() {
         entityData.set(TAKING_OFF, true);
         takeOffStartTick = level.getGameTime();
+        getAnimationLogic().forceActiveAnimation("Movement/Idle/Eat", nextTakeOffAnimation(), "TakeOff");
     }
 
     /**
@@ -216,12 +217,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     public boolean isTakeOffAnimationDone() {
-        int flyDelay = getAnimationLogic().getActionDelay("Movement/Idle/Eat");
-        if (flyDelay < 0) {
-            //Use animation end for animations without delay
-            AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation("Movement/Idle/Eat");
-            return activeAnimation == null || level.getGameTime() > activeAnimation.endTick() + takeOffStartTick;
-        }
+        double flyDelay = getAnimationLogic().getActionDelay("Movement/Idle/Eat");
         return level.getGameTime() > flyDelay + takeOffStartTick;
     }
 
@@ -281,22 +277,21 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     private PlayState flyingPredicate(AnimationEvent<PrehistoricFlying> event) {
         AnimationController<PrehistoricFlying> controller = event.getController();
-        if (isTakingOff()) {
-            if (!takeOffAnimationStarted) {
-                getAnimationLogic().addActiveAnimation(controller.getName(), nextTakeOffAnimation(), "TakeOff");
-                takeOffAnimationStarted = true;
-            }
-        } else {
-            takeOffAnimationStarted = false;
+        AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+        if (activeAnimation != null && activeAnimation.forced() && !getAnimationLogic().isAnimationDone(controller.getName())) {
+            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));
+            return PlayState.CONTINUE;
+        }
+        if (!isTakingOff()) {
             if (event.isMoving()) {
                 getAnimationLogic().addActiveAnimation(controller.getName(), nextMovingAnimation(), "Walk");
             } else {
                 getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation(), "Idle");
             }
         }
-        AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-        if (activeAnimation != null) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));
+        AnimationLogic.ActiveAnimationInfo newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+        if (newAnimation != null) {
+            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.animationName()));
         }
         return PlayState.CONTINUE;
     }

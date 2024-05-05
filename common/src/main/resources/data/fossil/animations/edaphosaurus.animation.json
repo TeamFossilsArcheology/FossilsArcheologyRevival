@@ -17,7 +17,7 @@
     },
     "animation.edaphosaurus.attack": {
       "animation_length": 0.58333,
-      "action_delay": [7]
+      "action_delay": [0.29]
     },
     "animation.edaphosaurus.speak": {
       "animation_length": 2.33333

@@ -25,7 +25,7 @@
     },
     "animation.compsognathus.attack": {
       "animation_length": 0.75,
-      "action_delay": [10]
+      "action_delay": [0.42]
     },
     "animation.compsognathus.speak": {
       "animation_length": 1

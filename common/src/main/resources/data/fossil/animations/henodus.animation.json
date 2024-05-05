@@ -24,7 +24,7 @@
     },
     "animation.henodus.attack": {
       "animation_length": 0.58333,
-      "action_delay": [8]
+      "action_delay": [0.42]
     },
     "animation.henodus.sit/sleep": {
       "loop": true,

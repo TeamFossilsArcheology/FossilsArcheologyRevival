@@ -22,11 +22,11 @@
     },
     "animation.megalania.bite": {
       "animation_length": 0.70833,
-      "action_delay": [8]
+      "action_delay": [0.33]
     },
     "animation.megalania.bite2": {
       "animation_length": 1.5,
-      "action_delay": [8]
+      "action_delay": [0.33]
     },
     "animation.megalania.eat": {
       "animation_length": 1.5

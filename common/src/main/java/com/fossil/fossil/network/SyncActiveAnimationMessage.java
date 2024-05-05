@@ -8,6 +8,9 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
+/**
+ * Sync active animation from server to clients
+ */
 public class SyncActiveAnimationMessage {
     private final int entityId;
     private final String controller;

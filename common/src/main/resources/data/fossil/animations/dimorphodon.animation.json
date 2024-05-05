@@ -71,7 +71,7 @@
     },
     "animation.dimorphodon.attack": {
       "animation_length": 0.5,
-      "action_delay": [8]
+      "action_delay": [0.33]
     }
   },
   "geckolib_format_version": 2

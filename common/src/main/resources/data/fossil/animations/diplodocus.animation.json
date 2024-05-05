@@ -11,7 +11,7 @@
     },
     "animation.diplodocus.attack": {
       "animation_length": 5.5,
-      "action_delay": [22]
+      "action_delay": [0.92]
     },
     "animation.diplodocus.drink": {
       "animation_length": 30.875

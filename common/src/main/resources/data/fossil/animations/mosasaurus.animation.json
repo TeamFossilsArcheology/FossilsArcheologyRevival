@@ -18,7 +18,7 @@
     "animation.mosasaurus.attack": {
       "loop": true,
       "animation_length": 1.25,
-      "action_delay": [14]
+      "action_delay": [0.58]
     },
     "animation.mosasaurus.leap": {
       "loop": true,

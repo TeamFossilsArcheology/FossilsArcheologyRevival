@@ -49,7 +49,7 @@
     },
     "animation.gallimimus.attack1": {
       "animation_length": 1,
-      "action_delay": [7]
+      "action_delay": [0.58]
     }
   },
   "geckolib_format_version": 2

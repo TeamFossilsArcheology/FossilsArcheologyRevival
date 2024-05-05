@@ -31,7 +31,7 @@
     },
     "animation.plesiosaurus.attack": {
       "animation_length": 1.25,
-      "action_delay": [15]
+      "action_delay": [0.63]
     }
   },
   "geckolib_format_version": 2

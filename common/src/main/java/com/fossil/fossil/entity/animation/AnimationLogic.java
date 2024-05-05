@@ -79,7 +79,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return true;
     }
 
-    public int getActionDelay(String controller) {
+    public double getActionDelay(String controller) {
         ActiveAnimationInfo activeAnimation = getActiveAnimation(controller);
         if (activeAnimation != null && entity.getServerAnimationInfos().containsKey(activeAnimation.animationName())) {
             return entity.getServerAnimationInfos().get(activeAnimation.animationName()).actionDelay;

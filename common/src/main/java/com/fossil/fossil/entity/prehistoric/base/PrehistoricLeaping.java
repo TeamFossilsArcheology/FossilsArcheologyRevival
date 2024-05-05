@@ -39,7 +39,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         super.aiStep();
         if (!level.isClientSide) {
             if (isLeaping() && isOnGround()) {
-                int leapDelay = getServerAnimationInfos().get(getLeapingAnimationName()).actionDelay;
+                int leapDelay = (int) getServerAnimationInfos().get(getLeapingAnimationName()).actionDelay;
                 boolean hasTarget = getTarget() != null && getTarget().isAlive();
                 if (hasTarget && level.getGameTime() == leapStartTick + leapDelay) {
                     doLeapMovement();

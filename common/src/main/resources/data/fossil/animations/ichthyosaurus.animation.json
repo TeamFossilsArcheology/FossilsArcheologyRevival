@@ -58,7 +58,7 @@
     },
     "animation.icthyosaurus.attack": {
       "animation_length": 0.5,
-      "action_delay": [7]
+      "action_delay": [0.29]
     },
     "animation.icthyosaurus.ontogeny_baby": {
       "loop": "hold_on_last_frame"

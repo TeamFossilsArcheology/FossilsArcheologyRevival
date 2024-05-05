@@ -24,7 +24,7 @@
     "animation.megalograptus.Attack1": {
       "loop": true,
       "animation_length": 1,
-      "action_delay": [12]
+      "action_delay": [0.5]
     },
     "animation.megalograptus.Extra1": {
       "loop": true,

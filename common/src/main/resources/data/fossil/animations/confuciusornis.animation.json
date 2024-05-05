@@ -8,7 +8,7 @@
     "animation.confuciusornis.attack1": {
       "loop": true,
       "animation_length": 0.54167,
-      "action_delay": [5]
+      "action_delay": [0.21]
     },
     "animation.confuciusornis.eating": {
       "loop": true,

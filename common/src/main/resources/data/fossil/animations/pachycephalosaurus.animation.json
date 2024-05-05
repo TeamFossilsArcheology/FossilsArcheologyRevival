@@ -12,12 +12,12 @@
     "animation.pachycephalosaurus.Attack1": {
       "loop": true,
       "animation_length": 1,
-      "action_delay": [7]
+      "action_delay": [0.33]
     },
     "animation.pachycephalosaurus.Attack2": {
       "loop": true,
       "animation_length": 1,
-      "action_delay": [9]
+      "action_delay": [0.38]
     },
     "animation.pachycephalosaurus.charge": {
       "loop": true,

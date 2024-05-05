@@ -44,11 +44,11 @@
     },
     "animation.dodo.bite1": {
       "animation_length": 1,
-      "action_delay": [9]
+      "action_delay": [0.42]
     },
     "animation.dodo.bite2": {
       "animation_length": 1,
-      "action_delay": [9]
+      "action_delay": [0.42]
     },
     "animation.dodo.sleep1": {
       "loop": true,

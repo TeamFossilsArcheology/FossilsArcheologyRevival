@@ -26,7 +26,7 @@
     },
     "animation.titanis.attack": {
       "animation_length": 0.5,
-      "action_delay": [8]
+      "action_delay": [0.38]
     },
     "animation.titanis.sit": {
       "loop": true,
