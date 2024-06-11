@@ -498,6 +498,12 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                     float angle = (float) (Mth.atan2(next.z, next.x) * Mth.RAD_TO_DEG) - 90;
                     float rot = Mth.wrapDegrees(angle - mob.getYRot());
                     mob.setYRot(mob.getYRot() + rot);
+                    float atan = (float) Mth.atan2(next.z, next.x);
+                    float yawTurn = Mth.wrapDegrees(mob.getYRot() + 90);
+                    float yawTurnNew = Mth.wrapDegrees(atan * Mth.RAD_TO_DEG);
+                    float max = yawTurn + Mth.wrapDegrees(yawTurnNew - yawTurn);
+                    float add = yawTurn < max ? Mth.clamp(yawTurn + 4, yawTurn, max) : Mth.clamp(yawTurn - 4, yawTurn, max);
+                    mob.setYRot(add - 90);
 
                     float k = (float) (-Mth.atan2(next.y, next.horizontalDistance()) * Mth.RAD_TO_DEG);
                     mob.setXRot(k);

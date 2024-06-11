@@ -2,6 +2,8 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.control.CustomFlightBodyRotationControl;
+import com.fossil.fossil.entity.ai.control.CustomFlightLookControl;
 import com.fossil.fossil.entity.ai.control.CustomFlightMoveControl;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import net.minecraft.core.BlockPos;
@@ -13,6 +15,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.MoveControl.Operation;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.util.GoalUtils;
@@ -46,6 +49,12 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     protected PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level) {
         super(entityType, level);
         moveControl = new CustomFlightMoveControl(this);
+        lookControl = new CustomFlightLookControl(this);
+    }
+
+    @Override
+    protected @NotNull BodyRotationControl createBodyControl() {
+        return new CustomFlightBodyRotationControl(this);
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -108,7 +117,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     @Override
     public void aiStep() {
         super.aiStep();
-        if (!isOnGround() && getDeltaMovement().y < 0) {
+        if (!isOnGround() && getDeltaMovement().y < 0 && !isFlying()) {
             setDeltaMovement(getDeltaMovement().multiply(1, 0.6, 1));
         }
         if (!level.isClientSide) {
@@ -168,14 +177,15 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     public void moveTo(Vec3 pos, boolean shouldLand) {
         if (isFlying()) {
-            getMoveControl().setWantedPosition(pos.x, pos.y, pos.z, shouldLand);
+            getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
+            getMoveControl().setOperation(Operation.MOVE_TO);
         } else if (isTakingOff()) {
-            getMoveControl().setWantedPosition(pos.x, pos.y, pos.z, shouldLand);
+            getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
             getMoveControl().setOperation(Operation.WAIT);
         } else if (distanceToSqr(pos) > 40) {
             //start fly
             startTakeOff();
-            getMoveControl().setWantedPosition(pos.x, pos.y, pos.z, shouldLand);
+            getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
             getMoveControl().setOperation(Operation.WAIT);
         } else {
             //walk
@@ -184,8 +194,13 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     @Override
-    public boolean wantsToSleep() {
-        return super.wantsToSleep() && !isFlying();
+    public boolean canSleep() {
+        return super.canSleep() && !isFlying() && !isTakingOff();
+    }
+
+    @Override
+    public boolean canSit() {
+        return super.canSit() && !isFlying() && !isTakingOff();
     }
 
     public boolean isTakingOff() {
@@ -257,7 +272,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             double targetY = getY() + (double) ((random.nextFloat() * 2 - heightMod) * 16);
             double targetZ = getZ() + (double) ((random.nextFloat() * 2 - 1) * 16);
             Vec3 pos = new Vec3(targetX, targetY, targetZ);
-            results[i] = level.clip(new ClipContext(position(), pos, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
+            results[i] = level.clip(new ClipContext(position(), pos, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, this));
             if (results[i].getType() == HitResult.Type.MISS) {
                 return pos;
             }

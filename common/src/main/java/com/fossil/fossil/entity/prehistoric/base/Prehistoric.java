@@ -121,6 +121,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected float playerJumpPendingScale;
     private Gender gender = Gender.random(random);
     private int fleeTicks = 0;
+    /**
+     * Sleep cooldown for mobs with {@link Activity#BOTH}
+     */
     private int cathermalSleepCooldown = 0;
     private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
@@ -465,36 +468,35 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return super.isPushable();
     }
 
+    /**
+     * @return whether something is preventing the mob from sitting
+     */
+    public boolean canSit() {
+        return !isVehicle() && !isPassenger() && !isActuallyWeak();
+    }
+
+    /**
+     * @return whether something is preventing the mob from sleeping
+     */
     public boolean canSleep() {
+        if ((getTarget() == null || getTarget() instanceof ToyBase) && getLastHurtByMob() == null && !isInWater() && !isVehicle() && !isActuallyWeak()) {
+            return getOrderType() != OrderType.FOLLOW;
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether the mob can sleep. Depends on the time of day and how long it has been asleep.
+     *
+     * @return whether the mob can sleep at the moment
+     */
+    public boolean wantsToSleep() {
         if (aiActivityType() == Activity.DIURNAL) {
             return !level.isDay();
         } else if (aiActivityType() == Activity.NOCTURNAL) {
             return level.isDay() && !level.canSeeSky(blockPosition().above());
         }
-        return aiActivityType() == Activity.BOTH;
-    }
-
-    public boolean canWakeUp() {
-        if (aiActivityType() == Activity.DIURNAL) {
-            return level.isDay();
-        } else if (aiActivityType() == Activity.NOCTURNAL) {
-            return !level.isDay() || level.canSeeSky(blockPosition().above());
-        } else {
-            return ticksSlept > 4000;
-        }
-    }
-
-    public boolean wantsToSleep() {
-        if (level.isClientSide) {
-            return true;
-        }
-        if (aiActivityType() == Activity.BOTH && ticksSlept > 8000) {
-            return false;
-        }
-        if ((getTarget() == null || getTarget() instanceof ToyBase) && getLastHurtByMob() == null && !isInWater() && !isVehicle() && !isActuallyWeak() && canSleep()) {
-            return getOrderType() != OrderType.FOLLOW;
-        }
-        return false;
+        return aiActivityType() == Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
     }
 
     @Override
@@ -679,24 +681,27 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
             if (isSleeping()) {
                 ticksSlept++;
+                if (!wantsToSleep() || !canSleep()) {
+                    setSitting(false);
+                    setSleeping(false);
+                }
             } else {
                 ticksSlept = 0;
                 if (!isInWater()) {
-                    if (!isSitting() && !isVehicle() && random.nextInt(1000) == 1 && !isPassenger()) {
+                    if (!isSitting() && canSit() && random.nextInt(1000) == 1 && getTarget() == null) {
+                        //TODO: Maybe !isSleeping?. Maybe a priority system?
                         setSitting(true);
                         ticksSat = 0;
                     }
-                    if (isSitting() && ticksSat > 100 && random.nextInt(100) == 1 || getTarget() != null) {
+                    if (isSitting() && (!canSit() || ticksSat > 100 && random.nextInt(100) == 1 || getTarget() != null)) {
                         setSitting(false);
                     }
                 }
                 if (wantsToSleep()) {
                     if (aiActivityType() == Activity.BOTH) {
-                        if (cathermalSleepCooldown == 0) {
-                            if (random.nextInt(1200) == 1) {
-                                setSitting(false);
-                                startSleeping(BlockPos.ZERO);
-                            }
+                        if (random.nextInt(1200) == 1) {
+                            setSitting(false);
+                            startSleeping(BlockPos.ZERO);
                         }
                     } else if (aiActivityType() != Activity.NO_SLEEP) {
                         if (random.nextInt(200) == 1) {
@@ -706,11 +711,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                     }
                 }
             }
-            if (isSleeping() && (!wantsToSleep() || !canSleep() || canWakeUp())) {
-                setSitting(false);
-                setSleeping(false);
-            }
-            if (currentOrder == OrderType.STAY && !isSitting() && !isActuallyWeak()) {
+            if (currentOrder == OrderType.STAY && !isSitting() && canSit()) {
                 setSitting(true);
                 ticksSat = 0;
                 setSleeping(false);
@@ -1231,7 +1232,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         builder.append(name);
         if (hasBabyTexture && isBaby()) builder.append("_baby");
         if (hasTeenTexture && isTeen()) builder.append("_teen");
-        if (isAdult()) {
+        if (!hasTeenTexture && isTeen() || isAdult()) {
             if (gender == Gender.MALE) {
                 builder.append("_male");
             } else {

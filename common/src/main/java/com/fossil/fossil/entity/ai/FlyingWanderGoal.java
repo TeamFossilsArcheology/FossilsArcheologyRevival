@@ -10,8 +10,9 @@ import java.util.EnumSet;
 
 public class FlyingWanderGoal extends Goal {
     protected final PrehistoricFlying dino;
-    public Vec3 targetPos;
-    private boolean land;
+    private Vec3 targetPos;
+    private boolean shouldLand;
+    private boolean isRotating;
 
     public FlyingWanderGoal(PrehistoricFlying dino) {
         this.dino = dino;
@@ -20,12 +21,15 @@ public class FlyingWanderGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        boolean debugLand = false;
+        boolean debugLand = false;//TODO: Remove debug
+        if (dino.isImmobile() || !dino.isAdult()) {
+            return false;
+        }
         if (dino.isFlying()) {
-            if (debugLand || dino.getRandom().nextInt(50) == 0) {//TODO: Will only land if no predator is nearby?
+            if (debugLand || dino.getRandom().nextInt(50) == 0) {
                 BlockPos landPosition = dino.findLandPosition(false);
                 if (landPosition != null) {
-                    land = true;
+                    shouldLand = true;
                     targetPos = Vec3.atCenterOf(landPosition);
                     return true;
                 }
@@ -33,15 +37,12 @@ public class FlyingWanderGoal extends Goal {
             }
             targetPos = findAirTarget();
             return targetPos != null;
-        }
-
-        if (!dino.isOnGround() || dino.isImmobile() || !dino.isAdult()) {
-            return false;
-        }
-        boolean debug = false;
-        if (debug||dino.getRandom().nextInt(250) == 0) {
-            targetPos = findAirTarget();
-            return targetPos != null;
+        } else if (dino.isOnGround()) {
+            boolean debug = false;
+            if (debug||dino.getRandom().nextInt(250) == 0) {
+                targetPos = findAirTarget();
+                return targetPos != null;
+            }
         }
         return false;
     }
@@ -51,7 +52,7 @@ public class FlyingWanderGoal extends Goal {
         if (dino.isFlying()) {
             return dino.getMoveControl().hasWanted();
         }
-        return !dino.isTakingOff();
+        return isRotating || dino.isTakingOff();
     }
 
     @Override
@@ -59,28 +60,36 @@ public class FlyingWanderGoal extends Goal {
         dino.getLookControl().setLookAt(targetPos);
         dino.getNavigation().stop();
         if (dino.isFlying()) {
-            dino.moveTo(targetPos, land);
+            dino.moveTo(targetPos, shouldLand);
+        } else {
+            performTakeOff();
         }
     }
 
     @Override
     public void stop() {
-        land = false;
+        shouldLand = false;
+        isRotating = false;
         targetPos = null;
     }
 
     @Override
     public void tick() {
-        if (dino.isFlying() || dino.isTakingOff() || land) {
-            return;
-            //continue roam
-        } else if(!dino.isTakingOff()) {
+        if (!dino.isFlying() && !dino.isTakingOff() && !shouldLand) {
+            performTakeOff();
+        }
+    }
+
+    private void performTakeOff() {
+        if (!dino.isTakingOff()) {
             Vec3 distance = targetPos.subtract(dino.position());
             float rot = (float) (Mth.atan2(distance.z, distance.x) * Mth.RAD_TO_DEG - 90);
             float diff = Mth.degreesDifference(rot, dino.yBodyRot);
             if (diff > 45) {
+                isRotating = true;
                 dino.getLookControl().setLookAt(targetPos);
             } else {
+                isRotating = false;
                 dino.startTakeOff();
                 dino.moveTo(targetPos, false);
             }
@@ -88,6 +97,7 @@ public class FlyingWanderGoal extends Goal {
     }
 
     private Vec3 findAirTarget() {
+        //TODO: Different flight patterns. Do circles around point, Fly straight for a bit, random etc
         return dino.generateAirTarget();
     }
 }

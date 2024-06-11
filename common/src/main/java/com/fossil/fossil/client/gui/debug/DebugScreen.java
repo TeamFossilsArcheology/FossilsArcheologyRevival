@@ -15,8 +15,10 @@ import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.block.state.BlockState;
@@ -57,9 +59,11 @@ public class DebugScreen extends Screen {
             for (int i = 0; i < targets.size(); i++) {
                 if (below) {
                     pathTargets.add(new PathInfo(targets.get(i), player.level.getBlockState(targets.get(i).below()), true));
+                    //Minecraft.getInstance().debugRenderer.gameTestDebugRenderer.addMarker(targets.get(i).below(), -2147418368, "", 2000);
                     player.level.setBlock(targets.get(i).below(), blocks.get(i), 3);
                 } else {
                     pathTargets.add(new PathInfo(targets.get(i), player.level.getBlockState(targets.get(i)), false));
+                    //Minecraft.getInstance().debugRenderer.gameTestDebugRenderer.addMarker(targets.get(i), -2147418368, "", 2000);
                     player.level.setBlock(targets.get(i), blocks.get(i), 3);
                 }
             }
@@ -156,6 +160,36 @@ public class DebugScreen extends Screen {
         if (currentTab != null) {
             currentTab.render(poseStack, mouseX, mouseY, partialTick);
         }
+        if (entity instanceof Sheep sheep) {
+            drawString(poseStack, minecraft.font, new TextComponent("yRot: " + sheep.getYRot()), 275, 15, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("yRotHead: " + sheep.getYHeadRot()), 275, 35, 16777215);
+        }
+        Player player = Minecraft.getInstance().player;
+        float x = 1;
+        float y = 1;
+        float z = 1;
+        Vec3 offset = new Vec3(x, y, z);
+        float yRotCopy = Mth.wrapDegrees(player.getYRot());
+        float yawCopy = Mth.wrapDegrees(player.getYRot() + 90);
+        float targetYaw = (float) Mth.wrapDegrees(Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG);
+        float newYaw = Mth.approachDegrees(yawCopy, targetYaw, 4);
+        float targetPitch = (float) (Mth.atan2(-offset.y, offset.horizontalDistance()) * Mth.RAD_TO_DEG);
+        var a = Mth.cos(newYaw * Mth.DEG_TO_RAD);
+        var b = Mth.sin(-targetPitch * Mth.DEG_TO_RAD);
+        var c = Mth.sin(newYaw * Mth.DEG_TO_RAD);
+        var targetA = Mth.cos((targetYaw)* Mth.DEG_TO_RAD);
+        var targetB = 0;
+        var targetC = Mth.sin((targetYaw)* Mth.DEG_TO_RAD);
+        drawString(poseStack, minecraft.font, new TextComponent("xRot: " + player.getXRot()), 175, 15, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("yRotCopy: " + yRotCopy), 175, 35, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("yawCopy: " + yawCopy), 175, 65, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("targetYaw: " + targetYaw), 175, 95, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("a: " + a), 175, 125, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("b: " + b), 175, 155, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("c: " + c), 175, 185, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("targetA: " + (targetA - a)), 175, 215, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("newYaw: " + (targetA - a)), 175, 245, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("targetC: " + (targetC - c)), 175, 275, 16777215);
     }
 
     record PathInfo(BlockPos targetPos, BlockState blockState, boolean below) {
