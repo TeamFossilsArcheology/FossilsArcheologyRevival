@@ -233,7 +233,7 @@
 		},
 		"animation.confuciusornis.attack1": {
 			"loop": true,
-			"animation_length": 0.54167,
+			"animation_length": 0.5417,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -450,9 +450,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"rightWing3": {
@@ -475,7 +473,7 @@
 		},
 		"animation.confuciusornis.drinking": {
 			"loop": true,
-			"animation_length": 2.04167,
+			"animation_length": 2.0417,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -856,7 +854,7 @@
 		},
 		"animation.confuciusornis.walk": {
 			"loop": true,
-			"animation_length": 1.41667,
+			"animation_length": 1.4167,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -876,9 +874,7 @@
 				},
 				"tailFeathers": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"neck": {
@@ -1044,7 +1040,7 @@
 		},
 		"animation.confuciusornis.call": {
 			"loop": true,
-			"animation_length": 1.29167,
+			"animation_length": 1.2917,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -1170,7 +1166,7 @@
 		},
 		"animation.confuciusornis.flyfast": {
 			"loop": true,
-			"animation_length": 0.41667,
+			"animation_length": 0.4167,
 			"bones": {
 				"body": {
 					"rotation": {

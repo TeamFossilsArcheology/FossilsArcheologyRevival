@@ -19,9 +19,9 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Pachycephalosaurus extends Prehistoric {
     public static final String ANIMATIONS = "pachycephalosaurus.animation.json";
-    public static final String ATTACK1 = "animation.pachycephalosaurus.Attack1";
-    public static final String ATTACK2 = "animation.pachycephalosaurus.Attack2";
-    public static final String EAT = "animation.pachycephalosaurus.Eating";
+    public static final String ATTACK1 = "animation.pachycephalosaurus.attack1";
+    public static final String ATTACK2 = "animation.pachycephalosaurus.attack2";
+    public static final String EAT = "animation.pachycephalosaurus.eat";
     public static final String FALL = "animation.pachycephalosaurus.jump/fall";
     public static final String IDLE = "animation.pachycephalosaurus.idle";
     public static final String RUN = "animation.pachycephalosaurus.run";

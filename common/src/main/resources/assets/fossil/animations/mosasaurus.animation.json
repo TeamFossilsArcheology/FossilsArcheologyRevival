@@ -2,6 +2,7 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"animation.mosasaurus.swim": {
+			"loop": true,
 			"animation_length": 8,
 			"bones": {
 				"upperBody": {
@@ -174,6 +175,7 @@
 			}
 		},
 		"animation.mosasaurus.swimfast": {
+			"loop": true,
 			"animation_length": 8,
 			"bones": {
 				"upperBody": {
@@ -333,7 +335,6 @@
 			}
 		},
 		"animation.mosasaurus.eat": {
-			"loop": true,
 			"animation_length": 1.75,
 			"bones": {
 				"upperBody": {
@@ -407,7 +408,7 @@
 		},
 		"animation.mosasaurus.grab": {
 			"loop": true,
-			"animation_length": 2.45833,
+			"animation_length": 2.4583,
 			"bones": {
 				"upperBody": {
 					"rotation": {
@@ -558,7 +559,6 @@
 			}
 		},
 		"animation.mosasaurus.attack": {
-			"loop": true,
 			"animation_length": 1.25,
 			"bones": {
 				"neck": {
@@ -984,7 +984,8 @@
 			}
 		},
 		"animation.mosasaurus.idle": {
-			"animation_length": 16.33333,
+			"loop": true,
+			"animation_length": 16.3333,
 			"bones": {
 				"upperBody": {
 					"rotation": {
@@ -2321,126 +2322,6 @@
 						"16.3333": {
 							"vector": [-9.33, -2.5, -8.29]
 						}
-					}
-				}
-			}
-		},
-		"animation.mosasaurus.turn_left": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"righttFrontFlipper": {
-					"rotation": {
-						"vector": [15, 0, 20]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, 15, 5]
-					}
-				},
-				"leftBackFlipper": {
-					"rotation": {
-						"vector": [15, 0, 0]
-					}
-				},
-				"rightBackFlipper": {
-					"rotation": {
-						"vector": [-15, 0, 0]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, -10, -5]
-					}
-				},
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, -10, 10]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, 5, 5]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, 10, 5]
-					}
-				},
-				"lowerTailFin": {
-					"rotation": {
-						"vector": [0, 15, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, -10, -5]
-					}
-				},
-				"leftFrontFlipper": {
-					"rotation": {
-						"vector": [0, 0, 10]
-					}
-				}
-			}
-		},
-		"animation.mosasaurus.turn_right": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"righttFrontFlipper": {
-					"rotation": {
-						"vector": [0, 0, -10]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, -15, -5]
-					}
-				},
-				"leftBackFlipper": {
-					"rotation": {
-						"vector": [-15, 0, 0]
-					}
-				},
-				"rightBackFlipper": {
-					"rotation": {
-						"vector": [15, 0, 0]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, 5, 5]
-					}
-				},
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, 10, -10]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, -5, -5]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, -10, -5]
-					}
-				},
-				"lowerTailFin": {
-					"rotation": {
-						"vector": [0, -15, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, 10, 5]
-					}
-				},
-				"leftFrontFlipper": {
-					"rotation": {
-						"vector": [15, 0, -20]
 					}
 				}
 			}

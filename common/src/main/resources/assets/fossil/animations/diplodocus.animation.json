@@ -3,7 +3,7 @@
 	"animations": {
 		"animation.diplodocus.walk": {
 			"loop": true,
-			"animation_length": 3.70833,
+			"animation_length": 3.7083,
 			"bones": {
 				"bone4": {
 					"position": {
@@ -1284,7 +1284,7 @@
 		},
 		"animation.diplodocus.sprint": {
 			"loop": true,
-			"animation_length": 2.29167,
+			"animation_length": 2.2917,
 			"bones": {
 				"bone4": {
 					"position": {
@@ -4651,20 +4651,10 @@
 						}
 					},
 					"position": {
-						"21.0833": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"21.0833": {
-							"pre": {
-								"vector": [1, 1, 1]
-							},
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"neck2": {
@@ -4699,9 +4689,6 @@
 					},
 					"position": {
 						"2.375": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
 							"vector": [0, 0, 0]
 						},
 						"6.8333": {
@@ -4721,12 +4708,7 @@
 						}
 					},
 					"scale": {
-						"21.0833": {
-							"pre": {
-								"vector": [1, 1, 1]
-							},
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"neck3": {
@@ -4785,9 +4767,6 @@
 					},
 					"position": {
 						"9.1667": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
 							"vector": [0, 0, 0]
 						},
 						"10.0": {
@@ -4798,20 +4777,12 @@
 						}
 					},
 					"scale": {
-						"21.0833": {
-							"pre": {
-								"vector": [1, 1, 1]
-							},
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"neck4": {
 					"rotation": {
 						"3.5": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
 							"vector": [0, 0, 0]
 						},
 						"5.25": {
@@ -4837,20 +4808,10 @@
 						}
 					},
 					"position": {
-						"21.0833": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"21.0833": {
-							"pre": {
-								"vector": [1, 1, 1]
-							},
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"head": {
@@ -4871,13 +4832,13 @@
 							"vector": [-25, 0, 0]
 						},
 						"5.625": {
-							"vector": [-35.88, 0, 0]
+							"vector": [9.12, 0, 0]
 						},
 						"6.0833": {
-							"vector": [-55.26, 0, 0]
+							"vector": [12.24, 0, 0]
 						},
 						"6.8333": {
-							"vector": [-65, 0, 0]
+							"vector": [-27, 0, 0]
 						},
 						"8.125": {
 							"vector": [-20, 0, 0]
@@ -4921,9 +4882,6 @@
 					},
 					"position": {
 						"3.5": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
 							"vector": [0, 0, 0]
 						},
 						"21.0833": {
@@ -4931,12 +4889,7 @@
 						}
 					},
 					"scale": {
-						"21.0833": {
-							"pre": {
-								"vector": [1, 1, 1]
-							},
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"lowerJaw": {
@@ -5308,7 +5261,7 @@
 			}
 		},
 		"animation.diplodocus.eat": {
-			"animation_length": 7.29167,
+			"animation_length": 7.2917,
 			"bones": {
 				"JawBottom": {
 					"rotation": {
@@ -6762,200 +6715,6 @@
 				}
 			}
 		},
-		"animation.diplodocus.turn_right": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"neck": {
-					"rotation": {
-						"vector": [0, 10, -5]
-					}
-				},
-				"leftThigh": {
-					"rotation": {
-						"vector": [0, -5, 0]
-					},
-					"position": {
-						"vector": [0, -0.5, 0]
-					}
-				},
-				"rightThigh": {
-					"rotation": {
-						"vector": [0, -5, 10]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"rightUpperArm": {
-					"rotation": {
-						"vector": [10, 0, 0]
-					}
-				},
-				"rightLowerArm": {
-					"rotation": {
-						"vector": [-10, 0, 0]
-					}
-				},
-				"leftFoot": {
-					"rotation": {
-						"vector": [0, 0, 5]
-					}
-				},
-				"rightLeg": {
-					"rotation": {
-						"vector": [0, 0, -5]
-					}
-				},
-				"FrontThighLeft": {
-					"rotation": {
-						"vector": [0, 0, 10]
-					},
-					"position": {
-						"vector": [0, 1, 0]
-					}
-				},
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, 5, -5]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, -10, 2.5]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, -10, 2.5]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, -10, 2.5]
-					}
-				},
-				"tail4": {
-					"rotation": {
-						"vector": [0, -10, 2.5]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, 10, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, 5, 5]
-					}
-				},
-				"FrontThighLeftChild2": {
-					"rotation": {
-						"vector": [0, 0, 10]
-					},
-					"position": {
-						"vector": [0, 1, 0]
-					}
-				}
-			}
-		},
-		"animation.diplodocus.turn_left": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"neck": {
-					"rotation": {
-						"vector": [0, -10, 5]
-					}
-				},
-				"leftUpperArm": {
-					"rotation": {
-						"vector": [10, 0, 0]
-					}
-				},
-				"leftLowerArm": {
-					"rotation": {
-						"vector": [-10, 0, 0]
-					}
-				},
-				"leftThigh": {
-					"rotation": {
-						"vector": [0, 5, -10]
-					},
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
-				"leftLeg": {
-					"rotation": {
-						"vector": [0, 0, 5]
-					}
-				},
-				"rightThigh": {
-					"rotation": {
-						"vector": [0, 5, 0]
-					},
-					"position": {
-						"vector": [0, -0.5, 0]
-					}
-				},
-				"rightFoot": {
-					"rotation": {
-						"vector": [0, 0, -5]
-					}
-				},
-				"FrontThighRight": {
-					"rotation": {
-						"vector": [0, 0, -10]
-					},
-					"position": {
-						"vector": [0, 1, 0]
-					}
-				},
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, -5, 5]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, 10, -2.5]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, 10, -2.5]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, 10, -2.5]
-					}
-				},
-				"tail4": {
-					"rotation": {
-						"vector": [0, 10, -2.5]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, -10, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, -5, -5]
-					}
-				},
-				"FrontThighRightChild2": {
-					"rotation": {
-						"vector": [0, 0, -10]
-					},
-					"position": {
-						"vector": [0, 1, 0]
-					}
-				}
-			}
-		},
 		"animation.diplodocus.idle": {
 			"loop": true,
 			"animation_length": 12,
@@ -7671,7 +7430,7 @@
 		},
 		"animation.diplodocus.swim": {
 			"loop": true,
-			"animation_length": 15.70833,
+			"animation_length": 15.7083,
 			"bones": {
 				"FrontThighRight": {
 					"rotation": {

@@ -21,9 +21,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"lowerBody": {
@@ -186,9 +184,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"neck2": {
@@ -579,7 +575,7 @@
 		},
 		"animation.plesiosaurus.swimfast": {
 			"loop": true,
-			"animation_length": 0.95833,
+			"animation_length": 0.9583,
 			"bones": {
 				"upperBody": {
 					"rotation": {
@@ -597,9 +593,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"lowerBody": {
@@ -762,9 +756,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"neck2": {
@@ -1940,127 +1932,8 @@
 				}
 			}
 		},
-		"animation.plesiosaurus.turn_right": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"righttFrontFlipper": {
-					"rotation": {
-						"vector": [0, 0, -10]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, -15, -5]
-					}
-				},
-				"leftBackFlipper": {
-					"rotation": {
-						"vector": [-15, 0, 0]
-					}
-				},
-				"rightBackFlipper": {
-					"rotation": {
-						"vector": [15, 0, 0]
-					}
-				},
-				"lowerTailFin": {
-					"rotation": {
-						"vector": [0, -15, 0]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, 5, 5]
-					}
-				},
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, 10, -10]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, -5, -5]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, -10, -5]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, 10, 5]
-					}
-				},
-				"leftFrontFlipper": {
-					"rotation": {
-						"vector": [15, 0, -20]
-					}
-				}
-			}
-		},
-		"animation.plesiosaurus.turn_left": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"righttFrontFlipper": {
-					"rotation": {
-						"vector": [15, 0, 20]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, 15, 5]
-					}
-				},
-				"leftBackFlipper": {
-					"rotation": {
-						"vector": [15, 0, 0]
-					}
-				},
-				"rightBackFlipper": {
-					"rotation": {
-						"vector": [-15, 0, 0]
-					}
-				},
-				"lowerTailFin": {
-					"rotation": {
-						"vector": [0, 15, 0]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, -10, -5]
-					}
-				},
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, -10, 10]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, 5, 5]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, 10, 5]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, -10, -5]
-					}
-				},
-				"leftFrontFlipper": {
-					"rotation": {
-						"vector": [0, 0, 10]
-					}
-				}
-			}
-		},
 		"animation.plesiosaurus.randomidle": {
+			"loop": true,
 			"animation_length": 1.5,
 			"bones": {
 				"Neck": {
@@ -2082,31 +1955,21 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"0.0": {
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"JawBottomBase": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"0.0": {
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"upperBody": {
@@ -2125,14 +1988,10 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"0.0": {
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"lowerBody": {
@@ -2151,14 +2010,10 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"0.0": {
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"neck1": {
@@ -2180,9 +2035,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"neck2": {
@@ -2204,9 +2057,7 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					}
 				},
 				"head": {
@@ -2225,14 +2076,10 @@
 						}
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"0.0": {
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				}
 			}
@@ -2424,20 +2271,20 @@
 			}
 		},
 		"animation.plesiosaurus.attack": {
-			"animation_length": 1.25,
+			"animation_length": 0.7917,
 			"bones": {
 				"neck1": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.5": {
+						"0.2917": {
 							"vector": [4.61417, -2.53259, 17.32145]
 						},
-						"0.7083": {
+						"0.4167": {
 							"vector": [4.17123, 0.16777, -2.8158]
 						},
-						"1.25": {
+						"0.75": {
 							"vector": [0, 0, 0]
 						}
 					},
@@ -2452,13 +2299,13 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.5": {
+						"0.2917": {
 							"vector": [4.61417, -2.53259, 17.32145]
 						},
-						"0.7083": {
+						"0.4167": {
 							"vector": [4.17123, 0.16777, -2.8158]
 						},
-						"1.25": {
+						"0.75": {
 							"vector": [0, 0, 0]
 						}
 					},
@@ -2473,10 +2320,10 @@
 						"0.0": {
 							"vector": [0, 0, 0]
 						},
-						"0.5": {
+						"0.2917": {
 							"vector": [30, 0, 0]
 						},
-						"0.625": {
+						"0.375": {
 							"vector": [0, 0, 0]
 						}
 					},

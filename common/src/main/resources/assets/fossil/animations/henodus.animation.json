@@ -233,7 +233,7 @@
 		},
 		"animation.henodus.run": {
 			"loop": true,
-			"animation_length": 0.79167,
+			"animation_length": 0.7917,
 			"bones": {
 				"shell": {
 					"rotation": {
@@ -462,7 +462,7 @@
 			}
 		},
 		"animation.henodus.drink/eat": {
-			"animation_length": 1.04167,
+			"animation_length": 1.0417,
 			"bones": {
 				"neck": {
 					"rotation": {
@@ -521,7 +521,8 @@
 			}
 		},
 		"animation.henodus.swim": {
-			"animation_length": 0.95833,
+			"loop": true,
+			"animation_length": 0.9583,
 			"bones": {
 				"henodus": {
 					"rotation": {
@@ -743,7 +744,8 @@
 			}
 		},
 		"animation.henodus.swimfast": {
-			"animation_length": 0.70833,
+			"loop": true,
+			"animation_length": 0.7083,
 			"bones": {
 				"henodus": {
 					"rotation": {
@@ -987,7 +989,7 @@
 			}
 		},
 		"animation.henodus.attack": {
-			"animation_length": 0.58333,
+			"animation_length": 0.5833,
 			"bones": {
 				"neck": {
 					"rotation": {

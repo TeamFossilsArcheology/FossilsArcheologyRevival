@@ -660,12 +660,17 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				},
+				"lowerBody": {
+					"position": {
+						"vector": [0, 2, 0]
+					}
 				}
 			}
 		},
 		"animation.pachycephalosaurus.walk": {
 			"loop": true,
-			"animation_length": 2.66667,
+			"animation_length": 2.6667,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
@@ -1646,8 +1651,7 @@
 				}
 			}
 		},
-		"animation.pachycephalosaurus.Attack1": {
-			"loop": true,
+		"animation.pachycephalosaurus.attack1": {
 			"animation_length": 1,
 			"bones": {
 				"lowerBody": {
@@ -1783,8 +1787,7 @@
 				}
 			}
 		},
-		"animation.pachycephalosaurus.Attack2": {
-			"loop": true,
+		"animation.pachycephalosaurus.attack2": {
 			"animation_length": 1,
 			"bones": {
 				"lowerBody": {
@@ -2590,8 +2593,7 @@
 				}
 			}
 		},
-		"animation.pachycephalosaurus.Eating": {
-			"loop": true,
+		"animation.pachycephalosaurus.eat": {
 			"animation_length": 2.25,
 			"bones": {
 				"lowerBody": {
@@ -2782,8 +2784,7 @@
 				}
 			}
 		},
-		"animation.pachycephalosaurus.Drinking": {
-			"loop": true,
+		"animation.pachycephalosaurus.drink": {
 			"animation_length": 2.25,
 			"bones": {
 				"lowerBody": {
@@ -2974,9 +2975,8 @@
 				}
 			}
 		},
-		"animation.pachycephalosaurus.Call": {
-			"loop": true,
-			"animation_length": 2.70833,
+		"animation.pachycephalosaurus.call": {
+			"animation_length": 2.7083,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
@@ -3012,10 +3012,10 @@
 							"vector": [-27.5, 0, 0]
 						},
 						"1.3333": {
-							"vector": [-35, 0, 0]
+							"vector": [-7.5, 0, 0]
 						},
 						"1.875": {
-							"vector": [-37.5, 0, 0]
+							"vector": [-15, 0, 0]
 						},
 						"2.7083": {
 							"vector": [0, 0, 0]
@@ -3413,7 +3413,6 @@
 			}
 		},
 		"animation.pachycephalosaurus.speak": {
-			"loop": true,
 			"animation_length": 1,
 			"bones": {
 				"upperBody": {
@@ -3657,8 +3656,7 @@
 				}
 			}
 		},
-		"animation.pachycephalosaurus.Display": {
-			"loop": true,
+		"animation.pachycephalosaurus.display": {
 			"animation_length": 8,
 			"bones": {
 				"lowerBody": {

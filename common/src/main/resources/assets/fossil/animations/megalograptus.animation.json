@@ -82,20 +82,10 @@
 						}
 					},
 					"position": {
-						"0.7083": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"0.7083": {
-							"pre": {
-								"vector": [1, 1, 1]
-							},
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"leftLeg3_1": {
@@ -316,7 +306,7 @@
 				}
 			}
 		},
-		"animation.megalograptus.Swim": {
+		"animation.megalograptus.swim": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -515,15 +505,13 @@
 				}
 			}
 		},
-		"animation.megalograptus.Idle/sleep/sit": {
+		"animation.megalograptus.idle/sleep/sit": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
 				"head": {
 					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"position": {
 						"0.0": {
@@ -730,7 +718,7 @@
 				}
 			}
 		},
-		"animation.megalograptus.Basking": {
+		"animation.megalograptus.bask": {
 			"loop": true,
 			"animation_length": 3,
 			"bones": {
@@ -912,8 +900,7 @@
 				}
 			}
 		},
-		"animation.megalograptus.Eating": {
-			"loop": true,
+		"animation.megalograptus.eat": {
 			"animation_length": 2,
 			"bones": {
 				"rightPincer": {
@@ -1035,8 +1022,7 @@
 				}
 			}
 		},
-		"animation.megalograptus.Attack1": {
-			"loop": true,
+		"animation.megalograptus.attack1": {
 			"animation_length": 1,
 			"bones": {
 				"head": {
@@ -1202,7 +1188,7 @@
 				}
 			}
 		},
-		"animation.megalograptus.Extra1": {
+		"animation.megalograptus.extra1": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
@@ -1317,7 +1303,7 @@
 		},
 		"animation.megalograptus.run": {
 			"loop": true,
-			"animation_length": 0.58333,
+			"animation_length": 0.5833,
 			"bones": {
 				"head": {
 					"rotation": {
@@ -1396,20 +1382,10 @@
 						}
 					},
 					"position": {
-						"0.4167": {
-							"pre": {
-								"vector": [0, 0, 0]
-							},
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, 0, 0]
 					},
 					"scale": {
-						"0.4167": {
-							"pre": {
-								"vector": [1, 1, 1]
-							},
-							"vector": [1, 1, 1]
-						}
+						"vector": [1, 1, 1]
 					}
 				},
 				"leftLeg3_1": {

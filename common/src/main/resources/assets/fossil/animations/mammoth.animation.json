@@ -682,7 +682,7 @@
 		},
 		"animation.mammoth.walk": {
 			"loop": true,
-			"animation_length": 3.33333,
+			"animation_length": 3.3333,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -1120,7 +1120,7 @@
 		},
 		"animation.mammoth.run": {
 			"loop": true,
-			"animation_length": 1.41667,
+			"animation_length": 1.4167,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -1673,7 +1673,7 @@
 		},
 		"animation.mammoth.idle": {
 			"loop": true,
-			"animation_length": 3.33333,
+			"animation_length": 3.3333,
 			"bones": {
 				"neck": {
 					"rotation": {

@@ -191,7 +191,7 @@
 		},
 		"animation.liopleurodon.swimfast": {
 			"loop": true,
-			"animation_length": 1.45833,
+			"animation_length": 1.4583,
 			"bones": {
 				"LowerBody": {
 					"rotation": {
@@ -457,7 +457,7 @@
 		},
 		"animation.liopleurodon.grab": {
 			"loop": true,
-			"animation_length": 2.45833,
+			"animation_length": 2.4583,
 			"bones": {
 				"LowerBody": {
 					"rotation": {
@@ -613,6 +613,7 @@
 			}
 		},
 		"animation.liopleurodon.randomidle": {
+			"loop": true,
 			"animation_length": 1.5,
 			"bones": {
 				"LowerBody": {
@@ -674,7 +675,8 @@
 			}
 		},
 		"animation.liopleurodon.idle/sleep": {
-			"animation_length": 20.08333,
+			"loop": true,
+			"animation_length": 20.0833,
 			"bones": {
 				"LowerBody": {
 					"rotation": {
@@ -1868,126 +1870,6 @@
 						"8.0": {
 							"vector": [0, "-5+math.sin(query.anim_time*90-60)*-5", "math.sin(query.anim_time*90-60)*5"]
 						}
-					}
-				}
-			}
-		},
-		"animation.liopleurodon.turn_right": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"righttFrontFlipper": {
-					"rotation": {
-						"vector": [0, 0, -10]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, -15, -5]
-					}
-				},
-				"leftBackFlipper": {
-					"rotation": {
-						"vector": [-15, 0, 0]
-					}
-				},
-				"rightBackFlipper": {
-					"rotation": {
-						"vector": [15, 0, 0]
-					}
-				},
-				"lowerTailFin": {
-					"rotation": {
-						"vector": [0, -15, 0]
-					}
-				},
-				"leftFrontFlipper": {
-					"rotation": {
-						"vector": [15, 0, -20]
-					}
-				},
-				"LowerBody": {
-					"rotation": {
-						"vector": [0, 10, -10]
-					}
-				},
-				"Tail1": {
-					"rotation": {
-						"vector": [0, -5, -5]
-					}
-				},
-				"Tail2": {
-					"rotation": {
-						"vector": [0, -10, -5]
-					}
-				},
-				"UpperBody": {
-					"rotation": {
-						"vector": [0, 5, 5]
-					}
-				},
-				"Head": {
-					"rotation": {
-						"vector": [0, 10, 5]
-					}
-				}
-			}
-		},
-		"animation.liopleurodon.turn_left": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"righttFrontFlipper": {
-					"rotation": {
-						"vector": [15, 0, 20]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, 15, 5]
-					}
-				},
-				"leftBackFlipper": {
-					"rotation": {
-						"vector": [15, 0, 0]
-					}
-				},
-				"rightBackFlipper": {
-					"rotation": {
-						"vector": [-15, 0, 0]
-					}
-				},
-				"lowerTailFin": {
-					"rotation": {
-						"vector": [0, 15, 0]
-					}
-				},
-				"leftFrontFlipper": {
-					"rotation": {
-						"vector": [0, 0, 10]
-					}
-				},
-				"LowerBody": {
-					"rotation": {
-						"vector": [0, -10, 10]
-					}
-				},
-				"Tail1": {
-					"rotation": {
-						"vector": [0, 5, 5]
-					}
-				},
-				"Tail2": {
-					"rotation": {
-						"vector": [0, 10, 5]
-					}
-				},
-				"UpperBody": {
-					"rotation": {
-						"vector": [0, -10, -5]
-					}
-				},
-				"Head": {
-					"rotation": {
-						"vector": [0, -10, -5]
 					}
 				}
 			}

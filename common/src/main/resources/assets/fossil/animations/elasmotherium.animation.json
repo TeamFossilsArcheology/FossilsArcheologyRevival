@@ -3,7 +3,7 @@
 	"animations": {
 		"animation.elasmotherium.walk": {
 			"loop": true,
-			"animation_length": 3.33333,
+			"animation_length": 3.3333,
 			"bones": {
 				"earsL": {
 					"rotation": {
@@ -931,7 +931,7 @@
 		},
 		"animation.elasmotherium.idle": {
 			"loop": true,
-			"animation_length": 3.33333,
+			"animation_length": 3.3333,
 			"bones": {
 				"neck": {
 					"rotation": {
