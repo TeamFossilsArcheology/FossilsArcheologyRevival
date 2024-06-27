@@ -69,6 +69,8 @@ public class Tropeognathus extends PrehistoricFlying {
 
         if (isInWater()) {
             key = IDLE_SWIM;
+        } else if (isFlying()) {
+            key = FLY;//TODO: Hover anim missing
         } else {
             int number = random.nextInt(10);
             switch (number) {
@@ -94,7 +96,7 @@ public class Tropeognathus extends PrehistoricFlying {
 
         if (isChasing) key = RUN;
         if (isInWater()) key = SWIM;
-        if (isFlying() || !isOnGround()) key = FLY;
+        if (isFlying()) key = FLY;
 
         return getAllAnimations().get(key);
     }

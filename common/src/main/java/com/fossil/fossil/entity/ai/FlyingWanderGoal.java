@@ -85,7 +85,7 @@ public class FlyingWanderGoal extends Goal {
             Vec3 distance = targetPos.subtract(dino.position());
             float rot = (float) (Mth.atan2(distance.z, distance.x) * Mth.RAD_TO_DEG - 90);
             float diff = Mth.degreesDifference(rot, dino.yBodyRot);
-            if (diff > 45) {
+            if (diff > 45 && false) {//TODO: Can break if directly aboe target I think
                 isRotating = true;
                 dino.getLookControl().setLookAt(targetPos);
             } else {

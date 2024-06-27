@@ -6,9 +6,9 @@
 				"identifier": "geometry.pteranodon",
 				"texture_width": 128,
 				"texture_height": 64,
-				"visible_bounds_width": 3,
-				"visible_bounds_height": 3.5,
-				"visible_bounds_offset": [0, 1.25, 0]
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 5,
+				"visible_bounds_offset": [0, 0.5, 0]
 			},
 			"bones": [
 				{
@@ -16,7 +16,7 @@
 					"pivot": [0, 0, 0]
 				},
 				{
-					"name": "Body",
+					"name": "body",
 					"parent": "bone",
 					"pivot": [-0.02, 13.1, 0.5],
 					"rotation": [-46.96, 0, 0],
@@ -26,7 +26,7 @@
 				},
 				{
 					"name": "basin",
-					"parent": "Body",
+					"parent": "body",
 					"pivot": [-0.01, 12.7, 7],
 					"rotation": [-20.87, 0, 0],
 					"cubes": [
@@ -35,7 +35,7 @@
 				},
 				{
 					"name": "Neck1",
-					"parent": "Body",
+					"parent": "body",
 					"pivot": [-0.02, 13.6, 1.5],
 					"rotation": [2.61, 0, 0],
 					"cubes": [
@@ -73,7 +73,6 @@
 					"name": "Beak1L",
 					"parent": "Beak1R",
 					"pivot": [-0.02, 16.3, -8.3],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-0.93, 12.8, -13.3], "size": [2, 2, 6], "uv": [30, 53]}
 					]
@@ -91,7 +90,6 @@
 					"name": "Beak2R",
 					"parent": "Beak2L",
 					"pivot": [0.08, 14.3, -12.9],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-0.82, 12.8, -20.4], "size": [1, 2, 8], "uv": [54, 53]}
 					]
@@ -100,7 +98,6 @@
 					"name": "Jaw10",
 					"parent": "Head",
 					"pivot": [-0.12, 13.6, -6.8],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.12, 11.1, -12.3], "size": [2, 2, 7], "uv": [42, 48]}
 					]
@@ -136,7 +133,6 @@
 					"name": "CrestBase",
 					"parent": "CrestBase0",
 					"pivot": [-0.02, 14.2, -5.5],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.22, 12.7, -11.5], "size": [2, 3, 6], "uv": [65, 51]}
 					]
@@ -152,7 +148,7 @@
 				},
 				{
 					"name": "WingL1",
-					"parent": "Body",
+					"parent": "body",
 					"pivot": [2.18, 13.1, 3.5],
 					"rotation": [0, -13.04, 73.04],
 					"cubes": [
@@ -170,7 +166,7 @@
 				},
 				{
 					"name": "WingR1",
-					"parent": "Body",
+					"parent": "body",
 					"pivot": [-2.22, 13.1, 3.5],
 					"rotation": [0, 13.04, -73.04],
 					"cubes": [
@@ -188,7 +184,7 @@
 				},
 				{
 					"name": "Leg1R",
-					"parent": "Body",
+					"parent": "body",
 					"pivot": [-1.52, 12.1, 7.7],
 					"rotation": [39.13, 0, 18.26],
 					"cubes": [
@@ -215,7 +211,7 @@
 				},
 				{
 					"name": "Leg1L",
-					"parent": "Body",
+					"parent": "body",
 					"pivot": [1.48, 12.1, 7.7],
 					"rotation": [39.13, 0, -18.26],
 					"cubes": [

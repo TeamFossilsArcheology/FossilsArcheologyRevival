@@ -15,6 +15,9 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
     private final PrehistoricFlying mob;
     private boolean shouldLandAtTarget;
     private Vec3 flyingWanted = Vec3.ZERO;
+    private int tick;
+    private int lastStuckCheck;
+    private Vec3 lastStuckCheckPos = Vec3.ZERO;
 
     public CustomFlightMoveControl(PrehistoricFlying mob) {
         super(mob);
@@ -29,11 +32,19 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
             int[] targets = new int[3];
             BlockState[] blocks = new BlockState[1];
             blocks[0] = shouldLandAtTarget ? Blocks.EMERALD_BLOCK.defaultBlockState() : Blocks.GOLD_BLOCK.defaultBlockState();
-            targets[0] = (int) x;
-            targets[1] = (int) y;
-            targets[2] = (int) z;
+            targets[0] = Mth.floor(x);
+            targets[1] = Mth.floor(y);
+            targets[2] = Mth.floor(z);
             MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) mob.level).getPlayers(serverPlayer -> true),
                     new MarkMessage(targets, blocks, false));
+        }
+    }
+
+    @Override
+    public void setWantedPosition(double x, double y, double z, double speed) {
+        super.setWantedPosition(x, y, z, speed);
+        if (mob.isUsingStuckNavigation()) {
+            flyingWanted = new Vec3(x, y, z);
         }
     }
 
@@ -66,7 +77,13 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
                 mob.setXRot(newPitch);
                 if (Mth.degreesDifferenceAbs(initialYRot, mob.getYRot()) < 3) {
                     //Slows down before reaching the target to prevent overshooting
-                    float limit = dist > 15 ? 2.2f : (dist > 5 ? 1.8f : 1.2f);
+                    float limit = 1.2f;
+                    if (dist > 15) {
+                        limit = 2.2f;
+                    } else if (dist > 5) {
+                        limit = 1.8f;
+                    }
+                    limit = shouldLandAtTarget ? limit * 0.8f : limit;
                     speedModifier = Mth.approach((float) speedModifier, limit, (float) (0.05 * (1.8 / speedModifier)));
                 } else {
                     speedModifier = Mth.approach((float) speedModifier, 0.2f, 0.025f);
@@ -81,20 +98,51 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
                 double newZ = Mth.approach((float) move.z, (float) targetZMove, 0.01f);
                 mob.setDeltaMovement(newX, newY, newZ);
             } else {
-                if (!shouldLandAtTarget || mob.isOnGround()) {
-                    mob.onReachAirTarget(new BlockPos(flyingWanted));
-                    operation = Operation.WAIT;
-                    if (shouldLandAtTarget) {
+                if (mob.isUsingStuckNavigation()) {
+                    mob.switchNavigator(false);
+                }
+                if (shouldLandAtTarget) {
+                    if (!mob.level.isEmptyBlock(mob.blockPosition().below())) {
+                        mob.onReachAirTarget(new BlockPos(flyingWanted));//TODO: Maybe onReachGroundTarget?
                         mob.setFlying(false);
                     }
+                } else {
+                    mob.onReachAirTarget(new BlockPos(flyingWanted));
                 }
+                operation = Operation.WAIT;
             }
-            if (mob.horizontalCollision) {
-                //TODO: Make work in enclosures
-                //operation = Operation.WAIT;
+            if (mob.verticalCollisionBelow && offset.y < 0) {
+                if (!mob.isUsingStuckNavigation()) {
+                    if (offset.horizontalDistance() < 6 && offset.y > -3) {
+                        //Just walk if close enough
+                        mob.setFlying(false);
+                        operation = Operation.WAIT;
+                        mob.moveTo(flyingWanted, true);
+                        //TODO: Maybe onReachGroundTarget?
+                    } else {
+                        mob.doStuckNavigation(flyingWanted);
+                    }
+                }
+            } else if (mob.horizontalCollision || mob.verticalCollision) {
+                doStuckDetection(mob.position());
             }
         } else {
             mob.setNoGravity(false);
+        }
+    }
+
+    private void doStuckDetection(Vec3 pos) {
+        tick++;
+        if (tick - lastStuckCheck > 100) {
+            if (pos.distanceToSqr(lastStuckCheckPos) < 2.25) {
+                if (mob.isUsingStuckNavigation()) {
+                    mob.getNavigation().recomputePath();
+                } else {
+                    mob.doStuckNavigation(flyingWanted);
+                }
+            }
+            lastStuckCheck = tick;
+            lastStuckCheckPos = pos;
         }
     }
 }

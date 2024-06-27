@@ -18,6 +18,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.MoveControl.Operation;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
@@ -45,6 +46,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     private int groundTicks = 0;
     private long takeOffStartTick = 0;
     private boolean takeOffAnimationStarted;
+    private boolean usingStuckNavigation;
 
     protected PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level) {
         super(entityType, level);
@@ -114,6 +116,24 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         }
     }
 
+    public void doStuckNavigation(Vec3 target) {
+        switchNavigator(true);
+        getNavigation().moveTo(target.x, target.y, target.z, 1);
+    }
+
+    public void switchNavigator(boolean fly) {
+        usingStuckNavigation = fly;
+        if (fly) {
+            navigation = new FlyingPathNavigation(this, level);//TODO: Maybe use custom class that works better with our larger mobs
+        } else {
+            navigation = createNavigation(level);
+        }
+    }
+
+    public boolean isUsingStuckNavigation() {
+        return usingStuckNavigation;
+    }
+
     @Override
     public void aiStep() {
         super.aiStep();
@@ -123,6 +143,11 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         if (!level.isClientSide) {
             if (isTakingOff() && isTakeOffAnimationDone()) {
                 finishTakeOff();
+            }
+            if (getNavigation() instanceof FlyingPathNavigation flyingPathNavigation) {
+                if (flyingPathNavigation.isDone() || (usingStuckNavigation && !isFlying())) {
+                    switchNavigator(false);
+                }
             }
             if (isFlying()) {
                 flyingTicks++;
@@ -151,8 +176,8 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         int x = blockPosition().getX() - 8 + random.nextInt(16);
         int z = blockPosition().getZ() - 8 + random.nextInt(16);
         int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y, z);
-        if (force || GoalUtils.isSolid(this, new BlockPos(x, y - 1, z))) {
+        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y - 1, z);
+        if (force || GoalUtils.isSolid(this, pos)) {
             //TODO: This is somewhat messy
             BlockHitResult result = level.clip(new ClipContext(position(), Vec3.atCenterOf(pos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
             if (result.getType() != HitResult.Type.MISS) {
@@ -299,9 +324,11 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         }
         if (!isTakingOff()) {
             if (event.isMoving()) {
-                getAnimationLogic().addActiveAnimation(controller.getName(), nextMovingAnimation(), "Walk");
+                Animation animation = nextMovingAnimation();
+                getAnimationLogic().addActiveAnimation(controller.getName(), animation, "Walk");
             } else {
-                getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation(), "Idle");
+                Animation animation = nextIdleAnimation();
+                getAnimationLogic().addActiveAnimation(controller.getName(), animation, "Idle");
             }
         }
         AnimationLogic.ActiveAnimationInfo newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());

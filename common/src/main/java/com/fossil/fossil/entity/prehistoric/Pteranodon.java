@@ -156,7 +156,7 @@ public class Pteranodon extends PrehistoricFlying {
     public @NotNull Animation nextMovingAnimation() {
         String key = WALK;
         if (isInWater()) key = SWIM;
-        if (isFlying() || !isOnGround()) key = FLY;
+        if (isFlying()) key = FLY;
 
         return getAllAnimations().get(key);
     }
