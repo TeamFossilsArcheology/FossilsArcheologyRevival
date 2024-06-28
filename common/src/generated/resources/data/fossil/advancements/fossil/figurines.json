@@ -1,19 +1,20 @@
 {
+  "parent": "fossil:fossil/break_fossil",
   "display": {
     "icon": {
-      "item": "fossil:figurine"
+      "item": "fossil:figurine_steve_destroyed"
     },
     "title": {
-      "translate": "advancements.fossil.figurine.title"
+      "translate": "advancements.fossil.figurines.title"
     },
     "description": {
-      "translate": "advancements.fossil.figurine.description"
+      "translate": "advancements.fossil.figurines.description"
     },
     "frame": "task",
     "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": true,
+    "hidden": false
   },
-  "parent": "fossil:break_fossil",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",
@@ -25,5 +26,10 @@
         ]
       }
     }
-  }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
 }

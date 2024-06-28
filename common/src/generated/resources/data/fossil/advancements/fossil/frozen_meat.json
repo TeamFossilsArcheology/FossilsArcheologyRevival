@@ -1,4 +1,5 @@
 {
+  "parent": "fossil:fossil/break_fossil",
   "display": {
     "icon": {
       "item": "fossil:frozen_meat"
@@ -11,19 +12,26 @@
     },
     "frame": "task",
     "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": true,
+    "hidden": false
   },
-  "parent": "minecraft:break_fossil",
   "criteria": {
-    "requirement": {
+    "frozen_meat": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "tag": "fossil:frozen_meat"
+            "items": [
+              "fossil:frozen_meat"
+            ]
           }
         ]
       }
     }
-  }
+  },
+  "requirements": [
+    [
+      "frozen_meat"
+    ]
+  ]
 }

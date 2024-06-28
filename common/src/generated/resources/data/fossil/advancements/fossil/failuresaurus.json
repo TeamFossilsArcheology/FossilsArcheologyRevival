@@ -1,0 +1,39 @@
+{
+  "parent": "fossil:fossil/culture_vat",
+  "display": {
+    "icon": {
+      "item": "fossil:failuresaurus_flesh"
+    },
+    "title": {
+      "translate": "advancements.fossil.failuresaurus.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.failuresaurus.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:player_hurt_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:failuresaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
+}

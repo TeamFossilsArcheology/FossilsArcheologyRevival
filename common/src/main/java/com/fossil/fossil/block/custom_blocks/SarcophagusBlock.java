@@ -71,7 +71,7 @@ public class SarcophagusBlock extends BaseEntityBlock {
                         itemStack.shrink(1);
                     }
                     if (!level.isClientSide) {
-                        ModTriggers.SCARAB_TRIGGER.trigger((ServerPlayer) player);
+                        ModTriggers.OPEN_SARCOPHAGUS_TRIGGER.trigger((ServerPlayer) player);
                     }
                 }
             } else if (blockEntity.getState() == SarcophagusBlockEntity.STATE_UNLOCKED) {

@@ -1,0 +1,35 @@
+{
+  "parent": "fossil:fossil/culture_vat",
+  "display": {
+    "icon": {
+      "item": "fossil:egg_item_triceratops"
+    },
+    "title": {
+      "translate": "advancements.fossil.dino_eggs.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.dino_eggs.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "fossil:dino_eggs"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
+}

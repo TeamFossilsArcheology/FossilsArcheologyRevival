@@ -1,19 +1,20 @@
 {
+  "parent": "fossil:fossil/culture_vat",
   "display": {
     "icon": {
       "item": "fossil:syringe_mammoth"
     },
     "title": {
-      "translate": "advancements.fossil.embryo.title"
+      "translate": "advancements.fossil.embryos.title"
     },
     "description": {
-      "translate": "advancements.fossil.embryo.description"
+      "translate": "advancements.fossil.embryos.description"
     },
     "frame": "task",
     "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": true,
+    "hidden": false
   },
-  "parent": "minecraft:culture_vat",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",
@@ -25,5 +26,10 @@
         ]
       }
     }
-  }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
 }

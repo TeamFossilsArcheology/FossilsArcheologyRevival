@@ -1,23 +1,41 @@
 {
+  "parent": "fossil:fossil/root",
   "display": {
     "icon": {
-      "item": "fossil:fossil_bio"
+      "item": "fossil:relic_scrap"
     },
     "title": {
       "translate": "advancements.fossil.break_fossil.title"
     },
     "description": {
       "translate": "advancements.fossil.break_fossil.description"
-    }
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
   },
-  "parent": "fossil:fossil/root",
   "criteria": {
+    "relic_scrap": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:relic_scrap"
+            ]
+          }
+        ]
+      }
+    },
     "fossil_bio": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "fossil:fossil_bio"
+            "items": [
+              "fossil:fossil_bio"
+            ]
           }
         ]
       }
@@ -27,47 +45,21 @@
       "conditions": {
         "items": [
           {
-            "item": "fossil:fossil_plant"
+            "items": [
+              "fossil:fossil_plant"
+            ]
           }
         ]
       }
     },
-    "relic_scrap": {
+    "skull": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "fossil:relic_scrap"
-          }
-        ]
-      }
-    },
-    "skull_block": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "fossil:skull"
-          }
-        ]
-      }
-    },
-    "broken_sword": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "fossil:broken_sword"
-          }
-        ]
-      }
-    },
-    "broken_helmet": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "item": "fossil:broken_helmet"
+            "items": [
+              "fossil:skull"
+            ]
           }
         ]
       }
@@ -75,12 +67,10 @@
   },
   "requirements": [
     [
+      "relic_scrap",
       "fossil_bio",
       "fossil_plant",
-      "relic_scrap",
-      "skull_block",
-      "broken_sword",
-      "broken_helmet"
+      "skull"
     ]
   ]
 }

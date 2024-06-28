@@ -1,4 +1,5 @@
 {
+  "parent": "fossil:fossil/anu_lair",
   "display": {
     "icon": {
       "item": "fossil:sarcophagus"
@@ -11,12 +12,18 @@
     },
     "frame": "task",
     "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": true,
+    "hidden": false
   },
-  "parent": "fossil:anu_lair",
   "criteria": {
     "requirement": {
-      "trigger": "fossil:scarab"
+      "trigger": "fossil:open_sarcophagus",
+      "conditions": {}
     }
-  }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
 }

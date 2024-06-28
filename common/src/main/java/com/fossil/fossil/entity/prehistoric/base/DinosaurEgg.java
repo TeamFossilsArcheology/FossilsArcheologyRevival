@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 
+import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.sounds.MusicHandler;
 import com.fossil.fossil.util.Version;
@@ -68,14 +69,17 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable ServerPlayer player, PrehistoricEntityInfo info, boolean hatchMessage) {
         Entity entity = info.entityType().create(level);
         if (entity instanceof Prehistoric prehistoric) {
-            if (player != null && prehistoric.aiTameType() == PrehistoricEntityInfoAI.Taming.IMPRINTING) {
-                prehistoric.tame(player);
-                //TODO: First Hatch music
-                if (false) {
-                    MusicHandler.startMusic(ModSounds.MUSIC_FIRST_DINOSAUR.get());
-                }
-                if (hatchMessage) {
-                    player.displayClientMessage(EGG_HATCHED, false);
+            if (player != null) {
+                ModTriggers.INCUBATE_EGG_TRIGGER.trigger(player, entity);
+                if (prehistoric.aiTameType() == PrehistoricEntityInfoAI.Taming.IMPRINTING) {
+                    prehistoric.tame(player);
+                    //TODO: First Hatch music
+                    if (false) {
+                        MusicHandler.startMusic(ModSounds.MUSIC_FIRST_DINOSAUR.get());
+                    }
+                    if (hatchMessage) {
+                        player.displayClientMessage(EGG_HATCHED, false);
+                    }
                 }
             }
             prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(entity.blockPosition()),

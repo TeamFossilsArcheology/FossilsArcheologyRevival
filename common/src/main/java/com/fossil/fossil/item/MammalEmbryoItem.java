@@ -1,9 +1,11 @@
 package com.fossil.fossil.item;
 
+import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -26,7 +28,8 @@ public class MammalEmbryoItem extends PrehistoricEntityItem {
             if (ModCapabilities.getEmbryoProgress(animal) > 0) {
                 return InteractionResult.PASS;
             }
-            if (!player.level.isClientSide) {
+            if (player instanceof ServerPlayer serverPlayer) {
+                ModTriggers.IMPLANT_EMBRYO_TRIGGER.trigger(serverPlayer, stack);
                 ModCapabilities.startPregnancy(animal, info);
                 stack.shrink(1);
             }

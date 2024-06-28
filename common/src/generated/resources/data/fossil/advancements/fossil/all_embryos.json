@@ -1,0 +1,311 @@
+{
+  "parent": "fossil:fossil/embryos",
+  "display": {
+    "icon": {
+      "item": "fossil:syringe_mammoth"
+    },
+    "title": {
+      "translate": "advancements.fossil.all_embryos.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.all_embryos.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 500
+  },
+  "criteria": {
+    "syringe_elasmotherium": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_elasmotherium"
+          ]
+        }
+      }
+    },
+    "syringe_mammoth": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_mammoth"
+          ]
+        }
+      }
+    },
+    "syringe_megaloceros": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_megaloceros"
+          ]
+        }
+      }
+    },
+    "syringe_platybelodon": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_platybelodon"
+          ]
+        }
+      }
+    },
+    "syringe_quagga": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_quagga"
+          ]
+        }
+      }
+    },
+    "syringe_smilodon": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_smilodon"
+          ]
+        }
+      }
+    },
+    "syringe_cat": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_cat"
+          ]
+        }
+      }
+    },
+    "syringe_cow": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_cow"
+          ]
+        }
+      }
+    },
+    "syringe_dolphin": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_dolphin"
+          ]
+        }
+      }
+    },
+    "syringe_donkey": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_donkey"
+          ]
+        }
+      }
+    },
+    "syringe_fox": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_fox"
+          ]
+        }
+      }
+    },
+    "syringe_hoglin": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_hoglin"
+          ]
+        }
+      }
+    },
+    "syringe_horse": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_horse"
+          ]
+        }
+      }
+    },
+    "syringe_llama": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_llama"
+          ]
+        }
+      }
+    },
+    "syringe_mooshroom": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_mooshroom"
+          ]
+        }
+      }
+    },
+    "syringe_ocelot": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_ocelot"
+          ]
+        }
+      }
+    },
+    "syringe_panda": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_panda"
+          ]
+        }
+      }
+    },
+    "syringe_pig": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_pig"
+          ]
+        }
+      }
+    },
+    "syringe_polarbear": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_polarbear"
+          ]
+        }
+      }
+    },
+    "syringe_rabbit": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_rabbit"
+          ]
+        }
+      }
+    },
+    "syringe_sheep": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_sheep"
+          ]
+        }
+      }
+    },
+    "syringe_wolf": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_wolf"
+          ]
+        }
+      }
+    }
+  },
+  "requirements": [
+    [
+      "syringe_elasmotherium"
+    ],
+    [
+      "syringe_mammoth"
+    ],
+    [
+      "syringe_megaloceros"
+    ],
+    [
+      "syringe_platybelodon"
+    ],
+    [
+      "syringe_quagga"
+    ],
+    [
+      "syringe_smilodon"
+    ],
+    [
+      "syringe_cat"
+    ],
+    [
+      "syringe_cow"
+    ],
+    [
+      "syringe_dolphin"
+    ],
+    [
+      "syringe_donkey"
+    ],
+    [
+      "syringe_fox"
+    ],
+    [
+      "syringe_hoglin"
+    ],
+    [
+      "syringe_horse"
+    ],
+    [
+      "syringe_llama"
+    ],
+    [
+      "syringe_mooshroom"
+    ],
+    [
+      "syringe_ocelot"
+    ],
+    [
+      "syringe_panda"
+    ],
+    [
+      "syringe_pig"
+    ],
+    [
+      "syringe_polarbear"
+    ],
+    [
+      "syringe_rabbit"
+    ],
+    [
+      "syringe_sheep"
+    ],
+    [
+      "syringe_wolf"
+    ]
+  ]
+}

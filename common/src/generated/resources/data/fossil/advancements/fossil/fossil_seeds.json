@@ -1,19 +1,20 @@
 {
+  "parent": "fossil:fossil/analyzer",
   "display": {
     "icon": {
       "item": "fossil:fossil_seed_fern"
     },
     "title": {
-      "translate": "advancements.fossil.fossil_seed.title"
+      "translate": "advancements.fossil.fossil_seeds.title"
     },
     "description": {
-      "translate": "advancements.fossil.fossil_seed.description"
+      "translate": "advancements.fossil.fossil_seeds.description"
     },
     "frame": "task",
     "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": true,
+    "hidden": false
   },
-  "parent": "minecraft:analyzer",
   "criteria": {
     "requirement": {
       "trigger": "minecraft:inventory_changed",
@@ -25,5 +26,10 @@
         ]
       }
     }
-  }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
 }

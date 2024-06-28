@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
@@ -39,6 +40,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.BlockTags;
@@ -1080,6 +1082,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (isWeak() && (aiTameType() == Taming.GEM && stack.is(ModItems.SCARAB_GEM.get()) || aiTameType() == Taming.AQUATIC_GEM && stack.is(ModItems.AQUATIC_SCARAB_GEM.get()))) {
             //Tame with gem
             if (!level.isClientSide) {
+                ModTriggers.SCARAB_TAME_TRIGGER.trigger((ServerPlayer) player);
                 heal(200);
                 moodSystem.setMood(100);
                 feed(500);

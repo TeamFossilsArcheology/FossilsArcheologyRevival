@@ -1,0 +1,841 @@
+{
+  "parent": "fossil:fossil/dino_eggs",
+  "display": {
+    "icon": {
+      "item": "fossil:egg_item_tyrannosaurus"
+    },
+    "title": {
+      "translate": "advancements.fossil.all_eggs.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.all_eggs.description"
+    },
+    "frame": "challenge",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "rewards": {
+    "experience": 1000
+  },
+  "criteria": {
+    "alligator_gar": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:alligator_gar"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "allosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:allosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "ankylosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:ankylosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "arthropleura": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:arthropleura"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "brachiosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:brachiosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "ceratosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:ceratosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "citipati": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:citipati"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "coelacanth": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:coelacanth"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "compsognathus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:compsognathus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "confuciusornis": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:confuciusornis"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "crassigyrinus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:crassigyrinus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "deinonychus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:deinonychus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "dilophosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:dilophosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "diplocaulus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:diplocaulus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "diplodocus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:diplodocus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "dryosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:dryosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "dodo": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:dodo"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "edaphosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:edaphosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "gallimimus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:gallimimus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "gastornis": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:gastornis"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "henodus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:henodus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "ichthyosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:ichthyosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "kelenken": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:kelenken"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "liopleurodon": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:liopleurodon"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "megalania": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:megalania"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "megalodon": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:megalodon"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "megalograptus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:megalograptus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "meganeura": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:meganeura"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "mosasaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:mosasaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "nautilus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:nautilus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "ornitholestes": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:ornitholestes"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "pachycephalosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:pachycephalosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "pachyrhinosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:pachyrhinosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "parasaurolophus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:parasaurolophus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "phorusrhacos": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:phorusrhacos"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "plesiosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:plesiosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "pteranodon": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:pteranodon"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "sarcosuchus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:sarcosuchus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "spinosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:spinosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "stegosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:stegosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "sturgeon": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:sturgeon"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "therizinosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:therizinosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "tiktaalik": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:tiktaalik"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "titanis": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:titanis"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "triceratops": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:triceratops"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "tropeognathus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:tropeognathus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "tyrannosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:tyrannosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "velociraptor": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:velociraptor"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "alligator_gar"
+    ],
+    [
+      "allosaurus"
+    ],
+    [
+      "ankylosaurus"
+    ],
+    [
+      "arthropleura"
+    ],
+    [
+      "brachiosaurus"
+    ],
+    [
+      "ceratosaurus"
+    ],
+    [
+      "citipati"
+    ],
+    [
+      "coelacanth"
+    ],
+    [
+      "compsognathus"
+    ],
+    [
+      "confuciusornis"
+    ],
+    [
+      "crassigyrinus"
+    ],
+    [
+      "deinonychus"
+    ],
+    [
+      "dilophosaurus"
+    ],
+    [
+      "diplocaulus"
+    ],
+    [
+      "diplodocus"
+    ],
+    [
+      "dryosaurus"
+    ],
+    [
+      "dodo"
+    ],
+    [
+      "edaphosaurus"
+    ],
+    [
+      "gallimimus"
+    ],
+    [
+      "gastornis"
+    ],
+    [
+      "henodus"
+    ],
+    [
+      "ichthyosaurus"
+    ],
+    [
+      "kelenken"
+    ],
+    [
+      "liopleurodon"
+    ],
+    [
+      "megalania"
+    ],
+    [
+      "megalodon"
+    ],
+    [
+      "megalograptus"
+    ],
+    [
+      "meganeura"
+    ],
+    [
+      "mosasaurus"
+    ],
+    [
+      "nautilus"
+    ],
+    [
+      "ornitholestes"
+    ],
+    [
+      "pachycephalosaurus"
+    ],
+    [
+      "pachyrhinosaurus"
+    ],
+    [
+      "parasaurolophus"
+    ],
+    [
+      "phorusrhacos"
+    ],
+    [
+      "plesiosaurus"
+    ],
+    [
+      "pteranodon"
+    ],
+    [
+      "sarcosuchus"
+    ],
+    [
+      "spinosaurus"
+    ],
+    [
+      "stegosaurus"
+    ],
+    [
+      "sturgeon"
+    ],
+    [
+      "therizinosaurus"
+    ],
+    [
+      "tiktaalik"
+    ],
+    [
+      "titanis"
+    ],
+    [
+      "triceratops"
+    ],
+    [
+      "tropeognathus"
+    ],
+    [
+      "tyrannosaurus"
+    ],
+    [
+      "velociraptor"
+    ]
+  ]
+}

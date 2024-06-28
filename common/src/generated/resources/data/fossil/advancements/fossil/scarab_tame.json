@@ -1,0 +1,29 @@
+{
+  "parent": "fossil:fossil/scarab_gem",
+  "display": {
+    "icon": {
+      "item": "fossil:scarab_gem_aquatic"
+    },
+    "title": {
+      "translate": "advancements.fossil.scarab_tame.title"
+    },
+    "description": {
+      "translate": "advancements.fossil.scarab_tame.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false
+  },
+  "criteria": {
+    "requirement": {
+      "trigger": "fossil:scarab_tame",
+      "conditions": {}
+    }
+  },
+  "requirements": [
+    [
+      "requirement"
+    ]
+  ]
+}

@@ -1,0 +1,56 @@
+package com.fossil.fossil.advancements;
+
+import com.fossil.fossil.Fossil;
+import com.google.gson.JsonObject;
+import net.minecraft.advancements.critereon.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.GsonHelper;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+
+public class ImplantEmbryoTrigger extends SimpleCriterionTrigger<ImplantEmbryoTrigger.TriggerInstance> {
+    private static final ResourceLocation ID = new ResourceLocation(Fossil.MOD_ID, "implant_embryo");
+
+    public void trigger(ServerPlayer player, ItemStack stack) {
+        trigger(player, triggerInstance -> triggerInstance.matches(stack));
+    }
+
+    @Override
+    protected @NotNull TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite player, DeserializationContext context) {
+        JsonObject jsonObject = GsonHelper.getAsJsonObject(json, "item", json);
+        ItemPredicate itemPredicate = ItemPredicate.fromJson(jsonObject);
+        return new TriggerInstance(ID, player, itemPredicate);
+    }
+
+    @Override
+    public @NotNull ResourceLocation getId() {
+        return ID;
+    }
+
+    public static class TriggerInstance extends AbstractCriterionTriggerInstance {
+        private final ItemPredicate embryoItem;
+
+        public TriggerInstance(ResourceLocation resourceLocation, EntityPredicate.Composite composite, ItemPredicate embryoItem) {
+            super(resourceLocation, composite);
+            this.embryoItem = embryoItem;
+        }
+
+        public static TriggerInstance implantEmbryo(Item embryoItem) {
+            return new TriggerInstance(ID, EntityPredicate.Composite.ANY,
+                    ItemPredicate.Builder.item().of(embryoItem).build());
+        }
+
+        public boolean matches(ItemStack itemStack) {
+            return embryoItem.matches(itemStack);
+        }
+
+        @Override
+        public @NotNull JsonObject serializeToJson(SerializationContext context) {
+            JsonObject jsonObject = super.serializeToJson(context);
+            jsonObject.add("item", embryoItem.serializeToJson());
+            return jsonObject;
+        }
+    }
+}

@@ -1,4 +1,5 @@
 {
+  "parent": "fossil:fossil/broken_sword",
   "display": {
     "icon": {
       "item": "fossil:worktable"
@@ -11,19 +12,26 @@
     },
     "frame": "task",
     "show_toast": true,
-    "announce_to_chat": true
+    "announce_to_chat": true,
+    "hidden": false
   },
-  "parent": "fossil:broken_sword",
   "criteria": {
-    "requirement": {
+    "worktable": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "item": "fossil:worktable"
+            "items": [
+              "fossil:worktable"
+            ]
           }
         ]
       }
     }
-  }
+  },
+  "requirements": [
+    [
+      "worktable"
+    ]
+  ]
 }

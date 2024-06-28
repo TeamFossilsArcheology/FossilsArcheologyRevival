@@ -10,8 +10,8 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
-public class UseScarabTrigger extends SimpleCriterionTrigger<UseScarabTrigger.TriggerInstance> {
-    private final ResourceLocation id = new ResourceLocation(Fossil.MOD_ID, "scarab");
+public class OpenSarcophagusTrigger extends SimpleCriterionTrigger<OpenSarcophagusTrigger.TriggerInstance> {
+    private static final ResourceLocation ID = new ResourceLocation(Fossil.MOD_ID, "open_sarcophagus");
 
     public void trigger(ServerPlayer player) {
         trigger(player, triggerInstance -> true);
@@ -19,18 +19,22 @@ public class UseScarabTrigger extends SimpleCriterionTrigger<UseScarabTrigger.Tr
 
     @Override
     protected @NotNull TriggerInstance createInstance(JsonObject json, EntityPredicate.Composite player, DeserializationContext context) {
-        return new TriggerInstance(id, player);
+        return new TriggerInstance(ID, player);
     }
 
     @Override
     public @NotNull ResourceLocation getId() {
-        return id;
+        return ID;
     }
 
     public static class TriggerInstance extends AbstractCriterionTriggerInstance {
 
         public TriggerInstance(ResourceLocation resourceLocation, EntityPredicate.Composite composite) {
             super(resourceLocation, composite);
+        }
+
+        public static TriggerInstance useScarab() {
+            return new TriggerInstance(ID, EntityPredicate.Composite.ANY);
         }
     }
 }
