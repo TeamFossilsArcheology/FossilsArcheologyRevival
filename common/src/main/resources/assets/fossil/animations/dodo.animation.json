@@ -699,7 +699,7 @@
 				},
 				"leftLeg": {
 					"rotation": {
-						"vector": ["-90-", 15, 0]
+						"vector": [-90, 15, 0]
 					}
 				},
 				"leftFoot": {

@@ -1147,7 +1147,7 @@
 						"vector": ["-55.4405+math.sin(query.anim_time*1440/12)*2", -34.09848, -3.58938]
 					},
 					"position": {
-						"vector": [-3, "-11+math.sin(query.anim_time*1440/12+90)*", 0.25]
+						"vector": [-3, "-11", 0.25]
 					}
 				},
 				"leftLowerLeg": {
