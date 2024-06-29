@@ -33,6 +33,7 @@ public class Elasmotherium extends Prehistoric {
 
     public Elasmotherium(EntityType<Elasmotherium> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override
