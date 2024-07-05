@@ -111,7 +111,7 @@ public class Confuciusornis extends PrehistoricFlying {
 
     @Override
     public @NotNull Animation nextTakeOffAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(FLY);
     }
 
     @Nullable

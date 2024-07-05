@@ -79,7 +79,7 @@ public class MultiPartImpl<T extends Prehistoric> extends Entity implements Mult
 
     @Override
     public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
-        return size.scale(parent.getScale() * parent.getGenderedScale());
+        return size.scale(parent.getScale());
     }
 
     @Override

@@ -99,7 +99,7 @@ public class Compsognathus extends PrehistoricLeaping {
         if (isInWater()) {
             return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(RUN);//Walk to slow
     }
 
     @Override

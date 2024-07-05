@@ -30,6 +30,7 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
                 new ResourceLocation(Fossil.MOD_ID, "animations/" + animation)
         ));
     }
+
     public static List<BlockPos> pathTargets = new ArrayList<>();
     public static BlockPos entityTarget = null;
 
@@ -67,6 +68,11 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
             }
             super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
         }
+    }
+
+    @Override
+    protected float getSwingMotionAnimThreshold() {
+        return 0.08f;
     }
 
     @Override

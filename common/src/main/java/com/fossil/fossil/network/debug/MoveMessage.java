@@ -41,6 +41,7 @@ public class MoveMessage {
                 mob.goalSelector.getRunningGoals().forEach(WrappedGoal::stop);
                 mob.getNavigation().moveTo(x, y, z, 1);
                 mob.getMoveControl().setWantedPosition(x, y, z, 1);
+                mob.getLookControl().setLookAt(x, y, z, 180, 180);
             }
         });
     }

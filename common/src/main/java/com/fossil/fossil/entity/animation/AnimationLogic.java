@@ -153,7 +153,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     movementAnim = entity.nextMovingAnimation();
                 }
                 addActiveAnimation(controller.getName(), movementAnim, "Move");
-                //TODO: vlt stats().basespeed maxspeed/growspeed und sprintspeed
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                 animationSpeed = 1 / event.getAnimatable().getScale();
                 double animationBaseSpeed = getMovementSpeed(event.getAnimatable(), movementAnim.animationName);
@@ -162,6 +161,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     double mobSpeed = event.getAnimatable().getDeltaMovement().horizontalDistance() * 20;
                     animationSpeed *= mobSpeed / animationBaseSpeed;
                 }
+                //TODO: Breaks if you punch the mob around
+                //TODO: Choose sprinting anim based on animation speed?
                 if (lastSpeed > animationSpeed) {
                     //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
                     animationSpeed = lastSpeed;

@@ -66,7 +66,7 @@ public class Ankylosaurus extends Prehistoric {
         if (getTarget() != null) {
             double x = getTarget().getX() - getX();
             double z = getTarget().getZ() - getZ();
-            float yRotD = (float) (-(Mth.atan2(x, z) * Mth.RAD_TO_DEG));
+            float yRotD = (float) (-(Mth.atan2(z, x) * Mth.RAD_TO_DEG));
             if (Math.abs(Mth.degreesDifference(yBodyRot, yRotD)) > 130) {
                 return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK_BACK1 : ATTACK_BACK2);
             }

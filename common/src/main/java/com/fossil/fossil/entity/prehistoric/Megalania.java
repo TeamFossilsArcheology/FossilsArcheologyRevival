@@ -89,7 +89,7 @@ public class Megalania extends Prehistoric implements PrehistoricScary {
         if (isInWater()) {
             return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

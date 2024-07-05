@@ -102,7 +102,7 @@ public class Dodo extends Prehistoric {
         if (isInWater()) {
             return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

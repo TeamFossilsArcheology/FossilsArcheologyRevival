@@ -82,7 +82,7 @@ public class Megaloceros extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -98,17 +98,17 @@ public class Megaloceros extends Prehistoric {
     @Override
     public @NotNull Animation nextMovingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(IDLE);
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(IDLE);
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

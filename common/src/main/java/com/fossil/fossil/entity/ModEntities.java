@@ -38,13 +38,13 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Dilophosaurus>> DILOPHOSAURUS = registerDino("dilophosaurus", Dilophosaurus::new, 1.25f, 1.5f);
     public static final RegistrySupplier<EntityType<Diplocaulus>> DIPLOCAULUS = registerDino("diplocaulus", Diplocaulus::new, 2, 0.32f);
     public static final RegistrySupplier<EntityType<Diplodocus>> DIPLODOCUS = registerDino("diplodocus", Diplodocus::new, 1.85f, 1.85f);
-    public static final RegistrySupplier<EntityType<Dodo>> DODO = registerDino("dodo", Dodo::new, 0.8f, 0.7f);
+    public static final RegistrySupplier<EntityType<Dodo>> DODO = registerDino("dodo", Dodo::new, 0.8f, 1);
     public static final RegistrySupplier<EntityType<Dryosaurus>> DRYOSAURUS = registerDino("dryosaurus", Dryosaurus::new, 1.3f, 1.2f);
     public static final RegistrySupplier<EntityType<Edaphosaurus>> EDAPHOSAURUS = registerDino("edaphosaurus", Edaphosaurus::new, 1.3f, 1.7f);
     public static final RegistrySupplier<EntityType<Elasmotherium>> ELASMOTHERIUM = registerDino("elasmotherium", Elasmotherium::new, 1, 1);
     public static final RegistrySupplier<EntityType<Gallimimus>> GALLIMIMUS = registerDino("gallimimus", Gallimimus::new, 1.2f, 1.5f);
     public static final RegistrySupplier<EntityType<Gastornis>> GASTORNIS = registerDino("gastornis", Gastornis::new, 1.4f, 2.5f);
-    public static final RegistrySupplier<EntityType<Henodus>> HENODUS = registerDino("henodus", Henodus::new, 1.1f, 1);
+    public static final RegistrySupplier<EntityType<Henodus>> HENODUS = registerDino("henodus", Henodus::new, 1.1f, 0.8f);
     public static final RegistrySupplier<EntityType<Ichthyosaurus>> ICHTHYOSAURUS = registerDino("ichthyosaurus", Ichthyosaurus::new, 1.2f, 1);
     public static final RegistrySupplier<EntityType<Kelenken>> KELENKEN = registerDino("kelenken", Kelenken::new, 1.4f, 2.5f);
     public static final RegistrySupplier<EntityType<Liopleurodon>> LIOPLEURODON = registerDino("liopleurodon", Liopleurodon::new, 2.25f, 0.7f);

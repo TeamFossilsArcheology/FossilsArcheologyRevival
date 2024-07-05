@@ -156,7 +156,6 @@
 			}
 		},
 		"animation.mammoth.attack1": {
-			"loop": true,
 			"animation_length": 1.25,
 			"bones": {
 				"body": {
@@ -226,7 +225,6 @@
 			}
 		},
 		"animation.mammoth.drinking": {
-			"loop": true,
 			"animation_length": 4,
 			"bones": {
 				"body": {
@@ -398,7 +396,6 @@
 			}
 		},
 		"animation.mammoth.eating": {
-			"loop": true,
 			"animation_length": 4,
 			"bones": {
 				"body": {
@@ -579,7 +576,6 @@
 			}
 		},
 		"animation.mammoth.speak": {
-			"loop": true,
 			"animation_length": 2,
 			"bones": {
 				"neck": {

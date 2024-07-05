@@ -177,7 +177,7 @@ public class AnimationTab extends DebugTab {
                         double speed = 1 / Math.sqrt(prehistoric.getScale());
                         speed *= prehistoric.data().stats().baseSpeed() / 0.26;//multiplier
                         speed *= animation.getValue().animationLength / 20;
-                        MessageHandler.DEBUG_CHANNEL.sendToServer(new ForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), speed));
+                        MessageHandler.DEBUG_CHANNEL.sendToServer(new ForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), 1));
                     }
                 });
             }

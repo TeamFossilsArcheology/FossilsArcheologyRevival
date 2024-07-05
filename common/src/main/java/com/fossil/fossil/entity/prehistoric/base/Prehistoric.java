@@ -167,6 +167,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 maxFrustumHeightRadius = h;
             }
         }
+        //TODO: SLEEPING_DIMENSIONS
         frustumWidthRadius = maxFrustumWidthRadius;
         frustumHeightRadius = maxFrustumHeightRadius;
     }
@@ -874,14 +875,30 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void updateAbilities() {
-        double percent = Math.min((1f / data().adultAgeDays()) * getAgeInDays(), 1);
+        double percent = Math.min(getAgeInDays() / data().adultAgeDays(), 1);
 
         double healthDifference = getAttributeValue(Attributes.MAX_HEALTH);
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, stats().baseHealth(), stats().maxHealth())));
         healthDifference = getAttributeValue(Attributes.MAX_HEALTH) - healthDifference;
         heal((float) healthDifference);
         getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, stats().baseDamage(), stats().maxDamage())));
-        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Mth.lerp(percent, stats().baseSpeed(), stats().maxSpeed()));
+        float scale = (data().minScale() + (data().maxScale() - data().minScale()) / (data().adultAgeDays() * 24000) * getAge());
+        scale = Math.min(scale, data().maxScale());
+        double newSpeed = stats().baseSpeed();
+        if (scale < 1) {
+            float min = data().minScale();
+            float max = data().maxScale() > 1 ? 1 : data().maxScale();
+            if (min != max) {
+                newSpeed = Mth.lerp((scale - min) / (max - min), stats().minSpeed(), stats().baseSpeed());
+            }
+        } else {
+            float min = data().minScale() < 1 ? 1 : data().minScale();
+            float max = data().maxScale();
+            if (max != min) {
+                newSpeed = Mth.lerp((scale - min) / (max - min), stats().baseSpeed(), stats().maxSpeed());
+            }
+        }
+        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
         getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, stats().baseArmor(), stats().maxArmor()));
         getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, stats().baseKnockBackResistance(), stats().maxKnockBackResistance()));
     }
