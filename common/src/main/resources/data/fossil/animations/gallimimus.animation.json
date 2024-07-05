@@ -15,10 +15,11 @@
     },
     "animation.gallimimus.walk": {
       "loop": true,
-      "animation_length": 1.33333
+      "animation_length": 1.3333,
+      "blocks_per_second": 1.75
     },
     "animation.gallimimus.eat": {
-      "animation_length": 2.29167
+      "animation_length": 2.2917
     },
     "animation.gallimimus.drink": {
       "animation_length": 2.1
@@ -28,16 +29,11 @@
     },
     "animation.gallimimus.run": {
       "loop": true,
-      "animation_length": 0.625
+      "animation_length": 0.625,
+      "blocks_per_second": 5.55
     },
     "animation.gallimimus.call": {
       "animation_length": 1.25
-    },
-    "animation.gallimimus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.gallimimus.turn_right": {
-      "loop": "hold_on_last_frame"
     },
     "animation.gallimimus.idle": {
       "loop": true,
@@ -49,7 +45,16 @@
     },
     "animation.gallimimus.attack1": {
       "animation_length": 1,
-      "action_delay": [0.58]
+      "action_delay": [
+        0.58
+      ]
+    },
+    "animation.gallimimus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.gallimimus.runspeeddemo": {
+      "loop": true,
+      "animation_length": 1.2
     }
   },
   "geckolib_format_version": 2

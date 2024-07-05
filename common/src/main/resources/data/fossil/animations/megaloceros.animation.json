@@ -20,7 +20,9 @@
     "animation.megaloceros.attack": {
       "loop": true,
       "animation_length": 1,
-      "action_delay": [0.46]
+      "action_delay": [
+        0.46
+      ]
     },
     "animation.megaloceros.eat": {
       "loop": true,
@@ -32,17 +34,13 @@
     },
     "animation.megaloceros.walk": {
       "loop": true,
-      "animation_length": 1.875
-    },
-    "animation.megaloceros.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.megaloceros.turn_left": {
-      "loop": "hold_on_last_frame"
+      "animation_length": 1.875,
+      "blocks_per_second": 0.5
     },
     "animation.megaloceros.run": {
       "loop": true,
-      "animation_length": 1
+      "animation_length": 1,
+      "blocks_per_second": 1.4
     },
     "animation.megaloceros.speak": {
       "animation_length": 1.5
@@ -54,6 +52,12 @@
     "animation.megaloceros.swim": {
       "loop": true,
       "animation_length": 4
+    },
+    "animation.megaloceros.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.megaloceros.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

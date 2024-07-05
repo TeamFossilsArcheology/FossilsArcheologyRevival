@@ -353,7 +353,7 @@
 							"vector": [-17.32, 0, 0]
 						},
 						"1.125": {
-							"vector": [-17.32, 0, 0]
+							"vector": [-9.32, 0, 0]
 						},
 						"1.6667": {
 							"vector": [0, 0, 0]
@@ -1260,6 +1260,26 @@
 						"3.0": {
 							"vector": [0, 0, 0]
 						}
+					}
+				}
+			}
+		},
+		"animation.elasmotherium.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"chest": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.2"]
+					}
+				}
+			}
+		},
+		"animation.elasmotherium.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"chest": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*1"]
 					}
 				}
 			}

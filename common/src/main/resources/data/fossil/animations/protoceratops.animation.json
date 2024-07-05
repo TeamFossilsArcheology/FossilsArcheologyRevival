@@ -21,9 +21,6 @@
     "animation.protoceratops.drink": {
       "animation_length": 3
     },
-    "animation.protoceratops.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.protoceratops.sleep/sit": {
       "loop": true,
       "animation_length": 12
@@ -32,13 +29,11 @@
       "loop": true,
       "animation_length": 2
     },
-    "animation.protoceratops.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.protoceratops.call": {
       "animation_length": 3
     },
     "animation.protoceratops.run": {
+      "loop": true,
       "animation_length": 1
     }
   },

@@ -7,7 +7,9 @@
     },
     "fa.tropeognathus.groundtakeoff": {
       "animation_length": 1.56,
-      "action_delay": [1.2]
+      "action_delay": [
+        1.2
+      ]
     },
     "fa.tropeognathus.run": {
       "loop": true,
@@ -22,7 +24,9 @@
     },
     "fa.tropeognathus.biteattack": {
       "animation_length": 1.24,
-      "action_delay": [0.6]
+      "action_delay": [
+        0.6
+      ]
     },
     "fa.tropeognathus.biteeatwater": {
       "animation_length": 2.48
@@ -37,11 +41,15 @@
     },
     "fa.tropeognathus.biteattackwater": {
       "animation_length": 2.08,
-      "action_delay": [1]
+      "action_delay": [
+        1
+      ]
     },
     "fa.tropeognathus.bitefly": {
       "animation_length": 2.08,
-      "action_delay": [0.76]
+      "action_delay": [
+        0.76
+      ]
     },
     "fa.tropeognathus.display": {
       "animation_length": 6.24
@@ -61,7 +69,9 @@
     },
     "fa.tropeognathus.watertakeoff": {
       "animation_length": 2.6,
-      "action_delay": [1.8]
+      "action_delay": [
+        1.8
+      ]
     },
     "fa.tropeognathus.sleep": {
       "loop": true,

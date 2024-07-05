@@ -1,6 +1,66 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
+		"animation.edaphosaurus.right_turn": {
+			"loop": true,
+			"bones": {
+				"bodyUpper": {
+					"rotation": {
+						"vector": [0, -17.5, 0]
+					}
+				},
+				"tail1": {
+					"rotation": {
+						"vector": [0, -12.5, 0]
+					}
+				},
+				"tail2": {
+					"rotation": {
+						"vector": [0, 22.5, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, -20, 0]
+					}
+				},
+				"Head": {
+					"rotation": {
+						"vector": [-5.07673, -9.96156, 0.88045]
+					}
+				}
+			}
+		},
+		"animation.edaphosaurus.left_turn": {
+			"loop": true,
+			"bones": {
+				"bodyUpper": {
+					"rotation": {
+						"vector": [0, 17.5, 0]
+					}
+				},
+				"tail1": {
+					"rotation": {
+						"vector": [0, -12.5, 0]
+					}
+				},
+				"tail2": {
+					"rotation": {
+						"vector": [0, 22.5, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, 20, 0]
+					}
+				},
+				"Head": {
+					"rotation": {
+						"vector": [5.0767, 9.9616, 0.88045]
+					}
+				}
+			}
+		},
 		"animation.edaphosaurus.run": {
 			"loop": true,
 			"animation_length": 1,
@@ -1374,6 +1434,26 @@
 				"upperarmL2": {
 					"rotation": {
 						"vector": ["7.5+math.sin(query.anim_time*720)*2", -5, 15]
+					}
+				}
+			}
+		},
+		"animation.edaphosaurus.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bodyUpper": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.15"]
+					}
+				}
+			}
+		},
+		"animation.edaphosaurus.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bodyUpper": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.3"]
 					}
 				}
 			}

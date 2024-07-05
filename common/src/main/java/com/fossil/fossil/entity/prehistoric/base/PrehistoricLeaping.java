@@ -107,18 +107,40 @@ public abstract class PrehistoricLeaping extends Prehistoric {
 
     public abstract String getLeapingAnimationName();
 
-
+    private double lastSpeed = 1;
     private PlayState leapingPredicate(AnimationEvent<PrehistoricLeaping> event) {
         AnimationController<PrehistoricLeaping> controller = event.getController();
+        double animSpeed = 1;
         if (isLeaping()) {
             getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation(), "Leap");
         } else {
             if (event.isMoving()) {
-                getAnimationLogic().addActiveAnimation(controller.getName(), nextMovingAnimation(), "Move");
+                Animation movementAnim;
+                if (isSprinting()) {
+                    movementAnim = nextSprintingAnimation();
+                } else {
+                    movementAnim = nextMovingAnimation();
+                }
+                getAnimationLogic().addActiveAnimation(controller.getName(), movementAnim, "Move");
+                //TODO: Refactor to use the same code for AnimationLogic, PrehistoricFlying and this
+                //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
+                animSpeed = 1 / event.getAnimatable().getScale();
+                double animationBaseSpeed = AnimationLogic.getMovementSpeed(event.getAnimatable(), movementAnim.animationName);
+                if (animationBaseSpeed > 0) {
+                    //the deltaMovement of the animation should match the mobs deltaMovement
+                    double mobSpeed = event.getAnimatable().getDeltaMovement().horizontalDistance() * 20;
+                    animSpeed *= mobSpeed / animationBaseSpeed;
+                }
+                if (lastSpeed > animSpeed) {
+                    //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
+                    animSpeed = lastSpeed;
+                }
             } else {
                 getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation(), "Idle");
             }
         }
+        lastSpeed = animSpeed;
+        event.getController().setAnimationSpeed(animSpeed);
         AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
         if (activeAnimation != null) {
             controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));

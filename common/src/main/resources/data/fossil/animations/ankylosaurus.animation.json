@@ -46,15 +46,9 @@
       "loop": true,
       "animation_length": 2
     },
-    "animation.ankylosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.ankylosaurus.sleep1": {
       "loop": true,
       "animation_length": 12
-    },
-    "animation.ankylosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2

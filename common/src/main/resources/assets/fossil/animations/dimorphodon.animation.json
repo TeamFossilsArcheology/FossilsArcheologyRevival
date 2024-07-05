@@ -3491,6 +3491,72 @@
 				}
 			}
 		},
+		"animation.dimorphodon.turn_right": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBody": {
+					"rotation": {
+						"vector": [0, 10, -10]
+					}
+				},
+				"upperBody": {
+					"rotation": {
+						"vector": [0, 10, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, 20, 5]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, 10, 5]
+					}
+				},
+				"leftWingUpper": {
+					"rotation": {
+						"vector": [0, 0, 10]
+					}
+				},
+				"rightWingUpper": {
+					"rotation": {
+						"vector": [0, 0, 10]
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"vector": [0, 0, 10]
+					},
+					"position": {
+						"vector": [0, -0.25, 0]
+					}
+				},
+				"rightLeg": {
+					"rotation": {
+						"vector": [0, 0, 10]
+					},
+					"position": {
+						"vector": [0, 0.25, 0]
+					}
+				},
+				"Tail1": {
+					"rotation": {
+						"vector": [0, -10, -5]
+					}
+				},
+				"Tail2": {
+					"rotation": {
+						"vector": [0, -10, -5]
+					}
+				},
+				"Tail3": {
+					"rotation": {
+						"vector": [0, -10, -5]
+					}
+				}
+			}
+		},
 		"animation.dimorphodon.speak": {
 			"animation_length": 1,
 			"bones": {
@@ -4218,6 +4284,83 @@
 						"0.5": {
 							"vector": [0, 0, 0]
 						}
+					}
+				}
+			}
+		},
+		"animation.dimorphodon.ontogeny_baby": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBody": {
+					"position": {
+						"vector": [0, -0.5, 0]
+					}
+				},
+				"neck": {
+					"scale": {
+						"vector": [1.1, 1.1, 1.1]
+					}
+				},
+				"head": {
+					"scale": {
+						"vector": [1.1, 1.1, 0.9]
+					}
+				},
+				"upperJaw": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"leftWingUpper": {
+					"scale": {
+						"vector": [0.9, 0.9, 1.1]
+					}
+				},
+				"rightWingUpper": {
+					"scale": {
+						"vector": [0.9, 0.9, 1.1]
+					}
+				},
+				"leftLeg": {
+					"scale": {
+						"vector": [1, 0.9, 1]
+					}
+				},
+				"rightLeg": {
+					"scale": {
+						"vector": [1, 0.9, 1]
+					}
+				},
+				"Tail1": {
+					"scale": {
+						"vector": [1, 1, 1.2]
+					}
+				},
+				"Tail2": {
+					"scale": {
+						"vector": [1, 1, 0.9]
+					}
+				}
+			}
+		},
+		"animation.dimorphodon.WalkSpeedDemo": {
+			"loop": true,
+			"animation_length": 8,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "100+query.anim_time*-20"]
+					}
+				}
+			}
+		},
+		"animation.dimorphodon.RunSpeedDemo": {
+			"loop": true,
+			"animation_length": 8,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "100+query.anim_time*-60"]
 					}
 				}
 			}

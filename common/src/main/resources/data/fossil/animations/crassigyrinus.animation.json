@@ -25,8 +25,10 @@
       "animation_length": 4
     },
     "animation.crassigyrinus.attack": {
-      "animation_length": 1.375,
-      "action_delay": [0.42]
+      "animation_length": 0.6667,
+      "action_delay": [
+        0.42
+      ]
     },
     "animation.crassigyrinus.jump/fall": {
       "loop": true,
@@ -39,5 +41,6 @@
     "animation.crassigyrinus.eat": {
       "animation_length": 1.375
     }
-  }
+  },
+  "geckolib_format_version": 2
 }

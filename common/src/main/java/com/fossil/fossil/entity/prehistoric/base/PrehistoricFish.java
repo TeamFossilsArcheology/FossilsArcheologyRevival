@@ -134,7 +134,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        setSprinting(!(getMoveControl().getSpeedModifier() < 1.25));
+        setSprinting(getMoveControl().getSpeedModifier() >= 1.25);
     }
 
     @Override

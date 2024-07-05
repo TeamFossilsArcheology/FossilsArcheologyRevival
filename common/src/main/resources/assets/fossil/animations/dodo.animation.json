@@ -315,6 +315,113 @@
 				}
 			}
 		},
+		"animation.dodo.turn_right": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, 5, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [5, 17.5, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, 10, 0]
+					}
+				},
+				"rightLeg": {
+					"rotation": {
+						"vector": [0, 10, 0]
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"vector": [0, 15, 0]
+					}
+				}
+			}
+		},
+		"animation.dodo.turn_left": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, -5, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [5, -17.5, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, -10, 0]
+					}
+				},
+				"rightLeg": {
+					"rotation": {
+						"vector": [0, -10, 0]
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"vector": [0, -10, 0]
+					}
+				}
+			}
+		},
+		"animation.dodo.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.25"]
+					}
+				}
+			}
+		},
+		"animation.dodo.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.9"]
+					}
+				}
+			}
+		},
+		"animation.dodo.turningwalkspeeddemo": {
+			"loop": true,
+			"animation_length": 12,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, "-90-q.anim_time*30+1700*0.025", 0]
+					},
+					"position": {
+						"vector": ["0-math.sin(q.anim_time*30-9000*0.025)*13", 0, "0-math.sin(q.anim_time*30+1700*0.025)*13"]
+					}
+				}
+			}
+		},
+		"animation.dodo.turningrunspeeddemo": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"rotation": {
+						"vector": [0, "-90-q.anim_time*30+1700*0.45", 0]
+					},
+					"position": {
+						"vector": ["0-math.sin(q.anim_time*30-9000*0.025)*40", 0, "0-math.sin(q.anim_time*30+1700*0.025)*40"]
+					}
+				}
+			}
+		},
 		"animation.dodo.speak1": {
 			"animation_length": 1.5,
 			"bones": {

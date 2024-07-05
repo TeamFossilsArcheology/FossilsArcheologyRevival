@@ -7,7 +7,7 @@
     },
     "animation.liopleurodon.swimfast": {
       "loop": true,
-      "animation_length": 1.45833
+      "animation_length": 1.4583
     },
     "animation.liopleurodon.eat": {
       "loop": true,
@@ -15,28 +15,26 @@
     },
     "animation.liopleurodon.grab": {
       "loop": true,
-      "animation_length": 2.45833
+      "animation_length": 2.4583
     },
     "animation.liopleurodon.attack1": {
       "loop": true,
       "animation_length": 1.25,
-      "action_delay": [0.58]
+      "action_delay": [
+        0.58
+      ]
     },
     "animation.liopleurodon.randomidle": {
+      "loop": true,
       "animation_length": 1.5
     },
     "animation.liopleurodon.idle/sleep": {
-      "animation_length": 20.08333
+      "loop": true,
+      "animation_length": 20.0833
     },
     "animation.liopleurodon.beached": {
       "loop": true,
       "animation_length": 8
-    },
-    "animation.liopleurodon.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.liopleurodon.turn_left": {
-      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2

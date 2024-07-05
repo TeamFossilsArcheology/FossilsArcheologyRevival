@@ -5,15 +5,17 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.citpati.walk": {
+    "animation.citipati.walk": {
       "loop": true,
-      "animation_length": 1.33333
+      "animation_length": 1.3333,
+      "blocks_per_second": 1.33
     },
-    "animation.citpati.run": {
+    "animation.citipati.run": {
       "loop": true,
-      "animation_length": 0.625
+      "animation_length": 0.625,
+      "blocks_per_second": 3.0
     },
-    "animation.citpati.sit/sleep": {
+    "animation.citipati.sit/sleep": {
       "loop": true,
       "animation_length": 12
     },
@@ -26,23 +28,34 @@
       "animation_length": 4
     },
     "animation.citipati.eat": {
-      "animation_length": 3.04167
+      "animation_length": 3.0417
     },
-    "animation.citpati.turn_left": {
+    "animation.citipati.turn_left": {
       "loop": "hold_on_last_frame"
     },
-    "animation.citpati.attack1": {
+    "animation.citipati.attack1": {
       "animation_length": 1,
-      "action_delay": [0.58]
+      "action_delay": [
+        0.58
+      ]
     },
     "animation.citipati.call": {
       "animation_length": 1.25
     },
-    "animation.citpati.turn_right": {
+    "animation.citipati.turn_right": {
       "loop": "hold_on_last_frame"
     },
     "animation.citipati.speak": {
       "animation_length": 2
+    },
+    "dontusethis": {
+      "animation_length": 23.75
+    },
+    "animation.citipati.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.citipati.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

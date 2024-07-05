@@ -7,7 +7,8 @@
     },
     "animation.velociraptor.run": {
       "loop": true,
-      "animation_length": 0.75
+      "animation_length": 0.75,
+      "blocks_per_second": 2.3
     },
     "animation.velociraptor.display": {
       "animation_length": 2
@@ -39,17 +40,20 @@
     },
     "animation.velociraptor.attack": {
       "animation_length": 1,
-      "action_delay": [0.58]
-    },
-    "animation.velociraptor.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.velociraptor.turn_left": {
-      "loop": "hold_on_last_frame"
+      "action_delay": [
+        0.58
+      ]
     },
     "animation.velociraptor.walk": {
       "loop": true,
-      "animation_length": 1.41667
+      "animation_length": 1.4167,
+      "blocks_per_second": 1.1
+    },
+    "animation.velociraptor.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.velociraptor.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

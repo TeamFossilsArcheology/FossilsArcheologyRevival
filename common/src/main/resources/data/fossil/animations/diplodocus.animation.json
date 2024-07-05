@@ -3,27 +3,25 @@
   "animations": {
     "animation.diplodocus.walk": {
       "loop": true,
-      "animation_length": 4.79167
+      "animation_length": 3.75,
+      "blocks_per_second": 0.33
     },
     "animation.diplodocus.sprint": {
       "loop": true,
-      "animation_length": 3.41667
+      "animation_length": 2.25,
+      "blocks_per_second": 0.5
     },
     "animation.diplodocus.attack": {
       "animation_length": 5.5,
-      "action_delay": [0.92]
+      "action_delay": [
+        0.92
+      ]
     },
     "animation.diplodocus.drink": {
       "animation_length": 30.875
     },
     "animation.diplodocus.eat": {
-      "animation_length": 7.29167
-    },
-    "animation.diplodocus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.diplodocus.turn_left": {
-      "loop": "hold_on_last_frame"
+      "animation_length": 7.2917
     },
     "animation.diplodocus.idle": {
       "loop": true,
@@ -43,10 +41,16 @@
     },
     "animation.diplodocus.swim": {
       "loop": true,
-      "animation_length": 15.70833
+      "animation_length": 15.7083
     },
     "animation.diplodocus.speak": {
       "animation_length": 2
+    },
+    "animation.diplodocus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.diplodocus.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

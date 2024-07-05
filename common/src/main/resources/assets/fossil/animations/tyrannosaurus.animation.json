@@ -3230,6 +3230,162 @@
 				}
 			}
 		},
+		"animation.tyrannosaurus.turn_left": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBody": {
+					"rotation": {
+						"vector": [0, -5, 5]
+					}
+				},
+				"upperBody": {
+					"rotation": {
+						"vector": [0, -10, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, -10, 5]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, -5, -5]
+					}
+				},
+				"leftUpperArm": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					}
+				},
+				"leftLowerArm": {
+					"rotation": {
+						"vector": [-10, 0, 0]
+					}
+				},
+				"leftThigh": {
+					"rotation": {
+						"vector": [0, 5, -10]
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"vector": [0, 0, 5]
+					}
+				},
+				"rightThigh": {
+					"rotation": {
+						"vector": [0, 5, 0]
+					},
+					"position": {
+						"vector": [0, -0.5, 0]
+					}
+				},
+				"rightFoot": {
+					"rotation": {
+						"vector": [0, 0, -5]
+					}
+				},
+				"tail1": {
+					"rotation": {
+						"vector": [0, 10, -2.5]
+					}
+				},
+				"tail2": {
+					"rotation": {
+						"vector": [0, 10, -2.5]
+					}
+				},
+				"tail3": {
+					"rotation": {
+						"vector": [0, 10, -2.5]
+					}
+				},
+				"tail4": {
+					"rotation": {
+						"vector": [0, 10, -2.5]
+					}
+				}
+			}
+		},
+		"animation.tyrannosaurus.turn_right": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBody": {
+					"rotation": {
+						"vector": [0, 5, -5]
+					}
+				},
+				"upperBody": {
+					"rotation": {
+						"vector": [0, 10, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, 10, -5]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, 5, 5]
+					}
+				},
+				"leftThigh": {
+					"rotation": {
+						"vector": [0, -5, 0]
+					},
+					"position": {
+						"vector": [0, -0.5, 0]
+					}
+				},
+				"rightThigh": {
+					"rotation": {
+						"vector": [0, -5, 10]
+					}
+				},
+				"tail1": {
+					"rotation": {
+						"vector": [0, -10, 2.5]
+					}
+				},
+				"tail2": {
+					"rotation": {
+						"vector": [0, -10, 2.5]
+					}
+				},
+				"tail3": {
+					"rotation": {
+						"vector": [0, -10, 2.5]
+					}
+				},
+				"tail4": {
+					"rotation": {
+						"vector": [0, -10, 2.5]
+					}
+				},
+				"rightUpperArm": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					}
+				},
+				"rightLowerArm": {
+					"rotation": {
+						"vector": [-10, 0, 0]
+					}
+				},
+				"leftFoot": {
+					"rotation": {
+						"vector": [0, 0, 5]
+					}
+				},
+				"rightLeg": {
+					"rotation": {
+						"vector": [0, 0, -5]
+					}
+				}
+			}
+		},
 		"animation.tyrannosaurus.speak": {
 			"animation_length": 2,
 			"bones": {
@@ -5270,6 +5426,214 @@
 						"2.5": {
 							"vector": [0, 0, 0]
 						}
+					}
+				}
+			}
+		},
+		"animation.tyrannosaurus.ontogeny_baby": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBody": {
+					"position": {
+						"vector": [0, 3, 0]
+					}
+				},
+				"lowerBodyBreathing": {
+					"scale": {
+						"vector": [0.9, 1, 1]
+					}
+				},
+				"upperBodyBreathing": {
+					"scale": {
+						"vector": [0.9, 1, 1]
+					}
+				},
+				"neck": {
+					"scale": {
+						"vector": [0.9, 0.9, 1.1]
+					}
+				},
+				"head": {
+					"scale": {
+						"vector": [1.1, 1.1, 1.3]
+					}
+				},
+				"upperJaw": {
+					"scale": {
+						"vector": [1, 0.9, 1]
+					}
+				},
+				"lowerJaw": {
+					"scale": {
+						"vector": [1, 0.9, 1]
+					}
+				},
+				"leftUpperArm": {
+					"position": {
+						"vector": [-0.5, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1.4, 1.4]
+					}
+				},
+				"rightUpperArm": {
+					"position": {
+						"vector": [0.5, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1.4, 1.4]
+					}
+				},
+				"leftThigh": {
+					"position": {
+						"vector": [-0.5, -1.5, 0]
+					},
+					"scale": {
+						"vector": [0.9, 1.1, 1]
+					}
+				},
+				"leftLeg": {
+					"scale": {
+						"vector": [1, 1, 0.8]
+					}
+				},
+				"leftFoot": {
+					"scale": {
+						"vector": [1.2, 1, 1.4]
+					}
+				},
+				"rightThigh": {
+					"position": {
+						"vector": [-0.5, -1.5, 0]
+					},
+					"scale": {
+						"vector": [0.9, 1.1, 1]
+					}
+				},
+				"rightLeg": {
+					"scale": {
+						"vector": [1, 1, 0.8]
+					}
+				},
+				"rightFoot": {
+					"scale": {
+						"vector": [1.2, 1, 1.4]
+					}
+				},
+				"tail1": {
+					"scale": {
+						"vector": [0.9, 0.9, 1.2]
+					}
+				},
+				"tail2": {
+					"scale": {
+						"vector": [0.9, 0.9, 0.9]
+					}
+				}
+			}
+		},
+		"animation.tyrannosaurus.ontogeny_teen": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBodyBreathing": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"upperBodyBreathing": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"neck": {
+					"scale": {
+						"vector": [0.9, 0.9, 1]
+					}
+				},
+				"head": {
+					"scale": {
+						"vector": [1, 1, 1.1]
+					}
+				},
+				"upperJaw": {
+					"scale": {
+						"vector": [1, 1, 0.9]
+					}
+				},
+				"lowerJaw": {
+					"scale": {
+						"vector": [1, 1, 0.9]
+					}
+				},
+				"lowerBody": {
+					"position": {
+						"vector": [0, 1, 0]
+					}
+				},
+				"lefttCrest": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"rightCrest": {
+					"scale": {
+						"vector": [1, 1, 1]
+					}
+				},
+				"leftUpperArm": {
+					"scale": {
+						"vector": [1, 1.2, 1.2]
+					}
+				},
+				"rightUpperArm": {
+					"scale": {
+						"vector": [1, 1.2, 1.2]
+					}
+				},
+				"leftThigh": {
+					"position": {
+						"vector": [0, -0.5, 0]
+					},
+					"scale": {
+						"vector": [0.9, 1.04, 1]
+					}
+				},
+				"leftLeg": {
+					"scale": {
+						"vector": [1, 1, 0.9]
+					}
+				},
+				"leftFoot": {
+					"scale": {
+						"vector": [1.1, 1, 1.2]
+					}
+				},
+				"rightThigh": {
+					"position": {
+						"vector": [0, -0.5, 0]
+					},
+					"scale": {
+						"vector": [0.9, 1.04, 1]
+					}
+				},
+				"rightLeg": {
+					"scale": {
+						"vector": [1, 1, 0.9]
+					}
+				},
+				"rightFoot": {
+					"scale": {
+						"vector": [1.1, 1, 1.2]
+					}
+				},
+				"tail1": {
+					"scale": {
+						"vector": [1, 1, 1.1]
+					}
+				},
+				"tail2": {
+					"scale": {
+						"vector": [0.9, 0.9, 1]
 					}
 				}
 			}

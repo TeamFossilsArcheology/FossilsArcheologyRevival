@@ -3,13 +3,8 @@
   "animations": {
     "animation.phorusrhacos.walk": {
       "loop": true,
-      "animation_length": 2
-    },
-    "animation.phorusrhacos.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.phorusrhacos.turn_left": {
-      "loop": "hold_on_last_frame"
+      "animation_length": 2,
+      "blocks_per_second": 1.3125
     },
     "animation.phorusrhacos.drink": {
       "animation_length": 3
@@ -19,14 +14,16 @@
       "animation_length": 4
     },
     "animation.phorusrhacos.eat": {
-      "animation_length": 4.45833
+      "animation_length": 4.4583
     },
     "animation.phorusrhacos.speak": {
       "animation_length": 1
     },
     "animation.phorusrhacos.attack": {
       "animation_length": 0.5,
-      "action_delay": [0.38]
+      "action_delay": [
+        0.38
+      ]
     },
     "animation.phorusrhacos.sit": {
       "loop": true,
@@ -46,7 +43,14 @@
     },
     "animation.phorusrhacos.run": {
       "loop": true,
-      "animation_length": 0.95833
+      "animation_length": 0.9583,
+      "blocks_per_second": 4.1
+    },
+    "animation.phorusrhacos.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.phorusrhacos.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

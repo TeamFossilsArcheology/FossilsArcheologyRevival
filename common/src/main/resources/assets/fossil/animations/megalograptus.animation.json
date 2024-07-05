@@ -1405,6 +1405,16 @@
 					}
 				}
 			}
+		},
+		"animation.megalograptus.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"head": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.4"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

@@ -3196,6 +3196,26 @@
 					}
 				}
 			}
+		},
+		"animation.titanis.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*1.3125"]
+					}
+				}
+			}
+		},
+		"animation.titanis.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*6"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

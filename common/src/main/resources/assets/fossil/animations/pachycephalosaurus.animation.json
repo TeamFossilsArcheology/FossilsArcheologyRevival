@@ -3651,6 +3651,26 @@
 					}
 				}
 			}
+		},
+		"animation.pachycephalosaurus.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.75"]
+					}
+				}
+			}
+		},
+		"animation.pachycephalosaurus.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*2.7"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

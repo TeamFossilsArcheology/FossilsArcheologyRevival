@@ -9,18 +9,22 @@
     },
     "animation.edaphosaurus.run": {
       "loop": true,
-      "animation_length": 1
+      "animation_length": 1,
+      "blocks_per_second": 0.3
     },
     "animation.edaphosaurus.walk": {
       "loop": true,
-      "animation_length": 2.16667
+      "animation_length": 2.1667,
+      "blocks_per_second": 0.15
     },
     "animation.edaphosaurus.attack": {
-      "animation_length": 0.58333,
-      "action_delay": [0.29]
+      "animation_length": 0.5833,
+      "action_delay": [
+        0.29
+      ]
     },
     "animation.edaphosaurus.speak": {
-      "animation_length": 2.33333
+      "animation_length": 2.3333
     },
     "animation.edaphosaurus.eat": {
       "animation_length": 1.5
@@ -30,11 +34,19 @@
       "animation_length": 4
     },
     "animation.edaphosaurus.sleep/sit": {
-      "animation_length": 3.04167
+      "loop": true,
+      "animation_length": 3.0417
     },
     "animation.edaphosaurus.jump/fall": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.edaphosaurus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.edaphosaurus.runspeeddemo": {
+      "loop": true
     }
-  }
+  },
+  "geckolib_format_version": 2
 }

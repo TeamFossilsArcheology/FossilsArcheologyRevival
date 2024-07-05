@@ -2564,6 +2564,142 @@
 				}
 			}
 		},
+		"animation.dilophosaurus.turn_left": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBody": {
+					"rotation": {
+						"vector": [0, -5, 5]
+					}
+				},
+				"upperBody": {
+					"rotation": {
+						"vector": [0, -10, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, -10, 5]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, -5, -10]
+					}
+				},
+				"leftUpperArm": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					}
+				},
+				"leftLowerArm": {
+					"rotation": {
+						"vector": [-10, 0, 0]
+					}
+				},
+				"leftThigh": {
+					"rotation": {
+						"vector": [0, 5, -10]
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"vector": [0, 0, 5]
+					}
+				},
+				"rightThigh": {
+					"rotation": {
+						"vector": [0, 5, 0]
+					},
+					"position": {
+						"vector": [0, -0.5, 0]
+					}
+				},
+				"tail1": {
+					"rotation": {
+						"vector": [0, 15, -5]
+					}
+				},
+				"tail2": {
+					"rotation": {
+						"vector": [0, 20, -5]
+					}
+				},
+				"rightFoot": {
+					"rotation": {
+						"vector": [0, 0, -5]
+					}
+				}
+			}
+		},
+		"animation.dilophosaurus.turn_right": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBody": {
+					"rotation": {
+						"vector": [0, 5, -5]
+					}
+				},
+				"upperBody": {
+					"rotation": {
+						"vector": [0, 10, 0]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": [0, 10, -5]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": [0, 5, 10]
+					}
+				},
+				"rightUpperArm": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					}
+				},
+				"rightLowerArm": {
+					"rotation": {
+						"vector": [-10, 0, 0]
+					}
+				},
+				"leftThigh": {
+					"rotation": {
+						"vector": [0, -5, 0]
+					},
+					"position": {
+						"vector": [0, -0.5, 0]
+					}
+				},
+				"rightThigh": {
+					"rotation": {
+						"vector": [0, -5, 10]
+					}
+				},
+				"rightLeg": {
+					"rotation": {
+						"vector": [0, 0, -5]
+					}
+				},
+				"tail1": {
+					"rotation": {
+						"vector": [0, -15, 5]
+					}
+				},
+				"tail2": {
+					"rotation": {
+						"vector": [0, -20, 5]
+					}
+				},
+				"leftFoot": {
+					"rotation": {
+						"vector": [0, 0, 5]
+					}
+				}
+			}
+		},
 		"animation.dilophosaurus.speak": {
 			"animation_length": 2,
 			"bones": {
@@ -3818,6 +3954,165 @@
 						"2.0": {
 							"vector": [0, 0, 0]
 						}
+					}
+				}
+			}
+		},
+		"animation.dilophosaurus.ontogeny_baby": {
+			"loop": "hold_on_last_frame",
+			"bones": {
+				"lowerBody": {
+					"position": {
+						"vector": [0, 1, 0]
+					}
+				},
+				"neck": {
+					"scale": {
+						"vector": [0.9, 0.9, 1.1]
+					}
+				},
+				"head": {
+					"scale": {
+						"vector": [1.1, 1, 1.2]
+					}
+				},
+				"lowerJaw": {
+					"scale": {
+						"vector": [1, 1, 1.1]
+					}
+				},
+				"leftUpperArm": {
+					"position": {
+						"vector": [-0.5, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1.1, 1]
+					}
+				},
+				"rightUpperArm": {
+					"position": {
+						"vector": [0.5, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1.1, 1]
+					}
+				},
+				"leftThigh": {
+					"position": {
+						"vector": [-0.5, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1.1, 1.1]
+					}
+				},
+				"rightThigh": {
+					"position": {
+						"vector": [0.5, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 1.1, 1.1]
+					}
+				},
+				"tail1": {
+					"scale": {
+						"vector": [0.9, 0.9, 1.1]
+					}
+				},
+				"upperJaw": {
+					"scale": {
+						"vector": [1, 1, 1.1]
+					}
+				},
+				"MaleCrestL": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 0.3, 1]
+					}
+				},
+				"malecresthookL": {
+					"scale": {
+						"vector": [0, 1, 0]
+					}
+				},
+				"MaleCrestR": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 0.3, 1]
+					}
+				},
+				"malecresthookR": {
+					"scale": {
+						"vector": [0, 1, 0]
+					}
+				},
+				"FemaleCrestL": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 0.3, 1]
+					}
+				},
+				"femalecresthookL": {
+					"scale": {
+						"vector": [0, 1, 0]
+					}
+				},
+				"FemaleCrestR": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					},
+					"scale": {
+						"vector": [1, 0.3, 1]
+					}
+				},
+				"femalecresthookR": {
+					"scale": {
+						"vector": [0, 1, 0]
+					}
+				},
+				"BabyCrestL": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					}
+				},
+				"BabyCrestR": {
+					"rotation": {
+						"vector": [10, 0, 0]
+					}
+				},
+				"leftLowerArm": {
+					"scale": {
+						"vector": [1, 1.1, 1]
+					}
+				},
+				"rightLowerArm": {
+					"scale": {
+						"vector": [1, 1.1, 1]
+					}
+				}
+			}
+		},
+		"animation.dilophosaurus.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"Root": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*1"]
+					}
+				}
+			}
+		},
+		"animation.dilophosaurus.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"Root": {
+					"position": {
+						"vector": [0, 0, "100-query.anim_time*16*4.25"]
 					}
 				}
 			}

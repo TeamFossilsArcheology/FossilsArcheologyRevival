@@ -16,12 +16,6 @@
     "animation.coelacanth.land": {
       "loop": true,
       "animation_length": 4
-    },
-    "animation.coelacanth.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.coelacanth.turn_right": {
-      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2

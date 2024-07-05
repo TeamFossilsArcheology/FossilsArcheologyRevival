@@ -2976,6 +2976,27 @@
 					}
 				}
 			}
+		},
+		"animation.gallimimus.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"Root": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*1.75"]
+					}
+				}
+			}
+		},
+		"animation.gallimimus.runspeeddemo": {
+			"loop": true,
+			"animation_length": 1.2,
+			"bones": {
+				"Root": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*5.55"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

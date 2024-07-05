@@ -3,30 +3,28 @@
   "animations": {
     "animation.megalograptus.walk": {
       "loop": true,
-      "animation_length": 1
+      "animation_length": 1,
+      "blocks_per_second": 0.4
     },
-    "animation.megalograptus.Swim": {
+    "animation.megalograptus.swim": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.megalograptus.Idle/sleep/sit": {
+    "animation.megalograptus.idle/sleep/sit": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.megalograptus.Basking": {
+    "animation.megalograptus.bask": {
       "loop": true,
       "animation_length": 3
     },
-    "animation.megalograptus.Eating": {
-      "loop": true,
+    "animation.megalograptus.eat": {
       "animation_length": 2
     },
-    "animation.megalograptus.Attack1": {
-      "loop": true,
-      "animation_length": 1,
-      "action_delay": [0.5]
+    "animation.megalograptus.attack1": {
+      "animation_length": 1
     },
-    "animation.megalograptus.Extra1": {
+    "animation.megalograptus.extra1": {
       "loop": true,
       "animation_length": 2
     },
@@ -36,7 +34,10 @@
     },
     "animation.megalograptus.run": {
       "loop": true,
-      "animation_length": 0.58333
+      "animation_length": 0.5833
+    },
+    "animation.megalograptus.walkspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

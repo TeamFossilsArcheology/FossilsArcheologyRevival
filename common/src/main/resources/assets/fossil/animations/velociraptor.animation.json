@@ -3130,6 +3130,26 @@
 					}
 				}
 			}
+		},
+		"animation.velociraptor.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*1.1"]
+					}
+				}
+			}
+		},
+		"animation.velociraptor.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*2.3"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

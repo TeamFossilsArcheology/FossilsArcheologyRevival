@@ -3,27 +3,24 @@
   "animations": {
     "animation.brachiosaurus.walk": {
       "loop": true,
-      "animation_length": 4.45833
+      "animation_length": 4.4583,
+      "blocks_per_second": 0.16874999999999998
     },
     "animation.brachiosaurus.sprint": {
       "loop": true,
-      "animation_length": 2.83333
+      "animation_length": 2.8333
     },
     "animation.brachiosaurus.attack": {
       "animation_length": 5.5,
-      "action_delay": [0.92]
+      "action_delay": [
+        0.92
+      ]
     },
     "animation.brachiosaurus.drink": {
-      "animation_length": 21.08333
+      "animation_length": 21.0833
     },
     "animation.brachiosaurus.eat": {
-      "animation_length": 7.29167
-    },
-    "animation.brachiosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.brachiosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
+      "animation_length": 7.2917
     },
     "animation.brachiosaurus.idle": {
       "loop": true,
@@ -43,10 +40,13 @@
     },
     "animation.brachiosaurus.swim": {
       "loop": true,
-      "animation_length": 15.70833
+      "animation_length": 15.7083
     },
     "animation.brachiosaurus.speak": {
       "animation_length": 2
+    },
+    "animation.brachiosaurus.walkspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

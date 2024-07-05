@@ -1425,7 +1425,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public void startAttack() {
         swing(InteractionHand.MAIN_HAND);
-        getAnimationLogic().forceActiveAnimation("Attack", nextAttackAnimation(), "Attack");
+        getAnimationLogic().forceActiveAnimation("Attack", nextAttackAnimation(), "Attack", 1);
     }
 
     public boolean attackTarget(LivingEntity target) {

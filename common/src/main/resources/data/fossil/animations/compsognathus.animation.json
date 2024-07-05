@@ -7,25 +7,29 @@
     },
     "animation.compsognathus.walk": {
       "loop": true,
-      "animation_length": 1
+      "animation_length": 1,
+      "blocks_per_second": 0.46875
     },
     "animation.compsognathus.run": {
       "loop": true,
-      "animation_length": 0.58333
+      "animation_length": 0.5833,
+      "blocks_per_second": 1.5
     },
     "animation.compsognathus.swim": {
       "loop": true,
       "animation_length": 2
     },
     "animation.compsognathus.eat": {
-      "animation_length": 1.91667
+      "animation_length": 1.9167
     },
     "animation.compsognathus.drink": {
-      "animation_length": 1.45833
+      "animation_length": 1.4583
     },
     "animation.compsognathus.attack": {
       "animation_length": 0.75,
-      "action_delay": [0.42]
+      "action_delay": [
+        0.42
+      ]
     },
     "animation.compsognathus.speak": {
       "animation_length": 1
@@ -40,6 +44,12 @@
     "animation.compsognathus.jump/fall": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.compsognathus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.compsognathus.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

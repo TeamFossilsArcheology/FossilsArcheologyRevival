@@ -7,18 +7,13 @@
     },
     "animation.plesiosaurus.swimfast": {
       "loop": true,
-      "animation_length": 0.95833
+      "animation_length": 0.9583
     },
     "animation.plesiosaurus.eat": {
       "animation_length": 1.75
     },
-    "animation.plesiosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.plesiosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.plesiosaurus.randomidle": {
+      "loop": true,
       "animation_length": 1.5
     },
     "animation.plesiosaurus.sleep": {
@@ -30,8 +25,10 @@
       "animation_length": 8
     },
     "animation.plesiosaurus.attack": {
-      "animation_length": 1.25,
-      "action_delay": [0.63]
+      "animation_length": 0.7917,
+      "action_delay": [
+        0.63
+      ]
     }
   },
   "geckolib_format_version": 2

@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.AIMessage;
+import com.fossil.fossil.network.debug.MoveMessage;
 import com.fossil.fossil.network.debug.TameMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
@@ -15,7 +16,6 @@ import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Sheep;
@@ -100,15 +100,6 @@ public class DebugScreen extends Screen {
                 List.of(Boolean.TRUE, Boolean.FALSE));
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(addWidget(new InfoTab(this, prehistoric)));
-           /* xPosInput = this.addRenderableWidget(new EditBox(this.font, 280, height - 40, 50, 20, new TextComponent("")));
-            xPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(mob.getX()));
-            yPosInput = this.addRenderableWidget(new EditBox(this.font, 340, height - 40, 50, 20, new TextComponent("")));
-            yPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(mob.getY()));
-            zPosInput = this.addRenderableWidget(new EditBox(this.font, 400, height - 40, 50, 20, new TextComponent("")));
-            zPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(mob.getZ()));
-            this.addRenderableWidget(new Button(210, height - 40, 130, 20, new TextComponent("Move to Target"), button -> {
-                Player player = Minecraft.getInstance().player;
-            }));*/
             this.addRenderableWidget(new Button(460, height - 40, 50, 20, new TextComponent("Tame"), button -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new TameMessage(entity.getId()));
             }));
@@ -132,6 +123,12 @@ public class DebugScreen extends Screen {
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableLookAI"));
             this.addRenderableWidget(builder.create(20, height - 40, width / 6, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
+            }));
+            this.addRenderableWidget(new Button(240, height - 70, 70, 20, new TextComponent("Move Left"), button -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new MoveMessage(entity.getId(), entity.blockPosition().getX() - 10, entity.blockPosition().getY(), entity.blockPosition().getZ()));
+            }));
+            this.addRenderableWidget(new Button(340, height - 70, 70, 20, new TextComponent("Move Right"), button -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new MoveMessage(entity.getId(), entity.blockPosition().getX() + 10, entity.blockPosition().getY(), entity.blockPosition().getZ()));
             }));
         }
         if (entity instanceof PrehistoricAnimatable) {
@@ -164,7 +161,7 @@ public class DebugScreen extends Screen {
             drawString(poseStack, minecraft.font, new TextComponent("yRot: " + sheep.getYRot()), 275, 15, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("yRotHead: " + sheep.getYHeadRot()), 275, 35, 16777215);
         }
-        Player player = Minecraft.getInstance().player;
+        /*Player player = Minecraft.getInstance().player;
         float x = 1;
         float y = 1;
         float z = 1;
@@ -189,7 +186,7 @@ public class DebugScreen extends Screen {
         drawString(poseStack, minecraft.font, new TextComponent("c: " + c), 175, 185, 16777215);
         drawString(poseStack, minecraft.font, new TextComponent("targetA: " + (targetA - a)), 175, 215, 16777215);
         drawString(poseStack, minecraft.font, new TextComponent("newYaw: " + (targetA - a)), 175, 245, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("targetC: " + (targetC - c)), 175, 275, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("targetC: " + (targetC - c)), 175, 275, 16777215);*/
     }
 
     record PathInfo(BlockPos targetPos, BlockState blockState, boolean below) {

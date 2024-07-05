@@ -22,7 +22,8 @@
     },
     "animation.pachyrhinosaurus.run": {
       "loop": true,
-      "animation_length": 1
+      "animation_length": 1,
+      "blocks_per_second": 3.0
     },
     "animation.pachyrhinosaurus.turn_right": {
       "loop": "hold_on_last_frame"
@@ -43,7 +44,8 @@
     },
     "animation.pachyrhinosaurus.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 0.8
     },
     "animation.pachyrhinosaurus.swim": {
       "loop": true,
@@ -51,7 +53,9 @@
     },
     "animation.pachyrhinosaurus.attack2": {
       "animation_length": 1,
-      "action_delay": [0.58]
+      "action_delay": [
+        0.58
+      ]
     },
     "animation.pachyrhinosaurus.call": {
       "animation_length": 3
@@ -61,11 +65,20 @@
     },
     "animation.pachyrhinosaurus.attack1": {
       "animation_length": 1,
-      "action_delay": [0.58]
+      "action_delay": [
+        0.58
+      ]
     },
     "animation.pachyrhinosaurus.ram_windup": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.pachyrhinosaurus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.pachyrhinosaurus.runspeeddemo": {
+      "loop": true
     }
-  }
+  },
+  "geckolib_format_version": 2
 }

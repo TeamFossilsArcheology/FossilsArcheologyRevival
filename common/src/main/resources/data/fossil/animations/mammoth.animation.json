@@ -8,7 +8,9 @@
     "animation.mammoth.attack1": {
       "loop": true,
       "animation_length": 1.25,
-      "action_delay": [0.46]
+      "action_delay": [
+        0.46
+      ]
     },
     "animation.mammoth.drinking": {
       "loop": true,
@@ -24,11 +26,11 @@
     },
     "animation.mammoth.walk": {
       "loop": true,
-      "animation_length": 3.33333
+      "animation_length": 3.3333
     },
     "animation.mammoth.run": {
       "loop": true,
-      "animation_length": 1.41667
+      "animation_length": 1.4167
     },
     "animation.mammoth.jump/fall": {
       "loop": true,
@@ -40,7 +42,7 @@
     },
     "animation.mammoth.idle": {
       "loop": true,
-      "animation_length": 3.33333
+      "animation_length": 3.3333
     },
     "animation.mammoth.swim": {
       "loop": true

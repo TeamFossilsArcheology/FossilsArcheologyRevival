@@ -7,11 +7,13 @@
     },
     "animation.dryosaurus.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 0.8333
     },
     "animation.dryosaurus.run": {
       "loop": true,
-      "animation_length": 0.75
+      "animation_length": 0.75,
+      "blocks_per_second": 3.15
     },
     "animation.dryosaurus.eat": {
       "animation_length": 3
@@ -34,7 +36,7 @@
       "animation_length": 12
     },
     "animation.dryosaurus.speak": {
-      "animation_length": 1.70833
+      "animation_length": 1.7083
     },
     "animation.dryosaurus.jump/fall": {
       "loop": true,
@@ -46,7 +48,15 @@
     },
     "animation.dryosaurus.attack": {
       "animation_length": 1,
-      "action_delay": [0.58]
+      "action_delay": [
+        0.58
+      ]
+    },
+    "animation.dryosaurus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.dryosaurus.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

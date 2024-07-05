@@ -49,8 +49,10 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
                     double actionDelay = delayElement == null ? 0 : AnimationUtils.convertSecondsToTicks(delayElement.getAsDouble());
                     JsonElement lengthElement = animationJsonObject.get("animation_length");
                     double animationLength = lengthElement == null ? 0 : AnimationUtils.convertSecondsToTicks(lengthElement.getAsDouble());
-                    innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), actionDelay, animationLength));
-                    clientInnerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), actionDelay, animationLength));
+                    JsonElement speedElement = animationJsonObject.get("blocks_per_second");
+                    double speed = speedElement == null ? 0 : speedElement.getAsDouble();
+                    innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), actionDelay, animationLength, speed));
+                    clientInnerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), actionDelay, animationLength, speed));
                 }
                 builder.put("animations/" + fileEntry.getKey().getPath() + ".json", innerBuilder.build());
                 clientBuilder.put("animations/" + fileEntry.getKey().getPath() + ".json", clientInnerBuilder.build());
@@ -90,11 +92,13 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
          * x ticks after the start of the animation
          */
         public final double actionDelay;
+        public final double blocksPerSecond;
 
-        public ServerAnimationInfo(String animationName, double actionDelay, double animationLength) {
+        public ServerAnimationInfo(String animationName, double actionDelay, double animationLength, double blocksPerSecond) {
             this.animationName = animationName;
             this.animationLength = animationLength;
             this.actionDelay = actionDelay;
+            this.blocksPerSecond = blocksPerSecond;
         }
     }
 }

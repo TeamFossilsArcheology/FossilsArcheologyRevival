@@ -24,14 +24,16 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 
 public class AnimationTab extends DebugTab {
     private float rotYBase;
     private float rotXBase;
     private float scale = 15;
+    private double speed = 1;
     private AnimationsList animations;
     private String currentController;
 
@@ -115,7 +117,7 @@ public class AnimationTab extends DebugTab {
             sliderX.setSliderValue(0, true);
         }));
         if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
-            animations = addWidget(new AnimationsList(entity.getId(), prehistoric.getAllAnimations().keySet()));
+            animations = addWidget(new AnimationsList(entity.getId(), prehistoric.getAllAnimations()));
             List<String> controllers = prehistoric.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
             if (!controllers.isEmpty()) {
                 currentController = controllers.get(0);
@@ -123,6 +125,15 @@ public class AnimationTab extends DebugTab {
                                 options -> currentController, (options, option, controller) -> currentController = controller)
                         .createButton(Minecraft.getInstance().options, width / 2, 90, 100));
             }
+
+            addWidget(
+                    new Slider(width / 2, 120, 100, 20, new TextComponent("Speed: "), new TextComponent(""), 1, 3, speed, 0.01, 3,
+                            true) {
+                        @Override
+                        protected void applyValue() {
+                            speed = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                        }
+                    });
         }
     }
 
@@ -140,10 +151,10 @@ public class AnimationTab extends DebugTab {
 
     private class AnimationsList extends ContainerObjectSelectionList<AnimationsList.AnimationEntry> {
 
-        public AnimationsList(int mobId, Set<String> animations) {
+        public AnimationsList(int mobId, Map<String, Animation> animations) {
             super(AnimationTab.this.minecraft, 200, AnimationTab.this.height, 60, AnimationTab.this.height, 25);
-            List<String> sortedAnimations = animations.stream().sorted().toList();
-            for (String animation : sortedAnimations) {
+            List<Map.Entry<String, Animation>> sortedAnimations = animations.entrySet().stream().sorted(Map.Entry.comparingByKey()).toList();
+            for (Map.Entry<String, Animation> animation : sortedAnimations) {
                 addEntry(new AnimationEntry(mobId, animation));
             }
             setRenderBackground(false);
@@ -160,10 +171,13 @@ public class AnimationTab extends DebugTab {
         private class AnimationEntry extends ContainerObjectSelectionList.Entry<AnimationEntry> {
             private final Button changeButton;
 
-            AnimationEntry(int id, String text) {
-                changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
+            AnimationEntry(int id, Map.Entry<String, Animation> animation) {
+                changeButton = new Button(0, 0, 200, 20, new TextComponent(animation.getKey()), button -> {
                     if (entity instanceof Prehistoric prehistoric) {
-                        MessageHandler.DEBUG_CHANNEL.sendToServer(new ForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents()));
+                        double speed = 1 / Math.sqrt(prehistoric.getScale());
+                        speed *= prehistoric.data().stats().baseSpeed() / 0.26;//multiplier
+                        speed *= animation.getValue().animationLength / 20;
+                        MessageHandler.DEBUG_CHANNEL.sendToServer(new ForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), speed));
                     }
                 });
             }

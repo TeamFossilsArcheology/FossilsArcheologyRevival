@@ -7,11 +7,13 @@
     },
     "animation.ceratosaurus.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 0.85
     },
     "animation.ceratosaurus.run": {
       "loop": true,
-      "animation_length": 0.75
+      "animation_length": 0.75,
+      "blocks_per_second": 3.3
     },
     "animation.ceratosaurus.eat": {
       "animation_length": 3
@@ -21,7 +23,9 @@
     },
     "animation.ceratosaurus.attack": {
       "animation_length": 1,
-      "action_delay": [0.58]
+      "action_delay": [
+        0.58
+      ]
     },
     "animation.ceratosaurus.speak": {
       "animation_length": 1.5
@@ -47,6 +51,12 @@
     },
     "animation.ceratosaurus.turn_right": {
       "loop": "hold_on_last_frame"
+    },
+    "animation.ceratosaurus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.ceratosaurus.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

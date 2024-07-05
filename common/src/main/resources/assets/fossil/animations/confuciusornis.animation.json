@@ -1477,6 +1477,16 @@
 					}
 				}
 			}
+		},
+		"animation.confuciusornis.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.3125"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

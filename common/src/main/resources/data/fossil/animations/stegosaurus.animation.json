@@ -64,19 +64,27 @@
     },
     "animation.stegosaurus.attack_front1": {
       "animation_length": 1,
-      "action_delay": [0.54]
+      "action_delay": [
+        0.54
+      ]
     },
     "animation.stegosaurus.attack_front2": {
       "animation_length": 1,
-      "action_delay": [0.54]
+      "action_delay": [
+        0.54
+      ]
     },
     "animation.stegosaurus.attack_front_strong1": {
       "animation_length": 3,
-      "action_delay": [1.5]
+      "action_delay": [
+        1.5
+      ]
     },
     "animation.stegosaurus.attack_front_strong2": {
       "animation_length": 3,
-      "action_delay": [1.5]
+      "action_delay": [
+        1.5
+      ]
     },
     "animation.stegosaurus.attack_back1": {
       "animation_length": 1
@@ -89,37 +97,6 @@
     },
     "animation.stegosaurus.ontogeny_teen": {
       "loop": "hold_on_last_frame"
-    },
-    "animation.stegosaurus.bloodseeker": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.stegosaurus.WalkSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.stegosaurus.RunSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.stegosaurus.BabyRunSpeedDemo": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.stegosaurus.SwimSpeedDemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.stegosaurus.TurningRadiusDemo": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.stegosaurus.OntogenyDemo": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 8
-    },
-    "animation.stegosaurus.SizeDemo": {
-      "loop": true,
-      "animation_length": 12
     }
   },
   "geckolib_format_version": 2

@@ -2,6 +2,7 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"animation.brachiosaurus.walk": {
+			"loop": true,
 			"animation_length": 4.4583,
 			"bones": {
 				"MidBody": {
@@ -642,6 +643,7 @@
 			}
 		},
 		"animation.brachiosaurus.sprint": {
+			"loop": true,
 			"animation_length": 2.8333,
 			"bones": {
 				"MidBody": {
@@ -3663,6 +3665,7 @@
 			}
 		},
 		"animation.brachiosaurus.idle": {
+			"loop": true,
 			"animation_length": 12,
 			"bones": {
 				"lowerBodyBreathing": {
@@ -3708,6 +3711,7 @@
 			}
 		},
 		"animation.brachiosaurus.sleep": {
+			"loop": true,
 			"animation_length": 12,
 			"bones": {
 				"lowerBodyBreathing": {
@@ -3979,6 +3983,7 @@
 			}
 		},
 		"animation.brachiosaurus.sit": {
+			"loop": true,
 			"animation_length": 12,
 			"bones": {
 				"lowerBodyBreathing": {
@@ -4190,6 +4195,7 @@
 			}
 		},
 		"animation.brachiosaurus.jump/fall": {
+			"loop": true,
 			"animation_length": 2,
 			"bones": {
 				"neck": {
@@ -4321,6 +4327,7 @@
 			}
 		},
 		"animation.brachiosaurus.swim": {
+			"loop": true,
 			"animation_length": 15.7083,
 			"bones": {
 				"bone": {
@@ -6360,6 +6367,16 @@
 						"2.0": {
 							"vector": [0, 0, 0]
 						}
+					}
+				}
+			}
+		},
+		"animation.brachiosaurus.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*90*0.03"]
 					}
 				}
 			}

@@ -3,7 +3,8 @@
   "animations": {
     "animation.gastornis.walk": {
       "loop": true,
-      "animation_length": 3.25
+      "animation_length": 3.25,
+      "blocks_per_second": 0.825
     },
     "animation.gastornis.turn_right": {
       "loop": "hold_on_last_frame"
@@ -23,7 +24,9 @@
     },
     "animation.gastornis.attack": {
       "animation_length": 0.5,
-      "action_delay": [0.38]
+      "action_delay": [
+        0.38
+      ]
     },
     "animation.gastornis.sit": {
       "loop": true,
@@ -42,7 +45,14 @@
     },
     "animation.gastornis.run": {
       "loop": true,
-      "animation_length": 1.75
+      "animation_length": 1.75,
+      "blocks_per_second": 2.0
+    },
+    "animation.gastornis.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.gastornis.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

@@ -1021,6 +1021,16 @@
 					}
 				}
 			}
+		},
+		"animation.henodus.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"henodus": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.1667"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

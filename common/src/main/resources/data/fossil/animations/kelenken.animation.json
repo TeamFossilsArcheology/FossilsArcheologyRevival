@@ -3,7 +3,8 @@
   "animations": {
     "animation.kelenken.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 1.3125
     },
     "animation.kelenken.turn_right": {
       "loop": "hold_on_last_frame"
@@ -19,14 +20,16 @@
       "animation_length": 4
     },
     "animation.kelenken.eat": {
-      "animation_length": 4.45833
+      "animation_length": 4.4583
     },
     "animation.kelenken.speak": {
       "animation_length": 1
     },
     "animation.kelenken.attack": {
       "animation_length": 0.5,
-      "action_delay": [0.38]
+      "action_delay": [
+        0.38
+      ]
     },
     "animation.kelenken.sit": {
       "loop": true,
@@ -46,7 +49,14 @@
     },
     "animation.kelenken.run": {
       "loop": true,
-      "animation_length": 0.95833
+      "animation_length": 0.9583,
+      "blocks_per_second": 4.1
+    },
+    "animation.kelenken.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.kelenken.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

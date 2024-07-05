@@ -19,7 +19,8 @@
     },
     "animation.therizinosaurus.walk": {
       "loop": true,
-      "animation_length": 3
+      "animation_length": 3,
+      "blocks_per_second": 0.78125
     },
     "animation.therizinosaurus.walk_evil": {
       "loop": true,
@@ -27,7 +28,8 @@
     },
     "animation.therizinosaurus.run": {
       "loop": true,
-      "animation_length": 1.5
+      "animation_length": 1.5,
+      "blocks_per_second": 1.5
     },
     "animation.therizinosaurus.run_baby": {
       "loop": true,
@@ -35,11 +37,15 @@
     },
     "animation.therizinosaurus.attack1": {
       "animation_length": 1.04,
-      "action_delay": [0.6]
+      "action_delay": [
+        0.6
+      ]
     },
     "animation.therizinosaurus.attack2": {
       "animation_length": 1.28,
-      "action_delay": [0.6]
+      "action_delay": [
+        0.6
+      ]
     },
     "animation.therizinosaurus.jump/fall": {
       "loop": true,

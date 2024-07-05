@@ -3089,6 +3089,26 @@
 					}
 				}
 			}
+		},
+		"animation.phorusrhacos.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*1.3125"]
+					}
+				}
+			}
+		},
+		"animation.phorusrhacos.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*4.1"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2

@@ -18,7 +18,7 @@
     "healthBase": 5.0,
     "healthMax": 20.0,
     "speedBase": 0.25,
-    "speedMax": 0.4,
+    "speedMax": 0.25,
     "armorBase": 0.0,
     "armorMax": 0.0,
     "knockBackResistanceBase": 0,

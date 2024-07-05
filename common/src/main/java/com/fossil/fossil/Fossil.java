@@ -64,6 +64,7 @@ public class Fossil {
         MessageHandler.DEBUG_CHANNEL.register(ForceAnimationMessage.class, ForceAnimationMessage::write, ForceAnimationMessage::new, ForceAnimationMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(TameMessage.class, TameMessage::write, TameMessage::new, TameMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(MarkMessage.class, MarkMessage::write, MarkMessage::new, MarkMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(MoveMessage.class, MoveMessage::write, MoveMessage::new, MoveMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(VisionMessage.class, VisionMessage::write, VisionMessage::new, VisionMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(NewMarkMessage.class, NewMarkMessage::write, NewMarkMessage::new, NewMarkMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(SyncDebugInfoMessage.class, SyncDebugInfoMessage::write, SyncDebugInfoMessage::new, SyncDebugInfoMessage::apply);

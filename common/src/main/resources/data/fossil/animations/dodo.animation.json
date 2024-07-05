@@ -7,11 +7,13 @@
     },
     "animation.dodo.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 0.25
     },
     "animation.dodo.run": {
       "loop": true,
-      "animation_length": 1
+      "animation_length": 1,
+      "blocks_per_second": 0.9
     },
     "animation.dodo.turn_right": {
       "loop": true
@@ -44,11 +46,15 @@
     },
     "animation.dodo.bite1": {
       "animation_length": 1,
-      "action_delay": [0.42]
+      "action_delay": [
+        0.42
+      ]
     },
     "animation.dodo.bite2": {
       "animation_length": 1,
-      "action_delay": [0.42]
+      "action_delay": [
+        0.42
+      ]
     },
     "animation.dodo.sleep1": {
       "loop": true,
@@ -63,7 +69,7 @@
       "animation_length": 8
     },
     "animation.dodo.eat": {
-      "animation_length": 3.04167
+      "animation_length": 3.0417
     },
     "animation.dodo.jump/fall": {
       "loop": true,

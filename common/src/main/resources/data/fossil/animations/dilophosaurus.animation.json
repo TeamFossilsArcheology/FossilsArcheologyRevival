@@ -23,11 +23,13 @@
     },
     "animation.dilophosaurus.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 1.0
     },
     "animation.dilophosaurus.run": {
       "loop": true,
-      "animation_length": 0.75
+      "animation_length": 0.75,
+      "blocks_per_second": 4.25
     },
     "animation.dilophosaurus.jump/fall": {
       "loop": true,
@@ -78,6 +80,12 @@
     },
     "animation.dilophosaurus.ontogeny_baby": {
       "loop": "hold_on_last_frame"
+    },
+    "animation.dilophosaurus.walkspeeddemo": {
+      "loop": true
+    },
+    "animation.dilophosaurus.runspeeddemo": {
+      "loop": true
     }
   },
   "geckolib_format_version": 2

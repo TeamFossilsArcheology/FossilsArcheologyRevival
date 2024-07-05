@@ -8,7 +8,6 @@ import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.SyncActiveAnimationMessage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import org.jetbrains.annotations.Nullable;
@@ -33,12 +32,12 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     public @Nullable AnimationLogic.ActiveAnimationInfo getActiveAnimation(String controller) {
         CompoundTag animationTag = activeAnimations.getCompound(controller);
         if (animationTag.contains("Animation")) {
-            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getDouble("EndTick"), animationTag.getString("Category"), animationTag.getBoolean("Forced"));
+            return new AnimationLogic.ActiveAnimationInfo(animationTag.getString("Animation"), animationTag.getDouble("EndTick"), animationTag.getString("Category"), animationTag.getBoolean("Forced"), animationTag.getDouble("Speed"));
         }
         return null;
     }
 
-    public void forceActiveAnimation(String controller, Animation animation, String category) {
+    public void forceActiveAnimation(String controller, Animation animation, String category, double speed) {
         if (animation != null) {
             CompoundTag animationTag = new CompoundTag();
             animationTag.putString("Animation", animation.animationName);
@@ -46,6 +45,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             animationTag.putDouble("EndTick", entity.level.getGameTime() + animation.animationLength);
             animationTag.putString("Category", category);
             animationTag.putBoolean("Forced", true);
+            animationTag.putDouble("Speed", speed);
             activeAnimations.put(controller, animationTag);
             if (!entity.level.isClientSide) {
                 TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
@@ -86,6 +86,12 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
         return -1;
     }
+    public static double getMovementSpeed(PrehistoricAnimatable<Prehistoric> entity, String animationName) {
+        if (entity.getServerAnimationInfos().containsKey(animationName)) {
+            return entity.getServerAnimationInfos().get(animationName).blocksPerSecond;
+        }
+        return 0;
+    }
 
     public PlayState waterPredicate(AnimationEvent<PrehistoricSwimming> event) {
         AnimationController<PrehistoricSwimming> controller = event.getController();
@@ -94,6 +100,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
         if (activeAnimation != null && activeAnimation.forced && !isAnimationDone(controller.getName())) {
             loopType = PLAY_ONCE;
+            event.getController().setAnimationSpeed(activeAnimation.speed);
         } else {
             if (event.getAnimatable().isBeached()) {
                 if (activeAnimation == null || !activeAnimation.category.equals("Beached")) {
@@ -127,26 +134,39 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
         return PlayState.CONTINUE;
     }
-
+    private double lastSpeed = 1;
     public PlayState landPredicate(AnimationEvent<Prehistoric> event) {
         AnimationController<Prehistoric> controller = event.getController();
         ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
         ILoopType loopType = null;
-
+        double animationSpeed = 1;
         String activeCategory = activeAnimation != null ? activeAnimation.category : "";
         if (activeAnimation != null && activeAnimation.forced && !isAnimationDone(controller.getName())) {
             loopType = PLAY_ONCE;
+            event.getController().setAnimationSpeed(activeAnimation.speed);
         } else {
             if (event.isMoving()) {
+                Animation movementAnim;
                 if (entity.isSprinting()) {
-                    addActiveAnimation(controller.getName(), entity.nextSprintingAnimation(), "Move");
+                    movementAnim = entity.nextSprintingAnimation();
                 } else {
-                    addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), "Move");
+                    movementAnim = entity.nextMovingAnimation();
                 }
-                float speed = Mth.lerp(Math.min((1f / event.getAnimatable().data().adultAgeDays()) * event.getAnimatable().getAgeInDays(), 1), 2, 1);
-                event.getController().setAnimationSpeed(speed);
+                addActiveAnimation(controller.getName(), movementAnim, "Move");
+                //TODO: vlt stats().basespeed maxspeed/growspeed und sprintspeed
+                //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
+                animationSpeed = 1 / event.getAnimatable().getScale();
+                double animationBaseSpeed = getMovementSpeed(event.getAnimatable(), movementAnim.animationName);
+                if (animationBaseSpeed > 0) {
+                    //the deltaMovement of the animation should match the mobs deltaMovement
+                    double mobSpeed = event.getAnimatable().getDeltaMovement().horizontalDistance() * 20;
+                    animationSpeed *= mobSpeed / animationBaseSpeed;
+                }
+                if (lastSpeed > animationSpeed) {
+                    //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
+                    animationSpeed = lastSpeed;
+                }
             } else {
-                event.getController().setAnimationSpeed(1);
                 if (entity.isSleeping()) {
                     if (!activeCategory.equals("Sleep")) {
                         addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), "Sleep");
@@ -170,6 +190,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 }
             }
         }
+        lastSpeed = animationSpeed;
+        event.getController().setAnimationSpeed(animationSpeed);
         ActiveAnimationInfo newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation != null) {
             controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.animationName, loopType));
@@ -182,6 +204,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
         if (activeAnimation != null && activeAnimation.forced && !isAnimationDone(controller.getName())) {
             controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName));
+            event.getController().setAnimationSpeed(activeAnimation.speed);
             return PlayState.CONTINUE;
         } else {
             if (entity.swinging) {
@@ -216,7 +239,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return PlayState.CONTINUE;
     }
 
-    public record ActiveAnimationInfo(String animationName, double endTick, String category, boolean forced) {
+    public record ActiveAnimationInfo(String animationName, double endTick, String category, boolean forced, double speed) {
 
     }
 }

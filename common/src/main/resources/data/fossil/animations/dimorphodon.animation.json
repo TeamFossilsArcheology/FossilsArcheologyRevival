@@ -19,11 +19,13 @@
     },
     "animation.dimorphodon.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 1.25
     },
     "animation.dimorphodon.run": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 3.75
     },
     "animation.dimorphodon.climb": {
       "loop": true,
@@ -63,6 +65,12 @@
     "animation.dimorphodon.eat": {
       "animation_length": 2
     },
+    "animation.dimorphodon.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.dimorphodon.turn_right": {
+      "loop": "hold_on_last_frame"
+    },
     "animation.dimorphodon.speak": {
       "animation_length": 1
     },
@@ -71,7 +79,20 @@
     },
     "animation.dimorphodon.attack": {
       "animation_length": 0.5,
-      "action_delay": [0.33]
+      "action_delay": [
+        0.33
+      ]
+    },
+    "animation.dimorphodon.ontogeny_baby": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.dimorphodon.WalkSpeedDemo": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.dimorphodon.RunSpeedDemo": {
+      "loop": true,
+      "animation_length": 8
     }
   },
   "geckolib_format_version": 2
