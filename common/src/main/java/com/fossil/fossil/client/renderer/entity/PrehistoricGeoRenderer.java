@@ -4,8 +4,12 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.model.PrehistoricGeoModel;
 import com.fossil.fossil.entity.prehistoric.Meganeura;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.parts.AnimationOverride;
+import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Matrix3f;
+import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -15,12 +19,19 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
+import software.bernie.geckolib3.util.EModelRenderCycle;
+import software.bernie.geckolib3.util.RenderUtils;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRenderer<T> {
 
@@ -77,7 +88,97 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     public void render(GeoModel model, T animatable, float partialTick, RenderType type, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        //Unchanged code
+        setCurrentRTB(bufferSource);
+        renderEarly(animatable, poseStack, partialTick, bufferSource, buffer, packedLight,
+                packedOverlay, red, green, blue, alpha);
+
+        if (bufferSource != null)
+            buffer = bufferSource.getBuffer(type);
+
+        renderLate(animatable, poseStack, partialTick, bufferSource, buffer, packedLight,
+                packedOverlay, red, green, blue, alpha);
+        // Render all top level bones
+        for (GeoBone group : model.topLevelBones) {
+            renderRecursively(animatable, group, poseStack, buffer, packedLight, packedOverlay, red, green, blue,
+                    alpha);
+        }
+        // Since we rendered at least once at this point, let's set the cycle to
+        // repeated
+        setCurrentModelRenderCycle(EModelRenderCycle.REPEATED);
+        //Changed code
+        //TODO: Maybe use EModelRenderCycle.REPEATED?
+        updateTickForEntity(animatable);
+    }
+
+    //TODO: Find a better way to do this. Maybe in geckolib 4
+    private final Map<Integer, Integer> tickForEntity = new HashMap<>();
+
+    private boolean entityTickMatchesRenderTick(T animatable) {
+        return getTickForEntity(animatable) == animatable.tickCount;
+    }
+
+    private int getTickForEntity(Entity entity) {
+        return tickForEntity.computeIfAbsent(entity.getId(), integer -> entity.tickCount + 1);
+    }
+
+    private void updateTickForEntity(Entity entity) {
+        if (getTickForEntity(entity) <= entity.tickCount) {
+            tickForEntity.put(entity.getId(), entity.tickCount);
+        }
+    }
+
+    private void customBoneStuff(GeoBone bone, T animatable) {
+        MultiPart part = animatable.getCustomPart(bone.name);
+        if (part != null && entityTickMatchesRenderTick(animatable)) {
+            Vec3 localPos = new Vec3(bone.getLocalPosition().x, bone.getLocalPosition().y, bone.getLocalPosition().z);
+            part.setOverride(new AnimationOverride(localPos));
+        }
+    }
+
+    private void renderRecursively(T animatable, GeoBone bone, PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
+        //Unchanged code
+        poseStack.pushPose();
+        RenderUtils.translateMatrixToBone(poseStack, bone);
+        RenderUtils.translateToPivotPoint(poseStack, bone);
+
+        boolean rotOverride = bone.rotMat != null;
+
+        if (rotOverride) {
+            poseStack.last().pose().multiply(bone.rotMat);
+            poseStack.last().normal().mul(new Matrix3f(bone.rotMat));
+        } else {
+            RenderUtils.rotateMatrixAroundBone(poseStack, bone);
+        }
+
+        RenderUtils.scaleMatrixForBone(poseStack, bone);
+
+        if (bone.isTrackingXform()) {
+            Matrix4f poseState = poseStack.last().pose().copy();
+            Matrix4f localMatrix = RenderUtils.invertAndMultiplyMatrices(poseState, this.dispatchedMat);
+
+            bone.setModelSpaceXform(RenderUtils.invertAndMultiplyMatrices(poseState, this.renderEarlyMat));
+            localMatrix.translate(new Vector3f(getRenderOffset(this.animatable, 1)));
+            bone.setLocalSpaceXform(localMatrix);
+
+            Matrix4f worldState = localMatrix.copy();
+
+            worldState.translate(new Vector3f(this.animatable.position()));
+            bone.setWorldSpaceXform(worldState);
+        }
+
+        RenderUtils.translateAwayFromPivotPoint(poseStack, bone);
+        renderCubesOfBone(bone, poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        //Changed code
+        customBoneStuff(bone, animatable);
+        //Unchanged code
+        if (!bone.isHidden) {
+            for (GeoBone childBone : bone.childBones) {
+                renderRecursively(animatable, childBone, poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+            }
+        }
+
+        poseStack.popPose();
     }
 
     @Override

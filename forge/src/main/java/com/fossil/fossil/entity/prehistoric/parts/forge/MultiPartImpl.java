@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.prehistoric.parts.forge;
 
 import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.parts.AnimationOverride;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -19,6 +20,7 @@ public class MultiPartImpl<T extends Prehistoric> extends PartEntity<T> implemen
     private final EntityDimensions size;
     private final Vec3 offset;
     private final String name;
+    private AnimationOverride animationOverride;
 
     public MultiPartImpl(T parent, EntityHitboxManager.Hitbox hitbox) {
         super(parent);
@@ -39,6 +41,16 @@ public class MultiPartImpl<T extends Prehistoric> extends PartEntity<T> implemen
     @Override
     public Vec3 getOffset() {
         return offset;
+    }
+
+    @Override
+    public void setOverride(AnimationOverride animationOverride) {
+        this.animationOverride = animationOverride;
+    }
+
+    @Override
+    public AnimationOverride getOverride() {
+        return animationOverride;
     }
 
     @Override

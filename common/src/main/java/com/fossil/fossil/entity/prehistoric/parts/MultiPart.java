@@ -23,6 +23,10 @@ public interface MultiPart {
 
     Vec3 getOffset();
 
+    void setOverride(AnimationOverride animationOverride);
+
+    AnimationOverride getOverride();
+
     default void updatePosition() {
         Entity entity = getEntity();
         entity.xo = entity.getX();
@@ -32,6 +36,12 @@ public interface MultiPart {
         entity.yOld = entity.yo;
         entity.zOld = entity.zo;
         Vec3 offset = getOffset();
-        entity.setPos(getParent().position().add(new Vec3(offset.x, offset.y, offset.z).yRot(-getParent().yBodyRot * Mth.DEG_TO_RAD).scale(getParent().getScale())));
+        AnimationOverride animationOverride = getOverride();
+        if (animationOverride != null) {
+            entity.setPos(getParent().position().add(animationOverride.localPos()));
+        } else {
+            Vec3 newPos = getParent().position().add(new Vec3(offset.x, offset.y, offset.z).yRot(-getParent().yBodyRot * Mth.DEG_TO_RAD).scale(getParent().getScale()));
+            entity.setPos(newPos);
+        }
     }
 }

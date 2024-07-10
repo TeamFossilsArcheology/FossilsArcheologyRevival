@@ -27,7 +27,7 @@ public class ExplosionMixin {
     private Level level;
 
     @Inject(method = "explode", at = @At(value = "INVOKE", target = "Ljava/util/List;addAll(Ljava/util/Collection;)Z", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
-    public void doNotAddMultiPart(CallbackInfo ci) {
+    public void preventExplosion(CallbackInfo ci) {
         if (level.dimension() == ModDimensions.ANU_LAIR && level instanceof ServerLevel serverLevel) {
             AnuBoss.AnuLair anuLair = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_lair");
             if (anuLair == null || !anuLair.isAnuKilled()) {

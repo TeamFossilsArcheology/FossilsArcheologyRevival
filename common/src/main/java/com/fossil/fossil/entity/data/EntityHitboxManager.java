@@ -45,7 +45,10 @@ public class EntityHitboxManager extends SimpleJsonResourceReloadListener {
                 }
                 float width = GsonHelper.getAsFloat(elemObject, "width") / 16;
                 float height = GsonHelper.getAsFloat(elemObject, "height") / 16;
-                listBuilder.add(new Hitbox(elemObject.get("name").getAsString(), new Vec3(pos[0] / 16, pos[1] / 16, pos[2] / 16), width, height));
+
+                JsonElement refElement = elemObject.get("ref");
+                String ref = refElement == null ? null : refElement.getAsString();
+                listBuilder.add(new Hitbox(elemObject.get("name").getAsString(), new Vec3(pos[0] / 16, pos[1] / 16, pos[2] / 16), width, height, ref));
             }
             builder.put(fileEntry.getKey().getPath(), listBuilder.build());
         }
@@ -56,7 +59,7 @@ public class EntityHitboxManager extends SimpleJsonResourceReloadListener {
         return entities.get(entityName);
     }
 
-    public record Hitbox(String name, Vec3 pos, float width, float height) {
+    public record Hitbox(String name, Vec3 pos, float width, float height, String ref) {
         public float getFrustumWidthRadius() {
             return (float) Math.max(Math.abs(pos.x) + width, Math.abs(pos.z) + width);
         }

@@ -34,8 +34,8 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
             if (center.getY() >= radiusHeight) {
                 layer++;//Only increase radius up to a specific width/height. Otherwise, the blocks would be set in inaccessible chunks
             }
-            for (float i = 0; i < layer * 0.5; i += 0.5) {
-                for (float j = 0; j < 2 * Math.PI * i + random.nextInt(2); j += 0.5) {
+            for (float i = 0; i < layer * 0.5; i += 0.5f) {
+                for (float j = 0; j < 2 * Math.PI * i + random.nextInt(2); j += 0.5f) {
                     BlockPos stonePos = new BlockPos(Math.floor(center.getX() + Math.sin(j) * i + random.nextInt(2)), center.getY(),
                             Math.floor(center.getZ() + Math.cos(j) * i + random.nextInt(2)));
                     if (level.isEmptyBlock(stonePos) || level.getBlockState(stonePos).is(Blocks.WATER)) {
@@ -43,9 +43,9 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
                     }
                 }
             }
-            for (float i = 0; i < (first ? 0.45f : Math.max(layer * 0.2, 1)); i += 0.5) {
+            for (float i = 0; i < (first ? 0.45f : Math.max(layer * 0.2, 1)); i += 0.5f) {
                 float extra = i == 0 ? 3 : 1;
-                for (float j = 0; j < 2 * Math.PI * extra + random.nextInt(2); j += 0.5) {
+                for (float j = 0; j < 2 * Math.PI * extra + random.nextInt(2); j += 0.5f) {
                     BlockPos lavaPos = new BlockPos(Math.floor(center.getX() + Math.sin(j) * extra + random.nextInt(2)), center.getY(),
                             Math.floor(center.getZ() + Math.cos(j) * extra + random.nextInt(2)));
                     level.setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 18);

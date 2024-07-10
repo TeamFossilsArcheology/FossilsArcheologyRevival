@@ -24,8 +24,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
 public class CultureVatBlockEntityImpl extends FabricContainerBlockEntity implements CultureVatBlockEntity {
 
     private static final int[] SLOTS_FOR_UP = new int[]{CultureVatMenu.INPUT_SLOT_ID}; //Input
@@ -126,7 +124,7 @@ public class CultureVatBlockEntityImpl extends FabricContainerBlockEntity implem
             setChanged(level, pos, state);
         }
 
-        if (cookingProgress == 3001 && new Random().nextInt(100) < 20) {
+        if (cookingProgress == 3001 && level.getRandom().nextInt(100) < 20) {
             ModBlocks.CULTURE_VAT.get().onFailedCultivation(level, pos);
         }
     }

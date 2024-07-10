@@ -131,6 +131,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
     private final List<MultiPart> parts = new ArrayList<>();
+    private final Map<String, MultiPart> partsByRef = new HashMap<>();
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
@@ -157,6 +158,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         for (EntityHitboxManager.Hitbox hitbox : hitboxes) {
             MultiPart part = MultiPart.get(this, hitbox);
             parts.add(part);
+            if (hitbox.ref() != null) {
+                partsByRef.put(hitbox.ref(), part);
+            }
             //Caching this value might be overkill but this ensures that the entity will be visible even if parts are outside its bounding box
             float j = hitbox.getFrustumWidthRadius() + entityType.getDimensions().width / 2;
             if (j > maxFrustumWidthRadius) {
@@ -304,6 +308,15 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
      */
     public List<MultiPart> getCustomParts() {
         return parts;
+    }
+
+    /**
+     * @param ref the name of the bone the hitbox is attached to
+     * @return the hitbox attached to the given bone
+     */
+    @Nullable
+    public MultiPart getCustomPart(String ref) {
+        return partsByRef.get(ref);
     }
 
     @Override
