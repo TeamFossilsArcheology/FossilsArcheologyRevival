@@ -214,7 +214,7 @@
 					]
 				},
 				{
-					"name": "riderPos",
+					"name": "rider_pos",
 					"pivot": [0, 29, -9]
 				}
 			]

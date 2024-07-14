@@ -16,6 +16,11 @@
 					"pivot": [0, 0, 0]
 				},
 				{
+					"name": "body_hitbox",
+					"parent": "bone",
+					"pivot": [0, -0.29039, 2.01083]
+				},
+				{
 					"name": "lowerBody",
 					"parent": "bone",
 					"pivot": [0, 14.45961, 2.76083],
@@ -77,6 +82,11 @@
 					"cubes": [
 						{"origin": [-1.49, 11.75961, -27.39917], "size": [3, 2, 8], "uv": [49, 0]}
 					]
+				},
+				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0.5, 4.75961, -22.06917]
 				},
 				{
 					"name": "rightUpperArm",
@@ -196,13 +206,18 @@
 					]
 				},
 				{
-					"name": "rightToeClaw2",
+					"name": "rightToeClaw3",
 					"parent": "tail2",
 					"pivot": [0, 17.15961, 11.96083],
 					"rotation": [-101, 0, 0],
 					"cubes": [
 						{"origin": [-0.5, 16.65961, 11.96083], "size": [1, 1, 1], "uv": [0, 40]}
 					]
+				},
+				{
+					"name": "tail_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 12.30961, 13.76083]
 				},
 				{
 					"name": "rightThigh",

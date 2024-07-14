@@ -1,1 +1,17 @@
-{"elements": [{"name": "body", "pos": [0, 0, 0.3000000000000025], "width": 20.4, "height": 25},{"name": "head", "pos": [0, 12, 17.6], "width": 12.8, "height": 25}]}
+{
+	"elements": [
+		{
+			"name": "body",
+			"pos": [0, 0, 0.3],
+			"width": 20.4,
+			"height": 25
+		},
+		{
+			"name": "head",
+			"pos": [0, 12, 17.6],
+			"width": 12.8,
+			"height": 25,
+			"ref": "head_hitbox"
+		}
+	]
+}

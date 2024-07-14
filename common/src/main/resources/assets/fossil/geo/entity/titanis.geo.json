@@ -160,6 +160,11 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head1",
+					"pivot": [0, 19.3, -22.9]
+				},
+				{
 					"name": "upperlegRight",
 					"parent": "bone",
 					"pivot": [-5.5, 25.57926, 3.43447],

@@ -10,6 +10,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
+import com.mojang.math.Vector3d;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -130,9 +131,10 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     private void customBoneStuff(GeoBone bone, T animatable) {
         MultiPart part = animatable.getCustomPart(bone.name);
+        //Only update position once per tick
         if (part != null && entityTickMatchesRenderTick(animatable)) {
-            Vec3 localPos = new Vec3(bone.getLocalPosition().x, bone.getLocalPosition().y, bone.getLocalPosition().z);
-            part.setOverride(new AnimationOverride(localPos));
+            Vector3d localPos = bone.getLocalPosition();
+            part.setOverride(new AnimationOverride(new Vec3(localPos.x, localPos.y, localPos.z), bone.getScaleX(), bone.getScaleY()));
         }
     }
 

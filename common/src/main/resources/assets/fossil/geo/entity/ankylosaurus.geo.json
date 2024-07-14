@@ -29,7 +29,7 @@
 					]
 				},
 				{
-					"name": "riderPos",
+					"name": "rider_pos",
 					"parent": "upperBody",
 					"pivot": [0, 21.1, -4]
 				},
@@ -108,7 +108,7 @@
 					]
 				},
 				{
-					"name": "headHitbox",
+					"name": "head_hitbox",
 					"parent": "head",
 					"pivot": [0, 9.1, -18.5]
 				},
@@ -199,7 +199,7 @@
 					]
 				},
 				{
-					"name": "tailHitbox",
+					"name": "tail_hitbox",
 					"parent": "tail1",
 					"pivot": [-0.1, 8.1, 24]
 				},

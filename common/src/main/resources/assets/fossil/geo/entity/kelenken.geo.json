@@ -43,6 +43,11 @@
 					]
 				},
 				{
+					"name": "tail_hitbox",
+					"parent": "tailfan1",
+					"pivot": [0, 22.1, 14.05]
+				},
+				{
 					"name": "chest1",
 					"parent": "body1",
 					"pivot": [0, 26, -1.5],
@@ -50,6 +55,11 @@
 					"cubes": [
 						{"origin": [-5.5, 14.9, -11.5], "size": [11, 15, 14], "uv": [60, 0]}
 					]
+				},
+				{
+					"name": "rider_pos",
+					"parent": "chest1",
+					"pivot": [0, 30, -5]
 				},
 				{
 					"name": "upperwingR2",
@@ -151,6 +161,11 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head1",
+					"pivot": [0, 17.9692, -24.3848]
+				},
+				{
 					"name": "beard2R",
 					"parent": "neck2",
 					"pivot": [0, 27.2, -20.9],
@@ -185,6 +200,11 @@
 					"cubes": [
 						{"origin": [-0.9, 18.1, -19.2], "size": [3, 5, 9], "uv": [36, 90]}
 					]
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "body1",
+					"pivot": [0, 1.5, 9.8]
 				},
 				{
 					"name": "upperlegLeft",
@@ -257,10 +277,6 @@
 					"cubes": [
 						{"origin": [-3.5, 2.89777, 4.34567], "size": [1, 2, 4], "uv": [24, 86], "mirror": true}
 					]
-				},
-				{
-					"name": "riderPos",
-					"pivot": [0, 31, -5]
 				}
 			]
 		}

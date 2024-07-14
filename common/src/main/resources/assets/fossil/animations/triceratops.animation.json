@@ -285,6 +285,16 @@
 					"rotation": {
 						"vector": [97.5, 0, 0]
 					}
+				},
+				"head_hitbox": {
+					"position": {
+						"vector": [2, -2, 2.5]
+					}
+				},
+				"body_hitbox": {
+					"scale": {
+						"vector": [1, 0.7, 1]
+					}
 				}
 			}
 		},
@@ -431,6 +441,16 @@
 					"rotation": {
 						"vector": [97.5, 0, 0]
 					}
+				},
+				"head_hitbox": {
+					"position": {
+						"vector": [2, 0, 0]
+					}
+				},
+				"body_hitbox": {
+					"scale": {
+						"vector": [1, 0.7, 1]
+					}
 				}
 			}
 		},
@@ -567,6 +587,32 @@
 				"rightHand": {
 					"rotation": {
 						"vector": ["97.5+math.sin(query.anim_time*1440/12-30)*-3", 0, 0]
+					}
+				},
+				"head_hitbox": {
+					"position": {
+						"0.0": {
+							"vector": [-4, 3, -2]
+						},
+						"0.9": {
+							"vector": [-4, 4, -1]
+						}
+					},
+					"scale": {
+						"vector": [1, 0.7, 1]
+					}
+				},
+				"tail_hitbox": {
+					"position": {
+						"vector": [-2, 2, 1]
+					},
+					"scale": {
+						"vector": [1.3, 0.5, 1.3]
+					}
+				},
+				"body_hitbox": {
+					"scale": {
+						"vector": [1, 0.5, 1]
 					}
 				}
 			}

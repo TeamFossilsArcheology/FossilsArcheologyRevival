@@ -124,6 +124,11 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, 7.5, -18.3]
+				},
+				{
 					"name": "neckfluff",
 					"parent": "neck",
 					"pivot": [0, 16, -11.3],
@@ -194,6 +199,11 @@
 					"cubes": [
 						{"origin": [-1.5, 14, 19.8], "size": [3, 4, 24], "uv": [26, 21]}
 					]
+				},
+				{
+					"name": "tail_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 11, 16.8]
 				}
 			]
 		}

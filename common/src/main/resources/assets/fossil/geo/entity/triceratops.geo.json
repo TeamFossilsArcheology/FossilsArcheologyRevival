@@ -4,11 +4,11 @@
 		{
 			"description": {
 				"identifier": "geometry.triceratops",
-				"texture_width": 128,
+				"texture_width": 97,
 				"texture_height": 64,
-				"visible_bounds_width": 4,
-				"visible_bounds_height": 2.5,
-				"visible_bounds_offset": [0, 0.75, 0]
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
 			},
 			"bones": [
 				{
@@ -160,6 +160,11 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "neck",
+					"pivot": [0.5, 5.07411, -9.96668]
+				},
+				{
 					"name": "leftUpperArm",
 					"parent": "upperBody",
 					"pivot": [1.8, 6.65, -4.25],
@@ -297,8 +302,14 @@
 					]
 				},
 				{
-					"name": "riderPos",
-					"pivot": [0, 12, -1]
+					"name": "tail_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 7.29342, 13.50156]
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "root",
+					"pivot": [0, 0, 1.5]
 				}
 			]
 		}

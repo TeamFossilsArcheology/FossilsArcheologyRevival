@@ -1,1 +1,32 @@
-{"elements": [{"name": "body", "pos": [0, 0, 2.3000000000000007], "width": 20, "height": 24},{"name": "head", "pos": [0, 12.800000000000018, 21.699999999999996], "width": 16, "height": 16.00000000000002},{"name": "tail1", "pos": [0, 13.200000000000003, -12], "width": 8, "height": 7.999999999999993},{"name": "tail2", "pos": [0, 13.200000000000003, -20], "width": 8, "height": 8.000000000000018}]}
+{
+	"elements": [
+		{
+			"name": "body",
+			"pos": [0, 0, 2.3],
+			"width": 20,
+			"height": 24,
+			"ref": "body_hitbox"
+		},
+		{
+			"name": "head",
+			"pos": [0, 12.8, 21.7],
+			"width": 16,
+			"height": 16,
+			"ref": "head_hitbox"
+		},
+		{
+			"name": "tail1",
+			"pos": [0, 13.2, -12],
+			"width": 8,
+			"height": 8,
+			"ref": "tail1_hitbox"
+		},
+		{
+			"name": "tail2",
+			"pos": [0, 13.2, -20],
+			"width": 8,
+			"height": 8,
+			"ref": "tail2_hitbox"
+		}
+	]
+}

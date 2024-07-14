@@ -1,1 +1,23 @@
-{"elements": [{"name": "body", "pos": [0, 0, -1], "width": 16, "height": 16},{"name": "head", "pos": [2.6645352591003757e-15, 5, 13.500000000000005], "width": 11.199999999999994, "height": 8}]}
+{
+	"elements": [
+		{
+			"name": "body1",
+			"pos": [0, 0, 7],
+			"width": 16,
+			"height": 29
+		},
+		{
+			"name": "body2",
+			"pos": [0, 0, -9],
+			"width": 16,
+			"height": 29
+		},
+		{
+			"name": "head",
+			"pos": [0, 6, 23],
+			"width": 12.2,
+			"height": 17,
+			"ref": "head_hitbox"
+		}
+	]
+}

@@ -43,6 +43,11 @@
 					]
 				},
 				{
+					"name": "tail_hitbox",
+					"parent": "tailfan1",
+					"pivot": [0, 13.35, 16.8]
+				},
+				{
 					"name": "chest1",
 					"parent": "body1",
 					"pivot": [0, 29.05, 1.075],
@@ -106,6 +111,11 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head1",
+					"pivot": [0, 17.9692, -24.3848]
+				},
+				{
 					"name": "upperwingL",
 					"parent": "chest1",
 					"pivot": [5.5, 21.46916, -9.28484],
@@ -113,6 +123,11 @@
 					"cubes": [
 						{"origin": [5, 20.96916, -10.28484], "size": [1, 4, 6], "uv": [38, 29]}
 					]
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "body1",
+					"pivot": [0, 1.05, 8.575]
 				},
 				{
 					"name": "upperlegLeft",

@@ -552,8 +552,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             if (level.isClientSide) {
                 AnimationData data = getFactory().getOrCreateAnimationData(getId());
                 Map<String, Pair<IBone, BoneSnapshot>> map = data.getBoneSnapshotCollection();
-                if (map.get("riderPos") != null) {
-                    if (map.get("riderPos").getLeft() instanceof GeoBone geoBone) {
+                if (map.get("rider_pos") != null) {
+                    if (map.get("rider_pos").getLeft() instanceof GeoBone geoBone) {
                         float radius = (geoBone.getPivotZ() * getScale() / 16) * -1;
                         float angle = (Mth.DEG_TO_RAD * yBodyRot);
                         double extraX = radius * Mth.sin((float) (Math.PI + angle));

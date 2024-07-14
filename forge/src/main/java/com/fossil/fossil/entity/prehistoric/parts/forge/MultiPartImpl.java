@@ -83,6 +83,9 @@ public class MultiPartImpl<T extends Prehistoric> extends PartEntity<T> implemen
 
     @Override
     public @NotNull EntityDimensions getDimensions(@NotNull Pose pose) {
+        if (animationOverride != null) {
+            return size.scale(getParent().getScale()).scale(animationOverride.scaleW(), animationOverride.scaleH());
+        }
         return size.scale(getParent().getScale());
     }
 

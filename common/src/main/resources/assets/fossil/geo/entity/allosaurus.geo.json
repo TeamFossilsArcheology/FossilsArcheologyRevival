@@ -7,17 +7,10 @@
 				"texture_width": 128,
 				"texture_height": 128,
 				"visible_bounds_width": 8,
-				"visible_bounds_height": 3.5,
-				"visible_bounds_offset": [0, 1.25, 0]
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
 			},
 			"bones": [
-				{
-					"name": "headPivot",
-					"pivot": [0, 24, 0],
-					"cubes": [
-						{"origin": [0, 24, 0], "size": [0, 0, 0], "uv": [0, 0]}
-					]
-				},
 				{
 					"name": "allosaurus",
 					"pivot": [0, 11.7, 10.4],
@@ -44,11 +37,6 @@
 					]
 				},
 				{
-					"name": "riderPos",
-					"parent": "upperBody",
-					"pivot": [0, 19.2, -1]
-				},
-				{
 					"name": "neck",
 					"parent": "upperBody",
 					"pivot": [0, 15.9, -6.6],
@@ -65,6 +53,11 @@
 					"cubes": [
 						{"origin": [-2.5, 13.6, -17.8], "size": [5, 6, 4], "uv": [107, 1]}
 					]
+				},
+				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, 11.85, -17.8]
 				},
 				{
 					"name": "upperJaw",
@@ -139,6 +132,11 @@
 					]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "upperBody",
+					"pivot": [0, 19.2, -1]
+				},
+				{
 					"name": "tail1",
 					"parent": "lowerBody",
 					"pivot": [0, 15.6, 10.3],
@@ -173,6 +171,11 @@
 					"cubes": [
 						{"origin": [-1, 15.2, 35.8], "size": [2, 3, 13], "uv": [82, 107]}
 					]
+				},
+				{
+					"name": "tail_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 11.35, 15.3]
 				},
 				{
 					"name": "leftUpperLeg",

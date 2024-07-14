@@ -41,7 +41,7 @@
 					"name": "Head",
 					"parent": "neck1",
 					"pivot": [0, 10.4, -20],
-					"rotation": [17.87188, 0, 0],
+					"rotation": [7.83, 0, 0],
 					"cubes": [
 						{"origin": [-3.5, 8.9, -25], "size": [7, 4, 5], "uv": [84, 16]}
 					]
@@ -81,6 +81,11 @@
 					"cubes": [
 						{"origin": [-1.5, 7.83895, -30.01711], "size": [3, 1, 7], "uv": [89, 36]}
 					]
+				},
+				{
+					"name": "head_hitbox",
+					"parent": "Head",
+					"pivot": [0, 5.4, -21]
 				},
 				{
 					"name": "upperarmR",
@@ -173,6 +178,33 @@
 					]
 				},
 				{
+					"name": "upperlegR",
+					"parent": "basin1",
+					"pivot": [-4, 10.3, 10.2],
+					"rotation": [13.04, -26.09, -10.43],
+					"cubes": [
+						{"origin": [-10.5, 6.3, 7.7], "size": [7, 5, 5], "uv": [127, 0]}
+					]
+				},
+				{
+					"name": "lowerlegR",
+					"parent": "upperlegR",
+					"pivot": [-8.5, 6.3, 10.2],
+					"rotation": [0, 0, 0],
+					"cubes": [
+						{"origin": [-10.5, 2.3, 8.2], "size": [4, 4.75, 4], "inflate": -0.1, "uv": [130, 12]}
+					]
+				},
+				{
+					"name": "feetR",
+					"parent": "lowerlegR",
+					"pivot": [-8.5, 3.3, 10.2],
+					"rotation": [-1.71, 44.35, 5.22],
+					"cubes": [
+						{"origin": [-12.5, 1.3, 4.2], "size": [7, 2, 8], "uv": [123, 23]}
+					]
+				},
+				{
 					"name": "upperlegL",
 					"parent": "basin1",
 					"pivot": [4, 10.3, 10.2],
@@ -200,34 +232,7 @@
 					]
 				},
 				{
-					"name": "upperlegL2",
-					"parent": "basin1",
-					"pivot": [-4, 10.3, 10.2],
-					"rotation": [13.04, -26.09, -10.43],
-					"cubes": [
-						{"origin": [-10.5, 6.3, 7.7], "size": [7, 5, 5], "uv": [127, 0], "mirror": true}
-					]
-				},
-				{
-					"name": "lowerlegL2",
-					"parent": "upperlegL2",
-					"pivot": [-8.5, 6.3, 10.2],
-					"rotation": [0, 0, 0],
-					"cubes": [
-						{"origin": [-10.5, 2.3, 8.2], "size": [4, 4.75, 4], "inflate": -0.1, "uv": [130, 12], "mirror": true}
-					]
-				},
-				{
-					"name": "feetL2",
-					"parent": "lowerlegL2",
-					"pivot": [-8.5, 3.3, 10.2],
-					"rotation": [-1.71, 44.35, 5.22],
-					"cubes": [
-						{"origin": [-12.5, 1.3, 4.2], "size": [7, 2, 8], "uv": [123, 23], "mirror": true}
-					]
-				},
-				{
-					"name": "riderPos",
+					"name": "rider_pos",
 					"pivot": [0, 13.4, -5]
 				}
 			]

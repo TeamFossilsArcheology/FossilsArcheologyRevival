@@ -151,6 +151,11 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head1",
+					"pivot": [0, 19.8, -23.2]
+				},
+				{
 					"name": "upperwingR2",
 					"parent": "chest1",
 					"pivot": [-5.5, 24.1, -8],
