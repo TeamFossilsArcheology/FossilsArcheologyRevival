@@ -1,6 +1,5 @@
 package com.fossil.fossil.forge.data.loot;
 
-import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.custom_blocks.FourTallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
@@ -32,27 +31,29 @@ import org.jetbrains.annotations.NotNull;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.fossil.fossil.block.ModBlocks.*;
+
 public class ModBlockLootTables extends BlockLoot {
 
-    private static final List<Block> NO_TABLE = List.of(ModBlocks.ANU_PORTAL.get(), ModBlocks.SARCOPHAGUS.get(), ModBlocks.TAR.get(),
-            ModBlocks.ANU_STATUE.get(), ModBlocks.ANUBITE_STATUE.get(), ModBlocks.ANCIENT_CHEST.get(), ModBlocks.ANU_BARRIER.get(),
-            ModBlocks.MUTANT_TREE_TUMOR.get());
+    private static final List<Block> NO_TABLE = List.of(ANU_PORTAL.get(), SARCOPHAGUS.get(), TAR.get(),
+            ANU_STATUE.get(), ANUBITE_STATUE.get(), ANCIENT_CHEST.get(), ANU_BARRIER.get(),
+            MUTANT_TREE_TUMOR.get());
     private final List<Block> tableDone = new ArrayList<>();
 
     @Override
     protected void addTables() {
-        ModBlocks.AMBER_ORE.ifPresent(block -> addCustom(block, createOreDrop(block, Item.byBlock(ModBlocks.AMBER_CHUNK.get()))));
-        ModBlocks.ICED_DIRT.ifPresent(block -> addCustom(block, createSilkTouchOnlyTable(block)));
-        ModBlocks.PERMAFROST_BLOCK.ifPresent(block -> addCustom(block, multiple(20, ModItems.FERN_SEED_FOSSIL.get(),
-                ModBlocks.SKULL_BLOCK.get(), ModItems.FROZEN_MEAT.get(), Items.BONE, Items.BOOK)));
+        AMBER_ORE.ifPresent(block -> addCustom(block, createOreDrop(block, Item.byBlock(AMBER_CHUNK.get()))));
+        ICED_DIRT.ifPresent(block -> addCustom(block, createSilkTouchOnlyTable(block)));
+        PERMAFROST_BLOCK.ifPresent(block -> addCustom(block, multiple(20, ModItems.FERN_SEED_FOSSIL.get(),
+                SKULL_BLOCK.get(), ModItems.FROZEN_MEAT.get(), Items.BONE, Items.BOOK)));
 
-        ModBlocks.SLIME_TRAIL.ifPresent(block -> addCustom(block, randomItem(Items.SLIME_BALL, 0.33f)));
+        SLIME_TRAIL.ifPresent(block -> addCustom(block, randomItem(Items.SLIME_BALL, 0.33f)));
 
-        ModBlocks.CALAMITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.CALAMITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
-        ModBlocks.CORDAITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.CORDAITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
-        ModBlocks.MUTANT_TREE_LEAVES.ifPresent(block -> addCustom(block, createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(Items.STICK)))));
-        ModBlocks.PALM_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.PALM_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
-        ModBlocks.SIGILLARIA_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, ModBlocks.SIGILLARIA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        CALAMITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, CALAMITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        CORDAITES_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, CORDAITES_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        MUTANT_TREE_LEAVES.ifPresent(block -> addCustom(block, createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(Items.STICK)))));
+        PALM_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, PALM_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        SIGILLARIA_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, SIGILLARIA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
 
 
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
@@ -75,11 +76,11 @@ public class ModBlockLootTables extends BlockLoot {
         var paleList2 = group(11, 1, 9, 112, 475, 0, 400, 0, 48, 9, 9, 9, 9, 9, 9).when(enchant(ModEnchantments.PALEONTOLOGY.get(), 2));
         var paleList3 = group(16, 0, 10, 150, 575, 0, 225, 0, 67, 12, 12, 12, 12, 12, 12).when(enchant(ModEnchantments.PALEONTOLOGY.get(), 3));
         var defauList = group(1, 5, 5, 37, 275, 200, 350, 200, 9, 3, 3, 3, 3, 3, 3);
-        addCustom(ModBlocks.FOSSIL.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+        addCustom(FOSSIL.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defauList)))
                 .setParamSet(LootContextParamSets.BLOCK));
 
-        ModBlocks.BLOCKS.forEach(supplier -> supplier.ifPresent(block -> {
+        BLOCKS.forEach(supplier -> supplier.ifPresent(block -> {
             if (block instanceof AbstractGlassBlock) {
                 dropWhenSilkTouch(block);
             } else if (block instanceof SlabBlock) {
@@ -116,7 +117,7 @@ public class ModBlockLootTables extends BlockLoot {
 
     private EntryGroup.Builder group(int... weights) {
         return EntryGroup.list(lootItem(ModItems.SCARAB_GEM.get(), weights[0]), lootItem(ModItems.BROKEN_SWORD.get(), weights[1]),
-                lootItem(ModItems.BROKEN_HELMET.get(), weights[2]), lootItem(ModBlocks.SKULL_BLOCK.get(), weights[3]),
+                lootItem(ModItems.BROKEN_HELMET.get(), weights[2]), lootItem(SKULL_BLOCK.get(), weights[3]),
                 lootItem(ModItems.BIO_FOSSIL.get(), weights[4]), lootItem(ModItems.RELIC_SCRAP.get(), weights[5]),
                 lootItem(Items.BONE, weights[6]), lootItem(ModItems.PlANT_FOSSIL.get(), weights[7]),
                 DynamicLoot.dynamicEntry(ModItemTags.LEG_BONES.location()).setWeight(weights[8]),
@@ -136,7 +137,7 @@ public class ModBlockLootTables extends BlockLoot {
     @Override
     protected @NotNull Iterable<Block> getKnownBlocks() {
         List<Block> list = new ArrayList<>();
-        ModBlocks.BLOCKS.iterator().forEachRemaining(blockRegistrySupplier -> list.add(blockRegistrySupplier.get()));
+        BLOCKS.iterator().forEachRemaining(blockRegistrySupplier -> list.add(blockRegistrySupplier.get()));
         return list;
     }
 }

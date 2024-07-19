@@ -79,6 +79,16 @@
         }
       }
     },
+    "syringe_bat": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_bat"
+          ]
+        }
+      }
+    },
     "syringe_cat": {
       "trigger": "fossil:implant_embryo",
       "conditions": {
@@ -229,6 +239,16 @@
         }
       }
     },
+    "syringe_strider": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_strider"
+          ]
+        }
+      }
+    },
     "syringe_wolf": {
       "trigger": "fossil:implant_embryo",
       "conditions": {
@@ -258,6 +278,9 @@
     ],
     [
       "syringe_smilodon"
+    ],
+    [
+      "syringe_bat"
     ],
     [
       "syringe_cat"
@@ -303,6 +326,9 @@
     ],
     [
       "syringe_sheep"
+    ],
+    [
+      "syringe_strider"
     ],
     [
       "syringe_wolf"

@@ -140,6 +140,8 @@ public enum PrehistoricEntityInfo implements EntityInfo {
                 DinoBoneItem.registerItem("bone_tail", info, item -> info.tailBoneItem = item);
                 DinoBoneItem.registerItem("bone_unique", info, item -> info.uniqueBoneItem = item);
                 DinoBoneItem.registerItem("bone_vertebrae", info, item -> info.vertebraeBoneItem = item);
+            } else if (info == MEGALODON) {
+                DinoBoneItem.registerItem("bone_unique", info, item -> info.uniqueBoneItem = item);
             }
             if (info.mobType == PrehistoricMobType.FISH) {
                 //TODO: Define value somewhere. Also should all dinos be added here?

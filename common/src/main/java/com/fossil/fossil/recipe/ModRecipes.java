@@ -88,6 +88,10 @@ public class ModRecipes {
                     .addOutput(Items.BONE, 35)
                     .addOutput(info.dnaItem, 35));
         }
+        registerAnalyzer(new AnalyzerRecipe.Builder(PrehistoricEntityInfo.MEGALODON.uniqueBoneItem)
+                .addOutput(Items.BONE_MEAL, 30)
+                .addOutput(Items.BONE, 35)
+                .addOutput(PrehistoricEntityInfo.MEGALODON.dnaItem, 35));
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
             if (info.foodItem != null) {
                 registerAnalyzer(new AnalyzerRecipe.Builder(info.foodItem).addOutput(info.dnaItem, 100));

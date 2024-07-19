@@ -834,6 +834,7 @@ a0c089ac598f794f851825d6d29f7fb9839e335e assets/fossil/models/item/bone_unique_l
 7bd5eac047563160a662d6901a5f560f72b6ef88 assets/fossil/models/item/bone_unique_mammoth.json
 d9b0c5d4b4c4a3c3f0d26f48527fd265b26f56b9 assets/fossil/models/item/bone_unique_megalania.json
 31cadb0f9dde49bf8079afabbec61012a2c68bec assets/fossil/models/item/bone_unique_megaloceros.json
+6d78fa67120c0472c6d13bfa38ebf9d1d180d5b1 assets/fossil/models/item/bone_unique_megalodon.json
 ff1436ab0a42a6389fa32384adb3cfc2d853fac0 assets/fossil/models/item/bone_unique_mosasaurus.json
 375c53497a926473bd811b6b2210f78f70b04168 assets/fossil/models/item/bone_unique_ornitholestes.json
 9293af599d298844314a9966ab0554e174f71fb3 assets/fossil/models/item/bone_unique_pachycephalosaurus.json
@@ -1268,6 +1269,7 @@ d020d2d6c8bc1d4a752ed425c3c5f3ec7d79f2d9 assets/fossil/models/item/sigillaria_wo
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_alligator_gar.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_allosaurus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_ankylosaurus.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_anu_boss.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_arthropleura.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_brachiosaurus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_ceratosaurus.json
@@ -1284,6 +1286,7 @@ d020d2d6c8bc1d4a752ed425c3c5f3ec7d79f2d9 assets/fossil/models/item/sigillaria_wo
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_dryosaurus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_edaphosaurus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_elasmotherium.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_failuresaurus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_gallimimus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_gastornis.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_henodus.json
@@ -1308,10 +1311,12 @@ d020d2d6c8bc1d4a752ed425c3c5f3ec7d79f2d9 assets/fossil/models/item/sigillaria_wo
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_pteranodon.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_quagga.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_sarcosuchus.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_sentry_piglin.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_smilodon.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_spinosaurus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_stegosaurus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_sturgeon.json
+98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_tar_slime.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_therizinosaurus.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_tiktaalik.json
 98167609bf3898587f7565736a6fc24a7966cacd assets/fossil/models/item/spawn_egg_titanis.json
@@ -1336,6 +1341,7 @@ a7fa9ac4d5a2075e953307dba411cb20b5c88f37 assets/fossil/models/item/stripped_sigi
 60148b302c94f07fde59644f062177272a6e1c70 assets/fossil/models/item/stripped_tempskya_log.json
 6881bdae79e3940a2fd16cf513de2b877170e977 assets/fossil/models/item/stripped_tempskya_wood.json
 61ef004f88dcacd6f8bf55e7e1712446ce58fc64 assets/fossil/models/item/sturgeon_dna.json
+922565098397f6ed872ee931c580faacf6f4c7a2 assets/fossil/models/item/syringe_bat.json
 876dd8c6d951af6376bc5605254904fa38e72d73 assets/fossil/models/item/syringe_cat.json
 6765df85512fe1b3e7b2d700c3871f001302410e assets/fossil/models/item/syringe_cow.json
 42424375cc35f368ed4b06608007c1afb480481b assets/fossil/models/item/syringe_dolphin.json
@@ -1357,6 +1363,7 @@ c8af94fb915a7d56d10ceda0643d91815054b3fd assets/fossil/models/item/syringe_quagg
 26a1727dd9d6b9754993c889ae45df1510942461 assets/fossil/models/item/syringe_rabbit.json
 4596145067241cb6aa8af4bd50cfc0452bee4276 assets/fossil/models/item/syringe_sheep.json
 02fa974f4c32541ee585811d4ae5da63e0aa535a assets/fossil/models/item/syringe_smilodon.json
+00daf5802d829ad1066401a3de8803a0662b380e assets/fossil/models/item/syringe_strider.json
 221f84d98fa995052a3f2e0a0728a412c94bc712 assets/fossil/models/item/syringe_wolf.json
 306edcbd4a93c38af7eeda0220c7703ff28c7a94 assets/fossil/models/item/tempskya_button.json
 d3ad28bd64983f553462e8528e34943e5c1d310c assets/fossil/models/item/tempskya_door.json
@@ -1481,7 +1488,7 @@ f9674824d2c80b5587cde58220951d29e1b12bb6 data/c/tags/items/eggs.json
 10c663c809c8990012e0c99f9733a7a071f4d4bc data/forge/tags/items/eggs.json
 91d5abc093a9d0dcedfecd0af34c6cb90f7d769e data/forge/tags/items/slimeballs.json
 242854c06e36e93950b1868029b79ecbba8d8712 data/fossil/advancements/fossil/all_eggs.json
-ff352fdad5699b60ee65a79b486f243ede2fd3f2 data/fossil/advancements/fossil/all_embryos.json
+c0f9ad48fec4dd7b875b05824dfaee34db8e6daa data/fossil/advancements/fossil/all_embryos.json
 8c8885c9815df080ee35659bd7a716862cee7186 data/fossil/advancements/fossil/analyzer.json
 e2a14fd1205d453ab99dcf4e64deb8ec39b0fcc1 data/fossil/advancements/fossil/ancient_clock.json
 96fb84ed234cdeb550a82aceb0ed4f0f7ff95287 data/fossil/advancements/fossil/ancient_sword.json
@@ -2145,6 +2152,7 @@ c5f4d0cad86f3be78edab1f315ad00204aeee7fe data/fossil/loot_tables/entities/dodo.j
 a227fc3bf420e9515d11fafb54c420fb331724fa data/fossil/loot_tables/entities/dryosaurus.json
 593fada9558dbf63863d678ce251c6d2e70207b4 data/fossil/loot_tables/entities/edaphosaurus.json
 1ad02012fa8288092a3d99579e34e3e536884236 data/fossil/loot_tables/entities/elasmotherium.json
+3f980a42d6b89081aaa8660526fa2fb22a8c9345 data/fossil/loot_tables/entities/failuresaurus.json
 e8c46021abdf4ba461f8df0a84e5868b80390106 data/fossil/loot_tables/entities/gallimimus.json
 a8b7df1e4fe7603bc4ebe553b6fb8667ad1974dd data/fossil/loot_tables/entities/gastornis.json
 987eb6b637391c7dce80caa05feb07cca0851e90 data/fossil/loot_tables/entities/henodus.json
@@ -2154,7 +2162,7 @@ dd3384242b4d40f9a6eebcbc62e44c0b66ea5082 data/fossil/loot_tables/entities/liople
 433a74a32dc44c950504d203ae05043603b6b0d8 data/fossil/loot_tables/entities/mammoth.json
 054e0cbbafa36a499048c106d553bf7f2963cd34 data/fossil/loot_tables/entities/megalania.json
 4c957dc9a73de88a80fefd0d01c230d4b46ef5a7 data/fossil/loot_tables/entities/megaloceros.json
-b8da4b531566dc7184da9124c39402698c6615b1 data/fossil/loot_tables/entities/megalodon.json
+2ef42a994a442d173dafcd6322995229857a2810 data/fossil/loot_tables/entities/megalodon.json
 516663db37f50e2c28d2c58ff614c8427e800c11 data/fossil/loot_tables/entities/megalograptus.json
 8ad316f600b576fe618e1f2c91affc08b9da36a5 data/fossil/loot_tables/entities/meganeura.json
 2f5f0f45bc2895b5bc3b59bf679930571f3315d0 data/fossil/loot_tables/entities/mosasaurus.json
@@ -2592,7 +2600,7 @@ c961bb02de05a0fab6e1196aea64093c5ab1ebc2 data/fossil/tags/items/bones_foot.json
 bfadad2d1c7498391a757b65e752a8137b7bc520 data/fossil/tags/items/bones_ribcage.json
 4f4d92a8d01de1dc5af8706b1453008328070980 data/fossil/tags/items/bones_skull.json
 a8ba73dd19bece5db51e57b8eb0ec19c78b37dac data/fossil/tags/items/bones_tail.json
-fdc9a36a40b272e95215fae30980e1e16926a104 data/fossil/tags/items/bones_unique.json
+02f91d2d830e4abd2bd1b0cb883eadfed437acc3 data/fossil/tags/items/bones_unique.json
 eff963c3ddeff363509c20ec6efcaf1fbe556fd5 data/fossil/tags/items/bones_vertebrae.json
 be309a84eb640c90631d98e3906aa18ca049f0e3 data/fossil/tags/items/calamites_logs.json
 f9674824d2c80b5587cde58220951d29e1b12bb6 data/fossil/tags/items/cookable_eggs.json
@@ -2602,7 +2610,7 @@ b11b1eb79e719e3455ce06c30ad54119c18c351c data/fossil/tags/items/dna.json
 7d3350650c1e2f827c07c45656fb267a4749d745 data/fossil/tags/items/dna_insects.json
 7b411bb20f79c982151662559157974ee41b563d data/fossil/tags/items/dna_limbless.json
 14bbd737f0e930f5441e6881b3db4a3d570c3baf data/fossil/tags/items/dna_plants.json
-8d69e26b57472e9fb4d88906f927063e6c37745e data/fossil/tags/items/embryos.json
+a49fd61cf7e95d5e399ffff97926846a6bb74b0f data/fossil/tags/items/embryos.json
 10460075539ccb49e59b8e8db23a8234a217c4ba data/fossil/tags/items/figurines.json
 04e8131982f46c888108fe554b89dbcc9f1702a6 data/fossil/tags/items/filter_bones.json
 dce2b8515233f9bac90c7a0f6748c983be5ba55e data/fossil/tags/items/filter_dna.json
@@ -2629,6 +2637,7 @@ f57b81235450badfbb35b2423b1b6ec17e88a581 data/minecraft/tags/blocks/needs_iron_t
 c6313391372284f0c377f7db01ce7ee03f5bf64f data/minecraft/tags/blocks/needs_stone_tool.json
 e821f2ebebc89885d19f9d1e74634345a86e1307 data/minecraft/tags/blocks/planks.json
 343e7e1877211d85e699b5024cc08aba154a5059 data/minecraft/tags/blocks/portals.json
+14acb6a1e1f0d83d2db3d851310f3b3f93c63285 data/minecraft/tags/blocks/rails.json
 9f36f409e610ac2fc403d0c1f9240c8addf92421 data/minecraft/tags/blocks/replaceable_plants.json
 d5e7a157d66fea4faa3c5278aa4a8ddac4183645 data/minecraft/tags/blocks/saplings.json
 bd0e62e331edc7ace28d07c11d933e985ff7d64f data/minecraft/tags/blocks/soul_speed_blocks.json

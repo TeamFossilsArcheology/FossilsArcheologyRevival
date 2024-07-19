@@ -11,6 +11,7 @@ import com.fossil.fossil.item.ToyTetheredLogItem;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
@@ -73,7 +74,31 @@ public class ModItemProvider extends ItemModelProvider {
                     embyroItem(info.embryoItem.getRegistryName());
                 }
                 if (info.spawnEggItem != null) {
-                    spawnEggItem(info.resourceName);
+                    spawnEggItem(info.spawnEggItem);
+                }
+                if (info.armBoneItem != null) {
+                    boneItem(Objects.requireNonNull(info.armBoneItem.getRegistryName()), info, "arm_bone");
+                }
+                if (info.footBoneItem != null) {
+                    boneItem(Objects.requireNonNull(info.footBoneItem.getRegistryName()), info, "foot");
+                }
+                if (info.legBoneItem != null) {
+                    boneItem(Objects.requireNonNull(info.legBoneItem.getRegistryName()), info, "leg_bone");
+                }
+                if (info.ribcageBoneItem != null) {
+                    boneItem(Objects.requireNonNull(info.ribcageBoneItem.getRegistryName()), info, "ribcage");
+                }
+                if (info.skullBoneItem != null) {
+                    boneItem(Objects.requireNonNull(info.skullBoneItem.getRegistryName()), info, "skull");
+                }
+                if (info.tailBoneItem != null) {
+                    boneItem(Objects.requireNonNull(info.tailBoneItem.getRegistryName()), info, "tail");
+                }
+                if (info.uniqueBoneItem != null) {
+                    boneItem(Objects.requireNonNull(info.uniqueBoneItem.getRegistryName()), info, "unique");
+                }
+                if (info.vertebraeBoneItem != null) {
+                    boneItem(Objects.requireNonNull(info.vertebraeBoneItem.getRegistryName()), info, "vertebrae");
                 }
             }
             for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
@@ -90,16 +115,6 @@ public class ModItemProvider extends ItemModelProvider {
                     embyroItem(info.embryoItem.getRegistryName());
                 }
             }
-            for (PrehistoricEntityInfo info : PrehistoricEntityInfo.entitiesWithBones()) {
-                boneItem(Objects.requireNonNull(info.armBoneItem.getRegistryName()), info, "arm_bone");
-                boneItem(Objects.requireNonNull(info.footBoneItem.getRegistryName()), info, "foot");
-                boneItem(Objects.requireNonNull(info.legBoneItem.getRegistryName()), info, "leg_bone");
-                boneItem(Objects.requireNonNull(info.ribcageBoneItem.getRegistryName()), info, "ribcage");
-                boneItem(Objects.requireNonNull(info.skullBoneItem.getRegistryName()), info, "skull");
-                boneItem(Objects.requireNonNull(info.tailBoneItem.getRegistryName()), info, "tail");
-                boneItem(Objects.requireNonNull(info.uniqueBoneItem.getRegistryName()), info, "unique");
-                boneItem(Objects.requireNonNull(info.vertebraeBoneItem.getRegistryName()), info, "vertebrae");
-            }
             basicItem(ModItems.ALLIGATOR_GAR_BUCKET.get().getRegistryName());
             basicItem(ModItems.COELACANTH_BUCKET.get().getRegistryName());
             basicItem(ModItems.CRASSIGYRINUS_BUCKET.get().getRegistryName());
@@ -108,6 +123,11 @@ public class ModItemProvider extends ItemModelProvider {
             basicItem(ModItems.MEGALOGRAPTUS_BUCKET.get().getRegistryName());
             basicItem(ModItems.NAUTILUS_BUCKET.get().getRegistryName());
             basicItem(ModItems.STURGEON_BUCKET.get().getRegistryName());
+
+            spawnEggItem(ModItems.ANU_BOSS_SPAWN_EGG.get());
+            spawnEggItem(ModItems.FAILURESAURUS_SPAWN_EGG.get());
+            spawnEggItem(ModItems.SENTRY_PIGLIN_SPAWN_EGG.get());
+            spawnEggItem(ModItems.TAR_SLIME_SPAWN_EGG.get());
         }
         if (plantItems) {
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
@@ -164,8 +184,8 @@ public class ModItemProvider extends ItemModelProvider {
         builder(resourceLocation, item);
     }
 
-    public void spawnEggItem(String item) {
-        getBuilder("spawn_egg_" + item).parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
+    public void spawnEggItem(Item item) {
+        getBuilder(item.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
     }
 
     public void embyroItem(ResourceLocation item) {

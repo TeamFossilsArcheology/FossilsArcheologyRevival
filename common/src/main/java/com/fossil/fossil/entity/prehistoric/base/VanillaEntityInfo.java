@@ -14,7 +14,7 @@ import java.util.function.Function;
 
 public enum VanillaEntityInfo implements EntityInfo {
     AXOLOTL(EntityType.AXOLOTL, PrehistoricMobType.FISH, Diet.INSECTIVORE),
-    BAT(EntityType.BAT, PrehistoricMobType.OTHER, Diet.INSECTIVORE),
+    BAT(EntityType.BAT, PrehistoricMobType.MAMMAL, Diet.INSECTIVORE),
     CAT(EntityType.CAT, PrehistoricMobType.MAMMAL, Diet.CARNIVORE),
     CHICKEN(EntityType.CHICKEN, PrehistoricMobType.VANILLA_BIRD, Diet.HERBIVORE),
     COD(EntityType.COD, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
@@ -37,7 +37,7 @@ public enum VanillaEntityInfo implements EntityInfo {
     SALMON(EntityType.SALMON, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
     SHEEP(EntityType.SHEEP, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     SQUID(EntityType.SQUID, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
-    STRIDER(EntityType.STRIDER, PrehistoricMobType.OTHER, Diet.HERBIVORE),
+    STRIDER(EntityType.STRIDER, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     TROPICAL_FISH(EntityType.TROPICAL_FISH, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
     TURTLE(EntityType.TURTLE, PrehistoricMobType.OTHER, Diet.HERBIVORE),
     WOLF(EntityType.WOLF, PrehistoricMobType.MAMMAL, Diet.CARNIVORE);

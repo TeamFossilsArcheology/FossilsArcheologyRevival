@@ -7,6 +7,7 @@
     "fossil:syringe_platybelodon",
     "fossil:syringe_quagga",
     "fossil:syringe_smilodon",
+    "fossil:syringe_bat",
     "fossil:syringe_cat",
     "fossil:syringe_cow",
     "fossil:syringe_dolphin",
@@ -22,6 +23,7 @@
     "fossil:syringe_polarbear",
     "fossil:syringe_rabbit",
     "fossil:syringe_sheep",
+    "fossil:syringe_strider",
     "fossil:syringe_wolf"
   ]
 }
