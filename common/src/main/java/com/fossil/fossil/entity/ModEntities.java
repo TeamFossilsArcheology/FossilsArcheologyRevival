@@ -61,7 +61,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Pachyrhinosaurus>> PACHYRHINOSAURUS = registerDino("pachyrhinosaurus", Pachyrhinosaurus::new, 1.4f, 1.5f);
     public static final RegistrySupplier<EntityType<Parasaurolophus>> PARASAUROLOPHUS = registerDino("parasaurolophus", Parasaurolophus::new, 1.7f, 1.7f);
     public static final RegistrySupplier<EntityType<Phorusrhacos>> PHORUSRHACOS = registerDino("phorusrhacos", Phorusrhacos::new, 1.4f, 2.5f);
-    public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.9f, 2.1f);
+    public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.6f, 2f);
     public static final RegistrySupplier<EntityType<Plesiosaurus>> PLESIOSAURUS = registerDino("plesiosaurus", Plesiosaurus::new, 1, 1);
     public static final RegistrySupplier<EntityType<Pteranodon>> PTERANODON = registerDino("pteranodon", Pteranodon::new, 1.1f, 1.1f);
     public static final RegistrySupplier<EntityType<Quagga>> QUAGGA = registerDino("quagga", Quagga::new, 1.3964844f, 1.6f);
@@ -71,7 +71,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Stegosaurus>> STEGOSAURUS = registerDino("stegosaurus", Stegosaurus::new, 1.4f, 1.8f);
     public static final RegistrySupplier<EntityType<Sturgeon>> STURGEON = registerFish("sturgeon", Sturgeon::new, 1.9f, 0.5f);
     public static final RegistrySupplier<EntityType<Therizinosaurus>> THERIZINOSAURUS = registerDino("therizinosaurus", Therizinosaurus::new, 1.1f, 1.5f);
-    public static final RegistrySupplier<EntityType<Tiktaalik>> TIKTAALIK = registerDino("tiktaalik", Tiktaalik::new, 1.45f, 0.5f);
+    public static final RegistrySupplier<EntityType<Tiktaalik>> TIKTAALIK = registerDino("tiktaalik", Tiktaalik::new, 1.7f, 0.4f);
     public static final RegistrySupplier<EntityType<Titanis>> TITANIS = registerDino("titanis", Titanis::new, 1.4f, 2.5f);
     public static final RegistrySupplier<EntityType<Triceratops>> TRICERATOPS = registerDino("triceratops", Triceratops::new, 0.8f, 1);
     public static final RegistrySupplier<EntityType<Tropeognathus>> TROPEOGNATHUS = registerDino("tropeognathus", Tropeognathus::new, 1.25f, 1.1f);

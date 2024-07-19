@@ -33,7 +33,7 @@ public class AnimationTab extends DebugTab {
     private float rotYBase;
     private float rotXBase;
     private float scale = 15;
-    private double speed = 1;
+    private double transitionLength = 5;
     private AnimationsList animations;
     private String currentController;
 
@@ -127,11 +127,11 @@ public class AnimationTab extends DebugTab {
             }
 
             addWidget(
-                    new Slider(width / 2, 120, 100, 20, new TextComponent("Speed: "), new TextComponent(""), 1, 3, speed, 0.01, 3,
+                    new Slider(width / 2, 120, 100, 20, new TextComponent("Transition: "), new TextComponent(""), 0, 20, transitionLength, 1, 3,
                             true) {
                         @Override
                         protected void applyValue() {
-                            speed = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                            transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                         }
                     });
         }
@@ -174,10 +174,10 @@ public class AnimationTab extends DebugTab {
             AnimationEntry(int id, Map.Entry<String, Animation> animation) {
                 changeButton = new Button(0, 0, 200, 20, new TextComponent(animation.getKey()), button -> {
                     if (entity instanceof Prehistoric prehistoric) {
-                        double speed = 1 / Math.sqrt(prehistoric.getScale());
+                        /*double speed = 1 / Math.sqrt(prehistoric.getScale());
                         speed *= prehistoric.data().stats().baseSpeed() / 0.26;//multiplier
-                        speed *= animation.getValue().animationLength / 20;
-                        MessageHandler.DEBUG_CHANNEL.sendToServer(new ForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), 1));
+                        speed *= animation.getValue().animationLength / 20;*/
+                        MessageHandler.DEBUG_CHANNEL.sendToServer(new ForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), transitionLength));
                     }
                 });
             }

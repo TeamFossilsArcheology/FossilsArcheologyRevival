@@ -20,8 +20,15 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Platybelodon extends Prehistoric {
     public static final String ANIMATIONS = "platybelodon.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String ATTACK = "animation.platybelodon.attack1";
+    public static final String EAT = "animation.platybelodon.drink";
+    public static final String FALL = "animation.platybelodon.jump/fall";
+    public static final String IDLE1 = "animation.platybelodon.idle1";
+    public static final String IDLE2 = "animation.platybelodon.idle2";
+    public static final String RUN = "animation.platybelodon.run";
+    public static final String SLEEP = "animation.platybelodon.sleep";
+    public static final String SWIM = "animation.platybelodon.swim";
+    public static final String WALK = "animation.platybelodon.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -60,38 +67,38 @@ public class Platybelodon extends Prehistoric {
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(IDLE1);
     }
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(IDLE);
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(IDLE);
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

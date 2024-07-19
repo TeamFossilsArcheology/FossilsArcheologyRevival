@@ -205,7 +205,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         ActiveAnimationInfo activeAnimation = getActiveAnimation(controller.getName());
         if (activeAnimation != null && activeAnimation.forced && !isAnimationDone(controller.getName())) {
             controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName));
-            event.getController().setAnimationSpeed(activeAnimation.speed);
+            controller.transitionLengthTicks = activeAnimation.speed;
             return PlayState.CONTINUE;
         } else {
             if (entity.swinging) {

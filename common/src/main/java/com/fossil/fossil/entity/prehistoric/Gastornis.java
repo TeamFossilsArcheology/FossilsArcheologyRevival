@@ -24,6 +24,7 @@ public class Gastornis extends Prehistoric {
     public static final String EAT = "animation.gastornis.eat";
     public static final String FALL = "animation.gastornis.jump/fall";
     public static final String IDLE = "animation.gastornis.idle";
+    public static final String RUN = "animation.gastornis.run";
     public static final String SLEEP = "animation.gastornis.sleep";
     public static final String SWIM = "animation.gastornis.swim";
     public static final String WALK = "animation.gastornis.walk";
@@ -96,7 +97,7 @@ public class Gastornis extends Prehistoric {
         if (isInWater()) {
             return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override

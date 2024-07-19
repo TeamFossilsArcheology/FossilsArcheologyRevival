@@ -1,0 +1,25 @@
+{
+	"elements": [
+		{
+			"name": "body",
+			"pos": [0, 0, -5],
+			"width": 22,
+			"height": 28,
+			"ref": "body_hitbox"
+		},
+		{
+			"name": "head1",
+			"pos": [0, 0, 13],
+			"width": 14,
+			"height": 28,
+			"ref": "head1_hitbox"
+		},
+		{
+			"name": "head2",
+			"pos": [0, 11, 27],
+			"width": 14,
+			"height": 16,
+			"ref": "head2_hitbox"
+		}
+	]
+}
