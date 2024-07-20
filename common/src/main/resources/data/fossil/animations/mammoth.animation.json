@@ -6,22 +6,18 @@
       "animation_length": 4
     },
     "animation.mammoth.attack1": {
-      "loop": true,
       "animation_length": 1.25,
       "action_delay": [
         0.46
       ]
     },
     "animation.mammoth.drinking": {
-      "loop": true,
       "animation_length": 4
     },
     "animation.mammoth.eating": {
-      "loop": true,
       "animation_length": 4
     },
     "animation.mammoth.speak": {
-      "loop": true,
       "animation_length": 2
     },
     "animation.mammoth.walk": {

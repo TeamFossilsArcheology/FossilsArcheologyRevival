@@ -18,18 +18,15 @@
       "animation_length": 3
     },
     "animation.megaloceros.attack": {
-      "loop": true,
       "animation_length": 1,
       "action_delay": [
         0.46
       ]
     },
     "animation.megaloceros.eat": {
-      "loop": true,
       "animation_length": 3
     },
     "animation.megaloceros.drinking": {
-      "loop": true,
       "animation_length": 4
     },
     "animation.megaloceros.walk": {

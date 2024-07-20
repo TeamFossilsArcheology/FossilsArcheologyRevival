@@ -30,7 +30,7 @@
     },
     "animation.gastornis.sit": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 6
     },
     "animation.gastornis.sleep": {
       "loop": true,

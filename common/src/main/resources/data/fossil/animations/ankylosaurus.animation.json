@@ -10,7 +10,10 @@
       "animation_length": 1
     },
     "animation.ankylosaurus.attack_strong1": {
-      "animation_length": 3
+      "animation_length": 3,
+      "action_delay": [
+        1.5
+      ]
     },
     "animation.ankylosaurus.eat": {
       "animation_length": 3
@@ -26,10 +29,16 @@
       "animation_length": 6
     },
     "animation.ankylosaurus.attack_back1": {
-      "animation_length": 1
+      "animation_length": 1,
+      "action_delay": [
+        0.56
+      ]
     },
     "animation.ankylosaurus.attack_back2": {
-      "animation_length": 1
+      "animation_length": 1,
+      "action_delay": [
+        0.56
+      ]
     },
     "animation.ankylosaurus.call2": {
       "animation_length": 3

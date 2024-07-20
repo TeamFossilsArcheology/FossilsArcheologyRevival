@@ -29,7 +29,7 @@
     },
     "animation.deinonychus.sit": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 6
     },
     "animation.deinonychus.sleep": {
       "loop": true,

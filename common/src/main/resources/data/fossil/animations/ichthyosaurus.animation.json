@@ -41,12 +41,6 @@
       "loop": true,
       "animation_length": 8
     },
-    "animation.icthyosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.icthyosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.icthyosaurus.speak": {
       "animation_length": 2
     },
@@ -58,22 +52,9 @@
     },
     "animation.icthyosaurus.attack": {
       "animation_length": 0.5,
-      "action_delay": [0.29]
-    },
-    "animation.icthyosaurus.ontogeny_baby": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.icthyosaurus.SwimSpeedDemo1": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.icthyosaurus.SwimSpeedDemo2": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.icthyosaurus.TurtningRadiusDemo": {
-      "loop": true,
-      "animation_length": 12
+      "action_delay": [
+        0.29
+      ]
     },
     "animation.icthyosaurus.eat": {
       "animation_length": 2

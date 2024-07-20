@@ -32,16 +32,13 @@
       ]
     },
     "animation.kelenken.sit": {
-      "loop": true,
-      "animation_length": 12
+      "loop": true
     },
     "animation.kelenken.sleep": {
-      "loop": true,
-      "animation_length": 12
+      "loop": true
     },
     "animation.kelenken.idle": {
-      "loop": true,
-      "animation_length": 4
+      "loop": true
     },
     "animation.kelenken.jump/fall": {
       "loop": true,

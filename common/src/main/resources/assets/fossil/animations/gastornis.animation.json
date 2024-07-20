@@ -1782,6 +1782,97 @@
 				}
 			}
 		},
+		"animation.gastornis.attack": {
+			"animation_length": 0.5,
+			"bones": {
+				"neck1": {
+					"rotation": {
+						"0.0": {
+							"vector": ["math.sin(query.anim_time*180/0.25)*-5", 0, 0]
+						},
+						"0.25": {
+							"vector": ["math.sin(query.anim_time*180/0.37+30)*-5", 0, 0]
+						},
+						"0.4": {
+							"vector": ["math.sin(query.anim_time*180/0.5-30)*10", 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"neck2": {
+					"rotation": {
+						"0.0": {
+							"vector": ["math.sin(query.anim_time*180/0.25)*-5", 0, "math.sin(query.anim_time*180/0.25)*-20"]
+						},
+						"0.25": {
+							"vector": ["math.sin(query.anim_time*180/0.37-60)*-20", 0, "math.sin(query.anim_time*360/0.5)*-40"]
+						},
+						"0.4": {
+							"vector": ["math.sin(query.anim_time*180/0.5-100)*20", 0, "math.sin(query.anim_time*360/0.5)*-40"]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"head1": {
+					"rotation": {
+						"0.0": {
+							"vector": ["math.sin(query.anim_time*180/0.25)*5", 0, "math.sin(query.anim_time*180/0.25)*10"]
+						},
+						"0.25": {
+							"vector": ["-17.5+math.sin(query.anim_time*180/0.37+30)*20", 0, "math.sin(query.anim_time*360/0.5-60)*-10"]
+						},
+						"0.4": {
+							"vector": ["math.sin(query.anim_time*180/0.5)*-20", 0, "math.sin(query.anim_time*360/0.5-60)*-10"]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"Tlowerjaw": {
+					"rotation": {
+						"0.0": {
+							"vector": ["math.sin(query.anim_time*180/0.25)*30", 0, 0]
+						},
+						"0.25": {
+							"vector": ["math.sin(query.anim_time*180/0.37-60)*60", 0, 0]
+						},
+						"0.4": {
+							"vector": ["math.sin(query.anim_time*180/0.5)*-2.5", 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"head_hitbox": {
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.2": {
+							"vector": [-4, 4, 0]
+						},
+						"0.3": {
+							"vector": [5, 4, 0]
+						},
+						"0.4": {
+							"vector": [8, 7, 0]
+						},
+						"0.45": {
+							"vector": [5, 4, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
 		"animation.gastornis.sit": {
 			"loop": true,
 			"animation_length": 6,

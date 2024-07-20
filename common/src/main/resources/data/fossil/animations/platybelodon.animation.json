@@ -16,7 +16,7 @@
     },
     "animation.platybelodon.sleep": {
       "loop": true,
-      "animation_length": 2.5
+      "animation_length": 3.125
     },
     "animation.platybelodon.walk": {
       "loop": true,
