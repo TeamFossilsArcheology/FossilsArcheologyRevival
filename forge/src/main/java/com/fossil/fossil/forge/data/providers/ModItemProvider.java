@@ -128,6 +128,8 @@ public class ModItemProvider extends ItemModelProvider {
             spawnEggItem(ModItems.FAILURESAURUS_SPAWN_EGG.get());
             spawnEggItem(ModItems.SENTRY_PIGLIN_SPAWN_EGG.get());
             spawnEggItem(ModItems.TAR_SLIME_SPAWN_EGG.get());
+
+            basicItem(ModItems.MAGIC_CONCH.get());
         }
         if (plantItems) {
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {

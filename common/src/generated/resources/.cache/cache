@@ -1121,6 +1121,7 @@ b4bc67051cbf0ba2caa79948bcb2f797f0cf5abb assets/fossil/models/item/horsetail_sma
 fa2fb9c2d57887da1ba61ff8f3be498b22b92a6f assets/fossil/models/item/licopodiophyta.json
 e4547100917f1c4b32970fabeb8904cfee23739a assets/fossil/models/item/liopleurodon_dna.json
 89000c2036adbf92aa5b25194b1d2d5d6d95c0e3 assets/fossil/models/item/llama_dna.json
+92fc6c461bcca40a9e5bf19d204edcb217260bb5 assets/fossil/models/item/magic_conch.json
 9084aa6b481992383c9d9bb6da45b7322c918f63 assets/fossil/models/item/mammoth_dna.json
 6fff78254656e0246ddeaa18ecb21a915b3127fa assets/fossil/models/item/meat_alligator_gar.json
 3905322b6beba9587c6378227a9e13a642284909 assets/fossil/models/item/meat_allosaurus.json
@@ -2640,7 +2641,9 @@ e821f2ebebc89885d19f9d1e74634345a86e1307 data/minecraft/tags/blocks/planks.json
 14acb6a1e1f0d83d2db3d851310f3b3f93c63285 data/minecraft/tags/blocks/rails.json
 9f36f409e610ac2fc403d0c1f9240c8addf92421 data/minecraft/tags/blocks/replaceable_plants.json
 d5e7a157d66fea4faa3c5278aa4a8ddac4183645 data/minecraft/tags/blocks/saplings.json
+2f4e47a52d3a0f882d8b33b4b731f9116d73b992 data/minecraft/tags/blocks/slabs.json
 bd0e62e331edc7ace28d07c11d933e985ff7d64f data/minecraft/tags/blocks/soul_speed_blocks.json
+506378a53fbfa93cdbf0b541ebedd1510a829c87 data/minecraft/tags/blocks/stairs.json
 d77f64c764622979ccaf5aa4445d31ffa839f11f data/minecraft/tags/blocks/walls.json
 d3991e1c6d28ebf5a5ca740c7bca37514daa081a data/minecraft/tags/blocks/wooden_buttons.json
 05a23ad531c2ae259e33573ba8ecbc10f96c6eaf data/minecraft/tags/blocks/wooden_doors.json
