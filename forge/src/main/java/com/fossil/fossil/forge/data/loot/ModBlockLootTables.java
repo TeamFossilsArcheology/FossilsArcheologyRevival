@@ -1,6 +1,7 @@
 package com.fossil.fossil.forge.data.loot;
 
 import com.fossil.fossil.block.PrehistoricPlantInfo;
+import com.fossil.fossil.block.custom_blocks.AmphoraVaseBlock;
 import com.fossil.fossil.block.custom_blocks.FourTallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.enchantment.ModEnchantments;
@@ -15,10 +16,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.block.AbstractGlassBlock;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.SlabBlock;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -85,6 +83,8 @@ public class ModBlockLootTables extends BlockLoot {
                 dropWhenSilkTouch(block);
             } else if (block instanceof SlabBlock) {
                 addCustom(block, createSlabItemTable(block));
+            } else if (block instanceof DoorBlock || block instanceof AmphoraVaseBlock) {
+                addCustom(block, createDoorTable(block));
             } else if (!NO_TABLE.contains(block) && !tableDone.contains(block)) {
                 dropSelf(block);
             }

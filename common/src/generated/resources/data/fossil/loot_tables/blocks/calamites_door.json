@@ -7,6 +7,15 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "conditions": [
+            {
+              "condition": "minecraft:block_state_property",
+              "block": "fossil:calamites_door",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
           "name": "fossil:calamites_door"
         }
       ],

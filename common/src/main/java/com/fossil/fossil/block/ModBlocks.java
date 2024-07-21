@@ -6,6 +6,7 @@ import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.*;
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.material.ModFluids;
+import com.fossil.fossil.util.Version;
 import com.fossil.fossil.world.feature.tree.*;
 import dev.architectury.core.block.ArchitecturyLiquidBlock;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -54,11 +55,11 @@ public class ModBlocks {
     public static final RegistrySupplier<AnubiteStatueBlock> ANUBITE_STATUE = registerBlockWithCustomBlockItem("anubite_statue",
             () -> new AnubiteStatueBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
             block -> AnubiteStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
-    public static final RegistrySupplier<AnuBarrierBlock> ANU_BARRIER = registerBlock("anu_barrier",
+    public static final RegistrySupplier<AnuBarrierBlock> ANU_BARRIER = registerBlockWithDebugItem("anu_barrier",
             () -> new AnuBarrierBlock(BlockBehaviour.Properties.copy(Blocks.BARRIER)));
-    public static final RegistrySupplier<AnuPortal> ANU_PORTAL = registerBlock("anu_portal",
+    public static final RegistrySupplier<AnuPortal> ANU_PORTAL = registerBlockWithDebugItem("anu_portal",
             () -> new AnuPortal(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL)));
-    public static final RegistrySupplier<HomePortal> HOME_PORTAL = registerBlock("home_portal",
+    public static final RegistrySupplier<HomePortal> HOME_PORTAL = registerBlockWithDebugItem("home_portal",
             () -> new HomePortal(BlockBehaviour.Properties.copy(Blocks.NETHER_PORTAL)));
     public static final RegistrySupplier<AncientChestBlock> ANCIENT_CHEST = registerBlockWithCustomBlockItem("ancient_chest",
             () -> new AncientChestBlock(BlockBehaviour.Properties.of(Material.WOOD).noOcclusion().strength(-1, 3600000)),
@@ -248,7 +249,7 @@ public class ModBlocks {
             () -> FossilLeavesBlock.get(BlockBehaviour.Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> MUTANT_TREE_SAPLING = registerBlock("mutant_tree_sapling",
             () -> new SaplingBlock(new MutantTreeGrower(), BlockBehaviour.Properties.copy(Blocks.OAK_SAPLING)));
-    public static final RegistrySupplier<Block> MUTANT_TREE_TUMOR = registerBlock("mutant_tree_tumor",
+    public static final RegistrySupplier<Block> MUTANT_TREE_TUMOR = registerBlockWithDebugItem("mutant_tree_tumor",
             () -> new MutantTreeTumor(BlockBehaviour.Properties.of(Material.LEAVES).noOcclusion().dynamicShape().sound(SoundType.GRASS)));
     public static final RegistrySupplier<Block> MUTANT_TREE_VINE = registerBlock("mutant_tree_vine",
             () -> new VineBlock(BlockBehaviour.Properties.of(Material.REPLACEABLE_PLANT).noCollission().lightLevel(value -> 10).randomTicks().strength(0.2f).sound(SoundType.VINE)));
@@ -419,6 +420,7 @@ public class ModBlocks {
         VASES.add(toReturn);
         return toReturn;
     }
+
     private static RegistrySupplier<FigurineBlock> registerAnu(FigurineBlock.FigurineVariant variant) {
         return registerFigurine("anu", variant, () -> new FigurineAnuBlock(variant));
     }
@@ -483,11 +485,18 @@ public class ModBlocks {
         return toReturn;
     }
 
+    public static <T extends Block> RegistrySupplier<T> registerBlockWithDebugItem(String name, Supplier<T> block) {
+        RegistrySupplier<T> toReturn = BLOCKS.register(name, block);
+        if (Version.debugEnabled()) {
+            registerBlockItem(name, toReturn);
+        }
+        return toReturn;
+    }
+
     public static <T extends Block> RegistrySupplier<T> registerBlock(String name, Supplier<T> block) {
         RegistrySupplier<T> toReturn = BLOCKS.register(name, block);
         registerBlockItem(name, toReturn);
         return toReturn;
-
     }
 
     private static <T extends Block> RegistrySupplier<Item> registerBlockItem(String name, RegistrySupplier<T> block) {
