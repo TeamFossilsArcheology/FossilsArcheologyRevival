@@ -72,6 +72,8 @@ public class Fossil {
         MessageHandler.SYNC_CHANNEL.register(SyncEntityInfoMessage.class, SyncEntityInfoMessage::write, SyncEntityInfoMessage::new, SyncEntityInfoMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(SyncActiveAnimationMessage.class, SyncActiveAnimationMessage::write, SyncActiveAnimationMessage::new, SyncActiveAnimationMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(SyncToyAnimationMessage.class, SyncToyAnimationMessage::write, SyncToyAnimationMessage::new, SyncToyAnimationMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(HitPlayerC2SMessage.class, HitPlayerC2SMessage::write, HitPlayerC2SMessage::new, HitPlayerC2SMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(ActivateAttackBoxesS2CMessage.class, ActivateAttackBoxesS2CMessage::write, ActivateAttackBoxesS2CMessage::new, ActivateAttackBoxesS2CMessage::apply);
 
         TimerCallbacks.SERVER_CALLBACKS.register(new DisposableTask.Serializer());
     }

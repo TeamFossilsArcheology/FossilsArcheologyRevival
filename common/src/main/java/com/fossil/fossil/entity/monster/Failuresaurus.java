@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.monster;
 
 import com.fossil.fossil.block.ModBlocks;
+import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -134,7 +135,7 @@ public class Failuresaurus extends Monster {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
-        setVariant(Variant.values()[random.nextInt(Variant.values().length)].name());
+        setVariant(Util.getRandom(Variant.values(), random).name());
         return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
 

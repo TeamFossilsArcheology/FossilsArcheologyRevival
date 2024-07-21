@@ -9,11 +9,19 @@
       "loop": true,
       "animation_length": 1
     },
-    "animation.ankylosaurus.attack_strong1": {
+    "animation.ankylosaurus.attack_strong_right": {
       "animation_length": 3,
       "action_delay": [
         1.5
-      ]
+      ],
+      "heavy": true
+    },
+    "animation.ankylosaurus.attack_strong_left": {
+      "animation_length": 3,
+      "action_delay": [
+        1.5
+      ],
+      "heavy": true
     },
     "animation.ankylosaurus.eat": {
       "animation_length": 3

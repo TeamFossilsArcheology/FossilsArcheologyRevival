@@ -39,7 +39,7 @@ public class Henodus extends PrehistoricSwimming {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));

@@ -14,6 +14,8 @@ import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.model.AnimatedGeoModel;
 
+import java.util.Optional;
+
 public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel<T> {
     private final ResourceLocation modelLocation;
     private final ResourceLocation animationLocation;
@@ -48,8 +50,8 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel
             }
         }
         if (animatable instanceof Allosaurus allosaurus) {
-            AnimationLogic.ActiveAnimationInfo animationInfo = allosaurus.getAnimationLogic().getActiveAnimation("Movement/Idle/Eat");
-            if (animationInfo != null && animationInfo.animationName().contains("walk")) {
+            Optional<AnimationLogic.ActiveAnimationInfo> animationInfo = allosaurus.getAnimationLogic().getActiveAnimation("Movement/Idle/Eat");
+            if (animationInfo.isPresent() && animationInfo.get().animationName().contains("walk")) {
                 IBone foot = getAnimationProcessor().getBone("leftFoot");
                 if (foot instanceof GeoBone bone) {
                    // System.out.println("World: " + bone.getWorldPosition().x + " " + bone.getWorldPosition().y + " " + bone.getWorldPosition().z);

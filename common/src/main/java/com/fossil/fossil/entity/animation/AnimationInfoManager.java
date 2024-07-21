@@ -50,9 +50,11 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
                     JsonElement lengthElement = animationJsonObject.get("animation_length");
                     double animationLength = lengthElement == null ? 0 : AnimationUtils.convertSecondsToTicks(lengthElement.getAsDouble());
                     JsonElement speedElement = animationJsonObject.get("blocks_per_second");
-                    double speed = speedElement == null ? 0 : speedElement.getAsDouble();
-                    innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), actionDelay, animationLength, speed));
-                    clientInnerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), actionDelay, animationLength, speed));
+                    double blockSpeed = speedElement == null ? 0 : speedElement.getAsDouble();
+                    JsonElement clientAttackElement = animationJsonObject.get("uses_attack_box");
+                    boolean usesAttackBox = clientAttackElement == null ? false : clientAttackElement.getAsBoolean();
+                    innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), animationLength, actionDelay, blockSpeed, usesAttackBox));
+                    clientInnerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), animationLength, actionDelay, blockSpeed, usesAttackBox));
                 }
                 builder.put("animations/" + fileEntry.getKey().getPath() + ".json", innerBuilder.build());
                 clientBuilder.put("animations/" + fileEntry.getKey().getPath() + ".json", clientInnerBuilder.build());
@@ -92,13 +94,21 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
          * x ticks after the start of the animation
          */
         public final double actionDelay;
+        /**
+         * movespeed at which the animation looks best
+         */
         public final double blocksPerSecond;
+        /**
+         * whether an attack box should be activated for this animation
+         */
+        public final boolean usesAttackBox;
 
-        public ServerAnimationInfo(String animationName, double actionDelay, double animationLength, double blocksPerSecond) {
+        public ServerAnimationInfo(String animationName, double animationLength, double actionDelay, double blocksPerSecond, boolean usesAttackBox) {
             this.animationName = animationName;
             this.animationLength = animationLength;
             this.actionDelay = actionDelay;
             this.blocksPerSecond = blocksPerSecond;
+            this.usesAttackBox = usesAttackBox;
         }
     }
 }

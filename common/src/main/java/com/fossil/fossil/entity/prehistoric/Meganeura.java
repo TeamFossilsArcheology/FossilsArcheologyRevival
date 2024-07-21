@@ -112,7 +112,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         goalSelector.addGoal(1, new MeganeuraEnterWaterGoal(this, 1));
         goalSelector.addGoal(3, new MeganeuraWanderAndAttachGoal(this));
         goalSelector.addGoal(4, new DinoFollowOwnerGoal(this, 1, 10, 2, 50, false));
-        goalSelector.addGoal(5, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(5, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));

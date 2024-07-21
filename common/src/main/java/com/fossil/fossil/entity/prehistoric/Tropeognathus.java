@@ -42,7 +42,7 @@ public class Tropeognathus extends PrehistoricFlying {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
-        goalSelector.addGoal(2, new DinoMeleeAttackGoal(this, 1.0, true));
+        goalSelector.addGoal(2, new DelayedAttackGoal(this, 1.0, true));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, true));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
         targetSelector.addGoal(2, new DinoHurtByTargetGoal(this));
@@ -92,7 +92,7 @@ public class Tropeognathus extends PrehistoricFlying {
     @Override
     public @NotNull Animation nextMovingAnimation() {
         String key = WALK;
-        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DinoMeleeAttackGoal);
+        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DelayedAttackGoal);
 
         if (isChasing) key = RUN;
         if (isInWater()) key = SWIM;

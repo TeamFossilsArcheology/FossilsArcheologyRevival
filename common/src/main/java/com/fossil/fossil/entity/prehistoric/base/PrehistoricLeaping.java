@@ -18,6 +18,8 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
+import java.util.Optional;
+
 public abstract class PrehistoricLeaping extends Prehistoric {
     private static final EntityDataAccessor<Boolean> LEAPING = SynchedEntityData.defineId(PrehistoricLeaping.class, EntityDataSerializers.BOOLEAN);
     private final boolean canAttach;
@@ -141,9 +143,9 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         }
         lastSpeed = animSpeed;
         event.getController().setAnimationSpeed(animSpeed);
-        AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-        if (activeAnimation != null) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));
+        Optional<AnimationLogic.ActiveAnimationInfo> activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+        if (activeAnimation.isPresent()) {
+            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.get().animationName()));
         }
         return PlayState.CONTINUE;
     }

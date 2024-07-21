@@ -40,7 +40,7 @@ public class Plesiosaurus extends PrehistoricSwimming {
         goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
         goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(4, new MakeFishGoal(this));
         goalSelector.addGoal(7, new DinoLookAroundGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));

@@ -5,7 +5,7 @@ import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.CustomFlightBodyRotationControl;
 import com.fossil.fossil.entity.ai.control.CustomFlightLookControl;
 import com.fossil.fossil.entity.ai.control.CustomFlightMoveControl;
-import com.fossil.fossil.entity.animation.AnimationLogic;
+import com.fossil.fossil.entity.ai.navigation.FlightPathNavigation;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,11 +31,8 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
-import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public abstract class PrehistoricFlying extends Prehistoric implements FlyingAnimal {
@@ -235,7 +232,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public void startTakeOff() {
         entityData.set(TAKING_OFF, true);
         takeOffStartTick = level.getGameTime();
-        getAnimationLogic().forceActiveAnimation("Movement/Idle/Eat", nextTakeOffAnimation(), "TakeOff", 1);
+        getAnimationLogic().triggerAnimation("Movement/Idle/Eat", nextTakeOffAnimation(), "TakeOff");
     }
 
     /**
@@ -315,48 +312,9 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         return furthest != null ? Vec3.atCenterOf(furthest.getBlockPos().relative(furthest.getDirection())) : null;
     }
 
-    private double lastSpeed = 1;
-    private PlayState flyingPredicate(AnimationEvent<PrehistoricFlying> event) {
-        AnimationController<PrehistoricFlying> controller = event.getController();
-        AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-        if (activeAnimation != null && activeAnimation.forced() && !getAnimationLogic().isAnimationDone(controller.getName())) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName()));
-            return PlayState.CONTINUE;
-        }
-        double animSpeed = 1;
-        if (!isTakingOff()) {
-            if (event.isMoving()) {
-                Animation animation = nextMovingAnimation();
-                getAnimationLogic().addActiveAnimation(controller.getName(), animation, "Walk");
-                //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
-                animSpeed = 1 / event.getAnimatable().getScale();
-                double animationBaseSpeed = AnimationLogic.getMovementSpeed(event.getAnimatable(), animation.animationName);
-                if (animationBaseSpeed > 0) {
-                    //the deltaMovement of the animation should match the mobs deltaMovement
-                    double mobSpeed = event.getAnimatable().getDeltaMovement().horizontalDistance() * 20;
-                    animSpeed *= mobSpeed / animationBaseSpeed;
-                }
-                if (lastSpeed > animSpeed) {
-                    //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
-                    animSpeed = lastSpeed;
-                }
-            } else {
-                Animation animation = nextIdleAnimation();
-                getAnimationLogic().addActiveAnimation(controller.getName(), animation, "Idle");
-            }
-        }
-        lastSpeed = animSpeed;
-        event.getController().setAnimationSpeed(animSpeed);
-        AnimationLogic.ActiveAnimationInfo newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-        if (newAnimation != null) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.animationName()));
-        }
-        return PlayState.CONTINUE;
-    }
-
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, this::flyingPredicate));
+        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, getAnimationLogic()::flyingPredicate));
         data.addAnimationController(new AnimationController<>(this, "Attack", 5, getAnimationLogic()::attackPredicate));
     }
 

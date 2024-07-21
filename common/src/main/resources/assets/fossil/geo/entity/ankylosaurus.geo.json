@@ -199,6 +199,11 @@
 					]
 				},
 				{
+					"name": "attack_hitbox",
+					"parent": "bone21",
+					"pivot": [0, 0, 41.65]
+				},
+				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
 					"pivot": [0, 7.6, 22.25]

@@ -60,7 +60,7 @@ public class Therizinosaurus extends Prehistoric {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1.0, true));
+        goalSelector.addGoal(1, new DelayedAttackGoal(this, 1.0, true));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(5, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoWanderGoal(this, 1.0));

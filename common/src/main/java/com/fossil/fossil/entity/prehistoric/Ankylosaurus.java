@@ -20,9 +20,10 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Ankylosaurus extends Prehistoric {
     public static final String ANIMATIONS = "ankylosaurus.animation.json";
-    public static final String ATTACK_FRONT = "animation.ankylosaurus.attack_strong1";
-    public static final String ATTACK_BACK1 = "animation.ankylosaurus.attack_back1";
-    public static final String ATTACK_BACK2 = "animation.ankylosaurus.attack_back2";
+    public static final String ATTACK_FRONT_RIGHT = "animation.ankylosaurus.attack_strong_right";
+    public static final String ATTACK_FRONT_LEFT = "animation.ankylosaurus.attack_strong_left";
+    public static final String ATTACK_BACK_RIGHT = "animation.ankylosaurus.attack_back1";
+    public static final String ATTACK_BACK_LEFT = "animation.ankylosaurus.attack_back2";
     public static final String EAT = "animation.ankylosaurus.eat";
     public static final String FALL = "animation.ankylosaurus.jump/fall";
     public static final String IDLE = "animation.ankylosaurus.idle";
@@ -41,7 +42,7 @@ public class Ankylosaurus extends Prehistoric {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1));
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new DinoWanderGoal(this, 1));
@@ -66,12 +67,14 @@ public class Ankylosaurus extends Prehistoric {
         if (getTarget() != null) {
             double x = getTarget().getX() - getX();
             double z = getTarget().getZ() - getZ();
-            float yRotD = (float) (-(Mth.atan2(z, x) * Mth.RAD_TO_DEG));
-            if (Math.abs(Mth.degreesDifference(yBodyRot, yRotD)) > 130) {
-                return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK_BACK1 : ATTACK_BACK2);
-            }
+            double yawDiff = (Mth.atan2(z, x) * Mth.RAD_TO_DEG);
+            float yRotD = Mth.degreesDifference(yBodyRot, (float) Mth.wrapDegrees(yawDiff - 90));
+            return getAllAnimations().get(yRotD < 0 ? ATTACK_FRONT_RIGHT : ATTACK_FRONT_LEFT);
         }
-        return getAllAnimations().get(ATTACK_FRONT);
+        /*Vec3d right = getRotationVector().rotateY(90 * MathHelper.RADIANS_PER_DEGREE).normalize();
+        if(Math.abs(right.dotProduct(entity.getPos().subtract(getPos()))) > 1.75f)
+            return false;*/
+        return getAllAnimations().get(ATTACK_FRONT_RIGHT);
     }
 
     @Override

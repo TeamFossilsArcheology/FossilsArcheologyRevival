@@ -1,8 +1,8 @@
 package com.fossil.fossil.entity.prehistoric;
 
+import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.DinoFollowOwnerGoal;
 import com.fossil.fossil.entity.ai.DinoLookAroundGoal;
-import com.fossil.fossil.entity.ai.DinoMeleeAttackGoal;
 import com.fossil.fossil.entity.ai.DinoWanderGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
@@ -42,7 +42,7 @@ public class Confuciusornis extends PrehistoricFlying {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DinoMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(7, new DinoFollowOwnerGoal(this, 1, 10, 2, false));

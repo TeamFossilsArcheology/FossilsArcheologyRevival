@@ -8,6 +8,7 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
+import com.fossil.fossil.entity.ai.control.TestLookControl;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
@@ -19,6 +20,7 @@ import com.fossil.fossil.entity.prehistoric.Deinonychus;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.fossil.fossil.item.ModItems;
+import com.fossil.fossil.network.HitPlayerC2SMessage;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
 import com.fossil.fossil.sounds.ModSounds;
@@ -28,6 +30,7 @@ import com.fossil.fossil.util.Gender;
 import com.fossil.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
@@ -107,7 +110,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public final MoodSystem moodSystem = new MoodSystem(this);
     protected final WhipSteering steering = new WhipSteering(this);
     private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
-    private final ResourceLocation animationLocation;
+    public final ResourceLocation animationLocation;
     public OrderType currentOrder;
     protected boolean hasFeatherToggle = false;
     protected boolean featherToggle;
@@ -132,11 +135,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private int climbingCooldown = 0;
     private final List<MultiPart> parts = new ArrayList<>();
     private final Map<String, MultiPart> partsByRef = new HashMap<>();
+    public final Map<String, EntityHitboxManager.Hitbox> attackBoxes = new HashMap<>();
+    public final Map<EntityHitboxManager.Hitbox, Vec3> activeAttackBoxes = new HashMap<>();
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
         this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.moveControl = new SmoothTurningMoveControl(this);
+        lookControl = new TestLookControl(this);
         this.setHunger(this.getMaxHunger() / 2);
         this.pediaScale = 1.0F;
         this.currentOrder = OrderType.WANDER;
@@ -146,7 +152,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             this.getNavigation().getNodeEvaluator().setCanFloat(true);
         }
         setPersistenceRequired();
-        List<EntityHitboxManager.Hitbox> hitboxes = hitboxes();
+        List<EntityHitboxManager.Hitbox> hitboxes = EntityHitboxManager.HITBOX_DATA.getHitboxes(EntityType.getKey(getType()).getPath());
         if (hitboxes != null && !hitboxes.isEmpty()) {
             spawnHitBoxes(hitboxes, entityType);
         }
@@ -156,19 +162,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         float maxFrustumWidthRadius = 0;
         float maxFrustumHeightRadius = 0;
         for (EntityHitboxManager.Hitbox hitbox : hitboxes) {
-            MultiPart part = MultiPart.get(this, hitbox);
-            parts.add(part);
-            if (hitbox.ref() != null) {
-                partsByRef.put(hitbox.ref(), part);
-            }
-            //Caching this value might be overkill but this ensures that the entity will be visible even if parts are outside its bounding box
-            float j = hitbox.getFrustumWidthRadius() + entityType.getDimensions().width / 2;
-            if (j > maxFrustumWidthRadius) {
-                maxFrustumWidthRadius = j;
-            }
-            float h = hitbox.getFrustumHeightRadius() + entityType.getDimensions().height;
-            if (h > maxFrustumHeightRadius) {
-                maxFrustumHeightRadius = h;
+            if (hitbox.isAttackBox()) {
+                attackBoxes.put(hitbox.ref(), hitbox);
+            } else {
+                MultiPart part = MultiPart.get(this, hitbox);
+                parts.add(part);
+                if (hitbox.ref() != null) {
+                    partsByRef.put(hitbox.ref(), part);
+                }
+                //Caching this value might be overkill but this ensures that the entity will be visible even if parts are outside its bounding box
+                float j = hitbox.getFrustumWidthRadius() + entityType.getDimensions().width / 2;
+                if (j > maxFrustumWidthRadius) {
+                    maxFrustumWidthRadius = j;
+                }
+                float h = hitbox.getFrustumHeightRadius() + entityType.getDimensions().height;
+                if (h > maxFrustumHeightRadius) {
+                    maxFrustumHeightRadius = h;
+                }
             }
         }
         //TODO: SLEEPING_DIMENSIONS
@@ -329,6 +339,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             super.refreshDimensions();
         }
+    }
+
+    @Override
+    public boolean isPickable() {
+        return !isCustomMultiPart();
     }
 
     @Override
@@ -753,10 +768,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    public List<EntityHitboxManager.Hitbox> hitboxes() {
-        return EntityHitboxManager.HITBOX_DATA.getHitboxes(EntityType.getKey(getType()).getPath());
-    }
-
     @Override
     public void tick() {
         super.tick();
@@ -791,6 +802,21 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 if (ticksClimbing == 0 && climbingCooldown <= 0 && horizontalCollision && !wantsToSleep() && !isSleeping()) {
                     ticksClimbing = 0;
                     setClimbing(true);
+                }
+            }
+        }
+        if (level.isClientSide && !activeAttackBoxes.isEmpty()) {
+            if (level.getGameTime() > attack1) {
+                activeAttackBoxes.clear();
+            }
+            for (Map.Entry<EntityHitboxManager.Hitbox, Vec3> entry : activeAttackBoxes.entrySet()) {
+                EntityHitboxManager.Hitbox hitbox = entry.getKey();
+                EntityDimensions size = EntityDimensions.scalable(hitbox.width(), hitbox.height()).scale(getScale());
+                AABB aabb = size.makeBoundingBox(entry.getValue());
+                if (Minecraft.getInstance().player.getBoundingBox().intersects(aabb)) {
+                    activeAttackBoxes.clear();
+                    MessageHandler.SYNC_CHANNEL.sendToServer(new HitPlayerC2SMessage(this, Minecraft.getInstance().player));
+                    break;
                 }
             }
         }
@@ -1051,8 +1077,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public int getCurrentSwingDuration() {
         int time = 10;
         var activeAnimation = getAnimationLogic().getActiveAnimation("Attack");
-        if (activeAnimation != null) {
-            time = (int) (getAllAnimations().get(activeAnimation.animationName()).animationLength * 20);
+        if (activeAnimation.isPresent()) {
+            time = (int) (getAllAnimations().get(activeAnimation.get().animationName()).animationLength * 20);
         }
 
         if (MobEffectUtil.hasDigSpeed(this)) {
@@ -1453,9 +1479,17 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return isBaby() ? super.getSoundVolume() * 0.75f : 1;
     }
 
-    public void startAttack() {
-        swing(InteractionHand.MAIN_HAND);
-        getAnimationLogic().forceActiveAnimation("Attack", nextAttackAnimation(), "Attack", 1);
+    public AnimationInfoManager.ServerAnimationInfo startAttack() {
+        AnimationInfoManager.ServerAnimationInfo attackAnim = (AnimationInfoManager.ServerAnimationInfo) nextAttackAnimation();
+        getAnimationLogic().triggerAnimation("Attack", attackAnim, "Attack");
+        return attackAnim;
+    }
+
+    private long attack1;
+
+    public void activateAttackBoxes(double attackDuration) {
+        attackBoxes.values().forEach(hitbox -> activeAttackBoxes.put(hitbox, Vec3.ZERO));
+        attack1 = (long) (level.getGameTime() + attackDuration);
     }
 
     public boolean attackTarget(LivingEntity target) {

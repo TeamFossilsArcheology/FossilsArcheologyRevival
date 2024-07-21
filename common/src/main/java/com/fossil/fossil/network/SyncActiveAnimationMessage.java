@@ -1,10 +1,11 @@
 package com.fossil.fossil.network;
 
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import dev.architectury.networking.NetworkManager;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
+import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.function.Supplier;
 
@@ -14,40 +15,44 @@ import java.util.function.Supplier;
 public class SyncActiveAnimationMessage {
     private final int entityId;
     private final String controller;
-    private final CompoundTag animationTag;
+    private final String animationName;
+    private final double startTick;
+    private final String category;
 
     public SyncActiveAnimationMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.controller = buf.readUtf();
-        this.animationTag = new CompoundTag();
-        animationTag.putString("Animation", buf.readUtf());
-        animationTag.putDouble("StartTick", buf.readDouble());
-        animationTag.putString("Category", buf.readUtf());
-        animationTag.putBoolean("Forced", buf.readBoolean());
-        animationTag.putDouble("Speed", buf.readDouble());
+        this.animationName = buf.readUtf();
+        this.startTick = buf.readDouble();
+        this.category = buf.readUtf();
     }
 
-    public SyncActiveAnimationMessage(int entityId, String controller, CompoundTag animationTag) {
-        this.entityId = entityId;
+    public SyncActiveAnimationMessage(Entity entity, String controller, AnimationLogic.ActiveAnimationInfo activeAnimationInfo) {
+        this.entityId = entity.getId();
         this.controller = controller;
-        this.animationTag = animationTag;
+        this.animationName = activeAnimationInfo.animationName();
+        this.startTick = activeAnimationInfo.startTick();
+        this.category = activeAnimationInfo.category();
     }
 
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeUtf(controller);
-        buf.writeUtf(animationTag.getString("Animation"));
-        buf.writeDouble(animationTag.getDouble("StartTick"));
-        buf.writeUtf(animationTag.getString("Category"));
-        buf.writeBoolean(animationTag.getBoolean("Forced"));
-        buf.writeDouble(animationTag.getDouble("Speed"));
+        buf.writeUtf(animationName);
+        buf.writeDouble(startTick);
+        buf.writeUtf(category);
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
         if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
-            animationTag.putDouble("EndTick", animationTag.getDouble("StartTick") + prehistoric.getAllAnimations().get(animationTag.getString("Animation")).animationLength);
-            contextSupplier.get().queue(() -> prehistoric.getAnimationLogic().addActiveAnimation(controller, animationTag));
+            contextSupplier.get().queue(() -> {
+                double endTick = entity.level.getGameTime() + prehistoric.getAllAnimations().getOrDefault(animationName, new Animation()).animationLength;
+                AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.ActiveAnimationInfo(
+                        animationName, startTick, endTick, category, true, -1
+                );
+                prehistoric.getAnimationLogic().addNextAnimation(controller, activeAnimationInfo);
+            });
         }
     }
 }

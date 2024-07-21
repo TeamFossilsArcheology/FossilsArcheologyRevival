@@ -2,6 +2,7 @@ package com.fossil.fossil.client.renderer.entity;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.model.PrehistoricGeoModel;
+import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.prehistoric.Meganeura;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.parts.AnimationOverride;
@@ -108,7 +109,6 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
         // repeated
         setCurrentModelRenderCycle(EModelRenderCycle.REPEATED);
         //Changed code
-        //TODO: Maybe use EModelRenderCycle.REPEATED?
         updateTickForEntity(animatable);
     }
 
@@ -130,11 +130,21 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
     }
 
     private void customBoneStuff(GeoBone bone, T animatable) {
-        MultiPart part = animatable.getCustomPart(bone.name);
         //Only update position once per tick
-        if (part != null && entityTickMatchesRenderTick(animatable)) {
-            Vector3d localPos = bone.getLocalPosition();
-            part.setOverride(new AnimationOverride(new Vec3(localPos.x, localPos.y, localPos.z), bone.getScaleX(), bone.getScaleY()));
+        if (entityTickMatchesRenderTick(animatable)) {
+            MultiPart part = animatable.getCustomPart(bone.name);
+            if (part != null) {
+                //Tick hitboxes
+                Vector3d localPos = bone.getLocalPosition();
+                part.setOverride(new AnimationOverride(new Vec3(localPos.x, localPos.y, localPos.z), bone.getScaleX(), bone.getScaleY()));
+            } else {
+                //Tick attack boxes
+                EntityHitboxManager.Hitbox hitbox = animatable.attackBoxes.get(bone.name);
+                if (hitbox != null && animatable.activeAttackBoxes.containsKey(hitbox)) {
+                    Vector3d localPos = bone.getWorldPosition();
+                    animatable.activeAttackBoxes.put(hitbox, new Vec3(localPos.x, localPos.y, localPos.z));
+                }
+            }
         }
     }
 

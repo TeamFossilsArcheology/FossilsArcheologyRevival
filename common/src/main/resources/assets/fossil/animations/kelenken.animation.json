@@ -509,7 +509,7 @@
 			}
 		},
 		"animation.kelenken.turn_left": {
-			"loop": "hold_on_last_frame",
+			"loop": true,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
@@ -3450,6 +3450,26 @@
 					},
 					"position": {
 						"vector": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.kelenken.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*1.3125"]
+					}
+				}
+			}
+		},
+		"animation.kelenken.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"bone": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*4.1"]
 					}
 				}
 			}

@@ -1,24 +1,28 @@
 package com.fossil.fossil.entity.ai;
 
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.ToyBase;
+import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
-import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
-public class GrabMeleeAttackGoal extends DinoMeleeAttackGoal {
-    private static int ATTACK = 0;
-    private static int GRAB = 1;
+public class GrabMeleeAttackGoal extends DelayedAttackGoal {
+    private static final int ATTACK = 0;
+    private static final int GRAB = 1;
+    private static final int GRAB_DURATION = 55;
     private int attackType = -1;
-    private long attackStartTick;
+    private long grabStartTick = -1;
+
     public GrabMeleeAttackGoal(PrehistoricSwimming entity, double speed, boolean followTargetEvenIfNotSeen) {
         super(entity, speed, followTargetEvenIfNotSeen);
     }
 
     @Override
     public boolean canUse() {
-        //TODO: Currently used so that this does not conflict with BreachGoal. Needs better solution
-        Prehistoric dinosaur = (Prehistoric) mob;
-        LivingEntity target = dinosaur.getTarget();
+        //TODO: Currently used so that this does not conflict with BreachGoal. Might need better solution
+        LivingEntity target = prehistoric.getTarget();
         if (target != null && target.isInWater()) {
             return super.canUse();
         }
@@ -27,42 +31,54 @@ public class GrabMeleeAttackGoal extends DinoMeleeAttackGoal {
 
     @Override
     public boolean canContinueToUse() {
-        return attackType != GRAB && super.canContinueToUse();
+        return attackType == -1 && super.canContinueToUse();
     }
 
     @Override
-    public void stop() {
-        super.stop();
+    public void start() {
+        super.start();
         attackType = -1;
+        grabStartTick = -1;
     }
 
     @Override
     protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
-        PrehistoricSwimming dino = (PrehistoricSwimming) mob;
-        boolean canReachEnemy = dino.canReachPrey(enemy);
-        boolean isTimeToAttack = isTimeToAttack();
-        boolean tooBig = !PrehistoricSwimming.isEntitySmallerThan(enemy, 2 * dino.getScale() / dino.data().maxScale());
-        if (canReachEnemy) {
-            if (isTimeToAttack) {
-                if (tooBig || dino.getRandom().nextInt(5) > 0) {
-                    attackType = ATTACK;
-                    resetAttackCooldown();
-                    attackStartTick = mob.level.getGameTime();
-                    mob.swing(InteractionHand.MAIN_HAND);
-                } else {
-                    attackType = GRAB;
-                    dino.destroyBoat(enemy);
-                    dino.startGrabAttack(enemy);
+        PrehistoricSwimming swimming = (PrehistoricSwimming) prehistoric;
+        long currentTime = swimming.level.getGameTime();
+        if (attackType == GRAB) {
+            for (Entity passenger : swimming.getPassengers()) {
+                if (passenger instanceof LivingEntity && passenger != swimming.getRidingPlayer()) {
+                    if (passenger instanceof ToyBase toy && currentTime == grabStartTick + GRAB_DURATION) {
+                        swimming.stopGrabAttack(passenger);
+                        swimming.setTarget(null);
+                        swimming.moodSystem.useToy(toy.moodBonus);
+                    } else if (swimming.tickCount % 20 == 0) {
+                        boolean hurt = passenger.hurt(DamageSource.mobAttack(swimming), (float) swimming.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                        if (!hurt || (currentTime >= grabStartTick + GRAB_DURATION && swimming.getRandom().nextInt(5) == 0)) {
+                            swimming.stopGrabAttack(passenger);
+                        }
+                    }
                 }
             }
-            double attackDelay = dino.getAnimationLogic().getActionDelay("Attack");
-            if (attackStartTick >= 0 && attackDelay > -1 && mob.level.getGameTime() > attackStartTick + attackDelay) {
-                dino.attackTarget(enemy);
-                dino.destroyBoat(enemy);
-                attackStartTick = -1;
+        } else if (attackType == ATTACK) {
+            if (swimming.canReachPrey(enemy) && attackDamageTick > 0 && currentTime >= attackDamageTick) {
+                swimming.attackTarget(enemy);
+                swimming.destroyBoat(enemy);
+                attackDamageTick = -1;
+                attackType = -1;
             }
-        } else {
-            attackStartTick = -1;
+        } else if (currentTime > attackEndTick && swimming.canReachPrey(enemy)) {
+            boolean tooBig = !PrehistoricSwimming.isEntitySmallerThan(enemy, 2 * swimming.getScale() / swimming.data().maxScale());
+            if (tooBig || swimming.getRandom().nextInt(5) > 0) {
+                attackType = ATTACK;
+                AnimationInfoManager.ServerAnimationInfo animation = swimming.startAttack();
+                attackEndTick = (long) (currentTime + animation.animationLength + 20);
+                attackDamageTick = Math.min((long) (currentTime + animation.actionDelay), attackEndTick);
+            } else {
+                attackType = GRAB;
+                swimming.destroyBoat(enemy);
+                swimming.startGrabAttack(enemy);
+            }
         }
     }
 }

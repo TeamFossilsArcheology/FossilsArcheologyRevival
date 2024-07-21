@@ -50,7 +50,7 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public void registerGoals() {
         super.registerGoals();
         double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
-        goalSelector.addGoal(1, new DinoMeleeAttackGoal(this, speed, false));
+        goalSelector.addGoal(1, new DelayedAttackGoal(this, speed, false));
         goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(3, new DinoWanderGoal(this, speed));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));

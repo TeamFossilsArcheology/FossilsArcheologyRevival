@@ -1,6 +1,5 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
-import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationLogic;
@@ -41,6 +40,7 @@ import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class PrehistoricSwimming extends Prehistoric {
     public static final int MAX_TIME_IN_WATER = 1000;
@@ -55,7 +55,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
      */
     protected boolean isLandNavigator = true;
     protected boolean breachTargetReached = false;
-    protected long grabStartTick = -1;
     private boolean beached;
 
     protected PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level) {
@@ -186,23 +185,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 timeInWater = 0;
                 timeOnLand++;
             }
-
-            for (Entity passenger : getPassengers()) {
-                if (passenger instanceof LivingEntity && passenger != getRidingPlayer()) {
-                    if (passenger instanceof ToyBase toy && level.getGameTime() == grabStartTick + 55) {
-                        stopGrabAttack(passenger);
-                        setTarget(null);
-                        moodSystem.useToy(toy.moodBonus);
-                    } else {
-                        if (tickCount % 20 == 0) {
-                            boolean hurt = passenger.hurt(DamageSource.mobAttack(this), (float) getAttributeValue(Attributes.ATTACK_DAMAGE));
-                            if (!hurt || (level.getGameTime() >= grabStartTick + 55 && random.nextInt(5) == 0)) {
-                                stopGrabAttack(passenger);
-                            }
-                        }
-                    }
-                }
-            }
         } else {
             beached = !isAmphibious() && !isInWater() && isOnGround();
             if (beached) {
@@ -258,13 +240,11 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     public void startGrabAttack(LivingEntity target) {
         target.startRiding(this);
-        grabStartTick = level.getGameTime();
         entityData.set(GRABBING, true);
     }
 
     public void stopGrabAttack(Entity target) {
         target.stopRiding();
-        grabStartTick = -1;
         entityData.set(GRABBING, false);
     }
 
@@ -425,17 +405,17 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 0, getAnimationLogic()::waterPredicate));
         data.addAnimationController(new AnimationController<>(this, "Attack", 5, event -> {
             AnimationController<PrehistoricSwimming> controller = event.getController();
-            AnimationLogic.ActiveAnimationInfo activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+            Optional<AnimationLogic.ActiveAnimationInfo> activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
             if (swinging) {
-                if (activeAnimation == null || !activeAnimation.category().equals("Attack")) {
+                if (activeAnimation.isEmpty() || !activeAnimation.get().category().equals("Attack")) {
                     getAnimationLogic().addActiveAnimation(controller.getName(), nextAttackAnimation(), "Attack");
                 }
             } else if (isDoingGrabAttack()) {
                 getAnimationLogic().addActiveAnimation(controller.getName(), nextGrabbingAnimation(), "Grab");
             }
-            AnimationLogic.ActiveAnimationInfo newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-            if (newAnimation != null) {
-                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.animationName()));
+            Optional<AnimationLogic.ActiveAnimationInfo> newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+            if (newAnimation.isPresent()) {
+                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName()));
                 return PlayState.CONTINUE;
             } else {
                 event.getController().markNeedsReload();
