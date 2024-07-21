@@ -3,8 +3,8 @@ package com.fossil.fossil.entity.ai;
 import com.fossil.fossil.entity.ai.control.TestLookControl;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.network.ActivateAttackBoxesS2CMessage;
 import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.S2CActivateAttackBoxesMessage;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
@@ -162,7 +162,7 @@ public class DelayedAttackGoal extends Goal {
             if (currentTime > attackEndTick) {
                 AnimationInfoManager.ServerAnimationInfo animation = prehistoric.startAttack();
                 if (animation.usesAttackBox && enemy instanceof ServerPlayer player) {
-                    MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new ActivateAttackBoxesS2CMessage(prehistoric, animation.animationLength));
+                    MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(prehistoric, animation.animationLength));
                 } else {
                     attackDamageTick = (long) (currentTime + animation.actionDelay);
                 }

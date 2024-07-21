@@ -12,16 +12,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class MarkMessage {
+public class S2CMarkMessage {
     private final List<BlockPos> targets;
     private final List<BlockState> blocks;
     private final boolean below;
 
-    public MarkMessage(FriendlyByteBuf buf) {
+    public S2CMarkMessage(FriendlyByteBuf buf) {
         this(buf.readVarIntArray(), buf.readBoolean());
     }
 
-    public MarkMessage(int[] targetArray, boolean below) {
+    public S2CMarkMessage(int[] targetArray, boolean below) {
         this.targets = new ArrayList<>();
         this.blocks = new ArrayList<>();
         for (int i = 0; i < targetArray.length / 4; i++) {
@@ -31,7 +31,7 @@ public class MarkMessage {
         this.below = below;
     }
 
-    public MarkMessage(int[] targetArray, BlockState[] blocks, boolean below) {
+    public S2CMarkMessage(int[] targetArray, BlockState[] blocks, boolean below) {
         this.targets = new ArrayList<>();
         this.blocks = new ArrayList<>();
         for (int i = 0; i < blocks.length; i++) {

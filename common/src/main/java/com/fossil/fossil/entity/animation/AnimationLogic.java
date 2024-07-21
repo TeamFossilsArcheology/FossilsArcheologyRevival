@@ -2,7 +2,7 @@ package com.fossil.fossil.entity.animation;
 
 import com.fossil.fossil.entity.prehistoric.base.*;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.SyncActiveAnimationMessage;
+import com.fossil.fossil.network.S2CSyncActiveAnimationMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -43,7 +43,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
                 var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
                 System.out.println("Attack trigger send: " + players.size());
-                MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new SyncActiveAnimationMessage(entity, controller, activeAnimationInfo));
+                MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new S2CSyncActiveAnimationMessage(entity, controller, activeAnimationInfo));
             }
         }
     }
@@ -58,7 +58,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             if (!entity.level.isClientSide) {
                 TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
                 var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
-                MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new SyncActiveAnimationMessage(entity, controller, activeAnimationInfo));
+                MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new S2CSyncActiveAnimationMessage(entity, controller, activeAnimationInfo));
             }
         }
     }

@@ -3,8 +3,8 @@ package com.fossil.fossil.client.gui.debug;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.ForceAnimationMessage;
-import com.fossil.fossil.network.debug.RotationMessage;
+import com.fossil.fossil.network.debug.C2SForceAnimationMessage;
+import com.fossil.fossil.network.debug.C2SRotationMessage;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -85,7 +85,7 @@ public class AnimationTab extends DebugTab {
                     protected void applyValue() {
                         float rotY = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                         float newRot = (rotYBase + rotY) % 360;
-                        MessageHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.Y_ROT));
+                        MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SRotationMessage(entity.getId(), newRot, C2SRotationMessage.Y_ROT));
                         entity.setYBodyRot(newRot);
                         entity.setYRot(newRot);
                         entity.setYHeadRot(newRot);
@@ -98,7 +98,7 @@ public class AnimationTab extends DebugTab {
                     protected void applyValue() {
                         float rotX = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                         float newRot = (rotXBase + rotX) % 360;
-                        MessageHandler.DEBUG_CHANNEL.sendToServer(new RotationMessage(entity.getId(), newRot, RotationMessage.X_ROT));
+                        MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SRotationMessage(entity.getId(), newRot, C2SRotationMessage.X_ROT));
                         entity.setXRot(newRot);
                     }
                 });
@@ -177,7 +177,7 @@ public class AnimationTab extends DebugTab {
                         /*double speed = 1 / Math.sqrt(prehistoric.getScale());
                         speed *= prehistoric.data().stats().baseSpeed() / 0.26;//multiplier
                         speed *= animation.getValue().animationLength / 20;*/
-                        MessageHandler.DEBUG_CHANNEL.sendToServer(new ForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), transitionLength));
+                        MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), transitionLength));
                     }
                 });
             }

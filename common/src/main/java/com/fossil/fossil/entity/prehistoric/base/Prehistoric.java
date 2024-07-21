@@ -20,9 +20,9 @@ import com.fossil.fossil.entity.prehistoric.Deinonychus;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.fossil.fossil.item.ModItems;
-import com.fossil.fossil.network.HitPlayerC2SMessage;
+import com.fossil.fossil.network.C2SHitPlayerMessage;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
+import com.fossil.fossil.network.debug.C2SSyncDebugInfoMessage;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
@@ -705,7 +705,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (!level.isClientSide) {
             if (Version.debugEnabled()) {
                 MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
-                        new SyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, moodSystem.getMood()));
+                        new C2SSyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, moodSystem.getMood()));
             }
             if (cathermalSleepCooldown > 0) {
                 cathermalSleepCooldown--;
@@ -815,7 +815,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 AABB aabb = size.makeBoundingBox(entry.getValue());
                 if (Minecraft.getInstance().player.getBoundingBox().intersects(aabb)) {
                     activeAttackBoxes.clear();
-                    MessageHandler.SYNC_CHANNEL.sendToServer(new HitPlayerC2SMessage(this, Minecraft.getInstance().player));
+                    MessageHandler.SYNC_CHANNEL.sendToServer(new C2SHitPlayerMessage(this, Minecraft.getInstance().player));
                     break;
                 }
             }

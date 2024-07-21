@@ -8,18 +8,18 @@ import net.minecraft.world.entity.LivingEntity;
 
 import java.util.function.Supplier;
 
-public class RotationMessage {
+public class C2SRotationMessage {
     public static final byte Y_ROT = 0;
     public static final byte X_ROT = 1;
     private final int entityId;
     private final double rotation;
     private final byte flag;
 
-    public RotationMessage(FriendlyByteBuf buf) {
+    public C2SRotationMessage(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readDouble(), buf.readByte());
     }
 
-    public RotationMessage(int entityId, double rotation, byte flag) {
+    public C2SRotationMessage(int entityId, double rotation, byte flag) {
         this.entityId = entityId;
         this.rotation = rotation;
         this.flag = flag;

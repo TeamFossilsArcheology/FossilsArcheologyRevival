@@ -8,17 +8,17 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
-public class ForceAnimationMessage {
+public class C2SForceAnimationMessage {
     private final String controller;
     private final int entityId;
     private final String animation;
     private final double speed;
 
-    public ForceAnimationMessage(FriendlyByteBuf buf) {
+    public C2SForceAnimationMessage(FriendlyByteBuf buf) {
         this(buf.readUtf(), buf.readInt(), buf.readUtf(), buf.readDouble());
     }
 
-    public ForceAnimationMessage(String controller, int entityId, String animation, double speed) {
+    public C2SForceAnimationMessage(String controller, int entityId, String animation, double speed) {
         this.controller = controller;
         this.entityId = entityId;
         this.animation = animation;

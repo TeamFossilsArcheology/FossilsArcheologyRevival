@@ -59,21 +59,21 @@ public class Fossil {
         ModVillagers.register();
         ModEvents.init();
 
-        MessageHandler.DEBUG_CHANNEL.register(AIMessage.class, AIMessage::write, AIMessage::new, AIMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(RotationMessage.class, RotationMessage::write, RotationMessage::new, RotationMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(ForceAnimationMessage.class, ForceAnimationMessage::write, ForceAnimationMessage::new, ForceAnimationMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(TameMessage.class, TameMessage::write, TameMessage::new, TameMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(MarkMessage.class, MarkMessage::write, MarkMessage::new, MarkMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(MoveMessage.class, MoveMessage::write, MoveMessage::new, MoveMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(VisionMessage.class, VisionMessage::write, VisionMessage::new, VisionMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(NewMarkMessage.class, NewMarkMessage::write, NewMarkMessage::new, NewMarkMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(SyncDebugInfoMessage.class, SyncDebugInfoMessage::write, SyncDebugInfoMessage::new, SyncDebugInfoMessage::apply);
-        MessageHandler.CAP_CHANNEL.register(MammalCapMessage.class, MammalCapMessage::write, MammalCapMessage::new, MammalCapMessage::apply);
-        MessageHandler.SYNC_CHANNEL.register(SyncEntityInfoMessage.class, SyncEntityInfoMessage::write, SyncEntityInfoMessage::new, SyncEntityInfoMessage::apply);
-        MessageHandler.SYNC_CHANNEL.register(SyncActiveAnimationMessage.class, SyncActiveAnimationMessage::write, SyncActiveAnimationMessage::new, SyncActiveAnimationMessage::apply);
-        MessageHandler.SYNC_CHANNEL.register(SyncToyAnimationMessage.class, SyncToyAnimationMessage::write, SyncToyAnimationMessage::new, SyncToyAnimationMessage::apply);
-        MessageHandler.SYNC_CHANNEL.register(HitPlayerC2SMessage.class, HitPlayerC2SMessage::write, HitPlayerC2SMessage::new, HitPlayerC2SMessage::apply);
-        MessageHandler.SYNC_CHANNEL.register(ActivateAttackBoxesS2CMessage.class, ActivateAttackBoxesS2CMessage::write, ActivateAttackBoxesS2CMessage::new, ActivateAttackBoxesS2CMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(C2SDisableAIMessage.class, C2SDisableAIMessage::write, C2SDisableAIMessage::new, C2SDisableAIMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(C2SRotationMessage.class, C2SRotationMessage::write, C2SRotationMessage::new, C2SRotationMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(C2SForceAnimationMessage.class, C2SForceAnimationMessage::write, C2SForceAnimationMessage::new, C2SForceAnimationMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(C2STameMessage.class, C2STameMessage::write, C2STameMessage::new, C2STameMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(S2CMarkMessage.class, S2CMarkMessage::write, S2CMarkMessage::new, S2CMarkMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(C2SMoveMessage.class, C2SMoveMessage::write, C2SMoveMessage::new, C2SMoveMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(S2CVisionMessage.class, S2CVisionMessage::write, S2CVisionMessage::new, S2CVisionMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(S2CNewMarkMessage.class, S2CNewMarkMessage::write, S2CNewMarkMessage::new, S2CNewMarkMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(C2SSyncDebugInfoMessage.class, C2SSyncDebugInfoMessage::write, C2SSyncDebugInfoMessage::new, C2SSyncDebugInfoMessage::apply);
+        MessageHandler.CAP_CHANNEL.register(S2CMammalCapMessage.class, S2CMammalCapMessage::write, S2CMammalCapMessage::new, S2CMammalCapMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(S2CSyncEntityInfoMessage.class, S2CSyncEntityInfoMessage::write, S2CSyncEntityInfoMessage::new, S2CSyncEntityInfoMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(S2CSyncActiveAnimationMessage.class, S2CSyncActiveAnimationMessage::write, S2CSyncActiveAnimationMessage::new, S2CSyncActiveAnimationMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(S2CSyncToyAnimationMessage.class, S2CSyncToyAnimationMessage::write, S2CSyncToyAnimationMessage::new, S2CSyncToyAnimationMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(C2SHitPlayerMessage.class, C2SHitPlayerMessage::write, C2SHitPlayerMessage::new, C2SHitPlayerMessage::apply);
+        MessageHandler.SYNC_CHANNEL.register(S2CActivateAttackBoxesMessage.class, S2CActivateAttackBoxesMessage::write, S2CActivateAttackBoxesMessage::new, S2CActivateAttackBoxesMessage::apply);
 
         TimerCallbacks.SERVER_CALLBACKS.register(new DisposableTask.Serializer());
     }

@@ -9,17 +9,17 @@ import net.minecraft.world.entity.ai.goal.WrappedGoal;
 
 import java.util.function.Supplier;
 
-public class MoveMessage {
+public class C2SMoveMessage {
     private final int entityId;
     private final double x;
     private final double y;
     private final double z;
 
-    public MoveMessage(FriendlyByteBuf buf) {
+    public C2SMoveMessage(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readDouble(), buf.readDouble(), buf.readDouble());
     }
 
-    public MoveMessage(int entityId, double x, double y, double z) {
+    public C2SMoveMessage(int entityId, double x, double y, double z) {
         this.entityId = entityId;
         this.x = x;
         this.y = y;

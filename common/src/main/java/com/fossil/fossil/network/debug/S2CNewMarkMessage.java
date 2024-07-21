@@ -9,15 +9,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
-public class NewMarkMessage {
+public class S2CNewMarkMessage {
     private final List<BlockPos> targets;
     private final BlockPos target;
 
-    public NewMarkMessage(FriendlyByteBuf buf) {
+    public S2CNewMarkMessage(FriendlyByteBuf buf) {
         this(buf.readVarIntArray(), buf.readBlockPos());
     }
 
-    public NewMarkMessage(int[] targetArray, BlockPos target) {
+    public S2CNewMarkMessage(int[] targetArray, BlockPos target) {
         this.targets = new ArrayList<>();
         for (int i = 0; i < targetArray.length / 3; i++) {
             this.targets.add(new BlockPos(targetArray[3 * i], targetArray[3 * i + 1], targetArray[3 * i + 2]));

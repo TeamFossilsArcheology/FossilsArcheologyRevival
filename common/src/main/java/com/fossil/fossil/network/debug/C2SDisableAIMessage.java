@@ -8,16 +8,16 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
-public class AIMessage {
+public class C2SDisableAIMessage {
     private final int id;
     private final boolean disableAI;
     private final byte type;
 
-    public AIMessage(FriendlyByteBuf buf) {
+    public C2SDisableAIMessage(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readBoolean(), buf.readByte());
     }
 
-    public AIMessage(int id, boolean disableAI, byte type) {
+    public C2SDisableAIMessage(int id, boolean disableAI, byte type) {
         this.id = id;
         this.disableAI = disableAI;
         this.type = type;

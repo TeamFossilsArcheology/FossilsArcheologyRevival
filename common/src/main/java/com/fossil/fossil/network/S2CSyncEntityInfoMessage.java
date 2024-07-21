@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
 
-public class SyncEntityInfoMessage {
+public class S2CSyncEntityInfoMessage {
     private final Map<String, EntityDataManager.Data> data;
 
-    public SyncEntityInfoMessage(FriendlyByteBuf buf) {
+    public S2CSyncEntityInfoMessage(FriendlyByteBuf buf) {
         data = buf.readMap(HashMap::new, FriendlyByteBuf::readUtf, EntityDataManager.Data::readBuf);
     }
 
-    public SyncEntityInfoMessage(Map<String, EntityDataManager.Data> data) {
+    public S2CSyncEntityInfoMessage(Map<String, EntityDataManager.Data> data) {
         this.data = data;
     }
 

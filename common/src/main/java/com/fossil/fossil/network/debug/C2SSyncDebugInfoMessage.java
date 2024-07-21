@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Supplier;
 
-public class SyncDebugInfoMessage {
+public class C2SSyncDebugInfoMessage {
     private final int entityId;
     private final String enumString;
     private final int age;
@@ -22,11 +22,11 @@ public class SyncDebugInfoMessage {
     private final int climbingCooldown;
     private final int mood;
 
-    public SyncDebugInfoMessage(FriendlyByteBuf buf) {
+    public C2SSyncDebugInfoMessage(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readUtf(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
     }
 
-    public SyncDebugInfoMessage(int entityId, String enumString, int age, int matingCooldown, int playingCooldown, int climbingCooldown, int mood) {
+    public C2SSyncDebugInfoMessage(int entityId, String enumString, int age, int matingCooldown, int playingCooldown, int climbingCooldown, int mood) {
         this.entityId = entityId;
         this.enumString = enumString;
         this.age = age;

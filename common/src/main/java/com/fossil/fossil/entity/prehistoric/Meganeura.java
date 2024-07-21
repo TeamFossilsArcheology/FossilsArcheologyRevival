@@ -4,9 +4,9 @@ import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.MarkMessage;
-import com.fossil.fossil.network.debug.NewMarkMessage;
-import com.fossil.fossil.network.debug.VisionMessage;
+import com.fossil.fossil.network.debug.S2CMarkMessage;
+import com.fossil.fossil.network.debug.S2CNewMarkMessage;
+import com.fossil.fossil.network.debug.S2CVisionMessage;
 import com.fossil.fossil.sounds.ModSounds;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
@@ -168,7 +168,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
                     targets[3 * i + 2] = path.getNode(i).z;
                 }
                 MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
-                        new NewMarkMessage(targets, new BlockPos(getMoveControl().getWantedX(), getMoveControl().getWantedY(), getMoveControl().getWantedZ())));
+                        new S2CNewMarkMessage(targets, new BlockPos(getMoveControl().getWantedX(), getMoveControl().getWantedY(), getMoveControl().getWantedZ())));
             }
             attachTicks = 0;
             if ((verticalCollision || horizontalCollision) && attachCooldown == 0 && !isOnGround()) {
@@ -179,7 +179,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
                 BlockHitResult hitResult = level.clip(new ClipContext(prevEyePos, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
 
                 MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
-                        new VisionMessage(hitResult.getBlockPos(), Blocks.GOLD_BLOCK.defaultBlockState()));
+                        new S2CVisionMessage(hitResult.getBlockPos(), Blocks.GOLD_BLOCK.defaultBlockState()));
                 BlockPos sidePos = hitResult.getBlockPos();
                 if (level.getBlockState(sidePos).isFaceSturdy(level, sidePos, hitResult.getDirection())) {
                     setAttachmentPos(sidePos);
@@ -487,7 +487,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
                             blocks[0] = Blocks.GOLD_BLOCK.defaultBlockState();
                             blocks[1] = Blocks.EMERALD_BLOCK.defaultBlockState();
                             MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) meganeura.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(meganeura)),
-                                    new MarkMessage(targets, blocks, false));
+                                    new S2CMarkMessage(targets, blocks, false));
                             return;
                         }
                     }

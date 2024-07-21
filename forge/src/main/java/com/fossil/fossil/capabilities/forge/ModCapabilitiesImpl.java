@@ -3,8 +3,8 @@ package com.fossil.fossil.capabilities.forge;
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
-import com.fossil.fossil.network.MammalCapMessage;
 import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.S2CMammalCapMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraftforge.common.util.LazyOptional;
@@ -52,6 +52,6 @@ public class ModCapabilitiesImpl {
 
     public static void syncMammalWithClient(Animal animal, int embryoProgress, EntityInfo embryo) {
         MessageHandler.CAP_CHANNEL.sendToPlayers(((ServerLevel) animal.level).getPlayers(serverPlayer -> true),
-                new MammalCapMessage(animal, embryoProgress, embryo));
+                new S2CMammalCapMessage(animal, embryoProgress, embryo));
     }
 }

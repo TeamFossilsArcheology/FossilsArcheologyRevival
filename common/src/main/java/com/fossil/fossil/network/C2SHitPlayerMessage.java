@@ -11,16 +11,16 @@ import java.util.function.Supplier;
 /**
  * Cause a player hit on the server side. Will only trigger for the player that sent the message
  */
-public class HitPlayerC2SMessage {
+public class C2SHitPlayerMessage {
     private final int entityId;
     private final int targetId;
 
-    public HitPlayerC2SMessage(FriendlyByteBuf buf) {
+    public C2SHitPlayerMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.targetId = buf.readInt();
     }
 
-    public HitPlayerC2SMessage(Entity entity, Entity target) {
+    public C2SHitPlayerMessage(Entity entity, Entity target) {
         this.entityId = entity.getId();
         this.targetId = target.getId();
     }

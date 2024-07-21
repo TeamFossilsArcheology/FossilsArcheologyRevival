@@ -12,7 +12,7 @@ import com.fossil.fossil.fabric.capabilities.MammalComponent;
 import com.fossil.fossil.fabric.world.biome.FabricFossilRegion;
 import com.fossil.fossil.fabric.world.biome.FabricModBiomes;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.SyncEntityInfoMessage;
+import com.fossil.fossil.network.S2CSyncEntityInfoMessage;
 import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
 import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
 import com.fossil.fossil.world.feature.placement.ModPlacedFeatures;
@@ -61,7 +61,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
         ModRegistries.register();
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (joined && Platform.getEnv() == EnvType.SERVER) {
-                MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new SyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
+                MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
             }
         });
     }

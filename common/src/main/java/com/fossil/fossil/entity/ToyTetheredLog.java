@@ -2,7 +2,7 @@ package com.fossil.fossil.entity;
 
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.SyncToyAnimationMessage;
+import com.fossil.fossil.network.S2CSyncToyAnimationMessage;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -54,7 +54,7 @@ public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs becau
             double dist = direction.horizontalDistance();
             AABB area = getBoundingBox().inflate(16, 16, 16);
             List<ServerPlayer> players = ((ServerLevel)level).getPlayers(serverPlayer -> area.contains(serverPlayer.getX(), serverPlayer.getY(), serverPlayer.getZ()));
-            MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new SyncToyAnimationMessage(getId(), (float) (direction.z / dist), (float) (direction.x / dist)));
+            MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new S2CSyncToyAnimationMessage(getId(), (float) (direction.z / dist), (float) (direction.x / dist)));
         }
         return hurt;
     }

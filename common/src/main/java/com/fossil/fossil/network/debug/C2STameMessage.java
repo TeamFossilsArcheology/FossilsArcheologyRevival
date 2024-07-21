@@ -8,14 +8,14 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
-public class TameMessage {
+public class C2STameMessage {
     private final int id;
 
-    public TameMessage(FriendlyByteBuf buf) {
+    public C2STameMessage(FriendlyByteBuf buf) {
         this(buf.readInt());
     }
 
-    public TameMessage(int id) {
+    public C2STameMessage(int id) {
         this.id = id;
     }
 

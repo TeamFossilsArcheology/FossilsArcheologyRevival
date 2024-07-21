@@ -10,16 +10,16 @@ import java.util.function.Supplier;
 /**
  * Activate a mobs attack boxes on the client
  */
-public class ActivateAttackBoxesS2CMessage {
+public class S2CActivateAttackBoxesMessage {
     private final int entityId;
     private final double attackDuration;
 
-    public ActivateAttackBoxesS2CMessage(FriendlyByteBuf buf) {
+    public S2CActivateAttackBoxesMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.attackDuration = buf.readDouble();
     }
 
-    public ActivateAttackBoxesS2CMessage(Entity entity, double attackDuration) {
+    public S2CActivateAttackBoxesMessage(Entity entity, double attackDuration) {
         this.entityId = entity.getId();
         this.attackDuration = attackDuration;
     }

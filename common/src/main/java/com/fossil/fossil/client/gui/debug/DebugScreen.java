@@ -5,9 +5,9 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.AIMessage;
-import com.fossil.fossil.network.debug.MoveMessage;
-import com.fossil.fossil.network.debug.TameMessage;
+import com.fossil.fossil.network.debug.C2SDisableAIMessage;
+import com.fossil.fossil.network.debug.C2SMoveMessage;
+import com.fossil.fossil.network.debug.C2STameMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
@@ -101,7 +101,7 @@ public class DebugScreen extends Screen {
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(addWidget(new InfoTab(this, prehistoric)));
             this.addRenderableWidget(new Button(460, height - 40, 50, 20, new TextComponent("Tame"), button -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new TameMessage(entity.getId()));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
             }));
         } else if (entity instanceof PrehistoricSkeleton skeleton) {
             tabs.add(addWidget(new SkeletonEditTab(this, skeleton)));
@@ -109,26 +109,26 @@ public class DebugScreen extends Screen {
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {
             builder.withInitialValue(mob.isNoAi());
             disableAI = builder.create(20, height - 130, width / 6, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
             });
             this.addRenderableWidget(disableAI);
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableGoalAI"));
             this.addRenderableWidget(builder.create(20, height - 100, width / 6, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
             }));
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableMoveAI"));
             this.addRenderableWidget(builder.create(20, height - 70, width / 6, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
             }));
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableLookAI"));
             this.addRenderableWidget(builder.create(20, height - 40, width / 6, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new AIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
             }));
             this.addRenderableWidget(new Button(240, height - 70, 70, 20, new TextComponent("Move Left"), button -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new MoveMessage(entity.getId(), entity.blockPosition().getX() - 10, entity.blockPosition().getY(), entity.blockPosition().getZ()));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SMoveMessage(entity.getId(), entity.blockPosition().getX() - 10, entity.blockPosition().getY(), entity.blockPosition().getZ()));
             }));
             this.addRenderableWidget(new Button(340, height - 70, 70, 20, new TextComponent("Move Right"), button -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new MoveMessage(entity.getId(), entity.blockPosition().getX() + 10, entity.blockPosition().getY(), entity.blockPosition().getZ()));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SMoveMessage(entity.getId(), entity.blockPosition().getX() + 10, entity.blockPosition().getY(), entity.blockPosition().getZ()));
             }));
         }
         if (entity instanceof PrehistoricAnimatable) {

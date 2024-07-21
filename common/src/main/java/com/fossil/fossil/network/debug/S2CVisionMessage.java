@@ -9,20 +9,20 @@ import net.minecraft.world.level.block.state.BlockState;
 
 import java.util.function.Supplier;
 
-public class VisionMessage {
+public class S2CVisionMessage {
     private final BlockPos target;
     private final BlockState block;
 
-    public VisionMessage(FriendlyByteBuf buf) {
+    public S2CVisionMessage(FriendlyByteBuf buf) {
         this(buf.readVarIntArray());
     }
 
-    public VisionMessage(int[] targetArray) {
+    public S2CVisionMessage(int[] targetArray) {
         this.target = new BlockPos(targetArray[0], targetArray[1], targetArray[2]);
         this.block = Block.stateById(targetArray[3]);
     }
 
-    public VisionMessage(BlockPos target, BlockState block) {
+    public S2CVisionMessage(BlockPos target, BlockState block) {
         this.target = target;
         this.block = block;
     }

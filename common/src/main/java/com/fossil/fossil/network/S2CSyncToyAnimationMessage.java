@@ -7,18 +7,18 @@ import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
-public class SyncToyAnimationMessage {
+public class S2CSyncToyAnimationMessage {
     private final int entityId;
     private final float animationX;
     private final float animationZ;
 
-    public SyncToyAnimationMessage(FriendlyByteBuf buf) {
+    public S2CSyncToyAnimationMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.animationX = buf.readFloat();
         this.animationZ = buf.readFloat();
     }
 
-    public SyncToyAnimationMessage(int entityId, float animationX, float animationZ) {
+    public S2CSyncToyAnimationMessage(int entityId, float animationX, float animationZ) {
         this.entityId = entityId;
         this.animationX = animationX;
         this.animationZ = animationZ;

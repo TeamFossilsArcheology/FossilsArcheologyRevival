@@ -3,7 +3,7 @@ package com.fossil.fossil.client.gui.debug;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
+import com.fossil.fossil.network.debug.C2SSyncDebugInfoMessage;
 import com.fossil.fossil.util.Gender;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
@@ -90,7 +90,7 @@ public class InfoTab extends DebugTab {
                 .createButton(Minecraft.getInstance().options, 20, 180, 150));
         addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
             ((Prehistoric) entity).setGender(gender);
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), gender.name(), ageInTicks, matingCooldown, playingCooldown, climbingCooldown, mood));
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSyncDebugInfoMessage(entity.getId(), gender.name(), ageInTicks, matingCooldown, playingCooldown, climbingCooldown, mood));
         }));
     }
 

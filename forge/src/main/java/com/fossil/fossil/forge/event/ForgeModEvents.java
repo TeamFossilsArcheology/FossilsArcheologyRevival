@@ -9,7 +9,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.SyncEntityInfoMessage;
+import com.fossil.fossil.network.S2CSyncEntityInfoMessage;
 import com.fossil.fossil.villager.ModTrades;
 import com.fossil.fossil.villager.ModVillagers;
 import dev.architectury.platform.Platform;
@@ -75,7 +75,7 @@ public class ForgeModEvents {
     @SubscribeEvent
     public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
         if (Platform.getEnv() == Dist.DEDICATED_SERVER) {//TODO: How exactly does this work with LAN-Servers?
-            MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new SyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
+            MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
         }
     }
 }

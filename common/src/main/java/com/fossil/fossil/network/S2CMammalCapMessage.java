@@ -10,12 +10,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
-public class MammalCapMessage {
+public class S2CMammalCapMessage {
     private final int entityId;
     private final int embryoProgress;
     private final EntityInfo embryo;
 
-    public MammalCapMessage(FriendlyByteBuf buf) {
+    public S2CMammalCapMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.embryoProgress = buf.readInt();
         EntityInfo temp;
@@ -27,7 +27,7 @@ public class MammalCapMessage {
         this.embryo = temp;
     }
 
-    public MammalCapMessage(Animal animal, int embryoProgress, @Nullable EntityInfo embryo) {
+    public S2CMammalCapMessage(Animal animal, int embryoProgress, @Nullable EntityInfo embryo) {
         this.entityId = animal.getId();
         this.embryoProgress = embryoProgress;
         this.embryo = embryo;

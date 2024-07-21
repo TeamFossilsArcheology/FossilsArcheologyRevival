@@ -12,14 +12,14 @@ import java.util.function.Supplier;
 /**
  * Sync active animation from server to clients
  */
-public class SyncActiveAnimationMessage {
+public class S2CSyncActiveAnimationMessage {
     private final int entityId;
     private final String controller;
     private final String animationName;
     private final double startTick;
     private final String category;
 
-    public SyncActiveAnimationMessage(FriendlyByteBuf buf) {
+    public S2CSyncActiveAnimationMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
         this.controller = buf.readUtf();
         this.animationName = buf.readUtf();
@@ -27,7 +27,7 @@ public class SyncActiveAnimationMessage {
         this.category = buf.readUtf();
     }
 
-    public SyncActiveAnimationMessage(Entity entity, String controller, AnimationLogic.ActiveAnimationInfo activeAnimationInfo) {
+    public S2CSyncActiveAnimationMessage(Entity entity, String controller, AnimationLogic.ActiveAnimationInfo activeAnimationInfo) {
         this.entityId = entity.getId();
         this.controller = controller;
         this.animationName = activeAnimationInfo.animationName();

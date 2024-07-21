@@ -2,7 +2,7 @@ package com.fossil.fossil.entity.ai.control;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.MarkMessage;
+import com.fossil.fossil.network.debug.S2CMarkMessage;
 import com.fossil.fossil.util.Version;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
@@ -36,7 +36,7 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
             targets[1] = Mth.floor(y);
             targets[2] = Mth.floor(z);
             MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) mob.level).getPlayers(serverPlayer -> true),
-                    new MarkMessage(targets, blocks, false));
+                    new S2CMarkMessage(targets, blocks, false));
         }
     }
 
