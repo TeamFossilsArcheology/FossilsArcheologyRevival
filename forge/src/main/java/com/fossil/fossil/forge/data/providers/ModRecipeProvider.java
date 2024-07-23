@@ -33,7 +33,6 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraftforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -119,19 +118,7 @@ public class ModRecipeProvider extends RecipeProvider {
             ShapedRecipeBuilder.shaped(ModItems.CHICKEN_ESSENCE.get()).define('G', Items.GLASS_BOTTLE).define('C', ModItems.COOKED_CHICKEN_SOUP.get()).pattern("GGG").pattern("GCG").pattern("GGG").unlockedBy("has_cooked_chicken_soup", RecipeProvider.has(ModItems.COOKED_CHICKEN_SOUP.get())).save(consumer);
             ShapedRecipeBuilder.shaped(ModItems.STUNTED_ESSENCE.get()).define('P', Items.POISONOUS_POTATO).define('C', ModItems.CHICKEN_ESSENCE.get()).pattern(" P ").pattern("PCP").pattern(" P ").unlockedBy("has_chicken_essence", RecipeProvider.has(ModItems.CHICKEN_ESSENCE.get())).save(consumer);
 
-            var fabricEggs = ItemTags.create(new ResourceLocation("c:eggs"));
-            var fabricGlass = ItemTags.create(new ResourceLocation("c:glass_blocks"));
-            var fabricSlimeBalls = ItemTags.create(new ResourceLocation("c:slime_balls"));
-            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get()).requires(fabricEggs).requires(Items.WHEAT).requires(Items.ROTTEN_FLESH).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_from_rotten_flesh_fabric");
-            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get()).requires(Tags.Items.EGGS).requires(Items.WHEAT).requires(Items.ROTTEN_FLESH).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_from_rotten_flesh_forge");
-            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get(), 4).requires(fabricEggs).requires(Items.WHEAT).requires(ModItems.FAILURESAURUS_FLESH.get()).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_from_failuresaurus_flesh_fabric");
-            ShapelessRecipeBuilder.shapeless(ModItems.BIO_GOO.get(), 4).requires(Tags.Items.EGGS).requires(Items.WHEAT).requires(ModItems.FAILURESAURUS_FLESH.get()).requires(Items.MILK_BUCKET).unlockedBy("has_egg", RecipeProvider.has(Items.EGG)).save(consumer, Fossil.MOD_ID + ":bio_goo_from_failuresaurus_flesh_forge");
-
             ShapedRecipeBuilder.shaped(ANALYZER.get()).define('I', Items.IRON_INGOT).define('R', ModItems.RELIC_SCRAP.get()).define('B', ModItems.BIO_FOSSIL.get()).pattern("IRI").pattern("IBI").unlockedBy("has_bio_fossil", RecipeProvider.has(ModItems.BIO_FOSSIL.get())).save(consumer);
-            ShapedRecipeBuilder.shaped(CULTURE_VAT.get()).define('I', Items.IRON_INGOT).define('S', fabricSlimeBalls).define('G', fabricGlass).define('W', Items.WATER_BUCKET).pattern("GSG").pattern("GWG").pattern("III").unlockedBy("has_dna", RecipeProvider.has(ModItemTags.DNA)).save(consumer, Fossil.MOD_ID + ":culture_vat_fabric");
-            ShapedRecipeBuilder.shaped(CULTURE_VAT.get()).define('I', Items.IRON_INGOT).define('S', Tags.Items.SLIMEBALLS).define('G', Tags.Items.GLASS).define('W', Items.WATER_BUCKET).pattern("GSG").pattern("GWG").pattern("III").unlockedBy("has_dna", RecipeProvider.has(ModItemTags.DNA)).save(consumer, Fossil.MOD_ID + ":culture_vat_forge");
-            ShapedRecipeBuilder.shaped(FEEDER.get()).define('I', Items.IRON_INGOT).define('S', Blocks.STONE).define('B', Blocks.STONE_BUTTON).define('W', Items.BUCKET).define('G', fabricGlass).pattern("IGI").pattern("BWS").pattern("SSS").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS)).save(consumer, Fossil.MOD_ID + ":feeder_fabric");
-            ShapedRecipeBuilder.shaped(FEEDER.get()).define('I', Items.IRON_INGOT).define('S', Blocks.STONE).define('B', Blocks.STONE_BUTTON).define('W', Items.BUCKET).define('G', Tags.Items.GLASS).pattern("IGI").pattern("BWS").pattern("SSS").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS)).save(consumer, Fossil.MOD_ID + ":feeder_forge");
             ShapedRecipeBuilder.shaped(BUBBLE_BLOWER.get()).define('I', Items.GOLD_INGOT).define('N', Items.GOLD_NUGGET).define('W', Items.WATER_BUCKET).pattern("NIN").pattern("IWI").pattern("NIN").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS)).save(consumer);
             ShapedRecipeBuilder.shaped(SIFTER.get()).define('I', Blocks.IRON_BARS).define('S', Items.STRING).define('P', ItemTags.PLANKS).pattern("SPS").pattern("PIP").pattern("PSP").unlockedBy("has_planks", RecipeProvider.has(ItemTags.PLANKS)).save(consumer);
             ShapedRecipeBuilder.shaped(WORKTABLE.get()).define('L', Items.LEATHER).define('C', Blocks.CRAFTING_TABLE).pattern("L").pattern("C").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
