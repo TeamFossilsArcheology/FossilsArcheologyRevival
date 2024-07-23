@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/amber_chunk",
+      "y": 270
+    },
+    "facing=south": {
+      "model": "fossil:block/amber_chunk",
+      "y": 90
+    },
+    "facing=west": {
+      "model": "fossil:block/amber_chunk",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "fossil:block/amber_chunk"
+    }
+  }
+}

@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "fossil:ancient_wood_planks",
     "fossil:calamites_planks",
     "fossil:cordaites_planks",
     "fossil:mutant_tree_planks",

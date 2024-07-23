@@ -11,6 +11,7 @@ import net.minecraft.world.item.Item;
 public class ModItemTags {
     private static final ResourceKey<? extends Registry<Item>> key = ModItems.ITEMS.getRegistrar().key();
 
+    public static final TagKey<Item> ANCIENT_WOOD_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "ancient_wood_logs"));
     public static final TagKey<Item> CALAMITES_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "calamites_logs"));
     public static final TagKey<Item> CORDAITES_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "cordaites_logs"));
     public static final TagKey<Item> MUTANT_TREE_LOGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "mutant_tree_logs"));

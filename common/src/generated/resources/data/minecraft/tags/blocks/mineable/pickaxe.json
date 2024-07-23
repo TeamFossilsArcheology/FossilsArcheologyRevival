@@ -23,6 +23,12 @@
     "fossil:volcanic_tiles",
     "fossil:volcanic_tile_slab",
     "fossil:volcanic_tile_stairs",
-    "fossil:volcanic_tile_wall"
+    "fossil:volcanic_tile_wall",
+    "fossil:amber_ore",
+    "fossil:amber_block",
+    "fossil:amber_chunk",
+    "fossil:amber_chunk_dominican",
+    "fossil:amber_chunk_mosquito",
+    "fossil:shell"
   ]
 }

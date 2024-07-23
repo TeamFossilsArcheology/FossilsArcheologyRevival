@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class FigurineBlock extends HorizontalDirectionalBlock {
     protected final FigurineVariant variant;
 
-    public FigurineBlock(FigurineVariant variant) {
+    protected FigurineBlock(FigurineVariant variant) {
         super(Properties.of(Material.DECORATION).sound(SoundType.STONE));
         registerDefaultState(getStateDefinition().any().setValue(FACING, Direction.NORTH));
         this.variant = variant;

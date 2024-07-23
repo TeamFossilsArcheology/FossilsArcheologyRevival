@@ -8,8 +8,9 @@
 	"elements": [
 		{
 			"name": "shell2",
-			"from": [4.5, 0, -0.5],
-			"to": [11.5, 4, 3.5],
+			"from": [4.5, 0, 0],
+			"to": [11.5, 3, 3.5],
+			"rotation": {"angle": 0, "axis": "z", "origin": [0, 0, 0.5]},
 			"faces": {
 				"north": {"uv": [8, 2, 9.75, 4], "texture": "#texture"},
 				"east": {"uv": [7, 2, 8, 4], "texture": "#texture"},
@@ -21,8 +22,9 @@
 		},
 		{
 			"name": "opercule",
-			"from": [5, 1, -0.4],
-			"to": [11, 9, 3.6],
+			"from": [5, 1, 0.1],
+			"to": [11, 8, 3.6],
+			"rotation": {"angle": 0, "axis": "z", "origin": [0, 0, 0.5]},
 			"faces": {
 				"north": {"uv": [11.25, 6.5, 12.75, 10.5], "texture": "#texture"},
 				"east": {"uv": [10.25, 6.5, 11.25, 10.5], "texture": "#texture"},
@@ -35,7 +37,7 @@
 		{
 			"name": "shell1",
 			"from": [4.5, 0, 3.5],
-			"to": [11.5, 16, 16.5],
+			"to": [11.5, 15, 16],
 			"faces": {
 				"north": {"uv": [3.25, 6.5, 5, 14.5], "texture": "#texture"},
 				"east": {"uv": [0, 6.5, 3.25, 14.5], "texture": "#texture"},

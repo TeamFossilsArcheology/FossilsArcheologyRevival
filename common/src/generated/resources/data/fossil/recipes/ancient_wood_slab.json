@@ -1,17 +1,16 @@
 {
   "type": "minecraft:crafting_shaped",
+  "group": "wooden_slab",
   "pattern": [
-    "X  ",
-    "XX ",
-    "XXX"
+    "###"
   ],
   "key": {
-    "X": {
+    "#": {
       "item": "fossil:ancient_wood_planks"
     }
   },
   "result": {
-    "item": "fossil:ancient_wood_stairs",
-    "count": 4
+    "item": "fossil:ancient_wood_slab",
+    "count": 6
   }
 }

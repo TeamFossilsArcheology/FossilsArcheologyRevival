@@ -1,6 +1,7 @@
 {
   "replace": false,
   "values": [
+    "fossil:ancient_wood_slab",
     "fossil:calamites_slab",
     "fossil:cordaites_slab",
     "fossil:mutant_tree_slab",

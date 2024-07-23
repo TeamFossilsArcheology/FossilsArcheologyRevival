@@ -2,7 +2,6 @@
   "replace": false,
   "values": [
     "fossil:ancient_stone_slab",
-    "fossil:ancient_wood_slab",
     "fossil:volcanic_brick_slab",
     "fossil:volcanic_tile_slab"
   ]

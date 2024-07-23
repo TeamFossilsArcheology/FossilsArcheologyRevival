@@ -6,7 +6,6 @@ import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.*;
 import dev.architectury.registry.registries.RegistrySupplier;
-import net.minecraft.core.Direction;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
@@ -216,6 +215,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
             woodBlock(STRIPPED_TEMPSKYA_WOOD.get(), STRIPPED_TEMPSKYA_LOG.get());
             crossBlock(TEMPSKYA_SAPLING.get());
         }
+
+        amberChunkBlock(AMBER_CHUNK.get());
+        amberChunkBlock(AMBER_CHUNK_DOMINICAN.get());
+        amberChunkBlock(AMBER_CHUNK_MOSQUITO.get());
+
+        ResourceLocation shell = blockTexture(SHELL.get());
+        models().registerExistingModel(shell);
+        ModelFile file = models().getExistingFile(shell);
+        horizontalBlock(SHELL.get(), file);
     }
 
     public void registerExistingTextures(Block... blocks) {
@@ -332,15 +340,17 @@ public class ModBlockStateProvider extends BlockStateProvider {
         ResourceLocation texture = new ResourceLocation(Fossil.MOD_ID, "block/vases/" + block.getRegistryName().getPath());
         models().registerExistingTexture(texture);
         ModelFile file = models().singleTexture("block/vases/" + block.getRegistryName().getPath(), template, texture);
-        getVariantBuilder(block)
-                .partialState().with(VaseBlock.FACING, Direction.NORTH).setModels(ConfiguredModel.builder()
-                        .modelFile(file).buildLast())
-                .partialState().with(VaseBlock.FACING, Direction.EAST).setModels(ConfiguredModel.builder()
-                        .modelFile(file).rotationY(90).buildLast())
-                .partialState().with(VaseBlock.FACING, Direction.SOUTH).setModels(ConfiguredModel.builder()
-                        .modelFile(file).rotationY(180).buildLast())
-                .partialState().with(VaseBlock.FACING, Direction.WEST).setModels(ConfiguredModel.builder()
-                        .modelFile(file).rotationY(270).buildLast());
+        horizontalBlock(block, file);
+    }
+
+    public void amberChunkBlock(Block block) {
+        ResourceLocation template = new ResourceLocation(Fossil.MOD_ID, "block/amber_chunk_template");
+        models().registerExistingModel(template);
+        itemModels().basicItem(block.getRegistryName());
+        ResourceLocation texture = new ResourceLocation(Fossil.MOD_ID, "block/" + block.getRegistryName().getPath());
+        models().registerExistingTexture(texture);
+        ModelFile file = models().singleTexture("block/" + block.getRegistryName().getPath(), template, "all", texture);
+        horizontalBlock(block, file, 90);
     }
 
     private void shortBerryBlock(PrehistoricPlantInfo info, ShortBerryBushBlock block) {

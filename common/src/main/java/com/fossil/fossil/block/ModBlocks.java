@@ -39,7 +39,7 @@ public class ModBlocks {
             () -> new AnalyzerBlock(BlockBehaviour.Properties.of(Material.METAL, MaterialColor.METAL).strength(3f).requiresCorrectToolForDrops()
                     .lightLevel(activeBlockEmission(14))));
     public static final RegistrySupplier<SifterBlock> SIFTER = registerBlock("sifter",
-            () -> new SifterBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.METAL)));
+            () -> new SifterBlock(BlockBehaviour.Properties.of(Material.WOOD).strength(2.5f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<CultureVatBlock> CULTURE_VAT = registerBlock("culture_vat", () -> new CultureVatBlock(
             BlockBehaviour.Properties.of(Material.GLASS, MaterialColor.COLOR_CYAN).strength(2f).requiresCorrectToolForDrops()
                     .lightLevel(activeBlockEmission(14)).noOcclusion()));
@@ -68,34 +68,35 @@ public class ModBlocks {
             () -> new SarcophagusBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)
                     .lightLevel(state -> state.getValue(SarcophagusBlock.LIT) ? 7 : 0)), block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
     public static final RegistrySupplier<Block> SHELL = registerBlock("shell",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).noOcclusion()));
+            () -> new ShellBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1).requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
             () -> new OreBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> AMBER_BLOCK = registerBlock("amber_block",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
                     .isViewBlocking(ModBlocks::never)));
     public static final RegistrySupplier<Block> AMBER_CHUNK = registerBlock("amber_chunk",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
-                    .isViewBlocking(ModBlocks::never)));
+            () -> new AmberChunkBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()
+                    .noOcclusion().isViewBlocking(ModBlocks::never)));
     public static final RegistrySupplier<Block> AMBER_CHUNK_DOMINICAN = registerBlock("amber_chunk_dominican",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
-                    .isViewBlocking(ModBlocks::never)));
+            () -> new AmberChunkBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()
+                    .noOcclusion().isViewBlocking(ModBlocks::never)));
     public static final RegistrySupplier<Block> AMBER_CHUNK_MOSQUITO = registerBlock("amber_chunk_mosquito",
-            () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
-                    .isViewBlocking(ModBlocks::never)));
+            () -> new AmberChunkBlock(BlockBehaviour.Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()
+                    .noOcclusion().isViewBlocking(ModBlocks::never)));
     public static final RegistrySupplier<IcedDirtBlock> ICED_DIRT = registerBlock("iced_dirt",
             () -> new IcedDirtBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(1, 4).requiresCorrectToolForDrops()
-                    .sound(SoundType.GLASS).randomTicks()));
+                    .sound(SoundType.MOSS).randomTicks()));
     public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
             () -> new ObsidianSpikesBlock(BlockBehaviour.Properties.of(Material.STONE).strength(50, 2000).sound(SoundType.STONE)
                     .requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistrySupplier<DenseSandBlock> DENSE_SAND = registerBlock("dense_sand",
-            () -> new DenseSandBlock(9205340, BlockBehaviour.Properties.of(Material.SAND).strength(3f, 15f).sound(SoundType.SAND)));
+            () -> new DenseSandBlock(0x8C765C, BlockBehaviour.Properties.of(Material.SAND).strength(3f, 15f).sound(SoundType.SAND)));
     public static final RegistrySupplier<SkullBlock> SKULL_BLOCK = registerBlock("skull",
-            () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).strength(4f, 15f).requiresCorrectToolForDrops()));
+            () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).strength(2, 15f)
+                    .requiresCorrectToolForDrops().sound(SoundType.BONE_BLOCK)));
     public static final RegistrySupplier<SkullBlock> SKULL_LANTERN = registerBlock("skull_lantern",
-            () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(value -> 14).strength(4f, 15f)
-                    .requiresCorrectToolForDrops()));
+            () -> new SkullBlock(BlockBehaviour.Properties.of(Material.STONE).lightLevel(value -> 14).strength(2, 15f)
+                    .requiresCorrectToolForDrops().sound(SoundType.BONE_BLOCK)));
     public static final RegistrySupplier<Block> SLIME_TRAIL = registerBlock("slime_trail",
             () -> new RailBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)));
     public static final RegistrySupplier<Block> ANCIENT_STONE = registerBlock("ancient_stone",
@@ -133,8 +134,8 @@ public class ModBlocks {
             () -> new PermafrostBlock(
                     BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(2f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
-            () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(
-                    SoundType.GRAVEL)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops()
+                    .sound(SoundType.GRAVEL)));
     public static final RegistrySupplier<Block> VOLCANIC_ROCK = registerBlock("volcanic_rock",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_BRICKS = registerBlock("volcanic_bricks",

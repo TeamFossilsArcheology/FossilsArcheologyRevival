@@ -45,7 +45,7 @@ public class SarcophagusBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty LAYER = IntegerProperty.create("layer", 0, 2);
     public static final BooleanProperty LIT = BlockStateProperties.LIT;
-    private static final VoxelShape SHAPE = Block.box(0, 0, 0, 16, 43, 16);
+    private static final VoxelShape SHAPE = Block.box(1, 0, -1, 16, 49, 17);
 
 
     public SarcophagusBlock(Properties properties) {

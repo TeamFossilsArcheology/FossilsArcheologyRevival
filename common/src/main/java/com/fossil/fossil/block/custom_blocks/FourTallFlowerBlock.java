@@ -37,7 +37,7 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
     }
 
     @Override
-    public VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+    public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         Vec3 vec3 = state.getOffset(level, pos);
         return shape.move(vec3.x, vec3.y, vec3.z);
     }

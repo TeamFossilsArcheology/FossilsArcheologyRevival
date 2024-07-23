@@ -49,14 +49,14 @@ public class BubbleBlowerBlock extends BaseEntityBlock implements IDinoUnbreakab
 
     @Override
     public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
-        if (state.getValue(ACTIVE) && !level.hasNeighborSignal(pos)) {
+        if (Boolean.TRUE.equals(state.getValue(ACTIVE)) && !level.hasNeighborSignal(pos)) {
             level.setBlock(pos, state.setValue(ACTIVE, false), 2);
         }
     }
 
     @Override
     public void animateTick(BlockState state, Level level, BlockPos pos, Random random) {
-        if (state.getValue(ACTIVE)) {
+        if (Boolean.TRUE.equals(state.getValue(ACTIVE))) {
             int x = pos.getX();
             int y = pos.getY();
             int z = pos.getZ();
@@ -106,7 +106,8 @@ public class BubbleBlowerBlock extends BaseEntityBlock implements IDinoUnbreakab
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return super.getStateForPlacement(context).setValue(FACING, context.getHorizontalDirection().getOpposite());
+        boolean bl = context.getLevel().hasNeighborSignal(context.getClickedPos());
+        return defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite()).setValue(ACTIVE, bl);
     }
 
     @Override

@@ -117,6 +117,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModItemTags.COOKABLE_EGGS).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);
         tag(ModItemTags.ALL_BONES).addTags(ModItemTags.ARM_BONES, ModItemTags.FOOT_BONES, ModItemTags.LEG_BONES, ModItemTags.RIBCAGE_BONES, ModItemTags.SKULL_BONES, ModItemTags.TAIL_BONES, ModItemTags.UNIQUE_BONES, ModItemTags.VERTEBRAE_BONES);
         tag(ItemTags.MUSIC_DISCS).add(RECORD_ANU.get(), RECORD_BONES.get(), RECORD_DISCOVERY.get(), RECORD_SCARAB.get());
+        copy(ModBlockTags.ANCIENT_WOOD_LOGS, ModItemTags.ANCIENT_WOOD_LOGS);
         copy(ModBlockTags.CALAMITES_LOGS, ModItemTags.CALAMITES_LOGS);
         copy(ModBlockTags.CORDAITES_LOGS, ModItemTags.CORDAITES_LOGS);
         copy(ModBlockTags.PALM_LOGS, ModItemTags.PALM_LOGS);

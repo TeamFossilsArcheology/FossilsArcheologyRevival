@@ -45,6 +45,7 @@ import static com.fossil.fossil.block.ModBlocks.*;
 import static com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo.*;
 
 public class ModRecipeProvider extends RecipeProvider {
+    public static final BlockFamily ANCIENT_WOOD_PLANKS = new BlockFamily.Builder(ModBlocks.ANCIENT_WOOD_PLANKS.get()).slab(ANCIENT_WOOD_SLAB.get()).stairs(ANCIENT_WOOD_STAIRS.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily CALAMITES_PLANKS = new BlockFamily.Builder(ModBlocks.CALAMITES_PLANKS.get()).button(CALAMITES_BUTTON.get()).fence(CALAMITES_FENCE.get()).fenceGate(CALAMITES_FENCE_GATE.get()).pressurePlate(CALAMITES_PRESSURE_PLATE.get()).slab(CALAMITES_SLAB.get()).stairs(CALAMITES_STAIRS.get()).door(CALAMITES_DOOR.get()).trapdoor(CALAMITES_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily CORDAITES_PLANKS = new BlockFamily.Builder(ModBlocks.CORDAITES_PLANKS.get()).button(CORDAITES_BUTTON.get()).fence(CORDAITES_FENCE.get()).fenceGate(CORDAITES_FENCE_GATE.get()).pressurePlate(CORDAITES_PRESSURE_PLATE.get()).slab(CORDAITES_SLAB.get()).stairs(CORDAITES_STAIRS.get()).door(CORDAITES_DOOR.get()).trapdoor(CORDAITES_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily MUTANT_TREE_PLANKS = new BlockFamily.Builder(ModBlocks.MUTANT_TREE_PLANKS.get()).button(MUTANT_TREE_BUTTON.get()).fence(MUTANT_TREE_FENCE.get()).fenceGate(MUTANT_TREE_FENCE_GATE.get()).pressurePlate(MUTANT_TREE_PRESSURE_PLATE.get()).slab(MUTANT_TREE_SLAB.get()).stairs(MUTANT_TREE_STAIRS.get()).door(MUTANT_TREE_DOOR.get()).trapdoor(MUTANT_TREE_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
@@ -162,12 +163,14 @@ public class ModRecipeProvider extends RecipeProvider {
             }
 
             ShapelessRecipeBuilder.shapeless(DENSE_SAND.get()).requires(Blocks.SAND).requires(Items.QUARTZ).unlockedBy("has_sand", RecipeProvider.has(Blocks.SAND)).save(consumer);
+            generateFamilyRecipes(ANCIENT_WOOD_PLANKS, consumer);
             generateFamilyRecipes(CALAMITES_PLANKS, consumer);
             generateFamilyRecipes(CORDAITES_PLANKS, consumer);
             generateFamilyRecipes(MUTANT_TREE_PLANKS, consumer);
             generateFamilyRecipes(PALM_PLANKS, consumer);
             generateFamilyRecipes(SIGILLARIA_PLANKS, consumer);
             generateFamilyRecipes(TEMPSKYA_PLANKS, consumer);
+            RecipeProvider.planksFromLogs(consumer, ModBlocks.ANCIENT_WOOD_PLANKS.get(), ModItemTags.ANCIENT_WOOD_LOGS);
             RecipeProvider.planksFromLogs(consumer, ModBlocks.CALAMITES_PLANKS.get(), ModItemTags.CALAMITES_LOGS);
             RecipeProvider.planksFromLogs(consumer, ModBlocks.CORDAITES_PLANKS.get(), ModItemTags.CORDAITES_LOGS);
             RecipeProvider.planksFromLogs(consumer, ModBlocks.MUTANT_TREE_PLANKS.get(), ModItemTags.MUTANT_TREE_LOGS);

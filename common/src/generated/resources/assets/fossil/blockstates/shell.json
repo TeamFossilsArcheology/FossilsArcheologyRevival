@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "fossil:block/shell"
+    },
+    "facing=south": {
+      "model": "fossil:block/shell",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "fossil:block/shell",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "fossil:block/shell",
+      "y": 90
+    }
+  }
+}

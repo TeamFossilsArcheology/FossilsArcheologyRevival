@@ -2,14 +2,15 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [64, 32],
 	"textures": {
-		"texture": "#all",
-		"particle": "#all"
+		"particle": "#all",
+		"texture": "#all"
 	},
 	"elements": [
 		{
 			"name": "leftPiece",
-			"from": [5.2, -0.5, 2.1],
-			"to": [10.2, 4.5, 6.1],
+			"from": [5.2, 0, 2],
+			"to": [10.2, 5, 6],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.5, 0]},
 			"faces": {
 				"north": {"uv": [1, 9, 2.25, 11.5], "texture": "#texture"},
 				"east": {"uv": [0, 9, 1, 11.5], "texture": "#texture"},
@@ -21,8 +22,9 @@
 		},
 		{
 			"name": "rightPiece",
-			"from": [6.4, -0.5, 10.9],
-			"to": [10.4, 3.5, 13.9],
+			"from": [6.4, 0, 11],
+			"to": [10.4, 4, 14],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.5, 0]},
 			"faces": {
 				"north": {"uv": [0.75, 13.5, 1.75, 15.5], "texture": "#texture"},
 				"east": {"uv": [0, 13.5, 0.75, 15.5], "texture": "#texture"},
@@ -34,8 +36,9 @@
 		},
 		{
 			"name": "middlePiece",
-			"from": [5, -0.5, 5.7],
-			"to": [11, 6.5, 11.7],
+			"from": [5, 0, 5.7],
+			"to": [11, 7, 11.7],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.5, 0]},
 			"faces": {
 				"north": {"uv": [1.5, 3, 3, 6.5], "texture": "#texture"},
 				"east": {"uv": [0, 3, 1.5, 6.5], "texture": "#texture"},
@@ -47,8 +50,9 @@
 		},
 		{
 			"name": "mosquito1",
-			"from": [7.5, 3.6, 9.1],
-			"to": [8.5, 5.6, 10.1],
+			"from": [7.5, 4.1, 9.1],
+			"to": [8.5, 6.1, 10.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.5, 0]},
 			"faces": {
 				"north": {"uv": [5.5, 9.5, 5.75, 10.5], "texture": "#texture"},
 				"east": {"uv": [5.25, 9.5, 5.5, 10.5], "texture": "#texture"},
@@ -60,8 +64,9 @@
 		},
 		{
 			"name": "mosquito3",
-			"from": [7.5, 1.6, 7.1],
-			"to": [8.5, 3.6, 8.1],
+			"from": [7.5, 2.1, 7.1],
+			"to": [8.5, 4.1, 8.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.5, 0]},
 			"faces": {
 				"north": {"uv": [8, 9.5, 8.25, 10.5], "texture": "#texture"},
 				"east": {"uv": [7.75, 9.5, 8, 10.5], "texture": "#texture"},
@@ -73,8 +78,9 @@
 		},
 		{
 			"name": "mosquito4",
-			"from": [7.5, 4.6, 6.1],
-			"to": [8.5, 5.6, 8.1],
+			"from": [7.5, 5.1, 6.1],
+			"to": [8.5, 6.1, 8.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.5, 0]},
 			"faces": {
 				"north": {"uv": [8.25, 11.5, 8.5, 12], "texture": "#texture"},
 				"east": {"uv": [7.75, 11.5, 8.25, 12], "texture": "#texture"},
@@ -86,8 +92,9 @@
 		},
 		{
 			"name": "mosquito2",
-			"from": [7.5, 1.6, 8.1],
-			"to": [8.5, 4.6, 9.1],
+			"from": [7.5, 2.1, 8.1],
+			"to": [8.5, 5.1, 9.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.5, 0]},
 			"faces": {
 				"north": {"uv": [6.75, 9.5, 7, 11], "texture": "#texture"},
 				"east": {"uv": [6.5, 9.5, 6.75, 11], "texture": "#texture"},
@@ -99,8 +106,9 @@
 		},
 		{
 			"name": "mosquito1",
-			"from": [7.5, 2.6, 10.1],
-			"to": [8.5, 5.6, 11.1],
+			"from": [7.5, 3.1, 10.1],
+			"to": [8.5, 6.1, 11.1],
+			"rotation": {"angle": 0, "axis": "y", "origin": [0, 0.5, 0]},
 			"faces": {
 				"north": {"uv": [6.75, 9.5, 7, 11], "texture": "#texture"},
 				"east": {"uv": [6.5, 9.5, 6.75, 11], "texture": "#texture"},

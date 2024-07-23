@@ -1,17 +1,32 @@
 {
   "variants": {
-    "facing=north": {
+    "facing=north,half=upper": {
       "model": "fossil:block/vases/vase_amphora_light_blue"
     },
-    "facing=south": {
+    "facing=south,half=upper": {
       "model": "fossil:block/vases/vase_amphora_light_blue",
       "y": 180
     },
-    "facing=west": {
+    "facing=west,half=upper": {
       "model": "fossil:block/vases/vase_amphora_light_blue",
       "y": 270
     },
-    "facing=east": {
+    "facing=east,half=upper": {
+      "model": "fossil:block/vases/vase_amphora_light_blue",
+      "y": 90
+    },
+    "facing=north,half=lower": {
+      "model": "fossil:block/vases/vase_amphora_light_blue"
+    },
+    "facing=south,half=lower": {
+      "model": "fossil:block/vases/vase_amphora_light_blue",
+      "y": 180
+    },
+    "facing=west,half=lower": {
+      "model": "fossil:block/vases/vase_amphora_light_blue",
+      "y": 270
+    },
+    "facing=east,half=lower": {
       "model": "fossil:block/vases/vase_amphora_light_blue",
       "y": 90
     }
