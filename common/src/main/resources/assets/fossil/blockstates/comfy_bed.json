@@ -1,0 +1,36 @@
+{
+  "variants": {
+    "facing=east,part=head": {
+      "model": "fossil:block/comfy_bed_head",
+      "y": 270
+    },
+    "facing=north,part=head": {
+      "model": "fossil:block/comfy_bed_head",
+      "y": 180
+    },
+    "facing=south,part=head": {
+      "model": "fossil:block/comfy_bed_head",
+      "y": 0
+    },
+    "facing=west,part=head": {
+      "model": "fossil:block/comfy_bed_head",
+      "y": 90
+    },
+    "facing=east,part=foot": {
+      "model": "fossil:block/comfy_bed_foot",
+      "y": 270
+    },
+    "facing=north,part=foot": {
+      "model": "fossil:block/comfy_bed_foot",
+      "y": 180
+    },
+    "facing=south,part=foot": {
+      "model": "fossil:block/comfy_bed_foot",
+      "y": 0
+    },
+    "facing=west,part=foot": {
+      "model": "fossil:block/comfy_bed_foot",
+      "y": 90
+    }
+  }
+}

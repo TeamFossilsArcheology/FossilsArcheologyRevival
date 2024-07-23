@@ -214,6 +214,7 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK_DOMINICAN.get());
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK_MOSQUITO.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SHELL.get());
+        RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.COMFY_BED.get());
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
         MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
         MenuScreens.register(ModMenus.CULTURE_VAT.get(), CultureVatScreen::new);

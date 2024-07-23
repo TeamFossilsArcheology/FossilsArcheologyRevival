@@ -67,6 +67,8 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SARCOPHAGUS = registerBlockWithCustomBlockItem("sarcophagus",
             () -> new SarcophagusBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)
                     .lightLevel(state -> state.getValue(SarcophagusBlock.LIT) ? 7 : 0)), block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+    public static final RegistrySupplier<BedBlock> COMFY_BED = registerBlock("comfy_bed", () -> new ComfyBedBlock(
+            BlockBehaviour.Properties.of(Material.WOOL).sound(SoundType.WOOD).strength(0.2f).noOcclusion()));
     public static final RegistrySupplier<Block> SHELL = registerBlock("shell",
             () -> new ShellBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1).requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",

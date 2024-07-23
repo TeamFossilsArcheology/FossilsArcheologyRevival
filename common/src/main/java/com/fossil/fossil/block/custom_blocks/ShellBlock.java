@@ -27,21 +27,12 @@ public class ShellBlock extends HorizontalDirectionalBlock {
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        switch (state.getValue(FACING)) {
-            case NORTH -> {
-                return NORTH_SHAPE;
-            }
-            case WEST -> {
-                return WEST_SHAPE;
-            }
-            case SOUTH -> {
-                return SOUTH_SHAPE;
-            }
-            case EAST -> {
-                return EAST_SHAPE;
-            }
-        }
-        return NORTH_SHAPE;
+        return switch (state.getValue(FACING)) {
+            case NORTH -> NORTH_SHAPE;
+            case SOUTH -> SOUTH_SHAPE;
+            case WEST -> WEST_SHAPE;
+            default -> EAST_SHAPE;
+        };
     }
 
     @Nullable

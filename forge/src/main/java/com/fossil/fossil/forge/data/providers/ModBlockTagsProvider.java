@@ -53,6 +53,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addTag(BlockTags.WALLS, ANCIENT_STONE_WALL, VOLCANIC_BRICK_WALL, VOLCANIC_TILE_WALL);
         addTag(BlockTags.RAILS, SLIME_TRAIL);
         addTag(BlockTags.LEAVES, CALAMITES_LEAVES, CORDAITES_LEAVES, MUTANT_TREE_LEAVES, PALM_LEAVES, SIGILLARIA_LEAVES, TEMPSKYA_LEAF);
+        addTag(BlockTags.BEDS, COMFY_BED);
         addTag(BlockTags.PORTALS, ANU_PORTAL, HOME_PORTAL);
         addTag(BlockTags.SOUL_SPEED_BLOCKS, TARRED_DIRT);
         addTag(BlockTags.CLIMBABLE, MUTANT_TREE_VINE);

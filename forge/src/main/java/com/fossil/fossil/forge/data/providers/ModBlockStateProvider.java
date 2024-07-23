@@ -19,6 +19,7 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 import java.util.stream.IntStream;
 
 import static com.fossil.fossil.block.ModBlocks.*;
+import static net.minecraftforge.client.model.generators.ModelProvider.BLOCK_FOLDER;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     private final ModBlockModelProvider blockModels;
@@ -222,8 +223,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         ResourceLocation shell = blockTexture(SHELL.get());
         models().registerExistingModel(shell);
-        ModelFile file = models().getExistingFile(shell);
-        horizontalBlock(SHELL.get(), file);
+        horizontalBlock(SHELL.get(), models().getExistingFile(shell));
     }
 
     public void registerExistingTextures(Block... blocks) {
@@ -269,14 +269,14 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     public void wallBlock(WallBlock block, ResourceLocation texture) {
         itemModels().blockItem(block.getRegistryName(), "_inventory");
-        models().singleTexture("block/" + block.getRegistryName().getPath() + "_inventory", mcLoc("wall_inventory"), "wall", texture);
+        models().singleTexture(BLOCK_FOLDER + block.getRegistryName().getPath() + "_inventory", mcLoc("wall_inventory"), "wall", texture);
         super.wallBlock(block, texture);
     }
 
     @Override
     public void fenceBlock(FenceBlock block, ResourceLocation texture) {
         itemModels().blockItem(block.getRegistryName(), "_inventory");
-        models().singleTexture("block/" + block.getRegistryName().getPath() + "_inventory", mcLoc("fence_inventory"), texture);
+        models().singleTexture(BLOCK_FOLDER + block.getRegistryName().getPath() + "_inventory", mcLoc("fence_inventory"), texture);
         //getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
         super.fenceBlock(block, texture);
     }
@@ -308,7 +308,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     public void buttonBlock(ButtonBlock block, ResourceLocation texture) {
         itemModels().blockItem(block.getRegistryName(), "_inventory");
-        models().singleTexture("block/" + block.getRegistryName().getPath() + "_inventory", mcLoc("button_inventory"), texture);
+        models().singleTexture(BLOCK_FOLDER + block.getRegistryName().getPath() + "_inventory", mcLoc("button_inventory"), texture);
         //getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
         super.buttonBlock(block, texture);
     }
@@ -323,7 +323,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         itemModels().simpleItem(block.getRegistryName(), true);
         ResourceLocation texture = blockTexture(block);
         models().registerExistingTexture(texture);
-        ModelFile file = models().singleTexture("block/" + block.getRegistryName().getPath(), mcLoc("cross"), "cross", texture);
+        ModelFile file = models().singleTexture(BLOCK_FOLDER + block.getRegistryName().getPath(), mcLoc("cross"), "cross", texture);
         getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
     }
 
@@ -331,7 +331,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         itemModels().blockItem(block.getRegistryName());
         ResourceLocation texture = blockTexture(block);
         models().registerExistingTexture(texture);
-        ModelFile file = models().singleTexture("block/" + block.getRegistryName().getPath(), mcLoc("leaves"), "all", texture);
+        ModelFile file = models().singleTexture(BLOCK_FOLDER + block.getRegistryName().getPath(), mcLoc("leaves"), "all", texture);
         getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
     }
 
@@ -347,9 +347,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
         ResourceLocation template = new ResourceLocation(Fossil.MOD_ID, "block/amber_chunk_template");
         models().registerExistingModel(template);
         itemModels().basicItem(block.getRegistryName());
-        ResourceLocation texture = new ResourceLocation(Fossil.MOD_ID, "block/" + block.getRegistryName().getPath());
+        ResourceLocation texture = new ResourceLocation(Fossil.MOD_ID, BLOCK_FOLDER + block.getRegistryName().getPath());
         models().registerExistingTexture(texture);
-        ModelFile file = models().singleTexture("block/" + block.getRegistryName().getPath(), template, "all", texture);
+        ModelFile file = models().singleTexture(BLOCK_FOLDER + block.getRegistryName().getPath(), template, "all", texture);
         horizontalBlock(block, file, 90);
     }
 
