@@ -1,5 +1,6 @@
 package com.fossil.fossil.client.renderer.blockentity;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.custom_blocks.AnuBarrierBlock;
 import com.fossil.fossil.block.entity.AnuBarrierBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -16,14 +17,19 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
+import java.util.stream.IntStream;
+
 public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEntity> {
     private final float textureWidth = 16;
-    private final float textureHeight = 512;
-    private final ResourceLocation location = new ResourceLocation("textures/block/nether_portal.png");
+    private final float textureHeight = 16;
+    private static final ResourceLocation[] LOCATIONS = IntStream.range(1, 32)
+            .mapToObj(idx -> new ResourceLocation(Fossil.MOD_ID, "textures/block/anu_portal/anu_portal_"+idx+".png"))
+            .toArray(ResourceLocation[]::new);
 
     public AnuBarrierRenderer(BlockEntityRendererProvider.Context context) {
 
     }
+
 
     @Override
     public void render(AnuBarrierBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
@@ -34,7 +40,8 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
         poseStack.translate(-0.5, 0, -0.5);
         //Prevent z-fighting with half blocks
         poseStack.scale(0.0625f, 0.0625f, direction.getAxis() == Direction.Axis.X ? 0.063f : 0.062f);
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(location));
+        int i = (int) (blockEntity.getLevel().getGameTime() % LOCATIONS.length);
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(LOCATIONS[i]));
         renderBarrier(blockEntity, poseStack, vertexConsumer, packedLight);
         poseStack.popPose();
     }

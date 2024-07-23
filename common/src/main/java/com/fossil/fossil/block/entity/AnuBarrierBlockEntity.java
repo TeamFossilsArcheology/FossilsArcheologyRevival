@@ -106,7 +106,7 @@ public class AnuBarrierBlockEntity extends BlockEntity {
         for (int y = 0; y < height; y++) {
             for (int x = -radius; x <= radius; x++) {
                 if (level.isEmptyBlock(mutable.set(pos.getX() + direction.getStepX() * x, pos.getY() + y, pos.getZ() + direction.getStepZ() * x))) {
-                    level.setBlock(mutable, Blocks.BARRIER.defaultBlockState(), 3);
+                    level.setBlock(mutable, Blocks.BARRIER.defaultBlockState(), 18);
                 }
             }
         }
@@ -119,7 +119,7 @@ public class AnuBarrierBlockEntity extends BlockEntity {
             for (int x = -radius; x <= radius; x++) {
                 BlockState barrierState = level.getBlockState(mutable.set(pos.getX() + direction.getStepX() * x, pos.getY() + y, pos.getZ() + direction.getStepZ() * x));
                 if (barrierState.is(Blocks.BARRIER)) {
-                    level.removeBlock(mutable, false);
+                    level.setBlock(mutable, Blocks.AIR.defaultBlockState(), 18);
                 }
             }
         }
@@ -143,13 +143,13 @@ public class AnuBarrierBlockEntity extends BlockEntity {
         }
         state = STATE_GROWING;
         barrierTimer = 0;
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 18);
     }
 
     public void disable() {
         state = STATE_SHRINKING;
         destroyBarrier(getBlockPos(), getBlockState());
-        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 2);
+        level.sendBlockUpdated(getBlockPos(), getBlockState(), getBlockState(), 18);
     }
 
     public int getState() {
