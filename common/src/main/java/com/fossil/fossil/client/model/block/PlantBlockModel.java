@@ -12,7 +12,10 @@ import net.minecraft.util.GsonHelper;
 import org.jetbrains.annotations.Nullable;
 
 import java.lang.reflect.Type;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * This is a modification of the vanilla {@link net.minecraft.client.renderer.block.model.BlockModel BlockModel} that
@@ -65,7 +68,7 @@ public record PlantBlockModel(List<PlantBlockElement> elements, HashMap<String, 
             }
 
             private Map<Direction, PlantBlockElementFace> getFaces(JsonDeserializationContext context, JsonObject json) {
-                EnumMap<Direction, PlantBlockElementFace> map = Maps.newEnumMap(Direction.class);
+                Map<Direction, PlantBlockElementFace> map = Maps.newEnumMap(Direction.class);
                 JsonObject jsonObject = GsonHelper.getAsJsonObject(json, "faces");
                 for (Map.Entry<String, JsonElement> entry : jsonObject.entrySet()) {
                     Direction direction = getFacing(entry.getKey());

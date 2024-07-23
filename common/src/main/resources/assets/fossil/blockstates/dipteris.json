@@ -1,7 +1,7 @@
 {
   "variants": {
     "half=upper": {
-      "model": "fossil:block/empty"
+      "model": "fossil:block/dipteris_empty"
     },
     "half=lower": {
       "model": "fossil:block/dipteris"

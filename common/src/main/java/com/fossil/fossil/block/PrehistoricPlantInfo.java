@@ -93,8 +93,6 @@ public enum PrehistoricPlantInfo {
                 info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new VacciniumBushBlock(info.shape,  info));
                 info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(Foods.SWEET_BERRIES)));
                 info.registerPlantSeed(info.resourceName);
-            } else if (info == MUTANT_PLANT) {
-                info.plantBlock = ModBlocks.registerTallFlower(info.resourceName, info.shape);
             } else if (info.size == Size.SINGLE) {
                 info.plantBlock = ModBlocks.registerShortFlower(info.resourceName, info.shape);
                 info.registerPlantSeed(info.resourceName);
@@ -105,7 +103,7 @@ public enum PrehistoricPlantInfo {
                 info.plantBlock = ModBlocks.registerGrowableFlower(info.resourceName, (RegistrySupplier<TallFlowerBlock>) info.tallPlant.plantBlock,
                         info.shape);
                 info.registerPlantSeed(info.commonName);
-            } else if (info.size == Size.DOUBLE_GROWABLE) {
+            } else if (info.size == Size.DOUBLE_GROWABLE || info == MUTANT_PLANT) {
                 info.plantBlock = ModBlocks.registerTallFlower(info.resourceName, info.shape);
             } else if (info.size == Size.FOUR) {
                 info.plantBlock = ModBlocks.registerFourTallFlower(info.resourceName, info.shape);
