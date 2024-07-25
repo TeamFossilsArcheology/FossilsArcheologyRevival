@@ -237,8 +237,8 @@ public class DinopediaScreen extends Screen {
             } else {
                 font.draw(poseStack, new TranslatableComponent("pedia.fossil.owner", dino.getOwner().getName()), x, y + 80, col);
             }
-            var orderText = dino.getOrderType().getName();
-            renderHoverInfo(poseStack, x, y + 90, mouseX, mouseY, orderText, dino.getOrderType().getDescription());
+            var orderText = dino.getCurrentOrder().getName();
+            renderHoverInfo(poseStack, x, y + 90, mouseX, mouseY, orderText, dino.getCurrentOrder().getDescription());
             font.draw(poseStack, new TranslatableComponent("pedia.fossil.order.item", dino.getOrderItem().getName(null)), x, y + 100,
                     col);
             var activityText = dino.aiActivityType().getName();

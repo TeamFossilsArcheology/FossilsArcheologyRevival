@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -75,7 +76,7 @@ public class Gallimimus extends PrehistoricFlocking {
 
     @Override
     public boolean canDinoHunt(LivingEntity target) {
-        return isEntitySmallerThan(target, 0.6f) && super.canDinoHunt(target);
+        return Util.isEntitySmallerThan(target, 0.6f) && super.canDinoHunt(target);
     }
 
     @Override

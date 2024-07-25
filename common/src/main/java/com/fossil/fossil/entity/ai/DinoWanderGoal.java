@@ -25,7 +25,7 @@ public class DinoWanderGoal extends RandomStrollGoal {
     @Override
     public boolean canUse() {
         Prehistoric dinosaur = (Prehistoric) mob;
-        if (dinosaur.currentOrder != OrderType.WANDER || dinosaur.isImmobile() || dinosaur.getTarget() != null) {
+        if (dinosaur.getCurrentOrder() != OrderType.WANDER || dinosaur.isImmobile() || dinosaur.getTarget() != null) {
             return false;
         }
         if (dinosaur instanceof PrehistoricFlocking flocking && !flocking.isGroupLeader() && flocking.hasGroupLeader()) {

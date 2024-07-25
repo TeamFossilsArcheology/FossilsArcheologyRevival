@@ -2,13 +2,11 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.advancements.ModTriggers;
-import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
-import com.fossil.fossil.entity.ai.control.TestLookControl;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
@@ -19,6 +17,7 @@ import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.entity.prehistoric.Deinonychus;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.C2SHitPlayerMessage;
 import com.fossil.fossil.network.MessageHandler;
@@ -46,7 +45,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
@@ -68,17 +66,15 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BushBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
@@ -97,7 +93,7 @@ import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.
 
 public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable<Prehistoric>, PrehistoricDebug {
 
-    public static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
+    private static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Boolean> EATING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Integer> MOOD = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
@@ -111,7 +107,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected final WhipSteering steering = new WhipSteering(this);
     private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
     public final ResourceLocation animationLocation;
-    public OrderType currentOrder;
+    private OrderType currentOrder;
     protected boolean hasFeatherToggle = false;
     protected boolean featherToggle;
     protected boolean hasTeenTexture = true;
@@ -142,7 +138,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         super(entityType, level);
         this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.moveControl = new SmoothTurningMoveControl(this);
-        lookControl = new TestLookControl(this);
+        //lookControl = new TestLookControl(this);
         this.setHunger(this.getMaxHunger() / 2);
         this.pediaScale = 1.0F;
         this.currentOrder = OrderType.WANDER;
@@ -279,7 +275,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         ticksClimbing = compound.getInt("TicksClimbing");
         climbingCooldown = compound.getInt("ClimbingCooldown");
         if (compound.contains("CurrentOrder", CompoundTag.TAG_BYTE)) {
-            setOrder(OrderType.values()[compound.getByte("CurrentOrder")]);
+            setCurrentOrder(OrderType.values()[compound.getByte("CurrentOrder")]);
         }
         yBodyRot = compound.getInt("YBodyRot");
         yHeadRot = compound.getInt("YHeadRot");
@@ -290,22 +286,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             setGender(Gender.MALE);
         }
-    }
-
-    public static boolean isEntitySmallerThan(Entity entity, float size) {
-        if (entity instanceof Prehistoric prehistoric) {
-            return prehistoric.getBbWidth() <= size;
-        } else {
-            return entity.getBbWidth() <= size;
-        }
-    }
-
-    public static boolean canBreak(Block block) {
-        //TODO: Big break Test
-        if (block instanceof IDinoUnbreakable) return false;
-        BlockState state = block.defaultBlockState();
-        if (!state.requiresCorrectToolForDrops()) return false;
-        return !state.is(BlockTags.NEEDS_DIAMOND_TOOL);
     }
 
     public boolean isCustomMultiPart() {
@@ -399,28 +379,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public CompoundTag getDebugTag() {
-        return entityData.get(DEBUG);
-    }
-
-    @Override
-    public void disableCustomAI(byte type, boolean disableAI) {
-        CompoundTag tag = entityData.get(DEBUG).copy();
-        switch (type) {
-            case 0 -> setNoAi(disableAI);
-            case 1 -> tag.putBoolean("disableGoalAI", disableAI);
-            case 2 -> tag.putBoolean("disableMoveAI", disableAI);
-            case 3 -> tag.putBoolean("disableLookAI", disableAI);
-        }
-        entityData.set(DEBUG, tag);
-    }
-
-    @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
         return getType().getDimensions().scale(getScale());
     }
-
-    public abstract PrehistoricEntityInfo info();
 
     public AABB getAttackBounds() {
         float size = (float) (this.getBoundingBox().getSize() * 0.25F);
@@ -446,51 +407,18 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return spawnDataIn;
     }
 
-    public OrderType getOrderType() {
+    public OrderType getCurrentOrder() {
         return this.currentOrder;
+    }
+
+    public void setCurrentOrder(OrderType newOrder) {
+        //TODO: Look into this
+        currentOrder = newOrder;
     }
 
     @Override
     public boolean isImmobile() {//TODO: isVehicle not necessary for goals
         return getHealth() <= 0 || isSitting() || isActuallyWeak() || isVehicle() || isSleeping();
-    }
-
-    public boolean isSitting() {
-        return entityData.get(SITTING);
-    }
-
-    public void setSitting(boolean sitting) {
-        entityData.set(SITTING, sitting);
-    }
-
-    @Override
-    public boolean isSleeping() {
-        return entityData.get(SLEEPING);
-    }
-
-    @Override
-    public void startSleeping(BlockPos pos) {
-        setSleeping(true);
-        getNavigation().stop();
-    }
-
-    public void setSleeping(boolean sleeping) {
-        entityData.set(SLEEPING, sleeping);
-        if (!sleeping) {
-            cathermalSleepCooldown = 10000 + random.nextInt(6000);
-            setPose(Pose.STANDING);
-        } else {
-            setPose(Pose.SLEEPING);
-        }
-    }
-
-    @Override
-    public void stopSleeping() {
-    }
-
-    public void setOrder(OrderType newOrder) {
-        //TODO: Look into this
-        currentOrder = newOrder;
     }
 
     @Override
@@ -511,7 +439,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
      */
     public boolean canSleep() {
         if ((getTarget() == null || getTarget() instanceof ToyBase) && getLastHurtByMob() == null && !isInWater() && !isVehicle() && !isActuallyWeak()) {
-            return getOrderType() != OrderType.FOLLOW;
+            return getCurrentOrder() != OrderType.FOLLOW;
         }
         return false;
     }
@@ -531,6 +459,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
+    public float getWalkTargetValue(BlockPos pos, LevelReader level) {
+        return 0;
+    }
+
+    @Override
     public boolean isFood(ItemStack stack) {
         return false;
     }
@@ -543,12 +476,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Nullable
     public Player getRidingPlayer() {
         return getControllingPassenger() instanceof Player player ? player : null;
-    }
-
-    public void setRidingPlayer(Player player) {
-        player.yBodyRot = this.yBodyRot;
-        player.setXRot(getXRot());
-        player.startRiding(this);
     }
 
     @Override
@@ -600,6 +527,30 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             setDeltaMovement(getDeltaMovement().x, upwardMovement, getDeltaMovement().z);
         }
+    }
+
+    @Override
+    public boolean canJump() {
+        return isVehicle();
+    }
+
+    @Override
+    public void handleStartJump(int i) {
+        playSound(SoundEvents.HORSE_JUMP, 0.4f, 1);
+    }
+
+    @Override
+    public void handleStopJump() {
+    }
+
+    @Override
+    public void onPlayerJump(int jumpPower) {
+        playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * (float) jumpPower / 90.0f;
+    }
+
+    @Override
+    public boolean canBeControlledByRider() {
+        return data().canBeRidden() && getControllingPassenger() instanceof LivingEntity rider && isOwnedBy(rider);
     }
 
     @Override
@@ -661,6 +612,20 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
         }
         return null;
+    }
+
+    @Override
+    public boolean rideableUnderWater() {
+        return true;
+    }
+
+    @Override
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+        if (aiClimbType() == Climbing.ARTHROPOD || aiMovingType() == Moving.WALK_AND_GLIDE || aiMovingType() == Moving.FLIGHT) {
+            return false;
+        } else {
+            return super.causeFallDamage(distance, damageMultiplier, source);
+        }
     }
 
     @Override
@@ -751,7 +716,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (data().breaksBlocks() && moodSystem.getMood() < 0) {
             breakBlock(5);//TODO: Check if only server side
         }
-        if (getTarget() instanceof ToyBase && (isPreyBlocked(getTarget()) || moodSystem.getPlayingCooldown() > 0)) {
+        if (getTarget() instanceof ToyBase && (!getSensing().hasLineOfSight(getTarget()) || moodSystem.getPlayingCooldown() > 0)) {
             setTarget(null);
         }
         if (isFleeing()) {
@@ -823,77 +788,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public boolean onClimbable() {
-        if (aiMovingType() == Moving.AQUATIC || aiMovingType() == Moving.SEMI_AQUATIC) {
-            return false;
-        } else {
-            return aiClimbType() == Climbing.ARTHROPOD && isClimbing() && !isImmobile();
-        }
-    }
-
-    public boolean isClimbing() {
-        return entityData.get(CLIMBING);
-    }
-
-    public void setClimbing(boolean climbing) {
-        this.entityData.set(CLIMBING, climbing);
-    }
-
-    @Override
-    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
-        if (aiClimbType() == Climbing.ARTHROPOD || aiMovingType() == Moving.WALK_AND_GLIDE || aiMovingType() == Moving.FLIGHT) {
-            return false;
-        } else {
-            return super.causeFallDamage(distance, damageMultiplier, source);
-        }
-    }
-
-    public Activity aiActivityType() {
-        return ai().activity();
-    }
-
-    public Attacking aiAttackType() {
-        return ai().attacking();
-    }
-
-    public Climbing aiClimbType() {
-        return ai().climbing();
-    }
-
-    public Following aiFollowType() {
-        return ai().following();
-    }
-
-    public Jumping aiJumpType() {
-        return ai().jumping();
-    }
-
-    public Response aiResponseType() {
-        return ai().response();
-    }
-
-    public Stalking aiStalkType() {
-        return ai().stalking();
-    }
-
-    public Taming aiTameType() {
-        return ai().taming();
-    }
-
-    public Untaming aiUntameType() {
-        return ai().untaming();
-    }
-
-    public Moving aiMovingType() {
-        return ai().moving();
-    }
-
-    public WaterAbility aiWaterAbilityType() {
-        return ai().waterAbility();
-    }
-
-    @Override
-    public float getScale() {//TODO: Refresh Eye Height
+    public float getScale() {
         if (isAdult()) {
             return data().maxScale() * getGenderedScale();
         }
@@ -960,7 +855,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                     if (block instanceof BushBlock) continue;
                     if (!state.getFluidState().isEmpty()) continue;
                     if (state.getDestroySpeed(level, targetPos) >= maxHardness) continue;
-                    if (!canBreak(state.getBlock())) continue;
+                    if (!Util.canBreak(state.getBlock())) continue;
                     setDeltaMovement(getDeltaMovement().multiply(0.6, 1, 0.6));
                     if (!level.isClientSide) {
                         level.destroyBlock(targetPos, true);
@@ -968,6 +863,73 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 }
             }
         }
+    }
+
+    public boolean isSitting() {
+        return entityData.get(SITTING);
+    }
+
+    public void setSitting(boolean sitting) {
+        entityData.set(SITTING, sitting);
+    }
+
+    @Override
+    public boolean isSleeping() {
+        return entityData.get(SLEEPING);
+    }
+
+    @Override
+    public void startSleeping(BlockPos pos) {
+        setSleeping(true);
+        getNavigation().stop();
+    }
+
+    public void setSleeping(boolean sleeping) {
+        entityData.set(SLEEPING, sleeping);
+        if (!sleeping) {
+            cathermalSleepCooldown = 10000 + random.nextInt(6000);
+            setPose(Pose.STANDING);
+        } else {
+            setPose(Pose.SLEEPING);
+        }
+    }
+
+    @Override
+    public void stopSleeping() {
+    }
+
+    @Override
+    public boolean onClimbable() {
+        if (aiMovingType() == Moving.AQUATIC || aiMovingType() == Moving.SEMI_AQUATIC) {
+            return false;
+        } else {
+            return aiClimbType() == Climbing.ARTHROPOD && isClimbing() && !isImmobile();
+        }
+    }
+
+    public boolean isClimbing() {
+        return entityData.get(CLIMBING);
+    }
+
+    public void setClimbing(boolean climbing) {
+        this.entityData.set(CLIMBING, climbing);
+    }
+
+    public boolean isFleeing() {
+        return entityData.get(FLEEING);
+    }
+
+    public void setFleeing(boolean fleeing) {
+        entityData.set(FLEEING, fleeing);
+    }
+
+    protected int getFleeingCooldown() {
+        if (this.getLastHurtByMob() != null) {
+            int i = (int) (Math.max(this.getLastHurtByMob().getBbWidth() / 2F, 1) * 95);
+            int j = (int) (Math.min(this.getBbWidth() / 2F, 0.5D) * 50);
+            return i - j;
+        }
+        return 100;
     }
 
     public boolean isAdult() {
@@ -981,10 +943,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public boolean isBaby() {
         return getAgeInDays() < data().teenAgeDays();
-    }
-
-    public int getMaxHunger() {
-        return data().maxHunger();
     }
 
     public int getAgeInDays() {
@@ -1018,12 +976,87 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
+    public void grow(int ageInDays) {
+        if (isAgingDisabled()) {
+            return;
+        }
+        setAgeInDays(getAgeInDays() + ageInDays);
+        for (int i = 0; i < getScale() * 4; i++) {
+            double motionX = getRandom().nextGaussian() * 0.07;
+            double motionY = getRandom().nextGaussian() * 0.07;
+            double motionZ = getRandom().nextGaussian() * 0.07;
+            double minX = getBoundingBox().minX;
+            double minY = getBoundingBox().minY;
+            double minZ = getBoundingBox().minZ;
+            float x = (float) (getRandom().nextFloat() * (getBoundingBox().maxX - minX) + minX);
+            float y = (float) (getRandom().nextFloat() * (getBoundingBox().maxY - minY) + minY);
+            float z = (float) (getRandom().nextFloat() * (getBoundingBox().maxZ - minZ) + minZ);
+            level.addParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, motionX, motionY, motionZ);
+        }
+        updateAbilities();
+    }
+
     public boolean isAgingDisabled() {
         return this.entityData.get(AGING_DISABLED);
     }
 
     public void setAgingDisabled(boolean isAgingDisabled) {
         this.entityData.set(AGING_DISABLED, isAgingDisabled);
+    }
+
+    @Override
+    public boolean canMate(Animal otherAnimal) {
+        if (otherAnimal == this || otherAnimal.getClass() != getClass() || moodSystem.getMood() <= 50 || !isAdult() || getMatingCooldown() > 0) {
+            return false;
+        }
+        Prehistoric other = ((Prehistoric) otherAnimal);
+        return other.gender != gender && other.getMatingCooldown() <= 0 && (matingGoal.getPartner() == null || matingGoal.getPartner() == otherAnimal);
+    }
+
+    @Override
+    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob otherParent) {
+        if (otherParent instanceof Prehistoric) {
+            Entity baby = info().entityType().create(level);
+            if (baby instanceof Prehistoric prehistoric) {
+                prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
+                        MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
+                prehistoric.grow(0);
+                return prehistoric;
+            }
+        }
+        return null;
+    }
+
+    public void procreate(Prehistoric mob) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        if (random.nextInt(100) == 0 || calendar.get(Calendar.MONTH) + 1 == 4 && calendar.get(Calendar.DATE) == 1) {
+            playSound(ModSounds.MUSIC_MATING.get(), 1, 1);
+        }
+        if (!level.isClientSide) {
+            Entity hatchling;
+            if (this instanceof Mammal mammal) {
+                hatchling = mammal.createChild((ServerLevel) level);
+            } else if (info().cultivatedBirdEggItem != null) {
+                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().cultivatedBirdEggItem));
+            } else {
+                if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || info().isVivariousAquatic()) {
+                    hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem));
+                } else {
+                    hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
+                    ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
+                }
+            }
+            setTarget(null);
+            mob.setTarget(null);
+            hatchling.moveTo(mob.getX(), mob.getY(), mob.getZ(), mob.yBodyRot, 0);
+            if (hatchling instanceof Prehistoric prehistoric) {
+                prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
+                        MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
+                prehistoric.grow(0);
+            }
+            level.addFreshEntity(hatchling);
+        }
     }
 
     public int getMatingCooldown() {
@@ -1034,12 +1067,33 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         this.matingCooldown = cooldown;
     }
 
+    public Gender getGender() {
+        return gender == null ? Gender.MALE : gender;
+    }
+
+    public void setGender(@NotNull Gender gender) {
+        this.gender = gender;
+        refreshTexturePath();
+    }
+
     public int getClimbingCooldown() {
         return climbingCooldown;
     }
 
     public void setClimbingCooldown(int cooldown) {
         this.climbingCooldown = cooldown;
+    }
+
+    public boolean isWeak() {
+        return (getHealth() < 8) && isAdult() && !isTame();
+    }
+
+    public boolean isActuallyWeak() {
+        return (aiTameType() == Taming.AQUATIC_GEM || aiTameType() == Taming.GEM) && isWeak();
+    }
+
+    public int getMaxHunger() {
+        return data().maxHunger();
     }
 
     public boolean isHungry() {
@@ -1061,7 +1115,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void eatItem(ItemStack stack) {
         if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), info().diet) != 0)) {
             moodSystem.increaseMood(5);
-            doFoodEffect(stack.getItem());
+            makeEatingEffects(stack.getItem());
             setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), info().diet));
             stack.shrink(1);
             setStartEatAnimation(true);
@@ -1100,11 +1154,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             heal(FoodMappings.getMobFoodPoints(killedEntity, info().diet) / 10f);
             moodSystem.increaseMood(25);
         }
-    }
-
-    @Override
-    public boolean rideableUnderWater() {
-        return true;
     }
 
     @Override
@@ -1205,12 +1254,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
         } else {
             if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
-                if (isOwnedBy(player) && canBeRidden()) {
+                if (isOwnedBy(player) && data().canBeRidden()) {
                     if (getRidingPlayer() == null) {
                         if (!level.isClientSide) {
-                            setRidingPlayer(player);
+                            player.yBodyRot = this.yBodyRot;
+                            player.setXRot(getXRot());
+                            player.startRiding(this);
                         }
-                        setOrder(OrderType.WANDER);
+                        setCurrentOrder(OrderType.WANDER);
                         setSitting(false);
                         setSleeping(false);
                     } else if (getRidingPlayer() == player) {
@@ -1234,43 +1285,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 if (!level.isClientSide) {
                     jumping = false;
                     getNavigation().stop();
-                    currentOrder = OrderType.values()[(this.currentOrder.ordinal() + 1) % 3];
-                    sendOrderMessage(this.currentOrder);
+                    currentOrder = OrderType.values()[(currentOrder.ordinal() + 1) % 3];
+                    sendOrderMessage(currentOrder);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
         }
         return InteractionResult.PASS;
-    }
-
-    public abstract Item getOrderItem();
-
-    public void grow(int ageInDays) {
-        if (isAgingDisabled()) {
-            return;
-        }
-        setAgeInDays(getAgeInDays() + ageInDays);
-        for (int i = 0; i < getScale() * 4; i++) {
-            double motionX = getRandom().nextGaussian() * 0.07;
-            double motionY = getRandom().nextGaussian() * 0.07;
-            double motionZ = getRandom().nextGaussian() * 0.07;
-            double minX = getBoundingBox().minX;
-            double minY = getBoundingBox().minY;
-            double minZ = getBoundingBox().minZ;
-            float x = (float) (getRandom().nextFloat() * (getBoundingBox().maxX - minX) + minX);
-            float y = (float) (getRandom().nextFloat() * (getBoundingBox().maxY - minY) + minY);
-            float z = (float) (getRandom().nextFloat() * (getBoundingBox().maxZ - minZ) + minZ);
-            level.addParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, motionX, motionY, motionZ);
-        }
-        updateAbilities();
-    }
-
-    public boolean isWeak() {
-        return (getHealth() < 8) && isAdult() && !isTame();
-    }
-
-    public boolean isActuallyWeak() {
-        return (aiTameType() == Taming.AQUATIC_GEM || aiTameType() == Taming.GEM) && isWeak();
     }
 
     private void sendOrderMessage(OrderType orderType) {
@@ -1304,13 +1325,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
     }
 
-    @Override
-    public void playAmbientSound() {
-        if (!isSleeping()) {
-            super.playAmbientSound();
-        }
-    }
-
     public boolean canDinoHunt(LivingEntity target) {
         if (target instanceof ToyBase) {
             return true;
@@ -1331,58 +1345,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public boolean canMate(Animal otherAnimal) {
-        if (otherAnimal == this || otherAnimal.getClass() != getClass() || moodSystem.getMood() <= 50 || !isAdult() || getMatingCooldown() > 0) {
-            return false;
-        }
-        Prehistoric other = ((Prehistoric) otherAnimal);
-        return other.gender != gender && other.getMatingCooldown() <= 0 && (matingGoal.getPartner() == null || matingGoal.getPartner() == otherAnimal);
-    }
-
-    @Override
     protected @NotNull PathNavigation createNavigation(Level levelIn) {
         return aiClimbType() == Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
-    }
-
-    public boolean canBeRidden() {
-        return data().canBeRidden();
-    }
-
-    @Override
-    public boolean canBeControlledByRider() {
-        return canBeRidden() && this.getControllingPassenger() instanceof LivingEntity rider && isOwnedBy(rider);
-    }
-
-    public void procreate(Prehistoric mob) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date());
-        if (random.nextInt(100) == 0 || calendar.get(Calendar.MONTH) + 1 == 4 && calendar.get(Calendar.DATE) == 1) {
-            playSound(ModSounds.MUSIC_MATING.get(), 1, 1);
-        }
-        if (!level.isClientSide) {
-            Entity hatchling;
-            if (this instanceof Mammal mammal) {
-                hatchling = mammal.createChild((ServerLevel) level);
-            } else if (info().cultivatedBirdEggItem != null) {
-                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().cultivatedBirdEggItem));
-            } else {
-                if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || info().isVivariousAquatic()) {
-                    hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem));
-                } else {
-                    hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
-                    ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
-                }
-            }
-            setTarget(null);
-            mob.setTarget(null);
-            hatchling.moveTo(mob.getX(), mob.getY(), mob.getZ(), mob.yBodyRot, 0);
-            if (hatchling instanceof Prehistoric prehistoric) {
-                prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
-                        MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
-                prehistoric.grow(0);
-            }
-            level.addFreshEntity(hatchling);
-        }
     }
 
     public List<? extends Prehistoric> getNearbySpeciesMembers(int range) {
@@ -1412,66 +1376,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }*/
 
-    public void doFoodEffect(Item item) {
-        playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
-        if (item != null) {
-            spawnItemParticles(item, 4);
-        }
-    }
-
-    public void doFoodEffect() {
-        playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
-        switch (info().diet) {
-            case HERBIVORE -> spawnItemParticles(Items.WHEAT_SEEDS, 4);
-            case OMNIVORE -> spawnItemParticles(Items.BREAD, 4);
-            case PISCIVORE -> spawnItemParticles(Items.COD, 4);
-            default -> spawnItemParticles(Items.BEEF, 4);
-        }
-    }
-
-    public void spawnItemParticles(Item item, int count) {
-        if (level.isClientSide) {
-            for (int i = 0; i < count; i++) {
-                double motionX = getRandom().nextGaussian() * 0.07;
-                double motionY = getRandom().nextGaussian() * 0.07;
-                double motionZ = getRandom().nextGaussian() * 0.07;
-                double minX = getBoundingBox().minX;
-                double minY = getBoundingBox().minY;
-                double minZ = getBoundingBox().minZ;
-                float x = (float) (getRandom().nextFloat() * (getBoundingBox().maxX - minX) + minX);
-                float y = (float) (getRandom().nextFloat() * (getBoundingBox().maxY - minY) + minY);
-                float z = (float) (getRandom().nextFloat() * (getBoundingBox().maxZ - minZ) + minZ);
-                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), x, y, z, motionX, motionY, motionZ);
-            }
-        }
-    }
-
     @Override
-    public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob otherParent) {
-        if (otherParent instanceof Prehistoric) {
-            Entity baby = info().entityType().create(level);
-            if (baby instanceof Prehistoric prehistoric) {
-                prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
-                        MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
-                prehistoric.grow(0);
-                return prehistoric;
-            }
+    public void playAmbientSound() {
+        if (!isSleeping()) {
+            super.playAmbientSound();
         }
-        return null;
-    }
-
-    public boolean canReachPrey(Entity target) {
-        return getAttackBounds().intersects(target.getBoundingBox()) && !isPreyBlocked(target);
-    }
-
-    public boolean isPreyBlocked(Entity prey) {
-        return !getSensing().hasLineOfSight(prey);
-    }
-
-    public boolean canSeeFood(BlockPos position) {
-        Vec3 target = new Vec3(position.getX() + 0.5, position.getY() + 0.5, position.getZ() + 0.5);
-        BlockHitResult rayTrace = level.clip(new ClipContext(position(), target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, this));
-        return rayTrace.getType() != HitResult.Type.MISS;
     }
 
     @Override
@@ -1518,66 +1427,58 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void handleEntityEvent(byte id) {
         if (id == WHEAT_SEEDS_PARTICLES) {
-            spawnItemParticle(Items.WHEAT_SEEDS);
-            spawnItemParticle(Items.WHEAT_SEEDS);
-            spawnItemParticle(Items.WHEAT_SEEDS);
+            spawnItemParticles(Items.WHEAT_SEEDS, 3);
         } else if (id == BREAD_PARTICLES) {
-            spawnItemParticle(Items.BREAD);
-            spawnItemParticle(Items.BREAD);
-            spawnItemParticle(Items.BREAD);
+            spawnItemParticles(Items.BREAD, 3);
         } else if (id == BEEF_PARTICLES) {
-            spawnItemParticle(Items.BEEF);
-            spawnItemParticle(Items.BEEF);
-            spawnItemParticle(Items.BEEF);
+            spawnItemParticles(Items.BEEF, 3);
         } else {
             super.handleEntityEvent(id);
         }
     }
 
-    public void spawnItemParticle(Item item) {
-        if (this.level.isClientSide) return;
-        double motionX = random.nextGaussian() * 0.07D;
-        double motionY = random.nextGaussian() * 0.07D;
-        double motionZ = random.nextGaussian() * 0.07D;
-        double f = (float) (random.nextFloat() * (this.getBoundingBox().maxX - this.getBoundingBox().minX) + this.getBoundingBox().minX);
-        double f1 = (float) (random.nextFloat() * (this.getBoundingBox().maxY - this.getBoundingBox().minY) + this.getBoundingBox().minY);
-        double f2 = (float) (random.nextFloat() * (this.getBoundingBox().maxZ - this.getBoundingBox().minZ) + this.getBoundingBox().minZ);
-        this.level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), f, f1, f2, motionX, motionY, motionZ);
+    protected void makeEatingEffects(Item item) {
+        playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
+        if (item != null) {
+            spawnItemParticles(item, 4);
+        }
+    }
+
+    /**
+     * Plays a sound and spawns item particles based on diet
+     */
+    public void makeEatingEffects() {
+        switch (info().diet) {
+            case HERBIVORE -> makeEatingEffects(Items.WHEAT_SEEDS);
+            case OMNIVORE -> makeEatingEffects(Items.BREAD);
+            case PISCIVORE -> makeEatingEffects(Items.COD);
+            default -> makeEatingEffects(Items.BEEF);
+        }
+    }
+
+    private void spawnItemParticles(Item item, int count) {
+        if (level.isClientSide) {
+            for (int i = 0; i < count; i++) {
+                double motionX = getRandom().nextGaussian() * 0.07;
+                double motionY = getRandom().nextGaussian() * 0.07;
+                double motionZ = getRandom().nextGaussian() * 0.07;
+                double minX = getBoundingBox().minX;
+                double minY = getBoundingBox().minY;
+                double minZ = getBoundingBox().minZ;
+                float x = (float) (getRandom().nextFloat() * (getBoundingBox().maxX - minX) + minX);
+                float y = (float) (getRandom().nextFloat() * (getBoundingBox().maxY - minY) + minY);
+                float z = (float) (getRandom().nextFloat() * (getBoundingBox().maxZ - minZ) + minZ);
+                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), x, y, z, motionX, motionY, motionZ);
+            }
+        }
     }
 
     public float getMaxTurnDistancePerTick() {
         return Mth.clamp(90 - getBbWidth() * 20, 10, 90);
     }
 
-    @Override
-    public boolean canJump() {
-        return isVehicle();
-    }
-
-    @Override
-    public void handleStartJump(int i) {
-        playSound(SoundEvents.HORSE_JUMP, 0.4f, 1);
-    }
-
-    @Override
-    public void handleStopJump() {
-    }
-
-    @Override
-    public void onPlayerJump(int jumpPower) {
-        playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * (float) jumpPower / 90.0f;
-    }
-
     public float getProximityToNextPathSkip() {
         return this.getBbWidth() > 0.75F ? this.getBbWidth() / 2.0F : 0.75F - this.getBbWidth() / 2.0F;
-    }
-
-    public boolean isFleeing() {
-        return entityData.get(FLEEING);
-    }
-
-    public void setFleeing(boolean fleeing) {
-        entityData.set(FLEEING, fleeing);
     }
 
     public boolean shouldStartEatAnimation() {
@@ -1589,19 +1490,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         entityData.set(EATING, start);
     }
 
-    protected int getFleeingCooldown() {
-        if (this.getLastHurtByMob() != null) {
-            int i = (int) (Math.max(this.getLastHurtByMob().getBbWidth() / 2F, 1) * 95);
-            int j = (int) (Math.min(this.getBbWidth() / 2F, 0.5D) * 50);
-            return i - j;
-        }
-        return 100;
-    }
-
     @Override
     public @NotNull Packet<?> getAddEntityPacket() {
         return NetworkManager.createAddEntityPacket(this);
     }
+
+    public abstract PrehistoricEntityInfo info();
+
+    public abstract Item getOrderItem();
 
     public EntityDataManager.Data data() {
         return EntityDataManager.ENTITY_DATA.getData(EntityType.getKey(getType()).getPath());
@@ -1615,13 +1511,48 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return data().ai();
     }
 
-    public Gender getGender() {
-        return gender == null ? Gender.MALE : gender;
+    public Activity aiActivityType() {
+        return ai().activity();
     }
 
-    public void setGender(@NotNull Gender gender) {
-        this.gender = gender;
-        refreshTexturePath();
+    public Attacking aiAttackType() {
+        return ai().attacking();
+    }
+
+    public Climbing aiClimbType() {
+        return ai().climbing();
+    }
+
+    public Following aiFollowType() {
+        return ai().following();
+    }
+
+    public Jumping aiJumpType() {
+        return ai().jumping();
+    }
+
+    public Response aiResponseType() {
+        return ai().response();
+    }
+
+    public Stalking aiStalkType() {
+        return ai().stalking();
+    }
+
+    public Taming aiTameType() {
+        return ai().taming();
+    }
+
+    public Untaming aiUntameType() {
+        return ai().untaming();
+    }
+
+    public Moving aiMovingType() {
+        return ai().moving();
+    }
+
+    public WaterAbility aiWaterAbilityType() {
+        return ai().waterAbility();
     }
 
     @Override
@@ -1647,6 +1578,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public AnimationLogic<Prehistoric> getAnimationLogic() {
         return animationLogic;
+    }
+
+    @Override
+    public CompoundTag getDebugTag() {
+        return entityData.get(DEBUG);
+    }
+
+    @Override
+    public void disableCustomAI(byte type, boolean disableAI) {
+        CompoundTag tag = entityData.get(DEBUG).copy();
+        switch (type) {
+            case 0 -> setNoAi(disableAI);
+            case 1 -> tag.putBoolean("disableGoalAI", disableAI);
+            case 2 -> tag.putBoolean("disableMoveAI", disableAI);
+            case 3 -> tag.putBoolean("disableLookAI", disableAI);
+        }
+        entityData.set(DEBUG, tag);
     }
 
     public record PrehistoricGroupData(int ageInDays) implements SpawnGroupData {

@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.ai;
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -61,14 +62,14 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
                 }
             }
         } else if (attackType == ATTACK) {
-            if (swimming.canReachPrey(enemy) && attackDamageTick > 0 && currentTime >= attackDamageTick) {
+            if (Util.canReachPrey(swimming, enemy) && attackDamageTick > 0 && currentTime >= attackDamageTick) {
                 swimming.attackTarget(enemy);
                 swimming.destroyBoat(enemy);
                 attackDamageTick = -1;
                 attackType = -1;
             }
-        } else if (currentTime > attackEndTick && swimming.canReachPrey(enemy)) {
-            boolean tooBig = !PrehistoricSwimming.isEntitySmallerThan(enemy, 2 * swimming.getScale() / swimming.data().maxScale());
+        } else if (currentTime > attackEndTick && Util.canReachPrey(swimming, enemy)) {
+            boolean tooBig = !Util.isEntitySmallerThan(enemy, 2 * swimming.getScale() / swimming.data().maxScale());
             if (tooBig || swimming.getRandom().nextInt(5) > 0) {
                 attackType = ATTACK;
                 AnimationInfoManager.ServerAnimationInfo animation = swimming.startAttack();

@@ -127,8 +127,8 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     }
 
     @Override
-    public void doFoodEffect(Item item) {
-        super.doFoodEffect(item);
+    public void makeEatingEffects(Item item) {
+        super.makeEatingEffects(item);
         if (isSheared()) {
             woolRegenTicks++;
             if (woolRegenTicks >= 5) {

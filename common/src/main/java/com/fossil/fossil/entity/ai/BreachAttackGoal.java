@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -79,10 +80,10 @@ public class BreachAttackGoal extends Goal {
             return;
         }
 
-        if (dino.canReachPrey(target)) {
+        if (Util.canReachPrey(dino, target)) {
             dino.setBreaching(false);
             breachTargetReached = true;
-            boolean tooBig = !PrehistoricSwimming.isEntitySmallerThan(target, 2 * dino.getScale() / dino.data().maxScale());
+            boolean tooBig = !Util.isEntitySmallerThan(target, 2 * dino.getScale() / dino.data().maxScale());
             if (tooBig || dino.getRandom().nextInt(5) > 0) {
                 dino.swing(InteractionHand.MAIN_HAND);
                 dino.attackTarget(target);

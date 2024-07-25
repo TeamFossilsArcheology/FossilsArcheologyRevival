@@ -32,7 +32,7 @@ public class EnterWaterWithoutTargetGoal extends Goal {
             return false;
         }
 
-        if (dino instanceof PrehistoricSwimming && dino.currentOrder != OrderType.WANDER) {
+        if (dino instanceof PrehistoricSwimming && dino.getCurrentOrder() != OrderType.WANDER) {
             return false;
         }
         if (dino.getRandom().nextFloat() < 0.5) {

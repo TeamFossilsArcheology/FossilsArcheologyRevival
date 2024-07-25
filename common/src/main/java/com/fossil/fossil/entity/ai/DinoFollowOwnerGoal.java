@@ -48,7 +48,7 @@ public class DinoFollowOwnerGoal extends Goal {
         LivingEntity owner = dino.getOwner();
         if (owner == null || owner.isSpectator()) {
             return false;
-        } else if (dino.currentOrder != OrderType.FOLLOW) {
+        } else if (dino.getCurrentOrder() != OrderType.FOLLOW) {
             return false;
         } else if (dino.hasPassenger(dino.getOwner())) {
             return false;

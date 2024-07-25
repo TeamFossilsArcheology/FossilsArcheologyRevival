@@ -25,7 +25,7 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
                 feeder.feedDinosaur(entity);
                 entity.heal(0.1f);
                 if (feedingTicks % 4 == 0) {
-                    entity.doFoodEffect();
+                    entity.makeEatingEffects();
                 }
                 entity.setStartEatAnimation(true);
             }
@@ -37,6 +37,6 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         if (!super.isValidTarget(level, pos)) {
             return false;
         }
-        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && entity.canSeeFood(pos);
+        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && canSeeFood(pos);
     }
 }
