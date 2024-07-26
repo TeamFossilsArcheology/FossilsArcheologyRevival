@@ -1402,7 +1402,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public AnimationInfoManager.ServerAnimationInfo startAttack() {
         AnimationInfoManager.ServerAnimationInfo attackAnim = (AnimationInfoManager.ServerAnimationInfo) nextAttackAnimation();
-        getAnimationLogic().triggerAnimation("Attack", attackAnim, "Attack");
+        getAnimationLogic().triggerAnimation("Attack", attackAnim, AnimationLogic.Category.ATTACK);
         return attackAnim;
     }
 
@@ -1431,10 +1431,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return wasEffective;
     }
 
-    private static final byte TOTEM_PARTICLES = 35;
-    private static final byte WHEAT_SEEDS_PARTICLES = 62;
-    private static final byte BREAD_PARTICLES = 63;
-    private static final byte BEEF_PARTICLES = 64;
+    public static final byte TOTEM_PARTICLES = 35;
+    public static final byte WHEAT_SEEDS_PARTICLES = 62;
+    public static final byte BREAD_PARTICLES = 63;
+    public static final byte BEEF_PARTICLES = 64;
 
     @Override
     public void handleEntityEvent(byte id) {

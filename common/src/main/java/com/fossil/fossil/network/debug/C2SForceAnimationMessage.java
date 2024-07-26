@@ -1,5 +1,6 @@
 package com.fossil.fossil.network.debug;
 
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
@@ -36,7 +37,7 @@ public class C2SForceAnimationMessage {
         Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
         if (entity instanceof PrehistoricAnimatable<?> animatable && Version.debugEnabled()) {
             contextSupplier.get().queue(() -> {
-                animatable.getAnimationLogic().forceActiveAnimation(controller, animatable.getAllAnimations().get(animation), "Idle", speed);
+                animatable.getAnimationLogic().forceAnimation(controller, animatable.getAllAnimations().get(animation), AnimationLogic.Category.IDLE, speed);
             });
         }
     }

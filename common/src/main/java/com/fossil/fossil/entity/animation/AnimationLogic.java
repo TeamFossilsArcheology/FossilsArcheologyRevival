@@ -6,7 +6,6 @@ import com.fossil.fossil.network.S2CSyncActiveAnimationMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -18,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
 import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
 
 public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
@@ -33,7 +33,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return Optional.ofNullable(activeAnimations.get(controller));
     }
 
-    public void triggerAnimation(String controller, Animation animation, String category) {
+    public void triggerAnimation(String controller, Animation animation, Category category) {
         if (animation != null) {
             ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(),
                     entity.level.getGameTime() + animation.animationLength, category, true, 1
@@ -42,13 +42,12 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             if (!entity.level.isClientSide) {
                 TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
                 var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
-                System.out.println("Attack trigger send: " + players.size());
                 MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new S2CSyncActiveAnimationMessage(entity, controller, activeAnimationInfo));
             }
         }
     }
 
-    public void forceActiveAnimation(String controller, Animation animation, String category, double speed) {
+    public void forceAnimation(String controller, Animation animation, Category category, double speed) {
         //TODO: More debug control
         if (animation != null) {
             ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(),
@@ -63,22 +62,43 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
     }
 
-    public void addActiveAnimation(String controller, Animation animation, String category) {
-        if (animation != null) {
-            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, 1));
+    public boolean addActiveAnimation(String controller, Animation animation, Category category) {
+        if (animation == null) {
+            return false;
         }
+        ActiveAnimationInfo active = getActiveAnimation(controller).orElse(null);
+        if (active == null) {
+            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, 5));
+            return true;
+        }
+        boolean replaceAnim = false;
+        boolean isLoop = entity.getAllAnimations().get(active.animationName).loop != LOOP;
+        if (active.category == category && isAnimationDone(active)) {
+            replaceAnim = !isLoop || entity.getRandom().nextFloat() < category.chance;
+        } else if (active.category != category) {
+            replaceAnim = isLoop || isAnimationDone(active);
+        }
+        if (replaceAnim) {
+            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, 5));
+            return true;
+        }
+        return false;
     }
 
     public void addNextAnimation(String controller, ActiveAnimationInfo activeAnimationInfo) {
         nextAnimations.put(controller, activeAnimationInfo);
     }
 
-    public boolean isAnimationDone(String controller) {
+    private boolean isAnimationDone(String controller) {
         if (!activeAnimations.containsKey(controller)) {
             return false;
         }
         ActiveAnimationInfo activeAnimation = activeAnimations.get(controller);
         //TODO: Use isLoop? || event.getController().getAnimationState() == AnimationState.Stopped
+        return isAnimationDone(activeAnimation);
+    }
+
+    private boolean isAnimationDone(ActiveAnimationInfo activeAnimation) {
         return entity.level.getGameTime() >= activeAnimation.endTick;
     }
 
@@ -108,32 +128,23 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
         if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
             loopType = PLAY_ONCE;
-            event.getController().setAnimationSpeed(activeAnimation.get().speed);
+            //event.getController().setAnimationSpeed(activeAnimation.get().speed);
         } else {
             if (event.getAnimatable().isBeached()) {
-                if (activeAnimation.isEmpty() || !activeAnimation.get().category.equals("Beached")) {
-                    addActiveAnimation(controller.getName(), event.getAnimatable().nextBeachedAnimation(), "Beached");
-                }
+                addActiveAnimation(controller.getName(), event.getAnimatable().nextBeachedAnimation(), Category.BEACHED);
             } else if (event.isMoving()) {
                 if (entity.isSprinting()) {
-                    addActiveAnimation(controller.getName(), entity.nextSprintingAnimation(), "Move");
+                    addActiveAnimation(controller.getName(), entity.nextSprintingAnimation(), Category.SPRINT);
                 } else {
-                    addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), "Move");
+                    addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), Category.WALK);
                 }
+            } else if (entity.isSleeping()) {
+                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
+            } else if (entity.shouldStartEatAnimation()) {
+                addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), Category.EAT);
+                entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
             } else {
-                if (entity.isSleeping()) {
-                    addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), "Sleep");
-                } else if (entity.shouldStartEatAnimation()) {
-                    addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), "Eat");
-                    entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
-                    loopType = PLAY_ONCE;
-                } else if (controller.getCurrentAnimation() != null && controller.getCurrentAnimation().loop == PLAY_ONCE) {
-                    if (controller.getCurrentAnimation().loop == PLAY_ONCE && controller.getAnimationState() == AnimationState.Stopped) {
-                        addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), "Idle");
-                    }
-                } else if (activeAnimation.isEmpty() || isAnimationDone(controller.getName()) || activeAnimation.get().category.equals("Beached")) {
-                    addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), "Idle");
-                }
+                addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
         }
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
@@ -152,14 +163,13 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             activeAnimations.put(controller.getName(), next);
 
             controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName));
-            //controller.transitionLengthTicks = next.speed;
+            controller.transitionLengthTicks = next.speed;
             controller.markNeedsReload();
             return PlayState.CONTINUE;
         }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
         ILoopType loopType = null;
         double animationSpeed = 1;
-        String activeCategory = activeAnimation.isPresent() ? activeAnimation.get().category : "";
         if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
             loopType = PLAY_ONCE;
         } else {
@@ -167,10 +177,11 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 Animation movementAnim;
                 if (entity.isSprinting()) {
                     movementAnim = entity.nextSprintingAnimation();
+                    addActiveAnimation(controller.getName(), movementAnim, Category.WALK);
                 } else {
                     movementAnim = entity.nextMovingAnimation();
+                    addActiveAnimation(controller.getName(), movementAnim, Category.SPRINT);
                 }
-                addActiveAnimation(controller.getName(), movementAnim, "Move");
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                 animationSpeed = 1 / event.getAnimatable().getScale();
                 double animationBaseSpeed = getMovementSpeed(event.getAnimatable(), movementAnim.animationName);
@@ -185,28 +196,16 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
                     animationSpeed = lastSpeed;
                 }
-            } else {
-                if (entity.isSleeping()) {
-                    if (!activeCategory.equals("Sleep")) {
-                        addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), "Sleep");
-                    }
-                } else if (event.getAnimatable().isSitting()) {
-                    if (!activeCategory.equals("Sit")) {
-                        addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), "Sit");
-                    }
-                } else if (entity.shouldStartEatAnimation()) {
-                    addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), "Eat");
+            } else if (entity.isSleeping()) {
+                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
+            } else if (event.getAnimatable().isSitting()) {
+                addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
+            } else if (entity.shouldStartEatAnimation()) {
+                if (addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), Category.EAT)) {
                     entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
-                    loopType = PLAY_ONCE;
-                } else if (controller.getCurrentAnimation() != null && controller.getCurrentAnimation().loop == PLAY_ONCE) {
-                    if (controller.getCurrentAnimation().loop == PLAY_ONCE && controller.getAnimationState() == AnimationState.Stopped) {
-                        addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), "Idle");
-                    }
-                } else if (!activeCategory.equals("Idle")) {
-                    //TODO: Need to be able to cancel animation but also not replace running one if from same category etc
-                    addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), "Idle");
-                    loopType = PLAY_ONCE;
                 }
+            } else {
+                addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
         }
         lastSpeed = animationSpeed;
@@ -235,17 +234,43 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return PlayState.STOP;
     }
 
+    public PlayState grabAttackPredicate(AnimationEvent<PrehistoricSwimming> event) {
+        AnimationController<PrehistoricSwimming> controller = event.getController();
+        if (nextAnimations.containsKey(controller.getName())) {
+            ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
+            activeAnimations.put(controller.getName(), next);
+
+            controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName));
+            controller.transitionLengthTicks = next.speed;
+            controller.markNeedsReload();
+            return PlayState.CONTINUE;
+        }
+        if (event.getAnimatable().isDoingGrabAttack()) {
+            addActiveAnimation(controller.getName(), event.getAnimatable().nextGrabbingAnimation(), Category.ATTACK);
+        } else if (isAnimationDone(controller.getName())) {
+            activeAnimations.remove(controller.getName());
+        }
+        Optional<AnimationLogic.ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
+        if (newAnimation.isPresent()) {
+            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName()));
+            return PlayState.CONTINUE;
+        } else {
+            event.getController().markNeedsReload();
+            return PlayState.STOP;
+        }
+    }
+
     public PlayState fishPredicate(AnimationEvent<PrehistoricFish> event) {
         AnimationController<PrehistoricFish> controller = event.getController();
         if (!entity.isInWater() && entity.isOnGround()) {
-            addActiveAnimation(controller.getName(), event.getAnimatable().nextBeachedAnimation(), "Beached");
+            addActiveAnimation(controller.getName(), event.getAnimatable().nextBeachedAnimation(), Category.BEACHED);
         } else if (event.isMoving()) {
-            addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), "Move");
+            addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), Category.WALK);
         } else {
-            addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), "Idle");
+            addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
         }
-        Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        activeAnimation.ifPresent(anim -> controller.setAnimation(new AnimationBuilder().addAnimation(anim.animationName())));
+        Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
+        newAnimation.ifPresent(newInfo -> controller.setAnimation(new AnimationBuilder().addAnimation(newInfo.animationName())));
         return PlayState.CONTINUE;
     }
 
@@ -270,7 +295,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         if (!event.getAnimatable().isTakingOff()) {
             if (event.isMoving()) {
                 Animation animation = entity.nextMovingAnimation();
-                addActiveAnimation(controller.getName(), animation, "Walk");
+                addActiveAnimation(controller.getName(), animation, Category.WALK);
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                 animSpeed = 1 / event.getAnimatable().getScale();
                 double animationBaseSpeed = AnimationLogic.getMovementSpeed(event.getAnimatable(), animation.animationName);
@@ -283,22 +308,42 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
                     animSpeed = lastSpeed;
                 }
+            } else if (entity.isSleeping()) {
+                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
+            } else if (event.getAnimatable().isSitting()) {
+                addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
+            } else if (entity.shouldStartEatAnimation()) {
+                addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), Category.EAT);
+                entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
             } else {
-                Animation animation = entity.nextIdleAnimation();
-                addActiveAnimation(controller.getName(), animation, "Idle");
+                addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
         }
         lastSpeed = animSpeed;
         event.getController().setAnimationSpeed(animSpeed);
         Optional<AnimationLogic.ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
-        if (newAnimation.isPresent()) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName()));
-        }
+        newAnimation.ifPresent(newInfo -> controller.setAnimation(new AnimationBuilder().addAnimation(newInfo.animationName())));
         return PlayState.CONTINUE;
     }
 
-    public record ActiveAnimationInfo(String animationName, double startTick, double endTick, String category,
+    public record ActiveAnimationInfo(String animationName, double startTick, double endTick, Category category,
                                       boolean forced, double speed) {
 
+    }
+
+    public enum Category {
+        ATTACK, BEACHED(false, 0), EAT, IDLE, SIT(true, 0.2f),
+        SLEEP(true, 0.2f), SPRINT, WALK, NONE;
+        public final boolean canBeReplaced;
+        public final float chance;
+
+        Category() {
+            this(true, 1);
+        }
+
+        Category(boolean canBeReplaced, float chance) {
+            this.canBeReplaced = canBeReplaced;
+            this.chance = chance;
+        }
     }
 }

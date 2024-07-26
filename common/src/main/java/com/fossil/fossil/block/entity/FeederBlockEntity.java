@@ -164,12 +164,12 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
             if (!isEmpty(mob.info().diet)) {
                 if (mob.info().diet == Diet.CARNIVORE || mob.info().diet == Diet.CARNIVORE_EGG || mob.info().diet == Diet.PISCI_CARNIVORE || mob.info().diet == Diet.PISCIVORE || mob.info().diet == Diet.INSECTIVORE) {
                     meat--;
-                    level.broadcastEntityEvent(mob, (byte) 47);
+                    level.broadcastEntityEvent(mob, Prehistoric.BEEF_PARTICLES);
                     feedAmount++;
                 }
                 if (mob.info().diet == Diet.HERBIVORE) {
                     plant--;
-                    level.broadcastEntityEvent(mob, (byte) 45);
+                    level.broadcastEntityEvent(mob, Prehistoric.WHEAT_SEEDS_PARTICLES);
                     feedAmount++;
                 }
                 if (mob.info().diet == Diet.OMNIVORE) {

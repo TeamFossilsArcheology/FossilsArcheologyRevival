@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.ai.control.CustomFlightBodyRotationControl;
 import com.fossil.fossil.entity.ai.control.CustomFlightLookControl;
 import com.fossil.fossil.entity.ai.control.CustomFlightMoveControl;
 import com.fossil.fossil.entity.ai.navigation.FlightPathNavigation;
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -235,7 +236,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public void startTakeOff() {
         entityData.set(TAKING_OFF, true);
         takeOffStartTick = level.getGameTime();
-        getAnimationLogic().triggerAnimation("Movement/Idle/Eat", nextTakeOffAnimation(), "TakeOff");
+        getAnimationLogic().triggerAnimation("Movement/Idle/Eat", nextTakeOffAnimation(), AnimationLogic.Category.NONE);
     }
 
     /**

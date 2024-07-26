@@ -3,7 +3,6 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
-import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.mojang.math.Vector3d;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -33,9 +32,7 @@ import net.minecraft.world.level.pathfinder.SwimNodeEvaluator;
 import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.processor.IBone;
@@ -43,7 +40,6 @@ import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 
 import java.util.Map;
-import java.util.Optional;
 
 public abstract class PrehistoricSwimming extends Prehistoric {
     public static final int MAX_TIME_IN_WATER = 1000;
@@ -422,25 +418,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 0, getAnimationLogic()::waterPredicate));
-        data.addAnimationController(new AnimationController<>(this, "Attack", 5, event -> {
-            AnimationController<PrehistoricSwimming> controller = event.getController();
-            Optional<AnimationLogic.ActiveAnimationInfo> activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-            if (swinging) {
-                if (activeAnimation.isEmpty() || !activeAnimation.get().category().equals("Attack")) {
-                    getAnimationLogic().addActiveAnimation(controller.getName(), nextAttackAnimation(), "Attack");
-                }
-            } else if (isDoingGrabAttack()) {
-                getAnimationLogic().addActiveAnimation(controller.getName(), nextGrabbingAnimation(), "Grab");
-            }
-            Optional<AnimationLogic.ActiveAnimationInfo> newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
-            if (newAnimation.isPresent()) {
-                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName()));
-                return PlayState.CONTINUE;
-            } else {
-                event.getController().markNeedsReload();
-                return PlayState.STOP;
-            }
-        }));
+        data.addAnimationController(new AnimationController<>(this, "Attack", 5, getAnimationLogic()::grabAttackPredicate));
     }
 
     static class LargeSwimmerPathNavigation extends WaterBoundPathNavigation {
