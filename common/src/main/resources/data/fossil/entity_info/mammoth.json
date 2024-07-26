@@ -29,7 +29,7 @@
   "canBeRidden": true,
   "maxHunger": 150.0,
   "maxPopulation": 15,
-  "scaleBase": 1.1,
+  "scaleBase": 0.3,
   "scaleMax": 1.5,
   "teenAgeDays": 7
 }

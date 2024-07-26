@@ -24,8 +24,10 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Arthropleura extends Prehistoric {
     public static final String ANIMATIONS = "arthropleura.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+    public static final String EAT = "animation.arthropleura.eat/drink";
+    public static final String IDLE = "animation.arthropleura.idle";
+    public static final String SLEEP = "animation.arthropleura.sleep/sit";
+    public static final String WALK = "animation.arthropleura.walk/run";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -80,7 +82,7 @@ public class Arthropleura extends Prehistoric {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
     }
 
     @Override
@@ -90,7 +92,7 @@ public class Arthropleura extends Prehistoric {
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override
@@ -98,7 +100,7 @@ public class Arthropleura extends Prehistoric {
         if (isInWater()) {
             return getAllAnimations().get(IDLE);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
@@ -106,7 +108,7 @@ public class Arthropleura extends Prehistoric {
         if (isInWater()) {
             return getAllAnimations().get(IDLE);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override

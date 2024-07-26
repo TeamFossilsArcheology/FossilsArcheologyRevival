@@ -5,12 +5,14 @@ import com.fossil.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.fossil.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.fossil.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
+import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +21,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Diplocaulus extends PrehistoricSwimming {
+public class Diplocaulus extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "diplocaulus.animation.json";
     public static final String ATTACK = "animation.diplocaulus.attack";
     public static final String BEACHED = "animation.diplocaulus.idle/beached";
@@ -33,7 +35,6 @@ public class Diplocaulus extends PrehistoricSwimming {
 
     public Diplocaulus(EntityType<Diplocaulus> entityType, Level level) {
         super(entityType, level);
-        hasBabyTexture = false;
     }
 
     @Override
@@ -55,11 +56,10 @@ public class Diplocaulus extends PrehistoricSwimming {
         return 0.5f;
     }
 
-    //TODO: Bucket
-    /*@Override
+    @Override
     public @NotNull ItemStack getBucketItemStack() {
-        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
-    }*/
+        return new ItemStack(ModItems.DIPLOCAULUS_BUCKET.get());
+    }
 
     @Override
     public PrehistoricEntityInfo info() {

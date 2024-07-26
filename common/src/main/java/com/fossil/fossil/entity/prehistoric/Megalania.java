@@ -20,13 +20,13 @@ import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megalania extends Prehistoric implements PrehistoricScary {
     public static final String ANIMATIONS = "megalania.animation.json";
-    public static final String ATTACK = "animation.megalania.attack";
+    public static final String ATTACK1 = "animation.megalania.bite";
+    public static final String ATTACK2 = "animation.megalania.bite2";
     public static final String EAT = "animation.megalania.eat";
     public static final String FALL = "animation.megalania.jump/fall";
     public static final String IDLE = "animation.megalania.idle";
     public static final String RUN = "animation.megalania.run";
-    public static final String SLEEP = "animation.megalania.sleep1";
-    public static final String SWIM = "animation.megalania.swim";
+    public static final String SLEEP = "animation.megalania.sleep";
     public static final String WALK = "animation.megalania.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -58,7 +58,7 @@ public class Megalania extends Prehistoric implements PrehistoricScary {
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
+        return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK1 : ATTACK2);
     }
 
     @Override
@@ -79,7 +79,7 @@ public class Megalania extends Prehistoric implements PrehistoricScary {
     @Override
     public @NotNull Animation nextMovingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(SWIM);
+            return getAllAnimations().get(WALK);
         }
         return getAllAnimations().get(RUN);
     }
@@ -87,7 +87,7 @@ public class Megalania extends Prehistoric implements PrehistoricScary {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(SWIM);
+            return getAllAnimations().get(WALK);
         }
         return getAllAnimations().get(RUN);
     }

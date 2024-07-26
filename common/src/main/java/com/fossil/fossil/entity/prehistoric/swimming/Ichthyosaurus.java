@@ -2,12 +2,14 @@ package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
+import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +18,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Ichthyosaurus extends PrehistoricSwimming {
+public class Ichthyosaurus extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "ichthyosaurus.animation.json";
     public static final String ATTACK = "animation.ichthyosaurus.attack";
     public static final String BEACHED = "animation.ichthyosaurus.beached";
@@ -54,11 +56,10 @@ public class Ichthyosaurus extends PrehistoricSwimming {
         return 0.75f;
     }
 
-    //TODO: Bucket
-    /*@Override
+    @Override
     public @NotNull ItemStack getBucketItemStack() {
-        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
-    }*/
+        return new ItemStack(ModItems.ICHTHYOSAURUS_BUCKET.get());
+    }
 
     @Override
     public PrehistoricEntityInfo info() {
