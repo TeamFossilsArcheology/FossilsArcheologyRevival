@@ -5,7 +5,7 @@
     "climbing": "NONE",
     "following": "AGGRESSIVE",
     "jumping": "TWO_BLOCKS",
-    "response": "SCARED",
+    "response": "CALM",
     "stalking": "STEALTH",
     "taming": "FEEDING",
     "untaming": "ATTACK",

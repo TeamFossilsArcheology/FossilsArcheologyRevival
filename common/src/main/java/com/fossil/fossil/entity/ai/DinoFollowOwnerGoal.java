@@ -45,17 +45,15 @@ public class DinoFollowOwnerGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        LivingEntity owner = dino.getOwner();
-        if (owner == null || owner.isSpectator()) {
+        LivingEntity currentOwner = dino.getOwner();
+        if (currentOwner == null || currentOwner.isSpectator()) {
             return false;
-        } else if (dino.getCurrentOrder() != OrderType.FOLLOW) {
+        } else if (dino.getCurrentOrder() != OrderType.FOLLOW || dino.hasPassenger(currentOwner)) {
             return false;
-        } else if (dino.hasPassenger(dino.getOwner())) {
-            return false;
-        } else if (dino.distanceToSqr(owner) < (startDistance * startDistance)) {
+        } else if (dino.distanceToSqr(currentOwner) < (startDistance * startDistance)) {
             return false;
         }
-        this.owner = owner;
+        this.owner = currentOwner;
         return true;
     }
 

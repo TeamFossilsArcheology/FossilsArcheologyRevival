@@ -1,14 +1,15 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,39 +17,32 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Plesiosaurus extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "plesiosaurus.animation.json";
-    public static final String ATTACK = "animation.plesiosaurus.attack";
-    public static final String BEACHED = "animation.plesiosaurus.beached";
-    public static final String EAT = "animation.plesiosaurus.eat";
-    public static final String FALL = "animation.plesiosaurus.jump/fall";
-    public static final String IDLE = "animation.plesiosaurus.randomidle";
-    public static final String SLEEP = "animation.plesiosaurus.sleep";
-    public static final String SWIM = "animation.plesiosaurus.swim";
-    public static final String SWIM_FAST = "animation.plesiosaurus.swimfast";
+public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary {
+    public static final String ANIMATIONS = "sarcosuchus.animation.json";
+    public static final String IDLE = "animation.dilophosaurus.idle";
+    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Plesiosaurus(EntityType<Plesiosaurus> entityType, Level level) {
+    public Sarcosuchus(EntityType<Sarcosuchus> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
+        //TODO: hasTeenTexture = false;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
-        goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(4, new MakeFishGoal(this));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
+        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(6, new LeaveWaterGoal(this, 1));
+        goalSelector.addGoal(7, new DinoWanderGoal(this, 1));
+        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
+        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
     @Override
     public boolean isAmphibious() {
-        return false;
+        return true;
     }
 
     @Override
@@ -58,32 +52,32 @@ public class Plesiosaurus extends PrehistoricSwimming {
 
     @Override
     public PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.PLESIOSAURUS;
+        return PrehistoricEntityInfo.SARCOSUCHUS;
     }
 
     @Override
     public Item getOrderItem() {
-        return Items.NAUTILUS_SHELL;
+        return ModItems.SKULL_STICK.get();
     }
 
     @Override
-    protected boolean canHuntMobsOnLand() {
-        return false;
+    public float getTargetScale() {
+        return 2;
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Animation nextBeachedAnimation() {
-        return getAllAnimations().get(BEACHED);
+        return nextIdleAnimation();
     }
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
@@ -93,17 +87,23 @@ public class Plesiosaurus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        return getAllAnimations().get(SWIM);
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(SWIM_FAST);
+        if (isInWater()) {
+            return getAllAnimations().get(IDLE);
+        }
+        return getAllAnimations().get(IDLE);
     }
 
     @Override
@@ -114,18 +114,18 @@ public class Plesiosaurus extends PrehistoricSwimming {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return isInWater() ? ModSounds.PLESIOSAURUS_AMBIENT_INSIDE.get() : ModSounds.PLESIOSAURUS_AMBIENT_OUTSIDE.get();
+        return isBaby() ? ModSounds.SARCOSUCHUS_BABY_AMBIENT.get() : ModSounds.SARCOSUCHUS_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.PLESIOSAURUS_HURT.get();
+        return ModSounds.SARCOSUCHUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.PLESIOSAURUS_DEATH.get();
+        return ModSounds.SARCOSUCHUS_DEATH.get();
     }
 }

@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationLogic;
@@ -17,8 +18,10 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.GameRules;
@@ -61,6 +64,22 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         super(entityType, level);
         setPathfindingMalus(BlockPathTypes.WATER, 0);
         switchNavigator(false);
+    }
+
+    @Override
+    protected void registerGoals() {
+        matingGoal = new DinoMatingGoal(this, 1);
+        goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(2, matingGoal);
+        goalSelector.addGoal(3, new EatFromFeederGoal(this));
+        goalSelector.addGoal(4, new EatItemEntityGoal(this));
+        goalSelector.addGoal(5, new EatBlockGoal(this));
+        goalSelector.addGoal(6, new EnterWaterGoal(this, 1));
+        goalSelector.addGoal(6, new DinoSwimGoal(this, 1));
+        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0f));
+        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
+        targetSelector.addGoal(4, new HuntAndPlayGoal(this));
     }
 
     public static boolean isOverWater(LivingEntity entity) {

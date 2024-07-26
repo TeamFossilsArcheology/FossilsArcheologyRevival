@@ -2,9 +2,9 @@ package com.fossil.fossil.client.model;
 
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.Allosaurus;
-import com.fossil.fossil.entity.prehistoric.Megalodon;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
+import com.fossil.fossil.entity.prehistoric.swimming.Megalodon;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;

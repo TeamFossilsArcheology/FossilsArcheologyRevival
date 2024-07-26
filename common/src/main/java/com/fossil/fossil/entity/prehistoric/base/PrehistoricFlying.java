@@ -17,6 +17,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.MoveControl.Operation;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
@@ -66,12 +67,14 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(2, matingGoal);
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(5, new FlyingSleepGoal(this));
         goalSelector.addGoal(6, new FlyingWanderGoal(this));
         goalSelector.addGoal(6, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8));
         targetSelector.addGoal(4, new HuntAndPlayGoal(this));
     }

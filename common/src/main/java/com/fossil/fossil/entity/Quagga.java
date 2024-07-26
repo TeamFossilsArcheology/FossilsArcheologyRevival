@@ -1,6 +1,5 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity;
 
-import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;

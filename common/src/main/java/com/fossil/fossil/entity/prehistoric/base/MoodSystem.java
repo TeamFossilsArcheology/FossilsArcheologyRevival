@@ -36,13 +36,14 @@ public class MoodSystem {
     }
 
     public PrehistoricMoodType getMoodFace() {
-        if (getMood() == 100) {
+        int mood = getMood();
+        if (mood == 100) {
             return PrehistoricMoodType.HAPPY;
-        } else if (getMood() >= 50) {
+        } else if (mood >= 50) {
             return PrehistoricMoodType.CONTENT;
-        } else if (getMood() == -100) {
+        } else if (mood == -100) {
             return PrehistoricMoodType.ANGRY;
-        } else if (getMood() <= -50) {
+        } else if (mood <= -50) {
             return PrehistoricMoodType.SAD;
         } else {
             return PrehistoricMoodType.CALM;
@@ -91,6 +92,7 @@ public class MoodSystem {
     public void useToy(int playBonus) {
         if (getPlayingCooldown() == 0) {
             setMood(getMood() + playBonus);
+            //TODO: Display particles
             setPlayingCooldown(prehistoric.getRandom().nextInt(600) + 600);
         }
     }
@@ -108,9 +110,10 @@ public class MoodSystem {
         if (getPlayingCooldown() > 0) {
             setPlayingCooldown(getPlayingCooldown() - 1);
         }
-        if (moodCheckCooldown-- <= 0) {
+        if (moodCheckCooldown <= 0) {
             doMoodCheck();
             moodCheckCooldown = 3000 + prehistoric.getRandom().nextInt(5000);
         }
+        moodCheckCooldown--;
     }
 }

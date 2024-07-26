@@ -1,15 +1,17 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
-import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.DelayedAttackGoal;
+import com.fossil.fossil.entity.ai.DinoHurtByTargetGoal;
+import com.fossil.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
+import com.fossil.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
-import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -17,34 +19,28 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary {
-    public static final String ANIMATIONS = "spinosaurus.animation.json";
-    public static final String ATTACK = "animation.spinosaurus.attack";
-    public static final String EAT = "animation.spinosaurus.eat";
-    public static final String FALL = "animation.spinosaurus.jump/fall2";
-    public static final String GRAB = "animation.spinosaurus.grab";
-    public static final String IDLE = "animation.spinosaurus.idle";
-    public static final String RUN = "animation.spinosaurus.run";
-    public static final String SLEEP = "animation.spinosaurus.sleep";
-    public static final String SWIM = "animation.spinosaurus.swim";
-    public static final String WALK = "animation.spinosaurus.walk";
+public class Crassigyrinus extends PrehistoricSwimming {
+    public static final String ANIMATIONS = "crassigyrinus.animation.json";
+    public static final String ATTACK = "animation.crassigyrinus.attack";
+    public static final String BEACHED = "animation.crassigyrinus.idle/beached";
+    public static final String EAT = "animation.crassigyrinus.eat";
+    public static final String FALL = "animation.crassigyrinus.jump/fall";
+    public static final String IDLE = "animation.crassigyrinus.swimidle";
+    public static final String SLEEP = "animation.crassigyrinus.sleep/sit";
+    public static final String SWIM = "animation.crassigyrinus.swim";
+    public static final String SWIM_FAST = "animation.crassigyrinus.swimfast";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Spinosaurus(EntityType<Spinosaurus> entityType, Level level) {
+    public Crassigyrinus(EntityType<Crassigyrinus> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
-        goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
-        goalSelector.addGoal(1, new LeaveWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
+        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -52,27 +48,28 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public boolean isAmphibious() {
-        return true;
+        return false;
     }
 
     @Override
     public float swimSpeed() {
-        return 1;
+        return 0.5f;
     }
+
+    //TODO: Bucket
+    /*@Override
+    public @NotNull ItemStack getBucketItemStack() {
+        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
+    }*/
 
     @Override
     public PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.SPINOSAURUS;
+        return PrehistoricEntityInfo.CRASSIGYRINUS;
     }
 
     @Override
     public Item getOrderItem() {
-        return ModItems.SKULL_STICK.get();
-    }
-
-    @Override
-    public float getTargetScale() {
-        return 1.5f;
+        return Items.NAUTILUS_SHELL;
     }
 
     @Override
@@ -82,17 +79,12 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextBeachedAnimation() {
-        return nextIdleAnimation();
+        return getAllAnimations().get(BEACHED);
     }
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextGrabbingAnimation() {
-        return getAllAnimations().get(GRAB);
     }
 
     @Override
@@ -107,18 +99,12 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(RUN);
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override
@@ -129,18 +115,28 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.SPINOSAURUS_AMBIENT.get();
+        return isInWater() ? ModSounds.TIKTAALIK_AMBIENT.get() : ModSounds.HENODUS_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.SPINOSAURUS_HURT.get();
+        return ModSounds.TIKTAALIK_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.SPINOSAURUS_DEATH.get();
+        return ModSounds.TIKTAALIK_DEATH.get();
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return super.getSoundVolume() * 0.75f;
+    }
+
+    @Override
+    public float getVoicePitch() {
+        return super.getVoicePitch() * 1.1f;
     }
 }

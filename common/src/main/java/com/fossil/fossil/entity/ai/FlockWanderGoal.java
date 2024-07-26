@@ -34,15 +34,16 @@ public class FlockWanderGoal extends Goal {
     public boolean canUse() {
         if (entity.getCurrentOrder() != OrderType.WANDER || entity.isImmobile() || entity.getTarget() != null) {
             return false;
-        }
-        if (entity.isGroupLeader()) {
+        } else if (entity.isGroupLeader()) {
             return false;
-        } else if (entity.hasGroupLeader()) {
+        }
+        if (entity.hasGroupLeader()) {
             return true;
         } else if (nextStartTick > 0) {
             nextStartTick--;
             return false;
         } else {
+            //Try to find group leader
             nextStartTick = nextStartTick(entity);
             Predicate<PrehistoricFlocking> canJoin = flocking -> flocking.canGroupGrow() || !flocking.hasGroupLeader();
             var potentialFlock = entity.level.getEntitiesOfClass(entity.getClass(), entity.getBoundingBox().inflate(entity.getFlockDistance()),

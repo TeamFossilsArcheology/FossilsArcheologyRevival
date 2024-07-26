@@ -1,4 +1,4 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -17,28 +17,30 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary {
-    public static final String ANIMATIONS = "sarcosuchus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
+public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary {
+    public static final String ANIMATIONS = "spinosaurus.animation.json";
+    public static final String ATTACK = "animation.spinosaurus.attack";
+    public static final String EAT = "animation.spinosaurus.eat";
+    public static final String FALL = "animation.spinosaurus.jump/fall2";
+    public static final String GRAB = "animation.spinosaurus.grab";
+    public static final String IDLE = "animation.spinosaurus.idle";
+    public static final String RUN = "animation.spinosaurus.run";
+    public static final String SLEEP = "animation.spinosaurus.sleep";
+    public static final String SWIM = "animation.spinosaurus.swim";
+    public static final String WALK = "animation.spinosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Sarcosuchus(EntityType<Sarcosuchus> entityType, Level level) {
+    public Spinosaurus(EntityType<Spinosaurus> entityType, Level level) {
         super(entityType, level);
-        //TODO: hasTeenTexture = false;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(1, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
-        goalSelector.addGoal(1, new LeaveWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
+        goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(6, new LeaveWaterGoal(this, 1));
+        goalSelector.addGoal(7, new DinoWanderGoal(this, 1));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -56,7 +58,7 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.SARCOSUCHUS;
+        return PrehistoricEntityInfo.SPINOSAURUS;
     }
 
     @Override
@@ -66,12 +68,12 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public float getTargetScale() {
-        return 2;
+        return 1.5f;
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(ATTACK);
     }
 
     @Override
@@ -81,7 +83,12 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(EAT);
+    }
+
+    @Override
+    public @NotNull Animation nextGrabbingAnimation() {
+        return getAllAnimations().get(GRAB);
     }
 
     @Override
@@ -91,23 +98,23 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(IDLE);
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(WALK);
     }
 
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         if (isInWater()) {
-            return getAllAnimations().get(IDLE);
+            return getAllAnimations().get(SWIM);
         }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(RUN);
     }
 
     @Override
@@ -118,18 +125,18 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return isBaby() ? ModSounds.SARCOSUCHUS_BABY_AMBIENT.get() : ModSounds.SARCOSUCHUS_AMBIENT.get();
+        return ModSounds.SPINOSAURUS_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.SARCOSUCHUS_HURT.get();
+        return ModSounds.SPINOSAURUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.SARCOSUCHUS_DEATH.get();
+        return ModSounds.SPINOSAURUS_DEATH.get();
     }
 }

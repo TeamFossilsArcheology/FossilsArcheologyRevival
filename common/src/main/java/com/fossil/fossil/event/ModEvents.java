@@ -2,10 +2,10 @@ package com.fossil.fossil.event;
 
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.entity.Quagga;
 import com.fossil.fossil.entity.ThrownBirdEgg;
 import com.fossil.fossil.entity.ai.AnimalFearGoal;
 import com.fossil.fossil.entity.monster.AnuBoss;
-import com.fossil.fossil.entity.prehistoric.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.*;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.util.FossilFoodMappings;

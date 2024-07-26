@@ -1,7 +1,8 @@
 package com.fossil.fossil.entity.prehistoric;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.DelayedAttackGoal;
+import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
 import com.fossil.fossil.sounds.ModSounds;
@@ -19,7 +20,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Shearable;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -55,14 +55,6 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
         super.registerGoals();
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1));
         goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(1, new FloatGoal(this));
-        goalSelector.addGoal(2, new FlockWanderGoal(this, 1));
-        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
-        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
-        targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
     @Override

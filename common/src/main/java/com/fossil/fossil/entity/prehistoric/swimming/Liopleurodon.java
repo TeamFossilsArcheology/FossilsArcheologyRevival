@@ -1,6 +1,7 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
-import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.DinoHurtByTargetGoal;
+import com.fossil.fossil.entity.ai.GrabMeleeAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.sounds.ModSounds;
@@ -16,35 +17,43 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Crassigyrinus extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "crassigyrinus.animation.json";
-    public static final String ATTACK = "animation.crassigyrinus.attack";
-    public static final String BEACHED = "animation.crassigyrinus.idle/beached";
-    public static final String EAT = "animation.crassigyrinus.eat";
-    public static final String FALL = "animation.crassigyrinus.jump/fall";
-    public static final String IDLE = "animation.crassigyrinus.swimidle";
-    public static final String SLEEP = "animation.crassigyrinus.sleep/sit";
-    public static final String SWIM = "animation.crassigyrinus.swim";
-    public static final String SWIM_FAST = "animation.crassigyrinus.swimfast";
+public class Liopleurodon extends PrehistoricSwimming {
+    public static final String ANIMATIONS = "liopleurodon.animation.json";
+    public static final String ATTACK = "animation.liopleurodon.attack1";
+    public static final String BEACHED = "animation.liopleurodon.beached";
+    public static final String EAT = "animation.liopleurodon.eat";
+    public static final String GRAB = "animation.liopleurodon.grab";
+    public static final String IDLE = "animation.liopleurodon.randomidle";
+    public static final String SLEEP = "animation.liopleurodon.idle/sleep";
+    public static final String SWIM = "animation.liopleurodon.swim";
+    public static final String SWIM_FAST = "animation.liopleurodon.swimfast";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Crassigyrinus(EntityType<Crassigyrinus> entityType, Level level) {
+    public Liopleurodon(EntityType<Liopleurodon> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(1, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
-        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
+        goalSelector.addGoal(0, new GrabMeleeAttackGoal(this, 1, false));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
+    }
+
+    @Override
+    public PrehistoricEntityInfo info() {
+        return PrehistoricEntityInfo.LIOPLEURODON;
+    }
+
+    @Override
+    public Item getOrderItem() {
+        return Items.NAUTILUS_SHELL;
+    }
+
+    @Override
+    protected boolean canHuntMobsOnLand() {
+        return false;
     }
 
     @Override
@@ -54,23 +63,7 @@ public class Crassigyrinus extends PrehistoricSwimming {
 
     @Override
     public float swimSpeed() {
-        return 0.5f;
-    }
-
-    //TODO: Bucket
-    /*@Override
-    public @NotNull ItemStack getBucketItemStack() {
-        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
-    }*/
-
-    @Override
-    public PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.CRASSIGYRINUS;
-    }
-
-    @Override
-    public Item getOrderItem() {
-        return Items.NAUTILUS_SHELL;
+        return 6;
     }
 
     @Override
@@ -86,6 +79,11 @@ public class Crassigyrinus extends PrehistoricSwimming {
     @Override
     public @NotNull Animation nextEatingAnimation() {
         return getAllAnimations().get(EAT);
+    }
+
+    @Override
+    public @NotNull Animation nextGrabbingAnimation() {
+        return getAllAnimations().get(GRAB);
     }
 
     @Override
@@ -116,28 +114,18 @@ public class Crassigyrinus extends PrehistoricSwimming {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return isInWater() ? ModSounds.TIKTAALIK_AMBIENT.get() : ModSounds.HENODUS_AMBIENT.get();
+        return isInWater() ? ModSounds.LIOPLEURODON_AMBIENT_INSIDE.get() : ModSounds.LIOPLEURODON_AMBIENT_OUTSIDE.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.TIKTAALIK_HURT.get();
+        return ModSounds.LIOPLEURODON_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.TIKTAALIK_DEATH.get();
-    }
-
-    @Override
-    protected float getSoundVolume() {
-        return super.getSoundVolume() * 0.75f;
-    }
-
-    @Override
-    public float getVoicePitch() {
-        return super.getVoicePitch() * 1.1f;
+        return ModSounds.LIOPLEURODON_DEATH.get();
     }
 }

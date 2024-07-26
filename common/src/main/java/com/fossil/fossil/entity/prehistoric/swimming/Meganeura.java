@@ -1,4 +1,4 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -107,8 +107,8 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
 
     @Override
     protected void registerGoals() {
-        super.registerGoals();
-        goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
+        //TODO: Add missing goals
+        goalSelector.addGoal(0, new DinoSwimGoal(this, 1));
         goalSelector.addGoal(1, new MeganeuraEnterWaterGoal(this, 1));
         goalSelector.addGoal(3, new MeganeuraWanderAndAttachGoal(this));
         goalSelector.addGoal(4, new DinoFollowOwnerGoal(this, 1, 10, 2, 50, false));
@@ -399,7 +399,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         }
     }
 
-    static class MeganeuraEnterWaterGoal extends EnterWaterWithTargetGoal {
+    static class MeganeuraEnterWaterGoal extends EnterWaterGoal {
 
         public MeganeuraEnterWaterGoal(Meganeura dino, float speedModifier) {
             super(dino, 40, speedModifier);

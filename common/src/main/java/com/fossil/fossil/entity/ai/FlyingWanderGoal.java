@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.ai;
 
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
@@ -22,7 +23,7 @@ public class FlyingWanderGoal extends Goal {
     @Override
     public boolean canUse() {
         boolean debugLand = false;//TODO: Remove debug
-        if (dino.isImmobile() || !dino.isAdult()) {
+        if (dino.getCurrentOrder() != OrderType.WANDER || dino.isImmobile() || !dino.isAdult()) {
             return false;
         }
         if (dino.isFlying()) {

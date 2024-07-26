@@ -1,4 +1,4 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -32,12 +32,8 @@ public class Tiktaalik extends PrehistoricSwimming {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(1, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
-        goalSelector.addGoal(1, new LeaveWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
+        goalSelector.addGoal(6, new LeaveWaterGoal(this, 1));
+        goalSelector.addGoal(7, new DinoWanderGoal(this, 1));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));

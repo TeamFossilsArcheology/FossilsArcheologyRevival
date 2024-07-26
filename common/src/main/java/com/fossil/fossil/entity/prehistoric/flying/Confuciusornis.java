@@ -1,9 +1,6 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.flying;
 
 import com.fossil.fossil.entity.ai.DelayedAttackGoal;
-import com.fossil.fossil.entity.ai.DinoFollowOwnerGoal;
-import com.fossil.fossil.entity.ai.DinoLookAroundGoal;
-import com.fossil.fossil.entity.ai.DinoWanderGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.sounds.ModSounds;
@@ -11,7 +8,6 @@ import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -43,10 +39,6 @@ public class Confuciusornis extends PrehistoricFlying {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(1, new FloatGoal(this));
-        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(7, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
     }
 
     @Override

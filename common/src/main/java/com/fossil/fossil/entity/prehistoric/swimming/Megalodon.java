@@ -1,6 +1,8 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
-import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.BreachAttackGoal;
+import com.fossil.fossil.entity.ai.DinoHurtByTargetGoal;
+import com.fossil.fossil.entity.ai.GrabMeleeAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.item.ModItems;
@@ -38,13 +40,8 @@ public class Megalodon extends PrehistoricSwimming {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
         goalSelector.addGoal(2, new BreachAttackGoal(this, 1));
-        goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        goalSelector.addGoal(4, new EatItemEntityGoal(this));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 

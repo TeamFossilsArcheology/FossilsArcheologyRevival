@@ -5,7 +5,7 @@
     "climbing": "NONE",
     "following": "AGGRESSIVE",
     "jumping": "BASIC",
-    "response": "SCARED",
+    "response": "CUSTOM",
     "stalking": "NONE",
     "taming": "IMPRINTING",
     "untaming": "ATTACK",

@@ -4,7 +4,7 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.client.DinopediaBioManager;
 import com.fossil.fossil.config.FossilConfig;
-import com.fossil.fossil.entity.prehistoric.Quagga;
+import com.fossil.fossil.entity.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.MoodSystem;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;

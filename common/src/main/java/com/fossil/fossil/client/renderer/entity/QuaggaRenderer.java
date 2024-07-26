@@ -2,7 +2,7 @@ package com.fossil.fossil.client.renderer.entity;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.renderer.RendererFabricFix;
-import com.fossil.fossil.entity.prehistoric.Quagga;
+import com.fossil.fossil.entity.Quagga;
 import net.minecraft.client.model.HorseModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;

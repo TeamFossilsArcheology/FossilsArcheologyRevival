@@ -1,4 +1,4 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.fish;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
@@ -11,26 +11,26 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Sturgeon extends PrehistoricFish {
-    public static final String ANIMATIONS = "sturgeon.animation.json";
-    public static final String BEACHED = "animation.sturgeon.land";
-    public static final String IDLE = "animation.sturgeon.idle";
-    public static final String SWIM = "animation.sturgeon.swim";
-    public static final String SWIM_FAST = "animation.sturgeon.swim_fast";
+public class AlligatorGar extends PrehistoricFish {
+    public static final String ANIMATIONS = "alligator_gar.animation.json";
+    public static final String BEACHED = "animation.alligator_gar.land";
+    public static final String IDLE = "animation.alligator_gar.idle";
+    public static final String SWIM = "animation.alligator_gar.swim";
+    public static final String SWIM_FAST = "animation.alligator_gar.swim_fast";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Sturgeon(EntityType<Sturgeon> entityType, Level level) {
+    public AlligatorGar(EntityType<AlligatorGar> entityType, Level level) {
         super(entityType, level);
     }
 
     @Override
     public @NotNull ItemStack getBucketItemStack() {
-        return new ItemStack(ModItems.STURGEON_BUCKET.get());
+        return new ItemStack(ModItems.ALLIGATOR_GAR_BUCKET.get());
     }
 
     @Override
     public @NotNull PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.STURGEON;
+        return PrehistoricEntityInfo.ALLIGATOR_GAR;
     }
 
     @Override

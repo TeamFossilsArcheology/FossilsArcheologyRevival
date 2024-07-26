@@ -1,6 +1,8 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.DelayedAttackGoal;
+import com.fossil.fossil.entity.ai.FleeBattleGoal;
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
@@ -9,7 +11,8 @@ import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.target.TargetGoal;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -31,6 +34,7 @@ public class Megaloceros extends Prehistoric {
     public static final String SWIM = "animation.megaloceros.swim";
     public static final String WALK = "animation.megaloceros.walk";
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+    private Megaloceros lastMate;
 
     public Megaloceros(EntityType<Megaloceros> entityType, Level level) {
         super(entityType, level);
@@ -41,13 +45,15 @@ public class Megaloceros extends Prehistoric {
         super.registerGoals();
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1));
         goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(1, new FloatGoal(this));
-        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
-        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
-        targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
+        targetSelector.addGoal(4, new LastMateHurtByTargetGoal(this));
+    }
+
+    @Override
+    public void procreate(Prehistoric other) {
+        super.procreate(other);
+        if (other instanceof Megaloceros megaloceros) {
+            lastMate = megaloceros;
+        }
     }
 
     @Override
@@ -132,5 +138,35 @@ public class Megaloceros extends Prehistoric {
     @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.MEGALOCEROS_DEATH.get();
+    }
+
+    static class LastMateHurtByTargetGoal extends TargetGoal {
+        private final Megaloceros megaloceros;
+        private int timestamp;
+
+        public LastMateHurtByTargetGoal(Megaloceros megaloceros) {
+            super(megaloceros, false);
+            this.megaloceros = megaloceros;
+        }
+
+        @Override
+        public boolean canUse() {
+            if (megaloceros.aiResponseType() == PrehistoricEntityInfoAI.Response.SCARED || megaloceros.getCurrentOrder() != OrderType.WANDER) {
+                return false;
+            }
+            if (megaloceros.lastMate == null) {
+                return false;
+            }
+            targetMob = megaloceros.lastMate.getLastHurtByMob();
+            int i = megaloceros.lastMate.getLastHurtByMobTimestamp();
+            return i != timestamp && canAttack(targetMob, TargetingConditions.DEFAULT);
+        }
+
+        @Override
+        public void start() {
+            super.start();
+            megaloceros.setTarget(targetMob);
+            timestamp = megaloceros.lastMate.getLastHurtByMobTimestamp();
+        }
     }
 }

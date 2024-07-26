@@ -56,6 +56,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -193,12 +194,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(1, new FloatGoal(this));
         goalSelector.addGoal(2, matingGoal);
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(5, new EatBlockGoal(this));
-        goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8.0f));
-        targetSelector.addGoal(4, new HuntAndPlayGoal(this));
+        goalSelector.addGoal(6, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0f));
+        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
+        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
+        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
+        targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
+        targetSelector.addGoal(5, new HuntAndPlayGoal(this));
     }
 
     @Override
@@ -838,6 +846,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void breakBlock(float maxHardness) {
+        //TODO: Should blocks broken by swimming mobs be replaced with water?
         if (!FossilConfig.isEnabled(FossilConfig.DINOS_BREAK_BLOCKS) || !level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return;
         }
@@ -886,7 +895,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public void setSleeping(boolean sleeping) {
         entityData.set(SLEEPING, sleeping);
-        if (!sleeping) {
+        if (!sleeping) {//TODO: Maybe isSleeping to prevent cooldown resetting
             cathermalSleepCooldown = 10000 + random.nextInt(6000);
             setPose(Pose.STANDING);
         } else {
@@ -1027,7 +1036,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return null;
     }
 
-    public void procreate(Prehistoric mob) {
+    public void procreate(Prehistoric other) {
+        if (getGender() == Gender.MALE) {
+            setTarget(null);
+            return;
+        }
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
         if (random.nextInt(100) == 0 || calendar.get(Calendar.MONTH) + 1 == 4 && calendar.get(Calendar.DATE) == 1) {
@@ -1048,8 +1061,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 }
             }
             setTarget(null);
-            mob.setTarget(null);
-            hatchling.moveTo(mob.getX(), mob.getY(), mob.getZ(), mob.yBodyRot, 0);
+            hatchling.moveTo(getX(), getY(), getZ(), yBodyRot, 0);
             if (hatchling instanceof Prehistoric prehistoric) {
                 prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
                         MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
@@ -1532,7 +1544,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public Response aiResponseType() {
-        return ai().response();
+        return isBaby() ? Response.SCARED : ai().response();
     }
 
     public Stalking aiStalkType() {

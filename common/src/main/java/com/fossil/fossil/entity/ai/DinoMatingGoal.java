@@ -60,6 +60,7 @@ public class DinoMatingGoal extends Goal {
         male.getNavigation().moveTo(female, speedModifier);
         if (male.closerThan(female, male.getBbWidth() * 1.5)) {
             female.procreate(male);
+            male.procreate(female);
             male.setMatingCooldown(male.getRandom().nextInt(6000) + 6000);
             female.setMatingCooldown(male.getRandom().nextInt(12000) + 24000);
         }

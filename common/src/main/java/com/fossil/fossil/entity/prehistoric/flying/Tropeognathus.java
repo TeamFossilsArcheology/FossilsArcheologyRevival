@@ -1,4 +1,4 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.flying;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -43,9 +43,9 @@ public class Tropeognathus extends PrehistoricFlying {
         super.registerGoals();
         goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
         goalSelector.addGoal(2, new DelayedAttackGoal(this, 1.0, true));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, true));
-        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(2, new DinoHurtByTargetGoal(this));
+        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
+        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
+        targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
     @Override

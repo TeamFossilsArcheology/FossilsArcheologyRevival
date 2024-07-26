@@ -3,15 +3,15 @@ package com.fossil.fossil.entity.ai;
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
-import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-
+/**
+ * Random stroll goal for non flying/swimming mobs
+ */
 public class DinoWanderGoal extends RandomStrollGoal {
 
     public DinoWanderGoal(Prehistoric dinosaur, double speed) {
@@ -31,18 +31,14 @@ public class DinoWanderGoal extends RandomStrollGoal {
         if (dinosaur instanceof PrehistoricFlocking flocking && !flocking.isGroupLeader() && flocking.hasGroupLeader()) {
             return false;
         }
-        if (dinosaur instanceof PrehistoricFlying flying && (flying.isFlying() || flying.isTakingOff())) {
-            return false;
-        }
         return super.canUse();
     }
 
     @Nullable
     @Override
     protected Vec3 getPosition() {
-        Vec3 randomPos = null;
+        Vec3 randomPos;
         int verticalDistance = 7;
-        if (mob instanceof FlyingAnimal) verticalDistance = 10;
 
         if (mob.isInWater()) {
             randomPos = LandRandomPos.getPos(mob, 30, 8);

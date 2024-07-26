@@ -1,4 +1,4 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -16,37 +16,53 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Liopleurodon extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "liopleurodon.animation.json";
-    public static final String ATTACK = "animation.liopleurodon.attack1";
-    public static final String BEACHED = "animation.liopleurodon.beached";
-    public static final String EAT = "animation.liopleurodon.eat";
-    public static final String GRAB = "animation.liopleurodon.grab";
-    public static final String IDLE = "animation.liopleurodon.randomidle";
-    public static final String SLEEP = "animation.liopleurodon.idle/sleep";
-    public static final String SWIM = "animation.liopleurodon.swim";
-    public static final String SWIM_FAST = "animation.liopleurodon.swimfast";
+public class Ichthyosaurus extends PrehistoricSwimming {
+    public static final String ANIMATIONS = "ichthyosaurus.animation.json";
+    public static final String ATTACK = "animation.ichthyosaurus.attack";
+    public static final String BEACHED = "animation.ichthyosaurus.beached";
+    public static final String EAT = "animation.ichthyosaurus.eat";
+    public static final String IDLE = "animation.ichthyosaurus.idle";
+    public static final String SLEEP1 = "animation.ichthyosaurus.sleep1";
+    public static final String SLEEP2 = "animation.ichthyosaurus.sleep2";
+    public static final String SWIM = "animation.ichthyosaurus.swim";
+    public static final String SWIM_FAST = "animation.ichthyosaurus.swim_fast";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Liopleurodon(EntityType<Liopleurodon> entityType, Level level) {
+    public Ichthyosaurus(EntityType<Ichthyosaurus> entityType, Level level) {
         super(entityType, level);
+        hasTeenTexture = false;
     }
 
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
-        goalSelector.addGoal(0, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
-        goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
+        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(4, new MakeFishGoal(this));
+        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
+        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
     @Override
+    public boolean isAmphibious() {
+        return false;
+    }
+
+    @Override
+    public float swimSpeed() {
+        return 0.75f;
+    }
+
+    //TODO: Bucket
+    /*@Override
+    public @NotNull ItemStack getBucketItemStack() {
+        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
+    }*/
+
+    @Override
     public PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.LIOPLEURODON;
+        return PrehistoricEntityInfo.ICHTHYOSAURUS;
     }
 
     @Override
@@ -57,16 +73,6 @@ public class Liopleurodon extends PrehistoricSwimming {
     @Override
     protected boolean canHuntMobsOnLand() {
         return false;
-    }
-
-    @Override
-    public boolean isAmphibious() {
-        return false;
-    }
-
-    @Override
-    public float swimSpeed() {
-        return 6;
     }
 
     @Override
@@ -85,18 +91,13 @@ public class Liopleurodon extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextGrabbingAnimation() {
-        return getAllAnimations().get(GRAB);
-    }
-
-    @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
+        return getAllAnimations().get(random.nextInt(2) == 0 ? SLEEP1 : SLEEP2);
     }
 
     @Override
@@ -117,18 +118,18 @@ public class Liopleurodon extends PrehistoricSwimming {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return isInWater() ? ModSounds.LIOPLEURODON_AMBIENT_INSIDE.get() : ModSounds.LIOPLEURODON_AMBIENT_OUTSIDE.get();
+        return isInWater() ? ModSounds.ICHTHYOSAURUS_AMBIENT.get() : ModSounds.ICHTHYOSAURUS_OUTSIDE.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.LIOPLEURODON_HURT.get();
+        return ModSounds.ICHTHYOSAURUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.LIOPLEURODON_DEATH.get();
+        return ModSounds.ICHTHYOSAURUS_DEATH.get();
     }
 }

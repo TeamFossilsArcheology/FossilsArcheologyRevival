@@ -1,13 +1,14 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.swimming;
 
-import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.DelayedAttackGoal;
+import com.fossil.fossil.entity.ai.DinoHurtByTargetGoal;
+import com.fossil.fossil.entity.ai.MakeFishGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -17,19 +18,20 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Megalograptus extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "megalograptus.animation.json";
-    public static final String ATTACK = "animation.megalograptus.attack1";
-    public static final String EAT = "animation.megalograptus.eat";
-    public static final String FALL = "animation.megalograptus.jump/fall";
-    public static final String IDLE = "animation.megalograptus.idle/sleep/sit";
-    public static final String SLEEP = "animation.megalograptus.idle/sleep/sit";
-    public static final String SWIM = "animation.megalograptus.swim";
-    public static final String WALK = "animation.megalograptus.walk";
+public class Plesiosaurus extends PrehistoricSwimming {
+    public static final String ANIMATIONS = "plesiosaurus.animation.json";
+    public static final String ATTACK = "animation.plesiosaurus.attack";
+    public static final String BEACHED = "animation.plesiosaurus.beached";
+    public static final String EAT = "animation.plesiosaurus.eat";
+    public static final String FALL = "animation.plesiosaurus.jump/fall";
+    public static final String IDLE = "animation.plesiosaurus.randomidle";
+    public static final String SLEEP = "animation.plesiosaurus.sleep";
+    public static final String SWIM = "animation.plesiosaurus.swim";
+    public static final String SWIM_FAST = "animation.plesiosaurus.swimfast";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
-    public Megalograptus(EntityType<Megalograptus> entityType, Level level) {
+    public Plesiosaurus(EntityType<Plesiosaurus> entityType, Level level) {
         super(entityType, level);
         hasTeenTexture = false;
     }
@@ -37,46 +39,34 @@ public class Megalograptus extends PrehistoricSwimming {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new EnterWaterWithoutTargetGoal(this, 1));
         goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(1, new EnterWaterWithTargetGoal(this, 1));
-        goalSelector.addGoal(3, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
-        targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
+        goalSelector.addGoal(4, new MakeFishGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
     @Override
     public boolean isAmphibious() {
-        return true;
+        return false;
     }
 
     @Override
     public float swimSpeed() {
-        return 0.5f;
+        return 1;
     }
-
-    //TODO: Bucket
-    /*@Override
-    public @NotNull ItemStack getBucketItemStack() {
-        return new ItemStack(ModItems.COELACANTH_BUCKET.get());
-    }*/
 
     @Override
     public PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.MEGALOGRAPTUS;
-    }
-
-    @Override
-    public @NotNull MobType getMobType() {
-        return MobType.ARTHROPOD;
+        return PrehistoricEntityInfo.PLESIOSAURUS;
     }
 
     @Override
     public Item getOrderItem() {
         return Items.NAUTILUS_SHELL;
+    }
+
+    @Override
+    protected boolean canHuntMobsOnLand() {
+        return false;
     }
 
     @Override
@@ -86,7 +76,7 @@ public class Megalograptus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextBeachedAnimation() {
-        return nextIdleAnimation();
+        return getAllAnimations().get(BEACHED);
     }
 
     @Override
@@ -106,18 +96,12 @@ public class Megalograptus extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
+        return getAllAnimations().get(SWIM);
     }
 
     @Override
     public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Override
@@ -128,18 +112,18 @@ public class Megalograptus extends PrehistoricSwimming {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.MEGALOGRAPTUS_AMBIENT.get();
+        return isInWater() ? ModSounds.PLESIOSAURUS_AMBIENT_INSIDE.get() : ModSounds.PLESIOSAURUS_AMBIENT_OUTSIDE.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.MEGALOGRAPTUS_HURT.get();
+        return ModSounds.PLESIOSAURUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.MEGALOGRAPTUS_DEATH.get();
+        return ModSounds.PLESIOSAURUS_DEATH.get();
     }
 }
