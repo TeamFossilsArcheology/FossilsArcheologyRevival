@@ -1,1 +1,22 @@
-{"elements": [{"name": "body1", "pos": [0, 0, -7], "width": 16, "height": 34},{"name": "body2", "pos": [0, 0, 9], "width": 16, "height": 34},{"name": "head", "pos": [0, 14.5, 23], "width": 12, "height": 22.299999999999997}]}
+{
+	"elements": [
+		{
+			"name": "body1",
+			"pos": [0, 0, -7],
+			"width": 16,
+			"height": 34
+		},
+		{
+			"name": "body2",
+			"pos": [0, 0, 9],
+			"width": 16,
+			"height": 34
+		},
+		{
+			"name": "head",
+			"pos": [0, 14.5, 23],
+			"width": 12,
+			"height": 22.3
+		}
+	]
+}

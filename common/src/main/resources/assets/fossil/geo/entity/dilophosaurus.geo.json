@@ -7,8 +7,8 @@
 				"texture_width": 128,
 				"texture_height": 90,
 				"visible_bounds_width": 9,
-				"visible_bounds_height": 4,
-				"visible_bounds_offset": [0, 1, 0]
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
 			},
 			"bones": [
 				{
@@ -170,7 +170,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "head",
-					"pivot": [0, 8.45, -24.8]
+					"pivot": [0, 8.45, -24.8],
+					"cubes": []
 				},
 				{
 					"name": "troathsac",
@@ -310,17 +311,20 @@
 				{
 					"name": "tail1_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 13, 12.3]
+					"pivot": [0, 13, 12.3],
+					"cubes": []
 				},
 				{
 					"name": "tail2_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 13.25, 19.8]
+					"pivot": [0, 13.25, 19.8],
+					"cubes": []
 				},
 				{
 					"name": "body_hitbox",
 					"parent": "lowerBody",
-					"pivot": [0, -0.4, -2]
+					"pivot": [0, -0.4, -2],
+					"cubes": []
 				},
 				{
 					"name": "rider_pos",

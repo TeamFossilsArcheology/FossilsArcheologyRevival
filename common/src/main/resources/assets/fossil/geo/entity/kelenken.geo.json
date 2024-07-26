@@ -45,7 +45,8 @@
 				{
 					"name": "tail_hitbox",
 					"parent": "tailfan1",
-					"pivot": [0, 22.1, 14.05]
+					"pivot": [0, 22.1, 14.05],
+					"cubes": []
 				},
 				{
 					"name": "chest1",
@@ -163,7 +164,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "head1",
-					"pivot": [0, 17.9692, -24.3848]
+					"pivot": [0, 17.9692, -24.3848],
+					"cubes": []
 				},
 				{
 					"name": "beard2R",
@@ -204,7 +206,8 @@
 				{
 					"name": "body_hitbox",
 					"parent": "body1",
-					"pivot": [0, 1.5, 9.8]
+					"pivot": [0, 1.5, 9.8],
+					"cubes": []
 				},
 				{
 					"name": "upperlegLeft",

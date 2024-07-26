@@ -18,7 +18,8 @@
 				{
 					"name": "body_hitbox",
 					"parent": "bone",
-					"pivot": [0, -0.29039, 2.01083]
+					"pivot": [0, -0.29039, 2.01083],
+					"cubes": []
 				},
 				{
 					"name": "lowerBody",
@@ -86,7 +87,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "head",
-					"pivot": [0.5, 4.75961, -22.06917]
+					"pivot": [0.5, 4.75961, -22.06917],
+					"cubes": []
 				},
 				{
 					"name": "rightUpperArm",
@@ -217,7 +219,8 @@
 				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 12.30961, 13.76083]
+					"pivot": [0, 12.30961, 13.76083],
+					"cubes": []
 				},
 				{
 					"name": "rightThigh",

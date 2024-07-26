@@ -105,7 +105,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "head",
-					"pivot": [0, 8.6, -18.75]
+					"pivot": [0, 8.6, -18.75],
+					"cubes": []
 				},
 				{
 					"name": "leftUpperArm",
@@ -201,12 +202,14 @@
 				{
 					"name": "attack_hitbox",
 					"parent": "bone21",
-					"pivot": [0, 0, 41.65]
+					"pivot": [0, 0, 41.65],
+					"cubes": []
 				},
 				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 7.6, 22.25]
+					"pivot": [0, 7.6, 22.25],
+					"cubes": []
 				},
 				{
 					"name": "leftThigh",

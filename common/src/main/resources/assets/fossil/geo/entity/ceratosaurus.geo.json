@@ -117,7 +117,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "head",
-					"pivot": [0, 9.4, -17.1]
+					"pivot": [0, 9.4, -17.1],
+					"cubes": []
 				},
 				{
 					"name": "osteoderm1",
@@ -199,7 +200,8 @@
 				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 10.8, 15.2]
+					"pivot": [0, 10.8, 15.2],
+					"cubes": []
 				},
 				{
 					"name": "osteoderm6",

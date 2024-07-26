@@ -22,7 +22,7 @@
 		},
 		{
 			"name": "attack",
-			"pos": [0, 0, 0],
+			"pos": [0, 0, -41.65],
 			"width": 32,
 			"height": 24,
 			"ref": "attack_hitbox"

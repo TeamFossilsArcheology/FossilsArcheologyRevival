@@ -14,14 +14,14 @@
       "action_delay": [
         1.5
       ],
-      "heavy": true
+      "uses_attack_box": true
     },
     "animation.ankylosaurus.attack_strong_left": {
       "animation_length": 3,
       "action_delay": [
         1.5
       ],
-      "heavy": true
+      "uses_attack_box": true
     },
     "animation.ankylosaurus.eat": {
       "animation_length": 3

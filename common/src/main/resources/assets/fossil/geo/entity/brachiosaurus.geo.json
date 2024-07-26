@@ -117,17 +117,20 @@
 				{
 					"name": "head3_hitbox",
 					"parent": "Head",
-					"pivot": [0, 9.92354, -39.47258]
+					"pivot": [0, 9.92354, -39.47258],
+					"cubes": []
 				},
 				{
 					"name": "head2_hitbox",
 					"parent": "Neck2",
-					"pivot": [0, 8.77354, -22.97258]
+					"pivot": [0, 8.77354, -22.97258],
+					"cubes": []
 				},
 				{
 					"name": "head1_hitbox",
 					"parent": "Neck1",
-					"pivot": [0, 7.62354, -11.92258]
+					"pivot": [0, 7.62354, -11.92258],
+					"cubes": []
 				},
 				{
 					"name": "FrontThighRight",
@@ -186,7 +189,8 @@
 				{
 					"name": "body1_hitbox",
 					"parent": "MidBody",
-					"pivot": [0, -0.7, 5.1]
+					"pivot": [0, -0.7, 5.1],
+					"cubes": []
 				},
 				{
 					"name": "Tail",
@@ -218,17 +222,20 @@
 				{
 					"name": "tail2_hitbox",
 					"parent": "Tail2",
-					"pivot": [0, 11.15, 20]
+					"pivot": [0, 11.15, 20],
+					"cubes": []
 				},
 				{
 					"name": "tail1_hitbox",
 					"parent": "Tail",
-					"pivot": [0, 9.6, 11.5]
+					"pivot": [0, 9.6, 11.5],
+					"cubes": []
 				},
 				{
 					"name": "body2_hitbox",
 					"parent": "LowerBody",
-					"pivot": [0, 9.35, 0.7]
+					"pivot": [0, 9.35, 0.7],
+					"cubes": []
 				},
 				{
 					"name": "BackThighRight",
