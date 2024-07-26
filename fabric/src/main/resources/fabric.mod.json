@@ -67,7 +67,8 @@
       ]
     },
     "cardinal-components": [
-      "fossil:mammal"
+      "fossil:mammal",
+      "fossil:first_hatch"
     ]
   }
 }

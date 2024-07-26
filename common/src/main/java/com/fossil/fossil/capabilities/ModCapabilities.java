@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,5 +44,15 @@ public class ModCapabilities {
         setEmbryo(animal, null);
         setEmbryoProgress(animal, 0);
         syncMammalWithClient(animal, 0, null);
+    }
+
+    @ExpectPlatform
+    public static boolean hasHatchedDinosaur(Player player) {
+        throw new NotImplementedException();
+    }
+
+    @ExpectPlatform
+    public static void setHatchedDinosaur(Player player, boolean hatched) {
+        throw new NotImplementedException();
     }
 }

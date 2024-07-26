@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 
 import com.fossil.fossil.advancements.ModTriggers;
+import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.sounds.MusicHandler;
 import com.fossil.fossil.util.Version;
@@ -73,9 +74,9 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
                 ModTriggers.INCUBATE_EGG_TRIGGER.trigger(player, entity);
                 if (prehistoric.aiTameType() == PrehistoricEntityInfoAI.Taming.IMPRINTING) {
                     prehistoric.tame(player);
-                    //TODO: First Hatch music
-                    if (false) {
+                    if (!ModCapabilities.hasHatchedDinosaur(player)) {
                         MusicHandler.startMusic(ModSounds.MUSIC_FIRST_DINOSAUR.get());
+                        ModCapabilities.setHatchedDinosaur(player, true);
                     }
                     if (hatchMessage) {
                         player.displayClientMessage(EGG_HATCHED, false);
@@ -123,7 +124,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
         } else {
             setHatchingTime(currentHatchingTime + 1);
         }
-        if (getHatchingTime() >= TOTAL_HATCHING_TIME && !level.isClientSide) {
+        if (getHatchingTime() >= 200 && !level.isClientSide) {
             Player player = level.getNearestPlayer(this, 16);
             hatchEgg(level, getX(), getY(), getZ(), (ServerPlayer) player, prehistoricEntityInfo, true);
             for (int i = 0; i < 4; i++) {

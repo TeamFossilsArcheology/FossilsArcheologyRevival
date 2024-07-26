@@ -8,6 +8,7 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.entity.prehistoric.fish.Coelacanth;
+import com.fossil.fossil.fabric.capabilities.FirstHatchComponent;
 import com.fossil.fossil.fabric.capabilities.MammalComponent;
 import com.fossil.fossil.fabric.world.biome.FabricFossilRegion;
 import com.fossil.fossil.fabric.world.biome.FabricModBiomes;
@@ -30,6 +31,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
 import terrablender.api.RegionType;
@@ -81,6 +83,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
     @Override
     public void registerEntityComponentFactories(@NotNull EntityComponentFactoryRegistry registry) {
         registry.registerFor(Animal.class, ModCapabilitiesImpl.MAMMAL, MammalComponent::new);
+        registry.registerFor(Player.class, ModCapabilitiesImpl.PLAYER, FirstHatchComponent::new);
     }
 }
 

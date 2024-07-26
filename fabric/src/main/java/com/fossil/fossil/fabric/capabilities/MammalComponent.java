@@ -4,7 +4,6 @@ import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.event.ModEvents;
-import dev.onyxstudios.cca.api.v3.component.sync.AutoSyncedComponent;
 import dev.onyxstudios.cca.api.v3.component.tick.CommonTickingComponent;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.animal.Animal;
@@ -12,7 +11,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class MammalComponent implements IMammalComponent, AutoSyncedComponent, CommonTickingComponent {
+public class MammalComponent implements IMammalComponent, CommonTickingComponent {
     private final Animal animal;
     private int embryoProgress;
     private EntityInfo embryo;

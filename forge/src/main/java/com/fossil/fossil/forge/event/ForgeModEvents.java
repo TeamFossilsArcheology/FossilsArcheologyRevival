@@ -8,17 +8,28 @@ import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.event.ModEvents;
 import com.fossil.fossil.forge.capabilities.mammal.MammalCapProvider;
+import com.fossil.fossil.forge.capabilities.player.FirstHatchCapProvider;
+import com.fossil.fossil.forge.test.BatchArgument;
+import com.fossil.fossil.forge.test.BatchTestCommand;
+import com.fossil.fossil.forge.test.FossilGameTests;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.S2CSyncEntityInfoMessage;
 import com.fossil.fossil.villager.ModTrades;
 import com.fossil.fossil.villager.ModVillagers;
 import dev.architectury.platform.Platform;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.synchronization.ArgumentTypes;
+import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.RegisterGameTestsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
+import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -48,17 +59,17 @@ public class ForgeModEvents {
     @SubscribeEvent
     public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
         if (event.getEntityLiving() instanceof Animal animal) {
-            int currentProgress = ModCapabilitiesImpl.getEmbryoProgress(animal);
+            int currentProgress = ModCapabilities.getEmbryoProgress(animal);
             if (currentProgress == 0) {
                 return;
             }
             if (currentProgress >= FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION)) {
                 if (!animal.level.isClientSide) {
-                    ModEvents.growEntity(ModCapabilitiesImpl.getEmbryo(animal), animal);
+                    ModEvents.growEntity(ModCapabilities.getEmbryo(animal), animal);
                     ModCapabilities.stopPregnancy(animal);
                 }
             } else {
-                ModCapabilitiesImpl.setEmbryoProgress(animal, currentProgress + 1);
+                ModCapabilities.setEmbryoProgress(animal, currentProgress + 1);
             }
         }
     }
@@ -69,7 +80,22 @@ public class ForgeModEvents {
             MammalCapProvider mammalProvider = new MammalCapProvider();
             event.addListener(mammalProvider::invalidate);
             event.addCapability(MammalCapProvider.IDENTIFIER, mammalProvider);
+        } else if (event.getObject() instanceof Player) {
+            FirstHatchCapProvider playerProvider = new FirstHatchCapProvider();
+            event.addListener(playerProvider::invalidate);
+            event.addCapability(FirstHatchCapProvider.IDENTIFIER, playerProvider);
         }
+    }
+
+    @SubscribeEvent
+    public static void attachEntityCapabilities(PlayerEvent.Clone event) {
+        event.getOriginal().reviveCaps();
+        ModCapabilitiesImpl.getFirstHatchCap(event.getOriginal()).ifPresent(originalCap -> {
+            ModCapabilitiesImpl.getFirstHatchCap(event.getPlayer()).ifPresent(newCap -> {
+                newCap.setHatchedDinosaur(originalCap.hasHatchedDinosaur());
+            });
+        });
+        event.getOriginal().invalidateCaps();
     }
 
     @SubscribeEvent
