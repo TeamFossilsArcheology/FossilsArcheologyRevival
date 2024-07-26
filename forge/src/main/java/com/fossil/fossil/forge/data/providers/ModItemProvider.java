@@ -20,6 +20,8 @@ import net.minecraftforge.common.data.ExistingFileHelper;
 
 import java.util.Objects;
 
+import static com.fossil.fossil.block.PrehistoricPlantInfo.MUTANT_PLANT;
+
 public class ModItemProvider extends ItemModelProvider {
     public ModItemProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
         super(generator, Fossil.MOD_ID, existingFileHelper);
@@ -139,8 +141,10 @@ public class ModItemProvider extends ItemModelProvider {
                 }
             }
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
-                plantSeedItem(info.getPlantSeedItem().getRegistryName());
-                plantSeedItem(info.getFossilizedPlantSeedItem().getRegistryName());
+                if (info != MUTANT_PLANT) {
+                    plantSeedItem(info.getPlantSeedItem().getRegistryName());
+                    plantSeedItem(info.getFossilizedPlantSeedItem().getRegistryName());
+                }
             }
             basicItem(ModItems.CALAMITES_SAPLING_FOSSIL.get());
             basicItem(ModItems.CORDAITES_SAPLING_FOSSIL.get());

@@ -15,6 +15,7 @@ import java.util.function.Function;
 public enum VanillaEntityInfo implements EntityInfo {
     AXOLOTL(EntityType.AXOLOTL, PrehistoricMobType.FISH, Diet.INSECTIVORE),
     BAT(EntityType.BAT, PrehistoricMobType.MAMMAL, Diet.INSECTIVORE),
+    BEE(EntityType.BAT, PrehistoricMobType.OTHER, Diet.HERBIVORE),
     CAT(EntityType.CAT, PrehistoricMobType.MAMMAL, Diet.CARNIVORE),
     CHICKEN(EntityType.CHICKEN, PrehistoricMobType.VANILLA_BIRD, Diet.HERBIVORE),
     COD(EntityType.COD, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
