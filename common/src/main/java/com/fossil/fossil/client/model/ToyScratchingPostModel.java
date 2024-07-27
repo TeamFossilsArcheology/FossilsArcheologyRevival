@@ -34,7 +34,7 @@ public class ToyScratchingPostModel extends EntityModel<ToyScratchingPost> {
     }
 
     @Override
-    public void setupAnim(ToyScratchingPost entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(ToyScratchingPost entity, float partialTick, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
 
     }
 

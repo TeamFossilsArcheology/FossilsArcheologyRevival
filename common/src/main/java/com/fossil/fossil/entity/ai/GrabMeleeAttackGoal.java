@@ -49,16 +49,16 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
         if (attackType == GRAB) {
             for (Entity passenger : swimming.getPassengers()) {
                 if (passenger instanceof LivingEntity && passenger != swimming.getRidingPlayer()) {
-                    if (passenger instanceof ToyBase toy && currentTime == grabStartTick + GRAB_DURATION) {
-                        swimming.stopGrabAttack(passenger);
-                        swimming.setTarget(null);
-                        swimming.moodSystem.useToy(toy.moodBonus);
-                    } else if (swimming.tickCount % 20 == 0) {
+                    if (swimming.tickCount % 20 == 0) {
                         boolean hurt = passenger.hurt(DamageSource.mobAttack(swimming), (float) swimming.getAttributeValue(Attributes.ATTACK_DAMAGE));
                         if (!hurt || (currentTime >= grabStartTick + GRAB_DURATION && swimming.getRandom().nextInt(5) == 0)) {
                             swimming.stopGrabAttack(passenger);
                         }
                     }
+                } else if (passenger instanceof ToyBase toy && currentTime == grabStartTick + GRAB_DURATION) {
+                    swimming.stopGrabAttack(passenger);
+                    swimming.moodSystem.setToyTarget(null);
+                    swimming.moodSystem.useToy(toy.moodBonus);
                 }
             }
         } else if (attackType == ATTACK) {

@@ -72,7 +72,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return true;
         }
         boolean replaceAnim = false;
-        boolean isLoop = entity.getAllAnimations().get(active.animationName).loop != LOOP;
+        boolean isLoop = entity.getAllAnimations().get(active.animationName).loop == LOOP;
         if (active.category == category && isAnimationDone(active)) {
             replaceAnim = !isLoop || entity.getRandom().nextFloat() < category.chance;
         } else if (active.category != category) {
@@ -94,7 +94,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return false;
         }
         ActiveAnimationInfo activeAnimation = activeAnimations.get(controller);
-        //TODO: Use isLoop? || event.getController().getAnimationState() == AnimationState.Stopped
         return isAnimationDone(activeAnimation);
     }
 

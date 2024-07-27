@@ -73,11 +73,12 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(5, new FlyingSleepGoal(this));
+        goalSelector.addGoal(6, new PlayGoal(this, 1));
         goalSelector.addGoal(6, new FlyingWanderGoal(this));
         goalSelector.addGoal(6, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8));
-        targetSelector.addGoal(4, new HuntAndPlayGoal(this));
+        targetSelector.addGoal(5, new HuntingTargetGoal(this));
     }
 
     @Override

@@ -52,7 +52,7 @@ public class Liopleurodon extends PrehistoricSwimming {
     }
 
     @Override
-    protected boolean canHuntMobsOnLand() {
+    public boolean canHuntMobsOnLand() {
         return false;
     }
 

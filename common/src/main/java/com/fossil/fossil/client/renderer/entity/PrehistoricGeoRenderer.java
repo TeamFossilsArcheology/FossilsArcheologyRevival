@@ -122,6 +122,9 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
     private int getTickForEntity(Entity entity) {
         return tickForEntity.computeIfAbsent(entity.getId(), integer -> entity.tickCount + 1);
     }
+    public void removeTickForEntity(Entity entity) {
+        tickForEntity.remove(entity.getId());
+    }
 
     private void updateTickForEntity(Entity entity) {
         if (getTickForEntity(entity) <= entity.tickCount) {

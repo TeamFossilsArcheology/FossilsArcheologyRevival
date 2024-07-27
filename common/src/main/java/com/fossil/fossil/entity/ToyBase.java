@@ -1,23 +1,18 @@
 package com.fossil.fossil.entity;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.HumanoidArm;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
-
-public abstract class ToyBase extends LivingEntity {
+public abstract class ToyBase extends Entity {
 
     public final int moodBonus;
     protected final SoundEvent attackNoise;
@@ -26,10 +21,6 @@ public abstract class ToyBase extends LivingEntity {
         super(type, level);
         this.moodBonus = moodBonus;
         this.attackNoise = attackNoise;
-    }
-
-    public static AttributeSupplier.Builder createAttributes() {
-        return createLivingAttributes().add(Attributes.MOVEMENT_SPEED, 0);
     }
 
     protected boolean skipAI() {
@@ -44,13 +35,6 @@ public abstract class ToyBase extends LivingEntity {
     }
 
     @Override
-    public void aiStep() {
-        if (!skipAI()) {
-            super.aiStep();
-        }
-    }
-
-    @Override
     public void tick() {
         if (!skipAI()) {
             super.tick();
@@ -60,44 +44,55 @@ public abstract class ToyBase extends LivingEntity {
     @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source.getEntity() != null) {
-            if (source.isCreativePlayer()) {
-                discard();
-                return true;
-            }
-            if (source.getEntity() instanceof Player) {
-                if (!((Player) source.getEntity()).getAbilities().mayBuild) {
+            if (source.getDirectEntity() instanceof Player player) {
+                if (player.isCreative()) {
+                    discard();
+                    return true;
+                }
+                if (!player.getAbilities().mayBuild) {
                     return false;
                 }
                 Block.popResource(level, blockPosition(), getPickResult());
                 discard();
-                playSound(attackNoise, getSoundVolume(), getVoicePitch());
+                playSound(attackNoise, 1, getVoicePitch());
                 return true;
             } else if (source.getEntity() instanceof Prehistoric prehistoric) {
                 prehistoric.moodSystem.useToy(moodBonus);
-                playSound(attackNoise, getSoundVolume(), getVoicePitch());
+                playSound(attackNoise, 1, getVoicePitch());
                 return false;
+            } else if (source == DamageSource.CRAMMING || source.isFire()) {
+                Block.popResource(level, blockPosition(), getPickResult());
+                discard();
             }
         }
         return source != DamageSource.OUT_OF_WORLD;
     }
 
     @Override
-    public @NotNull Iterable<ItemStack> getArmorSlots() {
-        return Collections.emptyList();
+    public void remove(RemovalReason reason) {
+        if (reason == RemovalReason.KILLED) {
+            //TODO: This prevents /kill. Not sure if good
+            return;
+        }
+        super.remove(reason);
     }
 
     @Override
-    public @NotNull ItemStack getItemBySlot(EquipmentSlot slot) {
-        return ItemStack.EMPTY;
+    public boolean canBeCollidedWith() {
+        return true;
     }
 
     @Override
-    public void setItemSlot(EquipmentSlot slot, ItemStack stack) {
+    public boolean isPickable() {
+        return !isRemoved();
+    }
 
+    public float getVoicePitch() {
+        return (random.nextFloat() - random.nextFloat()) * 0.2f + 1;
     }
 
     @Override
-    public @NotNull HumanoidArm getMainArm() {
-        return HumanoidArm.RIGHT;
+    public @NotNull Packet<?> getAddEntityPacket() {
+        return new ClientboundAddEntityPacket(this);
     }
 }

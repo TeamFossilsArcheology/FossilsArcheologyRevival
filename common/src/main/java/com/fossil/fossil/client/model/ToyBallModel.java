@@ -32,21 +32,18 @@ public class ToyBallModel extends EntityModel<ToyBall> {
 
 
     @Override
-    public void setupAnim(ToyBall entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
+    public void setupAnim(ToyBall entity, float partialTick, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         rotationX = headPitch;
         rgb = entity.getColor().getTextureDiffuseColors();
     }
 
     @Override
     public void renderToBuffer(PoseStack stack, VertexConsumer buffer, int packedLight, int packedOverlay, float r, float g, float b, float alpha) {
-        r = rgb[0];
-        g = rgb[1];
-        b = rgb[2];
         stack.pushPose();
         stack.translate(0, 1.25, 0);
         stack.mulPose(Vector3f.XP.rotationDegrees(rotationX));
         stack.translate(0, -1.25, 0);
-        model.render(stack, buffer, packedLight, packedOverlay, r, g, b, alpha);
+        model.render(stack, buffer, packedLight, packedOverlay, rgb[0], rgb[1], rgb[2], alpha);
         stack.popPose();
     }
 }

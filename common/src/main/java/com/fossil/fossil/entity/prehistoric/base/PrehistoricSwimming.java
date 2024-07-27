@@ -71,11 +71,12 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(5, new EatBlockGoal(this));
         goalSelector.addGoal(6, new EnterWaterGoal(this, 1));
+        goalSelector.addGoal(6, new PlayGoal(this, 1));
         goalSelector.addGoal(6, new DinoSwimGoal(this, 1));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0f));
         goalSelector.addGoal(8, new DinoLookAroundGoal(this));
-        targetSelector.addGoal(4, new HuntAndPlayGoal(this));
+        targetSelector.addGoal(5, new HuntingTargetGoal(this));
     }
 
     public static boolean isOverWater(LivingEntity entity) {
@@ -331,16 +332,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return getScale() / data().maxScale() * swimSpeed();
     }
 
-    @Override
-    public boolean canDinoHunt(LivingEntity target) {
-        //TODO: Update
-        if (canDoBreachAttack() && isOverWater(target)) {
-            return super.canDinoHunt(target);
-        }
-        return super.canDinoHunt(target) && (target.isInWater() || canHuntMobsOnLand());
-    }
-
-    protected boolean canHuntMobsOnLand() {
+    public boolean canHuntMobsOnLand() {
         return true;
     }
 

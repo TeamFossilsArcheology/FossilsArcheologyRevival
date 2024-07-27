@@ -2,9 +2,9 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.advancements.ModTriggers;
+import com.fossil.fossil.client.renderer.entity.PrehistoricGeoRenderer;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
-import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
@@ -46,6 +46,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -199,6 +200,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         goalSelector.addGoal(3, new EatFromFeederGoal(this));
         goalSelector.addGoal(4, new EatItemEntityGoal(this));
         goalSelector.addGoal(5, new EatBlockGoal(this));
+        goalSelector.addGoal(6, new PlayGoal(this, 1));
         goalSelector.addGoal(6, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0f));
@@ -206,7 +208,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
-        targetSelector.addGoal(5, new HuntAndPlayGoal(this));
+        targetSelector.addGoal(5, new HuntingTargetGoal(this));
     }
 
     @Override
@@ -380,6 +382,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 part.getEntity().remove(RemovalReason.DISCARDED);
             }
         }
+        ((PrehistoricGeoRenderer<? extends Prehistoric>)Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(this)).removeTickForEntity(this);
     }
 
     public boolean hurt(Entity part, DamageSource source, float damage) {
@@ -446,7 +449,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
      * @return whether something is preventing the mob from sleeping
      */
     public boolean canSleep() {
-        if ((getTarget() == null || getTarget() instanceof ToyBase) && getLastHurtByMob() == null && !isInWater() && !isVehicle() && !isActuallyWeak()) {
+        if (!hasTarget() && getLastHurtByMob() == null && !isInWater() && !isVehicle() && !isActuallyWeak()) {
             return getCurrentOrder() != OrderType.FOLLOW;
         }
         return false;
@@ -464,6 +467,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return level.isDay() && !level.canSeeSky(blockPosition().above());
         }
         return aiActivityType() == Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
+    }
+
+    private boolean hasTarget() {
+        return getTarget() != null || moodSystem.getToyTarget() != null;
     }
 
     @Override
@@ -646,9 +653,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void aiStep() {
         updateSwingTime();
         super.aiStep();
-        if ((getTarget() != null || getLastHurtByMob() != null) && isSleeping()) {
-            setSleeping(false);
-        }
         if (getHunger() > getMaxHunger()) {
             setHunger(getMaxHunger());
         }
@@ -668,7 +672,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
 
         if (isSleeping()) {
-            if ((getTarget() != null && getTarget().isAlive()) || (getLastHurtByMob() != null && getLastHurtByMob().isAlive())) {
+            if ((hasTarget() || getLastHurtByMob() != null)) {
                 setSleeping(false);
             }
         }
@@ -692,12 +696,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             } else {
                 ticksSlept = 0;
                 if (!isInWater()) {
-                    if (!isSitting() && canSit() && random.nextInt(1000) == 1 && getTarget() == null) {
+                    if (!isSitting() && canSit() && random.nextInt(1000) == 1 && !hasTarget()) {
                         //TODO: Maybe !isSleeping?. Maybe a priority system?
                         setSitting(true);
                         ticksSat = 0;
                     }
-                    if (isSitting() && (!canSit() || ticksSat > 100 && random.nextInt(100) == 1 || getTarget() != null)) {
+                    if (isSitting() && (!canSit() || ticksSat > 100 && random.nextInt(100) == 1 || hasTarget())) {
                         setSitting(false);
                     }
                 }
@@ -724,9 +728,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (data().breaksBlocks() && moodSystem.getMood() < 0) {
             breakBlock(5);//TODO: Check if only server side
         }
-        if (getTarget() instanceof ToyBase && (!getSensing().hasLineOfSight(getTarget()) || moodSystem.getPlayingCooldown() > 0)) {
-            setTarget(null);
-        }
         if (isFleeing()) {
             fleeTicks++;
             if (fleeTicks > getFleeingCooldown()) {
@@ -743,6 +744,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void tick() {
+        if (!level.isClientSide) {
+            if (getGender() == Gender.MALE) {
+                setXRot(160);
+            } else {
+                setXRot(200);
+            }
+        }
         super.tick();
 
         if (!isAgingDisabled()) {
@@ -793,6 +801,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 }
             }
         }
+        if (!level.isClientSide) {
+            if (getGender() == Gender.MALE) {
+                setXRot(160);
+            } else {
+                setXRot(200);
+            }
+        }
+    }
+
+    @Override
+    public void lerpTo(double x, double y, double z, float yRot, float xRot, int lerpSteps, boolean teleport) {
+        super.lerpTo(x, y, z, yRot, xRot, lerpSteps, teleport);
+    }
+
+    @Override
+    public void setYRot(float yRot) {
+        super.setYRot(yRot);
     }
 
     @Override
@@ -976,7 +1001,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return;
         }
         entityData.set(AGE_TICK, age);
-        if (tickCount % 20 == 0) {
+        if (tickCount % 100 == 0) {
             refreshTexturePath();
             refreshDimensions();
         }
@@ -1337,19 +1362,20 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
     }
 
-    public boolean canDinoHunt(LivingEntity target) {
-        if (target instanceof ToyBase) {
-            return true;
+    @Override
+    public boolean canAttack(LivingEntity target) {
+        if (isOwnedBy(target) && moodSystem.getMoodFace() != PrehistoricMoodType.ANGRY) {
+            return false;
         }
-        if (target != null) {
-            boolean isFood = FoodMappings.getMobFoodPoints(target, info().diet) > 0;
-            if (info().diet != Diet.HERBIVORE && info().diet != Diet.NONE && isFood && canAttack(target)) {
-                if (getBbWidth() * getTargetScale() >= target.getBbWidth()) {
-                    return isHungry();
-                }
-            }
+        if (target instanceof Player && level.getDifficulty() == Difficulty.PEACEFUL) {
+            return false;
         }
-        return false;
+        return target.canBeSeenAsEnemy();
+    }
+
+    @Override
+    public void setTarget(@Nullable LivingEntity target) {
+        super.setTarget(target);
     }
 
     public float getTargetScale() {

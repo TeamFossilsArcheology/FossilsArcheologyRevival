@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.entity.ToyBase;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -10,6 +11,7 @@ public class MoodSystem {
     private final Prehistoric prehistoric;
     private int moodCheckCooldown = 0;
     private int playingCooldown;
+    private ToyBase toyTarget;
 
     public MoodSystem(Prehistoric prehistoric) {
         this.prehistoric = prehistoric;
@@ -37,11 +39,11 @@ public class MoodSystem {
 
     public PrehistoricMoodType getMoodFace() {
         int mood = getMood();
-        if (mood == 100) {
+        if (mood >= 100) {
             return PrehistoricMoodType.HAPPY;
         } else if (mood >= 50) {
             return PrehistoricMoodType.CONTENT;
-        } else if (mood == -100) {
+        } else if (mood <= -100) {
             return PrehistoricMoodType.ANGRY;
         } else if (mood <= -50) {
             return PrehistoricMoodType.SAD;
@@ -115,5 +117,13 @@ public class MoodSystem {
             moodCheckCooldown = 3000 + prehistoric.getRandom().nextInt(5000);
         }
         moodCheckCooldown--;
+    }
+
+    public void setToyTarget(ToyBase toyTarget) {
+        this.toyTarget = toyTarget;
+    }
+
+    public ToyBase getToyTarget() {
+        return toyTarget;
     }
 }

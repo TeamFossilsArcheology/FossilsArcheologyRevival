@@ -23,16 +23,16 @@ import java.util.function.Predicate;
  */
 public class DelayedAttackGoal extends Goal {
     private static final Predicate<Entity> CAN_ATTACK_TARGET = target -> !(target instanceof Player player) || (!player.isSpectator() && !player.isCreative() && target.level.getDifficulty() != Difficulty.PEACEFUL);
-    private static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
+    protected static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
     protected final Prehistoric prehistoric;
     private final double speedModifier;
     private final boolean followingTargetEvenIfNotSeen;
-    private Path path;
+    protected Path path;
     private double pathedTargetX;
     private double pathedTargetY;
     private double pathedTargetZ;
     private int ticksUntilNextPathRecalculation;
-    private long lastCanUseCheck;
+    protected long lastCanUseCheck;
     protected long attackEndTick = -1;
     protected long attackDamageTick = -1;
 
@@ -90,7 +90,7 @@ public class DelayedAttackGoal extends Goal {
         return true;
     }
 
-    protected double getAttackReachSqr(LivingEntity attackTarget) {
+    protected double getAttackReachSqr(Entity attackTarget) {
         return prehistoric.getBbWidth() * 2 * (prehistoric.getBbWidth() * 2) + attackTarget.getBbWidth();
     }
 
@@ -159,7 +159,7 @@ public class DelayedAttackGoal extends Goal {
         double attackReach = prehistoric.getBbWidth() * prehistoric.getBbWidth() * 2 + enemy.getBbWidth();
         long currentTime = prehistoric.level.getGameTime();
         if (distToEnemySqr <= attackReach) {
-            if (currentTime > attackEndTick) {
+            if (attackEndTick == -1) {
                 AnimationInfoManager.ServerAnimationInfo animation = prehistoric.startAttack();
                 if (animation.usesAttackBox && enemy instanceof ServerPlayer player) {
                     MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(prehistoric, animation.animationLength));

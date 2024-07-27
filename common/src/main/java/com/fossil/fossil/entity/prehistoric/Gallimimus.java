@@ -4,12 +4,10 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
-import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -64,11 +62,6 @@ public class Gallimimus extends PrehistoricFlocking {
         } else {
             maxUpStep = 0;
         }
-    }
-
-    @Override
-    public boolean canDinoHunt(LivingEntity target) {
-        return Util.isEntitySmallerThan(target, 0.6f) && super.canDinoHunt(target);
     }
 
     @Override

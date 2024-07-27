@@ -72,7 +72,7 @@ public class Ichthyosaurus extends PrehistoricSwimmingBucketable {
     }
 
     @Override
-    protected boolean canHuntMobsOnLand() {
+    public boolean canHuntMobsOnLand() {
         return false;
     }
 

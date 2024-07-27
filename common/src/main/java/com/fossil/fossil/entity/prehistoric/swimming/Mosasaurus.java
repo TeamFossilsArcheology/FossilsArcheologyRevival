@@ -88,7 +88,7 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    protected boolean canHuntMobsOnLand() {
+    public boolean canHuntMobsOnLand() {
         return false;
     }
 

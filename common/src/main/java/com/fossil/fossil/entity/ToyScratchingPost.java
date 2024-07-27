@@ -23,7 +23,6 @@ public class ToyScratchingPost extends ToyBase {
 
     @Override
     protected void defineSynchedData() {
-        super.defineSynchedData();
         entityData.define(WOOD_TYPE, WoodType.OAK.name());
     }
 
@@ -36,22 +35,12 @@ public class ToyScratchingPost extends ToyBase {
                 Block.popResource(level, blockPosition(), getPickResult());
             }
             discard();
-            playSound(attackNoise, getSoundVolume(), getVoicePitch());
+            playSound(attackNoise, 1, getVoicePitch());
         }
     }
 
     private boolean isOnBlock() {
         return !level.isEmptyBlock(new BlockPos(position().add(0, -1, 0)));
-    }
-
-    @Override
-    public boolean canBeCollidedWith() {
-        return !isDeadOrDying();
-    }
-
-    @Override
-    public boolean isPushable() {
-        return false;
     }
 
     @Nullable
@@ -70,13 +59,11 @@ public class ToyScratchingPost extends ToyBase {
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
         compound.putString("woodType", getWoodTypeName());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
         String woodType = compound.getString("woodType");
         if (woodType.isBlank()) {
             woodType = WoodType.OAK.name();

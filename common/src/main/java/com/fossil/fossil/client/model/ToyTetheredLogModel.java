@@ -43,7 +43,7 @@ public class ToyTetheredLogModel extends EntityModel<ToyTetheredLog> {
         float rot = 0;
         if (entity.animationPlaying) {
             float tick = entity.animationTick + partialTick;
-            rot = Mth.sin(1.5f * tick / Mth.PI) / (3.6f + tick / 10);
+            rot = (float) (0.5 * Mth.sin(tick * 0.5f) / Math.exp(tick / 10));
         }
         rope1.xRot = rot * entity.animationX;
         rope1.zRot = rot * entity.animationZ;

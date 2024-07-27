@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs because its livingentity
+public class ToyTetheredLog extends ToyBase {
     private static final EntityDataAccessor<String> WOOD_TYPE = SynchedEntityData.defineId(ToyTetheredLog.class, EntityDataSerializers.STRING);
     public int animationTick;
     public boolean animationPlaying;
@@ -35,7 +35,6 @@ public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs becau
 
     @Override
     protected void defineSynchedData() {
-        super.defineSynchedData();
         entityData.define(WOOD_TYPE, WoodType.OAK.name());
     }
 
@@ -68,13 +67,13 @@ public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs becau
                 Block.popResource(level, blockPosition(), getPickResult());
             }
             discard();
-            playSound(attackNoise, getSoundVolume(), getVoicePitch());
+            playSound(attackNoise, 1, getVoicePitch());
         }
         if (level.isClientSide) {
             if (animationPlaying) {
                 animationTick++;
             }
-            if (animationTick >= 26) {
+            if (animationTick >= 40) {
                 animationPlaying = false;
                 animationTick = 0;
             }
@@ -83,16 +82,6 @@ public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs becau
 
     private boolean isAttachedToBlock() {
         return !level.isEmptyBlock(blockPosition().above(2));
-    }
-
-    @Override
-    public boolean canBeCollidedWith() {
-        return !isDeadOrDying();
-    }
-
-    @Override
-    public boolean isPushable() {
-        return false;
     }
 
     @Nullable
@@ -111,13 +100,11 @@ public class ToyTetheredLog extends ToyBase {//TODO: Gets targeted by mobs becau
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
         compound.putString("woodType", getWoodTypeName());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
         String woodType = compound.getString("woodType");
         if (woodType.isBlank()) {
             woodType = WoodType.OAK.name();

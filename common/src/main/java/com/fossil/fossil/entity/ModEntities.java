@@ -188,9 +188,6 @@ public class ModEntities {
         EntityAttributeRegistry.register(ANU_DEAD, AnuDead::createAttributes);
         EntityAttributeRegistry.register(ANU_TOTEM, AnuTotem::createAttributes);
         EntityAttributeRegistry.register(SENTRY_PIGLIN, SentryPiglin::createAttributes);
-        EntityAttributeRegistry.register(TOY_BALL, ToyBase::createAttributes);
-        EntityAttributeRegistry.register(TOY_TETHERED_LOG, ToyBase::createAttributes);
-        EntityAttributeRegistry.register(TOY_SCRATCHING_POST, ToyBase::createAttributes);
         EntityAttributeRegistry.register(TAR_SLIME, TarSlime::createAttributes);
         EntityAttributeRegistry.register(FRIENDLY_PIGLIN, FriendlyPiglin::createAttributes);
         EntityAttributeRegistry.register(DINOSAUR_EGG, DinosaurEgg::createAttributes);
