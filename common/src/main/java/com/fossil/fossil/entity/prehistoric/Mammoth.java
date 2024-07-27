@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
+import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.nbt.CompoundTag;
@@ -15,16 +16,20 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Shearable;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
@@ -142,12 +147,26 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     }
 
     @Override
+    public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.is(Items.SHEARS) && readyForShearing()) {
+            shear(SoundSource.PLAYERS);
+            gameEvent(GameEvent.SHEAR, player);
+            if (!level.isClientSide) {
+                itemStack.hurtAndBreak(1, player, player2 -> player2.broadcastBreakEvent(hand));
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        }
+        return super.mobInteract(player, hand);
+    }
+
+    @Override
     public void shear(SoundSource source) {
         level.playSound(null, this, SoundEvents.SHEEP_SHEAR, source, 1, 1);
         setSheared(true);
         int maxWool = 1 + random.nextInt(20);
         for (int i = 0; i < maxWool; i++) {
-            ItemEntity itemEntity = spawnAtLocation(Blocks.BROWN_WOOL, 1);
+            ItemEntity itemEntity = spawnAtLocation(ModItems.MAMMOTH_FUR.get(), 1);
             if (itemEntity == null) continue;
             itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((random.nextFloat() - random.nextFloat()) * 0.1, random.nextFloat() * 0.05, (random.nextFloat() - random.nextFloat()) * 0.1));
         }

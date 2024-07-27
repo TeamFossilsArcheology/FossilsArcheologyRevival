@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "group": "bed",
+  "pattern": [
+    "FFF",
+    "PPP"
+  ],
+  "key": {
+    "F": {
+      "item": "fossil:fur_mammoth"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    }
+  },
+  "result": {
+    "item": "fossil:comfy_bed"
+  }
+}

@@ -17,6 +17,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BedPart;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
@@ -85,6 +86,8 @@ public class ModBlockLootTables extends BlockLoot {
                 addCustom(block, createSlabItemTable(block));
             } else if (block instanceof DoorBlock || block instanceof AmphoraVaseBlock) {
                 addCustom(block, createDoorTable(block));
+            } else if (block instanceof BedBlock) {
+                BlockLoot.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD);
             } else if (!NO_TABLE.contains(block) && !tableDone.contains(block)) {
                 dropSelf(block);
             }

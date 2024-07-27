@@ -3,7 +3,7 @@
 	"texture_size": [64, 64],
 	"textures": {
 		"texture": "fossil:block/comfy_bed_white",
-		"particle": "fossil:block/comfy_bed_white"
+		"particle": "minecraft:block/oak_planks"
 	},
 	"elements": [
 		{
