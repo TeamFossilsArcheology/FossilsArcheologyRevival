@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.ai;
 import com.fossil.fossil.entity.ai.control.TestLookControl;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.S2CActivateAttackBoxesMessage;
 import net.minecraft.server.level.ServerPlayer;
@@ -65,7 +66,7 @@ public class DelayedAttackGoal extends Goal {
         if (path != null) {
             return true;
         }
-        return getAttackReachSqr(target) >= prehistoric.distanceToSqr(target);
+        return canHit(target);
     }
 
     @Override
@@ -88,10 +89,6 @@ public class DelayedAttackGoal extends Goal {
             return false;
         }
         return true;
-    }
-
-    protected double getAttackReachSqr(Entity attackTarget) {
-        return prehistoric.getBbWidth() * 2 * (prehistoric.getBbWidth() * 2) + attackTarget.getBbWidth();
     }
 
     @Override
@@ -135,8 +132,7 @@ public class DelayedAttackGoal extends Goal {
             //moveControl.setLookAt(0, 0, 0);
             //moveControl.stop();
             //((SmoothTurningMoveControl)prehistoric.getMoveControl()).stop();
-        }else
-        if ((followingTargetEvenIfNotSeen || prehistoric.getSensing().hasLineOfSight(target)) && ticksUntilNextPathRecalculation <= 0 && (pathedTargetX == 0.0 && pathedTargetY == 0.0 && pathedTargetZ == 0.0 || target.distanceToSqr(pathedTargetX, pathedTargetY, pathedTargetZ) >= 1.0 || prehistoric.getRandom().nextFloat() < 0.05f)) {
+        } else if ((followingTargetEvenIfNotSeen || prehistoric.getSensing().hasLineOfSight(target)) && ticksUntilNextPathRecalculation <= 0 && (pathedTargetX == 0.0 && pathedTargetY == 0.0 && pathedTargetZ == 0.0 || target.distanceToSqr(pathedTargetX, pathedTargetY, pathedTargetZ) >= 1.0 || prehistoric.getRandom().nextFloat() < 0.05f)) {
             pathedTargetX = target.getX();
             pathedTargetY = target.getY();
             pathedTargetZ = target.getZ();
@@ -154,19 +150,22 @@ public class DelayedAttackGoal extends Goal {
         checkAndPerformAttack(target, dist);
     }
 
+    protected boolean canHit(Entity attackTarget) {
+        return Util.canReachPrey(prehistoric, attackTarget);
+    }
+
     protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
         //TODO: Use attackreach in all places
-        double attackReach = prehistoric.getBbWidth() * prehistoric.getBbWidth() * 2 + enemy.getBbWidth();
         long currentTime = prehistoric.level.getGameTime();
-        if (distToEnemySqr <= attackReach) {
-            if (attackEndTick == -1) {
+        if (canHit(enemy)) {
+            if (currentTime > attackEndTick + 20) {
                 AnimationInfoManager.ServerAnimationInfo animation = prehistoric.startAttack();
                 if (animation.usesAttackBox && enemy instanceof ServerPlayer player) {
                     MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(prehistoric, animation.animationLength));
                 } else {
                     attackDamageTick = (long) (currentTime + animation.actionDelay);
                 }
-                attackEndTick = (long) (currentTime + animation.animationLength + 20);
+                attackEndTick = (long) (currentTime + animation.animationLength);
                 //TODO: prevent only on certain attack(animationdata)
                 //prehistoric.getNavigation().stop();
                 //prehistoric.getLookControl().setLookAt(enemy);

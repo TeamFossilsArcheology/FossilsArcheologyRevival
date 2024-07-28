@@ -68,17 +68,20 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
                 attackDamageTick = -1;
                 attackType = -1;
             }
-        } else if (currentTime > attackEndTick && Util.canReachPrey(swimming, enemy)) {
+        } else if (currentTime > attackEndTick + 20 && canHit(enemy)) {
+            //Is target smaller than 2 blocks (if swimming is adult)
             boolean tooBig = !Util.isEntitySmallerThan(enemy, 2 * swimming.getScale() / swimming.data().maxScale());
             if (tooBig || swimming.getRandom().nextInt(5) > 0) {
                 attackType = ATTACK;
                 AnimationInfoManager.ServerAnimationInfo animation = swimming.startAttack();
-                attackEndTick = (long) (currentTime + animation.animationLength + 20);
+                attackEndTick = (long) (currentTime + animation.animationLength);
                 attackDamageTick = Math.min((long) (currentTime + animation.actionDelay), attackEndTick);
             } else {
                 attackType = GRAB;
                 swimming.destroyBoat(enemy);
                 swimming.startGrabAttack(enemy);
+                //TODO: Grab attack
+                attackEndTick = 1;
             }
         }
     }

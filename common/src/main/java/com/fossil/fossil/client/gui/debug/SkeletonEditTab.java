@@ -45,7 +45,7 @@ public class SkeletonEditTab extends DebugTab {
         addWidget(ageSlider);
         addWidget(new AnimationsList());
         addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0));
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0, 0));
             ageSlider.maxValue = EntityDataManager.ENTITY_DATA.getData(info.resourceName).adultAgeDays();
             age = (int) Math.min(age, ageSlider.maxValue);
             ageSlider.setValue(age);

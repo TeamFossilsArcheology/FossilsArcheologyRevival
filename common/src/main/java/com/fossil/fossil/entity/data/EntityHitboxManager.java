@@ -62,7 +62,7 @@ public class EntityHitboxManager extends SimpleJsonResourceReloadListener {
 
     public record Hitbox(String name, Vec3 pos, float width, float height, String ref, boolean isAttackBox) {
         public float getFrustumWidthRadius() {
-            return (float) Math.max(Math.abs(pos.x) + width, Math.abs(pos.z) + width);
+            return (float) Math.max(Math.abs(pos.x) + width / 2, Math.abs(pos.z) + width / 2);
         }
         public float getFrustumHeightRadius() {
             return (float) pos.y + height;

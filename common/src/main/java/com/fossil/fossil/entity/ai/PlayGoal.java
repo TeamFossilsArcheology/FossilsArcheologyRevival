@@ -115,10 +115,10 @@ public class PlayGoal extends Goal {
         double attackReach = dino.getBbWidth() * dino.getBbWidth() * 2 + target.getBbWidth();
         long currentTime = dino.level.getGameTime();
         if (distToEnemySqr <= attackReach) {
-            if (attackEndTick == -1) {
+            if (currentTime > attackEndTick + 20) {
                 AnimationInfoManager.ServerAnimationInfo animation = dino.startAttack();
                 attackDamageTick = (long) (currentTime + animation.actionDelay);
-                attackEndTick = (long) (currentTime + animation.animationLength + 20);
+                attackEndTick = (long) (currentTime + animation.animationLength);
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
                 dino.getNavigation().stop();
             }

@@ -67,7 +67,7 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(ATTACK1);
     }
 
     @Override

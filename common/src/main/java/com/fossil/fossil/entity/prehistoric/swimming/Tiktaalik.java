@@ -61,7 +61,7 @@ public class Tiktaalik extends PrehistoricSwimming {
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(IDLE);
+        return getAllAnimations().get(ATTACK1);
     }
 
     @Override

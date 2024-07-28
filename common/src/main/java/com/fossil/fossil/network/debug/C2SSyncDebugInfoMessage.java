@@ -20,19 +20,21 @@ public class C2SSyncDebugInfoMessage {
     private final int matingCooldown;
     private final int playingCooldown;
     private final int climbingCooldown;
+    private final int hunger;
     private final int mood;
 
     public C2SSyncDebugInfoMessage(FriendlyByteBuf buf) {
-        this(buf.readInt(), buf.readUtf(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
+        this(buf.readInt(), buf.readUtf(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
     }
 
-    public C2SSyncDebugInfoMessage(int entityId, String enumString, int age, int matingCooldown, int playingCooldown, int climbingCooldown, int mood) {
+    public C2SSyncDebugInfoMessage(int entityId, String enumString, int age, int matingCooldown, int playingCooldown, int climbingCooldown, int hunger, int mood) {
         this.entityId = entityId;
         this.enumString = enumString;
         this.age = age;
         this.matingCooldown = matingCooldown;
         this.playingCooldown = playingCooldown;
         this.climbingCooldown = climbingCooldown;
+        this.hunger = hunger;
         this.mood = mood;
     }
 
@@ -43,6 +45,7 @@ public class C2SSyncDebugInfoMessage {
         buf.writeInt(matingCooldown);
         buf.writeInt(playingCooldown);
         buf.writeInt(climbingCooldown);
+        buf.writeInt(hunger);
         buf.writeInt(mood);
     }
 
@@ -56,15 +59,18 @@ public class C2SSyncDebugInfoMessage {
             }
             if (player.level.getEntity(entityId) instanceof Prehistoric prehistoric) {
                 contextSupplier.get().queue(() -> {
-                    prehistoric.setGender(Gender.valueOf(enumString));
-                    prehistoric.setAgeInTicks(age);
-                    prehistoric.setMatingCooldown(matingCooldown);
-                    prehistoric.moodSystem.setPlayingCooldown(playingCooldown);
-                    prehistoric.setClimbingCooldown(climbingCooldown);
-                    prehistoric.moodSystem.setMood(mood);
-                    prehistoric.refreshTexturePath();
-                    prehistoric.refreshDimensions();
-                    prehistoric.updateAbilities();
+                    if (Minecraft.getInstance().screen instanceof DebugScreen) {
+                        prehistoric.setGender(Gender.valueOf(enumString));
+                        prehistoric.setAgeInTicks(age);
+                        prehistoric.setMatingCooldown(matingCooldown);
+                        prehistoric.moodSystem.setPlayingCooldown(playingCooldown);
+                        prehistoric.setClimbingCooldown(climbingCooldown);
+                        prehistoric.setHunger(hunger);
+                        prehistoric.moodSystem.setMood(mood);
+                        prehistoric.refreshTexturePath();
+                        prehistoric.refreshDimensions();
+                        prehistoric.updateAbilities();
+                    }
                 });
             } else if (player.level.getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
                 contextSupplier.get().queue(() -> {

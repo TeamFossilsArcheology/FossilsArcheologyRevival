@@ -34,6 +34,8 @@ public abstract class EntityRenderDispatcherMixin {
             if (Version.debugEnabled()) {
                 aABB = entity.getBoundingBoxForCulling().move(-entity.getX(), -entity.getY(), -entity.getZ());
                 LevelRenderer.renderLineBox(poseStack, buffer, aABB, 1, 0, 1, 1);
+                aABB = ((Prehistoric) entity).getAttackBounds().move(-entity.getX(), -entity.getY(), -entity.getZ());
+                LevelRenderer.renderLineBox(poseStack, buffer, aABB, 0, 0, 1, 1);
             }
 
             //Changed code

@@ -21,11 +21,13 @@ public class InfoTab extends DebugTab {
     private int matingCooldown;
     private int playingCooldown;
     private int climbingCooldown;
+    private int hunger;
     private int mood;
     private Slider ageSlider;
     private Slider matingSlider;
     private Slider playingSlider;
     private Slider climbingSlider;
+    private Slider hungerSlider;
     private Slider moodSlider;
 
     protected InfoTab(DebugScreen debugScreen, Prehistoric prehistoric) {
@@ -36,6 +38,7 @@ public class InfoTab extends DebugTab {
         this.matingCooldown = prehistoric.getMatingCooldown();
         this.playingCooldown = prehistoric.moodSystem.getPlayingCooldown();
         this.climbingCooldown = prehistoric.getClimbingCooldown();
+        this.hunger = prehistoric.getHunger();
         this.mood = prehistoric.moodSystem.getMood();
     }
 
@@ -73,7 +76,13 @@ public class InfoTab extends DebugTab {
                 climbingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
         };
-        moodSlider = new Slider(20, 150, 150, 20, new TextComponent("Mood: "), new TextComponent(""), -100, 100, mood, 1, 0, true) {
+        hungerSlider = new Slider(20, 150, 150, 20, new TextComponent("Hunger: "), new TextComponent(""), 0, ((Prehistoric)entity).getMaxHunger(), hunger, 1, 0, true) {
+            @Override
+            protected void applyValue() {
+                hunger = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+            }
+        };
+        moodSlider = new Slider(20, 180, 150, 20, new TextComponent("Mood: "), new TextComponent(""), -100, 100, mood, 1, 0, true) {
             @Override
             protected void applyValue() {
                 mood = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
@@ -83,14 +92,15 @@ public class InfoTab extends DebugTab {
         addWidget(matingSlider);
         addWidget(playingSlider);
         addWidget(climbingSlider);
+        addWidget(hungerSlider);
         addWidget(moodSlider);
 
         addWidget(CycleOption.create("Gender", () -> Arrays.stream(Gender.values()).toList(),
                         Gender::getName, options -> gender, (options, option, gender) -> this.gender = gender)
-                .createButton(Minecraft.getInstance().options, 20, 180, 150));
-        addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
+                .createButton(Minecraft.getInstance().options, 20, 210, 150));
+        addWidget(new Button(20, 240, 150, 20, new TextComponent("Set Info"), button -> {
             ((Prehistoric) entity).setGender(gender);
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSyncDebugInfoMessage(entity.getId(), gender.name(), ageInTicks, matingCooldown, playingCooldown, climbingCooldown, mood));
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSyncDebugInfoMessage(entity.getId(), gender.name(), ageInTicks, matingCooldown, playingCooldown, climbingCooldown, hunger, mood));
         }));
     }
 
@@ -102,8 +112,9 @@ public class InfoTab extends DebugTab {
             drawString(poseStack, minecraft.font, new TextComponent("Mate: " + (prehistoric.getMatingCooldown() / 20)), 175, 65, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Play: " + (prehistoric.moodSystem.getPlayingCooldown() / 20)), 175, 95, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Climb: " + (prehistoric.getClimbingCooldown() / 20)), 175, 125, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Mood: " + prehistoric.moodSystem.getMood()), 175, 155, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Gender: " + prehistoric.getGender().name()), 175, 185, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("Hunger: " + prehistoric.getHunger()), 175, 155, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("Mood: " + prehistoric.moodSystem.getMood()), 175, 185, 16777215);
+            drawString(poseStack, minecraft.font, new TextComponent("Gender: " + prehistoric.getGender().name()), 175, 215, 16777215);
         }
     }
 }

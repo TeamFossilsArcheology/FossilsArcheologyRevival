@@ -114,6 +114,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected boolean featherToggle;
     protected boolean hasTeenTexture = true;
     protected boolean hasBabyTexture = true;
+    private float headRadius;
     private float frustumWidthRadius;
     private float frustumHeightRadius;
     private int ticksSat;
@@ -169,11 +170,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                     partsByRef.put(hitbox.ref(), part);
                 }
                 //Caching this value might be overkill but this ensures that the entity will be visible even if parts are outside its bounding box
-                float j = hitbox.getFrustumWidthRadius() + entityType.getDimensions().width / 2;
+                float j = hitbox.getFrustumWidthRadius();
+                if (hitbox.name().contains("head") && (headRadius == 0 || j > maxFrustumWidthRadius)) {
+                    headRadius = j;
+                }
                 if (j > maxFrustumWidthRadius) {
                     maxFrustumWidthRadius = j;
                 }
-                float h = hitbox.getFrustumHeightRadius() + entityType.getDimensions().height;
+                float h = hitbox.getFrustumHeightRadius();
                 if (h > maxFrustumHeightRadius) {
                     maxFrustumHeightRadius = h;
                 }
@@ -339,12 +343,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public @NotNull AABB getBoundingBoxForCulling() {
         if (isCustomMultiPart()) {
-            float x = frustumWidthRadius * getScale() / 2;
-            float y = frustumHeightRadius * getScale() / 2;
-            AABB aabb = getBoundingBox();
-            return new AABB(aabb.minX - x, aabb.minY, aabb.minZ - x, aabb.maxX + x, aabb.maxY + y, aabb.maxZ + x);
+            float x = frustumWidthRadius * getScale();
+            float y = frustumHeightRadius * getScale();
+            Vec3 pos = position();
+            return new AABB(pos.x - x, pos.y, pos.z - x, pos.x + x, pos.y + y, pos.z + x);
         }
         return super.getBoundingBoxForCulling();
+    }
+
+    public AABB getAttackBounds() {
+        if (headRadius != 0) {
+            return getBoundingBox().inflate(headRadius * getScale());
+        }
+        return getBoundingBox().inflate(2.25f, 2.25f, 2.25f);
     }
 
     @Override
@@ -392,11 +403,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
         return getType().getDimensions().scale(getScale());
-    }
-
-    public AABB getAttackBounds() {
-        float size = (float) (this.getBoundingBox().getSize() * 0.25F);
-        return this.getBoundingBox().inflate(2.0F + size, 2.0F + size, 2.0F + size);
     }
 
     @Override
@@ -682,7 +688,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (!level.isClientSide) {
             if (Version.debugEnabled()) {
                 MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
-                        new C2SSyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, moodSystem.getMood()));
+                        new C2SSyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, getHunger(), moodSystem.getMood()));
             }
             if (cathermalSleepCooldown > 0) {
                 cathermalSleepCooldown--;
@@ -797,16 +803,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public void lerpTo(double x, double y, double z, float yRot, float xRot, int lerpSteps, boolean teleport) {
-        super.lerpTo(x, y, z, yRot, xRot, lerpSteps, teleport);
-    }
-
-    @Override
-    public void setYRot(float yRot) {
-        super.setYRot(yRot);
-    }
-
-    @Override
     public float getScale() {
         if (isAdult()) {
             return data().maxScale() * getGenderedScale();
@@ -822,13 +818,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected int getExperienceReward(Player player) {
         float base = 6 * getBbWidth() * (info().diet == Diet.HERBIVORE ? 1 : 2)
-                * (aiTameType() == Taming.GEM ? 1 : 2)
+                * (aiTameType() == Taming.GEM ? 2 : 1)
                 * (aiAttackType() == Attacking.BASIC ? 1 : 1.25f);
         return Mth.floor((float) Math.min(data().adultAgeDays(), getAgeInDays()) * base);
     }
 
     public void updateAbilities() {
-        double percent = Math.min(getAgeInDays() / data().adultAgeDays(), 1);
+        double percent = Math.min(getAge() / data().adultAgeDays() * 24000, 1);
 
         double healthDifference = getAttributeValue(Attributes.MAX_HEALTH);
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, stats().baseHealth(), stats().maxHealth())));
@@ -987,11 +983,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return;
         }
         entityData.set(AGE_TICK, age);
-        if (tickCount % 100 == 0) {
+        if (tickCount % 12000 == 0) {
             refreshTexturePath();
             refreshDimensions();
-        }
-        if (tickCount % 100 == 0) {
             updateAbilities();
         }
     }
@@ -1037,11 +1031,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public AgeableMob getBreedOffspring(ServerLevel serverLevel, AgeableMob otherParent) {
         if (otherParent instanceof Prehistoric) {
             Entity baby = info().entityType().create(level);
-            if (baby instanceof Prehistoric prehistoric) {
-                prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
+            if (baby instanceof Prehistoric prehistoricBaby) {
+                prehistoricBaby.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
                         MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
-                prehistoric.grow(0);
-                return prehistoric;
+                prehistoricBaby.grow(0);
+                return prehistoricBaby;
             }
         }
         return null;
@@ -1073,10 +1067,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
             setTarget(null);
             hatchling.moveTo(getX(), getY(), getZ(), yBodyRot, 0);
-            if (hatchling instanceof Prehistoric prehistoric) {
-                prehistoric.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
+            if (hatchling instanceof Prehistoric prehistoricHatchling) {
+                prehistoricHatchling.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(blockPosition()),
                         MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
-                prehistoric.grow(0);
+                prehistoricHatchling.grow(0);
             }
             level.addFreshEntity(hatchling);
         }
@@ -1226,11 +1220,15 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
         if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM) {
             //Grow up with chicken essence
-            if (isAdult() || getHunger() >= getMaxHunger()) {
-                player.displayClientMessage(new TranslatableComponent("prehistoric.essencefail"), true);
-                return InteractionResult.PASS;
-            }
             if (!level.isClientSide) {
+                if (isAdult()) {
+                    player.displayClientMessage(new TranslatableComponent("prehistoric.essence_fail_adult"), true);
+                    return InteractionResult.PASS;
+                }
+                if (isDeadlyHungry()) {
+                    player.displayClientMessage(new TranslatableComponent("prehistoric.essence_fail_hungry"), true);
+                    return InteractionResult.PASS;
+                }
                 if (!player.getAbilities().instabuild) {
                     stack.shrink(1);
                     player.addItem(new ItemStack(Items.GLASS_BOTTLE, 1));
