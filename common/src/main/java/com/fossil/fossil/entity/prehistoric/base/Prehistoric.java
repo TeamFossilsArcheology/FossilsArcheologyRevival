@@ -355,7 +355,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (headRadius != 0) {
             return getBoundingBox().inflate(headRadius * getScale());
         }
-        return getBoundingBox().inflate(2.25f, 2.25f, 2.25f);
+        float increase = Math.min(getBbWidth() / 2, 2.25f);
+        return getBoundingBox().inflate(increase);
     }
 
     @Override

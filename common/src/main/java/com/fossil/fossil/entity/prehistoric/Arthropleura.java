@@ -1,13 +1,11 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -33,24 +31,7 @@ public class Arthropleura extends Prehistoric {
 
     public Arthropleura(EntityType<Arthropleura> entityType, Level level) {
         super(entityType, level);
-    }
-
-    @Override
-    public void refreshTexturePath() {
-        String name = getType().arch$registryName().getPath();
-        StringBuilder builder = new StringBuilder();
-        builder.append("textures/entity/");
-        builder.append(name);
-        builder.append("/");
-        builder.append(name);
-        if (isBaby()) {
-            builder.append("_baby");
-        } else if (isAdult()) {
-            builder.append("_adult");
-        }
-        builder.append(".png");
-        String path = builder.toString();
-        textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
+        hasTeenTexture = false;
     }
 
     @Override
