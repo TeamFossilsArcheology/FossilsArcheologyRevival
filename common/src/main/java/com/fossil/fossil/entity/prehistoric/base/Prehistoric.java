@@ -744,13 +744,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void tick() {
-        if (!level.isClientSide) {
-            if (getGender() == Gender.MALE) {
-                setXRot(160);
-            } else {
-                setXRot(200);
-            }
-        }
         super.tick();
 
         if (!isAgingDisabled()) {
@@ -799,13 +792,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                     MessageHandler.SYNC_CHANNEL.sendToServer(new C2SHitPlayerMessage(this, Minecraft.getInstance().player));
                     break;
                 }
-            }
-        }
-        if (!level.isClientSide) {
-            if (getGender() == Gender.MALE) {
-                setXRot(160);
-            } else {
-                setXRot(200);
             }
         }
     }

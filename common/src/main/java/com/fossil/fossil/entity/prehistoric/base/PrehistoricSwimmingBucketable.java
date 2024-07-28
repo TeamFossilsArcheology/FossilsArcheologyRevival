@@ -23,6 +23,12 @@ public abstract class PrehistoricSwimmingBucketable extends PrehistoricSwimming 
     }
 
     @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(FROM_BUCKET, false);
+    }
+
+    @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         return Bucketable.bucketMobPickup(player, hand, this).orElse(super.mobInteract(player, hand));
     }

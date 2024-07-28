@@ -79,9 +79,9 @@ public class DinopediaScreen extends Screen {
         RenderSystem.applyModelViewMatrix();
         PoseStack poseStack2 = new PoseStack();
         poseStack2.translate(0.0, 0.0, 1000.0);
-        int scale = 40;//TODO: Different dinos probably will need different values(use bbwidth etc)
+        int scale = 15;
         if (entity instanceof Prehistoric) {
-            scale = 15;
+            scale = (int) (35 / entity.getBbWidth());
         } else if (entity instanceof DinosaurEgg) {
             scale = 110;
         }
@@ -90,10 +90,16 @@ public class DinopediaScreen extends Screen {
         Lighting.setupForEntityInInventory();
         EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
         entityRenderDispatcher.setRenderShadow(false);
-        float rotation = entity instanceof DinosaurEgg ? entity.tickCount : entity.yBodyRot - 110;
-        poseStack2.mulPose(Vector3f.YP.rotationDegrees(rotation));
+        //Look at mob from above
+        poseStack2.mulPose(Vector3f.XP.rotationDegrees(-30));
         MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0, 1, poseStack2, bufferSource, 0xF000F0));
+        RenderSystem.runAsFancy(() -> {
+            float yRotO = entity.yBodyRot;
+            //Turn mob to the right
+            entity.yBodyRot = 110;
+            entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0, 1, poseStack2, bufferSource, 0xF000F0);
+            entity.yBodyRot = yRotO;
+        });
         bufferSource.endBatch();
         entityRenderDispatcher.setRenderShadow(true);
         poseStack.popPose();
@@ -217,7 +223,7 @@ public class DinopediaScreen extends Screen {
             poseStack.pushPose();
             float scale = 1.5f;
             poseStack.scale(scale, scale, scale);
-            Component name = entity.getType().getDescription();
+            Component name = new TextComponent(String.valueOf(dino.getBbWidth()));
             font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
             poseStack.popPose();
             int x = leftPos + 30;

@@ -67,7 +67,7 @@ public class Megalodon extends PrehistoricSwimming {
 
     @Override
     protected void handleAirSupply(int airSupply) {
-        if (isAlive() && !isInWaterOrBubble()) {
+        if (isAlive() && !isInWaterOrBubble() && !isNoAi()) {
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -20) {
                 setAirSupply(0);

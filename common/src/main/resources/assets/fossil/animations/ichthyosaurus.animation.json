@@ -1,7 +1,7 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.icthyosaurus.idle": {
+		"animation.ichthyosaurus.idle": {
 			"loop": true,
 			"animation_length": 8,
 			"bones": {
@@ -92,7 +92,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.sit": {
+		"animation.ichthyosaurus.sit": {
 			"loop": true,
 			"animation_length": 8,
 			"bones": {
@@ -183,7 +183,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.sleep1": {
+		"animation.ichthyosaurus.sleep1": {
 			"loop": true,
 			"animation_length": 8,
 			"bones": {
@@ -257,7 +257,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.sleep2": {
+		"animation.ichthyosaurus.sleep2": {
 			"loop": true,
 			"animation_length": 8,
 			"bones": {
@@ -331,7 +331,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.swim": {
+		"animation.ichthyosaurus.swim": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
@@ -526,7 +526,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.swim_fast": {
+		"animation.ichthyosaurus.swim_fast": {
 			"loop": true,
 			"animation_length": 12,
 			"bones": {
@@ -600,7 +600,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.jump_start": {
+		"animation.ichthyosaurus.jump_start": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 3,
 			"bones": {
@@ -839,7 +839,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.jump_hold": {
+		"animation.ichthyosaurus.jump_hold": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -908,7 +908,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.jump_end": {
+		"animation.ichthyosaurus.jump_end": {
 			"loop": "hold_on_last_frame",
 			"animation_length": 3,
 			"bones": {
@@ -1090,7 +1090,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.beached": {
+		"animation.ichthyosaurus.beached": {
 			"loop": true,
 			"animation_length": 8,
 			"bones": {
@@ -1253,7 +1253,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.speak": {
+		"animation.ichthyosaurus.speak": {
 			"animation_length": 2,
 			"bones": {
 				"lowerBody": {
@@ -1352,7 +1352,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.emote1": {
+		"animation.ichthyosaurus.emote1": {
 			"animation_length": 3,
 			"bones": {
 				"lowerBody": {
@@ -1550,7 +1550,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.emote2": {
+		"animation.ichthyosaurus.emote2": {
 			"animation_length": 3,
 			"bones": {
 				"lowerBody": {
@@ -1762,7 +1762,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.attack": {
+		"animation.ichthyosaurus.attack": {
 			"animation_length": 0.5,
 			"bones": {
 				"lowerBody": {
@@ -1893,7 +1893,7 @@
 				}
 			}
 		},
-		"animation.icthyosaurus.eat": {
+		"animation.ichthyosaurus.eat": {
 			"animation_length": 2,
 			"bones": {
 				"lowerBody": {

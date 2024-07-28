@@ -48,15 +48,15 @@ public class S2CSyncActiveAnimationMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
-        if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
-            contextSupplier.get().queue(() -> {
+        contextSupplier.get().queue(() -> {
+            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+            if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
                 double endTick = entity.level.getGameTime() + prehistoric.getAllAnimations().getOrDefault(animationName, new Animation()).animationLength;
                 AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.ActiveAnimationInfo(
                         animationName, startTick, endTick, category, true, ticks
                 );
                 prehistoric.getAnimationLogic().addNextAnimation(controller, activeAnimationInfo);
-            });
-        }
+            }
+        });
     }
 }
