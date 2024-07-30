@@ -48,7 +48,7 @@ public class DinoFollowOwnerGoal extends Goal {
         LivingEntity currentOwner = dino.getOwner();
         if (currentOwner == null || currentOwner.isSpectator()) {
             return false;
-        } else if (dino.getCurrentOrder() != OrderType.FOLLOW || dino.hasPassenger(currentOwner)) {
+        } else if (dino.getCurrentOrder() != OrderType.FOLLOW) {
             return false;
         } else if (dino.distanceToSqr(currentOwner) < (startDistance * startDistance)) {
             return false;
@@ -70,10 +70,6 @@ public class DinoFollowOwnerGoal extends Goal {
         timeToRecalcPath = 0;
         oldWaterCost = dino.getPathfindingMalus(BlockPathTypes.WATER);
         dino.setPathfindingMalus(BlockPathTypes.WATER, 0);
-        dino.setSitting(false);
-        if (dino.isSleeping()) {
-            dino.setSleeping(false);
-        }
     }
 
     @Override
@@ -86,7 +82,8 @@ public class DinoFollowOwnerGoal extends Goal {
     @Override
     public void tick() {
         dino.getLookControl().setLookAt(owner, 10, dino.getMaxHeadXRot());
-        if (dino.isSitting() || --timeToRecalcPath > 0) {
+        --timeToRecalcPath;
+        if (timeToRecalcPath > 0) {
             return;
         }
         timeToRecalcPath = adjustedTickDelay(10);

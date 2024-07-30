@@ -40,7 +40,7 @@ public class PlayGoal extends Goal {
             return false;
         }
         lastCanUseCheck = l;
-        if (dino.isImmobile() || dino.isFleeing() || dino.getTarget() != null) {
+        if (dino.isFleeing() || dino.getTarget() != null) {
             return false;
         }
         if (dino.moodSystem.getPlayingCooldown() > 0 || dino.moodSystem.getMood() >= 100) {

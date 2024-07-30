@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
@@ -24,6 +25,7 @@ public class Gastornis extends Prehistoric {
     public static final String FALL = "animation.gastornis.jump/fall";
     public static final String IDLE = "animation.gastornis.idle";
     public static final String RUN = "animation.gastornis.run";
+    public static final String SIT = "animation.gastornis.sit";
     public static final String SLEEP = "animation.gastornis.sleep";
     public static final String SWIM = "animation.gastornis.swim";
     public static final String WALK = "animation.gastornis.walk";
@@ -38,7 +40,7 @@ public class Gastornis extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 2, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 2, false));
     }
 
     @Override
@@ -69,6 +71,11 @@ public class Gastornis extends Prehistoric {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SIT);
     }
 
     @Override

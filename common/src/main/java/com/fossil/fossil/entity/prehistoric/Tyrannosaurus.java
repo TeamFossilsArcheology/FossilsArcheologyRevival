@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -25,6 +26,8 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     public static final String FALL = "animation.tyrannosaurus.jump/fall";
     public static final String IDLE = "animation.tyrannosaurus.idle";
     public static final String RUN = "animation.tyrannosaurus.run";
+    public static final String SIT1 = "animation.tyrannosaurus.sit1";
+    public static final String SIT2 = "animation.tyrannosaurus.sit2";
     public static final String SLEEP1 = "animation.tyrannosaurus.sleep1";
     public static final String SLEEP2 = "animation.tyrannosaurus.sleep2";
     public static final String SWIM = "animation.tyrannosaurus.swim";
@@ -39,7 +42,7 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1.5, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1.5, false));
     }
 
     @Override
@@ -70,6 +73,11 @@ public class Tyrannosaurus extends Prehistoric implements PrehistoricScary {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(random.nextInt(2) == 0 ? SIT1 : SIT2);
     }
 
     @Override

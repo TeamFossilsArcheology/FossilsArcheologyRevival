@@ -49,7 +49,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     private int absoluteEggCooldown = 0;
     private int age;
 
-    public PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
+    protected PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
         super(entityType, level);
         this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.2f, 0.1f, true);
@@ -236,6 +236,11 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     public abstract @NotNull Animation nextBeachedAnimation();
+
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return nextIdleAnimation();
+    }
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {

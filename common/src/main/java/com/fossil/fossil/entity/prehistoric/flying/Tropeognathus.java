@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric.flying;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
@@ -41,8 +42,8 @@ public class Tropeognathus extends PrehistoricFlying {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new FleeBattleGoal(this, 1.0D));
-        goalSelector.addGoal(2, new DelayedAttackGoal(this, 1.0, true));
+        goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1.0D));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1.0, true));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -82,6 +83,11 @@ public class Tropeognathus extends PrehistoricFlying {
         }
 
         return getAllAnimations().get(key);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override

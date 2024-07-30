@@ -25,17 +25,15 @@ public class LeaveWaterGoal extends Goal {
         setFlags(EnumSet.of(Flag.MOVE));
     }
 
-    private static boolean shouldLeaveWater(PrehistoricSwimming dino) {
-        return dino.isAmphibious() && dino.timeInWater > MAX_TIME_IN_WATER && dino.timeOnLand < MAX_TIME_ON_LAND;
-    }
-
     @Override
     public boolean canUse() {
-        if (!dino.isInWater() || !shouldLeaveWater(dino)) {
+        if (!dino.isInWater() || !dino.isAmphibious()) {
             return false;
-        } else {
-            return findPossibleShelter();
         }
+        if (dino.timeInWater <= MAX_TIME_IN_WATER || dino.timeOnLand >= MAX_TIME_ON_LAND) {
+            return false;
+        }
+        return findPossibleShelter();
     }
 
     @Override
@@ -46,11 +44,6 @@ public class LeaveWaterGoal extends Goal {
     @Override
     public void start() {
         dino.getNavigation().moveTo(shelterPos.getX(), shelterPos.getY(), shelterPos.getZ(), speedModifier);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
     }
 
     private boolean findPossibleShelter() {

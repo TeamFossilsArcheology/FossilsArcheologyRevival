@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +25,7 @@ public class Pachyrhinosaurus extends Prehistoric {
     public static final String FALL = "animation.pachyrhinosaurus.jump/fall";
     public static final String IDLE = "animation.pachyrhinosaurus.idle";
     public static final String RUN = "animation.pachyrhinosaurus.run";
+    public static final String SIT = "animation.pachyrhinosaurus.sit";
     public static final String SLEEP1 = "animation.pachyrhinosaurus.sleep1";
     public static final String SLEEP2 = "animation.pachyrhinosaurus.sleep2";
     public static final String SWIM = "animation.pachyrhinosaurus.swim";
@@ -37,7 +39,7 @@ public class Pachyrhinosaurus extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
     }
 
     @Override
@@ -63,6 +65,11 @@ public class Pachyrhinosaurus extends Prehistoric {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SIT);
     }
 
     @Override

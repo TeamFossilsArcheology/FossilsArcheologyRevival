@@ -8,6 +8,13 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 
 public class Util {
+    public static final int IMMOBILE = 0;
+    public static final int ATTACK = 5;
+    public static final int SLEEP = 10;
+    public static final int NEEDS = 15;
+    public static final int WANDER = 20;
+    public static final int LOOK = 20;
+
     public static boolean isEntitySmallerThan(Entity entity, float size) {
         if (entity instanceof Prehistoric prehistoric) {
             return prehistoric.getBbWidth() <= size;

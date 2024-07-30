@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -29,6 +30,7 @@ public class Triceratops extends Prehistoric {
     public static final String FALL = "animation.triceratops.jump/fall";
     public static final String IDLE = "animation.triceratops.idle";
     public static final String RUN = "animation.triceratops.run";
+    public static final String SIT = "animation.triceratops.sit";
     public static final String SLEEP1 = "animation.triceratops.sleep1";
     public static final String SLEEP2 = "animation.triceratops.sleep2";
     public static final String SWIM = "animation.triceratops.swim";
@@ -39,7 +41,6 @@ public class Triceratops extends Prehistoric {
         super(type, level);
         this.hasFeatherToggle = true;
         this.featherToggle = FossilConfig.isEnabled(FossilConfig.QUILLED_TRICERATOPS);
-        this.pediaScale = 55;
     }
 
     protected void tickCustomParts() {
@@ -68,8 +69,8 @@ public class Triceratops extends Prehistoric {
         super.registerGoals();
 
         double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
-        goalSelector.addGoal(0, new FleeBattleGoal(this, 1.5 * speed));
-        goalSelector.addGoal(1, new DelayedAttackGoal(this, speed * 1.5, false));
+        goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1.5 * speed));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, speed * 1.5, false));
     }
 
     @Override
@@ -105,6 +106,11 @@ public class Triceratops extends Prehistoric {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SIT);
     }
 
     @Override

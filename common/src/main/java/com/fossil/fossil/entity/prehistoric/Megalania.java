@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
@@ -38,7 +39,7 @@ public class Megalania extends Prehistoric implements PrehistoricScary {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
     }
 
     @Override
@@ -69,6 +70,11 @@ public class Megalania extends Prehistoric implements PrehistoricScary {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.fossil.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.core.BlockPos;
@@ -36,6 +37,7 @@ public class Pteranodon extends PrehistoricFlying {
     public static final String HOVER = "animation.pteranodon.hover";
     public static final String IDLE = "animation.pteranodon.idle";
     public static final String IDLE_SWIM = "animation.pteranodon.swimidle";
+    public static final String SIT = "animation.pteranodon.sit";
     public static final String SLEEP = "animation.pteranodon.sleep";
     public static final String SWIM = "animation.pteranodon.swim";
     public static final String TAKEOFF = "animation.pteranodon.takeoff";
@@ -49,7 +51,7 @@ public class Pteranodon extends PrehistoricFlying {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -144,6 +146,11 @@ public class Pteranodon extends PrehistoricFlying {
         }
 
         return getAllAnimations().get(key);
+    }
+
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SIT);
     }
 
     @Override

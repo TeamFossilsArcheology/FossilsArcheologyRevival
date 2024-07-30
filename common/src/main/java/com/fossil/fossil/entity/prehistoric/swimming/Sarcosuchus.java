@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -32,9 +33,8 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(6, new LeaveWaterGoal(this, 1));
-        goalSelector.addGoal(7, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.WANDER + 1, new LeaveWaterGoal(this, 1));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -83,6 +83,11 @@ public class Sarcosuchus extends PrehistoricSwimming implements PrehistoricScary
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return nextIdleAnimation();
     }
 
     @Override

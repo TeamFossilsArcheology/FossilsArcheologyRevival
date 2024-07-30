@@ -21,9 +21,7 @@ public interface PrehistoricAnimatable<T extends Mob & PrehistoricAnimatable<T>>
 
     @NotNull Animation nextIdleAnimation();
 
-    default @NotNull Animation nextSittingAnimation() {
-        return nextIdleAnimation();
-    }
+    @NotNull Animation nextSittingAnimation();
 
     @NotNull Animation nextSleepingAnimation();
 

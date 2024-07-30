@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.fossil.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -42,7 +43,7 @@ public class Crassigyrinus extends PrehistoricSwimmingBucketable {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -91,6 +92,11 @@ public class Crassigyrinus extends PrehistoricSwimmingBucketable {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override

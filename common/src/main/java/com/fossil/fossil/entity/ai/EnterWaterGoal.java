@@ -12,8 +12,7 @@ import java.util.Random;
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming.MAX_TIME_ON_LAND;
 
 /**
- * Will move an amphibious mob to a random spot in water if its target is also in water or if it has spent too much time
- * on land
+ * Will move an amphibious mob to a random spot in water if it has spent too much time on land
  */
 public class EnterWaterGoal extends Goal {
     protected final PrehistoricSwimming dino;
@@ -32,19 +31,12 @@ public class EnterWaterGoal extends Goal {
         setFlags(EnumSet.of(Flag.MOVE));
     }
 
-    private static boolean shouldEnterWater(PrehistoricSwimming dino) {
-        if (!dino.isAmphibious()) {
-            return true;
-        }
-        return dino.timeInWater == 0 && dino.timeOnLand > MAX_TIME_ON_LAND;
-    }
-
     @Override
     public boolean canUse() {
-        if (dino.isInWater() || !shouldEnterWater(dino) || dino.isImmobile()) {
+        if (dino.isInWater() || !dino.isAmphibious()) {
             return false;
         }
-        if (dino.getTarget() != null && !dino.getTarget().isInWater()) {
+        if (dino.timeInWater != 0 || dino.timeOnLand <= MAX_TIME_ON_LAND) {
             return false;
         }
         return findPossibleShelter();
@@ -58,11 +50,6 @@ public class EnterWaterGoal extends Goal {
     @Override
     public void start() {
         dino.getNavigation().moveTo(shelterPos.getX(), shelterPos.getY(), shelterPos.getZ(), speedModifier);
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
     }
 
     private boolean findPossibleShelter() {

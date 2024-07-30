@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
@@ -26,6 +27,7 @@ public class Kelenken extends Prehistoric implements PrehistoricScary {
     public static final String FALL = "animation.kelenken.jump/fall";
     public static final String IDLE = "animation.kelenken.idle";
     public static final String RUN = "animation.kelenken.run";
+    public static final String SIT = "animation.kelenken.sit";
     public static final String SLEEP = "animation.kelenken.sleep";
     public static final String SWIM = "animation.kelenken.swim";
     public static final String WALK = "animation.kelenken.walk";
@@ -39,7 +41,7 @@ public class Kelenken extends Prehistoric implements PrehistoricScary {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
     }
 
     @Override
@@ -70,6 +72,11 @@ public class Kelenken extends Prehistoric implements PrehistoricScary {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SIT);
     }
 
     @Override

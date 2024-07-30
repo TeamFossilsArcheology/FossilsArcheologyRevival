@@ -78,9 +78,6 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     @Override
     public boolean canUse() {
         boolean dontStart = false;
-        if (entity.isImmobile()) {
-            return false;
-        }
         if (clearTicks > 0) {
             clearTicks--;
             if (clearTicks == 0) {
@@ -113,9 +110,6 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        if (entity.isImmobile()) {
-            return false;
-        }
         return this.tryTicks >= -STAY_TICKS && this.tryTicks < GIVE_UP_TICKS && this.isValidTarget(this.entity.level, this.targetPos);
     }
 

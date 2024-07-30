@@ -36,7 +36,7 @@ public class BreachAttackGoal extends Goal {
         LivingEntity target = dino.getTarget();
         if (cannotTargetEntity(target)) {
             return false;
-        } else if (dino.isImmobile() || dino.isFleeing() || !dino.isInWater()) {
+        } else if (dino.isFleeing() || !dino.isInWater()) {
             return false;
         } else if (dino.level.getDifficulty() == Difficulty.PEACEFUL && target instanceof Player) {
             return false;

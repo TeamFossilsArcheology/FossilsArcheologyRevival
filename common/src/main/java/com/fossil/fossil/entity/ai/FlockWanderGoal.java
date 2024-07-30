@@ -32,7 +32,7 @@ public class FlockWanderGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (entity.getCurrentOrder() != OrderType.WANDER || entity.isImmobile() || entity.getTarget() != null) {
+        if (entity.getCurrentOrder() != OrderType.WANDER || entity.getTarget() != null) {
             return false;
         } else if (entity.isGroupLeader()) {
             return false;

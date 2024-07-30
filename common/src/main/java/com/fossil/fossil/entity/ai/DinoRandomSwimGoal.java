@@ -15,25 +15,20 @@ import java.util.Random;
 /**
  * Will move the mob to a random spot in water if it is not in combat
  */
-public class DinoSwimGoal extends RandomSwimmingGoal {
+public class DinoRandomSwimGoal extends RandomSwimmingGoal {
     private final Prehistoric dino;
 
-    public DinoSwimGoal(PrehistoricSwimming dino, double speedModifier) {
+    public DinoRandomSwimGoal(PrehistoricSwimming dino, double speedModifier) {
         super(dino, speedModifier, 40);
         this.dino = dino;
     }
 
     @Override
     public boolean canUse() {
-        if (!dino.isInWater() || dino.isImmobile() || dino.getTarget() != null || dino.getCurrentOrder() != OrderType.WANDER) {
+        if (!dino.isInWater() || dino.getTarget() != null || dino.getCurrentOrder() != OrderType.WANDER) {
             return false;
         }
         return super.canUse();
-    }
-
-    @Override
-    public boolean canContinueToUse() {
-        return !dino.isImmobile() && super.canContinueToUse();
     }
 
     @Nullable

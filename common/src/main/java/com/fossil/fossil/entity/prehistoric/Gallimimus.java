@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -24,6 +25,7 @@ public class Gallimimus extends PrehistoricFlocking {
     public static final String FALL = "animation.gallimimus.jump/fall";
     public static final String IDLE = "animation.gallimimus.idle";
     public static final String RUN = "animation.gallimimus.run";
+    public static final String SIT = "animation.gallimimus.sit";
     public static final String SLEEP = "animation.gallimimus.sleep/sit";
     public static final String SWIM = "animation.gallimimus.swim";
     public static final String WALK = "animation.gallimimus.walk";
@@ -36,7 +38,7 @@ public class Gallimimus extends PrehistoricFlocking {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
     }
 
     @Override
@@ -82,6 +84,11 @@ public class Gallimimus extends PrehistoricFlocking {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SIT);
     }
 
     @Override

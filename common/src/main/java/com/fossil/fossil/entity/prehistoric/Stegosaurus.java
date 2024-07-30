@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,6 +26,8 @@ public class Stegosaurus extends Prehistoric {
     public static final String FALL = "animation.stegosaurus.jump/fall";
     public static final String IDLE = "animation.stegosaurus.idle";
     public static final String RUN = "animation.stegosaurus.run";
+    public static final String SIT1 = "animation.stegosaurus.sit1";
+    public static final String SIT2 = "animation.stegosaurus.sit2";
     public static final String SLEEP1 = "animation.stegosaurus.sleep1";
     public static final String SLEEP2 = "animation.stegosaurus.sleep2";
     public static final String SWIM = "animation.stegosaurus.swim";
@@ -39,8 +42,8 @@ public class Stegosaurus extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new FleeBattleGoal(this, 1));
-        goalSelector.addGoal(1, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
     }
 
     @Override
@@ -66,6 +69,11 @@ public class Stegosaurus extends Prehistoric {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(random.nextInt(2) == 0 ? SIT1 : SIT2);
     }
 
     @Override

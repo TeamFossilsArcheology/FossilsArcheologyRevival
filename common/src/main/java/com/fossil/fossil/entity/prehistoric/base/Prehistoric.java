@@ -59,6 +59,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
@@ -117,18 +118,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private float headRadius;
     private float frustumWidthRadius;
     private float frustumHeightRadius;
-    private int ticksSat;
-    private int ticksSlept;
-    public float pediaScale;
     public ResourceLocation textureLocation;
     protected DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
     private Gender gender = Gender.random(random);
-    private int fleeTicks = 0;
+    public int ticksSlept;
     /**
-     * Sleep cooldown for mobs with {@link Activity#BOTH}
+     * Sleep cooldown for mobs with {@link PrehistoricEntityInfoAI.Activity#BOTH}
      */
     private int cathermalSleepCooldown = 0;
+    private int fleeTicks = 0;
     private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
@@ -143,7 +142,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         this.moveControl = new SmoothTurningMoveControl(this);
         //lookControl = new TestLookControl(this);
         this.setHunger(this.getMaxHunger() / 2);
-        this.pediaScale = 1.0F;
         this.currentOrder = OrderType.WANDER;
         this.updateAbilities();
         if (this.getMobType() == MobType.WATER) {
@@ -198,17 +196,22 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
-        goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
-        goalSelector.addGoal(1, new FloatGoal(this));
-        goalSelector.addGoal(2, matingGoal);
-        goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        goalSelector.addGoal(4, new EatItemEntityGoal(this));
-        goalSelector.addGoal(5, new EatBlockGoal(this));
-        goalSelector.addGoal(6, new PlayGoal(this, 1));
-        goalSelector.addGoal(6, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0f));
-        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
+        if (aiTameType() == Taming.GEM || aiTameType() == Taming.AQUATIC_GEM) {
+            goalSelector.addGoal(Util.IMMOBILE, new ActuallyWeakGoal(this));
+        }
+        goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
+        goalSelector.addGoal(Util.SLEEP, new DinoSleepGoal(this));
+        goalSelector.addGoal(Util.SLEEP + 1, new DinoSitGoal(this));
+        goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
+        goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(Util.WANDER + 1, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8.0f));
+        goalSelector.addGoal(Util.LOOK + 1, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -435,8 +438,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
-    public boolean isImmobile() {//TODO: isVehicle not necessary for goals
-        return getHealth() <= 0 || isSitting() || isActuallyWeak() || isVehicle() || isSleeping();
+    public boolean isImmobile() {
+        return super.isImmobile() || isActuallyWeak();
     }
 
     @Override
@@ -446,37 +449,20 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     /**
-     * @return whether something is preventing the mob from sitting
-     */
-    public boolean canSit() {
-        return !isVehicle() && !isPassenger() && !isActuallyWeak();
-    }
-
-    /**
-     * @return whether something is preventing the mob from sleeping
-     */
-    public boolean canSleep() {
-        if (!hasTarget() && getLastHurtByMob() == null && !isInWater() && !isVehicle() && !isActuallyWeak()) {
-            return getCurrentOrder() != OrderType.FOLLOW;
-        }
-        return false;
-    }
-
-    /**
      * Returns whether the mob can sleep. Depends on the time of day and how long it has been asleep.
      *
      * @return whether the mob can sleep at the moment
      */
     public boolean wantsToSleep() {
-        if (aiActivityType() == Activity.DIURNAL) {
+        if (aiActivityType() == PrehistoricEntityInfoAI.Activity.DIURNAL) {
             return !level.isDay();
-        } else if (aiActivityType() == Activity.NOCTURNAL) {
+        } else if (aiActivityType() == PrehistoricEntityInfoAI.Activity.NOCTURNAL) {
             return level.isDay() && !level.canSeeSky(blockPosition().above());
         }
-        return aiActivityType() == Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
+        return aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
     }
 
-    private boolean hasTarget() {
+    public boolean hasTarget() {
         return getTarget() != null || moodSystem.getToyTarget() != null;
     }
 
@@ -663,7 +649,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (getHunger() > getMaxHunger()) {
             setHunger(getMaxHunger());
         }
-        moodSystem.tick();
         if (getMatingCooldown() > 0) {
             setMatingCooldown(getMatingCooldown() - 1);
         }
@@ -678,14 +663,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
         }
 
-        if (isSleeping()) {
-            if ((hasTarget() || getLastHurtByMob() != null)) {
-                setSleeping(false);
-            }
-        }
-        if (isSitting()) {
-            ticksSat++;
-        }
         if (!level.isClientSide) {
             if (Version.debugEnabled()) {
                 MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
@@ -694,43 +671,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             if (cathermalSleepCooldown > 0) {
                 cathermalSleepCooldown--;
             }
-            if (isSleeping()) {
-                ticksSlept++;
-                if (!wantsToSleep() || !canSleep()) {
-                    setSitting(false);
-                    setSleeping(false);
-                }
-            } else {
-                ticksSlept = 0;
-                if (!isInWater()) {
-                    if (!isSitting() && canSit() && random.nextInt(1000) == 1 && !hasTarget()) {
-                        //TODO: Maybe !isSleeping?. Maybe a priority system?
-                        setSitting(true);
-                        ticksSat = 0;
-                    }
-                    if (isSitting() && (!canSit() || ticksSat > 100 && random.nextInt(100) == 1 || hasTarget())) {
-                        setSitting(false);
-                    }
-                }
-                if (wantsToSleep()) {
-                    if (aiActivityType() == Activity.BOTH) {
-                        if (random.nextInt(1200) == 1) {
-                            setSitting(false);
-                            startSleeping(BlockPos.ZERO);
-                        }
-                    } else if (aiActivityType() != Activity.NO_SLEEP) {
-                        if (random.nextInt(200) == 1) {
-                            setSitting(false);
-                            startSleeping(BlockPos.ZERO);
-                        }
-                    }
-                }
-            }
-            if (currentOrder == OrderType.STAY && !isSitting() && canSit()) {
-                setSitting(true);
-                ticksSat = 0;
-                setSleeping(false);
-            }
+            moodSystem.tick();
         }
         if (data().breaksBlocks() && moodSystem.getMood() < 0) {
             breakBlock(5);//TODO: Check if only server side
@@ -771,6 +712,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             if (isClimbing()) {
                 ticksClimbing++;
                 boolean onCooldown = ticksClimbing >= 100 || level.getBlockState(blockPosition().above()).getMaterial().isSolid();
+                //TODO: climb goal?
                 if (isSleeping() || wantsToSleep() || onCooldown || !horizontalCollision) {
                     setClimbing(false);
                     ticksClimbing = 0;
@@ -899,6 +841,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void startSleeping(BlockPos pos) {
         setSleeping(true);
         getNavigation().stop();
+        setDeltaMovement(Vec3.ZERO);
+        hasImpulse = true;
     }
 
     public void setSleeping(boolean sleeping) {
@@ -920,7 +864,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (aiMovingType() == Moving.AQUATIC || aiMovingType() == Moving.SEMI_AQUATIC) {
             return false;
         } else {
-            return aiClimbType() == Climbing.ARTHROPOD && isClimbing() && !isImmobile();
+            return aiClimbType() == Climbing.ARTHROPOD && isClimbing();
         }
     }
 
@@ -1103,7 +1047,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isWeak() {
-        return (getHealth() < 8) && isAdult() && !isTame();
+        return getHealth() < 8 && isAdult() && !isTame();
     }
 
     public boolean isActuallyWeak() {
@@ -1180,8 +1124,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return false;
         }
         if (getLastHurtByMob() instanceof Player player && getOwner() == player) {
-            setTame(false);
             setOwnerUUID(null);
+            setTame(false);
             moodSystem.increaseMood(-15);
             player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.betrayed", getName()), true);
         }
@@ -1194,6 +1138,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             moodSystem.increaseMood(-5);
         }
         return super.hurt(source, amount);
+    }
+
+    @Override
+    protected void reassessTameGoals() {
+        if (!isTame()) {
+            setCurrentOrder(OrderType.WANDER);
+        }
     }
 
     @Override
@@ -1284,8 +1235,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                             player.startRiding(this);
                         }
                         setCurrentOrder(OrderType.WANDER);
-                        setSitting(false);
-                        setSleeping(false);
                     } else if (getRidingPlayer() == player) {
                         setSprinting(true);
                         moodSystem.increaseMood(-5);

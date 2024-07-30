@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.ai.control.CustomFlightLookControl;
 import com.fossil.fossil.entity.ai.control.CustomFlightMoveControl;
 import com.fossil.fossil.entity.ai.navigation.FlightPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationLogic;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -20,6 +21,7 @@ import net.minecraft.world.entity.ai.control.BodyRotationControl;
 import net.minecraft.world.entity.ai.control.MoveControl.Operation;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
 import net.minecraft.world.entity.animal.FlyingAnimal;
@@ -67,17 +69,19 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
-        goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
-        goalSelector.addGoal(1, new FloatGoal(this));
-        goalSelector.addGoal(2, matingGoal);
-        goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        goalSelector.addGoal(4, new EatItemEntityGoal(this));
-        goalSelector.addGoal(5, new FlyingSleepGoal(this));
-        goalSelector.addGoal(6, new PlayGoal(this, 1));
-        goalSelector.addGoal(6, new FlyingWanderGoal(this));
-        goalSelector.addGoal(6, new DinoWanderGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(8, new LookAtPlayerGoal(this, Player.class, 8));
+        goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
+        goalSelector.addGoal(Util.SLEEP, new FlyingSleepGoal(this));
+        goalSelector.addGoal(Util.SLEEP + 1, new FlyingSitGoal(this));
+        goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
+        goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 2, new PlayGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(Util.WANDER + 1, new FlyingWanderGoal(this));
+        goalSelector.addGoal(Util.WANDER + 1, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8));
+        goalSelector.addGoal(Util.LOOK + 1, new RandomLookAroundGoal(this));
         targetSelector.addGoal(5, new HuntingTargetGoal(this));
     }
 
@@ -107,15 +111,6 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     public void setFlying(boolean flying) {
         entityData.set(FLYING, flying);
-    }
-
-    @Override
-    public void startSleeping(BlockPos pos) {
-        if (!isFlying()) {
-            super.startSleeping(pos);
-        } else {
-            //stopSleeping();
-        }
     }
 
     public void doStuckNavigation(Vec3 target) {
@@ -218,16 +213,6 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             //walk
             getNavigation().moveTo(pos.x, pos.y, pos.z, 1);
         }
-    }
-
-    @Override
-    public boolean canSleep() {
-        return super.canSleep() && !isFlying() && !isTakingOff();
-    }
-
-    @Override
-    public boolean canSit() {
-        return super.canSit() && !isFlying() && !isTakingOff();
     }
 
     public boolean isTakingOff() {

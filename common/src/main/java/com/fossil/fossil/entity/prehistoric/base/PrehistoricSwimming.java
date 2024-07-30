@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
+import com.fossil.fossil.entity.util.Util;
 import com.mojang.math.Vector3d;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.player.Player;
@@ -65,17 +67,22 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
-        goalSelector.addGoal(1, new DinoPanicGoal(this, 1.5));
-        goalSelector.addGoal(2, matingGoal);
-        goalSelector.addGoal(3, new EatFromFeederGoal(this));
-        goalSelector.addGoal(4, new EatItemEntityGoal(this));
-        goalSelector.addGoal(5, new EatBlockGoal(this));
-        goalSelector.addGoal(6, new EnterWaterGoal(this, 1));
-        goalSelector.addGoal(6, new PlayGoal(this, 1));
-        goalSelector.addGoal(6, new DinoSwimGoal(this, 1));
-        goalSelector.addGoal(6, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(7, new LookAtPlayerGoal(this, Player.class, 8.0f));
-        goalSelector.addGoal(8, new DinoLookAroundGoal(this));
+        if (aiTameType() == PrehistoricEntityInfoAI.Taming.GEM || aiTameType() == PrehistoricEntityInfoAI.Taming.AQUATIC_GEM) {
+            goalSelector.addGoal(Util.IMMOBILE, new ActuallyWeakGoal(this));
+        }
+        goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(Util.SLEEP, new DinoSleepGoal(this));
+        goalSelector.addGoal(Util.SLEEP + 1, new DinoSitGoal(this));
+        goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
+        goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER + 2, new DinoRandomSwimGoal(this, 1));
+        goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8.0f));
+        goalSelector.addGoal(Util.LOOK + 1, new RandomLookAroundGoal(this));
         targetSelector.addGoal(5, new HuntingTargetGoal(this));
     }
 
@@ -189,10 +196,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 switchNavigator(false);
             } else if (!isInWater() && isOnGround() && !useSwimAI() && !isLandNavigator) {
                 switchNavigator(true);
-            }
-            if (isInWater() && (isSitting() || isSleeping())) {
-                setSitting(false);
-                setSleeping(false);
             }
             if (isInWater()) {
                 timeInWater++;

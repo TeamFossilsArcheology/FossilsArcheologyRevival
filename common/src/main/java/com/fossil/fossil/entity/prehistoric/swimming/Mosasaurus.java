@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.ai.GrabMeleeAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -47,8 +48,8 @@ public class Mosasaurus extends PrehistoricSwimming {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
-        goalSelector.addGoal(2, new BreachAttackGoal(this, 1));
+        goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.ATTACK + 1, new BreachAttackGoal(this, 1));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 
@@ -115,6 +116,11 @@ public class Mosasaurus extends PrehistoricSwimming {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
+    }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(SLEEP);
     }
 
     @Override

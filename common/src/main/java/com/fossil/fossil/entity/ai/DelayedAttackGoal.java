@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.ai.control.TestLookControl;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.network.MessageHandler;
@@ -52,7 +53,7 @@ public class DelayedAttackGoal extends Goal {
             return false;
         }
         lastCanUseCheck = l;
-        if (prehistoric.isImmobile() || prehistoric.isFleeing()) {
+        if (prehistoric.isFleeing() || prehistoric.getCurrentOrder() == OrderType.STAY) {
             return false;
         }
         LivingEntity target = prehistoric.getTarget();
@@ -76,7 +77,7 @@ public class DelayedAttackGoal extends Goal {
             return true;
         }
         LivingEntity target = prehistoric.getTarget();
-        if (target == null || !target.isAlive()) {
+        if (target == null || !target.isAlive() || prehistoric.getCurrentOrder() == OrderType.STAY) {
             return false;
         }
         if (!followingTargetEvenIfNotSeen) {

@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.entity.ai.FlockWanderGoal;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 
@@ -17,7 +18,7 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(6, new FlockWanderGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER + 1, new FlockWanderGoal(this, 1));
     }
 
     public void leaveGroup() {

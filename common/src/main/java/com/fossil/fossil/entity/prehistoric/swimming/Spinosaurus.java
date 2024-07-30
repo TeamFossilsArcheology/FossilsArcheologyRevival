@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -25,7 +26,6 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     public static final String GRAB = "animation.spinosaurus.grab";
     public static final String IDLE = "animation.spinosaurus.idle";
     public static final String RUN = "animation.spinosaurus.run";
-    public static final String SLEEP = "animation.spinosaurus.sleep";
     public static final String SWIM = "animation.spinosaurus.swim";
     public static final String WALK = "animation.spinosaurus.walk";
 
@@ -38,9 +38,8 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(1, new GrabMeleeAttackGoal(this, 1, false));
-        goalSelector.addGoal(6, new LeaveWaterGoal(this, 1));
-        goalSelector.addGoal(7, new DinoWanderGoal(this, 1));
+        goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.WANDER + 1, new LeaveWaterGoal(this, 1));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
@@ -95,10 +94,15 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
+    
+    @Override
+    public @NotNull Animation nextSittingAnimation() {
+        return getAllAnimations().get(IDLE);
+    }
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
+        return getAllAnimations().get(IDLE);
     }
 
     @Override

@@ -17,7 +17,7 @@ public class DinoOtherLeapAtTargetGoal extends MeleeAttackGoal {
     @Override
     public boolean canUse() {
         PrehistoricLeaping dino = (PrehistoricLeaping) mob;
-        if (dino.isImmobile() || dino.isPassenger() || !dino.isOnGround()) {
+        if (!dino.isOnGround()) {
             return false;
         }
         if (dino.level.getDifficulty() == Difficulty.PEACEFUL && dino.getTarget() instanceof Player) {

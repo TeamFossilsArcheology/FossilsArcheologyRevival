@@ -5,50 +5,49 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.EnumSet;
-
-public class FlyingSleepGoal extends Goal {
+public class FlyingSleepGoal extends DinoSleepGoal {
     protected final PrehistoricFlying dino;
     public BlockPos targetPos;
 
     public FlyingSleepGoal(PrehistoricFlying dino) {
+        super(dino);
         this.dino = dino;
-        setFlags(EnumSet.of(Flag.MOVE));
     }
 
     @Override
     public boolean canUse() {
-        boolean debug = false;
-        if (debug || dino.isFlying() && dino.canSleep() && !PrehistoricSwimming.isOverWater(dino)) {
+        boolean canSleep = super.canUse();
+        if (!canSleep) {
+            return false;
+        }
+        if ((dino.isFlying() || dino.isTakingOff() ))  {
+            if (PrehistoricSwimming.isOverWater(dino)) {
+                return false;
+            }
             targetPos = findGroundTarget();
             return targetPos != null;
         }
-        return false;
-    }
-
-    @Override
-    public boolean canContinueToUse() {
-        return dino.isFlying() && dino.getMoveControl().hasWanted();
+        return dino.isOnGround();
     }
 
     @Override
     public void start() {
-        dino.getNavigation().stop();
-        dino.moveTo(Vec3.atCenterOf(targetPos), true);
-    }
-
-    @Override
-    public void stop() {
-        targetPos = null;
+        if (!dino.isFlying()) {
+            super.start();
+        } else {
+            dino.moveTo(Vec3.atCenterOf(targetPos), true);
+        }
     }
 
     @Override
     public void tick() {
+        if (!dino.isFlying() && !dino.isSleeping()) {
+            super.start();
+        }
     }
 
     private BlockPos findGroundTarget() {

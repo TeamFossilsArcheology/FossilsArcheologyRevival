@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -49,7 +50,7 @@ public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
     public void registerGoals() {
         super.registerGoals();
         double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
-        goalSelector.addGoal(1, new DelayedAttackGoal(this, speed, false));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, speed, false));
     }
 
     @Override
