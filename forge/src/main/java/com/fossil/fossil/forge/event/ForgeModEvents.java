@@ -100,7 +100,7 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
-        if (Platform.getEnv() == Dist.DEDICATED_SERVER) {//TODO: How exactly does this work with LAN-Servers?
+        if (Platform.getEnv() == Dist.DEDICATED_SERVER) {
             MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
         }
     }

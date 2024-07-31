@@ -1,0 +1,17 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:axolotl",
+    "minecraft:chicken",
+    "minecraft:cow",
+    "minecraft:donkey",
+    "minecraft:goat",
+    "minecraft:horse",
+    "minecraft:llama",
+    "minecraft:mule",
+    "minecraft:panda",
+    "minecraft:pig",
+    "minecraft:rabbit",
+    "minecraft:sheep"
+  ]
+}

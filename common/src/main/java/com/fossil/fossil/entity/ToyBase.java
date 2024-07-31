@@ -45,7 +45,7 @@ public abstract class ToyBase extends Entity {
     public boolean hurt(DamageSource source, float amount) {
         if (source.getEntity() != null) {
             if (source.getDirectEntity() instanceof Player player) {
-                if (player.isCreative()) {
+                if (player.getAbilities().instabuild) {
                     discard();
                     return true;
                 }

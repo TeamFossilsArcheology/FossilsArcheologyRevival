@@ -67,7 +67,7 @@ public class SarcophagusBlock extends BaseEntityBlock {
                     level.setBlockAndUpdate(pos, blockState.setValue(SarcophagusBlock.LIT, true));
                     level.setBlockAndUpdate(pos.above(), level.getBlockState(pos.above()).setValue(SarcophagusBlock.LIT, true));
                     level.setBlockAndUpdate(pos.above(2), level.getBlockState(pos.above(2)).setValue(SarcophagusBlock.LIT, true));
-                    if (!player.isCreative()) {
+                    if (!player.getAbilities().instabuild) {
                         itemStack.shrink(1);
                     }
                     if (!level.isClientSide) {

@@ -87,7 +87,7 @@ public class ModBlockLootTables extends BlockLoot {
             } else if (block instanceof DoorBlock || block instanceof AmphoraVaseBlock) {
                 addCustom(block, createDoorTable(block));
             } else if (block instanceof BedBlock) {
-                BlockLoot.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD);
+                addCustom(block, BlockLoot.createSinglePropConditionTable(block, BedBlock.PART, BedPart.HEAD));
             } else if (!NO_TABLE.contains(block) && !tableDone.contains(block)) {
                 dropSelf(block);
             }

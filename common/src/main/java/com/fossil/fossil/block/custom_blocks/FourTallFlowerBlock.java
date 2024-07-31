@@ -86,7 +86,7 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
     @Override
     public void playerWillDestroy(Level level, BlockPos pos, BlockState state, Player player) {
         if (!level.isClientSide) {
-            if (player.isCreative()) {
+            if (player.getAbilities().instabuild) {
                 if (state.getValue(LAYER) == 0) {
                     for (int i = 0; i < 3; i++) {
                         if (level.getBlockState(pos.above(i)).getBlock() == this) {

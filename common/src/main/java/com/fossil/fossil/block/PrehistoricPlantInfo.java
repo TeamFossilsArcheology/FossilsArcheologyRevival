@@ -98,7 +98,9 @@ public enum PrehistoricPlantInfo {
                 info.registerPlantSeed(info.resourceName);
             } else if (info.size == Size.DOUBLE) {
                 info.plantBlock = ModBlocks.registerTallFlower(info.resourceName, info.shape);
-                info.registerPlantSeed(info.resourceName);
+                if (info != MUTANT_PLANT) {
+                    info.registerPlantSeed(info.resourceName);
+                }
             } else if (info.size == Size.SINGLE_GROWABLE) {
                 info.plantBlock = ModBlocks.registerGrowableFlower(info.resourceName, (RegistrySupplier<TallFlowerBlock>) info.tallPlant.plantBlock,
                         info.shape);

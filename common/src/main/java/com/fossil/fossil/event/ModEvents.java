@@ -1,5 +1,6 @@
 package com.fossil.fossil.event;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.Quagga;
@@ -8,6 +9,7 @@ import com.fossil.fossil.entity.ai.AnimalFearGoal;
 import com.fossil.fossil.entity.monster.AnuBoss;
 import com.fossil.fossil.entity.prehistoric.base.*;
 import com.fossil.fossil.recipe.ModRecipes;
+import com.fossil.fossil.tags.ModEntityTypeTags;
 import com.fossil.fossil.util.FossilFoodMappings;
 import com.fossil.fossil.world.dimension.ModDimensions;
 import dev.architectury.event.EventResult;
@@ -22,7 +24,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.animal.*;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.DispenserBlock;
@@ -42,7 +44,6 @@ public class ModEvents {
             return EventResult.pass();
         });
         BlockEvent.BREAK.register((level, pos, state, player, xp) -> {
-            //TODO: Prevent dino block break?
             if (level.dimension() == ModDimensions.ANU_LAIR && level instanceof ServerLevel serverLevel) {
                 if (!isBreakableInAnuLair(state) && !player.isCreative() && serverLevel.getServer().getProfilePermissions(player.getGameProfile()) < serverLevel.getServer().getOperatorUserPermissionLevel()) {
                     AnuBoss.AnuLair anuLair = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_lair");
@@ -78,16 +79,16 @@ public class ModEvents {
     }
 
     private static boolean isLivestock(PathfinderMob mob) {
-        //TODO: Maybe could be done with tags? MobType CREATURE
+        if (mob.getType().is(ModEntityTypeTags.LIVESTOCK)) {
+            return true;
+        }
         String className = "";
         try {
             className = mob.getClass().getSimpleName();
         } catch (Exception e) {
-            System.out.println(e);
+            Fossil.LOGGER.debug(e.getMessage());
         }
-        return !className.isEmpty() && (mob instanceof Cow || mob instanceof Sheep || mob instanceof Pig || mob instanceof Chicken
-                || mob instanceof Rabbit || mob instanceof AbstractHorse
-                || className.contains("Cow") || className.contains("Sheep") || (className.contains("Pig") && !className.contains("piglin")) || className.contains("Chicken")
+        return !className.isEmpty() && (className.contains("Cow") || className.contains("Sheep") || (className.contains("Pig") && !className.contains("piglin")) || className.contains("Chicken")
                 || className.contains("Rabbit") || className.contains("Peacock") || className.contains("Goat") || className.contains("Ferret")
                 || className.contains("Hedgehog") || className.contains("Peahen") || className.contains("Peafowl") || className.contains("Sow")
                 || className.contains("Hog"));

@@ -1,7 +1,6 @@
 package com.fossil.fossil.client.gui.filters;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.item.ModItems;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.hooks.client.screen.ScreenAccess;
@@ -126,8 +125,8 @@ public class FilterTab {
         private final ItemStack icon;
         private boolean enabled;
 
-        public Filter(String tagLocation, ItemStack icon) {
-            this.tag = TagKey.create(ModItems.ITEMS.getRegistrar().key(), new ResourceLocation(Fossil.MOD_ID, tagLocation));
+        public Filter(TagKey<Item> tag, ItemStack icon) {
+            this.tag = tag;
             this.icon = icon;
         }
     }

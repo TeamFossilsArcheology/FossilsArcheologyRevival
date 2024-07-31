@@ -171,7 +171,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     @Override
     public @NotNull InteractionResult interact(Player player, InteractionHand hand) {
         if (player.getInventory().getSelected().isEmpty()) {
-            if (!player.isCreative() && player.getInventory().add(new ItemStack(getPrehistoricEntityInfo().eggItem))) {
+            if (!player.getAbilities().instabuild && player.getInventory().add(new ItemStack(getPrehistoricEntityInfo().eggItem))) {
                 level.playSound(null, blockPosition(), SoundEvents.ITEM_PICKUP, SoundSource.NEUTRAL, 0.2f,
                         ((random.nextFloat() - random.nextFloat()) * 0.7f + 1) * 2);
                 kill();

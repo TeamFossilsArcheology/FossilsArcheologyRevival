@@ -22,7 +22,7 @@ public class FossilFoodMappings {
         FoodMappings.addPlant(Items.BEETROOT);
         FoodMappings.addPlant(Items.POTATO);
         FoodMappings.addPlant(Items.BAKED_POTATO);
-        FoodMappings.addPlant(Items.CAKE, 50);
+        FoodMappings.addPlant(Items.CAKE, 60);
         FoodMappings.addPlant(Items.CARROT);
         FoodMappings.addPlant(Items.COOKIE);
         FoodMappings.addPlant(Items.PUMPKIN_PIE);
@@ -43,9 +43,9 @@ public class FossilFoodMappings {
                 FoodMappings.addPlant(block, 15);
             });
         });
-        FoodMappings.addPlant(Blocks.CAKE, 35);
+        FoodMappings.addPlant(Blocks.CAKE, 60);
         FoodMappings.addPlant(Blocks.CARROTS, 20);
-        FoodMappings.addPlant(Blocks.WHEAT, 10);
+        FoodMappings.addPlant(Blocks.WHEAT, 13);
         FoodMappings.addPlant(Blocks.HAY_BLOCK, 90);
         FoodMappings.addPlant(Blocks.MELON, 65);
         FoodMappings.addPlant(Blocks.BROWN_MUSHROOM, 15);
@@ -56,7 +56,6 @@ public class FossilFoodMappings {
         FoodMappings.addPlant(Blocks.TALL_GRASS, 5);
         FoodMappings.addPlant(Blocks.LILY_PAD, 15);
         FoodMappings.addPlant(ModBlocks.FERNS.get(), 10);
-        //FoodMappings.addPlant(ModBlocks.PALM_LEAVES, 40);
         FoodMappings.addPlant(Blocks.CHORUS_FLOWER, 20);
         FoodMappings.addPlant(Blocks.CHORUS_PLANT, 10);
         FoodMappings.addPlant(Items.CHORUS_FRUIT);
@@ -84,13 +83,13 @@ public class FossilFoodMappings {
         FoodMappings.addEgg(Items.EGG, 7);
 
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
-            if (info.mobType != PrehistoricMobType.FISH) {
-                if (info.foodItem != null) FoodMappings.addMeat(info.foodItem);
-                if (info.cookedFoodItem != null) FoodMappings.addMeat(info.cookedFoodItem);
-            } else {
+            if (info.mobType == PrehistoricMobType.FISH) {
                 if (info.eggItem != null) FoodMappings.addFish(info.eggItem, 35);
                 if (info.foodItem != null) FoodMappings.addFish(info.foodItem);
                 if (info.cookedFoodItem != null) FoodMappings.addFish(info.cookedFoodItem);
+            } else {
+                if (info.foodItem != null) FoodMappings.addMeat(info.foodItem);
+                if (info.cookedFoodItem != null) FoodMappings.addMeat(info.cookedFoodItem);
             }
             if (info.mobType == PrehistoricMobType.BIRD) {
                 FoodMappings.addEgg(info.cultivatedBirdEggItem, 15);
@@ -106,9 +105,9 @@ public class FossilFoodMappings {
         FoodMappings.addMeat(EntityType.VILLAGER, 27);
         FoodMappings.addMeat(EntityType.ZOMBIE, 23);
         FoodMappings.addMeat(EntityType.CHICKEN, 5);
-        FoodMappings.addMeat(EntityType.RABBIT, 7);
-        FoodMappings.addMeat(EntityType.PARROT, 1);
-        FoodMappings.addMeat(EntityType.LLAMA, 35);
+        FoodMappings.addMeat(EntityType.RABBIT, 4);
+        FoodMappings.addMeat(EntityType.PARROT, 2);
+        FoodMappings.addMeat(EntityType.LLAMA, 50);
         FoodMappings.addMeat(EntityType.POLAR_BEAR, 60);
         FoodMappings.addMeat(EntityType.COW, 40);
         FoodMappings.addMeat(EntityType.HORSE, 55);
@@ -116,10 +115,12 @@ public class FossilFoodMappings {
         FoodMappings.addMeat(EntityType.SHEEP, 35);
         FoodMappings.addMeat(EntityType.SQUID, 30);
         FoodMappings.addMeat(EntityType.WOLF, 15);
-        FoodMappings.addMeat(EntityType.OCELOT, 10);
-        FoodMappings.addMeat(EntityType.GUARDIAN, 65);
+        FoodMappings.addMeat(EntityType.OCELOT, 7);
+        FoodMappings.addFish(EntityType.GUARDIAN, 65);
         FoodMappings.addFish(EntityType.SQUID, 40);
         FoodMappings.addInsect(EntityType.SPIDER, 30);
         FoodMappings.addInsect(EntityType.CAVE_SPIDER, 15);
+
+        //For the future: EntityType volume * 40 would be a decent food value
     }
 }

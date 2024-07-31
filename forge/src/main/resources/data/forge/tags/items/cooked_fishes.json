@@ -1,0 +1,8 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:cooked_alligator_gar",
+    "fossil:cooked_coelacanth",
+    "fossil:cooked_sturgeon"
+  ]
+}

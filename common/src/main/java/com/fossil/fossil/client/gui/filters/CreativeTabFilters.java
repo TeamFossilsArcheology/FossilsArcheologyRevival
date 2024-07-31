@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 import static com.fossil.fossil.client.gui.filters.FilterTab.Filter;
+import static com.fossil.fossil.tags.ModItemTags.*;
 
 public class CreativeTabFilters {
     private static final Map<Integer, FilterTab> tabs = new HashMap<>();
@@ -24,11 +25,11 @@ public class CreativeTabFilters {
 
     public static void register() {
         NonNullList<Filter> filters = NonNullList.create();
-        filters.add(new Filter("filter_bones", new ItemStack(PrehistoricEntityInfo.TRICERATOPS.skullBoneItem)));
-        filters.add(new Filter("filter_dna", new ItemStack(PrehistoricEntityInfo.TRICERATOPS.dnaItem)));
-        filters.add(new Filter("filter_eggs", new ItemStack(PrehistoricEntityInfo.TRICERATOPS.spawnEggItem)));
-        filters.add(new Filter("filter_meat", new ItemStack(PrehistoricEntityInfo.TRICERATOPS.foodItem)));
-        filters.add(new Filter("filter_plants", new ItemStack(ModItems.FERN_SEED.get())));
+        filters.add(new Filter(FILTER_BONES, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.skullBoneItem)));
+        filters.add(new Filter(FILTER_DNA, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.dnaItem)));
+        filters.add(new Filter(FILTER_EGGS, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.spawnEggItem)));
+        filters.add(new Filter(FILTER_MEAT, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.foodItem)));
+        filters.add(new Filter(FILTER_PLANTS, new ItemStack(ModItems.FERN_SEED.get())));
         ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
                 tabs.get(creativeScreen.getSelectedTab()).renderButtons(matrices, mouseX, mouseY, delta);

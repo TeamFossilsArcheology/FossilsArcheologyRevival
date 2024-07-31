@@ -444,8 +444,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean isPushable() {
-        //TODO: Maybe also !isVehicle()?
-        return super.isPushable();
+        return super.isPushable() && !isVehicle();
     }
 
     /**
@@ -553,7 +552,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void onPlayerJump(int jumpPower) {
-        playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * (float) jumpPower / 90.0f;
+        playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * jumpPower / 90.0f;
     }
 
     @Override
@@ -674,7 +673,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             moodSystem.tick();
         }
         if (data().breaksBlocks() && moodSystem.getMood() < 0) {
-            breakBlock(5);//TODO: Check if only server side
+            breakBlock(5);
         }
         if (isFleeing()) {
             fleeTicks++;
@@ -847,7 +846,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public void setSleeping(boolean sleeping) {
         entityData.set(SLEEPING, sleeping);
-        if (!sleeping) {//TODO: Maybe isSleeping to prevent cooldown resetting
+        if (!sleeping) {
             cathermalSleepCooldown = 10000 + random.nextInt(6000);
             setPose(Pose.STANDING);
         } else {
@@ -861,11 +860,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean onClimbable() {
-        if (aiMovingType() == Moving.AQUATIC || aiMovingType() == Moving.SEMI_AQUATIC) {
-            return false;
-        } else {
-            return aiClimbType() == Climbing.ARTHROPOD && isClimbing();
-        }
+        return aiClimbType() == Climbing.ARTHROPOD && isClimbing();
     }
 
     public boolean isClimbing() {
@@ -1091,6 +1086,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public int getCurrentSwingDuration() {
+        //TODO: Not needed anymore?
         int time = 10;
         var activeAnimation = getAnimationLogic().getActiveAnimation("Attack");
         if (activeAnimation.isPresent()) {
@@ -1198,12 +1194,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 setAgingDisabled(true);
                 stack.shrink(1);
                 playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, getSoundVolume(), getVoicePitch());
+            } else {
+                spawnItemParticles(stack.getItem(), 15);
+                spawnItemParticles(stack.getItem(), 15);
+                spawnItemParticles(Items.POISONOUS_POTATO, 15);
+                spawnItemParticles(Items.POISONOUS_POTATO, 15);
+                spawnItemParticles(Items.EGG, 15);
             }
-            spawnItemParticles(stack.getItem(), 15);
-            spawnItemParticles(stack.getItem(), 15);
-            spawnItemParticles(Items.POISONOUS_POTATO, 15);
-            spawnItemParticles(Items.POISONOUS_POTATO, 15);
-            spawnItemParticles(Items.EGG, 15);
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
         if (FoodMappings.getFoodAmount(stack.getItem(), info().diet) > 0) {
@@ -1228,12 +1225,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
                 if (isOwnedBy(player) && data().canBeRidden()) {
-                    if (getRidingPlayer() == null) {
-                        if (!level.isClientSide) {
-                            player.yBodyRot = this.yBodyRot;
-                            player.setXRot(getXRot());
-                            player.startRiding(this);
-                        }
+                    if (getRidingPlayer() == null && !level.isClientSide) {
+                        player.yBodyRot = this.yBodyRot;
+                        player.setXRot(getXRot());
+                        player.startRiding(this);
                         setCurrentOrder(OrderType.WANDER);
                     } else if (getRidingPlayer() == player) {
                         setSprinting(true);
@@ -1292,8 +1287,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
         if (isSleeping()) builder.append("_sleeping");
         builder.append(".png");
-        String path = builder.toString();
-        textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
+        textureLocation = new ResourceLocation(Fossil.MOD_ID, builder.toString());
     }
 
     @Override
@@ -1305,11 +1299,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return false;
         }
         return target.canBeSeenAsEnemy();
-    }
-
-    @Override
-    public void setTarget(@Nullable LivingEntity target) {
-        super.setTarget(target);
     }
 
     public float getTargetScale() {

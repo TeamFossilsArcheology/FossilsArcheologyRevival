@@ -41,7 +41,7 @@ public class AncientChestBlock extends BaseEntityBlock {
                 ItemStack itemStack = player.getItemInHand(hand);
                 if (itemStack.is(ModItems.ANCIENT_KEY.get())) {
                     blockEntity.setState(AncientChestBlockEntity.STATE_UNLOCKED);
-                    if (!player.isCreative()) {
+                    if (!player.getAbilities().instabuild) {
                         itemStack.shrink(1);
                     }
                 }

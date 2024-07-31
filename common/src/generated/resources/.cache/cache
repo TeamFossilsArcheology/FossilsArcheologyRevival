@@ -1934,7 +1934,7 @@ a9a05ddfae72c8e398063f8900032fbd461957c5 data/fossil/loot_tables/blocks/calamite
 b7535e673077140893502cc464db54c8d958d751 data/fossil/loot_tables/blocks/calamites_trapdoor.json
 49f480d5205e02986405c433dd62f325ac35e605 data/fossil/loot_tables/blocks/calamites_wood.json
 548ff86dd89ae39555e9d4c3c983e4bce576546f data/fossil/loot_tables/blocks/cephalotaxus.json
-db78d91a8cdfbc178b569a235e35fe8810570f53 data/fossil/loot_tables/blocks/comfy_bed.json
+0698756ef5d485a5f8c58228116b3ac4d4cdbee4 data/fossil/loot_tables/blocks/comfy_bed.json
 f6a6ef498825954cc4e4491da6e5325cc15c8791 data/fossil/loot_tables/blocks/cordaites_button.json
 453f2d158127bc69abd7816aec3b1d4a9eec3978 data/fossil/loot_tables/blocks/cordaites_door.json
 9b9ff0f7da3f845afd478f41d23387a40b321f0c data/fossil/loot_tables/blocks/cordaites_fence.json
@@ -2593,6 +2593,7 @@ f1ad8b4f116dbdbf76d59146f196d2f79712aa3f data/fossil/tags/blocks/mutant_tree_log
 07ddf71d4d8f03aa869b645a414a77df2934ad74 data/fossil/tags/blocks/palm_logs.json
 c14bc2c851ae4f2d91784207659b2999abe97384 data/fossil/tags/blocks/sigillaria_logs.json
 7792735a57bdbe07196f9062ced049cc5b96fe71 data/fossil/tags/blocks/tempskya_logs.json
+2b1fa1293f3357110606fdd222b53a1747d80929 data/fossil/tags/entity_types/livestock.json
 e0c7f01c59e307301f7b9dfab66148abac4972b6 data/fossil/tags/items/ancient_wood_logs.json
 bacdf3441a2951e40b2f233a957c51b9566563de data/fossil/tags/items/bones_all.json
 6fc28dcf6170f3a636b3ffd8e708d308d9035d35 data/fossil/tags/items/bones_arm.json

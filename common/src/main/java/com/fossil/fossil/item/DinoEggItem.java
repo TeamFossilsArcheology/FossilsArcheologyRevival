@@ -6,9 +6,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
@@ -40,13 +38,6 @@ public class DinoEggItem extends PrehistoricEntityItem {
             DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, info, false);
         }
         return true;
-    }
-
-    @Override
-    public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-        if (!level.isClientSide && entity instanceof ServerPlayer) {
-            //TODO: Trigger
-        }
     }
 
     @Override
