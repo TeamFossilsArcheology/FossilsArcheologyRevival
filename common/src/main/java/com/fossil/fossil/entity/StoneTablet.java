@@ -31,6 +31,7 @@ public class StoneTablet extends HangingEntity implements EntitySpawnExtension {
     public StoneTablet(Level level, BlockPos blockPos, Direction direction) {
         super(ModEntities.STONE_TABLET.get(), level, blockPos);
         List<Variant> validVariants = new ArrayList<>();
+        this.variant = Variant.LIGHTNING;
         for (Variant variant : Variant.values()) {
             this.variant = variant;
             setDirection(direction);
@@ -39,8 +40,8 @@ public class StoneTablet extends HangingEntity implements EntitySpawnExtension {
         }
         if (!validVariants.isEmpty()) {
             variant = validVariants.get(level.random.nextInt(validVariants.size()));
-            setDirection(direction);
         }
+        setDirection(direction);
     }
 
     public StoneTablet(Level level, BlockPos blockPos, Direction direction, Variant variant) {
@@ -53,12 +54,15 @@ public class StoneTablet extends HangingEntity implements EntitySpawnExtension {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", variant.ordinal());
+        compound.putByte("Facing", (byte)direction.get2DDataValue());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         variant = Variant.values()[compound.getInt("Variant")];
+        direction = Direction.from2DDataValue(compound.getByte("Facing"));
+        setDirection(direction);
     }
 
     @Override

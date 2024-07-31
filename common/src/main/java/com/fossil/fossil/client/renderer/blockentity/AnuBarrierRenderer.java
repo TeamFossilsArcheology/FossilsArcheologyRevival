@@ -8,6 +8,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3f;
+import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
@@ -42,7 +43,8 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
         poseStack.scale(0.0625f, 0.0625f, direction.getAxis() == Direction.Axis.X ? 0.063f : 0.062f);
         int i = (int) (blockEntity.getLevel().getGameTime() % LOCATIONS.length);
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(LOCATIONS[i]));
-        renderBarrier(blockEntity, poseStack, vertexConsumer, packedLight);
+        int fixedLight = LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().relative(direction));
+        renderBarrier(blockEntity, poseStack, vertexConsumer, fixedLight);
         poseStack.popPose();
     }
 

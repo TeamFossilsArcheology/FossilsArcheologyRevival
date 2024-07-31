@@ -80,10 +80,10 @@ public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements 
                 float minTexY = (texV + height - blockZ * 16) / 256f;
                 float maxTexY = (texV + height - (blockZ + 1) * 16) / 256f;
                 //Front
-                vertex(matrix4f, matrix3f, vertexConsumer, maxX, minY, maxTexX, minTexY, 0, 0, 0, -1, light);//z=-0.5f
-                vertex(matrix4f, matrix3f, vertexConsumer, minX, minY, minTexX, minTexY, 0, 0, 0, -1, light);
-                vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, 0, 0, 0, -1, light);
-                vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, 0, 0, 0, -1, light);
+                vertex(matrix4f, matrix3f, vertexConsumer, maxX, minY, maxTexX, minTexY, 0.4f, 0, 0, -1, light);//z=-0.5f
+                vertex(matrix4f, matrix3f, vertexConsumer, minX, minY, minTexX, minTexY, 0.4f, 0, 0, -1, light);
+                vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, 0.4f, 0, 0, -1, light);
+                vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, 0.4f, 0, 0, -1, light);
 
                 //Back
                 /*vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, 0.5f, 0, 0, 1, light);//z=0.5f
