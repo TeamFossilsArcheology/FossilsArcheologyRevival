@@ -1,10 +1,17 @@
 package com.fossil.fossil.client.model;
 
 import com.fossil.fossil.entity.PrehistoricSkeleton;
+import com.fossil.fossil.entity.animation.GeoModelManager;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
+import software.bernie.geckolib3.geo.render.built.GeoModel;
+import software.bernie.geckolib3.model.provider.GeoModelProvider;
 
-public class SkeletonModel extends AnimatedGeoModel<PrehistoricSkeleton> {
+public class SkeletonModel extends GeoModelProvider<PrehistoricSkeleton> {
+
+    @Override
+    public GeoModel getModel(ResourceLocation location) {
+        return GeoModelManager.SKELETON_MODELS.getSkeletonModel(location);
+    }
 
     @Override
     public ResourceLocation getModelLocation(PrehistoricSkeleton entity) {
@@ -14,10 +21,5 @@ public class SkeletonModel extends AnimatedGeoModel<PrehistoricSkeleton> {
     @Override
     public ResourceLocation getTextureLocation(PrehistoricSkeleton entity) {
         return entity.textureLocation;
-    }
-
-    @Override
-    public ResourceLocation getAnimationFileLocation(PrehistoricSkeleton entity) {
-        return null;
     }
 }

@@ -104,16 +104,18 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     public boolean hurt(DamageSource source, float amount) {
         if (amount > 0) {
             level.playSound(null, blockPosition(), SoundEvents.SKELETON_HURT, SoundSource.NEUTRAL, 1, (random.nextFloat() - random.nextFloat()) * 0.2f + 1.5f);
-            if (!level.isClientSide && !droppedBiofossil) {
-                if (info().timePeriod == TimePeriod.CENOZOIC) {
-                    spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
-                } else {
-                    spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
+            if (!level.isClientSide) {
+                if (!droppedBiofossil) {
+                    if (info().timePeriod == TimePeriod.CENOZOIC) {
+                        spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
+                    } else {
+                        spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
+                    }
+                    spawnAtLocation(new ItemStack(Items.BONE, Math.min(getAge(), data().adultAgeDays())), 1);
+                    droppedBiofossil = true;
                 }
-                spawnAtLocation(new ItemStack(Items.BONE, Math.min(getAge(), data().adultAgeDays())), 1);
-                droppedBiofossil = true;
+                discard();
             }
-            discard();
             return true;
         }
         return super.hurt(source, amount);

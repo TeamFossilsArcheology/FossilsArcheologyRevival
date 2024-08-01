@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.animation;
 
+import com.fossil.fossil.Fossil;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -24,8 +25,8 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     public static final AnimationInfoManager ANIMATIONS = new AnimationInfoManager(GSON);
     private static final Logger LOGGER = LogUtils.getLogger();
-    private ImmutableMap<String, ImmutableMap<String, ServerAnimationInfo>> animationInfos = ImmutableMap.of();
-    private ImmutableMap<String, ImmutableMap<String, Animation>> clientAnimationInfos = ImmutableMap.of();
+    private ImmutableMap<ResourceLocation, ImmutableMap<String, ServerAnimationInfo>> animationInfos = ImmutableMap.of();
+    private ImmutableMap<ResourceLocation, ImmutableMap<String, Animation>> clientAnimationInfos = ImmutableMap.of();
 
     public AnimationInfoManager(Gson gson) {
         super(gson, "animations");
@@ -33,8 +34,8 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        ImmutableMap.Builder<String, ImmutableMap<String, ServerAnimationInfo>> builder = ImmutableMap.builder();
-        ImmutableMap.Builder<String, ImmutableMap<String, Animation>> clientBuilder = ImmutableMap.builder();
+        ImmutableMap.Builder<ResourceLocation, ImmutableMap<String, ServerAnimationInfo>> builder = ImmutableMap.builder();
+        ImmutableMap.Builder<ResourceLocation, ImmutableMap<String, Animation>> clientBuilder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
             if (!(fileEntry.getValue() instanceof JsonObject)) {
                 continue;
@@ -56,8 +57,9 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
                     innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), animationLength, actionDelay, blockSpeed, usesAttackBox));
                     clientInnerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), animationLength, actionDelay, blockSpeed, usesAttackBox));
                 }
-                builder.put("animations/" + fileEntry.getKey().getPath() + ".json", innerBuilder.build());
-                clientBuilder.put("animations/" + fileEntry.getKey().getPath() + ".json", clientInnerBuilder.build());
+                ResourceLocation path = new ResourceLocation(Fossil.MOD_ID, "animations/" + fileEntry.getKey().getPath() + ".json");
+                builder.put(path, innerBuilder.build());
+                clientBuilder.put(path, clientInnerBuilder.build());
             } catch (Exception e) {
                 LOGGER.error("Could not load animations {} due to: {}", fileEntry, e);
             }
@@ -72,7 +74,7 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
      * @param animationFile the animation file "animations/xyz.animation.json"
      * @return a map containing all animations for a given dino
      */
-    public Map<String, ServerAnimationInfo> getServerAnimations(String animationFile) {
+    public Map<String, ServerAnimationInfo> getServerAnimations(ResourceLocation animationFile) {
         return animationInfos.getOrDefault(animationFile, ImmutableMap.of());
     }
 
@@ -82,7 +84,7 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
      * @param animationFile the animation file "animations/xyz.animation.json"
      * @return a map containing all animations for a given dino
      */
-    public Map<String, Animation> getClientAnimations(String animationFile) {
+    public Map<String, Animation> getClientAnimations(ResourceLocation animationFile) {
         return clientAnimationInfos.getOrDefault(animationFile, ImmutableMap.of());
     }
 

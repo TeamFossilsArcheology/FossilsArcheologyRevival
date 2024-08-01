@@ -21,7 +21,6 @@ import software.bernie.geckolib3.core.util.Color;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.geo.render.built.GeoCube;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
-import software.bernie.geckolib3.model.AnimatedGeoModel;
 import software.bernie.geckolib3.model.provider.GeoModelProvider;
 import software.bernie.geckolib3.renderers.geo.IGeoRenderer;
 import software.bernie.geckolib3.util.EModelRenderCycle;
@@ -30,7 +29,7 @@ import software.bernie.geckolib3.util.RenderUtils;
 
 public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implements IGeoRenderer<PrehistoricSkeleton> {
 
-    private final AnimatedGeoModel<PrehistoricSkeleton> geoModel;
+    private final GeoModelProvider<PrehistoricSkeleton> geoModel;
     private IRenderCycle currentModelRenderCycle = EModelRenderCycle.INITIAL;
     private PrehistoricSkeleton animatable;
     protected Matrix4f dispatchedMat = new Matrix4f();
@@ -133,7 +132,7 @@ public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implem
 
     @Override
     public RenderType getRenderType(PrehistoricSkeleton animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, ResourceLocation texture) {
-        return RenderType.entityTranslucent(texture);
+        return RenderType.entityCutoutNoCull(texture);
     }
 
     @Override

@@ -6,6 +6,7 @@ import com.fossil.fossil.client.DinopediaBioManager;
 import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
+import com.fossil.fossil.entity.animation.GeoModelManager;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.event.ModEvents;
@@ -37,6 +38,7 @@ public class Fossil {
 
     public static void init() {
         if (Minecraft.getInstance() != null) {
+            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, GeoModelManager.SKELETON_MODELS);
             ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, DinopediaBioManager.DINOPEDIA);
             ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoManager.ANIMATIONS);
             ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);

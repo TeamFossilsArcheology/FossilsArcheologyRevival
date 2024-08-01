@@ -1522,12 +1522,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (level.isClientSide) {
             return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
         }
-        return AnimationInfoManager.ANIMATIONS.getClientAnimations(animationLocation.getPath());
+        return AnimationInfoManager.ANIMATIONS.getClientAnimations(animationLocation);
     }
 
     @Override
     public Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos() {
-        return AnimationInfoManager.ANIMATIONS.getServerAnimations(animationLocation.getPath());
+        return AnimationInfoManager.ANIMATIONS.getServerAnimations(animationLocation);
     }
 
     public abstract @NotNull Animation nextAttackAnimation();
