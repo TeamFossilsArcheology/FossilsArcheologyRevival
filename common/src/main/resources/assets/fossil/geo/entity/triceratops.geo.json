@@ -6,9 +6,9 @@
 				"identifier": "geometry.triceratops",
 				"texture_width": 97,
 				"texture_height": 64,
-				"visible_bounds_width": 5,
-				"visible_bounds_height": 3.5,
-				"visible_bounds_offset": [0, 1.25, 0]
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
 			},
 			"bones": [
 				{
@@ -19,11 +19,7 @@
 					"name": "lowerBody",
 					"parent": "root",
 					"pivot": [0, 10, 0],
-					"rotation": [-3.37, 0, 0],
-					"cubes": [
-						{"origin": [-0.5, 12.59342, -0.24844], "size": [3, 2, 8], "pivot": [-0.5, 12.5934, -0.2484], "rotation": [0, -0.4211, 0], "uv": [11, 42]},
-						{"origin": [-2.3, 12.59342, -0.24844], "size": [3, 2, 8], "uv": [11, 42]}
-					]
+					"rotation": [-3.37, 0, 0]
 				},
 				{
 					"name": "lowerBodyBreathing",
@@ -37,11 +33,7 @@
 					"name": "upperBody",
 					"parent": "lowerBody",
 					"pivot": [0, 10, 0],
-					"rotation": [18.26, 0, 0],
-					"cubes": [
-						{"origin": [-1, 12.37411, -5.21668], "size": [3, 2, 6], "uv": [1, 39]},
-						{"origin": [-2, 12.37411, -5.21668], "size": [3, 2, 6], "uv": [0, 39]}
-					]
+					"rotation": [18.26, 0, 0]
 				},
 				{
 					"name": "upperBodyBreathing",
@@ -162,7 +154,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "neck",
-					"pivot": [0.5, 5.07411, -9.96668]
+					"pivot": [0.5, 5.07411, -9.96668],
+					"cubes": []
 				},
 				{
 					"name": "leftUpperArm",
@@ -278,9 +271,7 @@
 					"pivot": [0, 11.29342, 7.25156],
 					"rotation": [-23.48, 0, 0],
 					"cubes": [
-						{"origin": [-2.5, 7.41062, 6.85313], "size": [5, 5, 5], "uv": [24, 14]},
-						{"origin": [-1, 12.41062, 6.85313], "size": [3, 2, 5], "uv": [28, 42]},
-						{"origin": [-2, 12.41062, 6.85313], "size": [3, 2, 5], "uv": [28, 42]}
+						{"origin": [-2.5, 7.41062, 6.85313], "size": [5, 5, 5], "uv": [24, 14]}
 					]
 				},
 				{
@@ -304,12 +295,14 @@
 				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 7.29342, 13.50156]
+					"pivot": [0, 7.29342, 13.50156],
+					"cubes": []
 				},
 				{
 					"name": "body_hitbox",
 					"parent": "root",
-					"pivot": [0, 0, 1.5]
+					"pivot": [0, 0, 1.5],
+					"cubes": []
 				}
 			]
 		}

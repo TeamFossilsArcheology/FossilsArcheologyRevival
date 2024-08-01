@@ -6,9 +6,9 @@
 				"identifier": "geometry.megaloceros",
 				"texture_width": 128,
 				"texture_height": 90,
-				"visible_bounds_width": 10,
-				"visible_bounds_height": 6,
-				"visible_bounds_offset": [0, 2, 0]
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [0, 1.75, 0]
 			},
 			"bones": [
 				{
@@ -222,7 +222,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "neck1",
-					"pivot": [0, 8.9, -11.4]
+					"pivot": [0, 8.9, -11.4],
+					"cubes": []
 				},
 				{
 					"name": "front_leg_l1",

@@ -242,7 +242,7 @@
 					]
 				},
 				{
-					"name": "grabPos",
+					"name": "grab_pos",
 					"parent": "head",
 					"pivot": [0, 12, -41]
 				},

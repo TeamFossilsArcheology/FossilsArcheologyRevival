@@ -203,12 +203,14 @@
 					"name": "head2_hitbox",
 					"parent": "neck",
 					"pivot": [0, 8.4, -25.6],
-					"rotation": [2.94, 0, 0]
+					"rotation": [2.94, 0, 0],
+					"cubes": []
 				},
 				{
 					"name": "head1_hitbox",
 					"parent": "chest",
-					"pivot": [0, -0.45, -14.7]
+					"pivot": [0, -0.45, -14.7],
+					"cubes": []
 				},
 				{
 					"name": "upperlegR",
@@ -267,7 +269,8 @@
 				{
 					"name": "body_hitbox",
 					"parent": "basin",
-					"pivot": [0, 0, 7]
+					"pivot": [0, 0, 7],
+					"cubes": []
 				},
 				{
 					"name": "rider_pos",

@@ -239,8 +239,8 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             if (level.isClientSide) {
                 AnimationData data = getFactory().getOrCreateAnimationData(getId());
                 Map<String, Pair<IBone, BoneSnapshot>> map = data.getBoneSnapshotCollection();
-                if (map.get("grabPos") != null) {
-                    if (map.get("grabPos").getLeft() instanceof GeoBone geoBone) {
+                if (map.get("grab_pos") != null) {
+                    if (map.get("grab_pos").getLeft() instanceof GeoBone geoBone) {
                         Vector3d pos = geoBone.getLocalPosition();
                         passenger.setPos(getX() + pos.x, getY() + pos.y - 0.2 + passenger.getMyRidingOffset(), getZ() + pos.z);
                     }

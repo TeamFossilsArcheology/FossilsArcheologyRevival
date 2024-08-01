@@ -6,9 +6,9 @@
 				"identifier": "geometry.therizinosaurus",
 				"texture_width": 128,
 				"texture_height": 64,
-				"visible_bounds_width": 6,
-				"visible_bounds_height": 5.5,
-				"visible_bounds_offset": [0, 2.25, 0]
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [0, 1.75, 0]
 			},
 			"bones": [
 				{
@@ -145,7 +145,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "neck",
-					"pivot": [0, 5.39379, -17.2]
+					"pivot": [0, 5.39379, -17.2],
+					"cubes": []
 				},
 				{
 					"name": "leftUpperArm",
@@ -398,12 +399,14 @@
 				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 15.79379, 12.30876]
+					"pivot": [0, 15.79379, 12.30876],
+					"cubes": []
 				},
 				{
 					"name": "body_hitbox",
 					"parent": "root",
-					"pivot": [0, 0, -5]
+					"pivot": [0, 0, -5],
+					"cubes": []
 				}
 			]
 		}

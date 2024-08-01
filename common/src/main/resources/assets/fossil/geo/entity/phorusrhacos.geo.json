@@ -153,7 +153,8 @@
 				{
 					"name": "head_hitbox",
 					"parent": "head1",
-					"pivot": [0, 19.8, -23.2]
+					"pivot": [0, 19.8, -23.2],
+					"cubes": []
 				},
 				{
 					"name": "upperwingR2",
