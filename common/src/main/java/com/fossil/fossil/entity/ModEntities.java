@@ -190,6 +190,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(SENTRY_PIGLIN, SentryPiglin::createAttributes);
         EntityAttributeRegistry.register(TAR_SLIME, TarSlime::createAttributes);
         EntityAttributeRegistry.register(FRIENDLY_PIGLIN, FriendlyPiglin::createAttributes);
+        EntityAttributeRegistry.register(FAILURESAURUS, Failuresaurus::createAttributes);
         EntityAttributeRegistry.register(DINOSAUR_EGG, DinosaurEgg::createAttributes);
     }
 }
