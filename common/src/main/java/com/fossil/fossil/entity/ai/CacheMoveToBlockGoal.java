@@ -219,6 +219,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      * @implNote If no block has been found the cache will be set to be cleared.
      */
     protected boolean findNearestBlock() {
+        //TODO: Spiral check?
         BlockPos entityPos = entity.blockPosition();
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         int y = verticalSearchStart;

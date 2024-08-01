@@ -51,6 +51,8 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.FoliageColor;
 
+import java.util.function.Function;
+
 public class ClientInit {
     public static final KeyMapping DEBUG_SCREEN_KEY = new KeyMapping("key.fossil.debug_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_Y,
             "category.fossil.debug");

@@ -95,16 +95,22 @@ public class DebugScreen extends Screen {
     }
 
     @Override
+    protected void clearWidgets() {
+        super.clearWidgets();
+        tabs.clear();
+    }
+
+    @Override
     protected void init() {
         var builder = CycleButton.booleanBuilder(new TextComponent("On"), new TextComponent("Off")).withValues(
                 List.of(Boolean.TRUE, Boolean.FALSE));
         if (entity instanceof Prehistoric prehistoric) {
-            tabs.add(addWidget(new InfoTab(this, prehistoric)));
+            tabs.add(new InfoTab(this, prehistoric));
             this.addRenderableWidget(new Button(460, height - 40, 50, 20, new TextComponent("Tame"), button -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
             }));
         } else if (entity instanceof PrehistoricSkeleton skeleton) {
-            tabs.add(addWidget(new SkeletonEditTab(this, skeleton)));
+            tabs.add(new SkeletonEditTab(this, skeleton));
         }
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {
             builder.withInitialValue(mob.isNoAi());
@@ -132,7 +138,7 @@ public class DebugScreen extends Screen {
             }));
         }
         if (entity instanceof PrehistoricAnimatable) {
-            tabs.add(addWidget(new AnimationTab(this, entity)));
+            tabs.add(new AnimationTab(this, entity));
         }
         builder.withInitialValue(showPaths);
         addRenderableWidget(builder.create(240, height - 40, 100, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {

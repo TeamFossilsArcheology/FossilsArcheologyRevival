@@ -11,6 +11,7 @@ import net.minecraft.world.level.LevelReader;
  * Afterwards it will feed the entity until it is no longer hungry.
  */
 public class EatFromFeederGoal extends MoveToFoodGoal {
+    //TODO: Feeder position does not have to be calculated by every entity
 
     public EatFromFeederGoal(Prehistoric entity) {
         super(entity, 1, 32);
