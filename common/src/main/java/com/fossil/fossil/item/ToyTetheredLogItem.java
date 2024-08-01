@@ -7,6 +7,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.properties.WoodType;
@@ -24,9 +25,11 @@ public class ToyTetheredLogItem extends Item {
 
     @Override
     public InteractionResult useOn(UseOnContext context) {
+        BlockPlaceContext context1 = new BlockPlaceContext(context);
         Level level = context.getLevel();
         BlockPos blockPos = context.getClickedPos();
-        if (!(context.getClickedFace() == Direction.DOWN && level.isEmptyBlock(blockPos.below()) && level.isEmptyBlock(blockPos.below(2)))) {
+        if (context.getClickedFace() != Direction.DOWN || !level.getBlockState(blockPos.below()).canBeReplaced(context1)
+                || !level.getBlockState(blockPos.below(2)).canBeReplaced(context1)) {
             return InteractionResult.FAIL;
         }
         Vec3 vec3 = new Vec3(blockPos.getX() + 0.5, blockPos.getY() - 1.95, blockPos.getZ() + 0.5);

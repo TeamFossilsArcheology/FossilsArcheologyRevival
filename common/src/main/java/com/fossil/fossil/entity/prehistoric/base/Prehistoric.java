@@ -131,6 +131,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
+    private long attackBoxEndTime;
     private final List<MultiPart> parts = new ArrayList<>();
     private final Map<String, MultiPart> partsByRef = new HashMap<>();
     public final Map<String, EntityHitboxManager.Hitbox> attackBoxes = new HashMap<>();
@@ -244,6 +245,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
         buf.writeBoolean(getGender() == Gender.MALE);
+        buf.writeInt(getAge());
     }
 
     @Override
@@ -253,6 +255,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             gender = Gender.FEMALE;
         }
+        setAgeInTicks(buf.readInt());
         refreshTexturePath();
     }
 
@@ -728,7 +731,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
         }
         if (level.isClientSide && !activeAttackBoxes.isEmpty()) {
-            if (level.getGameTime() > attack1) {
+            if (level.getGameTime() > attackBoxEndTime) {
                 activeAttackBoxes.clear();
             }
             for (Map.Entry<EntityHitboxManager.Hitbox, Vec3> entry : activeAttackBoxes.entrySet()) {
@@ -1355,11 +1358,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return attackAnim;
     }
 
-    private long attack1;
-
     public void activateAttackBoxes(double attackDuration) {
         attackBoxes.values().forEach(hitbox -> activeAttackBoxes.put(hitbox, Vec3.ZERO));
-        attack1 = (long) (level.getGameTime() + attackDuration);
+        attackBoxEndTime = (long) (level.getGameTime() + attackDuration);
     }
 
     public boolean attackTarget(LivingEntity target) {

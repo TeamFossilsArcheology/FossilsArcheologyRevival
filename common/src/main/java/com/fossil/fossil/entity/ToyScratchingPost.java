@@ -12,6 +12,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class ToyScratchingPost extends ToyBase {
@@ -29,7 +30,7 @@ public class ToyScratchingPost extends ToyBase {
     @Override
     public void tick() {
         super.tick();
-        setDeltaMovement(0, 0, 0);
+        setDeltaMovement(Vec3.ZERO);
         if (!isOnBlock()) {
             if (!level.isClientSide) {
                 Block.popResource(level, blockPosition(), getPickResult());

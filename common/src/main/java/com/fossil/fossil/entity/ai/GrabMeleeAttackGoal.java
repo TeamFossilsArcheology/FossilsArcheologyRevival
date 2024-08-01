@@ -80,7 +80,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
                 attackType = GRAB;
                 swimming.destroyBoat(enemy);
                 swimming.startGrabAttack(enemy);
-                //TODO: Grab attack
+                //TODO: Grab attack needs to be delayed and probably only start when looking at player?
                 attackEndTick = 1;
             }
         }
