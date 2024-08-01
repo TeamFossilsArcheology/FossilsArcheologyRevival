@@ -16,19 +16,10 @@ import com.fossil.fossil.client.particle.TarBubbleParticle;
 import com.fossil.fossil.client.renderer.blockentity.*;
 import com.fossil.fossil.client.renderer.entity.*;
 import com.fossil.fossil.entity.ModEntities;
-import com.fossil.fossil.entity.prehistoric.*;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
-import com.fossil.fossil.entity.prehistoric.fish.AlligatorGar;
-import com.fossil.fossil.entity.prehistoric.fish.Coelacanth;
-import com.fossil.fossil.entity.prehistoric.fish.Nautilus;
-import com.fossil.fossil.entity.prehistoric.fish.Sturgeon;
-import com.fossil.fossil.entity.prehistoric.flying.Confuciusornis;
-import com.fossil.fossil.entity.prehistoric.flying.Pteranodon;
-import com.fossil.fossil.entity.prehistoric.flying.Tropeognathus;
-import com.fossil.fossil.entity.prehistoric.swimming.*;
 import com.fossil.fossil.inventory.ModMenus;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Version;
@@ -53,6 +44,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.LightningBoltRenderer;
 import net.minecraft.client.renderer.entity.ThrownItemRenderer;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.Animal;
@@ -64,60 +56,60 @@ public class ClientInit {
             "category.fossil.debug");
 
     public static void immediate() {
-        registerFish(ModEntities.ALLIGATOR_GAR, "alligator_gar.geo.json", AlligatorGar.ANIMATIONS, "alligator_gar");
-        registerDino(ModEntities.ALLOSAURUS, "allosaurus.geo.json", Allosaurus.ANIMATIONS);
-        registerDino(ModEntities.ANKYLOSAURUS, "ankylosaurus.geo.json", Ankylosaurus.ANIMATIONS);
-        registerDino(ModEntities.ARTHROPLEURA, "arthropleura.geo.json", Arthropleura.ANIMATIONS);
-        registerDino(ModEntities.BRACHIOSAURUS, "brachiosaurus.geo.json", Brachiosaurus.ANIMATIONS);
-        registerDino(ModEntities.CERATOSAURUS, "ceratosaurus.geo.json", Ceratosaurus.ANIMATIONS);
-        registerDino(ModEntities.CITIPATI, "citipati.geo.json", Citipati.ANIMATIONS);
-        registerFish(ModEntities.COELACANTH, "coelacanth.geo.json", Coelacanth.ANIMATIONS, "coelacanth");
-        registerDino(ModEntities.COMPSOGNATHUS, "compsognathus.geo.json", Compsognathus.ANIMATIONS);
-        registerDino(ModEntities.CONFUCIUSORNIS, "confuciusornis.geo.json", Confuciusornis.ANIMATIONS);
-        registerDino(ModEntities.CRASSIGYRINUS, "crassigyrinus.geo.json", Crassigyrinus.ANIMATIONS);
-        registerDino(ModEntities.DEINONYCHUS, "deinonychus.geo.json", Deinonychus.ANIMATIONS);
-        registerDino(ModEntities.DILOPHOSAURUS, "dilophosaurus.geo.json", Dilophosaurus.ANIMATIONS);
-        registerDino(ModEntities.DIPLOCAULUS, "diplocaulus.geo.json", Diplocaulus.ANIMATIONS);
-        registerDino(ModEntities.DIPLODOCUS, "diplodocus.geo.json", Diplodocus.ANIMATIONS);
-        registerDino(ModEntities.DODO, "dodo.geo.json", Dodo.ANIMATIONS);
-        registerDino(ModEntities.DRYOSAURUS, "dryosaurus.geo.json", Dryosaurus.ANIMATIONS);
-        registerDino(ModEntities.EDAPHOSAURUS, "edaphosaurus.geo.json", Edaphosaurus.ANIMATIONS);
-        registerDino(ModEntities.ELASMOTHERIUM, "elasmotherium.geo.json", Elasmotherium.ANIMATIONS);
-        registerDino(ModEntities.GALLIMIMUS, "gallimimus.geo.json", Gallimimus.ANIMATIONS);
-        registerDino(ModEntities.GASTORNIS, "gastornis.geo.json", Gastornis.ANIMATIONS);
-        registerDino(ModEntities.HENODUS, "henodus.geo.json", Henodus.ANIMATIONS);
-        registerDino(ModEntities.ICHTHYOSAURUS, "ichthyosaurus.geo.json", Ichthyosaurus.ANIMATIONS);
-        registerDino(ModEntities.KELENKEN, "kelenken.geo.json", Kelenken.ANIMATIONS);
-        registerDino(ModEntities.LIOPLEURODON, "liopleurodon.geo.json", Liopleurodon.ANIMATIONS);
-        registerDino(ModEntities.MAMMOTH, "mammoth.geo.json", Mammoth.ANIMATIONS);
-        registerDino(ModEntities.MEGALANIA, "megalania.geo.json", Megalania.ANIMATIONS);
-        registerDino(ModEntities.MEGALOCEROS, "megaloceros.geo.json", Megaloceros.ANIMATIONS);
-        registerDino(ModEntities.MEGALODON, "megalodon.geo.json", Megalodon.ANIMATIONS);
-        registerDino(ModEntities.MEGALOGRAPTUS, "megalograptus.geo.json", Megalograptus.ANIMATIONS);
-        registerDino(ModEntities.MEGANEURA, "meganeura.geo.json", Meganeura.ANIMATIONS);
-        registerDino(ModEntities.MOSASAURUS, "mosasaurus.geo.json", Mosasaurus.ANIMATIONS);
-        registerFish(ModEntities.NAUTILUS, "nautilus.geo.json", Nautilus.ANIMATIONS, "nautilus");
-        registerDino(ModEntities.ORNITHOLESTES, "ornitholestes.geo.json", Ornitholestes.ANIMATIONS);
-        registerDino(ModEntities.PACHYCEPHALOSAURUS, "pachycephalosaurus.geo.json", Pachycephalosaurus.ANIMATIONS);
-        registerDino(ModEntities.PACHYRHINOSAURUS, "pachyrhinosaurus.geo.json", Pachyrhinosaurus.ANIMATIONS);
-        registerDino(ModEntities.PARASAUROLOPHUS, "parasaurolophus.geo.json", Parasaurolophus.ANIMATIONS);
-        registerDino(ModEntities.PHORUSRHACOS, "phorusrhacos.geo.json", Phorusrhacos.ANIMATIONS);
-        registerDino(ModEntities.PLATYBELODON, "platybelodon.geo.json", Platybelodon.ANIMATIONS);
-        registerDino(ModEntities.PLESIOSAURUS, "plesiosaurus.geo.json", Plesiosaurus.ANIMATIONS);
-        registerDino(ModEntities.PTERANODON, "pteranodon.geo.json", Pteranodon.ANIMATIONS);
+        registerFish(ModEntities.ALLIGATOR_GAR, "alligator_gar");
+        registerDino(ModEntities.ALLOSAURUS, "allosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.ANKYLOSAURUS, "ankylosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.ARTHROPLEURA, "arthropleura");
+        registerDino(ModEntities.BRACHIOSAURUS, "brachiosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.CERATOSAURUS, "ceratosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.CITIPATI, "citipati");
+        registerFish(ModEntities.COELACANTH, "coelacanth");
+        registerDino(ModEntities.COMPSOGNATHUS, "compsognathus");
+        registerDino(ModEntities.CONFUCIUSORNIS, "confuciusornis");
+        registerDino(ModEntities.CRASSIGYRINUS, "crassigyrinus");
+        registerDino(ModEntities.DEINONYCHUS, "deinonychus", RenderType::entityCutout);
+        registerDino(ModEntities.DILOPHOSAURUS, "dilophosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.DIPLOCAULUS, "diplocaulus");
+        registerDino(ModEntities.DIPLODOCUS, "diplodocus", RenderType::entityCutout);
+        registerDino(ModEntities.DODO, "dodo");
+        registerDino(ModEntities.DRYOSAURUS, "dryosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.EDAPHOSAURUS, "edaphosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.ELASMOTHERIUM, "elasmotherium");
+        registerDino(ModEntities.GALLIMIMUS, "gallimimus");
+        registerDino(ModEntities.GASTORNIS, "gastornis");
+        registerDino(ModEntities.HENODUS, "henodus");
+        registerDino(ModEntities.ICHTHYOSAURUS, "ichthyosaurus");
+        registerDino(ModEntities.KELENKEN, "kelenken");
+        registerDino(ModEntities.LIOPLEURODON, "liopleurodon");
+        registerDino(ModEntities.MAMMOTH, "mammoth");
+        registerDino(ModEntities.MEGALANIA, "megalania");
+        registerDino(ModEntities.MEGALOCEROS, "megaloceros");
+        registerDino(ModEntities.MEGALODON, "megalodon");
+        registerDino(ModEntities.MEGALOGRAPTUS, "megalograptus");
+        registerDino(ModEntities.MEGANEURA, "meganeura", RenderType::entityTranslucent);
+        registerDino(ModEntities.MOSASAURUS, "mosasaurus", RenderType::entityCutout);
+        registerFish(ModEntities.NAUTILUS, "nautilus");
+        registerDino(ModEntities.ORNITHOLESTES, "ornitholestes", RenderType::entityCutout);
+        registerDino(ModEntities.PACHYCEPHALOSAURUS, "pachycephalosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.PACHYRHINOSAURUS, "pachyrhinosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.PARASAUROLOPHUS, "parasaurolophus", RenderType::entityCutout);
+        registerDino(ModEntities.PHORUSRHACOS, "phorusrhacos");
+        registerDino(ModEntities.PLATYBELODON, "platybelodon", RenderType::entityCutout);
+        registerDino(ModEntities.PLESIOSAURUS, "plesiosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.PTERANODON, "pteranodon");
         EntityRendererRegistry.register(ModEntities.QUAGGA, QuaggaRenderer::new);
-        registerDino(ModEntities.SARCOSUCHUS, "sarcosuchus.geo.json", Sarcosuchus.ANIMATIONS);
-        registerDino(ModEntities.SMILODON, "smilodon.geo.json", Smilodon.ANIMATIONS);
-        registerDino(ModEntities.SPINOSAURUS, "spinosaurus.geo.json", Spinosaurus.ANIMATIONS);
-        registerDino(ModEntities.STEGOSAURUS, "stegosaurus.geo.json", Stegosaurus.ANIMATIONS);
-        registerFish(ModEntities.STURGEON, "sturgeon.geo.json", Sturgeon.ANIMATIONS, "sturgeon");
-        registerDino(ModEntities.THERIZINOSAURUS, "therizinosaurus.geo.json", Therizinosaurus.ANIMATIONS);
-        registerDino(ModEntities.TIKTAALIK, "tiktaalik.geo.json", Tiktaalik.ANIMATIONS);
-        registerDino(ModEntities.TITANIS, "titanis.geo.json", Titanis.ANIMATIONS);
-        registerDino(ModEntities.TRICERATOPS, "triceratops.geo.json", Triceratops.ANIMATIONS);
-        registerDino(ModEntities.TROPEOGNATHUS, "tropeognathus.geo.json", Tropeognathus.ANIMATIONS);
-        registerDino(ModEntities.TYRANNOSAURUS, "tyrannosaurus.geo.json", Tyrannosaurus.ANIMATIONS);
-        registerDino(ModEntities.VELOCIRAPTOR, "velociraptor.geo.json", Velociraptor.ANIMATIONS);
+        registerDino(ModEntities.SARCOSUCHUS, "sarcosuchus");
+        registerDino(ModEntities.SMILODON, "smilodon", RenderType::entityCutout);
+        registerDino(ModEntities.SPINOSAURUS, "spinosaurus");
+        registerDino(ModEntities.STEGOSAURUS, "stegosaurus", RenderType::entityCutout);
+        registerFish(ModEntities.STURGEON, "sturgeon");
+        registerDino(ModEntities.THERIZINOSAURUS, "therizinosaurus");
+        registerDino(ModEntities.TIKTAALIK, "tiktaalik");
+        registerDino(ModEntities.TITANIS, "titanis");
+        registerDino(ModEntities.TRICERATOPS, "triceratops", RenderType::entityCutout);
+        registerDino(ModEntities.TROPEOGNATHUS, "tropeognathus", RenderType::entityCutout);
+        registerDino(ModEntities.TYRANNOSAURUS, "tyrannosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.VELOCIRAPTOR, "velociraptor", RenderType::entityCutout);
         EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, context -> new DinosaurEggRenderer(context, new DinosaurEggModel()));
         EntityRendererRegistry.register(ModEntities.THROWN_BIRD_EGG, ThrownItemRenderer::new);
 
@@ -142,12 +134,16 @@ public class ClientInit {
         ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION_EMITTER, new RedstoneExplosionEmitterParticle.Provider());
     }
 
-    private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String modelFileName, String animFileName) {
-        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, modelFileName, animFileName));
+    private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String name, Function<ResourceLocation, RenderType> renderType) {
+        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, name+".geo.json", name+".animation.json", renderType));
     }
 
-    private static <T extends PrehistoricFish> void registerFish(RegistrySupplier<EntityType<T>> type, String modelFileName, String animFileName, String textureFileName) {
-        EntityRendererRegistry.register(type, context -> new PrehistoricFishGeoRenderer<>(context, modelFileName, animFileName, textureFileName));
+    private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String name) {
+        registerDino(type, name, RenderType::entityCutoutNoCull);
+    }
+
+    private static <T extends PrehistoricFish> void registerFish(RegistrySupplier<EntityType<T>> type, String name) {
+        EntityRendererRegistry.register(type, context -> new PrehistoricFishGeoRenderer<>(context, name+".geo.json", name+".animation.json", name));
     }
 
     public static void later() {

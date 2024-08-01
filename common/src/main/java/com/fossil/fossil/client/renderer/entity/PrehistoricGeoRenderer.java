@@ -34,14 +34,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRenderer<T> {
+    private final Function<ResourceLocation, RenderType> renderType;
 
-    public PrehistoricGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation) {
+    public PrehistoricGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, Function<ResourceLocation, RenderType> renderType) {
         super(renderManager, new PrehistoricGeoModel<>(
                 new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + model),
                 new ResourceLocation(Fossil.MOD_ID, "animations/" + animation)
         ));
+        this.renderType = renderType;
     }
 
     public static List<BlockPos> pathTargets = new ArrayList<>();
@@ -198,8 +201,7 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     public RenderType getRenderType(T animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, ResourceLocation texture) {
-        //TODO: Performance check
-        return RenderType.entityTranslucent(texture);
+        return renderType.apply(texture);
     }
 
     @Override
