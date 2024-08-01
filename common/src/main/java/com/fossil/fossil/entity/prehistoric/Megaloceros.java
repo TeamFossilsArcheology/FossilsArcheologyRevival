@@ -94,6 +94,12 @@ public class Megaloceros extends Prehistoric {
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
+        float rand = random.nextFloat();
+        if (rand <= 0.1) {
+            return getAllAnimations().get(IDLE3);
+        } else if (rand <= 0.2) {
+            return getAllAnimations().get(IDLE2);
+        }
         return getAllAnimations().get(IDLE);
     }
     

@@ -71,7 +71,7 @@ public class Platybelodon extends Prehistoric {
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE1);
+        return random.nextFloat() > 0.1 ? getAllAnimations().get(IDLE1) : getAllAnimations().get(IDLE2);
     }
 
     @Override

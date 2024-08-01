@@ -41,10 +41,10 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Coelacanth>> COELACANTH = registerFish("coelacanth", Coelacanth::new, 2, 0.5f);
     public static final RegistrySupplier<EntityType<Compsognathus>> COMPSOGNATHUS = registerDino("compsognathus", Compsognathus::new, 1, 0.8f);
     public static final RegistrySupplier<EntityType<Confuciusornis>> CONFUCIUSORNIS = registerDino("confuciusornis", Confuciusornis::new, 1, 0.8f);
-    public static final RegistrySupplier<EntityType<Crassigyrinus>> CRASSIGYRINUS = registerDino("crassigyrinus", Crassigyrinus::new, 1.1f, 0.5f);
-    public static final RegistrySupplier<EntityType<Deinonychus>> DEINONYCHUS = registerDino("deinonychus", Deinonychus::new, 1.7f, 1.5f);
+    public static final RegistrySupplier<EntityType<Crassigyrinus>> CRASSIGYRINUS = registerDino("crassigyrinus", Crassigyrinus::new, 1.1f, 0.3f);
+    public static final RegistrySupplier<EntityType<Deinonychus>> DEINONYCHUS = registerDino("deinonychus", Deinonychus::new, 1.2f, 1.3f);
     public static final RegistrySupplier<EntityType<Dilophosaurus>> DILOPHOSAURUS = registerDino("dilophosaurus", Dilophosaurus::new, 1.25f, 1.5f);
-    public static final RegistrySupplier<EntityType<Diplocaulus>> DIPLOCAULUS = registerDino("diplocaulus", Diplocaulus::new, 2, 0.32f);
+    public static final RegistrySupplier<EntityType<Diplocaulus>> DIPLOCAULUS = registerDino("diplocaulus", Diplocaulus::new, 1.5f, 0.32f);
     public static final RegistrySupplier<EntityType<Diplodocus>> DIPLODOCUS = registerDino("diplodocus", Diplodocus::new, 1.85f, 1.85f);
     public static final RegistrySupplier<EntityType<Dodo>> DODO = registerDino("dodo", Dodo::new, 1, 1);
     public static final RegistrySupplier<EntityType<Dryosaurus>> DRYOSAURUS = registerDino("dryosaurus", Dryosaurus::new, 1.3f, 1.2f);

@@ -208,7 +208,7 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
+        return random.nextFloat() > 0.1 ? getAllAnimations().get(IDLE) : getAllAnimations().get(IDLE2);
     }
     
     @Override
