@@ -21,7 +21,7 @@ public class ModCapabilitiesImpl {
     private static final Map<Animal, LazyOptional<IMammalCap>> cachedMammals = new HashMap<>();
     private static final Map<Player, LazyOptional<IFirstHatchCap>> cachedPlayers = new HashMap<>();
 
-    private static Optional<IMammalCap> getMammalCap(Animal animal) {
+    public static Optional<IMammalCap> getMammalCap(Animal animal) {
         LazyOptional<IMammalCap> cap = cachedMammals.get(animal);
         if (cap == null) {
             cap = animal.getCapability(MammalCapProvider.MAMMAL_CAPABILITY);

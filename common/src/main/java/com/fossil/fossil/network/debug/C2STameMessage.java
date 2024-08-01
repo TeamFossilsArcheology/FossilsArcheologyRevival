@@ -24,8 +24,8 @@ public class C2STameMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        Entity entity = contextSupplier.get().getPlayer().level.getEntity(id);
         contextSupplier.get().queue(() -> {
+            Entity entity = contextSupplier.get().getPlayer().level.getEntity(id);
             if (entity instanceof Prehistoric prehistoric && Version.debugEnabled()) {
                 prehistoric.tame(contextSupplier.get().getPlayer());
             }

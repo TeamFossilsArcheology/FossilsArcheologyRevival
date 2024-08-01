@@ -2,6 +2,7 @@ package com.fossil.fossil.network;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
@@ -31,10 +32,13 @@ public class C2SHitPlayerMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        Player player = contextSupplier.get().getPlayer();
-        Entity entity = player.level.getEntity(entityId);
-        if (entity instanceof Prehistoric prehistoric && player.getId() == targetId) {
-            contextSupplier.get().queue(() -> prehistoric.attackTarget(player));
-        }
+        if (contextSupplier.get().getEnvironment() == Env.CLIENT) return;
+        contextSupplier.get().queue(() -> {
+            Player player = contextSupplier.get().getPlayer();
+            Entity entity = player.level.getEntity(entityId);
+            if (entity instanceof Prehistoric prehistoric && player.getId() == targetId) {
+                prehistoric.attackTarget(player);
+            }
+        });
     }
 }

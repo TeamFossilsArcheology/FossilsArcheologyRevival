@@ -2,6 +2,7 @@ package com.fossil.fossil.network;
 
 import com.fossil.fossil.entity.data.EntityDataManager;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
 
 import java.util.HashMap;
@@ -24,6 +25,7 @@ public class S2CSyncEntityInfoMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+        if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         contextSupplier.get().queue(() -> EntityDataManager.ENTITY_DATA.replaceData(data));
     }
 }

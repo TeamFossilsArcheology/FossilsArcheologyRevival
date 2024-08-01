@@ -2,6 +2,7 @@ package com.fossil.fossil.network;
 
 import com.fossil.fossil.entity.ToyTetheredLog;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 
@@ -31,9 +32,12 @@ public class S2CSyncToyAnimationMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
-        if (entity instanceof ToyTetheredLog toy) {
-            contextSupplier.get().queue(() -> toy.startAnimation(animationX, animationZ));
-        }
+        if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
+        contextSupplier.get().queue(() -> {
+            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+            if (entity instanceof ToyTetheredLog toy) {
+                toy.startAnimation(animationX, animationZ);
+            }
+        });
     }
 }

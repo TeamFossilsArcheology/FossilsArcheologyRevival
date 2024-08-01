@@ -32,9 +32,9 @@ public class C2SRotationMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
         contextSupplier.get().queue(() -> {
             if (Version.debugEnabled()) {
+                Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
                 switch (flag) {
                     case 0 -> {
                         if (entity instanceof LivingEntity) {

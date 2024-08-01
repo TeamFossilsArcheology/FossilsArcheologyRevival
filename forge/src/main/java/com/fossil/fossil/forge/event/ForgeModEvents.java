@@ -13,6 +13,7 @@ import com.fossil.fossil.forge.test.BatchArgument;
 import com.fossil.fossil.forge.test.BatchTestCommand;
 import com.fossil.fossil.forge.test.FossilGameTests;
 import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.S2CMammalCapMessage;
 import com.fossil.fossil.network.S2CSyncEntityInfoMessage;
 import com.fossil.fossil.villager.ModTrades;
 import com.fossil.fossil.villager.ModVillagers;
@@ -20,6 +21,7 @@ import dev.architectury.platform.Platform;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.synchronization.ArgumentTypes;
 import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -33,6 +35,8 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+
+import java.util.List;
 
 @Mod.EventBusSubscriber(modid = Fossil.MOD_ID)
 public class ForgeModEvents {
@@ -88,7 +92,7 @@ public class ForgeModEvents {
     }
 
     @SubscribeEvent
-    public static void attachEntityCapabilities(PlayerEvent.Clone event) {
+    public static void onPlayerClone(PlayerEvent.Clone event) {
         event.getOriginal().reviveCaps();
         ModCapabilitiesImpl.getFirstHatchCap(event.getOriginal()).ifPresent(originalCap -> {
             ModCapabilitiesImpl.getFirstHatchCap(event.getPlayer()).ifPresent(newCap -> {
@@ -96,6 +100,15 @@ public class ForgeModEvents {
             });
         });
         event.getOriginal().invalidateCaps();
+    }
+
+    @SubscribeEvent
+    public static void onPlayerStartTracking(PlayerEvent.StartTracking event) {
+        ServerPlayer serverPlayer = (ServerPlayer) event.getPlayer();
+        if (event.getTarget() instanceof Animal animal) {
+            ModCapabilitiesImpl.getMammalCap(animal).ifPresent(iMammalCap -> MessageHandler.CAP_CHANNEL.sendToPlayers(List.of(serverPlayer),
+                    new S2CMammalCapMessage(animal, iMammalCap.getEmbryoProgress(), iMammalCap.getEmbryo())));
+        }
     }
 
     @SubscribeEvent

@@ -34,8 +34,8 @@ public class C2SMoveMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
         contextSupplier.get().queue(() -> {
+            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
             if (Version.debugEnabled() && entity instanceof Mob mob) {
                 mob.getNavigation().stop();
                 mob.goalSelector.getRunningGoals().forEach(WrappedGoal::stop);

@@ -1,15 +1,19 @@
 package com.fossil.fossil.network;
 
+import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Supplier;
 
+/**
+ * Only used by the forge side
+ */
 public class S2CMammalCapMessage {
     private final int entityId;
     private final int embryoProgress;
@@ -33,11 +37,6 @@ public class S2CMammalCapMessage {
         this.embryo = embryo;
     }
 
-    @ExpectPlatform
-    public static void applyCap(Level level, int entityId, int embryoProgress, EntityInfo embryo) {
-
-    }
-
     public void write(FriendlyByteBuf buf) {
         buf.writeInt(entityId);
         buf.writeInt(embryoProgress);
@@ -49,6 +48,13 @@ public class S2CMammalCapMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        contextSupplier.get().queue(() -> applyCap(contextSupplier.get().getPlayer().level, entityId, embryoProgress, embryo));
+        if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
+        contextSupplier.get().queue(() -> {
+            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+            if (entity instanceof Animal animal) {
+                ModCapabilities.setEmbryoProgress(animal, embryoProgress);
+                ModCapabilities.setEmbryo(animal, embryo);
+            }
+        });
     }
 }

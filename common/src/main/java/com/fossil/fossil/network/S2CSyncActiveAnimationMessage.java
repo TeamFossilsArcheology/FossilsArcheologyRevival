@@ -3,6 +3,7 @@ package com.fossil.fossil.network;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 import software.bernie.geckolib3.core.builder.Animation;
@@ -48,6 +49,7 @@ public class S2CSyncActiveAnimationMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
+        if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         contextSupplier.get().queue(() -> {
             Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
             if (entity instanceof PrehistoricAnimatable<?> prehistoric) {

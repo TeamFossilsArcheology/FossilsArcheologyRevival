@@ -2,13 +2,14 @@ package com.fossil.fossil.network;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 
 import java.util.function.Supplier;
 
 /**
- * Activate a mobs attack boxes on the client
+ * Activate a mobs attack boxes on the client. Ideally only sent to the player that is being attack
  */
 public class S2CActivateAttackBoxesMessage {
     private final int entityId;
@@ -30,9 +31,12 @@ public class S2CActivateAttackBoxesMessage {
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
-        Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
-        if (entity instanceof Prehistoric prehistoric) {
-            contextSupplier.get().queue(() -> prehistoric.activateAttackBoxes(attackDuration));
-        }
+        if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
+        contextSupplier.get().queue(() -> {
+            Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
+            if (entity instanceof Prehistoric prehistoric) {
+                prehistoric.activateAttackBoxes(attackDuration);
+            }
+        });
     }
 }
