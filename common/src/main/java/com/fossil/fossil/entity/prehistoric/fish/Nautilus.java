@@ -12,9 +12,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -43,11 +41,10 @@ public class Nautilus extends PrehistoricFish {
     public static final String SHELL_EMERGE = "animation.nautilus.shell_emerge";
     public static final String BEACHED = "animation.nautilus.land";
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDimensions SHELL_DIMENSIONS = EntityDimensions.fixed(1, 0.5f);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private float ticksToShell = 0;
 
-    //TODO: Cant swim in 1 block water
-    //TODO: Pose for inshell
     public Nautilus(EntityType<Nautilus> entityType, Level level) {
         super(entityType, level);
     }
@@ -103,29 +100,34 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
+    protected boolean isImmobile() {
+        return super.isImmobile() || !isInWater() && isOnGround();
+    }
+
+    @Override
     public void aiStep() {
         super.aiStep();
-        if (!isInWater()) {
-            setDeltaMovement(Vec3.ZERO);
-            travel(Vec3.ZERO);//Apply gravity
-            hasImpulse = false;
+        if (ticksToShell > 0) {
+            ticksToShell--;
+        }
+        if (!level.isClientSide) {
+            List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
+            if (nearbyMobs.size() > 1 || isImmobile()) {
+                if (ticksToShell == 0 && !isInShell()) {
+                    hideInShell(true);
+                }
+            } else if (isInShell() && ticksToShell == 0) {
+                hideInShell(false);
+            }
+        }
+        if (isImmobile() && tickCount % 20 == 0) {
+            refreshDimensions();
         }
     }
 
     @Override
-    protected void customServerAiStep() {
-        super.customServerAiStep();
-        if (ticksToShell > 0) {
-            ticksToShell--;
-        }
-        List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
-        if (nearbyMobs.size() > 1 || (!isInWater() && isOnGround())) {
-            if (ticksToShell == 0 && !isInShell()) {
-                hideInShell(true);
-            }
-        } else if (isInShell() && ticksToShell == 0) {
-            hideInShell(false);
-        }
+    public @NotNull EntityDimensions getDimensions(Pose pose) {
+        return isImmobile() ? SHELL_DIMENSIONS : super.getDimensions(pose);
     }
 
     @Override

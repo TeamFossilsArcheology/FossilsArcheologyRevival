@@ -473,20 +473,12 @@
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
-				"shell": {
-					"rotation": {
-						"vector": [0, 0, -90]
-					},
-					"position": {
-						"vector": [0, -1.5, 0]
-					}
-				},
 				"head": {
 					"rotation": {
 						"vector": [0, 0, 0]
 					},
 					"position": {
-						"vector": ["-1+math.cos(query.anim_time*180)*0.2", 0, 0]
+						"vector": ["-1+math.cos(query.anim_time*180)*0.2", 0, 0.4]
 					},
 					"scale": {
 						"vector": ["0.9+math.cos(query.anim_time*180)*0.1", 1, 1]
@@ -510,6 +502,14 @@
 				"lowerLeftTentacle": {
 					"rotation": {
 						"vector": [0, "20+math.cos(query.anim_time*180)*2", 0]
+					}
+				},
+				"beached_bone": {
+					"rotation": {
+						"vector": [0, 0, -90]
+					},
+					"position": {
+						"vector": [0, -3.5, 0]
 					}
 				}
 			}
