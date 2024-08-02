@@ -102,7 +102,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
             simpleBlock(ANCIENT_WOOD_PLANKS.get());
             slabBlock(ANCIENT_WOOD_SLAB.get(), ancientWood);
             stairsBlock(ANCIENT_WOOD_STAIRS.get(), ancientWood);
-            logBlock(ANCIENT_WOOD_PILLAR.get());
+            logBlock(ANCIENT_WOOD_LOG.get());
 
             ResourceLocation volcanicBrick = blockTexture(VOLCANIC_BRICKS.get());
             simpleBlock(VOLCANIC_BRICKS.get());

@@ -115,9 +115,8 @@ public class ModBlocks {
             () -> new Block(BlockBehaviour.Properties.of(Material.WOOD).strength(2f, 3f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<SlabBlock> ANCIENT_WOOD_SLAB = registerBlock("ancient_wood_slab",
             () -> new SlabBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
-    //TODO: Just call it log?
-    public static final RegistrySupplier<RotatedPillarBlock> ANCIENT_WOOD_PILLAR = registerBlock("ancient_wood_pillar",
-            () -> new RotatedPillarBlock(BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));//TODO: Check necessary fabric/forge stuff
+    public static final RegistrySupplier<RotatedPillarBlock> ANCIENT_WOOD_LOG = registerBlock("ancient_wood_log",
+            () -> ModFlammableRotatedPillarBlock.get(BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<StairBlock> ANCIENT_WOOD_STAIRS = registerBlock("ancient_wood_stairs",
             () -> new StairBlock(ANCIENT_WOOD_PLANKS.get().defaultBlockState(), BlockBehaviour.Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",
@@ -508,6 +507,7 @@ public class ModBlocks {
 
     public static void register() {
         PrehistoricPlantInfo.register();
+        ModFlammableRotatedPillarBlock.registerAllStripped();
         BLOCKS.register();
     }
 }

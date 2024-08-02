@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "side": "fossil:block/ancient_wood_pillar",
-    "end": "fossil:block/ancient_wood_pillar_top"
-  }
-}

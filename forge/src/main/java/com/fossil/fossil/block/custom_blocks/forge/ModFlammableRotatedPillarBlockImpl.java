@@ -1,20 +1,23 @@
 package com.fossil.fossil.block.custom_blocks.forge;
 
-import com.fossil.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.world.item.AxeItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.common.ToolAction;
+import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModFlammableRotatedPillarBlockImpl {
+
+    private static final Map<Block, Block> STRIPPABLES = new HashMap<>();
 
     public static RotatedPillarBlock get(BlockBehaviour.Properties properties) {
         return new RotatedPillarBlock(properties) {
@@ -36,19 +39,16 @@ public class ModFlammableRotatedPillarBlockImpl {
             @Nullable
             @Override
             public BlockState getToolModifiedState(BlockState state, UseOnContext context, ToolAction toolAction, boolean simulate) {
-                ItemStack stack = context.getItemInHand();
-
-                if (!simulate && stack.getItem() instanceof AxeItem) {
-                    if (state.is(ModBlocks.CORDAITES_LOG.get())) {
-                        return ModBlocks.STRIPPED_CORDAITES_LOG.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
-                    }
-                    if (state.is(ModBlocks.CORDAITES_WOOD.get())) {
-                        return ModBlocks.STRIPPED_CORDAITES_WOOD.get().defaultBlockState().setValue(AXIS, state.getValue(AXIS));
-                    }
+                if (ToolActions.AXE_STRIP == toolAction) {
+                    Block block = STRIPPABLES.get(state.getBlock());
+                    return block != null ? block.defaultBlockState().setValue(AXIS, state.getValue(AXIS)) : null;
                 }
-
                 return super.getToolModifiedState(state, context, toolAction, simulate);
             }
         };
+    }
+
+    public static void registerStripped(Block base, Block stripped) {
+        STRIPPABLES.put(base, stripped);
     }
 }

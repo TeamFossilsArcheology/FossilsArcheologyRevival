@@ -7,7 +7,7 @@
       "entries": [
         {
           "type": "minecraft:item",
-          "name": "fossil:ancient_wood_pillar"
+          "name": "fossil:ancient_wood_log"
         }
       ],
       "conditions": [

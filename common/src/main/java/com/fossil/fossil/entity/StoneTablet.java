@@ -31,7 +31,7 @@ public class StoneTablet extends HangingEntity implements EntitySpawnExtension {
     public StoneTablet(Level level, BlockPos blockPos, Direction direction) {
         super(ModEntities.STONE_TABLET.get(), level, blockPos);
         List<Variant> validVariants = new ArrayList<>();
-        this.variant = Variant.LIGHTNING;
+        this.variant = Variant.SOCIAL;
         for (Variant variant : Variant.values()) {
             this.variant = variant;
             setDirection(direction);
