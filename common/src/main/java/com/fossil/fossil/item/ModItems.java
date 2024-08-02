@@ -122,7 +122,11 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> DINOPEDIA = ITEMS.register("dinopedia",
             () -> new Item(new Item.Properties().tab(ModTabs.FAPARKTAB)));
+    public static final RegistrySupplier<Item> ELASMOTHERIUM_FUR = ITEMS.register("fur_elasmotherium",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> MAMMOTH_FUR = ITEMS.register("fur_mammoth",
+            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> THERIZINOSAURUS_DOWN = ITEMS.register("fur_therizinosaurus",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> FAILURESAURUS_FLESH = ITEMS.register("failuresaurus_flesh",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));

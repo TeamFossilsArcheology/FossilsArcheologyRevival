@@ -70,8 +70,8 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
         }
         StringBuilder builder = new StringBuilder();
         builder.append("textures/entity/mammoth/mammoth");
-        if (hasBabyTexture && isBaby()) builder.append("_baby");
-        if (isAdult()) {
+        if (isBaby()) builder.append("_baby");
+        if (isTeen() || isAdult()) {
             if (getGender() == Gender.MALE) {
                 builder.append("_male");
             } else {
@@ -81,14 +81,21 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
         if (isSleeping()) builder.append("_sleeping");
         if (isSheared()) builder.append("_shaved");
         builder.append(".png");
-        String path = builder.toString();
-        textureLocation = new ResourceLocation(Fossil.MOD_ID, path);
+        textureLocation = new ResourceLocation(Fossil.MOD_ID, builder.toString());
     }
 
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(SHEARED, false);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (SHEARED.equals(key)) {
+            refreshTexturePath();
+        }
+        super.onSyncedDataUpdated(key);
     }
 
     @Override

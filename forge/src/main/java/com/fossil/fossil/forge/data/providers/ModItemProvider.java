@@ -131,6 +131,9 @@ public class ModItemProvider extends ItemModelProvider {
             spawnEggItem(ModItems.SENTRY_PIGLIN_SPAWN_EGG.get());
             spawnEggItem(ModItems.TAR_SLIME_SPAWN_EGG.get());
 
+            basicItem(ModItems.ELASMOTHERIUM_FUR.get());
+            basicItem(ModItems.MAMMOTH_FUR.get());
+            basicItem(ModItems.THERIZINOSAURUS_DOWN.get());
             basicItem(ModItems.MAGIC_CONCH.get());
         }
         if (plantItems) {
