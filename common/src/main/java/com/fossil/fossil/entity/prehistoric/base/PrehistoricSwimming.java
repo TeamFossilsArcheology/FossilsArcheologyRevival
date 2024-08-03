@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.util.Util;
 import com.mojang.math.Vector3d;
 import net.minecraft.client.player.LocalPlayer;
@@ -412,8 +413,10 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 0, getAnimationLogic()::waterPredicate));
-        data.addAnimationController(new AnimationController<>(this, "Attack", 5, getAnimationLogic()::grabAttackPredicate));
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.IDLE_CTRL, 0, getAnimationLogic()::waterPredicate));
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::grabAttackPredicate));
     }
 
     static class LargeSwimmerPathNavigation extends WaterBoundPathNavigation {

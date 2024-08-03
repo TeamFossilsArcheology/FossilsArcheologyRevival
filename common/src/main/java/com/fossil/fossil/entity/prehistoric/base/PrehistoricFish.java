@@ -222,7 +222,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle", 4, animationLogic::fishPredicate));
+        data.addAnimationController(new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 4, animationLogic::fishPredicate));
     }
 
     @Override

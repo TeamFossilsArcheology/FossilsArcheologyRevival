@@ -22,6 +22,8 @@ import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes
 import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
 
 public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
+    public static final String IDLE_CTRL = "Movement/Idle/Eat";
+    public static final String ATTACK_CTRL = "Attack";
     private final Map<String, ActiveAnimationInfo> activeAnimations = new HashMap<>();
     private final Map<String, ActiveAnimationInfo> nextAnimations = new HashMap<>();
     protected final T entity;

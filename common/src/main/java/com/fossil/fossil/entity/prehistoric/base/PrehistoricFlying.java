@@ -222,7 +222,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public void startTakeOff() {
         entityData.set(TAKING_OFF, true);
         takeOffStartTick = level.getGameTime();
-        getAnimationLogic().triggerAnimation("Movement/Idle/Eat", nextTakeOffAnimation(), AnimationLogic.Category.NONE);
+        getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, nextTakeOffAnimation(), AnimationLogic.Category.NONE);
     }
 
     /**
@@ -244,7 +244,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     public boolean isTakeOffAnimationDone() {
-        double flyDelay = getAnimationLogic().getActionDelay("Movement/Idle/Eat");
+        double flyDelay = getAnimationLogic().getActionDelay(AnimationLogic.IDLE_CTRL);
         return level.getGameTime() > flyDelay + takeOffStartTick;
     }
 
@@ -304,8 +304,10 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, getAnimationLogic()::flyingPredicate));
-        data.addAnimationController(new AnimationController<>(this, "Attack", 5, getAnimationLogic()::attackPredicate));
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::flyingPredicate));
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }
 
     public abstract @NotNull Animation nextTakeOffAnimation();

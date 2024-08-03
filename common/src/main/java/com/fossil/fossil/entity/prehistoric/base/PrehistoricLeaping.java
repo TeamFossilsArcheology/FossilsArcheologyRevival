@@ -152,7 +152,9 @@ public abstract class PrehistoricLeaping extends Prehistoric {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, this::leapingPredicate));
-        data.addAnimationController(new AnimationController<>(this, "Attack", 5, getAnimationLogic()::attackPredicate));
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.IDLE_CTRL, 5, this::leapingPredicate));
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }
 }

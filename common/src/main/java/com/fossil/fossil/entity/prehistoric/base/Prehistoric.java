@@ -1091,7 +1091,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public int getCurrentSwingDuration() {
         //TODO: Not needed anymore?
         int time = 10;
-        var activeAnimation = getAnimationLogic().getActiveAnimation("Attack");
+        var activeAnimation = getAnimationLogic().getActiveAnimation(AnimationLogic.ATTACK_CTRL);
         if (activeAnimation.isPresent()) {
             time = (int) (getAllAnimations().get(activeAnimation.get().animationName()).animationLength * 20);
         }
@@ -1354,7 +1354,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public AnimationInfoManager.ServerAnimationInfo startAttack() {
         AnimationInfoManager.ServerAnimationInfo attackAnim = (AnimationInfoManager.ServerAnimationInfo) nextAttackAnimation();
-        getAnimationLogic().triggerAnimation("Attack", attackAnim, AnimationLogic.Category.ATTACK);
+        getAnimationLogic().triggerAnimation(AnimationLogic.ATTACK_CTRL, attackAnim, AnimationLogic.Category.ATTACK);
         return attackAnim;
     }
 
@@ -1534,8 +1534,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, "Movement/Idle/Eat", 5, animationLogic::landPredicate));
-        data.addAnimationController(new AnimationController<>(this, "Attack", 5, animationLogic::attackPredicate));
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate));
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, animationLogic::attackPredicate));
     }
 
     public AnimationLogic<Prehistoric> getAnimationLogic() {

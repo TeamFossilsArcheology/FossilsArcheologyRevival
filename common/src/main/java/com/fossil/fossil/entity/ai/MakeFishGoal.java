@@ -1,12 +1,12 @@
 package com.fossil.fossil.entity.ai;
 
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public class MakeFishGoal extends Goal {
-    //TODO: Animations needed
     protected final PrehistoricSwimming dino;
     protected int tick;
 
@@ -36,6 +36,7 @@ public class MakeFishGoal extends Goal {
     @Override
     public void start() {
         tick = 0;
+        dino.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, dino.nextEatingAnimation(), AnimationLogic.Category.NONE);
     }
 
     @Override
