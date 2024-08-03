@@ -15,7 +15,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.AABB;
 
+import java.util.Comparator;
 import java.util.EnumSet;
 
 /**
@@ -219,27 +221,16 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      * @implNote If no block has been found the cache will be set to be cleared.
      */
     protected boolean findNearestBlock() {
-        //TODO: Spiral check?
-        BlockPos entityPos = entity.blockPosition();
-        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        int y = verticalSearchStart;
-        while (y <= verticalSearchRange) {
-            for (int l = 0; l < searchRange; ++l) {
-                int x = 0;
-                while (x <= l) {
-                    int z = x < l && x > -l ? l : 0;
-                    while (z <= l) {
-                        mutableBlockPos.setWithOffset(entityPos, x, y - 1, z);
-                        if (entity.isWithinRestriction(mutableBlockPos) && isValidTarget(entity.level, mutableBlockPos)) {
-                            targetPos = mutableBlockPos;
-                            return true;
-                        }
-                        z = z > 0 ? -z : 1 - z;
-                    }
-                    x = x > 0 ? -x : 1 - x;
-                }
-            }
-            y = y > 0 ? -y : 1 - y;
+        BlockPos pos = entity.blockPosition();
+        AABB searchArea = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ())
+                .inflate(searchRange, verticalSearchRange, searchRange);
+        //Maybe somewhat inefficient but I'm too lazy to write a proper 3d spiral algorithm
+        var target = BlockPos.betweenClosedStream(searchArea).map(BlockPos::immutable)
+                .sorted(Comparator.comparingInt(value -> value.distManhattan(pos)))
+                .filter(pos1 -> isValidTarget(entity.level, pos1)).findFirst();
+        if (target.isPresent()) {
+            targetPos = target.get();
+            return true;
         }
         clearTicks = !avoidCache.isEmpty() ? CLEAR_TICKS : 0;
         return false;
