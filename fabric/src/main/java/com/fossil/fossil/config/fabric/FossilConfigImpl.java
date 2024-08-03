@@ -6,7 +6,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "java:S1444"})
 public class FossilConfigImpl extends MidnightConfig {
 
 
@@ -85,6 +85,8 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry
     public static boolean dinosBreakBlocks = true;
     @MidnightConfig.Entry
+    public static boolean dinosEatBlocks = true;
+    @MidnightConfig.Entry
     public static boolean dinosEatModdedMobs = true;
     @MidnightConfig.Entry
     public static boolean animalsFearDinos = true;
@@ -122,20 +124,20 @@ public class FossilConfigImpl extends MidnightConfig {
     public static int fernTickRate = 2;
     @MidnightConfig.Entry
     public static boolean anuBlockPlacing = true;
-    public static Map<String, Field> mappedEntries = new HashMap<>();
+    private static final Map<String, Field> MAPPED_ENTRIES = new HashMap<>();
 
     public static void initFabricConfig() {
         Field[] allFields = FossilConfigImpl.class.getDeclaredFields();
         for (Field field : allFields) {
             if (field.getAnnotation(Entry.class) != null) {
-                mappedEntries.put(field.getName(), field);
+                MAPPED_ENTRIES.put(field.getName(), field);
             }
         }
     }
 
     public static boolean isEnabled(String field) {
         try {
-            return (boolean) mappedEntries.get(field).get(null);
+            return (boolean) MAPPED_ENTRIES.get(field).get(null);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }
@@ -143,7 +145,7 @@ public class FossilConfigImpl extends MidnightConfig {
 
     public static int getInt(String field) {
         try {
-            return (int) mappedEntries.get(field).get(null);
+            return (int) MAPPED_ENTRIES.get(field).get(null);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }

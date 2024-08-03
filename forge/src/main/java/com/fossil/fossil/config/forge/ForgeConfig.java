@@ -46,6 +46,7 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.BooleanValue WHIP_TO_TAME_DINO;
     public static final ForgeConfigSpec.IntValue DINO_UPDATE_DELAY;
     public static final ForgeConfigSpec.IntValue PREGNANCY_DURATION;
+    public static final ForgeConfigSpec.BooleanValue DINOS_EAT_BLOCKS;
     public static final ForgeConfigSpec.BooleanValue DINOS_BREAK_BLOCKS;
     public static final ForgeConfigSpec.BooleanValue DINOS_EAT_MODDED_MOBS;
     public static final ForgeConfigSpec.BooleanValue ANIMALS_FEAR_DINOS;
@@ -116,6 +117,7 @@ public class ForgeConfig {
         DINO_UPDATE_DELAY = intEntry("Dinosaurs will conduct expensive CPU operations like looking for plants or feeders, once every this number of ticks(with added standard deviation for servers)", FossilConfig.DINO_UPDATE_DELAY, 10, 1, 10000);
         PREGNANCY_DURATION = intEntry("How long mammal pregnancies last, in ticks", FossilConfig.PREGNANCY_DURATION, 10000, 1, 1000000000);
         DINOS_BREAK_BLOCKS = boolEntry("True if certain Dinosaurs can break blocks weaker than iron", FossilConfig.DINOS_BREAK_BLOCKS, true);
+        DINOS_EAT_BLOCKS = boolEntry("True if herbivores can eat plant blocks", FossilConfig.DINOS_EAT_BLOCKS, true);
         DINOS_EAT_MODDED_MOBS = boolEntry("True if Dinosaurs can eat non-vanilla mobs", FossilConfig.DINOS_EAT_MODDED_MOBS, true);
         ANIMALS_FEAR_DINOS = boolEntry("True if vanilla animals should run away from Dinosaurs", FossilConfig.ANIMALS_FEAR_DINOS, true);
         FEATHERED_DEINONYCHUS = boolEntry("True if Deinonychus is feathered", FossilConfig.FEATHERED_DEINONYCHUS, true);

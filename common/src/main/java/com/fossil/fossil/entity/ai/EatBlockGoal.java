@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.ai;
 
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
@@ -13,6 +14,14 @@ import net.minecraft.world.level.LevelReader;
 public class EatBlockGoal extends MoveToFoodGoal {
     public EatBlockGoal(Prehistoric entity) {
         super(entity, 1, 32);
+    }
+
+    @Override
+    public boolean canUse() {
+        if (!FossilConfig.isEnabled(FossilConfig.DINOS_EAT_BLOCKS)) {
+            return false;
+        }
+        return super.canUse();
     }
 
     @Override

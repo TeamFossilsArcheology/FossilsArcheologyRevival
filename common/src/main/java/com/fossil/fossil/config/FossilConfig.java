@@ -40,6 +40,7 @@ public class FossilConfig {
     public static final String DINO_UPDATE_DELAY = "dinoUpdateDelay";
     public static final String PREGNANCY_DURATION = "pregnancyDuration";
     public static final String DINOS_BREAK_BLOCKS = "dinosBreakBlocks";
+    public static final String DINOS_EAT_BLOCKS = "dinosEatBlocks";
     public static final String DINOS_EAT_MODDED_MOBS = "dinosEatModdedMobs";
     public static final String ANIMALS_FEAR_DINOS = "animalsFearDinos";
     public static final String CUSTOM_MAIN_MENU = "customMainMenu";
