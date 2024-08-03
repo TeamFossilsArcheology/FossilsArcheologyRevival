@@ -52,8 +52,6 @@ import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.effect.MobEffectUtil;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -516,7 +514,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                     }
                 }
             } else {
-                //TODO: Figure out if this needs to be more accurate
+                //Not sure if this will be accurate enough for larger dinos. Need to await player feedback
                 rider.setPos(getX(), getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ());
             }
         }
@@ -715,7 +713,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             if (isClimbing()) {
                 ticksClimbing++;
                 boolean onCooldown = ticksClimbing >= 100 || level.getBlockState(blockPosition().above()).getMaterial().isSolid();
-                //TODO: climb goal?
                 if (isSleeping() || wantsToSleep() || onCooldown || !horizontalCollision) {
                     setClimbing(false);
                     ticksClimbing = 0;
@@ -1068,33 +1065,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             makeEatingEffects(stack.getItem());
             setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), info().diet));
             stack.shrink(1);
-            setStartEatAnimation(true);
+            animationLogic.triggerAnimation(AnimationLogic.IDLE_CTRL, nextEatingAnimation(), AnimationLogic.Category.EAT);
         }
     }
 
     public void feed(int foodAmount) {
         setHunger(getHunger() + foodAmount);
         level.playSound(null, blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, getSoundVolume(), getVoicePitch());
-    }
-
-    @Override
-    public int getCurrentSwingDuration() {
-        //TODO: Not needed anymore?
-        int time = 10;
-        var activeAnimation = getAnimationLogic().getActiveAnimation(AnimationLogic.ATTACK_CTRL);
-        if (activeAnimation.isPresent()) {
-            time = (int) (getAllAnimations().get(activeAnimation.get().animationName()).animationLength * 20);
-        }
-
-        if (MobEffectUtil.hasDigSpeed(this)) {
-            time -= 1 + MobEffectUtil.getDigSpeedAmplification(this);
-        }
-
-        if (hasEffect(MobEffects.DIG_SLOWDOWN)) {
-            time += (1 + getEffect(MobEffects.DIG_SLOWDOWN).getAmplifier()) * 2;
-        }
-
-        return time;
     }
 
     @Override
@@ -1307,29 +1284,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(range, 4.0D, range), prehistoric -> prehistoric != this);
     }
 
-    //TODO: This method uses Forge-specific API and needs porting.
-    /*public boolean isInWaterMaterial() {
-        double d0 = this.getY();
-        int i = Mth.floor(this.getX());
-        int j = Mth.floor((float) Mth.floor(d0));
-        int k = Mth.floor(this.getZ());
-        BlockState blockState = this.level.getBlockState(new BlockPos(i, j, k));
-        if (blockState.getMaterial() == Material.WATER) {
-            double filled = 1.0f;
-            if (blockState.getBlock() instanceof IFluidBlock) {
-                filled = ((IFluidBlock) blockState.getBlock()).getFilledPercentage(level, new BlockPos(i, j, k));
-            }
-            if (filled < 0) {
-                filled *= -1;
-                return d0 > j + (1 - filled);
-            } else {
-                return d0 < j + filled;
-            }
-        } else {
-            return false;
-        }
-    }*/
-
     @Override
     public void playAmbientSound() {
         if (!isSleeping()) {
@@ -1439,15 +1393,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public float getProximityToNextPathSkip() {
         return this.getBbWidth() > 0.75F ? this.getBbWidth() / 2.0F : 0.75F - this.getBbWidth() / 2.0F;
-    }
-
-    public boolean shouldStartEatAnimation() {
-        return entityData.get(EATING);
-    }
-
-    public void setStartEatAnimation(boolean start) {
-        //TODO: There is still a delay between the feeding start and the animation start. Maybe do it similar to attack delay?
-        entityData.set(EATING, start);
     }
 
     @Override

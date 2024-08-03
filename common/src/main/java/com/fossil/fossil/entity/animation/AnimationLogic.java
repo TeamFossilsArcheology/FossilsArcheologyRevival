@@ -142,9 +142,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 }
             } else if (entity.isSleeping()) {
                 addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
-            } else if (entity.shouldStartEatAnimation()) {
-                addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), Category.EAT);
-                entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
@@ -202,10 +199,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
             } else if (event.getAnimatable().isSitting()) {
                 addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
-            } else if (entity.shouldStartEatAnimation()) {
-                if (addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), Category.EAT)) {
-                    entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
-                }
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
@@ -314,9 +307,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
             } else if (event.getAnimatable().isSitting()) {
                 addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
-            } else if (entity.shouldStartEatAnimation()) {
-                addActiveAnimation(controller.getName(), entity.nextEatingAnimation(), Category.EAT);
-                entity.setStartEatAnimation(false);//This technically doesn't work because it does not set the serverside to false
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }

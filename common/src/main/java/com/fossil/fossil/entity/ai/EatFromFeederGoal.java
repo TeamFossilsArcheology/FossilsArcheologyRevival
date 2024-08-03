@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.block.entity.FeederBlockEntity;
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
@@ -33,7 +34,7 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
                 if (feedingTicks % 4 == 0) {
                     entity.makeEatingEffects();
                 }
-                entity.setStartEatAnimation(true);
+                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, entity.nextEatingAnimation(), AnimationLogic.Category.EAT);
             }
         }
     }

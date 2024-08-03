@@ -28,8 +28,4 @@ public interface PrehistoricAnimatable<T extends Mob & PrehistoricAnimatable<T>>
     @NotNull Animation nextMovingAnimation();
 
     @NotNull Animation nextSprintingAnimation();
-
-    boolean shouldStartEatAnimation();
-
-    void setStartEatAnimation(boolean start);
 }

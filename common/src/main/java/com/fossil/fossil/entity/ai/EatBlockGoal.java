@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
@@ -28,7 +29,7 @@ public class EatBlockGoal extends MoveToFoodGoal {
     public void tick() {
         super.tick();
         if (isReachedTarget()) {
-            entity.setStartEatAnimation(true);
+            entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, entity.nextEatingAnimation(), AnimationLogic.Category.EAT);
             int foodAmount = FoodMappings.getFoodAmount(entity.level.getBlockState(targetPos).getBlock(), entity.info().diet);
             entity.feed(foodAmount);
             entity.heal(foodAmount / 10f);

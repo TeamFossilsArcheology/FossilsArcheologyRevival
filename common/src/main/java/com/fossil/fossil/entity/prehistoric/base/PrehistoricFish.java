@@ -201,16 +201,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
-    public boolean shouldStartEatAnimation() {
-        return false;
-    }
-
-    @Override
-    public void setStartEatAnimation(boolean start) {
-
-    }
-
-    @Override
     public Map<String, Animation> getAllAnimations() {
         return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
     }

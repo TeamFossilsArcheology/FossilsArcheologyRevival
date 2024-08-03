@@ -116,7 +116,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         if (isLeaping()) {
             getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation(), AnimationLogic.Category.ATTACK);
         } else {
-            if (event.isMoving()) {
+            if (event.isMoving() || isClimbing()) {
                 Animation movementAnim;
                 if (isSprinting()) {
                     movementAnim = nextSprintingAnimation();
