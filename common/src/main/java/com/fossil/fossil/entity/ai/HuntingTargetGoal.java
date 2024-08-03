@@ -50,7 +50,6 @@ public class HuntingTargetGoal extends TargetGoal {
         if (randomInterval > 0 && mob.getRandom().nextInt(randomInterval) != 0 || dino.isImmobile()) {
             return false;
         }
-        //TODO: getBbwidth vs getSize
         if (dino.isHungry()) {
             target = findHuntingTarget();
             if (target != null) {

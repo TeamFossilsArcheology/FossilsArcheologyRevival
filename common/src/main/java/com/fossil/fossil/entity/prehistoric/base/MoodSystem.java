@@ -94,7 +94,7 @@ public class MoodSystem {
     public void useToy(int playBonus) {
         if (getPlayingCooldown() == 0) {
             setMood(getMood() + playBonus);
-            //TODO: Display particles
+            prehistoric.level.broadcastEntityEvent(prehistoric, Prehistoric.HAPPY_VILLAGER_PARTICLES);
             setPlayingCooldown(prehistoric.getRandom().nextInt(600) + 600);
         }
     }

@@ -32,6 +32,7 @@ import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -938,19 +939,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return;
         }
         setAgeInDays(getAgeInDays() + ageInDays);
-        for (int i = 0; i < getScale() * 4; i++) {
-            double motionX = getRandom().nextGaussian() * 0.07;
-            double motionY = getRandom().nextGaussian() * 0.07;
-            double motionZ = getRandom().nextGaussian() * 0.07;
-            double minX = getBoundingBox().minX;
-            double minY = getBoundingBox().minY;
-            double minZ = getBoundingBox().minZ;
-            float x = (float) (getRandom().nextFloat() * (getBoundingBox().maxX - minX) + minX);
-            float y = (float) (getRandom().nextFloat() * (getBoundingBox().maxY - minY) + minY);
-            float z = (float) (getRandom().nextFloat() * (getBoundingBox().maxZ - minZ) + minZ);
-            level.addParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, motionX, motionY, motionZ);
-        }
         updateAbilities();
+        level.broadcastEntityEvent(this, GROW_UP_PARTICLES);
     }
 
     public boolean isAgingDisabled() {
@@ -1385,6 +1375,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public static final byte WHEAT_SEEDS_PARTICLES = 62;
     public static final byte BREAD_PARTICLES = 63;
     public static final byte BEEF_PARTICLES = 64;
+    public static final byte HAPPY_VILLAGER_PARTICLES = 65;
+    public static final byte GROW_UP_PARTICLES = 66;
 
     @Override
     public void handleEntityEvent(byte id) {
@@ -1394,6 +1386,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             spawnItemParticles(Items.BREAD, 3);
         } else if (id == BEEF_PARTICLES) {
             spawnItemParticles(Items.BEEF, 3);
+        } else if (id == HAPPY_VILLAGER_PARTICLES) {
+            spawnParticles(ParticleTypes.HAPPY_VILLAGER, 6);
+        } else if (id == GROW_UP_PARTICLES) {
+            spawnParticles(ParticleTypes.HAPPY_VILLAGER, getAgeInDays());
         } else {
             super.handleEntityEvent(id);
         }
@@ -1418,21 +1414,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    private void spawnItemParticles(Item item, int count) {
+    private void spawnParticles(ParticleOptions particleOptions, int count) {
         if (level.isClientSide) {
+            AABB aabb = getBoundingBoxForCulling();
             for (int i = 0; i < count; i++) {
                 double motionX = getRandom().nextGaussian() * 0.07;
                 double motionY = getRandom().nextGaussian() * 0.07;
                 double motionZ = getRandom().nextGaussian() * 0.07;
-                double minX = getBoundingBox().minX;
-                double minY = getBoundingBox().minY;
-                double minZ = getBoundingBox().minZ;
-                float x = (float) (getRandom().nextFloat() * (getBoundingBox().maxX - minX) + minX);
-                float y = (float) (getRandom().nextFloat() * (getBoundingBox().maxY - minY) + minY);
-                float z = (float) (getRandom().nextFloat() * (getBoundingBox().maxZ - minZ) + minZ);
-                level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), x, y, z, motionX, motionY, motionZ);
+                float x = (float) (getRandom().nextFloat() * (aabb.maxX - aabb.minX) + aabb.minX);
+                float y = (float) (getRandom().nextFloat() * (aabb.maxY - aabb.minY) + aabb.minY);
+                float z = (float) (getRandom().nextFloat() * (aabb.maxZ - aabb.minZ) + aabb.minZ);
+                level.addParticle(particleOptions, x, y, z, motionX, motionY, motionZ);
             }
         }
+    }
+
+    private void spawnItemParticles(Item item, int count) {
+        spawnParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), count);
     }
 
     public float getMaxTurnDistancePerTick() {
