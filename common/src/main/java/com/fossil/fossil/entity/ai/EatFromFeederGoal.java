@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.ai;
 import com.fossil.fossil.block.entity.FeederBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
 
@@ -55,7 +56,9 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
     @Override
     protected boolean findNearestBlock() {
         BlockPos mobPos = entity.blockPosition();
-        Optional<BlockPos> target = entity.level.getChunkAt(mobPos).getBlockEntities().entrySet().stream()
+        int radius = 2;//2 is 25 chunks. Should not be too slow
+        Optional<BlockPos> target = ChunkPos.rangeClosed(new ChunkPos(mobPos), radius)
+                .flatMap(chunkPos -> entity.level.getChunk(chunkPos.x, chunkPos.z).getBlockEntities().entrySet().stream())
                 .filter(this::isValidTarget)
                 .map(Map.Entry::getKey)
                 .min(Comparator.comparingInt(pos -> pos.distManhattan(mobPos)));
