@@ -84,13 +84,6 @@ public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements 
                 vertex(matrix4f, matrix3f, vertexConsumer, minX, minY, minTexX, minTexY, 0.4f, 0, 0, -1, light);
                 vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, 0.4f, 0, 0, -1, light);
                 vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, 0.4f, 0, 0, -1, light);
-
-                //Back
-                /*vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, 0.5f, 0, 0, 1, light);//z=0.5f
-                vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, 0.5f, 0, 0, 1, light);
-                vertex(matrix4f, matrix3f, vertexConsumer, minX, minY, minTexX, minTexY, 0.5f, 0, 0, 1, light);
-                vertex(matrix4f, matrix3f, vertexConsumer, maxX, minY, maxTexX, minTexY, 0.5f, 0, 0, 1, light);*/
-                //TODO: Other sides
             }
         }
     }

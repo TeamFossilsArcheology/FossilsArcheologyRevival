@@ -38,7 +38,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     /**
      * Cache that contains all block positions that should be avoided
      */
-    protected final LongList cache = new LongArrayList();
+    protected final LongList avoidCache = new LongArrayList();
     private final int verticalSearchRange;
     /**
      * Controls task execution delay
@@ -81,7 +81,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         if (clearTicks > 0) {
             clearTicks--;
             if (clearTicks == 0) {
-                cache.clear();
+                avoidCache.clear();
             }
             dontStart = true;
         }
@@ -173,7 +173,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             entity.getNavigation().stop();
             --tryTicks;
         } else if (stuckTicks > getStuckPatience()) {
-            cache.add(blockPos.asLong());
+            avoidCache.add(blockPos.asLong());
             tryTicks = GIVE_UP_TICKS;
         } else {
             reachedTarget = false;
@@ -241,7 +241,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             }
             y = y > 0 ? -y : 1 - y;
         }
-        clearTicks = cache.size() > 0 ? CLEAR_TICKS : 0;
+        clearTicks = !avoidCache.isEmpty() ? CLEAR_TICKS : 0;
         return false;
     }
 
@@ -251,7 +251,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      * @implNote Returns false if the cache contains the block position
      */
     protected boolean isValidTarget(LevelReader level, BlockPos pos) {
-        return !cache.contains(pos.asLong());
+        return !avoidCache.contains(pos.asLong());
     }
 
     private void setBlocks(boolean stuck) {

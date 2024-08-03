@@ -4,6 +4,11 @@ import com.fossil.fossil.block.entity.FeederBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
+import net.minecraft.world.level.block.entity.BlockEntity;
+
+import java.util.Comparator;
+import java.util.Map;
+import java.util.Optional;
 
 
 /**
@@ -11,7 +16,6 @@ import net.minecraft.world.level.LevelReader;
  * Afterwards it will feed the entity until it is no longer hungry.
  */
 public class EatFromFeederGoal extends MoveToFoodGoal {
-    //TODO: Feeder position does not have to be calculated by every entity
 
     public EatFromFeederGoal(Prehistoric entity) {
         super(entity, 1, 32);
@@ -39,5 +43,27 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
             return false;
         }
         return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && canSeeFood(pos);
+    }
+
+    private boolean isValidTarget(Map.Entry<BlockPos, BlockEntity> entry) {
+        if (avoidCache.contains(entry.getKey().asLong())) {
+            return false;
+        }
+        return entry.getValue() instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && canSeeFood(entry.getKey());
+    }
+
+    @Override
+    protected boolean findNearestBlock() {
+        BlockPos mobPos = entity.blockPosition();
+        Optional<BlockPos> target = entity.level.getChunkAt(mobPos).getBlockEntities().entrySet().stream()
+                .filter(this::isValidTarget)
+                .map(Map.Entry::getKey)
+                .min(Comparator.comparingInt(pos -> pos.distManhattan(mobPos)));
+        if (target.isPresent()) {
+            targetPos = target.get();
+            return true;
+        }
+        clearTicks = !avoidCache.isEmpty() ? CLEAR_TICKS : 0;
+        return false;
     }
 }
