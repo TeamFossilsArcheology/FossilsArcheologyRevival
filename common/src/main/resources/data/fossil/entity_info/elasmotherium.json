@@ -30,6 +30,6 @@
   "maxHunger": 125.0,
   "maxPopulation": 9,
   "scaleBase": 0.6,
-  "scaleMax": 3.0,
+  "scaleMax": 1.5,
   "teenAgeDays": 4
 }
