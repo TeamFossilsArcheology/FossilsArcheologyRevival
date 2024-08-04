@@ -24,7 +24,6 @@ public class DinoSleepGoal extends Goal {
                 }
             } else if (dino.aiActivityType() != PrehistoricEntityInfoAI.Activity.NO_SLEEP) {
                 if (dino.getRandom().nextInt(200) == 1) {
-                    System.out.println("DinoSleepGoal: canUse");
                     return true;
                 }
             }
@@ -44,28 +43,24 @@ public class DinoSleepGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (!dino.wantsToSleep() || !canSleep()) {
-            System.out.println("DinoSleepGoal: cant continue 1");
+        if (!canSleep()) {
             return false;
         }
-        if (dino.ticksSlept > 100 && dino.getRandom().nextInt(100) == 1) {
-            System.out.println("DinoSleepGoal: cant continue 2");
+        if (!dino.wantsToSleep() && dino.ticksSlept > 100 && dino.getRandom().nextInt(100) == 1) {
             return false;
         }
-        System.out.println("DinoSleepGoal: cant continue " + dino.isSleeping());
         return dino.isSleeping();
     }
 
     @Override
     public void start() {
-        System.out.println("DinoSleepGoal: start");
         dino.startSleeping(dino.blockPosition());
         dino.ticksSlept = 0;
     }
 
     @Override
     public void stop() {
-        dino.stopSleeping();
+        dino.setSleeping(false);
     }
 
     @Override

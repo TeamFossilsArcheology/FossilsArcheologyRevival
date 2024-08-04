@@ -242,6 +242,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (SLEEPING.equals(key)) {
+            refreshTexturePath();
+        }
+        super.onSyncedDataUpdated(key);
+    }
+
+    @Override
     public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
         buf.writeBoolean(getGender() == Gender.MALE);
         buf.writeInt(getAge());
