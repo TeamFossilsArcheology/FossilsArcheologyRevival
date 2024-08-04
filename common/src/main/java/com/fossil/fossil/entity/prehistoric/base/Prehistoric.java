@@ -111,7 +111,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public final ResourceLocation animationLocation;
     private OrderType currentOrder;
     protected boolean hasFeatherToggle = false;
-    protected boolean featherToggle;
     protected boolean hasTeenTexture = true;
     protected boolean hasBabyTexture = true;
     private float headRadius;

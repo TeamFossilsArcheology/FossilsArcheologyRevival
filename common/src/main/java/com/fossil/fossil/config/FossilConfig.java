@@ -44,14 +44,6 @@ public class FossilConfig {
     public static final String DINOS_EAT_MODDED_MOBS = "dinosEatModdedMobs";
     public static final String ANIMALS_FEAR_DINOS = "animalsFearDinos";
     public static final String CUSTOM_MAIN_MENU = "customMainMenu";
-    public static final String FEATHERED_DEINONYCHUS = "featheredDeinonychus";
-    public static final String FEATHERED_GALLIMIMUS = "featheredGallimimus";
-    public static final String FEATHERED_COMPSOGNATHUS = "featheredCompsognathus";
-    public static final String QUILLED_TRICERATOPS = "quilledTriceratops";
-    public static final String FEATHERED_VELOCIRAPTOR = "featheredVelociraptor";
-    public static final String FEATHERED_THERIZINOSAURUS = "featheredTherizinosaurus";
-    public static final String FEATHERED_DRYOSAURUS = "featheredDryosaurus";
-    public static final String FEATHERED_ORNITHOLESTES = "featheredOrnitholestes";
     public static final String HELMET_OVERLAYS = "helmetOverlays";
     public static final String FLYING_TARGET_MAX_HEIGHT = "flyingTargetMaxHeight";
     public static final String MACHINES_REQUIRE_ENERGY = "machinesRequireEnergy";

@@ -18,7 +18,6 @@ import com.fossil.fossil.network.*;
 import com.fossil.fossil.network.debug.*;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
-import com.fossil.fossil.util.DisposableTask;
 import com.fossil.fossil.villager.ModVillagers;
 import com.fossil.fossil.world.dimension.ModDimensions;
 import com.fossil.fossil.world.feature.ModFeatures;
@@ -28,7 +27,6 @@ import com.mojang.logging.LogUtils;
 import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.packs.PackType;
-import net.minecraft.world.level.timers.TimerCallbacks;
 import org.slf4j.Logger;
 
 
@@ -76,7 +74,5 @@ public class Fossil {
         MessageHandler.SYNC_CHANNEL.register(S2CSyncToyAnimationMessage.class, S2CSyncToyAnimationMessage::write, S2CSyncToyAnimationMessage::new, S2CSyncToyAnimationMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(C2SHitPlayerMessage.class, C2SHitPlayerMessage::write, C2SHitPlayerMessage::new, C2SHitPlayerMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CActivateAttackBoxesMessage.class, S2CActivateAttackBoxesMessage::write, S2CActivateAttackBoxesMessage::new, S2CActivateAttackBoxesMessage::apply);
-
-        TimerCallbacks.SERVER_CALLBACKS.register(new DisposableTask.Serializer());
     }
 }

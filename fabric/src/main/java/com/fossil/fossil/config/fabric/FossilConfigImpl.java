@@ -93,22 +93,6 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry
     public static boolean customMainMenu = true;
     @MidnightConfig.Entry
-    public static boolean featheredDeinonychus = true;
-    @MidnightConfig.Entry
-    public static boolean featheredGallimimus = true;
-    @MidnightConfig.Entry
-    public static boolean featheredCompsognathus = true;
-    @MidnightConfig.Entry
-    public static boolean quilledTriceratops = false;
-    @MidnightConfig.Entry
-    public static boolean featheredVelociraptor = true;
-    @MidnightConfig.Entry
-    public static boolean featheredTherizinosaurus = true;
-    @MidnightConfig.Entry
-    public static boolean featheredDryosaurus = false;
-    @MidnightConfig.Entry
-    public static boolean featheredOrnitholestes = true;
-    @MidnightConfig.Entry
     public static boolean helmetOverlays = true;
     @MidnightConfig.Entry(min = 1, max = 512)
     public static int flyingTargetMaxHeight = 128;

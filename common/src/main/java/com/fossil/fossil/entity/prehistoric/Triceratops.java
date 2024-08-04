@@ -1,6 +1,5 @@
 package com.fossil.fossil.entity.prehistoric;
 
-import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -40,7 +39,6 @@ public class Triceratops extends Prehistoric {
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(type, level);
         this.hasFeatherToggle = true;
-        this.featherToggle = FossilConfig.isEnabled(FossilConfig.QUILLED_TRICERATOPS);
     }
 
     protected void tickCustomParts() {
