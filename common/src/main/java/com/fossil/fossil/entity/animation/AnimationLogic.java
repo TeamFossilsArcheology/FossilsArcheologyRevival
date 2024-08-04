@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.animation;
 
 import com.fossil.fossil.entity.prehistoric.base.*;
-import com.fossil.fossil.entity.prehistoric.fish.Nautilus;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.S2CSyncActiveAnimationMessage;
 import net.minecraft.server.level.ServerLevel;
@@ -257,7 +256,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
     public PlayState fishPredicate(AnimationEvent<PrehistoricFish> event) {
         AnimationController<PrehistoricFish> controller = event.getController();
-        if (!entity.isInWater() && (entity.isOnGround() || entity instanceof Nautilus)) {
+        if (!entity.isInWater()) {
             addActiveAnimation(controller.getName(), event.getAnimatable().nextBeachedAnimation(), Category.BEACHED);
         } else if (event.isMoving()) {
             addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), Category.WALK);

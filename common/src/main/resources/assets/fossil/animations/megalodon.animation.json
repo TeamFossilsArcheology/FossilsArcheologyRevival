@@ -1119,7 +1119,7 @@
 						"vector": [0, "math.sin(query.anim_time*180+90)*4", "-25+math.sin(query.anim_time*180+90)*-4"]
 					}
 				},
-				"v": {
+				"root": {
 					"position": {
 						"vector": [0, 10, 0]
 					}
@@ -1244,7 +1244,7 @@
 						"vector": [-20, "math.sin(query.anim_time*180)*-2", "math.sin(query.anim_time*45)*5"]
 					}
 				},
-				"v": {
+				"root": {
 					"position": {
 						"vector": [0, 10, 0]
 					}

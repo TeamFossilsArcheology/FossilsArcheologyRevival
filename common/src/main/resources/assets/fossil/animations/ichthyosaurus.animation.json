@@ -1250,6 +1250,11 @@
 							"vector": [-15, 20, "-17.5+math.sin(query.anim_time*360-90)*-5"]
 						}
 					}
+				},
+				"root": {
+					"position": {
+						"vector": [0, 5, 0]
+					}
 				}
 			}
 		},
