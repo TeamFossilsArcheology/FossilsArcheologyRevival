@@ -5,8 +5,11 @@ import com.fossil.fossil.client.model.DinosaurEggModel;
 import com.fossil.fossil.client.renderer.RendererFabricFix;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.LivingEntityRenderer;
+import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
@@ -36,7 +39,18 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(DinosaurEgg entity) {
+
         return DinosaurEggModel.TEXTURES.computeIfAbsent(entity.getPrehistoricEntityInfo().resourceName,
-                name -> new ResourceLocation(Fossil.MOD_ID, "textures/entity/egg/egg_" + name + ".png"));
+                name -> {
+                    ResourceLocation rl = new ResourceLocation(Fossil.MOD_ID, "textures/entity/egg/egg_" + name + ".png");
+                    //Calling getTexture twice is needed because the first call will not return the missing texture
+                    Minecraft.getInstance().getTextureManager().getTexture(rl);
+                    AbstractTexture tex = Minecraft.getInstance().getTextureManager().getTexture(rl);
+                    if (tex == MissingTextureAtlasSprite.getTexture()) {
+                        return new ResourceLocation(Fossil.MOD_ID, "textures/entity/egg/fallback.png");
+                    } else {
+                        return rl;
+                    }
+                });
     }
 }
