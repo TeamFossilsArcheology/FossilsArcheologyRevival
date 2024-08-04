@@ -225,9 +225,10 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         AABB searchArea = new AABB(pos.getX(), pos.getY(), pos.getZ(), pos.getX(), pos.getY(), pos.getZ())
                 .inflate(searchRange, verticalSearchRange, searchRange);
         //Maybe somewhat inefficient but I'm too lazy to write a proper 3d spiral algorithm
-        var target = BlockPos.betweenClosedStream(searchArea).map(BlockPos::immutable)
-                .sorted(Comparator.comparingInt(value -> value.distManhattan(pos)))
-                .filter(pos1 -> isValidTarget(entity.level, pos1)).findFirst();
+        var target = BlockPos.betweenClosedStream(searchArea)
+                .map(BlockPos::immutable)
+                .filter(pos1 -> isValidTarget(entity.level, pos1))
+                .min(Comparator.comparingInt(value -> value.distManhattan(pos)));
         if (target.isPresent()) {
             targetPos = target.get();
             return true;

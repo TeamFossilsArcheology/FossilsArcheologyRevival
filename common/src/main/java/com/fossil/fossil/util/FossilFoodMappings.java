@@ -53,7 +53,8 @@ public class FossilFoodMappings {
         FoodMappings.addPlant(Blocks.POTATOES, 25);
         FoodMappings.addPlant(Blocks.PUMPKIN, 30);
         FoodMappings.addPlant(Blocks.SUGAR_CANE, 15);
-        FoodMappings.addPlant(Blocks.TALL_GRASS, 5);
+        FoodMappings.addPlant(Blocks.GRASS, 5);
+        FoodMappings.addPlant(Blocks.TALL_GRASS, 10);
         FoodMappings.addPlant(Blocks.LILY_PAD, 15);
         FoodMappings.addPlant(ModBlocks.FERNS.get(), 10);
         FoodMappings.addPlant(Blocks.CHORUS_FLOWER, 20);
