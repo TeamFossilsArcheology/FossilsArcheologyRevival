@@ -36,7 +36,7 @@ public class MakeFishGoal extends Goal {
     @Override
     public void start() {
         tick = 0;
-        dino.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, dino.nextEatingAnimation(), AnimationLogic.Category.NONE);
+        dino.getAnimationLogic().triggerAnimation(AnimationLogic.EAT_CTRL, dino.nextEatingAnimation(), AnimationLogic.Category.NONE);
     }
 
     @Override

@@ -21,7 +21,8 @@ import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes
 import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
 
 public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
-    public static final String IDLE_CTRL = "Movement/Idle/Eat";
+    public static final String IDLE_CTRL = "Movement/Idle";
+    public static final String EAT_CTRL = "Eat";
     public static final String ATTACK_CTRL = "Attack";
     private final Map<String, ActiveAnimationInfo> activeAnimations = new HashMap<>();
     private final Map<String, ActiveAnimationInfo> nextAnimations = new HashMap<>();
@@ -40,7 +41,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(),
                     entity.level.getGameTime() + animation.animationLength, category, true, 1
             );
-            addNextAnimation(controller, activeAnimationInfo);
             if (!entity.level.isClientSide) {
                 TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
                 var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
@@ -144,6 +144,29 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
+        }
+        Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
+        if (newAnimation.isPresent()) {
+            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, loopType));
+        }
+        return PlayState.CONTINUE;
+    }
+
+    public PlayState eatPredicate(AnimationEvent<Prehistoric> event) {
+        AnimationController<Prehistoric> controller = event.getController();
+        if (nextAnimations.containsKey(controller.getName())) {
+            ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
+            activeAnimations.put(controller.getName(), next);
+
+            controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName));
+            controller.transitionLengthTicks = next.speed;
+            controller.markNeedsReload();
+            return PlayState.CONTINUE;
+        }
+        Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
+        ILoopType loopType = null;
+        if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
+            loopType = PLAY_ONCE;
         }
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {

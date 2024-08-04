@@ -13,9 +13,17 @@ import net.minecraft.world.phys.Vec3;
  */
 public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
     protected int feedingTicks;
+    protected long animEndTick;
 
     protected MoveToFoodGoal(Prehistoric entity, double speedModifier, int searchRange) {
         super(entity, speedModifier, searchRange);
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        feedingTicks = 0;
+        animEndTick = 0;
     }
 
     @Override

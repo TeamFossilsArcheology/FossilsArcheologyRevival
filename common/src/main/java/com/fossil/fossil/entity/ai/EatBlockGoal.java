@@ -7,6 +7,7 @@ import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.LevelReader;
+import software.bernie.geckolib3.core.builder.Animation;
 
 /**
  * A Goal that will move the entity to the closest block if the entity is hungry, it can eat the plant and the entity can see it. Afterwards it will
@@ -29,12 +30,16 @@ public class EatBlockGoal extends MoveToFoodGoal {
     public void tick() {
         super.tick();
         if (isReachedTarget()) {
-            entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, entity.nextEatingAnimation(), AnimationLogic.Category.EAT);
             int foodAmount = FoodMappings.getFoodAmount(entity.level.getBlockState(targetPos).getBlock(), entity.info().diet);
             entity.feed(foodAmount);
             entity.heal(foodAmount / 10f);
             entity.playSound(SoundEvents.GENERIC_EAT, 1, 1);
             entity.level.destroyBlock(targetPos, false);
+            if (entity.level.getGameTime() > animEndTick) {
+                Animation anim = entity.nextEatingAnimation();
+                entity.getAnimationLogic().triggerAnimation(AnimationLogic.EAT_CTRL, anim, AnimationLogic.Category.EAT);
+                animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
+            }
         }
     }
 

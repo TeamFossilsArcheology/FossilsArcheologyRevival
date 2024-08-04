@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.ai;
 
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
@@ -7,6 +8,7 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.entity.EntityTypeTest;
+import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.List;
 
@@ -56,6 +58,11 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
             entity.eatItem(targetItem.getItem());
             targetItem.getItem().shrink(1);
             recentlyAte = true;
+            if (entity.level.getGameTime() > animEndTick) {
+                Animation anim = entity.nextEatingAnimation();
+                entity.getAnimationLogic().triggerAnimation(AnimationLogic.EAT_CTRL, anim, AnimationLogic.Category.EAT);
+                animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
+            }
         }
     }
 

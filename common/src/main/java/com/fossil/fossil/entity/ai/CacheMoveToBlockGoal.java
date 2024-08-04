@@ -132,6 +132,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         resetBlocks();
         var old = entity.getAttribute(Attributes.FOLLOW_RANGE).getBaseValue();
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(32);
+        //TODO: Maybe move to block below to prevent jumping
         path = entity.getNavigation().createPath(getMoveToTarget().getX() + 0.5d, getMoveToTarget().getY(), getMoveToTarget().getZ() + 0.5d, 1);
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(old);
         setBlocks(false);
@@ -140,7 +141,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
 
     public double acceptedDistance() {
         if (entity.isCustomMultiPart()) {
-            //return (entity.getBbWidth() + entity.getCustomParts()[1].getBbWidth()) / 2;
+            return entity.getHeadRadius() + 1;
         }
         return entity.getBbWidth() / 2 + 1;
     }

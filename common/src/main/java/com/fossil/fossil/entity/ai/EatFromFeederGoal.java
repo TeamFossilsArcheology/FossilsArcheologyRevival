@@ -7,6 +7,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -34,7 +35,11 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
                 if (feedingTicks % 4 == 0) {
                     entity.makeEatingEffects();
                 }
-                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, entity.nextEatingAnimation(), AnimationLogic.Category.EAT);
+                if (entity.level.getGameTime() > animEndTick) {
+                    Animation anim = entity.nextEatingAnimation();
+                    entity.getAnimationLogic().triggerAnimation(AnimationLogic.EAT_CTRL, anim, AnimationLogic.Category.EAT);
+                    animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
+                }
             }
         }
     }

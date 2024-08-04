@@ -34,7 +34,7 @@ public class SmoothTurningMoveControl extends MoveControl {
             BlockPos blockPos = mob.blockPosition();
             BlockState blockState = mob.level.getBlockState(blockPos);
             VoxelShape voxelShape = blockState.getCollisionShape(mob.level, blockPos);
-            if (y > mob.maxUpStep && x * x + z * z < Math.max(1, Mth.square(mob.getBbWidth())) || !voxelShape.isEmpty() && mob.getY() < voxelShape.max(Direction.Axis.Y) + blockPos.getY() && !blockState.is(BlockTags.DOORS) && !blockState.is(BlockTags.FENCES)) {
+            if (y > mob.maxUpStep && x * x + z * z < Math.max(1, Mth.square(Math.min(1.8, mob.getBbWidth()))) || !voxelShape.isEmpty() && mob.getY() < voxelShape.max(Direction.Axis.Y) + blockPos.getY() && !blockState.is(BlockTags.DOORS) && !blockState.is(BlockTags.FENCES)) {
                 mob.getJumpControl().jump();
                 operation = Operation.JUMPING;
             }
