@@ -33,15 +33,15 @@ configurations {
 
 val minecraftVersion: String by rootProject
 val fabricLoaderVersion: String by rootProject
-val fabricApiVersion: String by rootProject
+val fabricApiVersion: String by project
 val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
-val clothConfigVersion: String by rootProject
 val reiVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 val cardinalComponentsVersion: String by project
-val midnightConfigVersion: String by rootProject
+val energyVersion: String by project
+val midnightConfigVersion: String by project
 
 dependencies {
     "mappings"(loom.layered {
@@ -87,10 +87,11 @@ dependencies {
     modApi("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}")
     // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury-fabric:${architecturyVersion}")
+    modApi("teamreborn:energy:${energyVersion}")
+    include("teamreborn:energy:${energyVersion}")
     modRuntimeOnly("curse.maven:modmenu-308702:4145213")
     modImplementation("maven.modrinth:Wd844r7Q:1.18.2-02")//Structurized Reborn
     include("maven.modrinth:Wd844r7Q:1.18.2-02")
-    //modRuntimeOnly("me.shedaniel.cloth:cloth-config-fabric:${clothConfigVersion}")
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.80")
     modImplementation("com.github.glitchfiend:TerraBlender-fabric:${minecraftVersion}-${terraBlenderVersion}")

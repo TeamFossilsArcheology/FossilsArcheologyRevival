@@ -96,6 +96,8 @@ public class FossilConfigImpl extends MidnightConfig {
     public static boolean helmetOverlays = true;
     @MidnightConfig.Entry(min = 1, max = 512)
     public static int flyingTargetMaxHeight = 128;
+    @MidnightConfig.Entry(min = 1, max = 100)
+    public static int cultureVatFailChance = 10;
     @MidnightConfig.Entry
     public static boolean machinesRequireEnergy = false;
     @MidnightConfig.Entry(min = 1, max = 1000000)

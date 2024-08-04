@@ -53,6 +53,7 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.BooleanValue CUSTOM_MAIN_MENU;
     public static final ForgeConfigSpec.BooleanValue HELMET_OVERLAYS;
     public static final ForgeConfigSpec.IntValue FLYING_TARGET_MAX_HEIGHT;
+    public static final ForgeConfigSpec.IntValue CULTURE_VAT_FAIL_CHANCE;
     public static final ForgeConfigSpec.BooleanValue MACHINES_REQUIRE_ENERGY;
     public static final ForgeConfigSpec.IntValue MACHINE_MAX_ENERGY;
     public static final ForgeConfigSpec.IntValue MACHINE_TRANSFER_RATE;
@@ -114,10 +115,11 @@ public class ForgeConfig {
         ANIMALS_FEAR_DINOS = boolEntry("True if vanilla animals should run away from Dinosaurs", FossilConfig.ANIMALS_FEAR_DINOS, true);
         //BUILDER.pop();
         //BUILDER.push("Machine Config");
-        MACHINES_REQUIRE_ENERGY = boolEntry("True if machines require Redstone Flux(RF) to operate", FossilConfig.MACHINES_REQUIRE_ENERGY, false);
-        MACHINE_MAX_ENERGY = intEntry("Max stored Redstone Flux(RF) machines can have", FossilConfig.MACHINE_MAX_ENERGY, 1000, 1, 1000000);
-        MACHINE_TRANSFER_RATE = intEntry("Max Redstone Flux(RF) machines can transfer per tick", FossilConfig.MACHINE_TRANSFER_RATE, 10, 1, 1000000);
-        MACHINE_ENERGY_USAGE = intEntry("How much Redstone Flux(RF) machines consume per tick", FossilConfig.MACHINE_ENERGY_USAGE, 1, 1, 1000000);
+        CULTURE_VAT_FAIL_CHANCE = intEntry("Percentage chance that the Culture Vat will break", FossilConfig.CULTURE_VAT_FAIL_CHANCE, 10, 0, 100);
+        MACHINES_REQUIRE_ENERGY = boolEntry("True if machines require Energy to operate", FossilConfig.MACHINES_REQUIRE_ENERGY, false);
+        MACHINE_MAX_ENERGY = intEntry("Max stored Energy machines can have", FossilConfig.MACHINE_MAX_ENERGY, 1000, 1, 1000000);
+        MACHINE_TRANSFER_RATE = intEntry("Max Energy machines can transfer per tick", FossilConfig.MACHINE_TRANSFER_RATE, 10, 1, 1000000);
+        MACHINE_ENERGY_USAGE = intEntry("How much Energy machines consume per tick", FossilConfig.MACHINE_ENERGY_USAGE, 1, 1, 1000000);
         //BUILDER.pop();
         SPEC = BUILDER.build();
     }

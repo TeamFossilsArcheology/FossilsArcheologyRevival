@@ -1,12 +1,14 @@
 package com.fossil.fossil.client.gui;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.inventory.AnalyzerMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -40,10 +42,27 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
         blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         int progress = menu.getAnalyzeProgress() * 22 / 200;
         blit(poseStack, x + 80, y + 22, 177, 18, progress, 9);
+        if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
+            int energyProgress = 35 * menu.getStoredEnergy() / FossilConfig.getInt(FossilConfig.MACHINE_MAX_ENERGY);
+            blit(poseStack, x + 81, y + 35, 0, 166, 20, 35);
+            blit(poseStack, x + 81, y + 35, 20, 166, 20, 35 - energyProgress);
+        }
     }
 
     @Override
     protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        font.draw(poseStack, title, (float) titleLabelX, (float) titleLabelY, 0x404040);
+        font.draw(poseStack, title, titleLabelX, titleLabelY, 0x404040);
+    }
+
+    @Override
+    protected void renderTooltip(PoseStack poseStack, int mouseX, int mouseY) {
+        super.renderTooltip(poseStack, mouseX, mouseY);
+        if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
+            int x = (width - imageWidth) / 2;
+            int y = (height - imageHeight) / 2;
+            if (mouseX > x + 81 && mouseX < x + 101 && mouseY > y + 35 && mouseY < y + 70) {
+                renderTooltip(poseStack, new TextComponent(menu.getStoredEnergy() + " E"), mouseX, mouseY);
+            }
+        }
     }
 }

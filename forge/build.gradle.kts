@@ -19,7 +19,7 @@ configurations {
 }
 
 val minecraftVersion: String by rootProject
-val forgeVersion: String by rootProject
+val forgeVersion: String by project
 val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject

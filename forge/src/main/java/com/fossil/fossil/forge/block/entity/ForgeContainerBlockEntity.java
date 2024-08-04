@@ -46,10 +46,10 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putShort("LitTime", (short) this.litTime);
-        tag.putShort("LitDuration", (short) this.litDuration);
-        tag.putShort("CookingProgress", (short) this.cookingProgress);
-        tag.putShort("CookingTotalTime", (short) this.cookingTotalTime);
+        tag.putShort("LitTime", (short) litTime);
+        tag.putShort("LitDuration", (short) litDuration);
+        tag.putShort("CookingProgress", (short) cookingProgress);
+        tag.putShort("CookingTotalTime", (short) cookingTotalTime);
         ContainerHelper.saveAllItems(tag, getItems());
     }
 
@@ -101,11 +101,10 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
 
     @Override
     public boolean stillValid(@NotNull Player player) {
-        if (this.level.getBlockEntity(this.worldPosition) != this) {
+        if (level.getBlockEntity(worldPosition) != this) {
             return false;
         }
-        return player.distanceToSqr((double) this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY() + 0.5,
-                (double) this.worldPosition.getZ() + 0.5) <= 64.0;
+        return player.distanceToSqr(worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5) <= 64.0;
     }
 
     @Override
@@ -116,14 +115,14 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
     @NotNull
     @Override
     public <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        if (!this.remove && side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
+        if (!remove && side != null && cap == CapabilityItemHandler.ITEM_HANDLER_CAPABILITY) {
             if (side == Direction.UP) {
-                return this.handlers[0].cast();
+                return handlers[0].cast();
             }
             if (side == Direction.DOWN) {
-                return this.handlers[1].cast();
+                return handlers[1].cast();
             }
-            return this.handlers[2].cast();
+            return handlers[2].cast();
         }
         return super.getCapability(cap, side);
     }
@@ -131,8 +130,8 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
     @Override
     public void invalidateCaps() {
         super.invalidateCaps();
-        for (int x = 0; x < handlers.length; ++x) {
-            handlers[x].invalidate();
+        for (LazyOptional<? extends IItemHandler> handler : handlers) {
+            handler.invalidate();
         }
     }
 

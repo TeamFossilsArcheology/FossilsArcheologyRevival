@@ -14,7 +14,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     private final ContainerData containerData;
 
     public AnalyzerMenu(int id, Inventory playerInventory) {
-        this(id, playerInventory, new CustomSimpleContainer(13, 9), new SimpleContainerData(3));
+        this(id, playerInventory, new CustomSimpleContainer(13, 9), new SimpleContainerData(4));
     }
 
     public AnalyzerMenu(int id, Inventory playerInventory, CustomBlockEntity container, ContainerData containerData) {
@@ -83,6 +83,10 @@ public class AnalyzerMenu extends AbstractContainerMenu {
 
     public int getAnalyzeProgress() {
         return containerData.get(2);
+    }
+
+    public int getStoredEnergy() {
+        return containerData.get(3);
     }
 
     @Override

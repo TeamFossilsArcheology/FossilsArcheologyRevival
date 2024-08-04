@@ -4,7 +4,8 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.custom_blocks.CultureVatBlock;
 import com.fossil.fossil.block.entity.CultureVatBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
-import com.fossil.fossil.forge.block.entity.ForgeContainerBlockEntity;
+import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.forge.block.entity.ForgeEnergyContainerBlockEntity;
 import com.fossil.fossil.inventory.CultureVatMenu;
 import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.recipe.WorktableRecipe;
@@ -24,9 +25,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Random;
-
-public class CultureVatBlockEntityImpl extends ForgeContainerBlockEntity implements CultureVatBlockEntity {
+public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity implements CultureVatBlockEntity {
 
     private static final int[] SLOTS_FOR_UP = new int[]{CultureVatMenu.INPUT_SLOT_ID}; //Input
     private static final int[] SLOTS_FOR_SIDES = new int[]{CultureVatMenu.FUEL_SLOT_ID}; //Fuel
@@ -45,6 +44,9 @@ public class CultureVatBlockEntityImpl extends ForgeContainerBlockEntity impleme
                 case 2 -> {
                     return cookingProgress;
                 }
+                case 3 -> {
+                    return energyStorage.getEnergyStored();
+                }
             }
             return 0;
         }
@@ -60,10 +62,11 @@ public class CultureVatBlockEntityImpl extends ForgeContainerBlockEntity impleme
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+
     public CultureVatBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.CULTURE_VAT.get(), blockPos, blockState);
     }
@@ -85,7 +88,9 @@ public class CultureVatBlockEntityImpl extends ForgeContainerBlockEntity impleme
         boolean wasActive = cookingProgress > 0;
         boolean dirty = false;
         if (isProcessing()) {
-            --litTime;
+            if (!FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) || energyStorage.getEnergyStored() > 0) {
+                --litTime;
+            }
         }
 
         if (litTime == 0 && canProcess()) {
@@ -106,6 +111,7 @@ public class CultureVatBlockEntityImpl extends ForgeContainerBlockEntity impleme
 
         if (isProcessing() && canProcess()) {
             cookingProgress++;
+            energyStorage.extractEnergy(FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE), false);
             if (cookingProgress >= CultureVatMenu.CULTIVATION_TIME) {
                 cookingProgress = 0;
                 createItem();
@@ -126,7 +132,7 @@ public class CultureVatBlockEntityImpl extends ForgeContainerBlockEntity impleme
             setChanged(level, pos, state);
         }
 
-        if (false && cookingProgress == 3001 && new Random().nextInt(100) < 20) {
+        if (cookingProgress == 3001 && level.getRandom().nextInt(100) < 20) {
             ModBlocks.CULTURE_VAT.get().onFailedCultivation(level, pos);
         }
     }
@@ -157,6 +163,9 @@ public class CultureVatBlockEntityImpl extends ForgeContainerBlockEntity impleme
     }
 
     protected boolean canProcess() {
+        if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) && energyStorage.getEnergyStored() <= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE)) {
+            return false;
+        }
         ItemStack inputStack = items.get(CultureVatMenu.INPUT_SLOT_ID);
         if (!inputStack.isEmpty()) {
             return isValidInput(inputStack);

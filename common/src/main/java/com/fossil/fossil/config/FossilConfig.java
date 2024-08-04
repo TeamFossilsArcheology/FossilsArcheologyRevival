@@ -46,6 +46,7 @@ public class FossilConfig {
     public static final String CUSTOM_MAIN_MENU = "customMainMenu";
     public static final String HELMET_OVERLAYS = "helmetOverlays";
     public static final String FLYING_TARGET_MAX_HEIGHT = "flyingTargetMaxHeight";
+    public static final String CULTURE_VAT_FAIL_CHANCE = "cultureVatFailChance";
     public static final String MACHINES_REQUIRE_ENERGY = "machinesRequireEnergy";
     public static final String MACHINE_MAX_ENERGY = "machineMaxEnergy";
     public static final String MACHINE_TRANSFER_RATE = "machineTransferRate";

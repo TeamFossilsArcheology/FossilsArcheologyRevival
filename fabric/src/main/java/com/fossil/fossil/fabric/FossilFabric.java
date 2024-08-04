@@ -2,6 +2,9 @@ package com.fossil.fossil.fabric;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.advancements.ModTriggers;
+import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.block.entity.fabric.AnalyzerBlockEntityImpl;
+import com.fossil.fossil.block.entity.fabric.CultureVatBlockEntityImpl;
 import com.fossil.fossil.capabilities.fabric.ModCapabilitiesImpl;
 import com.fossil.fossil.config.fabric.FossilConfigImpl;
 import com.fossil.fossil.entity.ModEntities;
@@ -34,6 +37,7 @@ import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.levelgen.Heightmap;
 import org.jetbrains.annotations.NotNull;
+import team.reborn.energy.api.EnergyStorage;
 import terrablender.api.RegionType;
 import terrablender.api.Regions;
 import terrablender.api.SurfaceRuleManager;
@@ -65,6 +69,12 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
             if (joined && Platform.getEnv() == EnvType.SERVER) {
                 MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
             }
+        });
+        ModBlockEntities.ANALYZER.listen(blockEntityType -> {
+            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> ((AnalyzerBlockEntityImpl) blockEntity).energyStorage, blockEntityType);
+        });
+        ModBlockEntities.CULTURE_VAT.listen(blockEntityType -> {
+            EnergyStorage.SIDED.registerForBlockEntity((blockEntity, direction) -> ((CultureVatBlockEntityImpl) blockEntity).energyStorage, blockEntityType);
         });
     }
 

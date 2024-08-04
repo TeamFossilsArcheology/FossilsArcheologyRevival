@@ -3,7 +3,8 @@ package com.fossil.fossil.block.entity.fabric;
 import com.fossil.fossil.block.custom_blocks.AnalyzerBlock;
 import com.fossil.fossil.block.entity.AnalyzerBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
-import com.fossil.fossil.fabric.block.entity.FabricContainerBlockEntity;
+import com.fossil.fossil.config.FossilConfig;
+import com.fossil.fossil.fabric.block.entity.FabricEnergyContainerBlockEntity;
 import com.fossil.fossil.inventory.AnalyzerMenu;
 import com.fossil.fossil.inventory.CustomSimpleContainer;
 import com.fossil.fossil.recipe.AnalyzerRecipe;
@@ -23,7 +24,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implements AnalyzerBlockEntity {
+public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity implements AnalyzerBlockEntity {
 
     private static final int[] SLOTS_FOR_UP = new int[]{0, 1, 2, 3, 4, 5, 6, 7, 8}; //Input
     private static final int[] SLOTS_FOR_DOWN = new int[]{9, 10, 11, 12}; //Output
@@ -41,6 +42,9 @@ public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implemen
                 case 2 -> {
                     return cookingProgress;
                 }
+                case 3 -> {
+                    return (int) energyStorage.amount;
+                }
             }
             return 0;
         }
@@ -56,11 +60,12 @@ public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implemen
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(13, ItemStack.EMPTY);
     private int rawIndex = -1;
+
     public AnalyzerBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.ANALYZER.get(), blockPos, blockState);
     }
@@ -91,7 +96,10 @@ public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implemen
         }
         if (isProcessing() && canProcess()) {
             ++cookingProgress;
-
+            if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
+                energyStorage.amount -= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE);
+                dirty = true;
+            }
             if (cookingProgress == 200) {
                 cookingProgress = 0;
                 createItem();
@@ -116,6 +124,9 @@ public class AnalyzerBlockEntityImpl extends FabricContainerBlockEntity implemen
 
     @Override
     protected boolean canProcess() {
+        if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) && energyStorage.amount < FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE)) {
+            return false;
+        }
         int spaceIndex = -1;
         rawIndex = -1;
         boolean flag = false;

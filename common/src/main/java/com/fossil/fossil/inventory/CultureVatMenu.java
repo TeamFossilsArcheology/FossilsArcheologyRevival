@@ -27,7 +27,7 @@ public class CultureVatMenu extends AbstractContainerMenu {
     private final Level level;
 
     public CultureVatMenu(int id, Inventory playerInventory) {
-        this(id, playerInventory, new SimpleContainer(3), new SimpleContainerData(3));
+        this(id, playerInventory, new SimpleContainer(3), new SimpleContainerData(4));
     }
 
     public CultureVatMenu(int id, Inventory playerInventory, Container container, ContainerData containerData) {
@@ -130,6 +130,10 @@ public class CultureVatMenu extends AbstractContainerMenu {
 
     public int getCultivationTime() {
         return containerData.get(2);
+    }
+
+    public int getStoredEnergy() {
+        return containerData.get(3);
     }
 
     @Override

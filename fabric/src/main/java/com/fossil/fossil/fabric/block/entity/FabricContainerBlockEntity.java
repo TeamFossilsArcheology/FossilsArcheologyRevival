@@ -23,7 +23,6 @@ public abstract class FabricContainerBlockEntity extends BaseContainerBlockEntit
         super(blockEntityType, blockPos, blockState);
     }
 
-
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
@@ -91,11 +90,10 @@ public abstract class FabricContainerBlockEntity extends BaseContainerBlockEntit
 
     @Override
     public boolean stillValid(@NotNull Player player) {
-        if (this.level.getBlockEntity(this.worldPosition) != this) {
+        if (level.getBlockEntity(worldPosition) != this) {
             return false;
         }
-        return player.distanceToSqr((double) this.worldPosition.getX() + 0.5, (double) this.worldPosition.getY() + 0.5,
-                (double) this.worldPosition.getZ() + 0.5) <= 64.0;
+        return player.distanceToSqr(worldPosition.getX() + 0.5, worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5) <= 64.0;
     }
 
     @Override
