@@ -201,7 +201,6 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     }
 
     public static boolean isMammal(Mob mob) {
-        //TODO: Maybe could be done with tags?
         String className = "";
         try {
             className = mob.getClass().getSimpleName();

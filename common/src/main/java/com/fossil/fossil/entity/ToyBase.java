@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.util.Version;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
 import net.minecraft.sounds.SoundEvent;
@@ -70,8 +71,7 @@ public abstract class ToyBase extends Entity {
 
     @Override
     public void remove(RemovalReason reason) {
-        if (reason == RemovalReason.KILLED) {
-            //TODO: This prevents /kill. Not sure if good
+        if (Version.debugEnabled() && reason == RemovalReason.KILLED) {
             return;
         }
         super.remove(reason);

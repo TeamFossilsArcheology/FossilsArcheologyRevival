@@ -108,7 +108,6 @@ public class Failuresaurus extends Monster {
     }
 
     public void setVariant(String variant) {
-        System.out.println(variant);
         entityData.set(VARIANT, variant);
     }
 

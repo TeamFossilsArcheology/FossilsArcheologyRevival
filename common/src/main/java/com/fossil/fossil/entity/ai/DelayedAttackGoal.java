@@ -129,7 +129,7 @@ public class DelayedAttackGoal extends Goal {
             moveControl.start();
         }
         if (prehistoric.level.getGameTime() <= attackEndTick && prehistoric.getLookControl() instanceof TestLookControl moveControl) {
-            //TODO: prevent only on certain attack(animationdata)
+            //TODO: prevent only on certain attack(animationdata). Problably only for Anky, Brachio, Diplo, Stego
             //moveControl.setLookAt(0, 0, 0);
             //moveControl.stop();
             //((SmoothTurningMoveControl)prehistoric.getMoveControl()).stop();
@@ -156,7 +156,6 @@ public class DelayedAttackGoal extends Goal {
     }
 
     protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
-        //TODO: Use attackreach in all places
         long currentTime = prehistoric.level.getGameTime();
         if (canHit(enemy)) {
             if (currentTime > attackEndTick + 20) {

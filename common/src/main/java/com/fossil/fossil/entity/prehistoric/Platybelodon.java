@@ -24,7 +24,7 @@ public class Platybelodon extends Prehistoric {
     public static final String ATTACK = "animation.platybelodon.attack1";
     public static final String EAT = "animation.platybelodon.drink";
     public static final String FALL = "animation.platybelodon.jump/fall";
-    public static final String IDLE1 = "animation.platybelodon.idle1";
+    public static final String IDLE1 = "animation.platybelodon.idle";
     public static final String IDLE2 = "animation.platybelodon.idle2";
     public static final String RUN = "animation.platybelodon.run";
     public static final String SLEEP = "animation.platybelodon.sleep";

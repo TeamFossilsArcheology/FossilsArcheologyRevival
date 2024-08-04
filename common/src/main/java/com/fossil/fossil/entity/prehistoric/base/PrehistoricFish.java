@@ -13,8 +13,6 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.DifficultyInstance;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -22,7 +20,6 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.animal.AbstractFish;
 import net.minecraft.world.entity.item.ItemEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
@@ -95,7 +92,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     protected @NotNull SoundEvent getFlopSound() {
-        return SoundEvents.COD_FLOP;//TODO: Flops
+        return SoundEvents.COD_FLOP;
     }
 
     @Override
@@ -172,21 +169,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     @Override
     public CompoundTag getDebugTag() {
         return entityData.get(DEBUG);
-    }
-
-    @Override
-    protected @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
-        ItemStack itemStack = player.getItemInHand(hand);
-        //TODO: Maybe remove because bucket of water exists
-        if (itemStack.isEmpty() && isAlive() && !isBaby()) {
-            playSound(SoundEvents.ITEM_PICKUP, 1, random.nextFloat() + 0.8f);
-            if (!level.isClientSide) {
-                spawnAtLocation(new ItemStack(info().foodItem), 0.1f);
-            }
-            discard();
-            return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        return super.mobInteract(player, hand);
     }
 
     @Nullable
