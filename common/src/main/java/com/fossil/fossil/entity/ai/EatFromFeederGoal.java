@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.ai;
 import com.fossil.fossil.block.entity.FeederBlockEntity;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
@@ -21,14 +22,15 @@ import java.util.Optional;
 public class EatFromFeederGoal extends MoveToFoodGoal {
 
     public EatFromFeederGoal(Prehistoric entity) {
-        super(entity, 1, 32);
+        super(entity, 0.75, 32);
     }
 
     @Override
     public void tick() {
         super.tick();
         if (isReachedTarget()) {
-            if (entity.level.getBlockEntity(targetPos) instanceof FeederBlockEntity feeder) {
+            //Only start if entity has stopped because eating and moving animations cant stack
+            if (entity.level.getBlockEntity(targetPos) instanceof FeederBlockEntity feeder && Math.abs(entity.animationSpeed) <= Util.SWING_ANIM_THRESHOLD) {
                 feedingTicks++;
                 feeder.feedDinosaur(entity);
                 entity.heal(0.1f);
@@ -37,7 +39,7 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
                 }
                 if (entity.level.getGameTime() > animEndTick) {
                     Animation anim = entity.nextEatingAnimation();
-                    entity.getAnimationLogic().triggerAnimation(AnimationLogic.EAT_CTRL, anim, AnimationLogic.Category.EAT);
+                    entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, anim, AnimationLogic.Category.EAT);
                     animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
                 }
             }

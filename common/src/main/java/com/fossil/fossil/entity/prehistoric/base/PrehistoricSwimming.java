@@ -416,8 +416,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.IDLE_CTRL, 0, getAnimationLogic()::waterPredicate));
         data.addAnimationController(new AnimationController<>(
-                this, AnimationLogic.EAT_CTRL, 5, getAnimationLogic()::eatPredicate));
-        data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::grabAttackPredicate));
     }
 

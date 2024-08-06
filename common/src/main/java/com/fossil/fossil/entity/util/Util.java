@@ -14,6 +14,7 @@ public class Util {
     public static final int NEEDS = 15;
     public static final int WANDER = 20;
     public static final int LOOK = 20;
+    public static final float SWING_ANIM_THRESHOLD = 0.08f;
 
     public static boolean isEntitySmallerThan(Entity entity, float size) {
         if (entity instanceof Prehistoric prehistoric) {

@@ -51,27 +51,31 @@ public class C2SSyncDebugInfoMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         contextSupplier.get().queue(() -> {
-        Player player = contextSupplier.get().getPlayer();
-        if (Version.debugEnabled() && player != null) {
-            if (player.level.isClientSide && Minecraft.getInstance().screen instanceof DebugScreen debugScreen) {
-                if (debugScreen.entity == null || debugScreen.entity.getId() != entityId) {
-                    return;
+            Player player = contextSupplier.get().getPlayer();
+            if (Version.debugEnabled() && player != null) {
+                if (player.level.isClientSide) {
+                    if (Minecraft.getInstance().screen instanceof DebugScreen debugScreen) {
+                        if (debugScreen.entity == null || debugScreen.entity.getId() != entityId) {
+                            return;
+                        }
+                    } else {
+                        return;
+                    }
                 }
-            }
-            if (player.level.getEntity(entityId) instanceof Prehistoric prehistoric) {
-                if (Minecraft.getInstance().screen instanceof DebugScreen) {
+                if (player.level.getEntity(entityId) instanceof Prehistoric prehistoric) {
+                    if (!player.level.isClientSide) {
+                        prehistoric.setAgeInTicks(age);
+                        prehistoric.setHunger(hunger);
+                        prehistoric.moodSystem.setMood(mood);
+                    }
                     prehistoric.setGender(Gender.valueOf(enumString));
-                    prehistoric.setAgeInTicks(age);
                     prehistoric.setMatingCooldown(matingCooldown);
                     prehistoric.moodSystem.setPlayingCooldown(playingCooldown);
                     prehistoric.setClimbingCooldown(climbingCooldown);
-                    prehistoric.setHunger(hunger);
-                    prehistoric.moodSystem.setMood(mood);
                     prehistoric.refreshTexturePath();
                     prehistoric.refreshDimensions();
                     prehistoric.updateAbilities();
-                }
-            } else if (player.level.getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
+                } else if (player.level.getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
                     fossil.setType(PrehistoricEntityInfo.valueOf(enumString));
                     fossil.setAge(age);
                 }

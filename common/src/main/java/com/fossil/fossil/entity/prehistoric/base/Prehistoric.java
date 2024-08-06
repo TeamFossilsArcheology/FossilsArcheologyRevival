@@ -1491,8 +1491,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate));
         data.addAnimationController(new AnimationController<>(
-                this, AnimationLogic.EAT_CTRL, 5, animationLogic::eatPredicate));
-        data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, animationLogic::attackPredicate));
     }
 

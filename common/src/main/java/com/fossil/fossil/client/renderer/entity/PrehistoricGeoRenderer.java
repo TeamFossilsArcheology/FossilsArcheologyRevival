@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.parts.AnimationOverride;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
+import com.fossil.fossil.entity.util.Util;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Matrix3f;
@@ -88,7 +89,7 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     protected float getSwingMotionAnimThreshold() {
-        return 0.08f;
+        return Util.SWING_ANIM_THRESHOLD;
     }
 
     @Override
