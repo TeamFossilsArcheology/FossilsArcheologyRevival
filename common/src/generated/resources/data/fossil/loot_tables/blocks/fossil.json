@@ -31,22 +31,22 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 3,
+                  "weight": 9,
                   "name": "fossil:broken_sword"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 7,
+                  "weight": 9,
                   "name": "fossil:broken_helmet"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 37,
+                  "weight": 64,
                   "name": "fossil:skull"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 275,
+                  "weight": 225,
                   "name": "fossil:fossil_bio"
                 },
                 {
@@ -56,17 +56,17 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 75,
+                  "weight": 200,
                   "name": "minecraft:bone"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 200,
+                  "weight": 85,
                   "name": "fossil:fossil_plant"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 4,
+                  "weight": 3,
                   "name": "fossil:bones_leg"
                 },
                 {
@@ -98,6 +98,11 @@
                   "type": "minecraft:dynamic",
                   "weight": 3,
                   "name": "fossil:bones_unique"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_tail"
                 }
               ]
             },
@@ -124,46 +129,47 @@
                 },
                 {
                   "type": "minecraft:item",
+                  "weight": 11,
                   "name": "fossil:broken_sword"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 9,
+                  "weight": 11,
                   "name": "fossil:broken_helmet"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 37,
+                  "weight": 110,
                   "name": "fossil:skull"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 275,
+                  "weight": 132,
                   "name": "fossil:fossil_bio"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 750,
+                  "weight": 715,
                   "name": "fossil:relic_scrap"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 0,
+                  "weight": 36,
                   "name": "minecraft:bone"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 0,
+                  "weight": 50,
                   "name": "fossil:fossil_plant"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 0,
+                  "weight": 3,
                   "name": "fossil:bones_leg"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 2,
+                  "weight": 3,
                   "name": "fossil:bones_arm"
                 },
                 {
@@ -190,6 +196,11 @@
                   "type": "minecraft:dynamic",
                   "weight": 3,
                   "name": "fossil:bones_unique"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_tail"
                 }
               ]
             },
@@ -216,27 +227,27 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 0,
+                  "weight": 13,
                   "name": "fossil:broken_sword"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 10,
+                  "weight": 13,
                   "name": "fossil:broken_helmet"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 37,
+                  "weight": 144,
                   "name": "fossil:skull"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 275,
+                  "weight": 50,
                   "name": "fossil:fossil_bio"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 750,
+                  "weight": 820,
                   "name": "fossil:relic_scrap"
                 },
                 {
@@ -246,22 +257,22 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 0,
+                  "weight": 20,
                   "name": "fossil:fossil_plant"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 0,
+                  "weight": 3,
                   "name": "fossil:bones_leg"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 0,
+                  "weight": 3,
                   "name": "fossil:bones_arm"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 0,
+                  "weight": 3,
                   "name": "fossil:bones_foot"
                 },
                 {
@@ -283,6 +294,11 @@
                   "type": "minecraft:dynamic",
                   "weight": 3,
                   "name": "fossil:bones_unique"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_tail"
                 }
               ]
             },
@@ -304,22 +320,21 @@
               "children": [
                 {
                   "type": "minecraft:item",
-                  "weight": 6,
                   "name": "fossil:scarab_gem"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 3,
+                  "weight": 5,
                   "name": "fossil:broken_sword"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 7,
+                  "weight": 5,
                   "name": "fossil:broken_helmet"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 75,
+                  "weight": 55,
                   "name": "fossil:skull"
                 },
                 {
@@ -329,27 +344,27 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 25,
+                  "weight": 20,
                   "name": "fossil:relic_scrap"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 550,
+                  "weight": 440,
                   "name": "minecraft:bone"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 0,
+                  "weight": 145,
                   "name": "fossil:fossil_plant"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 28,
+                  "weight": 9,
                   "name": "fossil:bones_leg"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 6,
+                  "weight": 9,
                   "name": "fossil:bones_arm"
                 },
                 {
@@ -376,6 +391,11 @@
                   "type": "minecraft:dynamic",
                   "weight": 6,
                   "name": "fossil:bones_unique"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 6,
+                  "name": "fossil:bones_tail"
                 }
               ]
             },
@@ -397,26 +417,26 @@
               "children": [
                 {
                   "type": "minecraft:item",
-                  "weight": 11,
                   "name": "fossil:scarab_gem"
                 },
                 {
                   "type": "minecraft:item",
+                  "weight": 5,
                   "name": "fossil:broken_sword"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 9,
+                  "weight": 5,
                   "name": "fossil:broken_helmet"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 112,
+                  "weight": 30,
                   "name": "fossil:skull"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 475,
+                  "weight": 470,
                   "name": "fossil:fossil_bio"
                 },
                 {
@@ -426,48 +446,53 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 400,
+                  "weight": 326,
                   "name": "minecraft:bone"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 0,
+                  "weight": 175,
                   "name": "fossil:fossil_plant"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 48,
+                  "weight": 13,
                   "name": "fossil:bones_leg"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 9,
+                  "weight": 13,
                   "name": "fossil:bones_arm"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 9,
+                  "weight": 10,
                   "name": "fossil:bones_foot"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 9,
+                  "weight": 10,
                   "name": "fossil:bones_skull"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 9,
+                  "weight": 12,
                   "name": "fossil:bones_ribcage"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 9,
+                  "weight": 10,
                   "name": "fossil:bones_vertebrae"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 9,
+                  "weight": 10,
                   "name": "fossil:bones_unique"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 10,
+                  "name": "fossil:bones_tail"
                 }
               ]
             },
@@ -489,27 +514,26 @@
               "children": [
                 {
                   "type": "minecraft:item",
-                  "weight": 16,
                   "name": "fossil:scarab_gem"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 0,
+                  "weight": 5,
                   "name": "fossil:broken_sword"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 10,
+                  "weight": 5,
                   "name": "fossil:broken_helmet"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 150,
+                  "weight": 36,
                   "name": "fossil:skull"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 575,
+                  "weight": 510,
                   "name": "fossil:fossil_bio"
                 },
                 {
@@ -519,48 +543,53 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 225,
+                  "weight": 210,
                   "name": "minecraft:bone"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 0,
+                  "weight": 205,
                   "name": "fossil:fossil_plant"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 67,
+                  "weight": 18,
                   "name": "fossil:bones_leg"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 12,
+                  "weight": 18,
                   "name": "fossil:bones_arm"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 12,
+                  "weight": 15,
                   "name": "fossil:bones_foot"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 12,
+                  "weight": 15,
                   "name": "fossil:bones_skull"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 12,
+                  "weight": 17,
                   "name": "fossil:bones_ribcage"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 12,
+                  "weight": 15,
                   "name": "fossil:bones_vertebrae"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 12,
+                  "weight": 15,
                   "name": "fossil:bones_unique"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 15,
+                  "name": "fossil:bones_tail"
                 }
               ]
             },
@@ -583,7 +612,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 37,
+                  "weight": 34,
                   "name": "fossil:skull"
                 },
                 {
@@ -598,22 +627,22 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 350,
+                  "weight": 440,
                   "name": "minecraft:bone"
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 200,
+                  "weight": 110,
                   "name": "fossil:fossil_plant"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 9,
+                  "weight": 6,
                   "name": "fossil:bones_leg"
                 },
                 {
                   "type": "minecraft:dynamic",
-                  "weight": 3,
+                  "weight": 6,
                   "name": "fossil:bones_arm"
                 },
                 {
@@ -640,6 +669,11 @@
                   "type": "minecraft:dynamic",
                   "weight": 3,
                   "name": "fossil:bones_unique"
+                },
+                {
+                  "type": "minecraft:dynamic",
+                  "weight": 3,
+                  "name": "fossil:bones_tail"
                 }
               ]
             }
