@@ -15,6 +15,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
 
 public class Javelin extends AbstractArrow {
@@ -84,6 +85,12 @@ public class Javelin extends AbstractArrow {
             lightning = true;
         }
         super.tick();
+    }
+
+    @Override
+    protected void onHitBlock(BlockHitResult result) {
+        super.onHitBlock(result);
+        setPierceLevel((byte) 16);
     }
 
     @Override
