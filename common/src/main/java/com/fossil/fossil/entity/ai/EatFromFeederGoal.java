@@ -20,9 +20,16 @@ import java.util.Optional;
  * Afterwards it will feed the entity until it is no longer hungry.
  */
 public class EatFromFeederGoal extends MoveToFoodGoal {
+    private final int chunkRadius;
 
     public EatFromFeederGoal(Prehistoric entity) {
         super(entity, 0.75, 32);
+        this.chunkRadius = 2;
+    }
+
+    public EatFromFeederGoal(Prehistoric entity, int chunkRadius) {
+        super(entity, 0.75, 32);
+        this.chunkRadius = chunkRadius;
     }
 
     @Override
@@ -51,21 +58,21 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         if (!super.isValidTarget(level, pos)) {
             return false;
         }
-        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && canSeeFood(pos);
+        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && Util.canSeeFood(entity, pos);
     }
 
     private boolean isValidTarget(Map.Entry<BlockPos, BlockEntity> entry) {
         if (avoidCache.contains(entry.getKey().asLong())) {
             return false;
         }
-        return entry.getValue() instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && canSeeFood(entry.getKey());
+        return entry.getValue() instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && Util.canSeeFood(entity, entry.getKey());
     }
 
     @Override
     protected boolean findNearestBlock() {
         BlockPos mobPos = entity.blockPosition();
-        int radius = 2;//2 is 25 chunks. Should not be too slow
-        Optional<BlockPos> target = ChunkPos.rangeClosed(new ChunkPos(mobPos), radius)
+        //chunkRadius of 2 is 25 chunks. Should not be too slow
+        Optional<BlockPos> target = ChunkPos.rangeClosed(new ChunkPos(mobPos), chunkRadius)
                 .flatMap(chunkPos -> entity.level.getChunk(chunkPos.x, chunkPos.z).getBlockEntities().entrySet().stream())
                 .filter(this::isValidTarget)
                 .map(Map.Entry::getKey)

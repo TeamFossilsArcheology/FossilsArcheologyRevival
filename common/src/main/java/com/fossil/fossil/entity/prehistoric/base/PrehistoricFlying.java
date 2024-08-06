@@ -9,6 +9,7 @@ import com.fossil.fossil.entity.ai.navigation.FlightPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.util.Util;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -24,6 +25,7 @@ import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
 import net.minecraft.world.entity.ai.util.GoalUtils;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.ClipContext;
@@ -74,9 +76,10 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         goalSelector.addGoal(Util.SLEEP, new FlyingSleepGoal(this));
         goalSelector.addGoal(Util.SLEEP + 1, new FlyingSitGoal(this));
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
-        goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 2, new PlayGoal(this, 1));
+        goalSelector.addGoal(Util.NEEDS, new FlyingLandNearFoodGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 1, new FlyingEatFromFeederGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 2, new FlyingEatItemEntityGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, 1));
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new FlyingWanderGoal(this));
         goalSelector.addGoal(Util.WANDER + 1, new DinoWanderGoal(this, 1));
@@ -170,12 +173,17 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     @Nullable
     @Contract("true -> !null")
     public BlockPos findLandPosition(boolean force) {
-        int x = blockPosition().getX() - 8 + random.nextInt(16);
-        int z = blockPosition().getZ() - 8 + random.nextInt(16);
-        int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, y - 1, z);
+        Vec3 vec3 = LandRandomPos.getPos(this, 8, 15);
+        BlockPos.MutableBlockPos pos;
+        if (vec3 == null) {
+            int x = blockPosition().getX() - 8 + random.nextInt(16);
+            int z = blockPosition().getZ() - 8 + random.nextInt(16);
+            int y = level.getHeight(Heightmap.Types.MOTION_BLOCKING, x, z);
+            pos = new BlockPos.MutableBlockPos(x, y - 1, z);
+        } else {
+            pos = new BlockPos(vec3).mutable().move(Direction.DOWN);
+        }
         if (force || GoalUtils.isSolid(this, pos)) {
-            //TODO: This is somewhat messy
             BlockHitResult result = level.clip(new ClipContext(position(), Vec3.atCenterOf(pos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
             if (result.getType() != HitResult.Type.MISS) {
                 pos = result.getBlockPos().relative(result.getDirection()).mutable();

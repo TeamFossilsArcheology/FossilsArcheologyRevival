@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.ai;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.sounds.SoundEvents;
@@ -48,6 +49,6 @@ public class EatBlockGoal extends MoveToFoodGoal {
         if (!super.isValidTarget(level, pos)) {
             return false;
         }
-        return FoodMappings.getFoodAmount(level.getBlockState(pos).getBlock(), entity.info().diet) > 0 && canSeeFood(pos);
+        return FoodMappings.getFoodAmount(level.getBlockState(pos).getBlock(), entity.info().diet) > 0 && Util.canSeeFood(entity, pos);
     }
 }

@@ -57,7 +57,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     protected BlockPos targetPos = BlockPos.ZERO;
     protected int verticalSearchStart;
-    private boolean reachedTarget;
+    protected boolean reachedTarget;
     private Path path;
     private BlockPos lastStuckPos;
 
