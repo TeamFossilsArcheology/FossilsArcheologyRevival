@@ -6,7 +6,7 @@
     "EntityRenderDispatcherMixin",
     "ParticleAccessor",
     "ScreenEffectRendererMixin",
-    "TerrainParticleMixin"
+    "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
     "AbstractFishMixin", "ChunkMapMixin", "EntityCallbacksMixin", "ExplosionMixin", "JigsawPlacementMixin", "LevelMixin", "MobMixin", "NaturalSpawnerMixin", "PlayerMixin",
