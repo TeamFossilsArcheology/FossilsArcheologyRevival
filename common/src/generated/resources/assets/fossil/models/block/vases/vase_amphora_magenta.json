@@ -1,6 +1,7 @@
 {
   "parent": "fossil:block/template_vase_amphora",
   "textures": {
-    "texture": "fossil:block/vases/vase_amphora_magenta"
+    "color": "fossil:block/vases/vase_amphora_magenta",
+    "base": "fossil:block/vases/vase_amphora_base"
   }
 }

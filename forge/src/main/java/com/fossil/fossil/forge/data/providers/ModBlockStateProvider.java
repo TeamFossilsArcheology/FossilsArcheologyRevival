@@ -82,7 +82,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
             for (RegistrySupplier<VaseBlock> vaseReg : ModBlocks.VASES) {
                 VaseBlock block = vaseReg.get();
                 if (block instanceof AmphoraVaseBlock) {
-                    vaseBlock(block, amphoraTemplate);
+                    amphora(block, amphoraTemplate);
                 } else if (block instanceof KylixVaseBlock) {
                     vaseBlock(block, kylixTemplate);
                 } else if (block instanceof VoluteVaseBlock) {
@@ -334,6 +334,20 @@ public class ModBlockStateProvider extends BlockStateProvider {
         models().registerExistingTexture(texture);
         ModelFile file = models().singleTexture(BLOCK_FOLDER2 + block.getRegistryName().getPath(), mcLoc("leaves"), "all", texture);
         getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
+    }
+
+    public void amphora(VaseBlock block, ResourceLocation template) {
+        itemModels().vaseItem(block.getRegistryName());
+        ResourceLocation base = new ResourceLocation(Fossil.MOD_ID, "block/vases/vase_amphora_base");
+        if (block == AMPHORA_VASE_DAMAGED.get()) {
+            base = new ResourceLocation(Fossil.MOD_ID, "block/vases/vase_amphora_base_damaged");
+        }
+        ResourceLocation color = new ResourceLocation(Fossil.MOD_ID, "block/vases/" + block.getRegistryName().getPath());
+        models().registerExistingTexture(base, color);
+        ModelFile file = models().withExistingParent("block/vases/" + block.getRegistryName().getPath(), template)
+                .texture("color", color)
+                .texture("base", base);
+        horizontalBlock(block, file);
     }
 
     public void vaseBlock(VaseBlock block, ResourceLocation template) {
