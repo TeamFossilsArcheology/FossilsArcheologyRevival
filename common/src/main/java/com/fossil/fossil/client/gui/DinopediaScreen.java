@@ -202,12 +202,16 @@ public class DinopediaScreen extends Screen {
         return (leftPos + (left ? 0 : xSize / 2f) + (xSize / 2f - width * scale) / 2) / scale;
     }
 
+    private static float roundToHalf(double value) {
+        return Math.round(value * 2) / 2f;
+    }
+
     private void renderFirstPage(PoseStack poseStack, int mouseX, int mouseY) {
         int col = (157 << 16) | (126 << 8) | 103;
         if (entity instanceof Animal animal) {
-            int embryoProgress = ModCapabilities.getEmbryoProgress(animal);
+            float embryoProgress = ModCapabilities.getEmbryoProgress(animal);
             if (embryoProgress > 0) {
-                int quot = (int) Math.floor(((float) embryoProgress / (FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION) + 1) * 100f));
+                float quot = roundToHalf(embryoProgress / (FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION) + 1) * 100);
                 var progress = new TranslatableComponent("pedia.fossil.pregnantTime", quot);
                 font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 135, col);
                 poseStack.pushPose();

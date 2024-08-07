@@ -1,7 +1,6 @@
 package com.fossil.fossil.capabilities;
 
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -16,7 +15,7 @@ public class ModCapabilities {
     }
 
     @ExpectPlatform
-    public static PrehistoricEntityInfo getEmbryo(Animal animal) {
+    public static EntityInfo getEmbryo(Animal animal) {
         return null;
     }
 

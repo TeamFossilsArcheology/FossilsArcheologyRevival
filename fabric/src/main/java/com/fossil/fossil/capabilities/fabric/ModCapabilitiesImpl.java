@@ -2,8 +2,8 @@ package com.fossil.fossil.capabilities.fabric;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
-import com.fossil.fossil.fabric.capabilities.IFirstHatchComponent;
-import com.fossil.fossil.fabric.capabilities.IMammalComponent;
+import com.fossil.fossil.fabric.capabilities.FirstHatchComponent;
+import com.fossil.fossil.fabric.capabilities.MammalComponent;
 import dev.onyxstudios.cca.api.v3.component.ComponentKey;
 import dev.onyxstudios.cca.api.v3.component.ComponentRegistry;
 import net.minecraft.resources.ResourceLocation;
@@ -12,10 +12,10 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.Nullable;
 
 public class ModCapabilitiesImpl {
-    public static final ComponentKey<IMammalComponent> MAMMAL =
-            ComponentRegistry.getOrCreate(new ResourceLocation(Fossil.MOD_ID, "mammal"), IMammalComponent.class);
-    public static final ComponentKey<IFirstHatchComponent> PLAYER =
-            ComponentRegistry.getOrCreate(new ResourceLocation(Fossil.MOD_ID, "first_hatch"), IFirstHatchComponent.class);
+    public static final ComponentKey<MammalComponent> MAMMAL =
+            ComponentRegistry.getOrCreate(new ResourceLocation(Fossil.MOD_ID, "mammal"), MammalComponent.class);
+    public static final ComponentKey<FirstHatchComponent> PLAYER =
+            ComponentRegistry.getOrCreate(new ResourceLocation(Fossil.MOD_ID, "first_hatch"), FirstHatchComponent.class);
 
     public static int getEmbryoProgress(Animal animal) {
         return MAMMAL.get(animal).getEmbryoProgress();
