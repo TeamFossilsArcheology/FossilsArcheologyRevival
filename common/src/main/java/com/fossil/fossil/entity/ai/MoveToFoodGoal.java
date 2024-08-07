@@ -23,7 +23,7 @@ public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
 
     @Override
     public boolean canUse() {
-        if (entity.isHungry()) {
+        if (!entity.isHungry()) {
             return false;
         }
         if (entity.isDeadlyHungry()) {
