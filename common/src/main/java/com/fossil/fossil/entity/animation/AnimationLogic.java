@@ -49,11 +49,11 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
     }
 
-    public void forceAnimation(String controller, Animation animation, Category category, double speed) {
+    public void forceAnimation(String controller, Animation animation, Category category, double speed, boolean loop) {
         //TODO: More debug control
         if (animation != null) {
             ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(),
-                    entity.level.getGameTime() + animation.animationLength, category, true, speed
+                    entity.level.getGameTime() + animation.animationLength, category, true, speed, loop
             );
             addNextAnimation(controller, activeAnimationInfo);
             if (!entity.level.isClientSide) {
@@ -96,7 +96,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     private boolean isAnimationDone(ActiveAnimationInfo activeAnimation) {
-        return entity.level.getGameTime() >= activeAnimation.endTick;
+        return !activeAnimation.loop && entity.level.getGameTime() >= activeAnimation.endTick;
     }
 
     public double getActionDelay(String controller) {
@@ -124,7 +124,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         ILoopType loopType = null;
 
         if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
-            loopType = PLAY_ONCE;
+            loopType = activeAnimation.get().loop ? LOOP : PLAY_ONCE;
             //event.getController().setAnimationSpeed(activeAnimation.get().speed);
         } else {
             if (event.getAnimatable().isBeached()) {
@@ -158,14 +158,14 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
             controller.transitionLengthTicks = next.speed;
             controller.markNeedsReload();
-            controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName));
+            controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName, next.loop ? LOOP : null));
             return PlayState.CONTINUE;
         }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
         ILoopType loopType = null;
         double animationSpeed = 1;
         if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
-            loopType = PLAY_ONCE;
+            loopType = activeAnimation.get().loop ? LOOP : PLAY_ONCE;
         } else {
             if (event.isMoving()) {
                 Animation movementAnim;
@@ -272,13 +272,13 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
             controller.transitionLengthTicks = next.speed;
             controller.markNeedsReload();
-            controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName));
+            controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName, next.loop ? LOOP : null));
             return PlayState.CONTINUE;
         }
 
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
         if (activeAnimation.isPresent() && activeAnimation.get().forced() && !isAnimationDone(controller.getName())) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.get().animationName()));
+            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.get().animationName(), activeAnimation.get().loop ? LOOP : null));
             return PlayState.CONTINUE;
         }
         double animSpeed = 1;
@@ -314,8 +314,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public record ActiveAnimationInfo(String animationName, double startTick, double endTick, Category category,
-                                      boolean forced, double speed) {
-
+                                      boolean forced, double speed, boolean loop) {
+        public ActiveAnimationInfo(String animationName, double startTick, double endTick, Category category, boolean forced, double speed) {
+            this(animationName, startTick, endTick, category, forced, speed, false);
+        }
     }
 
     public enum Category {

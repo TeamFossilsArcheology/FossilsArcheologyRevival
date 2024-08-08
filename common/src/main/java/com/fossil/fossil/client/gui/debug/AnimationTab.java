@@ -33,6 +33,7 @@ public class AnimationTab extends DebugTab {
     private float rotYBase;
     private float rotXBase;
     private float scale = 15;
+    private boolean loop;
     private double transitionLength = 5;
     private AnimationsList animations;
     private String currentController;
@@ -134,6 +135,8 @@ public class AnimationTab extends DebugTab {
                             transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                         }
                     });
+            addWidget(CycleOption.createOnOff("Loop", options -> loop, (options, option, loop) -> this.loop = loop)
+                    .createButton(Minecraft.getInstance().options, width / 2, 150, 100));
         }
     }
 
@@ -177,7 +180,7 @@ public class AnimationTab extends DebugTab {
                         /*double speed = 1 / Math.sqrt(prehistoric.getScale());
                         speed *= prehistoric.data().stats().baseSpeed() / 0.26;//multiplier
                         speed *= animation.getValue().animationLength / 20;*/
-                        MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), transitionLength));
+                        MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), transitionLength, loop));
                     }
                 });
             }

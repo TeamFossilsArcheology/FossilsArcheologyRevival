@@ -20,6 +20,7 @@ public class S2CSyncActiveAnimationMessage {
     private final double startTick;
     private final AnimationLogic.Category category;
     private final double ticks;
+    private final boolean loop;
 
     public S2CSyncActiveAnimationMessage(FriendlyByteBuf buf) {
         this.entityId = buf.readInt();
@@ -28,6 +29,7 @@ public class S2CSyncActiveAnimationMessage {
         this.startTick = buf.readDouble();
         this.category = buf.readEnum(AnimationLogic.Category.class);
         this.ticks = buf.readDouble();
+        this.loop = buf.readBoolean();
     }
 
     public S2CSyncActiveAnimationMessage(Entity entity, String controller, AnimationLogic.ActiveAnimationInfo activeAnimationInfo) {
@@ -37,6 +39,7 @@ public class S2CSyncActiveAnimationMessage {
         this.startTick = activeAnimationInfo.startTick();
         this.category = activeAnimationInfo.category();
         this.ticks = activeAnimationInfo.speed();
+        this.loop = activeAnimationInfo.loop();
     }
 
     public void write(FriendlyByteBuf buf) {
@@ -46,6 +49,7 @@ public class S2CSyncActiveAnimationMessage {
         buf.writeDouble(startTick);
         buf.writeEnum(category);
         buf.writeDouble(ticks);
+        buf.writeBoolean(loop);
     }
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
@@ -55,7 +59,7 @@ public class S2CSyncActiveAnimationMessage {
             if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
                 double endTick = entity.level.getGameTime() + prehistoric.getAllAnimations().getOrDefault(animationName, new Animation()).animationLength;
                 AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.ActiveAnimationInfo(
-                        animationName, startTick, endTick, category, true, ticks
+                        animationName, startTick, endTick, category, true, ticks, loop
                 );
                 prehistoric.getAnimationLogic().addNextAnimation(controller, activeAnimationInfo);
             }
