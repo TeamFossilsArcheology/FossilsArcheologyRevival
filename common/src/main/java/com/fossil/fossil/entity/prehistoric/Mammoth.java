@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricShearable;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
@@ -23,7 +24,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Shearable;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -37,7 +37,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Mammoth extends PrehistoricFlocking implements Shearable {
+public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable {
     public static final String ANIMATIONS = "mammoth.animation.json";
     public static final String ATTACK = "animation.mammoth.attack1";
     public static final String EAT = "animation.mammoth.eating";
@@ -132,11 +132,10 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     }
 
     @Override
-    public void makeEatingParticles(Item item) {
-        super.makeEatingParticles(item);
+    public void feed(int foodAmount) {
         if (isSheared()) {
-            woolRegenTicks++;
-            if (woolRegenTicks >= 5) {
+            woolRegenTicks += foodAmount;
+            if (woolRegenTicks >= 150) {
                 setSheared(false);
                 woolRegenTicks = 0;
             }
@@ -185,10 +184,12 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
         return !isSheared() && !isBaby();
     }
 
+    @Override
     public boolean isSheared() {
         return entityData.get(SHEARED);
     }
 
+    @Override
     public void setSheared(boolean sheared) {
         entityData.set(SHEARED, sheared);
     }
@@ -217,7 +218,7 @@ public class Mammoth extends PrehistoricFlocking implements Shearable {
     public @NotNull Animation nextIdleAnimation() {
         return random.nextFloat() > 0.1 ? getAllAnimations().get(IDLE) : getAllAnimations().get(IDLE2);
     }
-    
+
     @Override
     public @NotNull Animation nextSittingAnimation() {
         return getAllAnimations().get(SLEEP);

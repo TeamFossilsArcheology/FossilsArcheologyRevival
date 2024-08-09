@@ -187,7 +187,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
                 level.getBlockState(getBlockPos()).setValue(FeederBlock.HERB, plant > 0).setValue(FeederBlock.CARN, meat > 0);
                 level.setBlockAndUpdate(getBlockPos(), getBlockState());
                 setChanged(level, getBlockPos(), getBlockState());
-                mob.setHunger(mob.getHunger() + feedAmount);
+                mob.feed(feedAmount);
             }
         }
     }

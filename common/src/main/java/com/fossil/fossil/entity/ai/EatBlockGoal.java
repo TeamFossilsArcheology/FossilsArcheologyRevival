@@ -6,7 +6,6 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.level.LevelReader;
 import software.bernie.geckolib3.core.builder.Animation;
 
@@ -34,7 +33,6 @@ public class EatBlockGoal extends MoveToFoodGoal {
             int foodAmount = FoodMappings.getFoodAmount(entity.level.getBlockState(targetPos).getBlock(), entity.info().diet);
             entity.feed(foodAmount);
             entity.heal(foodAmount / 10f);
-            entity.playSound(SoundEvents.GENERIC_EAT, 1, 1);
             entity.level.destroyBlock(targetPos, false);
             if (entity.level.getGameTime() > animEndTick) {
                 Animation anim = entity.nextEatingAnimation();

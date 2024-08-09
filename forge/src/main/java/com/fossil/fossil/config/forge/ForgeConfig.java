@@ -40,7 +40,8 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue NAUTILUS_SPAWN_WEIGHT;
     public static final ForgeConfigSpec.IntValue STURGEON_SPAWN_WEIGHT;
     public static final ForgeConfigSpec.BooleanValue HEALING_DINOS;
-    public static final ForgeConfigSpec.BooleanValue STARVING_DINOS;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_HUNGER;
+    public static final ForgeConfigSpec.BooleanValue ENABLE_STARVATION;
     public static final ForgeConfigSpec.BooleanValue BREEDING_DINOS;
     public static final ForgeConfigSpec.BooleanValue EGGS_LIKE_CHICKENS;
     public static final ForgeConfigSpec.BooleanValue WHIP_TO_TAME_DINO;
@@ -60,8 +61,8 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue MACHINE_ENERGY_USAGE;
     public static final ForgeConfigSpec.IntValue FERN_TICK_RATE;
     public static final ForgeConfigSpec.BooleanValue ANU_BLOCK_PLACING;
-    public static Map<String, ForgeConfigSpec.BooleanValue> mappedBools = new HashMap<>();
-    public static Map<String, ForgeConfigSpec.IntValue> mappedInts = new HashMap<>();
+    public static final Map<String, ForgeConfigSpec.BooleanValue> mappedBools = new HashMap<>();
+    public static final Map<String, ForgeConfigSpec.IntValue> mappedInts = new HashMap<>();
 
     static {
         ANU_BLOCK_PLACING = boolEntry("True if Anu should be able to place blocks", FossilConfig.ANU_BLOCK_PLACING, true);
@@ -101,8 +102,9 @@ public class ForgeConfig {
         STURGEON_SPAWN_WEIGHT = intEntry("Sturgeon Spawn Weight. Higher number = more common", FossilConfig.STURGEON_SPAWN_WEIGHT, 5, 0, 100000000);
         //BUILDER.pop();
         //BUILDER.push("Dino Config");
-        HEALING_DINOS = boolEntry("True if Dinosaurs can heal with food", FossilConfig.HEALING_DINOS, true);
-        STARVING_DINOS = boolEntry("True if Dinosaurs have hunger", FossilConfig.STARVING_DINOS, true);
+        HEALING_DINOS = boolEntry("True if Dinosaurs can be healed by hand feeding it food", FossilConfig.HEALING_DINOS, true);
+        ENABLE_HUNGER = boolEntry("True if Dinosaurs have hunger", FossilConfig.ENABLE_HUNGER, true);
+        ENABLE_STARVATION = boolEntry("True if Dinosaurs can starve to death", FossilConfig.ENABLE_STARVATION, false);
         BREEDING_DINOS = boolEntry("True if Dinosaurs should breed", FossilConfig.BREEDING_DINOS, true);
         EGGS_LIKE_CHICKENS = boolEntry("True if Dinosaurs should create item eggs instead of entities", FossilConfig.EGGS_LIKE_CHICKENS, true);
         WHIP_TO_TAME_DINO = boolEntry("True if Whips can be used to tame some dinosaurs", FossilConfig.WHIP_TO_TAME_DINO, true);

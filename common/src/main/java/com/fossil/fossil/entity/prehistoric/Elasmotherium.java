@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricShearable;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
@@ -21,7 +22,6 @@ import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Shearable;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
@@ -35,7 +35,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Elasmotherium extends Prehistoric implements Shearable {
+public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
     public static final String ANIMATIONS = "elasmotherium.animation.json";
     public static final String ATTACK = "animation.elasmotherium.attack1";
     public static final String EAT = "animation.elasmotherium.eat/drink";
@@ -116,11 +116,10 @@ public class Elasmotherium extends Prehistoric implements Shearable {
     }
 
     @Override
-    public void makeEatingParticles(Item item) {
-        super.makeEatingParticles(item);
+    public void feed(int foodAmount) {
         if (isSheared()) {
-            woolRegenTicks++;
-            if (woolRegenTicks >= 5) {
+            woolRegenTicks += foodAmount;
+            if (woolRegenTicks >= 125) {
                 setSheared(false);
                 woolRegenTicks = 0;
             }
@@ -158,10 +157,12 @@ public class Elasmotherium extends Prehistoric implements Shearable {
         return !isSheared() && !isBaby();
     }
 
+    @Override
     public boolean isSheared() {
         return entityData.get(SHEARED);
     }
 
+    @Override
     public void setSheared(boolean sheared) {
         entityData.set(SHEARED, sheared);
     }

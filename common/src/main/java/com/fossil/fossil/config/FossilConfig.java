@@ -33,7 +33,8 @@ public class FossilConfig {
     public static final String NAUTILUS_SPAWN_WEIGHT = "nautilusSpawnWeight";
     public static final String STURGEON_SPAWN_WEIGHT = "sturgeonSpawnWeight";
     public static final String HEALING_DINOS = "healingDinos";
-    public static final String STARVING_DINOS = "starvingDinos";
+    public static final String ENABLE_HUNGER = "enableHunger";
+    public static final String ENABLE_STARVATION = "enableStarvation";
     public static final String BREEDING_DINOS = "breedingDinos";
     public static final String EGGS_LIKE_CHICKENS = "eggsLikeChickens";
     public static final String WHIP_TO_TAME_DINO = "whipToTameDino";

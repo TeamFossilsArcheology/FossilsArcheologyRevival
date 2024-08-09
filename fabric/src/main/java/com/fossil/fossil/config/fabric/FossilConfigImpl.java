@@ -6,6 +6,9 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * {@link com.fossil.fossil.config.FossilConfig}
+ */
 @SuppressWarnings({"unused", "java:S1444"})
 public class FossilConfigImpl extends MidnightConfig {
 
@@ -71,7 +74,9 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry
     public static boolean healingDinos = true;
     @MidnightConfig.Entry
-    public static boolean starvingDinos = true;
+    public static boolean enableHunger = true;
+    @MidnightConfig.Entry
+    public static boolean enableStarvation = false;
     @MidnightConfig.Entry
     public static boolean breedingDinos = true;
     @MidnightConfig.Entry

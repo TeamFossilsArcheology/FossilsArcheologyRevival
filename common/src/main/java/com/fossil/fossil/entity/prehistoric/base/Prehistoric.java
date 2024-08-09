@@ -45,7 +45,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -709,7 +708,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (!isAgingDisabled()) {
             setAgeInTicks(getAge() + 1);
         }
-        if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.STARVING_DINOS)) {
+        if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.ENABLE_HUNGER)) {
             if (!isNoAi()) {
                 setHunger(getHunger() - 1);
             } else {
@@ -717,8 +716,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 setHealth(getMaxHealth());
             }
         }
-        if (getHealth() > getMaxHealth() / 2 && getHunger() == 0 && tickCount % 40 == 0) {
-            hurt(DamageSource.STARVE, 1);
+        if (tickCount % 40 == 0 && getHunger() == 0) {
+            if (getHealth() > (FossilConfig.isEnabled(FossilConfig.ENABLE_STARVATION) ? 0 : getMaxHealth() / 2)) {
+                hurt(DamageSource.STARVE, 1);
+            }
         }
         if (!level.isClientSide && aiClimbType() == Climbing.ARTHROPOD) {
             if (isClimbing()) {
@@ -1073,8 +1074,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void eatItem(ItemStack stack) {
         if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), info().diet) != 0)) {
             moodSystem.increaseMood(5);
-            makeEatingParticles(stack.getItem());
-            setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), info().diet));
+            feed(FoodMappings.getFoodAmount(stack.getItem(), info().diet));
             stack.shrink(1);
             animationLogic.triggerAnimation(AnimationLogic.IDLE_CTRL, nextEatingAnimation(), AnimationLogic.Category.EAT);
         }
@@ -1082,7 +1082,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public void feed(int foodAmount) {
         setHunger(getHunger() + foodAmount);
-        level.playSound(null, blockPosition(), SoundEvents.GENERIC_EAT, SoundSource.NEUTRAL, getSoundVolume(), getVoicePitch());
     }
 
     @Override
@@ -1188,7 +1187,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             //Feed dino
             if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
                 if (!level.isClientSide) {
-                    setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), info().diet));
                     eatItem(stack);
                     if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS)) {
                         heal(3);
