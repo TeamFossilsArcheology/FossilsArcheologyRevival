@@ -410,7 +410,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 part.getEntity().remove(RemovalReason.DISCARDED);
             }
         }
-        ((PrehistoricGeoRenderer<? extends Prehistoric>)Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(this)).removeTickForEntity(this);
+        ((PrehistoricGeoRenderer<? extends Prehistoric>) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(this)).removeTickForEntity(this);
     }
 
     public boolean hurt(Entity part, DamageSource source, float damage) {
@@ -1073,7 +1073,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void eatItem(ItemStack stack) {
         if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), info().diet) != 0)) {
             moodSystem.increaseMood(5);
-            makeEatingEffects(stack.getItem());
+            makeEatingParticles(stack.getItem());
             setHunger(getHunger() + FoodMappings.getFoodAmount(stack.getItem(), info().diet));
             stack.shrink(1);
             animationLogic.triggerAnimation(AnimationLogic.IDLE_CTRL, nextEatingAnimation(), AnimationLogic.Category.EAT);
@@ -1360,22 +1360,29 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    protected void makeEatingEffects(Item item) {
-        playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
-        if (item != null) {
+    private void makeEatingSounds() {
+        if (level.isClientSide) {
+            level.playSound(Minecraft.getInstance().player, blockPosition(), SoundEvents.GENERIC_EAT, getSoundSource(), getSoundVolume(), getVoicePitch());
+        } else {
+            playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
+        }
+    }
+
+    protected void makeEatingParticles(Item item) {
+        if (level.isClientSide && item != null) {
             spawnItemParticles(item, 4);
         }
     }
 
     /**
-     * Plays a sound and spawns item particles based on diet
+     * Spawns item particles based on diet
      */
-    public void makeEatingEffects() {
+    public void makeEatingParticles() {
         switch (info().diet) {
-            case HERBIVORE -> makeEatingEffects(Items.WHEAT_SEEDS);
-            case OMNIVORE -> makeEatingEffects(Items.BREAD);
-            case PISCIVORE -> makeEatingEffects(Items.COD);
-            default -> makeEatingEffects(Items.BEEF);
+            case HERBIVORE -> makeEatingParticles(Items.WHEAT_SEEDS);
+            case OMNIVORE -> makeEatingParticles(Items.BREAD);
+            case PISCIVORE -> makeEatingParticles(Items.COD);
+            default -> makeEatingParticles(Items.BEEF);
         }
     }
 
@@ -1488,8 +1495,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(
-                this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate));
+        var controller = new AnimationController<>(
+                this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate);
+        controller.registerParticleListener(event -> {
+            if ("eat".equals(event.effect)) {
+                makeEatingParticles();
+            }
+        });
+        controller.registerSoundListener(event -> {
+            if ("eat".equals(event.sound)) {
+                makeEatingSounds();
+            }
+        });
+        data.addAnimationController(controller);
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, animationLogic::attackPredicate));
     }

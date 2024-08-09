@@ -903,6 +903,34 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.4167": {
+					"effect": "eat"
+				},
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.0833": {
+					"effect": "eat"
+				},
+				"1.4167": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.4167": {
+					"effect": "eat"
+				},
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.0833": {
+					"effect": "eat"
+				},
+				"1.4167": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.megalograptus.attack1": {
@@ -1402,16 +1430,6 @@
 						"0.5833": {
 							"vector": [0, 0, 0]
 						}
-					}
-				}
-			}
-		},
-		"animation.megalograptus.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"head": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.4"]
 					}
 				}
 			}

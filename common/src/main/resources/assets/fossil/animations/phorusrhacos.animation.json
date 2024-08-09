@@ -2141,6 +2141,52 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				},
+				"1.3333": {
+					"effect": "eat"
+				},
+				"1.6667": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4167": {
+					"effect": "eat"
+				},
+				"3.75": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				},
+				"1.3333": {
+					"effect": "eat"
+				},
+				"1.6667": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4167": {
+					"effect": "eat"
+				},
+				"3.75": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.phorusrhacos.speak": {
@@ -3211,26 +3257,6 @@
 						"0.9583": {
 							"vector": [-15, -5, 2.5]
 						}
-					}
-				}
-			}
-		},
-		"animation.phorusrhacos.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*1.3125"]
-					}
-				}
-			}
-		},
-		"animation.phorusrhacos.runspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*4.1"]
 					}
 				}
 			}

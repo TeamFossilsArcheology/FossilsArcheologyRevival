@@ -116,8 +116,8 @@ public class Elasmotherium extends Prehistoric implements Shearable {
     }
 
     @Override
-    public void makeEatingEffects(Item item) {
-        super.makeEatingEffects(item);
+    public void makeEatingParticles(Item item) {
+        super.makeEatingParticles(item);
         if (isSheared()) {
             woolRegenTicks++;
             if (woolRegenTicks >= 5) {

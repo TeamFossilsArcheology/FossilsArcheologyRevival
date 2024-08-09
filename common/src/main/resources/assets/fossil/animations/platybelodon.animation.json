@@ -624,6 +624,34 @@
 						"vector": [1, 1, 1]
 					}
 				}
+			},
+			"sound_effects": {
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4": {
+					"effect": "eat"
+				},
+				"2.8": {
+					"effect": "eat"
+				},
+				"3.2": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4": {
+					"effect": "eat"
+				},
+				"2.8": {
+					"effect": "eat"
+				},
+				"3.2": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.platybelodon.sleep": {

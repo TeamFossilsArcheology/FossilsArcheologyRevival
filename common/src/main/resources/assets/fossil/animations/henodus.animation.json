@@ -518,6 +518,22 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.3333": {
+					"effect": "eat"
+				},
+				"0.6667": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.3333": {
+					"effect": "eat"
+				},
+				"0.6667": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.henodus.swim": {
@@ -1018,16 +1034,6 @@
 				"leftarm": {
 					"rotation": {
 						"vector": [0, 0, -20]
-					}
-				}
-			}
-		},
-		"animation.henodus.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"henodus": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.1667"]
 					}
 				}
 			}

@@ -372,6 +372,52 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.0833": {
+					"effect": "eat"
+				},
+				"1.4167": {
+					"effect": "eat"
+				},
+				"1.75": {
+					"effect": "eat"
+				},
+				"2.0833": {
+					"effect": "eat"
+				},
+				"2.4167": {
+					"effect": "eat"
+				},
+				"2.75": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.0833": {
+					"effect": "eat"
+				},
+				"1.4167": {
+					"effect": "eat"
+				},
+				"1.75": {
+					"effect": "eat"
+				},
+				"2.0833": {
+					"effect": "eat"
+				},
+				"2.4167": {
+					"effect": "eat"
+				},
+				"2.75": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.arthropleura.sleep/sit": {

@@ -2461,6 +2461,40 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.4167": {
+					"effect": "eat"
+				},
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.0833": {
+					"effect": "eat"
+				},
+				"1.4167": {
+					"effect": "eat"
+				},
+				"1.75": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.4167": {
+					"effect": "eat"
+				},
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.0833": {
+					"effect": "eat"
+				},
+				"1.4167": {
+					"effect": "eat"
+				},
+				"1.75": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.pachycephalosaurus.drink": {
@@ -3648,26 +3682,6 @@
 						"3.875": {
 							"vector": [0, 0, 0]
 						}
-					}
-				}
-			}
-		},
-		"animation.pachycephalosaurus.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"root": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.75"]
-					}
-				}
-			}
-		},
-		"animation.pachycephalosaurus.runspeeddemo": {
-			"loop": true,
-			"bones": {
-				"root": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*2.7"]
 					}
 				}
 			}

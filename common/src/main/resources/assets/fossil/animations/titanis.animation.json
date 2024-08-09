@@ -2201,6 +2201,52 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				},
+				"1.3333": {
+					"effect": "eat"
+				},
+				"1.6667": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4167": {
+					"effect": "eat"
+				},
+				"3.75": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				},
+				"1.3333": {
+					"effect": "eat"
+				},
+				"1.6667": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4167": {
+					"effect": "eat"
+				},
+				"3.75": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.titanis.speak": {
@@ -3268,26 +3314,6 @@
 						"0.6667": {
 							"vector": [-68.50408, 5.4974, 27.7359]
 						}
-					}
-				}
-			}
-		},
-		"animation.titanis.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*1.3125"]
-					}
-				}
-			}
-		},
-		"animation.titanis.runspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*6"]
 					}
 				}
 			}

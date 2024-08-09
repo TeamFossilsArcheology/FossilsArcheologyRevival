@@ -370,7 +370,7 @@
 		},
 		"animation.liopleurodon.eat": {
 			"loop": true,
-			"animation_length": 1.75,
+			"animation_length": 1.3333,
 			"bones": {
 				"UpperBody": {
 					"rotation": {
@@ -383,7 +383,7 @@
 						"1.0833": {
 							"vector": [2.5, 0, 0]
 						},
-						"1.75": {
+						"1.3333": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -399,7 +399,7 @@
 						"1.0417": {
 							"vector": [2.5, 0, 0]
 						},
-						"1.75": {
+						"1.3333": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -415,7 +415,7 @@
 						"1.0833": {
 							"vector": [-5, 0, 0]
 						},
-						"1.75": {
+						"1.3333": {
 							"vector": [0, 0, 0]
 						}
 					}
@@ -423,21 +423,37 @@
 				"JawBottomBase": {
 					"rotation": {
 						"0.0": {
-							"vector": [0, 0, 0]
+							"vector": [-35, 0, 0]
 						},
 						"0.5": {
-							"vector": [27.5, 0, 0]
+							"vector": ["27.5-35", 0, 0]
 						},
 						"0.75": {
-							"vector": [0, 0, 0]
+							"vector": [-35, 0, 0]
 						},
 						"1.0": {
-							"vector": [15, 0, 0]
+							"vector": ["15-35", 0, 0]
 						},
 						"1.3333": {
-							"vector": [0, 0, 0]
+							"vector": [-35, 0, 0]
 						}
 					}
+				}
+			},
+			"sound_effects": {
+				"0.5": {
+					"effect": "eat"
+				},
+				"0.8333": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.5": {
+					"effect": "eat"
+				},
+				"0.8333": {
+					"effect": "eat"
 				}
 			}
 		},

@@ -775,6 +775,28 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.3333": {
+					"effect": "eat"
+				},
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.3333": {
+					"effect": "eat"
+				},
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				}
 			}
 		}
 	},

@@ -606,7 +606,7 @@
 			}
 		},
 		"animation.crassigyrinus.eat": {
-			"animation_length": 1.375,
+			"animation_length": 1.2917,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -722,6 +722,28 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				}
+			},
+			"sound_effects": {
+				"0.3333": {
+					"effect": "eat"
+				},
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.3333": {
+					"effect": "eat"
+				},
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
 				}
 			}
 		}

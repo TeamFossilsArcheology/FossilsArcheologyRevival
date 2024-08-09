@@ -164,12 +164,10 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
             if (!isEmpty(mob.info().diet)) {
                 if (mob.info().diet == Diet.CARNIVORE || mob.info().diet == Diet.CARNIVORE_EGG || mob.info().diet == Diet.PISCI_CARNIVORE || mob.info().diet == Diet.PISCIVORE || mob.info().diet == Diet.INSECTIVORE) {
                     meat--;
-                    level.broadcastEntityEvent(mob, Prehistoric.BEEF_PARTICLES);
                     feedAmount++;
                 }
                 if (mob.info().diet == Diet.HERBIVORE) {
                     plant--;
-                    level.broadcastEntityEvent(mob, Prehistoric.WHEAT_SEEDS_PARTICLES);
                     feedAmount++;
                 }
                 if (mob.info().diet == Diet.OMNIVORE) {
@@ -219,8 +217,8 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
 
     @Override
     public boolean stillValid(Player player) {
-        return level.getBlockEntity(worldPosition) == this && player.distanceToSqr((double) worldPosition.getX() + 0.5,
-                (double) worldPosition.getY() + 0.5, (double) worldPosition.getZ() + 0.5) <= 64.0;
+        return level.getBlockEntity(worldPosition) == this && player.distanceToSqr(worldPosition.getX() + 0.5,
+                worldPosition.getY() + 0.5, worldPosition.getZ() + 0.5) <= 64.0;
     }
 
     @Override
@@ -241,5 +239,13 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
         return direction != Direction.DOWN;
+    }
+
+    public void setMeat(int meat) {
+        this.meat = meat;
+    }
+
+    public void setPlant(int plant) {
+        this.plant = plant;
     }
 }

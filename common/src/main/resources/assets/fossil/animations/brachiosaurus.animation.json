@@ -2943,7 +2943,7 @@
 			}
 		},
 		"animation.brachiosaurus.eat": {
-			"animation_length": 7.2917,
+			"animation_length": 6.8333,
 			"bones": {
 				"Neck1": {
 					"rotation": {
@@ -3661,6 +3661,34 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				}
+			},
+			"sound_effects": {
+				"0.7917": {
+					"effect": "eat"
+				},
+				"1.125": {
+					"effect": "eat"
+				},
+				"1.4583": {
+					"effect": "eat"
+				},
+				"1.7917": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.7917": {
+					"effect": "eat"
+				},
+				"1.125": {
+					"effect": "eat"
+				},
+				"1.4583": {
+					"effect": "eat"
+				},
+				"1.7917": {
+					"effect": "eat"
 				}
 			}
 		},
@@ -6422,16 +6450,6 @@
 						"2.0": {
 							"vector": [0, 0, 0]
 						}
-					}
-				}
-			}
-		},
-		"animation.brachiosaurus.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*90*0.03"]
 					}
 				}
 			}

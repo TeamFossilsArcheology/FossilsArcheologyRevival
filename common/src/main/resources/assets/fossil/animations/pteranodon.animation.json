@@ -3679,6 +3679,34 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				},
+				"1.3333": {
+					"effect": "eat"
+				},
+				"1.6667": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.6667": {
+					"effect": "eat"
+				},
+				"1.0": {
+					"effect": "eat"
+				},
+				"1.3333": {
+					"effect": "eat"
+				},
+				"1.6667": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.pteranodon.drink": {
@@ -4126,16 +4154,6 @@
 						"0.5": {
 							"vector": [0, 0, 0]
 						}
-					}
-				}
-			}
-		},
-		"animation.pteranodon.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*1.3125"]
 					}
 				}
 			}

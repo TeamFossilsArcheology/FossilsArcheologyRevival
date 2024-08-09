@@ -2049,109 +2049,6 @@
 				}
 			}
 		},
-		"animation.pachyrhinosaurus.turn_right": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, 5, 0]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, 5, 0]
-					}
-				},
-				"neck": {
-					"rotation": {
-						"vector": [0, 20, -5]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, 15, 5]
-					}
-				},
-				"leftUpperArm": {
-					"rotation": {
-						"vector": [0, 0, -5]
-					},
-					"position": {
-						"vector": [0, -0.15, 0]
-					}
-				},
-				"leftLowerArm": {
-					"rotation": {
-						"vector": [0, 0, 2.5]
-					}
-				},
-				"leftHand": {
-					"rotation": {
-						"vector": [0, 2.5, 0]
-					}
-				},
-				"rightUpperArm": {
-					"rotation": {
-						"vector": [0, 0, -2.5]
-					}
-				},
-				"rightLowerArm": {
-					"rotation": {
-						"vector": [0, 0, -2.5]
-					}
-				},
-				"rightHand": {
-					"rotation": {
-						"vector": [0, 5, 0]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, -10, 0]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, -20, 0]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, -20, 0]
-					}
-				},
-				"leftThigh": {
-					"rotation": {
-						"vector": [0, 0, -5]
-					}
-				},
-				"leftLeg": {
-					"rotation": {
-						"vector": [0, 0, 2.5]
-					}
-				},
-				"leftFoot": {
-					"rotation": {
-						"vector": [0, 2.5, 0]
-					}
-				},
-				"rightThigh": {
-					"rotation": {
-						"vector": [0, 0, -5]
-					}
-				},
-				"rightLeg": {
-					"rotation": {
-						"vector": [0, 0, 2.5]
-					}
-				},
-				"rightFoot": {
-					"rotation": {
-						"vector": [0, 2.5, 0]
-					}
-				}
-			}
-		},
 		"animation.pachyrhinosaurus.jump/fall": {
 			"loop": true,
 			"animation_length": 2,
@@ -2806,6 +2703,40 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				}
+			},
+			"sound_effects": {
+				"0.8": {
+					"effect": "eat"
+				},
+				"1.2": {
+					"effect": "eat"
+				},
+				"1.6": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.8": {
+					"effect": "eat"
+				},
+				"1.2": {
+					"effect": "eat"
+				},
+				"1.6": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4": {
+					"effect": "eat"
 				}
 			}
 		},
@@ -4199,109 +4130,6 @@
 				}
 			}
 		},
-		"animation.pachyrhinosaurus.turn_left": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, -5, 0]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, -5, 0]
-					}
-				},
-				"neck": {
-					"rotation": {
-						"vector": [0, -20, 5]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, -15, -5]
-					}
-				},
-				"leftUpperArm": {
-					"rotation": {
-						"vector": [0, 0, 5]
-					}
-				},
-				"leftLowerArm": {
-					"rotation": {
-						"vector": [0, 0, -2.5]
-					}
-				},
-				"leftHand": {
-					"rotation": {
-						"vector": [0, -2.5, 0]
-					}
-				},
-				"rightUpperArm": {
-					"rotation": {
-						"vector": [0, 0, 2.5]
-					},
-					"position": {
-						"vector": [0, -0.15, 0]
-					}
-				},
-				"rightLowerArm": {
-					"rotation": {
-						"vector": [0, 0, 2.5]
-					}
-				},
-				"rightHand": {
-					"rotation": {
-						"vector": [0, -5, 0]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, 10, 0]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, 20, 0]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, 20, 0]
-					}
-				},
-				"leftThigh": {
-					"rotation": {
-						"vector": [0, 0, 5]
-					}
-				},
-				"leftLeg": {
-					"rotation": {
-						"vector": [0, 0, -2.5]
-					}
-				},
-				"leftFoot": {
-					"rotation": {
-						"vector": [0, -2.5, 0]
-					}
-				},
-				"rightThigh": {
-					"rotation": {
-						"vector": [0, 0, 5]
-					}
-				},
-				"rightLeg": {
-					"rotation": {
-						"vector": [0, 0, -2.5]
-					}
-				},
-				"rightFoot": {
-					"rotation": {
-						"vector": [0, -2.5, 0]
-					}
-				}
-			}
-		},
 		"animation.pachyrhinosaurus.attack1": {
 			"animation_length": 1,
 			"bones": {
@@ -5028,26 +4856,6 @@
 						"2.0": {
 							"vector": [0, 0, 0]
 						}
-					}
-				}
-			}
-		},
-		"animation.pachyrhinosaurus.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"root": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.8"]
-					}
-				}
-			}
-		},
-		"animation.pachyrhinosaurus.runspeeddemo": {
-			"loop": true,
-			"bones": {
-				"root": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*3"]
 					}
 				}
 			}

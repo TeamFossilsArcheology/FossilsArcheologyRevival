@@ -486,6 +486,40 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.5": {
+					"effect": "eat"
+				},
+				"0.9": {
+					"effect": "eat"
+				},
+				"1.3": {
+					"effect": "eat"
+				},
+				"1.7": {
+					"effect": "eat"
+				},
+				"2.1": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.5": {
+					"effect": "eat"
+				},
+				"0.9": {
+					"effect": "eat"
+				},
+				"1.3": {
+					"effect": "eat"
+				},
+				"1.7": {
+					"effect": "eat"
+				},
+				"2.1": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.megaloceros.drinking": {
@@ -1511,26 +1545,6 @@
 					},
 					"position": {
 						"vector": [0, "math.sin(query.anim_time*180)*0.2", "math.sin(query.anim_time*180+120)*-0.2"]
-					}
-				}
-			}
-		},
-		"animation.megaloceros.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"body": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.5"]
-					}
-				}
-			}
-		},
-		"animation.megaloceros.runspeeddemo": {
-			"loop": true,
-			"bones": {
-				"body": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*1.4"]
 					}
 				}
 			}

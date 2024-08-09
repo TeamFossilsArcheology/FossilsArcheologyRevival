@@ -816,9 +816,6 @@
 					}
 				},
 				"head_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
 					"rotation": {
 						"vector": [5.22, 0, 0]
 					}
@@ -1196,75 +1193,21 @@
 						}
 					}
 				}
-			}
-		},
-		"animation.megalania.turn_right": {
-			"loop": true,
-			"bones": {
-				"chest1": {
-					"rotation": {
-						"vector": [0, -17.5, 0]
-					}
+			},
+			"sound_effects": {
+				"0.6667": {
+					"effect": "eat"
 				},
-				"neck1": {
-					"rotation": {
-						"vector": [0, -20, 0]
-					}
-				},
-				"Head": {
-					"rotation": {
-						"vector": [-5.07673, -9.96156, 0.88045]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, -12.5, 0]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, 22.5, 0]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, 22.5, 0]
-					}
+				"1.0": {
+					"effect": "eat"
 				}
-			}
-		},
-		"animation.megalania.turn_left": {
-			"loop": true,
-			"bones": {
-				"chest1": {
-					"rotation": {
-						"vector": [0, 17.5, 0]
-					}
+			},
+			"particle_effects": {
+				"0.6667": {
+					"effect": "eat"
 				},
-				"neck1": {
-					"rotation": {
-						"vector": [0, 20, 0]
-					}
-				},
-				"Head": {
-					"rotation": {
-						"vector": [5.0767, 9.9616, 0.88045]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, -12.5, 0]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, 22.5, 0]
-					}
-				},
-				"tail3": {
-					"rotation": {
-						"vector": [0, 22.5, 0]
-					}
+				"1.0": {
+					"effect": "eat"
 				}
 			}
 		},
@@ -2047,26 +1990,6 @@
 						"1.05": {
 							"vector": [-14.4, 0, 0]
 						}
-					}
-				}
-			}
-		},
-		"animation.megalania.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"body1": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.41"]
-					}
-				}
-			}
-		},
-		"animation.megalania.runspeeddemo": {
-			"loop": true,
-			"bones": {
-				"body1": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.6"]
 					}
 				}
 			}

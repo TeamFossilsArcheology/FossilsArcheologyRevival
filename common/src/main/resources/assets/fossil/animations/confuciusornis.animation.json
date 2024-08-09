@@ -431,6 +431,28 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.25": {
+					"effect": "eat"
+				},
+				"0.5833": {
+					"effect": "eat"
+				},
+				"0.9167": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.25": {
+					"effect": "eat"
+				},
+				"0.5833": {
+					"effect": "eat"
+				},
+				"0.9167": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.confuciusornis.drinking": {
@@ -1474,16 +1496,6 @@
 				"bone": {
 					"position": {
 						"vector": [0, -3, 0]
-					}
-				}
-			}
-		},
-		"animation.confuciusornis.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.3125"]
 					}
 				}
 			}

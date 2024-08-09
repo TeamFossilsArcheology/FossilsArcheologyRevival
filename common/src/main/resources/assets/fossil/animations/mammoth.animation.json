@@ -573,6 +573,46 @@
 						"vector": [1, 1, 1]
 					}
 				}
+			},
+			"sound_effects": {
+				"1.5": {
+					"effect": "eat"
+				},
+				"1.8333": {
+					"effect": "eat"
+				},
+				"2.1667": {
+					"effect": "eat"
+				},
+				"2.5": {
+					"effect": "eat"
+				},
+				"2.8333": {
+					"effect": "eat"
+				},
+				"3.1667": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"1.5": {
+					"effect": "eat"
+				},
+				"1.8333": {
+					"effect": "eat"
+				},
+				"2.1667": {
+					"effect": "eat"
+				},
+				"2.5": {
+					"effect": "eat"
+				},
+				"2.8333": {
+					"effect": "eat"
+				},
+				"3.1667": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.mammoth.speak": {

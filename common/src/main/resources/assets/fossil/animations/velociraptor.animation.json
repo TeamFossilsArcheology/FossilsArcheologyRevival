@@ -1115,6 +1115,40 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.8": {
+					"effect": "eat"
+				},
+				"1.2": {
+					"effect": "eat"
+				},
+				"1.6": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.8": {
+					"effect": "eat"
+				},
+				"1.2": {
+					"effect": "eat"
+				},
+				"1.6": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.4": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.velociraptor.drink": {
@@ -3127,26 +3161,6 @@
 						"0.875": {
 							"vector": [0, 0, 0]
 						}
-					}
-				}
-			}
-		},
-		"animation.velociraptor.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*1.1"]
-					}
-				}
-			}
-		},
-		"animation.velociraptor.runspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*2.3"]
 					}
 				}
 			}

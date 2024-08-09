@@ -41,9 +41,6 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
                 feedingTicks++;
                 feeder.feedDinosaur(entity);
                 entity.heal(0.1f);
-                if (feedingTicks % 4 == 0) {
-                    entity.makeEatingEffects();
-                }
                 if (entity.level.getGameTime() > animEndTick) {
                     Animation anim = entity.nextEatingAnimation();
                     entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, anim, AnimationLogic.Category.EAT);

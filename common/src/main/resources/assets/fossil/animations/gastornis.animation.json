@@ -1178,177 +1178,6 @@
 				}
 			}
 		},
-		"animation.gastornis.turn_right": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, 5, -5]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, 10, 0]
-					}
-				},
-				"neck": {
-					"rotation": {
-						"vector": [0, 10, -5]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, 5, 10]
-					}
-				},
-				"rightUpperArm": {
-					"rotation": {
-						"vector": [10, 0, 0]
-					}
-				},
-				"rightLowerArm": {
-					"rotation": {
-						"vector": [-10, 0, 0]
-					}
-				},
-				"leftThigh": {
-					"rotation": {
-						"vector": [0, -5, 0]
-					},
-					"position": {
-						"vector": [0, -0.5, 0]
-					}
-				},
-				"rightThigh": {
-					"rotation": {
-						"vector": [0, -5, 10]
-					}
-				},
-				"rightLeg": {
-					"rotation": {
-						"vector": [0, 0, -5]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, -20, 5]
-					}
-				},
-				"leftFoot": {
-					"rotation": {
-						"vector": [0, 0, 5]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, -15, 5]
-					}
-				},
-				"chest1": {
-					"rotation": {
-						"vector": [0, 10, 0]
-					}
-				},
-				"neck1": {
-					"rotation": {
-						"vector": [0, 10, -5]
-					}
-				},
-				"head1": {
-					"rotation": {
-						"vector": [-2.50739, 7.6383, -12.48522]
-					}
-				}
-			}
-		},
-		"animation.gastornis.turn_left": {
-			"loop": "hold_on_last_frame",
-			"bones": {
-				"lowerBody": {
-					"rotation": {
-						"vector": [0, -5, 5]
-					}
-				},
-				"upperBody": {
-					"rotation": {
-						"vector": [0, -10, 0]
-					}
-				},
-				"neck": {
-					"rotation": {
-						"vector": [0, -10, 5]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": [0, -5, -10]
-					}
-				},
-				"leftUpperArm": {
-					"rotation": {
-						"vector": [10, 0, 0]
-					}
-				},
-				"leftLowerArm": {
-					"rotation": {
-						"vector": [-10, 0, 0]
-					}
-				},
-				"leftThigh": {
-					"rotation": {
-						"vector": [0, 5, -10]
-					}
-				},
-				"leftLeg": {
-					"rotation": {
-						"vector": [0, 0, 5]
-					}
-				},
-				"rightThigh": {
-					"rotation": {
-						"vector": [0, 5, 0]
-					},
-					"position": {
-						"vector": [0, -0.5, 0]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [0, 20, -5]
-					}
-				},
-				"rightFoot": {
-					"rotation": {
-						"vector": [0, 0, -5]
-					}
-				},
-				"body1": {
-					"rotation": {
-						"vector": [0, -5, 5]
-					}
-				},
-				"tail1": {
-					"rotation": {
-						"vector": [0, 15, -5]
-					}
-				},
-				"chest1": {
-					"rotation": {
-						"vector": [0, -10, 0]
-					}
-				},
-				"neck1": {
-					"rotation": {
-						"vector": [0, -10, 5]
-					}
-				},
-				"head1": {
-					"rotation": {
-						"vector": [-2.50739, -7.6383, 12.48522]
-					}
-				}
-			}
-		},
 		"animation.gastornis.drink": {
 			"animation_length": 3,
 			"bones": {
@@ -2277,6 +2106,40 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"1.0": {
+					"effect": "eat"
+				},
+				"1.4": {
+					"effect": "eat"
+				},
+				"1.8": {
+					"effect": "eat"
+				},
+				"2.2": {
+					"effect": "eat"
+				},
+				"2.6": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"1.0": {
+					"effect": "eat"
+				},
+				"1.4": {
+					"effect": "eat"
+				},
+				"1.8": {
+					"effect": "eat"
+				},
+				"2.2": {
+					"effect": "eat"
+				},
+				"2.6": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.gastornis.run": {
@@ -2896,26 +2759,6 @@
 						"1.75": {
 							"vector": [-15, -5, 2.5]
 						}
-					}
-				}
-			}
-		},
-		"animation.gastornis.walkspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*0.825"]
-					}
-				}
-			}
-		},
-		"animation.gastornis.runspeeddemo": {
-			"loop": true,
-			"bones": {
-				"bone": {
-					"position": {
-						"vector": [0, 0, "50-query.anim_time*16*2"]
 					}
 				}
 			}
