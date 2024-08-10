@@ -2,6 +2,7 @@ package com.fossil.fossil.forge.data.providers;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.custom_blocks.FigurineBlock;
+import com.fossil.fossil.block.custom_blocks.VaseBlock;
 import com.fossil.fossil.tags.ModBlockTags;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.data.DataGenerator;
@@ -64,6 +65,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 VOLCANIC_ROCK, VOLCANIC_BRICKS, VOLCANIC_BRICK_SLAB, VOLCANIC_BRICK_STAIRS, VOLCANIC_BRICK_WALL,
                 VOLCANIC_TILES, VOLCANIC_TILE_SLAB, VOLCANIC_TILE_STAIRS, VOLCANIC_TILE_WALL,
                 AMBER_ORE, AMBER_BLOCK, AMBER_CHUNK, AMBER_CHUNK_DOMINICAN, AMBER_CHUNK_MOSQUITO, SHELL);
+        for (RegistrySupplier<VaseBlock> vase : VASES) {
+            addTag(BlockTags.MINEABLE_WITH_PICKAXE, vase);
+        }
         addTag(BlockTags.MINEABLE_WITH_SHOVEL, DENSE_SAND, VOLCANIC_ASH, TARRED_DIRT, SLIME_TRAIL, ICED_DIRT, PERMAFROST_BLOCK);
         addTag(BlockTags.MINEABLE_WITH_HOE, CALAMITES_LEAVES, CORDAITES_LEAVES, MUTANT_TREE_LEAVES, PALM_LEAVES, SIGILLARIA_LEAVES, TEMPSKYA_LEAF);
         addTag(BlockTags.NEEDS_DIAMOND_TOOL, FAKE_OBSIDIAN, OBSIDIAN_SPIKES);//Time Machine

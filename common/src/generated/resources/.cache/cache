@@ -2636,7 +2636,7 @@ d0e5c6d1657285a4b0969cb80e9b05d841b908ea data/minecraft/tags/blocks/fence_gates.
 629beb169f945e980193dc4405b976f9251ff570 data/minecraft/tags/blocks/logs_that_burn.json
 da20b4e941729738bd5679e4e8e094833caf17f7 data/minecraft/tags/blocks/mineable/axe.json
 5bfb811528237ccb2695d5a79d74c1cdbff7b65a data/minecraft/tags/blocks/mineable/hoe.json
-a0a9552722a72159f0f3ea92627400a884ddfc18 data/minecraft/tags/blocks/mineable/pickaxe.json
+fa0c1457d16246bdee66bbc2fdc233bca4a7902a data/minecraft/tags/blocks/mineable/pickaxe.json
 62bffb9bd158a2125a690e1f0069a8b91b4341ab data/minecraft/tags/blocks/mineable/shovel.json
 8c47626d790c6e8924254d659bf8a98856916473 data/minecraft/tags/blocks/needs_diamond_tool.json
 c0a0969ee1843d6c4a28e4335c78091250e36c40 data/minecraft/tags/blocks/needs_iron_tool.json
