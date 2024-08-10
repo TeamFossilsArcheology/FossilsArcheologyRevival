@@ -24,7 +24,7 @@ import java.util.function.Predicate;
  * or defer the hit logic to the targets client
  */
 public class DelayedAttackGoal extends Goal {
-    private static final Predicate<Entity> CAN_ATTACK_TARGET = target -> !(target instanceof Player player) || (!player.isSpectator() && !player.isCreative() && target.level.getDifficulty() != Difficulty.PEACEFUL);
+    protected static final Predicate<Entity> CAN_ATTACK_TARGET = target -> !(target instanceof Player player) || (!player.isSpectator() && !player.isCreative() && target.level.getDifficulty() != Difficulty.PEACEFUL);
     protected static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
     protected final Prehistoric prehistoric;
     private final double speedModifier;

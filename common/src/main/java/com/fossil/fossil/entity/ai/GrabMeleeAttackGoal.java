@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.util.Util;
 import net.minecraft.world.damagesource.DamageSource;
@@ -13,16 +14,17 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
     private static final int ATTACK = 0;
     private static final int GRAB = 1;
     private static final int GRAB_DURATION = 55;
+    private final PrehistoricSwimming swimming;
     private int attackType = -1;
     private long grabStartTick = -1;
 
     public GrabMeleeAttackGoal(PrehistoricSwimming entity, double speed, boolean followTargetEvenIfNotSeen) {
         super(entity, speed, followTargetEvenIfNotSeen);
+        this.swimming = entity;
     }
 
     @Override
     public boolean canUse() {
-        //TODO: Currently used so that this does not conflict with BreachGoal. Might need better solution
         LivingEntity target = prehistoric.getTarget();
         if (target != null && target.isInWater()) {
             return super.canUse();
@@ -32,7 +34,17 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
 
     @Override
     public boolean canContinueToUse() {
-        return attackType == -1 && super.canContinueToUse();
+        if (attackType == ATTACK) {
+            return super.canContinueToUse();
+        }
+        if (attackType == GRAB && !swimming.isDoingGrabAttack()) {
+            return false;
+        }
+        LivingEntity target = prehistoric.getTarget();
+        if (target == null || !target.isAlive() || prehistoric.getCurrentOrder() == OrderType.STAY) {
+            return false;
+        }
+        return CAN_ATTACK_TARGET.test(target);
     }
 
     @Override
@@ -44,7 +56,6 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
 
     @Override
     protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
-        PrehistoricSwimming swimming = (PrehistoricSwimming) prehistoric;
         long currentTime = swimming.level.getGameTime();
         if (attackType == GRAB) {
             for (Entity passenger : swimming.getPassengers()) {
@@ -52,6 +63,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
                     if (swimming.tickCount % 20 == 0) {
                         boolean hurt = passenger.hurt(DamageSource.mobAttack(swimming), (float) swimming.getAttributeValue(Attributes.ATTACK_DAMAGE));
                         if (!hurt || (currentTime >= grabStartTick + GRAB_DURATION && swimming.getRandom().nextInt(5) == 0)) {
+                            attackEndTick = currentTime + 20;
                             swimming.stopGrabAttack(passenger);
                         }
                     }

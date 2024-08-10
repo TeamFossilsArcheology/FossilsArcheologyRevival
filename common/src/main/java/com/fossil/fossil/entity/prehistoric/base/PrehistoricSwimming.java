@@ -205,6 +205,9 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 timeInWater = 0;
                 timeOnLand++;
             }
+            if (isDoingGrabAttack() && (getTarget() == null || !getPassengers().contains(getTarget()))) {
+                setDoingGrabAttack(false);
+            }
         } else {
             beached = !isAmphibious() && !isInWater() && isOnGround();
             if (beached) {
