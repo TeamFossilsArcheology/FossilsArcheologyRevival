@@ -1,0 +1,35 @@
+{
+  "ai": {
+    "activity": "DIURNAL",
+    "attacking": "BASIC",
+    "climbing": "NONE",
+    "following": "AGGRESSIVE",
+    "jumping": "BASIC",
+    "response": "TERRITORIAL",
+    "stalking": "NONE",
+    "taming": "FEEDING",
+    "untaming": "ATTACK",
+    "moving": "FLIGHT",
+    "waterAbility": "IGNORE_AND_FISH"
+  },
+  "stats": {
+    "damageBase": 2.0,
+    "damageMax": 4.0,
+    "healthBase": 6.0,
+    "healthMax": 30.0,
+    "speedBase": 0.15,
+    "speedMax": 0.2,
+    "armorBase": 0.0,
+    "armorMax": 0.0,
+    "knockBackResistanceBase": 0,
+    "knockBackResistanceMax": 0
+  },
+  "adultAgeDays": 9,
+  "breaksBlocks": false,
+  "canBeRidden": false,
+  "maxHunger": 50.0,
+  "maxPopulation": 15,
+  "scaleBase": 0.3,
+  "scaleMax": 1.6,
+  "teenAgeDays": 4
+}

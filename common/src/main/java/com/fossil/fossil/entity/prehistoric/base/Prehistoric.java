@@ -31,8 +31,6 @@ import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ItemParticleOption;
-import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -109,7 +107,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
     public final ResourceLocation animationLocation;
     private OrderType currentOrder;
-    protected boolean hasFeatherToggle = false;
     protected boolean hasTeenTexture = true;
     protected boolean hasBabyTexture = true;
     private float headRadius;
@@ -134,9 +131,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public final Map<String, EntityHitboxManager.Hitbox> attackBoxes = new HashMap<>();
     public final Map<EntityHitboxManager.Hitbox, Vec3> activeAttackBoxes = new HashMap<>();
 
-    protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
+    protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
-        this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
+        this.animationLocation = animationLocation;
         this.moveControl = new SmoothTurningMoveControl(this);
         //lookControl = new TestLookControl(this);
         this.setHunger(this.getMaxHunger() / 2);
@@ -151,6 +148,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (hitboxes != null && !hitboxes.isEmpty()) {
             spawnHitBoxes(hitboxes, entityType);
         }
+    }
+
+    protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
+        this(entityType, level, new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json"));
     }
 
     private void spawnHitBoxes(List<EntityHitboxManager.Hitbox> hitboxes, EntityType<? extends Prehistoric> entityType) {

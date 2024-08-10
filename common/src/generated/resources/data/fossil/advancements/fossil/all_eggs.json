@@ -61,6 +61,20 @@
         ]
       }
     },
+    "aquilolamna": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:aquilolamna"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
     "arthropleura": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
@@ -181,6 +195,20 @@
             "condition": "minecraft:entity_properties",
             "predicate": {
               "type": "fossil:deinonychus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "dimetrodon": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:dimetrodon"
             },
             "entity": "this"
           }
@@ -523,6 +551,34 @@
         ]
       }
     },
+    "protoceratops": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:protoceratops"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "psittacosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:psittacosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
     "pteranodon": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
@@ -531,6 +587,20 @@
             "condition": "minecraft:entity_properties",
             "predicate": {
               "type": "fossil:pteranodon"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "quetzalcoatlus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:quetzalcoatlus"
             },
             "entity": "this"
           }
@@ -649,6 +719,62 @@
         ]
       }
     },
+    "dicranurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:dicranurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "lonchodomas": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:lonchodomas"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "scotoharpes": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:scotoharpes"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "walliserops": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:walliserops"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
     "tropeognathus": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
@@ -703,6 +829,9 @@
       "ankylosaurus"
     ],
     [
+      "aquilolamna"
+    ],
+    [
       "arthropleura"
     ],
     [
@@ -728,6 +857,9 @@
     ],
     [
       "deinonychus"
+    ],
+    [
+      "dimetrodon"
     ],
     [
       "dilophosaurus"
@@ -802,7 +934,16 @@
       "plesiosaurus"
     ],
     [
+      "protoceratops"
+    ],
+    [
+      "psittacosaurus"
+    ],
+    [
       "pteranodon"
+    ],
+    [
+      "quetzalcoatlus"
     ],
     [
       "sarcosuchus"
@@ -827,6 +968,18 @@
     ],
     [
       "triceratops"
+    ],
+    [
+      "dicranurus"
+    ],
+    [
+      "lonchodomas"
+    ],
+    [
+      "scotoharpes"
+    ],
+    [
+      "walliserops"
     ],
     [
       "tropeognathus"

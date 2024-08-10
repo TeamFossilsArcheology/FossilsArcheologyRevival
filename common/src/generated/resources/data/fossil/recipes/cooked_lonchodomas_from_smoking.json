@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_lonchodomas"
+  },
+  "result": "fossil:cooked_lonchodomas",
+  "experience": 1.5,
+  "cookingtime": 100
+}

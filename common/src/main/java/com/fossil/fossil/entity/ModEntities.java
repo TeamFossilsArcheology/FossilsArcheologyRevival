@@ -13,6 +13,7 @@ import com.fossil.fossil.entity.prehistoric.fish.Nautilus;
 import com.fossil.fossil.entity.prehistoric.fish.Sturgeon;
 import com.fossil.fossil.entity.prehistoric.flying.Confuciusornis;
 import com.fossil.fossil.entity.prehistoric.flying.Pteranodon;
+import com.fossil.fossil.entity.prehistoric.flying.Quetzalcoatlus;
 import com.fossil.fossil.entity.prehistoric.flying.Tropeognathus;
 import com.fossil.fossil.entity.prehistoric.swimming.*;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
@@ -34,6 +35,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Allosaurus>> ALLOSAURUS = registerDino("allosaurus", Allosaurus::new, 1.1f, 1.3f);
     //public static final RegistrySupplier<EntityType<Ammonite>> AMMONITE = registerDino("ammonite", Ammonite::new, 2, 1);
     public static final RegistrySupplier<EntityType<Ankylosaurus>> ANKYLOSAURUS = registerDino("ankylosaurus", Ankylosaurus::new, 1.6f, 1.4f);
+    public static final RegistrySupplier<EntityType<Aquilolamna>> AQUILOLAMNA = registerDino("aquilolamna", Aquilolamna::new, 1, 1);
     public static final RegistrySupplier<EntityType<Arthropleura>> ARTHROPLEURA = registerDino("arthropleura", Arthropleura::new, 2, 0.5f);
     public static final RegistrySupplier<EntityType<Brachiosaurus>> BRACHIOSAURUS = registerDino("brachiosaurus", Brachiosaurus::new, 0.95f, 1.3f);
     public static final RegistrySupplier<EntityType<Ceratosaurus>> CERATOSAURUS = registerDino("ceratosaurus", Ceratosaurus::new, 1.55f, 1.3f);
@@ -44,6 +46,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Crassigyrinus>> CRASSIGYRINUS = registerDino("crassigyrinus", Crassigyrinus::new, 1.1f, 0.3f);
     public static final RegistrySupplier<EntityType<Deinonychus>> DEINONYCHUS = registerDino("deinonychus", Deinonychus::new, 1.2f, 1.3f);
     public static final RegistrySupplier<EntityType<Dilophosaurus>> DILOPHOSAURUS = registerDino("dilophosaurus", Dilophosaurus::new, 1.25f, 1.5f);
+    public static final RegistrySupplier<EntityType<Dimetrodon>> DIMETRODON = registerDino("dimetrodon", Dimetrodon::new, 1.3f, 1.7f);
     public static final RegistrySupplier<EntityType<Diplocaulus>> DIPLOCAULUS = registerDino("diplocaulus", Diplocaulus::new, 1.5f, 0.32f);
     public static final RegistrySupplier<EntityType<Diplodocus>> DIPLODOCUS = registerDino("diplodocus", Diplodocus::new, 1.85f, 1.85f);
     public static final RegistrySupplier<EntityType<Dodo>> DODO = registerDino("dodo", Dodo::new, 1, 1);
@@ -71,8 +74,11 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Phorusrhacos>> PHORUSRHACOS = registerDino("phorusrhacos", Phorusrhacos::new, 1.4f, 2.5f);
     public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.6f, 2f);
     public static final RegistrySupplier<EntityType<Plesiosaurus>> PLESIOSAURUS = registerDino("plesiosaurus", Plesiosaurus::new, 1, 1);
+    public static final RegistrySupplier<EntityType<Protoceratops>> PROTOCERATOPS = registerDino("protoceratops", Protoceratops::new, 0.8f, 1);
+    public static final RegistrySupplier<EntityType<Psittacosaurus>> PSITTACOSAURUS = registerDino("psittacosaurus", Psittacosaurus::new, 0.8f, 1);
     public static final RegistrySupplier<EntityType<Pteranodon>> PTERANODON = registerDino("pteranodon", Pteranodon::new, 1.1f, 1.1f);
     public static final RegistrySupplier<EntityType<Quagga>> QUAGGA = registerDino("quagga", Quagga::new, 1.3964844f, 1.6f);
+    public static final RegistrySupplier<EntityType<Quetzalcoatlus>> QUETZALCOATLUS = registerDino("quetzalcoatlus", Quetzalcoatlus::new, 1f, 1f);
     public static final RegistrySupplier<EntityType<Sarcosuchus>> SARCOSUCHUS = registerDino("sarcosuchus", Sarcosuchus::new, 2, 1);
     public static final RegistrySupplier<EntityType<Smilodon>> SMILODON = registerDino("smilodon", Smilodon::new, 1.2f, 1.4f);
     public static final RegistrySupplier<EntityType<Spinosaurus>> SPINOSAURUS = registerDino("spinosaurus", Spinosaurus::new, 1.5f, 1);
@@ -85,6 +91,10 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Tropeognathus>> TROPEOGNATHUS = registerDino("tropeognathus", Tropeognathus::new, 1.25f, 1.1f);
     public static final RegistrySupplier<EntityType<Tyrannosaurus>> TYRANNOSAURUS = registerDino("tyrannosaurus", Tyrannosaurus::new, 1.3f, 1.25f);
     public static final RegistrySupplier<EntityType<Velociraptor>> VELOCIRAPTOR = registerDino("velociraptor", Velociraptor::new, 1.5f, 1.5f);
+    public static final RegistrySupplier<EntityType<Dicranurus>> DICRANURUS = registerDino("dicranurus", Dicranurus::new, 1.1f, 0.8f);
+    public static final RegistrySupplier<EntityType<Lonchodomas>> LONCHODOMAS = registerDino("lonchodomas", Lonchodomas::new, 1.1f, 0.8f);
+    public static final RegistrySupplier<EntityType<Scotoharpes>> SCOTOHARPES = registerDino("scotoharpes", Scotoharpes::new, 1.1f, 0.8f);
+    public static final RegistrySupplier<EntityType<Walliserops>> WALLISEROPS = registerDino("walliserops", Walliserops::new, 1.1f, 0.8f);
 
     public static final RegistrySupplier<EntityType<DinosaurEgg>> DINOSAUR_EGG = ENTITIES.register(
             "dinosaur_egg", () -> EntityType.Builder.of(DinosaurEgg::new, MobCategory.CREATURE).sized(0.5F, 0.6F).build("dinosaur_egg"));
@@ -132,6 +142,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(ALLIGATOR_GAR, PrehistoricFish::createAttributes);
         EntityAttributeRegistry.register(ALLOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(ANKYLOSAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(AQUILOLAMNA, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(ARTHROPLEURA, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(BRACHIOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(CERATOSAURUS, Prehistoric::createAttributes);
@@ -142,6 +153,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(CRASSIGYRINUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DEINONYCHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DILOPHOSAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(DIMETRODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DIPLOCAULUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DIPLODOCUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DODO, Prehistoric::createAttributes);
@@ -169,8 +181,11 @@ public class ModEntities {
         EntityAttributeRegistry.register(PHORUSRHACOS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PLATYBELODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PLESIOSAURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(PROTOCERATOPS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(PSITTACOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(PTERANODON, PrehistoricFlying::createAttributes);
         EntityAttributeRegistry.register(QUAGGA, AbstractChestedHorse::createBaseChestedHorseAttributes);
+        EntityAttributeRegistry.register(QUETZALCOATLUS, PrehistoricFlying::createAttributes);
         EntityAttributeRegistry.register(SARCOSUCHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(SMILODON, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(SPINOSAURUS, Prehistoric::createAttributes);
@@ -183,6 +198,11 @@ public class ModEntities {
         EntityAttributeRegistry.register(TROPEOGNATHUS, PrehistoricFlying::createAttributes);
         EntityAttributeRegistry.register(TYRANNOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(VELOCIRAPTOR, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(DICRANURUS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(LONCHODOMAS, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(SCOTOHARPES, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(WALLISEROPS, Prehistoric::createAttributes);
+
         EntityAttributeRegistry.register(ANUBITE, Anubite::createAttributes);
         EntityAttributeRegistry.register(ANU_BOSS, AnuBoss::createAttributes);
         EntityAttributeRegistry.register(ANU_DEAD, AnuDead::createAttributes);

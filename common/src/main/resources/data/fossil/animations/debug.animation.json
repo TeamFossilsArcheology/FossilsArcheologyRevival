@@ -1,0 +1,22 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.debug.firstRight": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.debug.secondLeft": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.debug.bothUp": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.debug.bothRotation": {
+      "loop": true,
+      "animation_length": 3.33333
+    }
+  },
+  "geckolib_format_version": 2
+}

@@ -38,7 +38,6 @@ public class Triceratops extends Prehistoric {
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(type, level);
-        this.hasFeatherToggle = true;
     }
 
     protected void tickCustomParts() {

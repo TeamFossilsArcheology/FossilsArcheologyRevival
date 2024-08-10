@@ -1,12 +1,15 @@
 package com.fossil.fossil.entity.prehistoric;
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.FleeBattleGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.util.Gender;
 import net.minecraft.core.BlockPos;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -40,6 +43,25 @@ public class Arthropleura extends Prehistoric {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
         goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+    }
+
+    @Override
+    public void refreshTexturePath() {
+        if (!level.isClientSide) {
+            return;
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append("textures/entity/arthropleura/arthropleura");
+        if (hasBabyTexture && isBaby()) builder.append("_baby");
+        if (!hasTeenTexture && isTeen() || isAdult()) {
+            if (getGender() == Gender.MALE) {
+                builder.append("_male");
+            } else {
+                builder.append("_female");
+            }
+        }
+        builder.append(".png");
+        textureLocation = new ResourceLocation(Fossil.MOD_ID, builder.toString());
     }
 
     @Override

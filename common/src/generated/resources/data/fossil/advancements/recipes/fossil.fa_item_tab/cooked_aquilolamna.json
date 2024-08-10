@@ -1,0 +1,34 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:cooked_aquilolamna"
+    ]
+  },
+  "criteria": {
+    "has_aquilolamna_meat": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:meat_aquilolamna"
+            ]
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:cooked_aquilolamna"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_aquilolamna_meat",
+      "has_the_recipe"
+    ]
+  ]
+}

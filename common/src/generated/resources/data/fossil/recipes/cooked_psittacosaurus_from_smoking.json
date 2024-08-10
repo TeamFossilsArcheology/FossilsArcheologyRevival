@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_psittacosaurus"
+  },
+  "result": "fossil:cooked_psittacosaurus",
+  "experience": 1.5,
+  "cookingtime": 100
+}

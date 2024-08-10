@@ -32,7 +32,8 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     ALLIGATOR_GAR(ModEntities.ALLIGATOR_GAR, PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE, 0X43462A, 0XAF4231),
     ALLOSAURUS(ModEntities.ALLOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0X907B6C, 0X5F422D),
     ANKYLOSAURUS(ModEntities.ANKYLOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, 0X8A5B49, 0X211B13),
-    ARTHROPLEURA(ModEntities.ARTHROPLEURA, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.HERBIVORE, 0X2A292C, 0X97531F),
+    AQUILOLAMNA(ModEntities.AQUILOLAMNA, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE, 0XD6D6D6, 0X3B3B3B),
+    ARTHROPLEURA(ModEntities.ARTHROPLEURA, PrehistoricMobType.ARTHROPOD, TimePeriod.PALEOZOIC, Diet.HERBIVORE, 0X2A292C, 0X97531F),
     BRACHIOSAURUS(ModEntities.BRACHIOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, 0X52523E, 0X222114),
     CERATOSAURUS(ModEntities.CERATOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0.6f, 0XB4B4A7, 0X776446),
     CITIPATI(ModEntities.CITIPATI, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.OMNIVORE, 0.6f, 0X5E4A3E, 0X667373),
@@ -41,6 +42,7 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     CONFUCIUSORNIS(ModEntities.CONFUCIUSORNIS, PrehistoricMobType.BIRD, TimePeriod.MESOZOIC, Diet.HERBIVORE, 0XDAE5E9, 0X8B8B8D),
     CRASSIGYRINUS(ModEntities.CRASSIGYRINUS, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE, 0XCA773A, 0X8F4B2D),
     DEINONYCHUS(ModEntities.DEINONYCHUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, 0.6f, 0X2B2424, 0XC8C8C8),
+    DIMETRODON(ModEntities.DIMETRODON, PrehistoricMobType.DINOSAUR, TimePeriod.PALEOZOIC, Diet.PISCI_CARNIVORE, 0XD6D6D6, 0X3B3B3B),
     DILOPHOSAURUS(ModEntities.DILOPHOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0.5f, 0X4E5931, 0XF25314),
     DIPLOCAULUS(ModEntities.DIPLOCAULUS, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE, 0XB0A380, 0X7C9694),
     DIPLODOCUS(ModEntities.DIPLODOCUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, 0X937373, 0XDAD8C7),
@@ -58,8 +60,8 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     MEGALANIA(ModEntities.MEGALANIA, PrehistoricMobType.DINOSAUR, TimePeriod.CENOZOIC, Diet.CARNIVORE_EGG, 0X6D543D, 0XDCAE73),
     MEGALOCEROS(ModEntities.MEGALOCEROS, PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE, 0X5C2E1A, 0X8E5A3B),
     MEGALODON(ModEntities.MEGALODON, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.CENOZOIC, Diet.PISCI_CARNIVORE, 0X697B7E, 0XD0D5D5),
-    MEGALOGRAPTUS(ModEntities.MEGALOGRAPTUS, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCIVORE, 0XB26F45, 0X713719),
-    MEGANEURA(ModEntities.MEGANEURA, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCI_CARNIVORE, 0X6A4C3F, 0XE0B45A),
+    MEGALOGRAPTUS(ModEntities.MEGALOGRAPTUS, PrehistoricMobType.ARTHROPOD, TimePeriod.PALEOZOIC, Diet.PISCIVORE, 0XB26F45, 0X713719),
+    MEGANEURA(ModEntities.MEGANEURA, PrehistoricMobType.ARTHROPOD, TimePeriod.PALEOZOIC, Diet.PISCI_CARNIVORE, 0X6A4C3F, 0XE0B45A),
     MOSASAURUS(ModEntities.MOSASAURUS, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCI_CARNIVORE, 0X888D90, 0X3A4C52),
     NAUTILUS(ModEntities.NAUTILUS, PrehistoricMobType.FISH, TimePeriod.MESOZOIC, Diet.NONE, 0XC55F47, 0XF5F5F5),
     ORNITHOLESTES(ModEntities.ORNITHOLESTES, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, 0.5f, 0X2F221A, 0XC43824),
@@ -69,9 +71,11 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     PHORUSRHACOS(ModEntities.PHORUSRHACOS, PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.CARNIVORE, 0X5F4E3E, 0XD4D4D4),
     PLATYBELODON(ModEntities.PLATYBELODON, PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE, 0X8B6551, 0X62473A),
     PLESIOSAURUS(ModEntities.PLESIOSAURUS, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCIVORE, 0XE4A86E, 0XE17920),
+    PROTOCERATOPS(ModEntities.PROTOCERATOPS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, 0XD6D6D6, 0X3B3B3B),
+    PSITTACOSAURUS(ModEntities.PSITTACOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0XD6D6D6, 0X3B3B3B),
     PTERANODON(ModEntities.PTERANODON, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE, 0.4f, 0XD6D6D6, 0X3B3B3B),
     QUAGGA(ModEntities.QUAGGA, PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.HERBIVORE, 0X763C24, 0XD3B9AB),
-    //QUETZALCOATLUS(ModEntities.QUETZALCOATLUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCIVORE, 0XD6D6D6, 0X3B3B3B),
+    QUETZALCOATLUS(ModEntities.QUETZALCOATLUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0XD6D6D6, 0X3B3B3B),
     SARCOSUCHUS(ModEntities.SARCOSUCHUS, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.MESOZOIC, Diet.PISCI_CARNIVORE, 0X4B4929, 0X8D8C65),
     SMILODON(ModEntities.SMILODON, PrehistoricMobType.MAMMAL, TimePeriod.CENOZOIC, Diet.CARNIVORE, 0XB88C64, 0XECDFCE),
     SPINOSAURUS(ModEntities.SPINOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.PISCI_CARNIVORE, 0X84512A, 0X562F20),
@@ -81,6 +85,10 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     TIKTAALIK(ModEntities.TIKTAALIK, PrehistoricMobType.DINOSAUR_AQUATIC, TimePeriod.PALEOZOIC, Diet.PISCI_CARNIVORE, 0X6A5A1A, 0XD7CF99),
     TITANIS(ModEntities.TITANIS, PrehistoricMobType.BIRD, TimePeriod.CENOZOIC, Diet.CARNIVORE, 0X484848, 0XEFEFEF),
     TRICERATOPS(ModEntities.TRICERATOPS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.HERBIVORE, 0X64352D, 0X251A17),
+    DICRANURUS(ModEntities.DICRANURUS, PrehistoricMobType.ARTHROPOD, TimePeriod.PALEOZOIC, Diet.PISCIVORE, 0XD6D6D6, 0X3B3B3B),
+    LONCHODOMAS(ModEntities.LONCHODOMAS, PrehistoricMobType.ARTHROPOD, TimePeriod.PALEOZOIC, Diet.PISCIVORE, 0XD6D6D6, 0X3B3B3B),
+    SCOTOHARPES(ModEntities.SCOTOHARPES, PrehistoricMobType.ARTHROPOD, TimePeriod.PALEOZOIC, Diet.PISCIVORE, 0XD6D6D6, 0X3B3B3B),
+    WALLISEROPS(ModEntities.WALLISEROPS, PrehistoricMobType.ARTHROPOD, TimePeriod.PALEOZOIC, Diet.PISCIVORE, 0XD6D6D6, 0X3B3B3B),
     TROPEOGNATHUS(ModEntities.TROPEOGNATHUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0XD6D6D6, 0X3B3B3B),
     TYRANNOSAURUS(ModEntities.TYRANNOSAURUS, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE, 0X9D8A74, 0X4C3116),
     VELOCIRAPTOR(ModEntities.VELOCIRAPTOR, PrehistoricMobType.DINOSAUR, TimePeriod.MESOZOIC, Diet.CARNIVORE_EGG, 0.5f, 0X4A0D04, 0XC9C9C9);
@@ -147,7 +155,7 @@ public enum PrehistoricEntityInfo implements EntityInfo {
                 //TODO: Define value somewhere. Also should all dinos be added here?
                 info.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));
                 registerItem("egg_item", info, properties -> new FishEggItem(info), item -> info.eggItem = item);
-            } else if (info.mobType == PrehistoricMobType.DINOSAUR || info.mobType == PrehistoricMobType.DINOSAUR_AQUATIC) {
+            } else if (info.mobType == PrehistoricMobType.DINOSAUR || info.mobType == PrehistoricMobType.DINOSAUR_AQUATIC || info.mobType == PrehistoricMobType.ARTHROPOD) {
                 info.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 registerItem("egg_item", info, p -> new DinoEggItem(info), item -> info.eggItem = item);
             } else if (info.mobType == PrehistoricMobType.MAMMAL) {
@@ -238,10 +246,10 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     }
 
     public boolean hasBones() {
-        return timePeriod != TimePeriod.CURRENT && mobType != PrehistoricMobType.FISH && this != MEGANEURA && this != MEGALODON && this != MEGALOGRAPTUS && this != ARTHROPLEURA;
+        return timePeriod != TimePeriod.CURRENT && mobType != PrehistoricMobType.FISH && mobType != PrehistoricMobType.ARTHROPOD && this != MEGALODON;
     }
 
     public boolean isVivariousAquatic() {
-        return this.mobType == PrehistoricMobType.DINOSAUR_AQUATIC && this != SARCOSUCHUS;
+        return mobType == PrehistoricMobType.DINOSAUR_AQUATIC && this != SARCOSUCHUS || mobType == PrehistoricMobType.ARTHROPOD;
     }
 }

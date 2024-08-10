@@ -11,6 +11,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
@@ -58,6 +59,12 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected boolean isLandNavigator = true;
     protected boolean breachTargetReached = false;
     private boolean beached;
+
+    protected PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
+        super(entityType, level, animationLocation);
+        setPathfindingMalus(BlockPathTypes.WATER, 0);
+        switchNavigator(false);
+    }
 
     protected PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);

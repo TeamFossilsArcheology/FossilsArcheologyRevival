@@ -61,6 +61,7 @@ public class ClientInit {
         registerFish(ModEntities.ALLIGATOR_GAR, "alligator_gar");
         registerDino(ModEntities.ALLOSAURUS, "allosaurus", RenderType::entityCutout);
         registerDino(ModEntities.ANKYLOSAURUS, "ankylosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.AQUILOLAMNA, "aquilolamna", RenderType::entityCutout);
         registerDino(ModEntities.ARTHROPLEURA, "arthropleura");
         registerDino(ModEntities.BRACHIOSAURUS, "brachiosaurus", RenderType::entityCutout);
         registerDino(ModEntities.CERATOSAURUS, "ceratosaurus", RenderType::entityCutout);
@@ -71,6 +72,7 @@ public class ClientInit {
         registerDino(ModEntities.CRASSIGYRINUS, "crassigyrinus");
         registerDino(ModEntities.DEINONYCHUS, "deinonychus", RenderType::entityCutout);
         registerDino(ModEntities.DILOPHOSAURUS, "dilophosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.DIMETRODON, "dimetrodon", RenderType::entityCutout);
         registerDino(ModEntities.DIPLOCAULUS, "diplocaulus");
         registerDino(ModEntities.DIPLODOCUS, "diplodocus", RenderType::entityCutout);
         registerDino(ModEntities.DODO, "dodo");
@@ -98,8 +100,11 @@ public class ClientInit {
         registerDino(ModEntities.PHORUSRHACOS, "phorusrhacos");
         registerDino(ModEntities.PLATYBELODON, "platybelodon", RenderType::entityCutout);
         registerDino(ModEntities.PLESIOSAURUS, "plesiosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.PROTOCERATOPS, "protoceratops", RenderType::entityCutout);
+        registerDino(ModEntities.PSITTACOSAURUS, "psittacosaurus", RenderType::entityCutout);
         registerDino(ModEntities.PTERANODON, "pteranodon");
         EntityRendererRegistry.register(ModEntities.QUAGGA, QuaggaRenderer::new);
+        registerDino(ModEntities.QUETZALCOATLUS, "quetzalcoatlus");
         registerDino(ModEntities.SARCOSUCHUS, "sarcosuchus");
         registerDino(ModEntities.SMILODON, "smilodon", RenderType::entityCutout);
         registerDino(ModEntities.SPINOSAURUS, "spinosaurus");
@@ -112,6 +117,11 @@ public class ClientInit {
         registerDino(ModEntities.TROPEOGNATHUS, "tropeognathus", RenderType::entityCutout);
         registerDino(ModEntities.TYRANNOSAURUS, "tyrannosaurus", RenderType::entityCutout);
         registerDino(ModEntities.VELOCIRAPTOR, "velociraptor", RenderType::entityCutout);
+
+        registerTrilobite(ModEntities.DICRANURUS);
+        registerTrilobite(ModEntities.LONCHODOMAS);
+        registerTrilobite(ModEntities.SCOTOHARPES);
+        registerTrilobite(ModEntities.WALLISEROPS);
         EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, context -> new DinosaurEggRenderer(context, new DinosaurEggModel()));
         EntityRendererRegistry.register(ModEntities.THROWN_BIRD_EGG, ThrownItemRenderer::new);
 
@@ -134,6 +144,10 @@ public class ClientInit {
         ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION, RedstoneExplosionParticle.Provider::new);
         ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION_EMITTER, new RedstoneExplosionEmitterParticle.Provider());
+    }
+
+    private static <T extends Prehistoric> void registerTrilobite(RegistrySupplier<EntityType<T>> type) {
+        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, "trilobite.geo.json", "trilobite.animation.json", RenderType::entityCutoutNoCull));
     }
 
     private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String name, Function<ResourceLocation, RenderType> renderType) {

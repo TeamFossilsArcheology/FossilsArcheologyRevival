@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_scotoharpes"
+  },
+  "result": "fossil:cooked_scotoharpes",
+  "experience": 1.5,
+  "cookingtime": 200
+}

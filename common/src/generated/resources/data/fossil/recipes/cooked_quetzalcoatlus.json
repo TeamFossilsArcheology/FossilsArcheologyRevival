@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "ingredient": {
+    "item": "fossil:meat_quetzalcoatlus"
+  },
+  "result": "fossil:cooked_quetzalcoatlus",
+  "experience": 1.5,
+  "cookingtime": 200
+}
