@@ -116,7 +116,7 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
         updateTickForEntity(animatable);
     }
 
-    //TODO: Find a better way to do this. Maybe in geckolib 4
+    //TODO: Find a better way to do this. Maybe in geckolib 4, Edit: RenderPerBone
     private final Map<Integer, Integer> tickForEntity = new HashMap<>();
 
     private boolean entityTickMatchesRenderTick(T animatable) {

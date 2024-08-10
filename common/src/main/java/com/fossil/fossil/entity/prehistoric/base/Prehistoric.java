@@ -536,7 +536,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public double getJumpStrength() {
-        return 1;//TODO: Jump Strength for all rideable dinos
+        return 0.3;
     }
 
     private void doJump(double upwardMovement, double forwardMovement) {
