@@ -15,25 +15,6 @@
       "animation_length": 1,
       "blocks_per_second": 0.9
     },
-    "animation.dodo.turn_right": {
-      "loop": true
-    },
-    "animation.dodo.turn_left": {
-      "loop": true
-    },
-    "animation.dodo.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.dodo.runspeeddemo": {
-      "loop": true
-    },
-    "animation.dodo.turningwalkspeeddemo": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dodo.turningrunspeeddemo": {
-      "loop": true
-    },
     "animation.dodo.speak1": {
       "animation_length": 1.5
     },

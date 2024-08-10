@@ -31,10 +31,6 @@
       "animation_length": 1.5,
       "blocks_per_second": 1.5
     },
-    "animation.therizinosaurus.run_baby": {
-      "loop": true,
-      "animation_length": 0.75
-    },
     "animation.therizinosaurus.attack1": {
       "animation_length": 1.04,
       "action_delay": [
@@ -67,12 +63,6 @@
     "animation.therizinosaurus.eat3": {
       "animation_length": 3
     },
-    "animation.therizinosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.therizinosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.therizinosaurus.speak": {
       "animation_length": 2
     },
@@ -85,25 +75,6 @@
     "animation.therizinosaurus.dance": {
       "loop": true,
       "animation_length": 2
-    },
-    "animation.therizinosaurus.WalkSpeedDemo": {
-      "loop": true,
-      "animation_length": 18
-    },
-    "animation.therizinosaurus.RunSpeedDemo": {
-      "loop": true,
-      "animation_length": 18
-    },
-    "animation.therizinosaurus.BabyRunSpeedDemo": {
-      "loop": true,
-      "animation_length": 18
-    },
-    "animation.therizinosaurus.SwimSpeedDemo": {
-      "loop": true
-    },
-    "animation.therizinosaurus.TurningRadiusDemo": {
-      "loop": true,
-      "animation_length": 6
     }
   },
   "geckolib_format_version": 2

@@ -11,7 +11,7 @@
     },
     "animation.liopleurodon.eat": {
       "loop": true,
-      "animation_length": 1.75
+      "animation_length": 1.3333
     },
     "animation.liopleurodon.grab": {
       "loop": true,

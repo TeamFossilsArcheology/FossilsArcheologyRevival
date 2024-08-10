@@ -16,6 +16,12 @@
     "animation.sturgeon.land": {
       "loop": true,
       "animation_length": 4
+    },
+    "animation.sturgeon.turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "animation.sturgeon.turn_right": {
+      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2

@@ -48,12 +48,6 @@
       "loop": true,
       "animation_length": 1.4167,
       "blocks_per_second": 1.1
-    },
-    "animation.velociraptor.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.velociraptor.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

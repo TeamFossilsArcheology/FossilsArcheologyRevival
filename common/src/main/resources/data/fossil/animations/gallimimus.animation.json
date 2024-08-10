@@ -48,13 +48,6 @@
       "action_delay": [
         0.58
       ]
-    },
-    "animation.gallimimus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.gallimimus.runspeeddemo": {
-      "loop": true,
-      "animation_length": 1.2
     }
   },
   "geckolib_format_version": 2

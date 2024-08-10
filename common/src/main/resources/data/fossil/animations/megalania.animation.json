@@ -32,12 +32,6 @@
     "animation.megalania.eat": {
       "animation_length": 1.5
     },
-    "animation.megalania.turn_right": {
-      "loop": true
-    },
-    "animation.megalania.turn_left": {
-      "loop": true
-    },
     "animation.megalania.TongueFlick": {
       "animation_length": 1.6667
     },
@@ -52,12 +46,6 @@
       "loop": true,
       "animation_length": 1.0417,
       "blocks_per_second": 0.6
-    },
-    "animation.megalania.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.megalania.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

@@ -1,12 +1,6 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.edaphosaurus.right_turn": {
-      "loop": true
-    },
-    "animation.edaphosaurus.left_turn": {
-      "loop": true
-    },
     "animation.edaphosaurus.run": {
       "loop": true,
       "animation_length": 1,
@@ -40,12 +34,6 @@
     "animation.edaphosaurus.jump/fall": {
       "loop": true,
       "animation_length": 2
-    },
-    "animation.edaphosaurus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.edaphosaurus.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

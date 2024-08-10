@@ -44,12 +44,6 @@
     "animation.compsognathus.jump/fall": {
       "loop": true,
       "animation_length": 2
-    },
-    "animation.compsognathus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.compsognathus.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

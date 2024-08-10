@@ -57,12 +57,6 @@
       "loop": "hold_on_last_frame",
       "animation_length": 1
     },
-    "animation.dilophosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.dilophosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.dilophosaurus.speak": {
       "animation_length": 2
     },
@@ -77,15 +71,6 @@
     },
     "animation.dilophosaurus.attack3": {
       "animation_length": 2
-    },
-    "animation.dilophosaurus.ontogeny_baby": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.dilophosaurus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.dilophosaurus.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

@@ -42,21 +42,9 @@
       "loop": true,
       "animation_length": 2
     },
-    "animation.ceratosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.ceratosaurus.sleep": {
       "loop": true,
       "animation_length": 12
-    },
-    "animation.ceratosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.ceratosaurus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.ceratosaurus.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

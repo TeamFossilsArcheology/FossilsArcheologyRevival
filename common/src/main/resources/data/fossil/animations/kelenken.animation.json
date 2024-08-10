@@ -6,12 +6,6 @@
       "animation_length": 2,
       "blocks_per_second": 1.3125
     },
-    "animation.kelenken.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.kelenken.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.kelenken.drink": {
       "animation_length": 3
     },
@@ -48,12 +42,6 @@
       "loop": true,
       "animation_length": 0.9583,
       "blocks_per_second": 4.1
-    },
-    "animation.kelenken.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.kelenken.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

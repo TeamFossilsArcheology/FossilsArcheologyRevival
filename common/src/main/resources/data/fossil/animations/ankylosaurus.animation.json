@@ -48,12 +48,12 @@
         0.56
       ]
     },
-    "animation.ankylosaurus.call2": {
-      "animation_length": 3
-    },
     "animation.ankylosaurus.sit1": {
       "loop": true,
       "animation_length": 12
+    },
+    "animation.ankylosaurus.call2": {
+      "animation_length": 3
     },
     "animation.ankylosaurus.idle": {
       "loop": true,

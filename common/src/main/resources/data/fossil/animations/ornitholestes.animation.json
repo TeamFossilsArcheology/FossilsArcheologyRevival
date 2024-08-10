@@ -6,12 +6,6 @@
       "animation_length": 1.4167,
       "blocks_per_second": 1.2
     },
-    "animation.ornitholestes.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.ornitholestes.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.ornitholestes.attack": {
       "animation_length": 1,
       "action_delay": [
@@ -54,12 +48,6 @@
     },
     "animation.ornitholestes.display": {
       "animation_length": 2.4583
-    },
-    "animation.ornitholestes.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.ornitholestes.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

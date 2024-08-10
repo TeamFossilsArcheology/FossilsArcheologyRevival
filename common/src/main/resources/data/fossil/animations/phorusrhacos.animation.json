@@ -45,12 +45,6 @@
       "loop": true,
       "animation_length": 0.9583,
       "blocks_per_second": 4.1
-    },
-    "animation.phorusrhacos.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.phorusrhacos.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

@@ -30,9 +30,6 @@
     "animation.citipati.eat": {
       "animation_length": 3.0417
     },
-    "animation.citipati.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.citipati.attack1": {
       "animation_length": 1,
       "action_delay": [
@@ -42,20 +39,8 @@
     "animation.citipati.call": {
       "animation_length": 1.25
     },
-    "animation.citipati.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.citipati.speak": {
       "animation_length": 2
-    },
-    "dontusethis": {
-      "animation_length": 23.75
-    },
-    "animation.citipati.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.citipati.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

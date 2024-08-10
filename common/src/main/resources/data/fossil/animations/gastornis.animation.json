@@ -6,12 +6,6 @@
       "animation_length": 3.25,
       "blocks_per_second": 0.825
     },
-    "animation.gastornis.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.gastornis.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.gastornis.drink": {
       "animation_length": 3
     },
@@ -47,12 +41,6 @@
       "loop": true,
       "animation_length": 1.75,
       "blocks_per_second": 2.0
-    },
-    "animation.gastornis.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.gastornis.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

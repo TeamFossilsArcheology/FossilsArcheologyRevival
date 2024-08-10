@@ -48,18 +48,6 @@
     "animation.deinonychus.jump/fall": {
       "loop": true,
       "animation_length": 2
-    },
-    "animation.deinonychus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.deinonychus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.deinonychus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.deinonychus.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

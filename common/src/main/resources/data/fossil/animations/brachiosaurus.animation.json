@@ -20,7 +20,7 @@
       "animation_length": 21.0833
     },
     "animation.brachiosaurus.eat": {
-      "animation_length": 7.2917
+      "animation_length": 6.8333
     },
     "animation.brachiosaurus.idle": {
       "loop": true,
@@ -44,9 +44,6 @@
     },
     "animation.brachiosaurus.speak": {
       "animation_length": 2
-    },
-    "animation.brachiosaurus.walkspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

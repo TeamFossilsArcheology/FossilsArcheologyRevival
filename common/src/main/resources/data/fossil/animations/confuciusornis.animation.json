@@ -48,9 +48,6 @@
     "animation.confuciusornis.sleep/sit": {
       "loop": true,
       "animation_length": 12
-    },
-    "animation.confuciusornis.walkspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

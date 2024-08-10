@@ -35,9 +35,6 @@
     "animation.megalograptus.run": {
       "loop": true,
       "animation_length": 0.5833
-    },
-    "animation.megalograptus.walkspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

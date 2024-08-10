@@ -49,12 +49,6 @@
     "animation.megaloceros.swim": {
       "loop": true,
       "animation_length": 4
-    },
-    "animation.megaloceros.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.megaloceros.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

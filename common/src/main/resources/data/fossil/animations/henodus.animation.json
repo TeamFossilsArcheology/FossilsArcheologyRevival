@@ -34,9 +34,6 @@
     "animation.henodus.sit/sleep": {
       "loop": true,
       "animation_length": 4
-    },
-    "animation.henodus.walkspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

@@ -44,12 +44,6 @@
       "loop": true,
       "animation_length": 0.6667,
       "blocks_per_second": 6.0
-    },
-    "animation.titanis.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.titanis.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

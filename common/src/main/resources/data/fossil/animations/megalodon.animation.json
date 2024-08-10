@@ -34,7 +34,7 @@
       "animation_length": 8
     },
     "animation.megalodon.eat": {
-      "animation_length": 3
+      "animation_length": 2.4167
     },
     "animation.megalodon.grab": {
       "loop": true,

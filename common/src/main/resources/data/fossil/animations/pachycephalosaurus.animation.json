@@ -51,12 +51,6 @@
     },
     "animation.pachycephalosaurus.display": {
       "animation_length": 8
-    },
-    "animation.pachycephalosaurus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.pachycephalosaurus.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

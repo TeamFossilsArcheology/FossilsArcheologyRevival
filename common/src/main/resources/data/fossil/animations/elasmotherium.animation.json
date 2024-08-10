@@ -35,12 +35,6 @@
     },
     "animation.elasmotherium.eat/drink": {
       "animation_length": 3
-    },
-    "animation.elasmotherium.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.elasmotherium.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

@@ -47,12 +47,6 @@
     "animation.stegosaurus.eat": {
       "animation_length": 3
     },
-    "animation.stegosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.stegosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
     "animation.stegosaurus.speak": {
       "animation_length": 2
     },
@@ -91,12 +85,6 @@
     },
     "animation.stegosaurus.attack_back2": {
       "animation_length": 1
-    },
-    "animation.stegosaurus.ontogeny_baby": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.stegosaurus.ontogeny_teen": {
-      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2
