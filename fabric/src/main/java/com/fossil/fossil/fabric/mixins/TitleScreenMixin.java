@@ -40,12 +40,12 @@ public abstract class TitleScreenMixin extends Screen {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         RenderSystem.enableBlend();
         RenderSystem.setShaderTexture(0, LAYER_TEXTURE_BACK);
-        int u = (int) (fossil$initialOffsetBack + ((fossil$layerTick + partialTick) / 2f) + 1);
-        blit(poseStack, 0, 0, u, 0, width, height, (int) (1024 * (height / 128f)), height);
+        float u = fossil$initialOffsetBack + ((fossil$layerTick + partialTick) / 2f) + 1;
+        blit(poseStack, 0, 0, u / (960f / width), 0, width, height, (int) (1024 * (height / 128f)), height);
 
         RenderSystem.setShaderTexture(0, LAYER_TEXTURE_FRONT);
-        u = (int) (fossil$initialOffsetFront + fossil$layerTick + partialTick + 2 + 512);
-        blit(poseStack, 0, 0, u, 0, width, height, (int) (2048 * (height / 128f)), height);
+        u = fossil$initialOffsetFront + fossil$layerTick + partialTick + 2 + 512;
+        blit(poseStack, 0, 0, u / (960f / width), 0, width, height, (int) (2048 * (height / 128f)), height);
     }
 
     @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PanoramaRenderer;render(FF)V"))
