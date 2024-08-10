@@ -125,7 +125,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
-    private long attackBoxEndTime;
+    public long attackBoxEndTime;
     private final List<MultiPart> parts = new ArrayList<>();
     private final Map<String, MultiPart> partsByRef = new HashMap<>();
     public Vec3 eatPos;
@@ -136,7 +136,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         super(entityType, level);
         this.animationLocation = animationLocation;
         this.moveControl = new SmoothTurningMoveControl(this);
-        //lookControl = new TestLookControl(this);
         this.setHunger(this.getMaxHunger() / 2);
         this.currentOrder = OrderType.WANDER;
         this.updateAbilities();

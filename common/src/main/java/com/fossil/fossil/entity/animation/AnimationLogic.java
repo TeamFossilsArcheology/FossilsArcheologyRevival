@@ -99,6 +99,11 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return !activeAnimation.loop && entity.level.getGameTime() >= activeAnimation.endTick;
     }
 
+    private boolean isBlocked() {
+        //TODO: Heavy attacks need priority. Think of something better in the future
+        return entity instanceof Prehistoric prehistoric && entity.level.getGameTime() < prehistoric.attackBoxEndTime;
+    }
+
     public double getActionDelay(String controller) {
         if (activeAnimations.containsKey(controller)) {
             ActiveAnimationInfo activeAnimation = activeAnimations.get(controller);
@@ -151,6 +156,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     private double lastSpeed = 1;
 
     public PlayState landPredicate(AnimationEvent<Prehistoric> event) {
+        if (isBlocked()) return PlayState.STOP;
         AnimationController<Prehistoric> controller = event.getController();
         if (nextAnimations.containsKey(controller.getName())) {
             ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
@@ -219,6 +225,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return PlayState.CONTINUE;
         }
         if (!isAnimationDone(controller.getName())) {
+            System.out.println("not done");
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;

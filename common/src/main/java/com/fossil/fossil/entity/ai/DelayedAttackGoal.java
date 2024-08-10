@@ -1,6 +1,5 @@
 package com.fossil.fossil.entity.ai;
 
-import com.fossil.fossil.entity.ai.control.TestLookControl;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -37,6 +36,7 @@ public class DelayedAttackGoal extends Goal {
     protected long lastCanUseCheck;
     protected long attackEndTick = -1;
     protected long attackDamageTick = -1;
+    private boolean doingHeavyAttack;
 
 
     public DelayedAttackGoal(Prehistoric prehistoric, double speedModifier, boolean followingTargetEvenIfNotSeen) {
@@ -99,6 +99,7 @@ public class DelayedAttackGoal extends Goal {
         ticksUntilNextPathRecalculation = 0;
         attackEndTick = -1;
         attackDamageTick = -1;
+        doingHeavyAttack = false;
     }
 
     @Override
@@ -125,14 +126,8 @@ public class DelayedAttackGoal extends Goal {
         prehistoric.getLookControl().setLookAt(target, 30, 30);
         double dist = prehistoric.distanceToSqr(target);
         ticksUntilNextPathRecalculation = Math.max(ticksUntilNextPathRecalculation - 1, 0);
-        if (prehistoric.getLookControl() instanceof TestLookControl moveControl) {
-            moveControl.start();
-        }
-        if (prehistoric.level.getGameTime() <= attackEndTick && prehistoric.getLookControl() instanceof TestLookControl moveControl) {
-            //TODO: prevent only on certain attack(animationdata). Problably only for Anky, Brachio, Diplo, Stego
-            //moveControl.setLookAt(0, 0, 0);
-            //moveControl.stop();
-            //((SmoothTurningMoveControl)prehistoric.getMoveControl()).stop();
+        if (prehistoric.level.getGameTime() <= attackEndTick && doingHeavyAttack) {
+            //Prevent movement
         } else if ((followingTargetEvenIfNotSeen || prehistoric.getSensing().hasLineOfSight(target)) && ticksUntilNextPathRecalculation <= 0 && (pathedTargetX == 0.0 && pathedTargetY == 0.0 && pathedTargetZ == 0.0 || target.distanceToSqr(pathedTargetX, pathedTargetY, pathedTargetZ) >= 1.0 || prehistoric.getRandom().nextFloat() < 0.05f)) {
             pathedTargetX = target.getX();
             pathedTargetY = target.getY();
@@ -162,6 +157,7 @@ public class DelayedAttackGoal extends Goal {
                 AnimationInfoManager.ServerAnimationInfo animation = prehistoric.startAttack();
                 if (animation.usesAttackBox && enemy instanceof ServerPlayer player) {
                     MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(prehistoric, animation.animationLength));
+                    doingHeavyAttack = true;
                 } else {
                     attackDamageTick = (long) (currentTime + animation.actionDelay);
                 }
