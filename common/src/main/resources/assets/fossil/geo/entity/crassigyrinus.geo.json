@@ -56,6 +56,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "cranium",
+					"pivot": [0, 1, -15]
+				},
+				{
 					"name": "jaw",
 					"parent": "head",
 					"pivot": [0, 0.64987, -11.50316],

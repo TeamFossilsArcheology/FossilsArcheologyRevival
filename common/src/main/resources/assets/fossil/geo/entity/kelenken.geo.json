@@ -162,6 +162,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerhook",
+					"pivot": [0, 38, -28.9]
+				},
+				{
 					"name": "head_hitbox",
 					"parent": "head1",
 					"pivot": [0, 17.9692, -24.3848],

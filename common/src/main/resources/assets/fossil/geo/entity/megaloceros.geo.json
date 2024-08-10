@@ -150,6 +150,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "jaw",
+					"pivot": [0, 18.7, -26.8]
+				},
+				{
 					"name": "ear_l",
 					"parent": "head_base",
 					"pivot": [2, 21.2, -20.8],

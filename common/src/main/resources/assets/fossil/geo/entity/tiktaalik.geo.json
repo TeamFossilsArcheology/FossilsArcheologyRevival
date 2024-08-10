@@ -142,6 +142,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "Lowerjawfront",
+					"pivot": [0, 1.7, -16.75]
+				},
+				{
 					"name": "Lefteye",
 					"parent": "Head",
 					"pivot": [-0.8, 4.8, -13.5],

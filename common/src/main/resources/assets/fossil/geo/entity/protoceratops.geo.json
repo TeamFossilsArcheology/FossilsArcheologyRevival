@@ -104,6 +104,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "jawLower",
+					"pivot": [0, 8.52502, -16.25528]
+				},
+				{
 					"name": "babyfrill",
 					"parent": "head",
 					"pivot": [20.9, 13.48143, -13.52099],

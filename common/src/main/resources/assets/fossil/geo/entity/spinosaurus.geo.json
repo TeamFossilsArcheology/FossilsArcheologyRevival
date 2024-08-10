@@ -242,6 +242,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0, 11.72521, -39.53521]
+				},
+				{
 					"name": "grab_pos",
 					"parent": "head",
 					"pivot": [0, 12, -41]

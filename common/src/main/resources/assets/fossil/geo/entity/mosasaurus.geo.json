@@ -133,6 +133,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "bottomJaw",
+					"pivot": [0, 4.29, -22.7]
+				},
+				{
 					"name": "toungue1",
 					"parent": "jawBase",
 					"pivot": [0, 4, -20.4],

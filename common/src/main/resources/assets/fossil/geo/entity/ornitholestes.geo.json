@@ -70,6 +70,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "Lowerjaw",
+					"pivot": [0, 15.4, -23.3]
+				},
+				{
 					"name": "Quills2",
 					"parent": "Head",
 					"pivot": [0, 17.8, -19.1],

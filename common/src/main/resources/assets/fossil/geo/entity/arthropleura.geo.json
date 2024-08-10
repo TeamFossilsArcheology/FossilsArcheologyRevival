@@ -51,6 +51,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "head",
+					"pivot": [0, 2.4, -12.8]
+				},
+				{
 					"name": "legsLeft",
 					"parent": "bodyFront",
 					"pivot": [2, 2, -8]

@@ -128,6 +128,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private long attackBoxEndTime;
     private final List<MultiPart> parts = new ArrayList<>();
     private final Map<String, MultiPart> partsByRef = new HashMap<>();
+    public Vec3 eatPos;
     public final Map<String, EntityHitboxManager.Hitbox> attackBoxes = new HashMap<>();
     public final Map<EntityHitboxManager.Hitbox, Vec3> activeAttackBoxes = new HashMap<>();
 
@@ -1176,11 +1177,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 stack.shrink(1);
                 playSound(SoundEvents.ZOMBIE_VILLAGER_CURE, getSoundVolume(), getVoicePitch());
             } else {
-                spawnItemParticles(stack.getItem(), 15);
-                spawnItemParticles(stack.getItem(), 15);
-                spawnItemParticles(Items.POISONOUS_POTATO, 15);
-                spawnItemParticles(Items.POISONOUS_POTATO, 15);
-                spawnItemParticles(Items.EGG, 15);
+                AABB aabb = eatPos == null ? getBoundingBoxForCulling() : new AABB(eatPos, eatPos);
+                Util.spawnItemParticles(level, stack.getItem(), 15, aabb);
+                Util.spawnItemParticles(level, stack.getItem(), 15, aabb);
+                Util.spawnItemParticles(level, Items.POISONOUS_POTATO, 15, aabb);
+                Util.spawnItemParticles(level, Items.POISONOUS_POTATO, 15, aabb);
+                Util.spawnItemParticles(level, Items.EGG, 15, aabb);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -1345,15 +1347,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void handleEntityEvent(byte id) {
         if (id == WHEAT_SEEDS_PARTICLES) {
-            spawnItemParticles(Items.WHEAT_SEEDS, 3);
+            Util.spawnItemParticles(this, Items.WHEAT_SEEDS, 3);
         } else if (id == BREAD_PARTICLES) {
-            spawnItemParticles(Items.BREAD, 3);
+            Util.spawnItemParticles(this, Items.BREAD, 3);
         } else if (id == BEEF_PARTICLES) {
-            spawnItemParticles(Items.BEEF, 3);
+            Util.spawnItemParticles(this, Items.BREAD, 3);
+            Util.spawnItemParticles(this, Items.BEEF, 3);
         } else if (id == HAPPY_VILLAGER_PARTICLES) {
-            spawnParticles(ParticleTypes.HAPPY_VILLAGER, 6);
+            Util.spawnParticles(this, ParticleTypes.HAPPY_VILLAGER, 6);
         } else if (id == GROW_UP_PARTICLES) {
-            spawnParticles(ParticleTypes.HAPPY_VILLAGER, getAgeInDays());
+            Util.spawnParticles(this, ParticleTypes.HAPPY_VILLAGER, getAgeInDays());
         } else {
             super.handleEntityEvent(id);
         }
@@ -1365,43 +1368,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
         }
-    }
-
-    protected void makeEatingParticles(Item item) {
-        if (level.isClientSide && item != null) {
-            spawnItemParticles(item, 4);
-        }
-    }
-
-    /**
-     * Spawns item particles based on diet
-     */
-    public void makeEatingParticles() {
-        switch (info().diet) {
-            case HERBIVORE -> makeEatingParticles(Items.WHEAT_SEEDS);
-            case OMNIVORE -> makeEatingParticles(Items.BREAD);
-            case PISCIVORE -> makeEatingParticles(Items.COD);
-            default -> makeEatingParticles(Items.BEEF);
-        }
-    }
-
-    private void spawnParticles(ParticleOptions particleOptions, int count) {
-        if (level.isClientSide) {
-            AABB aabb = getBoundingBoxForCulling();
-            for (int i = 0; i < count; i++) {
-                double motionX = getRandom().nextGaussian() * 0.07;
-                double motionY = getRandom().nextGaussian() * 0.07;
-                double motionZ = getRandom().nextGaussian() * 0.07;
-                float x = (float) (getRandom().nextFloat() * (aabb.maxX - aabb.minX) + aabb.minX);
-                float y = (float) (getRandom().nextFloat() * (aabb.maxY - aabb.minY) + aabb.minY);
-                float z = (float) (getRandom().nextFloat() * (aabb.maxZ - aabb.minZ) + aabb.minZ);
-                level.addParticle(particleOptions, x, y, z, motionX, motionY, motionZ);
-            }
-        }
-    }
-
-    private void spawnItemParticles(Item item, int count) {
-        spawnParticles(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(item)), count);
     }
 
     public float getMaxTurnDistancePerTick() {
@@ -1498,7 +1464,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate);
         controller.registerParticleListener(event -> {
             if ("eat".equals(event.effect)) {
-                makeEatingParticles();
+                //TODO: Could use event.script + getScale to increase the aabb size
+                AABB aabb = eatPos == null ? getBoundingBoxForCulling() : new AABB(eatPos, eatPos);
+                switch (info().diet) {
+                    case HERBIVORE -> Util.spawnItemParticles(level, Items.WHEAT_SEEDS, 4, aabb);
+                    case OMNIVORE -> Util.spawnItemParticles(level, Items.BREAD, 4, aabb);
+                    case PISCIVORE -> Util.spawnItemParticles(level, Items.COD, 4, aabb);
+                    default -> Util.spawnItemParticles(level, Items.BEEF, 4, aabb);
+                }
             }
         });
         controller.registerSoundListener(event -> {

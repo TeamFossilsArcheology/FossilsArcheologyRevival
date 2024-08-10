@@ -144,13 +144,18 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
                 //Tick hitboxes
                 Vector3d localPos = bone.getLocalPosition();
                 part.setOverride(new AnimationOverride(new Vec3(localPos.x, localPos.y, localPos.z), bone.getScaleX(), bone.getScaleY()));
-            } else {
+            }
+            EntityHitboxManager.Hitbox hitbox = animatable.attackBoxes.get(bone.name);
+            if (hitbox != null) {
                 //Tick attack boxes
-                EntityHitboxManager.Hitbox hitbox = animatable.attackBoxes.get(bone.name);
-                if (hitbox != null && animatable.activeAttackBoxes.containsKey(hitbox)) {
+                if (animatable.activeAttackBoxes.containsKey(hitbox)) {
                     Vector3d localPos = bone.getWorldPosition();
                     animatable.activeAttackBoxes.put(hitbox, new Vec3(localPos.x, localPos.y, localPos.z));
                 }
+            }
+            if ("eat_pos".equals(bone.name)) {
+                Vector3d localPos = bone.getWorldPosition();
+                animatable.eatPos = new Vec3(localPos.x, localPos.y, localPos.z);
             }
         }
     }

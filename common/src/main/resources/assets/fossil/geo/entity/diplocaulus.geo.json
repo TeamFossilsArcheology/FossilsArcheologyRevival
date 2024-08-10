@@ -72,6 +72,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "jaw",
+					"pivot": [0, 1.5, -15]
+				},
+				{
 					"name": "leftArm",
 					"parent": "body",
 					"pivot": [3.25, 1.25, -9],

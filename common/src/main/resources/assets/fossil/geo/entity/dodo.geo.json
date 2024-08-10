@@ -80,7 +80,7 @@
 					]
 				},
 				{
-					"name": "beakUpper2",
+					"name": "beakUpper",
 					"parent": "head",
 					"pivot": [0, 14.9, -6.9],
 					"cubes": [
@@ -88,12 +88,17 @@
 					]
 				},
 				{
-					"name": "beakUpper",
+					"name": "beakLower",
 					"parent": "head",
 					"pivot": [0, 13.9, -6.9],
 					"cubes": [
 						{"origin": [-1.5, 12.9, -11.9], "size": [3, 1, 5], "uv": [48, 20]}
 					]
+				},
+				{
+					"name": "eat_pos",
+					"parent": "beakLower",
+					"pivot": [0, 13.9, -8.9]
 				},
 				{
 					"name": "rightLeg",

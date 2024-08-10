@@ -78,6 +78,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0, 15.6, -29.1]
+				},
+				{
 					"name": "MaleCrestL",
 					"parent": "head",
 					"pivot": [1.9, 19.8, -26.9],

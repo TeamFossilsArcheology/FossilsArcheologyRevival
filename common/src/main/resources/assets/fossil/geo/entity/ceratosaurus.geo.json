@@ -97,6 +97,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0, 13.95, -21]
+				},
+				{
 					"name": "rightHorn",
 					"parent": "head",
 					"pivot": [-1.9, 17, -17.1],

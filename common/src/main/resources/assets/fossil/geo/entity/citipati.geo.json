@@ -133,6 +133,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0.5, 17.39905, -28.32078]
+				},
+				{
 					"name": "upperCrest",
 					"parent": "head",
 					"pivot": [-0.01, 18.79905, -23.24078],

@@ -124,6 +124,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerBeak",
+					"pivot": [0, 7.8, -10.2]
+				},
+				{
 					"name": "floofR",
 					"parent": "head",
 					"pivot": [-0.2, 9.9, -9.1],

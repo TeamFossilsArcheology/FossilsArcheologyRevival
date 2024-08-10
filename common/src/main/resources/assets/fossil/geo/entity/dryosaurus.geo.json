@@ -124,6 +124,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0, 15.1, -24.13]
+				},
+				{
 					"name": "head_hitbox",
 					"parent": "head",
 					"pivot": [0, 7.5, -18.3],

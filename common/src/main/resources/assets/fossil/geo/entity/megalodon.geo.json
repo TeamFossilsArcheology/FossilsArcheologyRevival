@@ -66,6 +66,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "jaw",
+					"pivot": [0, 8.01632, -36.71316]
+				},
+				{
 					"name": "gills",
 					"parent": "head",
 					"pivot": [0, 9.1, -23.7],

@@ -128,6 +128,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0.2, 3.55, -31]
+				},
+				{
 					"name": "rightFrontFlipper",
 					"parent": "upperBody",
 					"pivot": [-5, 3.3, -3.4],

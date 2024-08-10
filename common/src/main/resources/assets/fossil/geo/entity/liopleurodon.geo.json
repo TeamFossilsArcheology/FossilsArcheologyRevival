@@ -133,7 +133,7 @@
 					"pivot": [0.02, 4.99, -24.05],
 					"rotation": [0, 0, -1.5],
 					"cubes": [
-						{"origin": [-1.98, 1.99, -36.05], "size": [4, 3, 12], "uv": [61, 37], "mirror": true}
+						{"origin": [-1.98, 1.99, -36.05], "size": [4, 3, 12], "inflate": -0.1, "uv": [61, 37], "mirror": true}
 					]
 				},
 				{
@@ -171,6 +171,11 @@
 					"cubes": [
 						{"origin": [-2.02, 5, -36.1], "size": [4, 3, 12], "uv": [46, 54], "mirror": true}
 					]
+				},
+				{
+					"name": "eat_pos",
+					"parent": "JawBottom",
+					"pivot": [0, 5.9, -24]
 				},
 				{
 					"name": "grab_pos",

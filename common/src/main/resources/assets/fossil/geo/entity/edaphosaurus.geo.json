@@ -297,6 +297,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "BottomJaw1",
+					"pivot": [0, 9.16199, -14.93141]
+				},
+				{
 					"name": "upperarmL",
 					"parent": "bodyUpper",
 					"pivot": [4, 5.9, -7],

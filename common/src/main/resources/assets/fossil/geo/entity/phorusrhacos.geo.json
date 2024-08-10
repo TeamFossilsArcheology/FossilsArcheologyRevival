@@ -121,6 +121,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "shape107P",
+					"pivot": [0, 40.8, -27.9]
+				},
+				{
 					"name": "maincrownRP2",
 					"parent": "head1",
 					"pivot": [0, 40.8, -16.6],

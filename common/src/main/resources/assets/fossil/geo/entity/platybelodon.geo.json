@@ -110,6 +110,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "jaw1",
+					"pivot": [0, 19.6, -32]
+				},
+				{
 					"name": "trunk1",
 					"parent": "head",
 					"pivot": [0, 24.4, -23.2],

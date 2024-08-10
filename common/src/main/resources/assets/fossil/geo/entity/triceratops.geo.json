@@ -4,7 +4,7 @@
 		{
 			"description": {
 				"identifier": "geometry.triceratops",
-				"texture_width": 97,
+				"texture_width": 128,
 				"texture_height": 64,
 				"visible_bounds_width": 4,
 				"visible_bounds_height": 2.5,
@@ -150,6 +150,11 @@
 					"cubes": [
 						{"origin": [-1, 7.43021, -14.01912], "size": [2, 1, 5], "uv": [76, 22]}
 					]
+				},
+				{
+					"name": "eat_pos",
+					"parent": "beakbottom",
+					"pivot": [0, 8.43021, -12.01912]
 				},
 				{
 					"name": "head_hitbox",

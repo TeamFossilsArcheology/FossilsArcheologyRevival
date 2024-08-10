@@ -87,6 +87,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "jawLower",
+					"pivot": [0, 16.4, -27.1]
+				},
+				{
 					"name": "domeSpikes",
 					"parent": "head",
 					"pivot": [0, 20.5, -19.4],

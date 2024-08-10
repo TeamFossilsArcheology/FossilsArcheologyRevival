@@ -74,7 +74,12 @@
 					]
 				},
 				{
-					"name": "UpperBeak",
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0, 18.2, -30.6]
+				},
+				{
+					"name": "UpperBeak2",
 					"parent": "head",
 					"pivot": [-0.4, 21.6, -33.77],
 					"rotation": [26.7, 0, 0],
@@ -84,7 +89,7 @@
 				},
 				{
 					"name": "UpperBeak",
-					"parent": "UpperBeak",
+					"parent": "UpperBeak2",
 					"pivot": [0.1, 21.6, -28.97],
 					"rotation": [-2, 0, 0],
 					"cubes": [
@@ -101,7 +106,7 @@
 					]
 				},
 				{
-					"name": "Crest2",
+					"name": "Crest3",
 					"parent": "shape31",
 					"pivot": [0.11, 21.6, -19.97],
 					"rotation": [-13, 0, 0],
@@ -111,7 +116,7 @@
 				},
 				{
 					"name": "Crest2",
-					"parent": "Crest2",
+					"parent": "Crest3",
 					"pivot": [0.12, 21.59, -16.2],
 					"rotation": [-16, 0, 0],
 					"cubes": [
@@ -137,7 +142,7 @@
 					]
 				},
 				{
-					"name": "rightUpperArm",
+					"name": "leftUpperArm",
 					"parent": "upperBody",
 					"pivot": [5, 16, -11.8],
 					"rotation": [91.3, 0, 0],
@@ -146,8 +151,8 @@
 					]
 				},
 				{
-					"name": "rightLowerArm",
-					"parent": "rightUpperArm",
+					"name": "leftLowerArm",
+					"parent": "leftUpperArm",
 					"pivot": [5.39, 15.7, -16.8],
 					"rotation": [-15.65, 0, 0],
 					"cubes": [

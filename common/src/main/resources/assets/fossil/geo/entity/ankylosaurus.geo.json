@@ -6,7 +6,7 @@
 				"identifier": "geometry.ankylosaurus",
 				"texture_width": 256,
 				"texture_height": 256,
-				"visible_bounds_width": 7,
+				"visible_bounds_width": 9,
 				"visible_bounds_height": 2.5,
 				"visible_bounds_offset": [0, 0.75, 0]
 			},
@@ -69,6 +69,11 @@
 					"cubes": [
 						{"origin": [-2.6, 9.46839, -24.76794], "size": [5, 2, 5], "pivot": [0.5, 10.35415, -21.19924], "rotation": [12.5, 0, 0], "uv": [0, 78]}
 					]
+				},
+				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0, 9.5, -23.25]
 				},
 				{
 					"name": "bone8",

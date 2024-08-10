@@ -47,6 +47,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "mandibles",
+					"pivot": [0, 3.5, -10.5]
+				},
+				{
 					"name": "antenneaL",
 					"parent": "head",
 					"pivot": [1, 4.9, -10.6],

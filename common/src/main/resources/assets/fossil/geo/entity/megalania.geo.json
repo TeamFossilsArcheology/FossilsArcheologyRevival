@@ -74,6 +74,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "BottomJaw2",
+					"pivot": [0, 8.9, -27]
+				},
+				{
 					"name": "tongue1",
 					"parent": "BottomJaw1",
 					"pivot": [0, 9.1, -25],

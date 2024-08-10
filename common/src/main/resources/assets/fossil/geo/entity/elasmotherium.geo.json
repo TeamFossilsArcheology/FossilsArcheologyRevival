@@ -137,10 +137,15 @@
 				{
 					"name": "jaw",
 					"parent": "head",
-					"pivot": [0, 19.7, -27.3],
+					"pivot": [0, 20.7, -27.3],
 					"cubes": [
-						{"origin": [-3.5, 16.7, -32.8], "size": [7, 3, 7], "inflate": -0.001, "pivot": [0, 18.2, -25.3], "rotation": [25, 0, 0], "uv": [60, 71]}
+						{"origin": [-3.5, 17.7, -32.8], "size": [7, 3, 7], "inflate": -0.001, "pivot": [0, 19.2, -25.3], "rotation": [25, 0, 0], "uv": [60, 71]}
 					]
+				},
+				{
+					"name": "eat_pos",
+					"parent": "jaw",
+					"pivot": [0, 17.7, -31.3]
 				},
 				{
 					"name": "snout",

@@ -223,6 +223,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "lowerJaw",
+					"pivot": [0.4, 38.9, -15.9]
+				},
+				{
 					"name": "leftfloof2",
 					"parent": "neck2",
 					"pivot": [0.1, 27.8, -11.5],

@@ -87,6 +87,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "beakbottom",
+					"pivot": [0, 16.08236, -24.03185]
+				},
+				{
 					"name": "frill",
 					"parent": "head",
 					"pivot": [0, 22.18236, -17.53185],

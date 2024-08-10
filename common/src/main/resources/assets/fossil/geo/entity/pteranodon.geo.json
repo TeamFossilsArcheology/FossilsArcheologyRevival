@@ -115,6 +115,11 @@
 					]
 				},
 				{
+					"name": "eat_pos",
+					"parent": "Jaw10",
+					"pivot": [-0.12, 12.6, -9.8]
+				},
+				{
 					"name": "CrestBase0",
 					"parent": "Head",
 					"pivot": [-0.02, 14.2, -5.5],
