@@ -43,6 +43,12 @@
 					]
 				},
 				{
+					"name": "tail_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 29.3, 11.8],
+					"cubes": []
+				},
+				{
 					"name": "chest1",
 					"parent": "body1",
 					"pivot": [0, 26.1, -1.5],
@@ -52,7 +58,7 @@
 					]
 				},
 				{
-					"name": "upperwingR2",
+					"name": "upperwingR",
 					"parent": "chest1",
 					"pivot": [-5.5, 24.3, -8],
 					"rotation": [-56.82, -18.26, 10.43],
@@ -62,7 +68,7 @@
 				},
 				{
 					"name": "part2",
-					"parent": "upperwingR2",
+					"parent": "upperwingR",
 					"pivot": [-5.5, 24.3, -8],
 					"rotation": [0, 0, 0],
 					"cubes": [
@@ -70,19 +76,21 @@
 					]
 				},
 				{
-					"name": "upperwingR",
+					"name": "upperwingL",
 					"parent": "chest1",
 					"pivot": [5.5, 24.3, -8],
 					"rotation": [-56.82, 18.26, -10.43],
+					"mirror": true,
 					"cubes": [
 						{"origin": [4.5, 22.8, -10], "size": [2, 5, 9], "uv": [37, 29]}
 					]
 				},
 				{
 					"name": "part93",
-					"parent": "upperwingR",
+					"parent": "upperwingL",
 					"pivot": [5.5, 24.3, -8],
 					"rotation": [0, 0, 0],
+					"mirror": true,
 					"cubes": [
 						{"origin": [5, 23.3, -9.5], "size": [1, 10, 15], "uv": [45, 31]}
 					]
@@ -163,6 +171,12 @@
 					"name": "head_hitbox",
 					"parent": "head1",
 					"pivot": [0, 19.3, -22.9],
+					"cubes": []
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "body1",
+					"pivot": [0, 0, 5],
 					"cubes": []
 				},
 				{
