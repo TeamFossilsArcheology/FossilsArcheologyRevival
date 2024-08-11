@@ -5,6 +5,7 @@ import com.fossil.fossil.entity.animation.AnimationLogic;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -109,7 +110,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
 
     public abstract String getLeapingAnimationName();
 
-    private double lastSpeed = 1;
+    private double lastSpeed = 0;
     private PlayState leapingPredicate(AnimationEvent<PrehistoricLeaping> event) {
         AnimationController<PrehistoricLeaping> controller = event.getController();
         double animSpeed = 1;
@@ -129,12 +130,14 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                 animSpeed = 1 / event.getAnimatable().getScale();
                 double animationBaseSpeed = AnimationLogic.getMovementSpeed(event.getAnimatable(), movementAnim.animationName);
                 if (animationBaseSpeed > 0) {
-                    //the deltaMovement of the animation should match the mobs deltaMovement
-                    double mobSpeed = event.getAnimatable().getDeltaMovement().horizontalDistance() * 20;
+                    //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
+                    double mobSpeed = getDeltaMovement().horizontalDistance() * 20;
+                    //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+                    mobSpeed = Math.min(23.55 * Mth.square(event.getAnimatable().stats().maxSpeed()), mobSpeed);
                     animSpeed *= mobSpeed / animationBaseSpeed;
                 }
                 if (lastSpeed > animSpeed) {
-                    //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
+                    //I would love to always change speed but that causes stuttering, so we just find one max speed that's good enough
                     animSpeed = lastSpeed;
                 }
             } else {

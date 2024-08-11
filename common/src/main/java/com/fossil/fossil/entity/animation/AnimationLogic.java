@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.prehistoric.base.*;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.S2CSyncActiveAnimationMessage;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import software.bernie.geckolib3.core.PlayState;
@@ -154,7 +155,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return PlayState.CONTINUE;
     }
 
-    private double lastSpeed = 1;
+    private double lastSpeed = 0;
 
     public PlayState landPredicate(AnimationEvent<Prehistoric> event) {
         if (isBlocked()) return PlayState.STOP;
@@ -187,14 +188,15 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 animationSpeed = 1 / event.getAnimatable().getScale();
                 double animationBaseSpeed = getMovementSpeed(event.getAnimatable(), movementAnim.animationName);
                 if (animationBaseSpeed > 0) {
-                    //the deltaMovement of the animation should match the mobs deltaMovement
-                    double mobSpeed = event.getAnimatable().getDeltaMovement().horizontalDistance() * 20;
+                    //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
+                    double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
+                    //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+                    mobSpeed = Math.min(23.55 * Mth.square(event.getAnimatable().stats().maxSpeed()), mobSpeed);
                     animationSpeed *= mobSpeed / animationBaseSpeed;
                 }
-                //TODO: Breaks if you punch the mob around
                 //TODO: Choose sprinting anim based on animation speed?
                 if (lastSpeed > animationSpeed) {
-                    //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
+                    //I would love to always change speed but that causes stuttering, so we just find one max speed that's good enough
                     animationSpeed = lastSpeed;
                 }
             } else if (entity.isSleeping()) {

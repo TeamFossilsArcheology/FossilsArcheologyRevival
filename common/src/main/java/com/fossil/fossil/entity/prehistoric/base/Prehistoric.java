@@ -1376,7 +1376,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return EntityDataManager.ENTITY_DATA.getData(EntityType.getKey(getType()).getPath());
     }
 
-    private Stat stats() {
+    public Stat stats() {
         return data().stats();
     }
 
