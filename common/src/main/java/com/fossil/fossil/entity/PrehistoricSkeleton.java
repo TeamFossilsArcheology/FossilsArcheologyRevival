@@ -34,6 +34,8 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
+import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo.*;
+
 public class PrehistoricSkeleton extends Entity implements IAnimatable {
     private static final EntityDataAccessor<Integer> AGE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<String> TYPE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.STRING);
@@ -49,7 +51,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     @Override
     protected void defineSynchedData() {
         entityData.define(AGE, 0);
-        entityData.define(TYPE, PrehistoricEntityInfo.TRICERATOPS.name());
+        entityData.define(TYPE, TRICERATOPS.name());
     }
 
     @Override
@@ -136,7 +138,11 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
         }
         String name = info().resourceName;
         textureLocation = new ResourceLocation(Fossil.MOD_ID, "textures/entity/" + name + "/" + name + "_skeleton.png");
-        modelLocation = new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + name + ".geo.json");
+        if (info() == DICRANURUS || info() == LONCHODOMAS || info() == SCOTOHARPES || info() == WALLISEROPS) {
+            modelLocation = new ResourceLocation(Fossil.MOD_ID, "geo/entity/trilobite.geo.json");
+        } else {
+            modelLocation = new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + name + ".geo.json");
+        }
     }
 
     @Override
@@ -174,7 +180,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     }
 
     public PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.valueOf(entityData.get(TYPE));
+        return valueOf(entityData.get(TYPE));
     }
 
 
