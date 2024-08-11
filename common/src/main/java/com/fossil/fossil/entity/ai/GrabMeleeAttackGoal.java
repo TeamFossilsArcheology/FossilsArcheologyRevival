@@ -55,7 +55,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
     }
 
     @Override
-    protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
+    protected void checkAndPerformAttack(LivingEntity enemy) {
         long currentTime = swimming.level.getGameTime();
         if (attackType == GRAB) {
             for (Entity passenger : swimming.getPassengers()) {

@@ -5,8 +5,8 @@ import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.pathfinder.Path;
@@ -16,7 +16,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-//TODO: Needs big polish. Especially the movement. Should ideally stop before walking into the toy but also be able to follow ball. Should also play multiple times with toy(though only count once towards mood)
 public class PlayGoal extends Goal {
     protected static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
     protected long lastCanUseCheck;
@@ -54,11 +53,7 @@ public class PlayGoal extends Goal {
         if (path != null) {
             return true;
         }
-        return getAttackReachSqr(target) >= dino.distanceToSqr(target);
-    }
-
-    protected double getAttackReachSqr(Entity attackTarget) {
-        return dino.getBbWidth() * 2 * (dino.getBbWidth() * 2) + attackTarget.getBbWidth();
+        return Util.canReachPrey(dino, target);
     }
 
     @Override
@@ -104,17 +99,15 @@ public class PlayGoal extends Goal {
     @Override
     public void tick() {
         dino.getLookControl().setLookAt(target, 30, 30);
-        double dist = dino.distanceToSqr(target);
-        double attackReach = dino.getBbWidth() * dino.getBbWidth() * 2 + target.getBbWidth();
-        if (dist > attackReach && dino.getNavigation().isDone()) {
+        if (dino.getNavigation().isDone() && !Util.canReachPrey(dino, target)) {
             dino.getNavigation().moveTo(target, speedModifier);
         }
-        checkAndPerformAttack(target, dist);
+        checkAndPerformAttack(target);
     }
-    protected void checkAndPerformAttack(ToyBase target, double distToEnemySqr) {
-        double attackReach = dino.getBbWidth() * dino.getBbWidth() * 2 + target.getBbWidth();
+
+    protected void checkAndPerformAttack(ToyBase target) {
         long currentTime = dino.level.getGameTime();
-        if (distToEnemySqr <= attackReach) {
+        if (Util.canReachPrey(dino, target)) {
             if (currentTime > attackEndTick + 20) {
                 AnimationInfoManager.ServerAnimationInfo animation = dino.startAttack();
                 attackDamageTick = (long) (currentTime + animation.actionDelay);

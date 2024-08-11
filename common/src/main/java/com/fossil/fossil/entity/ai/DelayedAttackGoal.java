@@ -143,14 +143,14 @@ public class DelayedAttackGoal extends Goal {
             }
             ticksUntilNextPathRecalculation = adjustedTickDelay(ticksUntilNextPathRecalculation);
         }
-        checkAndPerformAttack(target, dist);
+        checkAndPerformAttack(target);
     }
 
     protected boolean canHit(Entity attackTarget) {
         return Util.canReachPrey(prehistoric, attackTarget);
     }
 
-    protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
+    protected void checkAndPerformAttack(LivingEntity enemy) {
         long currentTime = prehistoric.level.getGameTime();
         if (canHit(enemy)) {
             if (currentTime > attackEndTick + 20) {

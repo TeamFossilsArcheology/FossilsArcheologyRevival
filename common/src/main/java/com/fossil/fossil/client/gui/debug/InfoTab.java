@@ -58,19 +58,19 @@ public class InfoTab extends DebugTab {
                 ageSlider.setValue(ageInTicks);
             }
         }));
-        matingSlider = new Slider(20, 60, 150, 20, new TextComponent("Seconds till mating: "), new TextComponent(""), 0, 300, matingCooldown, 1, 0, true) {
+        matingSlider = new Slider(20, 60, 150, 20, new TextComponent("Seconds till mating: "), new TextComponent(""), 0, 900, matingCooldown / 20f, 1, 0, true) {
             @Override
             protected void applyValue() {
                 matingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
         };
-        playingSlider = new Slider(20, 90, 150, 20, new TextComponent("Seconds till playing: "), new TextComponent(""), 0, 120, playingCooldown, 1, 0, true) {
+        playingSlider = new Slider(20, 90, 150, 20, new TextComponent("Seconds till playing: "), new TextComponent(""), 0, 120, playingCooldown / 20f, 1, 0, true) {
             @Override
             protected void applyValue() {
                 playingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
         };
-        climbingSlider = new Slider(20, 120, 150, 20, new TextComponent("Seconds till climbing: "), new TextComponent(""), 0, 120, climbingCooldown, 1, 0, true) {
+        climbingSlider = new Slider(20, 120, 150, 20, new TextComponent("Seconds till climbing: "), new TextComponent(""), 0, 120, climbingCooldown / 20f, 1, 0, true) {
             @Override
             protected void applyValue() {
                 climbingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
