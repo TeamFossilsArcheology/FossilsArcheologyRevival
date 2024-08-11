@@ -41,6 +41,7 @@ public class FossilConfig {
     public static final String DINO_UPDATE_DELAY = "dinoUpdateDelay";
     public static final String PREGNANCY_DURATION = "pregnancyDuration";
     public static final String DINOS_BREAK_BLOCKS = "dinosBreakBlocks";
+    public static final String BLOCK_BREAK_HARDNESS = "blockBreakHardness";
     public static final String DINOS_EAT_BLOCKS = "dinosEatBlocks";
     public static final String DINOS_EAT_MODDED_MOBS = "dinosEatModdedMobs";
     public static final String ANIMALS_FEAR_DINOS = "animalsFearDinos";
@@ -79,6 +80,11 @@ public class FossilConfig {
 
     @ExpectPlatform
     public static int getInt(String field) {
+        return 0;
+    }
+
+    @ExpectPlatform
+    public static double getDouble(String field) {
         return 0;
     }
 }

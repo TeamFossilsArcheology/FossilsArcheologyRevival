@@ -89,6 +89,8 @@ public class FossilConfigImpl extends MidnightConfig {
     public static int pregnancyDuration = 10000;
     @MidnightConfig.Entry
     public static boolean dinosBreakBlocks = true;
+    @MidnightConfig.Entry(min = 0, max = 100)
+    public static double blockBreakHardness = 5;
     @MidnightConfig.Entry
     public static boolean dinosEatBlocks = true;
     @MidnightConfig.Entry
@@ -135,6 +137,14 @@ public class FossilConfigImpl extends MidnightConfig {
     }
 
     public static int getInt(String field) {
+        try {
+            return (int) MAPPED_ENTRIES.get(field).get(null);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static double getDouble(String field) {
         try {
             return (int) MAPPED_ENTRIES.get(field).get(null);
         } catch (IllegalAccessException e) {

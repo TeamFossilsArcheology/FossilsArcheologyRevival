@@ -49,6 +49,7 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue PREGNANCY_DURATION;
     public static final ForgeConfigSpec.BooleanValue DINOS_EAT_BLOCKS;
     public static final ForgeConfigSpec.BooleanValue DINOS_BREAK_BLOCKS;
+    public static final ForgeConfigSpec.DoubleValue BLOCK_BREAK_HARDNESS;
     public static final ForgeConfigSpec.BooleanValue DINOS_EAT_MODDED_MOBS;
     public static final ForgeConfigSpec.BooleanValue ANIMALS_FEAR_DINOS;
     public static final ForgeConfigSpec.BooleanValue CUSTOM_MAIN_MENU;
@@ -61,8 +62,9 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue MACHINE_ENERGY_USAGE;
     public static final ForgeConfigSpec.IntValue FERN_TICK_RATE;
     public static final ForgeConfigSpec.BooleanValue ANU_BLOCK_PLACING;
-    public static final Map<String, ForgeConfigSpec.BooleanValue> mappedBools = new HashMap<>();
-    public static final Map<String, ForgeConfigSpec.IntValue> mappedInts = new HashMap<>();
+    public static final Map<String, ForgeConfigSpec.BooleanValue> MAPPED_BOOLS = new HashMap<>();
+    public static final Map<String, ForgeConfigSpec.IntValue> MAPPED_INTS = new HashMap<>();
+    public static final Map<String, ForgeConfigSpec.DoubleValue> MAPPED_DOUBLES = new HashMap<>();
 
     static {
         ANU_BLOCK_PLACING = boolEntry("True if Anu should be able to place blocks", FossilConfig.ANU_BLOCK_PLACING, true);
@@ -111,7 +113,8 @@ public class ForgeConfig {
         FLYING_TARGET_MAX_HEIGHT = intEntry("Maximum height that flying creatures should soar to", FossilConfig.FLYING_TARGET_MAX_HEIGHT, 128, 1, 512);
         DINO_UPDATE_DELAY = intEntry("Dinosaurs will conduct expensive CPU operations like looking for plants or feeders, once every this number of ticks(with added standard deviation for servers)", FossilConfig.DINO_UPDATE_DELAY, 10, 1, 10000);
         PREGNANCY_DURATION = intEntry("How long mammal pregnancies last, in ticks", FossilConfig.PREGNANCY_DURATION, 10000, 1, 1000000000);
-        DINOS_BREAK_BLOCKS = boolEntry("True if certain Dinosaurs can break blocks weaker than iron", FossilConfig.DINOS_BREAK_BLOCKS, true);
+        DINOS_BREAK_BLOCKS = boolEntry("True if certain Dinosaurs can break blocks weaker than the set hardness", FossilConfig.DINOS_BREAK_BLOCKS, true);
+        BLOCK_BREAK_HARDNESS = doubleEntry("Minimum hardness that a block needs in order not to break. The default is iron(5). A value of 0.4 would be enough to break leaves and glass but not dirt", FossilConfig.BLOCK_BREAK_HARDNESS, 5, 0, 100);
         DINOS_EAT_BLOCKS = boolEntry("True if herbivores can eat plant blocks", FossilConfig.DINOS_EAT_BLOCKS, true);
         DINOS_EAT_MODDED_MOBS = boolEntry("True if Dinosaurs can eat non-vanilla mobs", FossilConfig.DINOS_EAT_MODDED_MOBS, true);
         ANIMALS_FEAR_DINOS = boolEntry("True if vanilla animals should run away from Dinosaurs", FossilConfig.ANIMALS_FEAR_DINOS, true);
@@ -131,13 +134,19 @@ public class ForgeConfig {
 
     private static ForgeConfigSpec.BooleanValue boolEntry(String comment, String path, boolean defaultValue) {
         ForgeConfigSpec.BooleanValue entry = BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).define(path, defaultValue);
-        mappedBools.put(path, entry);
+        MAPPED_BOOLS.put(path, entry);
         return entry;
     }
 
     private static ForgeConfigSpec.IntValue intEntry(String comment, String path, int defaultValue, int min, int max) {
         ForgeConfigSpec.IntValue entry = BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
-        mappedInts.put(path, entry);
+        MAPPED_INTS.put(path, entry);
+        return entry;
+    }
+
+    private static ForgeConfigSpec.DoubleValue doubleEntry(String comment, String path, double defaultValue, double min, double max) {
+        ForgeConfigSpec.DoubleValue entry = BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
+        MAPPED_DOUBLES.put(path, entry);
         return entry;
     }
 }

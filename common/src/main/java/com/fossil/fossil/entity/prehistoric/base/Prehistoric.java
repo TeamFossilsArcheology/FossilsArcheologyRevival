@@ -70,9 +70,7 @@ import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.BushBlock;
-import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -692,8 +690,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
             moodSystem.tick();
         }
-        if (data().breaksBlocks() && moodSystem.getMood() < 0) {
-            breakBlock(5);
+        if (!level.isClientSide && horizontalCollision && data().breaksBlocks() && moodSystem.getMood() < 0) {
+            breakBlock((float) FossilConfig.getDouble(FossilConfig.BLOCK_BREAK_HARDNESS));
         }
         if (isFleeing()) {
             fleeTicks++;
@@ -816,29 +814,21 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void breakBlock(float maxHardness) {
-        //TODO: Should blocks broken by swimming mobs be replaced with water?
         if (!FossilConfig.isEnabled(FossilConfig.DINOS_BREAK_BLOCKS) || !level.getGameRules().getBoolean(GameRules.RULE_MOBGRIEFING)) {
             return;
         }
         if (!isAdult() || !isHungry()) {
             return;
         }
-        for (int a = (int) Math.round(getBoundingBox().minX) - 1; a <= (int) Math.round(getBoundingBox().maxX) + 1; a++) {
-            for (int b = (int) Math.round(getBoundingBox().minY) + 1; (b <= (int) Math.round(getBoundingBox().maxY) + 2) && (b <= 127); b++) {
-                for (int c = (int) Math.round(getBoundingBox().minZ) - 1; c <= (int) Math.round(getBoundingBox().maxZ) + 1; c++) {
-                    BlockPos targetPos = new BlockPos(a, b, c);
-                    if (level.isEmptyBlock(targetPos)) continue;
-                    BlockState state = level.getBlockState(targetPos);
-                    Block block = state.getBlock();
-
-                    if (block instanceof BushBlock) continue;
-                    if (!state.getFluidState().isEmpty()) continue;
-                    if (state.getDestroySpeed(level, targetPos) >= maxHardness) continue;
-                    if (!Util.canBreak(state.getBlock())) continue;
-                    setDeltaMovement(getDeltaMovement().multiply(0.6, 1, 0.6));
-                    if (!level.isClientSide) {
-                        level.destroyBlock(targetPos, true);
-                    }
+        AABB aabb = getBoundingBox().inflate(0.1, 0, 0.1);
+        boolean waterMob = this instanceof PrehistoricSwimming;
+        int lowest = Mth.floor(aabb.minY) + (waterMob ? 0 : 1);
+        for (BlockPos targetPos : BlockPos.betweenClosed(Mth.floor(aabb.minX), lowest, Mth.floor(aabb.minZ), Mth.floor(aabb.maxX), Mth.ceil(aabb.maxY), Mth.floor(aabb.maxZ))) {
+            if (Util.canBreak(level, targetPos, maxHardness)) {
+                setDeltaMovement(getDeltaMovement().multiply(0.6, 1, 0.6));
+                level.destroyBlock(targetPos, random.nextInt(10) == 0, this);
+                if (waterMob && targetPos.getY() == lowest) {
+                    level.setBlock(targetPos, Blocks.WATER.defaultBlockState(), 3);
                 }
             }
         }

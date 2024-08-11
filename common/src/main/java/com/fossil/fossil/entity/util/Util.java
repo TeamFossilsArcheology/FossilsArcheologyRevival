@@ -6,13 +6,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
@@ -60,12 +58,12 @@ public class Util {
         }
     }
 
-    public static boolean canBreak(Block block) {
-        //TODO: Big break Test
-        if (block instanceof IDinoUnbreakable) return false;
-        BlockState state = block.defaultBlockState();
-        if (!state.requiresCorrectToolForDrops()) return false;
-        return !state.is(BlockTags.NEEDS_DIAMOND_TOOL);
+    public static boolean canBreak(Level level, BlockPos targetPos, float maxHardness) {
+        BlockState state = level.getBlockState(targetPos);
+        if (state.getBlock() instanceof IDinoUnbreakable || state.getDestroySpeed(level, targetPos) >= maxHardness || state.getDestroySpeed(level, targetPos) < 0) {
+            return false;
+        }
+        return !state.getCollisionShape(level, targetPos).isEmpty() && state.getFluidState().isEmpty();
     }
 
     public static boolean canReachPrey(Prehistoric prehistoric, Entity target) {
