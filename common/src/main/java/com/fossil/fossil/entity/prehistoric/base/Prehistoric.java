@@ -370,7 +370,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public AABB getAttackBounds() {
         if (headRadius != 0) {
-            return getBoundingBox().inflate(headRadius * getScale());
+            float radius = headRadius * getScale();
+            return getBoundingBox().inflate(radius, radius * 0.5, radius);
         }
         float increase = Math.min(getBbWidth() / 2, 2.25f);
         return getBoundingBox().inflate(increase);

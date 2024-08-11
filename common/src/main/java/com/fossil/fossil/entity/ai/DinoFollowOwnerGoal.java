@@ -20,25 +20,25 @@ import java.util.EnumSet;
 public class DinoFollowOwnerGoal extends Goal {
     private final Prehistoric dino;
     private final double speedModifier;
-    private final float startDistance;
-    private final float stopDistance;
-    private final float teleportDistance;
+    private final float startDistanceSqr;
+    private final float stopDistanceSqr;
+    private final float teleportDistanceSqr;
     private final boolean canFly;
     private LivingEntity owner;
     private float oldWaterCost;
     private int timeToRecalcPath;
 
     public DinoFollowOwnerGoal(Prehistoric dino, double speedModifier, float startDistance, float stopDistance, boolean canFly) {
-        this(dino, speedModifier, startDistance, stopDistance, 144, canFly);
+        this(dino, speedModifier, startDistance, stopDistance, 12, canFly);
     }
 
 
     public DinoFollowOwnerGoal(Prehistoric dino, double speedModifier, float startDistance, float stopDistance, float teleportDistance, boolean canFly) {
         this.dino = dino;
         this.speedModifier = speedModifier;
-        this.startDistance = startDistance;
-        this.stopDistance = stopDistance;
-        this.teleportDistance = teleportDistance;
+        this.startDistanceSqr = startDistance * startDistance;
+        this.stopDistanceSqr = stopDistance * stopDistance;
+        this.teleportDistanceSqr = teleportDistance * teleportDistance;
         this.canFly = canFly;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
     }
@@ -50,7 +50,7 @@ public class DinoFollowOwnerGoal extends Goal {
             return false;
         } else if (dino.getCurrentOrder() != OrderType.FOLLOW) {
             return false;
-        } else if (dino.distanceToSqr(currentOwner) < (startDistance * startDistance)) {
+        } else if (dino.distanceToSqr(currentOwner) < (startDistanceSqr * startDistanceSqr)) {
             return false;
         }
         this.owner = currentOwner;
@@ -62,7 +62,7 @@ public class DinoFollowOwnerGoal extends Goal {
         if (dino.getNavigation().isDone()) {
             return false;
         }
-        return dino.distanceToSqr(owner) > (stopDistance * stopDistance) && !dino.isSitting();
+        return dino.distanceToSqr(owner) > (stopDistanceSqr * stopDistanceSqr) && !dino.isSitting();
     }
 
     @Override
@@ -91,7 +91,7 @@ public class DinoFollowOwnerGoal extends Goal {
         if (move) {
             return;
         }
-        if (!dino.isLeashed() && dino.distanceToSqr(owner) >= teleportDistance) {
+        if (!dino.isLeashed() && dino.distanceToSqr(owner) >= teleportDistanceSqr) {
             teleportToOwner();
         }
     }
