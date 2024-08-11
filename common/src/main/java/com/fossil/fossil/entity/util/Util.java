@@ -1,11 +1,14 @@
 package com.fossil.fossil.entity.util;
 
 import com.fossil.fossil.block.IDinoUnbreakable;
+import com.fossil.fossil.entity.data.EntityDataManager;
+import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -74,5 +77,32 @@ public class Util {
         Vec3 target = new Vec3(position.getX() + 0.5, position.getY() + 0.5, position.getZ() + 0.5);
         BlockHitResult rayTrace = dino.getLevel().clip(new ClipContext(dino.position(), target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, dino));
         return rayTrace.getType() != HitResult.Type.MISS;
+    }
+    
+    public static double calculateSpeed(EntityDataManager.Data data, float scale) {
+        Stat stats = data.stats();
+        double newSpeed = stats.baseSpeed();
+        boolean minAbove1 = data.minScale() >= 1;
+        boolean maxBelow1 = data.maxScale() <= 1;
+        //baseSpeed is for scale=1
+        if (scale < 1) {
+            float min = data.minScale();
+            float max = maxBelow1 ? data.maxScale() : 1;
+            if (min != max) {
+                //Sets maxSpeed as upper limit if maxScale is below 1
+                newSpeed = Mth.lerp((scale - min) / (max - min), stats.minSpeed(), maxBelow1 ? stats.maxSpeed() : stats.baseSpeed());
+            }
+        } else {
+            float min = data.minScale() < 1 ? 1 : data.minScale();
+            float max = data.maxScale();
+            if (max != min) {
+                //Sets minSpeed as lower limit if minScale is above 1
+                newSpeed = Mth.lerp((scale - min) / (max - min), minAbove1 ? stats.minSpeed() : stats.baseSpeed(), stats.maxSpeed());
+            } else{
+                //scale == maxScale == 1
+                newSpeed = stats.maxSpeed();
+            }
+        }
+        return newSpeed;
     }
 }

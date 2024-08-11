@@ -795,21 +795,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, stats().baseDamage(), stats().maxDamage())));
         float scale = (data().minScale() + (data().maxScale() - data().minScale()) / (data().adultAgeDays() * 24000) * getAge());
         scale = Math.min(scale, data().maxScale());
-        double newSpeed = stats().baseSpeed();
-        if (scale < 1) {
-            float min = data().minScale();
-            float max = data().maxScale() > 1 ? 1 : data().maxScale();
-            if (min != max) {
-                newSpeed = Mth.lerp((scale - min) / (max - min), stats().minSpeed(), stats().baseSpeed());
-            }
-        } else {
-            float min = data().minScale() < 1 ? 1 : data().minScale();
-            float max = data().maxScale();
-            if (max != min) {
-                newSpeed = Mth.lerp((scale - min) / (max - min), stats().baseSpeed(), stats().maxSpeed());
-            }
-        }
-        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(newSpeed);
+        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Util.calculateSpeed(data(), scale));
         getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, stats().baseArmor(), stats().maxArmor()));
         getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, stats().baseKnockBackResistance(), stats().maxKnockBackResistance()));
     }
