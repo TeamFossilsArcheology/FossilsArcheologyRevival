@@ -83,8 +83,6 @@ public class FossilConfigImpl extends MidnightConfig {
     public static boolean eggsLikeChickens = true;
     @MidnightConfig.Entry
     public static boolean whipToTameDino = true;
-    @MidnightConfig.Entry(min = 1, max = 10000)
-    public static int dinoUpdateDelay = 10;
     @MidnightConfig.Entry(min = 1, max = 1000000000)
     public static int pregnancyDuration = 10000;
     @MidnightConfig.Entry
@@ -146,7 +144,7 @@ public class FossilConfigImpl extends MidnightConfig {
 
     public static double getDouble(String field) {
         try {
-            return (int) MAPPED_ENTRIES.get(field).get(null);
+            return (double) MAPPED_ENTRIES.get(field).get(null);
         } catch (IllegalAccessException e) {
             throw new RuntimeException(e);
         }

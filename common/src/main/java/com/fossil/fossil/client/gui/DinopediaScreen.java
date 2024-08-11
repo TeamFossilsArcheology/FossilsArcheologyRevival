@@ -227,16 +227,14 @@ public class DinopediaScreen extends Screen {
             poseStack.pushPose();
             float scale = 1.5f;
             poseStack.scale(scale, scale, scale);
-            Component name = new TextComponent(String.valueOf(dino.getBbWidth()));
+            Component name = entity.getType().getDescription();
             font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
             poseStack.popPose();
             int x = leftPos + 30;
             int y = topPos + 85;
             font.draw(poseStack, new TranslatableComponent("pedia.fossil.age", dino.getAgeInDays()), x, y + 20, col);
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.health", entity.getHealth() + "/" + entity.getMaxHealth()), x,
-                    y + 30, col);
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x,
-                    y + 40, col);
+            font.draw(poseStack, new TranslatableComponent("pedia.fossil.health", entity.getHealth() + "/" + entity.getMaxHealth()), x, y + 30, col);
+            font.draw(poseStack, new TranslatableComponent("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x, y + 40, col);
             var dietText = dino.info().diet.getName();
             renderHoverInfo(poseStack, x, y + 50, mouseX, mouseY, dietText, dino.info().diet.getDescription());
             var tempText = dino.aiResponseType().getName();
@@ -247,12 +245,15 @@ public class DinopediaScreen extends Screen {
             } else {
                 font.draw(poseStack, new TranslatableComponent("pedia.fossil.owner", dino.getOwner().getName()), x, y + 80, col);
             }
-            var orderText = dino.getCurrentOrder().getName();
-            renderHoverInfo(poseStack, x, y + 90, mouseX, mouseY, orderText, dino.getCurrentOrder().getDescription());
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.order.item", dino.getOrderItem().getName(null)), x, y + 100,
-                    col);
-            var activityText = dino.aiActivityType().getName();
-            renderHoverInfo(poseStack, x, y + 110, mouseX, mouseY, activityText, dino.aiActivityType().getDescription());
+            var order = dino.getCurrentOrder();
+            renderHoverInfo(poseStack, x, y + 90, mouseX, mouseY, order.getName(), order.getDescription());
+
+            font.draw(poseStack, new TranslatableComponent("pedia.fossil.order.item", new TranslatableComponent(dino.getOrderItem().getDescriptionId())), x, y + 100, col);
+
+            var activity = dino.aiActivityType();
+            renderHoverInfo(poseStack, x, y + 110, mouseX, mouseY, activity.getName(), activity.getDescription());
+
+            font.draw(poseStack, new TranslatableComponent("pedia.fossil.population", dino.data().maxPopulation()), x, y + 120, col);
         } else if (entity instanceof DinosaurEgg egg) {
             poseStack.pushPose();
             float scale = 1.5f;

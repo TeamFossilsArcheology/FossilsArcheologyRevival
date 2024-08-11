@@ -168,6 +168,7 @@
   "pedia.fossil.order.desc.stay": "This mob will not move.",
   "pedia.fossil.order.desc.wander": "This mob is free to wander around.",
   "pedia.fossil.owner": "Owner: %s",
+  "pedia.fossil.population": "Max Population: %s",
   "pedia.fossil.pregnant": "Pregnant %s",
   "pedia.fossil.pregnantTime": "Embryo Progress: %s%%",
   "pedia.fossil.temperament": "Temperament: %s",

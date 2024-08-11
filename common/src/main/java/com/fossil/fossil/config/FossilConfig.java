@@ -38,7 +38,6 @@ public class FossilConfig {
     public static final String BREEDING_DINOS = "breedingDinos";
     public static final String EGGS_LIKE_CHICKENS = "eggsLikeChickens";
     public static final String WHIP_TO_TAME_DINO = "whipToTameDino";
-    public static final String DINO_UPDATE_DELAY = "dinoUpdateDelay";
     public static final String PREGNANCY_DURATION = "pregnancyDuration";
     public static final String DINOS_BREAK_BLOCKS = "dinosBreakBlocks";
     public static final String BLOCK_BREAK_HARDNESS = "blockBreakHardness";

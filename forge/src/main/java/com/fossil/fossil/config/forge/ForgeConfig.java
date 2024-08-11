@@ -45,7 +45,6 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.BooleanValue BREEDING_DINOS;
     public static final ForgeConfigSpec.BooleanValue EGGS_LIKE_CHICKENS;
     public static final ForgeConfigSpec.BooleanValue WHIP_TO_TAME_DINO;
-    public static final ForgeConfigSpec.IntValue DINO_UPDATE_DELAY;
     public static final ForgeConfigSpec.IntValue PREGNANCY_DURATION;
     public static final ForgeConfigSpec.BooleanValue DINOS_EAT_BLOCKS;
     public static final ForgeConfigSpec.BooleanValue DINOS_BREAK_BLOCKS;
@@ -111,7 +110,6 @@ public class ForgeConfig {
         EGGS_LIKE_CHICKENS = boolEntry("True if Dinosaurs should create item eggs instead of entities", FossilConfig.EGGS_LIKE_CHICKENS, true);
         WHIP_TO_TAME_DINO = boolEntry("True if Whips can be used to tame some dinosaurs", FossilConfig.WHIP_TO_TAME_DINO, true);
         FLYING_TARGET_MAX_HEIGHT = intEntry("Maximum height that flying creatures should soar to", FossilConfig.FLYING_TARGET_MAX_HEIGHT, 128, 1, 512);
-        DINO_UPDATE_DELAY = intEntry("Dinosaurs will conduct expensive CPU operations like looking for plants or feeders, once every this number of ticks(with added standard deviation for servers)", FossilConfig.DINO_UPDATE_DELAY, 10, 1, 10000);
         PREGNANCY_DURATION = intEntry("How long mammal pregnancies last, in ticks", FossilConfig.PREGNANCY_DURATION, 10000, 1, 1000000000);
         DINOS_BREAK_BLOCKS = boolEntry("True if certain Dinosaurs can break blocks weaker than the set hardness", FossilConfig.DINOS_BREAK_BLOCKS, true);
         BLOCK_BREAK_HARDNESS = doubleEntry("Minimum hardness that a block needs in order not to break. The default is iron(5). A value of 0.4 would be enough to break leaves and glass but not dirt", FossilConfig.BLOCK_BREAK_HARDNESS, 5, 0, 100);
