@@ -70,7 +70,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
         ActiveAnimationInfo active = getActiveAnimation(controller).orElse(null);
         if (active == null) {
-            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, 5));
+            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, category.transitionLength));
             return true;
         }
         boolean replaceAnim = false;
@@ -81,7 +81,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             replaceAnim = isLoop || isAnimationDone(active);
         }
         if (replaceAnim) {
-            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, 5));
+            int transitionLength = Math.max(category.transitionLength, active.category.transitionLength);
+            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, transitionLength));
             return true;
         }
         return false;
@@ -208,6 +209,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         event.getController().setAnimationSpeed(animationSpeed);
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
+            controller.transitionLengthTicks = newAnimation.get().speed;
             controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, loopType));
         }
         return PlayState.CONTINUE;
@@ -225,7 +227,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return PlayState.CONTINUE;
         }
         if (!isAnimationDone(controller.getName())) {
-            System.out.println("not done");
             return PlayState.CONTINUE;
         }
         return PlayState.STOP;
@@ -328,18 +329,20 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public enum Category {
-        ATTACK, BEACHED(false, 0), EAT, IDLE, SIT(true, 0.2f),
-        SLEEP(true, 0.2f), SPRINT, WALK, NONE;
+        ATTACK, BEACHED(false, 0, 5), EAT, IDLE, SIT(true, 0.2f, 20),
+        SLEEP(true, 0.2f, 20), SPRINT, WALK, NONE;
         public final boolean canBeReplaced;
         public final float chance;
+        public final int transitionLength;
 
         Category() {
-            this(true, 1);
+            this(true, 1, 5);
         }
 
-        Category(boolean canBeReplaced, float chance) {
+        Category(boolean canBeReplaced, float chance, int ticks) {
             this.canBeReplaced = canBeReplaced;
             this.chance = chance;
+            this.transitionLength = ticks;
         }
     }
 }
