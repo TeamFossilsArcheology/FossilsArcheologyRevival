@@ -40,19 +40,6 @@ public class Triceratops extends Prehistoric {
         super(type, level);
     }
 
-    protected void tickCustomParts() {
-        /*Vec3 view = calculateViewVector(0, yBodyRot);
-        Vec3 offset = view.reverse().scale(0.4 * getScale());
-        parts[0].setPos(getX() + offset.x, getY() + offset.y, getZ() + offset.z);
-
-        Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
-        float offsetVert = getPose() == Pose.SLEEPING ? 0 : getScale();
-        parts[1].setPos(position().add(offset.x + offsetHor.x, offsetVert, offset.z + offsetHor.z));
-
-        offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
-        parts[2].setPos(position().add(offset.x + offsetHor.x, offsetVert, offset.z + offsetHor.z));*/
-    }
-
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
         if (poseIn == Pose.SLEEPING) {

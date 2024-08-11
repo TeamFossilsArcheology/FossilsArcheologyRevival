@@ -149,13 +149,13 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
             if (hitbox != null) {
                 //Tick attack boxes
                 if (animatable.activeAttackBoxes.containsKey(hitbox)) {
-                    Vector3d localPos = bone.getWorldPosition();
-                    animatable.activeAttackBoxes.put(hitbox, new Vec3(localPos.x, localPos.y, localPos.z));
+                    Vector3d worldPos = bone.getWorldPosition();
+                    animatable.activeAttackBoxes.put(hitbox, new Vec3(worldPos.x, worldPos.y, worldPos.z));
                 }
             }
             if ("eat_pos".equals(bone.name)) {
-                Vector3d localPos = bone.getWorldPosition();
-                animatable.eatPos = new Vec3(localPos.x, localPos.y, localPos.z);
+                Vector3d worldPos = bone.getWorldPosition();
+                animatable.eatPos = new Vec3(worldPos.x, worldPos.y, worldPos.z);
             }
         }
     }

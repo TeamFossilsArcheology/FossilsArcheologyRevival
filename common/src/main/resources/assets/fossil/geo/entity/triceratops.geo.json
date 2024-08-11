@@ -4,7 +4,7 @@
 		{
 			"description": {
 				"identifier": "geometry.triceratops",
-				"texture_width": 96,
+				"texture_width": 97,
 				"texture_height": 64,
 				"visible_bounds_width": 4,
 				"visible_bounds_height": 2.5,

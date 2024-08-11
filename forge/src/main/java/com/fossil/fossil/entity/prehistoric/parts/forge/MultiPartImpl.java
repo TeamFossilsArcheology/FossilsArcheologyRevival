@@ -44,8 +44,13 @@ public class MultiPartImpl<T extends Prehistoric> extends PartEntity<T> implemen
     }
 
     @Override
-    public void setOverride(AnimationOverride animationOverride) {
-        this.animationOverride = animationOverride;
+    public void setOverride(AnimationOverride newOverride) {
+        if (animationOverride != null && (animationOverride.scaleH() != newOverride.scaleH() || animationOverride.scaleW() != newOverride.scaleW())) {
+            animationOverride = newOverride;
+            refreshDimensions();
+        } else {
+            animationOverride = newOverride;
+        }
     }
 
     @Override

@@ -15,12 +15,14 @@ import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class MultiPartImpl<T extends Prehistoric> extends Entity implements MultiPart {
     public final T parent;
     private final EntityDimensions size;
     private final Vec3 offset;
     private final String name;
+    @Nullable
     private AnimationOverride animationOverride;
 
     public MultiPartImpl(T parent, EntityHitboxManager.Hitbox hitbox) {
@@ -52,8 +54,13 @@ public class MultiPartImpl<T extends Prehistoric> extends Entity implements Mult
     }
 
     @Override
-    public void setOverride(AnimationOverride animationOverride) {
-        this.animationOverride = animationOverride;
+    public void setOverride(AnimationOverride newOverride) {
+        if (animationOverride != null && (animationOverride.scaleH() != newOverride.scaleH() || animationOverride.scaleW() != newOverride.scaleW())) {
+            animationOverride = newOverride;
+            refreshDimensions();
+        } else {
+            animationOverride = newOverride;
+        }
     }
 
     @Override

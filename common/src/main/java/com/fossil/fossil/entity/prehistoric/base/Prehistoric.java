@@ -33,6 +33,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
@@ -147,6 +148,12 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         List<EntityHitboxManager.Hitbox> hitboxes = EntityHitboxManager.HITBOX_DATA.getHitboxes(EntityType.getKey(getType()).getPath());
         if (hitboxes != null && !hitboxes.isEmpty()) {
             spawnHitBoxes(hitboxes, entityType);
+        }
+        if (level.isClientSide) {
+            System.out.println(Fossil.LOGGER.isDebugEnabled());
+            for (Animation anim : getAllAnimations().values()) {
+                Fossil.LOGGER.debug("{} is loop: {}", anim.animationName, anim.loop);
+            }
         }
     }
 
@@ -300,7 +307,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         ticksSlept = compound.getInt("TicksSlept");
         ticksClimbing = compound.getInt("TicksClimbing");
         climbingCooldown = compound.getInt("ClimbingCooldown");
-        if (compound.contains("CurrentOrder", CompoundTag.TAG_BYTE)) {
+        if (compound.contains("CurrentOrder", Tag.TAG_BYTE)) {
             setCurrentOrder(OrderType.values()[compound.getByte("CurrentOrder")]);
         }
         yBodyRot = compound.getInt("YBodyRot");
@@ -937,9 +944,11 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             return;
         }
         entityData.set(AGE_TICK, age);
+        if (tickCount % 120 == 0) {
+            refreshDimensions();
+        }
         if (tickCount % 12000 == 0) {
             refreshTexturePath();
-            refreshDimensions();
             updateAbilities();
         }
     }
