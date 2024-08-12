@@ -1,7 +1,7 @@
 {
   "ai": {
     "activity": "BOTH",
-    "attacking": "DROWN",
+    "attacking": "BASIC",
     "climbing": "NONE",
     "following": "AGGRESSIVE",
     "jumping": "BASIC",

@@ -10,6 +10,7 @@ import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.ClipContext;
@@ -19,6 +20,10 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.List;
+import java.util.function.Predicate;
 
 public class Util {
     public static final int IMMOBILE = 0;
@@ -78,7 +83,7 @@ public class Util {
         BlockHitResult rayTrace = dino.getLevel().clip(new ClipContext(dino.position(), target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, dino));
         return rayTrace.getType() != HitResult.Type.MISS;
     }
-    
+
     public static double calculateSpeed(EntityDataManager.Data data, float scale) {
         Stat stats = data.stats();
         double newSpeed = stats.baseSpeed();
@@ -98,11 +103,26 @@ public class Util {
             if (max != min) {
                 //Sets minSpeed as lower limit if minScale is above 1
                 newSpeed = Mth.lerp((scale - min) / (max - min), minAbove1 ? stats.minSpeed() : stats.baseSpeed(), stats.maxSpeed());
-            } else{
+            } else {
                 //scale == maxScale == 1
                 newSpeed = stats.maxSpeed();
             }
         }
         return newSpeed;
+    }
+
+    @Nullable
+    public static <T extends Entity> T getNearestEntity(Class<? extends T> entityClazz, Mob attacker, AABB searchArea, Predicate<T> predicate) {
+        List<? extends T> entities = attacker.level.getEntitiesOfClass(entityClazz, searchArea, entity -> true);
+        double shortestDist = -1;
+        T target = null;
+        for (T entity : entities) {
+            if (!attacker.getSensing().hasLineOfSight(entity) || !predicate.test(entity)) continue;
+            double currentDist = entity.distanceToSqr(attacker);
+            if (shortestDist != -1 && currentDist >= shortestDist) continue;
+            shortestDist = currentDist;
+            target = entity;
+        }
+        return target;
     }
 }

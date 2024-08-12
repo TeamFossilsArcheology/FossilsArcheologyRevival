@@ -102,6 +102,9 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     private boolean isBlocked() {
+        if (entity instanceof PrehistoricSwimming swimming && swimming.isDoingGrabAttack()) {
+            return true;
+        }
         //TODO: Heavy attacks need priority. Think of something better in the future
         return entity instanceof Prehistoric prehistoric && entity.level.getGameTime() < prehistoric.attackBoxEndTime;
     }
@@ -126,6 +129,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public PlayState waterPredicate(AnimationEvent<PrehistoricSwimming> event) {
+        if (isBlocked()) return PlayState.STOP;
         AnimationController<PrehistoricSwimming> controller = event.getController();
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
         ILoopType loopType = null;

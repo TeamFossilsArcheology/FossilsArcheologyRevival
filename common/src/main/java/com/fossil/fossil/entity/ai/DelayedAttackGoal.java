@@ -162,10 +162,6 @@ public class DelayedAttackGoal extends Goal {
                     attackDamageTick = (long) (currentTime + animation.actionDelay);
                 }
                 attackEndTick = (long) (currentTime + animation.animationLength);
-                //TODO: prevent only on certain attack(animationdata)
-                //prehistoric.getNavigation().stop();
-                //prehistoric.getLookControl().setLookAt(enemy);
-                //prehistoric.getMoveControl().setWantedPosition(prehistoric.getX(), prehistoric.getY(), prehistoric.getZ(), 1);
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
             }
             if (attackDamageTick > 0 && currentTime == attackDamageTick) {

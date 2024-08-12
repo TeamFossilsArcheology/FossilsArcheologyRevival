@@ -1,7 +1,7 @@
 {
   "ai": {
     "activity": "DIURNAL",
-    "attacking": "GRAB",
+    "attacking": "BASIC",
     "climbing": "NONE",
     "following": "AGGRESSIVE",
     "jumping": "BASIC",

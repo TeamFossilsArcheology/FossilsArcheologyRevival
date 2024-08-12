@@ -114,8 +114,8 @@ public class HuntingTargetGoal extends TargetGoal {
      * {@code getClass() != getClass() && target.size < acceptedSize}
      */
     private LivingEntity findHuntingTarget() {
-        return mob.level.getNearestEntity(mob.level.getEntitiesOfClass(LivingEntity.class, getTargetSearchArea(getFollowDistance()), livingEntity -> true),
-                huntTargetConditions, mob, mob.getX(), mob.getEyeY(), mob.getZ());
+        return mob.level.getNearestEntity(LivingEntity.class, huntTargetConditions, mob, mob.getX(), mob.getEyeY(), mob.getZ(),
+                getTargetSearchArea(getFollowDistance()));
     }
 
     private @NotNull AABB getTargetSearchArea(double targetDistance) {

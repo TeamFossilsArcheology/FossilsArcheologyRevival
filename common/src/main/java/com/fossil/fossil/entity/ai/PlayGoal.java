@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
@@ -14,16 +15,14 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
-
 public class PlayGoal extends Goal {
     protected static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
     protected long lastCanUseCheck;
-    private final Prehistoric dino;
-    private final double speedModifier;
+    protected final Prehistoric dino;
+    protected final double speedModifier;
     @Nullable
     protected Path path;
-    private ToyBase target;
+    protected ToyBase target;
     protected long attackEndTick = -1;
     protected long attackDamageTick = -1;
 
@@ -39,7 +38,7 @@ public class PlayGoal extends Goal {
             return false;
         }
         lastCanUseCheck = l;
-        if (dino.isFleeing() || dino.getTarget() != null) {
+        if (dino.isFleeing() || dino.getTarget() != null || dino.getCurrentOrder() != OrderType.WANDER) {
             return false;
         }
         if (dino.moodSystem.getPlayingCooldown() > 0 || dino.moodSystem.getMood() >= 100) {
@@ -70,7 +69,7 @@ public class PlayGoal extends Goal {
             return false;
         }
         double d = getFollowDistance();
-        if (dino.distanceToSqr(currentToyTarget) > d * d) {
+        if (dino.distanceToSqr(currentToyTarget) > d * d || dino.getCurrentOrder() != OrderType.WANDER) {
             return false;
         }
         dino.moodSystem.setToyTarget(currentToyTarget);
@@ -122,29 +121,14 @@ public class PlayGoal extends Goal {
         }
     }
 
-    private ToyBase findPlayTarget() {
-        double maxDist = getFollowDistance();
-        double shortestDist = Double.MAX_VALUE;
-        List<ToyBase> entities = dino.level.getEntitiesOfClass(ToyBase.class, getTargetSearchArea(maxDist));
-        ToyBase newTarget = null;
-        maxDist = Math.max(maxDist, 2);
-        for (ToyBase toy : entities) {
-            double currentDist = dino.distanceToSqr(toy.getX(), toy.getY(), toy.getZ());
-            if (currentDist > maxDist * maxDist || currentDist > shortestDist || !dino.getSensing().hasLineOfSight(toy)) {
-                continue;
-            }
-            shortestDist = currentDist;
-            newTarget = toy;
-        }
-        return newTarget;
+    protected ToyBase findPlayTarget() {
+        return Util.getNearestEntity(ToyBase.class, dino, getTargetSearchArea(getFollowDistance()), toyBase -> true);
     }
 
-    private @NotNull AABB getTargetSearchArea(double targetDistance) {
+    protected @NotNull AABB getTargetSearchArea(double targetDistance) {
         double yDist = 4;
-        if (dino instanceof PrehistoricFlying) {
+        if (dino instanceof PrehistoricFlying || (dino instanceof PrehistoricSwimming && dino.isSwimming())) {
             yDist = targetDistance;
-        } else if (dino instanceof PrehistoricSwimming swimming) {
-            yDist = swimming.canDoBreachAttack() ? 50 : targetDistance;
         }
         return dino.getBoundingBox().inflate(targetDistance, yDist, targetDistance);
     }

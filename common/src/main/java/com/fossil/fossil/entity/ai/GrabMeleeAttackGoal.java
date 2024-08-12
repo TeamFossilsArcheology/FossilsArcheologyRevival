@@ -1,6 +1,5 @@
 package com.fossil.fossil.entity.ai;
 
-import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
@@ -67,10 +66,6 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
                             swimming.stopGrabAttack(passenger);
                         }
                     }
-                } else if (passenger instanceof ToyBase toy && currentTime == grabStartTick + GRAB_DURATION) {
-                    swimming.stopGrabAttack(passenger);
-                    swimming.moodSystem.setToyTarget(null);
-                    swimming.moodSystem.useToy(toy.moodBonus);
                 }
             }
         } else if (attackType == ATTACK) {
@@ -94,6 +89,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
                 swimming.startGrabAttack(enemy);
                 //TODO: Grab attack needs to be delayed and probably only start when looking at player?
                 attackEndTick = 1;
+                grabStartTick = currentTime;
             }
         }
     }

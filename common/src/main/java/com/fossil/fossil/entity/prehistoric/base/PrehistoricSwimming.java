@@ -85,7 +85,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
         goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, 1));
+        goalSelector.addGoal(Util.NEEDS + 3, new WaterPlayGoal(this, 1));
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal(this, 1));
         goalSelector.addGoal(Util.WANDER + 2, new DinoRandomSwimGoal(this, 1));
@@ -212,9 +212,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 timeInWater = 0;
                 timeOnLand++;
             }
-            if (isDoingGrabAttack() && (getTarget() == null || !getPassengers().contains(getTarget()))) {
-                setDoingGrabAttack(false);
-            }
         } else {
             beached = !isAmphibious() && !isInWater() && isOnGround();
             if (beached) {
@@ -268,14 +265,16 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         }
     }
 
-    public void startGrabAttack(LivingEntity target) {
+    public void startGrabAttack(Entity target) {
         target.startRiding(this);
-        entityData.set(GRABBING, true);
+        System.out.println("startGrabAttack");
+        setDoingGrabAttack(true);
     }
 
     public void stopGrabAttack(Entity target) {
         target.stopRiding();
-        entityData.set(GRABBING, false);
+        System.out.println("stopGrabAttack");
+        setDoingGrabAttack(false);
     }
 
     @Override
@@ -329,7 +328,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         float newStrafeMovement = rider.xxa * 0.5f;
         float newForwardMovement = rider.zza;
         if (isControlledByLocalInstance()) {
-            setSpeed((float)getAttributeValue(Attributes.MOVEMENT_SPEED));
+            setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
             steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (LocalPlayer) rider);
         } else {
             setDeltaMovement(Vec3.ZERO);
@@ -419,7 +418,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(
-                this, AnimationLogic.IDLE_CTRL, 0, getAnimationLogic()::waterPredicate));
+                this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::waterPredicate));
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::grabAttackPredicate));
     }
