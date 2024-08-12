@@ -69,7 +69,7 @@ public class HuntingTargetGoal extends TargetGoal {
             return true;
         } else {
             //Calm and can hunt
-            return FoodMappings.getMobFoodPoints(player, dino.info().diet) > 0 && dino.getBbWidth() * dino.getTargetScale() >= player.getBbWidth();
+            return FoodMappings.getMobFoodPoints(player, dino.data().diet()) > 0 && dino.getBbWidth() * dino.getTargetScale() >= player.getBbWidth();
         }
     }
 
@@ -99,7 +99,7 @@ public class HuntingTargetGoal extends TargetGoal {
                 canTarget = target.isInWater() || swimming.canHuntMobsOnLand();
             }
         }
-        boolean isFood = FoodMappings.getMobFoodPoints(target, dino.info().diet) > 0;
+        boolean isFood = FoodMappings.getMobFoodPoints(target, dino.data().diet()) > 0;
         boolean smallEnough = dino.getBoundingBox().getSize() * dino.getTargetScale() >= target.getBoundingBox().getSize();
         //System.out.println(dino.info().name() + " " + target.getType().getDescriptionId() + " " + isFood + " " + smallEnough);
         return canTarget && (isFood

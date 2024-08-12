@@ -1,7 +1,15 @@
 package com.fossil.fossil.util;
 
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParseException;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.GsonHelper;
+
+import java.lang.reflect.Type;
 
 public enum Diet implements DinopediaInfo {
     CARNIVORE(3),
@@ -35,4 +43,18 @@ public enum Diet implements DinopediaInfo {
         return description;
     }
 
+    public static Diet readBuf(FriendlyByteBuf buf) {
+        return Diet.valueOf(buf.readUtf());
+    }
+
+    public static void writeBuf(FriendlyByteBuf buf, Diet diet) {
+        buf.writeUtf(diet.name());
+    }
+
+    public static class Supplier implements JsonDeserializer<Diet> {
+        @Override
+        public Diet deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+            return Diet.valueOf(GsonHelper.getAsString(json.getAsJsonObject(), "diet", Diet.NONE.name()));
+        }
+    }
 }

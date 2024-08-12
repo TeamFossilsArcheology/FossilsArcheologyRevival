@@ -779,7 +779,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     protected int getExperienceReward(Player player) {
-        float base = 6 * getBbWidth() * (info().diet == Diet.HERBIVORE ? 1 : 2)
+        float base = 6 * getBbWidth() * (data().diet() == Diet.HERBIVORE ? 1 : 2)
                 * (aiTameType() == Taming.GEM ? 2 : 1)
                 * (aiAttackType() == Attacking.BASIC ? 1 : 1.25f);
         return Mth.floor((float) Math.min(data().adultAgeDays(), getAgeInDays()) * base);
@@ -1059,9 +1059,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void eatItem(ItemStack stack) {
-        if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), info().diet) != 0)) {
+        if (stack != null && (FoodMappings.getFoodAmount(stack.getItem(), data().diet()) != 0)) {
             moodSystem.increaseMood(5);
-            feed(FoodMappings.getFoodAmount(stack.getItem(), info().diet));
+            feed(FoodMappings.getFoodAmount(stack.getItem(), data().diet()));
             stack.shrink(1);
             animationLogic.triggerAnimation(AnimationLogic.IDLE_CTRL, nextEatingAnimation(), AnimationLogic.Category.EAT);
         }
@@ -1074,9 +1074,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void killed(ServerLevel level, LivingEntity killedEntity) {
         super.killed(level, killedEntity);
-        if (info().diet != Diet.HERBIVORE) {
-            feed(FoodMappings.getMobFoodPoints(killedEntity, info().diet));
-            heal(FoodMappings.getMobFoodPoints(killedEntity, info().diet) / 10f);
+        if (data().diet() != Diet.HERBIVORE) {
+            feed(FoodMappings.getMobFoodPoints(killedEntity, data().diet()));
+            heal(FoodMappings.getMobFoodPoints(killedEntity, data().diet()) / 10f);
             moodSystem.increaseMood(25);
         }
     }
@@ -1171,7 +1171,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
-        if (FoodMappings.getFoodAmount(stack.getItem(), info().diet) > 0) {
+        if (FoodMappings.getFoodAmount(stack.getItem(), data().diet()) > 0) {
             //Feed dino
             if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
                 if (!level.isClientSide) {
@@ -1451,7 +1451,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             if ("eat".equals(event.effect)) {
                 //TODO: Could use event.script + getScale to increase the aabb size
                 AABB aabb = eatPos == null ? getBoundingBoxForCulling() : new AABB(eatPos, eatPos);
-                switch (info().diet) {
+                switch (data().diet()) {
                     case HERBIVORE -> Util.spawnItemParticles(level, Items.WHEAT_SEEDS, 4, aabb);
                     case OMNIVORE -> Util.spawnItemParticles(level, Items.BREAD, 4, aabb);
                     case PISCIVORE -> Util.spawnItemParticles(level, Items.COD, 4, aabb);

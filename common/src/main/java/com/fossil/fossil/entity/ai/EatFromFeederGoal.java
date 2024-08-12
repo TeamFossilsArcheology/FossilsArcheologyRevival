@@ -55,14 +55,14 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
         if (!super.isValidTarget(level, pos)) {
             return false;
         }
-        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && Util.canSeeFood(entity, pos);
+        return level.getBlockEntity(pos) instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.data().diet()) && Util.canSeeFood(entity, pos);
     }
 
     private boolean isValidTarget(Map.Entry<BlockPos, BlockEntity> entry) {
         if (avoidCache.contains(entry.getKey().asLong())) {
             return false;
         }
-        return entry.getValue() instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.info().diet) && Util.canSeeFood(entity, entry.getKey());
+        return entry.getValue() instanceof FeederBlockEntity feeder && !feeder.isEmpty(entity.data().diet()) && Util.canSeeFood(entity, entry.getKey());
     }
 
     @Override

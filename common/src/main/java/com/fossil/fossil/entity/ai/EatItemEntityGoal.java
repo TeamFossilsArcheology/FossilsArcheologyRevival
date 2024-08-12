@@ -81,7 +81,7 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
     protected boolean findNearestBlock() {
         List<ItemEntity> nearbyItems = entity.level.getEntities(EntityTypeTest.forClass(ItemEntity.class),
                 entity.getBoundingBox().inflate(searchRange),
-                itemEntity -> FoodMappings.getFoodAmount(itemEntity.getItem().getItem(), entity.info().diet) > 0
+                itemEntity -> FoodMappings.getFoodAmount(itemEntity.getItem().getItem(), entity.data().diet()) > 0
                         && !avoidCache.contains(itemEntity.blockPosition().asLong()));
         targetItem = nearbyItems.stream().min((o1, o2) -> Double.compare(entity.distanceToSqr(o1), entity.distanceToSqr(o2))).orElse(null);
         if (targetItem == null) {

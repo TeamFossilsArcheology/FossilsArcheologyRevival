@@ -68,6 +68,6 @@ public class FlyingLandNearFoodGoal extends MoveToFoodGoal {
     }
 
     private boolean isValidTarget(Map.Entry<BlockPos, BlockEntity> entry) {
-        return entry.getValue() instanceof FeederBlockEntity feeder && !feeder.isEmpty(dino.info().diet) && Util.canSeeFood(dino, entry.getKey());
+        return entry.getValue() instanceof FeederBlockEntity feeder && !feeder.isEmpty(dino.data().diet()) && Util.canSeeFood(dino, entry.getKey());
     }
 }

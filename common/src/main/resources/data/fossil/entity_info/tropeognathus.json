@@ -27,6 +27,7 @@
   "adultAgeDays": 6,
   "breaksBlocks": true,
   "canBeRidden": false,
+  "diet": "CARNIVORE",
   "maxHunger": 175,
   "maxPopulation": 7,
   "scaleBase": 0.4,

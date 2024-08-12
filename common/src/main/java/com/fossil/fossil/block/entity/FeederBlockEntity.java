@@ -161,16 +161,16 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     public void feedDinosaur(Prehistoric mob) {
         if (level != null) {
             int feedAmount = 0;
-            if (!isEmpty(mob.info().diet)) {
-                if (mob.info().diet == Diet.CARNIVORE || mob.info().diet == Diet.CARNIVORE_EGG || mob.info().diet == Diet.PISCI_CARNIVORE || mob.info().diet == Diet.PISCIVORE || mob.info().diet == Diet.INSECTIVORE) {
+            if (!isEmpty(mob.data().diet())) {
+                if (mob.data().diet() == Diet.CARNIVORE || mob.data().diet() == Diet.CARNIVORE_EGG || mob.data().diet() == Diet.PISCI_CARNIVORE || mob.data().diet() == Diet.PISCIVORE || mob.data().diet() == Diet.INSECTIVORE) {
                     meat--;
                     feedAmount++;
                 }
-                if (mob.info().diet == Diet.HERBIVORE) {
+                if (mob.data().diet() == Diet.HERBIVORE) {
                     plant--;
                     feedAmount++;
                 }
-                if (mob.info().diet == Diet.OMNIVORE) {
+                if (mob.data().diet() == Diet.OMNIVORE) {
                     if (meat == 0 && plant != 0) {
                         plant--;
                         feedAmount++;

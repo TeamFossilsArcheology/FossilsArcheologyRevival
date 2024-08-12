@@ -28,6 +28,8 @@
   "adultAgeDays": 10,
   "breaksBlocks": false,
   "canBeRidden": true,
+  "diet": "OMNIVORE",
+  "eggScale": 0.5,
   "maxHunger": 100.0,
   "maxPopulation": 15,
   "scaleBase": 0.2,

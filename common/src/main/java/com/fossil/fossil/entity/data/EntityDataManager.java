@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.data;
 
+import com.fossil.fossil.util.Diet;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +19,7 @@ import java.util.Map;
  */
 public class EntityDataManager extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(Stat.class, new Stat.Supplier())
-            .registerTypeAdapter(AI.class, new AI.Supplier())
+            .registerTypeAdapter(AI.class, new AI.Supplier()).registerTypeAdapter(Diet.class, new Diet.Supplier())
             .disableHtmlEscaping().create();
     public static final EntityDataManager ENTITY_DATA = new EntityDataManager(GSON);
     private ImmutableMap<String, Data> entities = ImmutableMap.of();
@@ -36,6 +37,8 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
             }
             Stat stat = GSON.getAdapter(Stat.class).fromJsonTree(root.getAsJsonObject("stats"));
             AI ai = GSON.getAdapter(AI.class).fromJsonTree(root.getAsJsonObject("ai"));
+            Diet diet = GSON.getAdapter(Diet.class).fromJsonTree(root.getAsJsonObject("diet"));
+            float eggScale = root.has("eggScale") ? root.get("eggScale").getAsFloat() : 1;
             float minScale = root.get("scaleBase").getAsFloat();
             float maxScale = root.get("scaleMax").getAsFloat();
             int teenAgeDays = root.get("teenAgeDays").getAsInt();
@@ -44,7 +47,7 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
             int maxPopulation = root.has("maxPopulation") ? root.get("maxPopulation").getAsInt() : 15;
             boolean canBeRidden = root.has("canBeRidden") && root.get("canBeRidden").getAsBoolean();
             boolean breaksBlocks = root.has("breaksBlocks") && root.get("breaksBlocks").getAsBoolean();
-            builder.put(fileEntry.getKey().getPath(), new Data(stat, ai, minScale, maxScale, teenAgeDays, adultAgeDays,
+            builder.put(fileEntry.getKey().getPath(), new Data(stat, ai, diet, eggScale, minScale, maxScale, teenAgeDays, adultAgeDays,
                     maxHunger, maxPopulation, canBeRidden, breaksBlocks));
         }
         entities = builder.build();
@@ -62,17 +65,18 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
         entities = ImmutableMap.copyOf(dataMap);
     }
 
-    public record Data(Stat stats, AI ai, float minScale, float maxScale, int teenAgeDays, int adultAgeDays,
+    public record Data(Stat stats, AI ai, Diet diet, float eggScale, float minScale, float maxScale, int teenAgeDays, int adultAgeDays,
                        int maxHunger, int maxPopulation, boolean canBeRidden, boolean breaksBlocks) {
 
         public static Data readBuf(FriendlyByteBuf buf) {
-            return new Data(Stat.readBuf(buf), AI.readBuf(buf), buf.readFloat(), buf.readFloat(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readBoolean(), buf.readBoolean());
+            return new Data(Stat.readBuf(buf), AI.readBuf(buf), Diet.readBuf(buf), buf.readFloat(), buf.readFloat(), buf.readFloat(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readBoolean(), buf.readBoolean());
         }
 
         public static void writeBuf(FriendlyByteBuf buf, Data data) {
             Stat.writeBuf(buf, data.stats);
             AI.writeBuf(buf, data.ai);
-            buf.writeFloat(data.minScale).writeFloat(data.maxScale).writeInt(data.teenAgeDays).writeInt(data.adultAgeDays)
+            Diet.writeBuf(buf, data.diet);
+            buf.writeFloat(data.eggScale).writeFloat(data.minScale).writeFloat(data.maxScale).writeInt(data.teenAgeDays).writeInt(data.adultAgeDays)
                     .writeInt(data.maxHunger).writeInt(data.maxPopulation).writeBoolean(data.canBeRidden).writeBoolean(data.breaksBlocks);
         }
     }

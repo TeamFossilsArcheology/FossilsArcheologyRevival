@@ -27,6 +27,7 @@
   "adultAgeDays": 13,
   "breaksBlocks": true,
   "canBeRidden": true,
+  "diet": "HERBIVORE",
   "maxHunger": 175.0,
   "maxPopulation": 6,
   "scaleBase": 0.15,

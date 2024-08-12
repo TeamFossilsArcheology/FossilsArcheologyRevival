@@ -27,6 +27,7 @@
   "adultAgeDays": 10,
   "breaksBlocks": false,
   "canBeRidden": true,
+  "diet": "CARNIVORE_EGG",
   "maxHunger": 125.0,
   "maxPopulation": 5,
   "scaleBase": 0.2,

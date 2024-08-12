@@ -27,6 +27,7 @@
   "adultAgeDays": 8,
   "breaksBlocks": false,
   "canBeRidden": false,
+  "diet": "PISCI_CARNIVORE",
   "maxHunger": 80.0,
   "maxPopulation": 15,
   "scaleBase": 0.4,

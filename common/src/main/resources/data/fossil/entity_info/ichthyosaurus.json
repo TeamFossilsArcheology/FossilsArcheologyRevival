@@ -27,6 +27,7 @@
   "adultAgeDays": 7,
   "breaksBlocks": false,
   "canBeRidden": false,
+  "diet": "PISCIVORE",
   "maxHunger": 125.0,
   "maxPopulation": 15,
   "scaleBase": 0.3,

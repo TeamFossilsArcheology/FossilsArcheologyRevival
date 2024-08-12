@@ -54,7 +54,7 @@ public class Nautilus extends PrehistoricFish {
             return true;
         }
         if (entity instanceof Prehistoric prehistoric) {
-            return prehistoric.info().diet.getFearIndex() >= 2;
+            return prehistoric.data().diet().getFearIndex() >= 2;
         }
         if (entity instanceof Nautilus) {
             return false;
