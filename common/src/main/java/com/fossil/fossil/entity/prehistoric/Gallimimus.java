@@ -62,7 +62,7 @@ public class Gallimimus extends PrehistoricFlocking {
         if (getRidingPlayer() != null) {
             maxUpStep = 2;
         } else {
-            maxUpStep = 0;
+            maxUpStep = 0.6f;
         }
     }
 

@@ -673,7 +673,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (getRidingPlayer() != null) {
             maxUpStep = 1;
         } else {
-            maxUpStep = 0;
+            maxUpStep = 0.6f;
         }
         if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) && !level.isClientSide) {
             if (random.nextInt(500) == 0 && deathTime == 0) {
