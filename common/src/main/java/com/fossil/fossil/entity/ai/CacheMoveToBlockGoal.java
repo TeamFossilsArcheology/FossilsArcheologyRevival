@@ -112,7 +112,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     @Override
     public boolean canContinueToUse() {
-        return this.tryTicks >= -STAY_TICKS && this.tryTicks < GIVE_UP_TICKS && this.isValidTarget(this.entity.level, this.targetPos);
+        return tryTicks >= -STAY_TICKS && tryTicks < GIVE_UP_TICKS && isValidTarget(entity.level, targetPos);
     }
 
     @Override
@@ -132,7 +132,6 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         resetBlocks();
         var old = entity.getAttribute(Attributes.FOLLOW_RANGE).getBaseValue();
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(32);
-        //TODO: Maybe move to block below to prevent jumping
         path = entity.getNavigation().createPath(getMoveToTarget().getX() + 0.5d, getMoveToTarget().getY(), getMoveToTarget().getZ() + 0.5d, 1);
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(old);
         setBlocks(false);
@@ -147,7 +146,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     protected BlockPos getMoveToTarget() {
-        return this.targetPos.above();
+        return targetPos;
     }
 
     @Override
@@ -204,7 +203,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     public boolean shouldRecalculatePath() {
-        return this.tryTicks % 40 == 0;
+        return tryTicks % 40 == 0;
     }
 
     protected boolean checkReachedTarget() {
