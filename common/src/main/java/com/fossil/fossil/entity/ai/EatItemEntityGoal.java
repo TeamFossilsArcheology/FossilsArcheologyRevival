@@ -59,7 +59,7 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
             recentlyAte = true;
             if (entity.level.getGameTime() > animEndTick) {
                 Animation anim = entity.nextEatingAnimation();
-                entity.getAnimationLogic().triggerAnimation(AnimationLogic.EAT_CTRL, anim, AnimationLogic.Category.EAT);
+                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, anim, AnimationLogic.Category.EAT);
                 animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
             }
         }
