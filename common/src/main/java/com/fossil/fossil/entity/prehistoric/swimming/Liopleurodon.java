@@ -63,11 +63,6 @@ public class Liopleurodon extends PrehistoricSwimming {
     }
 
     @Override
-    public float swimSpeed() {
-        return 6;
-    }
-
-    @Override
     public @NotNull Animation nextAttackAnimation() {
         return getAllAnimations().get(ATTACK);
     }

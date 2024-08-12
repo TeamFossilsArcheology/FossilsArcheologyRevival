@@ -51,11 +51,6 @@ public class Plesiosaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public float swimSpeed() {
-        return 1;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.PLESIOSAURUS;
     }

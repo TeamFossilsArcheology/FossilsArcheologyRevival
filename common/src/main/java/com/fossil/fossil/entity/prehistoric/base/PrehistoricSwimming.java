@@ -329,6 +329,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         float newStrafeMovement = rider.xxa * 0.5f;
         float newForwardMovement = rider.zza;
         if (isControlledByLocalInstance()) {
+            setSpeed((float)getAttributeValue(Attributes.MOVEMENT_SPEED));
             steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (LocalPlayer) rider);
         } else {
             setDeltaMovement(Vec3.ZERO);
@@ -338,12 +339,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     public boolean onClimbable() {
         return false;
-    }
-
-    public abstract float swimSpeed();
-
-    private double getScaledSwimSpeed() {
-        return getScale() / data().maxScale() * swimSpeed();
     }
 
     public boolean canHuntMobsOnLand() {

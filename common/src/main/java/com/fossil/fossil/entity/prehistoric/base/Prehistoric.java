@@ -601,7 +601,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         boolean fastInWater = aiMovingType() == Moving.AQUATIC || aiMovingType() == Moving.SEMI_AQUATIC;
         if (playerJumpPendingScale > 0) {
             double newYMovement = getJumpStrength() * playerJumpPendingScale * getBlockJumpFactor() + getJumpBoostPower();
-            if (isInWater()) {//TODO: Fix use in swimming?
+            if (isInWater()) {
                 if (fastInWater) {
                     doJump(newYMovement, newForwardMovement);
                 } else {

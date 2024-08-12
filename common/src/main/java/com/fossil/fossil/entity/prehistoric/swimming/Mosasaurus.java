@@ -59,11 +59,6 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public float swimSpeed() {
-        return 1.2f;
-    }
-
-    @Override
     public boolean canDoBreachAttack() {
         return true;
     }

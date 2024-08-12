@@ -45,11 +45,6 @@ public class Tiktaalik extends PrehistoricSwimming {
     }
 
     @Override
-    public float swimSpeed() {
-        return 0.5f;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.TIKTAALIK;
     }

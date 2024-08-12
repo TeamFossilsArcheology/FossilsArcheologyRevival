@@ -252,11 +252,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public float swimSpeed() {
-        return 0.25f;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.MEGANEURA;
     }

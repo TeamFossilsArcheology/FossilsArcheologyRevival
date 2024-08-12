@@ -54,11 +54,6 @@ public class Ichthyosaurus extends PrehistoricSwimmingBucketable {
     }
 
     @Override
-    public float swimSpeed() {
-        return 0.75f;
-    }
-
-    @Override
     public @NotNull ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.ICHTHYOSAURUS_BUCKET.get());
     }

@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.item.ModItems;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.tags.FluidTags;
@@ -31,13 +30,14 @@ public class WhipSteering {
 
     public void slowWaterTravel(Vec3 travelVector) {
         boolean movement = Math.abs(travelVector.x) > 0 || Math.abs(travelVector.z) > 0;
-        double downwardMovement = dino.isEyeInFluid(FluidTags.WATER) ? 0 : -0.15;
+        double downwardMovement = dino.getFluidHeight(FluidTags.WATER) > dino.getFluidJumpThreshold() * dino.getScale() ? 0 : -0.15;
         if (movement) {
-            dino.setDeltaMovement(0, Math.max(dino.getDeltaMovement().y, 0) + downwardMovement, 0);
+            dino.setDeltaMovement(0, downwardMovement, 0);
         } else {
             dino.setDeltaMovement(dino.getDeltaMovement().x / 2, downwardMovement, dino.getDeltaMovement().z / 2);
         }
-        double upwardMovement = dino.getFluidHeight(FluidTags.WATER) > dino.getFluidJumpThreshold() ? 0.15 : 0;
+        double upwardMovement = dino.isEyeInFluid(FluidTags.WATER) ? 0.15 : 0;
+        upwardMovement += dino.horizontalCollision ? 0.55 : 0;
         dino.moveRelative(dino.getSpeed(), new Vec3(travelVector.x, upwardMovement, travelVector.z));
         if (dino.horizontalCollision) {
             dino.setDeltaMovement(dino.getDeltaMovement().add(0, 0.1, 0));
@@ -48,15 +48,14 @@ public class WhipSteering {
     public void waterTravel(Vec3 travelVector, LocalPlayer rider) {
         Vec3 look = rider.getLookAngle();
         boolean movement = Math.abs(travelVector.x) > 0 || Math.abs(travelVector.z) > 0;
-        double downwardMovement = !rider.input.jumping && look.y < -0.4 ? -0.15 : 0;
+        double downwardMovement = !rider.input.jumping && look.y < -0.4 ? -0.3 : 0;
         if (movement) {
-            dino.setDeltaMovement(0, downwardMovement, 0);
+            dino.setDeltaMovement(0, 0, 0);
         } else {
-            dino.setDeltaMovement(dino.getDeltaMovement().x / 2, downwardMovement, dino.getDeltaMovement().z / 2);
+            dino.setDeltaMovement(dino.getDeltaMovement().x / 2, 0, dino.getDeltaMovement().z / 2);
         }
-        double upwardMovement = rider.input.jumping ? dino.getJumpStrength() * 0.15 : 0;
-        float speed = dino instanceof PrehistoricSwimming swimming ? swimming.swimSpeed() : dino.getSpeed();
-        dino.moveRelative(speed, new Vec3(travelVector.x, upwardMovement, travelVector.z));
+        double upwardMovement = rider.input.jumping ? 0.3 : 0;
+        dino.moveRelative(dino.getSpeed(), new Vec3(travelVector.x, upwardMovement+downwardMovement, travelVector.z));
         dino.move(MoverType.SELF, dino.getDeltaMovement());
     }
 }

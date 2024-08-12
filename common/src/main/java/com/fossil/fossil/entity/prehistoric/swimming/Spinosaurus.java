@@ -51,11 +51,6 @@ public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary
     }
 
     @Override
-    public float swimSpeed() {
-        return 1;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.SPINOSAURUS;
     }

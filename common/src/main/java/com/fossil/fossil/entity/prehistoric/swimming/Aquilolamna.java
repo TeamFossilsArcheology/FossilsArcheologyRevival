@@ -51,11 +51,6 @@ public class Aquilolamna extends PrehistoricSwimming {
     }
 
     @Override
-    public float swimSpeed() {
-        return 0.75f;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.AQUILOLAMNA;
     }

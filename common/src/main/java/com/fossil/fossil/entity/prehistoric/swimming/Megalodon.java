@@ -52,11 +52,6 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    public float swimSpeed() {
-        return 1;
-    }
-
-    @Override
     public boolean canDoBreachAttack() {
         return true;
     }

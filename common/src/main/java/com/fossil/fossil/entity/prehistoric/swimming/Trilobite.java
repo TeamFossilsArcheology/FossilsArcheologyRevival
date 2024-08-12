@@ -50,11 +50,6 @@ public abstract class Trilobite extends PrehistoricSwimming {
     }
 
     @Override
-    public float swimSpeed() {
-        return 0.2f;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.DICRANURUS;
     }

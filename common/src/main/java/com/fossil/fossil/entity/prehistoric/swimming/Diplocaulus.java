@@ -53,11 +53,6 @@ public class Diplocaulus extends PrehistoricSwimmingBucketable {
     }
 
     @Override
-    public float swimSpeed() {
-        return 0.5f;
-    }
-
-    @Override
     public @NotNull ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.DIPLOCAULUS_BUCKET.get());
     }
