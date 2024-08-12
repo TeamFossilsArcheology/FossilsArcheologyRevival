@@ -37,13 +37,13 @@ public abstract class ForgeEnergyContainerBlockEntity extends ForgeContainerBloc
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-        tag.put("Energy", energyStorage.serializeNBT());
+        energyStorage.deserializeNBT(tag.get("Energy"));
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        energyStorage.deserializeNBT(tag.get("Energy"));
+        tag.put("Energy", energyStorage.serializeNBT());
     }
 
     @Override
