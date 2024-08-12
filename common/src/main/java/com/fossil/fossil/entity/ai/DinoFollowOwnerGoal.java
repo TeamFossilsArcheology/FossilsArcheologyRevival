@@ -50,7 +50,7 @@ public class DinoFollowOwnerGoal extends Goal {
             return false;
         } else if (dino.getCurrentOrder() != OrderType.FOLLOW) {
             return false;
-        } else if (dino.distanceToSqr(currentOwner) < (startDistanceSqr * startDistanceSqr)) {
+        } else if (dino.distanceToSqr(currentOwner) < startDistanceSqr) {
             return false;
         }
         this.owner = currentOwner;
@@ -62,7 +62,7 @@ public class DinoFollowOwnerGoal extends Goal {
         if (dino.getNavigation().isDone()) {
             return false;
         }
-        return dino.distanceToSqr(owner) > (stopDistanceSqr * stopDistanceSqr) && !dino.isSitting();
+        return dino.distanceToSqr(owner) > stopDistanceSqr && !dino.isSitting();
     }
 
     @Override
