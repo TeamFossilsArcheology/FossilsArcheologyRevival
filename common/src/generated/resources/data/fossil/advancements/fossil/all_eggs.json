@@ -257,20 +257,6 @@
         ]
       }
     },
-    "dryosaurus": {
-      "trigger": "fossil:incubate_egg",
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "type": "fossil:dryosaurus"
-            },
-            "entity": "this"
-          }
-        ]
-      }
-    },
     "dodo": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
@@ -279,6 +265,20 @@
             "condition": "minecraft:entity_properties",
             "predicate": {
               "type": "fossil:dodo"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "dryosaurus": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:dryosaurus"
             },
             "entity": "this"
           }
@@ -871,10 +871,10 @@
       "diplodocus"
     ],
     [
-      "dryosaurus"
+      "dodo"
     ],
     [
-      "dodo"
+      "dryosaurus"
     ],
     [
       "edaphosaurus"

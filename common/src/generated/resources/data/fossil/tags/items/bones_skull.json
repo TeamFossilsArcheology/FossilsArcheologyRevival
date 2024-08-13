@@ -3,7 +3,6 @@
   "values": [
     "fossil:bone_skull_allosaurus",
     "fossil:bone_skull_ankylosaurus",
-    "fossil:bone_skull_aquilolamna",
     "fossil:bone_skull_brachiosaurus",
     "fossil:bone_skull_ceratosaurus",
     "fossil:bone_skull_citipati",
@@ -15,8 +14,8 @@
     "fossil:bone_skull_dilophosaurus",
     "fossil:bone_skull_diplocaulus",
     "fossil:bone_skull_diplodocus",
-    "fossil:bone_skull_dryosaurus",
     "fossil:bone_skull_dodo",
+    "fossil:bone_skull_dryosaurus",
     "fossil:bone_skull_edaphosaurus",
     "fossil:bone_skull_elasmotherium",
     "fossil:bone_skull_gallimimus",

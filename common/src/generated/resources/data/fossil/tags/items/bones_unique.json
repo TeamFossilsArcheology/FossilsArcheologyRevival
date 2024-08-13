@@ -3,7 +3,6 @@
   "values": [
     "fossil:bone_unique_allosaurus",
     "fossil:bone_unique_ankylosaurus",
-    "fossil:bone_unique_aquilolamna",
     "fossil:bone_unique_brachiosaurus",
     "fossil:bone_unique_ceratosaurus",
     "fossil:bone_unique_citipati",
@@ -15,8 +14,8 @@
     "fossil:bone_unique_dilophosaurus",
     "fossil:bone_unique_diplocaulus",
     "fossil:bone_unique_diplodocus",
-    "fossil:bone_unique_dryosaurus",
     "fossil:bone_unique_dodo",
+    "fossil:bone_unique_dryosaurus",
     "fossil:bone_unique_edaphosaurus",
     "fossil:bone_unique_elasmotherium",
     "fossil:bone_unique_gallimimus",

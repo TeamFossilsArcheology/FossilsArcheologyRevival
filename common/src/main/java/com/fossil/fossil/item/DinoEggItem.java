@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class DinoEggItem extends PrehistoricEntityItem {
     public DinoEggItem(PrehistoricEntityInfo info) {
-        super(info);
+        super(new Properties().stacksTo(8), info);
     }
 
     public static boolean spawnEgg(Level level, PrehistoricEntityInfo info, double x, double y, double z, Player player) {

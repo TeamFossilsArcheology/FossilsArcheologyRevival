@@ -3,7 +3,6 @@
   "values": [
     "fossil:bone_ribcage_allosaurus",
     "fossil:bone_ribcage_ankylosaurus",
-    "fossil:bone_ribcage_aquilolamna",
     "fossil:bone_ribcage_brachiosaurus",
     "fossil:bone_ribcage_ceratosaurus",
     "fossil:bone_ribcage_citipati",
@@ -15,8 +14,8 @@
     "fossil:bone_ribcage_dilophosaurus",
     "fossil:bone_ribcage_diplocaulus",
     "fossil:bone_ribcage_diplodocus",
-    "fossil:bone_ribcage_dryosaurus",
     "fossil:bone_ribcage_dodo",
+    "fossil:bone_ribcage_dryosaurus",
     "fossil:bone_ribcage_edaphosaurus",
     "fossil:bone_ribcage_elasmotherium",
     "fossil:bone_ribcage_gallimimus",

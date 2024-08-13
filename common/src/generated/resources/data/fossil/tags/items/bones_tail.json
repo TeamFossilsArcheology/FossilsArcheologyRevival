@@ -3,7 +3,6 @@
   "values": [
     "fossil:bone_tail_allosaurus",
     "fossil:bone_tail_ankylosaurus",
-    "fossil:bone_tail_aquilolamna",
     "fossil:bone_tail_brachiosaurus",
     "fossil:bone_tail_ceratosaurus",
     "fossil:bone_tail_citipati",
@@ -15,8 +14,8 @@
     "fossil:bone_tail_dilophosaurus",
     "fossil:bone_tail_diplocaulus",
     "fossil:bone_tail_diplodocus",
-    "fossil:bone_tail_dryosaurus",
     "fossil:bone_tail_dodo",
+    "fossil:bone_tail_dryosaurus",
     "fossil:bone_tail_edaphosaurus",
     "fossil:bone_tail_elasmotherium",
     "fossil:bone_tail_gallimimus",

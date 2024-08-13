@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class FishEggItem extends PrehistoricEntityItem {
 
     public FishEggItem(EntityInfo info) {
-        super(info);
+        super(new Properties().stacksTo(8), info);
     }
 
     private boolean spawnFish(ServerLevel level, BlockPos pos) {

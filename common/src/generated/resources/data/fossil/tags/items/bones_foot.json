@@ -3,7 +3,6 @@
   "values": [
     "fossil:bone_foot_allosaurus",
     "fossil:bone_foot_ankylosaurus",
-    "fossil:bone_foot_aquilolamna",
     "fossil:bone_foot_brachiosaurus",
     "fossil:bone_foot_ceratosaurus",
     "fossil:bone_foot_citipati",
@@ -15,8 +14,8 @@
     "fossil:bone_foot_dilophosaurus",
     "fossil:bone_foot_diplocaulus",
     "fossil:bone_foot_diplodocus",
-    "fossil:bone_foot_dryosaurus",
     "fossil:bone_foot_dodo",
+    "fossil:bone_foot_dryosaurus",
     "fossil:bone_foot_edaphosaurus",
     "fossil:bone_foot_elasmotherium",
     "fossil:bone_foot_gallimimus",

@@ -3,7 +3,6 @@
   "values": [
     "fossil:bone_arm_allosaurus",
     "fossil:bone_arm_ankylosaurus",
-    "fossil:bone_arm_aquilolamna",
     "fossil:bone_arm_brachiosaurus",
     "fossil:bone_arm_ceratosaurus",
     "fossil:bone_arm_citipati",
@@ -15,8 +14,8 @@
     "fossil:bone_arm_dilophosaurus",
     "fossil:bone_arm_diplocaulus",
     "fossil:bone_arm_diplodocus",
-    "fossil:bone_arm_dryosaurus",
     "fossil:bone_arm_dodo",
+    "fossil:bone_arm_dryosaurus",
     "fossil:bone_arm_edaphosaurus",
     "fossil:bone_arm_elasmotherium",
     "fossil:bone_arm_gallimimus",
