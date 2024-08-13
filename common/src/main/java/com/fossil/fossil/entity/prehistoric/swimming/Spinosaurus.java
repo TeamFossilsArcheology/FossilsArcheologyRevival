@@ -2,7 +2,6 @@ package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
@@ -18,7 +17,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Spinosaurus extends PrehistoricSwimming implements PrehistoricScary {
+public class Spinosaurus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "spinosaurus.animation.json";
     public static final String ATTACK = "animation.spinosaurus.attack";
     public static final String EAT = "animation.spinosaurus.eat";

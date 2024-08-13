@@ -3,7 +3,6 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
@@ -18,7 +17,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Allosaurus extends Prehistoric implements PrehistoricScary {
+public class Allosaurus extends Prehistoric {
     public static final String ANIMATIONS = "allosaurus.animation.json";
     public static final String ATTACK = "animation.allosaurus.attack";
     public static final String EAT = "animation.allosaurus.eat";

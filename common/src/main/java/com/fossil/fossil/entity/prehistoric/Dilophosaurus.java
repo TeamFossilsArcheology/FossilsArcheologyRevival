@@ -3,7 +3,6 @@ package com.fossil.fossil.entity.prehistoric;
 import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -19,7 +18,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Dilophosaurus extends Prehistoric implements PrehistoricScary {
+public class Dilophosaurus extends Prehistoric {
     public static final String ANIMATIONS = "dilophosaurus.animation.json";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     public static final String ATTACK2 = "animation.dilophosaurus.attack2";

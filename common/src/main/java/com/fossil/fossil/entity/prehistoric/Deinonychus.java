@@ -5,7 +5,6 @@ import com.fossil.fossil.entity.ai.DelayedAttackGoal;
 import com.fossil.fossil.entity.ai.DinoOtherLeapAtTargetGoal;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricLeaping;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricScary;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -22,7 +21,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Deinonychus extends PrehistoricLeaping implements PrehistoricScary {
+public class Deinonychus extends PrehistoricLeaping {
     public static final String ANIMATIONS = "deinonychus.animation.json";
     public static final String ATTACK = "animation.deinonychus.attack";
     public static final String EAT = "animation.deinonychus.eat";
