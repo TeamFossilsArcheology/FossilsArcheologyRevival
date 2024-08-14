@@ -5,11 +5,11 @@
     "climbing": "ARTHROPOD",
     "following": "AGGRESSIVE",
     "jumping": "TWO_BLOCKS",
+    "moving": "WALK",
     "response": "TERRITORIAL",
     "stalking": "STEALTH",
     "taming": "IMPRINTING",
     "untaming": "ATTACK",
-    "moving": "WALK",
     "waterAbility": "NONE"
   },
   "attributes": {
@@ -21,17 +21,17 @@
     "speedMax": 0.23,
     "armorBase": 0.0,
     "armorMax": 2.0,
-    "knockBackResistanceBase": 0,
-    "knockBackResistanceMax": 0
+    "knockBackResistanceBase": 0.0,
+    "knockBackResistanceMax": 0.0
   },
   "adultAgeDays": 10,
+  "teenAgeDays": 4,
   "breaksBlocks": false,
   "canBeRidden": false,
   "diet": "CARNIVORE_EGG",
-  "eggScale": 0.6,
-  "maxHunger": 100.0,
+  "maxHunger": 100,
   "maxPopulation": 9,
+  "eggScale": 0.6,
   "scaleBase": 0.2,
-  "scaleMax": 0.79,
-  "teenAgeDays": 4
+  "scaleMax": 0.79
 }

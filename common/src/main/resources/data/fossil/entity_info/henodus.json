@@ -5,11 +5,11 @@
     "climbing": "NONE",
     "following": "NORMAL",
     "jumping": "BASIC",
+    "moving": "AQUATIC",
     "response": "WATER_CALM",
     "stalking": "NONE",
     "taming": "IMPRINTING",
     "untaming": "STARVE",
-    "moving": "AQUATIC",
     "waterAbility": "IGNORE_AND_FISH"
   },
   "attributes": {
@@ -22,15 +22,15 @@
     "armorBase": 5.0,
     "armorMax": 10.0,
     "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1
+    "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 4,
+  "teenAgeDays": 2,
   "breaksBlocks": false,
   "canBeRidden": false,
   "diet": "HERBIVORE",
-  "maxHunger": 50.0,
+  "maxHunger": 50,
   "maxPopulation": 15,
   "scaleBase": 0.25,
-  "scaleMax": 0.75,
-  "teenAgeDays": 2
+  "scaleMax": 0.75
 }

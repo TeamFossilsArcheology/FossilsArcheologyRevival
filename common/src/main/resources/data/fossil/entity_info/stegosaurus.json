@@ -5,11 +5,11 @@
     "climbing": "NONE",
     "following": "SKITTISH",
     "jumping": "BASIC",
+    "moving": "WALK",
     "response": "TERRITORIAL",
     "stalking": "NONE",
     "taming": "IMPRINTING",
     "untaming": "STARVE",
-    "moving": "WALK",
     "waterAbility": "NONE"
   },
   "attributes": {
@@ -22,15 +22,15 @@
     "armorBase": 10.0,
     "armorMax": 30.0,
     "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1
+    "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 12,
+  "teenAgeDays": 5,
   "breaksBlocks": true,
   "canBeRidden": false,
   "diet": "HERBIVORE",
-  "maxHunger": 175.0,
+  "maxHunger": 175,
   "maxPopulation": 7,
   "scaleBase": 0.2,
-  "scaleMax": 1.5,
-  "teenAgeDays": 5
+  "scaleMax": 1.5
 }

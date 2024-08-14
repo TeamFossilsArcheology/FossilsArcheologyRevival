@@ -5,11 +5,11 @@
     "climbing": "NONE",
     "following": "SKITTISH",
     "jumping": "TWO_BLOCKS",
+    "moving": "WALK",
     "response": "SCARED",
     "stalking": "NONE",
     "taming": "FEEDING",
     "untaming": "ATTACK",
-    "moving": "WALK",
     "waterAbility": "NONE"
   },
   "attributes": {
@@ -17,22 +17,21 @@
     "damageMax": 3.0,
     "healthBase": 8.0,
     "healthMax": 40.0,
-    "speedMin": 0.25,
     "speedBase": 0.3,
     "speedMax": 0.3,
     "armorBase": 0.0,
     "armorMax": 0.0,
     "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1
+    "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 10,
+  "teenAgeDays": 4,
   "breaksBlocks": false,
   "canBeRidden": true,
   "diet": "OMNIVORE",
-  "eggScale": 0.5,
-  "maxHunger": 100.0,
+  "maxHunger": 100,
   "maxPopulation": 15,
+  "eggScale": 0.5,
   "scaleBase": 0.2,
-  "scaleMax": 1.2,
-  "teenAgeDays": 4
+  "scaleMax": 1.2
 }

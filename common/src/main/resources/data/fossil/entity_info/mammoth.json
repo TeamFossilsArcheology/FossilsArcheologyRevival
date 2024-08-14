@@ -5,11 +5,11 @@
     "climbing": "NONE",
     "following": "NONE",
     "jumping": "BASIC",
+    "moving": "WALK",
     "response": "TERRITORIAL",
     "stalking": "NONE",
     "taming": "IMPRINTING",
     "untaming": "ATTACK",
-    "moving": "WALK",
     "waterAbility": "NONE"
   },
   "attributes": {
@@ -22,15 +22,15 @@
     "armorBase": 0.0,
     "armorMax": 10.0,
     "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1
+    "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 14,
+  "teenAgeDays": 7,
   "breaksBlocks": true,
   "canBeRidden": true,
   "diet": "HERBIVORE",
-  "maxHunger": 150.0,
+  "maxHunger": 150,
   "maxPopulation": 15,
   "scaleBase": 0.3,
-  "scaleMax": 1.7,
-  "teenAgeDays": 7
+  "scaleMax": 1.7
 }

@@ -5,11 +5,11 @@
     "climbing": "NONE",
     "following": "AGGRESSIVE",
     "jumping": "BASIC",
+    "moving": "SEMI_AQUATIC",
     "response": "AGGRESSIVE",
     "stalking": "NONE",
     "taming": "AQUATIC_GEM",
     "untaming": "NONE",
-    "moving": "SEMI_AQUATIC",
     "waterAbility": "ATTACK"
   },
   "attributes": {
@@ -22,15 +22,15 @@
     "armorBase": 10.0,
     "armorMax": 20.0,
     "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1
+    "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 12,
+  "teenAgeDays": 5,
   "breaksBlocks": true,
   "canBeRidden": true,
   "diet": "PISCI_CARNIVORE",
-  "maxHunger": 175.0,
+  "maxHunger": 175,
   "maxPopulation": 15,
   "scaleBase": 2.25,
-  "scaleMax": 2.5,
-  "teenAgeDays": 5
+  "scaleMax": 2.5
 }

@@ -5,32 +5,32 @@
     "climbing": "NONE",
     "following": "NORMAL",
     "jumping": "BASIC",
+    "moving": "FLIGHT",
     "response": "CALM",
     "stalking": "NONE",
     "taming": "NONE",
     "untaming": "NONE",
-    "moving": "FLIGHT",
     "waterAbility": "ATTACK"
   },
   "attributes": {
-    "damageBase": 12,
-    "damageMax": 12,
-    "healthBase": 12,
-    "healthMax": 64,
+    "damageBase": 12.0,
+    "damageMax": 12.0,
+    "healthBase": 12.0,
+    "healthMax": 64.0,
     "speedBase": 0.2,
     "speedMax": 0.35,
-    "armorBase": 5,
-    "armorMax": 15,
+    "armorBase": 5.0,
+    "armorMax": 15.0,
     "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1
+    "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 6,
+  "teenAgeDays": 5,
   "breaksBlocks": true,
   "canBeRidden": false,
   "diet": "CARNIVORE",
   "maxHunger": 175,
   "maxPopulation": 7,
   "scaleBase": 0.4,
-  "scaleMax": 2,
-  "teenAgeDays": 5
+  "scaleMax": 2.0
 }

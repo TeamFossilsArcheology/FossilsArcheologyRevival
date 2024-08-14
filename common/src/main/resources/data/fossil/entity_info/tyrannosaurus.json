@@ -5,11 +5,11 @@
     "climbing": "NONE",
     "following": "AGGRESSIVE",
     "jumping": "BASIC",
+    "moving": "WALK",
     "response": "AGGRESSIVE",
     "stalking": "STEALTH",
     "taming": "GEM",
     "untaming": "NONE",
-    "moving": "WALK",
     "waterAbility": "NONE"
   },
   "attributes": {
@@ -22,15 +22,15 @@
     "armorBase": 0.0,
     "armorMax": 7.0,
     "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1
+    "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 12,
+  "teenAgeDays": 5,
   "breaksBlocks": true,
   "canBeRidden": true,
   "diet": "CARNIVORE",
-  "maxHunger": 150.0,
+  "maxHunger": 150,
   "maxPopulation": 2,
   "scaleBase": 0.2,
-  "scaleMax": 2.5,
-  "teenAgeDays": 5
+  "scaleMax": 2.5
 }
