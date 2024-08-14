@@ -1,8 +1,8 @@
 package com.fossil.fossil.entity.util;
 
 import com.fossil.fossil.block.IDinoUnbreakable;
+import com.fossil.fossil.entity.data.Attribute;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
@@ -85,8 +85,8 @@ public class Util {
     }
 
     public static double calculateSpeed(EntityDataManager.Data data, float scale) {
-        Stat stats = data.stats();
-        double newSpeed = stats.baseSpeed();
+        Attribute attributes = data.attributes();
+        double newSpeed = attributes.baseSpeed();
         boolean minAbove1 = data.minScale() >= 1;
         boolean maxBelow1 = data.maxScale() <= 1;
         //baseSpeed is for scale=1
@@ -95,17 +95,17 @@ public class Util {
             float max = maxBelow1 ? data.maxScale() : 1;
             if (min != max) {
                 //Sets maxSpeed as upper limit if maxScale is below 1
-                newSpeed = Mth.lerp((scale - min) / (max - min), stats.minSpeed(), maxBelow1 ? stats.maxSpeed() : stats.baseSpeed());
+                newSpeed = Mth.lerp((scale - min) / (max - min), attributes.minSpeed(), maxBelow1 ? attributes.maxSpeed() : attributes.baseSpeed());
             }
         } else {
             float min = data.minScale() < 1 ? 1 : data.minScale();
             float max = data.maxScale();
             if (max != min) {
                 //Sets minSpeed as lower limit if minScale is above 1
-                newSpeed = Mth.lerp((scale - min) / (max - min), minAbove1 ? stats.minSpeed() : stats.baseSpeed(), stats.maxSpeed());
+                newSpeed = Mth.lerp((scale - min) / (max - min), minAbove1 ? attributes.minSpeed() : attributes.baseSpeed(), attributes.maxSpeed());
             } else {
                 //scale == maxScale == 1
-                newSpeed = stats.maxSpeed();
+                newSpeed = attributes.maxSpeed();
             }
         }
         return newSpeed;

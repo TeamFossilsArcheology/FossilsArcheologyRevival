@@ -11,9 +11,9 @@ import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.data.AI;
+import com.fossil.fossil.entity.data.Attribute;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.data.EntityHitboxManager;
-import com.fossil.fossil.entity.data.Stat;
 import com.fossil.fossil.entity.prehistoric.Deinonychus;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
@@ -789,15 +789,15 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         double percent = Math.min(getAge() / data().adultAgeDays() * 24000, 1);
 
         double healthDifference = getAttributeValue(Attributes.MAX_HEALTH);
-        getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, stats().baseHealth(), stats().maxHealth())));
+        getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseHealth(), attributes().maxHealth())));
         healthDifference = getAttributeValue(Attributes.MAX_HEALTH) - healthDifference;
         heal((float) healthDifference);
-        getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, stats().baseDamage(), stats().maxDamage())));
+        getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseDamage(), attributes().maxDamage())));
         float scale = (data().minScale() + (data().maxScale() - data().minScale()) / (data().adultAgeDays() * 24000) * getAge());
         scale = Math.min(scale, data().maxScale());
         getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Util.calculateSpeed(data(), scale));
-        getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, stats().baseArmor(), stats().maxArmor()));
-        getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, stats().baseKnockBackResistance(), stats().maxKnockBackResistance()));
+        getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, attributes().baseArmor(), attributes().maxArmor()));
+        getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, attributes().baseKnockBackResistance(), attributes().maxKnockBackResistance()));
     }
 
     public void breakBlock(float maxHardness) {
@@ -1376,8 +1376,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return EntityDataManager.ENTITY_DATA.getData(EntityType.getKey(getType()).getPath());
     }
 
-    public Stat stats() {
-        return data().stats();
+    public Attribute attributes() {
+        return data().attributes();
     }
 
     private AI ai() {

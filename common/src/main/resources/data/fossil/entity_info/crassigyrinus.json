@@ -12,7 +12,7 @@
     "moving": "AQUATIC",
     "waterAbility": "ATTACK"
   },
-  "stats": {
+  "attributes": {
     "damageBase": 1.0,
     "damageMax": 4.0,
     "healthBase": 4.0,

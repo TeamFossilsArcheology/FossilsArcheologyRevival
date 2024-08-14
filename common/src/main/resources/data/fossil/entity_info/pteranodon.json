@@ -12,7 +12,7 @@
     "moving": "FLIGHT",
     "waterAbility": "IGNORE_AND_FISH"
   },
-  "stats": {
+  "attributes": {
     "damageBase": 2.0,
     "damageMax": 4.0,
     "healthBase": 6.0,

@@ -178,7 +178,7 @@ public class AnimationTab extends DebugTab {
                 changeButton = new Button(0, 0, 200, 20, new TextComponent(animation.getKey()), button -> {
                     if (entity instanceof Prehistoric prehistoric) {
                         /*double speed = 1 / Math.sqrt(prehistoric.getScale());
-                        speed *= prehistoric.data().stats().baseSpeed() / 0.26;//multiplier
+                        speed *= prehistoric.data().attributes().baseSpeed() / 0.26;//multiplier
                         speed *= animation.getValue().animationLength / 20;*/
                         MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), transitionLength, loop));
                     }

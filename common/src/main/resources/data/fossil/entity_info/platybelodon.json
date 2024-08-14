@@ -12,7 +12,7 @@
     "moving": "WALK",
     "waterAbility": "NONE"
   },
-  "stats": {
+  "attributes": {
     "damageBase": 2.0,
     "damageMax": 8.0,
     "healthBase": 8.0,

@@ -12,7 +12,7 @@
     "moving": "AQUATIC",
     "waterAbility": "IGNORE_AND_FISH"
   },
-  "stats": {
+  "attributes": {
     "damageBase": 1.0,
     "damageMax": 2.0,
     "healthBase": 10.0,

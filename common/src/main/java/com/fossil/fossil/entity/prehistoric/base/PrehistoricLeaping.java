@@ -133,7 +133,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                     //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                     double mobSpeed = getDeltaMovement().horizontalDistance() * 20;
                     //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
-                    mobSpeed = Math.min(23.55 * Mth.square(event.getAnimatable().stats().maxSpeed()), mobSpeed);
+                    mobSpeed = Math.min(23.55 * Mth.square(event.getAnimatable().attributes().maxSpeed()), mobSpeed);
                     animSpeed *= mobSpeed / animationBaseSpeed;
                 }
                 if (lastSpeed > animSpeed) {

@@ -12,7 +12,7 @@
     "moving": "FLIGHT",
     "waterAbility": "ATTACK"
   },
-  "stats": {
+  "attributes": {
     "damageBase": 12,
     "damageMax": 12,
     "healthBase": 12,
