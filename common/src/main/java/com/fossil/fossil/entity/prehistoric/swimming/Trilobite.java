@@ -13,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.MobType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -52,6 +53,11 @@ public abstract class Trilobite extends PrehistoricSwimming {
     @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.DICRANURUS;
+    }
+
+    @Override
+    public @NotNull MobType getMobType() {
+        return MobType.ARTHROPOD;
     }
 
     @Override

@@ -37,7 +37,7 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
             }
             Attribute attribute = GSON.getAdapter(Attribute.class).fromJsonTree(root.getAsJsonObject("attributes"));
             AI ai = GSON.getAdapter(AI.class).fromJsonTree(root.getAsJsonObject("ai"));
-            Diet diet = GSON.getAdapter(Diet.class).fromJsonTree(root.getAsJsonObject("diet"));
+            Diet diet = GSON.fromJson(root, Diet.class);
             float eggScale = root.has("eggScale") ? root.get("eggScale").getAsFloat() : 1;
             float minScale = root.get("scaleBase").getAsFloat();
             float maxScale = root.get("scaleMax").getAsFloat();
@@ -65,7 +65,8 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
         entities = ImmutableMap.copyOf(dataMap);
     }
 
-    public record Data(Attribute attributes, AI ai, Diet diet, float eggScale, float minScale, float maxScale, int teenAgeDays, int adultAgeDays,
+    public record Data(Attribute attributes, AI ai, Diet diet, float eggScale, float minScale, float maxScale,
+                       int teenAgeDays, int adultAgeDays,
                        int maxHunger, int maxPopulation, boolean canBeRidden, boolean breaksBlocks) {
 
         public static Data readBuf(FriendlyByteBuf buf) {
