@@ -6,6 +6,9 @@ import com.fossil.fossil.entity.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -25,6 +28,8 @@ import net.minecraft.world.phys.shapes.Shapes;
 import org.jetbrains.annotations.NotNull;
 
 public class TarSlime extends Slime {
+    private static final EntityDataAccessor<Integer> VEHICLE_ID = SynchedEntityData.defineId(TarSlime.class, EntityDataSerializers.INT);
+
     public TarSlime(EntityType<? extends TarSlime> entityType, Level level) {
         super(entityType, level);
     }
@@ -34,16 +39,20 @@ public class TarSlime extends Slime {
     }
 
     @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(VEHICLE_ID, -1);
+    }
+
+    @Override
     protected @NotNull ParticleOptions getParticleType() {
         return ModBlockEntities.TAR_BUBBLE.get();
     }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (source.getEntity() != null && getVehicle() != null && getVehicle().is(source.getEntity())) {
-            if (random.nextBoolean()) {
-                stopRiding();
-            }
+        if (source.getEntity() != null && getVehicle() != null && getVehicle().is(source.getEntity()) && random.nextBoolean()) {
+            stopRiding();
         }
         return super.hurt(source, amount);
     }
@@ -70,12 +79,12 @@ public class TarSlime extends Slime {
         if (!level.isClientSide && i > 1 && isDeadOrDying()) {
             Component component = getCustomName();
             boolean bl = isNoAi();
-            float f = (float) i / 4.0f;
+            float f = i / 4.0f;
             int j = i / 2;
             int k = 2 + random.nextInt(3);
             for (int l = 0; l < k; ++l) {
-                float g = ((float) (l % 2) - 0.5f) * f;
-                float h = ((float) (l / 2) - 0.5f) * f;
+                float g = ((l % 2) - 0.5f) * f;
+                float h = (l / 2f - 0.5f) * f;
                 TarSlime slime = ModEntities.TAR_SLIME.get().create(level);
                 if (getSharedFlag(0)) {
                     slime.setSecondsOnFire(15);
@@ -87,7 +96,7 @@ public class TarSlime extends Slime {
                 slime.setNoAi(bl);
                 slime.setInvulnerable(isInvulnerable());
                 slime.setSize(j, true);
-                slime.moveTo(getX() + (double) g, getY() + 0.5, getZ() + (double) h, random.nextFloat() * 360.0f, 0.0f);
+                slime.moveTo(getX() + g, getY() + 0.5, getZ() + h, random.nextFloat() * 360.0f, 0.0f);
                 level.addFreshEntity(slime);
             }
         }
@@ -99,6 +108,21 @@ public class TarSlime extends Slime {
 
     @Override
     protected void decreaseSquish() {
+        this.targetSquish *= 0.97f;
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (VEHICLE_ID.equals(key)) {
+            //Have to set this ourselves because the server won't send this info to the player that is the vehicle
+            Entity entity = level.getEntity(entityData.get(VEHICLE_ID));
+            if (entityData.get(VEHICLE_ID) == -1 || entity == null) {
+                stopRiding();
+            } else if (getVehicle() != entity) {
+                startRiding(entity);
+            }
+        }
+        super.onSyncedDataUpdated(key);
     }
 
     @Override
@@ -106,18 +130,18 @@ public class TarSlime extends Slime {
         super.rideTick();
         Entity vehicle = getVehicle();
         if (vehicle != null) {
-            if (vehicle instanceof Player) {
-                setYRot(vehicle.getYRot());
-                setPos(position());
-            }
-            if (vehicle instanceof LivingEntity) {
-                ((LivingEntity) vehicle).addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100), this);
+            if (vehicle instanceof LivingEntity livingEntity) {
+                if (!level.isClientSide && !livingEntity.hasEffect(MobEffects.BLINDNESS)) {
+                    livingEntity.addEffect(new MobEffectInstance(MobEffects.BLINDNESS, 100), this);
+                }
                 if (tickCount % 20 == 0) {
-                    vehicle.hurt(DamageSource.mobAttack(this), getSize());
-                    playSound(getJumpSound(), getSoundVolume(), getVoicePitch());
+                    if (!level.isClientSide) {
+                        vehicle.hurt(DamageSource.mobAttack(this), getSize());
+                        playSound(getJumpSound(), getSoundVolume(), getVoicePitch());
+                    }
                     targetSquish = 0.7f;
                 } else {
-                    targetSquish = 0;
+                    targetSquish = Math.max(0, targetSquish * 0.9f);
                 }
             }
             if (!vehicle.isAlive()) {
@@ -128,11 +152,29 @@ public class TarSlime extends Slime {
 
     @Override
     public void playerTouch(Player player) {
-        super.playerTouch(player);
-        if (random.nextInt(6) == 0 && player.getPassengers().isEmpty()) {
-            if (!player.isCreative()) {
-                startRiding(player);
-            }
+        if (!isDealsDamage() || player.isCreative() || !player.getPassengers().isEmpty() || getVehicle() != null) {
+            return;
+        }
+        if (random.nextInt(6) == 0) {
+            startRiding(player);
+        }
+    }
+
+    @Override
+    public boolean startRiding(Entity vehicle) {
+        if (super.startRiding(vehicle)) {
+            entityData.set(VEHICLE_ID, vehicle.getId());
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void stopRiding() {
+        Entity entity = getVehicle();
+        super.stopRiding();
+        if (entity != null && entity != getVehicle() && !level.isClientSide) {
+            entityData.set(VEHICLE_ID, -1);
         }
     }
 
