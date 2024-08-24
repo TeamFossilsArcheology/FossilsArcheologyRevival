@@ -87,7 +87,7 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(SHEARED, false);
+        entityData.define(SHEARED, true);
     }
 
     @Override

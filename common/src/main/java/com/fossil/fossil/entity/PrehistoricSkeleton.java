@@ -82,6 +82,9 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
 
     @Override
     public @NotNull InteractionResult interact(Player player, InteractionHand hand) {
+        if (hand == InteractionHand.OFF_HAND) {
+            return InteractionResult.PASS;
+        }
         ItemStack stack = player.getItemInHand(hand);
         if (stack.isEmpty()) {
             if (player.isShiftKeyDown()) {

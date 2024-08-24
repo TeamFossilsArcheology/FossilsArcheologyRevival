@@ -3,7 +3,9 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.entity.ai.FlockWanderGoal;
 import com.fossil.fossil.entity.util.Util;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.stream.Stream;
 
@@ -52,7 +54,15 @@ public abstract class PrehistoricFlocking extends Prehistoric {
 
     public void pathToGroupLeader(double speed) {
         if (hasGroupLeader()) {
-            getNavigation().moveTo(groupLeader, speed);
+            Vec3 vec;
+            if (distanceTo(groupLeader) < 7) {
+                vec = LandRandomPos.getPos(this, 5, 7);
+            } else {
+                vec = LandRandomPos.getPos(groupLeader, 5, 7);
+            }
+            if (vec != null) {
+                getNavigation().moveTo(vec.x, vec.y, vec.z, speed);
+            }
         }
     }
 

@@ -56,28 +56,30 @@ public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implem
     }
 
     @Override
-    public void render(PrehistoricSkeleton entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
+    public void render(PrehistoricSkeleton animatable, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
         setCurrentModelRenderCycle(EModelRenderCycle.INITIAL);
         poseStack.pushPose();
         dispatchedMat = poseStack.last().pose().copy();
-        GeoModel model = geoModel.getModel(geoModel.getModelLocation(entity));
+        GeoModel model = geoModel.getModel(geoModel.getModelLocation(animatable));
         poseStack.translate(0, 0.01f, 0);
-        RenderSystem.setShaderTexture(0, getTextureLocation(entity));
+        RenderSystem.setShaderTexture(0, getTextureLocation(animatable));
 
-        if (!entity.isInvisibleTo(Minecraft.getInstance().player)) {
-            Color renderColor = getRenderColor(entity, partialTick, poseStack, bufferSource, null, packedLight);
-            RenderType renderType = getRenderType(entity, partialTick, poseStack, bufferSource, null, packedLight, getTextureLocation(entity));
+        if (!animatable.isInvisibleTo(Minecraft.getInstance().player)) {
+            poseStack.mulPose(Vector3f.YP.rotationDegrees(180f - animatable.getYRot()));
+
+            Color renderColor = getRenderColor(animatable, partialTick, poseStack, bufferSource, null, packedLight);
+            RenderType renderType = getRenderType(animatable, partialTick, poseStack, bufferSource, null, packedLight, getTextureLocation(animatable));
 
             VertexConsumer glintBuffer = bufferSource.getBuffer(RenderType.entityGlintDirect());
-            VertexConsumer translucentBuffer = bufferSource.getBuffer(RenderType.entityTranslucentCull(getTextureLocation(entity)));
+            VertexConsumer translucentBuffer = bufferSource.getBuffer(RenderType.entityTranslucentCull(getTextureLocation(animatable)));
 
-            render(model, entity, partialTick, renderType, poseStack, bufferSource,
+            render(model, animatable, partialTick, renderType, poseStack, bufferSource,
                     glintBuffer != translucentBuffer ? VertexMultiConsumer.create(glintBuffer, translucentBuffer) : null,
                     packedLight, OverlayTexture.pack(OverlayTexture.u(0), OverlayTexture.v(false)), renderColor.getRed() / 255f, renderColor.getGreen() / 255f, renderColor.getBlue() / 255f, renderColor.getAlpha() / 255f);
         }
 
         poseStack.popPose();
-        super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
+        super.render(animatable, entityYaw, partialTick, poseStack, bufferSource, packedLight);
     }
 
     @Override

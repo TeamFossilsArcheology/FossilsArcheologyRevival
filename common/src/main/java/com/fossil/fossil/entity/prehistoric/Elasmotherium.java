@@ -85,7 +85,7 @@ public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(SHEARED, false);
+        entityData.define(SHEARED, true);
     }
 
     @Override
