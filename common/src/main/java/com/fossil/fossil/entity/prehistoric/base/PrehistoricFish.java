@@ -123,6 +123,9 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
             moveRelative(getSpeed(), travelVector);
             move(MoverType.SELF, getDeltaMovement());
             setDeltaMovement(getDeltaMovement().scale(0.9));
+            if (getTarget() == null) {
+                setDeltaMovement(getDeltaMovement().add(0.0, -0.005, 0.0));
+            }
         } else {
             super.travel(travelVector);
         }

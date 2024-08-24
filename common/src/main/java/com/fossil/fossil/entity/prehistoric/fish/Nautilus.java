@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric.fish;
 
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
@@ -9,6 +10,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -43,7 +45,8 @@ public class Nautilus extends PrehistoricFish {
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDimensions SHELL_DIMENSIONS = EntityDimensions.fixed(1, 0.5f);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    private float ticksToShell = 0;
+    private float ticksUntilShellUpdate = 0;
+    private float ticksInShell = -1;
 
     public Nautilus(EntityType<Nautilus> entityType, Level level) {
         super(entityType, level);
@@ -92,42 +95,53 @@ public class Nautilus extends PrehistoricFish {
 
     @Override
     public void travel(Vec3 travelVector) {
-        if (isInShell()) {
-            super.travel(Vec3.ZERO);
+        if (isInShell() && isInWater()) {
+            if (!level.isClientSide) {
+                setDeltaMovement(0, -0.05, 0);
+                move(MoverType.SELF, getDeltaMovement());
+            }
         } else {
             super.travel(travelVector);
         }
     }
 
     @Override
-    protected boolean isImmobile() {
-        return super.isImmobile() || !isInWater() && isOnGround();
-    }
-
-    @Override
     public void aiStep() {
         super.aiStep();
-        if (ticksToShell > 0) {
-            ticksToShell--;
-        }
         if (!level.isClientSide) {
-            List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
-            if (nearbyMobs.size() > 1 || isImmobile()) {
-                if (ticksToShell == 0 && !isInShell()) {
-                    hideInShell(true);
+            if (ticksUntilShellUpdate > 0) {
+                ticksUntilShellUpdate--;
+            }
+            if (ticksInShell > -1) {
+                ticksInShell++;
+            }
+            if (isInShell() && ticksInShell > 20) {
+                resetFallDistance();
+            }
+            if (ticksUntilShellUpdate == 0) {
+                List<LivingEntity> nearbyMobs = level.getEntitiesOfClass(LivingEntity.class, getBoundingBox().inflate(2, 2, 2), Nautilus::getsScaredBy);
+                if (!nearbyMobs.isEmpty()) {
+                    closeShell();
                 }
-            } else if (isInShell() && ticksToShell == 0) {
-                hideInShell(false);
+                if (shouldBeBeached()) {
+                    closeShell();
+                }
+                if (isInShell() && nearbyMobs.isEmpty()) {
+                    openShell();
+                }
             }
         }
-        if (isImmobile() && tickCount % 20 == 0) {
+        if (shouldBeBeached() && tickCount % 20 == 0) {
+            Vec3 oldPos = position();
             refreshDimensions();
+            //Prevent little jump after bounding box change
+            setPos(oldPos);
         }
     }
 
     @Override
     public @NotNull EntityDimensions getDimensions(Pose pose) {
-        return isImmobile() ? SHELL_DIMENSIONS : super.getDimensions(pose);
+        return shouldBeBeached() ? SHELL_DIMENSIONS : super.getDimensions(pose);
     }
 
     @Override
@@ -135,7 +149,7 @@ public class Nautilus extends PrehistoricFish {
         ItemStack itemStack = player.getItemInHand(hand);
         if (itemStack.is(Items.FLINT)) {
             if (!level.isClientSide) {
-                hideInShell(false);
+                openShell();
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         }
@@ -151,16 +165,14 @@ public class Nautilus extends PrehistoricFish {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (amount > 0 && isInShell() && source.getEntity() != null) {
+        if (amount > 0 && isInShell() && ticksInShell > 20 && source.getEntity() != null) {
             playSound(SoundEvents.ITEM_BREAK, 1, random.nextFloat() + 0.8f);
             if (getVehicle() != null) {
                 return super.hurt(source, amount);
             }
             return false;
         }
-        if (!isInShell()) {
-            hideInShell(true);
-        }
+        closeShell();
         return super.hurt(source, amount);
     }
 
@@ -169,18 +181,54 @@ public class Nautilus extends PrehistoricFish {
         return isInShell();
     }
 
+    private boolean shouldBeBeached() {
+        if (isInWater() || level.getFluidState(blockPosition()).is(FluidTags.WATER)) {
+            return false;
+        }
+        return isOnGround() || !level.getFluidState(blockPosition().below()).is(FluidTags.WATER);
+    }
+
     public boolean isInShell() {
         return entityData.get(IS_IN_SHELL);
     }
 
-    public void hideInShell(boolean inShell) {
-        entityData.set(IS_IN_SHELL, inShell);
-        ticksToShell = 60;
+    public void hideInShell(boolean close) {
+        if (close) {
+            closeShell();
+        } else {
+            openShell();
+        }
+    }
+
+    public void closeShell() {
+        if (!entityData.get(IS_IN_SHELL)) {
+            ticksInShell = 0;
+        }
+        entityData.set(IS_IN_SHELL, true);
+        ticksUntilShellUpdate = 60;
+    }
+
+    public void openShell() {
+        entityData.set(IS_IN_SHELL, false);
+        ticksUntilShellUpdate = 60;
+        ticksInShell = -1;
     }
 
     @Override
     public void registerControllers(AnimationData data) {
-        super.registerControllers(data);
+        data.addAnimationController(new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 20, event -> {
+            var ctrl = event.getController();
+            if (shouldBeBeached()) {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextBeachedAnimation().animationName));
+            } else if (isInShell() && isInWater()) {
+                return PlayState.STOP;
+            } else if (event.isMoving()) {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextMovingAnimation().animationName));
+            } else {
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextIdleAnimation().animationName));
+            }
+            return PlayState.CONTINUE;
+        }));
         data.addAnimationController(new AnimationController<>(this, "Shell", 4, this::shellPredicate));
     }
 

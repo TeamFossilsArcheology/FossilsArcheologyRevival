@@ -116,11 +116,6 @@
 					"scale": {
 						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
 					}
-				},
-				"root": {
-					"rotation": {
-						"vector": [0, 180, 0]
-					}
 				}
 			}
 		},
@@ -515,6 +510,28 @@
 					},
 					"position": {
 						"vector": [0, -3.5, 0]
+					}
+				}
+			}
+		},
+		"animation.nautilus.swimSpeedDemoBack": {
+			"loop": true,
+			"animation_length": 8,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "-100+query.anim_time*40"]
+					}
+				}
+			}
+		},
+		"animation.nautilus.swimSpeedDemoFront": {
+			"loop": true,
+			"animation_length": 8,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "100+query.anim_time*-20"]
 					}
 				}
 			}
