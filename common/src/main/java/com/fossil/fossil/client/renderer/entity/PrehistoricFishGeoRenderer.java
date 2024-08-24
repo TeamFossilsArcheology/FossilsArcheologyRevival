@@ -3,8 +3,10 @@ package com.fossil.fossil.client.renderer.entity;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.model.PrehistoricFishGeoModel;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
+import com.fossil.fossil.entity.prehistoric.fish.Nautilus;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import com.mojang.math.Vector3f;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -19,6 +21,14 @@ public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends GeoEn
                 new ResourceLocation(Fossil.MOD_ID, "animations/" + animation),
                 new ResourceLocation(Fossil.MOD_ID, "textures/entity/" + texture + "/texturemap.png")
         ));
+    }
+
+    @Override
+    protected void applyRotations(T animatable, PoseStack poseStack, float ageInTicks, float rotationYaw, float partialTick) {
+        super.applyRotations(animatable, poseStack, ageInTicks, rotationYaw, partialTick);
+        if (animatable instanceof Nautilus) {
+            poseStack.mulPose(Vector3f.YP.rotation(180));
+        }
     }
 
     @Override
