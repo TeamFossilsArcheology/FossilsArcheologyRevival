@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric.swimming;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.S2CMarkMessage;
 import com.fossil.fossil.network.debug.S2CNewMarkMessage;
@@ -379,7 +380,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
                     return;
                 }
                 if (mob.getTarget() == null) {
-                    float newYRot = (float) (Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG) - 90;
+                    float newYRot = Util.yawToYRot(Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG);
                     mob.setYRot(newYRot);
                     mob.yBodyRot = newYRot;
                     float speed = (float) mob.getAttributeValue(Attributes.FLYING_SPEED);
@@ -390,7 +391,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
                 } else {
                     xDist = mob.getTarget().getX() - mob.getX();
                     zDist = mob.getTarget().getZ() - mob.getZ();
-                    float newYRot = (float) (Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG) - 90;
+                    float newYRot = Util.yawToYRot(Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG);
                     mob.setYRot(newYRot);
                     mob.yBodyRot = newYRot;
                 }

@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -59,7 +60,7 @@ public class ToyBall extends ToyBase {
     private void pushBall(Entity entity) {
         Vec3 offset = position().subtract(entity.position());
         double yawDiff = (Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG);
-        pushBall((float) Mth.wrapDegrees(yawDiff - 90));
+        pushBall(Util.yawToYRot(yawDiff));
     }
 
     @Override

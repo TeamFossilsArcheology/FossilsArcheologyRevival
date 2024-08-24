@@ -125,4 +125,12 @@ public class Util {
         }
         return target;
     }
+
+    public static float yRotToYaw(double yRot) {
+        return (float) Mth.wrapDegrees(yRot + 90);
+    }
+
+    public static float yawToYRot(double yaw) {
+        return (float) Mth.wrapDegrees(yaw - 90);
+    }
 }

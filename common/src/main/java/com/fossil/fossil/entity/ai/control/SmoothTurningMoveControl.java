@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.ai.control;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;
@@ -27,7 +28,7 @@ public class SmoothTurningMoveControl extends MoveControl {
                 mob.setZza(0);
                 return;
             }
-            float newYRot = (float)(Mth.atan2(z, x) * Mth.RAD_TO_DEG) - 90;
+            float newYRot = Util.yawToYRot(Mth.atan2(z, x) * Mth.RAD_TO_DEG);
             float turn = ((Prehistoric) mob).getMaxTurnDistancePerTick();
             mob.setYRot(rotlerp(mob.getYRot(), newYRot, turn));
             mob.setSpeed((float)(speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));

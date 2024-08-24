@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.ai.control;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.S2CMarkMessage;
 import com.fossil.fossil.util.Version;
@@ -64,15 +65,15 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
             if (dist > Math.min(1.5, mob.getBbWidth())) {
                 float initialYRot = mob.getYRot();
                 float initialXRot = mob.getXRot();
-                float initialYaw = Mth.wrapDegrees(initialYRot + 90);
+                float initialYaw = Util.yRotToYaw(initialYRot);
 
-                float targetYaw = (float) Mth.wrapDegrees(Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG);//atan2 always returns between -180 and 180 so no wrapdegrees needed
-                float targetPitch = (float) (Mth.atan2(-offset.y, offset.horizontalDistance()) * Mth.RAD_TO_DEG);
+                float targetYaw = (float) Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG;//atan2 always returns between -180 and 180 so no wrapdegrees needed
+                float targetPitch = (float) Mth.atan2(-offset.y, offset.horizontalDistance()) * Mth.RAD_TO_DEG;
 
                 float newYaw = Mth.approachDegrees(initialYaw, targetYaw, 4);
                 float newPitch = Mth.approachDegrees(initialXRot, targetPitch, 4);
 
-                mob.setYRot(Mth.wrapDegrees(newYaw - 90));
+                mob.setYRot(Util.yawToYRot(newYaw));
                 mob.yBodyRot = mob.getYRot();
                 mob.setXRot(newPitch);
                 if (Mth.degreesDifferenceAbs(initialYRot, mob.getYRot()) < 3) {

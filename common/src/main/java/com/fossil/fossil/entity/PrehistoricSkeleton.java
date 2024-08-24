@@ -3,6 +3,7 @@ package com.fossil.fossil.entity;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.TimePeriod;
 import dev.architectury.networking.NetworkManager;
@@ -88,7 +89,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
             } else {
                 double d0 = player.getX() - this.getX();
                 double d2 = player.getZ() - this.getZ();
-                setYRot((float) (Mth.atan2(d2, d0) * Mth.RAD_TO_DEG) - 90);
+                setYRot(Util.yawToYRot(Mth.atan2(d2, d0) * Mth.RAD_TO_DEG));
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
         } else if (stack.is(Items.BONE) && !isAdult()) {

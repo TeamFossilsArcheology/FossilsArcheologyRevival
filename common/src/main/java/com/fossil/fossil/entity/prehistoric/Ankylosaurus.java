@@ -63,7 +63,7 @@ public class Ankylosaurus extends Prehistoric {
             double x = getTarget().getX() - getX();
             double z = getTarget().getZ() - getZ();
             double yawDiff = (Mth.atan2(z, x) * Mth.RAD_TO_DEG);
-            float yRotD = Mth.degreesDifference(yBodyRot, (float) Mth.wrapDegrees(yawDiff - 90));
+            float yRotD = Mth.degreesDifference(yBodyRot, Util.yawToYRot(yawDiff));
             return getAllAnimations().get(yRotD < 0 ? ATTACK_FRONT_RIGHT : ATTACK_FRONT_LEFT);
         }
         /*Vec3d right = getRotationVector().rotateY(90 * MathHelper.RADIANS_PER_DEGREE).normalize();
