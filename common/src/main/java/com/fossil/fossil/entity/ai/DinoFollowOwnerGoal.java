@@ -29,7 +29,7 @@ public class DinoFollowOwnerGoal extends Goal {
     private int timeToRecalcPath;
 
     public DinoFollowOwnerGoal(Prehistoric dino, double speedModifier, float startDistance, float stopDistance, boolean canFly) {
-        this(dino, speedModifier, startDistance, stopDistance, 12, canFly);
+        this(dino, speedModifier, startDistance, stopDistance, 18, canFly);
     }
 
 
@@ -87,12 +87,13 @@ public class DinoFollowOwnerGoal extends Goal {
             return;
         }
         timeToRecalcPath = adjustedTickDelay(10);
+        if (!dino.isLeashed() && dino.distanceToSqr(owner) >= teleportDistanceSqr) {
+            teleportToOwner();
+            return;
+        }
         boolean move = dino.getNavigation().moveTo(owner, speedModifier);
         if (move) {
             return;
-        }
-        if (!dino.isLeashed() && dino.distanceToSqr(owner) >= teleportDistanceSqr) {
-            teleportToOwner();
         }
     }
 
@@ -122,7 +123,11 @@ public class DinoFollowOwnerGoal extends Goal {
     private boolean canTeleportTo(BlockPos teleportPos) {
         Level level = dino.getLevel();
         NodeEvaluator nodeEvaluator = dino.getNavigation().getNodeEvaluator();
-        if (nodeEvaluator.getBlockPathType(level, teleportPos.getX(), teleportPos.getY(), teleportPos.getZ()) != BlockPathTypes.WALKABLE) {
+        BlockPathTypes type = nodeEvaluator.getBlockPathType(level, teleportPos.getX(), teleportPos.getY(), teleportPos.getZ());
+        if (type == BlockPathTypes.WATER && dino.getPathfindingMalus(type) == 0) {
+            return level.noCollision(dino, dino.getBoundingBox().move(teleportPos.subtract(dino.blockPosition())));
+        }
+        if (type != BlockPathTypes.WALKABLE) {
             return false;
         }
         if (!canFly && level.getBlockState(teleportPos).getBlock() instanceof LeavesBlock) {
