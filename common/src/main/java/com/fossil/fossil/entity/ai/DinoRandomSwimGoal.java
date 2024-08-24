@@ -19,7 +19,7 @@ public class DinoRandomSwimGoal extends RandomSwimmingGoal {
     private final Prehistoric dino;
 
     public DinoRandomSwimGoal(PrehistoricSwimming dino, double speedModifier) {
-        super(dino, speedModifier, 40);
+        super(dino, speedModifier, 10);
         this.dino = dino;
     }
 

@@ -24,7 +24,6 @@ public class Plesiosaurus extends PrehistoricSwimming {
     public static final String ATTACK = "animation.plesiosaurus.attack";
     public static final String BEACHED = "animation.plesiosaurus.beached";
     public static final String EAT = "animation.plesiosaurus.eat";
-    public static final String FALL = "animation.plesiosaurus.jump/fall";
     public static final String IDLE = "animation.plesiosaurus.randomidle";
     public static final String SLEEP = "animation.plesiosaurus.sleep";
     public static final String SWIM = "animation.plesiosaurus.swim";

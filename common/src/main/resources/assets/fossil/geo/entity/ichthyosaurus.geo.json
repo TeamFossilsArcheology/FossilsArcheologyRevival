@@ -54,7 +54,6 @@
 					"name": "jaw",
 					"parent": "head",
 					"pivot": [0, 3.45, -16.4],
-					"rotation": [20, 0, 0],
 					"cubes": [
 						{"origin": [-1.5, 1.45, -28.4], "size": [3, 2, 14], "uv": [61, 15]}
 					]
