@@ -1,0 +1,7 @@
+{
+  "parent": "fossil:block/template_vase_amphora_top",
+  "textures": {
+    "color": "fossil:block/vases/vase_amphora_cyan",
+    "base": "fossil:block/vases/vase_amphora_base"
+  }
+}

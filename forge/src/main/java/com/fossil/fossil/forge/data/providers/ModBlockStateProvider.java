@@ -9,6 +9,7 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.block.state.properties.SlabType;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
@@ -75,14 +76,15 @@ public class ModBlockStateProvider extends BlockStateProvider {
             }
         }
         if (vases) {
-            ResourceLocation amphoraTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora");
+            ResourceLocation amphoraTemplateBase = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora_base");
+            ResourceLocation amphoraTemplateTop = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora_top");
             ResourceLocation kylixTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_kylix");
             ResourceLocation voluteTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_volute");
-            models().registerExistingModel(amphoraTemplate, kylixTemplate, voluteTemplate);
+            models().registerExistingModel(amphoraTemplateBase, amphoraTemplateTop, kylixTemplate, voluteTemplate);
             for (RegistrySupplier<VaseBlock> vaseReg : ModBlocks.VASES) {
                 VaseBlock block = vaseReg.get();
                 if (block instanceof AmphoraVaseBlock) {
-                    amphora(block, amphoraTemplate);
+                    amphora(block, amphoraTemplateBase, amphoraTemplateTop);
                 } else if (block instanceof KylixVaseBlock) {
                     vaseBlock(block, kylixTemplate);
                 } else if (block instanceof VoluteVaseBlock) {
@@ -336,7 +338,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         getVariantBuilder(block).partialState().setModels(ConfiguredModel.builder().modelFile(file).buildLast());
     }
 
-    public void amphora(VaseBlock block, ResourceLocation template) {
+    public void amphora(VaseBlock block, ResourceLocation templateBase, ResourceLocation templateTop) {
         itemModels().vaseItem(block.getRegistryName());
         ResourceLocation base = new ResourceLocation(Fossil.MOD_ID, "block/vases/vase_amphora_base");
         if (block == AMPHORA_VASE_DAMAGED.get()) {
@@ -344,10 +346,16 @@ public class ModBlockStateProvider extends BlockStateProvider {
         }
         ResourceLocation color = new ResourceLocation(Fossil.MOD_ID, "block/vases/" + block.getRegistryName().getPath());
         models().registerExistingTexture(base, color);
-        ModelFile file = models().withExistingParent("block/vases/" + block.getRegistryName().getPath(), template)
+        ModelFile fileBase = models().withExistingParent("block/vases/" + block.getRegistryName().getPath() + "_base", templateBase)
                 .texture("color", color)
                 .texture("base", base);
-        horizontalBlock(block, file);
+        ModelFile fileTop = models().withExistingParent("block/vases/" + block.getRegistryName().getPath() + "_top", templateTop)
+                .texture("color", color)
+                .texture("base", base);
+        getVariantBuilder(block).forAllStates(state ->
+                ConfiguredModel.builder().modelFile(state.getValue(AmphoraVaseBlock.HALF) == DoubleBlockHalf.UPPER ? fileTop : fileBase)
+                        .rotationY(((int) state.getValue(BlockStateProperties.HORIZONTAL_FACING).toYRot() + 180) % 360)
+                        .build());
     }
 
     public void vaseBlock(VaseBlock block, ResourceLocation template) {

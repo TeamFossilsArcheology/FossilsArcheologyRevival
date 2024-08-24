@@ -58,6 +58,39 @@ public class ClientInit {
             "category.fossil.debug");
 
     public static void immediate() {
+        registerEntityRenderers();
+        ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
+        ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
+        ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION, RedstoneExplosionParticle.Provider::new);
+        ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION_EMITTER, new RedstoneExplosionEmitterParticle.Provider());
+    }
+
+    public static void later() {
+        if (Version.debugEnabled()) {
+            KeyMappingRegistry.register(DEBUG_SCREEN_KEY);
+            ClientTickEvent.CLIENT_POST.register(minecraft -> {
+                while (DEBUG_SCREEN_KEY.consumeClick()) {
+                    minecraft.setScreen(new DebugScreen(DebugScreen.getHitResult(minecraft)));
+                }
+            });
+            EntityEvent.ADD.register((entity, world) -> {
+                if (entity == Minecraft.getInstance().player) {
+                    ((Player)entity).displayClientMessage(new TextComponent("You're running a development build of F/A: Revival").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), false);
+                }
+                return EventResult.pass();
+            });
+        }
+        registerBlockRenderers();
+        registerEventHandlers();
+        MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
+        MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
+        MenuScreens.register(ModMenus.CULTURE_VAT.get(), CultureVatScreen::new);
+        MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
+        MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
+        CreativeTabFilters.register();
+    }
+
+    private static void registerEntityRenderers() {
         registerFish(ModEntities.ALLIGATOR_GAR, "alligator_gar");
         registerDino(ModEntities.ALLOSAURUS, "allosaurus", RenderType::entityCutout);
         registerDino(ModEntities.ANKYLOSAURUS, "ankylosaurus", RenderType::entityCutout);
@@ -140,10 +173,6 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.ANCIENT_LIGHTNING_BOLT, LightningBoltRenderer::new);
         EntityRendererRegistry.register(ModEntities.FRIENDLY_PIGLIN, context -> new FriendlyPiglinRenderer(context, new FriendlyPiglinModel()));
         EntityRendererRegistry.register(ModEntities.SKELETON, SkeletonRenderer::new);
-        ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
-        ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
-        ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION, RedstoneExplosionParticle.Provider::new);
-        ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION_EMITTER, new RedstoneExplosionEmitterParticle.Provider());
     }
 
     private static <T extends Prehistoric> void registerTrilobite(RegistrySupplier<EntityType<T>> type) {
@@ -162,21 +191,23 @@ public class ClientInit {
         EntityRendererRegistry.register(type, context -> new PrehistoricFishGeoRenderer<>(context, name+".geo.json", name+".animation.json", name));
     }
 
-    public static void later() {
-        if (Version.debugEnabled()) {
-            KeyMappingRegistry.register(DEBUG_SCREEN_KEY);
-            ClientTickEvent.CLIENT_POST.register(minecraft -> {
-                while (DEBUG_SCREEN_KEY.consumeClick()) {
-                    minecraft.setScreen(new DebugScreen(DebugScreen.getHitResult(minecraft)));
+    private static void registerEventHandlers() {
+        InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
+            if (player.level.isClientSide) {
+                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
+                    if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0) {
+                        Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
+                    } else if (entity instanceof DinosaurEgg || entity instanceof Prehistoric) {
+                        Minecraft.getInstance().setScreen(new DinopediaScreen((LivingEntity) entity));
+                    }
+                    return EventResult.interruptTrue();
                 }
-            });
-            EntityEvent.ADD.register((entity, world) -> {
-                if (entity == Minecraft.getInstance().player) {
-                    ((Player)entity).displayClientMessage(new TextComponent("You're running a development build of F/A: Revival").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), false);
-                }
-                return EventResult.pass();
-            });
-        }
+            }
+            return EventResult.pass();
+        });
+    }
+
+    private static void registerBlockRenderers() {
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
             RenderTypeRegistry.register(RenderType.cutout(), info.getPlantBlock());
         }
@@ -235,31 +266,14 @@ public class ClientInit {
         RenderTypeRegistry.register(RenderType.translucent(), ModBlocks.AMBER_CHUNK_MOSQUITO.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.SHELL.get());
         RenderTypeRegistry.register(RenderType.cutout(), ModBlocks.COMFY_BED.get());
-        MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
-        MenuScreens.register(ModMenus.SIFTER.get(), SifterScreen::new);
-        MenuScreens.register(ModMenus.CULTURE_VAT.get(), CultureVatScreen::new);
-        MenuScreens.register(ModMenus.ANALYZER.get(), AnalyzerScreen::new);
-        MenuScreens.register(ModMenus.WORKTABLE.get(), WorktableScreen::new);
-        InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
-            if (player.level.isClientSide) {
-                if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
-                    if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0) {
-                        Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
-                    } else if (entity instanceof DinosaurEgg || entity instanceof Prehistoric) {
-                        Minecraft.getInstance().setScreen(new DinopediaScreen((LivingEntity) entity));
-                    }
-                    return EventResult.interruptTrue();
-                }
-            }
-            return EventResult.pass();
-        });
+
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_STATUE.get(), AnuStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.SARCOPHAGUS.get(), SarcophagusRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.CULTURE_VAT.get(), CultureVatRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANCIENT_CHEST.get(), AncientChestRenderer::new);
         BlockEntityRendererRegistry.register(ModBlockEntities.ANU_BARRIER.get(), AnuBarrierRenderer::new);
-        CreativeTabFilters.register();
+
         ColorHandlerRegistry.registerBlockColors((blockState, blockAndTintGetter, blockPos, i) -> {
             if (blockAndTintGetter == null || blockPos == null) {
                 return FoliageColor.getDefaultColor();
