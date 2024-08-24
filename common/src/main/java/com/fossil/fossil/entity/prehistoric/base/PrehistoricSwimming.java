@@ -3,6 +3,7 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
+import com.fossil.fossil.entity.ai.navigation.PrehistoricWaterPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.util.Util;
 import com.mojang.math.Vector3d;
@@ -146,7 +147,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             isLandNavigator = true;
         } else {
             moveControl = new SwimmingMoveControl(this);
-            navigation = new LargeSwimmerPathNavigation(this);
+            navigation = new PrehistoricWaterPathNavigation(this, level);
             lookControl = new SmoothSwimmingLookControl(this, 20);
             isLandNavigator = false;
         }
@@ -421,19 +422,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::waterPredicate));
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::grabAttackPredicate));
-    }
-
-    static class LargeSwimmerPathNavigation extends WaterBoundPathNavigation {
-
-        public LargeSwimmerPathNavigation(PrehistoricSwimming mob) {
-            super(mob, mob.level);
-        }
-
-        @Override
-        protected @NotNull PathFinder createPathFinder(int maxVisitedNodes) {
-            nodeEvaluator = new SwimNodeEvaluator(true);
-            return new PathFinder(nodeEvaluator, maxVisitedNodes);
-        }
     }
 
     @Override
