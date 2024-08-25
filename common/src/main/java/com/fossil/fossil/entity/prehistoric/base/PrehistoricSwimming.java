@@ -2,7 +2,6 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
-import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricWaterPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.util.Util;
@@ -24,7 +23,6 @@ import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Items;
@@ -135,19 +133,17 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     protected @NotNull PathNavigation createNavigation(Level level) {
-        return new WaterBoundPathNavigation(this, level);
+        return new PrehistoricWaterPathNavigation(this, level);
     }
 
     protected void switchNavigator(boolean onLand) {
         //TODO: Properly implement all four classes
         if (onLand) {
             moveControl = new SmoothTurningMoveControl(this);
-            navigation = new AmphibiousPathNavigation(this);
             lookControl = new LookControl(this);
             isLandNavigator = true;
         } else {
             moveControl = new SwimmingMoveControl(this);
-            navigation = new PrehistoricWaterPathNavigation(this, level);
             lookControl = new SmoothSwimmingLookControl(this, 20);
             isLandNavigator = false;
         }

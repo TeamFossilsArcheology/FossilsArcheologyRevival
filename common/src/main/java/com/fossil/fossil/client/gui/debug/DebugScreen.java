@@ -22,6 +22,7 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
@@ -131,10 +132,10 @@ public class DebugScreen extends Screen {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
             }));
             this.addRenderableWidget(new Button(240, height - 70, 70, 20, new TextComponent("Move Left"), button -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SMoveMessage(entity.getId(), entity.blockPosition().getX() - 10, entity.blockPosition().getY(), entity.blockPosition().getZ()));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SMoveMessage(entity.getId(), entity.blockPosition().getX() - 10, minecraft.level.getHeight(Heightmap.Types.MOTION_BLOCKING, entity.blockPosition().getX() - 10, entity.blockPosition().getZ()), entity.blockPosition().getZ()));
             }));
             this.addRenderableWidget(new Button(340, height - 70, 70, 20, new TextComponent("Move Right"), button -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SMoveMessage(entity.getId(), entity.blockPosition().getX() + 10, entity.blockPosition().getY(), entity.blockPosition().getZ()));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SMoveMessage(entity.getId(), entity.blockPosition().getX() + 10, minecraft.level.getHeight(Heightmap.Types.MOTION_BLOCKING, entity.blockPosition().getX() - 10, entity.blockPosition().getZ()), entity.blockPosition().getZ()));
             }));
         }
         if (entity instanceof PrehistoricAnimatable) {
