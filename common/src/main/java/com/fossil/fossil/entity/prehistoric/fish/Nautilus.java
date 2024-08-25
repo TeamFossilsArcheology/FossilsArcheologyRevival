@@ -126,7 +126,7 @@ public class Nautilus extends PrehistoricFish {
                 if (shouldBeBeached()) {
                     closeShell();
                 }
-                if (isInShell() && nearbyMobs.isEmpty()) {
+                if (ticksInShell > 20 && ticksUntilShellUpdate == 0 && isInShell() && nearbyMobs.isEmpty()) {
                     openShell();
                 }
             }
