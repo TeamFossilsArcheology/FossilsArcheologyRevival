@@ -14,6 +14,7 @@ import com.mojang.math.Matrix3f;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3d;
 import com.mojang.math.Vector3f;
+import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
@@ -126,6 +127,7 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
     private int getTickForEntity(Entity entity) {
         return tickForEntity.computeIfAbsent(entity.getId(), integer -> entity.tickCount + 1);
     }
+
     public void removeTickForEntity(Entity entity) {
         tickForEntity.remove(entity.getId());
     }
@@ -217,13 +219,20 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
             float deathRotation = (animatable.deathTime + partialTick - 1f) / 20f * 1.6f;
 
             poseStack.mulPose(Vector3f.ZP.rotationDegrees(Math.min(Mth.sqrt(deathRotation), 1) * getDeathMaxRotation(animatable)));
+        } else if (animatable.hasCustomName()) {
+            String name = ChatFormatting.stripFormatting(animatable.getName().getString());
+
+            if (name != null && (name.equals("Dinnerbone") || name.equalsIgnoreCase("Grumm"))) {
+                poseStack.translate(0, animatable.getBbHeight() + 0.1f, 0);
+                poseStack.mulPose(Vector3f.ZP.rotationDegrees(180f));
+            }
         }
     }
 
     @Override
     public boolean shouldShowName(T animatable) {
         //Calling super.shouldShowName in fabric crashes the game because the method doesn't exist in GeoEntityRenderer
-        return false;
+        return animatable.hasCustomName() && (animatable == entityRenderDispatcher.crosshairPickEntity || animatable.shouldShowName());
     }
 
     @Override

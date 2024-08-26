@@ -31,7 +31,7 @@ public class Util {
     public static final int SLEEP = 10;
     public static final int NEEDS = 15;
     public static final int WANDER = 20;
-    public static final int LOOK = 20;
+    public static final int LOOK = 25;
     public static final float SWING_ANIM_THRESHOLD = 0.08f;
 
     public static void spawnParticles(Level level, ParticleOptions particleOptions, int count, AABB aabb) {

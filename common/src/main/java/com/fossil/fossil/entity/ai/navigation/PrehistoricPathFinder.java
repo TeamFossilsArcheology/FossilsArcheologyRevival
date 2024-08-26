@@ -26,7 +26,13 @@ public class PrehistoricPathFinder extends PathFinder {
     @Override
     public Path findPath(PathNavigationRegion regionIn, Mob mob, Set<BlockPos> targetPositions, float maxRange, int accuracy, float searchDepthMultiplier) {
         Path path = super.findPath(regionIn, mob, targetPositions, maxRange, accuracy, searchDepthMultiplier);
-        return path == null ? null : new PatchedPath(path);
+        return path == null ? null : copyPath(path);
+    }
+
+    PatchedPath copyPath(Path original) {
+        PatchedPath path = new PatchedPath(original);
+        path.setDebug(original.getOpenSet(), original.getClosedSet(), original.targetNodes);
+        return path;
     }
 
     static class PatchedPath extends Path {
