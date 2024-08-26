@@ -64,7 +64,7 @@ public class PathingRenderer {
         boolean renderNeigbours = false;
         boolean renderPath = true;
         boolean renderLine = true;
-        boolean renderOpenSet = true;
+        boolean renderOpenSet = false;
         boolean renderClosedSet = true;
         boolean renderSweep = true;
         boolean renderWantedPos = true;
@@ -112,6 +112,7 @@ public class PathingRenderer {
                     AABB targetArea = new AABB(node2.x + 0.25, node2.y + 0.25, node2.z + 0.25, node2.x + 0.75, node2.y + 0.75, node2.z + 0.75).move(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 1, i == PathingScreen.tick ? 1 : 0, 0, 0.5f);
                 }
+                PathingRenderUtil.renderTextBatch(poseStack, mc, path.getClosedSet(), PathingScreen.tick);
             }
 
             if (renderSweep) {

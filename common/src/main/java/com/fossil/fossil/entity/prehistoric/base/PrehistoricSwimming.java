@@ -477,10 +477,10 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 double y = wantedY - mob.getY();
                 double z = wantedZ - mob.getZ();
                 double dist = x * x + y * y + z * z;
-                if (dist < 2.500000277905201E-7) {
+                if (dist < 0.00000025) {
                     mob.setZza(0);
                 } else {
-                    float h = floatMod((float) ((Mth.atan2(z, x) * Mth.RAD_TO_DEG) - 90), 360);
+                    float h = floatMod(Util.yawToYRot(Mth.atan2(z, x) * Mth.RAD_TO_DEG), 360);
                     float g = rotlerp(floatMod(mob.getYRot(), 360), h, 10);
                     mob.setYRot(g);
                     mob.yBodyRot = mob.getYRot();
@@ -490,7 +490,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                         mob.setSpeed(i * 0.1f);
                         double horDist = Math.sqrt(x * x + z * z);
                         float k;
-                        if (Math.abs(y) > 9.999999747378752E-6 || Math.abs(horDist) > 9.999999747378752E-6) {
+                        if (Math.abs(y) > 0.00001 || Math.abs(horDist) > 0.00001) {
                             k = (float) (-Mth.atan2(y, horDist) * Mth.RAD_TO_DEG) + 90;
                             k = Mth.clamp(k, 30, 150);
                             g = rotlerp(mob.getXRot() + 90, k, 5);
@@ -500,11 +500,10 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                         float l = Mth.sin(mob.getXRot() * Mth.DEG_TO_RAD);
                         mob.zza = k * i;
                         mob.yya = -l * i;
-                    } else {
-                        mob.setSpeed(i * 0.2f);//TODO: Out of water
                     }
                 }
             } else {
+                mob.setDeltaMovement(this.mob.getDeltaMovement().add(0.0, 0.005, 0.0));
                 mob.setSpeed(0);
                 mob.setXxa(0);
                 mob.setYya(0);
@@ -512,7 +511,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             }
         }
 
-        private float floatMod(float x, float y) {
+        private float floatMod(double x, double y) {
             //x mod y behaving the same way as Math.floorMod but with doubles
             return (float) (x - Math.floor(x / y) * y);
         }

@@ -56,13 +56,6 @@ public class AmphNodeEvaluator extends PlayerNodeEvaluator {
                 Node diagonalNode = getNode(x + direction.getStepX() + direction2.getStepX(), y, z + direction.getStepZ() + direction2.getStepZ());
                 if (!isDiagonalNodeValid(diagonalNode, map.get(direction), map.get(direction2))) continue;
                 nodes[i++] = diagonalNode;
-                for (Direction direction1 : Direction.Plane.VERTICAL) {
-                    Node vertNode = getNode(x + direction.getStepX() + direction2.getStepX(), y + direction1.getStepY(), z + direction.getStepZ() + direction2.getStepZ());
-                    Node verticalFace1 = getNode(vertNode.x + direction.getStepX(), vertNode.y + direction.getStepY(), vertNode.z + direction.getStepZ());
-                    Node verticalFace2 = getNode(vertNode.x + direction2.getStepX(), vertNode.y + direction2.getStepY(), vertNode.z + direction2.getStepZ());
-                    if (!isVerticalDiagonalNodeValid(vertNode, verticalFace1, verticalFace2)) continue;
-                    nodes[i++] = vertNode;
-                }
             }
             return i;
         } else {

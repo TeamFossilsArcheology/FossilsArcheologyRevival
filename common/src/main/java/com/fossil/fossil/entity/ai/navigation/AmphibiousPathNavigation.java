@@ -37,7 +37,7 @@ public class AmphibiousPathNavigation extends WaterBoundPathNavigation {
         if (!tryShortcut(path, new Vec3(mob.getX(), mob.getY(), mob.getZ()), pathLength, base, max)) {
             if (Util.isAt(mob, path, 0.5F) || Util.atElevationChange(mob, path) && Util.isAt(mob, path, mob.getBbWidth() * 0.5F)) {
                 mob.getLookControl().setLookAt(path.getNextEntityPos(mob));
-                path.setNextNodeIndex(path.getNextNodeIndex() + 1);
+                path.advance();
             }
         }
         doStuckDetection(entityPos);

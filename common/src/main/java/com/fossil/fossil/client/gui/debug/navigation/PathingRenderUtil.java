@@ -36,7 +36,7 @@ public class PathingRenderUtil {
         tesselator.end();
     }
 
-    public static void renderTextBatch(PoseStack poseStack, Minecraft minecraft, Node[] nodes) {
+    public static void renderTextBatch(PoseStack poseStack, Minecraft minecraft, Node[] nodes, int end) {
         RenderSystem.enableTexture();
         boolean transparent = true;
         if (transparent) {
@@ -48,15 +48,16 @@ public class PathingRenderUtil {
         MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
 
         poseStack.pushPose();
-        for (int i = 0; i < nodes.length; i++) {
+        for (int i = 0; i < end; i++) {
             poseStack.pushPose();
             poseStack.translate(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
             poseStack.translate(nodes[i].x + 0.5, nodes[i].y + 0.5, nodes[i].z + 0.5);
             poseStack.mulPoseMatrix(new Matrix4f(minecraft.gameRenderer.getMainCamera().rotation()));
             poseStack.scale(0.02f, -0.02f, 0.02f);
             poseStack.scale(-1, 1, 1);
-            float g = -minecraft.font.width(String.valueOf(i)) / 2f;
-            minecraft.font.drawInBatch(String.valueOf(i), g, 0, -1, false, poseStack.last().pose(), bufferSource, transparent, 0, 15728880);
+            String string = String.format("%s", nodes[i].type);
+            float g = -minecraft.font.width(string) / 2f;
+            minecraft.font.drawInBatch(string, g, 0, -1, false, poseStack.last().pose(), bufferSource, transparent, 0, 15728880);
             poseStack.popPose();
         }
         bufferSource.endBatch();
