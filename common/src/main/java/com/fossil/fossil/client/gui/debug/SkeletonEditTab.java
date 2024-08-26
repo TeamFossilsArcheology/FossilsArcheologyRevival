@@ -34,9 +34,9 @@ public class SkeletonEditTab extends DebugTab {
 
     @Override
     protected void init(int width, int height) {
-        Slider ageSlider;
+        DebugSlider ageSlider;
         super.init(width, height);
-        ageSlider = new Slider(20, 30, 150, 20, new TextComponent("Age: "), new TextComponent(""), 0, maxAge, age, 1, 0, true) {
+        ageSlider = new DebugSlider(20, 30, 150, 20, new TextComponent("Age: "), new TextComponent(""), 0, maxAge, age, 1, 0, true) {
             @Override
             protected void applyValue() {
                 age = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));

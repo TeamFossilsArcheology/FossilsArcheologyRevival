@@ -79,8 +79,8 @@ public class AnimationTab extends DebugTab {
         super.init(width, height);
         int yLeft = 0;
         int yRight = 0;
-        Slider sliderY = addWidget(
-                new Slider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation Y: "), new TextComponent(""), 0, 360, 0, 5, 3,
+        DebugSlider sliderY = addWidget(
+                new DebugSlider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation Y: "), new TextComponent(""), 0, 360, 0, 5, 3,
                         true) {
                     @Override
                     protected void applyValue() {
@@ -92,8 +92,8 @@ public class AnimationTab extends DebugTab {
                         entity.setYHeadRot(newRot);
                     }
                 });
-        Slider sliderX = addWidget(
-                new Slider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation X: "), new TextComponent(""), 0, 360, 0, 5, 3,
+        DebugSlider sliderX = addWidget(
+                new DebugSlider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Rotation X: "), new TextComponent(""), 0, 360, 0, 5, 3,
                         true) {
                     @Override
                     protected void applyValue() {
@@ -104,7 +104,7 @@ public class AnimationTab extends DebugTab {
                     }
                 });
         addWidget(
-                new Slider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Scale: "), new TextComponent(""), 0, 100, scale, 5, 3,
+                new DebugSlider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Scale: "), new TextComponent(""), 0, 100, scale, 5, 3,
                         true) {
                     @Override
                     protected void applyValue() {
@@ -128,7 +128,7 @@ public class AnimationTab extends DebugTab {
             }
 
             addWidget(
-                    new Slider(width / 2, 120, 100, 20, new TextComponent("Transition: "), new TextComponent(""), 0, 20, transitionLength, 1, 3,
+                    new DebugSlider(width / 2, 120, 100, 20, new TextComponent("Transition: "), new TextComponent(""), 0, 20, transitionLength, 1, 3,
                             true) {
                         @Override
                         protected void applyValue() {

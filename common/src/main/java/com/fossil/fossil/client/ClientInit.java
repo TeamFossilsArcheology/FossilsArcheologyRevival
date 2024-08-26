@@ -54,8 +54,20 @@ import net.minecraft.world.level.FoliageColor;
 import java.util.function.Function;
 
 public class ClientInit {
+    //TODO: Figure out if unregistered keys are a problem. If yes move to Version.debugEnabled()
     public static final KeyMapping DEBUG_SCREEN_KEY = new KeyMapping("key.fossil.debug_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_Y,
             "category.fossil.debug");
+    public static final KeyMapping PATHING_SCREEN_KEY = new KeyMapping("key.fossil.pathing_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_R,
+            "category.fossil.debug");
+    public static final KeyMapping DEBUG_REPATH_KEY = new KeyMapping("key.fossil.debug_repath", InputConstants.Type.KEYSYM, InputConstants.KEY_V,
+            "category.fossil.debug");
+    public static final KeyMapping DEBUG_ADVANCE_KEY = new KeyMapping("key.fossil.debug_advance", InputConstants.Type.KEYSYM, InputConstants.KEY_X,
+            "category.fossil.debug");
+    public static final KeyMapping DEBUG_REVERSE_KEY = new KeyMapping("key.fossil.debug_reverse", InputConstants.Type.KEYSYM, InputConstants.KEY_C,
+            "category.fossil.debug");
+    public static final KeyMapping DEBUG_HELP_KEY = new KeyMapping("key.fossil.debug_help", InputConstants.Type.KEYSYM, InputConstants.KEY_LALT,
+            "category.fossil.debug");
+
 
     public static void immediate() {
         registerEntityRenderers();

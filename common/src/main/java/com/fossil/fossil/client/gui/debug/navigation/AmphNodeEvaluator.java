@@ -1,24 +1,33 @@
-package com.fossil.fossil.entity.ai.navigation;
+package com.fossil.fossil.client.gui.debug.navigation;
 
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.BlockGetter;
+import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.Target;
-import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumMap;
 
-public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
+public class AmphNodeEvaluator extends PlayerNodeEvaluator {
+    @Override
+    public void prepare(PathNavigationRegion level, Player p) {
+        super.prepare(level, p);
+        PathingDebug.setPathfindingMalus(BlockPathTypes.WATER, 0);
+    }
 
     @Override
-    public @NotNull Node getStart() {
-        return getNode(Mth.floor(mob.getBoundingBox().minX), Mth.floor(mob.getBoundingBox().minY + 0.5), Mth.floor(mob.getBoundingBox().minZ));
+    public Node getStart() {
+        AABB aABB = PathingRenderer.getBigHitbox().move(Vec3.atBottomCenterOf(PathingDebug.pos1));
+        return super.getNode(Mth.floor(aABB.minX), Mth.floor(aABB.minY + 0.5), Mth.floor(aABB.minZ));
     }
 
     @Override
@@ -31,7 +40,7 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
         int x = node.x;
         int y = node.y;
         int z = node.z;
-        BlockPathTypes type = getCachedBlockType(mob, x, y, z);
+        BlockPathTypes type = getCachedBlockType(player, x, y, z);
         if (type == BlockPathTypes.WATER) {
             //SwimNodeEvaluator code
             int i = 0;
@@ -47,8 +56,6 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
                 Node diagonalNode = getNode(x + direction.getStepX() + direction2.getStepX(), y, z + direction.getStepZ() + direction2.getStepZ());
                 if (!isDiagonalNodeValid(diagonalNode, map.get(direction), map.get(direction2))) continue;
                 nodes[i++] = diagonalNode;
-                //Added vertical diagonal nodes. Slower to calculate(and skipped by the navigator anyway) but does seem
-                //to lead to better pathfinding around blocks/water border
                 for (Direction direction1 : Direction.Plane.VERTICAL) {
                     Node vertNode = getNode(x + direction.getStepX() + direction2.getStepX(), y + direction1.getStepY(), z + direction.getStepZ() + direction2.getStepZ());
                     Node verticalFace1 = getNode(vertNode.x + direction.getStepX(), vertNode.y + direction.getStepY(), vertNode.z + direction.getStepZ());
@@ -61,8 +68,8 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
         } else {
             //AmphibiousNodeEvaluator code
             int i = super.getNeighbors(nodes, node);
-            BlockPathTypes typeAbove = getCachedBlockType(mob, x, y + 1, z);
-            int j = mob.getPathfindingMalus(type) > 0 && typeAbove != BlockPathTypes.STICKY_HONEY ? Mth.floor(Math.max(1, mob.maxUpStep)) : 0;
+            BlockPathTypes typeAbove = getCachedBlockType(player, x, y + 1, z);
+            int j = PathingDebug.getPathfindingMalus(type) > 0 && typeAbove != BlockPathTypes.STICKY_HONEY ? Mth.floor(Math.max(1, 1)) : 0;
             double floorLevel = getFloorLevel(new BlockPos(x, y, z));
             Node nodeAbove = findAcceptedNode(x, y + 1, z, Math.max(0, j - 1), floorLevel, Direction.UP, type);
             Node nodeBelow = findAcceptedNode(x, y - 1, z, j, floorLevel, Direction.DOWN, type);

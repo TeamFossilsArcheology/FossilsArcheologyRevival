@@ -8,7 +8,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.text.DecimalFormat;
 
-public class Slider extends AbstractSliderButton {
+public class DebugSlider extends AbstractSliderButton {
 
     private final DecimalFormat format;
     protected Component prefix;
@@ -18,8 +18,8 @@ public class Slider extends AbstractSliderButton {
     protected double stepSize;
     protected boolean drawString;
 
-    Slider(int x, int y, int width, int height, Component prefix, Component suffix, double minValue, double maxValue, double currentValue,
-           double stepSize, int precision, boolean drawString) {
+    DebugSlider(int x, int y, int width, int height, Component prefix, Component suffix, double minValue, double maxValue, double currentValue,
+                double stepSize, int precision, boolean drawString) {
         super(x, y, width, height, new TextComponent(""), 0D);
         this.prefix = prefix;
         this.suffix = suffix;
@@ -94,11 +94,16 @@ public class Slider extends AbstractSliderButton {
         return false;
     }
 
+    public void setMaxValue(double maxValue) {
+        this.maxValue = maxValue;
+        setSliderValue(value, true);
+    }
+
     private void setValueFromMouse(double mouseX) {
         this.setSliderValue((mouseX - (this.x + 4)) / (this.width - 8), false);
     }
 
-    void setSliderValue(double value, boolean force) {
+    public void setSliderValue(double value, boolean force) {
         double oldValue = this.value;
         this.value = this.snapToNearest(value);
         if (force || !Mth.equal(oldValue, this.value)) {
@@ -108,7 +113,7 @@ public class Slider extends AbstractSliderButton {
         this.updateMessage();
     }
 
-    private double snapToNearest(double value) {
+    public double snapToNearest(double value) {
         if (stepSize <= 0D) {
             return Mth.clamp(value, 0D, 1D);
         }

@@ -23,12 +23,12 @@ public class InfoTab extends DebugTab {
     private int climbingCooldown;
     private int hunger;
     private int mood;
-    private Slider ageSlider;
-    private Slider matingSlider;
-    private Slider playingSlider;
-    private Slider climbingSlider;
-    private Slider hungerSlider;
-    private Slider moodSlider;
+    private DebugSlider ageSlider;
+    private DebugSlider matingSlider;
+    private DebugSlider playingSlider;
+    private DebugSlider climbingSlider;
+    private DebugSlider hungerSlider;
+    private DebugSlider moodSlider;
 
     protected InfoTab(DebugScreen debugScreen, Prehistoric prehistoric) {
         super(debugScreen, prehistoric);
@@ -45,7 +45,7 @@ public class InfoTab extends DebugTab {
     @Override
     protected void init(int width, int height) {
         super.init(width, height);
-        ageSlider = new Slider(20, 30, 150, 20, new TextComponent("Age in ticks: "), new TextComponent(""), 0, maxAgeInTicks, ageInTicks, 12000, 0, true) {
+        ageSlider = new DebugSlider(20, 30, 150, 20, new TextComponent("Age in ticks: "), new TextComponent(""), 0, maxAgeInTicks, ageInTicks, 12000, 0, true) {
             @Override
             protected void applyValue() {
                 ageInTicks = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
@@ -58,31 +58,31 @@ public class InfoTab extends DebugTab {
                 ageSlider.setValue(ageInTicks);
             }
         }));
-        matingSlider = new Slider(20, 60, 150, 20, new TextComponent("Seconds till mating: "), new TextComponent(""), 0, 900, matingCooldown / 20f, 1, 0, true) {
+        matingSlider = new DebugSlider(20, 60, 150, 20, new TextComponent("Seconds till mating: "), new TextComponent(""), 0, 900, matingCooldown / 20f, 1, 0, true) {
             @Override
             protected void applyValue() {
                 matingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
         };
-        playingSlider = new Slider(20, 90, 150, 20, new TextComponent("Seconds till playing: "), new TextComponent(""), 0, 120, playingCooldown / 20f, 1, 0, true) {
+        playingSlider = new DebugSlider(20, 90, 150, 20, new TextComponent("Seconds till playing: "), new TextComponent(""), 0, 120, playingCooldown / 20f, 1, 0, true) {
             @Override
             protected void applyValue() {
                 playingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
         };
-        climbingSlider = new Slider(20, 120, 150, 20, new TextComponent("Seconds till climbing: "), new TextComponent(""), 0, 120, climbingCooldown / 20f, 1, 0, true) {
+        climbingSlider = new DebugSlider(20, 120, 150, 20, new TextComponent("Seconds till climbing: "), new TextComponent(""), 0, 120, climbingCooldown / 20f, 1, 0, true) {
             @Override
             protected void applyValue() {
                 climbingCooldown = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize) * 20);
             }
         };
-        hungerSlider = new Slider(20, 150, 150, 20, new TextComponent("Hunger: "), new TextComponent(""), 0, ((Prehistoric)entity).getMaxHunger(), hunger, 1, 0, true) {
+        hungerSlider = new DebugSlider(20, 150, 150, 20, new TextComponent("Hunger: "), new TextComponent(""), 0, ((Prehistoric)entity).getMaxHunger(), hunger, 1, 0, true) {
             @Override
             protected void applyValue() {
                 hunger = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
             }
         };
-        moodSlider = new Slider(20, 180, 150, 20, new TextComponent("Mood: "), new TextComponent(""), -100, 100, mood, 1, 0, true) {
+        moodSlider = new DebugSlider(20, 180, 150, 20, new TextComponent("Mood: "), new TextComponent(""), -100, 100, mood, 1, 0, true) {
             @Override
             protected void applyValue() {
                 mood = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
