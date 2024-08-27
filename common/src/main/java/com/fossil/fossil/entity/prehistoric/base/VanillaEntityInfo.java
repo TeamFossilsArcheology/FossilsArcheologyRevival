@@ -23,6 +23,7 @@ public enum VanillaEntityInfo implements EntityInfo {
     DOLPHIN(EntityType.DOLPHIN, PrehistoricMobType.MAMMAL, Diet.PISCI_CARNIVORE),
     DONKEY(EntityType.DONKEY, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     FOX(EntityType.FOX, PrehistoricMobType.MAMMAL, Diet.OMNIVORE),
+    GOAT(EntityType.GOAT, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     GLOW_SQUID(EntityType.GLOW_SQUID, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),
     HOGLIN(EntityType.HOGLIN, PrehistoricMobType.MAMMAL, Diet.OMNIVORE),
     HORSE(EntityType.HORSE, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
