@@ -1196,6 +1196,7 @@ ea8f3014e51bde1f41ab5bbbf31b1d0fb3715b1f assets/fossil/models/item/fossil_seed_z
 b04de4af5e86d611ca76cecadd9a1669de8ed346 assets/fossil/models/item/gallimimus_dna.json
 029b7df50e3accb902af70d92743d569edd783d4 assets/fossil/models/item/gastornis_dna.json
 0692e15fb11111ccd6571b123ef0eb6e6a10596e assets/fossil/models/item/glow_squid_dna.json
+404b742bd3496408c8eee11f73c1367fa91e5d8a assets/fossil/models/item/goat_dna.json
 dd4eed53c4f294a5389b6e9df72be9f3ff1f66a1 assets/fossil/models/item/henodus_dna.json
 63a7202f6ff7539f3998e3f185ccac401860358b assets/fossil/models/item/hoglin_dna.json
 bc3deed988d813501571c8190b78a0c89a0dc6f5 assets/fossil/models/item/horse_dna.json
@@ -1457,6 +1458,7 @@ a7fa9ac4d5a2075e953307dba411cb20b5c88f37 assets/fossil/models/item/stripped_sigi
 305064bba02f2805951488ce9263c47593bf29ed assets/fossil/models/item/syringe_donkey.json
 2e5ebc1a923dc0a6a816ed95414189c64e842363 assets/fossil/models/item/syringe_elasmotherium.json
 35414b3ea5d4f42c4b77c70e6188781d58a33b60 assets/fossil/models/item/syringe_fox.json
+bb0696f3d73a595e2989e2f24847859e79d8a8c4 assets/fossil/models/item/syringe_goat.json
 c953914e88f8c0142a93586ff0dbd33c44902af8 assets/fossil/models/item/syringe_hoglin.json
 771e525b6d9c582a91bced5507fe773ad1c5051f assets/fossil/models/item/syringe_horse.json
 1e0b3bb75755be13b2f25117f2166c74e888aa81 assets/fossil/models/item/syringe_llama.json
@@ -1594,7 +1596,7 @@ ac32ced254e5f91c18826e4e1eb02ed6426098d7 assets/fossil/models/item/walliserops_d
 9ccba276efaeddb134213fc255173b52fa72104e assets/fossil/models/item/welwitschia.json
 8491accea0af47eed05526f1315a09392ea8e225 assets/fossil/models/item/wolf_dna.json
 44af569d153dbcd6ec5c8923338a602a1126c04c data/fossil/advancements/fossil/all_eggs.json
-c0f9ad48fec4dd7b875b05824dfaee34db8e6daa data/fossil/advancements/fossil/all_embryos.json
+34994f110cfe3d79a75be92d48f7406d8abadb16 data/fossil/advancements/fossil/all_embryos.json
 8c8885c9815df080ee35659bd7a716862cee7186 data/fossil/advancements/fossil/analyzer.json
 e2a14fd1205d453ab99dcf4e64deb8ec39b0fcc1 data/fossil/advancements/fossil/ancient_clock.json
 96fb84ed234cdeb550a82aceb0ed4f0f7ff95287 data/fossil/advancements/fossil/ancient_sword.json
@@ -2331,7 +2333,7 @@ d46d1453351383aa10dfc6945578927e02ce0d61 data/fossil/loot_tables/entities/wallis
 52c9d7dc0a2626d41597251bafc93ec394a9624b data/fossil/recipes/analyzer/beef.json
 5d55c9092dc3228964aaf0f69e223d16ad9a1335 data/fossil/recipes/analyzer/chicken.json
 4882d951fc54f0544bca2c5702274a849e8446e6 data/fossil/recipes/analyzer/egg.json
-7168137a2ebad88c005aaeb2ee95ef189d9a71c1 data/fossil/recipes/analyzer/failuresaurus_flesh.json
+6c3db0283cb6dd72d5aa301a5ac26ca3162e2198 data/fossil/recipes/analyzer/failuresaurus_flesh.json
 eb55412510d6e8e54103f2ccd3e1e496b23da572 data/fossil/recipes/analyzer/feather.json
 6d735f79a2868a0d1e9164352e703259ff88f01e data/fossil/recipes/analyzer/fishes.json
 89fc28652895a58f2b844d92856eb632a373442e data/fossil/recipes/analyzer/fossil_bio.json
@@ -2769,11 +2771,11 @@ be309a84eb640c90631d98e3906aa18ca049f0e3 data/fossil/tags/items/calamites_logs.j
 f9674824d2c80b5587cde58220951d29e1b12bb6 data/fossil/tags/items/cookable_eggs.json
 078e15eaee30669406aa4ce79abd0b5998d33e12 data/fossil/tags/items/cordaites_logs.json
 c3d0826ee417a249fd6539c4311e5b866bfa4db7 data/fossil/tags/items/dino_eggs.json
-19bada9323e51d4a035c9edd12ee2520ea743333 data/fossil/tags/items/dna.json
+63845698bc7d91c994dfc61a51eb949760c12aad data/fossil/tags/items/dna.json
 7d3350650c1e2f827c07c45656fb267a4749d745 data/fossil/tags/items/dna_insects.json
 7b411bb20f79c982151662559157974ee41b563d data/fossil/tags/items/dna_limbless.json
 14bbd737f0e930f5441e6881b3db4a3d570c3baf data/fossil/tags/items/dna_plants.json
-a49fd61cf7e95d5e399ffff97926846a6bb74b0f data/fossil/tags/items/embryos.json
+212df8e039837a4da3c195f00bc77afc77d90755 data/fossil/tags/items/embryos.json
 10460075539ccb49e59b8e8db23a8234a217c4ba data/fossil/tags/items/figurines.json
 04e8131982f46c888108fe554b89dbcc9f1702a6 data/fossil/tags/items/filter_bones.json
 dce2b8515233f9bac90c7a0f6748c983be5ba55e data/fossil/tags/items/filter_dna.json

@@ -139,6 +139,16 @@
         }
       }
     },
+    "syringe_goat": {
+      "trigger": "fossil:implant_embryo",
+      "conditions": {
+        "item": {
+          "items": [
+            "fossil:syringe_goat"
+          ]
+        }
+      }
+    },
     "syringe_hoglin": {
       "trigger": "fossil:implant_embryo",
       "conditions": {
@@ -296,6 +306,9 @@
     ],
     [
       "syringe_fox"
+    ],
+    [
+      "syringe_goat"
     ],
     [
       "syringe_hoglin"
