@@ -54,11 +54,6 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return false;
-    }
-
-    @Override
     public boolean canDoBreachAttack() {
         return true;
     }

@@ -12,12 +12,12 @@
 			},
 			"bones": [
 				{
-					"name": "bone",
+					"name": "pitch_root",
 					"pivot": [0, 13, -2]
 				},
 				{
 					"name": "lowerBody",
-					"parent": "bone",
+					"parent": "pitch_root",
 					"pivot": [0, 11.3, 4.2],
 					"rotation": [-10.65, 0, 0],
 					"cubes": [
@@ -307,7 +307,7 @@
 				},
 				{
 					"name": "leftThigh",
-					"parent": "bone",
+					"parent": "pitch_root",
 					"pivot": [3, 12.5, 4],
 					"rotation": [-23.48, 0, 0],
 					"cubes": [
@@ -334,7 +334,7 @@
 				},
 				{
 					"name": "rightThigh",
-					"parent": "bone",
+					"parent": "pitch_root",
 					"pivot": [-3, 12.5, 4],
 					"rotation": [-23.48, 0, 0],
 					"cubes": [

@@ -162,7 +162,9 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return false;
     }
 
-    public abstract boolean isAmphibious();
+    public boolean isAmphibious() {
+        return aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC;
+    }
 
     @Override
     public boolean canBreatheUnderwater() {

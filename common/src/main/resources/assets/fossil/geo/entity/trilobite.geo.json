@@ -12,12 +12,12 @@
 			},
 			"bones": [
 				{
-					"name": "trilobite",
+					"name": "pitch_root",
 					"pivot": [1.5, -1, 0]
 				},
 				{
 					"name": "body",
-					"parent": "trilobite",
+					"parent": "pitch_root",
 					"pivot": [0, 0.63333, 1.93333],
 					"cubes": [
 						{"origin": [-2, 0.3, -1], "size": [4, 1, 4], "inflate": 0.01, "uv": [0, 18]},

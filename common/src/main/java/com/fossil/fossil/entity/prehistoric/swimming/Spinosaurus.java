@@ -45,11 +45,6 @@ public class Spinosaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return true;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.SPINOSAURUS;
     }

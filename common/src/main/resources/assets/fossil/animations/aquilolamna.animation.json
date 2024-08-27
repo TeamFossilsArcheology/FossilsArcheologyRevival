@@ -118,12 +118,22 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.6667": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.6667": {
+					"effect": "eat"
+				}
 			}
 		},
 		"beached": {
 			"loop": true,
 			"bones": {
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"vector": ["-5+math.sin(query.anim_time*180)*-1", 20, "-5+math.sin(query.anim_time*45)*2.5"]
 					},
@@ -239,7 +249,7 @@
 						"vector": [0, "-10+math.sin(query.anim_time*90+60)*5", "5+math.sin(query.anim_time*180-60)*-2.5"]
 					}
 				},
-				"root": {
+				"pitch_root": {
 					"position": {
 						"vector": [0, -3, 0]
 					}

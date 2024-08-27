@@ -50,11 +50,6 @@ public class Megalograptus extends PrehistoricSwimmingBucketable {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return true;
-    }
-
-    @Override
     public @NotNull ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.MEGALOGRAPTUS_BUCKET.get());
     }

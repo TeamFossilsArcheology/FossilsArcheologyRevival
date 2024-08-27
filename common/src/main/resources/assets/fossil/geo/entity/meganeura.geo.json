@@ -12,12 +12,12 @@
 			},
 			"bones": [
 				{
-					"name": "root",
+					"name": "pitch_root",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "thorax",
-					"parent": "root",
+					"parent": "pitch_root",
 					"pivot": [0, 3.9, 0]
 				},
 				{

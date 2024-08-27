@@ -6,18 +6,18 @@
 				"identifier": "geometry.pteranodon",
 				"texture_width": 128,
 				"texture_height": 64,
-				"visible_bounds_width": 3,
+				"visible_bounds_width": 5,
 				"visible_bounds_height": 3.5,
 				"visible_bounds_offset": [0, 1.25, 0]
 			},
 			"bones": [
 				{
-					"name": "bone",
+					"name": "pitch_root",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "body",
-					"parent": "bone",
+					"parent": "pitch_root",
 					"pivot": [-0.02, 13.1, 0.5],
 					"rotation": [-46.96, 0, 0],
 					"cubes": [
@@ -73,7 +73,6 @@
 					"name": "Beak1L",
 					"parent": "Beak1R",
 					"pivot": [-0.02, 16.3, -8.3],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-0.93, 12.8, -13.3], "size": [2, 2, 6], "uv": [30, 53]}
 					]
@@ -91,7 +90,6 @@
 					"name": "Beak2R",
 					"parent": "Beak2L",
 					"pivot": [0.08, 14.3, -12.9],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-0.82, 12.8, -20.4], "size": [1, 2, 8], "uv": [54, 53]}
 					]
@@ -100,7 +98,6 @@
 					"name": "Jaw10",
 					"parent": "Head",
 					"pivot": [-0.12, 13.6, -6.8],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.12, 11.1, -12.3], "size": [2, 2, 7], "uv": [42, 48]}
 					]
@@ -141,7 +138,6 @@
 					"name": "CrestBase",
 					"parent": "CrestBase0",
 					"pivot": [-0.02, 14.2, -5.5],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.22, 12.7, -11.5], "size": [2, 3, 6], "uv": [65, 51]}
 					]

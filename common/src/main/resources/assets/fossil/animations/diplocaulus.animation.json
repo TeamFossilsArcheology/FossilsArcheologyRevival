@@ -125,7 +125,7 @@
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"vector": [-1.5, 0, 0]
 					},
@@ -161,7 +161,7 @@
 		"animation.diplocaulus.leaveground": {
 			"animation_length": 1,
 			"bones": {
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"0.0": {
 							"vector": [-1.5, 0, 0]
@@ -371,7 +371,7 @@
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
-				"root": {
+				"pitch_root": {
 					"position": {
 						"vector": [0, -3, 0]
 					}
@@ -444,7 +444,7 @@
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"vector": [-10, 0, 0]
 					}

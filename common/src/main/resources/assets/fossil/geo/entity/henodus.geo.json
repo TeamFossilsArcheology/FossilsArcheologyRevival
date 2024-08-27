@@ -12,12 +12,17 @@
 			},
 			"bones": [
 				{
-					"name": "henodus",
+					"name": "pitch_root",
+					"pivot": [0, 2.7, 0]
+				},
+				{
+					"name": "body",
+					"parent": "pitch_root",
 					"pivot": [0, 2.7, 0]
 				},
 				{
 					"name": "shell",
-					"parent": "henodus",
+					"parent": "body",
 					"pivot": [0, 2.2, 0],
 					"cubes": [
 						{"origin": [-4, 0.7, -6], "size": [8, 3, 12], "uv": [0, 14]},

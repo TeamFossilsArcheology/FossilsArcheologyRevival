@@ -40,11 +40,6 @@ public class Tiktaalik extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return true;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.TIKTAALIK;
     }

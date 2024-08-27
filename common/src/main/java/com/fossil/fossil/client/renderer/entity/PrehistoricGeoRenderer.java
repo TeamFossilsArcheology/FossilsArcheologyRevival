@@ -1,6 +1,5 @@
 package com.fossil.fossil.client.renderer.entity;
 
-import com.fossil.fossil.Fossil;
 import com.fossil.fossil.client.model.PrehistoricGeoModel;
 import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -42,10 +41,7 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
     private final Function<ResourceLocation, RenderType> renderType;
 
     public PrehistoricGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, Function<ResourceLocation, RenderType> renderType) {
-        super(renderManager, new PrehistoricGeoModel<>(
-                new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + model),
-                new ResourceLocation(Fossil.MOD_ID, "animations/" + animation)
-        ));
+        super(renderManager, new PrehistoricGeoModel<>(model, animation));
         this.renderType = renderType;
     }
 

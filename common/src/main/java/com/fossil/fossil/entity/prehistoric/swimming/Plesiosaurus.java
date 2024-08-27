@@ -45,11 +45,6 @@ public class Plesiosaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return false;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.PLESIOSAURUS;
     }

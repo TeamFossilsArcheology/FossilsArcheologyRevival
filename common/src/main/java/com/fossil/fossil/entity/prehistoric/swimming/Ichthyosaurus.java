@@ -49,11 +49,6 @@ public class Ichthyosaurus extends PrehistoricSwimmingBucketable {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return false;
-    }
-
-    @Override
     public @NotNull ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.ICHTHYOSAURUS_BUCKET.get());
     }

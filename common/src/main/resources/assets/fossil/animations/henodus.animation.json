@@ -540,7 +540,7 @@
 			"loop": true,
 			"animation_length": 0.9583,
 			"bones": {
-				"henodus": {
+				"body": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 7.5]
@@ -742,7 +742,7 @@
 			"loop": true,
 			"animation_length": 0.7083,
 			"bones": {
-				"henodus": {
+				"body": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 7.5]
@@ -1011,7 +1011,7 @@
 						"vector": ["-12.5+math.sin((query.anim_time*360)*0.25-90)*-0.75", 0, 0]
 					}
 				},
-				"henodus": {
+				"body": {
 					"position": {
 						"vector": [0, -1, 0]
 					}

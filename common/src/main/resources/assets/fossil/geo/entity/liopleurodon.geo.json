@@ -12,7 +12,12 @@
 			},
 			"bones": [
 				{
+					"name": "pitch_root",
+					"pivot": [0, 0, 0]
+				},
+				{
 					"name": "LowerBody",
+					"parent": "pitch_root",
 					"pivot": [0, 5.1, 0.5],
 					"rotation": [-2.61, 0, 0],
 					"cubes": [
@@ -90,6 +95,11 @@
 					"cubes": [
 						{"origin": [-5.5, 0.5, -8.1], "size": [11, 10, 10], "uv": [41, 16]}
 					]
+				},
+				{
+					"name": "riderPos",
+					"parent": "UpperBody",
+					"pivot": [0, 10, -6]
 				},
 				{
 					"name": "Neck",
@@ -199,10 +209,6 @@
 					"cubes": [
 						{"origin": [3.5, -13.6, -7.5], "size": [2, 19, 8], "uv": [107, 33], "mirror": true}
 					]
-				},
-				{
-					"name": "riderPos",
-					"pivot": [0, 10, -6]
 				}
 			]
 		}

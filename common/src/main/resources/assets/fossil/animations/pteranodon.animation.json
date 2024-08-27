@@ -2638,7 +2638,7 @@
 						}
 					}
 				},
-				"bone": {
+				"pitch_root": {
 					"rotation": {
 						"vector": [32.5, 0, 0]
 					},
@@ -4098,7 +4098,7 @@
 						"vector": ["52.5+math.cos(query.anim_time*720)*-5", 0, 0]
 					}
 				},
-				"bone": {
+				"pitch_root": {
 					"rotation": {
 						"vector": [27.5, 0, 0]
 					}

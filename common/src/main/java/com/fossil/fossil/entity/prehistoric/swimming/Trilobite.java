@@ -46,11 +46,6 @@ public abstract class Trilobite extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return true;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.DICRANURUS;
     }
@@ -62,7 +57,7 @@ public abstract class Trilobite extends PrehistoricSwimming {
 
     @Override
     public Item getOrderItem() {
-        return Items.STICK;
+        return Items.NAUTILUS_SHELL;
     }
 
     @Override

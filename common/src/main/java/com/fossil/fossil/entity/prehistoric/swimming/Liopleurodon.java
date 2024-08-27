@@ -59,11 +59,6 @@ public class Liopleurodon extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return false;
-    }
-
-    @Override
     public @NotNull Animation nextAttackAnimation() {
         return getAllAnimations().get(ATTACK);
     }

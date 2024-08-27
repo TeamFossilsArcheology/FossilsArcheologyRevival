@@ -2343,7 +2343,7 @@
 						}
 					}
 				},
-				"bone": {
+				"pitch_root": {
 					"position": {
 						"vector": [0, 5, 0]
 					}

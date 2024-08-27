@@ -66,7 +66,7 @@ public class CustomSwimMoveControl extends SmoothSwimmingMoveControl {
                 mob.setYRot(g);
                 mob.yBodyRot = mob.getYRot();
                 mob.yHeadRot = mob.getYRot();
-                float i = (float) (speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED));
+                float i = (float) (speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)) * 2;
                 if (mob.isInWater()) {
                     mob.setSpeed(i * 0.1f);
                     double horDist = Math.sqrt(x * x + z * z);

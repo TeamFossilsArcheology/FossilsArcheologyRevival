@@ -48,11 +48,6 @@ public class Diplocaulus extends PrehistoricSwimmingBucketable {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return false;
-    }
-
-    @Override
     public @NotNull ItemStack getBucketItemStack() {
         return new ItemStack(ModItems.DIPLOCAULUS_BUCKET.get());
     }

@@ -49,18 +49,13 @@ public class Henodus extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean isAmphibious() {
-        return true;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.HENODUS;
     }
 
     @Override
     public Item getOrderItem() {
-        return Items.STICK;
+        return Items.NAUTILUS_SHELL;
     }
 
     @Override

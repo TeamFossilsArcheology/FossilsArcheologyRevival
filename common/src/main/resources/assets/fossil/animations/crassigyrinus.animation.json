@@ -122,7 +122,7 @@
 						}
 					}
 				},
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"vector": [-1.5, 0, 0]
 					},
@@ -167,7 +167,7 @@
 						}
 					}
 				},
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"0.0": {
 							"vector": [-1.5, 0, 0]
@@ -384,7 +384,7 @@
 						}
 					}
 				},
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"vector": [-10, 0, 0]
 					}
@@ -521,7 +521,7 @@
 						"vector": [0, "math.sin(query.anim_time*180)*0.5", 0]
 					}
 				},
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"vector": ["-15+math.sin(query.anim_time*720)*2", "math.sin(query.anim_time*180)*2", "math.sin(query.anim_time*1440)*1"]
 					},
@@ -621,7 +621,7 @@
 						}
 					}
 				},
-				"root": {
+				"pitch_root": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]

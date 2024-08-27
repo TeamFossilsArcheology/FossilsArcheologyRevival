@@ -5,7 +5,7 @@
     "climbing": "NONE",
     "following": "NORMAL",
     "jumping": "BASIC",
-    "moving": "AQUATIC",
+    "moving": "SEMI_AQUATIC",
     "response": "WATER_CALM",
     "stalking": "NONE",
     "taming": "IMPRINTING",
