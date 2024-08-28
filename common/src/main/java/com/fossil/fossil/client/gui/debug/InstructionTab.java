@@ -32,6 +32,7 @@ public class InstructionTab extends DebugTab {
     }
     //TODO: Loop, Sleep, Sit, Anim, Attack
     //TODO: Save across sessions
+    //TODO: Teleport rotation
     //TODO: Drag instructions in list
 
     @Override

@@ -29,13 +29,13 @@ public class PathingScreen extends Screen {
 
     @Override
     protected void init() {
-        addRenderableWidget(new DebugSlider(470, height - 70, 150, 20, new TextComponent("Width: "), new TextComponent(""), 0.1, 5, bbWidth, 0.1, 2, true) {
+        addRenderableWidget(new DebugSlider(470, height - 70, 150, 20, new TextComponent("Width: "), new TextComponent(""), 0.1, 5, bbWidth, 0.01, 3, true) {
             @Override
             protected void applyValue() {
                 bbWidth = (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
             }
         });
-        addRenderableWidget(new DebugSlider(620, height - 70, 150, 20, new TextComponent("Height: "), new TextComponent(""), 0.1, 5, bbHeight, 0.1, 2, true) {
+        addRenderableWidget(new DebugSlider(620, height - 70, 150, 20, new TextComponent("Height: "), new TextComponent(""), 0.1, 5, bbHeight, 0.01, 3, true) {
             @Override
             protected void applyValue() {
                 bbHeight = (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));

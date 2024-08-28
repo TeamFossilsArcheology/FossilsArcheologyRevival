@@ -2,6 +2,7 @@ package com.fossil.fossil.client.gui.debug.instruction;
 
 import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.fossil.fossil.client.gui.debug.navigation.PathingDebug;
+import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.client.Minecraft;
@@ -24,6 +25,10 @@ public class InstructionRenderer {
 
     public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks, long finishNanoTime) {
         Minecraft mc = Minecraft.getInstance();
+        if (SmoothTurningMoveControl.wanted != null) {
+            Vec3 pos = SmoothTurningMoveControl.wanted;
+            LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.25, pos.y, pos.z - 0.25, pos.x + 0.25, pos.y + 0.5, pos.z + 0.25), 1, 0, 0, 1);
+        }
         if (InstructionTab.activeEntity != null) {
             List<Instruction> instructions = InstructionTab.INSTRUCTIONS.get(InstructionTab.activeEntity.getId());
             countAtPos.clear();

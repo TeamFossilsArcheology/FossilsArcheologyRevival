@@ -33,10 +33,6 @@ public class InstructionSystem {
 
     private boolean tickRunning() {
         Instruction current = instructions.get(index);
-        if (tries >= 15) {
-            tries = 0;
-            return false;
-        }
         if (current instanceof Instruction.MoveTo moveTo) {
             return tryUpdatePath(moveTo);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
@@ -53,6 +49,10 @@ public class InstructionSystem {
 
     private boolean tryUpdatePath(Instruction.MoveTo moveTo) {
         PathNavigation navigation = entity.getNavigation();
+        if (tries >= 15) {
+            tries = 0;
+            return false;
+        }
         if (navigation instanceof GroundPathNavigation && !entity.isOnGround() && !entity.isInWaterOrBubble()) {
             return true;
         }
@@ -65,13 +65,13 @@ public class InstructionSystem {
             return true;
         }
         if (path.sameAs(navigation.getPath())) {
-            return true;
+            return !navigation.getPath().isDone();
         }
-        if (!navigation.moveTo(moveTo.target.getX(), moveTo.target.getY(), moveTo.target.getZ(), 1)) {
+        if (!navigation.moveTo(path, 1)) {
             tries++;
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     private void startNext() {

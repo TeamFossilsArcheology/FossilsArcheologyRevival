@@ -29,9 +29,9 @@ public class DebugLargePath extends PlayerPath {
     @Override
     public Vec3 getEntityPosAtNode(int index) {
         Node node = getNode(index);
-        double d0 = node.x + Mth.floor(PathingRenderer.getBbWidth() + 1.0F) * 0.5D;
+        double d0 = node.x + Mth.floor(PathingRenderer.getBbWidth() + 1) * 0.5;
         double d1 = node.y;
-        double d2 = node.z + Mth.floor(PathingRenderer.getBbWidth() + 1.0F) * 0.5D;
+        double d2 = node.z + Mth.floor(PathingRenderer.getBbWidth() + 1) * 0.5;
         return new Vec3(d0, d1, d2);
     }
 }

@@ -31,7 +31,7 @@ public class DebugLevelRendererMixin {
             final Vec3 viewPosition = mc.gameRenderer.getMainCamera().getPosition();
             poseStack.pushPose();
             poseStack.translate(-viewPosition.x, -viewPosition.y, -viewPosition.z);
-            PathingRenderer.render(poseStack, bufferSource, partialTicks);
+            PathingRenderer.render(poseStack, bufferSource, partialTicks, finishNanoTime);
             InstructionRenderer.render(poseStack, bufferSource, partialTicks, finishNanoTime);
             bufferSource.endBatch();
             poseStack.popPose();

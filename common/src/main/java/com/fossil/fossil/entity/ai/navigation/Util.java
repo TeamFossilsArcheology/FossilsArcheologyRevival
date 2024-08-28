@@ -125,7 +125,7 @@ public class Util {
         final Vec3 pathPos = path.getNextEntityPos(mob);
         return Math.abs(mob.getX() - pathPos.x) < threshold
                 && Math.abs(mob.getZ() - pathPos.z) < threshold
-                && Math.abs(mob.getY() - pathPos.y) < 1.0D;
+                && Math.abs(mob.getY() - pathPos.y) <= 1.0D;
     }
 
     public static boolean atElevationChange(Entity mob, Path path) {

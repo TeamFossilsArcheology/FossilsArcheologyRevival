@@ -1497,8 +1497,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             case 3 -> tag.putBoolean("disableLookAI", disableAI);
         }
         entityData.set(DEBUG, tag);
-        MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 32),
-                new C2SDisableAIMessage(getId(), disableAI, type));
+        if (level instanceof ServerLevel serverLevel) {
+            MessageHandler.DEBUG_CHANNEL.sendToPlayers(serverLevel.getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 32),
+                    new C2SDisableAIMessage(getId(), disableAI, type));
+        }
     }
 
     public record PrehistoricGroupData(int ageInDays) implements SpawnGroupData {

@@ -2,6 +2,7 @@ package com.fossil.fossil.client.gui.debug.navigation;
 
 import com.fossil.fossil.client.ClientInit;
 import com.fossil.fossil.client.gui.debug.PathingScreen;
+import com.fossil.fossil.client.gui.debug.instruction.InstructionRenderUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
@@ -17,6 +18,9 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib3.core.util.Color;
+
+import static com.fossil.fossil.client.gui.debug.navigation.PathingDebug.*;
 
 public class PathingRenderer {
     public static int pathIndex;
@@ -30,8 +34,8 @@ public class PathingRenderer {
                 pathIndex = max - 1;
             }
         }
-        if (PathingDebug.pathNavigation4 != null) PathingDebug.pathNavigation4.followThePath();
-        if (PathingDebug.pathNavigation5 != null) PathingDebug.pathNavigation5.followThePath();
+        if (pathNavigation4 != null && pathNavigation4.sweepStartPos != null) pathNavigation4.followThePath();
+        if (pathNavigation5 != null && pathNavigation5.sweepStartPos != null) pathNavigation5.followThePath();
     }
 
     public static void advanceIndex() {
@@ -43,19 +47,29 @@ public class PathingRenderer {
                 pathIndex = 0;
             }
         }
-        if (PathingDebug.pathNavigation4 != null) PathingDebug.pathNavigation4.followThePath();
-        if (PathingDebug.pathNavigation5 != null) PathingDebug.pathNavigation5.followThePath();
+        if (pathNavigation4 != null && pathNavigation4.sweepStartPos != null) pathNavigation4.followThePath();
+        if (pathNavigation5 != null && pathNavigation5.sweepStartPos != null) pathNavigation5.followThePath();
     }
 
-    public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks) {
-        if (PathingDebug.pos1 != null && PathingDebug.pos2 != null) {
+    public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks, long finishNanoTime) {
+        if (pos1 != null && pos2 != null) {
             poseStack.pushPose();
-            poseStack.translate(PathingDebug.pos1.getX(), PathingDebug.pos1.getY(), PathingDebug.pos1.getZ());
+            poseStack.translate(pos1.getX(), pos1.getY(), pos1.getZ());
             renderPath(PathingScreen.currentNav, poseStack, buffer, partialTicks);
             poseStack.popPose();
         }
-        if (PathingDebug.pos1 != null) PathingRenderUtil.renderLineBox(poseStack, buffer, PathingDebug.pos1);
-        if (PathingDebug.pos2 != null) PathingRenderUtil.renderLineBox(poseStack, buffer, PathingDebug.pos2);
+        if (pos1 != null) PathingRenderUtil.renderLineBox(poseStack, buffer, pos1);
+        if (pos2 != null) PathingRenderUtil.renderLineBox(poseStack, buffer, pos2);
+
+        if (showHelpMenu) {
+            if (pos1 != null) {
+                InstructionRenderUtil.renderWholeBox(poseStack, PathingDebug.getBlockHitResult(Minecraft.getInstance()),
+                        Color.ofRGBA(0, 0, 1, 0.5f), finishNanoTime);
+            } else {
+                InstructionRenderUtil.renderWholeBox(poseStack, PathingDebug.getBlockHitResult(Minecraft.getInstance()),
+                        Color.ofRGBA(0, 1, 0, 0.5f), finishNanoTime);
+            }
+        }
     }
 
     private static void renderPath(PlayerPathNavigation pathNav, PoseStack poseStack, MultiBufferSource buffer, float partialTicks) {
@@ -74,7 +88,7 @@ public class PathingRenderer {
             if (renderPath) {
                 for (int i = 0; i < path.nodes.size(); i++) {
                     Node node = path.getNode(i);
-                    AABB targetArea = new AABB(new BlockPos(node.x, node.y, node.z)).move(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
+                    AABB targetArea = new AABB(new BlockPos(node.x, node.y, node.z)).move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
                     if (i == PathingRenderer.pathIndex) {
                         //Highlight current node
                         LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 0, (float) i / (path.nodes.size() - 1), 1, 0.25f);
@@ -89,7 +103,7 @@ public class PathingRenderer {
                     AABB targetArea = new AABB(node.x + 0.5F - maxDistanceToWaypoint / 2.0F,
                             node.y + 0.01F, node.z + 0.5F - maxDistanceToWaypoint / 2.0F,
                             node.x + 0.5F + maxDistanceToWaypoint / 2.0F,
-                            node.y + 0.1, node.z + 0.5F + maxDistanceToWaypoint / 2.0F).move(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
+                            node.y + 0.1, node.z + 0.5F + maxDistanceToWaypoint / 2.0F).move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 0.8f, 1, 1, 0.5f);
                 }
             }
@@ -109,7 +123,7 @@ public class PathingRenderer {
                 }
                 for (int i = 0; i < PathingScreen.tick; i++) {
                     Node node2 = path.getClosedSet()[i];
-                    AABB targetArea = new AABB(node2.x + 0.25, node2.y + 0.25, node2.z + 0.25, node2.x + 0.75, node2.y + 0.75, node2.z + 0.75).move(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
+                    AABB targetArea = new AABB(node2.x + 0.25, node2.y + 0.25, node2.z + 0.25, node2.x + 0.75, node2.y + 0.75, node2.z + 0.75).move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 1, i == PathingScreen.tick ? 1 : 0, 0, 0.5f);
                 }
                 PathingRenderUtil.renderTextBatch(poseStack, mc, path.getClosedSet(), PathingScreen.tick);
@@ -120,21 +134,21 @@ public class PathingRenderer {
                 if (pathNav.sweepStartPos != null) {
                     Vec3 wantedPos = pathNav.sweepStartPos;
                     AABB targetArea = new AABB(wantedPos.x - 0.25, wantedPos.y - 0.25, wantedPos.z - 0.25, wantedPos.x + 0.25, wantedPos.y + 0.25, wantedPos.z + 0.25);
-                    targetArea = targetArea.move(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
+                    targetArea = targetArea.move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 1, 1, 0, 1);
                 }
                 //Wanted pos for sweep logic
                 if (pathNav.sweepWantedPos != null) {
                     Vec3 wantedPos = pathNav.sweepWantedPos;
                     poseStack.pushPose();
-                    poseStack.translate(wantedPos.x - PathingDebug.pos1.getX(), wantedPos.y - PathingDebug.pos1.getY(), wantedPos.z - PathingDebug.pos1.getZ());
+                    poseStack.translate(wantedPos.x - pos1.getX(), wantedPos.y - pos1.getY(), wantedPos.z - pos1.getZ());
                     mc.getBlockRenderer().renderSingleBlock(Blocks.RED_CARPET.defaultBlockState(), poseStack, buffer, mc.getEntityRenderDispatcher().getPackedLightCoords(mc.player, partialTicks), OverlayTexture.NO_OVERLAY);
                     poseStack.popPose();
                 }
                 if (WaterPathFinder.sweeped != null) {
                     for (BlockPos blockPos : WaterPathFinder.sweeped) {
                         AABB targetArea = new AABB(blockPos.getX() - 0.25, blockPos.getY() - 0.25, blockPos.getZ() - 0.25, blockPos.getX() + 0.25, blockPos.getY() + 0.25, blockPos.getZ() + 0.25);
-                        targetArea = targetArea.move(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
+                        targetArea = targetArea.move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
                         LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 0, 1, 0, 1);
                     }
                 }
@@ -144,27 +158,27 @@ public class PathingRenderer {
                 if (pathNav.wantedPos != null) {
                     Vec3 wantedPos = pathNav.wantedPos.add(0, 1, 0);
                     AABB targetArea = new AABB(wantedPos.x - 0.25, wantedPos.y - 0.25, wantedPos.z - 0.25, wantedPos.x + 0.25, wantedPos.y + 0.25, wantedPos.z + 0.25);
-                    targetArea = targetArea.move(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
+                    targetArea = targetArea.move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 0, 1, 1, 1);
                 }
             }
             //Render current hitbox
             Vec3 pos = path.getEntityPosAtNode(PathingRenderer.pathIndex);
-            AABB aABB = PathingRenderer.getBigHitbox().move(pos.x, pos.y, pos.z).move(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
+            AABB aABB = PathingRenderer.getBigHitbox().move(pos.x, pos.y, pos.z).move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
             LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), aABB, 0, 1, 0, 1);
 
             //Highlight blocked positions around the current node
             if (renderNeigbours) {
                 Node[] neighbors = new Node[6400];
                 BlockPos[] neighborsX = new BlockPos[6400];
-                PathNavigationRegion pathNavigationRegion = new PathNavigationRegion(mc.level, PathingDebug.pos1.offset(-24, -24, -24), PathingDebug.pos1.offset(24, 24, 24));
+                PathNavigationRegion pathNavigationRegion = new PathNavigationRegion(mc.level, pos1.offset(-24, -24, -24), pos1.offset(24, 24, 24));
                 pathNav.nodeEvaluator.prepare(pathNavigationRegion, mc.player);
                 pathNav.nodeEvaluator.getBlockedNeighbors(neighbors, path.getNode(PathingRenderer.pathIndex), neighborsX);
                 pathNav.nodeEvaluator.done();
                 for (Node neighbor : neighbors) {
                     if (neighbor != null) {
                         poseStack.pushPose();
-                        poseStack.translate(neighbor.x - PathingDebug.pos1.getX(), neighbor.y - PathingDebug.pos1.getY(), neighbor.z - PathingDebug.pos1.getZ());
+                        poseStack.translate(neighbor.x - pos1.getX(), neighbor.y - pos1.getY(), neighbor.z - pos1.getZ());
                         if (neighbor.type == BlockPathTypes.BLOCKED) {
                             mc.getBlockRenderer().renderSingleBlock(Blocks.IRON_BLOCK.defaultBlockState(), poseStack, buffer, mc.getEntityRenderDispatcher().getPackedLightCoords(mc.player, partialTicks), OverlayTexture.NO_OVERLAY);
                         } else {
@@ -176,7 +190,7 @@ public class PathingRenderer {
                 for (BlockPos neighbor : neighborsX) {
                     if (neighbor != null) {
                         poseStack.pushPose();
-                        poseStack.translate(neighbor.getX() - PathingDebug.pos1.getX(), neighbor.getY() - PathingDebug.pos1.getY(), neighbor.getZ() - PathingDebug.pos1.getZ());
+                        poseStack.translate(neighbor.getX() - pos1.getX(), neighbor.getY() - pos1.getY(), neighbor.getZ() - pos1.getZ());
                         mc.getBlockRenderer().renderSingleBlock(Blocks.GLASS.defaultBlockState(), poseStack, buffer, mc.getEntityRenderDispatcher().getPackedLightCoords(mc.player, partialTicks), OverlayTexture.NO_OVERLAY);
                         poseStack.popPose();
                     }
@@ -197,7 +211,7 @@ public class PathingRenderer {
             mc.font.drawShadow(poseStack, new TextComponent("op: " + PathingDebug.pathNavigation1.moveControl.operation.name()), 2, yPosition + 80, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("move: " + PathingDebug.pathNavigation1.moveControl.move.toString()), 2, yPosition + 100, 0xEEEBF0);
         }*/
-        if (PathingDebug.showHelpMenu) {
+        if (showHelpMenu) {
             float xPos = (float) (0.7 * mc.getWindow().getGuiScaledWidth());
             mc.font.drawShadow(poseStack, new TranslatableComponent("Open Screen: %s", ClientInit.PATHING_SCREEN_KEY.getTranslatedKeyMessage()), xPos, yPosition + 120, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("Set pos 1: Left click"), xPos, yPosition + 140, 0xEEEBF0);
