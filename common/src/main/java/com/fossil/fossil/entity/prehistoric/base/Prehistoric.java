@@ -17,10 +17,12 @@ import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.prehistoric.Deinonychus;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
+import com.fossil.fossil.entity.util.InstructionSystem;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.C2SHitPlayerMessage;
 import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.debug.C2SDisableAIMessage;
 import com.fossil.fossil.network.debug.C2SSyncDebugInfoMessage;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
@@ -104,6 +106,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public final MoodSystem moodSystem = new MoodSystem(this);
     protected final WhipSteering steering = new WhipSteering(this);
     private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
+    private final InstructionSystem instructionSystem = new InstructionSystem(this);
     public final ResourceLocation animationLocation;
     private OrderType currentOrder;
     protected boolean hasTeenTexture = true;
@@ -690,6 +693,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 cathermalSleepCooldown--;
             }
             moodSystem.tick();
+            instructionSystem.tick();
         }
         if (!level.isClientSide && horizontalCollision && data().breaksBlocks() && moodSystem.getMood() < 0) {
             breakBlock((float) FossilConfig.getDouble(FossilConfig.BLOCK_BREAK_HARDNESS));
@@ -1473,6 +1477,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return animationLogic;
     }
 
+    public InstructionSystem getInstructionSystem() {
+        return instructionSystem;
+    }
+
     @Override
     public CompoundTag getDebugTag() {
         return entityData.get(DEBUG);
@@ -1480,6 +1488,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void disableCustomAI(byte type, boolean disableAI) {
+        if (!Version.debugEnabled()) return;
         CompoundTag tag = entityData.get(DEBUG).copy();
         switch (type) {
             case 0 -> setNoAi(disableAI);
@@ -1488,6 +1497,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             case 3 -> tag.putBoolean("disableLookAI", disableAI);
         }
         entityData.set(DEBUG, tag);
+        MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 32),
+                new C2SDisableAIMessage(getId(), disableAI, type));
     }
 
     public record PrehistoricGroupData(int ageInDays) implements SpawnGroupData {

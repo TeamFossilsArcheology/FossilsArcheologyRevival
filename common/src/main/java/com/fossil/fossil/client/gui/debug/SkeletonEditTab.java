@@ -43,7 +43,7 @@ public class SkeletonEditTab extends DebugTab {
             }
         };
         addWidget(ageSlider);
-        addWidget(new AnimationsList());
+        addWidget(new ModelsList());
         addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0, 0));
             ageSlider.maxValue = EntityDataManager.ENTITY_DATA.getData(info.resourceName).adultAgeDays();
@@ -61,13 +61,13 @@ public class SkeletonEditTab extends DebugTab {
         }
     }
 
-    private class AnimationsList extends ContainerObjectSelectionList<AnimationsList.AnimationEntry> {
+    private class ModelsList extends ContainerObjectSelectionList<ModelsList.ModelEntry> {
 
-        public AnimationsList() {
+        public ModelsList() {
             super(SkeletonEditTab.this.minecraft, 200, SkeletonEditTab.this.height, 60, SkeletonEditTab.this.height, 25);
-            List<String> sortedAnimations = PrehistoricEntityInfo.entitiesWithSkeleton(TimePeriod.values()).stream().map(Enum::name).toList();
-            for (String typeName : sortedAnimations) {
-                addEntry(new AnimationsList.AnimationEntry(typeName));
+            List<String> sortedModels = PrehistoricEntityInfo.entitiesWithSkeleton(TimePeriod.values()).stream().map(Enum::name).toList();
+            for (String typeName : sortedModels) {
+                addEntry(new ModelEntry(typeName));
             }
             setRenderBackground(false);
             setRenderTopAndBottom(false);
@@ -80,10 +80,10 @@ public class SkeletonEditTab extends DebugTab {
             return x0 + width - 6;
         }
 
-        private class AnimationEntry extends ContainerObjectSelectionList.Entry<AnimationsList.AnimationEntry> {
+        private class ModelEntry extends ContainerObjectSelectionList.Entry<ModelEntry> {
             private final Button changeButton;
 
-            AnimationEntry(String text) {
+            ModelEntry(String text) {
                 changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
                     SkeletonEditTab.this.info = PrehistoricEntityInfo.valueOf(button.getMessage().getContents());
                 });

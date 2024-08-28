@@ -1,5 +1,6 @@
 package com.fossil.fossil.client.renderer.entity;
 
+import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.fossil.fossil.client.model.PrehistoricGeoModel;
 import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -25,6 +26,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib3.core.util.Color;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
@@ -82,6 +84,19 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
             }
             super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
         }
+    }
+
+    @Override
+    public Color getRenderColor(T animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight) {
+        if (InstructionTab.highlightEntityList != null && InstructionTab.highlightEntityList.getId() == animatable.getId()) {
+            return Color.RED;
+        } else if (InstructionTab.highlightInstructionList != null && InstructionTab.highlightInstructionList.getId() == animatable.getId()) {
+            return Color.RED;
+        }
+        if (InstructionTab.activeEntity != null && InstructionTab.activeEntity.getId() == animatable.getId()) {
+            return Color.YELLOW;
+        }
+        return super.getRenderColor(animatable, partialTick, poseStack, bufferSource, buffer, packedLight);
     }
 
     @Override

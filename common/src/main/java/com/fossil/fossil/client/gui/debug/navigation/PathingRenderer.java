@@ -189,14 +189,14 @@ public class PathingRenderer {
         Minecraft mc = Minecraft.getInstance();
         poseStack.pushPose();
         float yPosition = (float) (0.2 * mc.getWindow().getGuiScaledHeight());
-        if (PathingDebug.pathNavigation1 != null) {
+        /*if (PathingDebug.pathNavigation1 != null) {
             mc.font.drawShadow(poseStack, new TextComponent("zza: " + PathingDebug.pathNavigation1.moveControl.zza), 2, yPosition, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("yRot: " + PathingDebug.pathNavigation1.moveControl.yRot), 2, yPosition + 20, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("jump: " + PathingDebug.pathNavigation1.moveControl.jump), 2, yPosition + 40, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("speed: " + PathingDebug.pathNavigation1.moveControl.speed), 2, yPosition + 60, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("op: " + PathingDebug.pathNavigation1.moveControl.operation.name()), 2, yPosition + 80, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("move: " + PathingDebug.pathNavigation1.moveControl.move.toString()), 2, yPosition + 100, 0xEEEBF0);
-        }
+        }*/
         if (PathingDebug.showHelpMenu) {
             float xPos = (float) (0.7 * mc.getWindow().getGuiScaledWidth());
             mc.font.drawShadow(poseStack, new TranslatableComponent("Open Screen: %s", ClientInit.PATHING_SCREEN_KEY.getTranslatedKeyMessage()), xPos, yPosition + 120, 0xEEEBF0);

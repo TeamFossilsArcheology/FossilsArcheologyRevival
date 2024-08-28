@@ -28,6 +28,7 @@ import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class DebugScreen extends Screen {
@@ -37,6 +38,7 @@ public class DebugScreen extends Screen {
     private static PathInfo currentVision;
     public final Entity entity;
     private final List<DebugTab> tabs = new ArrayList<>();
+    private static int tabShift = 0;
     private DebugTab currentTab;
 
     public DebugScreen(Entity entity) {
@@ -140,6 +142,7 @@ public class DebugScreen extends Screen {
         }
         if (entity instanceof PrehistoricAnimatable) {
             tabs.add(new AnimationTab(this, entity));
+            tabs.add(new InstructionTab(this, entity));
         }
         builder.withInitialValue(showPaths);
         addRenderableWidget(builder.create(240, height - 40, 100, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
@@ -148,13 +151,20 @@ public class DebugScreen extends Screen {
         addRenderableWidget(new Button(340, height - 40, 100, 20, new TextComponent("Clear Paths"), button -> clearPaths()));
         if (!tabs.isEmpty()) {
             tabs.forEach(tab -> tab.init(width, height));
+            Collections.rotate(tabs, -tabShift);
             currentTab = addWidget(tabs.get(0));
+            currentTab.onOpen();
             addRenderableWidget(CycleOption.create("Tab", () -> tabs, debugTab -> new TextComponent(debugTab.getClass().getSimpleName()),
                     options -> currentTab, (options, option, tab) -> {
+                        tab.onOpen();
                         addWidget(tab);
                         removeWidget(currentTab);
+                        currentTab.onClose();
                         currentTab = tab;
                     }).createButton(Minecraft.getInstance().options, width / 2, 60, 100));
+            addRenderableWidget(new Button(width / 2, 35, 100, 20, new TextComponent("Set default"), button -> {
+                tabShift += tabs.indexOf(currentTab);
+            }));
         }
     }
 

@@ -1,5 +1,7 @@
 package com.fossil.fossil.fabric.mixins;
 
+import com.fossil.fossil.client.gui.debug.InstructionTab;
+import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.client.gui.debug.navigation.PathingDebug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -26,7 +28,9 @@ public class DebugMinecraftMixin {
 
     @Inject(method = "startUseItem", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelRightClick(final CallbackInfo ci) {
-        if (PathingDebug.showHelpMenu) {
+        if (InstructionTab.positionActive()) {
+            InstructionTab.positionMode = Instruction.Type.IDLE;
+        } else if (PathingDebug.showHelpMenu) {
             BlockPos hitResult = PathingDebug.getBlockHitResult((Minecraft) (Object) this);
             if (PathingDebug.addNodeToPathMode) {
                 PathingDebug.removeFromPath(hitResult);
@@ -40,7 +44,10 @@ public class DebugMinecraftMixin {
 
     @Inject(method = "startAttack", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelLeftClick(CallbackInfoReturnable<Boolean> cir) {
-        if (PathingDebug.showHelpMenu) {
+        if (InstructionTab.positionActive()) {
+            BlockPos hitResult = PathingDebug.getBlockHitResult((Minecraft) (Object) this);
+            InstructionTab.addPosition(hitResult);
+        } else if (PathingDebug.showHelpMenu) {
             BlockPos hitResult = PathingDebug.getBlockHitResult((Minecraft) (Object) this);
             if (PathingDebug.addNodeToPathMode) {
                 PathingDebug.addToPath(hitResult);
@@ -53,7 +60,7 @@ public class DebugMinecraftMixin {
 
     @Inject(method = "continueAttack", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelLeftClick(boolean leftClick, CallbackInfo ci) {
-        if (PathingDebug.showHelpMenu) {
+        if (InstructionTab.positionActive() || PathingDebug.showHelpMenu) {
             ci.cancel();
         }
     }

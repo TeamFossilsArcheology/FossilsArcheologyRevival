@@ -1,5 +1,6 @@
 package com.fossil.fossil.fabric.mixins;
 
+import com.fossil.fossil.client.gui.debug.instruction.InstructionRenderer;
 import com.fossil.fossil.client.gui.debug.navigation.PathingRenderer;
 import com.fossil.fossil.util.Version;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -31,6 +32,7 @@ public class DebugLevelRendererMixin {
             poseStack.pushPose();
             poseStack.translate(-viewPosition.x, -viewPosition.y, -viewPosition.z);
             PathingRenderer.render(poseStack, bufferSource, partialTicks);
+            InstructionRenderer.render(poseStack, bufferSource, partialTicks, finishNanoTime);
             bufferSource.endBatch();
             poseStack.popPose();
         }

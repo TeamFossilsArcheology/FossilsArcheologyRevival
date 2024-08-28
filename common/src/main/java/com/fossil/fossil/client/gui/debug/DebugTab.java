@@ -44,6 +44,20 @@ public abstract class DebugTab extends GuiComponent implements ContainerEventHan
         }
     }
 
+    /**
+     * On switch to this tab
+     */
+    protected void onOpen() {
+
+    }
+
+    /**
+     * On switch to different tab
+     */
+    protected void onClose() {
+
+    }
+
     @Override
     public @NotNull List<? extends GuiEventListener> children() {
         return renderables;
