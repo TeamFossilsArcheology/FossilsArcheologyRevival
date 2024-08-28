@@ -13,12 +13,14 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.pathfinder.PathComputationType;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 public class ObsidianSpikesBlock extends Block {
-    private static final VoxelShape SHAPE = Block.box(1, 0, 2, 16, 2, 16);
+    private static final VoxelShape SHAPE = Block.box(1, 0, 1, 15, 12, 15);
+    private static final VoxelShape COLLISION_SHAPE = Block.box(5, 0, 5, 11, 11, 11);
 
     public ObsidianSpikesBlock(Properties properties) {
         super(properties);
@@ -50,5 +52,15 @@ public class ObsidianSpikesBlock extends Block {
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return COLLISION_SHAPE;
+    }
+
+    @Override
+    public boolean isPathfindable(BlockState state, BlockGetter level, BlockPos pos, PathComputationType type) {
+        return false;
     }
 }
