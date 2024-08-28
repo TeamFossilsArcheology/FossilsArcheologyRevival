@@ -49,6 +49,9 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
                 instructions.remove(children.indexOf(selected));
                 children.remove(selected);
                 selected = null;
+                if (!children.isEmpty()) {
+                    selected = children.get(0);
+                }
             }
         });
         upButton = new Button(x0 + 110, y1 + 5, 20, 20, new TextComponent(""), button -> {
@@ -151,6 +154,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+        y1 = Math.max(200, 200);
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);

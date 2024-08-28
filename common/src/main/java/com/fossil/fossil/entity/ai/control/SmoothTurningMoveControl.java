@@ -39,7 +39,7 @@ public class SmoothTurningMoveControl extends MoveControl {
                 mob.setZza(0);
                 return;
             }
-            if (horizontalDist > 0.1) {
+            if (horizontalDist > 0.12) {
                 //Prevents spinning if mob overshoots the wanted position
                 float newYRot = Util.yawToYRot(Mth.atan2(z, x) * Mth.RAD_TO_DEG);
                 float turn = ((Prehistoric) mob).getMaxTurnDistancePerTick();
@@ -50,7 +50,8 @@ public class SmoothTurningMoveControl extends MoveControl {
             BlockState blockState = mob.level.getBlockState(blockPos);
             VoxelShape voxelShape = blockState.getCollisionShape(mob.level, blockPos);
             double distance = Math.max(1, Mth.square(Math.min(1.8, mob.getBbWidth() / 2 + 0.1)));
-            if (y > mob.maxUpStep && horizontalDist < distance || !voxelShape.isEmpty() && mob.getY() < voxelShape.max(Direction.Axis.Y) + blockPos.getY() && !blockState.is(BlockTags.DOORS) && !blockState.is(BlockTags.FENCES)) {
+            Vec3 move = mob.getDeltaMovement();
+            if (y > mob.maxUpStep && (horizontalDist < distance || move.horizontalDistance() < 2.5E-7) || !voxelShape.isEmpty() && mob.getY() < voxelShape.max(Direction.Axis.Y) + blockPos.getY() && !blockState.is(BlockTags.DOORS) && !blockState.is(BlockTags.FENCES)) {
                 mob.getJumpControl().jump();
                 operation = Operation.JUMPING;
             }
