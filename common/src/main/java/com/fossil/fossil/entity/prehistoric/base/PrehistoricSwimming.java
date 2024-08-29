@@ -302,7 +302,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 moveRelative(getSpeed(), travelVector);
                 move(MoverType.SELF, getDeltaMovement());
                 setDeltaMovement(getDeltaMovement().scale(0.9));
-                if (level.getFluidState(blockPosition().below()).is(FluidTags.WATER)) {
+                if (!isNoGravity() && level.getFluidState(blockPosition().below()).is(FluidTags.WATER)) {
                     setDeltaMovement(getDeltaMovement().add(0.0, -0.005, 0.0));
                 }
             } else {
@@ -327,6 +327,13 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (LocalPlayer) rider);
         } else {
             setDeltaMovement(Vec3.ZERO);
+        }
+    }
+
+    @Override
+    public void onInsideBubbleColumn(boolean downwards) {
+        if (getBbWidth() < 2) {
+            super.onInsideBubbleColumn(downwards);
         }
     }
 

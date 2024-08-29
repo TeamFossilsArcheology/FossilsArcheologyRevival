@@ -92,7 +92,7 @@ public class InstructionSystem {
             }
             return navigation.moveTo(path, 1);
         }
-        if (navigation.getPath().isDone() && moveTo.target.closerToCenterThan(entity.position(), acceptedDistance())) {
+        if (navigation.getPath().isDone() && !moveTo.target.closerToCenterThan(entity.position(), acceptedDistance())) {
             Path path = navigation.createPath(moveTo.target, 1);
             if (path == null) {
                 tries++;

@@ -40,6 +40,7 @@ public class PrehistoricPathFinder extends PathFinder {
     @Nullable
     public Path findPath(PathNavigationRegion region, Mob mob, Set<BlockPos> targetPositions, float maxRange, int accuracy, float searchDepthMultiplier) {
         this.openSet.clear();
+        closedSet.clear();
         this.nodeEvaluator.prepare(region, mob);
         Node node = nodeEvaluator.getStart();
         Map<Target, BlockPos> map = targetPositions.stream().collect(Collectors.toMap(blockPos -> nodeEvaluator.getGoal(blockPos.getX(), blockPos.getY(), blockPos.getZ()), Function.identity()));
