@@ -101,9 +101,10 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
 
     @Override
     public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        InstructionTab.highlightInstructionEntity = null;
+        InstructionTab.highlightInstruction = null;
         if (isMouseOver(mouseX, mouseY)) {
             InstructionEntry entry = getEntryAtPosition(mouseX, mouseY);
-            InstructionTab.highlightInstructionList = null;
             if (entry != null) {
                 if (entry.mouseClicked(mouseX, mouseY, button)) {
                     setFocused(entry);
@@ -245,7 +246,9 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
             if (button == 0) {
                 InstructionsList.this.selected = this;
                 if (instruction instanceof Instruction.Attack attack) {
-                    InstructionTab.highlightInstructionList = minecraft.level.getEntity(attack.targetId);
+                    InstructionTab.highlightInstructionEntity = minecraft.level.getEntity(attack.targetId);
+                } else if (instruction instanceof Instruction.MoveTo) {
+                    InstructionTab.highlightInstruction = instruction;
                 }
                 return true;
             } else {

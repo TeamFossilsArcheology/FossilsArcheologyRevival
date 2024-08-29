@@ -2,10 +2,10 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.entity.ToyBase;
 import com.fossil.fossil.entity.animation.AnimationLogic;
+import com.fossil.fossil.entity.util.Util;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -111,6 +111,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     public abstract String getLeapingAnimationName();
 
     private double lastSpeed = 0;
+
     private PlayState leapingPredicate(AnimationEvent<PrehistoricLeaping> event) {
         AnimationController<PrehistoricLeaping> controller = event.getController();
         double animSpeed = 1;
@@ -133,7 +134,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                     //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                     double mobSpeed = getDeltaMovement().horizontalDistance() * 20;
                     //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
-                    mobSpeed = Math.min(23.55 * Mth.square(event.getAnimatable().attributes().maxSpeed()), mobSpeed);
+                    mobSpeed = Math.min(Util.attributeToSpeed(event.getAnimatable().attributes().maxSpeed()), mobSpeed);
                     animSpeed *= mobSpeed / animationBaseSpeed;
                 }
                 if (lastSpeed > animSpeed) {

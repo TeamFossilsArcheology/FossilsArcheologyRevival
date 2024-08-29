@@ -88,9 +88,9 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     public Color getRenderColor(T animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight) {
-        if (InstructionTab.highlightEntityList != null && InstructionTab.highlightEntityList.getId() == animatable.getId()) {
+        if (InstructionTab.entityListHighlight != null && InstructionTab.entityListHighlight.getId() == animatable.getId()) {
             return Color.RED;
-        } else if (InstructionTab.highlightInstructionList != null && InstructionTab.highlightInstructionList.getId() == animatable.getId()) {
+        } else if (InstructionTab.highlightInstructionEntity != null && InstructionTab.highlightInstructionEntity.getId() == animatable.getId()) {
             return Color.RED;
         }
         if (InstructionTab.activeEntity != null && InstructionTab.activeEntity.getId() == animatable.getId()) {

@@ -31,7 +31,7 @@ public class InstructionRenderUtil {
             poseStack.scale(-1, 1, 1);
             String string;
             if (instruction instanceof Instruction.Idle idle) {
-                string = String.format("%s: %s (%s seconds)", i, instruction.type, idle.duration);
+                string = String.format("%s: %s (%s seconds)", i, instruction.type, idle.duration / 20);
             } else {
                 string = String.format("%s: %s", i, instruction.type);
             }

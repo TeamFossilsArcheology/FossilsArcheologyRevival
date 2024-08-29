@@ -22,8 +22,9 @@ public class InstructionTab extends DebugTab {
     public static final Map<Integer, List<Instruction>> INSTRUCTIONS = new HashMap<>();
     private InstructionsList animations;
     private EntityList entities;
-    public static Entity highlightEntityList;
-    public static Entity highlightInstructionList;
+    public static Entity entityListHighlight;
+    public static Entity highlightInstructionEntity;
+    public static Instruction highlightInstruction;
     public static Instruction.Type positionMode = Instruction.Type.IDLE;
     public static Entity activeEntity;
 
@@ -34,6 +35,9 @@ public class InstructionTab extends DebugTab {
     //TODO: Save across sessions
     //TODO: Teleport rotation
     //TODO: Drag instructions in list
+    //TODO: Add spawner. Use EntityRenderer to render preview. Rotate with mousewheel
+    //TODO: Flying mobs, Aquatic mobs
+    //TODO: Arrow above dino instead of outline
 
     @Override
     protected void init(int width, int height) {
@@ -80,7 +84,7 @@ public class InstructionTab extends DebugTab {
         }
 
         EditBox zPosInput = addWidget(new EditBox(minecraft.font, 325, 30, 30, 20, new TextComponent("")));
-        zPosInput.setValue(new DecimalFormat("#.0#", DecimalFormatSymbols.getInstance(Locale.US)).format(5));
+        zPosInput.setValue(new DecimalFormat("##", DecimalFormatSymbols.getInstance(Locale.US)).format(5));
         addWidget(new Button(325, 5, 70, 20, new TextComponent("Add Idle"), button -> {
             Instruction instruction = new Instruction.Idle(Integer.parseInt(zPosInput.getValue()) * 20);
             animations.addInstruction(instruction);

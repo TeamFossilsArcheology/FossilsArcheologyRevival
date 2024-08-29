@@ -34,7 +34,7 @@ public class EntityList extends ContainerObjectSelectionList<EntityList.EntityEn
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
         if (!isMouseOver(mouseX, mouseY)) {
-            InstructionTab.highlightEntityList = null;
+            InstructionTab.entityListHighlight = null;
         }
     }
 
@@ -67,7 +67,7 @@ public class EntityList extends ContainerObjectSelectionList<EntityList.EntityEn
             changeButton.y = top;
             changeButton.render(poseStack, mouseX, mouseY, partialTick);
             if (isMouseOver) {
-                InstructionTab.highlightEntityList = entity;
+                InstructionTab.entityListHighlight = entity;
             }
         }
 

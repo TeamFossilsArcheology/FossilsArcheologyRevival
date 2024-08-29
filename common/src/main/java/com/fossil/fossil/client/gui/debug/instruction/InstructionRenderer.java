@@ -51,6 +51,8 @@ public class InstructionRenderer {
                 }
             }
             InstructionRenderUtil.renderTextBatch(poseStack, mc, texts);
+            if (InstructionTab.highlightInstruction instanceof Instruction.MoveTo moveTo)
+                addPosition(poseStack, buffer, moveTo, moveTo.target, Color.RED);
         }
         if (InstructionTab.positionMode != Instruction.Type.IDLE) {
             InstructionRenderUtil.renderWholeBox(poseStack, PathingDebug.getBlockHitResult(mc), Color.ofRGBA(1, 0, 0, 0.5f), finishNanoTime);
@@ -60,6 +62,6 @@ public class InstructionRenderer {
     private static void addPosition(PoseStack poseStack, MultiBufferSource buffer, Instruction instruction, BlockPos target, Color color) {
         LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(target), color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, color.getAlpha() / 255f);
         int stack = countAtPos.compute(target, (blockPos, count) -> count == null ? 1 : count + 1);
-        texts.add(Pair.of(Vec3.atCenterOf(target).add(0, (stack - 1) * 0.2, 0), instruction));
+        texts.add(Pair.of(Vec3.atCenterOf(target).add(0, 0.5 + stack * 0.2, 0), instruction));
     }
 }

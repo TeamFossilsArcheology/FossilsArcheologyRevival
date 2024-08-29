@@ -1,10 +1,10 @@
 package com.fossil.fossil.entity.animation;
 
 import com.fossil.fossil.entity.prehistoric.base.*;
+import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.S2CSyncActiveAnimationMessage;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import software.bernie.geckolib3.core.PlayState;
@@ -195,7 +195,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                     double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
                     //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
-                    mobSpeed = Math.min(23.55 * Mth.square(event.getAnimatable().attributes().maxSpeed()), mobSpeed);
+                    mobSpeed = Math.min(Util.attributeToSpeed(event.getAnimatable().attributes().maxSpeed()), mobSpeed);
                     animationSpeed *= mobSpeed / animationBaseSpeed;
                 }
                 //TODO: Choose sprinting anim based on animation speed?

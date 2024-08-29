@@ -84,6 +84,10 @@ public class Util {
         return rayTrace.getType() != HitResult.Type.MISS;
     }
 
+    public static double attributeToSpeed(double speed) {
+        return 23.55 * Mth.square(speed);
+    }
+
     public static double calculateSpeed(EntityDataManager.Data data, float scale) {
         Attribute attributes = data.attributes();
         double newSpeed = attributes.baseSpeed();

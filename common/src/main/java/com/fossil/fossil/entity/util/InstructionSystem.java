@@ -59,19 +59,31 @@ public class InstructionSystem {
         if (navigation instanceof WaterBoundPathNavigation && !entity.isInWaterOrBubble()) {
             return true;
         }
-        Path path = navigation.createPath(moveTo.target, 1);
-        if (path == null) {
-            tries++;
-            return true;
+
+        if (navigation.getPath() == null) {
+            Path path = navigation.createPath(moveTo.target, 1);
+            if (path == null) {
+                tries++;
+                return true;
+            }
+            return navigation.moveTo(path, 1);
         }
-        if (path.sameAs(navigation.getPath())) {
-            return !navigation.getPath().isDone();
+        if (navigation.getPath().isDone() && moveTo.target.closerToCenterThan(entity.position(), acceptedDistance())) {
+            Path path = navigation.createPath(moveTo.target, 1);
+            if (path == null) {
+                tries++;
+                return true;
+            }
+            return navigation.moveTo(path, 1);
         }
-        if (!navigation.moveTo(path, 1)) {
-            tries++;
-            return false;
+        return !navigation.getPath().isDone();
+    }
+
+    public double acceptedDistance() {
+        if (entity.isCustomMultiPart()) {
+            return entity.getHeadRadius() + 1;
         }
-        return true;
+        return entity.getBbWidth() / 2 + 1;
     }
 
     private void startNext() {
