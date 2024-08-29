@@ -3,6 +3,8 @@ package com.fossil.fossil.client.gui.debug;
 import com.fossil.fossil.client.gui.debug.instruction.EntityList;
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.client.gui.debug.instruction.InstructionsList;
+import com.fossil.fossil.entity.ai.BreachAttackGoal;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SInstructionMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -21,7 +23,8 @@ import java.util.*;
 public class InstructionTab extends DebugTab {
     public static final Map<Integer, List<Instruction>> INSTRUCTIONS = new HashMap<>();
     private InstructionsList animations;
-    private EntityList entities;
+    private EntityList attackEntities;
+    private EntityList breachEntities;
     public static Entity entityListHighlight;
     public static Entity highlightInstructionEntity;
     public static Instruction highlightInstruction;
@@ -73,14 +76,31 @@ public class InstructionTab extends DebugTab {
             debugScreen.onClose();
         }));
         if (entity instanceof LivingEntity livingEntity) {
-            var list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(20).ignoreLineOfSight(), livingEntity, entity.getBoundingBox().inflate(20));
-            entities = addWidget(new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
+            var list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight(), livingEntity, entity.getBoundingBox().inflate(30));
+            attackEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
                 Instruction instruction = new Instruction.Attack(entity1.getId());
                 animations.addInstruction(instruction);
                 INSTRUCTIONS.get(entity.getId()).add(instruction);
+            });
+            addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
+                widgets.remove(breachEntities);
+                renderables.remove(breachEntities);
+                addWidget(attackEntities);
             }));
-            addWidget(new Button(width - 220, 5, 100, 20, new TextComponent("Add Attack"), button -> {
-            }));
+            if (entity instanceof PrehistoricSwimming) {
+                list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight()
+                        .selector(target -> !BreachAttackGoal.isEntitySubmerged(target) && PrehistoricSwimming.isOverWater(target)), livingEntity, entity.getBoundingBox().inflate(30));
+                breachEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
+                    Instruction instruction = new Instruction.Breach(entity1.getId());
+                    animations.addInstruction(instruction);
+                    INSTRUCTIONS.get(entity.getId()).add(instruction);
+                });
+                addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Breach"), button -> {
+                    widgets.remove(attackEntities);
+                    renderables.remove(attackEntities);
+                    addWidget(breachEntities);
+                }));
+            }
         }
 
         EditBox zPosInput = addWidget(new EditBox(minecraft.font, 325, 30, 30, 20, new TextComponent("")));

@@ -1,6 +1,5 @@
 package com.fossil.fossil.entity.prehistoric.swimming;
 
-import com.fossil.fossil.entity.ai.BreachAttackGoal;
 import com.fossil.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.fossil.fossil.entity.ai.GrabMeleeAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -49,7 +48,7 @@ public class Mosasaurus extends PrehistoricSwimming {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, 1, false));
-        goalSelector.addGoal(Util.ATTACK + 1, new BreachAttackGoal(this, 1));
+        //goalSelector.addGoal(Util.ATTACK + 1, new BreachAttackGoal(this, 1));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }
 

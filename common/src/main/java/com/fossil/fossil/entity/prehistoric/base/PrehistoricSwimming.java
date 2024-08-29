@@ -190,7 +190,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         if (canDoBreachAttack() && !level.isClientSide) {
             LivingEntity target = getTarget();
             if (target != null) {
-                if (!isEntitySubmerged(target) && !isOverWater(target)) {
+                if (!BreachAttackGoal.isEntitySubmerged(target) && !isOverWater(target)) {
                     //If target out of reach
                     setTarget(null);
                 }
@@ -302,7 +302,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
                 moveRelative(getSpeed(), travelVector);
                 move(MoverType.SELF, getDeltaMovement());
                 setDeltaMovement(getDeltaMovement().scale(0.9));
-                if (getTarget() == null && level.getFluidState(blockPosition().below()).is(FluidTags.WATER)) {
+                if (level.getFluidState(blockPosition().below()).is(FluidTags.WATER)) {
                     setDeltaMovement(getDeltaMovement().add(0.0, -0.005, 0.0));
                 }
             } else {
@@ -362,10 +362,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     public boolean canBeControlledByRider() {
         return info().isVivariousAquatic() ? isInWater() && super.canBeControlledByRider() : super.canBeControlledByRider();
-    }
-
-    public boolean isEntitySubmerged(LivingEntity entity) {
-        return level.getFluidState(entity.blockPosition().above()).is(FluidTags.WATER);
     }
 
     public boolean isBeached() {

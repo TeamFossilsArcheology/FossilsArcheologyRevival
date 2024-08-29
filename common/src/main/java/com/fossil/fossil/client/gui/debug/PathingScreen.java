@@ -69,6 +69,9 @@ public class PathingScreen extends Screen {
                 PathingDebug.rePath();
             }
         });
+        addRenderableWidget(new Button(200, height - 50, 100, 20, new TextComponent("Reset scroll"), button -> {
+            PathingDebug.pickBlockOffset = 0;
+        }));
         addRenderableWidget(new Button(300, height - 50, 100, 20, new TextComponent("Reset pos3"), button -> {
             PathingDebug.pos3 = null;
         }));

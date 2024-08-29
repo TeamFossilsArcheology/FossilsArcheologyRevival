@@ -2,6 +2,7 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.util.Util;
+import net.minecraft.tags.FluidTags;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,6 +12,7 @@ import net.minecraft.world.phys.Vec3;
 
 import java.util.EnumSet;
 
+//Breaching is unfinished
 public class BreachAttackGoal extends Goal {
     private final PrehistoricSwimming dino;
     private final double speedModifier;
@@ -24,6 +26,10 @@ public class BreachAttackGoal extends Goal {
         this.dino = dino;
         this.speedModifier = speed;
         this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+    }
+
+    public static boolean isEntitySubmerged(LivingEntity entity) {
+        return entity.level.getFluidState(entity.blockPosition().above()).is(FluidTags.WATER);
     }
 
     @Override
@@ -46,13 +52,13 @@ public class BreachAttackGoal extends Goal {
     }
 
     private boolean cannotTargetEntity(LivingEntity entity) {
-        return entity == null || !entity.isAlive() || dino.isEntitySubmerged(entity) || !PrehistoricSwimming.isOverWater(entity) || dino.hasPassenger(entity);
+        return entity == null || !entity.isAlive() || isEntitySubmerged(entity) || !PrehistoricSwimming.isOverWater(entity) || dino.hasPassenger(entity);
     }
 
     @Override
     public boolean canContinueToUse() {
         LivingEntity target = dino.getTarget();
-        if (target == null || !target.isAlive() || dino.isEntitySubmerged(target) || !PrehistoricSwimming.isOverWater(target)) {
+        if (target == null || !target.isAlive() || isEntitySubmerged(target) || !PrehistoricSwimming.isOverWater(target)) {
             return false;
         }
         return !breachTargetReached || (!dino.isInWater() && !dino.isOnGround());

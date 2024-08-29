@@ -1,4 +1,4 @@
-package com.fossil.fossil.fabric.mixins;
+package com.fossil.fossil.forge.mixins;
 
 import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;

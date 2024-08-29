@@ -1,7 +1,11 @@
 package com.fossil.fossil.entity.util;
 
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
+import com.fossil.fossil.entity.ai.BreachAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
@@ -17,6 +21,7 @@ public class InstructionSystem {
     private boolean shouldLoop;
     private int tries;
     private long endTick;
+    private boolean breachTargetReached;
 
     public InstructionSystem(Prehistoric entity) {
         this.entity = entity;
@@ -43,6 +48,25 @@ public class InstructionSystem {
 
         } else if (current instanceof Instruction.Attack attack) {
 
+        } else if (current instanceof Instruction.Breach breach) {
+            PrehistoricSwimming swimming = (PrehistoricSwimming) entity;
+            Entity target = entity.level.getEntity(breach.targetId);
+            if (target instanceof LivingEntity livingEntity) {
+                if (!livingEntity.isAlive() || BreachAttackGoal.isEntitySubmerged(livingEntity) || !PrehistoricSwimming.isOverWater(livingEntity)) {
+                    return false;
+                }
+                if (Util.canReachPrey(entity, target)) {
+                    breachTargetReached = true;
+                    //swimming.startGrabAttack(target);
+                }
+                if (breachTargetReached && entity.isInWater()) {
+                    swimming.setBreaching(false);
+                    breachTargetReached = false;
+                    swimming.stopGrabAttack(livingEntity);
+                    return false;
+                }
+                return true;
+            }
         }
         return false;
     }
@@ -106,8 +130,13 @@ public class InstructionSystem {
             endTick = entity.level.getGameTime() + idle.duration;
         } else if (current instanceof Instruction.PlayAnim playAnim) {
 
-        } else if (current instanceof Instruction.Attack attack) {
-
+        } else if (current instanceof Instruction.Breach breach) {
+            Entity target = entity.level.getEntity(breach.targetId);
+            if (target instanceof LivingEntity livingEntity && entity instanceof PrehistoricSwimming swimming) {
+                entity.setTarget(livingEntity);
+                entity.getMoveControl().setWantedPosition(target.position().x, target.position().y + 4, target.position().z, 1);
+                swimming.setBreaching(true);
+            }
         }
     }
 

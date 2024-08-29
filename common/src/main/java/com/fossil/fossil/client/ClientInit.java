@@ -80,6 +80,8 @@ public class ClientInit {
     public static void later() {
         if (Version.debugEnabled()) {
             KeyMappingRegistry.register(DEBUG_SCREEN_KEY);
+            KeyMappingRegistry.register(PATHING_SCREEN_KEY);
+            KeyMappingRegistry.register(DEBUG_HELP_KEY);
             ClientTickEvent.CLIENT_POST.register(minecraft -> {
                 while (DEBUG_SCREEN_KEY.consumeClick()) {
                     minecraft.setScreen(new DebugScreen(DebugScreen.getHitResult(minecraft)));

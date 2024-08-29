@@ -2,7 +2,7 @@
   "required": true,
   "package": "com.fossil.fossil.forge.mixins",
   "compatibilityLevel": "JAVA_17",
-  "client": ["ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"],
+  "client": ["DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"],
   "mixins": [
     "AbstractClientPlayerMixin", "AbstractFishMixin", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "PrehistoricMixin", "ProjectileUtilMixin",
     "TransientEntitySectionManagerMixin"

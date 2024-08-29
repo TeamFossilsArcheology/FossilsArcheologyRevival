@@ -22,6 +22,7 @@ public class PathingDebug {
     public static Vec3 pos3;
     public static boolean showHelpMenu;
     public static boolean addNodeToPathMode;
+    public static int pickBlockOffset;
 
 
     private static final Map<BlockPathTypes, Float> pathfindingMalus = Maps.newEnumMap(BlockPathTypes.class);
@@ -109,7 +110,7 @@ public class PathingDebug {
         Vec3 view = camera.getViewVector(1.0f);
         double range = 30;
         Vec3 end = eye.add(view.x * range, view.y * range, view.z * range);
-        BlockHitResult hitResult = camera.level.clip(new ClipContext(eye, end, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, camera));
+        BlockHitResult hitResult = camera.level.clip(new ClipContext(eye.add(view.scale(pickBlockOffset)), end, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, camera));
         return hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
     }
 
