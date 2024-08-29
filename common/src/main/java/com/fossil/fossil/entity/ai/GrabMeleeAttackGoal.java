@@ -4,10 +4,8 @@ import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.util.Util;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.Blocks;
 
 public class GrabMeleeAttackGoal extends DelayedAttackGoal {
@@ -37,11 +35,11 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
         if (attackType == ATTACK) {
             return super.canContinueToUse();
         }
-        if (attackType == GRAB && !swimming.isDoingGrabAttack()) {
-            return false;
-        }
         LivingEntity target = prehistoric.getTarget();
         if (target == null || !target.isAlive() || prehistoric.getCurrentOrder() == OrderType.STAY) {
+            return false;
+        }
+        if (attackType == GRAB && (!swimming.isDoingGrabAttack() || !swimming.hasPassenger(target))) {
             return false;
         }
         return CAN_ATTACK_TARGET.test(target);
@@ -55,13 +53,25 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
     }
 
     @Override
+    public void stop() {
+        super.stop();
+        swimming.setDoingGrabAttack(false);
+    }
+
+    @Override
+    protected boolean canUpdateMovement() {
+        return attackType != GRAB;
+    }
+
+    @Override
     protected void checkAndPerformAttack(LivingEntity enemy) {
         long currentTime = swimming.level.getGameTime();
         if (attackType == GRAB) {
             for (Entity passenger : swimming.getPassengers()) {
                 if (passenger instanceof LivingEntity && passenger != swimming.getRidingPlayer()) {
                     if (swimming.tickCount % 20 == 0) {
-                        boolean hurt = passenger.hurt(DamageSource.mobAttack(swimming), (float) swimming.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                        //boolean hurt = passenger.hurt(DamageSource.mobAttack(swimming), (float) swimming.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                        boolean hurt = true;
                         if (!hurt || (currentTime >= grabStartTick + GRAB_DURATION && swimming.getRandom().nextInt(5) == 0)) {
                             attackEndTick = currentTime + 20;
                             swimming.stopGrabAttack(passenger);
@@ -79,7 +89,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
         } else if (currentTime > attackEndTick + 20 && canHit(enemy)) {
             //Is target smaller than 2 blocks (if swimming is adult)
             boolean tooBig = !Util.isEntitySmallerThan(enemy, 2 * swimming.getScale() / swimming.data().maxScale());
-            if (tooBig || swimming.getRandom().nextInt(5) > 0) {
+            if (false && (tooBig || swimming.getRandom().nextInt(5) > 0)) {
                 attackType = ATTACK;
                 AnimationInfoManager.ServerAnimationInfo animation = swimming.startAttack();
                 attackEndTick = (long) (currentTime + animation.animationLength);

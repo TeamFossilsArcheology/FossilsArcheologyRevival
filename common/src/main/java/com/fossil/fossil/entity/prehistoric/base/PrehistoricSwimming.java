@@ -116,7 +116,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         compound.putInt("TimeOnLand", timeOnLand);
         compound.putBoolean("Breaching", isBreaching());
         compound.putFloat("BreachPitch", getBreachPitch());
-        compound.putBoolean("Grabbing", isDoingGrabAttack());
     }
 
     @Override
@@ -126,7 +125,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         timeOnLand = compound.getInt("TimeOnLand");
         setBreaching(compound.getBoolean("Breaching"));
         setBreachPitch(compound.getFloat("BreachPitch"));
-        setDoingGrabAttack(compound.getBoolean("Grabbing"));
     }
 
     @Override
@@ -186,6 +184,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public void aiStep() {
+        System.out.printf("client: %s %s %s spin: %s%n", level.isClientSide, getYRot(), yBodyRot, isAutoSpinAttack());
         super.aiStep();
         if (canDoBreachAttack() && !level.isClientSide) {
             LivingEntity target = getTarget();

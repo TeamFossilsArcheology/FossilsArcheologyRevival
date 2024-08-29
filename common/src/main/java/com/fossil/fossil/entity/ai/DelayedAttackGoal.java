@@ -123,9 +123,13 @@ public class DelayedAttackGoal extends Goal {
         if (target == null) {
             return;
         }
-        prehistoric.getLookControl().setLookAt(target, 30, 30);
         double dist = prehistoric.distanceToSqr(target);
         ticksUntilNextPathRecalculation = Math.max(ticksUntilNextPathRecalculation - 1, 0);
+        if (canUpdateMovement()) {
+            prehistoric.getLookControl().setLookAt(target, 30, 30);
+        } else {
+            ticksUntilNextPathRecalculation = 15;
+        }
         if (prehistoric.level.getGameTime() <= attackEndTick && doingHeavyAttack) {
             //Prevent movement
         } else if ((followingTargetEvenIfNotSeen || prehistoric.getSensing().hasLineOfSight(target)) && ticksUntilNextPathRecalculation <= 0 && (pathedTargetX == 0.0 && pathedTargetY == 0.0 && pathedTargetZ == 0.0 || target.distanceToSqr(pathedTargetX, pathedTargetY, pathedTargetZ) >= 1.0 || prehistoric.getRandom().nextFloat() < 0.05f)) {
@@ -144,6 +148,10 @@ public class DelayedAttackGoal extends Goal {
             ticksUntilNextPathRecalculation = adjustedTickDelay(ticksUntilNextPathRecalculation);
         }
         checkAndPerformAttack(target);
+    }
+
+    protected boolean canUpdateMovement() {
+        return true;
     }
 
     protected boolean canHit(Entity attackTarget) {

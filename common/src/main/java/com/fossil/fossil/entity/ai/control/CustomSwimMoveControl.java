@@ -62,7 +62,7 @@ public class CustomSwimMoveControl extends SmoothSwimmingMoveControl {
                 mob.setZza(0);
             }
         } else if (operation == Operation.MOVE_TO && !mob.getNavigation().isDone()) {
-            mob.setNoGravity(true);
+            if (mob.isInWater()) mob.setNoGravity(true);
             double x = wantedX - mob.getX();
             double y = wantedY - mob.getY();
             double z = wantedZ - mob.getZ();
@@ -96,7 +96,7 @@ public class CustomSwimMoveControl extends SmoothSwimmingMoveControl {
                 }
             }
         } else {
-            mob.setNoGravity(true);
+            if (mob.isInWater()) mob.setNoGravity(true);
             mob.setSpeed(0);
             mob.setXxa(0);
             mob.setYya(0);
