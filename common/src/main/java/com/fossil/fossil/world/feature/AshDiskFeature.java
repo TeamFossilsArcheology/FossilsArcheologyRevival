@@ -50,9 +50,9 @@ public class AshDiskFeature extends Feature<AshDiskConfiguration> {
                     } else if (chance < 0.8) {
                         level.setBlock(newBlockPos, ModBlocks.VOLCANIC_ASH.get().defaultBlockState(), 2);
                     } else if (chance < 0.85) {
-                        level.setBlock(newBlockPos, ModBlocks.FOSSIL.get().defaultBlockState(), 2);
+                        level.setBlock(newBlockPos, ModBlocks.TUFF_FOSSIL.get().defaultBlockState(), 2);
                     } else {
-                        level.setBlock(newBlockPos, Blocks.STONE.defaultBlockState(), 2);
+                        level.setBlock(newBlockPos, Blocks.TUFF.defaultBlockState(), 2);
                     }
                 }
             }

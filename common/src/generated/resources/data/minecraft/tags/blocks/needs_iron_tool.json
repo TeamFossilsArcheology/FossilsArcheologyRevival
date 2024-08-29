@@ -1,7 +1,13 @@
 {
   "replace": false,
   "values": [
-    "fossil:fossil",
+    "fossil:fossil_calcite",
+    "fossil:fossil_deepslate",
+    "fossil:fossil_dripstone",
+    "fossil:fossil_red_sandstone",
+    "fossil:fossil_sandstone",
+    "fossil:fossil_stone",
+    "fossil:fossil_tuff",
     "fossil:permafrost_block",
     "fossil:amber_ore"
   ]

@@ -92,9 +92,16 @@ public class ModBlockLootTables extends BlockLoot {
                 .group(13, 13, 10, 10, 12, 10, 10, 10).when(enchant(PALEONTOLOGY.get(), 2));
         var paleList3 = scarab(1).broken(5).skullBlock(36).bio(510).plant(205).relic(0).bone(210)
                 .group(18, 18, 15, 15, 17, 15, 15, 15).when(enchant(PALEONTOLOGY.get(), 3));
-        addCustom(FOSSIL.get(), LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+        LootTable.Builder fossils = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
                         .add(AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defauList)))
-                .setParamSet(LootContextParamSets.BLOCK));
+                .setParamSet(LootContextParamSets.BLOCK);
+        addCustom(CALCITE_FOSSIL.get(), fossils);
+        addCustom(DEEPSLATE_FOSSIL.get(), fossils);
+        addCustom(DRIPSTONE_FOSSIL.get(), fossils);
+        addCustom(RED_SANDSTONE_FOSSIL.get(), fossils);
+        addCustom(SANDSTONE_FOSSIL.get(), fossils);
+        addCustom(STONE_FOSSIL.get(), fossils);
+        addCustom(TUFF_FOSSIL.get(), fossils);
 
         BLOCKS.forEach(supplier -> supplier.ifPresent(block -> {
             if (block instanceof AbstractGlassBlock) {

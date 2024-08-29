@@ -223,6 +223,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
         amberChunkBlock(AMBER_CHUNK.get());
         amberChunkBlock(AMBER_CHUNK_DOMINICAN.get());
         amberChunkBlock(AMBER_CHUNK_MOSQUITO.get());
+        simpleBlock(CALCITE_FOSSIL.get());
+        simpleBlock(DEEPSLATE_FOSSIL.get());
+        simpleBlock(DRIPSTONE_FOSSIL.get());
+        simpleBlock(RED_SANDSTONE_FOSSIL.get());
+        simpleBlock(SANDSTONE_FOSSIL.get());
+        simpleBlock(STONE_FOSSIL.get());
+        simpleBlock(TUFF_FOSSIL.get());
 
         ResourceLocation shell = blockTexture(SHELL.get());
         models().registerExistingModel(shell);

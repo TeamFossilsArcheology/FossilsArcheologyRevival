@@ -127,8 +127,23 @@ public class ModBlocks {
             () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
     public static final RegistrySupplier<Block> FAKE_OBSIDIAN = registerBlockWithoutBlockItem("fake_obsidian",
             () -> new FakeObsidian(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)));
-    public static final RegistrySupplier<Block> FOSSIL = registerBlock("fossil",
-            () -> new FossilBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.STONE).strength(2f).requiresCorrectToolForDrops()));
+
+    //Fossil Blocks
+    public static final RegistrySupplier<Block> CALCITE_FOSSIL = registerBlock("fossil_calcite",
+            () -> new FossilBlock(BlockBehaviour.Properties.copy(Blocks.CALCITE).strength(1.25f)));
+    public static final RegistrySupplier<Block> DEEPSLATE_FOSSIL = registerBlock("fossil_deepslate",
+            () -> new FossilBlock(BlockBehaviour.Properties.copy(Blocks.DEEPSLATE).strength(4, 7)));
+    public static final RegistrySupplier<Block> DRIPSTONE_FOSSIL = registerBlock("fossil_dripstone",
+            () -> new FossilBlock(BlockBehaviour.Properties.copy(Blocks.DRIPSTONE_BLOCK).strength(3, 2)));
+    public static final RegistrySupplier<Block> RED_SANDSTONE_FOSSIL = registerBlock("fossil_red_sandstone",
+            () -> new FossilBlock(BlockBehaviour.Properties.copy(Blocks.RED_SANDSTONE).strength(1.6f)));
+    public static final RegistrySupplier<Block> SANDSTONE_FOSSIL = registerBlock("fossil_sandstone",
+            () -> new FossilBlock(BlockBehaviour.Properties.copy(Blocks.SANDSTONE).strength(1.6f)));
+    public static final RegistrySupplier<Block> STONE_FOSSIL = registerBlock("fossil_stone",
+            () -> new FossilBlock(BlockBehaviour.Properties.copy(Blocks.STONE).strength(3, 6)));
+    public static final RegistrySupplier<Block> TUFF_FOSSIL = registerBlock("fossil_tuff",
+            () -> new FossilBlock(BlockBehaviour.Properties.copy(Blocks.TUFF).strength(3, 6)));
+
     public static final RegistrySupplier<Block> TARRED_DIRT = registerBlock("tarred_dirt",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT)));
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
