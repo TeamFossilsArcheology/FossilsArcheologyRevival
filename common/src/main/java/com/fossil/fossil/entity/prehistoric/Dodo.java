@@ -53,7 +53,6 @@ public class Dodo extends Prehistoric {
 
     public Dodo(EntityType<Dodo> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override
@@ -78,7 +77,7 @@ public class Dodo extends Prehistoric {
         if (getVariant() == Variant.FESTIVE) {
             builder.append("_festive");
         } else {
-            if (hasBabyTexture && isBaby()) builder.append("_baby");
+            if (isBaby()) builder.append("_baby");
             if (isTeen() || isAdult()) {
                 if (getGender() == Gender.MALE) {
                     builder.append("_male");

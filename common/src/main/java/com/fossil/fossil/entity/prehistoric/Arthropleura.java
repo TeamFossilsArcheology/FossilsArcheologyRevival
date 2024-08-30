@@ -35,7 +35,6 @@ public class Arthropleura extends Prehistoric {
 
     public Arthropleura(EntityType<Arthropleura> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override
@@ -52,8 +51,8 @@ public class Arthropleura extends Prehistoric {
         }
         StringBuilder builder = new StringBuilder();
         builder.append("textures/entity/arthropleura/arthropleura");
-        if (hasBabyTexture && isBaby()) builder.append("_baby");
-        if (!hasTeenTexture && isTeen() || isAdult()) {
+        if (isBaby()) builder.append("_baby");
+        if (!hasTeenTexture() && isTeen() || isAdult()) {
             if (getGender() == Gender.MALE) {
                 builder.append("_male");
             } else {

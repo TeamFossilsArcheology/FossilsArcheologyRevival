@@ -26,7 +26,6 @@ public class Tiktaalik extends PrehistoricSwimming {
 
     public Tiktaalik(EntityType<Tiktaalik> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override

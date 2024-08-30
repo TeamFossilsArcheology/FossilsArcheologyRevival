@@ -51,7 +51,6 @@ public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
 
     public Elasmotherium(EntityType<Elasmotherium> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override

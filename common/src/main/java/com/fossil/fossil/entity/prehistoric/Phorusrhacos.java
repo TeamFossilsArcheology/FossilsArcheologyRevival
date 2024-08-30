@@ -34,7 +34,6 @@ public class Phorusrhacos extends Prehistoric {
 
     public Phorusrhacos(EntityType<Phorusrhacos> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override

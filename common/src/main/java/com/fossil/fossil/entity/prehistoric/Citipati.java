@@ -32,7 +32,6 @@ public class Citipati extends Prehistoric {
 
     public Citipati(EntityType<Citipati> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override

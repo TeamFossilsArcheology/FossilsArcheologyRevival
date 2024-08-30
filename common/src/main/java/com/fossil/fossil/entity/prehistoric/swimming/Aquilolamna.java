@@ -33,7 +33,6 @@ public class Aquilolamna extends PrehistoricSwimming {
 
     public Aquilolamna(EntityType<Aquilolamna> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override

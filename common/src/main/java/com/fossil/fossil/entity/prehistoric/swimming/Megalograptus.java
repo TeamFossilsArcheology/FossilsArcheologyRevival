@@ -37,7 +37,6 @@ public class Megalograptus extends PrehistoricSwimmingBucketable {
 
     public Megalograptus(EntityType<Megalograptus> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override

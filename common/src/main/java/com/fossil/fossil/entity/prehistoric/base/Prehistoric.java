@@ -32,6 +32,8 @@ import com.fossil.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.texture.AbstractTexture;
+import net.minecraft.client.renderer.texture.MissingTextureAtlasSprite;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -88,6 +90,7 @@ import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.resource.GeckoLibCache;
 
 import java.util.*;
+import java.util.function.BooleanSupplier;
 
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.*;
 
@@ -109,8 +112,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private final InstructionSystem instructionSystem = new InstructionSystem(this);
     public final ResourceLocation animationLocation;
     private OrderType currentOrder;
-    protected boolean hasTeenTexture = true;
-    protected boolean hasBabyTexture = true;
+    private Boolean hasTeenTexture;
+    private final BooleanSupplier hasTeenTextureSupplier = () -> {
+        String name = getType().arch$registryName().getPath();
+        ResourceLocation rl = new ResourceLocation(Fossil.MOD_ID, "textures/entity/" + name + "/" + name + "_teen.png");
+        Minecraft.getInstance().getTextureManager().getTexture(rl);
+        AbstractTexture tex = Minecraft.getInstance().getTextureManager().getTexture(rl);
+        return tex != MissingTextureAtlasSprite.getTexture();
+    };
     private float headRadius;
     private float frustumWidthRadius;
     private float frustumHeightRadius;
@@ -1237,6 +1246,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
+    protected boolean hasTeenTexture() {
+        if (hasTeenTexture == null) {
+            hasTeenTexture = hasTeenTextureSupplier.getAsBoolean();
+        }
+        return hasTeenTexture;
+    }
+
     public void refreshTexturePath() {
         if (!level.isClientSide) {
             return;
@@ -1247,9 +1263,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         builder.append(name);
         builder.append("/");
         builder.append(name);
-        if (hasBabyTexture && isBaby()) builder.append("_baby");
-        if (hasTeenTexture && isTeen()) builder.append("_teen");
-        if (!hasTeenTexture && isTeen() || isAdult()) {
+        if (isBaby()) builder.append("_baby");
+        if (hasTeenTexture() && isTeen()) builder.append("_teen");
+        if (!hasTeenTexture() && isTeen() || isAdult()) {
             if (gender == Gender.MALE) {
                 builder.append("_male");
             } else {

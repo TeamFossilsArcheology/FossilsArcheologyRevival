@@ -37,7 +37,6 @@ public class Crassigyrinus extends PrehistoricSwimmingBucketable {
 
     public Crassigyrinus(EntityType<Crassigyrinus> entityType, Level level) {
         super(entityType, level);
-        hasTeenTexture = false;
     }
 
     @Override
