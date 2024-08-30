@@ -2,12 +2,10 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlocking;
-import com.mojang.datafixers.DataFixUtils;
 import net.minecraft.world.entity.ai.goal.FollowFlockLeaderGoal;
 import net.minecraft.world.entity.ai.goal.Goal;
 
 import java.util.EnumSet;
-import java.util.function.Predicate;
 
 
 /**
@@ -32,26 +30,14 @@ public class FlockWanderGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        if (entity.getCurrentOrder() != OrderType.WANDER || entity.getTarget() != null) {
-            return false;
-        } else if (entity.isGroupLeader()) {
+        if (entity.isGroupLeader() || entity.getCurrentOrder() != OrderType.WANDER || entity.getTarget() != null) {
             return false;
         }
-        if (entity.hasGroupLeader()) {
-            return true;
-        } else if (nextStartTick > 0) {
+        if (nextStartTick > 0) {
             nextStartTick--;
             return false;
-        } else {
-            //Try to find group leader
-            nextStartTick = nextStartTick(entity);
-            Predicate<PrehistoricFlocking> canJoin = flocking -> flocking.canGroupGrow() || !flocking.hasGroupLeader();
-            var potentialFlock = entity.level.getEntitiesOfClass(entity.getClass(), entity.getBoundingBox().inflate(entity.getFlockDistance()),
-                    canJoin);
-            var newGroupLeader = DataFixUtils.orElse(potentialFlock.stream().findFirst(), entity);
-            newGroupLeader.addFollowers(potentialFlock.stream().filter(flocking -> !flocking.hasGroupLeader()));
-            return entity.hasGroupLeader();
         }
+        return entity.hasGroupLeader();
     }
 
     @Override
@@ -65,13 +51,9 @@ public class FlockWanderGoal extends Goal {
     }
 
     @Override
-    public void stop() {
-        entity.leaveGroup();
-    }
-
-    @Override
     public void tick() {
-        if (--timeToRecalcPath > 0) {
+        timeToRecalcPath--;
+        if (timeToRecalcPath > 0) {
             return;
         }
         timeToRecalcPath = adjustedTickDelay(25);

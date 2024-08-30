@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
+import com.fossil.fossil.entity.ai.FlockBuildGoal;
 import com.fossil.fossil.entity.ai.FlockWanderGoal;
 import com.fossil.fossil.entity.util.Util;
 import net.minecraft.world.entity.EntityType;
@@ -20,6 +21,7 @@ public abstract class PrehistoricFlocking extends Prehistoric {
     @Override
     protected void registerGoals() {
         super.registerGoals();
+        goalSelector.addGoal(0, new FlockBuildGoal(this));
         goalSelector.addGoal(Util.WANDER + 1, new FlockWanderGoal(this, 1));
     }
 
@@ -50,6 +52,10 @@ public abstract class PrehistoricFlocking extends Prehistoric {
 
     public boolean inRangeOfGroupLeader() {
         return distanceToSqr(groupLeader) <= 121;
+    }
+
+    public boolean isPartOfSameFlock(PrehistoricFlocking other) {
+        return groupLeader != null && (other.groupLeader == this || groupLeader == other || other.groupLeader == groupLeader);
     }
 
     public void pathToGroupLeader(double speed) {
