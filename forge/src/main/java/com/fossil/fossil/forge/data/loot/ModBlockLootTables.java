@@ -3,6 +3,7 @@ package com.fossil.fossil.forge.data.loot;
 import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.custom_blocks.AmphoraVaseBlock;
 import com.fossil.fossil.block.custom_blocks.FourTallFlowerBlock;
+import com.fossil.fossil.block.custom_blocks.TallBerryBushBlock;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.tags.ModItemTags;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
@@ -72,6 +73,9 @@ public class ModBlockLootTables extends BlockLoot {
             } else if (flower instanceof FourTallFlowerBlock) {
                 condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(
                         StatePropertiesPredicate.Builder.properties().hasProperty(FourTallFlowerBlock.LAYER, 0)));
+            } else if (flower instanceof TallBerryBushBlock) {
+                condition.when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(flower).setProperties(
+                        StatePropertiesPredicate.Builder.properties().hasProperty(TallBerryBushBlock.HALF, DoubleBlockHalf.LOWER)));
             }
             addCustom(flower, LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(condition)
                     .when(ExplosionCondition.survivesExplosion())).setParamSet(LootContextParamSets.BLOCK));

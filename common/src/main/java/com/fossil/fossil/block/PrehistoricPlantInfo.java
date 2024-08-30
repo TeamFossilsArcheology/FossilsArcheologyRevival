@@ -12,6 +12,7 @@ import net.minecraft.world.food.Foods;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.BushBlock;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 import java.util.Arrays;
@@ -23,7 +24,7 @@ public enum PrehistoricPlantInfo {
     BENNETTITALES_LARGE(Size.DOUBLE_GROWABLE, Block.box(2, 0, 2, 14, 28, 14)),
     BENNETTITALES_SMALL(Size.SINGLE_GROWABLE, BENNETTITALES_LARGE, "bennettitales", Block.box(2, 0, 2, 14, 16, 14)),
     CEPHALOTAXUS(Size.SINGLE, Block.box(2, 0, 2, 14, 10, 14)),
-    CRATAEGUS(Size.DOUBLE_BERRY, Block.box(1, 0, 1, 15, 23, 15), 2, 3),
+    CRATAEGUS(Size.DOUBLE_BERRY, Shapes.empty(), 2, 3),
     CYATHEA(Size.FOUR, Block.box(5, 0, 5, 11, 16, 11)),
     DICTYOPHYLLUM(Size.SINGLE, Block.box(3, 0, 3, 13, 16, 13)),
     DILLHOFFIA(Size.SINGLE, Block.box(2, 0, 2, 14, 13, 14)),
@@ -40,7 +41,7 @@ public enum PrehistoricPlantInfo {
     SAGENOPTERIS(Size.SINGLE, Block.box(4, 0, 4, 12, 14, 12)),
     //SARRACENIA(Size.DOUBLE, Block.box(3, 0, 3, 13, 16, 13), Block.box(3, 0, 3, 13, 12, 13)),
     SARRACENIA(Size.DOUBLE, Block.box(3, 0, 3, 13, 28, 13)),
-    VACCINIUM(Size.SINGLE_BERRY, Block.box(0, 0, 0, 16, 14, 16), 2, 3),
+    VACCINIUM(Size.SINGLE_BERRY, Shapes.empty(), 2, 3),
     WELWITSCHIA(Size.SINGLE, Block.box(3, 0, 3, 13, 5, 13)),
     ZAMITES(Size.DOUBLE, Block.box(3, 0, 3, 13, 32, 13));
 
@@ -82,7 +83,7 @@ public enum PrehistoricPlantInfo {
     public static void register() {
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
             if (info == CRATAEGUS) {
-                info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new CrataegusBushBlock(info.shape, info));
+                info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new CrataegusBushBlock(info));
                 info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(Foods.SWEET_BERRIES)));
                 info.registerPlantSeed(info.resourceName);
             } else if (info == EPHEDRA) {

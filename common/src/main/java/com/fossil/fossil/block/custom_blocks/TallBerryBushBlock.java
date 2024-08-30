@@ -2,16 +2,19 @@ package com.fossil.fossil.block.custom_blocks;
 
 import com.fossil.fossil.block.PrehistoricPlantInfo;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,18 +24,17 @@ import net.minecraft.world.level.block.state.properties.IntegerProperty;
 import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Random;
 
 public abstract class TallBerryBushBlock extends DoublePlantBlock implements BonemealableBlock {
-    private final VoxelShape shape;
     private final PrehistoricPlantInfo info;
 
-    protected TallBerryBushBlock(VoxelShape shape, PrehistoricPlantInfo info) {
+    protected TallBerryBushBlock(PrehistoricPlantInfo info) {
         super(BlockBehaviour.Properties.of(Material.PLANT).noCollission().randomTicks().sound(SoundType.SWEET_BERRY_BUSH));
-        this.shape = shape;
         this.info = info;
         this.registerDefaultState(stateDefinition.any().setValue(ageProperty(), 0).setValue(HALF, DoubleBlockHalf.LOWER));
     }
@@ -42,14 +44,33 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
     @Override
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            return shape.move(0, -1, 0);
+            if (state.getValue(ageProperty()) == 0) {
+                return Shapes.empty();
+            }
+            return getShapesByAge()[state.getValue(ageProperty())].move(0, -1, 0);
         }
-        return shape;
+        return getShapesByAge()[state.getValue(ageProperty())];
     }
+
+    protected abstract VoxelShape[] getShapesByAge();
+
+    protected abstract int getCreateUpperAge();
 
     @Override
     public BlockBehaviour.@NotNull OffsetType getOffsetType() {
         return OffsetType.NONE;
+    }
+
+    @Override
+    public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
+    }
+
+    @Override
+    public @NotNull BlockState updateShape(BlockState state, Direction direction, BlockState neighborState, LevelAccessor level, BlockPos currentPos, BlockPos neighborPos) {
+        if (state.getValue(HALF) == DoubleBlockHalf.LOWER && getShapesByAge()[state.getValue(ageProperty())].bounds().maxY < 1) {
+            return state;
+        }
+        return super.updateShape(state, direction, neighborState, level, currentPos, neighborPos);
     }
 
     @Override
@@ -65,13 +86,21 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
         }
     }
 
-    private void updateAge(Level level, BlockPos pos, BlockState state, int nextAge) {
-        level.setBlock(pos, state.setValue(ageProperty(), nextAge), 2);
+    protected void updateAge(Level level, BlockPos pos, BlockState state, int nextAge) {
         if (state.getValue(HALF) == DoubleBlockHalf.LOWER) {
-            level.setBlock(pos.above(), level.getBlockState(pos.above()).setValue(ageProperty(), nextAge), 2);
+            BlockPos posAbove = pos.above();
+            BlockState stateAbove = level.getBlockState(posAbove);
+            if (stateAbove.is(info.getPlantBlock())) {
+                level.setBlock(posAbove, stateAbove.setValue(ageProperty(), nextAge), 2);
+            } else if (!stateAbove.isAir()) {
+                return;
+            } else if (nextAge >= getCreateUpperAge()) {
+                level.setBlock(posAbove, DoublePlantBlock.copyWaterloggedFrom(level, posAbove, defaultBlockState().setValue(HALF, DoubleBlockHalf.UPPER)).setValue(ageProperty(), nextAge), 3);
+            }
         } else {
             level.setBlock(pos.below(), level.getBlockState(pos.below()).setValue(ageProperty(), nextAge), 2);
         }
+        level.setBlock(pos, state.setValue(ageProperty(), nextAge), 2);
     }
 
     @Override
