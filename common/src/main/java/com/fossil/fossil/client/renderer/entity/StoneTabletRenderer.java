@@ -68,10 +68,10 @@ public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements 
         float offsetY = -height / 2.0f;
         for (int blockX = 0; blockX < width / 16; ++blockX) {
             for (int blockZ = 0; blockZ < height / 16; ++blockZ) {
-                float minX = offsetX + (float) (blockX * 16);
-                float maxX = offsetX + (float) ((blockX + 1) * 16);
-                float minY = offsetY + (float) (blockZ * 16);
-                float maxY = offsetY + (float) ((blockZ + 1) * 16);
+                float minX = offsetX + (blockX * 16);
+                float maxX = offsetX + ((blockX + 1) * 16);
+                float minY = offsetY + (blockZ * 16);
+                float maxY = offsetY + ((blockZ + 1) * 16);
                 int light = getLightColor(entity, (maxX + minX) / 2.0f, (maxY + minY) / 2.0f);
                 //texture coordinates go bottom -> top and right -> left
                 //vertex coordinates map the textures onto the block with 0 in the middle and go bottom -> top and right -> left
@@ -84,6 +84,13 @@ public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements 
                 vertex(matrix4f, matrix3f, vertexConsumer, minX, minY, minTexX, minTexY, 0.4f, 0, 0, -1, light);
                 vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, 0.4f, 0, 0, -1, light);
                 vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, 0.4f, 0, 0, -1, light);
+
+                minTexY = (texV + (height + 128) - blockZ * 16) / 256f;
+                maxTexY = (texV + (height + 128) - (blockZ + 1) * 16) / 256f;
+                vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, 0.5f, 0, 0, 1, light);//z=0.5f
+                vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, 0.5f, 0, 0, 1, light);
+                vertex(matrix4f, matrix3f, vertexConsumer, minX, minY, minTexX, minTexY, 0.5f, 0, 0, 1, light);
+                vertex(matrix4f, matrix3f, vertexConsumer, maxX, minY, maxTexX, minTexY, 0.5f, 0, 0, 1, light);
             }
         }
     }

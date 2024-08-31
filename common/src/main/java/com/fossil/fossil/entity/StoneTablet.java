@@ -54,7 +54,7 @@ public class StoneTablet extends HangingEntity implements EntitySpawnExtension {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("Variant", variant.ordinal());
-        compound.putByte("Facing", (byte)direction.get2DDataValue());
+        compound.putByte("Facing", (byte) direction.get2DDataValue());
     }
 
     @Override
@@ -135,8 +135,8 @@ public class StoneTablet extends HangingEntity implements EntitySpawnExtension {
         PUZZLE("Puzzle", 32, 32, 32, 64),
         GUN_FIGHT("GunFight", 64, 32, 32, 96),
         PRINCESS("Princess", 32, 32, 0, 96),
-        MOSAURUS("Mosa", 32, 16, 64, 128),
-        HOLY_MOSAURUS("HolyMosasaurus", 64, 32, 0, 128),
+        MOSAURUS("Mosa", 32, 16, 224, 48),
+        HOLY_MOSAURUS("HolyMosasaurus", 64, 32, 160, 48),
         ANCI_TM("AnciTM", 32, 32, 96, 0),
         MOD_TM("ModTM", 16, 32, 128, 0),
         VIG_TM("VigTM", 32, 32, 144, 0),
