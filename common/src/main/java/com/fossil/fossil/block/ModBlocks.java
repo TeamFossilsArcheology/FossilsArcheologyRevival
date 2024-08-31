@@ -398,9 +398,9 @@ public class ModBlocks {
 
     static {
         for (DyeColor color : DyeColor.values()) {
-            registerColoredVase("amphora", color, AmphoraVaseBlock::new);
-            registerColoredVase("kylix", color, KylixVaseBlock::new);
-            registerColoredVase("volute", color, VoluteVaseBlock::new);
+            registerVase("amphora", color.getSerializedName(), () -> new AmphoraVaseBlock(color));
+            registerVase("kylix", color.getSerializedName(), () -> new KylixVaseBlock(color));
+            registerVase("volute", color.getSerializedName(), () -> new VoluteVaseBlock(color));
         }
     }
 
@@ -417,19 +417,15 @@ public class ModBlocks {
     }
 
     private static RegistrySupplier<VaseBlock> registerVolute(VaseBlock.VaseVariant variant) {
-        return registerVase("volute", variant.getSerializedName(), VoluteVaseBlock::new);
+        return registerVase("volute", variant.getSerializedName(), () -> new VoluteVaseBlock(variant));
     }
 
     private static RegistrySupplier<VaseBlock> registerKylix(VaseBlock.VaseVariant variant) {
-        return registerVase("kylix", variant.getSerializedName(), KylixVaseBlock::new);
+        return registerVase("kylix", variant.getSerializedName(), () -> new KylixVaseBlock(variant));
     }
 
     private static RegistrySupplier<VaseBlock> registerAmphora(VaseBlock.VaseVariant variant) {
-        return registerVase("amphora", variant.getSerializedName(), AmphoraVaseBlock::new);
-    }
-
-    private static RegistrySupplier<VaseBlock> registerColoredVase(String name, DyeColor color, Supplier<VaseBlock> supplier) {
-        return registerVase(name, color.getSerializedName(), supplier);
+        return registerVase("amphora", variant.getSerializedName(), () -> new AmphoraVaseBlock(variant));
     }
 
     private static RegistrySupplier<VaseBlock> registerVase(String name, String variant, Supplier<VaseBlock> supplier) {
@@ -517,7 +513,7 @@ public class ModBlocks {
     }
 
     private static <T extends Block> RegistrySupplier<Item> registerBlockItem(String name, RegistrySupplier<T> block) {
-        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+        return ModItems.ITEMS.register(name, () -> new CustomBlockItem(block.get(), new Item.Properties().tab(ModTabs.FABLOCKTAB)));
     }
 
     public static void register() {

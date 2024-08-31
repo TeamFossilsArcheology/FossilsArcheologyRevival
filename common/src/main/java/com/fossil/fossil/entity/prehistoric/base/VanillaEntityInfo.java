@@ -2,6 +2,8 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.util.Diet;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -11,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 public enum VanillaEntityInfo implements EntityInfo {
     AXOLOTL(EntityType.AXOLOTL, PrehistoricMobType.FISH, Diet.INSECTIVORE),
@@ -47,6 +50,7 @@ public enum VanillaEntityInfo implements EntityInfo {
     public final PrehistoricMobType mobType;
     public final Diet diet;
     public final String resourceName;
+    public final Supplier<Component> displayName;
     public Item dnaItem;
     public Item eggItem;
     public Item embryoItem;
@@ -57,6 +61,7 @@ public enum VanillaEntityInfo implements EntityInfo {
         this.mobType = mobType;
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
+        this.displayName = () -> new TranslatableComponent("entity.minecraft." + resourceName);
     }
 
     public static void register() {
@@ -96,5 +101,10 @@ public enum VanillaEntityInfo implements EntityInfo {
             return cultivatedBirdEggItem;
         }
         return null;
+    }
+
+    @Override
+    public Supplier<Component> displayName() {
+        return displayName;
     }
 }

@@ -4,7 +4,6 @@ import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.item.*;
 import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.TimePeriod;
-import dev.architectury.core.item.ArchitecturySpawnEggItem;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -98,9 +97,9 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     public final TimePeriod timePeriod;
     public final String resourceName;
     public final Supplier<Component> displayName;
-    private final @NotNull RegistrySupplier<? extends EntityType<? extends Mob>> entitySupplier;
-    private final int backgroundEggColor;
-    private final int highlightEggColor;
+    public final @NotNull RegistrySupplier<? extends EntityType<? extends Mob>> entitySupplier;
+    public final int backgroundEggColor;
+    public final int highlightEggColor;
     public Item dnaItem;
     public Item eggItem;
     public Item embryoItem;
@@ -164,7 +163,7 @@ public enum PrehistoricEntityInfo implements EntityInfo {
             ModItems.ITEMS.register("cooked_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
                             .food(new FoodProperties.Builder().nutrition(8).saturationMod(info == NAUTILUS ? 2 : 0.8f).build())))
                     .listen(item -> info.cookedFoodItem = item);
-            registerItem("spawn_egg", info, properties -> new ArchitecturySpawnEggItem(info.entitySupplier, info.backgroundEggColor, info.highlightEggColor, properties), item -> info.spawnEggItem = item);
+            registerItem("spawn_egg", info, properties -> new CustomSpawnEggItem(info), item -> info.spawnEggItem = item);
         }
     }
 
@@ -227,6 +226,11 @@ public enum PrehistoricEntityInfo implements EntityInfo {
             return cultivatedBirdEggItem;
         }
         return null;
+    }
+
+    @Override
+    public Supplier<Component> displayName() {
+        return displayName;
     }
 
     public boolean hasBones() {

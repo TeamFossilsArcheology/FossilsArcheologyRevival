@@ -19,7 +19,7 @@ import java.util.Random;
 public class MammalEmbryoItem extends PrehistoricEntityItem {
 
     public MammalEmbryoItem(EntityInfo info) {
-        super(info);
+        super(info, "embryo");
     }
 
     @Override

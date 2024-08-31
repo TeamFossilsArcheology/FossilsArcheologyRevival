@@ -16,7 +16,7 @@ public class BirdEggItem extends PrehistoricEntityItem {
     private final boolean cultivated;
 
     public BirdEggItem(EntityInfo info, boolean cultivated) {
-        super(new Properties().stacksTo(16), info);
+        super(new Properties().stacksTo(16), info, cultivated ? "bird_egg_cultivated" : "bird_egg");
         this.cultivated = cultivated;
     }
 
