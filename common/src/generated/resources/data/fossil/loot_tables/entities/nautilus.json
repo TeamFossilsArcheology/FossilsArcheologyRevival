@@ -7,7 +7,13 @@
       "entries": [
         {
           "type": "minecraft:item",
+          "weight": 95,
           "name": "minecraft:nautilus_shell"
+        },
+        {
+          "type": "minecraft:item",
+          "weight": 5,
+          "name": "fossil:magic_conch"
         }
       ]
     }

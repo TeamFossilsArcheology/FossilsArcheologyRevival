@@ -40,6 +40,6 @@ public class FabricFossilRegion extends Region {
 
     @Override
     public int getWeight() {
-        return 500;//TODO: Figure out weights
+        return 7;
     }
 }

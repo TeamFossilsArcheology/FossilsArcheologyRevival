@@ -45,7 +45,8 @@ public class ModEntityLootTables extends EntityLoot {
         }
         var wool = uniformLoot(Items.BROWN_WOOL, 6, 8);
         add(new ResourceLocation(Fossil.MOD_ID, "entities/" + PrehistoricEntityInfo.MAMMOTH.resourceName), defaultLoot(PrehistoricEntityInfo.MAMMOTH).withPool(wool));
-        var shell = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(Items.NAUTILUS_SHELL));
+        var shell = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(Items.NAUTILUS_SHELL).setWeight(95))
+                .add(LootItem.lootTableItem(ModItems.MAGIC_CONCH.get()).setWeight(5));
         add(new ResourceLocation(Fossil.MOD_ID, "entities/" + PrehistoricEntityInfo.NAUTILUS.resourceName), LootTable.lootTable().withPool(shell));
         add(ModEntities.FAILURESAURUS.get(), LootTable.lootTable().withPool(
                 LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ModItems.FAILURESAURUS_FLESH.get()))));

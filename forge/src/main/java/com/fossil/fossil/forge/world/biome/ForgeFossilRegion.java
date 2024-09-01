@@ -39,6 +39,6 @@ public class ForgeFossilRegion extends Region {
 
     @Override
     public int getWeight() {
-        return 500;//TODO: Figure out weights
+        return 7;
     }
 }

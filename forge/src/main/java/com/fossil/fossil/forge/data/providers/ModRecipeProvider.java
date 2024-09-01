@@ -9,7 +9,6 @@ import com.fossil.fossil.block.custom_blocks.VaseBlock;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.forge.data.recipe.AnalyzerRecipeBuilder;
-import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ToyBallItem;
 import com.fossil.fossil.item.ToyScratchingPostItem;
 import com.fossil.fossil.item.ToyTetheredLogItem;
@@ -42,6 +41,7 @@ import java.util.function.Consumer;
 
 import static com.fossil.fossil.block.ModBlocks.*;
 import static com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo.*;
+import static com.fossil.fossil.item.ModItems.*;
 
 public class ModRecipeProvider extends RecipeProvider {
     public static final BlockFamily ANCIENT_WOOD_PLANKS = new BlockFamily.Builder(ModBlocks.ANCIENT_WOOD_PLANKS.get()).slab(ANCIENT_WOOD_SLAB.get()).stairs(ANCIENT_WOOD_STAIRS.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
@@ -69,14 +69,14 @@ public class ModRecipeProvider extends RecipeProvider {
                 }
             }
             fullOre(DENSE_SAND.get(), REINFORCED_GLASS.get(), consumer, 3);
-            fullCooking(ModItemTags.COOKABLE_EGGS, ModItems.COOKED_EGG.get(), "dino_egg", consumer, "", 1);
+            fullCooking(ModItemTags.COOKABLE_EGGS, COOKED_EGG.get(), "dino_egg", consumer, "", 1);
         }
         if (craftingRecipes) {
-            ToyBallItem white = ModItems.TOY_BALLS.get(DyeColor.WHITE).get();
+            ToyBallItem white = TOY_BALLS.get(DyeColor.WHITE).get();
             ShapedRecipeBuilder.shaped(white).define('W', ItemTags.WOOL).define('S', Items.STRING)
                     .define('B', Items.SLIME_BALL).pattern("SWS").pattern("WBW").pattern("SWS").unlockedBy("has_wool",
                             RecipeProvider.has(ItemTags.WOOL)).save(consumer, RecipeBuilder.getDefaultRecipeId(white));
-            for (Map.Entry<DyeColor, RegistrySupplier<ToyBallItem>> entry : ModItems.TOY_BALLS.entrySet()) {
+            for (Map.Entry<DyeColor, RegistrySupplier<ToyBallItem>> entry : TOY_BALLS.entrySet()) {
                 DyeColor color = entry.getKey();
                 ToyBallItem ball = entry.getValue().get();
                 if (color == DyeColor.WHITE) continue;
@@ -85,53 +85,55 @@ public class ModRecipeProvider extends RecipeProvider {
                 ShapelessRecipeBuilder.shapeless(white).requires(Items.WHITE_DYE).requires(ball).unlockedBy("has_ball",
                         RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID + ":toy_ball_" + color.getName() + "_to_white");
             }
-            for (Map.Entry<String, RegistrySupplier<ToyTetheredLogItem>> entry : ModItems.TOY_TETHERED_LOGS.entrySet()) {
+            for (Map.Entry<String, RegistrySupplier<ToyTetheredLogItem>> entry : TOY_TETHERED_LOGS.entrySet()) {
                 var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_log"));
                 block.ifPresent(log -> ShapedRecipeBuilder.shaped(entry.getValue().get()).define('S', Items.STRING).define('L', log)
                         .pattern("S").pattern("S").pattern("L").unlockedBy("has_log", RecipeProvider.has(log)).save(consumer));
             }
-            ShapedRecipeBuilder.shaped(ModItems.TOY_TETHERED_LOGS.get(WoodType.CRIMSON.name()).get()).define('S', Items.STRING)
+            ShapedRecipeBuilder.shaped(TOY_TETHERED_LOGS.get(WoodType.CRIMSON.name()).get()).define('S', Items.STRING)
                     .define('L', Blocks.CRIMSON_STEM).pattern("S").pattern("S").pattern("L").unlockedBy("has_log",
                             RecipeProvider.has(Blocks.CRIMSON_STEM)).save(consumer);
-            ShapedRecipeBuilder.shaped(ModItems.TOY_TETHERED_LOGS.get(WoodType.WARPED.name()).get()).define('S', Items.STRING)
+            ShapedRecipeBuilder.shaped(TOY_TETHERED_LOGS.get(WoodType.WARPED.name()).get()).define('S', Items.STRING)
                     .define('L', Blocks.WARPED_STEM).pattern("S").pattern("S").pattern("L").unlockedBy("has_log",
                             RecipeProvider.has(Blocks.WARPED_STEM)).save(consumer);
-            for (Map.Entry<String, RegistrySupplier<ToyScratchingPostItem>> entry : ModItems.TOY_SCRATCHING_POSTS.entrySet()) {
+            for (Map.Entry<String, RegistrySupplier<ToyScratchingPostItem>> entry : TOY_SCRATCHING_POSTS.entrySet()) {
                 var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_slab"));
                 block.ifPresent(slab -> ShapedRecipeBuilder.shaped(entry.getValue().get()).define('S', Items.STICK).define('X', slab)
                         .define('W', ItemTags.WOOL).pattern("WWW").pattern("WSW").pattern(" X ").unlockedBy("has_slab",
                                 RecipeProvider.has(slab)).save(consumer));
             }
-            ShapelessRecipeBuilder.shapeless(ModItems.AQUATIC_SCARAB_GEM.get()).requires(ModItems.SCARAB_GEM.get()).requires(AMBER_CHUNK_DOMINICAN.get())
-                    .unlockedBy("has_scarab_gem", RecipeProvider.has(ModItems.AQUATIC_SCARAB_GEM.get())).save(consumer);
+            ShapelessRecipeBuilder.shapeless(AQUATIC_SCARAB_GEM.get()).requires(SCARAB_GEM.get()).requires(AMBER_CHUNK_DOMINICAN.get())
+                    .unlockedBy("has_scarab_gem", RecipeProvider.has(AQUATIC_SCARAB_GEM.get())).save(consumer);
             var bonesLeg = ModItemTags.LEG_BONES;
             var bonesFoot = ModItemTags.FOOT_BONES;
             var bonesVertebrae = ModItemTags.VERTEBRAE_BONES;
             var bonesRibcage = ModItemTags.RIBCAGE_BONES;
             var bonesSkull = ModItemTags.SKULL_BONES;
-            ShapedRecipeBuilder.shaped(ModItems.BONE_BOOTS.get()).define('L', bonesLeg).define('F', bonesFoot).pattern("L L").pattern("F F").unlockedBy("has_bones", RecipeProvider.has(bonesFoot)).save(consumer);
-            ShapedRecipeBuilder.shaped(ModItems.BONE_CHESTPLATE.get()).define('B', Items.BONE).define('V', bonesVertebrae).define('R', bonesRibcage).pattern("B B").pattern(" V ").pattern("BRB").unlockedBy("has_bones", RecipeProvider.has(bonesRibcage)).save(consumer);
-            ShapedRecipeBuilder.shaped(ModItems.BONE_HELMET.get()).define('B', Items.BONE).define('S', bonesSkull).pattern("BSB").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesSkull)).save(consumer);
-            ShapedRecipeBuilder.shaped(ModItems.BONE_LEGGINGS.get()).define('B', Items.BONE).define('L', bonesLeg).pattern("BBB").pattern("L L").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesLeg)).save(consumer);
+            ShapedRecipeBuilder.shaped(BONE_BOOTS.get()).define('L', bonesLeg).define('F', bonesFoot).pattern("L L").pattern("F F").unlockedBy("has_bones", RecipeProvider.has(bonesFoot)).save(consumer);
+            ShapedRecipeBuilder.shaped(BONE_CHESTPLATE.get()).define('B', Items.BONE).define('V', bonesVertebrae).define('R', bonesRibcage).pattern("B B").pattern(" V ").pattern("BRB").unlockedBy("has_bones", RecipeProvider.has(bonesRibcage)).save(consumer);
+            ShapedRecipeBuilder.shaped(BONE_HELMET.get()).define('B', Items.BONE).define('S', bonesSkull).pattern("BSB").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesSkull)).save(consumer);
+            ShapedRecipeBuilder.shaped(BONE_LEGGINGS.get()).define('B', Items.BONE).define('L', bonesLeg).pattern("BBB").pattern("L L").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesLeg)).save(consumer);
             ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(VOLCANIC_ASH.get(), 4).unlockedBy("has_volcanic_ash", RecipeProvider.has(VOLCANIC_ASH.get())).save(consumer, Fossil.MOD_ID + ":bone_meal_from_ash");
             ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(ModItemTags.ALL_BONES).unlockedBy("has_bone", RecipeProvider.has(ModItemTags.ALL_BONES)).save(consumer, Fossil.MOD_ID + ":bone_meal_from_bone");
-            ShapedRecipeBuilder.shaped(ModItems.CHICKEN_ESSENCE.get(), 8).define('G', Items.GLASS_BOTTLE).define('C', ModItems.COOKED_CHICKEN_SOUP.get()).pattern("GGG").pattern("GCG").pattern("GGG").unlockedBy("has_cooked_chicken_soup", RecipeProvider.has(ModItems.COOKED_CHICKEN_SOUP.get())).save(consumer);
-            ShapedRecipeBuilder.shaped(ModItems.STUNTED_ESSENCE.get()).define('P', Items.POISONOUS_POTATO).define('C', ModItems.CHICKEN_ESSENCE.get()).pattern(" P ").pattern("PCP").pattern(" P ").unlockedBy("has_chicken_essence", RecipeProvider.has(ModItems.CHICKEN_ESSENCE.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(CHICKEN_ESSENCE.get(), 8).define('G', Items.GLASS_BOTTLE).define('C', COOKED_CHICKEN_SOUP.get()).pattern("GGG").pattern("GCG").pattern("GGG").unlockedBy("has_cooked_chicken_soup", RecipeProvider.has(COOKED_CHICKEN_SOUP.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(STUNTED_ESSENCE.get()).define('P', Items.POISONOUS_POTATO).define('C', CHICKEN_ESSENCE.get()).pattern(" P ").pattern("PCP").pattern(" P ").unlockedBy("has_chicken_essence", RecipeProvider.has(CHICKEN_ESSENCE.get())).save(consumer);
 
-            ShapedRecipeBuilder.shaped(ANALYZER.get()).define('I', Items.IRON_INGOT).define('R', ModItems.RELIC_SCRAP.get()).define('B', ModItems.BIO_FOSSIL.get()).pattern("IRI").pattern("IBI").unlockedBy("has_bio_fossil", RecipeProvider.has(ModItems.BIO_FOSSIL.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(ANALYZER.get()).define('I', Items.IRON_INGOT).define('R', RELIC_SCRAP.get()).define('B', BIO_FOSSIL.get()).pattern("IRI").pattern("IBI").unlockedBy("has_bio_fossil", RecipeProvider.has(BIO_FOSSIL.get())).save(consumer);
             ShapedRecipeBuilder.shaped(BUBBLE_BLOWER.get()).define('I', Items.GOLD_INGOT).define('N', Items.GOLD_NUGGET).define('W', Items.WATER_BUCKET).pattern("NIN").pattern("IWI").pattern("NIN").unlockedBy("has_dino_egg", RecipeProvider.has(ModItemTags.DINO_EGGS)).save(consumer);
             ShapedRecipeBuilder.shaped(SIFTER.get()).define('I', Blocks.IRON_BARS).define('S', Items.STRING).define('P', ItemTags.PLANKS).pattern("SPS").pattern("PIP").pattern("PSP").unlockedBy("has_planks", RecipeProvider.has(ItemTags.PLANKS)).save(consumer);
             ShapedRecipeBuilder.shaped(WORKTABLE.get()).define('L', Items.LEATHER).define('C', Blocks.CRAFTING_TABLE).pattern("L").pattern("C").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
             ShapedRecipeBuilder.shaped(DRUM.get()).define('L', Items.LEATHER).define('R', Items.REDSTONE).define('P', ItemTags.PLANKS).pattern("LLL").pattern("PRP").pattern("PPP").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
 
-            ShapelessRecipeBuilder.shapeless(ModItems.DINOPEDIA.get()).requires(Items.BOOK).requires(ModItems.BIO_FOSSIL.get()).unlockedBy("has_bio_fossil", RecipeProvider.has(ModItems.BIO_FOSSIL.get())).save(consumer);
+            ShapelessRecipeBuilder.shapeless(DINOPEDIA.get()).requires(Items.BOOK).requires(BIO_FOSSIL.get()).unlockedBy("has_bio_fossil", RecipeProvider.has(BIO_FOSSIL.get())).save(consumer);
 
-            ShapelessRecipeBuilder.shapeless(ModItems.RAW_CHICKEN_SOUP.get()).requires(Items.BUCKET).requires(Items.CHICKEN).unlockedBy("has_chicken", RecipeProvider.has(Items.CHICKEN)).save(consumer);
-            ShapelessRecipeBuilder.shapeless(ModItems.SKULL_STICK.get()).requires(Items.STICK).requires(SKULL_BLOCK.get()).unlockedBy("has_skull_block", RecipeProvider.has(SKULL_BLOCK.get())).save(consumer);
+            ShapelessRecipeBuilder.shapeless(RAW_CHICKEN_SOUP.get()).requires(Items.BUCKET).requires(Items.CHICKEN).unlockedBy("has_chicken", RecipeProvider.has(Items.CHICKEN)).save(consumer);
+            ShapelessRecipeBuilder.shapeless(SKULL_STICK.get()).requires(Items.STICK).requires(SKULL_BLOCK.get()).unlockedBy("has_skull_block", RecipeProvider.has(SKULL_BLOCK.get())).save(consumer);
+            ShapelessRecipeBuilder.shapeless(TOOTH_DAGGER.get()).requires(Items.STICK).requires(PrehistoricEntityInfo.TYRANNOSAURUS.uniqueBoneItem);
+            ShapedRecipeBuilder.shaped(WHIP.get()).define('S', Items.STRING).define('T', Items.STICK).pattern("  S").pattern(" TS").pattern("T S").unlockedBy("has_dinopedia", RecipeProvider.has(DINOPEDIA.get())).save(consumer);
 
-            ShapedRecipeBuilder.shaped(AMPHORA_VASE_DAMAGED.get()).define('P', ModItems.POTTERY_SHARD.get()).pattern("PP").pattern("PP").pattern("PP").unlockedBy("has_pottery_shard", RecipeProvider.has(ModItems.POTTERY_SHARD.get())).save(consumer);
-            ShapedRecipeBuilder.shaped(KYLIX_VASE_DAMAGED.get()).define('P', ModItems.POTTERY_SHARD.get()).pattern("PPP").pattern(" P ").unlockedBy("has_pottery_shard", RecipeProvider.has(ModItems.POTTERY_SHARD.get())).save(consumer);
-            ShapedRecipeBuilder.shaped(VOLUTE_VASE_DAMAGED.get()).define('P', ModItems.POTTERY_SHARD.get()).pattern("P P").pattern("P P").pattern("PPP").unlockedBy("has_pottery_shard", RecipeProvider.has(ModItems.POTTERY_SHARD.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(AMPHORA_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PP").pattern("PP").pattern("PP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(KYLIX_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PPP").pattern(" P ").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
+            ShapedRecipeBuilder.shaped(VOLUTE_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("P P").pattern("P P").pattern("PPP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
             for (RegistrySupplier<VaseBlock> vase : VASES) {
                 String name = vase.get().getRegistryName().getPath();
                 if (!name.contains("damaged") && !name.contains("restored")) {
@@ -202,22 +204,22 @@ public class ModRecipeProvider extends RecipeProvider {
         }
 
         if (analyzerRecipes) {
-            AnalyzerRecipeBuilder plantFossil = analyzed(ModItems.PlANT_FOSSIL.get())
+            AnalyzerRecipeBuilder plantFossil = analyzed(PlANT_FOSSIL.get())
                     .addOutput(Blocks.SAND, 35)
                     .addOutput(Blocks.CACTUS, 20)
-                    .addOutput(ModItems.FERN_SEED_FOSSIL.get(), 5)
-                    .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 2.5);
+                    .addOutput(FERN_SEED_FOSSIL.get(), 5)
+                    .addOutput(CALAMITES_SAPLING_FOSSIL.get(), 2.5)
+                    .addOutput(CORDAITES_SAPLING_FOSSIL.get(), 2.5)
+                    .addOutput(PALM_SAPLING_FOSSIL.get(), 2.5)
+                    .addOutput(SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)
+                    .addOutput(TEMPSKYA_SAPLING_FOSSIL.get(), 2.5);
 
             double seedWeight = (100F - plantFossil.total) / (double) PrehistoricPlantInfo.plantsWithSeeds().size();
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
                 plantFossil.addOutput(info.getFossilizedPlantSeedItem(), seedWeight);
             }
             plantFossil.save(consumer);
-            AnalyzerRecipeBuilder bioFossil = analyzed(ModItems.BIO_FOSSIL.get())
+            AnalyzerRecipeBuilder bioFossil = analyzed(BIO_FOSSIL.get())
                     .addOutput(Blocks.SAND, 35)
                     .addOutput(Items.BONE_MEAL, 50);
             List<PrehistoricEntityInfo> bioFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
@@ -256,12 +258,12 @@ public class ModRecipeProvider extends RecipeProvider {
                         .addOutput(Items.BONE, 35)
                         .addOutput(type.dnaItem, 35).save(consumer);
             }*/
-            analyzed(ModItems.TAR_DROP.get())
+            analyzed(TAR_DROP.get())
                     .addOutput(Items.COAL, 20)
                     .addOutput(Items.CHARCOAL, 20)
-                    .addOutput(ModItems.TAR_FOSSIL.get(), 45)
+                    .addOutput(TAR_FOSSIL.get(), 45)
                     .addOutput(VOLCANIC_ROCK.get(), 15).save(consumer);
-            AnalyzerRecipeBuilder tarFossil = analyzed(ModItems.TAR_FOSSIL.get())
+            AnalyzerRecipeBuilder tarFossil = analyzed(TAR_FOSSIL.get())
                     .addOutput(Items.BONE_MEAL, 15)
                     .addOutput(VOLCANIC_ROCK.get(), 30);
             List<PrehistoricEntityInfo> tarFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.CENOZOIC);
@@ -271,7 +273,7 @@ public class ModRecipeProvider extends RecipeProvider {
             }
             tarFossil.save(consumer);
 
-            AnalyzerRecipeBuilder failuresaurusFlesh = analyzed(ModItems.FAILURESAURUS_FLESH.get())
+            AnalyzerRecipeBuilder failuresaurusFlesh = analyzed(FAILURESAURUS_FLESH.get())
                     .addOutput(Items.ROTTEN_FLESH, 33);
             double failuresaurusDNAChance = 67F / (PrehistoricEntityInfo.values().length + VanillaEntityInfo.values().length);
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
@@ -296,20 +298,20 @@ public class ModRecipeProvider extends RecipeProvider {
                 failuresaurusFlesh.addOutput(info.dnaItem, failuresaurusDNAChance);
             }
             failuresaurusFlesh.save(consumer);
-            AnalyzerRecipeBuilder frozenMeat = analyzed(ModItems.FROZEN_MEAT.get())
+            AnalyzerRecipeBuilder frozenMeat = analyzed(FROZEN_MEAT.get())
                     .addOutput(Items.CHICKEN, 15)
                     .addOutput(Items.MUTTON, 15)
                     .addOutput(Items.BEEF, 15)
                     .addOutput(Items.PORKCHOP, 15)
                     .addOutput(Items.CHICKEN, 15)
-                    .addOutput(ModItems.TAR_FOSSIL.get(), 20);
+                    .addOutput(TAR_FOSSIL.get(), 20);
             for (PrehistoricEntityInfo info : tarFossilEntityList) {
                 frozenMeat.addOutput(info.dnaItem, tarFossilDNAChance);
             }
             frozenMeat.save(consumer);
             analyzed(AMBER_CHUNK_DOMINICAN.get()).addOutput(Items.SPIDER_EYE, 9).addOutput(Items.STRING, 10).addOutput(Blocks.DIRT, 25).addOutput(Blocks.GRAVEL, 25)
                     .addOutput(Items.WHEAT_SEEDS, 1).addOutput(Items.BEETROOT_SEEDS, 1).addOutput(Items.PUMPKIN_SEEDS, 1).addOutput(Items.MELON_SEEDS, 1)
-                    .addOutput(ModItems.CALAMITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.CORDAITES_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.PALM_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), 1).addOutput(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), 1).save(consumer);
+                    .addOutput(CALAMITES_SAPLING_FOSSIL.get(), 1).addOutput(CORDAITES_SAPLING_FOSSIL.get(), 1).addOutput(PALM_SAPLING_FOSSIL.get(), 1).addOutput(SIGILLARIA_SAPLING_FOSSIL.get(), 1).addOutput(TEMPSKYA_SAPLING_FOSSIL.get(), 1).save(consumer);
             analyzed(Items.BEEF).addOutput(COW.dnaItem, 100).save(consumer);
             analyzed(Items.CHICKEN).addOutput(CHICKEN.dnaItem, 100).save(consumer);
             analyzed(Items.EGG).addOutput(CHICKEN.dnaItem, 100).save(consumer);
@@ -322,7 +324,7 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(Items.RABBIT).addOutput(RABBIT.dnaItem, 100).save(consumer);
             analyzed(Items.RABBIT_FOOT).addOutput(RABBIT.dnaItem, 100).save(consumer);
             analyzed(Items.RABBIT_HIDE).addOutput(RABBIT.dnaItem, 100).save(consumer);
-            analyzed(ModItems.RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(ModItems.POTTERY_SHARD.get(), 4).addOutput(ModItems.BROKEN_HELMET.get(), 4).addOutput(ModItems.BROKEN_SWORD.get(), 4).addOutput(ModItems.STONE_TABLET.get(), 30)
+            analyzed(RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(POTTERY_SHARD.get(), 4).addOutput(BROKEN_HELMET.get(), 4).addOutput(BROKEN_SWORD.get(), 4).addOutput(STONE_TABLET.get(), 30)
                     .addOutput(ANU_FIGURINE_DESTROYED.get(), 4).addOutput(ENDERMAN_FIGURINE_DESTROYED.get(), 4).addOutput(PIGLIN_FIGURINE_DESTROYED.get(), 4).addOutput(SKELETON_FIGURINE_DESTROYED.get(), 4).addOutput(STEVE_FIGURINE_DESTROYED.get(), 4).addOutput(ZOMBIE_FIGURINE_DESTROYED.get(), 4).save(consumer);
             analyzed(ItemTags.WOOL).addOutput(Items.STRING, 3, 60).addOutput(SHEEP.dnaItem, 27).addOutput(LLAMA.dnaItem, 13).save(consumer);
         }

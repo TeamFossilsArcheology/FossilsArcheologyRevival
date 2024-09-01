@@ -28,8 +28,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class ModItems {
-    public static final DeferredRegister<Item> ITEMS =
-            DeferredRegister.create(Fossil.MOD_ID, Registry.ITEM_REGISTRY);
+    public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(Fossil.MOD_ID, Registry.ITEM_REGISTRY);
 
     public static final RegistrySupplier<Item> TAR_BUCKET = ITEMS.register("tar_bucket",
             () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET).tab(ModTabs.FAITEMTAB)));
@@ -156,10 +155,10 @@ public class ModItems {
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
 
     public static final RegistrySupplier<SpawnEggItem> TAR_SLIME_SPAWN_EGG = registerSpawnEgg("spawn_egg_tar_slime", ModEntities.TAR_SLIME, 0X222222, 0x0B0B0B);
-
     public static final RegistrySupplier<SpawnEggItem> ANU_BOSS_SPAWN_EGG = registerSpawnEgg("spawn_egg_anu_boss", ModEntities.ANU_BOSS, 0X0F0F0F, 0XF72D00);
     public static final RegistrySupplier<SpawnEggItem> SENTRY_PIGLIN_SPAWN_EGG = registerSpawnEgg("spawn_egg_sentry_piglin", ModEntities.SENTRY_PIGLIN, 15373203, 0XD0A750);
     public static final RegistrySupplier<SpawnEggItem> FAILURESAURUS_SPAWN_EGG = registerSpawnEgg("spawn_egg_failuresaurus", ModEntities.FAILURESAURUS, 0X46DA9b, 0X257B47);
+
     public static final Map<DyeColor, RegistrySupplier<ToyBallItem>> TOY_BALLS = Arrays.stream(DyeColor.values()).collect(Collectors.toMap(Function.identity(), ModItems::registerBall));
     public static final Map<String, RegistrySupplier<ToyTetheredLogItem>> TOY_TETHERED_LOGS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerTetheredLog));
     public static final Map<String, RegistrySupplier<ToyScratchingPostItem>> TOY_SCRATCHING_POSTS = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name, ModItems::registerScratchingPost));

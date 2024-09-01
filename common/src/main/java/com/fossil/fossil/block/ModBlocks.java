@@ -32,6 +32,7 @@ import java.util.function.ToIntFunction;
 
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Fossil.MOD_ID, Registry.BLOCK_REGISTRY);
+
     public static final RegistrySupplier<BubbleBlowerBlock> BUBBLE_BLOWER = registerBlock("bubble_blower",
             () -> new BubbleBlowerBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3).sound(SoundType.METAL).requiresCorrectToolForDrops())
     );
@@ -47,8 +48,10 @@ public class ModBlocks {
             BlockBehaviour.Properties.of(Material.WOOD, MaterialColor.COLOR_BROWN).strength(1f).sound(SoundType.WOOD)));
     public static final RegistrySupplier<FeederBlock> FEEDER = registerBlock("feeder",
             () -> new FeederBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3)));
+
     public static final RegistrySupplier<ArchitecturyLiquidBlock> TAR = registerBlockWithoutBlockItem("tar",
             () -> TarBlock.get(ModFluids.TAR, BlockBehaviour.Properties.copy(Blocks.WATER).isSuffocating(ModBlocks::always).isViewBlocking(ModBlocks::always)));
+
     public static final RegistrySupplier<AnuStatueBlock> ANU_STATUE = registerBlockWithCustomBlockItem("anu_statue",
             () -> new AnuStatueBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
             block -> AnuStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
@@ -67,8 +70,17 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SARCOPHAGUS = registerBlockWithCustomBlockItem("sarcophagus",
             () -> new SarcophagusBlock(BlockBehaviour.Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)
                     .lightLevel(state -> state.getValue(SarcophagusBlock.LIT) ? 7 : 0)), block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+    public static final RegistrySupplier<Block> FAKE_OBSIDIAN = registerBlockWithoutBlockItem("fake_obsidian",
+            () -> new FakeObsidian(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)));
+    public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
+            () -> new ObsidianSpikesBlock(BlockBehaviour.Properties.of(Material.STONE).strength(50, 2000).sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops().noOcclusion()));
+
+    public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
+            () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
     public static final RegistrySupplier<BedBlock> COMFY_BED = registerBlock("comfy_bed", () -> new ComfyBedBlock(
             BlockBehaviour.Properties.of(Material.WOOL).sound(SoundType.WOOD).strength(0.2f).noOcclusion()));
+
     public static final RegistrySupplier<Block> SHELL = registerBlock("shell",
             () -> new ShellBlock(BlockBehaviour.Properties.of(Material.STONE).strength(1).requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
@@ -88,9 +100,6 @@ public class ModBlocks {
     public static final RegistrySupplier<IcedDirtBlock> ICED_DIRT = registerBlock("iced_dirt",
             () -> new IcedDirtBlock(BlockBehaviour.Properties.of(Material.DIRT).strength(1, 4).requiresCorrectToolForDrops()
                     .sound(SoundType.MOSS).randomTicks()));
-    public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
-            () -> new ObsidianSpikesBlock(BlockBehaviour.Properties.of(Material.STONE).strength(50, 2000).sound(SoundType.STONE)
-                    .requiresCorrectToolForDrops().noOcclusion()));
     public static final RegistrySupplier<DenseSandBlock> DENSE_SAND = registerBlock("dense_sand",
             () -> new DenseSandBlock(0x8C765C, BlockBehaviour.Properties.of(Material.SAND).strength(3f, 15f).sound(SoundType.SAND)));
     public static final RegistrySupplier<SkullBlock> SKULL_BLOCK = registerBlock("skull",
@@ -101,6 +110,7 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops().sound(SoundType.BONE_BLOCK)));
     public static final RegistrySupplier<Block> SLIME_TRAIL = registerBlock("slime_trail",
             () -> new RailBlock(BlockBehaviour.Properties.copy(Blocks.SLIME_BLOCK)));
+
     public static final RegistrySupplier<Block> ANCIENT_STONE = registerBlock("ancient_stone",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE).strength(1.5f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> ANCIENT_STONE_BRICKS = registerBlock("ancient_stone_bricks",
@@ -123,10 +133,6 @@ public class ModBlocks {
             () -> new ClearGlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(3f, 25f)));
     public static final RegistrySupplier<ClearGlassBlock> ANCIENT_GLASS = registerBlock("ancient_glass",
             () -> new ClearGlassBlock(BlockBehaviour.Properties.copy(Blocks.GLASS).strength(1f)));
-    public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
-            () -> new DrumBlock(BlockBehaviour.Properties.of(Material.WOOD).sound(SoundType.WOOD)));
-    public static final RegistrySupplier<Block> FAKE_OBSIDIAN = registerBlockWithoutBlockItem("fake_obsidian",
-            () -> new FakeObsidian(BlockBehaviour.Properties.copy(Blocks.OBSIDIAN)));
 
     //Fossil Blocks
     public static final RegistrySupplier<Block> CALCITE_FOSSIL = registerBlock("fossil_calcite",
@@ -147,11 +153,9 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> TARRED_DIRT = registerBlock("tarred_dirt",
             () -> new Block(BlockBehaviour.Properties.copy(Blocks.DIRT)));
     public static final RegistrySupplier<Block> PERMAFROST_BLOCK = registerBlock("permafrost_block",
-            () -> new PermafrostBlock(
-                    BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(2f).requiresCorrectToolForDrops()));
+            () -> new PermafrostBlock(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLUE).strength(2f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_ASH = registerBlock("volcanic_ash",
-            () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops()
-                    .sound(SoundType.GRAVEL)));
+            () -> new Block(BlockBehaviour.Properties.of(Material.DIRT, MaterialColor.COLOR_BLACK).strength(0.2f).requiresCorrectToolForDrops().sound(SoundType.GRAVEL)));
     public static final RegistrySupplier<Block> VOLCANIC_ROCK = registerBlock("volcanic_rock",
             () -> new Block(BlockBehaviour.Properties.of(Material.STONE, MaterialColor.COLOR_BLACK).strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> VOLCANIC_BRICKS = registerBlock("volcanic_bricks",

@@ -37,8 +37,7 @@ public class ModOverworldBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, ModPlacedFeatures.FOSSIL_VOLCANO);
         biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacedFeatures.coneVolcano());
 
-        //TODO: Colors
-        return biome(Biome.Precipitation.NONE, Biome.BiomeCategory.DESERT, 2, 0, 0x300000, 0x300000, 0x300000, calculateSkyColor(2),
+        return biome(Biome.Precipitation.NONE, Biome.BiomeCategory.DESERT, 2, 0, 0x981010, 0x4c0808, 0x504040, calculateSkyColor(2),
                 new MobSpawnSettings.Builder(), biomeBuilder);
     }
 }
