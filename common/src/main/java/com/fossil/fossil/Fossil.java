@@ -20,6 +20,7 @@ import com.fossil.fossil.recipe.ModRecipes;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.villager.ModVillagers;
 import com.fossil.fossil.world.dimension.ModDimensions;
+import com.fossil.fossil.world.effect.ModEffects;
 import com.fossil.fossil.world.feature.ModFeatures;
 import com.fossil.fossil.world.feature.structures.ModStructures;
 import com.fossil.fossil.world.feature.village.ModVillages;
@@ -53,6 +54,7 @@ public class Fossil {
         ModStructures.register();
         ModVillages.register();
         ModDimensions.register();
+        ModEffects.register();
         ModLootItemFunctionTypes.register();
         ModRecipes.register();
         ModEnchantments.register();

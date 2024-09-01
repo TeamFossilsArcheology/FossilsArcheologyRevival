@@ -14,8 +14,11 @@ import com.fossil.fossil.network.S2CMammalCapMessage;
 import com.fossil.fossil.network.S2CSyncEntityInfoMessage;
 import com.fossil.fossil.villager.ModTrades;
 import com.fossil.fossil.villager.ModVillagers;
+import com.fossil.fossil.world.effect.ComfyBedEffect;
+import com.fossil.fossil.world.effect.ModEffects;
 import dev.architectury.platform.Platform;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
@@ -24,7 +27,11 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
+import net.minecraftforge.event.entity.player.PlayerWakeUpEvent;
+import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
+import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -100,6 +107,34 @@ public class ForgeModEvents {
         if (event.getTarget() instanceof Animal animal) {
             ModCapabilitiesImpl.getMammalCap(animal).ifPresent(iMammalCap -> MessageHandler.CAP_CHANNEL.sendToPlayers(List.of(serverPlayer),
                     new S2CMammalCapMessage(animal, iMammalCap.getEmbryoProgress(), iMammalCap.getEmbryo())));
+        }
+    }
+
+    @SubscribeEvent
+    public static void allowDaySleep(PlayerSleepInBedEvent event) {
+        if (ComfyBedEffect.canApply(event.getOptionalPos(), event.getPlayer().getLevel())) {
+            event.setResult(Event.Result.ALLOW);
+        }
+    }
+
+    @SubscribeEvent
+    public static void allowDaySleep(SleepingTimeCheckEvent event) {
+        if (ComfyBedEffect.canApply(event.getSleepingLocation(), event.getPlayer().getLevel())) {
+            event.setResult(Event.Result.ALLOW);
+        }
+    }
+
+    @SubscribeEvent
+    public static void addComfyBedEffect(PlayerWakeUpEvent event) {
+        if (ComfyBedEffect.canApply(event.getPlayer().getSleepingPos(), event.getPlayer().getLevel())) {
+            event.getPlayer().addEffect(new MobEffectInstance(ModEffects.COMFY_BED.get(), 24000, 0));
+        }
+    }
+
+    @SubscribeEvent
+    public static void addComfyBedEffect(LivingEvent.LivingVisibilityEvent event) {
+        if (event.getEntityLiving().hasEffect(ModEffects.COMFY_BED.get())) {
+            event.modifyVisibility(0.5);
         }
     }
 

@@ -11,17 +11,24 @@ import com.fossil.fossil.fabric.client.model.PlantModelProvider;
 import com.fossil.fossil.fabric.client.renderer.CustomItemRendererFabricImpl;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Version;
+import com.fossil.fossil.world.effect.ComfyBedEffect;
+import com.fossil.fossil.world.effect.ModEffects;
 import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.HudRenderCallback;
+import net.fabricmc.fabric.api.entity.event.v1.EntitySleepEvents;
 import net.fabricmc.fabric.api.event.client.ClientSpriteRegistryCallback;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.effect.MobEffectInstance;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+
+import java.util.Optional;
 
 public class FossilFabricClient implements ClientModInitializer {
     @Override
@@ -41,6 +48,17 @@ public class FossilFabricClient implements ClientModInitializer {
         HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
             Minecraft mc = Minecraft.getInstance();
             OverlayRenderer.renderHelmet(mc.getWindow().getGuiScaledWidth(), mc.getWindow().getGuiScaledHeight());
+        });
+        EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> {
+            if (ComfyBedEffect.canApply(Optional.of(sleepingPos), player.level)) {
+                return InteractionResult.sidedSuccess(player.level.isClientSide);
+            }
+            return InteractionResult.PASS;
+        });
+        EntitySleepEvents.STOP_SLEEPING.register((entity, sleepingPos) -> {
+            if (ComfyBedEffect.canApply(Optional.of(sleepingPos), entity.level)) {
+                entity.addEffect(new MobEffectInstance(ModEffects.COMFY_BED.get(), 24000, 0));
+            }
         });
         if (Version.debugEnabled()) {
             HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
