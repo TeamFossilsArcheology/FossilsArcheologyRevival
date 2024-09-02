@@ -16,61 +16,63 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Comment
     public static MidnightConfig.Comment generate;
     @MidnightConfig.Entry
-    public static boolean generatePrehistoricTrees = false;
+    public static boolean generateAcademy = true;
+    @MidnightConfig.Entry
+    public static boolean generateAztecWeaponShops = true;
     @MidnightConfig.Entry
     public static boolean generateHellShips = true;
+    @MidnightConfig.Entry(min = 1, max = 1000000)
+    public static int hellShipSpacing = 24;
+    @MidnightConfig.Entry(min = 1, max = 1000000)
+    public static int hellShipSeparation = 5;
     @MidnightConfig.Entry
-    public static boolean generateAcademy = true;
+    public static boolean generateMoai = true;
+    @MidnightConfig.Entry(min = 1, max = 1000000)
+    public static int moaiRarity = 400;
+    @MidnightConfig.Entry
+    public static boolean generateTarPits = true;
+    @MidnightConfig.Entry(min = 1, max = 1000000)
+    public static int tarPitRarity = 100;
     @MidnightConfig.Entry
     public static boolean generateTemple = true;
     @MidnightConfig.Entry
     public static boolean generateFossils = true;
+    @MidnightConfig.Entry(min = 1, max = 500)
+    public static int fossilOreRarity = 15;
     @MidnightConfig.Entry
     public static boolean generatePermafrost = true;
+    @MidnightConfig.Entry(min = 1, max = 500)
+    public static int permafrostRarity = 4;
     @MidnightConfig.Entry
     public static boolean generateVolcanicRock = true;
     @MidnightConfig.Entry
-    public static boolean generateAztecWeaponShops = true;
-    @MidnightConfig.Entry
-    public static boolean generateMoai = true;
-    @MidnightConfig.Entry
-    public static boolean generateTarPits = true;
-    @MidnightConfig.Entry
     public static boolean generateVolcanoBiome = true;
     @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int fossilOreRarity = 38;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int permafrostRarity = 4;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int hellShipSpacing = 24;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int hellShipSeperation = 5;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int tarPitRarity = 100;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int moaiRarity = 400;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int volcanoBiomeRarity = 1;
-    @MidnightConfig.Entry
-    public static boolean spawnTarSlimes = true;
-    @MidnightConfig.Entry
-    public static boolean spawnNautilus = true;
-    @MidnightConfig.Entry
-    public static boolean spawnCoelacanth = true;
+    public static int volcanoBiomeRarity = 7;
+    @MidnightConfig.Comment
+    public static MidnightConfig.Comment spawn;
     @MidnightConfig.Entry
     public static boolean spawnAlligatorGar = true;
-    @MidnightConfig.Entry
-    public static boolean spawnSturgeon = true;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int tarSlimesSpawnRate = 75;
     @MidnightConfig.Entry(min = 0, max = 1000000)
     public static int alligatorGarSpawnWeight = 4;
+    @MidnightConfig.Entry
+    public static boolean spawnCoelacanth = true;
     @MidnightConfig.Entry(min = 0, max = 1000000)
     public static int coelacanthSpawnWeight = 3;
+    @MidnightConfig.Entry
+    public static boolean spawnNautilus = true;
     @MidnightConfig.Entry(min = 0, max = 1000000)
     public static int nautilusSpawnWeight = 2;
+    @MidnightConfig.Entry
+    public static boolean spawnSturgeon = true;
     @MidnightConfig.Entry(min = 0, max = 1000000)
     public static int sturgeonSpawnWeight = 5;
+    @MidnightConfig.Entry
+    public static boolean spawnTarSlimes = true;
+    @MidnightConfig.Entry(min = 1, max = 1000000)
+    public static int tarSlimesSpawnRate = 75;
+    @MidnightConfig.Comment
+    public static MidnightConfig.Comment mob;
     @MidnightConfig.Entry
     public static boolean healingDinos = true;
     @MidnightConfig.Entry
@@ -95,12 +97,12 @@ public class FossilConfigImpl extends MidnightConfig {
     public static boolean dinosEatModdedMobs = true;
     @MidnightConfig.Entry
     public static boolean animalsFearDinos = true;
-    @MidnightConfig.Entry
-    public static boolean customMainMenu = true;
-    @MidnightConfig.Entry
-    public static boolean helmetOverlays = true;
     @MidnightConfig.Entry(min = 1, max = 512)
     public static int flyingTargetMaxHeight = 128;
+    @MidnightConfig.Entry
+    public static boolean anuBlockPlacing = true;
+    @MidnightConfig.Comment
+    public static MidnightConfig.Comment machine;
     @MidnightConfig.Entry(min = 1, max = 100)
     public static int cultureVatFailChance = 10;
     @MidnightConfig.Entry
@@ -111,10 +113,14 @@ public class FossilConfigImpl extends MidnightConfig {
     public static int machineTransferRate = 10;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int machineEnergyUsage = 1;
+    @MidnightConfig.Comment
+    public static MidnightConfig.Comment other;
+    @MidnightConfig.Entry
+    public static boolean customMainMenu = true;
+    @MidnightConfig.Entry
+    public static boolean helmetOverlays = true;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int fernTickRate = 2;
-    @MidnightConfig.Entry
-    public static boolean anuBlockPlacing = true;
     private static final Map<String, Field> MAPPED_ENTRIES = new HashMap<>();
 
     public static void initFabricConfig() {

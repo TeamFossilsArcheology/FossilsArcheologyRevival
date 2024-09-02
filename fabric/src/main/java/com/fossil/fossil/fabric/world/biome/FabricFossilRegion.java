@@ -1,6 +1,7 @@
 package com.fossil.fossil.fabric.world.biome;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.world.biome.ModBiomes;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.core.Registry;
@@ -40,6 +41,6 @@ public class FabricFossilRegion extends Region {
 
     @Override
     public int getWeight() {
-        return 7;
+        return FossilConfig.getInt(FossilConfig.VOLCANO_BIOME_RARITY);
     }
 }

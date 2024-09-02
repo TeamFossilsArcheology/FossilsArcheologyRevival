@@ -38,7 +38,7 @@ public class ModPlacedFeatures {
 
     static {
         StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
-                ModConfiguredFeatures.HELL_BOAT, new LazyRandomSpreadPlacement(FossilConfig.HELL_SHIP_SPACING, FossilConfig.HELL_SHIP_SEPERATION,
+                ModConfiguredFeatures.HELL_BOAT, new LazyRandomSpreadPlacement(FossilConfig.HELL_SHIP_SPACING, FossilConfig.HELL_SHIP_SEPARATION,
                         RandomSpreadType.LINEAR, 92182587));
     }
 
