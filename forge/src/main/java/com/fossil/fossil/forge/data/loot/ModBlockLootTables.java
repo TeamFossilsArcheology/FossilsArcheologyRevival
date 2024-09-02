@@ -14,6 +14,7 @@ import net.minecraft.data.loot.BlockLoot;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BedPart;
@@ -21,6 +22,7 @@ import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.*;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.*;
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
@@ -50,7 +52,9 @@ public class ModBlockLootTables extends BlockLoot {
 
     @Override
     protected void addTables() {
-        AMBER_ORE.ifPresent(block -> addCustom(block, createOreDrop(block, Item.byBlock(AMBER_CHUNK.get()))));
+        AMBER_ORE.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block,
+                LootItem.lootTableItem(AMBER_CHUNK_MOSQUITO.get().asItem()).when(LootItemRandomChanceCondition.randomChance(0.05f))
+                        .otherwise(LootItem.lootTableItem(AMBER_CHUNK.get().asItem()).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))));
         ICED_DIRT.ifPresent(block -> addCustom(block, createSilkTouchOnlyTable(block)));
         PERMAFROST_BLOCK.ifPresent(block -> addCustom(block, multiple(20, FERN_SEED_FOSSIL.get(),
                 SKULL_BLOCK.get(), FROZEN_MEAT.get(), Items.BONE, Items.BOOK)));
