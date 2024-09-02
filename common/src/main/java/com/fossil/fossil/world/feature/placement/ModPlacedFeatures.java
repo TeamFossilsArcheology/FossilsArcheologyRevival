@@ -67,7 +67,10 @@ public class ModPlacedFeatures {
         var permafrostBlockPlaced = PlacementUtils.register("permafrost_block_placed", ModOreFeatures.PERMAFROST_BLOCK,
                 commonOrePlacement(FossilConfig.PERMAFROST_RARITY, // VeinsPerChunk
                         HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(100), VerticalAnchor.aboveBottom(256))));
-
+        var oreAmber = PlacementUtils.register("amber_ore_placed", ModOreFeatures.ORE_AMBER,
+                commonOrePlacement(2, HeightRangePlacement.triangle(VerticalAnchor.absolute(-10), VerticalAnchor.absolute(80))));
+        var oreAmberBuried = PlacementUtils.register("ore_amber_buried", ModOreFeatures.ORE_AMBER_BURIED,
+                commonOrePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(-10), VerticalAnchor.absolute(80))));
         BiomeModifications.addProperties((context, mutable) -> {
             if (FossilConfig.isEnabled(FossilConfig.GENERATE_FOSSILS)) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, fossilBlockPlaced);
@@ -78,6 +81,8 @@ public class ModPlacedFeatures {
             if (FossilConfig.isEnabled(FossilConfig.GENERATE_PERMAFROST)) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, permafrostBlockPlaced);
             }
+            mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, oreAmber);
+            mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, oreAmberBuried);
             if (FossilConfig.isEnabled(FossilConfig.GENERATE_TAR_PITS) && mutable.getCategory() == Biome.BiomeCategory.SWAMP) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.LAKES, tarPitPlaced);
             }
