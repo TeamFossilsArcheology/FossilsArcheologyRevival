@@ -120,6 +120,7 @@
   "item.fossil.spawn_egg_anu_boss": "Anu Boss Spawn Egg",
   "item.fossil.spawn_egg_sentry_piglin": "Sentry Piglin Spawn Egg",
   "item.fossil.spawn_egg_failuresaurus": "Failuresaurus Spawn Egg",
+  "item.fossil.spawn_egg_generic": "%s Spawn Egg",
 
   "item.fossil.skull_stick": "Skull Stick",
   "item.fossil.stone_tablet": "Stone Tablet",

@@ -1,7 +1,6 @@
 package com.fossil.fossil.world.feature.tree;
 
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.custom_blocks.MutantTreeTumor;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
@@ -32,7 +31,7 @@ public class MutantTreeFeature extends CustomTreeFeature {
         BlockState log = ModBlocks.MUTANT_TREE_LOG.get().defaultBlockState();
         BlockState leaves = ModBlocks.MUTANT_TREE_LEAVES.get().defaultBlockState();
         BlockState vine = ModBlocks.MUTANT_TREE_VINE.get().defaultBlockState();
-        BlockState tumor = ModBlocks.MUTANT_TREE_TUMOR.get().defaultBlockState();
+        //BlockState tumor = ModBlocks.MUTANT_TREE_TUMOR.get().defaultBlockState();
         for (int i = 0; i < treeHeight - 1; ++i) {
             level.setBlock(pos.above(i), log, 19);
         }
@@ -87,7 +86,7 @@ public class MutantTreeFeature extends CustomTreeFeature {
             mutable.setWithOffset(belowFoliage, direction);
             for (int i = 0; i < trunk; i++) {
                 if (level.isEmptyBlock(mutable) && level.isEmptyBlock(mutable.below()) && level.getRandom().nextInt(9) == 0) {
-                    level.setBlock(mutable, tumor.setValue(MutantTreeTumor.FACING, direction), 19);
+                    //level.setBlock(mutable, tumor.setValue(MutantTreeTumor.FACING, direction), 19);
                     break;
                 }
                 mutable.move(Direction.DOWN);

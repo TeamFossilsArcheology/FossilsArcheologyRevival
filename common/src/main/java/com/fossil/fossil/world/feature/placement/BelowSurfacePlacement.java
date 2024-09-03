@@ -12,7 +12,7 @@ import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import java.util.Random;
 import java.util.stream.Stream;
 
-//TODO: Breaks in Forge because the PLACEMENT_MODIFIERS registry is already frozen
+//Breaks in Forge because the PLACEMENT_MODIFIERS registry is already frozen
 public class BelowSurfacePlacement extends PlacementModifier {
 
     public static final Codec<BelowSurfacePlacement> CODEC = RecordCodecBuilder.create(instance -> instance.group(

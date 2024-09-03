@@ -28,7 +28,7 @@ public class MutantTreeTumor extends Block {
     public MutantTreeTumor(BlockBehaviour.Properties properties) {
         super(properties);
         this.registerDefaultState(stateDefinition.any().setValue(FACING, Direction.NORTH));
-    }//TODO: Survival, properties
+    }
 
     @Nullable
     @Override
