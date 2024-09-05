@@ -6,8 +6,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SDisableAIMessage;
-import com.fossil.fossil.network.debug.C2SMoveMessage;
-import com.fossil.fossil.network.debug.C2STameMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
@@ -22,10 +20,10 @@ import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.EntityHitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -36,16 +34,21 @@ public class DebugScreen extends Screen {
     public static CycleButton<Boolean> disableAI;
     public static boolean showPaths;
     private static PathInfo currentVision;
-    public final Entity entity;
+    public static Entity entity;
     private final List<DebugTab> tabs = new ArrayList<>();
     private static int tabShift = 0;
     private DebugTab currentTab;
 
-    public DebugScreen(Entity entity) {
-        super(entity == null ? new TextComponent("Debug Screen") : entity.getDisplayName());
-        this.entity = entity;
+    public DebugScreen(Entity newEntity) {
+        super(new TextComponent("Debug Screen"));
+        entity = newEntity;
+        if (newEntity == null || !newEntity.isAlive()) {
+            entity = null;
+        }
     }
+    //TODO: Discard all button
 
+    @Nullable
     public static Entity getHitResult(Minecraft mc) {
         Entity camera = mc.getCameraEntity();
         Vec3 view = camera.getViewVector(1.0f);
@@ -54,7 +57,7 @@ public class DebugScreen extends Screen {
         AABB aabb = camera.getBoundingBox().expandTowards(view.scale(range)).inflate(1);
         EntityHitResult entityHitResult = ProjectileUtil.getEntityHitResult(camera, camera.getEyePosition(), end, aabb,
                 Entity::isPickable, range * range);
-        return (entityHitResult != null) ? (Entity) entityHitResult.getEntity() : null;
+        return (entityHitResult != null) ? entityHitResult.getEntity() : null;
     }
 
     public static void showPath(Player player, List<BlockPos> targets, List<BlockState> blocks, boolean below) {
@@ -109,35 +112,26 @@ public class DebugScreen extends Screen {
                 List.of(Boolean.TRUE, Boolean.FALSE));
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InfoTab(this, prehistoric));
-            this.addRenderableWidget(new Button(460, height - 40, 50, 20, new TextComponent("Tame"), button -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
-            }));
         } else if (entity instanceof PrehistoricSkeleton skeleton) {
             tabs.add(new SkeletonEditTab(this, skeleton));
         }
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {
             builder.withInitialValue(mob.isNoAi());
-            disableAI = builder.create(20, height - 130, width / 6, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
+            disableAI = builder.create(width / 2 - 225, height - 95, 130, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
             });
             this.addRenderableWidget(disableAI);
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableGoalAI"));
-            this.addRenderableWidget(builder.create(20, height - 100, width / 6, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
+            this.addRenderableWidget(builder.create(width / 2 - 225, height - 70, 130, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
             }));
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableMoveAI"));
-            this.addRenderableWidget(builder.create(20, height - 70, width / 6, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
+            this.addRenderableWidget(builder.create(width / 2 - 225, height - 45, 130, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
             }));
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableLookAI"));
-            this.addRenderableWidget(builder.create(20, height - 40, width / 6, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
+            this.addRenderableWidget(builder.create(width / 2 - 225, height - 22, 130, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
-            }));
-            this.addRenderableWidget(new Button(240, height - 70, 70, 20, new TextComponent("Move Left"), button -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SMoveMessage(entity.getId(), entity.blockPosition().getX() - 10, minecraft.level.getHeight(Heightmap.Types.MOTION_BLOCKING, entity.blockPosition().getX() - 10, entity.blockPosition().getZ()), entity.blockPosition().getZ()));
-            }));
-            this.addRenderableWidget(new Button(340, height - 70, 70, 20, new TextComponent("Move Right"), button -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SMoveMessage(entity.getId(), entity.blockPosition().getX() + 10, minecraft.level.getHeight(Heightmap.Types.MOTION_BLOCKING, entity.blockPosition().getX() - 10, entity.blockPosition().getZ()), entity.blockPosition().getZ()));
             }));
         }
         if (entity instanceof PrehistoricAnimatable) {
@@ -145,10 +139,10 @@ public class DebugScreen extends Screen {
             tabs.add(new InstructionTab(this, entity));
         }
         builder.withInitialValue(showPaths);
-        addRenderableWidget(builder.create(240, height - 40, 100, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
+        addRenderableWidget(builder.create(width / 2 - 91, height - 45, 91, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
             showPaths = (boolean) cycleButton.getValue();
         }));
-        addRenderableWidget(new Button(340, height - 40, 100, 20, new TextComponent("Clear Paths"), button -> clearPaths()));
+        addRenderableWidget(new Button(width / 2, height - 45, 91, 20, new TextComponent("Clear Paths"), button -> clearPaths()));
         if (!tabs.isEmpty()) {
             tabs.forEach(tab -> tab.init(width, height));
             Collections.rotate(tabs, -tabShift);

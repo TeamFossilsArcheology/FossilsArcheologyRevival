@@ -30,7 +30,7 @@ public class InstructionRenderer {
             LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.25, pos.y, pos.z - 0.25, pos.x + 0.25, pos.y + 0.5, pos.z + 0.25), 1, 0, 0, 1);
         }
         if (InstructionTab.activeEntity != null) {
-            List<Instruction> instructions = InstructionTab.INSTRUCTIONS.get(InstructionTab.activeEntity.getId());
+            List<Instruction> instructions = InstructionTab.INSTRUCTIONS.get(InstructionTab.activeEntity.getUUID()).instructions();
             countAtPos.clear();
             texts.clear();
             BlockPos currentPos = InstructionTab.activeEntity.blockPosition();

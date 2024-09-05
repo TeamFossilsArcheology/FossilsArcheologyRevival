@@ -21,7 +21,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 public class InstructionTab extends DebugTab {
-    public static final Map<Integer, List<Instruction>> INSTRUCTIONS = new HashMap<>();
+    public static final Map<UUID, Pair> INSTRUCTIONS = new HashMap<>();
     private InstructionsList animations;
     private EntityList attackEntities;
     private EntityList breachEntities;
@@ -45,26 +45,32 @@ public class InstructionTab extends DebugTab {
     @Override
     protected void init(int width, int height) {
         super.init(width, height);
-        animations = addWidget(new InstructionsList(INSTRUCTIONS.computeIfAbsent(entity.getId(), id -> new ArrayList<>()), minecraft));
+        animations = addWidget(new InstructionsList(INSTRUCTIONS.computeIfAbsent(entity.getUUID(), id -> new Pair(entity.getId(), new ArrayList<>())), minecraft));
 
-        addWidget(new Button(5, 240, 50, 20, new TextComponent("Start"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getId())));
+        addWidget(new Button(5, 340, 50, 20, new TextComponent("Start"), button -> {
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
             debugScreen.onClose();
             onClose();
         }));
-        addWidget(new Button(5, 265, 50, 20, new TextComponent("Stop"), button -> {
+        addWidget(new Button(5, 365, 50, 20, new TextComponent("Stop"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entity.getId(), true, List.of()));
         }));
-        addWidget(new Button(60, 240, 70, 20, new TextComponent("Start All"), button -> {
-            for (Map.Entry<Integer, List<Instruction>> entry : INSTRUCTIONS.entrySet()) {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entry.getKey(), true, entry.getValue()));
+        addWidget(new Button(60, 340, 70, 20, new TextComponent("Start All"), button -> {
+            for (Map.Entry<UUID, Pair> entry : INSTRUCTIONS.entrySet()) {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entry.getValue().id, true, entry.getValue().instructions));
             }
             debugScreen.onClose();
             onClose();
         }));
-        addWidget(new Button(135, 240, 50, 20, new TextComponent("Debug"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getId())));
+        addWidget(new Button(135, 340, 50, 20, new TextComponent("Debug"), button -> {
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
         }));
+        /*addWidget(new Button(60, 365, 70, 20, new TextComponent("Save"), button -> {
+
+        }));
+        addWidget(new Button(135, 365, 50, 20, new TextComponent("Load"), button -> {
+
+        }));*/
         addWidget(new Button(220, 5, 100, 20, new TextComponent("Walk Builder"), button -> {
             positionMode = Instruction.Type.WALK_TO;
             debugScreen.onClose();
@@ -80,20 +86,20 @@ public class InstructionTab extends DebugTab {
             attackEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
                 Instruction instruction = new Instruction.Attack(entity1.getId());
                 animations.addInstruction(instruction);
-                INSTRUCTIONS.get(entity.getId()).add(instruction);
+                INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
             });
             addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
                 widgets.remove(breachEntities);
                 renderables.remove(breachEntities);
                 addWidget(attackEntities);
             }));
-            if (entity instanceof PrehistoricSwimming) {
+            if (entity instanceof PrehistoricSwimming swimming && swimming.canDoBreachAttack()) {
                 list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight()
                         .selector(target -> !BreachAttackGoal.isEntitySubmerged(target) && PrehistoricSwimming.isOverWater(target)), livingEntity, entity.getBoundingBox().inflate(30));
                 breachEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
                     Instruction instruction = new Instruction.Breach(entity1.getId());
                     animations.addInstruction(instruction);
-                    INSTRUCTIONS.get(entity.getId()).add(instruction);
+                    INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
                 });
                 addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Breach"), button -> {
                     widgets.remove(attackEntities);
@@ -108,7 +114,7 @@ public class InstructionTab extends DebugTab {
         addWidget(new Button(325, 5, 70, 20, new TextComponent("Add Idle"), button -> {
             Instruction instruction = new Instruction.Idle(Integer.parseInt(zPosInput.getValue()) * 20);
             animations.addInstruction(instruction);
-            INSTRUCTIONS.get(entity.getId()).add(instruction);
+            INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         }));
     }
 
@@ -125,9 +131,9 @@ public class InstructionTab extends DebugTab {
     public static void addPosition(BlockPos target) {
         if (activeEntity == null) return;
         if (positionMode == Instruction.Type.WALK_TO) {
-            INSTRUCTIONS.get(activeEntity.getId()).add(new Instruction.MoveTo(target));
+            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.MoveTo(target));
         } else if (positionMode == Instruction.Type.TELEPORT) {
-            INSTRUCTIONS.get(activeEntity.getId()).add(new Instruction.TeleportTo(target));
+            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.TeleportTo(target));
         }
     }
 
@@ -138,5 +144,9 @@ public class InstructionTab extends DebugTab {
     @Override
     protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
+    }
+
+    public record Pair(int id, List<Instruction> instructions) {
+
     }
 }

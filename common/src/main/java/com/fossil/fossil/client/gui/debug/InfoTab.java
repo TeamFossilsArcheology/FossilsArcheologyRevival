@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SSyncDebugInfoMessage;
+import com.fossil.fossil.network.debug.C2STameMessage;
 import com.fossil.fossil.util.Gender;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
@@ -57,6 +58,9 @@ public class InfoTab extends DebugTab {
                 ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeDays() * 24000 + 1)) / (data.maxScale() - data.minScale()));
                 ageSlider.setValue(ageInTicks);
             }
+        }));
+        addWidget(new Button(275, 55, 50, 20, new TextComponent("Tame"), button -> {
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
         }));
         matingSlider = new DebugSlider(20, 60, 150, 20, new TextComponent("Seconds till mating: "), new TextComponent(""), 0, 900, matingCooldown / 20f, 1, 0, true) {
             @Override

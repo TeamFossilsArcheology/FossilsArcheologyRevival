@@ -31,7 +31,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
     private InstructionEntry hovered;
     protected int width = 200;
     protected int y0 = 5;
-    protected int y1 = y0 + 200;
+    protected int y1 = y0 + 300;
     protected int x0 = 5;
     protected int x1 = x0 + width;
     protected int itemHeight = 20;
@@ -41,12 +41,12 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
     private final Button downButton;
 
 
-    public InstructionsList(List<Instruction> instructions, Minecraft minecraft) {
+    public InstructionsList(InstructionTab.Pair pair, Minecraft minecraft) {
         this.minecraft = minecraft;
-        instructions.forEach(instruction -> children.add(new InstructionEntry(instruction, minecraft)));
+        pair.instructions().forEach(instruction -> children.add(new InstructionEntry(instruction, minecraft)));
         removeButton = new Button(x0, y1 + 5, 70, 20, new TextComponent("Remove item"), button -> {
             if (selected != null) {
-                instructions.remove(children.indexOf(selected));
+                pair.instructions().remove(children.indexOf(selected));
                 children.remove(selected);
                 selected = null;
                 if (!children.isEmpty()) {
@@ -58,7 +58,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
             int i = children.indexOf(selected);
             if (i != 0) {
                 Collections.swap(children, i, i - 1);
-                Collections.swap(instructions, i, i - 1);
+                Collections.swap(pair.instructions(), i, i - 1);
             }
         }) {
             @Override
@@ -75,7 +75,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
             int i = children.indexOf(selected);
             if (i != children.size() - 1) {
                 Collections.swap(children, i, i + 1);
-                Collections.swap(instructions, i, i + 1);
+                Collections.swap(pair.instructions(), i, i + 1);
             }
         }) {
             @Override
@@ -155,7 +155,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
-        y1 = Math.max(200, 200);
+        y1 = Math.max(300, 300);
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionTexColorShader);
