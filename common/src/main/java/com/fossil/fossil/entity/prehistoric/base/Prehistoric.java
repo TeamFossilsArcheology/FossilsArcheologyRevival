@@ -933,7 +933,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (isAgingDisabled()) {
             return;
         }
-        entityData.set(AGE_TICK, age);
+        if (tickCount % getType().updateInterval() == 0) {
+            entityData.set(AGE_TICK, age);
+        }
         if (tickCount % 120 == 0) {
             refreshDimensions();
         }
