@@ -1,5 +1,6 @@
 package com.fossil.fossil.forge.energy;
 
+import net.minecraft.nbt.Tag;
 import net.minecraftforge.energy.EnergyStorage;
 
 public abstract class FAEnergyStorage extends EnergyStorage {
@@ -27,4 +28,13 @@ public abstract class FAEnergyStorage extends EnergyStorage {
     }
 
     protected abstract void onChange();
+
+    @Override
+    public void deserializeNBT(Tag nbt) {
+        if (nbt == null) {
+            energy = 0;
+        } else {
+            super.deserializeNBT(nbt);
+        }
+    }
 }
