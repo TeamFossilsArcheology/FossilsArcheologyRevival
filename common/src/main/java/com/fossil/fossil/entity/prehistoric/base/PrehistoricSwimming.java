@@ -72,9 +72,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
-        if (aiTameType() == PrehistoricEntityInfoAI.Taming.GEM || aiTameType() == PrehistoricEntityInfoAI.Taming.AQUATIC_GEM) {
-            goalSelector.addGoal(Util.IMMOBILE, new ActuallyWeakGoal(this));
-        }
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.SLEEP, new DinoSleepGoal(this));
         goalSelector.addGoal(Util.SLEEP + 1, new DinoSitGoal(this));

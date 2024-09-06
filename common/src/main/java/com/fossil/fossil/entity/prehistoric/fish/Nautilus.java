@@ -131,7 +131,7 @@ public class Nautilus extends PrehistoricFish {
                 }
             }
         }
-        if (shouldBeBeached() && tickCount % 20 == 0) {
+        if (tickCount % 20 == 0) {
             Vec3 oldPos = position();
             refreshDimensions();
             //Prevent little jump after bounding box change

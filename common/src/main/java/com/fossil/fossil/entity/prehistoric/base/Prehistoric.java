@@ -5,6 +5,7 @@ import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.client.renderer.entity.PrehistoricGeoRenderer;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
+import com.fossil.fossil.entity.ai.EatBlockGoal;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
@@ -58,10 +59,7 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
-import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
-import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
-import net.minecraft.world.entity.ai.goal.WrappedGoal;
+import net.minecraft.world.entity.ai.goal.*;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
@@ -212,9 +210,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
-        if (aiTameType() == Taming.GEM || aiTameType() == Taming.AQUATIC_GEM) {
-            goalSelector.addGoal(Util.IMMOBILE, new ActuallyWeakGoal(this));
-        }
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
         goalSelector.addGoal(Util.SLEEP, new DinoSleepGoal(this));
@@ -232,6 +227,15 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
         targetSelector.addGoal(5, new HuntingTargetGoal(this));
+    }
+
+    @Override
+    protected void updateControlFlags() {
+        super.updateControlFlags();
+        boolean bl = !isWeak();
+        goalSelector.setControlFlag(Goal.Flag.MOVE, bl);
+        goalSelector.setControlFlag(Goal.Flag.JUMP, bl);
+        goalSelector.setControlFlag(Goal.Flag.LOOK, bl);
     }
 
     @Override
@@ -470,7 +474,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean isImmobile() {
-        return super.isImmobile() || isActuallyWeak();
+        return super.isImmobile() || isWeak();
     }
 
     @Override
@@ -933,7 +937,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (isAgingDisabled()) {
             return;
         }
-        if (tickCount % getType().updateInterval() == 0) {
+        if (tickCount % getType().updateInterval() * 2 == 0) {
             entityData.set(AGE_TICK, age);
         }
         if (tickCount % 120 == 0) {
@@ -1046,11 +1050,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public boolean isWeak() {
-        return getHealth() < 8 && isAdult() && !isTame();
-    }
-
-    public boolean isActuallyWeak() {
-        return (aiTameType() == Taming.AQUATIC_GEM || aiTameType() == Taming.GEM) && isWeak();
+        return (aiTameType() == Taming.AQUATIC_GEM || aiTameType() == Taming.GEM) && getHealth() < 8 && isAdult() && !isTame();
     }
 
     public int getMaxHunger() {
