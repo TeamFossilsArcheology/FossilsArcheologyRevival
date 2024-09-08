@@ -1,7 +1,9 @@
 package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.control.CustomSwimMoveControl;
 import com.fossil.fossil.entity.ai.control.MeganeuraFlyingMoveControl;
+import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
@@ -21,6 +23,7 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
 import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
@@ -69,22 +72,15 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     protected static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.DIRECTION);
     protected static final EntityDataAccessor<Boolean> ATTACHED = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.BOOLEAN);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    private final PathNavigation flightNav;
-    private final PathNavigation swimNav;
     private final MeganeuraAttachSystem attachSystem = new MeganeuraAttachSystem(this);
+    private final PathNavigation flightNav;
+    private final PathNavigation amphibiousNav;
+    protected boolean isAirNavigator;
 
     public Meganeura(EntityType<Meganeura> entityType, Level level) {
         super(entityType, level);
         flightNav = new FlyingPathNavigation(this, level);
-        swimNav = new AmphibiousPathNavigation(this, level);
-        lookControl = new LookControl(this) {
-            @Override
-            //TODO: Maybe not needed
-            protected boolean resetXRotOnTick() {
-                return false;
-            }
-        };
-        switchNavigator(true);
+        amphibiousNav = new AmphibiousPathNavigation(this, level);
     }
 
     @Override
@@ -152,6 +148,15 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
+    protected boolean canAgeUpNaturally() {
+        if (isInWater() && isBaby() && (getAge() + 1) / 24000 >= data().teenAgeDays()) {
+            //Forbid leaving larvae stage if in water to prevent drowning
+            return false;
+        }
+        return super.canAgeUpNaturally();
+    }
+
+    @Override
     public boolean hurt(DamageSource source, float amount) {
         if (source == DamageSource.IN_WALL) {
             return false;
@@ -182,11 +187,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
 
     @Override
     protected void customServerAiStep() {
-        if (isBaby() && isLandNavigator) {
-            switchNavigator(false);
-        } else if (!isBaby() && !isLandNavigator) {
-            switchNavigator(true);
-        }
+        switchNavigator();
         super.customServerAiStep();
         attachSystem.serverTick();
     }
@@ -200,16 +201,51 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         return !isOnGround() && !attachSystem.isAttached();
     }
 
-    @Override
-    protected void switchNavigator(boolean inAir) {
-        if (inAir) {
-            moveControl = new MeganeuraFlyingMoveControl(this);
-            navigation = flightNav;
-            isLandNavigator = true;
-        } else {
-            super.switchNavigator(false);
-            navigation = swimNav;
+    private void switchNavigator() {
+        //TODO: Rework + clean up
+        if (isLandNavigator) {
+            if (isBaby()) {
+                if (isInWater()) {
+                    //Baby start swimming
+                    moveControl = new CustomSwimMoveControl(this);
+                    lookControl = new SmoothSwimmingLookControl(this, 20);
+                    isLandNavigator = false;
+                    navigation = amphibiousNav;
+                }
+            } else {
+                moveControl = new MeganeuraFlyingMoveControl(this);
+                navigation = flightNav;
+                isLandNavigator = false;
+                isAirNavigator = true;
+            }
+        } else if (isAirNavigator) {
+            if (isBaby()) {
+                //Just needed for debug purposes
+                moveControl = new SmoothTurningMoveControl(this);
+                lookControl = new LookControl(this);
+                isLandNavigator = true;
+                isAirNavigator = false;
+            }
+        } else {//isWaterNavigator
+            if (isBaby()) {
+                if (!isInWater() && isOnGround()) {
+                    //Baby start walking
+                    moveControl = new SmoothTurningMoveControl(this);
+                    lookControl = new LookControl(this);
+                    isLandNavigator = true;
+                    navigation = amphibiousNav;
+                }
+            } else {
+                moveControl = new MeganeuraFlyingMoveControl(this);
+                navigation = flightNav;
+                isLandNavigator = false;
+                isAirNavigator = true;
+            }
         }
+    }
+
+    @Override
+    protected void switchNavigator(boolean onLand) {
     }
 
     public MeganeuraAttachSystem getAttachSystem() {

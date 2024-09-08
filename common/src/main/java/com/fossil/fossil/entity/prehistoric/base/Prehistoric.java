@@ -266,6 +266,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (SLEEPING.equals(key)) {
             refreshTexturePath();
+        } else if (AGE_TICK.equals(key)) {
+            refreshDimensions();
+            if (level.isClientSide) {
+                refreshTexturePath();
+            } else {
+                updateAbilities();
+            }
         }
         super.onSyncedDataUpdated(key);
     }
@@ -283,7 +290,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             gender = Gender.FEMALE;
         }
-        setAgeInTicks(buf.readInt());
+        setAge(buf.readInt());
         refreshTexturePath();
     }
 
@@ -311,7 +318,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         moodSystem.load(compound);
-        setAgeInTicks(compound.getInt("Age"));
+        setAge(compound.getInt("Age"));
         setMatingCooldown(compound.getInt("MatingCooldown"));
         setHunger(compound.getInt("Hunger"));
         setFleeing(compound.getBoolean("Fleeing"));
@@ -728,8 +735,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void tick() {
         super.tick();
 
-        if (!isAgingDisabled()) {
-            setAgeInTicks(getAge() + 1);
+        if (!level.isClientSide && !isAgingDisabled() && canAgeUpNaturally()) {
+            setAge(getAge() + 1);
         }
         if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.ENABLE_HUNGER)) {
             if (!isNoAi()) {
@@ -920,32 +927,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void setAgeInDays(int days) {
-        setAgeInTicks(days * 24000);
+        setAge(days * 24000);
     }
 
     @Override
     public int getAge() {
-        return entityData.get(AGE_TICK);
+        return level.isClientSide ? entityData.get(AGE_TICK) : age;
     }
 
     @Override
     public void setAge(int age) {
-    }
-
-    public void setAgeInTicks(int age) {
         if (isAgingDisabled()) {
             return;
         }
-        if (tickCount % getType().updateInterval() * 2 == 0) {
+        if (tickCount % 120 == 0 || age > this.age + 120 || age < this.age - 120) {
             entityData.set(AGE_TICK, age);
         }
-        if (tickCount % 120 == 0) {
-            refreshDimensions();
-        }
-        if (tickCount % 12000 == 0) {
-            refreshTexturePath();
-            updateAbilities();
-        }
+        this.age = age;
     }
 
     public void grow(int ageInDays) {
@@ -959,6 +957,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     public boolean isAgingDisabled() {
         return this.entityData.get(AGING_DISABLED);
+    }
+
+    protected boolean canAgeUpNaturally() {
+        return true;
     }
 
     public void setAgingDisabled(boolean isAgingDisabled) {
@@ -1000,17 +1002,15 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
         if (!level.isClientSide) {
             Entity hatchling;
-            if (this instanceof Mammal mammal) {
-                hatchling = mammal.createChild((ServerLevel) level);
+            if (info().mobType == PrehistoricMobType.MAMMAL) {
+                hatchling = getType().create(level);
             } else if (info().cultivatedBirdEggItem != null) {
                 hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().cultivatedBirdEggItem));
+            } else if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || info().isViviparousAquatic()) {
+                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem));
             } else {
-                if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || info().isVivariousAquatic()) {
-                    hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem));
-                } else {
-                    hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
-                    ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
-                }
+                hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
+                ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
             }
             setTarget(null);
             hatchling.moveTo(getX(), getY(), getZ(), yBodyRot, 0);
@@ -1466,8 +1466,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void registerControllers(AnimationData data) {
-        var controller = new AnimationController<>(
-                this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate);
+        var controller = new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate);
+        registerEatingListeners(controller);
+        data.addAnimationController(controller);
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, animationLogic::attackPredicate));
+    }
+
+    protected void registerEatingListeners(AnimationController<? extends Prehistoric> controller) {
         controller.registerParticleListener(event -> {
             if ("eat".equals(event.effect)) {
                 //TODO: Could use event.script + getScale to increase the aabb size
@@ -1485,9 +1491,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 makeEatingSounds();
             }
         });
-        data.addAnimationController(controller);
-        data.addAnimationController(new AnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 5, animationLogic::attackPredicate));
     }
 
     public AnimationLogic<Prehistoric> getAnimationLogic() {

@@ -237,7 +237,7 @@ public enum PrehistoricEntityInfo implements EntityInfo {
         return timePeriod != CURRENT && mobType != FISH && mobType != ARTHROPOD && this != MEGALODON && this != AQUILOLAMNA;
     }
 
-    public boolean isVivariousAquatic() {
+    public boolean isViviparousAquatic() {
         return mobType == DINOSAUR_AQUATIC && this != SARCOSUCHUS || mobType == ARTHROPOD;
     }
 }

@@ -53,7 +53,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     /**
      * Cache check for current navigator
      */
-    protected boolean isLandNavigator = true;
+    protected boolean isLandNavigator;
     public boolean breachTargetReached = false;
     private boolean beached;
 
@@ -83,6 +83,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal(this, 1));
         goalSelector.addGoal(Util.WANDER + 2, new DinoRandomSwimGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER + 3, new AmphibiousWanderGoal(this, 1));
         goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8.0f));
         goalSelector.addGoal(Util.LOOK + 1, new RandomLookAroundGoal(this));
         targetSelector.addGoal(5, new HuntingTargetGoal(this));
@@ -130,7 +131,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     protected void switchNavigator(boolean onLand) {
-        //TODO: Properly implement all four classes
         if (onLand) {
             moveControl = new SmoothTurningMoveControl(this);
             lookControl = new LookControl(this);
@@ -194,7 +194,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         if (!level.isClientSide) {
             if (isInWater() && canSwim() && isLandNavigator) {
                 switchNavigator(false);
-            } else if (!isInWater() && isOnGround() && !canSwim() && !isLandNavigator) {
+            } else if (!isInWater() && isOnGround() && isAmphibious() && !isLandNavigator) {
                 switchNavigator(true);
             }
             if (isInWater()) {
@@ -363,7 +363,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public boolean canBeControlledByRider() {
-        return info().isVivariousAquatic() ? isInWater() && super.canBeControlledByRider() : super.canBeControlledByRider();
+        return !isAmphibious() ? isInWater() && super.canBeControlledByRider() : super.canBeControlledByRider();
     }
 
     public boolean isBeached() {
@@ -410,8 +410,9 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(
-                this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::waterPredicate));
+        var controller = new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::waterPredicate);
+        registerEatingListeners(controller);
+        data.addAnimationController(controller);
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::grabAttackPredicate));
     }

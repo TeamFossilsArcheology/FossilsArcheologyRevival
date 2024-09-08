@@ -64,7 +64,7 @@ public class C2SSyncDebugInfoMessage {
                 }
                 if (player.level.getEntity(entityId) instanceof Prehistoric prehistoric) {
                     if (!player.level.isClientSide) {
-                        prehistoric.setAgeInTicks(age);
+                        prehistoric.setAge(age);
                         prehistoric.setHunger(hunger);
                         prehistoric.moodSystem.setMood(mood);
                     }

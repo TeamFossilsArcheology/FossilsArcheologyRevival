@@ -68,7 +68,7 @@ public class PrehistoricPathFinder extends PathFinder {
             for (Target target : set) {
                 if (node.distanceManhattan(target) > accuracy) continue;
                 target.setReached();
-                return reconstructPath(target.getBestNode(), targetPos.get(target), true);
+                return reconstructPath(target, targetPos.get(target), true);
             }
             if (node.distanceTo(start) >= maxRange) continue;
             int neighborCount = nodeEvaluator.getNeighbors(neighbors, node);
@@ -90,7 +90,7 @@ public class PrehistoricPathFinder extends PathFinder {
             }
             i++;
         }
-        Optional<PatchedPath> path = set.stream().map(target -> reconstructPath(target.getBestNode(), targetPos.get(target), false))
+        Optional<PatchedPath> path = set.stream().map(target -> reconstructPath(target, targetPos.get(target), false))
                 .min(Comparator.comparingDouble(PatchedPath::getDistToTarget).thenComparingInt(PatchedPath::getNodeCount));
         return path.orElse(null);
     }
@@ -108,14 +108,16 @@ public class PrehistoricPathFinder extends PathFinder {
     /**
      * Converts a recursive path point structure into a path
      */
-    private PatchedPath reconstructPath(Node point, BlockPos targetPos, boolean reachesTarget) {
+    private PatchedPath reconstructPath(Target target, BlockPos targetPos, boolean reachesTarget) {
+        Node end = target.getBestNode();
         ArrayList<Node> list = Lists.newArrayList();
-        Node node = point;
+        Node node = end;
         list.add(0, node);
         while (node.cameFrom != null) {
             node = node.cameFrom;
             list.add(0, node);
         }
+        list.add(target);
         return new PatchedPath(list, targetPos, reachesTarget);
     }
 

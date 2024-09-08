@@ -25,12 +25,12 @@ public class DinoEggItem extends PrehistoricEntityItem {
         if (level.isClientSide) {
             return true;
         }
-        if (!info.isVivariousAquatic()) {
+        if (!info.isViviparousAquatic()) {
             DinosaurEgg egg = ModEntities.DINOSAUR_EGG.get().create(level);
             if (egg == null) {
                 return false;
             }
-            egg.moveTo(x, y + 0.5, z, 0, 0);
+            egg.moveTo(x, y, z, 0, 0);
             egg.setPrehistoricEntityInfo(info);
             level.addFreshEntity(egg);
             level.gameEvent(player, GameEvent.ENTITY_PLACE, egg);

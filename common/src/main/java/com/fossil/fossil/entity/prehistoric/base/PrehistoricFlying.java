@@ -312,8 +312,9 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(
-                this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::flyingPredicate));
+        var controller = new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::flyingPredicate);
+        registerEatingListeners(controller);
+        data.addAnimationController(controller);
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }

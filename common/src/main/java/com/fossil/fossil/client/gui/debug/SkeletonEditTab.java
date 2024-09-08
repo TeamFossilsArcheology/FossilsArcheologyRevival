@@ -2,7 +2,6 @@ package com.fossil.fossil.client.gui.debug;
 
 import com.fossil.fossil.entity.PrehistoricSkeleton;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SSyncDebugInfoMessage;
@@ -19,7 +18,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
-public class SkeletonEditTab extends DebugTab {
+public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
     private final int maxAge;
     private int age;
     private PrehistoricEntityInfo info;
@@ -55,10 +54,8 @@ public class SkeletonEditTab extends DebugTab {
     @Override
     protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
-        if (entity instanceof Prehistoric prehistoric) {
-            drawString(poseStack, minecraft.font, new TextComponent("Age: " + prehistoric.getAge()), 175, 35, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Type: " + prehistoric.info().name()), 175, 185, 16777215);
-        }
+        drawString(poseStack, minecraft.font, new TextComponent("Age: " + entity.getAge()), 175, 35, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Type: " + entity.info().name()), 175, 185, 16777215);
     }
 
     private class ModelsList extends ContainerObjectSelectionList<ModelsList.ModelEntry> {

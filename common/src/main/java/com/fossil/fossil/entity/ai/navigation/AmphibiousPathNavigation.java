@@ -40,7 +40,7 @@ public class AmphibiousPathNavigation extends WaterBoundPathNavigation {
         final Vec3 base = entityPos.add(-mob.getBbWidth() * 0.5F, 0, -mob.getBbWidth() * 0.5F);
         final Vec3 max = base.add(mob.getBbWidth(), mob.getBbHeight(), mob.getBbWidth());
         if (!tryShortcut(path, new Vec3(mob.getX(), mob.getY(), mob.getZ()), pathLength, base, max)) {
-            if (Util.isAt(mob, path, 0.5F) || Util.atElevationChange(mob, path) && Util.isAt(mob, path, mob.getBbWidth() * 0.75F)) {
+            if (Util.isAt(mob, path, Math.min(mob.getBbWidth() * 0.75f, 0.5f)) || Util.atElevationChange(mob, path) && Util.isAt(mob, path, mob.getBbWidth() * 0.75F)) {
                 path.advance();
                 if (!path.isDone()) {
                     mob.getLookControl().setLookAt(path.getNextEntityPos(mob));

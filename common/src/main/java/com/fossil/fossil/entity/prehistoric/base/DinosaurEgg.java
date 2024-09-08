@@ -22,7 +22,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -87,7 +86,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
                     MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(0), null);
             prehistoric.grow(0);
         }
-        entity.moveTo(Mth.floor(x), Mth.floor(y) + 1, Mth.floor(z), level.random.nextFloat() * 360, 0);
+        entity.moveTo(x, y, z, level.random.nextFloat() * 360, 0);
         level.addFreshEntity(entity);
         return entity;
     }

@@ -131,6 +131,15 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     public PlayState waterPredicate(AnimationEvent<PrehistoricSwimming> event) {
         if (isBlocked()) return PlayState.STOP;
         AnimationController<PrehistoricSwimming> controller = event.getController();
+        if (nextAnimations.containsKey(controller.getName())) {
+            ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
+            activeAnimations.put(controller.getName(), next);
+
+            controller.transitionLengthTicks = next.speed;
+            controller.markNeedsReload();
+            controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName, next.loop ? LOOP : null));
+            return PlayState.CONTINUE;
+        }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
         ILoopType loopType = null;
 
