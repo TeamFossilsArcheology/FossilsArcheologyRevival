@@ -4,7 +4,9 @@ import com.fossil.fossil.client.gui.debug.instruction.EntityList;
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.client.gui.debug.instruction.InstructionsList;
 import com.fossil.fossil.entity.ai.BreachAttackGoal;
+import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SInstructionMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -15,12 +17,13 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
+import net.minecraft.world.phys.BlockHitResult;
 
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
 
-public class InstructionTab extends DebugTab {
+public class InstructionTab extends DebugTab<Prehistoric> {
     public static final Map<UUID, Pair> INSTRUCTIONS = new HashMap<>();
     private InstructionsList animations;
     private EntityList attackEntities;
@@ -29,9 +32,9 @@ public class InstructionTab extends DebugTab {
     public static Entity highlightInstructionEntity;
     public static Instruction highlightInstruction;
     public static Instruction.Type positionMode = Instruction.Type.IDLE;
-    public static Entity activeEntity;
+    public static Prehistoric activeEntity;
 
-    protected InstructionTab(DebugScreen debugScreen, Entity entity) {
+    protected InstructionTab(DebugScreen debugScreen, Prehistoric entity) {
         super(debugScreen, entity);
     }
     //TODO: Loop, Sleep, Sit, Anim, Attack
@@ -41,6 +44,7 @@ public class InstructionTab extends DebugTab {
     //TODO: Add spawner. Use EntityRenderer to render preview. Rotate with mousewheel
     //TODO: Flying mobs, Aquatic mobs
     //TODO: Arrow above dino instead of outline
+    //TODO: Anu support
 
     @Override
     protected void init(int width, int height) {
@@ -72,41 +76,45 @@ public class InstructionTab extends DebugTab {
 
         }));*/
         addWidget(new Button(220, 5, 100, 20, new TextComponent("Walk Builder"), button -> {
-            positionMode = Instruction.Type.WALK_TO;
+            positionMode = Instruction.Type.MOVE_TO;
             debugScreen.onClose();
             //TODO: Custom icons next to crosshair for walk/teleport
         }));
 
         addWidget(new Button(220, 30, 100, 20, new TextComponent("Teleport Builder"), button -> {
-            positionMode = Instruction.Type.TELEPORT;
+            positionMode = Instruction.Type.TELEPORT_TO;
             debugScreen.onClose();
         }));
-        if (entity instanceof LivingEntity livingEntity) {
-            var list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight(), livingEntity, entity.getBoundingBox().inflate(30));
-            attackEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
-                Instruction instruction = new Instruction.Attack(entity1.getId());
+        if (entity instanceof Meganeura) {
+            addWidget(new Button(220, 55, 100, 20, new TextComponent("Attach Builder"), button -> {
+                positionMode = Instruction.Type.ATTACH_TO;
+                debugScreen.onClose();
+            }));
+        }
+        var list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight(), entity, entity.getBoundingBox().inflate(30));
+        attackEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
+            Instruction instruction = new Instruction.Attack(entity1.getId());
+            animations.addInstruction(instruction);
+            INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
+        });
+        addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
+            widgets.remove(breachEntities);
+            renderables.remove(breachEntities);
+            addWidget(attackEntities);
+        }));
+        if (entity instanceof PrehistoricSwimming swimming && swimming.canDoBreachAttack()) {
+            list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight()
+                    .selector(target -> !BreachAttackGoal.isEntitySubmerged(target) && PrehistoricSwimming.isOverWater(target)), entity, entity.getBoundingBox().inflate(30));
+            breachEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
+                Instruction instruction = new Instruction.Breach(entity1.getId());
                 animations.addInstruction(instruction);
                 INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
             });
-            addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
-                widgets.remove(breachEntities);
-                renderables.remove(breachEntities);
-                addWidget(attackEntities);
+            addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Breach"), button -> {
+                widgets.remove(attackEntities);
+                renderables.remove(attackEntities);
+                addWidget(breachEntities);
             }));
-            if (entity instanceof PrehistoricSwimming swimming && swimming.canDoBreachAttack()) {
-                list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight()
-                        .selector(target -> !BreachAttackGoal.isEntitySubmerged(target) && PrehistoricSwimming.isOverWater(target)), livingEntity, entity.getBoundingBox().inflate(30));
-                breachEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
-                    Instruction instruction = new Instruction.Breach(entity1.getId());
-                    animations.addInstruction(instruction);
-                    INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
-                });
-                addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Breach"), button -> {
-                    widgets.remove(attackEntities);
-                    renderables.remove(attackEntities);
-                    addWidget(breachEntities);
-                }));
-            }
         }
 
         EditBox zPosInput = addWidget(new EditBox(minecraft.font, 325, 30, 30, 20, new TextComponent("")));
@@ -128,12 +136,18 @@ public class InstructionTab extends DebugTab {
         activeEntity = null;
     }
 
-    public static void addPosition(BlockPos target) {
+    public static void addPosition(BlockHitResult hitResult) {
         if (activeEntity == null) return;
-        if (positionMode == Instruction.Type.WALK_TO) {
+        if (positionMode == Instruction.Type.MOVE_TO) {
+            BlockPos target = hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.MoveTo(target));
-        } else if (positionMode == Instruction.Type.TELEPORT) {
-            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.TeleportTo(target));
+        } else if (positionMode == Instruction.Type.TELEPORT_TO) {
+            BlockPos target = hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
+            //TODO: Rotation from scrolling
+            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.TeleportTo(target, 0));
+        } else if (positionMode == Instruction.Type.ATTACH_TO) {
+            BlockPos target = hitResult.getBlockPos();
+            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.AttachTo(target, hitResult.getDirection(), hitResult.getLocation()));
         }
     }
 

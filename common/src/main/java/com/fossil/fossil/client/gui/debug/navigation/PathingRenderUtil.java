@@ -12,6 +12,8 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import software.bernie.geckolib3.core.util.Color;
 
 public class PathingRenderUtil {
 
@@ -19,21 +21,29 @@ public class PathingRenderUtil {
         LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(blockPos), 1, 1, 1, 0.75f);
     }
 
-    public static void renderLine(PoseStack poseStack, Node start, Node end) {
+    public static void renderLine(PoseStack poseStack, double x0, double y0, double z0, double x1, double y1, double z1, Color color) {
+        poseStack.pushPose();
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder bufferBuilder = tesselator.getBuilder();
         RenderSystem.setShader(GameRenderer::getPositionColorShader);
         bufferBuilder.begin(VertexFormat.Mode.DEBUG_LINES, DefaultVertexFormat.POSITION_COLOR);
-        Vector4f vector4f = new Vector4f(start.x, start.y, start.z, 1.0f);
-        vector4f.add(-PathingDebug.pos1.getX() + 0.5f, -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ() + 0.5f, 0);
+        Vector4f vector4f = new Vector4f((float) x0, (float) y0, (float) z0, 1.0f);
         vector4f.transform(poseStack.last().pose());
-        bufferBuilder.vertex(vector4f.x(), vector4f.y(), vector4f.z()).color(255, 255, 255, 255).endVertex();
+        bufferBuilder.vertex(vector4f.x(), vector4f.y(), vector4f.z()).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
 
-        vector4f = new Vector4f(end.x, end.y, end.z, 1.0f);
-        vector4f.add(-PathingDebug.pos1.getX() + 0.5f, -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ() + 0.5f, 0);
+        vector4f = new Vector4f((float) x1, (float) y1, (float) z1, 1.0f);
         vector4f.transform(poseStack.last().pose());
-        bufferBuilder.vertex(vector4f.x(), vector4f.y(), vector4f.z()).color(255, 255, 255, 255).endVertex();
+        bufferBuilder.vertex(vector4f.x(), vector4f.y(), vector4f.z()).color(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha()).endVertex();
         tesselator.end();
+        poseStack.popPose();
+    }
+
+    public static void renderLine(PoseStack poseStack, Vec3 start, Vec3 end, Color color) {
+        renderLine(poseStack, start.x, start.y, start.z, end.x, end.y, end.z, color);
+    }
+
+    public static void renderLine(PoseStack poseStack, Node start, Node end) {
+        renderLine(poseStack, start.x + 0.5f, start.y, start.z + 0.5f, end.x + 0.5f, end.y, end.z + 0.5f, Color.WHITE);
     }
 
     public static void renderTextBatch(PoseStack poseStack, Minecraft minecraft, Node[] nodes, int end) {
@@ -50,7 +60,6 @@ public class PathingRenderUtil {
         poseStack.pushPose();
         for (int i = 0; i < end; i++) {
             poseStack.pushPose();
-            poseStack.translate(-PathingDebug.pos1.getX(), -PathingDebug.pos1.getY(), -PathingDebug.pos1.getZ());
             poseStack.translate(nodes[i].x + 0.5, nodes[i].y + 0.5, nodes[i].z + 0.5);
             poseStack.mulPoseMatrix(new Matrix4f(minecraft.gameRenderer.getMainCamera().rotation()));
             poseStack.scale(0.02f, -0.02f, 0.02f);

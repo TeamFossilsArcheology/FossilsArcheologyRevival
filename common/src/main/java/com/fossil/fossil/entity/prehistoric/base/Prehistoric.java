@@ -112,6 +112,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private OrderType currentOrder;
     private Boolean hasTeenTexture;
     private final BooleanSupplier hasTeenTextureSupplier = () -> {
+        //TODO: Do this differently to prevent filling up the log
         String name = getType().arch$registryName().getPath();
         ResourceLocation rl = new ResourceLocation(Fossil.MOD_ID, "textures/entity/" + name + "/" + name + "_teen.png");
         Minecraft.getInstance().getTextureManager().getTexture(rl);
@@ -289,9 +290,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("Mood", moodSystem.getMood());
+        moodSystem.saveAdditional(compound);
         compound.putInt("MatingCooldown", getMatingCooldown());
-        compound.putInt("PlayingCooldown", moodSystem.getPlayingCooldown());
         compound.putInt("Hunger", getHunger());
         compound.putBoolean("Fleeing", isFleeing());
         compound.putBoolean("Sitting", isSitting());
@@ -310,10 +310,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        moodSystem.setMood(compound.getInt("Mood"));
+        moodSystem.load(compound);
         setAgeInTicks(compound.getInt("Age"));
         setMatingCooldown(compound.getInt("MatingCooldown"));
-        moodSystem.setPlayingCooldown(compound.getInt("PlayingCooldown"));
         setHunger(compound.getInt("Hunger"));
         setFleeing(compound.getBoolean("Fleeing"));
         setSitting(compound.getBoolean("Sitting"));
@@ -705,8 +704,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             if (cathermalSleepCooldown > 0) {
                 cathermalSleepCooldown--;
             }
-            moodSystem.tick();
-            instructionSystem.tick();
+            moodSystem.serverTick();
+            instructionSystem.serverTick();
         }
         if (!level.isClientSide && horizontalCollision && data().breaksBlocks() && moodSystem.getMood() < 0) {
             breakBlock((float) FossilConfig.getDouble(FossilConfig.BLOCK_BREAK_HARDNESS));

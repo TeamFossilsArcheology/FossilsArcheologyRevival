@@ -1,12 +1,13 @@
 package com.fossil.fossil.entity.ai.control;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 
-public class CustomFlightBodyRotationControl extends BodyRotationControl {
-    private final PrehistoricFlying flying;
+public class CustomFlightBodyRotationControl<T extends Mob & FlyingAnimal> extends BodyRotationControl {
+    private final T flying;
 
-    public CustomFlightBodyRotationControl(PrehistoricFlying flying) {
+    public CustomFlightBodyRotationControl(T flying) {
         super(flying);
         this.flying = flying;
     }

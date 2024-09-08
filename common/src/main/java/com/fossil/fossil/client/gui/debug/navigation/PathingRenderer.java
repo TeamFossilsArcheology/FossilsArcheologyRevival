@@ -54,7 +54,6 @@ public class PathingRenderer {
     public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks, long finishNanoTime) {
         if (pos1 != null && pos2 != null) {
             poseStack.pushPose();
-            poseStack.translate(pos1.getX(), pos1.getY(), pos1.getZ());
             renderPath(PathingScreen.currentNav, poseStack, buffer, partialTicks);
             poseStack.popPose();
         }
@@ -88,7 +87,7 @@ public class PathingRenderer {
             if (renderPath) {
                 for (int i = 0; i < path.nodes.size(); i++) {
                     Node node = path.getNode(i);
-                    AABB targetArea = new AABB(new BlockPos(node.x, node.y, node.z)).move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
+                    AABB targetArea = new AABB(new BlockPos(node.x, node.y, node.z));
                     if (i == PathingRenderer.pathIndex) {
                         //Highlight current node
                         LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 0, (float) i / (path.nodes.size() - 1), 1, 0.25f);
@@ -103,7 +102,7 @@ public class PathingRenderer {
                     AABB targetArea = new AABB(node.x + 0.5F - maxDistanceToWaypoint / 2.0F,
                             node.y + 0.01F, node.z + 0.5F - maxDistanceToWaypoint / 2.0F,
                             node.x + 0.5F + maxDistanceToWaypoint / 2.0F,
-                            node.y + 0.1, node.z + 0.5F + maxDistanceToWaypoint / 2.0F).move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
+                            node.y + 0.1, node.z + 0.5F + maxDistanceToWaypoint / 2.0F);
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 0.8f, 1, 1, 0.5f);
                 }
             }
@@ -123,7 +122,7 @@ public class PathingRenderer {
                 }
                 for (int i = 0; i < PathingScreen.tick; i++) {
                     Node node2 = path.getClosedSet()[i];
-                    AABB targetArea = new AABB(node2.x + 0.25, node2.y + 0.25, node2.z + 0.25, node2.x + 0.75, node2.y + 0.75, node2.z + 0.75).move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
+                    AABB targetArea = new AABB(node2.x + 0.25, node2.y + 0.25, node2.z + 0.25, node2.x + 0.75, node2.y + 0.75, node2.z + 0.75);
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 1, i == PathingScreen.tick ? 1 : 0, 0, 0.5f);
                 }
                 PathingRenderUtil.renderTextBatch(poseStack, mc, path.getClosedSet(), PathingScreen.tick);
@@ -134,14 +133,13 @@ public class PathingRenderer {
                 if (pathNav.sweepStartPos != null) {
                     Vec3 wantedPos = pathNav.sweepStartPos;
                     AABB targetArea = new AABB(wantedPos.x - 0.25, wantedPos.y - 0.25, wantedPos.z - 0.25, wantedPos.x + 0.25, wantedPos.y + 0.25, wantedPos.z + 0.25);
-                    targetArea = targetArea.move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 1, 1, 0, 1);
                 }
                 //Wanted pos for sweep logic
                 if (pathNav.sweepWantedPos != null) {
                     Vec3 wantedPos = pathNav.sweepWantedPos;
                     poseStack.pushPose();
-                    poseStack.translate(wantedPos.x - pos1.getX(), wantedPos.y - pos1.getY(), wantedPos.z - pos1.getZ());
+                    poseStack.translate(wantedPos.x, wantedPos.y, wantedPos.z);
                     mc.getBlockRenderer().renderSingleBlock(Blocks.RED_CARPET.defaultBlockState(), poseStack, buffer, mc.getEntityRenderDispatcher().getPackedLightCoords(mc.player, partialTicks), OverlayTexture.NO_OVERLAY);
                     poseStack.popPose();
                 }
@@ -158,13 +156,12 @@ public class PathingRenderer {
                 if (pathNav.wantedPos != null) {
                     Vec3 wantedPos = pathNav.wantedPos.add(0, 1, 0);
                     AABB targetArea = new AABB(wantedPos.x - 0.25, wantedPos.y - 0.25, wantedPos.z - 0.25, wantedPos.x + 0.25, wantedPos.y + 0.25, wantedPos.z + 0.25);
-                    targetArea = targetArea.move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 0, 1, 1, 1);
                 }
             }
             //Render current hitbox
             Vec3 pos = path.getEntityPosAtNode(PathingRenderer.pathIndex);
-            AABB aABB = PathingRenderer.getBigHitbox().move(pos.x, pos.y, pos.z).move(-pos1.getX(), -pos1.getY(), -pos1.getZ());
+            AABB aABB = PathingRenderer.getBigHitbox().move(pos.x, pos.y, pos.z);
             LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), aABB, 0, 1, 0, 1);
 
             //Highlight blocked positions around the current node
@@ -178,7 +175,7 @@ public class PathingRenderer {
                 for (Node neighbor : neighbors) {
                     if (neighbor != null) {
                         poseStack.pushPose();
-                        poseStack.translate(neighbor.x - pos1.getX(), neighbor.y - pos1.getY(), neighbor.z - pos1.getZ());
+                        poseStack.translate(neighbor.x, neighbor.y, neighbor.z);
                         if (neighbor.type == BlockPathTypes.BLOCKED) {
                             mc.getBlockRenderer().renderSingleBlock(Blocks.IRON_BLOCK.defaultBlockState(), poseStack, buffer, mc.getEntityRenderDispatcher().getPackedLightCoords(mc.player, partialTicks), OverlayTexture.NO_OVERLAY);
                         } else {
@@ -190,7 +187,7 @@ public class PathingRenderer {
                 for (BlockPos neighbor : neighborsX) {
                     if (neighbor != null) {
                         poseStack.pushPose();
-                        poseStack.translate(neighbor.getX() - pos1.getX(), neighbor.getY() - pos1.getY(), neighbor.getZ() - pos1.getZ());
+                        poseStack.translate(neighbor.getX(), neighbor.getY(), neighbor.getZ());
                         mc.getBlockRenderer().renderSingleBlock(Blocks.GLASS.defaultBlockState(), poseStack, buffer, mc.getEntityRenderDispatcher().getPackedLightCoords(mc.player, partialTicks), OverlayTexture.NO_OVERLAY);
                         poseStack.popPose();
                     }

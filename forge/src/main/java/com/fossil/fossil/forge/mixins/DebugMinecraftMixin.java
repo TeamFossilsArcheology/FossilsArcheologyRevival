@@ -5,6 +5,7 @@ import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.client.gui.debug.navigation.PathingDebug;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.phys.BlockHitResult;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -46,7 +47,7 @@ public class DebugMinecraftMixin {
     @Inject(method = "startAttack", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelLeftClick(CallbackInfoReturnable<Boolean> cir) {
         if (InstructionTab.positionActive()) {
-            BlockPos hitResult = PathingDebug.getBlockHitResult((Minecraft) (Object) this);
+            BlockHitResult hitResult = PathingDebug.getFullHitResult((Minecraft) (Object) this);
             InstructionTab.addPosition(hitResult);
             cir.setReturnValue(false);
         } else if (PathingDebug.showHelpMenu) {

@@ -20,6 +20,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
@@ -58,13 +59,39 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
     @Override
     public void render(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         this.shadowRadius = entity.getBbWidth() * 0.45F;
-        if (entity instanceof Meganeura meganeura && meganeura.getAttachmentPos() != null) {
+        if (entity instanceof Meganeura meganeura) {
             poseStack.pushPose();
-            Vec3i normal = meganeura.getAttachmentFace().getNormal();
-            double x = normal.getX() * 0.2;
-            double y = normal.getY() * 0.2 + 0.2;
-            double z = normal.getZ() * 0.2;
-            poseStack.translate(x, y, z);
+            if (meganeura.getAttachSystem().attachStarted()) {
+                Direction face = meganeura.getAttachSystem().getAttachmentFace();
+                Vec3i normal = face.getNormal();
+                float yRot = toPoseStackRotation(face.getOpposite().toYRot());
+                float xRot = (float) -Mth.atan2(Mth.sqrt(normal.getX() * normal.getX() + normal.getZ() * normal.getZ()), 0) * Mth.RAD_TO_DEG;
+                float translate = entity.getBbWidth() / 2;
+                float yTranslate = 0.2f;
+                if (!meganeura.getAttachSystem().isAttached()) {
+                    //Is approaching
+                    Vec3 pos = meganeura.getAttachSystem().getAttachmentPos();
+                    double dist = pos.distanceTo(entity.position());
+                    if (dist < 1) {
+                        //TODO: Use initial dist as base value so that it still looks good when starting closer than 1
+                        xRot *= (float) Math.min((-dist + 1) * 1.2, 1);
+                        translate *= (float) Math.min((-dist + 1) * 1.2, 1);
+                        yTranslate *= (float) Math.min((-dist + 1) * 1.2, 1);
+                    } else {
+                        xRot = 0;
+                        translate = 0;
+                        yTranslate = 0;
+                    }
+                    Vec3 offset = pos.subtract(entity.position());
+                    double yawDiff = (Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG);
+                    yRot = toPoseStackRotation(Util.clampTo360(Util.yawToYRot(yawDiff)));
+                }
+                yRot += entityYaw;
+                poseStack.translate(-normal.getX() * translate, yTranslate, -normal.getZ() * translate);
+                //Could apply z rotation depending on approach angle
+                poseStack.mulPose(Vector3f.YP.rotationDegrees(yRot));
+                poseStack.mulPose(Vector3f.XP.rotationDegrees(xRot));
+            }
             super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
             poseStack.popPose();
         } else {
@@ -84,6 +111,10 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
             }
             super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
         }
+    }
+
+    private static float toPoseStackRotation(float rot) {
+        return -rot;
     }
 
     @Override

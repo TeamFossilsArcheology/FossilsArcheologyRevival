@@ -2,32 +2,39 @@ package com.fossil.fossil.entity.util;
 
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.entity.ai.BreachAttackGoal;
+import com.fossil.fossil.entity.prehistoric.base.AISystem;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
+import net.minecraft.core.Direction;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.pathfinder.Path;
+import net.minecraft.world.phys.Vec3;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstructionSystem {
-    protected final Prehistoric entity;
+public class InstructionSystem implements AISystem {
+    private final Prehistoric entity;
     private final List<Instruction> instructions = new ArrayList<>();
     private int index = -1;
     private boolean shouldLoop;
     private int tries;
     private long endTick;
     private boolean breachTargetReached;
+    private boolean attached;
 
     public InstructionSystem(Prehistoric entity) {
         this.entity = entity;
     }
 
-    public void tick() {
+    @Override
+    public void serverTick() {
         if (instructions.isEmpty() || index >= instructions.size()) {
             return;
         }
@@ -41,6 +48,21 @@ public class InstructionSystem {
         if (current instanceof Instruction.MoveTo moveTo) {
             return tryUpdatePath(moveTo);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
+            return false;
+        } else if (current instanceof Instruction.AttachTo attachTo) {
+            if (entity instanceof Meganeura meganeura) {
+                if (!meganeura.getAttachSystem().isAttached()) {
+                    return true;
+                } else if (!attached) {
+                    attached = true;
+                    endTick = entity.level.getGameTime() + 100;
+                }
+                if (endTick < entity.level.getGameTime()) {
+                    meganeura.getAttachSystem().stopAttaching();
+                    return false;
+                }
+                return true;
+            }
             return false;
         } else if (current instanceof Instruction.Idle idle) {
             return endTick >= entity.level.getGameTime();
@@ -126,6 +148,16 @@ public class InstructionSystem {
             entity.getNavigation().moveTo(moveTo.target.getX(), moveTo.target.getY(), moveTo.target.getZ(), 1);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
             entity.moveTo(teleportTo.target, entity.getYRot(), entity.getXRot());
+        } else if (current instanceof Instruction.AttachTo attachTo) {
+            attached = false;
+            entity.getNavigation().moveTo(attachTo.target.getX(), attachTo.target.getY(), attachTo.target.getZ(), 1);
+            if (entity instanceof Meganeura meganeura) {
+                Direction face = attachTo.direction;
+                float rad = entity.getBbWidth() / 2;
+                if (!meganeura.usesAttachHitBox()) rad *= meganeura.getAttachHitBoxScale();
+                Vec3 pos = new Vec3(attachTo.location.x + rad * face.getStepX(), attachTo.location.y, attachTo.location.z + rad * face.getStepZ());
+                meganeura.getAttachSystem().setAttachTarget(attachTo.target, face, pos);
+            }
         } else if (current instanceof Instruction.Idle idle) {
             endTick = entity.level.getGameTime() + idle.duration;
         } else if (current instanceof Instruction.PlayAnim playAnim) {
@@ -149,6 +181,11 @@ public class InstructionSystem {
         if (instructions.isEmpty()) {
             stop();
         } else {
+            if (entity instanceof Meganeura meganeura) {
+                meganeura.getAttachSystem().stopAttaching();
+            }
+            if (entity.isSleeping()) entity.setSleeping(false);
+            if (entity.isSitting()) entity.setSitting(false);
             entity.disableCustomAI((byte) 0, false);
             entity.disableCustomAI((byte) 1, true);
             entity.disableCustomAI((byte) 2, false);
@@ -160,5 +197,13 @@ public class InstructionSystem {
     public void stop() {
         entity.disableCustomAI((byte) 0, true);
         entity.disableCustomAI((byte) 1, false);
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag arg) {
+    }
+
+    @Override
+    public void load(CompoundTag arg) {
     }
 }

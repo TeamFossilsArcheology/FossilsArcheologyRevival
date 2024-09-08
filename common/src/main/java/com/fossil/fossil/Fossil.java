@@ -68,7 +68,7 @@ public class Fossil {
         MessageHandler.DEBUG_CHANNEL.register(C2STameMessage.class, C2STameMessage::write, C2STameMessage::new, C2STameMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(S2CMarkMessage.class, S2CMarkMessage::write, S2CMarkMessage::new, S2CMarkMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(C2SMoveMessage.class, C2SMoveMessage::write, C2SMoveMessage::new, C2SMoveMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(S2CVisionMessage.class, S2CVisionMessage::write, S2CVisionMessage::new, S2CVisionMessage::apply);
+        MessageHandler.DEBUG_CHANNEL.register(C2SDiscardMessage.class, C2SDiscardMessage::write, C2SDiscardMessage::new, C2SDiscardMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(S2CNewMarkMessage.class, S2CNewMarkMessage::write, S2CNewMarkMessage::new, S2CNewMarkMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(C2SSyncDebugInfoMessage.class, C2SSyncDebugInfoMessage::write, C2SSyncDebugInfoMessage::new, C2SSyncDebugInfoMessage::apply);
         MessageHandler.CAP_CHANNEL.register(S2CMammalCapMessage.class, S2CMammalCapMessage::write, S2CMammalCapMessage::new, S2CMammalCapMessage::apply);

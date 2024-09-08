@@ -137,4 +137,8 @@ public class Util {
     public static float yawToYRot(double yaw) {
         return (float) Mth.wrapDegrees(yaw - 90);
     }
+    public static float clampTo360(double x) {
+        //x mod y behaving the same way as Math.floorMod but with doubles
+        return (float) (x - Math.floor(x / 360) * 360);
+    }
 }

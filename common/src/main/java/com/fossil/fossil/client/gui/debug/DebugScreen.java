@@ -6,6 +6,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SDisableAIMessage;
+import com.fossil.fossil.network.debug.C2SDiscardMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
@@ -34,12 +35,12 @@ public class DebugScreen extends Screen {
     public static CycleButton<Boolean> disableAI;
     public static boolean showPaths;
     private static PathInfo currentVision;
-    public static Entity entity;
-    private final List<DebugTab> tabs = new ArrayList<>();
+    public static @Nullable Entity entity;
+    private final List<DebugTab<? extends Entity>> tabs = new ArrayList<>();
     private static int tabShift = 0;
-    private DebugTab currentTab;
+    private DebugTab<? extends Entity> currentTab;
 
-    public DebugScreen(Entity newEntity) {
+    public DebugScreen(@Nullable Entity newEntity) {
         super(new TextComponent("Debug Screen"));
         entity = newEntity;
         if (newEntity == null || !newEntity.isAlive()) {
@@ -136,7 +137,19 @@ public class DebugScreen extends Screen {
         }
         if (entity instanceof PrehistoricAnimatable) {
             tabs.add(new AnimationTab(this, entity));
-            tabs.add(new InstructionTab(this, entity));
+        }
+        if (entity instanceof Prehistoric prehistoric) {
+            tabs.add(new InstructionTab(this, prehistoric));
+        }
+        addRenderableWidget(new Button(width / 2 - 91, height - 70, 91, 20, new TextComponent("Discard All"), button -> {
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(-1));
+            if (currentTab != null) currentTab.onClose();
+        }));
+        if (entity != null) {
+            addRenderableWidget(new Button(width / 2, height - 70, 91, 20, new TextComponent("Discard This"), button -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(entity.getId()));
+                if (currentTab != null) currentTab.onClose();
+            }));
         }
         builder.withInitialValue(showPaths);
         addRenderableWidget(builder.create(width / 2 - 91, height - 45, 91, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {

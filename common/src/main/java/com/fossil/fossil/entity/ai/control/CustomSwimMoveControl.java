@@ -72,8 +72,8 @@ public class CustomSwimMoveControl extends SmoothSwimmingMoveControl {
                 mob.setZza(0);
             } else {
                 if (horizontalDist > 0.3) {
-                    float h = floatMod(Util.yawToYRot(Mth.atan2(z, x) * Mth.RAD_TO_DEG), 360);
-                    float g = rotlerp(floatMod(mob.getYRot(), 360), h, 5);
+                    float h = Util.clampTo360(Util.yawToYRot(Mth.atan2(z, x) * Mth.RAD_TO_DEG));
+                    float g = rotlerp(Util.clampTo360(mob.getYRot()), h, 5);
                     mob.setYRot(g);
                     mob.yBodyRot = mob.getYRot();
                     mob.yHeadRot = mob.getYRot();
@@ -102,10 +102,5 @@ public class CustomSwimMoveControl extends SmoothSwimmingMoveControl {
             mob.setYya(0);
             mob.setZza(0);
         }
-    }
-
-    private float floatMod(double x, double y) {
-        //x mod y behaving the same way as Math.floorMod but with doubles
-        return (float) (x - Math.floor(x / y) * y);
     }
 }

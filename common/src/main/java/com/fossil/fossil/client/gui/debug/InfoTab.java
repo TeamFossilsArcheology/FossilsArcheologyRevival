@@ -15,7 +15,7 @@ import net.minecraft.util.Mth;
 
 import java.util.Arrays;
 
-public class InfoTab extends DebugTab {
+public class InfoTab extends DebugTab<Prehistoric> {
     private final int maxAgeInTicks;
     private Gender gender;
     private int ageInTicks;
@@ -53,11 +53,9 @@ public class InfoTab extends DebugTab {
             }
         };
         addWidget(new Button(275, 30, 150, 20, new TextComponent("Scale 1"), button -> {
-            if (entity instanceof Prehistoric prehistoric) {
-                EntityDataManager.Data data = prehistoric.data();
-                ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeDays() * 24000 + 1)) / (data.maxScale() - data.minScale()));
-                ageSlider.setValue(ageInTicks);
-            }
+            EntityDataManager.Data data = entity.data();
+            ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeDays() * 24000 + 1)) / (data.maxScale() - data.minScale()));
+            ageSlider.setValue(ageInTicks);
         }));
         addWidget(new Button(275, 55, 50, 20, new TextComponent("Tame"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
@@ -103,7 +101,7 @@ public class InfoTab extends DebugTab {
                         Gender::getName, options -> gender, (options, option, gender) -> this.gender = gender)
                 .createButton(Minecraft.getInstance().options, 20, 210, 150));
         addWidget(new Button(20, 240, 150, 20, new TextComponent("Set Info"), button -> {
-            ((Prehistoric) entity).setGender(gender);
+            entity.setGender(gender);
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSyncDebugInfoMessage(entity.getId(), gender.name(), ageInTicks, matingCooldown, playingCooldown, climbingCooldown, hunger, mood));
         }));
     }
@@ -111,14 +109,12 @@ public class InfoTab extends DebugTab {
     @Override
     protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
-        if (entity instanceof Prehistoric prehistoric) {
-            drawString(poseStack, minecraft.font, new TextComponent("Age: " + prehistoric.getAge()), 175, 35, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Mate: " + (prehistoric.getMatingCooldown() / 20)), 175, 65, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Play: " + (prehistoric.moodSystem.getPlayingCooldown() / 20)), 175, 95, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Climb: " + (prehistoric.getClimbingCooldown() / 20)), 175, 125, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Hunger: " + prehistoric.getHunger()), 175, 155, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Mood: " + prehistoric.moodSystem.getMood()), 175, 185, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Gender: " + prehistoric.getGender().name()), 175, 215, 16777215);
-        }
+        drawString(poseStack, minecraft.font, new TextComponent("Age: " + entity.getAge()), 175, 35, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Mate: " + (entity.getMatingCooldown() / 20)), 175, 65, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Play: " + (entity.moodSystem.getPlayingCooldown() / 20)), 175, 95, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Climb: " + (entity.getClimbingCooldown() / 20)), 175, 125, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Hunger: " + entity.getHunger()), 175, 155, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Mood: " + entity.moodSystem.getMood()), 175, 185, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Gender: " + entity.getGender().name()), 175, 215, 16777215);
     }
 }

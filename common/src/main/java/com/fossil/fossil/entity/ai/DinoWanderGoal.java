@@ -10,7 +10,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Random stroll goal for non flying/swimming mobs
+ * Random stroll goal for non-flying/swimming mobs
  */
 public class DinoWanderGoal extends RandomStrollGoal {
 

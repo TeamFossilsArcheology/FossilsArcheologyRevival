@@ -32,6 +32,8 @@ public class InstructionRenderUtil {
             String string;
             if (instruction instanceof Instruction.Idle idle) {
                 string = String.format("%s: %s (%s seconds)", i, instruction.type, idle.duration / 20);
+            } else if(instruction instanceof Instruction.AttachTo attachTo) {
+                string = String.format("%s: %s %s", i, instruction.type, attachTo.direction);
             } else {
                 string = String.format("%s: %s", i, instruction.type);
             }

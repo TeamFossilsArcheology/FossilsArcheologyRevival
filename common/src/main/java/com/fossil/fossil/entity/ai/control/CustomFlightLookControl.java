@@ -1,12 +1,13 @@
 package com.fossil.fossil.entity.ai.control;
 
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 
-public class CustomFlightLookControl extends LookControl {
-    private final PrehistoricFlying flying;
+public class CustomFlightLookControl<T extends Mob & FlyingAnimal> extends LookControl {
+    private final T flying;
 
-    public CustomFlightLookControl(PrehistoricFlying flying) {
+    public CustomFlightLookControl(T flying) {
         super(flying);
         this.flying = flying;
     }

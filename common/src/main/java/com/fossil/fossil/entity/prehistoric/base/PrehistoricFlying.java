@@ -54,7 +54,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     protected PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level) {
         super(entityType, level);
         moveControl = new CustomFlightMoveControl(this);
-        lookControl = new CustomFlightLookControl(this);
+        lookControl = new CustomFlightLookControl<>(this);
     }
 
     @Override

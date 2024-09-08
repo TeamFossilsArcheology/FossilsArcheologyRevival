@@ -2,12 +2,13 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import com.fossil.fossil.entity.ToyBase;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
-public class MoodSystem {
+public class MoodSystem implements AISystem {
     private final Prehistoric prehistoric;
     private int moodCheckCooldown = 0;
     private int playingCooldown;
@@ -99,7 +100,8 @@ public class MoodSystem {
         }
     }
 
-    public void tick() {
+    @Override
+    public void serverTick() {
         if (getMood() > 100) {
             setMood(100);
         }
@@ -125,5 +127,17 @@ public class MoodSystem {
 
     public ToyBase getToyTarget() {
         return toyTarget;
+    }
+
+    @Override
+    public void saveAdditional(CompoundTag tag) {
+        tag.putInt("Mood", getMood());
+        tag.putInt("PlayingCooldown", getPlayingCooldown());
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        setMood(tag.getInt("Mood"));
+        setPlayingCooldown(tag.getInt("PlayingCooldown"));
     }
 }

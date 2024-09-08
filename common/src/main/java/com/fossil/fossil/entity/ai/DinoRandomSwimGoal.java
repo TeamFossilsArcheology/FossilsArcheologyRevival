@@ -1,7 +1,6 @@
 package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
@@ -16,7 +15,7 @@ import java.util.Random;
  * Will move the mob to a random spot in water if it is not in combat
  */
 public class DinoRandomSwimGoal extends RandomSwimmingGoal {
-    private final Prehistoric dino;
+    private final PrehistoricSwimming dino;
 
     public DinoRandomSwimGoal(PrehistoricSwimming dino, double speedModifier) {
         super(dino, speedModifier, 10);
@@ -25,7 +24,7 @@ public class DinoRandomSwimGoal extends RandomSwimmingGoal {
 
     @Override
     public boolean canUse() {
-        if (!dino.isInWater() || dino.getTarget() != null || dino.getCurrentOrder() != OrderType.WANDER) {
+        if (!dino.isInWater() || !dino.canSwim() || dino.getTarget() != null || dino.getCurrentOrder() != OrderType.WANDER) {
             return false;
         }
         return super.canUse();

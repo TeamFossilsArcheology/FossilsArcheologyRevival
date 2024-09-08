@@ -161,6 +161,10 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC;
     }
 
+    public boolean canSwim() {
+        return true;
+    }
+
     @Override
     public boolean canBreatheUnderwater() {
         return true;
@@ -175,13 +179,8 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return MovementEmission.EVENTS;
     }
 
-    protected boolean useSwimAI() {
-        return isInWater();
-    }
-
     @Override
     public void aiStep() {
-        System.out.printf("client: %s %s %s spin: %s%n", level.isClientSide, getYRot(), yBodyRot, isAutoSpinAttack());
         super.aiStep();
         if (canDoBreachAttack() && !level.isClientSide) {
             LivingEntity target = getTarget();
@@ -193,9 +192,9 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             }
         }
         if (!level.isClientSide) {
-            if (isInWater() && useSwimAI() && isLandNavigator) {
+            if (isInWater() && canSwim() && isLandNavigator) {
                 switchNavigator(false);
-            } else if (!isInWater() && isOnGround() && !useSwimAI() && !isLandNavigator) {
+            } else if (!isInWater() && isOnGround() && !canSwim() && !isLandNavigator) {
                 switchNavigator(true);
             }
             if (isInWater()) {

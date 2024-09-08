@@ -29,7 +29,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import java.util.List;
 import java.util.Map;
 
-public class AnimationTab extends DebugTab {
+public class AnimationTab extends DebugTab<Entity> {
     private float rotYBase;
     private float rotXBase;
     private float scale = 15;

@@ -1,146 +1,154 @@
 package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.ai.*;
+import com.fossil.fossil.entity.ai.control.MeganeuraFlyingMoveControl;
+import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.util.Util;
-import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.S2CMarkMessage;
-import com.fossil.fossil.network.debug.S2CNewMarkMessage;
-import com.fossil.fossil.network.debug.S2CVisionMessage;
 import com.fossil.fossil.sounds.ModSounds;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.NbtUtils;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MobType;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.MoveControl;
-import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
+import net.minecraft.world.entity.Pose;
+import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
-import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.NotImplementedException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.EnumSet;
-import java.util.Optional;
 import java.util.Random;
 
 
 public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     public static final String ANIMATIONS = "meganeura.animation.json";
     public static final String ATTACK = "animation.meganeura.attack";
+    public static final String ATTACK_BABY = "animation.meganeura.attack_baby";
+    public static final String DROWN = "animation.meganeura.drown";
     public static final String EAT = "animation.meganeura.eat";
+    public static final String EAT_BABY = "animation.meganeura.eat_baby";
     public static final String FLY = "animation.meganeura.fly";
     public static final String IDLE = "animation.meganeura.idle";
-    public static final String VERTICAL_IDLE = "animation.meganeura.vertical_idle";
+    public static final String IDLE_BABY = "animation.meganeura.idle_baby";
+    public static final String HOVER = "animation.meganeura.hover";
+    public static final String SIT = "animation.meganeura.sit";
+    public static final String SIT_BABY = "animation.meganeura.sit_baby";
+    public static final String SWIM_BABY = "animation.meganeura.swim_baby";
+    public static final String SLEEP = "animation.meganeura.sleep";
+    public static final String SLEEP_BABY = "animation.meganeura.sleep_baby";
     public static final String WALK = "animation.meganeura.walk";
-    private static final EntityDataAccessor<Optional<BlockPos>> ATTACHED_BLOCK_POS = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.OPTIONAL_BLOCK_POS);
-    private static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.DIRECTION);
+    public static final String WALK_BABY = "animation.meganeura.walk_baby";
+    protected static final EntityDataAccessor<Float> ATTACHED_X = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.FLOAT);
+    protected static final EntityDataAccessor<Float> ATTACHED_Y = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.FLOAT);
+    protected static final EntityDataAccessor<Float> ATTACHED_Z = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.FLOAT);
+    protected static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.DIRECTION);
+    protected static final EntityDataAccessor<Boolean> ATTACHED = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.BOOLEAN);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    private int attachCooldown = 0;
-    private int attachTicks = 0;
+    private final PathNavigation flightNav;
+    private final PathNavigation swimNav;
+    private final MeganeuraAttachSystem attachSystem = new MeganeuraAttachSystem(this);
 
     public Meganeura(EntityType<Meganeura> entityType, Level level) {
         super(entityType, level);
-    }
-
-    @ExpectPlatform
-    public static Meganeura get(EntityType<Meganeura> entityType, Level level) {
-        throw new NotImplementedException();
-    }
-
-    public static BlockPos getPositionRelativetoGround(LivingEntity entity, double x, double z) {
-        BlockPos.MutableBlockPos pos = new BlockPos.MutableBlockPos(x, entity.getY(), z);
-        while (entity.level.isEmptyBlock(pos.below()) && pos.getY() > 0) {
-            pos.move(0, -1, 0);
-        }
-        return pos.above(2 + entity.getRandom().nextInt(3));
+        flightNav = new FlyingPathNavigation(this, level);
+        swimNav = new AmphibiousPathNavigation(this, level);
+        lookControl = new LookControl(this) {
+            @Override
+            //TODO: Maybe not needed
+            protected boolean resetXRotOnTick() {
+                return false;
+            }
+        };
+        switchNavigator(true);
     }
 
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        compound.putInt("AttachCooldown", attachCooldown);
-        compound.putInt("AttachFace", getAttachmentFace().get3DDataValue());
-        if (getAttachmentPos() != null) {
-            compound.put("AttachPos", NbtUtils.writeBlockPos(getAttachmentPos()));
-        }
+        attachSystem.saveAdditional(compound);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        attachCooldown = compound.getInt("AttachCooldown");
-        setAttachmentFace(Direction.from3DDataValue(compound.getInt("AttachFace")));
-        if (compound.contains("AttachPos", Tag.TAG_COMPOUND)) {
-            setAttachmentPos(NbtUtils.readBlockPos(compound.getCompound("AttachPos")));
-        }
+        attachSystem.load(compound);
     }
 
     @Override
     protected void registerGoals() {
-        //TODO: Add missing goals
-        goalSelector.addGoal(0, new DinoRandomSwimGoal(this, 1));
-        goalSelector.addGoal(1, new MeganeuraEnterWaterGoal(this, 1));
-        goalSelector.addGoal(3, new MeganeuraWanderAndAttachGoal(this));
-        goalSelector.addGoal(4, new DinoFollowOwnerGoal(this, 1, 10, 2, 50, false));
-        goalSelector.addGoal(5, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(7, new RandomLookAroundGoal(this));
+        matingGoal = new DinoMatingGoal(this, 1);
+        goalSelector.addGoal(Util.IMMOBILE, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+        goalSelector.addGoal(Util.SLEEP, new DinoSleepGoal(this));
+        goalSelector.addGoal(Util.SLEEP + 1, new DinoSitGoal(this));
+        goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
+        goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
+        goalSelector.addGoal(Util.NEEDS + 2, new WaterPlayGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER + 2, new MeganeuraWanderAndAttachGoal(this));
+        goalSelector.addGoal(Util.WANDER + 3, new DinoRandomSwimGoal(this, 1));
+        goalSelector.addGoal(Util.LOOK, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
+        targetSelector.addGoal(5, new HuntingTargetGoal(this));
     }
 
     @Override
-    protected void defineSynchedData() {
+    protected void updateControlFlags() {
+        super.updateControlFlags();
+        boolean bl = !attachSystem.isAttached();
+        goalSelector.setControlFlag(Goal.Flag.MOVE, bl);
+        goalSelector.setControlFlag(Goal.Flag.JUMP, bl);
+        goalSelector.setControlFlag(Goal.Flag.LOOK, bl);
+    }
+
+    @Override
+    public void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(ATTACHED_BLOCK_POS, Optional.empty());
-        entityData.define(ATTACHED_FACE, Direction.DOWN);
+        entityData.define(ATTACHED_X, 0f);
+        entityData.define(ATTACHED_Y, 0f);
+        entityData.define(ATTACHED_Z, 0f);
+        entityData.define(ATTACHED_FACE, Direction.UP);
+        entityData.define(ATTACHED, false);
     }
 
-    public @Nullable BlockPos getAttachmentPos() {
-        return entityData.get(ATTACHED_BLOCK_POS).orElse(null);
-    }
-
-    public void setAttachmentPos(@Nullable BlockPos blockPos) {
-        entityData.set(ATTACHED_BLOCK_POS, Optional.ofNullable(blockPos));
-    }
-
-    public Direction getAttachmentFace() {
-        return entityData.get(ATTACHED_FACE);
-    }
-
-    public void setAttachmentFace(Direction direction) {
-        entityData.set(ATTACHED_FACE, direction);
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (ATTACHED_FACE.equals(key)) {
+            Vec3 oldPos = position();
+            refreshDimensions();
+            //Prevent little jump after bounding box change
+            setPos(oldPos);
+        }
+        super.onSyncedDataUpdated(key);
     }
 
     @Override
@@ -148,80 +156,39 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         if (source == DamageSource.IN_WALL) {
             return false;
         }
-        stopAttaching();
-        attachCooldown = 1000 + random.nextInt(1500);
+        attachSystem.stopAttaching(1000 + random.nextInt(1500));
         return super.hurt(source, amount);
     }
 
     @Override
-    public void aiStep() {
-        super.aiStep();
-        if (attachCooldown > 0) {
-            attachCooldown--;
+    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
+        if (usesAttachHitBox()) {
+            return super.getDimensions(poseIn).scale(getAttachHitBoxScale(), 2f);
         }
-        if (getAttachmentPos() == null) {
-            Path path = getNavigation().getPath();
-            if (path != null) {
-                int[] targets = new int[path.getNodeCount() * 3];
-                for (int i = 0; i < path.getNodeCount(); i++) {
-                    targets[3 * i] = path.getNode(i).x;
-                    targets[3 * i + 1] = path.getNode(i).y;
-                    targets[3 * i + 2] = path.getNode(i).z;
-                }
-                MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
-                        new S2CNewMarkMessage(targets, new BlockPos(getMoveControl().getWantedX(), getMoveControl().getWantedY(), getMoveControl().getWantedZ())));
-            }
-            attachTicks = 0;
-            if ((verticalCollision || horizontalCollision) && attachCooldown == 0 && !isOnGround()) {
-                attachCooldown = 5;
-                Vec3 prevEyePos = getEyePosition(0);
-                Vec3 prevViewVector = getViewVector(0);
-                Vec3 target = prevEyePos.add(prevViewVector);
-                BlockHitResult hitResult = level.clip(new ClipContext(prevEyePos, target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-
-                MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(this)),
-                        new S2CVisionMessage(hitResult.getBlockPos(), Blocks.GOLD_BLOCK.defaultBlockState()));
-                BlockPos sidePos = hitResult.getBlockPos();
-                if (level.getBlockState(sidePos).isFaceSturdy(level, sidePos, hitResult.getDirection())) {
-                    setAttachmentPos(sidePos);
-                    setAttachmentFace(hitResult.getDirection().getOpposite());
-                    setDeltaMovement(Vec3.ZERO);
-                }
-            }
-        } else {
-            BlockPos attachmentPos = getAttachmentPos();
-            if (level.getBlockState(attachmentPos).isFaceSturdy(level, attachmentPos, getAttachmentFace())) {
-                attachTicks++;
-                attachCooldown = 150;
-                setYRot(getAttachmentFace().toYRot());
-                yBodyRot = getAttachmentFace().toYRot();
-                yHeadRot = getAttachmentFace().toYRot();
-                //this.moveControl.operation = EntityMoveHelper.Action.WAIT;
-                setDeltaMovement(Vec3.ZERO);
-            } else {
-                stopAttaching();
-            }
-        }
-        if (attachTicks > 1150 && random.nextInt(123) == 0 || getAttachmentPos() != null && getTarget() != null) {
-            stopAttaching();
-            attachCooldown = 1000 + random.nextInt(1500);
-        }
-
-        boolean flying = isFlying();
-        if (!isImmobile() && !useSwimAI() && getAttachmentPos() == null) {
-            //setDeltaMovement(getDeltaMovement().add(0, 0.08, 0));
-        } else if (!isBaby()) {
-            //this.moveHelper.action = EntityMoveHelper.Action.WAIT;
-        }
-        if (flying && tickCount % 20 == 0 && !level.isClientSide && !isBaby() && getAttachmentPos() == null) {
-            //playSound(FASoundRegistry.MEGANEURA_FLY, this.getSoundVolume(), 1);
-        }
+        return super.getDimensions(poseIn);
     }
 
-    private void stopAttaching() {
-        attachTicks = 0;
-        setAttachmentFace(Direction.DOWN);
-        setAttachmentPos(null);
+    @Override
+    public boolean shouldRenderAtSqrDistance(double distance) {
+        double d = getBoundingBox().getSize() * 10.0;
+        //TODO: Figure out best value
+        if (Double.isNaN(d)) {
+            d = 1.0;
+        }
+
+        d *= 64.0 * getViewScale();
+        return distance < d * d;
+    }
+
+    @Override
+    protected void customServerAiStep() {
+        if (isBaby() && isLandNavigator) {
+            switchNavigator(false);
+        } else if (!isBaby() && !isLandNavigator) {
+            switchNavigator(true);
+        }
+        super.customServerAiStep();
+        attachSystem.serverTick();
     }
 
     @Override
@@ -230,25 +197,41 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     public boolean isFlying() {
-        return !isOnGround() && !isImmobile();
+        return !isOnGround() && !attachSystem.isAttached();
     }
 
     @Override
-    protected void switchNavigator(boolean onLand) {
-        if (onLand) {
+    protected void switchNavigator(boolean inAir) {
+        if (inAir) {
             moveControl = new MeganeuraFlyingMoveControl(this);
-            navigation = new FlyingPathNavigation(this, level);
+            navigation = flightNav;
             isLandNavigator = true;
         } else {
-            moveControl = new SmoothSwimmingMoveControl(this, 90, 5, 0.1f, 0.01f, true);
-            navigation = new WaterBoundPathNavigation(this, level);
-            isLandNavigator = false;
+            super.switchNavigator(false);
+            navigation = swimNav;
         }
+    }
+
+    public MeganeuraAttachSystem getAttachSystem() {
+        return attachSystem;
+    }
+
+    public boolean usesAttachHitBox() {
+        return attachSystem.getAttachmentFace().getAxis().isHorizontal();
+    }
+
+    public float getAttachHitBoxScale() {
+        return 0.5f;
     }
 
     @Override
     public boolean isAmphibious() {
-        return true;
+        return isBaby();
+    }
+
+    @Override
+    public boolean canSwim() {
+        return isBaby();
     }
 
     @Override
@@ -273,29 +256,41 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
 
     @Override
     public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
+        return getAllAnimations().get(isBaby() ? EAT_BABY : EAT);
     }
 
     @Override
     public @NotNull Animation nextIdleAnimation() {
-        if (attachTicks > 0) {
-            return getAllAnimations().get(VERTICAL_IDLE);
+        if (isBaby()) {
+            return getAllAnimations().get(IDLE_BABY);
+        }
+        if (isInWater()) {
+            return getAllAnimations().get(DROWN);
+        }
+        if (isFlying()) {
+            return getAllAnimations().get(HOVER);
         }
         return getAllAnimations().get(IDLE);
     }
 
     @Override
     public @NotNull Animation nextSittingAnimation() {
-        return nextIdleAnimation();
+        return getAllAnimations().get(isBaby() ? SIT_BABY : SIT);
     }
 
     @Override
     public @NotNull Animation nextSleepingAnimation() {
-        return nextIdleAnimation();
+        return getAllAnimations().get(isBaby() ? SLEEP_BABY : SLEEP);
     }
 
     @Override
     public @NotNull Animation nextMovingAnimation() {
+        if (isBaby()) {
+            if (isInWater()) {
+                return getAllAnimations().get(SWIM_BABY);
+            }
+            return getAllAnimations().get(WALK_BABY);
+        }
         if (isFlying()) {
             return getAllAnimations().get(FLY);
         }
@@ -304,12 +299,12 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
 
     @Override
     public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(WALK);
+        return nextMovingAnimation();
     }
 
     @Override
     public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
+        return getAllAnimations().get(isBaby() ? ATTACK_BABY : ATTACK);
     }
 
     @Override
@@ -340,161 +335,48 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         return super.getSoundVolume() * 0.5f;
     }
 
-    public boolean isDirectPathBetweenPoints(Vec3 target) {
-        BlockHitResult hitResult = level.clip(new ClipContext(position().add(0, -0.25, 0), target, ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, this));
-        BlockPos sidePos = hitResult.getBlockPos();
-        BlockPos pos = new BlockPos(hitResult.getLocation());
-        if (!level.isEmptyBlock(pos) || !level.isEmptyBlock(sidePos)) {
-            return true;
-        } else {
-            return hitResult.getType() == HitResult.Type.BLOCK;
-        }
-    }
-
-    static class MeganeuraFlyingMoveControl extends MoveControl {
-
+    static class MeganeuraWanderAndAttachGoal extends DinoWanderGoal {
         private final Meganeura meganeura;
-
-        public MeganeuraFlyingMoveControl(Meganeura meganeura) {
-            super(meganeura);
-            this.meganeura = meganeura;
-        }
-
-        @Override
-        public void setWantedPosition(double x, double y, double z, double speed) {
-            super.setWantedPosition(x, y, z, speed);
-        }
-
-        @Override
-        public void tick() {
-            if (operation == Operation.MOVE_TO) {
-                mob.setNoGravity(true);
-                double xDist = wantedX - mob.getX();
-                double yDist = wantedY - mob.getY();
-                double zDist = wantedZ - mob.getZ();
-                double targetDistance = Mth.sqrt((float) (xDist * xDist + zDist * zDist + yDist * yDist));
-                if (targetDistance < 2.500000277905201E-7 || meganeura.getAttachmentPos() != null || (targetDistance <= mob.getBbWidth() / 2 && mob.level.isEmptyBlock(new BlockPos(wantedX, wantedY, wantedZ)))) {
-                    operation = Operation.WAIT;
-                    mob.setDeltaMovement(mob.getDeltaMovement().scale(0.5));
-                    return;
-                }
-                if (mob.getTarget() == null) {
-                    float newYRot = Util.yawToYRot(Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG);
-                    mob.setYRot(newYRot);
-                    mob.yBodyRot = newYRot;
-                    float speed = (float) mob.getAttributeValue(Attributes.FLYING_SPEED);
-                    double xSpeed = speed * 0.07 * xDist / targetDistance;
-                    double ySpeed = speed * 0.07 * yDist / targetDistance;
-                    double zSpeed = speed * 0.07 * zDist / targetDistance;
-                    mob.setDeltaMovement(mob.getDeltaMovement().add(xSpeed, ySpeed, zSpeed));
-                } else {
-                    xDist = mob.getTarget().getX() - mob.getX();
-                    zDist = mob.getTarget().getZ() - mob.getZ();
-                    float newYRot = Util.yawToYRot(Mth.atan2(zDist, xDist) * Mth.RAD_TO_DEG);
-                    mob.setYRot(newYRot);
-                    mob.yBodyRot = newYRot;
-                }
-            } else if (meganeura.getAttachmentPos() == null) {
-                mob.setNoGravity(false);
-            }
-        }
-    }
-
-    static class MeganeuraEnterWaterGoal extends EnterWaterGoal {
-
-        public MeganeuraEnterWaterGoal(Meganeura dino, float speedModifier) {
-            super(dino, 40, speedModifier);
-        }
-
-        @Override
-        public boolean canUse() {
-            return dino.isBaby() && super.canUse();
-        }
-    }
-
-    static class MeganeuraWanderAndAttachGoal extends Goal {
-        private final Meganeura meganeura;
-        protected BlockPos targetPos = BlockPos.ZERO;
-        private boolean isGoingToAttach;
 
         public MeganeuraWanderAndAttachGoal(Meganeura meganeura) {
+            super(meganeura, 1, 10);
             this.meganeura = meganeura;
-            setFlags(EnumSet.of(Goal.Flag.MOVE));
         }
 
         @Override
         public boolean canUse() {
-            if (meganeura.attachCooldown != 0) {
+            if (meganeura.isBaby() || meganeura.attachSystem.attachStarted()) {
                 return false;
             }
-            if (meganeura.random.nextInt(4) != 0 || meganeura.isBaby() || meganeura.isInSittingPose()) {
-                return false;
-            }
-            findTargetPos();
-            return meganeura.isDirectPathBetweenPoints(Vec3.atCenterOf(targetPos)) && meganeura.getAttachmentPos() == null;
+            return super.canUse();
         }
 
         @Override
-        public boolean canContinueToUse() {
-            return !meganeura.getNavigation().isDone() && !meganeura.isVehicle();
-        }
-
-        @Override
-        public void start() {
-            if (!meganeura.isDirectPathBetweenPoints(Vec3.atCenterOf(targetPos))) {
-                targetPos = getPositionRelativetoGround(meganeura, meganeura.getX() + meganeura.getRandom().nextInt(15) - 7, meganeura.getZ() + meganeura.getRandom().nextInt(15) - 7);
-            }
-            if (meganeura.level.isEmptyBlock(targetPos) || isGoingToAttach) {
-                if (!meganeura.isFlying()) {
-                    meganeura.switchNavigator(true);
-                }
-                double x = targetPos.getX();
-                double y = targetPos.getY();
-                double z = targetPos.getZ();
-                meganeura.getNavigation().moveTo(x, y, z, 0.25);
-                if (meganeura.getTarget() == null) {
-                    meganeura.getLookControl().setLookAt(x, y, z);
-                }
-            }
-        }
-
-        @Override
-        public void stop() {
-            meganeura.getNavigation().stop();
-        }
-
-        private void findTargetPos() {
-            Random random = meganeura.getRandom();
-            Level level = meganeura.level;
-            if (meganeura.attachCooldown == 0) {
+        protected @Nullable Vec3 getPosition() {
+            if (meganeura.attachSystem.getAttachCooldown() == 0) {
+                Random random = meganeura.random;
+                Level level = mob.level;
                 for (int i = 0; i < 15; i++) {
-                    BlockPos blockPos = meganeura.blockPosition().offset(random.nextInt(16) - 8, random.nextInt(10), random.nextInt(16) - 8);
-                    if (!level.isEmptyBlock(blockPos)) {
-                        BlockHitResult hitResult = level.clip(new ClipContext(meganeura.position().add(0, 0.25, 0), Vec3.atCenterOf(blockPos), ClipContext.Block.COLLIDER, ClipContext.Fluid.NONE, meganeura));
-                        if (level.getBlockState(hitResult.getBlockPos()).isFaceSturdy(level, hitResult.getBlockPos(), hitResult.getDirection())) {
-                            isGoingToAttach = true;
-                            targetPos = hitResult.getBlockPos();
-                            if (level.getBlockState(targetPos).isAir()) {
-                                targetPos = getPositionRelativetoGround(meganeura, meganeura.getX() + random.nextInt(16) - 8, meganeura.getZ() + random.nextInt(16) - 8);
-                            }
-                            int[] targets = new int[6];
-                            targets[0] = targetPos.getX();
-                            targets[1] = targetPos.getY();
-                            targets[2] = targetPos.getZ();
-                            targets[3] = blockPos.getX();
-                            targets[4] = blockPos.getY();
-                            targets[5] = blockPos.getZ();
-                            BlockState[] blocks = new BlockState[2];
-                            blocks[0] = Blocks.GOLD_BLOCK.defaultBlockState();
-                            blocks[1] = Blocks.EMERALD_BLOCK.defaultBlockState();
-                            MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) meganeura.level).getPlayers(serverPlayer -> serverPlayer.hasLineOfSight(meganeura)),
-                                    new S2CMarkMessage(targets, blocks, false));
-                            return;
-                        }
+                    BlockPos blockPos = mob.blockPosition().offset(random.nextInt(16) - 8, random.nextInt(10) - 2, random.nextInt(16) - 8);
+                    BlockHitResult hitResult = level.clip(new ClipContext(mob.getEyePosition(), Vec3.atCenterOf(blockPos), ClipContext.Block.COLLIDER, ClipContext.Fluid.WATER, mob));
+                    if (hitResult.getType() == HitResult.Type.MISS || hitResult.getDirection().getAxis().isVertical()) {
+                        continue;
                     }
+                    if (!level.getBlockState(hitResult.getBlockPos()).isFaceSturdy(level, hitResult.getBlockPos(), hitResult.getDirection())) {
+                        continue;
+                    }
+                    meganeura.attachSystem.setAttachTarget(hitResult.getBlockPos().immutable(), hitResult.getDirection());
+                    return Vec3.atCenterOf(hitResult.getBlockPos());
                 }
             }
-            targetPos = getPositionRelativetoGround(meganeura, meganeura.getX() + random.nextInt(16) - 8, meganeura.getZ() + random.nextInt(16) - 8);
+            Vec3 view = mob.getViewVector(0.0f);
+            Vec3 pos = HoverRandomPos.getPos(mob, 8, 7, view.x, view.z, Mth.HALF_PI, 3, 1);
+            if (pos != null) {
+                return pos;
+            }
+            //TODO: No Water
+            return AirAndWaterRandomPos.getPos(mob, 8, 4, -2, view.x, view.z, Mth.HALF_PI);
+
         }
     }
 }

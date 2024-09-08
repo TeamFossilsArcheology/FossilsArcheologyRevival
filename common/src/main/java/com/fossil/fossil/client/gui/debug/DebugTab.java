@@ -15,10 +15,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DebugTab extends GuiComponent implements ContainerEventHandler, NarratableEntry {
+public abstract class DebugTab<E extends Entity> extends GuiComponent implements ContainerEventHandler, NarratableEntry {
     protected final DebugScreen debugScreen;
     protected final Minecraft minecraft;
-    protected final Entity entity;
+    protected final E entity;
     protected final List<Widget> widgets = new ArrayList<>();
     protected final List<GuiEventListener> renderables = new ArrayList<>();
     protected int width;
@@ -27,7 +27,7 @@ public abstract class DebugTab extends GuiComponent implements ContainerEventHan
     private GuiEventListener focused;
     private boolean isDragging;
 
-    protected DebugTab(DebugScreen debugScreen, Entity entity) {
+    protected DebugTab(DebugScreen debugScreen, E entity) {
         this.debugScreen = debugScreen;
         this.minecraft = Minecraft.getInstance();
         this.entity = entity;

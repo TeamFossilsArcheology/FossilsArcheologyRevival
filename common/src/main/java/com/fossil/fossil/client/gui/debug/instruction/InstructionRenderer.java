@@ -27,7 +27,7 @@ public class InstructionRenderer {
         Minecraft mc = Minecraft.getInstance();
         if (SmoothTurningMoveControl.wanted != null) {
             Vec3 pos = SmoothTurningMoveControl.wanted;
-            LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.25, pos.y, pos.z - 0.25, pos.x + 0.25, pos.y + 0.5, pos.z + 0.25), 1, 0, 0, 1);
+            LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.15, pos.y, pos.z - 0.15, pos.x + 0.15, pos.y + 0.15, pos.z + 0.15), 1, 0, 0, 1);
         }
         if (InstructionTab.activeEntity != null) {
             List<Instruction> instructions = InstructionTab.INSTRUCTIONS.get(InstructionTab.activeEntity.getUUID()).instructions();
@@ -43,6 +43,11 @@ public class InstructionRenderer {
                     //TODO: Render bounding box
                     addPosition(poseStack, buffer, instruction, teleportTo.target, Color.PINK);
                     currentPos = teleportTo.target;
+                } else if (instruction instanceof Instruction.AttachTo attachTo) {
+                    addPosition(poseStack, buffer, instruction, attachTo.target, Color.GREEN);
+                    Vec3 pos = attachTo.location;
+                    LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.05, pos.y, pos.z - 0.05, pos.x + 0.05, pos.y + 0.05, pos.z + 0.05), 1, 0, 1, 1);
+                    currentPos = attachTo.target;
                 } else if (instruction instanceof Instruction.Attack attack) {
                 } else if (instruction instanceof Instruction.PlayAnim playAnim) {
                 } else if (instruction instanceof Instruction.Idle idle) {
