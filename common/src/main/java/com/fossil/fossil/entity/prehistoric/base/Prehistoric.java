@@ -159,7 +159,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             spawnHitBoxes(hitboxes, entityType);
         }
         if (level.isClientSide) {
-            System.out.println(Fossil.LOGGER.isDebugEnabled());
             for (Animation anim : getAllAnimations().values()) {
                 Fossil.LOGGER.debug("{} is loop: {}", anim.animationName, anim.loop);
             }
@@ -253,9 +252,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         entityData.define(AGING_DISABLED, false);
 
         CompoundTag tag = new CompoundTag();
-        tag.putDouble("x", position().x);
-        tag.putDouble("y", position().y);
-        tag.putDouble("z", position().z);
         tag.putBoolean("disableGoalAI", false);
         tag.putBoolean("disableMoveAI", false);
         tag.putBoolean("disableLookAI", false);
@@ -414,13 +410,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void remove(RemovalReason reason) {
         super.remove(reason);
-        if (Version.debugEnabled()) {
-            for (WrappedGoal availableGoal : goalSelector.getAvailableGoals()) {
-                if (availableGoal.getGoal() instanceof CacheMoveToBlockGoal goal) {
-                    goal.stop();//Only for the debug message
-                }
-            }
-        }
         if (isCustomMultiPart()) {
             //Ensures that the callbacks get called. Probably not necessary because the multiparts are not added to the server
             for (MultiPart part : parts) {

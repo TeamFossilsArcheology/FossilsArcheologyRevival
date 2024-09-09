@@ -66,9 +66,6 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         super.defineSynchedData();
         entityData.define(BABY, false);
         CompoundTag tag = new CompoundTag();
-        tag.putDouble("x", position().x);
-        tag.putDouble("y", position().y);
-        tag.putDouble("z", position().z);
         tag.putBoolean("disableGoalAI", false);
         tag.putBoolean("disableMoveAI", false);
         tag.putBoolean("disableLookAI", false);

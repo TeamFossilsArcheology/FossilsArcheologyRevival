@@ -419,7 +419,8 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     public int getMaxHeadXRot() {
-        return 1;//TODO: Check if needed
+        //I can't really tell if this does anything
+        return 1;
     }
 
     @Override

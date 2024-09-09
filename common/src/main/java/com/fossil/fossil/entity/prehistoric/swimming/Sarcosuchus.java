@@ -26,7 +26,6 @@ public class Sarcosuchus extends PrehistoricSwimming {
 
     public Sarcosuchus(EntityType<Sarcosuchus> entityType, Level level) {
         super(entityType, level);
-        //TODO: hasTeenTexture = false;
     }
 
     @Override
