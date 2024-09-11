@@ -113,7 +113,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public final SitSystem sitSystem = registerSystem(new SitSystem(this));
     protected final WhipSteering steering = new WhipSteering(this);
     private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
-    private final InstructionSystem instructionSystem = new InstructionSystem(this);
+    private final InstructionSystem instructionSystem = registerSystem(new InstructionSystem(this));
     public final ResourceLocation animationLocation;
     private OrderType currentOrder = OrderType.WANDER;
     private Boolean hasTeenTexture;

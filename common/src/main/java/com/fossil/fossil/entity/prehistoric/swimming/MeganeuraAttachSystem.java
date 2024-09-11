@@ -21,7 +21,7 @@ public class MeganeuraAttachSystem extends AISystem {
     private BlockPos targetBlockPos;
     private Vec3 targetLocation;
     private Direction targetFace;
-    private int attachCooldown = 10;
+    private int attachCooldown = 150;
     private int attachTicks = 0;
     private int tryTicks = 0;
 

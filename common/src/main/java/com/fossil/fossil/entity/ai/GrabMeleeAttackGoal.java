@@ -4,8 +4,10 @@ import com.fossil.fossil.entity.animation.AnimationInfoManager;
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.util.Util;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.level.block.Blocks;
 
 public class GrabMeleeAttackGoal extends DelayedAttackGoal {
@@ -70,8 +72,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
             for (Entity passenger : swimming.getPassengers()) {
                 if (passenger instanceof LivingEntity && passenger != swimming.getRidingPlayer()) {
                     if (swimming.tickCount % 20 == 0) {
-                        //boolean hurt = passenger.hurt(DamageSource.mobAttack(swimming), (float) swimming.getAttributeValue(Attributes.ATTACK_DAMAGE));
-                        boolean hurt = true;
+                        boolean hurt = passenger.hurt(DamageSource.mobAttack(swimming), (float) swimming.getAttributeValue(Attributes.ATTACK_DAMAGE));
                         if (!hurt || (currentTime >= grabStartTick + GRAB_DURATION && swimming.getRandom().nextInt(5) == 0)) {
                             attackEndTick = currentTime + 20;
                             swimming.stopGrabAttack(passenger);
@@ -89,7 +90,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
         } else if (currentTime > attackEndTick + 20 && canHit(enemy)) {
             //Is target smaller than 2 blocks (if swimming is adult)
             boolean tooBig = !Util.isEntitySmallerThan(enemy, 2 * swimming.getScale() / swimming.data().maxScale());
-            if (false && (tooBig || swimming.getRandom().nextInt(5) > 0)) {
+            if (tooBig || swimming.getRandom().nextInt(5) > 0) {
                 attackType = ATTACK;
                 AnimationInfoManager.ServerAnimationInfo animation = swimming.startAttack();
                 attackEndTick = (long) (currentTime + animation.animationLength);

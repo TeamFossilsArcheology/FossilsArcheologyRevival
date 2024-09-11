@@ -4,7 +4,6 @@ import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
 import com.fossil.fossil.entity.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.phys.Vec3;
 
@@ -20,7 +19,6 @@ public class MeganeuraFlyingMoveControl extends MoveControl {
     @Override
     public void setWantedPosition(double x, double y, double z, double speed) {
         super.setWantedPosition(x, y, z, speed);
-        speedModifier = speed * (meganeura.getAttributeValue(Attributes.MOVEMENT_SPEED) + 0.8);
         SmoothTurningMoveControl.wanted = new Vec3(x, y, z);
     }
 
@@ -44,9 +42,9 @@ public class MeganeuraFlyingMoveControl extends MoveControl {
                 mob.setYRot(rotlerp(mob.getYRot(), newYRot, 25));
                 mob.yBodyRot = mob.getYRot();
                 Vec3 move = mob.getDeltaMovement();
-                double xSpeed = move.x * 0.9 + 0.02 * xDist / targetDistance;
-                double ySpeed = move.y * 0.9 + 0.02 * yDist / targetDistance;
-                double zSpeed = move.z * 0.9 + 0.02 * zDist / targetDistance;
+                double xSpeed = move.x * 0.9 + 0.03 * xDist / targetDistance;
+                double ySpeed = move.y * 0.9 + 0.03 * yDist / targetDistance;
+                double zSpeed = move.z * 0.9 + 0.03 * zDist / targetDistance;
                 mob.setDeltaMovement(xSpeed * speedModifier, ySpeed * speedModifier, zSpeed * speedModifier);
             } else {
                 xDist = mob.getTarget().getX() - mob.getX();
