@@ -73,8 +73,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
-        goalSelector.addGoal(Util.SLEEP, new DinoSleepGoal(this));
-        goalSelector.addGoal(Util.SLEEP + 1, new DinoSitGoal(this));
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
@@ -162,7 +160,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     public boolean canSwim() {
-        return true;
+        return aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC || aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC;
     }
 
     @Override

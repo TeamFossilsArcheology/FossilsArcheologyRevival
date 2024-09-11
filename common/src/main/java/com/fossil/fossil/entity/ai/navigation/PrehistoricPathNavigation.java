@@ -28,7 +28,7 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
     @Override
     protected @NotNull PathFinder createPathFinder(int maxVisitedNodes) {
         nodeEvaluator = new PrehistoricNodeEvaluator();
-        return new PrehistoricPathFinder(nodeEvaluator, maxVisitedNodes);
+        return new PrehistoricPathFinder(nodeEvaluator, maxVisitedNodes, mob);
     }
 
     @Override

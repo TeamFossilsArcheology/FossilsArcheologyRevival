@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.prehistoric.swimming;
 
 import com.fossil.fossil.entity.prehistoric.base.AISystem;
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -12,7 +13,7 @@ import java.util.Random;
 
 import static com.fossil.fossil.entity.prehistoric.swimming.Meganeura.*;
 
-public class MeganeuraAttachSystem implements AISystem {
+public class MeganeuraAttachSystem extends AISystem {
     private static final int MAX_TRY_TICKS = 300;//15 sec
     private static final int MAX_ATTACH_TICKS = 1200;//1 min
     private final Meganeura mob;
@@ -25,6 +26,7 @@ public class MeganeuraAttachSystem implements AISystem {
     private int tryTicks = 0;
 
     public MeganeuraAttachSystem(Meganeura mob) {
+        super(mob);
         this.mob = mob;
         this.entityData = mob.getEntityData();
     }
@@ -67,14 +69,27 @@ public class MeganeuraAttachSystem implements AISystem {
             if (!mob.level.getBlockState(targetBlockPos).isFaceSturdy(mob.level, targetBlockPos, getAttachmentFace())) {
                 stopAttaching();
             }
-            if (attachTicks > MAX_ATTACH_TICKS && mob.getRandom().nextInt(123) == 0 || mob.getTarget() != null || mob.isDeadlyHungry()) {
-                stopAttaching(1000 + mob.getRandom().nextInt(1500));
-            }
             if (isAttached()) {
+                if (!mob.isSleeping() && mob.getCurrentOrder() != OrderType.STAY && (attachTicks > MAX_ATTACH_TICKS && mob.getRandom().nextInt(123) == 0 || mob.getTarget() != null)) {
+                    stopAttaching(1000 + mob.getRandom().nextInt(1500));
+                }
+
                 attachTicks++;
                 mob.setDeltaMovement(Vec3.ZERO);
+                if (mob.getCurrentOrder() == OrderType.FOLLOW) {
+                    stopAttaching();
+                }
             }
-            //TODO: sleep, sit(is attach?), follow, walk?
+        }
+    }
+
+    @Override
+    public void clientTick() {
+        if (attachStarted()) {
+            mob.setYRot(0);
+            mob.setXRot(0);
+            mob.yBodyRot = 0;
+            mob.yHeadRot = 0;
         }
     }
 
@@ -145,8 +160,16 @@ public class MeganeuraAttachSystem implements AISystem {
         return entityData.get(ATTACHED);
     }
 
+    public void setAttached(boolean attached) {
+        entityData.set(ATTACHED, attached);
+    }
+
     public int getAttachCooldown() {
         return attachCooldown;
+    }
+
+    public void setAttachCooldown(int attachCooldown) {
+        this.attachCooldown = attachCooldown;
     }
 
     public boolean attachStarted() {
@@ -173,8 +196,10 @@ public class MeganeuraAttachSystem implements AISystem {
 
     @Override
     public void saveAdditional(CompoundTag tag) {
+        tag.putInt("AttachTicks", attachTicks);
         tag.putInt("AttachCooldown", attachCooldown);
         tag.putInt("AttachFace", getAttachmentFace().get3DDataValue());
+        tag.putBoolean("Attached", isAttached());
         Vec3 attachPos = getAttachmentPos();
         tag.putDouble("AttachX", attachPos.x);
         tag.putDouble("AttachY", attachPos.y);
@@ -186,8 +211,10 @@ public class MeganeuraAttachSystem implements AISystem {
 
     @Override
     public void load(CompoundTag tag) {
+        attachTicks = tag.getInt("AttachTicks");
         attachCooldown = tag.getInt("AttachCooldown");
         setAttachmentFace(Direction.from3DDataValue(tag.getInt("AttachFace")));
+        setAttached(tag.getBoolean("Attached"));
         setAttachmentPos(new Vec3(tag.getDouble("AttachX"), tag.getDouble("AttachY"), tag.getDouble("AttachZ")));
         if (tag.contains("AttachPos")) {
             targetBlockPos = NbtUtils.readBlockPos(tag.getCompound("AttachPos"));

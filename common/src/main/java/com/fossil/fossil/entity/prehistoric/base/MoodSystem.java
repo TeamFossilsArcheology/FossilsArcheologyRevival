@@ -8,14 +8,13 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
-public class MoodSystem implements AISystem {
-    private final Prehistoric prehistoric;
+public class MoodSystem extends AISystem {
     private int moodCheckCooldown = 0;
     private int playingCooldown;
     private ToyBase toyTarget;
 
     public MoodSystem(Prehistoric prehistoric) {
-        this.prehistoric = prehistoric;
+        super(prehistoric);
         this.playingCooldown = prehistoric.getRandom().nextInt(6000) + 6000;
     }
 
@@ -58,11 +57,11 @@ public class MoodSystem implements AISystem {
     }
 
     public int getMood() {
-        return Mth.clamp(prehistoric.getEntityData().get(Prehistoric.MOOD), -100, 100);
+        return Mth.clamp(mob.getEntityData().get(Prehistoric.MOOD), -100, 100);
     }
 
     public void setMood(int mood) {
-        prehistoric.getEntityData().set(Prehistoric.MOOD, Mth.clamp(mood, -100, 100));
+        mob.getEntityData().set(Prehistoric.MOOD, Mth.clamp(mood, -100, 100));
     }
 
     public void increaseMood(int mood) {
@@ -71,12 +70,12 @@ public class MoodSystem implements AISystem {
 
     public void doMoodCheck() {
         int overallMoodAddition = 0;
-        if (arePlantsNearby(prehistoric, 16)) {
+        if (arePlantsNearby(mob, 16)) {
             overallMoodAddition += 50;
         } else {
             overallMoodAddition -= 50;
         }
-        if (prehistoric.getNearbySpeciesMembers(40).size() <= prehistoric.data().maxPopulation()) {
+        if (mob.getNearbySpeciesMembers(40).size() <= mob.data().maxPopulation()) {
             overallMoodAddition += 50;
         } else {
             overallMoodAddition -= 50;
@@ -95,8 +94,8 @@ public class MoodSystem implements AISystem {
     public void useToy(int playBonus) {
         if (getPlayingCooldown() == 0) {
             setMood(getMood() + playBonus);
-            prehistoric.level.broadcastEntityEvent(prehistoric, Prehistoric.HAPPY_VILLAGER_PARTICLES);
-            setPlayingCooldown(prehistoric.getRandom().nextInt(600) + 600);
+            mob.level.broadcastEntityEvent(mob, Prehistoric.HAPPY_VILLAGER_PARTICLES);
+            setPlayingCooldown(mob.getRandom().nextInt(600) + 600);
         }
     }
 
@@ -108,7 +107,7 @@ public class MoodSystem implements AISystem {
         if (getMood() < -100) {
             setMood(-100);
         }
-        if (prehistoric.isDeadlyHungry() && getMood() > -50) {
+        if (mob.isDeadlyHungry() && getMood() > -50) {
             setMood(-50);
         }
         if (getPlayingCooldown() > 0) {
@@ -116,7 +115,7 @@ public class MoodSystem implements AISystem {
         }
         if (moodCheckCooldown <= 0) {
             doMoodCheck();
-            moodCheckCooldown = 3000 + prehistoric.getRandom().nextInt(5000);
+            moodCheckCooldown = 3000 + mob.getRandom().nextInt(5000);
         }
         moodCheckCooldown--;
     }

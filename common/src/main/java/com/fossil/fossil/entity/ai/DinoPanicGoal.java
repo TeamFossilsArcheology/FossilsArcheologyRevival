@@ -17,4 +17,18 @@ public class DinoPanicGoal extends PanicGoal {
         }
         return super.canUse();
     }
+
+    @Override
+    public void start() {
+        super.start();
+        ((Prehistoric)mob).sleepSystem.setSleepDisabled(true);
+        ((Prehistoric)mob).sitSystem.setSittingDisabled(true);
+    }
+
+    @Override
+    public void stop() {
+        super.stop();
+        ((Prehistoric)mob).sleepSystem.setSleepDisabled(false);
+        ((Prehistoric)mob).sitSystem.setSittingDisabled(false);
+    }
 }

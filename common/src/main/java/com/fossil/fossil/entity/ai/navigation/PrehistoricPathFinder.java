@@ -26,11 +26,13 @@ public class PrehistoricPathFinder extends PathFinder {
     private final NodeEvaluator nodeEvaluator;
     private final BinaryHeap openSet = new BinaryHeap();
     protected final List<Node> closedSet = new ArrayList<>();
+    protected final Mob mob;
 
-    public PrehistoricPathFinder(NodeEvaluator nodeEvaluator, int maxVisitedNodes) {
+    public PrehistoricPathFinder(NodeEvaluator nodeEvaluator, int maxVisitedNodes, Mob mob) {
         super(nodeEvaluator, maxVisitedNodes);
         this.nodeEvaluator = nodeEvaluator;
         this.maxVisitedNodes = maxVisitedNodes;
+        this.mob = mob;
     }
 
     /**
@@ -117,7 +119,10 @@ public class PrehistoricPathFinder extends PathFinder {
             node = node.cameFrom;
             list.add(0, node);
         }
-        list.add(target);
+        //This should help some of the smaller mobs reach their target
+        if (mob.getBbWidth() < 0.75) {
+            list.add(target);
+        }
         return new PatchedPath(list, targetPos, reachesTarget);
     }
 

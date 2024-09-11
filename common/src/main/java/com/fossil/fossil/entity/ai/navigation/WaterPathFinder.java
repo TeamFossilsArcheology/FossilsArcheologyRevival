@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity.ai.navigation;
 
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.level.pathfinder.Node;
 import net.minecraft.world.level.pathfinder.NodeEvaluator;
 import net.minecraft.world.level.pathfinder.Target;
@@ -11,8 +12,8 @@ public class WaterPathFinder extends PrehistoricPathFinder {
     private static final int EDGE = 14;
     private static final int CORNER = 17;
 
-    public WaterPathFinder(NodeEvaluator nodeEvaluator, int maxVisitedNodes) {
-        super(nodeEvaluator, maxVisitedNodes);
+    public WaterPathFinder(NodeEvaluator nodeEvaluator, int maxVisitedNodes, Mob mob) {
+        super(nodeEvaluator, maxVisitedNodes, mob);
     }
 
     @Override

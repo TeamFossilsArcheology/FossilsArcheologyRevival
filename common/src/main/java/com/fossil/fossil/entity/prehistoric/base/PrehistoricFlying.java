@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.ai.control.CustomFlightLookControl;
 import com.fossil.fossil.entity.ai.control.CustomFlightMoveControl;
 import com.fossil.fossil.entity.ai.navigation.FlightPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationLogic;
+import com.fossil.fossil.entity.prehistoric.SleepSystem;
 import com.fossil.fossil.entity.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -73,8 +74,6 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
-        goalSelector.addGoal(Util.SLEEP, new FlyingSleepGoal(this));
-        goalSelector.addGoal(Util.SLEEP + 1, new FlyingSitGoal(this));
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new FlyingLandNearFoodGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new FlyingEatFromFeederGoal(this));
@@ -93,6 +92,11 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         super.defineSynchedData();
         entityData.define(FLYING, false);
         entityData.define(TAKING_OFF, false);
+    }
+
+    @Override
+    protected @NotNull SleepSystem createSleepSystem() {
+        return new FlyingSleepSystem(this);
     }
 
     @Override

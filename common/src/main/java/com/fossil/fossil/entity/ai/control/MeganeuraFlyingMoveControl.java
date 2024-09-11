@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
 import com.fossil.fossil.entity.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.phys.Vec3;
 
@@ -19,6 +20,7 @@ public class MeganeuraFlyingMoveControl extends MoveControl {
     @Override
     public void setWantedPosition(double x, double y, double z, double speed) {
         super.setWantedPosition(x, y, z, speed);
+        speedModifier = speed * (meganeura.getAttributeValue(Attributes.MOVEMENT_SPEED) + 0.8);
         SmoothTurningMoveControl.wanted = new Vec3(x, y, z);
     }
 

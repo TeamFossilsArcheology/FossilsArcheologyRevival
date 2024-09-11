@@ -19,8 +19,7 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstructionSystem implements AISystem {
-    private final Prehistoric entity;
+public class InstructionSystem extends AISystem {
     private final List<Instruction> instructions = new ArrayList<>();
     private int index = -1;
     private boolean shouldLoop;
@@ -30,7 +29,7 @@ public class InstructionSystem implements AISystem {
     private boolean attached;
 
     public InstructionSystem(Prehistoric entity) {
-        this.entity = entity;
+        super(entity);
     }
 
     @Override
@@ -50,14 +49,14 @@ public class InstructionSystem implements AISystem {
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
             return false;
         } else if (current instanceof Instruction.AttachTo attachTo) {
-            if (entity instanceof Meganeura meganeura) {
+            if (mob instanceof Meganeura meganeura) {
                 if (!meganeura.getAttachSystem().isAttached()) {
                     return true;
                 } else if (!attached) {
                     attached = true;
-                    endTick = entity.level.getGameTime() + 100;
+                    endTick = mob.level.getGameTime() + 100;
                 }
-                if (endTick < entity.level.getGameTime()) {
+                if (endTick < mob.level.getGameTime()) {
                     meganeura.getAttachSystem().stopAttaching();
                     return false;
                 }
@@ -65,23 +64,23 @@ public class InstructionSystem implements AISystem {
             }
             return false;
         } else if (current instanceof Instruction.Idle idle) {
-            return endTick >= entity.level.getGameTime();
+            return endTick >= mob.level.getGameTime();
         } else if (current instanceof Instruction.PlayAnim playAnim) {
 
         } else if (current instanceof Instruction.Attack attack) {
 
         } else if (current instanceof Instruction.Breach breach) {
-            PrehistoricSwimming swimming = (PrehistoricSwimming) entity;
-            Entity target = entity.level.getEntity(breach.targetId);
+            PrehistoricSwimming swimming = (PrehistoricSwimming) mob;
+            Entity target = mob.level.getEntity(breach.targetId);
             if (target instanceof LivingEntity livingEntity) {
                 if (!livingEntity.isAlive() || BreachAttackGoal.isEntitySubmerged(livingEntity) || !PrehistoricSwimming.isOverWater(livingEntity)) {
                     return false;
                 }
-                if (Util.canReachPrey(entity, target)) {
+                if (Util.canReachPrey(mob, target)) {
                     breachTargetReached = true;
                     //swimming.startGrabAttack(target);
                 }
-                if (breachTargetReached && entity.isInWater()) {
+                if (breachTargetReached && mob.isInWater()) {
                     swimming.setBreaching(false);
                     breachTargetReached = false;
                     swimming.stopGrabAttack(livingEntity);
@@ -94,15 +93,15 @@ public class InstructionSystem implements AISystem {
     }
 
     private boolean tryUpdatePath(Instruction.MoveTo moveTo) {
-        PathNavigation navigation = entity.getNavigation();
+        PathNavigation navigation = mob.getNavigation();
         if (tries >= 15) {
             tries = 0;
             return false;
         }
-        if (navigation instanceof GroundPathNavigation && !entity.isOnGround() && !entity.isInWaterOrBubble()) {
+        if (navigation instanceof GroundPathNavigation && !mob.isOnGround() && !mob.isInWaterOrBubble()) {
             return true;
         }
-        if (navigation instanceof WaterBoundPathNavigation && !entity.isInWaterOrBubble()) {
+        if (navigation instanceof WaterBoundPathNavigation && !mob.isInWaterOrBubble()) {
             return true;
         }
 
@@ -114,7 +113,7 @@ public class InstructionSystem implements AISystem {
             }
             return navigation.moveTo(path, 1);
         }
-        if (navigation.getPath().isDone() && !moveTo.target.closerToCenterThan(entity.position(), acceptedDistance())) {
+        if (navigation.getPath().isDone() && !moveTo.target.closerToCenterThan(mob.position(), acceptedDistance())) {
             Path path = navigation.createPath(moveTo.target, 1);
             if (path == null) {
                 tries++;
@@ -126,10 +125,10 @@ public class InstructionSystem implements AISystem {
     }
 
     public double acceptedDistance() {
-        if (entity.isCustomMultiPart()) {
-            return entity.getHeadRadius() + 1;
+        if (mob.isCustomMultiPart()) {
+            return mob.getHeadRadius() + 1;
         }
-        return entity.getBbWidth() / 2 + 1;
+        return mob.getBbWidth() / 2 + 1;
     }
 
     private void startNext() {
@@ -145,28 +144,28 @@ public class InstructionSystem implements AISystem {
         }
         Instruction current = instructions.get(index);
         if (current instanceof Instruction.MoveTo moveTo) {
-            entity.getNavigation().moveTo(moveTo.target.getX(), moveTo.target.getY(), moveTo.target.getZ(), 1);
+            mob.getNavigation().moveTo(moveTo.target.getX(), moveTo.target.getY(), moveTo.target.getZ(), 1);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
-            entity.moveTo(teleportTo.target, entity.getYRot(), entity.getXRot());
+            mob.moveTo(teleportTo.target, mob.getYRot(), mob.getXRot());
         } else if (current instanceof Instruction.AttachTo attachTo) {
             attached = false;
-            entity.getNavigation().moveTo(attachTo.target.getX(), attachTo.target.getY(), attachTo.target.getZ(), 1);
-            if (entity instanceof Meganeura meganeura) {
+            mob.getNavigation().moveTo(attachTo.target.getX(), attachTo.target.getY(), attachTo.target.getZ(), 1);
+            if (mob instanceof Meganeura meganeura) {
                 Direction face = attachTo.direction;
-                float rad = entity.getBbWidth() / 2;
+                float rad = mob.getBbWidth() / 2;
                 if (!meganeura.usesAttachHitBox()) rad *= meganeura.getAttachHitBoxScale();
                 Vec3 pos = new Vec3(attachTo.location.x + rad * face.getStepX(), attachTo.location.y, attachTo.location.z + rad * face.getStepZ());
                 meganeura.getAttachSystem().setAttachTarget(attachTo.target, face, pos);
             }
         } else if (current instanceof Instruction.Idle idle) {
-            endTick = entity.level.getGameTime() + idle.duration;
+            endTick = mob.level.getGameTime() + idle.duration;
         } else if (current instanceof Instruction.PlayAnim playAnim) {
 
         } else if (current instanceof Instruction.Breach breach) {
-            Entity target = entity.level.getEntity(breach.targetId);
-            if (target instanceof LivingEntity livingEntity && entity instanceof PrehistoricSwimming swimming) {
-                entity.setTarget(livingEntity);
-                entity.getMoveControl().setWantedPosition(target.position().x, target.position().y + 4, target.position().z, 1);
+            Entity target = mob.level.getEntity(breach.targetId);
+            if (target instanceof LivingEntity livingEntity && mob instanceof PrehistoricSwimming swimming) {
+                mob.setTarget(livingEntity);
+                mob.getMoveControl().setWantedPosition(target.position().x, target.position().y + 4, target.position().z, 1);
                 swimming.setBreaching(true);
             }
         }
@@ -175,28 +174,28 @@ public class InstructionSystem implements AISystem {
     public void start(List<Instruction> instructions, boolean loop) {
         this.instructions.clear();
         this.instructions.addAll(instructions);
-        entity.getNavigation().stop();
+        mob.getNavigation().stop();
         index = -1;
         shouldLoop = loop;
         if (instructions.isEmpty()) {
             stop();
         } else {
-            if (entity instanceof Meganeura meganeura) {
+            if (mob instanceof Meganeura meganeura) {
                 meganeura.getAttachSystem().stopAttaching();
             }
-            if (entity.isSleeping()) entity.setSleeping(false);
-            if (entity.isSitting()) entity.setSitting(false);
-            entity.disableCustomAI((byte) 0, false);
-            entity.disableCustomAI((byte) 1, true);
-            entity.disableCustomAI((byte) 2, false);
-            entity.disableCustomAI((byte) 3, false);
+            if (mob.isSleeping()) mob.sleepSystem.setSleeping(false);
+            if (mob.sitSystem.isSitting()) mob.sitSystem.setSitting(false);
+            mob.disableCustomAI((byte) 0, false);
+            mob.disableCustomAI((byte) 1, true);
+            mob.disableCustomAI((byte) 2, false);
+            mob.disableCustomAI((byte) 3, false);
             startNext();
         }
     }
 
     public void stop() {
-        entity.disableCustomAI((byte) 0, true);
-        entity.disableCustomAI((byte) 1, false);
+        mob.disableCustomAI((byte) 0, true);
+        mob.disableCustomAI((byte) 1, false);
     }
 
     @Override

@@ -5,13 +5,14 @@ import com.fossil.fossil.entity.ai.control.CustomSwimMoveControl;
 import com.fossil.fossil.entity.ai.control.MeganeuraFlyingMoveControl;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
+import com.fossil.fossil.entity.prehistoric.SleepSystem;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -72,7 +73,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     protected static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.DIRECTION);
     protected static final EntityDataAccessor<Boolean> ATTACHED = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.BOOLEAN);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
-    private final MeganeuraAttachSystem attachSystem = new MeganeuraAttachSystem(this);
+    private final MeganeuraAttachSystem attachSystem = registerSystem(new MeganeuraAttachSystem(this));
     private final PathNavigation flightNav;
     private final PathNavigation amphibiousNav;
     protected boolean isAirNavigator;
@@ -84,29 +85,15 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public void addAdditionalSaveData(CompoundTag compound) {
-        super.addAdditionalSaveData(compound);
-        attachSystem.saveAdditional(compound);
-    }
-
-    @Override
-    public void readAdditionalSaveData(CompoundTag compound) {
-        super.readAdditionalSaveData(compound);
-        attachSystem.load(compound);
-    }
-
-    @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(Util.IMMOBILE, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
-        goalSelector.addGoal(Util.SLEEP, new DinoSleepGoal(this));
-        goalSelector.addGoal(Util.SLEEP + 1, new DinoSitGoal(this));
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
         goalSelector.addGoal(Util.NEEDS + 2, new WaterPlayGoal(this, 1));
-        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 5, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal(this, 1));
         goalSelector.addGoal(Util.WANDER + 2, new MeganeuraWanderAndAttachGoal(this));
         goalSelector.addGoal(Util.WANDER + 3, new DinoRandomSwimGoal(this, 1));
@@ -148,6 +135,11 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
+    protected @NotNull SleepSystem createSleepSystem() {
+        return new MeganeuraSleepSystem(this);
+    }
+
+    @Override
     protected boolean canAgeUpNaturally() {
         if (isInWater() && isBaby() && (getAge() + 1) / 24000 >= data().teenAgeDays()) {
             //Forbid leaving larvae stage if in water to prevent drowning
@@ -175,8 +167,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
 
     @Override
     public boolean shouldRenderAtSqrDistance(double distance) {
-        double d = getBoundingBox().getSize() * 10.0;
-        //TODO: Figure out best value
+        double d = getBbWidth();
         if (Double.isNaN(d)) {
             d = 1.0;
         }
@@ -189,12 +180,26 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     protected void customServerAiStep() {
         switchNavigator();
         super.customServerAiStep();
-        attachSystem.serverTick();
+    }
+
+    @Override
+    public void absMoveTo(double x, double y, double z, float yRot, float xRot) {
+        if (Thread.currentThread().getStackTrace()[2].getClassName().contains("SpawnEntityPacket")) {
+            //TODO: Bug in Architectury. Is removed in 1.19
+            super.absMoveTo(x, y, z, xRot, yRot);
+        } else {
+            super.absMoveTo(x, y, z, yRot, xRot);
+        }
     }
 
     @Override
     protected void checkFallDamage(double y, boolean onGround, BlockState state, BlockPos pos) {
 
+    }
+
+    @Override
+    public boolean isPushable() {
+        return super.isPushable() && !attachSystem.isAttached();
     }
 
     public boolean isFlying() {
@@ -253,21 +258,11 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     public boolean usesAttachHitBox() {
-        return attachSystem.getAttachmentFace().getAxis().isHorizontal();
+        return attachSystem == null || attachSystem.getAttachmentFace().getAxis().isHorizontal();
     }
 
     public float getAttachHitBoxScale() {
         return 0.5f;
-    }
-
-    @Override
-    public boolean isAmphibious() {
-        return isBaby();
-    }
-
-    @Override
-    public boolean canSwim() {
-        return isBaby();
     }
 
     @Override
@@ -278,6 +273,11 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     @Override
     public Item getOrderItem() {
         return Items.ARROW;
+    }
+
+    @Override
+    public PrehistoricEntityInfoAI.Moving aiMovingType() {
+        return isBaby() ? PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC : PrehistoricEntityInfoAI.Moving.FLIGHT;
     }
 
     @Override
@@ -371,6 +371,25 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         return super.getSoundVolume() * 0.5f;
     }
 
+    class MeganeuraSleepSystem extends SleepSystem {
+
+        public MeganeuraSleepSystem(PrehistoricSwimming mob) {
+            super(mob);
+        }
+
+        @Override
+        protected boolean canSleep() {
+            if (!super.canSleep()) {
+                return false;
+            }
+            if (!isBaby() && !attachSystem.isAttached()) {
+                if (!attachSystem.attachStarted()) attachSystem.setAttachCooldown(0);
+                return false;
+            }
+            return true;
+        }
+    }
+
     static class MeganeuraWanderAndAttachGoal extends DinoWanderGoal {
         private final Meganeura meganeura;
 
@@ -410,7 +429,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
             if (pos != null) {
                 return pos;
             }
-            //TODO: No Water
             return AirAndWaterRandomPos.getPos(mob, 8, 4, -2, view.x, view.z, Mth.HALF_PI);
 
         }

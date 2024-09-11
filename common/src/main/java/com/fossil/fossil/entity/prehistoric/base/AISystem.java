@@ -2,11 +2,20 @@ package com.fossil.fossil.entity.prehistoric.base;
 
 import net.minecraft.nbt.CompoundTag;
 
-public interface AISystem {
+public abstract class AISystem {
+    protected final Prehistoric mob;
 
-    void serverTick();
+    protected AISystem(Prehistoric mob) {
+        this.mob = mob;
+    }
 
-    void saveAdditional(CompoundTag arg);
+    public abstract void serverTick();
 
-    void load(CompoundTag arg);
+    public void clientTick() {
+
+    }
+
+    public abstract void saveAdditional(CompoundTag tag);
+
+    public abstract void load(CompoundTag tag);
 }

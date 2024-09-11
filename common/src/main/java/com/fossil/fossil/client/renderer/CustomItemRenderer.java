@@ -23,7 +23,7 @@ import net.minecraft.world.level.block.Block;
 
 public class CustomItemRenderer extends BlockEntityWithoutLevelRenderer {
 
-    public static CustomItemRenderer INSTANCE = new CustomItemRenderer();
+    public static final CustomItemRenderer INSTANCE = new CustomItemRenderer();
     private final AnuStatueBlockEntity anuStatue = new AnuStatueBlockEntity(BlockPos.ZERO, ModBlocks.ANU_STATUE.get().defaultBlockState());
     private final AnubiteStatueBlockEntity anubiteStatue = new AnubiteStatueBlockEntity(BlockPos.ZERO,
             ModBlocks.ANUBITE_STATUE.get().defaultBlockState());

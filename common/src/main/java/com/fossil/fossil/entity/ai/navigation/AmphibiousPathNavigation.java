@@ -24,7 +24,7 @@ public class AmphibiousPathNavigation extends WaterBoundPathNavigation {
     @Override
     protected @NotNull PathFinder createPathFinder(int maxVisitedNodes) {
         nodeEvaluator = new PrehistoricAmphibiousNodeEvaluator();
-        return new WaterPathFinder(nodeEvaluator, maxVisitedNodes);
+        return new WaterPathFinder(nodeEvaluator, maxVisitedNodes, mob);
     }
 
     @Override

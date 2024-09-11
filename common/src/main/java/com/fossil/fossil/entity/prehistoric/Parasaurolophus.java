@@ -50,6 +50,17 @@ public class Parasaurolophus extends Prehistoric {
     }
 
     @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (SLEEPING.equals(key) && !level.isClientSide) {
+            setStanding(false);
+        }
+        if (SITTING.equals(key) && !level.isClientSide) {
+            setStanding(false);
+        }
+        super.onSyncedDataUpdated(key);
+    }
+
+    @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putBoolean("Standing", isStanding());
@@ -100,22 +111,6 @@ public class Parasaurolophus extends Prehistoric {
 
     public void setStanding(boolean standing) {
         entityData.set(STANDING, standing);
-    }
-
-    @Override
-    public void setSleeping(boolean sleeping) {
-        if (sleeping) {
-            setStanding(false);
-        }
-        super.setSleeping(sleeping);
-    }
-
-    @Override
-    public void setSitting(boolean sitting) {
-        if (sitting) {
-            setStanding(false);
-        }
-        super.setSitting(sitting);
     }
 
     @Override

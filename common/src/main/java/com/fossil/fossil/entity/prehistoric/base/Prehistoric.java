@@ -5,7 +5,6 @@ import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.client.renderer.entity.PrehistoricGeoRenderer;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
-import com.fossil.fossil.entity.ai.EatBlockGoal;
 import com.fossil.fossil.entity.ai.*;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.fossil.fossil.entity.ai.navigation.PrehistoricPathNavigation;
@@ -16,6 +15,7 @@ import com.fossil.fossil.entity.data.Attribute;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.prehistoric.Deinonychus;
+import com.fossil.fossil.entity.prehistoric.SleepSystem;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.fossil.fossil.entity.util.InstructionSystem;
@@ -59,7 +59,10 @@ import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.*;
+import net.minecraft.world.entity.ai.goal.FloatGoal;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
+import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
@@ -100,16 +103,19 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private static final EntityDataAccessor<Integer> AGE_TICK = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Integer> HUNGER = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> FLEEING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    public static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
-    public final MoodSystem moodSystem = new MoodSystem(this);
+    private final List<AISystem> aiSystems = new ArrayList<>();
+    public final MoodSystem moodSystem = registerSystem(new MoodSystem(this));
+    public final SleepSystem sleepSystem = registerSystem(createSleepSystem());
+    public final SitSystem sitSystem = registerSystem(new SitSystem(this));
     protected final WhipSteering steering = new WhipSteering(this);
     private final AnimationLogic<Prehistoric> animationLogic = new AnimationLogic<>(this);
     private final InstructionSystem instructionSystem = new InstructionSystem(this);
     public final ResourceLocation animationLocation;
-    private OrderType currentOrder;
+    private OrderType currentOrder = OrderType.WANDER;
     private Boolean hasTeenTexture;
     private final BooleanSupplier hasTeenTextureSupplier = () -> {
         //TODO: Do this differently to prevent filling up the log
@@ -126,11 +132,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
     private Gender gender = Gender.random(random);
-    public int ticksSlept;
-    /**
-     * Sleep cooldown for mobs with {@link PrehistoricEntityInfoAI.Activity#BOTH}
-     */
-    private int cathermalSleepCooldown = 0;
     private int fleeTicks = 0;
     private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
@@ -147,8 +148,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         this.animationLocation = animationLocation;
         this.moveControl = new SmoothTurningMoveControl(this);
         this.setHunger(this.getMaxHunger() / 2);
-        this.currentOrder = OrderType.WANDER;
         this.updateAbilities();
+        refreshDimensions();
         if (this.getMobType() == MobType.WATER) {
             this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
             this.getNavigation().getNodeEvaluator().setCanFloat(true);
@@ -210,10 +211,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
+        goalSelector.addGoal(Util.IMMOBILE, new DinoStayGoal(this));
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
-        goalSelector.addGoal(Util.SLEEP, new DinoSleepGoal(this));
-        goalSelector.addGoal(Util.SLEEP + 1, new DinoSitGoal(this));
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
@@ -232,10 +232,10 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     protected void updateControlFlags() {
         super.updateControlFlags();
-        boolean bl = !isWeak();
-        goalSelector.setControlFlag(Goal.Flag.MOVE, bl);
-        goalSelector.setControlFlag(Goal.Flag.JUMP, bl);
-        goalSelector.setControlFlag(Goal.Flag.LOOK, bl);
+        boolean enabled = !isSleeping() && !isWeak();
+        goalSelector.setControlFlag(Goal.Flag.MOVE, enabled && !sitSystem.isSitting());
+        goalSelector.setControlFlag(Goal.Flag.JUMP, enabled && !sitSystem.isSitting());
+        goalSelector.setControlFlag(Goal.Flag.LOOK, enabled);
     }
 
     @Override
@@ -293,34 +293,27 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
-        moodSystem.saveAdditional(compound);
+        aiSystems.forEach(system -> system.saveAdditional(compound));
         compound.putInt("MatingCooldown", getMatingCooldown());
         compound.putInt("Hunger", getHunger());
         compound.putBoolean("Fleeing", isFleeing());
-        compound.putBoolean("Sitting", isSitting());
-        compound.putBoolean("Sleeping", isSleeping());
-        compound.putInt("TicksSlept", ticksSlept);
         compound.putInt("TicksClimbing", ticksClimbing);
         compound.putInt("ClimbingCooldown", climbingCooldown);
         compound.putByte("CurrentOrder", (byte) currentOrder.ordinal());
         compound.putFloat("YBodyRot", yBodyRot);
         compound.putFloat("YHeadRot", yHeadRot);
         compound.putBoolean("AgingDisabled", isAgingDisabled());
-        compound.putInt("CathermalTimer", cathermalSleepCooldown);
         compound.putString("Gender", getGender().toString());
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
-        moodSystem.load(compound);
+        aiSystems.forEach(system -> system.load(compound));
         setAge(compound.getInt("Age"));
         setMatingCooldown(compound.getInt("MatingCooldown"));
         setHunger(compound.getInt("Hunger"));
         setFleeing(compound.getBoolean("Fleeing"));
-        setSitting(compound.getBoolean("Sitting"));
-        setSleeping(compound.getBoolean("Sleeping"));
-        ticksSlept = compound.getInt("TicksSlept");
         ticksClimbing = compound.getInt("TicksClimbing");
         climbingCooldown = compound.getInt("ClimbingCooldown");
         if (compound.contains("CurrentOrder", Tag.TAG_BYTE)) {
@@ -329,7 +322,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         yBodyRot = compound.getInt("YBodyRot");
         yHeadRot = compound.getInt("YHeadRot");
         setAgingDisabled(compound.getBoolean("AgingDisabled"));
-        cathermalSleepCooldown = compound.getInt("CathermalTimer");
         if ("female".equalsIgnoreCase(compound.getString("Gender"))) {
             setGender(Gender.FEMALE);
         } else {
@@ -453,7 +445,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         moodSystem.setPlayingCooldown(0);
         setMatingCooldown(24000);
         heal(getMaxHealth());
-        currentOrder = OrderType.WANDER;
+        setCurrentOrder(OrderType.WANDER);
         setNoAi(false);
         return spawnDataIn;
     }
@@ -475,20 +467,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public boolean isPushable() {
         return super.isPushable() && !isVehicle();
-    }
-
-    /**
-     * Returns whether the mob can sleep. Depends on the time of day and how long it has been asleep.
-     *
-     * @return whether the mob can sleep at the moment
-     */
-    public boolean wantsToSleep() {
-        if (aiActivityType() == PrehistoricEntityInfoAI.Activity.DIURNAL) {
-            return !level.isDay();
-        } else if (aiActivityType() == PrehistoricEntityInfoAI.Activity.NOCTURNAL) {
-            return level.isDay() && !level.canSeeSky(blockPosition().above());
-        }
-        return aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
     }
 
     public boolean hasTarget() {
@@ -675,43 +653,41 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void aiStep() {
         updateSwingTime();
         super.aiStep();
-        if (getHunger() > getMaxHunger()) {
-            setHunger(getMaxHunger());
-        }
-        if (getMatingCooldown() > 0) {
-            setMatingCooldown(getMatingCooldown() - 1);
-        }
+
         if (getRidingPlayer() != null) {
             maxUpStep = 1;
         } else {
             maxUpStep = 0.6f;
         }
-        if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) && !level.isClientSide) {
-            if (random.nextInt(500) == 0 && deathTime == 0) {
-                heal(1);
-            }
-        }
 
         if (!level.isClientSide) {
+            if (getHunger() > getMaxHunger()) {
+                setHunger(getMaxHunger());
+            }
+            if (getMatingCooldown() > 0) {
+                setMatingCooldown(getMatingCooldown() - 1);
+            }
+            if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) && random.nextInt(500) == 0 && deathTime == 0) {
+                heal(1);
+            }
+
             if (Version.debugEnabled()) {
                 MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
                         new C2SSyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, getHunger(), moodSystem.getMood()));
             }
-            if (cathermalSleepCooldown > 0) {
-                cathermalSleepCooldown--;
+            aiSystems.forEach(AISystem::serverTick);
+            if (horizontalCollision && data().breaksBlocks() && moodSystem.getMood() < 0) {
+                breakBlock((float) FossilConfig.getDouble(FossilConfig.BLOCK_BREAK_HARDNESS));
             }
-            moodSystem.serverTick();
-            instructionSystem.serverTick();
-        }
-        if (!level.isClientSide && horizontalCollision && data().breaksBlocks() && moodSystem.getMood() < 0) {
-            breakBlock((float) FossilConfig.getDouble(FossilConfig.BLOCK_BREAK_HARDNESS));
-        }
-        if (isFleeing()) {
-            fleeTicks++;
-            if (fleeTicks > getFleeingCooldown()) {
-                this.setFleeing(false);
-                fleeTicks = 0;
+            if (isFleeing()) {
+                fleeTicks++;
+                if (fleeTicks > getFleeingCooldown()) {
+                    this.setFleeing(false);
+                    fleeTicks = 0;
+                }
             }
+        } else {
+            aiSystems.forEach(AISystem::clientTick);
         }
         if (isCustomMultiPart()) {
             for (MultiPart part : parts) {
@@ -744,7 +720,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             if (isClimbing()) {
                 ticksClimbing++;
                 boolean onCooldown = ticksClimbing >= 100 || level.getBlockState(blockPosition().above()).getMaterial().isSolid();
-                if (isSleeping() || wantsToSleep() || onCooldown || !horizontalCollision) {
+                if (isSleeping() || sleepSystem.wantsToSleep() || onCooldown || !horizontalCollision) {
                     setClimbing(false);
                     ticksClimbing = 0;
                     if (onCooldown) {
@@ -753,7 +729,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 }
             } else {
                 climbingCooldown--;
-                if (ticksClimbing == 0 && climbingCooldown <= 0 && horizontalCollision && !wantsToSleep() && !isSleeping()) {
+                //TODO: ticksClimbing==0 seems to be wrong
+                if (ticksClimbing == 0 && climbingCooldown <= 0 && horizontalCollision && !sleepSystem.wantsToSleep() && !isSleeping()) {
                     ticksClimbing = 0;
                     setClimbing(true);
                 }
@@ -833,14 +810,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
     }
 
-    public boolean isSitting() {
-        return entityData.get(SITTING);
-    }
-
-    public void setSitting(boolean sitting) {
-        entityData.set(SITTING, sitting);
-    }
-
     @Override
     public boolean isSleeping() {
         return entityData.get(SLEEPING);
@@ -848,20 +817,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void startSleeping(BlockPos pos) {
-        setSleeping(true);
-        getNavigation().stop();
-        setDeltaMovement(Vec3.ZERO);
-        hasImpulse = true;
-    }
-
-    public void setSleeping(boolean sleeping) {
-        entityData.set(SLEEPING, sleeping);
-        if (!sleeping) {
-            cathermalSleepCooldown = 10000 + random.nextInt(6000);
-            setPose(Pose.STANDING);
-        } else {
-            setPose(Pose.SLEEPING);
-        }
     }
 
     @Override
@@ -1097,8 +1052,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         }
 
         if (amount > 0) {
-            setSitting(false);
-            setSleeping(false);
+            sleepSystem.setSleeping(false);
         }
         if (source.getEntity() != null) {
             moodSystem.increaseMood(-5);
@@ -1199,6 +1153,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                         player.yBodyRot = this.yBodyRot;
                         player.setXRot(getXRot());
                         player.startRiding(this);
+                        sitSystem.setSitting(false);
+                        sleepSystem.setSleeping(false);
                         setCurrentOrder(OrderType.WANDER);
                     } else if (getRidingPlayer() == player) {
                         setSprinting(true);
@@ -1214,14 +1170,13 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                         }
                     }
                 }
-                setSitting(false);
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
             if (stack.is(getOrderItem()) && isOwnedBy(player) && !player.isPassenger()) {
                 if (!level.isClientSide) {
                     jumping = false;
                     getNavigation().stop();
-                    currentOrder = OrderType.values()[(currentOrder.ordinal() + 1) % 3];
+                    setCurrentOrder(OrderType.values()[(currentOrder.ordinal() + 1) % 3]);
                     sendOrderMessage(currentOrder);
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
@@ -1286,6 +1241,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     protected @NotNull PathNavigation createNavigation(Level levelIn) {
         return aiClimbType() == Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
     }
+
+    protected @NotNull SleepSystem createSleepSystem() {
+        return new SleepSystem(this);
+    }
+
+    protected <T extends AISystem> T registerSystem(T system) {
+        aiSystems.add(system);
+        return system;
+    }
+
 
     public List<? extends Prehistoric> getNearbySpeciesMembers(int range) {
         return level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(range, 4.0D, range), prehistoric -> prehistoric != this);

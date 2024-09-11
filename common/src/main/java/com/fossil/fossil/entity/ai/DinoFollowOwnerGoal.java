@@ -59,10 +59,10 @@ public class DinoFollowOwnerGoal extends Goal {
 
     @Override
     public boolean canContinueToUse() {
-        if (dino.getNavigation().isDone()) {
+        if (dino.getNavigation().isDone() || dino.getCurrentOrder() != OrderType.FOLLOW) {
             return false;
         }
-        return dino.distanceToSqr(owner) > stopDistanceSqr && !dino.isSitting();
+        return dino.distanceToSqr(owner) > stopDistanceSqr;
     }
 
     @Override

@@ -214,7 +214,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 }
             } else if (entity.isSleeping()) {
                 addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
-            } else if (event.getAnimatable().isSitting()) {
+            } else if (event.getAnimatable().sitSystem.isSitting()) {
                 addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
@@ -323,7 +323,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 }
             } else if (entity.isSleeping()) {
                 addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
-            } else if (event.getAnimatable().isSitting()) {
+            } else if (event.getAnimatable().sitSystem.isSitting()) {
                 addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
