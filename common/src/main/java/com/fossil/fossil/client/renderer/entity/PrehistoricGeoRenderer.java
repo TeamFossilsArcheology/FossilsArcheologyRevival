@@ -3,6 +3,7 @@ package com.fossil.fossil.client.renderer.entity;
 import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.fossil.fossil.client.model.PrehistoricGeoModel;
 import com.fossil.fossil.entity.data.EntityHitboxManager;
+import com.fossil.fossil.entity.prehistoric.Arthropleura;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.parts.AnimationOverride;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
@@ -123,6 +124,9 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
             return Color.RED;
         } else if (InstructionTab.highlightInstructionEntity != null && InstructionTab.highlightInstructionEntity.getId() == animatable.getId()) {
             return Color.RED;
+        }
+        if (animatable instanceof Arthropleura arthropleura && arthropleura.isBee()) {
+            return Color.YELLOW;
         }
         return super.getRenderColor(animatable, partialTick, poseStack, bufferSource, buffer, packedLight);
     }

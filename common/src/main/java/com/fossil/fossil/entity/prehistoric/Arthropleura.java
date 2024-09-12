@@ -9,20 +9,41 @@ import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobType;
+import net.minecraft.world.entity.ai.control.FlyingMoveControl;
+import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.ai.control.MoveControl;
+import net.minecraft.world.entity.ai.goal.Goal;
+import net.minecraft.world.entity.ai.goal.TemptGoal;
+import net.minecraft.world.entity.ai.navigation.FlyingPathNavigation;
+import net.minecraft.world.entity.ai.util.AirAndWaterRandomPos;
+import net.minecraft.world.entity.ai.util.HoverRandomPos;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
+import java.util.EnumSet;
 
 public class Arthropleura extends Prehistoric {
     public static final String ANIMATIONS = "arthropleura.animation.json";
@@ -30,6 +51,11 @@ public class Arthropleura extends Prehistoric {
     public static final String IDLE = "animation.arthropleura.idle";
     public static final String SLEEP = "animation.arthropleura.sleep/sit";
     public static final String WALK = "animation.arthropleura.walk/run";
+    public static final EntityDataAccessor<Boolean> IS_BEE = SynchedEntityData.defineId(Arthropleura.class, EntityDataSerializers.BOOLEAN);
+    private MoveControl oldMoveControl;
+    private LookControl oldLookControl;
+    private final TemptGoal temptGoal = new TemptGoal(this, 1.25, Ingredient.of(ItemTags.FLOWERS), false);
+    private final BeeWanderGoal wanderGoal = new BeeWanderGoal();
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
@@ -42,6 +68,78 @@ public class Arthropleura extends Prehistoric {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
         goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+    }
+
+    @Override
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        entityData.define(IS_BEE, false);
+    }
+
+    @Override
+    public void addAdditionalSaveData(CompoundTag compound) {
+        super.addAdditionalSaveData(compound);
+        compound.putBoolean("Bee", isBee());
+    }
+
+    @Override
+    public void readAdditionalSaveData(CompoundTag compound) {
+        super.readAdditionalSaveData(compound);
+        entityData.set(IS_BEE, compound.getBoolean("Bee"));
+    }
+
+    @Override
+    public void setCustomName(@Nullable Component name) {
+        if (name != null && name.getContents().equals("Bee")) {
+            entityData.set(IS_BEE, true);
+            navigation.stop();
+            setDeltaMovement(Vec3.ZERO);
+            oldMoveControl = moveControl;
+            oldLookControl = lookControl;
+            moveControl = new FlyingMoveControl(this, 20, true);
+            lookControl = new LookControl(this);
+            FlyingPathNavigation flyingPathNavigation = new FlyingPathNavigation(this, level) {
+
+                @Override
+                public boolean isStableDestination(BlockPos pos) {
+                    return !level.getBlockState(pos.below()).isAir();
+                }
+            };
+            flyingPathNavigation.setCanOpenDoors(false);
+            flyingPathNavigation.setCanFloat(false);
+            flyingPathNavigation.setCanPassDoors(true);
+            navigation = flyingPathNavigation;
+            goalSelector.addGoal(3, temptGoal);
+            goalSelector.addGoal(Util.WANDER - 1, wanderGoal);
+        } else if (getName().getContents().equals("Bee")) {
+            navigation.stop();
+            setDeltaMovement(Vec3.ZERO);
+            entityData.set(IS_BEE, false);
+            moveControl = oldMoveControl;
+            lookControl = oldLookControl;
+            navigation = createNavigation(level);
+            goalSelector.removeGoal(temptGoal);
+            goalSelector.removeGoal(wanderGoal);
+        }
+        super.setCustomName(name);
+    }
+
+    /**
+     * Bee
+     */
+    public boolean isBee() {
+        return entityData.get(IS_BEE);
+    }
+
+    @Override
+    public float getWalkTargetValue(BlockPos pos, LevelReader level) {
+        if (isBee()) {
+            if (level.getBlockState(pos).isAir()) {
+                return 10.0f;
+            }
+            return 0.0f;
+        }
+        return super.getWalkTargetValue(pos, level);
     }
 
     @Override
@@ -92,7 +190,7 @@ public class Arthropleura extends Prehistoric {
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
-    
+
     @Override
     public @NotNull Animation nextSittingAnimation() {
         return getAllAnimations().get(SLEEP);
@@ -127,23 +225,66 @@ public class Arthropleura extends Prehistoric {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.ARTHROPLEURA_AMBIENT.get();
+        return isBee() ? SoundEvents.BEE_LOOP : ModSounds.ARTHROPLEURA_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.ARTHROPLEURA_HURT.get();
+        return isBee() ? SoundEvents.BEE_HURT : ModSounds.ARTHROPLEURA_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.ARTHROPLEURA_DEATH.get();
+        return isBee() ? SoundEvents.BEE_DEATH : ModSounds.ARTHROPLEURA_DEATH.get();
+    }
+
+    @Override
+    protected float getSoundVolume() {
+        return isBee() ? super.getSoundVolume() * 2 : super.getSoundVolume();
     }
 
     @Override
     protected void playStepSound(BlockPos pos, BlockState state) {
-        playSound(ModSounds.ARTHROPLEURA_WALK.get(), 0.15f, 1);
+        if (!isBee()) {
+            playSound(ModSounds.ARTHROPLEURA_WALK.get(), 0.15f, 1);
+        }
+    }
+
+    class BeeWanderGoal extends Goal {
+
+        BeeWanderGoal() {
+            setFlags(EnumSet.of(Goal.Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            return Arthropleura.this.navigation.isDone() && Arthropleura.this.random.nextInt(10) == 0;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return Arthropleura.this.navigation.isInProgress();
+        }
+
+        @Override
+        public void start() {
+            Vec3 vec3 = findPos();
+            if (vec3 != null) {
+                Arthropleura.this.navigation.moveTo(Arthropleura.this.navigation.createPath(new BlockPos(vec3), 1), 1.0);
+            }
+        }
+
+        @Nullable
+        private Vec3 findPos() {
+            Vec3 vec32 = Arthropleura.this.getViewVector(0);
+            int i = 8;
+            Vec3 vec33 = HoverRandomPos.getPos(Arthropleura.this, i, 7, vec32.x, vec32.z, Mth.HALF_PI, 3, 1);
+            if (vec33 != null) {
+                return vec33;
+            }
+            return AirAndWaterRandomPos.getPos(Arthropleura.this, i, 4, -2, vec32.x, vec32.z, Mth.HALF_PI);
+        }
     }
 }
