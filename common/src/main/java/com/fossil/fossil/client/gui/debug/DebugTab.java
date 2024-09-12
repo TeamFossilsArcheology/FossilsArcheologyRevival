@@ -2,20 +2,18 @@ package com.fossil.fossil.client.gui.debug;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiComponent;
 import net.minecraft.client.gui.components.Widget;
-import net.minecraft.client.gui.components.events.ContainerEventHandler;
+import net.minecraft.client.gui.components.events.AbstractContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public abstract class DebugTab<E extends Entity> extends GuiComponent implements ContainerEventHandler, NarratableEntry {
+public abstract class DebugTab<E extends Entity> extends AbstractContainerEventHandler implements GuiEventListener, NarratableEntry {
     protected final DebugScreen debugScreen;
     protected final Minecraft minecraft;
     protected final E entity;
@@ -23,9 +21,6 @@ public abstract class DebugTab<E extends Entity> extends GuiComponent implements
     protected final List<GuiEventListener> renderables = new ArrayList<>();
     protected int width;
     protected int height;
-    @Nullable
-    private GuiEventListener focused;
-    private boolean isDragging;
 
     protected DebugTab(DebugScreen debugScreen, E entity) {
         this.debugScreen = debugScreen;
@@ -42,6 +37,19 @@ public abstract class DebugTab<E extends Entity> extends GuiComponent implements
         for (Widget widget : widgets) {
             widget.render(poseStack, mouseX, mouseY, partialTick);
         }
+    }
+
+    @Override
+    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+        if (getFocused() != null) {
+            getFocused().mouseReleased(mouseX, mouseY, button);
+        }
+        return super.mouseReleased(mouseX, mouseY, button);
+    }
+
+    @Override
+    public boolean isMouseOver(double mouseX, double mouseY) {
+        return mouseY >= 0 && mouseY <= height && mouseX >= 0 && mouseX <= width;
     }
 
     /**
@@ -61,27 +69,6 @@ public abstract class DebugTab<E extends Entity> extends GuiComponent implements
     @Override
     public @NotNull List<? extends GuiEventListener> children() {
         return renderables;
-    }
-
-    @Override
-    public boolean isDragging() {
-        return isDragging;
-    }
-
-    @Override
-    public void setDragging(boolean isDragging) {
-        this.isDragging = isDragging;
-    }
-
-    @Nullable
-    @Override
-    public GuiEventListener getFocused() {
-        return focused;
-    }
-
-    @Override
-    public void setFocused(@Nullable GuiEventListener focused) {
-        this.focused = focused;
     }
 
     @Override

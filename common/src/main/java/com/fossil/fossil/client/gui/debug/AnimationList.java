@@ -12,6 +12,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.List;
@@ -49,6 +50,17 @@ public class AnimationList extends DebugSelectionList<AnimationList.AnimationEnt
         setRenderBackground(false);
         setRenderTopAndBottom(false);
         this.consumer = function;
+    }
+
+    @Override
+    protected @Nullable AnimationEntry getEntryAtPosition(double mouseX, double mouseY) {
+        int x1 = x0 + getRowWidth();
+        int m = Mth.floor(mouseY - (double) y0) - headerHeight + (int) getScrollAmount() - 4;
+        int n = m / itemHeight;
+        if (mouseX < getScrollbarPosition() && mouseX >= x0 && mouseX <= x1 && n >= 0 && m >= 0 && n < getItemCount()) {
+            return children().get(n);
+        }
+        return null;
     }
 
     @Override

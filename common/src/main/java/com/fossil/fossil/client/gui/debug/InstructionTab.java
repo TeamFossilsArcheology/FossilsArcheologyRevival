@@ -39,7 +39,6 @@ public class InstructionTab extends DebugTab<Prehistoric> {
         super(debugScreen, entity);
     }
     //TODO: Teleport rotation
-    //TODO: Drag instructions in list
     //TODO: Add spawner. Use EntityRenderer to render preview. Rotate with mousewheel
     //TODO: Flying mobs, Aquatic mobs
     //TODO: Arrow above dino instead of outline

@@ -1,5 +1,6 @@
 package com.fossil.fossil.client.gui.debug.instruction;
 
+import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
@@ -32,13 +33,17 @@ public class InstructionRenderUtil {
             String string;
             if (instruction instanceof Instruction.Idle idle) {
                 string = String.format("%s: %s (%s seconds)", i, instruction.type, idle.duration / 20);
-            } else if(instruction instanceof Instruction.AttachTo attachTo) {
+            } else if (instruction instanceof Instruction.AttachTo attachTo) {
                 string = String.format("%s: %s %s", i, instruction.type, attachTo.direction);
             } else {
                 string = String.format("%s: %s", i, instruction.type);
             }
             float g = -minecraft.font.width(string) / 2f;
-            minecraft.font.drawInBatch(string, g, 0, -1, false, poseStack.last().pose(), bufferSource, true, 0, 15728880);
+            int color = -1;
+            if (InstructionTab.highlightInstruction == instruction) {
+                color = Color.RED.hashCode();
+            }
+            minecraft.font.drawInBatch(string, g, 0, color, false, poseStack.last().pose(), bufferSource, true, 0, 15728880);
             poseStack.popPose();
         }
         bufferSource.endBatch();
@@ -46,6 +51,7 @@ public class InstructionRenderUtil {
         RenderSystem.enableDepthTest();
         poseStack.popPose();
     }
+
     private static float nanoToPulse(long finishNanoTime) {
         return 0.1f + 0.5f * Math.abs(Mth.sin(finishNanoTime / 5E8f));
     }

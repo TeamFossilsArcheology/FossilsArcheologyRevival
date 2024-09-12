@@ -22,3 +22,4 @@ accessible method net/minecraft/world/level/levelgen/structure/pools/JigsawPlace
 accessible class net/minecraft/world/entity/ai/control/MoveControl$Operation
 accessible class net/minecraft/server/network/ServerGamePacketListenerImpl$EntityInteraction
 accessible method net/minecraft/world/level/pathfinder/Path setDebug ([Lnet/minecraft/world/level/pathfinder/Node;[Lnet/minecraft/world/level/pathfinder/Node;Ljava/util/Set;)V
+extendable method net/minecraft/client/gui/components/AbstractSelectionList getEntryAtPosition (DD)Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;

@@ -158,8 +158,7 @@ public class DebugScreen extends Screen {
         if (!tabs.isEmpty()) {
             tabs.forEach(tab -> tab.init(width, height));
             Collections.rotate(tabs, -tabShift);
-            currentTab = addWidget(tabs.get(0));
-            currentTab.onOpen();
+            currentTab = tabs.get(0);
             addRenderableWidget(CycleOption.create("Tab", () -> tabs, debugTab -> new TextComponent(debugTab.getClass().getSimpleName()),
                     options -> currentTab, (options, option, tab) -> {
                         tab.onOpen();
@@ -171,6 +170,8 @@ public class DebugScreen extends Screen {
             addRenderableWidget(new Button(width / 2, 35, 100, 20, new TextComponent("Set default"), button -> {
                 tabShift += tabs.indexOf(currentTab);
             }));
+            addWidget(currentTab);
+            currentTab.onOpen();
         }
     }
 

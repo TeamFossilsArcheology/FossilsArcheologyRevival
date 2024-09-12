@@ -52,7 +52,7 @@ public class InstructionRenderer {
                 } else if (instruction instanceof Instruction.PlayAnim playAnim) {
                 } else if (instruction instanceof Instruction.Idle idle) {
                     int stack = countAtPos.compute(currentPos, (blockPos, count) -> count == null ? 1 : count + 1);
-                    texts.add(Pair.of(Vec3.atCenterOf(currentPos).add(0, (stack - 1) * 0.2, 0), instruction));
+                    texts.add(Pair.of(Vec3.atCenterOf(currentPos).add(0, 0.5 + stack * 0.2, 0), instruction));
                 }
             }
             InstructionRenderUtil.renderTextBatch(poseStack, mc, texts);
