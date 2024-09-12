@@ -4,6 +4,7 @@ import com.fossil.fossil.entity.prehistoric.base.*;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.S2CSyncActiveAnimationMessage;
+import com.fossil.fossil.network.debug.S2CCancelAnimationMessage;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -50,11 +51,11 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
     }
 
-    public void forceAnimation(String controller, Animation animation, Category category, double speed, boolean loop) {
+    public ActiveAnimationInfo forceAnimation(String controller, Animation animation, Category category, double transitionLength, boolean loop) {
         //TODO: More debug control
         if (animation != null) {
             ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(),
-                    entity.level.getGameTime() + animation.animationLength, category, true, speed, loop
+                    entity.level.getGameTime() + animation.animationLength, category, true, transitionLength, loop
             );
             addNextAnimation(controller, activeAnimationInfo);
             if (!entity.level.isClientSide) {
@@ -62,7 +63,9 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
                 MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new S2CSyncActiveAnimationMessage(entity, controller, activeAnimationInfo));
             }
+            return activeAnimationInfo;
         }
+        return null;
     }
 
     public boolean addActiveAnimation(String controller, Animation animation, Category category) {
@@ -93,11 +96,21 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         nextAnimations.put(controller, activeAnimationInfo);
     }
 
-    private boolean isAnimationDone(String controller) {
+    public void cancelAnimation(String controller) {
+        if (entity.level.isClientSide) {
+            activeAnimations.remove(controller);
+        } else {
+            TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
+            var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
+            MessageHandler.DEBUG_CHANNEL.sendToPlayers(players, new S2CCancelAnimationMessage(entity.getId(), controller));
+        }
+    }
+
+    public boolean isAnimationDone(String controller) {
         return getActiveAnimation(controller).filter(this::isAnimationDone).isPresent();
     }
 
-    private boolean isAnimationDone(ActiveAnimationInfo activeAnimation) {
+    public boolean isAnimationDone(ActiveAnimationInfo activeAnimation) {
         return !activeAnimation.loop && entity.level.getGameTime() >= activeAnimation.endTick;
     }
 
@@ -135,7 +148,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
             activeAnimations.put(controller.getName(), next);
 
-            controller.transitionLengthTicks = next.speed;
+            controller.transitionLengthTicks = next.transitionLength;
             controller.markNeedsReload();
             controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName, next.loop ? LOOP : null));
             return PlayState.CONTINUE;
@@ -177,7 +190,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
             activeAnimations.put(controller.getName(), next);
 
-            controller.transitionLengthTicks = next.speed;
+            controller.transitionLengthTicks = next.transitionLength;
             controller.markNeedsReload();
             controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName, next.loop ? LOOP : null));
             return PlayState.CONTINUE;
@@ -224,7 +237,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         event.getController().setAnimationSpeed(animationSpeed);
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
-            controller.transitionLengthTicks = newAnimation.get().speed;
+            controller.transitionLengthTicks = newAnimation.get().transitionLength;
             controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, loopType));
         }
         return PlayState.CONTINUE;
@@ -236,7 +249,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
             activeAnimations.put(controller.getName(), next);
 
-            controller.transitionLengthTicks = next.speed;
+            controller.transitionLengthTicks = next.transitionLength;
             controller.markNeedsReload();
             controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName));
             return PlayState.CONTINUE;
@@ -253,7 +266,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
             activeAnimations.put(controller.getName(), next);
 
-            controller.transitionLengthTicks = next.speed;
+            controller.transitionLengthTicks = next.transitionLength;
             controller.markNeedsReload();
             controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName));
             return PlayState.CONTINUE;
@@ -293,7 +306,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             ActiveAnimationInfo next = nextAnimations.remove(controller.getName());
             activeAnimations.put(controller.getName(), next);
 
-            controller.transitionLengthTicks = next.speed;
+            controller.transitionLengthTicks = next.transitionLength;
             controller.markNeedsReload();
             controller.setAnimation(new AnimationBuilder().addAnimation(next.animationName, next.loop ? LOOP : null));
             return PlayState.CONTINUE;
@@ -337,7 +350,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public record ActiveAnimationInfo(String animationName, double startTick, double endTick, Category category,
-                                      boolean forced, double speed, boolean loop) {
+                                      boolean forced, double transitionLength, boolean loop) {
         public ActiveAnimationInfo(String animationName, double startTick, double endTick, Category category, boolean forced, double speed) {
             this(animationName, startTick, endTick, category, forced, speed, false);
         }

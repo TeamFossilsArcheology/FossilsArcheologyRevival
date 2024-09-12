@@ -47,7 +47,6 @@ public class DebugScreen extends Screen {
             entity = null;
         }
     }
-    //TODO: Discard all button
 
     @Nullable
     public static Entity getHitResult(Minecraft mc) {

@@ -8,7 +8,7 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.C2SInstructionMessage;
+import com.fossil.fossil.network.debug.InstructionMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
@@ -25,7 +25,8 @@ import java.util.*;
 
 public class InstructionTab extends DebugTab<Prehistoric> {
     public static final Map<UUID, Pair> INSTRUCTIONS = new HashMap<>();
-    private InstructionsList animations;
+    private InstructionsList instructions;
+    private AnimationList animations;
     private EntityList attackEntities;
     private EntityList breachEntities;
     public static Entity entityListHighlight;
@@ -37,8 +38,6 @@ public class InstructionTab extends DebugTab<Prehistoric> {
     protected InstructionTab(DebugScreen debugScreen, Prehistoric entity) {
         super(debugScreen, entity);
     }
-    //TODO: Loop, Sleep, Sit, Anim, Attack
-    //TODO: Save across sessions
     //TODO: Teleport rotation
     //TODO: Drag instructions in list
     //TODO: Add spawner. Use EntityRenderer to render preview. Rotate with mousewheel
@@ -49,32 +48,26 @@ public class InstructionTab extends DebugTab<Prehistoric> {
     @Override
     protected void init(int width, int height) {
         super.init(width, height);
-        animations = addWidget(new InstructionsList(INSTRUCTIONS.computeIfAbsent(entity.getUUID(), id -> new Pair(entity.getId(), new ArrayList<>())), minecraft));
+        instructions = addWidget(new InstructionsList(INSTRUCTIONS.computeIfAbsent(entity.getUUID(), id -> new Pair(entity.getId(), new ArrayList<>())), minecraft));
 
         addWidget(new Button(5, 340, 50, 20, new TextComponent("Start"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
             debugScreen.onClose();
             onClose();
         }));
         addWidget(new Button(5, 365, 50, 20, new TextComponent("Stop"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entity.getId(), true, List.of()));
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entity.getId(), true, List.of()));
         }));
         addWidget(new Button(60, 340, 70, 20, new TextComponent("Start All"), button -> {
             for (Map.Entry<UUID, Pair> entry : INSTRUCTIONS.entrySet()) {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entry.getValue().id, true, entry.getValue().instructions));
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entry.getValue().id, true, entry.getValue().instructions));
             }
             debugScreen.onClose();
             onClose();
         }));
         addWidget(new Button(135, 340, 50, 20, new TextComponent("Debug"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SInstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
         }));
-        /*addWidget(new Button(60, 365, 70, 20, new TextComponent("Save"), button -> {
-
-        }));
-        addWidget(new Button(135, 365, 50, 20, new TextComponent("Load"), button -> {
-
-        }));*/
         addWidget(new Button(220, 5, 100, 20, new TextComponent("Walk Builder"), button -> {
             positionMode = Instruction.Type.MOVE_TO;
             debugScreen.onClose();
@@ -92,36 +85,53 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             }));
         }
         var list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight(), entity, entity.getBoundingBox().inflate(30));
-        attackEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
+        attackEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
             Instruction instruction = new Instruction.Attack(entity1.getId());
-            animations.addInstruction(instruction);
+            instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         });
         addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
             widgets.remove(breachEntities);
             renderables.remove(breachEntities);
+            widgets.remove(animations);
+            renderables.remove(animations);
             addWidget(attackEntities);
         }));
         if (entity instanceof PrehistoricSwimming swimming && swimming.canDoBreachAttack()) {
             list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight()
                     .selector(target -> !BreachAttackGoal.isEntitySubmerged(target) && PrehistoricSwimming.isOverWater(target)), entity, entity.getBoundingBox().inflate(30));
-            breachEntities = new EntityList(width - 220, 200, 300, list, minecraft, entity1 -> {
+            breachEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
                 Instruction instruction = new Instruction.Breach(entity1.getId());
-                animations.addInstruction(instruction);
+                instructions.addInstruction(instruction);
                 INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
             });
             addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Breach"), button -> {
                 widgets.remove(attackEntities);
                 renderables.remove(attackEntities);
+                widgets.remove(animations);
+                renderables.remove(animations);
                 addWidget(breachEntities);
             }));
         }
+        List<String> controllers = entity.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
+        animations = new AnimationList(width - 315, 300, entity.getAllAnimations(), controllers, true, minecraft, animationObject -> {
+            Instruction instruction = new Instruction.PlayAnim(animationObject.name(), animationObject.controller(), animationObject.loop(), (int) animationObject.transitionLength());
+            instructions.addInstruction(instruction);
+            INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
+        });
+        addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Animations"), button -> {
+            widgets.remove(attackEntities);
+            renderables.remove(attackEntities);
+            widgets.remove(breachEntities);
+            renderables.remove(breachEntities);
+            addWidget(animations);
+        }));
 
         EditBox zPosInput = addWidget(new EditBox(minecraft.font, 325, 30, 30, 20, new TextComponent("")));
         zPosInput.setValue(new DecimalFormat("##", DecimalFormatSymbols.getInstance(Locale.US)).format(5));
         addWidget(new Button(325, 5, 70, 20, new TextComponent("Add Idle"), button -> {
             Instruction instruction = new Instruction.Idle(Integer.parseInt(zPosInput.getValue()) * 20);
-            animations.addInstruction(instruction);
+            instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         }));
     }

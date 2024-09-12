@@ -1,42 +1,29 @@
 package com.fossil.fossil.client.gui.debug;
 
-import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SForceAnimationMessage;
 import com.fossil.fossil.network.debug.C2SRotationMessage;
-import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Quaternion;
 import com.mojang.math.Vector3f;
-import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.gui.components.ContainerObjectSelectionList;
-import net.minecraft.client.gui.components.events.GuiEventListener;
-import net.minecraft.client.gui.narration.NarratableEntry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.List;
-import java.util.Map;
 
 public class AnimationTab extends DebugTab<Entity> {
     private float rotYBase;
     private float rotXBase;
     private float scale = 15;
-    private boolean loop;
-    private double transitionLength = 5;
-    private AnimationsList animations;
-    private String currentController;
 
     protected AnimationTab(DebugScreen debugScreen, Entity entity) {
         super(debugScreen, entity);
@@ -118,25 +105,10 @@ public class AnimationTab extends DebugTab<Entity> {
             sliderX.setSliderValue(0, true);
         }));
         if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
-            animations = addWidget(new AnimationsList(entity.getId(), prehistoric.getAllAnimations()));
             List<String> controllers = prehistoric.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
-            if (!controllers.isEmpty()) {
-                currentController = controllers.get(0);
-                addWidget(CycleOption.create("Controller", () -> controllers, TextComponent::new,
-                                options -> currentController, (options, option, controller) -> currentController = controller)
-                        .createButton(Minecraft.getInstance().options, width / 2, 90, 100));
-            }
-
-            addWidget(
-                    new DebugSlider(width / 2, 120, 100, 20, new TextComponent("Transition: "), new TextComponent(""), 0, 20, transitionLength, 1, 3,
-                            true) {
-                        @Override
-                        protected void applyValue() {
-                            transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
-                        }
-                    });
-            addWidget(CycleOption.createOnOff("Loop", options -> loop, (options, option, loop) -> this.loop = loop)
-                    .createButton(Minecraft.getInstance().options, width / 2, 150, 100));
+            addWidget(new AnimationList(width - width / 4, height, prehistoric.getAllAnimations(), controllers, false, minecraft, animationObject -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(animationObject.controller(), entity.getId(), animationObject.name(), animationObject.transitionLength(), animationObject.loop()));
+            }));
         }
     }
 
@@ -149,69 +121,6 @@ public class AnimationTab extends DebugTab<Entity> {
             drawString(poseStack, minecraft.font, new TextComponent("Rotation Body: " + (entity instanceof LivingEntity livingEntity ? livingEntity.yBodyRot : entity.getYRot())), 20, 180, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Start Animation:"), width - width / 4 + 20, 30, 16777215);
-        }
-    }
-
-    private class AnimationsList extends ContainerObjectSelectionList<AnimationsList.AnimationEntry> {
-
-        public AnimationsList(int mobId, Map<String, Animation> animations) {
-            super(AnimationTab.this.minecraft, 200, AnimationTab.this.height, 60, AnimationTab.this.height, 25);
-            List<Map.Entry<String, Animation>> sortedAnimations = animations.entrySet().stream().sorted(Map.Entry.comparingByKey()).toList();
-            for (Map.Entry<String, Animation> animation : sortedAnimations) {
-                addEntry(new AnimationEntry(mobId, animation));
-            }
-            setRenderBackground(false);
-            setRenderTopAndBottom(false);
-            x0 = (AnimationTab.this.width - AnimationTab.this.width / 4);
-            x1 = x0 + width;
-        }
-
-        @Override
-        protected int getScrollbarPosition() {
-            return x0 + width - 6;
-        }
-
-        private class AnimationEntry extends ContainerObjectSelectionList.Entry<AnimationEntry> {
-            private final Button changeButton;
-
-            AnimationEntry(int id, Map.Entry<String, Animation> animation) {
-                changeButton = new Button(0, 0, 200, 20, new TextComponent(animation.getKey()), button -> {
-                    if (entity instanceof Prehistoric prehistoric) {
-                        /*double speed = 1 / Math.sqrt(prehistoric.getScale());
-                        speed *= prehistoric.data().attributes().baseSpeed() / 0.26;//multiplier
-                        speed *= animation.getValue().animationLength / 20;*/
-                        MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(currentController, prehistoric.getId(), button.getMessage().getContents(), transitionLength, loop));
-                    }
-                });
-            }
-
-            @Override
-            public @NotNull List<? extends NarratableEntry> narratables() {
-                return ImmutableList.of(changeButton);
-            }
-
-            @Override
-            public void render(PoseStack poseStack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
-                               float partialTick) {
-                changeButton.x = left;
-                changeButton.y = top;
-                changeButton.render(poseStack, mouseX, mouseY, partialTick);
-            }
-
-            @Override
-            public @NotNull List<? extends GuiEventListener> children() {
-                return ImmutableList.of(changeButton);
-            }
-
-            @Override
-            public boolean mouseClicked(double mouseX, double mouseY, int button) {
-                return changeButton.mouseClicked(mouseX, mouseY, button);
-            }
-
-            @Override
-            public boolean mouseReleased(double mouseX, double mouseY, int button) {
-                return changeButton.mouseReleased(mouseX, mouseY, button);
-            }
         }
     }
 }

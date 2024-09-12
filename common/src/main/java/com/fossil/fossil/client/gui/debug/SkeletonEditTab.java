@@ -4,7 +4,7 @@ import com.fossil.fossil.entity.PrehistoricSkeleton;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.network.MessageHandler;
-import com.fossil.fossil.network.debug.C2SSyncDebugInfoMessage;
+import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
 import com.fossil.fossil.util.TimePeriod;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -44,7 +44,7 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
         addWidget(ageSlider);
         addWidget(new ModelsList());
         addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
-            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0, 0));
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0, 0));
             ageSlider.maxValue = EntityDataManager.ENTITY_DATA.getData(info.resourceName).adultAgeDays();
             age = (int) Math.min(age, ageSlider.maxValue);
             ageSlider.setValue(age);

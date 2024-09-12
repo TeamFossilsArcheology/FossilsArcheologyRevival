@@ -1,8 +1,10 @@
 package com.fossil.fossil.forge.mixins;
 
+import com.fossil.fossil.client.gui.debug.DebugScreen;
 import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.client.gui.debug.navigation.PathingDebug;
+import com.fossil.fossil.util.Version;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.phys.BlockHitResult;
@@ -18,6 +20,16 @@ public class DebugMinecraftMixin {
 
     @Shadow
     private int rightClickDelay;
+
+    @Inject(method = "clearLevel(Lnet/minecraft/client/gui/screens/Screen;)V", at = @At(value = "HEAD"))
+    public void clearDebugEntity(final CallbackInfo ci) {
+        if (Version.debugEnabled()) {
+            DebugScreen.entity = null;
+            InstructionTab.entityListHighlight = null;
+            InstructionTab.highlightInstructionEntity = null;
+            InstructionTab.activeEntity = null;
+        }
+    }
 
     @Inject(method = "pickBlock", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelMiddleClick(final CallbackInfo ci) {

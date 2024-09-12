@@ -24,7 +24,7 @@ import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.network.C2SHitPlayerMessage;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SDisableAIMessage;
-import com.fossil.fossil.network.debug.C2SSyncDebugInfoMessage;
+import com.fossil.fossil.network.debug.SyncDebugInfoMessage;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
@@ -673,7 +673,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
             if (Version.debugEnabled()) {
                 MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) level).getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 16),
-                        new C2SSyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, getHunger(), moodSystem.getMood()));
+                        new SyncDebugInfoMessage(getId(), gender.name(), getAge(), matingCooldown, moodSystem.getPlayingCooldown(), climbingCooldown, getHunger(), moodSystem.getMood()));
             }
             aiSystems.forEach(AISystem::serverTick);
             if (horizontalCollision && data().breaksBlocks() && moodSystem.getMood() < 0) {

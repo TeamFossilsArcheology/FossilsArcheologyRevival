@@ -38,7 +38,7 @@ public class S2CSyncActiveAnimationMessage {
         this.animationName = activeAnimationInfo.animationName();
         this.startTick = activeAnimationInfo.startTick();
         this.category = activeAnimationInfo.category();
-        this.ticks = activeAnimationInfo.speed();
+        this.ticks = activeAnimationInfo.transitionLength();
         this.loop = activeAnimationInfo.loop();
     }
 

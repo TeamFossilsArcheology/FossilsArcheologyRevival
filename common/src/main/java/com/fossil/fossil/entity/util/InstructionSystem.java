@@ -2,12 +2,18 @@ package com.fossil.fossil.entity.util;
 
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.entity.ai.BreachAttackGoal;
+import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.prehistoric.base.AISystem;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
+import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.debug.InstructionMessage;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
@@ -27,6 +33,8 @@ public class InstructionSystem extends AISystem {
     private long endTick;
     private boolean breachTargetReached;
     private boolean attached;
+    private AnimationLogic.ActiveAnimationInfo activeAnim;
+    private long animCount;
 
     public InstructionSystem(Prehistoric entity) {
         super(entity);
@@ -44,6 +52,7 @@ public class InstructionSystem extends AISystem {
 
     private boolean tickRunning() {
         Instruction current = instructions.get(index);
+        System.out.println("tickRunning " + current);
         if (current instanceof Instruction.MoveTo moveTo) {
             return tryUpdatePath(moveTo);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
@@ -66,7 +75,23 @@ public class InstructionSystem extends AISystem {
         } else if (current instanceof Instruction.Idle idle) {
             return endTick >= mob.level.getGameTime();
         } else if (current instanceof Instruction.PlayAnim playAnim) {
-
+            if (playAnim.timeBased) {
+                if (animCount < mob.level.getGameTime()) {
+                    mob.getAnimationLogic().cancelAnimation(playAnim.controller);
+                    return false;
+                }
+                return true;
+            } else {
+                if (mob.getAnimationLogic().isAnimationDone(activeAnim)) {
+                    animCount--;
+                    if (animCount > 0) {
+                        activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationLogic.Category.IDLE, 5, false);
+                    } else {
+                        return false;
+                    }
+                }
+                return true;
+            }
         } else if (current instanceof Instruction.Attack attack) {
 
         } else if (current instanceof Instruction.Breach breach) {
@@ -146,6 +171,7 @@ public class InstructionSystem extends AISystem {
         if (current instanceof Instruction.MoveTo moveTo) {
             mob.getNavigation().moveTo(moveTo.target.getX(), moveTo.target.getY(), moveTo.target.getZ(), 1);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
+            mob.getNavigation().stop();
             mob.moveTo(teleportTo.target, mob.getYRot(), mob.getXRot());
         } else if (current instanceof Instruction.AttachTo attachTo) {
             attached = false;
@@ -160,7 +186,13 @@ public class InstructionSystem extends AISystem {
         } else if (current instanceof Instruction.Idle idle) {
             endTick = mob.level.getGameTime() + idle.duration;
         } else if (current instanceof Instruction.PlayAnim playAnim) {
-
+            if (playAnim.timeBased) {
+                animCount = mob.level.getGameTime() + playAnim.count * 20L;
+                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationLogic.Category.IDLE, 5, true);
+            } else {
+                animCount = playAnim.count;
+                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationLogic.Category.IDLE, 5, false);
+            }
         } else if (current instanceof Instruction.Breach breach) {
             Entity target = mob.level.getEntity(breach.targetId);
             if (target instanceof LivingEntity livingEntity && mob instanceof PrehistoricSwimming swimming) {
@@ -177,6 +209,7 @@ public class InstructionSystem extends AISystem {
         mob.getNavigation().stop();
         index = -1;
         shouldLoop = loop;
+        syncWithClients();
         if (instructions.isEmpty()) {
             stop();
         } else {
@@ -198,11 +231,27 @@ public class InstructionSystem extends AISystem {
         mob.disableCustomAI((byte) 1, false);
     }
 
-    @Override
-    public void saveAdditional(CompoundTag arg) {
+    public void syncWithClients() {
+        MessageHandler.DEBUG_CHANNEL.sendToPlayers(((ServerLevel) mob.level).getPlayers(serverPlayer -> serverPlayer.distanceTo(mob) < 32),
+                new InstructionMessage(mob.getId(), shouldLoop, instructions));
     }
 
     @Override
-    public void load(CompoundTag arg) {
+    public void saveAdditional(CompoundTag tag) {
+        ListTag saved = new ListTag();
+        for (int i = 0; i < instructions.size(); i++) {
+            saved.addTag(i, instructions.get(i).encodeTag());
+        }
+        tag.put("Instructions", saved);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        instructions.clear();
+        ListTag saved = tag.getList("Instructions", Tag.TAG_LIST);
+        for (Tag savedTag : saved) {
+            instructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
+        }
+        syncWithClients();
     }
 }

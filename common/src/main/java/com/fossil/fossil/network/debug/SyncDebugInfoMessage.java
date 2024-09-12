@@ -13,7 +13,7 @@ import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Supplier;
 
-public class C2SSyncDebugInfoMessage {
+public class SyncDebugInfoMessage {
     private final int entityId;
     private final String enumString;
     private final int age;
@@ -23,11 +23,11 @@ public class C2SSyncDebugInfoMessage {
     private final int hunger;
     private final int mood;
 
-    public C2SSyncDebugInfoMessage(FriendlyByteBuf buf) {
+    public SyncDebugInfoMessage(FriendlyByteBuf buf) {
         this(buf.readInt(), buf.readUtf(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt(), buf.readInt());
     }
 
-    public C2SSyncDebugInfoMessage(int entityId, String enumString, int age, int matingCooldown, int playingCooldown, int climbingCooldown, int hunger, int mood) {
+    public SyncDebugInfoMessage(int entityId, String enumString, int age, int matingCooldown, int playingCooldown, int climbingCooldown, int hunger, int mood) {
         this.entityId = entityId;
         this.enumString = enumString;
         this.age = age;
@@ -54,8 +54,8 @@ public class C2SSyncDebugInfoMessage {
             Player player = contextSupplier.get().getPlayer();
             if (Version.debugEnabled() && player != null) {
                 if (player.level.isClientSide) {
-                    if (Minecraft.getInstance().screen instanceof DebugScreen debugScreen) {
-                        if (debugScreen.entity == null || debugScreen.entity.getId() != entityId) {
+                    if (Minecraft.getInstance().screen instanceof DebugScreen) {
+                        if (DebugScreen.entity == null || DebugScreen.entity.getId() != entityId) {
                             return;
                         }
                     } else {
