@@ -52,7 +52,7 @@ public class InstructionSystem extends AISystem {
 
     private boolean tickRunning() {
         Instruction current = instructions.get(index);
-        System.out.println("tickRunning " + current);
+
         if (current instanceof Instruction.MoveTo moveTo) {
             return tryUpdatePath(moveTo);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {

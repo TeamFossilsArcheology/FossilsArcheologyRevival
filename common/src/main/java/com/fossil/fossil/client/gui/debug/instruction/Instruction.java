@@ -233,7 +233,7 @@ public abstract class Instruction {
         }
 
         protected static Instruction decodeTag(CompoundTag tag) {
-            return new PlayAnim(tag.getString("Name"), tag.getString("Name"), tag.getBoolean("TimeBased"), tag.getInt("Count"));
+            return new PlayAnim(tag.getString("Name"), tag.getString("Controller"), tag.getBoolean("TimeBased"), tag.getInt("Count"));
         }
 
         @Override

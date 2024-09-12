@@ -28,7 +28,7 @@ public class InstructionRenderer {
 
     public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks, long finishNanoTime, Frustum frustum) {
         Minecraft mc = Minecraft.getInstance();
-        if (SmoothTurningMoveControl.wanted != null) {
+        if (SmoothTurningMoveControl.wanted != null && InstructionTab.activeEntity != null) {
             Vec3 pos = SmoothTurningMoveControl.wanted;
             LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.15, pos.y, pos.z - 0.15, pos.x + 0.15, pos.y + 0.15, pos.z + 0.15), 1, 0, 0, 1);
         }
