@@ -29,8 +29,9 @@ public class C2SDiscardMessage {
             Player player = contextSupplier.get().getPlayer();
             if (player.level instanceof ServerLevel serverLevel) {
                 if (entityId == -1) {
-                    StreamSupport.stream(serverLevel.getAllEntities().spliterator(), false)
-                            .filter(entity -> !(entity instanceof Player)).forEach(Entity::discard);
+                    var list = StreamSupport.stream(serverLevel.getAllEntities().spliterator(), false)
+                            .filter(entity -> !(entity instanceof Player)).toList();
+                    list.forEach(Entity::discard);
                 } else {
                     StreamSupport.stream(serverLevel.getAllEntities().spliterator(), false)
                             .filter(entity -> entity.getId() == entityId).forEach(Entity::discard);

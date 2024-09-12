@@ -40,7 +40,6 @@ public class InstructionTab extends DebugTab<Prehistoric> {
         super(debugScreen, entity);
     }
     //TODO: Add spawner. Use EntityRenderer to render preview. Rotate with mousewheel
-    //TODO: Flying mobs, Aquatic mobs
     //TODO: Anu support
 
     @Override
