@@ -56,7 +56,12 @@ public class InstructionSystem extends AISystem {
         if (current instanceof Instruction.MoveTo moveTo) {
             return tryUpdatePath(moveTo);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
-            return false;
+            if (endTick < mob.level.getGameTime()) {
+                return false;
+            }
+            mob.moveTo(teleportTo.target, teleportTo.rotation, mob.getXRot());
+            mob.setYHeadRot(teleportTo.rotation);
+            return true;
         } else if (current instanceof Instruction.AttachTo attachTo) {
             if (mob instanceof Meganeura meganeura) {
                 if (!meganeura.getAttachSystem().isAttached()) {
@@ -172,7 +177,9 @@ public class InstructionSystem extends AISystem {
             mob.getNavigation().moveTo(moveTo.target.getX(), moveTo.target.getY(), moveTo.target.getZ(), 1);
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
             mob.getNavigation().stop();
-            mob.moveTo(teleportTo.target, mob.getYRot(), mob.getXRot());
+            mob.moveTo(teleportTo.target, teleportTo.rotation, mob.getXRot());
+            mob.setYHeadRot(teleportTo.rotation);
+            endTick = mob.level.getGameTime() + 5;
         } else if (current instanceof Instruction.AttachTo attachTo) {
             attached = false;
             mob.getNavigation().moveTo(attachTo.target.getX(), attachTo.target.getY(), attachTo.target.getZ(), 1);

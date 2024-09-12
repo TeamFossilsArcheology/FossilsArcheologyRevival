@@ -33,15 +33,14 @@ public class InstructionTab extends DebugTab<Prehistoric> {
     public static Entity highlightInstructionEntity;
     public static Instruction highlightInstruction;
     public static Instruction.Type positionMode = Instruction.Type.IDLE;
+    public static int teleportRotation;
     public static Prehistoric activeEntity;
 
     protected InstructionTab(DebugScreen debugScreen, Prehistoric entity) {
         super(debugScreen, entity);
     }
-    //TODO: Teleport rotation
     //TODO: Add spawner. Use EntityRenderer to render preview. Rotate with mousewheel
     //TODO: Flying mobs, Aquatic mobs
-    //TODO: Arrow above dino instead of outline
     //TODO: Anu support
 
     @Override
@@ -75,6 +74,7 @@ public class InstructionTab extends DebugTab<Prehistoric> {
 
         addWidget(new Button(220, 30, 100, 20, new TextComponent("Teleport Builder"), button -> {
             positionMode = Instruction.Type.TELEPORT_TO;
+            teleportRotation = 0;
             debugScreen.onClose();
         }));
         if (entity instanceof Meganeura) {
@@ -152,8 +152,7 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.MoveTo(target));
         } else if (positionMode == Instruction.Type.TELEPORT_TO) {
             BlockPos target = hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
-            //TODO: Rotation from scrolling
-            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.TeleportTo(target, 0));
+            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.TeleportTo(target, -teleportRotation + 180));
         } else if (positionMode == Instruction.Type.ATTACH_TO) {
             BlockPos target = hitResult.getBlockPos();
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.AttachTo(target, hitResult.getDirection(), hitResult.getLocation()));

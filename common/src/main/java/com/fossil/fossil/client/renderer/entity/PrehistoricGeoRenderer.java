@@ -124,9 +124,6 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
         } else if (InstructionTab.highlightInstructionEntity != null && InstructionTab.highlightInstructionEntity.getId() == animatable.getId()) {
             return Color.RED;
         }
-        if (InstructionTab.activeEntity != null && InstructionTab.activeEntity.getId() == animatable.getId()) {
-            return Color.YELLOW;
-        }
         return super.getRenderColor(animatable, partialTick, poseStack, bufferSource, buffer, packedLight);
     }
 

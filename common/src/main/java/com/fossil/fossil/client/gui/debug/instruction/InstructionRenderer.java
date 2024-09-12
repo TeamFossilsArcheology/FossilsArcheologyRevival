@@ -3,13 +3,16 @@ package com.fossil.fossil.client.gui.debug.instruction;
 import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.fossil.fossil.client.gui.debug.navigation.PathingDebug;
 import com.fossil.fossil.entity.ai.control.SmoothTurningMoveControl;
+import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.Mth;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.util.Color;
@@ -23,7 +26,7 @@ public class InstructionRenderer {
     static Map<BlockPos, Integer> countAtPos = new HashMap<>();
     static List<Pair<Vec3, Instruction>> texts = new ArrayList<>();
 
-    public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks, long finishNanoTime) {
+    public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks, long finishNanoTime, Frustum frustum) {
         Minecraft mc = Minecraft.getInstance();
         if (SmoothTurningMoveControl.wanted != null) {
             Vec3 pos = SmoothTurningMoveControl.wanted;
@@ -40,9 +43,11 @@ public class InstructionRenderer {
                     addPosition(poseStack, buffer, instruction, moveTo.target, Color.WHITE);
                     currentPos = moveTo.target;
                 } else if (instruction instanceof Instruction.TeleportTo teleportTo) {
-                    //TODO: Render bounding box
-                    addPosition(poseStack, buffer, instruction, teleportTo.target, Color.PINK);
-                    currentPos = teleportTo.target;
+                    if (frustum.isVisible(new AABB(teleportTo.target))) {
+                        addPosition(poseStack, buffer, instruction, teleportTo.target, Color.PINK);
+                        InstructionRenderUtil.renderArrow(poseStack, Vec3.atBottomCenterOf(teleportTo.target).add(0, 1, 0), Color.ofRGBA(1, 1, 0, 0.5f), -(teleportTo.rotation - 180));
+                        currentPos = teleportTo.target;
+                    }
                 } else if (instruction instanceof Instruction.AttachTo attachTo) {
                     addPosition(poseStack, buffer, instruction, attachTo.target, Color.GREEN);
                     Vec3 pos = attachTo.location;
@@ -56,11 +61,23 @@ public class InstructionRenderer {
                 }
             }
             InstructionRenderUtil.renderTextBatch(poseStack, mc, texts);
-            if (InstructionTab.highlightInstruction instanceof Instruction.MoveTo moveTo)
+            if (InstructionTab.highlightInstruction instanceof Instruction.MoveTo moveTo) {
                 addPosition(poseStack, buffer, moveTo, moveTo.target, Color.RED);
+            }
+            if (InstructionTab.activeEntity != null && frustum.isVisible(InstructionTab.activeEntity.getBoundingBoxForCulling())) {
+                Prehistoric entity = InstructionTab.activeEntity;
+                double lerpX = Mth.lerp(partialTicks, entity.xOld, entity.getX());
+                double lerpY = Mth.lerp(partialTicks, entity.yOld, entity.getY());
+                double lerpZ = Mth.lerp(partialTicks, entity.zOld, entity.getZ());
+                Vec3 pos = new Vec3(lerpX, lerpY + entity.getBbHeight() + 1, lerpZ);
+                InstructionRenderUtil.renderDownArrow(poseStack, pos, Color.ofRGBA(1, 1, 0, 0.5f), finishNanoTime);
+            }
         }
         if (InstructionTab.positionMode != Instruction.Type.IDLE) {
             InstructionRenderUtil.renderWholeBox(poseStack, PathingDebug.getBlockHitResult(mc), Color.ofRGBA(1, 0, 0, 0.5f), finishNanoTime);
+            if (InstructionTab.positionMode == Instruction.Type.TELEPORT_TO) {
+                InstructionRenderUtil.renderArrow(poseStack, Vec3.atBottomCenterOf(PathingDebug.getBlockHitResult(mc)).add(0, 1, 0), Color.ofRGBA(1, 0, 1, 0.5f), InstructionTab.teleportRotation);
+            }
         }
     }
 

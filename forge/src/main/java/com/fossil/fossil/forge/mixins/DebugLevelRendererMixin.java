@@ -8,7 +8,7 @@ import com.mojang.math.Matrix4f;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.*;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.client.renderer.culling.Frustum;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,16 +23,19 @@ public class DebugLevelRendererMixin {
     @Final
     private RenderBuffers renderBuffers;
 
+    @Shadow
+    private Frustum cullingFrustum;
+
     @Inject(method = "renderLevel", at = @At(value = "TAIL"))
-    private <E extends Entity> void renderDebugPaths(PoseStack poseStack, float partialTicks, long finishNanoTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f projectionMatrix, CallbackInfo ci) {
+    private void renderDebugPaths(PoseStack poseStack, float partialTick, long finishNanoTime, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightTexture lightTexture, Matrix4f projectionMatrix, CallbackInfo ci) {
         if (Version.debugEnabled()) {
             MultiBufferSource.BufferSource bufferSource = renderBuffers.bufferSource();
             final Minecraft mc = Minecraft.getInstance();
             final Vec3 viewPosition = mc.gameRenderer.getMainCamera().getPosition();
             poseStack.pushPose();
             poseStack.translate(-viewPosition.x, -viewPosition.y, -viewPosition.z);
-            PathingRenderer.render(poseStack, bufferSource, partialTicks, finishNanoTime);
-            InstructionRenderer.render(poseStack, bufferSource, partialTicks, finishNanoTime);
+            PathingRenderer.render(poseStack, bufferSource, partialTick, finishNanoTime);
+            InstructionRenderer.render(poseStack, bufferSource, partialTick, finishNanoTime, cullingFrustum);
             bufferSource.endBatch();
             poseStack.popPose();
         }
