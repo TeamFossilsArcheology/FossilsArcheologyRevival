@@ -3,6 +3,7 @@ package com.fossil.fossil.block.custom_blocks;
 import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.block.entity.BubbleBlowerBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.client.particle.ModParticles;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -64,22 +65,22 @@ public class BubbleBlowerBlock extends BaseEntityBlock implements IDinoUnbreakab
             switch (state.getValue(FACING)) {
                 case NORTH -> {
                     for (int i = 0; i < 4; i++) {
-                        level.addParticle(ModBlockEntities.BUBBLE.get(), x + random.nextFloat(), y + random.nextFloat(), z - 0.1f, 0.0, 0.04, 0.0);
+                        level.addParticle(ModParticles.BUBBLE.get(), x + random.nextFloat(), y + random.nextFloat(), z - 0.1f, 0.0, 0.04, 0.0);
                     }
                 }
                 case EAST -> {
                     for (int i = 0; i < 4; i++) {
-                        level.addParticle(ModBlockEntities.BUBBLE.get(), x + 1.1f, y + random.nextFloat(), z + random.nextFloat(), 0, 0.04, 0);
+                        level.addParticle(ModParticles.BUBBLE.get(), x + 1.1f, y + random.nextFloat(), z + random.nextFloat(), 0, 0.04, 0);
                     }
                 }
                 case SOUTH -> {
                     for (int i = 0; i < 4; i++) {
-                        level.addParticle(ModBlockEntities.BUBBLE.get(), x + random.nextFloat(), y + random.nextFloat(), z + 1.1f, 0, 0.04, 0);
+                        level.addParticle(ModParticles.BUBBLE.get(), x + random.nextFloat(), y + random.nextFloat(), z + 1.1f, 0, 0.04, 0);
                     }
                 }
                 case WEST -> {
                     for (int i = 0; i < 4; i++) {
-                        level.addParticle(ModBlockEntities.BUBBLE.get(), x - 0.1f, y + random.nextFloat(), z + random.nextFloat(), 0, 0.04, 0);
+                        level.addParticle(ModParticles.BUBBLE.get(), x - 0.1f, y + random.nextFloat(), z + random.nextFloat(), 0, 0.04, 0);
                     }
                 }
             }

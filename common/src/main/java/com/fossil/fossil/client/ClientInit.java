@@ -9,10 +9,7 @@ import com.fossil.fossil.client.gui.*;
 import com.fossil.fossil.client.gui.debug.DebugScreen;
 import com.fossil.fossil.client.gui.filters.CreativeTabFilters;
 import com.fossil.fossil.client.model.*;
-import com.fossil.fossil.client.particle.BubbleParticle;
-import com.fossil.fossil.client.particle.RedstoneExplosionEmitterParticle;
-import com.fossil.fossil.client.particle.RedstoneExplosionParticle;
-import com.fossil.fossil.client.particle.TarBubbleParticle;
+import com.fossil.fossil.client.particle.*;
 import com.fossil.fossil.client.renderer.blockentity.*;
 import com.fossil.fossil.client.renderer.entity.*;
 import com.fossil.fossil.entity.ModEntities;
@@ -72,10 +69,12 @@ public class ClientInit {
 
     public static void immediate() {
         registerEntityRenderers();
-        ParticleProviderRegistry.register(ModBlockEntities.BUBBLE, BubbleParticle.Provider::new);
-        ParticleProviderRegistry.register(ModBlockEntities.TAR_BUBBLE, TarBubbleParticle.Provider::new);
-        ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION, RedstoneExplosionParticle.Provider::new);
-        ParticleProviderRegistry.register(ModBlockEntities.REDSTONE_EXPLOSION_EMITTER, new RedstoneExplosionEmitterParticle.Provider());
+        ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH, VolcanoVentAshParticle.Provider::new);
+        ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH_EMITTER, new VolcanoVentAshEmitterParticle.Provider());
+        ParticleProviderRegistry.register(ModParticles.BUBBLE, BubbleParticle.Provider::new);
+        ParticleProviderRegistry.register(ModParticles.TAR_BUBBLE, TarBubbleParticle.Provider::new);
+        ParticleProviderRegistry.register(ModParticles.REDSTONE_EXPLOSION, RedstoneExplosionParticle.Provider::new);
+        ParticleProviderRegistry.register(ModParticles.REDSTONE_EXPLOSION_EMITTER, new RedstoneExplosionEmitterParticle.Provider());
     }
 
     public static void later() {
@@ -91,7 +90,7 @@ public class ClientInit {
             });
             EntityEvent.ADD.register((entity, world) -> {
                 if (entity == Minecraft.getInstance().player) {
-                    ((Player)entity).displayClientMessage(new TextComponent("You're running a development build of F/A: Revival").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), false);
+                    ((Player) entity).displayClientMessage(new TextComponent("You're running a development build of F/A: Revival").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), false);
                 }
                 return EventResult.pass();
             });
@@ -196,7 +195,7 @@ public class ClientInit {
     }
 
     private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String name, Function<ResourceLocation, RenderType> renderType) {
-        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, name+".geo.json", name+".animation.json", renderType));
+        EntityRendererRegistry.register(type, context -> new PrehistoricGeoRenderer<>(context, name + ".geo.json", name + ".animation.json", renderType));
     }
 
     private static <T extends Prehistoric> void registerDino(RegistrySupplier<EntityType<T>> type, String name) {
@@ -204,7 +203,7 @@ public class ClientInit {
     }
 
     private static <T extends PrehistoricFish> void registerFish(RegistrySupplier<EntityType<T>> type, String name) {
-        EntityRendererRegistry.register(type, context -> new PrehistoricFishGeoRenderer<>(context, name+".geo.json", name+".animation.json", name));
+        EntityRendererRegistry.register(type, context -> new PrehistoricFishGeoRenderer<>(context, name + ".geo.json", name + ".animation.json", name));
     }
 
     private static void registerEventHandlers() {

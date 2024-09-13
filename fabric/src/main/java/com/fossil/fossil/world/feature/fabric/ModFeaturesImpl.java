@@ -15,5 +15,6 @@ public class ModFeaturesImpl {
         Registry.register(Registry.FEATURE, TEMPSKYA_TREE.location(), TEMPSKYA_TREE.feature());
         Registry.register(Registry.FEATURE, MOAI_STATUE.location(), MOAI_STATUE.feature());
         Registry.register(Registry.FEATURE, VOLCANO_CONE.location(), VOLCANO_CONE.feature());
+        Registry.register(Registry.FEATURE, VOLCANO_VENT.location(), VOLCANO_VENT.feature());
     }
 }

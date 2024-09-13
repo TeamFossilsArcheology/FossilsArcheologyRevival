@@ -1,7 +1,7 @@
 package com.fossil.fossil.entity.monster;
 
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.client.particle.ModParticles;
 import com.fossil.fossil.entity.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
@@ -46,7 +46,7 @@ public class TarSlime extends Slime {
 
     @Override
     protected @NotNull ParticleOptions getParticleType() {
-        return ModBlockEntities.TAR_BUBBLE.get();
+        return ModParticles.TAR_BUBBLE.get();
     }
 
     @Override

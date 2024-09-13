@@ -3,6 +3,7 @@ package com.fossil.fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.DinopediaBioManager;
+import com.fossil.fossil.client.particle.ModParticles;
 import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.animation.AnimationInfoManager;
@@ -50,6 +51,7 @@ public class Fossil {
         ModItems.register();
         ModMenus.register();
         ModBlockEntities.register();
+        ModParticles.register();
         ModFeatures.register();
         ModStructures.register();
         ModVillages.register();

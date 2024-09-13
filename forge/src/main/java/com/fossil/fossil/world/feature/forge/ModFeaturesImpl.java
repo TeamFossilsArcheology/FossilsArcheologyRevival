@@ -20,6 +20,7 @@ public class ModFeaturesImpl {
         TEMPSKYA_TREE.feature().setRegistryName(TEMPSKYA_TREE.location());
         MOAI_STATUE.feature().setRegistryName(MOAI_STATUE.location());
         VOLCANO_CONE.feature().setRegistryName(VOLCANO_CONE.location());
+        VOLCANO_VENT.feature().setRegistryName(VOLCANO_VENT.location());
     }
 
     @SubscribeEvent
@@ -34,5 +35,6 @@ public class ModFeaturesImpl {
         registry.register(TEMPSKYA_TREE.feature());
         registry.register(MOAI_STATUE.feature());
         registry.register(VOLCANO_CONE.feature());
+        registry.register(VOLCANO_VENT.feature());
     }
 }

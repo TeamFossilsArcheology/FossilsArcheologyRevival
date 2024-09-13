@@ -9,24 +9,13 @@ public class BubbleParticle extends RisingParticle {
     protected BubbleParticle(ClientLevel clientLevel, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
         super(clientLevel, x, y, z, xSpeed, ySpeed, zSpeed);
         this.setSize(0.02f, 0.02f);
-        this.quadSize *= this.random.nextFloat() * 0.6f;
-        this.lifetime = (int) (18 / (Math.random() * 0.4 + 0.2));
-    }
-
-    @Override
-    public void tick() {
-        super.tick();
+        this.quadSize *= random.nextFloat(0.6f);
+        this.lifetime = (int) (18 / (random.nextDouble(0.4) + 0.2));
     }
 
     @Override
     public @NotNull ParticleRenderType getRenderType() {
         return ParticleRenderType.PARTICLE_SHEET_OPAQUE;
-    }
-
-    public static class Type extends SimpleParticleType {
-        public Type(boolean bl) {
-            super(bl);
-        }
     }
 
     public static class Provider implements ParticleProvider<SimpleParticleType> {

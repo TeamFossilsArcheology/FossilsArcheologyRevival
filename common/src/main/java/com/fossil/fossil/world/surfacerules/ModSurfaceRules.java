@@ -17,7 +17,7 @@ public class ModSurfaceRules {
                     Noises.GRAVEL, -0.05, 0.05), SurfaceRules.state(Blocks.ANDESITE.defaultBlockState())),
             SurfaceRules.state(Blocks.STONE.defaultBlockState()));
 
-    public static SurfaceRules.RuleSource VOLCANIC_SURFACE_RULE = volcanoBiome();
+    public static final SurfaceRules.RuleSource VOLCANIC_SURFACE_RULE = volcanoBiome();
 
     public static SurfaceRules.RuleSource volcanoBiome() {
         SurfaceRules.RuleSource rock = makeStateRule(ModBlocks.VOLCANIC_ROCK.get());

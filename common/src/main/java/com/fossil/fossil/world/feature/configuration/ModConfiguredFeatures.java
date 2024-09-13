@@ -65,6 +65,8 @@ public class ModConfiguredFeatures {
             ModFeatures.ASH_DISK.feature(), new AshDiskConfiguration(UniformInt.of(4, 6), true));
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> VOLCANO_CONE = register("volcano_cone",
             ModFeatures.VOLCANO_CONE.feature(), NoneFeatureConfiguration.INSTANCE);
+    public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> VOLCANO_VENT = register("volcano_vent",
+            ModFeatures.VOLCANO_VENT.feature(), NoneFeatureConfiguration.INSTANCE);
 
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {
         return FeatureUtils.register(Fossil.MOD_ID + ":" + name, feature, config);

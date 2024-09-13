@@ -19,6 +19,7 @@ public class ModFeatures {
     public static final Tuple<NoneFeatureConfiguration, TempskyaTreeFeature> TEMPSKYA_TREE = create("tempskya_tree", new TempskyaTreeFeature());
     public static final Tuple<NoneFeatureConfiguration, MoaiStatueFeature> MOAI_STATUE = create("moai_statue", new MoaiStatueFeature());
     public static final Tuple<NoneFeatureConfiguration, VolcanoConeFeature> VOLCANO_CONE = create("volcano_cone", new VolcanoConeFeature());
+    public static final Tuple<NoneFeatureConfiguration, VolcanoVentFeature> VOLCANO_VENT = create("volcano_vent", new VolcanoVentFeature());
 
     public static <C extends FeatureConfiguration, F extends Feature<C>> Tuple<C, F> create(String name, F feature) {
         return new Tuple<>(new ResourceLocation(Fossil.MOD_ID, name), feature);

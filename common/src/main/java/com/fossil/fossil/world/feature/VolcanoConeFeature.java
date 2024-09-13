@@ -43,12 +43,17 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
                     }
                 }
             }
+            boolean updateLava = center.getY() == stopHeight || first;
             for (float i = 0; i < (first ? 0.45f : Math.max(layer * 0.2, 1)); i += 0.5f) {
                 float extra = i == 0 ? 3 : 1;
                 for (float j = 0; j < 2 * Math.PI * extra + random.nextInt(2); j += 0.5f) {
                     BlockPos lavaPos = new BlockPos(Math.floor(center.getX() + Math.sin(j) * extra + random.nextInt(2)), center.getY(),
                             Math.floor(center.getZ() + Math.cos(j) * extra + random.nextInt(2)));
-                    level.setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 18);
+                    if (updateLava) {
+                        level.setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 3);
+                    } else {
+                        level.setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 18);
+                    }
                 }
                 first = false;
             }

@@ -955,6 +955,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             } else {
                 hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
                 ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
+                //((ServerLevel)level).getServer().getAdvancements().getAdvancement(new ResourceLocation(Fossil.MOD_ID, "all_eggs"));
                 if (getOwner() instanceof ServerPlayer player && player.getRecipeBook().contains(DinosaurEgg.GOLDEN_EGG_RECIPE)) {
                     ((DinosaurEgg) hatchling).setGoldenEgg(random.nextFloat() < 0.05);
                 }
@@ -1446,6 +1447,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         controller.registerSoundListener(event -> {
             if ("eat".equals(event.sound)) {
                 makeEatingSounds();
+            }
+            if ("call".equals(event.sound)) {
+                playAmbientSound();
             }
         });
     }

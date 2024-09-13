@@ -35,6 +35,7 @@ public class ModPlacedFeatures {
     private static Holder<PlacedFeature> ashDiskVolcano;
     private static Holder<PlacedFeature> magmaDiskVolcano;
     private static Holder<PlacedFeature> coneVolcano;
+    private static Holder<PlacedFeature> ventVolcano;
 
     static {
         StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
@@ -50,6 +51,8 @@ public class ModPlacedFeatures {
                 RarityFilter.onAverageOnceEvery(3), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
         coneVolcano = PlacementUtils.register("volcano_cone", ModConfiguredFeatures.VOLCANO_CONE,
                 RarityFilter.onAverageOnceEvery(30), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome());
+        ventVolcano = PlacementUtils.register("volcano_vent", ModConfiguredFeatures.VOLCANO_VENT,
+                CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
         var tarPitPlaced = PlacementUtils.register("tar_pit_placed", ModConfiguredFeatures.TAR_PIT,
                 new LazyRarityFilter(FossilConfig.TAR_PIT_RARITY),
                 InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
@@ -114,6 +117,10 @@ public class ModPlacedFeatures {
 
     public static Holder<PlacedFeature> coneVolcano() {
         return coneVolcano;
+    }
+
+    public static Holder<PlacedFeature> ventVolcano() {
+        return ventVolcano;
     }
 
     private static List<PlacementModifier> orePlacement(PlacementModifier placementModifier, PlacementModifier placementModifier2) {

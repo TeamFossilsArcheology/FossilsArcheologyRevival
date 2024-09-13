@@ -1,6 +1,6 @@
 package com.fossil.fossil.material;
 
-import com.fossil.fossil.block.entity.ModBlockEntities;
+import com.fossil.fossil.client.particle.ModParticles;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.monster.TarSlime;
@@ -32,7 +32,7 @@ public class TarFluid {
             double speedX = (random.nextDouble() - 0.5D) * 0.3D;
             double speedY = 0.3D * random.nextDouble() + 0.2D;
             double speedZ = (random.nextDouble() - 0.5D) * 0.3D;
-            level.addParticle(ModBlockEntities.TAR_BUBBLE.get(), posX, posY, posZ, speedX, speedY, speedZ);
+            level.addParticle(ModParticles.TAR_BUBBLE.get(), posX, posY, posZ, speedX, speedY, speedZ);
         }
     }
 

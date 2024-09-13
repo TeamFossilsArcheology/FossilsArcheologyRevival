@@ -42,12 +42,6 @@ public class RedstoneExplosionParticle extends TextureSheetParticle {
         return ParticleRenderType.PARTICLE_SHEET_LIT;
     }
 
-    public static class Type extends SimpleParticleType {
-        public Type(boolean bl) {
-            super(bl);
-        }
-    }
-
     public static class Provider implements ParticleProvider<SimpleParticleType> {
         private final SpriteSet sprites;
 
