@@ -20,7 +20,7 @@ public class SitSystem extends AISystem {
         if (isSitting()) {
             ticksSat++;
             if (mob.getCurrentOrder() != OrderType.STAY) {
-                if (ticksSat > 100 && mob.getRandom().nextInt(100) == 0 || !canSit()) {
+                if (ticksSat > 300 && mob.getRandom().nextInt(100) == 0 || !canSit()) {
                     setSitting(false);
                 }
             }

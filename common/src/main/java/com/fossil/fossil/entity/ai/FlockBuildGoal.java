@@ -34,6 +34,8 @@ public class FlockBuildGoal extends Goal {
 
     @Override
     public void stop() {
-        entity.leaveGroup();
+        if (entity.hasGroupLeader()) {
+            entity.leaveGroup();
+        }
     }
 }
