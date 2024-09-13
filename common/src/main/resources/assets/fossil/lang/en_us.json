@@ -34,6 +34,8 @@
   "item.fossil.cooked_egg": "Cooked Egg",
   "item.fossil.cooked_nautilus": "Sio-Chiu-Le",
   "item.fossil.dinopedia": "Dinopedia",
+  "item.fossil.cooked_meat": "Cooked %s Meat",
+  "item.fossil.meat": "Raw %s Meat",
   "item.fossil.dna": "%s Dna",
   "item.fossil.bird_egg": "%s Egg",
   "item.fossil.bird_egg_cultivated": "Cultivated %s Egg",
@@ -349,6 +351,9 @@
   "enchantment.fossil.archeology.desc": "Placeholder description for Archeology",
   "enchantment.fossil.paleontology": "Paleontology",
   "enchantment.fossil.paleontology.desc": "Placeholder description for Paleontology",
+
+  "entity.minecraft.villager.paleontologist": "Paleontologist",
+  "entity.minecraft.villager.archeologist": "Archeologist",
 
   "entity.fossil.alligator_gar": "Alligator Gar",
   "entity.fossil.allosaurus": "Allosaurus",

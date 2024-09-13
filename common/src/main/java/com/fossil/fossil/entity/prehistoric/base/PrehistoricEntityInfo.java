@@ -13,7 +13,6 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ambient.Bat;
 import net.minecraft.world.entity.animal.*;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
-import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -156,13 +155,12 @@ public enum PrehistoricEntityInfo implements EntityInfo {
                 registerItem("egg", info, properties -> new BirdEggItem(info, false), item -> info.birdEggItem = item);
                 registerItem("egg_item", info, properties -> new BirdEggItem(info, true), item -> info.cultivatedBirdEggItem = item);
             }
-            ModItems.ITEMS.register("meat_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
-                            .food(new FoodProperties.Builder().nutrition(3).saturationMod(0.3f).build())))
-                    .listen(item -> info.foodItem = item);
-
-            ModItems.ITEMS.register("cooked_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)
-                            .food(new FoodProperties.Builder().nutrition(8).saturationMod(info == NAUTILUS ? 2 : 0.8f).build())))
-                    .listen(item -> info.cookedFoodItem = item);
+            registerItem("meat", info, properties -> new MeatItem(info, false), item -> info.foodItem = item);
+            if (info == NAUTILUS) {
+                registerItem("cooked", info, properties -> new MeatItem(info, true, 2), item -> info.cookedFoodItem = item);
+            } else {
+                registerItem("cooked", info, properties -> new MeatItem(info, true), item -> info.cookedFoodItem = item);
+            }
             registerItem("spawn_egg", info, properties -> new CustomSpawnEggItem(info), item -> info.spawnEggItem = item);
         }
     }
