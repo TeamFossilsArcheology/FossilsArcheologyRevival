@@ -261,7 +261,7 @@ public class DinopediaScreen extends Screen {
             var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityInfo().displayName.get());
             font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
             poseStack.popPose();
-            int time = Mth.floor((float) egg.getHatchingTime() / DinosaurEgg.TOTAL_HATCHING_TIME * 100);
+            int time = Mth.floor((float) egg.getHatchingTime() / egg.getTotalHatchingTime() * 100);
             var progress = new TranslatableComponent("pedia.fossil.egg.time", Math.max(time, 0));
             font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 120, (157 << 16) | (126 << 8) | 103);
 

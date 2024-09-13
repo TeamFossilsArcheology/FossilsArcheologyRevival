@@ -1,5 +1,6 @@
 package com.fossil.fossil.entity;
 
+import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricMobType;
@@ -10,6 +11,7 @@ import net.minecraft.core.dispenser.AbstractProjectileDispenseBehavior;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
@@ -100,6 +102,9 @@ public class ThrownBirdEgg extends ThrowableItemProjectile {
                 entity.setAgeInDays(0);
                 entity.moveTo(getX(), getY(), getZ(), getYRot(), 0);
                 level.addFreshEntity(entity);
+                if (getOwner() instanceof ServerPlayer player) {
+                    ModTriggers.INCUBATE_EGG_TRIGGER.trigger(player, entity);
+                }
                 Player nearestPlayer = level.getNearestPlayer(entity, 5);
                 if (nearestPlayer != null) {
                     entity.tame(nearestPlayer);

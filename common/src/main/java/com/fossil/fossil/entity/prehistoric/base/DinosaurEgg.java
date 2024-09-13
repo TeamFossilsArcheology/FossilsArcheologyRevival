@@ -1,6 +1,7 @@
 package com.fossil.fossil.entity.prehistoric.base;
 
 
+import com.fossil.fossil.Fossil;
 import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.sounds.ModSounds;
@@ -19,6 +20,7 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -42,11 +44,15 @@ import java.util.Collections;
 
 public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public static final int TOTAL_HATCHING_TIME = Version.debugEnabled() ? 1000 : 3000;
+    /**
+     * Dummy recipe that awards the player with a chance to get a golden egg
+     */
+    public static final ResourceLocation GOLDEN_EGG_RECIPE = new ResourceLocation(Fossil.MOD_ID, "golden_egg");
     private static final EntityDataAccessor<Integer> HATCHING_TIME = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.INT);
+    private static final EntityDataAccessor<Boolean> GOLDEN_EGG = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.BOOLEAN);
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final TranslatableComponent EGG_HATCHED = new TranslatableComponent("entity.fossil.dinosaur_egg.hatched");
 
-    public float scale;
     private PrehistoricEntityInfo prehistoricEntityInfo;
 
     public DinosaurEgg(EntityType<DinosaurEgg> type, Level level) {
@@ -95,6 +101,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(HATCHING_TIME, 0);
+        entityData.define(GOLDEN_EGG, false);
     }
 
     @Override
@@ -116,14 +123,14 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public void tick() {
         super.tick();
         int currentHatchingTime = getHatchingTime();
-        if (isTooCold() || isInWater()) {
+        if ((!isGoldenEgg() && isTooCold()) || isInWater()) {
             if (currentHatchingTime > 0) {
                 setHatchingTime(currentHatchingTime - 1);
             }
         } else {
             setHatchingTime(currentHatchingTime + 1);
         }
-        if (getHatchingTime() >= 200 && !level.isClientSide) {
+        if (getHatchingTime() >= getTotalHatchingTime() && !level.isClientSide) {
             Player player = level.getNearestPlayer(this, 16);
             hatchEgg(level, getX(), getY(), getZ(), (ServerPlayer) player, prehistoricEntityInfo, true);
             for (int i = 0; i < 4; i++) {
@@ -208,6 +215,18 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
         entityData.set(HATCHING_TIME, time);
     }
 
+    public boolean isGoldenEgg() {
+        return entityData.get(GOLDEN_EGG);
+    }
+
+    public void setGoldenEgg(boolean goldenEgg) {
+        entityData.set(GOLDEN_EGG, goldenEgg);
+    }
+
+    public int getTotalHatchingTime() {
+        return isGoldenEgg() ? (int) (TOTAL_HATCHING_TIME * 0.9) : TOTAL_HATCHING_TIME;
+    }
+
     public PrehistoricEntityInfo getPrehistoricEntityInfo() {
         return prehistoricEntityInfo;
     }
@@ -223,16 +242,16 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     @Override
     public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
-        buf.writeUtf(getPrehistoricEntityInfo().name());
+        buf.writeEnum(getPrehistoricEntityInfo());
     }
 
     @Override
     public void loadAdditionalSpawnData(FriendlyByteBuf buf) {
-        String type = buf.readUtf();
         try {
-            setPrehistoricEntityInfo(PrehistoricEntityInfo.valueOf(type));
-        } catch (IllegalArgumentException e) {
-            LOGGER.error("Dinosaur egg " + stringUUID + " has invalid dinosaur specified: " + type);
+            setPrehistoricEntityInfo(buf.readEnum(PrehistoricEntityInfo.class));
+        } catch (IndexOutOfBoundsException e) {
+            LOGGER.error("Dinosaur egg {} has invalid dinosaur specified: {}", stringUUID, e);
+            setPrehistoricEntityInfo(PrehistoricEntityInfo.DODO);
         }
     }
 

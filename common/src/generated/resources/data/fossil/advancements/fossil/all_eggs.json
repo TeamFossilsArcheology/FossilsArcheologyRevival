@@ -16,7 +16,10 @@
     "hidden": false
   },
   "rewards": {
-    "experience": 1000
+    "experience": 1000,
+    "recipes": [
+      "fossil:golden_egg"
+    ]
   },
   "criteria": {
     "alligator_gar": {

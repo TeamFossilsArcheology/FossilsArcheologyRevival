@@ -3,6 +3,7 @@ package com.fossil.fossil.item;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricMobType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
@@ -37,6 +38,9 @@ public class DinoEggItem extends PrehistoricEntityItem {
             DinosaurEgg egg = ModEntities.DINOSAUR_EGG.get().create(level);
             if (egg == null) {
                 return false;
+            }
+            if (player instanceof ServerPlayer serverPlayer && serverPlayer.getRecipeBook().contains(DinosaurEgg.GOLDEN_EGG_RECIPE)) {
+                egg.setGoldenEgg(true);
             }
             egg.moveTo(x, y, z, 0, 0);
             egg.setPrehistoricEntityInfo(info);

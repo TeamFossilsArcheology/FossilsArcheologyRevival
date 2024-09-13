@@ -1,10 +1,12 @@
 package com.fossil.fossil.item;
 
+import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.entity.prehistoric.base.EntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -17,9 +19,10 @@ public class FishEggItem extends PrehistoricEntityItem {
         super(new Properties().stacksTo(8), info, "fish_egg");
     }
 
-    private boolean spawnFish(ServerLevel level, BlockPos pos) {
+    private boolean spawnFish(ServerPlayer player, ServerLevel level, BlockPos pos) {
         Entity entity = info.entityType().create(level);
         if (entity instanceof PrehistoricFish fish) {
+            ModTriggers.INCUBATE_EGG_TRIGGER.trigger(player, entity);
             entity.moveTo(pos.getX(), pos.getY() + 1, pos.getZ(), level.random.nextFloat() * 360, 0);
             fish.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(-1), null);
             level.addFreshEntity(entity);
@@ -30,7 +33,7 @@ public class FishEggItem extends PrehistoricEntityItem {
 
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
-        if (!context.getLevel().isClientSide && spawnFish((ServerLevel) context.getLevel(), context.getClickedPos())) {
+        if (!context.getLevel().isClientSide && spawnFish((ServerPlayer) context.getPlayer(), (ServerLevel) context.getLevel(), context.getClickedPos())) {
             context.getItemInHand().shrink(1);
             return InteractionResult.SUCCESS;
         }

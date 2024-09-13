@@ -10,14 +10,9 @@ import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
 import net.minecraft.client.model.geom.builders.MeshDefinition;
 import net.minecraft.client.model.geom.builders.PartDefinition;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class DinosaurEggModel extends EntityModel<DinosaurEgg> {
-    public static final Map<String, ResourceLocation> TEXTURES = new HashMap<>();
 
     private final ModelPart model = createBodyLayer().bakeRoot();
     private final float defaultYRot = model.getChild("Egg1").yRot;
@@ -41,7 +36,7 @@ public class DinosaurEggModel extends EntityModel<DinosaurEgg> {
         egg1.yRot = defaultYRot;
         egg1.zRot = defaultZRot;
         egg1.y = defaultY;
-        if (entity.getHatchingTime() > DinosaurEgg.TOTAL_HATCHING_TIME * 0.9) {
+        if (entity.getHatchingTime() > entity.getTotalHatchingTime() * 0.9) {
             egg1.yRot += calcRotation(0.3F, 0.5F, false, 0.25F, 0, ageInTicks, 1);
             egg1.zRot += calcRotation(0.3F, 0.5F, true, 0.25F, 0, ageInTicks, 1);
             egg1.y += calcBob(0.3F, 0.9F, true, ageInTicks, 1);

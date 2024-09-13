@@ -104,7 +104,7 @@ public class ForgeConfig {
         ENABLE_HUNGER = boolEntry("True if Dinosaurs have hunger", FossilConfig.ENABLE_HUNGER, true);
         ENABLE_STARVATION = boolEntry("True if Dinosaurs can die of hunger", FossilConfig.ENABLE_STARVATION, false);
         BREEDING_DINOS = boolEntry("True if Dinosaurs should breed", FossilConfig.BREEDING_DINOS, true);
-        EGGS_LIKE_CHICKENS = boolEntry("True if Dinosaurs should create item eggs instead of entities", FossilConfig.EGGS_LIKE_CHICKENS, true);
+        EGGS_LIKE_CHICKENS = boolEntry("True if Dinosaurs should create item eggs instead of entities", FossilConfig.EGGS_LIKE_CHICKENS, false);
         WHIP_TO_TAME_DINO = boolEntry("True if Whips can be used to tame some dinosaurs", FossilConfig.WHIP_TO_TAME_DINO, true);
         FLYING_TARGET_MAX_HEIGHT = intEntry("Maximum height that flying creatures should be able to fly to", FossilConfig.FLYING_TARGET_MAX_HEIGHT, 128, 1, 512);
         PREGNANCY_DURATION = intEntry("How long mammal pregnancies last, in ticks", FossilConfig.PREGNANCY_DURATION, 10000, 1, 1000000000);

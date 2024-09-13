@@ -82,7 +82,7 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry
     public static boolean breedingDinos = true;
     @MidnightConfig.Entry
-    public static boolean eggsLikeChickens = true;
+    public static boolean eggsLikeChickens = false;
     @MidnightConfig.Entry
     public static boolean whipToTameDino = true;
     @MidnightConfig.Entry(min = 1, max = 1000000000)
