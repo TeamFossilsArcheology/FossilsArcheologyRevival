@@ -52,6 +52,9 @@ public class InstructionSystem extends AISystem {
 
     private boolean tickRunning() {
         Instruction current = instructions.get(index);
+        if (mob.isHungry()) {
+            mob.setHunger(mob.getMaxHunger());
+        }
 
         if (current instanceof Instruction.MoveTo moveTo) {
             return tryUpdatePath(moveTo);
@@ -79,6 +82,13 @@ public class InstructionSystem extends AISystem {
             return false;
         } else if (current instanceof Instruction.Idle idle) {
             return endTick >= mob.level.getGameTime();
+        } else if (current instanceof Instruction.Sleep sleep) {
+            if (endTick < mob.level.getGameTime()) {
+                mob.sleepSystem.setSleeping(false);
+                mob.sleepSystem.setSleepForced(false);
+                return false;
+            }
+            return true;
         } else if (current instanceof Instruction.PlayAnim playAnim) {
             if (playAnim.timeBased) {
                 if (animCount < mob.level.getGameTime()) {
@@ -207,6 +217,10 @@ public class InstructionSystem extends AISystem {
                 mob.getMoveControl().setWantedPosition(target.position().x, target.position().y + 4, target.position().z, 1);
                 swimming.setBreaching(true);
             }
+        } else if (current instanceof Instruction.Sleep sleep) {
+            endTick = mob.level.getGameTime() + sleep.duration;
+            mob.sleepSystem.setSleeping(true);
+            mob.sleepSystem.setSleepForced(true);
         }
     }
 
@@ -236,6 +250,7 @@ public class InstructionSystem extends AISystem {
     public void stop() {
         mob.disableCustomAI((byte) 0, true);
         mob.disableCustomAI((byte) 1, false);
+        mob.sleepSystem.setSleepForced(false);
     }
 
     public void syncWithClients() {
@@ -255,7 +270,7 @@ public class InstructionSystem extends AISystem {
     @Override
     public void load(CompoundTag tag) {
         instructions.clear();
-        ListTag saved = tag.getList("Instructions", Tag.TAG_LIST);
+        ListTag saved = tag.getList("Instructions", Tag.TAG_COMPOUND);
         for (Tag savedTag : saved) {
             instructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
         }

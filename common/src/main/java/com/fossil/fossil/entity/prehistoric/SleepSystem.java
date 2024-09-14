@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Pose;
 
 public class SleepSystem extends AISystem {
+    private boolean sleepForced;
     protected boolean sleepDisabled;
     private int ticksSlept;
     /**
@@ -25,7 +26,7 @@ public class SleepSystem extends AISystem {
             cathermalSleepCooldown--;
         }
         trySleeping();
-        if (mob.isSleeping()) {
+        if (mob.isSleeping() && !sleepForced) {
             ticksSlept++;
             if (ticksSlept > 100 && !wantsToSleep() && mob.getRandom().nextInt(100) == 0) {
                 setSleeping(false);
@@ -80,6 +81,10 @@ public class SleepSystem extends AISystem {
             return mob.level.isDay() && !mob.level.canSeeSky(mob.blockPosition().above());
         }
         return mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
+    }
+
+    public void setSleepForced(boolean sleepForced) {
+        this.sleepForced = sleepForced;
     }
 
     public void setSleepDisabled(boolean sleepDisabled) {

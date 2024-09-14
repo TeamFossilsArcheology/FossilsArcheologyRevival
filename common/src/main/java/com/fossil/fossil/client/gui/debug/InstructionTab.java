@@ -132,6 +132,11 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         }));
+        addWidget(new Button(400, 5, 70, 20, new TextComponent("Add Sleep"), button -> {
+            Instruction instruction = new Instruction.Sleep(Integer.parseInt(zPosInput.getValue()) * 20);
+            instructions.addInstruction(instruction);
+            INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
+        }));
     }
 
     @Override

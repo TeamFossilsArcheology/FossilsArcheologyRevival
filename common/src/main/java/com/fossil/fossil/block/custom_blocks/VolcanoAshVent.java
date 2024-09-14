@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class VolcanoAshVent extends AirBlock {
     public VolcanoAshVent() {
-        super(Properties.copy(Blocks.AIR).randomTicks());
+        super(Properties.copy(Blocks.AIR));
     }
 
     @Override

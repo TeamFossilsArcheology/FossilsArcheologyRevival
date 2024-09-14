@@ -42,6 +42,7 @@ public abstract class Instruction {
                 case BREACH -> Breach.decodeTag(tag);
                 case PLAY_ANIM -> PlayAnim.decodeTag(tag);
                 case IDLE -> Idle.decodeTag(tag);
+                case SLEEP -> Sleep.decodeTag(tag);
             };
         } catch (RuntimeException e) {
             Fossil.LOGGER.error("Could not read Instruction enum from tag: ", e);
@@ -177,6 +178,31 @@ public abstract class Instruction {
         }
     }
 
+    public static class Sleep extends Instruction {
+        public final int duration;
+
+        public Sleep(int duration) {
+            super(Type.SLEEP);
+            this.duration = duration;
+        }
+
+        @Override
+        public CompoundTag encodeTag() {
+            CompoundTag tag = super.encodeTag();
+            tag.putInt("Duration", duration);
+            return tag;
+        }
+
+        protected static Instruction decodeTag(CompoundTag tag) {
+            return new Sleep(tag.getInt("Duration"));
+        }
+
+        @Override
+        public String toString() {
+            return type.name() + ": " + (duration / 20f);
+        }
+    }
+
     public static class Breach extends Instruction {
         public final int targetId;
 
@@ -268,6 +294,6 @@ public abstract class Instruction {
     }
 
     public enum Type {
-        ATTACK, MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, BREACH, ATTACH_TO;
+        ATTACK, MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, BREACH, ATTACH_TO, SLEEP;
     }
 }

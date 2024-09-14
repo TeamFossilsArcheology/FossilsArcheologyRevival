@@ -52,7 +52,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public ActiveAnimationInfo forceAnimation(String controller, Animation animation, Category category, double transitionLength, boolean loop) {
-        //TODO: More debug control
         if (animation != null) {
             ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(),
                     entity.level.getGameTime() + animation.animationLength, category, true, transitionLength, loop
@@ -162,14 +161,14 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         } else {
             if (event.getAnimatable().isBeached()) {
                 addActiveAnimation(controller.getName(), event.getAnimatable().nextBeachedAnimation(), Category.BEACHED);
+            } else if (entity.isSleeping()) {
+                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
             } else if (event.isMoving()) {
                 if (entity.isSprinting()) {
                     addActiveAnimation(controller.getName(), entity.nextSprintingAnimation(), Category.SPRINT);
                 } else {
                     addActiveAnimation(controller.getName(), entity.nextMovingAnimation(), Category.WALK);
                 }
-            } else if (entity.isSleeping()) {
-                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
@@ -201,7 +200,11 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
             loopType = activeAnimation.get().loop ? LOOP : PLAY_ONCE;
         } else {
-            if (event.isMoving()) {
+            if (entity.isSleeping()) {
+                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
+            } else if (event.getAnimatable().sitSystem.isSitting()) {
+                addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
+            } else if (event.isMoving()) {
                 Animation movementAnim;
                 if (entity.isSprinting()) {
                     movementAnim = entity.nextSprintingAnimation();
@@ -225,10 +228,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     //I would love to always change speed but that causes stuttering, so we just find one max speed that's good enough
                     animationSpeed = lastSpeed;
                 }
-            } else if (entity.isSleeping()) {
-                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
-            } else if (event.getAnimatable().sitSystem.isSitting()) {
-                addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
@@ -319,7 +318,11 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
         double animSpeed = 1;
         if (!event.getAnimatable().isTakingOff()) {
-            if (event.isMoving()) {
+            if (entity.isSleeping()) {
+                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
+            } else if (event.getAnimatable().sitSystem.isSitting()) {
+                addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
+            } else if (event.isMoving()) {
                 Animation animation = entity.nextMovingAnimation();
                 addActiveAnimation(controller.getName(), animation, Category.WALK);
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
@@ -334,10 +337,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     //I would love to always change speed but that causes stuttering, so we just find one speed thats good enough
                     animSpeed = lastSpeed;
                 }
-            } else if (entity.isSleeping()) {
-                addActiveAnimation(controller.getName(), entity.nextSleepingAnimation(), Category.SLEEP);
-            } else if (event.getAnimatable().sitSystem.isSitting()) {
-                addActiveAnimation(controller.getName(), entity.nextSittingAnimation(), Category.SIT);
             } else {
                 addActiveAnimation(controller.getName(), entity.nextIdleAnimation(), Category.IDLE);
             }
@@ -358,7 +357,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
     public enum Category {
         ATTACK, BEACHED(false, 0, 5), EAT, IDLE, SIT(true, 0.2f, 20),
-        SLEEP(true, 0.2f, 20), SPRINT, WALK, NONE;
+        SLEEP(true, 0.05f, 20), SPRINT, WALK, NONE;
         public final boolean canBeReplaced;
         public final float chance;
         public final int transitionLength;
