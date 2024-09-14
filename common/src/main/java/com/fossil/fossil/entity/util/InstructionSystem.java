@@ -219,6 +219,7 @@ public class InstructionSystem extends AISystem {
             }
         } else if (current instanceof Instruction.Sleep sleep) {
             endTick = mob.level.getGameTime() + sleep.duration;
+            mob.sleepSystem.setSleepDisabled(false);
             mob.sleepSystem.setSleeping(true);
             mob.sleepSystem.setSleepForced(true);
         }
@@ -231,6 +232,8 @@ public class InstructionSystem extends AISystem {
         index = -1;
         shouldLoop = loop;
         syncWithClients();
+        mob.sleepSystem.setSleepDisabled(true);
+        mob.sitSystem.setSittingDisabled(true);
         if (instructions.isEmpty()) {
             stop();
         } else {
@@ -251,6 +254,8 @@ public class InstructionSystem extends AISystem {
         mob.disableCustomAI((byte) 0, true);
         mob.disableCustomAI((byte) 1, false);
         mob.sleepSystem.setSleepForced(false);
+        mob.sleepSystem.setSleepDisabled(false);
+        mob.sitSystem.setSittingDisabled(false);
     }
 
     public void syncWithClients() {
@@ -265,6 +270,8 @@ public class InstructionSystem extends AISystem {
             saved.addTag(i, instructions.get(i).encodeTag());
         }
         tag.put("Instructions", saved);
+        tag.putInt("InstructionsIndex", index);
+        tag.putBoolean("InstructionsLoop", shouldLoop);
     }
 
     @Override
@@ -274,6 +281,8 @@ public class InstructionSystem extends AISystem {
         for (Tag savedTag : saved) {
             instructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
         }
+        index = tag.getInt("InstructionsIndex");
+        shouldLoop = tag.getBoolean("InstructionsLoop");
         syncWithClients();
     }
 }

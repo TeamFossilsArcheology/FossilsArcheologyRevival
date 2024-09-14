@@ -95,19 +95,20 @@ public class InstructionRenderUtil {
         poseStack.popPose();
     }
 
-    public static void renderDownArrow(PoseStack poseStack, Vec3 pos, Color color, long finishNanoTime) {
+    public static void renderDownArrow(PoseStack poseStack, Vec3 pos, Color color, float scale, long finishNanoTime) {
         float seconds = finishNanoTime / 10E8f;
-        renderArrow(poseStack, pos, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1, true, (seconds * 120) % 360, Mth.sin(seconds) * 0.25f);
+        renderArrow(poseStack, pos, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1, true, scale, (seconds * 120) % 360, Mth.sin(seconds) * 0.25f);
     }
 
     public static void renderArrow(PoseStack poseStack, Vec3 pos, Color color, float yRot) {
-        renderArrow(poseStack, pos, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1, false, yRot, 0);
+        renderArrow(poseStack, pos, color.getRed() / 255f, color.getGreen() / 255f, color.getBlue() / 255f, 1, false,1, yRot, 0);
     }
 
-    public static void renderArrow(PoseStack poseStack, Vec3 pos, float r, float g, float b, float a, boolean down, float yRot, float bounce) {
+    public static void renderArrow(PoseStack poseStack, Vec3 pos, float r, float g, float b, float a, boolean down, float scale, float yRot, float bounce) {
         poseStack.pushPose();
         poseStack.translate(pos.x(), pos.y() + bounce, pos.z());
         poseStack.mulPose(Vector3f.YP.rotationDegrees(yRot));
+        poseStack.scale(scale, scale, scale);
         if (!down) {
             float i = 0.2f;
             float o = -0.1f;
