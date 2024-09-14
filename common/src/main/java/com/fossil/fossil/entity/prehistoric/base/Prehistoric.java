@@ -1348,7 +1348,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public float getMaxTurnDistancePerTick() {
-        return Mth.clamp(90 - getBbWidth() * 20, 10, 90);
+        return Mth.clamp(90 - getBbWidth() * 35, 5, 90);
     }
 
     public float getProximityToNextPathSkip() {

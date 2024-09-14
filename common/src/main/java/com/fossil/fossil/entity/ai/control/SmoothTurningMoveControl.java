@@ -39,13 +39,16 @@ public class SmoothTurningMoveControl extends MoveControl {
                 mob.setZza(0);
                 return;
             }
+            float turnMod = 1;
             if (horizontalDist > 0.12) {
                 //Prevents spinning if mob overshoots the wanted position
                 float newYRot = Util.yawToYRot(Mth.atan2(z, x) * Mth.RAD_TO_DEG);
                 float turn = ((Prehistoric) mob).getMaxTurnDistancePerTick();
+                //Slow down mob while turning
+                turnMod = Mth.lerp(Math.min(0, Mth.degreesDifferenceAbs(mob.getYRot(), newYRot) - turn) / 180f, 1, 0.1f);
                 mob.setYRot(rotlerp(mob.getYRot(), newYRot, turn));
             }
-            mob.setSpeed((float) (speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
+            mob.setSpeed((float) (turnMod * speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
             BlockPos blockPos = mob.blockPosition();
             BlockState blockState = mob.level.getBlockState(blockPos);
             VoxelShape voxelShape = blockState.getCollisionShape(mob.level, blockPos);
