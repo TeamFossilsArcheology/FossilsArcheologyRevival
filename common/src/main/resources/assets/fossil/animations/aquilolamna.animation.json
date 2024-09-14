@@ -38,6 +38,11 @@
 					"rotation": {
 						"vector": [0, "Math.sin((query.anim_time-0.4)*180)*6", 0]
 					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, 4, 0]
+					}
 				}
 			}
 		},
@@ -116,6 +121,11 @@
 						"1.0": {
 							"vector": [0, 0, 0]
 						}
+					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, 4, 0]
 					}
 				}
 			},
@@ -251,7 +261,7 @@
 				},
 				"pitch_root": {
 					"position": {
-						"vector": [0, -3, 0]
+						"vector": [0, 1, 0]
 					}
 				}
 			}

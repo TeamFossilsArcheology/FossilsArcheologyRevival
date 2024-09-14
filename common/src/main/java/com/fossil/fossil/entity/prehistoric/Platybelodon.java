@@ -9,7 +9,9 @@ import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -42,6 +44,14 @@ public class Platybelodon extends Prehistoric {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
         goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
+        if (poseIn == Pose.SLEEPING) {
+            return super.getDimensions(poseIn).scale(1, 0.6f);
+        }
+        return super.getDimensions(poseIn);
     }
 
     @Override

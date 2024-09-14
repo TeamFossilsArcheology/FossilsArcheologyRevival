@@ -8,7 +8,9 @@ import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -40,6 +42,14 @@ public class Gastornis extends Prehistoric {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 2, false));
+    }
+
+    @Override
+    public @NotNull EntityDimensions getDimensions(Pose poseIn) {
+        if (poseIn == Pose.SLEEPING) {
+            return super.getDimensions(poseIn).scale(1.4f, 0.4f);
+        }
+        return super.getDimensions(poseIn);
     }
 
     @Override

@@ -128,10 +128,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (ATTACHED_FACE.equals(key)) {
-            Vec3 oldPos = position();
             refreshDimensions();
-            //Prevent little jump after bounding box change
-            setPos(oldPos);
         }
         super.onSyncedDataUpdated(key);
     }

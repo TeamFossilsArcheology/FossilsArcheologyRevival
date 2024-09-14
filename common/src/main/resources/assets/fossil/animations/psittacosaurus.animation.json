@@ -2858,7 +2858,7 @@
 						"vector": ["-5+math.sin(query.anim_time*1440/12)*-1", -5, -100]
 					},
 					"position": {
-						"vector": [-2, "7.5+math.sin(query.anim_time*1440/12+90)*0.25", 0]
+						"vector": [8, "7.5+math.sin(query.anim_time*1440/12+90)*0.25", 0]
 					}
 				},
 				"leftLeg": {

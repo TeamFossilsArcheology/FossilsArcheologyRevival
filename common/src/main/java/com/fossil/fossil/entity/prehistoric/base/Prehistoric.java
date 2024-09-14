@@ -352,13 +352,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void refreshDimensions() {
+        double oldY = getY();
         if (isCustomMultiPart()) {
             super.refreshDimensions();
+            setPos(getX(), oldY, getZ());
             for (MultiPart part : parts) {
                 part.getEntity().refreshDimensions();
             }
         } else {
             super.refreshDimensions();
+            setPos(getX(), oldY, getZ());
         }
     }
 
@@ -462,6 +465,16 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     @Override
     public boolean isImmobile() {
         return super.isImmobile() || isWeak();
+    }
+
+    @Override
+    public void push(double x, double y, double z) {
+        EntityDimensions dimensions = getDimensions(Pose.STANDING);
+        float max = Math.max(dimensions.width, dimensions.height);
+        if (max < 3) {
+            float mult = Mth.lerp((Math.max(max, 1) - 1) / 2f, 1, 0);
+            super.push(x * mult, y, z * mult);
+        }
     }
 
     @Override

@@ -1,6 +1,94 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
+		"animation.crassigyrinus.attack": {
+			"animation_length": 0.6667,
+			"bones": {
+				"body": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-5, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"head": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [-31.5, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"jaw": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [24, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"leftArm": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [7, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [7, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"tail": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [5, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
+					}
+				}
+			}
+		},
 		"animation.crassigyrinus.swim": {
 			"loop": true,
 			"animation_length": 12,
@@ -33,6 +121,11 @@
 				"tail2": {
 					"rotation": {
 						"vector": [-2.5, "math.sin((query.anim_time*720)*0.25-90)*20", 0]
+					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, 4, 0]
 					}
 				}
 			}
@@ -101,6 +194,11 @@
 				"tail2": {
 					"rotation": {
 						"vector": [-2.5, "math.sin((query.anim_time*1440)*0.25-90)*20", 0]
+					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, 4, 0]
 					}
 				}
 			}
@@ -221,7 +319,14 @@
 				},
 				"leftArm": {
 					"rotation": {
-						"0.0417": {"pre": {"vector": [22.42287, -1.91134, 4.62111]}, "post": {"vector": [22.42287, -1.91134, 4.62111]}},
+						"0.0417": {
+							"pre": {
+								"vector": [22.42287, -1.91134, 4.62111]
+							},
+							"post": {
+								"vector": [22.42287, -1.91134, 4.62111]
+							}
+						},
 						"0.2917": {
 							"vector": [32.34207, 29.47666, -25.35451]
 						},
@@ -233,7 +338,14 @@
 						}
 					},
 					"position": {
-						"0.5417": {"pre": {"vector": [0, 0, 0]}, "post": {"vector": [0, 0, 0]}},
+						"0.5417": {
+							"pre": {
+								"vector": [0, 0, 0]
+							},
+							"post": {
+								"vector": [0, 0, 0]
+							}
+						},
 						"1.0": {
 							"vector": [0, 0, 0.5]
 						}
@@ -254,7 +366,14 @@
 				},
 				"leftLeg": {
 					"rotation": {
-						"0.1667": {"pre": {"vector": [0, 0, 0]}, "post": {"vector": [0, 0, 0]}},
+						"0.1667": {
+							"pre": {
+								"vector": [0, 0, 0]
+							},
+							"post": {
+								"vector": [0, 0, 0]
+							}
+						},
 						"0.4167": {
 							"vector": [51.93606, 35.80852, -24.61562]
 						},
@@ -328,45 +447,6 @@
 				}
 			}
 		},
-		"animation.crassigyrinus.idle/beached": {
-			"loop": true,
-			"animation_length": 4,
-			"bones": {
-				"bodyBreathing": {
-					"scale": {
-						"0.0": {
-							"vector": [1, 1, 1]
-						},
-						"2.0": {
-							"vector": [1.025, 1.025, 1.025]
-						},
-						"4.0": {
-							"vector": [1, 1, 1]
-						}
-					}
-				},
-				"body": {
-					"position": {
-						"vector": [0, 0.75, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": ["7.5+math.sin((query.anim_time*360)*0.25-90)*-0.75", 0, 0]
-					}
-				},
-				"tail": {
-					"rotation": {
-						"vector": [7.5, "math.sin((query.anim_time*360)*0.25-90)*2.5", 0]
-					}
-				},
-				"tail2": {
-					"rotation": {
-						"vector": [-5, "0+math.sin((query.anim_time*360)*0.25-135)*5", 0]
-					}
-				}
-			}
-		},
 		"animation.crassigyrinus.swimidle": {
 			"loop": true,
 			"animation_length": 4,
@@ -387,6 +467,9 @@
 				"pitch_root": {
 					"rotation": {
 						"vector": [-10, 0, 0]
+					},
+					"position": {
+						"vector": [0, 4, 0]
 					}
 				},
 				"head": {
@@ -422,89 +505,6 @@
 				"tail2": {
 					"rotation": {
 						"vector": [-5, "0+math.sin((query.anim_time*360)*0.25-135)*5", 0]
-					}
-				}
-			}
-		},
-		"animation.crassigyrinus.attack": {
-			"animation_length": 0.6667,
-			"bones": {
-				"body": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.25": {
-							"vector": [-5, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"head": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.25": {
-							"vector": [-31.5, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"jaw": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.25": {
-							"vector": [24, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"leftArm": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.25": {
-							"vector": [7, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"leftLeg": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.25": {
-							"vector": [7, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						}
-					}
-				},
-				"tail": {
-					"rotation": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.25": {
-							"vector": [5, 0, 0]
-						},
-						"0.5": {
-							"vector": [0, 0, 0]
-						}
 					}
 				}
 			}
@@ -602,6 +602,11 @@
 					"rotation": {
 						"vector": [-5.09128, "14.9424+math.sin((query.anim_time*360)*0.25-135)*5", -1.31861]
 					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
+					}
 				}
 			}
 		},
@@ -632,6 +637,9 @@
 						"0.5": {
 							"vector": [0, 0, 0]
 						}
+					},
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
 					}
 				},
 				"head": {
@@ -744,6 +752,45 @@
 				},
 				"1.0": {
 					"effect": "eat"
+				}
+			}
+		},
+		"animation.crassigyrinus.idle/beached": {
+			"loop": true,
+			"animation_length": 4,
+			"bones": {
+				"bodyBreathing": {
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"2.0": {
+							"vector": [1.025, 1.025, 1.025]
+						},
+						"4.0": {
+							"vector": [1, 1, 1]
+						}
+					}
+				},
+				"body": {
+					"position": {
+						"vector": [0, 0.75, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["7.5+math.sin((query.anim_time*360)*0.25-90)*-0.75", 0, 0]
+					}
+				},
+				"tail": {
+					"rotation": {
+						"vector": [7.5, "math.sin((query.anim_time*360)*0.25-90)*2.5", 0]
+					}
+				},
+				"tail2": {
+					"rotation": {
+						"vector": [-5, "0+math.sin((query.anim_time*360)*0.25-135)*5", 0]
+					}
 				}
 			}
 		}

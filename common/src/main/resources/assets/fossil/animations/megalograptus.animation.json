@@ -439,6 +439,11 @@
 							"vector": [-7.37178, 13.63213, -10.60342]
 						}
 					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, 4, 0]
+					}
 				}
 			}
 		},
@@ -609,6 +614,11 @@
 					},
 					"scale": {
 						"vector": [1, 1, 1]
+					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
 					}
 				}
 			}
@@ -1067,6 +1077,11 @@
 					},
 					"scale": {
 						"vector": [1, 1, 1]
+					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
 					}
 				}
 			}

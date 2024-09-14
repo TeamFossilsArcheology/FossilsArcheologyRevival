@@ -517,6 +517,11 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
+					}
 				}
 			},
 			"sound_effects": {
@@ -538,7 +543,7 @@
 		},
 		"animation.henodus.swim": {
 			"loop": true,
-			"animation_length": 0.9583,
+			"animation_length": 1,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -735,12 +740,17 @@
 							"vector": [-3, -3, 0]
 						}
 					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, 4, 0]
+					}
 				}
 			}
 		},
 		"animation.henodus.swimfast": {
 			"loop": true,
-			"animation_length": 0.7083,
+			"animation_length": 0.75,
 			"bones": {
 				"body": {
 					"rotation": {
@@ -931,6 +941,11 @@
 							"vector": [-3, -3, 0]
 						}
 					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, 4, 0]
+					}
 				}
 			}
 		},
@@ -946,6 +961,11 @@
 				"head": {
 					"rotation": {
 						"vector": ["7.5+math.sin((query.anim_time*360)*0.25-90)*-0.75", 0, 0]
+					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
 					}
 				}
 			}
@@ -994,6 +1014,11 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
+					}
 				}
 			}
 		},
@@ -1034,6 +1059,11 @@
 				"leftarm": {
 					"rotation": {
 						"vector": [0, 0, -20]
+					}
+				},
+				"pitch_root": {
+					"position": {
+						"vector": [0, "query.is_in_water ? 4 : 0", 0]
 					}
 				}
 			}
