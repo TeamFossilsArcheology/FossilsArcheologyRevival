@@ -142,6 +142,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public Vec3 eatPos;
     public final Map<String, EntityHitboxManager.Hitbox> attackBoxes = new HashMap<>();
     public final Map<EntityHitboxManager.Hitbox, Vec3> activeAttackBoxes = new HashMap<>();
+    private AABB attackBounds = new AABB(0, 0, 0, 0, 0, 0);
+    private AABB cullingBounds = new AABB(0, 0, 0, 0, 0, 0);
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -196,7 +198,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 }
             }
         }
-        //TODO: SLEEPING_DIMENSIONS
         frustumWidthRadius = maxFrustumWidthRadius;
         frustumHeightRadius = maxFrustumHeightRadius;
     }
@@ -371,7 +372,22 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     @Override
+    public void setPos(double x, double y, double z) {
+        super.setPos(x, y, z);
+        this.attackBounds = makeAttackBounds();
+        this.cullingBounds = makeBoundingBoxForCulling();
+    }
+
+    @Override
     public @NotNull AABB getBoundingBoxForCulling() {
+        return cullingBounds;
+    }
+
+    public AABB getAttackBounds() {
+        return attackBounds;
+    }
+
+    private AABB makeBoundingBoxForCulling() {
         if (isCustomMultiPart()) {
             float x = frustumWidthRadius * getScale();
             float y = frustumHeightRadius * getScale();
@@ -381,13 +397,17 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return super.getBoundingBoxForCulling();
     }
 
-    public AABB getAttackBounds() {
+    private AABB makeAttackBounds() {
         if (headRadius != 0) {
-            float radius = headRadius * getScale();
-            return getBoundingBox().inflate(radius, radius * 0.5, radius);
+            float radius = headRadius * getScale() * 0.9f;
+            return inflateAABB(getBoundingBox(), radius, radius * 0.55, radius);
         }
         float increase = Math.min(getBbWidth() / 2, 2.25f);
-        return getBoundingBox().inflate(increase);
+        return inflateAABB(getBoundingBox(), increase, increase, increase);
+    }
+
+    private AABB inflateAABB(AABB base, double x, double y, double z) {
+        return new AABB(base.minX - x, base.minY - Math.min(1, y), base.minZ - z, base.maxX + x, base.maxY + y, base.maxZ + z);
     }
 
     public float getHeadRadius() {

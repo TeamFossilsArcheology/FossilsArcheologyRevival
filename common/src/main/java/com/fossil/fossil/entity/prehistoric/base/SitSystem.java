@@ -7,6 +7,7 @@ import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.
 public class SitSystem extends AISystem {
     protected boolean sittingDisabled;
     private int ticksSat;
+    private int sitCooldown = 20 * 60 * 3;
 
     public SitSystem(Prehistoric mob) {
         super(mob);
@@ -14,7 +15,10 @@ public class SitSystem extends AISystem {
 
     @Override
     public void serverTick() {
-        if (!isSitting() && canSit() && (mob.getRandom().nextInt(1000) == 0 || mob.getCurrentOrder() == OrderType.STAY)) {
+        if (sitCooldown > 0) {
+            sitCooldown--;
+        }
+        if (!isSitting() && canSit() && (sitCooldown == 0 && mob.getRandom().nextInt(1000) == 0 || mob.getCurrentOrder() == OrderType.STAY)) {
             setSitting(true);
         }
         if (isSitting()) {
