@@ -28,9 +28,8 @@ public class OverlayRenderer {
             ItemStack helmet = mc.player.getItemBySlot(EquipmentSlot.HEAD);
             boolean ancient = helmet.is(ModItems.ANCIENT_HELMET.get());
             if (ancient || helmet.is(ModItems.BONE_HELMET.get())) {
-                RenderSystem.disableDepthTest();
-                RenderSystem.depthMask(false);
                 RenderSystem.defaultBlendFunc();
+                RenderSystem.enableBlend();
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
                 RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1);
                 RenderSystem.setShaderTexture(0, ancient ? ANCIENT_HELMET : BONE_HELMET);
@@ -42,9 +41,7 @@ public class OverlayRenderer {
                 bufferbuilder.vertex(screenWidth, 0.0, -90.0).uv(1.0f, 0.0f).endVertex();
                 bufferbuilder.vertex(0.0, 0.0, -90.0).uv(0.0f, 0.0f).endVertex();
                 tesselator.end();
-                RenderSystem.depthMask(true);
-                RenderSystem.enableDepthTest();
-                RenderSystem.setShaderColor(1.0f, 1.0f, 1.0f, 1.0f);
+                RenderSystem.disableBlend();
             }
         }
     }

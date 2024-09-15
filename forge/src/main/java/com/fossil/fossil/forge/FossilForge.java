@@ -4,7 +4,6 @@ import com.fossil.fossil.Fossil;
 import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.client.ClientInit;
 import com.fossil.fossil.client.model.block.PlantBlockModel;
-import com.fossil.fossil.client.renderer.armor.AncientHelmetRenderer;
 import com.fossil.fossil.config.forge.ForgeConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
@@ -12,8 +11,9 @@ import com.fossil.fossil.entity.prehistoric.fish.Coelacanth;
 import com.fossil.fossil.forge.capabilities.mammal.IMammalCap;
 import com.fossil.fossil.forge.client.ClientModEvents;
 import com.fossil.fossil.forge.client.model.PlantModelLoader;
+import com.fossil.fossil.forge.client.renderer.armor.ForgeAncientHelmetRenderer;
 import com.fossil.fossil.forge.world.biome.ForgeFossilRegion;
-import com.fossil.fossil.item.AncientHelmetItem;
+import com.fossil.fossil.item.forge.AncientHelmetItemImpl;
 import com.fossil.fossil.world.chunk.AnuLairChunkGenerator;
 import com.fossil.fossil.world.chunk.TreasureChunkGenerator;
 import com.fossil.fossil.world.feature.placement.ModPlacementTypes;
@@ -62,7 +62,7 @@ public class FossilForge {
     public void onClient(FMLClientSetupEvent event) {
         ClientModEvents.registerOverlays();
         ClientInit.later();
-        GeoArmorRenderer.registerArmorRenderer(AncientHelmetItem.class, AncientHelmetRenderer::new);
+        GeoArmorRenderer.registerArmorRenderer(AncientHelmetItemImpl.class, ForgeAncientHelmetRenderer::new);
     }
 
     public void onCommon(FMLCommonSetupEvent event) {

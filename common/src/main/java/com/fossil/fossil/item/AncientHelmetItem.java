@@ -1,26 +1,19 @@
 package com.fossil.fossil.item;
 
+import com.fossil.fossil.Fossil;
+import dev.architectury.injectables.annotations.ExpectPlatform;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
+import net.minecraft.world.item.Item;
 
-public class AncientHelmetItem extends ArmorItem implements IAnimatable {
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
+public class AncientHelmetItem {
+    public static final ResourceLocation MODEL = new ResourceLocation(Fossil.MOD_ID, "geo/armor/ancient_helmet.geo.json");
+    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/models/armor/ancient_helmet_texture.png");
 
-    public AncientHelmetItem(ArmorMaterial material, EquipmentSlot slot, Properties settings) {
-        super(material, slot, settings);
-    }
-
-    @Override
-    public void registerControllers(AnimationData data) {
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return this.factory;
+    @ExpectPlatform
+    public static ArmorItem get(ArmorMaterial material, EquipmentSlot slot, Item.Properties properties) {
+        throw new AssertionError();
     }
 }

@@ -1,12 +1,12 @@
-package com.fossil.fossil.client.renderer.armor;
+package com.fossil.fossil.fabric.client.renderer.armor;
 
-import com.fossil.fossil.client.model.armor.AncientHelmetModel;
-import com.fossil.fossil.item.AncientHelmetItem;
+import com.fossil.fossil.fabric.client.model.armor.FabricAncientHelmetModel;
+import com.fossil.fossil.item.fabric.AncientHelmetItemImpl;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
-public class AncientHelmetRenderer extends GeoArmorRenderer<AncientHelmetItem> {
-    public AncientHelmetRenderer() {
-        super(new AncientHelmetModel());
+public class FabricAncientHelmetRenderer extends GeoArmorRenderer<AncientHelmetItemImpl> {
+    public FabricAncientHelmetRenderer() {
+        super(new FabricAncientHelmetModel());
 
         this.headBone = "armorHead";
         this.bodyBone = "armorBody";
