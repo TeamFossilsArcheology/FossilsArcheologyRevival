@@ -176,6 +176,7 @@ public class InstructionSystem extends AISystem {
         tries = 0;
         if (instructions.size() == index) {
             if (shouldLoop) {
+                syncWithClients();
                 index = 0;
             } else {
                 stop();

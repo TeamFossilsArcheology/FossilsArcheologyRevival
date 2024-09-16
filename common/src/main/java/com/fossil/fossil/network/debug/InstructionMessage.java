@@ -1,6 +1,5 @@
 package com.fossil.fossil.network.debug;
 
-import com.fossil.fossil.client.gui.debug.DebugScreen;
 import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
@@ -41,7 +40,7 @@ public class InstructionMessage {
                 Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
                 if (entity instanceof Prehistoric prehistoric) {
                     if (level.isClientSide) {
-                        if (DebugScreen.entity == null || DebugScreen.entity.getId() != entity.getId()) {
+                        if (InstructionTab.activeEntity == null || InstructionTab.activeEntity.getId() != entity.getId()) {
                             InstructionTab.INSTRUCTIONS.put(entity.getUUID(), new InstructionTab.Pair(entityId, instructions));
                         }
                     } else {

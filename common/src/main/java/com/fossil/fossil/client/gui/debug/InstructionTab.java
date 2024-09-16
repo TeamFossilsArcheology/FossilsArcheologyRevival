@@ -61,9 +61,13 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             }
             debugScreen.onClose();
             onClose();
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("Starts Instruction for all mobs"), i, j);
         }));
         addWidget(new Button(135, 340, 50, 20, new TextComponent("Debug"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("Starts Instruction without closing the debug menu"), i, j);
         }));
         addWidget(new Button(220, 5, 100, 20, new TextComponent("Walk Builder"), button -> {
             positionMode = Instruction.Type.MOVE_TO;
