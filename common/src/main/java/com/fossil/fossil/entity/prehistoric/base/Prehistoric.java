@@ -161,6 +161,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (hitboxes != null && !hitboxes.isEmpty()) {
             spawnHitBoxes(hitboxes, entityType);
         }
+        this.attackBounds = makeAttackBounds();
+        this.cullingBounds = makeBoundingBoxForCulling();
         if (level.isClientSide) {
             for (Animation anim : getAllAnimations().values()) {
                 Fossil.LOGGER.debug("{} is loop: {}", anim.animationName, anim.loop);
@@ -287,7 +289,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             gender = Gender.FEMALE;
         }
-        setAge(buf.readInt());
+        setAgeInTicks(buf.readInt());
         refreshTexturePath();
     }
 
@@ -311,7 +313,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         aiSystems.forEach(system -> system.load(compound));
-        setAge(compound.getInt("Age"));
+        setAgeInTicks(compound.getInt("Age"));
         setMatingCooldown(compound.getInt("MatingCooldown"));
         setHunger(compound.getInt("Hunger"));
         setFleeing(compound.getBoolean("Fleeing"));
@@ -387,8 +389,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return attackBounds;
     }
 
+    @SuppressWarnings("java:S2589")
     private AABB makeBoundingBoxForCulling() {
-        if (isCustomMultiPart()) {
+        if (parts != null && isCustomMultiPart()) {
             float x = frustumWidthRadius * getScale();
             float y = frustumHeightRadius * getScale();
             Vec3 pos = position();
@@ -734,7 +737,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         super.tick();
 
         if (!level.isClientSide && !isAgingDisabled() && canAgeUpNaturally()) {
-            setAge(getAge() + 1);
+            setAgeInTicks(getAge() + 1);
         }
         if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.ENABLE_HUNGER)) {
             if (!isNoAi()) {
@@ -904,7 +907,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     }
 
     public void setAgeInDays(int days) {
-        setAge(days * 24000);
+        setAgeInTicks(days * 24000);
     }
 
     @Override
@@ -914,6 +917,9 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public void setAge(int age) {
+    }
+
+    public void setAgeInTicks(int age) {
         if (isAgingDisabled()) {
             return;
         }

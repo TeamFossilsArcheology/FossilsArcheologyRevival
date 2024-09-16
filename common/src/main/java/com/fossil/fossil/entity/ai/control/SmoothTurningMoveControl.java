@@ -43,10 +43,12 @@ public class SmoothTurningMoveControl extends MoveControl {
             if (horizontalDist > 0.12) {
                 //Prevents spinning if mob overshoots the wanted position
                 float newYRot = Util.yawToYRot(Mth.atan2(z, x) * Mth.RAD_TO_DEG);
-                float turn = ((Prehistoric) mob).getMaxTurnDistancePerTick();
+                float maxTurn = ((Prehistoric) mob).getMaxTurnDistancePerTick();
+                //Turn of 180 becomes 180-maxTurn to speed up smaller mobs
+                float turnDiff = Math.max(0, Mth.degreesDifferenceAbs(mob.getYRot(), newYRot) - maxTurn);
                 //Slow down mob while turning
-                turnMod = Mth.lerp(Math.min(0, Mth.degreesDifferenceAbs(mob.getYRot(), newYRot) - turn) / 180f, 1, 0.1f);
-                mob.setYRot(rotlerp(mob.getYRot(), newYRot, turn));
+                turnMod = Mth.lerp(turnDiff / 180f, 1, 0.1f);
+                mob.setYRot(rotlerp(mob.getYRot(), newYRot, maxTurn));
             }
             mob.setSpeed((float) (turnMod * speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
             BlockPos blockPos = mob.blockPosition();

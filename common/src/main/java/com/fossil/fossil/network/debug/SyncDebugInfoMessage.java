@@ -64,7 +64,7 @@ public class SyncDebugInfoMessage {
                 }
                 if (player.level.getEntity(entityId) instanceof Prehistoric prehistoric) {
                     if (!player.level.isClientSide) {
-                        prehistoric.setAge(age);
+                        prehistoric.setAgeInTicks(age);
                         prehistoric.setHunger(hunger);
                         prehistoric.moodSystem.setMood(mood);
                     }
