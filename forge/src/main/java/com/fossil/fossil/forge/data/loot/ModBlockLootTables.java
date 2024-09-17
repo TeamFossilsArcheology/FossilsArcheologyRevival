@@ -6,6 +6,7 @@ import com.fossil.fossil.block.custom_blocks.FourTallFlowerBlock;
 import com.fossil.fossil.block.custom_blocks.TallBerryBushBlock;
 import com.fossil.fossil.block.custom_blocks.TallFlowerBlock;
 import com.fossil.fossil.tags.ModItemTags;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
@@ -38,14 +39,15 @@ import static com.fossil.fossil.item.ModItems.*;
 
 public class ModBlockLootTables extends BlockLoot {
 
-    private static final List<Block> NO_TABLE = List.of(ANU_PORTAL.get(), SARCOPHAGUS.get(), TAR.get(),
+    private static final List<Block> NO_TABLE = List.of(ASH_VENT.get(), ANU_PORTAL.get(), SARCOPHAGUS.get(), TAR.get(),
             ANU_STATUE.get(), ANUBITE_STATUE.get(), ANCIENT_CHEST.get(), ANU_BARRIER.get(),
             MUTANT_TREE_TUMOR.get());
     private final List<Block> tableDone = new ArrayList<>();
     private int scarab;
     private int broken;
     private int skullBlock;
-    private int bioFossil;
+    private int mobFossil;
+    private Item mobFossilItem;
     private int plantFossil;
     private int relic;
     private int bone;
@@ -85,31 +87,50 @@ public class ModBlockLootTables extends BlockLoot {
                     .when(ExplosionCondition.survivesExplosion())).setParamSet(LootContextParamSets.BLOCK));
         }
         //lol this is so bad but I like it
-        var defauList = scarab(1).broken(5).skullBlock(34).bio(275).plant(110).relic(200).bone(440)
+        var defaultList = scarab(1).broken(5).skullBlock(34).mobFossil(BIO_FOSSIL,275).plant(110).relic(200).bone(440)
                 .group(6, 6, 3, 3, 3, 3, 3, 3);
-        var archList1 = scarab(6).broken(9).skullBlock(64).bio(225).plant(85).relic(475).bone(200)
+        var archList1 = scarab(6).broken(9).skullBlock(64).mobFossil(BIO_FOSSIL,225).plant(85).relic(475).bone(200)
                 .group(3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 1));
-        var archList2 = scarab(11).broken(11).skullBlock(110).bio(132).plant(50).relic(715).bone(36).
+        var archList2 = scarab(11).broken(11).skullBlock(110).mobFossil(BIO_FOSSIL,132).plant(50).relic(715).bone(36).
                 group(3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 2));
-        var archList3 = scarab(16).broken(13).skullBlock(144).bio(50).plant(20).relic(820).bone(0).
+        var archList3 = scarab(16).broken(13).skullBlock(144).mobFossil(BIO_FOSSIL,50).plant(20).relic(820).bone(0).
                 group(3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 3));
 
-        var paleList1 = scarab(1).broken(5).skullBlock(55).bio(375).plant(145).relic(20).bone(440)
+        var paleList1 = scarab(1).broken(5).skullBlock(55).mobFossil(BIO_FOSSIL,375).plant(145).relic(20).bone(440)
                 .group(9, 9, 6, 6, 6, 6, 6, 6).when(enchant(PALEONTOLOGY.get(), 1));
-        var paleList2 = scarab(1).broken(5).skullBlock(30).bio(470).plant(175).relic(0).bone(326)
+        var paleList2 = scarab(1).broken(5).skullBlock(30).mobFossil(BIO_FOSSIL,470).plant(175).relic(0).bone(326)
                 .group(13, 13, 10, 10, 12, 10, 10, 10).when(enchant(PALEONTOLOGY.get(), 2));
-        var paleList3 = scarab(1).broken(5).skullBlock(36).bio(510).plant(205).relic(0).bone(210)
+        var paleList3 = scarab(1).broken(5).skullBlock(36).mobFossil(BIO_FOSSIL,510).plant(205).relic(0).bone(210)
                 .group(18, 18, 15, 15, 17, 15, 15, 15).when(enchant(PALEONTOLOGY.get(), 3));
         LootTable.Builder fossils = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defauList)))
+                        .add(AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defaultList)))
                 .setParamSet(LootContextParamSets.BLOCK);
         addCustom(CALCITE_FOSSIL.get(), fossils);
-        addCustom(DEEPSLATE_FOSSIL.get(), fossils);
         addCustom(DRIPSTONE_FOSSIL.get(), fossils);
         addCustom(RED_SANDSTONE_FOSSIL.get(), fossils);
         addCustom(SANDSTONE_FOSSIL.get(), fossils);
         addCustom(STONE_FOSSIL.get(), fossils);
-        addCustom(TUFF_FOSSIL.get(), fossils);
+
+        defaultList = scarab(1).broken(5).skullBlock(34).mobFossil(SHALE_FOSSIL, 300).plant(85).relic(200).bone(440)
+                .group( 6, 6, 3, 3, 3, 3, 3, 3);
+        archList1 = scarab(6).broken(9).skullBlock(64).mobFossil(SHALE_FOSSIL, 255).plant(55).relic(475).bone(200)
+                .group(3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 1));
+        archList2 = scarab(11).broken(11).skullBlock(110).mobFossil(SHALE_FOSSIL, 162).plant(20).relic(715).bone(36).
+                group( 3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 2));
+        archList3 = scarab(16).broken(13).skullBlock(144).mobFossil(SHALE_FOSSIL, 70).plant(0).relic(820).bone(0).
+                group( 3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 3));
+
+        paleList1 = scarab(1).broken(5).skullBlock(55).mobFossil(SHALE_FOSSIL, 405).plant(115).relic(20).bone(440)
+                .group( 9, 9, 6, 6, 6, 6, 6, 6).when(enchant(PALEONTOLOGY.get(), 1));
+        paleList2 = scarab(1).broken(5).skullBlock(30).mobFossil(SHALE_FOSSIL, 480).plant(145).relic(0).bone(326)
+                .group( 13, 13, 10, 10, 12, 10, 10, 10).when(enchant(PALEONTOLOGY.get(), 2));
+        paleList3 = scarab(1).broken(5).skullBlock(36).mobFossil(SHALE_FOSSIL, 540).plant(175).relic(0).bone(210)
+                .group( 18, 18, 15, 15, 17, 15, 15, 15).when(enchant(PALEONTOLOGY.get(), 3));
+        var deepSlateFossils = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
+                        .add(AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defaultList)))
+                .setParamSet(LootContextParamSets.BLOCK);
+        addCustom(DEEPSLATE_FOSSIL.get(), deepSlateFossils);
+        addCustom(TUFF_FOSSIL.get(), deepSlateFossils);
 
         BLOCKS.forEach(supplier -> supplier.ifPresent(block -> {
             if (block instanceof AbstractGlassBlock) {
@@ -170,8 +191,9 @@ public class ModBlockLootTables extends BlockLoot {
         return this;
     }
 
-    private ModBlockLootTables bio(int weight) {
-        bioFossil = weight;
+    private ModBlockLootTables mobFossil(RegistrySupplier<Item> fossil, int weight) {
+        mobFossilItem = fossil.get();
+        mobFossil = weight;
         return this;
     }
 
@@ -188,7 +210,7 @@ public class ModBlockLootTables extends BlockLoot {
     private EntryGroup.Builder group(int... weights) {
         return EntryGroup.list(lootItem(SCARAB_GEM.get(), scarab), lootItem(BROKEN_SWORD.get(), broken),
                 lootItem(BROKEN_HELMET.get(), broken), lootItem(SKULL_BLOCK.get(), skullBlock),
-                lootItem(BIO_FOSSIL.get(), bioFossil), lootItem(RELIC_SCRAP.get(), relic),
+                lootItem(mobFossilItem, mobFossil), lootItem(RELIC_SCRAP.get(), relic),
                 lootItem(Items.BONE, bone), lootItem(PlANT_FOSSIL.get(), plantFossil),
                 DynamicLoot.dynamicEntry(ModItemTags.LEG_BONES.location()).setWeight(weights[0]),
                 DynamicLoot.dynamicEntry(ModItemTags.ARM_BONES.location()).setWeight(weights[1]),

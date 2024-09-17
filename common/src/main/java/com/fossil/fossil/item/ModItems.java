@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.material.ModFluids;
 import com.fossil.fossil.sounds.ModSounds;
+import com.fossil.fossil.util.TimePeriod;
 import dev.architectury.core.item.ArchitecturyBucketItem;
 import dev.architectury.core.item.ArchitecturyMobBucketItem;
 import dev.architectury.core.item.ArchitecturySpawnEggItem;
@@ -59,13 +60,10 @@ public class ModItems {
             () -> CustomRecordItem.get(2, ModSounds.MUSIC_SCARAB, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<RecordItem> RECORD_DISCOVERY = ITEMS.register("record_discovery",
             () -> CustomRecordItem.get(3, ModSounds.MUSIC_DISCOVERY, new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> BIO_FOSSIL = ITEMS.register("fossil_bio",
-            () -> new BioFossilItem(false));
-
-    public static final RegistrySupplier<Item> TAR_FOSSIL = ITEMS.register("fossil_tar",
-            () -> new BioFossilItem(true));
-    public static final RegistrySupplier<Item> PlANT_FOSSIL = ITEMS.register("fossil_plant",
-            () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
+    public static final RegistrySupplier<Item> BIO_FOSSIL = ITEMS.register("fossil_bio", () -> new FossilItem(TimePeriod.MESOZOIC));
+    public static final RegistrySupplier<Item> PlANT_FOSSIL = ITEMS.register("fossil_plant", () -> new FossilItem(null));
+    public static final RegistrySupplier<Item> SHALE_FOSSIL = ITEMS.register("fossil_shale", () -> new FossilItem(TimePeriod.PALEOZOIC));
+    public static final RegistrySupplier<Item> TAR_FOSSIL = ITEMS.register("fossil_tar", () -> new FossilItem(TimePeriod.CENOZOIC));
 
     public static final RegistrySupplier<Item> RELIC_SCRAP = ITEMS.register("relic_scrap",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));

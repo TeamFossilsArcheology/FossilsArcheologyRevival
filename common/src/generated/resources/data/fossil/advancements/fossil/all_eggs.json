@@ -16,10 +16,7 @@
     "hidden": false
   },
   "rewards": {
-    "experience": 1000,
-    "recipes": [
-      "fossil:golden_egg"
-    ]
+    "experience": 1000
   },
   "criteria": {
     "alligator_gar": {
@@ -204,14 +201,14 @@
         ]
       }
     },
-    "dimetrodon": {
+    "dicranurus": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
         "entity": [
           {
             "condition": "minecraft:entity_properties",
             "predicate": {
-              "type": "fossil:dimetrodon"
+              "type": "fossil:dicranurus"
             },
             "entity": "this"
           }
@@ -226,6 +223,20 @@
             "condition": "minecraft:entity_properties",
             "predicate": {
               "type": "fossil:dilophosaurus"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "dimetrodon": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:dimetrodon"
             },
             "entity": "this"
           }
@@ -380,6 +391,20 @@
             "condition": "minecraft:entity_properties",
             "predicate": {
               "type": "fossil:liopleurodon"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "lonchodomas": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:lonchodomas"
             },
             "entity": "this"
           }
@@ -624,6 +649,20 @@
         ]
       }
     },
+    "scotoharpes": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:scotoharpes"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
     "spinosaurus": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
@@ -722,62 +761,6 @@
         ]
       }
     },
-    "dicranurus": {
-      "trigger": "fossil:incubate_egg",
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "type": "fossil:dicranurus"
-            },
-            "entity": "this"
-          }
-        ]
-      }
-    },
-    "lonchodomas": {
-      "trigger": "fossil:incubate_egg",
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "type": "fossil:lonchodomas"
-            },
-            "entity": "this"
-          }
-        ]
-      }
-    },
-    "scotoharpes": {
-      "trigger": "fossil:incubate_egg",
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "type": "fossil:scotoharpes"
-            },
-            "entity": "this"
-          }
-        ]
-      }
-    },
-    "walliserops": {
-      "trigger": "fossil:incubate_egg",
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "type": "fossil:walliserops"
-            },
-            "entity": "this"
-          }
-        ]
-      }
-    },
     "tropeognathus": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
@@ -814,6 +797,20 @@
             "condition": "minecraft:entity_properties",
             "predicate": {
               "type": "fossil:velociraptor"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "walliserops": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:walliserops"
             },
             "entity": "this"
           }
@@ -862,10 +859,13 @@
       "deinonychus"
     ],
     [
-      "dimetrodon"
+      "dicranurus"
     ],
     [
       "dilophosaurus"
+    ],
+    [
+      "dimetrodon"
     ],
     [
       "diplocaulus"
@@ -899,6 +899,9 @@
     ],
     [
       "liopleurodon"
+    ],
+    [
+      "lonchodomas"
     ],
     [
       "megalania"
@@ -952,6 +955,9 @@
       "sarcosuchus"
     ],
     [
+      "scotoharpes"
+    ],
+    [
       "spinosaurus"
     ],
     [
@@ -973,18 +979,6 @@
       "triceratops"
     ],
     [
-      "dicranurus"
-    ],
-    [
-      "lonchodomas"
-    ],
-    [
-      "scotoharpes"
-    ],
-    [
-      "walliserops"
-    ],
-    [
       "tropeognathus"
     ],
     [
@@ -992,6 +986,9 @@
     ],
     [
       "velociraptor"
+    ],
+    [
+      "walliserops"
     ]
   ]
 }

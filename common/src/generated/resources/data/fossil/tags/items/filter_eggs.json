@@ -15,8 +15,9 @@
     "fossil:spawn_egg_confuciusornis",
     "fossil:spawn_egg_crassigyrinus",
     "fossil:spawn_egg_deinonychus",
-    "fossil:spawn_egg_dimetrodon",
+    "fossil:spawn_egg_dicranurus",
     "fossil:spawn_egg_dilophosaurus",
+    "fossil:spawn_egg_dimetrodon",
     "fossil:spawn_egg_diplocaulus",
     "fossil:spawn_egg_diplodocus",
     "fossil:spawn_egg_dodo",
@@ -29,6 +30,7 @@
     "fossil:spawn_egg_ichthyosaurus",
     "fossil:spawn_egg_kelenken",
     "fossil:spawn_egg_liopleurodon",
+    "fossil:spawn_egg_lonchodomas",
     "fossil:spawn_egg_mammoth",
     "fossil:spawn_egg_megalania",
     "fossil:spawn_egg_megaloceros",
@@ -50,6 +52,7 @@
     "fossil:spawn_egg_quagga",
     "fossil:spawn_egg_quetzalcoatlus",
     "fossil:spawn_egg_sarcosuchus",
+    "fossil:spawn_egg_scotoharpes",
     "fossil:spawn_egg_smilodon",
     "fossil:spawn_egg_spinosaurus",
     "fossil:spawn_egg_stegosaurus",
@@ -58,12 +61,9 @@
     "fossil:spawn_egg_tiktaalik",
     "fossil:spawn_egg_titanis",
     "fossil:spawn_egg_triceratops",
-    "fossil:spawn_egg_dicranurus",
-    "fossil:spawn_egg_lonchodomas",
-    "fossil:spawn_egg_scotoharpes",
-    "fossil:spawn_egg_walliserops",
     "fossil:spawn_egg_tropeognathus",
     "fossil:spawn_egg_tyrannosaurus",
-    "fossil:spawn_egg_velociraptor"
+    "fossil:spawn_egg_velociraptor",
+    "fossil:spawn_egg_walliserops"
   ]
 }

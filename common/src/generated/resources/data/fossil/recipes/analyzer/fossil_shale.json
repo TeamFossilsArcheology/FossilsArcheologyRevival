@@ -1,0 +1,64 @@
+{
+  "type": "fossil:analyzer",
+  "ingredient": {
+    "item": "fossil:fossil_shale"
+  },
+  "outputs": [
+    {
+      "item": "fossil:arthropleura_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "weight": 50.0
+    },
+    {
+      "item": "fossil:crassigyrinus_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:dicranurus_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:dimetrodon_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:diplocaulus_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:edaphosaurus_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:lonchodomas_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:megalograptus_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:meganeura_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:scotoharpes_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "fossil:tiktaalik_dna",
+      "weight": 1.25
+    },
+    {
+      "item": "minecraft:tuff",
+      "weight": 35.0
+    },
+    {
+      "item": "fossil:walliserops_dna",
+      "weight": 1.25
+    }
+  ]
+}

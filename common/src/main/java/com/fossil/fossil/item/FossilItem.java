@@ -20,30 +20,26 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class BioFossilItem extends Item {
+public class FossilItem extends Item {
 
-    private final boolean isTar;
+    private final @Nullable TimePeriod timePeriod;
 
-    public BioFossilItem(boolean isTar) {
+    public FossilItem(@Nullable TimePeriod timePeriod) {
         super(new Properties().tab(ModTabs.FAITEMTAB));
-        this.isTar = isTar;
+        this.timePeriod = timePeriod;
     }
 
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
-        if (context.getClickedFace() == Direction.DOWN) {
+        if (timePeriod == null || context.getClickedFace() == Direction.DOWN) {
             return InteractionResult.FAIL;
         }
         Level level = context.getLevel();
-        List<PrehistoricEntityInfo> entityInfos;
-        if (isTar) {
-            entityInfos = PrehistoricEntityInfo.entitiesWithSkeleton(TimePeriod.CENOZOIC);
-        } else {
-            entityInfos = PrehistoricEntityInfo.entitiesWithSkeleton(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
-        }
+        List<PrehistoricEntityInfo> entityInfos = PrehistoricEntityInfo.entitiesWithSkeleton(timePeriod);
         PrehistoricEntityInfo info = entityInfos.get(level.getRandom().nextInt(entityInfos.size()));
         if (info == null) {
             return InteractionResult.FAIL;

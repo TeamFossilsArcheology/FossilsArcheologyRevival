@@ -19,8 +19,9 @@
     "fossil:cooked_confuciusornis",
     "fossil:cooked_crassigyrinus",
     "fossil:cooked_deinonychus",
-    "fossil:cooked_dimetrodon",
+    "fossil:cooked_dicranurus",
     "fossil:cooked_dilophosaurus",
+    "fossil:cooked_dimetrodon",
     "fossil:cooked_diplocaulus",
     "fossil:cooked_diplodocus",
     "fossil:cooked_dodo",
@@ -33,6 +34,7 @@
     "fossil:cooked_ichthyosaurus",
     "fossil:cooked_kelenken",
     "fossil:cooked_liopleurodon",
+    "fossil:cooked_lonchodomas",
     "fossil:cooked_mammoth",
     "fossil:cooked_megalania",
     "fossil:cooked_megaloceros",
@@ -54,6 +56,7 @@
     "fossil:cooked_quagga",
     "fossil:cooked_quetzalcoatlus",
     "fossil:cooked_sarcosuchus",
+    "fossil:cooked_scotoharpes",
     "fossil:cooked_smilodon",
     "fossil:cooked_spinosaurus",
     "fossil:cooked_stegosaurus",
@@ -62,12 +65,9 @@
     "fossil:cooked_tiktaalik",
     "fossil:cooked_titanis",
     "fossil:cooked_triceratops",
-    "fossil:cooked_dicranurus",
-    "fossil:cooked_lonchodomas",
-    "fossil:cooked_scotoharpes",
-    "fossil:cooked_walliserops",
     "fossil:cooked_tropeognathus",
     "fossil:cooked_tyrannosaurus",
-    "fossil:cooked_velociraptor"
+    "fossil:cooked_velociraptor",
+    "fossil:cooked_walliserops"
   ]
 }

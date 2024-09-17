@@ -222,12 +222,21 @@ public class ModRecipeProvider extends RecipeProvider {
             AnalyzerRecipeBuilder bioFossil = analyzed(BIO_FOSSIL.get())
                     .addOutput(Blocks.SAND, 35)
                     .addOutput(Items.BONE_MEAL, 50);
-            List<PrehistoricEntityInfo> bioFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.MESOZOIC, TimePeriod.PALEOZOIC);
+            List<PrehistoricEntityInfo> bioFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.MESOZOIC);
             double bioFossilDNAChance = 15F / (double) bioFossilEntityList.size();
             for (PrehistoricEntityInfo info : bioFossilEntityList) {
                 bioFossil.addOutput(info.dnaItem, bioFossilDNAChance);
             }
             bioFossil.save(consumer);
+            AnalyzerRecipeBuilder shaleFossil = analyzed(SHALE_FOSSIL.get())
+                    .addOutput(Blocks.TUFF, 35)
+                    .addOutput(Items.BONE_MEAL, 50);
+            List<PrehistoricEntityInfo> shaleFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.PALEOZOIC);
+            double shaleFossilDNAChance = 15F / (double) shaleFossilEntityList.size();
+            for (PrehistoricEntityInfo info : shaleFossilEntityList) {
+                shaleFossil.addOutput(info.dnaItem, shaleFossilDNAChance);
+            }
+            shaleFossil.save(consumer);
             /*for (PrehistoricEntityType type : PrehistoricEntityType.entitiesWithBones()) {
                 analyzed(type.legBoneItem)
                         .addOutput(Items.BONE_MEAL, 30)

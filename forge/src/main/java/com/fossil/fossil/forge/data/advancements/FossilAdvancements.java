@@ -10,6 +10,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.tags.ModItemTags;
 import com.fossil.fossil.world.dimension.ModDimensions;
+import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -19,7 +20,9 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 import static com.fossil.fossil.block.ModBlocks.*;
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo.*;
@@ -34,40 +37,40 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
                         new ResourceLocation(Fossil.MOD_ID, "textures/block/ancient_stone_bricks.png"), FrameType.TASK, true, false, false)
                 .addCriterion("requirement", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CRAFTING_TABLE))
                 .save(consumer, Fossil.MOD_ID + ":fossil/root");
-        Advancement breakFossil = simple(root, "break_fossil", consumer, RELIC_SCRAP.get(), BIO_FOSSIL.get(), PlANT_FOSSIL.get(), SKULL_BLOCK.get());
-        Advancement analyzer = simple(breakFossil, consumer, ANALYZER.get());
+        Advancement breakFossil = simple(root, "break_fossil", consumer, RELIC_SCRAP, BIO_FOSSIL, PlANT_FOSSIL, SHALE_FOSSIL, SKULL_BLOCK);
+        Advancement analyzer = simple(breakFossil, consumer, ANALYZER);
         Advancement fossilSeed = tag(FERN_SEED_FOSSIL.get(), ModItemTags.FOSSIL_SEEDS, analyzer, consumer);
         Advancement restoredSeed = tag(FERN_SEED.get(), ModItemTags.RESTORED_SEEDS, fossilSeed, consumer);
 
         Advancement figurine = tag(STEVE_FIGURINE_DESTROYED.get(), ModItemTags.FIGURINES, breakFossil, consumer);
-        Advancement anuLair = other(figurine, ANU_STATUE.get(), "anu_lair", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.ANU_LAIR), consumer);
-        Advancement anubite = other(anuLair, ANUBITE_STATUE.get(), "anubite",
+        Advancement anuLair = other(figurine, ANU_STATUE, "anu_lair", ChangeDimensionTrigger.TriggerInstance.changedDimensionTo(ModDimensions.ANU_LAIR), consumer);
+        Advancement anubite = other(anuLair, ANUBITE_STATUE, "anubite",
                 KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(ModEntities.ANUBITE.get())), consumer);
-        Advancement sarcophagus = other(anuLair, SARCOPHAGUS.get(), "sarcophagus",
+        Advancement sarcophagus = other(anuLair, SARCOPHAGUS, "sarcophagus",
                 OpenSarcophagusTrigger.TriggerInstance.useScarab(), consumer);
-        Advancement killAnu = other(sarcophagus, ANCIENT_KEY.get(), "kill_anu",
+        Advancement killAnu = other(sarcophagus, ANCIENT_KEY, "kill_anu",
                 KilledTrigger.TriggerInstance.playerKilledEntity(EntityPredicate.Builder.entity().of(ModEntities.ANU_BOSS.get())), consumer);
-        Advancement ancientClock = simple(killAnu, consumer, ANCIENT_CLOCK.get());
+        Advancement ancientClock = simple(killAnu, consumer, ANCIENT_CLOCK);
 
-        Advancement frozenMeat = simple(breakFossil, consumer, FROZEN_MEAT.get());
-        Advancement scarabGem = simple(breakFossil, consumer, SCARAB_GEM.get());
-        Advancement scarabTame = other(scarabGem, AQUATIC_SCARAB_GEM.get(), "scarab_tame", ScarabTameTrigger.TriggerInstance.useScarab(), consumer);
+        Advancement frozenMeat = simple(breakFossil, consumer, FROZEN_MEAT);
+        Advancement scarabGem = simple(breakFossil, consumer, SCARAB_GEM);
+        Advancement scarabTame = other(scarabGem, AQUATIC_SCARAB_GEM, "scarab_tame", ScarabTameTrigger.TriggerInstance.useScarab(), consumer);
 
-        Advancement stoneTablet = simple(analyzer, consumer, STONE_TABLET.get());
-        Advancement tarDrop = simple(breakFossil, consumer, TAR_DROP.get());
-        Advancement tarFossil = simple(tarDrop, consumer, TAR_FOSSIL.get());
+        Advancement stoneTablet = simple(analyzer, consumer, STONE_TABLET);
+        Advancement tarDrop = simple(breakFossil, consumer, TAR_DROP);
+        Advancement tarFossil = simple(tarDrop, consumer, TAR_FOSSIL);
 
-        Advancement brokenSword = simple(root, consumer, BROKEN_SWORD.get(), BROKEN_HELMET.get());
-        Advancement worktable = simple(brokenSword, consumer, WORKTABLE.get());
-        Advancement ancientSword = simple(worktable, consumer, ANCIENT_SWORD.get(), ANCIENT_HELMET.get());
+        Advancement brokenSword = simple(root, consumer, BROKEN_SWORD, BROKEN_HELMET);
+        Advancement worktable = simple(brokenSword, consumer, WORKTABLE);
+        Advancement ancientSword = simple(worktable, consumer, ANCIENT_SWORD, ANCIENT_HELMET);
 
         Advancement dna = tag(TRICERATOPS.dnaItem, ModItemTags.DNA, analyzer, consumer);
-        Advancement cultureVat = simple(dna, consumer, CULTURE_VAT.get());
-        Advancement failuresaurus = other(cultureVat, FAILURESAURUS_FLESH.get(), "failuresaurus",
+        Advancement cultureVat = simple(dna, consumer, CULTURE_VAT);
+        Advancement failuresaurus = other(cultureVat, FAILURESAURUS_FLESH, "failuresaurus",
                 PlayerHurtEntityTrigger.TriggerInstance.playerHurtEntity(EntityPredicate.Builder.entity().of(ModEntities.FAILURESAURUS.get()).build()), consumer);
         Advancement embryo = tag(MAMMOTH.embryoItem, ModItemTags.EMBRYOS, cultureVat, consumer);
         Advancement dinoEgg = tag(TRICERATOPS.eggItem, ModItemTags.DINO_EGGS, cultureVat, consumer);
-        Advancement dinopedia = simple(dinoEgg, consumer, DINOPEDIA.get());
+        Advancement dinopedia = simple(dinoEgg, consumer, DINOPEDIA);
 
         Advancement.Builder builder = Advancement.Builder.advancement().display(TYRANNOSAURUS.eggItem, title("all_eggs"),
                         description("all_eggs"), null, FrameType.CHALLENGE, true, true, false)
@@ -95,8 +98,8 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
 
     }
 
-    private Advancement other(Advancement parent, ItemLike item, String key, CriterionTriggerInstance trigger, Consumer<Advancement> consumer) {
-        return Advancement.Builder.advancement().display(item, title(key), description(key),
+    private Advancement other(Advancement parent, RegistrySupplier<? extends ItemLike> item, String key, CriterionTriggerInstance trigger, Consumer<Advancement> consumer) {
+        return Advancement.Builder.advancement().display(item.get(), title(key), description(key),
                         null, FrameType.TASK, true, true, false)
                 .parent(parent)
                 .addCriterion("requirement", trigger)
@@ -114,8 +117,14 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
         return builder.save(consumer, Fossil.MOD_ID + ":fossil/" + key);
     }
 
-    private Advancement simple(Advancement parent, Consumer<Advancement> consumer, ItemLike... items) {
-        return simple(parent, items[0].asItem().getRegistryName().getPath(), consumer, items);
+    @SafeVarargs
+    private Advancement simple(Advancement parent, String key, Consumer<Advancement> consumer, RegistrySupplier<? extends ItemLike>... items) {
+        return simple(parent, key, consumer, Arrays.stream(items).map(Supplier::get).toArray(ItemLike[]::new));
+    }
+
+    @SafeVarargs
+    private Advancement simple(Advancement parent, Consumer<Advancement> consumer, RegistrySupplier<? extends ItemLike>... items) {
+        return simple(parent, items[0].get().asItem().getRegistryName().getPath(), consumer, Arrays.stream(items).map(Supplier::get).toArray(ItemLike[]::new));
     }
 
     private Advancement tag(ItemLike item, TagKey<Item> tag, Advancement parent, Consumer<Advancement> consumer) {

@@ -46,8 +46,8 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 225,
-                  "name": "fossil:fossil_bio"
+                  "weight": 255,
+                  "name": "fossil:fossil_shale"
                 },
                 {
                   "type": "minecraft:item",
@@ -61,7 +61,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 85,
+                  "weight": 55,
                   "name": "fossil:fossil_plant"
                 },
                 {
@@ -144,8 +144,8 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 132,
-                  "name": "fossil:fossil_bio"
+                  "weight": 162,
+                  "name": "fossil:fossil_shale"
                 },
                 {
                   "type": "minecraft:item",
@@ -159,7 +159,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 50,
+                  "weight": 20,
                   "name": "fossil:fossil_plant"
                 },
                 {
@@ -242,8 +242,8 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 50,
-                  "name": "fossil:fossil_bio"
+                  "weight": 70,
+                  "name": "fossil:fossil_shale"
                 },
                 {
                   "type": "minecraft:item",
@@ -257,7 +257,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 20,
+                  "weight": 0,
                   "name": "fossil:fossil_plant"
                 },
                 {
@@ -339,8 +339,8 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 375,
-                  "name": "fossil:fossil_bio"
+                  "weight": 405,
+                  "name": "fossil:fossil_shale"
                 },
                 {
                   "type": "minecraft:item",
@@ -354,7 +354,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 145,
+                  "weight": 115,
                   "name": "fossil:fossil_plant"
                 },
                 {
@@ -436,8 +436,8 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 470,
-                  "name": "fossil:fossil_bio"
+                  "weight": 480,
+                  "name": "fossil:fossil_shale"
                 },
                 {
                   "type": "minecraft:item",
@@ -451,7 +451,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 175,
+                  "weight": 145,
                   "name": "fossil:fossil_plant"
                 },
                 {
@@ -533,8 +533,8 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 510,
-                  "name": "fossil:fossil_bio"
+                  "weight": 540,
+                  "name": "fossil:fossil_shale"
                 },
                 {
                   "type": "minecraft:item",
@@ -548,7 +548,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 205,
+                  "weight": 175,
                   "name": "fossil:fossil_plant"
                 },
                 {
@@ -617,8 +617,8 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 275,
-                  "name": "fossil:fossil_bio"
+                  "weight": 300,
+                  "name": "fossil:fossil_shale"
                 },
                 {
                   "type": "minecraft:item",
@@ -632,7 +632,7 @@
                 },
                 {
                   "type": "minecraft:item",
-                  "weight": 110,
+                  "weight": 85,
                   "name": "fossil:fossil_plant"
                 },
                 {

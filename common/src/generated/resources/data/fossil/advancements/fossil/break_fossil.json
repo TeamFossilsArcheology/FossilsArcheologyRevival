@@ -52,6 +52,18 @@
         ]
       }
     },
+    "fossil_shale": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:fossil_shale"
+            ]
+          }
+        ]
+      }
+    },
     "skull": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
@@ -70,6 +82,7 @@
       "relic_scrap",
       "fossil_bio",
       "fossil_plant",
+      "fossil_shale",
       "skull"
     ]
   ]

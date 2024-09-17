@@ -14,8 +14,9 @@
     "fossil:meat_confuciusornis",
     "fossil:meat_crassigyrinus",
     "fossil:meat_deinonychus",
-    "fossil:meat_dimetrodon",
+    "fossil:meat_dicranurus",
     "fossil:meat_dilophosaurus",
+    "fossil:meat_dimetrodon",
     "fossil:meat_diplocaulus",
     "fossil:meat_diplodocus",
     "fossil:meat_dodo",
@@ -28,6 +29,7 @@
     "fossil:meat_ichthyosaurus",
     "fossil:meat_kelenken",
     "fossil:meat_liopleurodon",
+    "fossil:meat_lonchodomas",
     "fossil:meat_mammoth",
     "fossil:meat_megalania",
     "fossil:meat_megaloceros",
@@ -49,6 +51,7 @@
     "fossil:meat_quagga",
     "fossil:meat_quetzalcoatlus",
     "fossil:meat_sarcosuchus",
+    "fossil:meat_scotoharpes",
     "fossil:meat_smilodon",
     "fossil:meat_spinosaurus",
     "fossil:meat_stegosaurus",
@@ -57,12 +60,9 @@
     "fossil:meat_tiktaalik",
     "fossil:meat_titanis",
     "fossil:meat_triceratops",
-    "fossil:meat_dicranurus",
-    "fossil:meat_lonchodomas",
-    "fossil:meat_scotoharpes",
-    "fossil:meat_walliserops",
     "fossil:meat_tropeognathus",
     "fossil:meat_tyrannosaurus",
-    "fossil:meat_velociraptor"
+    "fossil:meat_velociraptor",
+    "fossil:meat_walliserops"
   ]
 }
