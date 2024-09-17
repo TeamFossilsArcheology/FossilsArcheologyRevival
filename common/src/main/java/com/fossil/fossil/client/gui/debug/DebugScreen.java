@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.C2SDisableAIMessage;
 import com.fossil.fossil.network.debug.C2SDiscardMessage;
+import com.fossil.fossil.network.debug.C2SStructureMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
@@ -155,6 +156,11 @@ public class DebugScreen extends Screen {
             showPaths = (boolean) cycleButton.getValue();
         }));
         addRenderableWidget(new Button(width / 2, height - 45, 91, 20, new TextComponent("Clear Paths"), button -> clearPaths()));
+        addRenderableWidget(new Button(width / 2 + 95, height - 45, 125, 20, new TextComponent("Spawn Test Structure"), button -> {
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SStructureMessage(true));
+        }, (button, poseStack, i, j) -> {
+            renderTooltip(poseStack, new TextComponent("Spawns a big structure at 0,79,0 with every mob"), i, j);
+        }));
         if (!tabs.isEmpty()) {
             tabs.forEach(tab -> tab.init(width, height));
             Collections.rotate(tabs, -tabShift);

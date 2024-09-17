@@ -7,6 +7,8 @@ import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.capabilities.ModCapabilities;
 import com.fossil.fossil.client.gui.*;
 import com.fossil.fossil.client.gui.debug.DebugScreen;
+import com.fossil.fossil.client.gui.debug.PathingScreen;
+import com.fossil.fossil.client.gui.debug.navigation.*;
 import com.fossil.fossil.client.gui.filters.CreativeTabFilters;
 import com.fossil.fossil.client.model.*;
 import com.fossil.fossil.client.particle.*;
@@ -22,6 +24,7 @@ import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.util.Version;
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.architectury.event.EventResult;
+import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.event.events.common.EntityEvent;
 import dev.architectury.event.events.common.InteractionEvent;
@@ -52,22 +55,29 @@ import net.minecraft.world.level.FoliageColor;
 import java.util.function.Function;
 
 public class ClientInit {
-    //TODO: Figure out if unregistered keys are a problem. If yes move to Version.debugEnabled()
-    public static final KeyMapping DEBUG_SCREEN_KEY = new KeyMapping("key.fossil.debug_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_Y,
-            "category.fossil.debug");
-    public static final KeyMapping PATHING_SCREEN_KEY = new KeyMapping("key.fossil.pathing_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_R,
-            "category.fossil.debug");
-    public static final KeyMapping DEBUG_REPATH_KEY = new KeyMapping("key.fossil.debug_repath", InputConstants.Type.KEYSYM, InputConstants.KEY_V,
-            "category.fossil.debug");
-    public static final KeyMapping DEBUG_ADVANCE_KEY = new KeyMapping("key.fossil.debug_advance", InputConstants.Type.KEYSYM, InputConstants.KEY_X,
-            "category.fossil.debug");
-    public static final KeyMapping DEBUG_REVERSE_KEY = new KeyMapping("key.fossil.debug_reverse", InputConstants.Type.KEYSYM, InputConstants.KEY_C,
-            "category.fossil.debug");
-    public static final KeyMapping DEBUG_HELP_KEY = new KeyMapping("key.fossil.debug_help", InputConstants.Type.KEYSYM, InputConstants.KEY_LALT,
-            "category.fossil.debug");
+    public static KeyMapping debugScreenKey;
+    public static KeyMapping pathingScreenKey;
+    public static KeyMapping debugRepathKey;
+    public static KeyMapping debugAdvanceKey;
+    public static KeyMapping debugReverseKey;
+    public static KeyMapping debugHelpKey;
 
 
     public static void immediate() {
+        if (Version.debugEnabled()) {
+            debugScreenKey = new KeyMapping("key.fossil.debug_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_Y,
+                    "category.fossil.debug");
+            pathingScreenKey = new KeyMapping("key.fossil.pathing_screen", InputConstants.Type.KEYSYM, InputConstants.KEY_R,
+                    "category.fossil.debug");
+            debugRepathKey = new KeyMapping("key.fossil.debug_repath", InputConstants.Type.KEYSYM, InputConstants.KEY_V,
+                    "category.fossil.debug");
+            debugAdvanceKey = new KeyMapping("key.fossil.debug_advance", InputConstants.Type.KEYSYM, InputConstants.KEY_X,
+                    "category.fossil.debug");
+            debugReverseKey = new KeyMapping("key.fossil.debug_reverse", InputConstants.Type.KEYSYM, InputConstants.KEY_C,
+                    "category.fossil.debug");
+            debugHelpKey = new KeyMapping("key.fossil.debug_help", InputConstants.Type.KEYSYM, InputConstants.KEY_B,
+                    "category.fossil.debug");
+        }
         registerEntityRenderers();
         ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH, VolcanoVentAshParticle.Provider::new);
         ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH_EMITTER, new VolcanoVentAshEmitterParticle.Provider());
@@ -79,14 +89,48 @@ public class ClientInit {
 
     public static void later() {
         if (Version.debugEnabled()) {
-            KeyMappingRegistry.register(DEBUG_SCREEN_KEY);
-            KeyMappingRegistry.register(PATHING_SCREEN_KEY);
-            KeyMappingRegistry.register(DEBUG_HELP_KEY);
+            KeyMappingRegistry.register(debugScreenKey);
+            KeyMappingRegistry.register(pathingScreenKey);
+            KeyMappingRegistry.register(debugRepathKey);
+            KeyMappingRegistry.register(debugAdvanceKey);
+            KeyMappingRegistry.register(debugReverseKey);
+            KeyMappingRegistry.register(debugHelpKey);
             ClientTickEvent.CLIENT_POST.register(minecraft -> {
-                while (DEBUG_SCREEN_KEY.consumeClick()) {
+                if (Minecraft.getInstance().isPaused()) return;
+                while (ClientInit.debugHelpKey.consumeClick()) {
+                    PathingDebug.showHelpMenu = !PathingDebug.showHelpMenu;
+                }
+                while (ClientInit.pathingScreenKey.consumeClick()) {
+                    if (PathingDebug.showHelpMenu) {
+                        minecraft.setScreen(new PathingScreen());
+                    }
+                }
+                while (ClientInit.debugRepathKey.consumeClick()) {
+                    if (PathingDebug.showHelpMenu) {
+                        PathingDebug.rePath();
+                    }
+                }
+                while (ClientInit.debugAdvanceKey.consumeClick()) {
+                    if (PathingDebug.showHelpMenu) {
+                        PathingRenderer.advanceIndex();
+                    }
+                }
+                while (ClientInit.debugReverseKey.consumeClick()) {
+                    if (PathingDebug.showHelpMenu) {
+                        PathingRenderer.reverseIndex();
+                    }
+                }
+                PathingDebug.tick();
+                while (debugScreenKey.consumeClick()) {
                     Entity entity = DebugScreen.getHitResult(minecraft);
                     minecraft.setScreen(new DebugScreen(entity == null ? DebugScreen.entity : entity));
                 }
+            });
+            ClientPlayerEvent.CLIENT_PLAYER_JOIN.register(player -> {
+                PathingDebug.pathNavigation1 = new PlayerPathNavigation(player, Minecraft.getInstance().level, "Base");
+                PathingDebug.pathNavigation3 = new DebugCenteredPathNavigation(player, Minecraft.getInstance().level);
+                PathingDebug.pathNavigation4 = new SweepPathNavigation(player, Minecraft.getInstance().level);
+                PathingDebug.pathNavigation5 = new WaterPathNavigation(player, Minecraft.getInstance().level);
             });
             EntityEvent.ADD.register((entity, world) -> {
                 if (entity == Minecraft.getInstance().player) {

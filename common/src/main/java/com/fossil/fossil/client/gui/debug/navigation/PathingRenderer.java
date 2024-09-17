@@ -210,13 +210,13 @@ public class PathingRenderer {
         }*/
         if (showHelpMenu) {
             float xPos = (float) (0.7 * mc.getWindow().getGuiScaledWidth());
-            mc.font.drawShadow(poseStack, new TranslatableComponent("Open Screen: %s", ClientInit.PATHING_SCREEN_KEY.getTranslatedKeyMessage()), xPos, yPosition + 120, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, new TranslatableComponent("Open Screen: %s", ClientInit.pathingScreenKey.getTranslatedKeyMessage()), xPos, yPosition + 120, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("Set pos 1: Left click"), xPos, yPosition + 140, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("Set pos 2: Right click"), xPos, yPosition + 160, 0xEEEBF0);
             mc.font.drawShadow(poseStack, new TextComponent("Set sweep pos: Middle mouse"), xPos, yPosition + 180, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TranslatableComponent("Repath: %s", ClientInit.DEBUG_REPATH_KEY.getTranslatedKeyMessage()), xPos, yPosition + 200, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TranslatableComponent("Advance: %s", ClientInit.DEBUG_ADVANCE_KEY.getTranslatedKeyMessage()), xPos, yPosition + 220, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TranslatableComponent("Reverse: %s", ClientInit.DEBUG_REVERSE_KEY.getTranslatedKeyMessage()), xPos, yPosition + 240, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, new TranslatableComponent("Repath: %s", ClientInit.debugRepathKey.getTranslatedKeyMessage()), xPos, yPosition + 200, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, new TranslatableComponent("Advance: %s", ClientInit.debugAdvanceKey.getTranslatedKeyMessage()), xPos, yPosition + 220, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, new TranslatableComponent("Reverse: %s", ClientInit.debugReverseKey.getTranslatedKeyMessage()), xPos, yPosition + 240, 0xEEEBF0);
         }
         poseStack.popPose();
     }
