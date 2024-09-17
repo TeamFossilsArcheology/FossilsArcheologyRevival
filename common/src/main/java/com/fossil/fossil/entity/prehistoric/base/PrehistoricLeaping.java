@@ -129,7 +129,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                 //TODO: Refactor to use the same code for AnimationLogic, PrehistoricFlying and this
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                 animSpeed = 1 / event.getAnimatable().getScale();
-                double animationBaseSpeed = AnimationLogic.getMovementSpeed(event.getAnimatable(), movementAnim.animationName);
+                double animationBaseSpeed = AnimationLogic.getAnimationTargetSpeed(event.getAnimatable(), movementAnim.animationName);
                 if (animationBaseSpeed > 0) {
                     //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                     double mobSpeed = getDeltaMovement().horizontalDistance() * 20;

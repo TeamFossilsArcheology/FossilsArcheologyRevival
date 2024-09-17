@@ -4,8 +4,8 @@
   "compatibilityLevel": "JAVA_17",
   "client": ["DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"],
   "mixins": [
-    "AbstractClientPlayerMixin", "AbstractFishMixin", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "PrehistoricMixin", "ProjectileUtilMixin",
-    "TransientEntitySectionManagerMixin"
+    "AbstractClientPlayerMixin", "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin",
+    "PrehistoricMixin", "ProjectileUtilMixin", "TransientEntitySectionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -7,8 +7,9 @@
     "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "ChunkMapMixin", "EntityCallbacksMixin", "ExplosionMixin", "JigsawPlacementMixin", "LevelMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin",
-    "PlayerMixin", "ProjectileUtilMixin", "ServerGamePacketListenerImplMixin", "ServerLevelMixin", "ServerPlayerMixin", "TransientEntitySectionManagerMixin"
+    "AbstractFishMixin", "AnimationControllerAccessor", "ChunkMapMixin", "EntityCallbacksMixin", "ExplosionMixin", "JigsawPlacementMixin", "LevelMixin",
+    "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin", "PlayerMixin", "ProjectileUtilMixin", "ServerGamePacketListenerImplMixin", "ServerLevelMixin", "ServerPlayerMixin",
+    "TransientEntitySectionManagerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

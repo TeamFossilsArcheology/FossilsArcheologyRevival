@@ -373,11 +373,14 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return !isCustomMultiPart();
     }
 
+    @SuppressWarnings("java:S2589")
     @Override
     public void setPos(double x, double y, double z) {
         super.setPos(x, y, z);
-        this.attackBounds = makeAttackBounds();
-        this.cullingBounds = makeBoundingBoxForCulling();
+        if (parts != null) {
+            this.attackBounds = makeAttackBounds();
+            this.cullingBounds = makeBoundingBoxForCulling();
+        }
     }
 
     @Override
@@ -389,9 +392,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         return attackBounds;
     }
 
-    @SuppressWarnings("java:S2589")
     private AABB makeBoundingBoxForCulling() {
-        if (parts != null && isCustomMultiPart()) {
+        if (isCustomMultiPart()) {
             float x = frustumWidthRadius * getScale();
             float y = frustumHeightRadius * getScale();
             Vec3 pos = position();
