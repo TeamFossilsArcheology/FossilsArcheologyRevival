@@ -7,7 +7,6 @@ import com.fossil.fossil.entity.prehistoric.Arthropleura;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.parts.AnimationOverride;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
-import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
 import com.fossil.fossil.entity.util.Util;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -16,17 +15,12 @@ import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector3d;
 import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.core.BlockPos;
-import net.minecraft.core.Direction;
-import net.minecraft.core.Vec3i;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.util.Color;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
@@ -35,9 +29,7 @@ import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 import software.bernie.geckolib3.util.EModelRenderCycle;
 import software.bernie.geckolib3.util.RenderUtils;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
@@ -49,73 +41,10 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
         this.renderType = renderType;
     }
 
-    public static List<BlockPos> pathTargets = new ArrayList<>();
-    public static BlockPos entityTarget = null;
-
-    public static void showPath(List<BlockPos> targets, BlockPos target) {
-        pathTargets = targets;
-        entityTarget = target;
-    }
-
     @Override
     public void render(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         this.shadowRadius = entity.getBbWidth() * 0.45F;
-        if (entity instanceof Meganeura meganeura) {
-            poseStack.pushPose();
-            if (meganeura.getAttachSystem().attachStarted()) {
-                Direction face = meganeura.getAttachSystem().getAttachmentFace();
-                Vec3i normal = face.getNormal();
-                float yRot = toPoseStackRotation(face.getOpposite().toYRot());
-                float xRot = (float) -Mth.atan2(Mth.sqrt(normal.getX() * normal.getX() + normal.getZ() * normal.getZ()), 0) * Mth.RAD_TO_DEG;
-                float translate = entity.getBbWidth() / 2;
-                float yTranslate = 0.2f;
-                if (!meganeura.getAttachSystem().isAttached()) {
-                    //Is approaching
-                    Vec3 pos = meganeura.getAttachSystem().getAttachmentPos();
-                    double dist = pos.distanceTo(entity.position());
-                    if (dist < 1) {
-                        //TODO: Use initial dist as base value so that it still looks good when starting closer than 1
-                        xRot *= (float) Math.min((-dist + 1) * 1.2, 1);
-                        translate *= (float) Math.min((-dist + 1) * 1.2, 1);
-                        yTranslate *= (float) Math.min((-dist + 1) * 1.2, 1);
-                    } else {
-                        xRot = 0;
-                        translate = 0;
-                        yTranslate = 0;
-                    }
-                    Vec3 offset = pos.subtract(entity.position());
-                    double yawDiff = (Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG);
-                    yRot = toPoseStackRotation(Util.clampTo360(Util.yawToYRot(yawDiff)));
-                }
-                yRot += entityYaw;
-                poseStack.translate(-normal.getX() * translate, yTranslate, -normal.getZ() * translate);
-                //Could apply z rotation depending on approach angle
-                poseStack.mulPose(Vector3f.YP.rotationDegrees(yRot));
-                poseStack.mulPose(Vector3f.XP.rotationDegrees(xRot));
-            }
-            super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
-            poseStack.popPose();
-        } else {
-            double rx = entity.xo + (entity.getX() - entity.xo) * partialTick;
-            double ry = entity.yo + (entity.getY() - entity.yo) * partialTick;
-            double rz = entity.zo + (entity.getZ() - entity.zo) * partialTick;
-            if (!pathTargets.isEmpty()) {
-                for (int i = 0; i < pathTargets.size(); i++) {
-                    AABB targetArea = new AABB(pathTargets.get(i)).move(-rx, -ry, -rz);
-                    LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 1, (float) i / (pathTargets.size() - 1), 1, 0.25f);
-                }
-            }
-            if (entityTarget != null) {
-                AABB targetArea = new AABB(entityTarget.getX() - 0.25, entityTarget.getY() - 0.25, entityTarget.getZ() - 0.25, entityTarget.getX() + 0.25, entityTarget.getY() + 0.25, entityTarget.getZ() + 0.25);
-                targetArea = targetArea.move(-rx, -ry, -rz);
-                LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), targetArea, 0, 1, 1, 1);
-            }
-            super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
-        }
-    }
-
-    private static float toPoseStackRotation(float rot) {
-        return -rot;
+        super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
     }
 
     @Override

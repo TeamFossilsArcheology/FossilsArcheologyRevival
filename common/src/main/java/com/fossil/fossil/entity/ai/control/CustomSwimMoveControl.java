@@ -16,13 +16,6 @@ public class CustomSwimMoveControl extends SmoothSwimmingMoveControl {
         this.mob = mob;
     }
 
-    @Override
-    public void setWantedPosition(double x, double y, double z, double speed) {
-        //TODO: Remove for release because bad
-        SmoothTurningMoveControl.wanted = new Vec3(x, y, z);
-        super.setWantedPosition(x, y, z, speed);
-    }
-
 
     @Override
     public void tick() {
@@ -33,14 +26,14 @@ public class CustomSwimMoveControl extends SmoothSwimmingMoveControl {
             double z = wantedZ - mob.getZ();
             double dist = x * x + y * y + z * z;
             if (dist < 2.5) {
-                operation = Operation.WAIT;//TODO: Same logic needs to be called by the goal
+                operation = Operation.WAIT;
                 mob.setBreaching(false);
                 mob.setDeltaMovement(mob.getDeltaMovement().x * 2, mob.getDeltaMovement().y, mob.getDeltaMovement().z * 2);
                 mob.breachTargetReached = true;
             } else {
                 Vec3 current = mob.getDeltaMovement();
                 double movementX = (Mth.sign(x) * 0.5 - current.x) * 0.1 * 2;
-                double movementY = (Mth.sign(y) * 0.5 - current.y) * 0.1 * 3;//TODO: figure out best values
+                double movementY = (Mth.sign(y) * 0.5 - current.y) * 0.1 * 3;
                 double movementZ = (Mth.sign(z) * 0.5 - current.z) * 0.1 * 2;
                 Vec3 next = current.add(movementX, movementY, movementZ);
                 mob.setDeltaMovement(next);

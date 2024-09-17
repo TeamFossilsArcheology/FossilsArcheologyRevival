@@ -58,7 +58,7 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
         final Vec3 base = entityPos.add(-mob.getBbWidth() * 0.5F, 0, -mob.getBbWidth() * 0.5F);
         final Vec3 max = base.add(mob.getBbWidth(), mob.getBbHeight(), mob.getBbWidth());
         if (!tryShortcut(path, new Vec3(mob.getX(), mob.getY(), mob.getZ()), pathLength, base, max)) {
-            if (Util.isAt(mob, path, 0.5F) || Util.atElevationChange(mob, path) && Util.isAt(mob, path, mob.getBbWidth() * 0.75F)) {
+            if (NavUtil.isAt(mob, path, 0.5F) || NavUtil.atElevationChange(mob, path) && NavUtil.isAt(mob, path, mob.getBbWidth() * 0.75F)) {
                 mob.getLookControl().setLookAt(path.getNextEntityPos(mob));
                 path.advance();
             }
@@ -87,7 +87,7 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
     private boolean tryShortcut(Path path, Vec3 entityPos, int pathLength, Vec3 base, Vec3 max) {
         for (int i = pathLength - 1; i > path.getNextNodeIndex(); i--) {
             final Vec3 vec = path.getEntityPosAtNode(mob, i).subtract(entityPos);
-            if (Util.isNoCollisionOnPath(vec, base, max, PathComputationType.LAND, mob, nodeEvaluator)) {
+            if (NavUtil.isNoCollisionOnPath(vec, base, max, PathComputationType.LAND, mob, nodeEvaluator)) {
                 path.setNextNodeIndex(i);
                 return true;
             }

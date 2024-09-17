@@ -3,6 +3,7 @@ package com.fossil.fossil;
 import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.DinopediaBioManager;
+import com.fossil.fossil.client.OptionalTextureManager;
 import com.fossil.fossil.client.particle.ModParticles;
 import com.fossil.fossil.enchantment.ModEnchantments;
 import com.fossil.fossil.entity.ModEntities;
@@ -40,6 +41,7 @@ public class Fossil {
         if (Minecraft.getInstance() != null) {
             ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, GeoModelManager.SKELETON_MODELS);
             ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, DinopediaBioManager.DINOPEDIA);
+            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, OptionalTextureManager.TEXTURE_MANAGER);
             ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoManager.ANIMATIONS);
             ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataManager.ENTITY_DATA);
             ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityHitboxManager.HITBOX_DATA);
@@ -73,7 +75,6 @@ public class Fossil {
         MessageHandler.DEBUG_CHANNEL.register(InstructionMessage.class, InstructionMessage::write, InstructionMessage::new, InstructionMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(S2CCancelAnimationMessage.class, S2CCancelAnimationMessage::write, S2CCancelAnimationMessage::new, S2CCancelAnimationMessage::apply);
         MessageHandler.DEBUG_CHANNEL.register(S2CMarkMessage.class, S2CMarkMessage::write, S2CMarkMessage::new, S2CMarkMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(S2CNewMarkMessage.class, S2CNewMarkMessage::write, S2CNewMarkMessage::new, S2CNewMarkMessage::apply);
 
         MessageHandler.CAP_CHANNEL.register(S2CMammalCapMessage.class, S2CMammalCapMessage::write, S2CMammalCapMessage::new, S2CMammalCapMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CSyncEntityInfoMessage.class, S2CSyncEntityInfoMessage::write, S2CSyncEntityInfoMessage::new, S2CSyncEntityInfoMessage::apply);

@@ -9,21 +9,12 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 
 public class SmoothTurningMoveControl extends MoveControl {
-    public static Vec3 wanted;
 
     public SmoothTurningMoveControl(Prehistoric prehistoric) {
         super(prehistoric);
-    }
-
-    @Override
-    public void setWantedPosition(double x, double y, double z, double speed) {
-        //TODO: Remove for release because bad
-        wanted = new Vec3(x, y, z);
-        super.setWantedPosition(x, y, z, speed);
     }
 
     @Override

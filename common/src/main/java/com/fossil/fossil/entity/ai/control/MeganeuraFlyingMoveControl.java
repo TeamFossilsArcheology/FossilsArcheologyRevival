@@ -17,12 +17,6 @@ public class MeganeuraFlyingMoveControl extends MoveControl {
     }
 
     @Override
-    public void setWantedPosition(double x, double y, double z, double speed) {
-        super.setWantedPosition(x, y, z, speed);
-        SmoothTurningMoveControl.wanted = new Vec3(x, y, z);
-    }
-
-    @Override
     public void tick() {
         if (meganeura.getAttachSystem().isAttached()) {
             mob.setNoGravity(true);

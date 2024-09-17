@@ -17,7 +17,7 @@ import net.minecraft.world.phys.Vec3;
  * found at https://www.curseforge.com/minecraft/mc-mods/mowzies-mobs
  * with source code at https://github.com/BobMowzie/MowziesMobs/blob/master/src/main/java/com/bobmowzie/mowziesmobs/server/ai/MMPathNavigateGround.java
  */
-public class Util {
+public class NavUtil {
 
     //TODO: Could probably move all this to a parent Navigation class/interface as long as its only needed in the Navigators
     static final float EPSILON = 1.0E-8F;

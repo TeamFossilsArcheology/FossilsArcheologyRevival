@@ -182,7 +182,7 @@ public class ClientInit {
         registerDino(ModEntities.MEGALOCEROS, "megaloceros");
         registerDino(ModEntities.MEGALODON, "megalodon");
         registerDino(ModEntities.MEGALOGRAPTUS, "megalograptus");
-        registerDino(ModEntities.MEGANEURA, "meganeura", RenderType::entityTranslucent);
+        EntityRendererRegistry.register(ModEntities.MEGANEURA, MeganeuraRenderer::new);
         registerDino(ModEntities.MOSASAURUS, "mosasaurus", RenderType::entityCutout);
         registerFish(ModEntities.NAUTILUS, "nautilus");
         registerDino(ModEntities.ORNITHOLESTES, "ornitholestes", RenderType::entityCutout);
