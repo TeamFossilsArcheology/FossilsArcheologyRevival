@@ -31,9 +31,13 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     private final Map<String, ActiveAnimationInfo> activeAnimations = new HashMap<>();
     private final Map<String, ActiveAnimationInfo> nextAnimations = new HashMap<>();
     protected final T entity;
+    private double attributeSpeed;
 
     public AnimationLogic(T entity) {
         this.entity = entity;
+        if (entity instanceof Prehistoric prehistoric) {
+            this.attributeSpeed = prehistoric.attributes().maxSpeed();
+        }
     }
 
     public Optional<ActiveAnimationInfo> getActiveAnimation(String controller) {
@@ -225,8 +229,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 //the deltaMovement of the animation should match the mobs deltaMovement
                 double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
                 //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
-                //TODO: Limit mobSpeed further for babies?
-                mobSpeed = Math.min(Util.attributeToSpeed(event.getAnimatable().attributes().maxSpeed()), mobSpeed);
+                mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
                 //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                 double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
                 if (animationTargetSpeed > 0) {
@@ -345,7 +348,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
                 //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
                 //TODO: Flying mob might need different limit
-                mobSpeed = Math.min(Util.attributeToSpeed(event.getAnimatable().attributes().maxSpeed()), mobSpeed);
+                mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
                 //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                 double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), animation.animationName);
                 if (animationTargetSpeed > 0) {
@@ -359,6 +362,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         newAnimation.ifPresent(newInfo -> controller.setAnimation(new AnimationBuilder().addAnimation(newInfo.animationName())));
         return PlayState.CONTINUE;
+    }
+
+    public void setAttributeSpeed(double attributeSpeed) {
+        this.attributeSpeed = attributeSpeed;
     }
 
     public record ActiveAnimationInfo(String animationName, double startTick, double endTick, Category category,

@@ -69,7 +69,7 @@ public class InstructionRenderer {
                 double lerpY = Mth.lerp(partialTicks, entity.yOld, entity.getY());
                 double lerpZ = Mth.lerp(partialTicks, entity.zOld, entity.getZ());
                 Vec3 pos = new Vec3(lerpX, lerpY + entity.getBbHeight() + 1, lerpZ);
-                InstructionRenderUtil.renderDownArrow(poseStack, pos, Color.ofRGBA(1, 1, 0, 0.5f), entity.getBbWidth(), finishNanoTime);
+                InstructionRenderUtil.renderDownArrow(poseStack, pos, Color.ofRGBA(1, 1, 0, 0.5f), Math.max(1, entity.getBbWidth()), finishNanoTime);
             }
         }
         if (InstructionTab.positionMode != Instruction.Type.IDLE) {

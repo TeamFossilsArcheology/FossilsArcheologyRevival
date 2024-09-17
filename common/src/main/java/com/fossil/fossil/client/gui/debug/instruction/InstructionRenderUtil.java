@@ -110,8 +110,8 @@ public class InstructionRenderUtil {
         poseStack.mulPose(Vector3f.YP.rotationDegrees(yRot));
         poseStack.scale(scale, scale, scale);
         if (!down) {
-            float i = 0.2f;
-            float o = -0.1f;
+            float i = 0.3f;
+            float o = -0.2f;
             poseStack.translate(0, i, o);
             poseStack.mulPose(Vector3f.XP.rotationDegrees(90));
             poseStack.scale(0.5f, 0.5f, 0.5f);
