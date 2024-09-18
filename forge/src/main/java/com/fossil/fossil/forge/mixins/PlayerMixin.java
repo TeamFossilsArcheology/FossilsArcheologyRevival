@@ -1,4 +1,4 @@
-package com.fossil.fossil.fabric.mixins;
+package com.fossil.fossil.forge.mixins;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
@@ -11,11 +11,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-/**
- * Fabric has no PartEntity so we mixin our own
- *
- * @see ServerLevelMixin
- */
 @Mixin(Player.class)
 public abstract class PlayerMixin {
 
