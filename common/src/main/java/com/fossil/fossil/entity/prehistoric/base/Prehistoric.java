@@ -358,7 +358,7 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
 
     @Override
     public boolean isPickable() {
-        return !isCustomMultiPart();
+        return super.isPickable() && !isCustomMultiPart();
     }
 
     @SuppressWarnings("java:S2589")
@@ -1080,20 +1080,23 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         if (source == DamageSource.IN_WALL) {
             return false;
         }
-        if (getLastHurtByMob() instanceof Player player && getOwner() == player) {
-            setOwnerUUID(null);
-            setTame(false);
-            moodSystem.increaseMood(-15);
-            player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.betrayed", getName()), true);
-        }
+        boolean hurt = super.hurt(source, amount);
+        if (hurt) {
+            if (getLastHurtByMob() instanceof Player player && getOwner() == player) {
+                setOwnerUUID(null);
+                setTame(false);
+                moodSystem.increaseMood(-15);
+                player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.betrayed", getName()), true);
+            }
 
-        if (amount > 0) {
-            sleepSystem.setSleeping(false);
+            if (amount > 0) {
+                sleepSystem.setSleeping(false);
+            }
+            if (source.getEntity() != null) {
+                moodSystem.increaseMood(-5);
+            }
         }
-        if (source.getEntity() != null) {
-            moodSystem.increaseMood(-5);
-        }
-        return super.hurt(source, amount);
+        return hurt;
     }
 
     @Override

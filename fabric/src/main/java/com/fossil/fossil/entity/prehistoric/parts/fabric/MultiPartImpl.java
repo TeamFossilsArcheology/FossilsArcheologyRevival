@@ -80,10 +80,10 @@ public class MultiPartImpl<T extends Prehistoric> extends Entity implements Mult
 
     @Override
     public boolean hurt(@NotNull DamageSource source, float amount) {
-        if (isInvulnerableTo(source)) {
-            return false;
+        if (parent.hurt(this, source, amount)) {
+            return true;
         }
-        return parent.hurt(this, source, amount);
+        return false;
     }
 
     @Override

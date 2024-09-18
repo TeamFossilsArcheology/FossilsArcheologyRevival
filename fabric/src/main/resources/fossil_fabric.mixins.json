@@ -3,11 +3,11 @@
   "package": "com.fossil.fossil.fabric.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "EntityRenderDispatcherMixin", "ParticleAccessor", "ScreenEffectRendererMixin",
-    "TerrainParticleMixin", "TitleScreenMixin"
+    "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "EntityRenderDispatcherMixin", "MinecraftMixin", "ParticleAccessor",
+    "ScreenEffectRendererMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "AnimationControllerAccessor", "ChunkMapMixin", "EntityCallbacksMixin", "ExplosionMixin", "JigsawPlacementMixin", "LevelMixin",
+    "AbstractFishMixin", "AnimationControllerAccessor", "ChunkMapMixin", "EntityCallbacksMixin", "EntityHitResultMixin", "ExplosionMixin", "JigsawPlacementMixin", "LevelMixin",
     "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin", "PlayerMixin", "ProjectileUtilMixin", "ServerGamePacketListenerImplMixin", "ServerLevelMixin", "ServerPlayerMixin",
     "TransientEntitySectionManagerMixin"
   ],

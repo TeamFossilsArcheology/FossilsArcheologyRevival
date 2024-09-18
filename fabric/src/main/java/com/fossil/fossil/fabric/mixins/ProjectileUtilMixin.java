@@ -1,7 +1,7 @@
 package com.fossil.fossil.fabric.mixins;
 
 import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
-import net.minecraft.world.entity.Entity;
+import com.fossil.fossil.fabric.MultiPartEntityHitResult;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.phys.EntityHitResult;
 import org.spongepowered.asm.mixin.Mixin;
@@ -17,9 +17,10 @@ public abstract class ProjectileUtilMixin {
         if (cir.getReturnValue() == null) {
             return;
         }
-        Entity entity = cir.getReturnValue().getEntity();
-        if (entity instanceof MultiPart part) {
-            cir.setReturnValue(new EntityHitResult(part.getParent(), cir.getReturnValue().getLocation()));
+        if (cir.getReturnValue().getEntity() instanceof MultiPart part) {
+            EntityHitResult hitResult = new EntityHitResult(part.getParent(), cir.getReturnValue().getLocation());
+            ((MultiPartEntityHitResult)hitResult).fossilsArcheologyRevival$setMultiPart(part);
+            cir.setReturnValue(hitResult);
         }
     }
 }

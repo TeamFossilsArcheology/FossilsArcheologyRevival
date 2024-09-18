@@ -152,8 +152,11 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         if (source == DamageSource.IN_WALL) {
             return false;
         }
-        attachSystem.stopAttaching(1000 + random.nextInt(1500));
-        return super.hurt(source, amount);
+        boolean hurt = super.hurt(source, amount);
+        if (hurt) {
+            attachSystem.stopAttaching(1000 + random.nextInt(1500));
+        }
+        return hurt;
     }
 
     @Override

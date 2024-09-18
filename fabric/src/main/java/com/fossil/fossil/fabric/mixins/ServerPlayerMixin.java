@@ -11,6 +11,7 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -38,7 +39,7 @@ public abstract class ServerPlayerMixin extends Player {
     public abstract Entity getCamera();
 
     @Shadow
-    public abstract ServerLevel getLevel();
+    public abstract @NotNull ServerLevel getLevel();
 
     @Redirect(method = "setCamera", at = @At(value = "FIELD", target = "Lnet/minecraft/server/level/ServerPlayer;camera:Lnet/minecraft/world/entity/Entity;", opcode = Opcodes.PUTFIELD))
     public void setCameraNoMultiPart(ServerPlayer instance, Entity entityToSpectate) {

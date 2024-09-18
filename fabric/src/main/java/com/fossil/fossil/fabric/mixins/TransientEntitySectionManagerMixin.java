@@ -33,7 +33,7 @@ public abstract class TransientEntitySectionManagerMixin<T extends EntityAccess>
     private void addPartEntitiesToSections(T entity, CallbackInfo ci) {
         if (entity instanceof Prehistoric prehistoric && prehistoric.isCustomMultiPart()) {
             for (MultiPart part : prehistoric.getCustomParts()) {
-                long l = SectionPos.asLong(part.getParent().blockPosition());
+                long l = SectionPos.asLong(part.getEntity().blockPosition());
                 EntitySection<T> section = this.sectionStorage.getOrCreateSection(l);
                 T partEntity = (T) part.getEntity();
                 section.add(partEntity);
