@@ -1,6 +1,7 @@
 package com.fossil.fossil.fabric.mixins;
 
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricDebug;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -11,7 +12,6 @@ import net.minecraft.world.entity.ai.goal.GoalSelector;
 import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(Mob.class)
 public abstract class MobMixin extends LivingEntity {
@@ -20,55 +20,39 @@ public abstract class MobMixin extends LivingEntity {
         super(entityType, level);
     }
 
-    @Redirect(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;tick()V"))
-    protected final void disableGoalAI(GoalSelector instance) {
-        Mob entity = ((Mob) (Object) this);
-        if (entity instanceof PrehistoricDebug prehistoric) {
+    @WrapWithCondition(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;tick()V"))
+    protected final boolean disableGoalAI(GoalSelector instance) {
+        if (this instanceof PrehistoricDebug prehistoric) {
             CompoundTag tag = prehistoric.getDebugTag();
-            if (!tag.getBoolean("disableGoalAI")) {
-                instance.tick();
-            }
-        } else {
-            instance.tick();
+            return !tag.getBoolean("disableGoalAI");
         }
+        return true;
     }
 
-    @Redirect(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;tickRunningGoals(Z)V"))
-    protected final void disableGoalAI(GoalSelector instance, boolean tickAllRunning) {
-        Mob entity = ((Mob) (Object) this);
-        if (entity instanceof PrehistoricDebug prehistoric) {
+    @WrapWithCondition(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/goal/GoalSelector;tickRunningGoals(Z)V"))
+    protected final boolean disableGoalAI(GoalSelector instance, boolean tickAllRunning) {
+        if (this instanceof PrehistoricDebug prehistoric) {
             CompoundTag tag = prehistoric.getDebugTag();
-            if (!tag.getBoolean("disableGoalAI")) {
-                instance.tickRunningGoals(tickAllRunning);
-            }
-        } else {
-            instance.tickRunningGoals(tickAllRunning);
+            return !tag.getBoolean("disableGoalAI");
         }
+        return true;
     }
 
-    @Redirect(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/control/MoveControl;tick()V"))
-    protected final void disableMoveAI(MoveControl instance) {
-        Mob entity = ((Mob) (Object) this);
-        if (entity instanceof PrehistoricDebug prehistoric) {
+    @WrapWithCondition(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/control/MoveControl;tick()V"))
+    protected final boolean disableMoveAI(MoveControl instance) {
+        if (this instanceof PrehistoricDebug prehistoric) {
             CompoundTag tag = prehistoric.getDebugTag();
-            if (!tag.getBoolean("disableMoveAI")) {
-                instance.tick();
-            }
-        } else {
-            instance.tick();
+            return !tag.getBoolean("disableMoveAI");
         }
+        return true;
     }
 
-    @Redirect(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/control/LookControl;tick()V"))
-    protected final void disableLookAI(LookControl instance) {
-        Mob entity = ((Mob) (Object) this);
-        if (entity instanceof PrehistoricDebug prehistoric) {
+    @WrapWithCondition(method = "serverAiStep", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/control/LookControl;tick()V"))
+    protected final boolean disableLookAI(LookControl instance) {
+        if (this instanceof PrehistoricDebug prehistoric) {
             CompoundTag tag = prehistoric.getDebugTag();
-            if (!tag.getBoolean("disableLookAI")) {
-                instance.tick();
-            }
-        } else {
-            instance.tick();
+            return !tag.getBoolean("disableLookAI");
         }
+        return true;
     }
 }

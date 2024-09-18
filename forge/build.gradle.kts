@@ -42,6 +42,9 @@ dependencies {
     modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
     modImplementation("com.github.glitchfiend:TerraBlender-forge:${minecraftVersion}-${terraBlenderVersion}")
+
+    annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1")?.let { compileOnly(it) }
+    include("io.github.llamalad7:mixinextras-forge:0.4.1")?.let { implementation(it) }
 }
 
 loom {
@@ -52,9 +55,9 @@ loom {
         extraAccessWideners.add(loom.accessWidenerPath.get().asFile.name)
         mixinConfig("fossil_forge.mixins.json")
 
-        //dataGen { //breaks my forge run, so I disable it when not needed
-        //    mod(archivesBaseName)
-        //}
+        dataGen { //breaks my forge run, so I disable it when not needed
+            mod(archivesBaseName)
+        }
         /*
         mixinConfig("fa-common.mixins.json")
         mixinConfig("fa-forge.mixins.json")
@@ -67,7 +70,7 @@ loom {
 tasks {
     processResources {
         inputs.property("version", project.version)
-        //duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
         filesMatching("META-INF/mods.toml") {
             expand("version" to project.version)
         }
