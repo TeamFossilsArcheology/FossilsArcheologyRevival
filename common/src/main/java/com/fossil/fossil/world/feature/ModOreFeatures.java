@@ -19,8 +19,8 @@ import static net.minecraft.data.worldgen.features.OreFeatures.STONE_ORE_REPLACE
 public class ModOreFeatures {
     public static final List<OreConfiguration.TargetBlockState> OVERWORLD_FOSSIL_BLOCK = List.of(
             target(Blocks.CALCITE, ModBlocks.CALCITE_FOSSIL),
-            target(Blocks.DEEPSLATE, ModBlocks.DRIPSTONE_FOSSIL),
-            target(Blocks.DRIPSTONE_BLOCK, ModBlocks.DEEPSLATE_FOSSIL),
+            target(Blocks.DRIPSTONE_BLOCK, ModBlocks.DRIPSTONE_FOSSIL),
+            target(Blocks.DEEPSLATE, ModBlocks.DEEPSLATE_FOSSIL),
             target(Blocks.RED_SANDSTONE, ModBlocks.RED_SANDSTONE_FOSSIL),
             target(Blocks.SANDSTONE, ModBlocks.SANDSTONE_FOSSIL),
             OreConfiguration.target(STONE_ORE_REPLACEABLES, ModBlocks.STONE_FOSSIL.get().defaultBlockState()),

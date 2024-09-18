@@ -1,5 +1,6 @@
 package com.fossil.fossil.client;
 
+import com.fossil.fossil.Fossil;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
@@ -27,8 +28,10 @@ public class OptionalTextureManager extends SimplePreparableReloadListener<Pair<
         int i = DIRECTORY.length() + 1;
 
         for (ResourceLocation resourceLocation : resourceManager.listResources(DIRECTORY, string -> string.endsWith(PATH_SUFFIX))) {
+            if (!resourceLocation.getNamespace().equals(Fossil.MOD_ID)) {
+                continue;
+            }
             String path = resourceLocation.getPath();
-
             String entityName = path.substring(i, path.length() - PATH_SUFFIX_LENGTH);
             if (path.contains("baby")) {
                 babySetBuilder.add(entityName);
