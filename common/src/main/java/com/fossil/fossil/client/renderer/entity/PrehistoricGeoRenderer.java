@@ -2,17 +2,12 @@ package com.fossil.fossil.client.renderer.entity;
 
 import com.fossil.fossil.client.gui.debug.InstructionTab;
 import com.fossil.fossil.client.model.PrehistoricGeoModel;
-import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.prehistoric.Arthropleura;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.parts.AnimationOverride;
-import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.fossil.fossil.entity.util.Util;
+import com.github.darkpred.multipartsupport.entity.MultiPartGeoEntityRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Matrix3f;
-import com.mojang.math.Matrix4f;
-import com.mojang.math.Vector3d;
 import com.mojang.math.Vector3f;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -20,17 +15,10 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.util.Color;
-import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
-import software.bernie.geckolib3.util.EModelRenderCycle;
-import software.bernie.geckolib3.util.RenderUtils;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.function.Function;
 
 public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRenderer<T> {
@@ -67,116 +55,10 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     public void render(GeoModel model, T animatable, float partialTick, RenderType type, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        //Unchanged code
-        setCurrentRTB(bufferSource);
-        renderEarly(animatable, poseStack, partialTick, bufferSource, buffer, packedLight,
-                packedOverlay, red, green, blue, alpha);
-
-        if (bufferSource != null)
-            buffer = bufferSource.getBuffer(type);
-
-        renderLate(animatable, poseStack, partialTick, bufferSource, buffer, packedLight,
-                packedOverlay, red, green, blue, alpha);
-        // Render all top level bones
-        for (GeoBone group : model.topLevelBones) {
-            renderRecursively(animatable, group, poseStack, buffer, packedLight, packedOverlay, red, green, blue,
-                    alpha);
+        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+        if (this instanceof MultiPartGeoEntityRenderer renderer) {
+            renderer.updateTickForEntity(animatable);
         }
-        // Since we rendered at least once at this point, let's set the cycle to
-        // repeated
-        setCurrentModelRenderCycle(EModelRenderCycle.REPEATED);
-        //Changed code
-        updateTickForEntity(animatable);
-    }
-
-    //TODO: Find a better way to do this. Maybe in geckolib 4, Edit: RenderPerBone
-    private final Map<Integer, Integer> tickForEntity = new HashMap<>();
-
-    private boolean entityTickMatchesRenderTick(T animatable) {
-        return getTickForEntity(animatable) == animatable.tickCount;
-    }
-
-    private int getTickForEntity(Entity entity) {
-        return tickForEntity.computeIfAbsent(entity.getId(), integer -> entity.tickCount + 1);
-    }
-
-    public void removeTickForEntity(Entity entity) {
-        tickForEntity.remove(entity.getId());
-    }
-
-    private void updateTickForEntity(Entity entity) {
-        if (getTickForEntity(entity) <= entity.tickCount) {
-            tickForEntity.put(entity.getId(), entity.tickCount);
-        }
-    }
-
-    private void customBoneStuff(GeoBone bone, T animatable) {
-        //Only update position once per tick
-        if (entityTickMatchesRenderTick(animatable)) {
-            MultiPart part = animatable.getCustomPart(bone.name);
-            if (part != null) {
-                //Tick hitboxes
-                Vector3d localPos = bone.getLocalPosition();
-                part.setOverride(new AnimationOverride(new Vec3(localPos.x, localPos.y, localPos.z), bone.getScaleX(), bone.getScaleY()));
-            }
-            EntityHitboxManager.Hitbox hitbox = animatable.attackBoxes.get(bone.name);
-            if (hitbox != null) {
-                //Tick attack boxes
-                if (animatable.activeAttackBoxes.containsKey(hitbox)) {
-                    Vector3d worldPos = bone.getWorldPosition();
-                    animatable.activeAttackBoxes.put(hitbox, new Vec3(worldPos.x, worldPos.y, worldPos.z));
-                }
-            }
-            if ("eat_pos".equals(bone.name)) {
-                Vector3d worldPos = bone.getWorldPosition();
-                animatable.eatPos = new Vec3(worldPos.x, worldPos.y, worldPos.z);
-            }
-        }
-    }
-
-    private void renderRecursively(T animatable, GeoBone bone, PoseStack poseStack, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        //Unchanged code
-        poseStack.pushPose();
-        RenderUtils.translateMatrixToBone(poseStack, bone);
-        RenderUtils.translateToPivotPoint(poseStack, bone);
-
-        boolean rotOverride = bone.rotMat != null;
-
-        if (rotOverride) {
-            poseStack.last().pose().multiply(bone.rotMat);
-            poseStack.last().normal().mul(new Matrix3f(bone.rotMat));
-        } else {
-            RenderUtils.rotateMatrixAroundBone(poseStack, bone);
-        }
-
-        RenderUtils.scaleMatrixForBone(poseStack, bone);
-
-        if (bone.isTrackingXform()) {
-            Matrix4f poseState = poseStack.last().pose().copy();
-            Matrix4f localMatrix = RenderUtils.invertAndMultiplyMatrices(poseState, this.dispatchedMat);
-
-            bone.setModelSpaceXform(RenderUtils.invertAndMultiplyMatrices(poseState, this.renderEarlyMat));
-            localMatrix.translate(new Vector3f(getRenderOffset(this.animatable, 1)));
-            bone.setLocalSpaceXform(localMatrix);
-
-            Matrix4f worldState = localMatrix.copy();
-
-            worldState.translate(new Vector3f(this.animatable.position()));
-            bone.setWorldSpaceXform(worldState);
-        }
-
-        RenderUtils.translateAwayFromPivotPoint(poseStack, bone);
-        renderCubesOfBone(bone, poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        //Changed code
-        customBoneStuff(bone, animatable);
-        //Unchanged code
-        if (!bone.isHidden) {
-            for (GeoBone childBone : bone.childBones) {
-                renderRecursively(animatable, childBone, poseStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-            }
-        }
-
-        poseStack.popPose();
     }
 
     @Override

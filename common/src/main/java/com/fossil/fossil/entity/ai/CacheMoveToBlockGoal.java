@@ -126,8 +126,8 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     public double acceptedDistance() {
-        if (entity.isCustomMultiPart()) {
-            return entity.getHeadRadius() + 1;
+        if (entity.getPlaceHolderName().hasCustomParts()) {
+            return entity.getPlaceHolderName().getHeadRadius() * entity.getScale() + 1;
         }
         return entity.getBbWidth() / 2 + 1;
     }

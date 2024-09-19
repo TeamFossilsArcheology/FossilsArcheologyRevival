@@ -5,9 +5,16 @@ val fabricLoaderVersion: String by rootProject
 val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
+val multiPartLibVersion: String by rootProject
 
 architectury {
     common(enabledPlatforms.split(","))
+}
+
+repositories {
+    flatDir {
+        dirs("lib")
+    }
 }
 
 loom {
@@ -27,6 +34,7 @@ dependencies {
 
     // Geckolib 3.0 template uses forge one so... I guess this is ok?
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
+    modCompileOnly("com.github.darkpred.multipartsupport:multipartsupport-common:1.18.2-${multiPartLibVersion}")
 }
 
 publishing {

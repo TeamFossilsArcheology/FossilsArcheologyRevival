@@ -3,6 +3,7 @@ package com.fossil.fossil.network;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
+import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
 
@@ -35,7 +36,7 @@ public class S2CActivateAttackBoxesMessage {
         contextSupplier.get().queue(() -> {
             Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
             if (entity instanceof Prehistoric prehistoric) {
-                prehistoric.activateAttackBoxes(attackDuration);
+                prehistoric.getPlaceHolderName().getAttackBoxPlaceHolder().activateAttackBoxes((ClientLevel) contextSupplier.get().getPlayer().level, attackDuration);
             }
         });
     }

@@ -3,7 +3,6 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.client.OptionalTextureManager;
-import com.fossil.fossil.client.renderer.entity.PrehistoricGeoRenderer;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.ModEntities;
 import com.fossil.fossil.entity.ai.*;
@@ -14,11 +13,9 @@ import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.data.AI;
 import com.fossil.fossil.entity.data.Attribute;
 import com.fossil.fossil.entity.data.EntityDataManager;
-import com.fossil.fossil.entity.data.EntityHitboxManager;
 import com.fossil.fossil.entity.prehistoric.Deinonychus;
 import com.fossil.fossil.entity.prehistoric.SleepSystem;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
-import com.fossil.fossil.entity.prehistoric.parts.MultiPart;
 import com.fossil.fossil.entity.util.InstructionSystem;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
@@ -31,9 +28,14 @@ import com.fossil.fossil.util.Diet;
 import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.Gender;
 import com.fossil.fossil.util.Version;
+import com.github.darkpred.multipartsupport.api.IPlaceHolderName;
+import com.github.darkpred.multipartsupport.api.PlaceHolderNameFactory;
+import com.github.darkpred.multipartsupport.entity.GeckoLibMultiPartEntity;
+import com.github.darkpred.multipartsupport.entity.MultiPart;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -93,7 +95,7 @@ import java.util.*;
 
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.*;
 
-public abstract class Prehistoric extends TamableAnimal implements PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable<Prehistoric>, PrehistoricDebug {
+public abstract class Prehistoric extends TamableAnimal implements GeckoLibMultiPartEntity<Prehistoric>, PlayerRideableJumping, EntitySpawnExtension, PrehistoricAnimatable<Prehistoric>, PrehistoricDebug {
 
     private static final EntityDataAccessor<CompoundTag> DEBUG = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.COMPOUND_TAG);
     private static final EntityDataAccessor<Boolean> EATING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
@@ -114,9 +116,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private final InstructionSystem instructionSystem = registerSystem(new InstructionSystem(this));
     public final ResourceLocation animationLocation;
     private OrderType currentOrder = OrderType.WANDER;
-    private float headRadius;
-    private float frustumWidthRadius;
-    private float frustumHeightRadius;
     public ResourceLocation textureLocation;
     protected DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
@@ -125,14 +124,8 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
     private int matingCooldown = random.nextInt(6000) + 6000;
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
-    public long attackBoxEndTime;
-    private final List<MultiPart> parts = new ArrayList<>();
-    private final Map<String, MultiPart> partsByRef = new HashMap<>();
-    public Vec3 eatPos;
-    public final Map<String, EntityHitboxManager.Hitbox> attackBoxes = new HashMap<>();
-    public final Map<EntityHitboxManager.Hitbox, Vec3> activeAttackBoxes = new HashMap<>();
-    private AABB attackBounds = new AABB(0, 0, 0, 0, 0, 0);
-    private AABB cullingBounds = new AABB(0, 0, 0, 0, 0, 0);
+    private Vec3 eatPos;
+    private final IPlaceHolderName<Prehistoric> placeHolder = PlaceHolderNameFactory.create(this);
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -146,12 +139,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
             this.getNavigation().getNodeEvaluator().setCanFloat(true);
         }
         setPersistenceRequired();
-        List<EntityHitboxManager.Hitbox> hitboxes = EntityHitboxManager.HITBOX_DATA.getHitboxes(EntityType.getKey(getType()).getPath());
-        if (hitboxes != null && !hitboxes.isEmpty()) {
-            spawnHitBoxes(hitboxes, entityType);
-        }
-        this.attackBounds = makeAttackBounds();
-        this.cullingBounds = makeBoundingBoxForCulling();
         if (level.isClientSide) {
             for (Animation anim : getAllAnimations().values()) {
                 Fossil.LOGGER.debug("{} is loop: {}", anim.animationName, anim.loop);
@@ -163,34 +150,35 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         this(entityType, level, new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json"));
     }
 
-    private void spawnHitBoxes(List<EntityHitboxManager.Hitbox> hitboxes, EntityType<? extends Prehistoric> entityType) {
-        float maxFrustumWidthRadius = 0;
-        float maxFrustumHeightRadius = 0;
-        for (EntityHitboxManager.Hitbox hitbox : hitboxes) {
-            if (hitbox.isAttackBox()) {
-                attackBoxes.put(hitbox.ref(), hitbox);
-            } else {
-                MultiPart part = MultiPart.get(this, hitbox);
-                parts.add(part);
-                if (hitbox.ref() != null) {
-                    partsByRef.put(hitbox.ref(), part);
-                }
-                //Caching this value might be overkill but this ensures that the entity will be visible even if parts are outside its bounding box
-                float j = hitbox.getFrustumWidthRadius();
-                if (hitbox.name().contains("head") && (headRadius == 0 || j > maxFrustumWidthRadius)) {
-                    headRadius = j;
-                }
-                if (j > maxFrustumWidthRadius) {
-                    maxFrustumWidthRadius = j;
-                }
-                float h = hitbox.getFrustumHeightRadius();
-                if (h > maxFrustumHeightRadius) {
-                    maxFrustumHeightRadius = h;
-                }
-            }
+    @Override
+    public IPlaceHolderName<Prehistoric> getPlaceHolderName() {
+        return placeHolder;
+    }
+
+    @Override
+    public boolean partHurt(MultiPart<Prehistoric> multiPart, @NotNull DamageSource damageSource, float v) {
+        return hurt(damageSource, v);
+    }
+
+    @Override
+    public void setAnchorPos(String boneName, Vec3 localPos) {
+        if ("eat_pos".equals(boneName)) {
+            eatPos = position().add(localPos);
         }
-        frustumWidthRadius = maxFrustumWidthRadius;
-        frustumHeightRadius = maxFrustumHeightRadius;
+    }
+
+    @Override
+    public boolean canSetAnchorPos(String boneName) {
+        if ("eat_pos".equals(boneName)) {
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean attackBoxHit(LocalPlayer player) {
+        MessageHandler.SYNC_CHANNEL.sendToServer(new C2SHitPlayerMessage(this, player));
+        return true;
     }
 
     public static AttributeSupplier.Builder createAttributes() {
@@ -318,128 +306,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             setGender(Gender.MALE);
         }
-    }
-
-    public boolean isCustomMultiPart() {
-        return !parts.isEmpty();
-    }
-
-    /**
-     * @return The child parts of this entity.
-     * @implSpec On the forge classpath this implementation should return objects that inherit from PartEntity instead of Entity.
-     */
-    public List<MultiPart> getCustomParts() {
-        return parts;
-    }
-
-    /**
-     * @param ref the name of the bone the hitbox is attached to
-     * @return the hitbox attached to the given bone
-     */
-    @Nullable
-    public MultiPart getCustomPart(String ref) {
-        return partsByRef.get(ref);
-    }
-
-    @Override
-    public void refreshDimensions() {
-        double oldY = getY();
-        if (isCustomMultiPart()) {
-            super.refreshDimensions();
-            setPos(getX(), oldY, getZ());
-            for (MultiPart part : parts) {
-                part.getEntity().refreshDimensions();
-            }
-        } else {
-            super.refreshDimensions();
-            setPos(getX(), oldY, getZ());
-        }
-    }
-
-    @Override
-    public boolean isPickable() {
-        return super.isPickable() && !isCustomMultiPart();
-    }
-
-    @SuppressWarnings("java:S2589")
-    @Override
-    public void setPos(double x, double y, double z) {
-        super.setPos(x, y, z);
-        if (parts != null) {
-            this.attackBounds = makeAttackBounds();
-            this.cullingBounds = makeBoundingBoxForCulling();
-        }
-    }
-
-    @Override
-    public @NotNull AABB getBoundingBoxForCulling() {
-        return cullingBounds;
-    }
-
-    public AABB getAttackBounds() {
-        return attackBounds;
-    }
-
-    private AABB makeBoundingBoxForCulling() {
-        if (isCustomMultiPart()) {
-            float x = frustumWidthRadius * getScale();
-            float y = frustumHeightRadius * getScale();
-            Vec3 pos = position();
-            return new AABB(pos.x - x, pos.y, pos.z - x, pos.x + x, pos.y + y, pos.z + x);
-        }
-        return super.getBoundingBoxForCulling();
-    }
-
-    private AABB makeAttackBounds() {
-        if (headRadius != 0) {
-            float radius = headRadius * getScale() * 0.9f;
-            return inflateAABB(getBoundingBox(), radius, radius * 0.55, radius);
-        }
-        float increase = Math.min(getBbWidth() / 2, 2.25f);
-        return inflateAABB(getBoundingBox(), increase, increase, increase);
-    }
-
-    private AABB inflateAABB(AABB base, double x, double y, double z) {
-        return new AABB(base.minX - x, base.minY - Math.min(1, y), base.minZ - z, base.maxX + x, base.maxY + y, base.maxZ + z);
-    }
-
-    public float getHeadRadius() {
-        return headRadius * getScale();
-    }
-
-    @Override
-    public void setId(int id) {
-        super.setId(id);
-        for (int i = 0; i < parts.size(); ++i) {
-            parts.get(i).getEntity().setId(id + i + 1);
-        }
-    }
-
-    @Override
-    public void remove(RemovalReason reason) {
-        super.remove(reason);
-        if (isCustomMultiPart()) {
-            //Ensures that the callbacks get called. Probably not necessary because the multiparts are not added to the server
-            for (MultiPart part : parts) {
-                part.getEntity().remove(reason);
-            }
-        }
-    }
-
-    @Override
-    public void onClientRemoval() {
-        super.onClientRemoval();
-        if (isCustomMultiPart()) {
-            //Ensures that the callbacks get called on the client side
-            for (MultiPart part : parts) {
-                part.getEntity().remove(RemovalReason.DISCARDED);
-            }
-        }
-        ((PrehistoricGeoRenderer<? extends Prehistoric>) Minecraft.getInstance().getEntityRenderDispatcher().getRenderer(this)).removeTickForEntity(this);
-    }
-
-    public boolean hurt(Entity part, DamageSource source, float damage) {
-        return hurt(source, damage);
     }
 
     @Override
@@ -714,11 +580,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         } else {
             aiSystems.forEach(AISystem::clientTick);
         }
-        if (isCustomMultiPart()) {
-            for (MultiPart part : parts) {
-                part.updatePosition();
-            }
-        }
     }
 
     @Override
@@ -758,21 +619,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
                 if (ticksClimbing == 0 && climbingCooldown <= 0 && horizontalCollision && !sleepSystem.wantsToSleep() && !isSleeping()) {
                     ticksClimbing = 0;
                     setClimbing(true);
-                }
-            }
-        }
-        if (level.isClientSide && !activeAttackBoxes.isEmpty()) {
-            if (level.getGameTime() > attackBoxEndTime) {
-                activeAttackBoxes.clear();
-            }
-            for (Map.Entry<EntityHitboxManager.Hitbox, Vec3> entry : activeAttackBoxes.entrySet()) {
-                EntityHitboxManager.Hitbox hitbox = entry.getKey();
-                EntityDimensions size = EntityDimensions.scalable(hitbox.width(), hitbox.height()).scale(getScale());
-                AABB aabb = size.makeBoundingBox(entry.getValue());
-                if (Minecraft.getInstance().player.getBoundingBox().intersects(aabb)) {
-                    activeAttackBoxes.clear();
-                    MessageHandler.SYNC_CHANNEL.sendToServer(new C2SHitPlayerMessage(this, Minecraft.getInstance().player));
-                    break;
                 }
             }
         }
@@ -1308,11 +1154,6 @@ public abstract class Prehistoric extends TamableAnimal implements PlayerRideabl
         AnimationInfoManager.ServerAnimationInfo attackAnim = (AnimationInfoManager.ServerAnimationInfo) nextAttackAnimation();
         getAnimationLogic().triggerAnimation(AnimationLogic.ATTACK_CTRL, attackAnim, AnimationLogic.Category.ATTACK);
         return attackAnim;
-    }
-
-    public void activateAttackBoxes(double attackDuration) {
-        attackBoxes.values().forEach(hitbox -> activeAttackBoxes.put(hitbox, Vec3.ZERO));
-        attackBoxEndTime = (long) (level.getGameTime() + attackDuration);
     }
 
     public boolean attackTarget(LivingEntity target) {

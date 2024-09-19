@@ -124,7 +124,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return true;
         }
         //TODO: Heavy attacks need priority. Think of something better in the future
-        return entity instanceof Prehistoric prehistoric && entity.level.getGameTime() < prehistoric.attackBoxEndTime;
+        return entity instanceof Prehistoric prehistoric && entity.level.getGameTime() < prehistoric.getPlaceHolderName().getAttackBoxPlaceHolder().attackBoxEndTime();
     }
 
     public double getActionDelay(String controller) {

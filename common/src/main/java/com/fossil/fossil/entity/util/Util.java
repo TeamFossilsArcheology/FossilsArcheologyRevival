@@ -75,7 +75,7 @@ public class Util {
     }
 
     public static boolean canReachPrey(Prehistoric prehistoric, Entity target) {
-        return prehistoric.getAttackBounds().intersects(target.getBoundingBox()) && prehistoric.getSensing().hasLineOfSight(target);
+        return prehistoric.getPlaceHolderName().getAttackBounds().intersects(target.getBoundingBox()) && prehistoric.getSensing().hasLineOfSight(target);
     }
 
     public static boolean canSeeFood(Prehistoric dino, BlockPos position) {

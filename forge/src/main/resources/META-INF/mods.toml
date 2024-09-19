@@ -63,3 +63,9 @@ mandatory = true
 versionRange = "[1.2.0,)"
 ordering = "NONE"
 side = "BOTH"
+[[dependencies.fossil]]
+modId = "multipartsupport"
+mandatory = true
+versionRange = "[0.23.0,)"
+ordering = "NONE"
+side = "BOTH"

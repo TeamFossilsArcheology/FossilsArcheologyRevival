@@ -38,6 +38,7 @@ val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
 val reiVersion: String by rootProject
+val multiPartLibVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 val cardinalComponentsVersion: String by project
 val energyVersion: String by project
@@ -101,6 +102,7 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
     modImplementation("maven.modrinth:midnightlib:${midnightConfigVersion}")
     include("maven.modrinth:midnightlib:${midnightConfigVersion}")
+    modImplementation("com.github.darkpred.multipartsupport:multipartsupport-fabric:1.18.2-${multiPartLibVersion}")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }

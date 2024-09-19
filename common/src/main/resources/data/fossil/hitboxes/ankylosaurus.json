@@ -25,7 +25,8 @@
 			"pos": [0, 0, -41.65],
 			"width": 32,
 			"height": 24,
-			"ref": "attack_hitbox"
+			"ref": "attack_hitbox",
+			"is_attack_box": true
 		}
 	]
 }

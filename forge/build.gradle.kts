@@ -24,6 +24,7 @@ val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
 val reiVersion: String by rootProject
+val multiPartLibVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 
 dependencies {
@@ -42,6 +43,7 @@ dependencies {
     modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
     modImplementation("com.github.glitchfiend:TerraBlender-forge:${minecraftVersion}-${terraBlenderVersion}")
+    modImplementation("com.github.darkpred.multipartsupport:multipartsupport-forge:1.18.2-${multiPartLibVersion}")
 
     annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1")?.let { compileOnly(it) }
     include("io.github.llamalad7:mixinextras-forge:0.4.1")?.let { implementation(it) }

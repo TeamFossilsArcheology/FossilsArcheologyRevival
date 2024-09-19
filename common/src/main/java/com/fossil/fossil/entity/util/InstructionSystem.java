@@ -165,8 +165,8 @@ public class InstructionSystem extends AISystem {
     }
 
     public double acceptedDistance() {
-        if (mob.isCustomMultiPart()) {
-            return mob.getHeadRadius() + 1;
+        if (mob.getPlaceHolderName().hasCustomParts()) {
+            return mob.getPlaceHolderName().getHeadRadius() * mob.getScale() + 1;
         }
         return mob.getBbWidth() / 2 + 1;
     }

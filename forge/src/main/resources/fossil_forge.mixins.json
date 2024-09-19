@@ -1,13 +1,14 @@
 {
   "required": true,
+  "minVersion": "0.8",
   "package": "com.fossil.fossil.forge.mixins",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "MinecraftMixin", "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
+    "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractClientPlayerMixin", "AbstractFishMixin", "AnimationControllerAccessor", "EntityHitResultMixin", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin",
-    "NaturalSpawnerMixin", "PlayerMixin", "PrehistoricMixin", "ProjectileUtilMixin", "TransientEntitySectionManagerMixin"
+    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin",
+    "NaturalSpawnerMixin"
   ],
   "injectors": {
     "defaultRequire": 1
