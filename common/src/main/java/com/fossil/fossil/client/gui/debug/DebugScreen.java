@@ -109,8 +109,7 @@ public class DebugScreen extends Screen {
 
     @Override
     protected void init() {
-        var builder = CycleButton.booleanBuilder(new TextComponent("On"), new TextComponent("Off")).withValues(
-                List.of(Boolean.TRUE, Boolean.FALSE));
+        var builder = CycleButton.onOffBuilder();
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InfoTab(this, prehistoric));
         } else if (entity instanceof PrehistoricSkeleton skeleton) {

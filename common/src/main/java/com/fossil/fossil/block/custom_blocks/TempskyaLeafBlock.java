@@ -50,8 +50,9 @@ public class TempskyaLeafBlock extends Block {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockState blockState;
-        if (!context.replacingClickedOnBlock() && (blockState = context.getLevel().getBlockState(context.getClickedPos().relative(context.getClickedFace().getOpposite()))).is(this) && blockState.getValue(FACING) == context.getClickedFace()) {
+        BlockPos supportBlockPos = context.getClickedPos().relative(context.getClickedFace().getOpposite());
+        BlockState blockState = context.getLevel().getBlockState(supportBlockPos);
+        if (!blockState.isFaceSturdy(context.getLevel(), supportBlockPos, context.getClickedFace())) {
             return null;
         }
         blockState = defaultBlockState();
