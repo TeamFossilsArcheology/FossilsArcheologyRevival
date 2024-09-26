@@ -6,12 +6,17 @@ import com.fossil.fossil.entity.monster.AnuBoss;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+
+import java.util.List;
 
 public class SarcophagusBlockEntity extends BlockEntity {
     public static final int STATE_LOCKED = 0;
@@ -65,8 +70,11 @@ public class SarcophagusBlockEntity extends BlockEntity {
                     anuBoss.moveTo(anuPos, state.getValue(SarcophagusBlock.FACING).toYRot(), 0);
                     anuBoss.yHeadRot = state.getValue(SarcophagusBlock.FACING).toYRot();
                     anuBoss.finalizeSpawn((ServerLevelAccessor) level, level.getCurrentDifficultyAt(pos), MobSpawnType.NATURAL, null, null);
-                    Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 100, false);
-                    player.displayClientMessage(AnuBoss.getRandomGreeting(level.random), false);
+                    Vec3 spawn = anuBoss.position();
+                    AABB arenaBounds = new AABB(spawn.x - AnuBoss.ARENA_RADIUS, spawn.y - 10, spawn.z - AnuBoss.ARENA_RADIUS,
+                            spawn.x + AnuBoss.ARENA_RADIUS, spawn.y + 10, spawn.z + AnuBoss.ARENA_RADIUS);
+                    List<Player> players = level.getNearbyPlayers(TargetingConditions.DEFAULT, anuBoss, arenaBounds);
+                    players.forEach(player -> player.displayClientMessage(AnuBoss.getRandomGreeting(level.random), false));
                     level.addFreshEntity(anuBoss);
                 }
             }

@@ -59,8 +59,10 @@ public class ModBlocks {
     public static final RegistrySupplier<AnubiteStatueBlock> ANUBITE_STATUE = registerBlockWithCustomBlockItem("anubite_statue",
             () -> new AnubiteStatueBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
             block -> AnubiteStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
-    public static final RegistrySupplier<AnuBarrierBlock> ANU_BARRIER = registerBlockWithDebugItem("anu_barrier",
-            () -> new AnuBarrierBlock(Properties.copy(Blocks.BARRIER)));
+    public static final RegistrySupplier<AnuBarrierOriginBlock> ANU_BARRIER_ORIGIN = registerBlockWithDebugItem("anu_barrier_origin",
+            () -> new AnuBarrierOriginBlock(Properties.copy(Blocks.BARRIER)));
+    public static final RegistrySupplier<AnuBarrierFaceBlock> ANU_BARRIER_FACE = registerBlockWithDebugItem("anu_barrier_face",
+            () -> new AnuBarrierFaceBlock(Properties.copy(Blocks.BARRIER)));
     public static final RegistrySupplier<AnuPortal> ANU_PORTAL = registerBlockWithDebugItem("anu_portal",
             () -> new AnuPortal(Properties.copy(Blocks.NETHER_PORTAL)));
     public static final RegistrySupplier<HomePortal> HOME_PORTAL = registerBlockWithDebugItem("home_portal",

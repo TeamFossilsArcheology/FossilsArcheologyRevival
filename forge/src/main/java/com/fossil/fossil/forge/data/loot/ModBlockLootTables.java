@@ -40,7 +40,7 @@ import static com.fossil.fossil.item.ModItems.*;
 public class ModBlockLootTables extends BlockLoot {
 
     private static final List<Block> NO_TABLE = List.of(ASH_VENT.get(), ANU_PORTAL.get(), SARCOPHAGUS.get(), TAR.get(),
-            ANU_STATUE.get(), ANUBITE_STATUE.get(), ANCIENT_CHEST.get(), ANU_BARRIER.get(),
+            ANU_STATUE.get(), ANUBITE_STATUE.get(), ANCIENT_CHEST.get(), ANU_BARRIER_ORIGIN.get(), ANU_BARRIER_FACE.get(),
             MUTANT_TREE_TUMOR.get());
     private final List<Block> tableDone = new ArrayList<>();
     private int scarab;

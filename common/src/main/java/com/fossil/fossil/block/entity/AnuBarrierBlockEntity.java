@@ -1,6 +1,7 @@
 package com.fossil.fossil.block.entity;
 
-import com.fossil.fossil.block.custom_blocks.AnuBarrierBlock;
+import com.fossil.fossil.block.ModBlocks;
+import com.fossil.fossil.block.custom_blocks.AnuBarrierOriginBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -86,7 +87,7 @@ public class AnuBarrierBlockEntity extends BlockEntity {
     }
 
     private void spawnBarrier(BlockPos pos, BlockState state) {
-        Direction direction = state.getValue(AnuBarrierBlock.FACING).getClockWise();
+        Direction direction = state.getValue(AnuBarrierOriginBlock.FACING).getClockWise();
         radius = 0;
         height = 1;
         while (radius < MAX_SIZE) {
@@ -106,19 +107,19 @@ public class AnuBarrierBlockEntity extends BlockEntity {
         for (int y = 0; y < height; y++) {
             for (int x = -radius; x <= radius; x++) {
                 if (level.isEmptyBlock(mutable.set(pos.getX() + direction.getStepX() * x, pos.getY() + y, pos.getZ() + direction.getStepZ() * x))) {
-                    level.setBlock(mutable, Blocks.BARRIER.defaultBlockState(), 18);
+                    level.setBlock(mutable, ModBlocks.ANU_BARRIER_FACE.get().withPropertiesOf(state), 18);
                 }
             }
         }
     }
 
     private void destroyBarrier(BlockPos pos, BlockState state) {
-        Direction direction = state.getValue(AnuBarrierBlock.FACING).getClockWise();
+        Direction direction = state.getValue(AnuBarrierOriginBlock.FACING).getClockWise();
         BlockPos.MutableBlockPos mutable = pos.mutable();
         for (int y = 0; y < height; y++) {
             for (int x = -radius; x <= radius; x++) {
                 BlockState barrierState = level.getBlockState(mutable.set(pos.getX() + direction.getStepX() * x, pos.getY() + y, pos.getZ() + direction.getStepZ() * x));
-                if (barrierState.is(Blocks.BARRIER)) {
+                if (barrierState.is(ModBlocks.ANU_BARRIER_FACE.get())) {
                     level.setBlock(mutable, Blocks.AIR.defaultBlockState(), 18);
                 }
             }

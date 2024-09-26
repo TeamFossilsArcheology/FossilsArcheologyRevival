@@ -8,6 +8,7 @@ import software.bernie.shadowed.eliotlash.mclib.utils.MathHelper;
 
 public class AnuMoveControl extends MoveControl {
     private final AnuBoss anu;
+    public static Vec3 wanted;
 
     public AnuMoveControl(AnuBoss mob) {
         super(mob);
@@ -15,10 +16,17 @@ public class AnuMoveControl extends MoveControl {
     }
 
     @Override
+    public void setWantedPosition(double x, double y, double z, double speed) {
+        super.setWantedPosition(x, y, z, speed);
+        wanted = new Vec3(x, y, z);
+    }
+
+    @Override
     public void tick() {
-        if (anu.getAttackMode() == AnuBoss.AttackMode.FLIGHT) {
+        if (anu.phaseSystem.getCurrentPhase().isFlying()) {
             if (operation == Operation.MOVE_TO) {
                 mob.setNoGravity(true);
+                //TODO: Change
                 double x = wantedX - mob.getX();
                 double y = wantedY - mob.getY();
                 double z = wantedZ - mob.getZ();
@@ -34,7 +42,7 @@ public class AnuMoveControl extends MoveControl {
                 double newY = (Math.signum(y) * 0.7 - current.y) * 0.1;
                 double newZ = (Math.signum(z) * 0.5 - current.z) * 0.05;
                 Vec3 next = current.add(newX, newY, newZ);
-                mob.setDeltaMovement(next);
+                mob.setDeltaMovement(new Vec3(next.x, Double.isNaN(next.y) ? 0 : next.y, next.z));
                 float angle = (float) (Math.atan2(next.z, next.x) * Mth.RAD_TO_DEG) - 90;
                 float rotation = MathHelper.wrapDegrees(angle - mob.getYRot());
                 mob.setYRot(mob.getYRot() + rotation);

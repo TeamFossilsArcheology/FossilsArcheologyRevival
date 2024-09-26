@@ -93,26 +93,25 @@ public class AnuBossModel extends EntityModel<AnuBoss> implements ArmedModel {
 
     @Override
     public void prepareMobModel(AnuBoss entity, float limbSwing, float limbSwingAmount, float partialTick) {
-        boolean wingsVisible = entity.getAttackMode() == AnuBoss.AttackMode.FLIGHT;
+        boolean wingsVisible = entity.phaseSystem.getCurrentPhase().isFlying();
         leftWing1.visible = wingsVisible;
         rightWing1.visible = wingsVisible;
     }
 
     @Override
     public void setupAnim(AnuBoss entity, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (entity.getAttackMode() != AnuBoss.AttackMode.FLIGHT) {
-            rightArm.xRot = Mth.cos(limbSwing * 0.6662f + Mth.PI) * limbSwingAmount;
-            leftArm.xRot = Mth.cos(limbSwing * 0.6662f + 1) * limbSwingAmount;
-            rightLeg.xRot = Mth.cos(limbSwing * 0.6662f + 1) * limbSwingAmount;
-            leftLeg.xRot = Mth.cos(limbSwing * 0.6662f + Mth.PI + 2) * limbSwingAmount;
-            head.setRotation(headPitch * Mth.DEG_TO_RAD, netHeadYaw * Mth.DEG_TO_RAD, head.zRot);
-        }
-        if (entity.getAttackMode() == AnuBoss.AttackMode.FLIGHT) {
+        if (entity.phaseSystem.getCurrentPhase().isFlying()) {
             head.setRotation((float) Math.toRadians(-35), 0, head.zRot);
             rightArm.xRot = 0;
             leftArm.xRot = (float) Math.toRadians(-125);
             rightLeg.xRot = 0;
             leftLeg.xRot = 0;
+        } else {
+            rightArm.xRot = Mth.cos(limbSwing * 0.6662f + Mth.PI) * limbSwingAmount;
+            leftArm.xRot = Mth.cos(limbSwing * 0.6662f + 1) * limbSwingAmount;
+            rightLeg.xRot = Mth.cos(limbSwing * 0.6662f + 1) * limbSwingAmount;
+            leftLeg.xRot = Mth.cos(limbSwing * 0.6662f + Mth.PI + 2) * limbSwingAmount;
+            head.setRotation(headPitch * Mth.DEG_TO_RAD, netHeadYaw * Mth.DEG_TO_RAD, head.zRot);
         }
         leftWing2.yRot = 0.5f * Mth.sin(limbSwingAmount * 0.1f + limbSwing);
         leftWing3.yRot = -0.5f * Mth.sin(limbSwingAmount * 0.1f + limbSwing);

@@ -1,7 +1,7 @@
 package com.fossil.fossil.client.renderer.blockentity;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.custom_blocks.AnuBarrierBlock;
+import com.fossil.fossil.block.custom_blocks.AnuBarrierOriginBlock;
 import com.fossil.fossil.block.entity.AnuBarrierBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -24,7 +24,7 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
     private final float textureWidth = 16;
     private final float textureHeight = 16;
     private static final ResourceLocation[] LOCATIONS = IntStream.range(1, 32)
-            .mapToObj(idx -> new ResourceLocation(Fossil.MOD_ID, "textures/block/anu_portal/anu_portal_"+idx+".png"))
+            .mapToObj(idx -> new ResourceLocation(Fossil.MOD_ID, "textures/block/anu_portal/anu_portal_" + idx + ".png"))
             .toArray(ResourceLocation[]::new);
 
     public AnuBarrierRenderer(BlockEntityRendererProvider.Context context) {
@@ -35,14 +35,14 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
     @Override
     public void render(AnuBarrierBlockEntity blockEntity, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight, int packedOverlay) {
         poseStack.pushPose();
-        Direction direction = blockEntity.getBlockState().getValue(AnuBarrierBlock.FACING);
+        Direction direction = blockEntity.getBlockState().getValue(AnuBarrierOriginBlock.FACING);
         poseStack.translate(0.5, 0, 0.5);
-        poseStack.mulPose(Vector3f.YP.rotationDegrees(direction.toYRot()));
+        poseStack.mulPose(Vector3f.YP.rotationDegrees(-direction.toYRot() + 180));
         poseStack.translate(-0.5, 0, -0.5);
         //Prevent z-fighting with half blocks
         poseStack.scale(0.0625f, 0.0625f, direction.getAxis() == Direction.Axis.X ? 0.063f : 0.062f);
         int i = (int) (blockEntity.getLevel().getGameTime() % LOCATIONS.length);
-        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucent(LOCATIONS[i]));
+        VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucentCull(LOCATIONS[i]));
         int fixedLight = LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().relative(direction));
         renderBarrier(blockEntity, poseStack, vertexConsumer, fixedLight);
         poseStack.popPose();
@@ -96,14 +96,25 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
         //Offset the texture vertically depending on the height and y position in the circle
         float minTexY = (textureHeight - y) / textureHeight;
         float maxTexY = minTexY - height / textureHeight;
-        vertex(matrix4f, matrix3f, vertexConsumer, maxX, y, maxTexX, minTexY, packedLight);
-        vertex(matrix4f, matrix3f, vertexConsumer, minX, y, minTexX, minTexY, packedLight);
-        vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, packedLight);
-        vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, packedLight);
+        //Front
+        vertex(matrix4f, matrix3f, vertexConsumer, maxX, y, maxTexX, minTexY, packedLight, false);
+        vertex(matrix4f, matrix3f, vertexConsumer, minX, y, minTexX, minTexY, packedLight, false);
+        vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, packedLight, false);
+        vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, packedLight, false);
+        //Back
+        vertex(matrix4f, matrix3f, vertexConsumer, maxX, maxY, maxTexX, maxTexY, packedLight, true);
+        vertex(matrix4f, matrix3f, vertexConsumer, minX, maxY, minTexX, maxTexY, packedLight, true);
+        vertex(matrix4f, matrix3f, vertexConsumer, minX, y, minTexX, minTexY, packedLight, true);
+        vertex(matrix4f, matrix3f, vertexConsumer, maxX, y, maxTexX, minTexY, packedLight, true);
     }
 
-    private void vertex(Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, float x, float y, float u, float v, int n) {
-        vertexConsumer.vertex(matrix4f, x, y, 8).color(255, 255, 255, 255).uv(u, v)
-                .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(n).normal(matrix3f, 0, 0, -1).endVertex();
+    private void vertex(Matrix4f matrix4f, Matrix3f matrix3f, VertexConsumer vertexConsumer, float x, float y, float u, float v, int n, boolean back) {
+        if (back) {
+            vertexConsumer.vertex(matrix4f, x, y, 8).color(125, 255, 255, 255).uv(u, v)
+                    .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(n).normal(matrix3f, 0, 0, -1).endVertex();
+        } else {
+            vertexConsumer.vertex(matrix4f, x, y, 8).color(255, 255, 255, 255).uv(u, v)
+                    .overlayCoords(OverlayTexture.NO_OVERLAY).uv2(n).normal(matrix3f, 0, 0, -1).endVertex();
+        }
     }
 }
