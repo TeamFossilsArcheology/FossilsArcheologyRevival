@@ -169,7 +169,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     public boolean canBreatheOnLand() {
-        return true;
+        return isAmphibious();
     }
 
     @Override
