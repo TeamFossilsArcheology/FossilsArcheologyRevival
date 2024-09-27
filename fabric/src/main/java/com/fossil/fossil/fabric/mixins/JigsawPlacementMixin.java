@@ -64,7 +64,9 @@ public abstract class JigsawPlacementMixin {
     private void tryPlacingCustomStructures(PoolElementStructurePiece structurePiece, MutableObject<VoxelShape> mutableObject, int depth, boolean bl, LevelHeightAccessor levelHeightAccessor, CallbackInfo ci) {
         //This is a copy of the base method that allows us to place some of our structures
         String name = structurePiece.getElement().toString();
-        if (name.contains(Fossil.MOD_ID) && (name.contains("house_taiga_top") || name.contains("house_plains_top") || name.contains("tent_option"))) {
+        boolean isTop = name.contains("house_taiga_top") || name.contains("house_plains_top") || name.contains("tent_option");
+        boolean isBottom = name.contains("house_taiga_base") || name.contains("house_plains_base");
+        if (name.contains(Fossil.MOD_ID) && (isTop || isBottom)) {
             ci.cancel();
             StructurePoolElement structurePoolElement = structurePiece.getElement();
             BlockPos baseStructurePosition = structurePiece.getPosition();
@@ -92,8 +94,7 @@ public abstract class JigsawPlacementMixin {
                 if (baseFallbackPool.isEmpty() || baseFallbackPool.get().size() == 0 && !Objects.equals(baseFallbackLocation, Pools.EMPTY.location())) {
                     continue;
                 }
-                boolean bl3 = baseStructureBoundingBox.isInside(expectedJigsawPosition);
-                if (bl3) {
+                if (baseStructureBoundingBox.isInside(expectedJigsawPosition)) {
                     mutableObject3 = mutableObject2;
                     if (mutableObject2.getValue() == null) {
                         mutableObject2.setValue(Shapes.create(AABB.of(baseStructureBoundingBox)));
@@ -101,8 +102,9 @@ public abstract class JigsawPlacementMixin {
                 } else {
                     mutableObject3 = mutableObject;
                 }
-                ArrayList<StructurePoolElement> list = Lists.newArrayList();
-                if (depth != maxDepth) {
+                List<StructurePoolElement> list = Lists.newArrayList();
+                //Always place basement even if limit is reached
+                if (depth != maxDepth || isBottom) {
                     list.addAll(baseTargetPool.get().getShuffledTemplates(this.random));
                 }
                 list.addAll(baseFallbackPool.get().getShuffledTemplates(this.random));
