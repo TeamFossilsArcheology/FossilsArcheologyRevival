@@ -1,0 +1,32 @@
+{
+	"elements": [
+		{
+			"name": "body",
+			"pos": [0, 0, 0],
+			"width": 15.6,
+			"height": 22.8,
+			"ref": "body_hitbox"
+		},
+		{
+			"name": "head",
+			"pos": [0, 16.4, 14.4],
+			"width": 11.4,
+			"height": 17,
+			"ref": "head_hitbox"
+		},
+		{
+			"name": "tail1",
+			"pos": [0, 13.4, -14.6],
+			"width": 11.2,
+			"height": 7,
+			"ref": "tail1_hitbox"
+		},
+		{
+			"name": "tail2",
+			"pos": [0, 13.4, -30.1],
+			"width": 16.2,
+			"height": 7,
+			"ref": "tail2_hitbox"
+		}
+	]
+}

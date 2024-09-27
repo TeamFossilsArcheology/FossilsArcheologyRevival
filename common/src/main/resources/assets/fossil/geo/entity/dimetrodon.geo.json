@@ -145,6 +145,12 @@
 					"pivot": [0, 9.44585, -17.00438]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, 5.91421, -15.31803],
+					"cubes": []
+				},
+				{
 					"name": "leftArmUpper",
 					"parent": "bodyUpper",
 					"pivot": [1.23542, 7.38176, -7.66742],

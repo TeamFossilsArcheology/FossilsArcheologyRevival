@@ -1427,6 +1427,20 @@
 					"position": {
 						"vector": [0, -12, 0]
 					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-9.43, 0, 0]
+					},
+					"position": {
+						"vector": [0, 12, 0]
+					},
+					"scale": {
+						"vector": [1, 0.5, 1]
+					}
 				}
 			}
 		},
@@ -1779,6 +1793,49 @@
 							"vector": [0, 0, 22.5]
 						},
 						"2.8333": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [7.54, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.2917": {
+							"vector": [0, 0, 3]
+						},
+						"0.5": {
+							"vector": [0, 0, 0]
+						},
+						"0.625": {
+							"vector": [0, 0.86, -2.43]
+						},
+						"0.7917": {
+							"vector": [0, 4, -5]
+						},
+						"1.0": {
+							"vector": [0, 7, -7]
+						},
+						"1.4167": {
+							"vector": [0, 8, -6]
+						},
+						"2.4167": {
+							"vector": [0, 6, -6]
+						},
+						"2.7083": {
+							"vector": [0, 1, -5]
+						},
+						"2.9167": {
+							"vector": [0, 0, -2]
+						},
+						"3.0417": {
 							"vector": [0, 0, 0]
 						}
 					}

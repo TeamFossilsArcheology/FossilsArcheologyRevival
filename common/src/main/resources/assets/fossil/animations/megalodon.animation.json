@@ -73,6 +73,53 @@
 					"rotation": {
 						"vector": [0, "10+math.sin(query.anim_time*90-60)*5", "math.sin(query.anim_time*180-60)*-5"]
 					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [5, 12, -1]
+					}
+				},
+				"tail2_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [6, 13, 8]
+					},
+					"scale": {
+						"vector": [1.2, 0.5, 1.2]
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [14, 18, 0]
+					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [10, 13, 4]
+					}
 				}
 			}
 		},
@@ -1248,6 +1295,53 @@
 					"position": {
 						"vector": [0, 10, 0]
 					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [8, 12, 0]
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [12, 18, 0]
+					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [6, 16, 3]
+					}
+				},
+				"tail2_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [3, 13, 0]
+					},
+					"scale": {
+						"vector": [1.4, 0.3, 1.4]
+					}
 				}
 			}
 		},
@@ -1655,17 +1749,6 @@
 						"0.6667": {
 							"vector": [0, 0, 0]
 						}
-					}
-				}
-			}
-		},
-		"animation.megalodon.sizeDemo": {
-			"loop": true,
-			"animation_length": 12,
-			"bones": {
-				"pitch_root": {
-					"scale": {
-						"vector": [2, 2, 2]
 					}
 				}
 			}

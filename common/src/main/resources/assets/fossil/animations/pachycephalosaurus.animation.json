@@ -2460,6 +2460,40 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [5.22, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [0, 10, -7]
+						},
+						"0.8333": {
+							"vector": [0, 10, -7]
+						},
+						"1.25": {
+							"vector": [0, 9, -6]
+						},
+						"1.5833": {
+							"vector": [0, 8, -5]
+						},
+						"1.875": {
+							"vector": [0, 6, -3]
+						},
+						"1.9583": {
+							"vector": [0, 6, -2]
+						},
+						"2.25": {
+							"vector": [0, 0, 0]
+						}
+					}
 				}
 			},
 			"sound_effects": {
@@ -2680,6 +2714,46 @@
 						},
 						"1.5": {
 							"vector": [7.5, 0, 0]
+						},
+						"2.25": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [5.22, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.25": {
+							"vector": [0, 13, -8]
+						},
+						"0.5417": {
+							"vector": [0, 11, -5.5]
+						},
+						"0.8333": {
+							"vector": [0, 7, -1]
+						},
+						"1.25": {
+							"vector": [0, 12, -6]
+						},
+						"1.5833": {
+							"vector": [0, 8, -2]
+						},
+						"1.875": {
+							"vector": [0, 6, 0]
+						},
+						"1.9583": {
+							"vector": [0, 6, 0]
+						},
+						"2.125": {
+							"vector": [0, 3, -1]
 						},
 						"2.25": {
 							"vector": [0, 0, 0]
@@ -3105,6 +3179,25 @@
 				"LeftFoot": {
 					"rotation": {
 						"vector": [80, 0, 0]
+					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [5.22, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [3, 8, 0]
+						},
+						"2.375": {
+							"vector": [1, 8, 0]
+						}
+					},
+					"scale": {
+						"vector": [1, 0.7, 1]
 					}
 				}
 			}

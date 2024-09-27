@@ -271,7 +271,6 @@ public class InstructionSystem extends AISystem {
             saved.addTag(i, instructions.get(i).encodeTag());
         }
         tag.put("Instructions", saved);
-        tag.putInt("InstructionsIndex", index);
         tag.putBoolean("InstructionsLoop", shouldLoop);
     }
 
@@ -282,8 +281,8 @@ public class InstructionSystem extends AISystem {
         for (Tag savedTag : saved) {
             instructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
         }
-        index = tag.getInt("InstructionsIndex");
         shouldLoop = tag.getBoolean("InstructionsLoop");
+        start(instructions, shouldLoop);
         syncWithClients();
     }
 }

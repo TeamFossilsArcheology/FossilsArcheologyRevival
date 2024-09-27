@@ -101,6 +101,12 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, 5.45, -22.2],
+					"cubes": []
+				},
+				{
 					"name": "leftUpperArm",
 					"parent": "upperBody",
 					"pivot": [-3.5, 14.7, -12.5],
@@ -153,6 +159,12 @@
 					"cubes": [
 						{"origin": [-1.5, 17.2, 26.4], "size": [3, 4, 28], "uv": [21, 28]}
 					]
+				},
+				{
+					"name": "tail_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 15.95, 19.9],
+					"cubes": []
 				},
 				{
 					"name": "rightThigh",

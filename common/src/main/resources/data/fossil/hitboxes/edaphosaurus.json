@@ -1,0 +1,28 @@
+{
+	"elements": [
+		{
+			"name": "body1",
+			"pos": [0, 0, 0],
+			"width": 19.6,
+			"height": 15.8
+		},
+		{
+			"name": "body2",
+			"pos": [0, 0, -17.5],
+			"width": 15.6,
+			"height": 15.8
+		},
+		{
+			"name": "head",
+			"pos": [0, 8, 13.5],
+			"width": 8,
+			"height": 7
+		},
+		{
+			"name": "tail",
+			"pos": [0, 0, -29.5],
+			"width": 10,
+			"height": 9
+		}
+	]
+}

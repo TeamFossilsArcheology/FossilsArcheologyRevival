@@ -10,13 +10,15 @@
 			"name": "head",
 			"pos": [0, 15.3, 18.4],
 			"width": 12.8,
-			"height": 19.2
+			"height": 19.2,
+			"ref": "head_hitbox"
 		},
 		{
 			"name": "tail",
 			"pos": [0, 12.8, -16.9],
 			"width": 16,
-			"height": 11
+			"height": 11,
+			"ref": "tail_hitbox"
 		}
 	]
 }

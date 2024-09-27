@@ -147,6 +147,12 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, 5.89905, -24.09078],
+					"cubes": []
+				},
+				{
 					"name": "rightUpperArm",
 					"parent": "upperBody",
 					"pivot": [2.5, 16.89905, -6.56078],
@@ -253,6 +259,24 @@
 					"cubes": [
 						{"origin": [-4.5, 18.49905, 19.83922], "size": [9, 2, 7], "uv": [50, 79], "mirror": true}
 					]
+				},
+				{
+					"name": "tail2_hitbox",
+					"parent": "tail2",
+					"pivot": [0, 16.24905, 29.98922],
+					"cubes": []
+				},
+				{
+					"name": "tail1_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 15.29905, 15.23922],
+					"cubes": []
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "lowerBody",
+					"pivot": [0, -0.4, 2.95],
+					"cubes": []
 				}
 			]
 		}

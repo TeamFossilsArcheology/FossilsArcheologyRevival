@@ -58,7 +58,7 @@ public class C2SStructureMessage {
                 length++;
             }
         }
-        BlockState ironBlock = Blocks.IRON_BLOCK.defaultBlockState();
+        BlockState ironBlock = Blocks.JUNGLE_PLANKS.defaultBlockState();
         for (BlockPos blockPos : BlockPos.betweenClosed(0, 119, 0, length * 5 + 20, 119, 30)) {
             level.setBlock(blockPos, ironBlock, 2);
         }

@@ -3,9 +3,7 @@ package com.fossil.fossil.client.gui.debug;
 import com.fossil.fossil.client.gui.debug.instruction.EntityList;
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.client.gui.debug.instruction.InstructionsList;
-import com.fossil.fossil.entity.ai.BreachAttackGoal;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
-import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.InstructionMessage;
@@ -98,7 +96,7 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             renderables.remove(animations);
             addWidget(attackEntities);
         }));
-        if (entity instanceof PrehistoricSwimming swimming && swimming.canDoBreachAttack()) {
+        /*if (entity instanceof PrehistoricSwimming swimming && swimming.canDoBreachAttack()) {
             list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight()
                     .selector(target -> !BreachAttackGoal.isEntitySubmerged(target) && PrehistoricSwimming.isOverWater(target)), entity, entity.getBoundingBox().inflate(30));
             breachEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
@@ -113,7 +111,7 @@ public class InstructionTab extends DebugTab<Prehistoric> {
                 renderables.remove(animations);
                 addWidget(breachEntities);
             }));
-        }
+        }*/
         List<String> controllers = entity.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
         animations = new AnimationList(width - 315, 300, entity.getAllAnimations(), controllers, true, minecraft, animationObject -> {
             Instruction instruction = new Instruction.PlayAnim(animationObject.name(), animationObject.controller(), animationObject.loop(), (int) animationObject.transitionLength());
