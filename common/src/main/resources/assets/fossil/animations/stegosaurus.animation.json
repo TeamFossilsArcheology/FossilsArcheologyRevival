@@ -269,6 +269,62 @@
 					"rotation": {
 						"vector": [-25, 0, 0]
 					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"10.625": {
+							"vector": [-1, 11, 0]
+						}
+					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-5, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"10.625": {
+							"vector": [0, -8, 5]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [1, 1, 1]
+						},
+						"10.625": {
+							"vector": [1, 1.8, 1]
+						}
+					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"10.625": {
+							"vector": [5, 0, 10]
+						}
+					}
 				}
 			}
 		},
@@ -441,6 +497,46 @@
 				"plate16": {
 					"rotation": {
 						"vector": [-5, 0, 0]
+					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-5, 0, 0]
+					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 2, 1]
+						},
+						"10.625": {
+							"vector": [0, 5, 5]
+						}
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, 11, 4]
+						},
+						"10.625": {
+							"vector": [-2, 9, -7.5]
+						}
 					}
 				}
 			}
@@ -812,6 +908,62 @@
 				"plate2": {
 					"position": {
 						"vector": [0, 0, 0.5]
+					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-5, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [5, 6, -2]
+						},
+						"10.625": {
+							"vector": [4, 7, -6]
+						}
+					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [4, 3, 5]
+						},
+						"10.625": {
+							"vector": [4, 1, 4]
+						}
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [9, 18, 1]
+						},
+						"10.625": {
+							"vector": [-8, -6, 0]
+						}
+					},
+					"scale": {
+						"0.0": {
+							"vector": [1, 0.7, 1]
+						},
+						"10.625": {
+							"vector": [1, 0.7, 1]
+						}
 					}
 				}
 			}

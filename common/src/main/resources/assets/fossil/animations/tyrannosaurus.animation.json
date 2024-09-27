@@ -245,7 +245,7 @@
 						"vector": ["-25+math.cos(query.anim_time*1440/12)*1", -10, 2.5]
 					},
 					"position": {
-						"vector": [0, "-10+math.cos(query.anim_time*1440/12-120)*0.25", 0]
+						"vector": [0, "-6+math.cos(query.anim_time*1440/12-120)*0.25", 0]
 					}
 				},
 				"upperBody": {
@@ -371,7 +371,7 @@
 						"vector": ["-25+math.cos(query.anim_time*1440/12)*-1", 10, -2.5]
 					},
 					"position": {
-						"vector": [0, "-10+math.cos(query.anim_time*1440/12-120)*-0.25", 0]
+						"vector": [0, "-6+math.cos(query.anim_time*1440/12-120)*-0.25", 0]
 					}
 				},
 				"upperBody": {
@@ -497,7 +497,7 @@
 						"vector": ["-10+math.cos(query.anim_time*1440/12)*1", 10, 2.5]
 					},
 					"position": {
-						"vector": [0, "-9+math.cos(query.anim_time*1440/12-120)*0.25", 0]
+						"vector": [0, "-7+math.cos(query.anim_time*1440/12-120)*0.25", 0]
 					}
 				},
 				"lowerBodyBreathing": {
@@ -626,7 +626,7 @@
 						"vector": ["-10+math.cos(query.anim_time*1440/12)*-1", -10, -2.5]
 					},
 					"position": {
-						"vector": [0, "-9+math.cos(query.anim_time*1440/12-120)*-0.25", 0]
+						"vector": [0, "-6.5+math.cos(query.anim_time*1440/12-120)*-0.25", 0]
 					}
 				},
 				"lowerBodyBreathing": {
@@ -1390,7 +1390,7 @@
 						"vector": ["5+math.cos(query.anim_time*720/1.5+60)*-2.5", "math.cos(query.anim_time*360/1.5-60)*5", "math.cos(query.anim_time*360/1.5)*2.5"]
 					},
 					"position": {
-						"vector": [0, "math.cos(query.anim_time*720/1.5-90)*0.5", "math.cos(query.anim_time*720/1.5-95)*-1"]
+						"vector": [0, "-0.75+math.cos(query.anim_time*720/1.5-90)*0.5", "math.cos(query.anim_time*720/1.5-95)*-1"]
 					}
 				},
 				"upperBody": {
@@ -2022,7 +2022,7 @@
 						"vector": ["5+math.cos(query.anim_time*720/0.75+60)*-2.5", "math.cos(query.anim_time*360/0.75-60)*5", "math.cos(query.anim_time*360/0.75)*2.5"]
 					},
 					"position": {
-						"vector": [0, "math.cos(query.anim_time*720/0.75-75)*1", "math.cos(query.anim_time*720/0.75-105)*-2"]
+						"vector": [0, "-1+math.cos(query.anim_time*720/0.75-75)*1", "math.cos(query.anim_time*720/0.75-105)*-2"]
 					}
 				},
 				"upperBody": {

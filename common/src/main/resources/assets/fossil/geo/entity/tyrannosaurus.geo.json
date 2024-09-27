@@ -61,6 +61,12 @@
 					]
 				},
 				{
+					"name": "tail_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 12.1, 13.2],
+					"cubes": []
+				},
+				{
 					"name": "upperBody",
 					"parent": "lowerBody",
 					"pivot": [0, 17.4, -4.4],
@@ -142,6 +148,12 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, 11.2, -25.1],
+					"cubes": []
+				},
+				{
 					"name": "leftUpperArm",
 					"parent": "upperBody",
 					"pivot": [-3.8, 13.4, -13.4],
@@ -176,6 +188,12 @@
 					"cubes": [
 						{"origin": [3.81, 6.4, -14.4], "size": [2, 4, 2], "uv": [34, 33], "mirror": true}
 					]
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "upperBody",
+					"pivot": [0, 0.4, -4.4],
+					"cubes": []
 				},
 				{
 					"name": "rightThigh",

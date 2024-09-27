@@ -6,9 +6,9 @@
 				"identifier": "geometry.titanis",
 				"texture_width": 243,
 				"texture_height": 115,
-				"visible_bounds_width": 4,
-				"visible_bounds_height": 4.5,
-				"visible_bounds_offset": [0, 1.75, 0]
+				"visible_bounds_width": 5,
+				"visible_bounds_height": 5,
+				"visible_bounds_offset": [0, 1.5, 0]
 			},
 			"bones": [
 				{
@@ -45,7 +45,7 @@
 				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 29.3, 11.8],
+					"pivot": [0, 22.3, 13.8],
 					"cubes": []
 				},
 				{
@@ -181,7 +181,7 @@
 				{
 					"name": "body_hitbox",
 					"parent": "body1",
-					"pivot": [0, 0, 5],
+					"pivot": [0, 1.5, 10.5],
 					"cubes": []
 				},
 				{

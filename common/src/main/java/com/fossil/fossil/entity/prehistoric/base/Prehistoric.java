@@ -626,8 +626,17 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
     }
 
+    private float scaleOverride = -1;
+
+    public void setScaleOverride(float scaleOverride) {
+        this.scaleOverride = scaleOverride;
+    }
+
     @Override
     public float getScale() {
+        if (scaleOverride > 0) {
+            return scaleOverride;
+        }
         if (isAdult()) {
             return data().maxScale() * getGenderedScale();
         }
