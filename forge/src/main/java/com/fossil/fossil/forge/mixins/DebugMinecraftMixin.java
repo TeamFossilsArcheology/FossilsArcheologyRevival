@@ -33,6 +33,9 @@ public class DebugMinecraftMixin {
 
     @Inject(method = "pickBlock", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelMiddleClick(final CallbackInfo ci) {
+        if (!Version.debugEnabled()) {
+            return;
+        }
         if (PathingDebug.showHelpMenu) {
             PathingDebug.setPos3(PathingDebug.getHitResult((Minecraft) (Object) this));
             ci.cancel();
@@ -41,6 +44,9 @@ public class DebugMinecraftMixin {
 
     @Inject(method = "startUseItem", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelRightClick(final CallbackInfo ci) {
+        if (!Version.debugEnabled()) {
+            return;
+        }
         if (InstructionTab.positionActive()) {
             InstructionTab.positionMode = Instruction.Type.IDLE;
             ci.cancel();
@@ -58,6 +64,9 @@ public class DebugMinecraftMixin {
 
     @Inject(method = "startAttack", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelLeftClick(CallbackInfoReturnable<Boolean> cir) {
+        if (!Version.debugEnabled()) {
+            return;
+        }
         if (InstructionTab.positionActive()) {
             BlockHitResult hitResult = PathingDebug.getFullHitResult((Minecraft) (Object) this);
             InstructionTab.addPosition(hitResult);
@@ -75,6 +84,9 @@ public class DebugMinecraftMixin {
 
     @Inject(method = "continueAttack", at = @At(value = "HEAD"), cancellable = true)
     public void debugCancelLeftClick(boolean leftClick, CallbackInfo ci) {
+        if (!Version.debugEnabled()) {
+            return;
+        }
         if (InstructionTab.positionActive() || PathingDebug.showHelpMenu) {
             ci.cancel();
         }
