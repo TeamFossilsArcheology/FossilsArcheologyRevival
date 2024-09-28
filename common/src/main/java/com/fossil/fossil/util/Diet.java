@@ -21,7 +21,7 @@ public enum Diet implements DinopediaInfo {
     PISCI_CARNIVORE(3),
     NONE(0);
     private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase());
-    private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.diet.desc." + name().toLowerCase());
+    private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase() + ".desc");
 
     private final int fearIndex;
 

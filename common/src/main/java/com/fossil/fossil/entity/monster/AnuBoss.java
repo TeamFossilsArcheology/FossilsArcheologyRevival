@@ -60,8 +60,9 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     public static final EntityDataAccessor<Boolean> WEAK = SynchedEntityData.defineId(AnuBoss.class, EntityDataSerializers.BOOLEAN);
     private static final TranslatableComponent SPAWN_1 = new TranslatableComponent("entity.fossil.anu.hello");
     private static final TranslatableComponent SPAWN_2 = new TranslatableComponent("entity.fossil.anu.fewBeaten");
-    private static final TranslatableComponent ANU_COMBAT_DRAW = new TranslatableComponent("entity.fossil.anu.draw");
-    private static final TranslatableComponent ANU_COMBAT_COWARD = new TranslatableComponent("entity.fossil.anu.coward");
+    private static final TranslatableComponent ANU_COMBAT_SWORD = new TranslatableComponent("entity.fossil.anu.draw");
+    private static final TranslatableComponent ANU_COMBAT_BOW = new TranslatableComponent("entity.fossil.anu.coward");
+    private static final TranslatableComponent ANU_COMBAT_FIST = new TranslatableComponent("entity.fossil.anu.fist");
     private static final TranslatableComponent ANU_COMBAT_ANCIENT = new TranslatableComponent("entity.fossil.anu.ancient");
     private static final TranslatableComponent ANU_DEATH = new TranslatableComponent("entity.fossil.anu.death");
     private static final int SONG_LENGTH = 4041;
@@ -185,9 +186,11 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
             if (itemStack.is(ModItems.ANCIENT_SWORD.get())) {
                 player.displayClientMessage(ANU_COMBAT_ANCIENT, false);
             } else if (itemStack.getItem() instanceof SwordItem) {
-                player.displayClientMessage(ANU_COMBAT_DRAW, false);
+                player.displayClientMessage(ANU_COMBAT_SWORD, false);
             } else if (source.isProjectile()) {
-                player.displayClientMessage(ANU_COMBAT_COWARD, false);
+                player.displayClientMessage(ANU_COMBAT_BOW, false);
+            } else if (itemStack.isEmpty()) {
+                player.displayClientMessage(ANU_COMBAT_FIST, false);
             }
         }
         return super.hurt(source, isWeak() ? amount * 1.25f : amount);

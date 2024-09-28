@@ -73,7 +73,7 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> SARCOPHAGUS = registerBlockWithCustomBlockItem("sarcophagus",
             () -> new SarcophagusBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)
                     .lightLevel(state -> state.getValue(SarcophagusBlock.LIT) ? 7 : 0)), block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
-    public static final RegistrySupplier<Block> FAKE_OBSIDIAN = registerBlockWithoutBlockItem("fake_obsidian",
+    public static final RegistrySupplier<Block> FAKE_OBSIDIAN = registerBlockWithDebugItem("fake_obsidian",
             () -> new FakeObsidian(Properties.copy(Blocks.OBSIDIAN)));
     public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
             () -> new ObsidianSpikesBlock(Properties.of(Material.STONE).strength(50, 2000).sound(SoundType.STONE)

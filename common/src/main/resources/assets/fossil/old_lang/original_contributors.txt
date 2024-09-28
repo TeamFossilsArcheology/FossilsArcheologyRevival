@@ -1,0 +1,20 @@
+bg_BG:DemonicSerpent
+cs_CZ:ZapiikCZ,Fanoosch
+cy_GB:Dim
+de_DE:
+es_ES:Ninguno
+es_MX:Ninguno
+fr_FR:Aucun(e)
+id_ID:Haikal787
+it_IT:Battilani,Lorenzo
+ja_JP:無し
+hu_HU:Nincs
+ko_KR:utoc123,dy126800,CommandRedstone,hoyeoni
+nl_NL:Geen
+pl_PL:Mirach,Żaden
+pt_BR:Diego Ramos,Mininudoalem,FelipeBdC
+ro_RO:Valy11
+ru_RU:Ничего
+tr_TR:Yok
+zh_CN:PrinceXI
+zh_TW:Cobra_Rider_system
