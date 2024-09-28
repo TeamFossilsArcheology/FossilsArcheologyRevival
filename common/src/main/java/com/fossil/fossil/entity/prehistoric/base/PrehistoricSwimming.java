@@ -7,7 +7,6 @@ import com.fossil.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.fossil.fossil.entity.animation.AnimationLogic;
 import com.fossil.fossil.entity.util.Util;
 import com.mojang.math.Vector3d;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -290,7 +289,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             return;
         }
         LivingEntity rider = (LivingEntity) getControllingPassenger();
-        if (rider == null || !canBeControlledByRider() || !steering.trySteer(rider)) {
+        if (rider == null || !canBeControlledByRider() || (isControlledByLocalInstance() && !steering.trySteering(rider))) {
             if (isEffectiveAi() && isInWater()) {
                 moveRelative(getSpeed(), travelVector);
                 move(MoverType.SELF, getDeltaMovement());
@@ -317,7 +316,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         float newForwardMovement = rider.zza;
         if (isControlledByLocalInstance()) {
             setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
-            steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (LocalPlayer) rider);
+            steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (Player) rider, playerJumpPendingScale);
         } else {
             setDeltaMovement(Vec3.ZERO);
         }

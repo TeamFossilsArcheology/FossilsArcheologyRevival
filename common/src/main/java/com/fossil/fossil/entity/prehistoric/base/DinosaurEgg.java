@@ -4,8 +4,9 @@ package com.fossil.fossil.entity.prehistoric.base;
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.advancements.ModTriggers;
 import com.fossil.fossil.capabilities.ModCapabilities;
+import com.fossil.fossil.network.MessageHandler;
+import com.fossil.fossil.network.S2CMusicMessage;
 import com.fossil.fossil.sounds.ModSounds;
-import com.fossil.fossil.sounds.MusicHandler;
 import com.fossil.fossil.util.Version;
 import com.mojang.logging.LogUtils;
 import dev.architectury.extensions.network.EntitySpawnExtension;
@@ -80,7 +81,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
                 if (prehistoric.aiTameType() == PrehistoricEntityInfoAI.Taming.IMPRINTING) {
                     prehistoric.tame(player);
                     if (!ModCapabilities.hasHatchedDinosaur(player)) {
-                        MusicHandler.startMusic(ModSounds.MUSIC_FIRST_DINOSAUR.get());
+                        MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CMusicMessage(ModSounds.MUSIC_FIRST_DINOSAUR.get()));
                         ModCapabilities.setHatchedDinosaur(player, true);
                     }
                     if (hatchMessage) {

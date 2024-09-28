@@ -2,11 +2,11 @@ package com.fossil.fossil.entity.ai;
 
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.item.ModItems;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.MoverType;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.phys.Vec3;
 
 public class WhipSteering {
@@ -18,7 +18,7 @@ public class WhipSteering {
         this.dino = dino;
     }
 
-    public boolean trySteer(LivingEntity rider) {
+    public boolean trySteering(LivingEntity rider) {
         if (rider.getItemInHand(InteractionHand.MAIN_HAND).is(ModItems.WHIP.get())) {
             lastSeenWhipTicks = 0;
         } else {
@@ -45,17 +45,17 @@ public class WhipSteering {
         dino.move(MoverType.SELF, dino.getDeltaMovement());
     }
 
-    public void waterTravel(Vec3 travelVector, LocalPlayer rider) {
+    public void waterTravel(Vec3 travelVector, Player rider, float playerJumpPendingScale) {
         Vec3 look = rider.getLookAngle();
         boolean movement = Math.abs(travelVector.x) > 0 || Math.abs(travelVector.z) > 0;
-        double downwardMovement = !rider.input.jumping && look.y < -0.4 ? -0.3 : 0;
+        double downwardMovement = playerJumpPendingScale <= 0 && look.y < -0.4 ? -0.3 : 0;
         if (movement) {
             dino.setDeltaMovement(0, 0, 0);
         } else {
             dino.setDeltaMovement(dino.getDeltaMovement().x / 2, 0, dino.getDeltaMovement().z / 2);
         }
-        double upwardMovement = rider.input.jumping ? 0.3 : 0;
-        dino.moveRelative(dino.getSpeed(), new Vec3(travelVector.x, upwardMovement+downwardMovement, travelVector.z));
+        double upwardMovement = playerJumpPendingScale > 0 ? 0.3 : 0;
+        dino.moveRelative(dino.getSpeed(), new Vec3(travelVector.x, upwardMovement + downwardMovement, travelVector.z));
         dino.move(MoverType.SELF, dino.getDeltaMovement());
     }
 }

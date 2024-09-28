@@ -3,6 +3,7 @@ package com.fossil.fossil.block.custom_blocks;
 import com.fossil.fossil.block.entity.FakeObsidianBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.world.item.AirItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.BlockGetter;
@@ -41,7 +42,11 @@ public class FakeObsidian extends BaseEntityBlock {
 
     @Override
     public @NotNull Item asItem() {
-        return Blocks.OBSIDIAN.asItem();
+        Item item = super.asItem();
+        if (item instanceof AirItem) {
+            return Blocks.OBSIDIAN.asItem();
+        }
+        return item;
     }
 
     @Override

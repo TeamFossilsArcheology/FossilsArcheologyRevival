@@ -8,17 +8,10 @@ import software.bernie.shadowed.eliotlash.mclib.utils.MathHelper;
 
 public class AnuMoveControl extends MoveControl {
     private final AnuBoss anu;
-    public static Vec3 wanted;
 
     public AnuMoveControl(AnuBoss mob) {
         super(mob);
         this.anu = mob;
-    }
-
-    @Override
-    public void setWantedPosition(double x, double y, double z, double speed) {
-        super.setWantedPosition(x, y, z, speed);
-        wanted = new Vec3(x, y, z);
     }
 
     @Override

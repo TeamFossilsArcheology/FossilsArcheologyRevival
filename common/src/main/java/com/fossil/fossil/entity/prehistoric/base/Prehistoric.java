@@ -34,8 +34,6 @@ import com.github.darkpred.multipartsupport.entity.GeckoLibMultiPartEntity;
 import com.github.darkpred.multipartsupport.entity.MultiPart;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -176,7 +174,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public boolean attackBoxHit(LocalPlayer player) {
+    public boolean attackBoxHit(Player player) {
         MessageHandler.SYNC_CHANNEL.sendToServer(new C2SHitPlayerMessage(this, player));
         return true;
     }
@@ -468,7 +466,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             return;
         }
         LivingEntity rider = (LivingEntity) getControllingPassenger();
-        if (rider == null || !canBeControlledByRider() || !steering.trySteer(rider)) {
+        if (rider == null || !canBeControlledByRider() || !steering.trySteering(rider)) {
             super.travel(travelVector);
             return;
         }
@@ -1211,11 +1209,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     private void makeEatingSounds() {
-        if (level.isClientSide) {
-            level.playSound(Minecraft.getInstance().player, blockPosition(), SoundEvents.GENERIC_EAT, getSoundSource(), getSoundVolume(), getVoicePitch());
-        } else {
-            playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
-        }
+        playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
     }
 
     public float getMaxTurnDistancePerTick() {
