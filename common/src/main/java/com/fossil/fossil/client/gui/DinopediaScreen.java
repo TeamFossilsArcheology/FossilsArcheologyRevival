@@ -10,6 +10,7 @@ import com.fossil.fossil.entity.prehistoric.base.MoodSystem;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.fossil.fossil.util.FoodMappings;
+import com.fossil.fossil.util.Version;
 import com.mojang.blaze3d.platform.Lighting;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -111,14 +112,16 @@ public class DinopediaScreen extends Screen {
     protected void init() {
         leftPos = (width - xSize) / 2;
         topPos = (height - ySize) / 2;
-        addRenderableWidget(CycleOption.create("options.guiScale", () -> IntStream.rangeClosed(0,
-                        Minecraft.getInstance().getWindow().calculateScale(0, Minecraft.getInstance().isEnforceUnicode())).boxed().collect(
-                        Collectors.toList()),
-                integer -> integer == 0 ? new TranslatableComponent("options.guiScale.auto") : new TextComponent(Integer.toString(integer)),
-                options -> options.guiScale, (options, option, integer) -> {
-                    options.guiScale = integer;
-                    minecraft.resizeDisplay();
-                }).createButton(Minecraft.getInstance().options, (width - 200) / 2, 10, 200));
+        if (Version.debugEnabled()) {
+            addRenderableWidget(CycleOption.create("options.guiScale", () -> IntStream.rangeClosed(0,
+                            Minecraft.getInstance().getWindow().calculateScale(0, Minecraft.getInstance().isEnforceUnicode())).boxed().collect(
+                            Collectors.toList()),
+                    integer -> integer == 0 ? new TranslatableComponent("options.guiScale.auto") : new TextComponent(Integer.toString(integer)),
+                    options -> options.guiScale, (options, option, integer) -> {
+                        options.guiScale = integer;
+                        minecraft.resizeDisplay();
+                    }).createButton(Minecraft.getInstance().options, (width - 200) / 2, 10, 200));
+        }
         backButton = addRenderableWidget(new DinopediaPageButton(leftPos + 10, topPos + ySize - 45, 200, 100, false, button -> pageBack()));
         if (entity instanceof Prehistoric) {
             forwardButton = addRenderableWidget(
