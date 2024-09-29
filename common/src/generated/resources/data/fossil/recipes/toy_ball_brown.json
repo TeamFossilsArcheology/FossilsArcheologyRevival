@@ -7,7 +7,7 @@
   ],
   "key": {
     "W": {
-      "item": "minecraft:white_wool"
+      "item": "minecraft:brown_wool"
     },
     "S": {
       "item": "minecraft:string"
@@ -17,6 +17,6 @@
     }
   },
   "result": {
-    "item": "fossil:toy_ball_white"
+    "item": "fossil:toy_ball_brown"
   }
 }
