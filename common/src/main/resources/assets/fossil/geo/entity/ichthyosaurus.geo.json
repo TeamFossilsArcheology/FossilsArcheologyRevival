@@ -64,6 +64,12 @@
 					"pivot": [0, 3.45, -20.4]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, -0.2, -21.4],
+					"cubes": []
+				},
+				{
 					"name": "leftFrontFlipper",
 					"parent": "upperBody",
 					"pivot": [3.7, 2.15, -10.4],
@@ -80,6 +86,12 @@
 					"cubes": [
 						{"origin": [-4.7, -5.95, -11.9], "size": [1, 8, 5], "uv": [97, 19]}
 					]
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "upperBody",
+					"pivot": [0, -3, -4],
+					"cubes": []
 				},
 				{
 					"name": "dorsalfin",
@@ -150,6 +162,12 @@
 					"cubes": [
 						{"origin": [-0.5, 6.1, 21.2], "size": [1, 13, 7], "uv": [41, 41]}
 					]
+				},
+				{
+					"name": "tail_hitbox",
+					"parent": "tail1",
+					"pivot": [0, 0.1, 14.45],
+					"cubes": []
 				}
 			]
 		}

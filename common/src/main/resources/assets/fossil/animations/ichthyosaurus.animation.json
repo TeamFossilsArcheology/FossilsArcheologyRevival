@@ -254,6 +254,22 @@
 					"rotation": {
 						"vector": [0, "math.sin(query.anim_time*180-30)*-5", "math.sin(query.anim_time*180-30)*-2.5"]
 					}
+				},
+				"body_hitbox": {
+					"rotation": {
+						"vector": [1.34, 0, 0]
+					},
+					"position": {
+						"vector": [0, 1, 7]
+					}
+				},
+				"tail_hitbox": {
+					"rotation": {
+						"vector": [-3.88, 0, 0]
+					},
+					"position": {
+						"vector": [0, 3, 5]
+					}
 				}
 			}
 		},
@@ -327,6 +343,30 @@
 				"uppeTtailFin": {
 					"rotation": {
 						"vector": [0, "math.sin(query.anim_time*180-30)*-5", "math.sin(query.anim_time*180-30)*-2.5"]
+					}
+				},
+				"head_hitbox": {
+					"rotation": {
+						"vector": [1.34, 0, 0]
+					},
+					"position": {
+						"vector": [0, 4, 6]
+					}
+				},
+				"body_hitbox": {
+					"rotation": {
+						"vector": [1.34, 0, 0]
+					},
+					"position": {
+						"vector": [0, 4, 9]
+					}
+				},
+				"tail_hitbox": {
+					"rotation": {
+						"vector": [-3.88, 0, 0]
+					},
+					"position": {
+						"vector": [0, 2, 5]
 					}
 				}
 			}
@@ -1255,6 +1295,39 @@
 					"position": {
 						"vector": [0, 5, 0]
 					}
+				},
+				"head_hitbox": {
+					"rotation": {
+						"vector": [1.34, 0, 0]
+					},
+					"position": {
+						"vector": [-2, 2, 0]
+					},
+					"scale": {
+						"vector": [1, 0.6, 1]
+					}
+				},
+				"body_hitbox": {
+					"rotation": {
+						"vector": [1.34, 0, 0]
+					},
+					"position": {
+						"vector": [-4.5, 8, 0]
+					},
+					"scale": {
+						"vector": [1, 0.7, 1]
+					}
+				},
+				"tail_hitbox": {
+					"rotation": {
+						"vector": [-3.88, 0, 0]
+					},
+					"position": {
+						"vector": [-2, 6, 0]
+					},
+					"scale": {
+						"vector": [1, 0.6, 1]
+					}
 				}
 			}
 		},
@@ -1374,7 +1447,14 @@
 						"2.9583": {
 							"vector": [0, 0, 360]
 						},
-						"3.0": {"pre": {"vector": [0, 0, 360]}, "post": {"vector": [0, 0, 0]}}
+						"3.0": {
+							"pre": {
+								"vector": [0, 0, 360]
+							},
+							"post": {
+								"vector": [0, 0, 0]
+							}
+						}
 					}
 				},
 				"upperBody": {
@@ -1572,7 +1652,14 @@
 						"2.9583": {
 							"vector": [-360, 0, 0]
 						},
-						"3.0": {"pre": {"vector": [-360, 0, 0]}, "post": {"vector": [0, 0, 0]}}
+						"3.0": {
+							"pre": {
+								"vector": [-360, 0, 0]
+							},
+							"post": {
+								"vector": [0, 0, 0]
+							}
+						}
 					},
 					"position": {
 						"0.0": {
