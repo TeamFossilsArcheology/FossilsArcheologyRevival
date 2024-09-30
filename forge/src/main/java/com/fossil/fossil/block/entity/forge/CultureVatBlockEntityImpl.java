@@ -76,11 +76,7 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
     }
 
     public static int getItemFuelTime(ItemStack stack) {
-        Integer fuel = ModRecipes.CULTURE_VAT_FUEL_VALUES.get(stack.getItem());
-        if (fuel != null) {
-            return fuel;
-        }
-        return 0;
+        return ModRecipes.getCultureVatFuelValue(stack.getItem());
     }
 
     @Override
@@ -219,7 +215,7 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
             return false;
         }
         if (index == CultureVatMenu.FUEL_SLOT_ID) {
-            return ModRecipes.CULTURE_VAT_FUEL_VALUES.containsKey(stack.getItem());
+            return ModRecipes.isCultureVatFuel(stack.getItem());
         }
         return isValidInput(stack);
     }

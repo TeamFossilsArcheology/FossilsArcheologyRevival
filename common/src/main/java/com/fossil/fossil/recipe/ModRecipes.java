@@ -29,12 +29,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.*;
 
 public class ModRecipes {
-    public static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
-    public static final Map<Item, AnalyzerRecipe> SIFTER_RECIPES = new HashMap<>();
-    public static final Map<Item, WorktableRecipe> WORKTABLE_RECIPES = new HashMap<>();
-    public static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new HashMap<>();
-    public static final Map<ItemLike, WorktableRecipe> CULTURE_VAT_RECIPES = new HashMap<>();
-    public static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new HashMap<>();
+    private static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
+    private static final Map<Item, AnalyzerRecipe> SIFTER_RECIPES = new HashMap<>();
+    private static final Map<Item, WorktableRecipe> WORKTABLE_RECIPES = new HashMap<>();
+    private static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new HashMap<>();
+    private static final Map<ItemLike, WorktableRecipe> CULTURE_VAT_RECIPES = new HashMap<>();
+    private static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new HashMap<>();
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Fossil.MOD_ID,
             Registry.RECIPE_SERIALIZER_REGISTRY);
@@ -168,12 +168,12 @@ public class ModRecipes {
         registerWorktable(ModItems.ANCIENT_JAVELIN.get(), ModItems.ANCIENT_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
 
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
-            if (info.dnaItem != null) {
+            if (info.dnaItem != null && info.getDNAResult() != null) {
                 registerCultureVat(info.dnaItem, info.getDNAResult(), ModItems.BIO_GOO.get());
             }
         }
         for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
-            if (info.dnaItem != null) {
+            if (info.dnaItem != null && info.getDNAResult() != null) {
                 registerCultureVat(info.dnaItem, info.getDNAResult(), ModItems.BIO_GOO.get());
             }
         }
@@ -247,5 +247,20 @@ public class ModRecipes {
             CULTURE_VAT_RECIPES.put(itemStack.getItem(), recipe);
         }
         return CULTURE_VAT_RECIPES.get(itemStack.getItem());
+    }
+    public static boolean isWorktableFuel(ItemLike itemLike) {
+        return WORKTABLE_FUEL_VALUES.containsKey(itemLike);
+    }
+
+    public static int getWorktableFuelValue(ItemLike itemLike) {
+        return WORKTABLE_FUEL_VALUES.getOrDefault(itemLike, 0);
+    }
+
+    public static boolean isCultureVatFuel(ItemLike itemLike){
+        return CULTURE_VAT_FUEL_VALUES.containsKey(itemLike);
+    }
+
+    public static int getCultureVatFuelValue(ItemLike itemLike){
+        return CULTURE_VAT_FUEL_VALUES.getOrDefault(itemLike, 0);
     }
 }

@@ -66,6 +66,7 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+
     public WorktableBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.WORKTABLE.get(), blockPos, blockState);
     }
@@ -76,11 +77,7 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
     }
 
     public static int getItemFuelTime(ItemStack stack) {
-        Integer fuel = ModRecipes.WORKTABLE_FUEL_VALUES.get(stack.getItem());
-        if (fuel != null) {
-            return fuel;
-        }
-        return 0;
+        return ModRecipes.getWorktableFuelValue(stack.getItem());
     }
 
     @Override
@@ -234,7 +231,7 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
             return false;
         }
         if (slot == WorktableMenu.FUEL_SLOT_ID) {
-            return ModRecipes.WORKTABLE_FUEL_VALUES.containsKey(stack.getItem());
+            return ModRecipes.isWorktableFuel(stack.getItem());
         }
         return ModRecipes.getWorktableRecipeForItem(stack, getLevel()) != null;
     }

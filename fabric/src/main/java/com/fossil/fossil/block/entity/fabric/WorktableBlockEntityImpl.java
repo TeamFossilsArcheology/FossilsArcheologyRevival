@@ -76,11 +76,7 @@ public class WorktableBlockEntityImpl extends FabricContainerBlockEntity impleme
     }
 
     public static int getItemFuelTime(ItemStack stack) {
-        Integer fuel = ModRecipes.WORKTABLE_FUEL_VALUES.get(stack.getItem());
-        if (fuel != null) {
-            return fuel;
-        }
-        return 0;
+        return ModRecipes.getWorktableFuelValue(stack.getItem());
     }
 
     @Override
@@ -234,7 +230,7 @@ public class WorktableBlockEntityImpl extends FabricContainerBlockEntity impleme
             return false;
         }
         if (slot == WorktableMenu.FUEL_SLOT_ID) {
-            return ModRecipes.WORKTABLE_FUEL_VALUES.containsKey(stack.getItem());
+            return ModRecipes.isWorktableFuel(stack.getItem());
         }
         return true;
     }

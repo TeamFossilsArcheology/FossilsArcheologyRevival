@@ -14,7 +14,9 @@ import com.fossil.fossil.item.ToyScratchingPostItem;
 import com.fossil.fossil.item.ToyTetheredLogItem;
 import com.fossil.fossil.tags.ModItemTags;
 import com.fossil.fossil.util.TimePeriod;
+import com.google.common.collect.Maps;
 import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.Util;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.core.Registry;
 import net.minecraft.data.BlockFamily;
@@ -51,7 +53,24 @@ public class ModRecipeProvider extends RecipeProvider {
     public static final BlockFamily PALM_PLANKS = new BlockFamily.Builder(ModBlocks.PALM_PLANKS.get()).button(PALM_BUTTON.get()).fence(PALM_FENCE.get()).fenceGate(PALM_FENCE_GATE.get()).pressurePlate(PALM_PRESSURE_PLATE.get()).slab(PALM_SLAB.get()).stairs(PALM_STAIRS.get()).door(PALM_DOOR.get()).trapdoor(PALM_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily SIGILLARIA_PLANKS = new BlockFamily.Builder(ModBlocks.SIGILLARIA_PLANKS.get()).button(SIGILLARIA_BUTTON.get()).fence(SIGILLARIA_FENCE.get()).fenceGate(SIGILLARIA_FENCE_GATE.get()).pressurePlate(SIGILLARIA_PRESSURE_PLATE.get()).slab(SIGILLARIA_SLAB.get()).stairs(SIGILLARIA_STAIRS.get()).door(SIGILLARIA_DOOR.get()).trapdoor(SIGILLARIA_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
     public static final BlockFamily TEMPSKYA_PLANKS = new BlockFamily.Builder(ModBlocks.TEMPSKYA_PLANKS.get()).button(TEMPSKYA_BUTTON.get()).fence(TEMPSKYA_FENCE.get()).fenceGate(TEMPSKYA_FENCE_GATE.get()).pressurePlate(TEMPSKYA_PRESSURE_PLATE.get()).slab(TEMPSKYA_SLAB.get()).stairs(TEMPSKYA_STAIRS.get()).door(TEMPSKYA_DOOR.get()).trapdoor(TEMPSKYA_TRAPDOOR.get()).recipeGroupPrefix("wooden").recipeUnlockedBy("has_planks").getFamily();
-
+    private static final Map<DyeColor, ItemLike> ITEM_BY_DYE = Util.make(Maps.newEnumMap(DyeColor.class), enumMap -> {
+        enumMap.put(DyeColor.WHITE, Blocks.WHITE_WOOL);
+        enumMap.put(DyeColor.ORANGE, Blocks.ORANGE_WOOL);
+        enumMap.put(DyeColor.MAGENTA, Blocks.MAGENTA_WOOL);
+        enumMap.put(DyeColor.LIGHT_BLUE, Blocks.LIGHT_BLUE_WOOL);
+        enumMap.put(DyeColor.YELLOW, Blocks.YELLOW_WOOL);
+        enumMap.put(DyeColor.LIME, Blocks.LIME_WOOL);
+        enumMap.put(DyeColor.PINK, Blocks.PINK_WOOL);
+        enumMap.put(DyeColor.GRAY, Blocks.GRAY_WOOL);
+        enumMap.put(DyeColor.LIGHT_GRAY, Blocks.LIGHT_GRAY_WOOL);
+        enumMap.put(DyeColor.CYAN, Blocks.CYAN_WOOL);
+        enumMap.put(DyeColor.PURPLE, Blocks.PURPLE_WOOL);
+        enumMap.put(DyeColor.BLUE, Blocks.BLUE_WOOL);
+        enumMap.put(DyeColor.BROWN, Blocks.BROWN_WOOL);
+        enumMap.put(DyeColor.GREEN, Blocks.GREEN_WOOL);
+        enumMap.put(DyeColor.RED, Blocks.RED_WOOL);
+        enumMap.put(DyeColor.BLACK, Blocks.BLACK_WOOL);
+    });
 
     public ModRecipeProvider(DataGenerator arg) {
         super(arg);
@@ -73,7 +92,7 @@ public class ModRecipeProvider extends RecipeProvider {
         }
         if (craftingRecipes) {
             ToyBallItem white = TOY_BALLS.get(DyeColor.WHITE).get();
-            ShapedRecipeBuilder.shaped(white).define('W', ItemTags.WOOL).define('S', Items.STRING)
+            ShapedRecipeBuilder.shaped(white).define('W', Blocks.WHITE_WOOL).define('S', Items.STRING)
                     .define('B', Items.SLIME_BALL).pattern("SWS").pattern("WBW").pattern("SWS").unlockedBy("has_wool",
                             RecipeProvider.has(ItemTags.WOOL)).save(consumer, RecipeBuilder.getDefaultRecipeId(white));
             for (Map.Entry<DyeColor, RegistrySupplier<ToyBallItem>> entry : TOY_BALLS.entrySet()) {
@@ -84,6 +103,9 @@ public class ModRecipeProvider extends RecipeProvider {
                         RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID + ":toy_ball_white_to_" + color.getName());
                 ShapelessRecipeBuilder.shapeless(white).requires(Items.WHITE_DYE).requires(ball).unlockedBy("has_ball",
                         RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID + ":toy_ball_" + color.getName() + "_to_white");
+                ShapedRecipeBuilder.shaped(ball).define('W', ITEM_BY_DYE.get(entry.getKey())).define('S', Items.STRING)
+                        .define('B', Items.SLIME_BALL).pattern("SWS").pattern("WBW").pattern("SWS").unlockedBy("has_wool",
+                                RecipeProvider.has(ItemTags.WOOL)).save(consumer, RecipeBuilder.getDefaultRecipeId(ball));
             }
             for (Map.Entry<String, RegistrySupplier<ToyTetheredLogItem>> entry : TOY_TETHERED_LOGS.entrySet()) {
                 var block = Registry.BLOCK.getOptional(new ResourceLocation("minecraft:" + entry.getKey() + "_log"));
