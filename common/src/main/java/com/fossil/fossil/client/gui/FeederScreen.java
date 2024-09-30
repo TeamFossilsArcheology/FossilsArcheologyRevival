@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/feeder.png");
+    private static final int BAR_HEIGHT = 47;
+    private static final int BAR_WIDTH = 5;
 
     public FeederScreen(FeederMenu containerMenu, Inventory inventory, Component component) {
         super(containerMenu, inventory, component);
@@ -24,8 +26,8 @@ public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
         RenderSystem.setShaderColor(1, 1, 1, 1);
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
-        drawString(poseStack, font, String.valueOf(menu.getMeat()), x + 25, y + 32, 16711680);
-        drawString(poseStack, font, String.valueOf(menu.getVeg()), x + 121, y + 32, 0X35AC47);
+        drawString(poseStack, font, String.valueOf(menu.getMeat()), x + 22, y + 32, 16711680);
+        drawString(poseStack, font, String.valueOf(menu.getVeg()), x + 122, y + 32, 0X35AC47);
         renderTooltip(poseStack, mouseX, mouseY);
     }
 
@@ -37,9 +39,9 @@ public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
-        int scaledMeat = menu.getMeat() * 46 / 10000;
-        blit(poseStack, x + 66, y + 55 - scaledMeat, imageWidth, 46 - scaledMeat, 3, scaledMeat);
-        int scaledVeg = menu.getVeg() * 46 / 10000;
-        blit(poseStack, x + 110, y + 55 - scaledVeg, 176, 46 - scaledVeg, 3, scaledVeg);
+        int scaledMeat = menu.getMeat() * BAR_HEIGHT / 10000;
+        blit(poseStack, x + 64, y + 55 - scaledMeat, imageWidth, BAR_HEIGHT - scaledMeat, BAR_WIDTH, scaledMeat);
+        int scaledVeg = menu.getVeg() * BAR_HEIGHT / 10000;
+        blit(poseStack, x + 107, y + 55 - scaledVeg, 176, BAR_HEIGHT - scaledVeg, BAR_WIDTH, scaledVeg);
     }
 }

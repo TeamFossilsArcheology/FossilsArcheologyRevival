@@ -26,14 +26,14 @@ public class FeederMenu extends AbstractContainerMenu {
         super(ModMenus.FEEDER.get(), id);
         this.container = container;
         this.containerData = containerData;
-        addSlot(new Slot(container, 0, 60, 62) {
+        addSlot(new Slot(container, 0, 59, 62) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return FoodMappings.getFoodAmount(stack.getItem(), Diet.CARNIVORE_EGG) > 0 || FoodMappings.getFoodAmount(stack.getItem(),
                         Diet.PISCI_CARNIVORE) > 0;
             }
         });
-        addSlot(new Slot(container, 1, 104, 62) {
+        addSlot(new Slot(container, 1, 101, 62) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return FoodMappings.getFoodAmount(stack.getItem(), Diet.HERBIVORE) > 0;

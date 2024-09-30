@@ -52,6 +52,7 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
     @Override
     protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
         font.draw(poseStack, title, titleLabelX, titleLabelY, 0x404040);
+        font.draw(poseStack, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0x404040);
     }
 
     @Override

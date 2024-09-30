@@ -26,9 +26,9 @@ public class WorktableMenu extends AbstractContainerMenu {
         super(ModMenus.WORKTABLE.get(), id);
         this.container = container;
         this.containerData = containerData;
-        addSlot(new Slot(container, INPUT_SLOT_ID, 49, 20));
-        addSlot(new Slot(container, FUEL_SLOT_ID, 81, 54));
-        addSlot(new FurnaceResultSlot(playerInventory.player, container, OUTPUT_SLOT_ID, 116, 21));
+        addSlot(new Slot(container, INPUT_SLOT_ID, 44, 20));
+        addSlot(new Slot(container, FUEL_SLOT_ID, 80, 54));
+        addSlot(new FurnaceResultSlot(playerInventory.player, container, OUTPUT_SLOT_ID, 114, 20));
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 9; x++) {
                 addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
@@ -58,7 +58,7 @@ public class WorktableMenu extends AbstractContainerMenu {
         if (i == 0) {
             i = 200;
         }
-        return containerData.get(0) * 12 / i;
+        return containerData.get(0) * 14 / i;
     }
 
     @Override
@@ -77,7 +77,7 @@ public class WorktableMenu extends AbstractContainerMenu {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (ModRecipes.WORKTABLE_FUEL_VALUES.containsKey(current.getItem())) {
+                } else if (ModRecipes.isWorktableFuel(current.getItem())) {
                     if (!moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }

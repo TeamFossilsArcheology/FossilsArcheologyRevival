@@ -12,6 +12,8 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class WorktableScreen extends AbstractContainerScreen<WorktableMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/workbench.png");
+    private static final int PROGRESS_WIDTH = 14;
+    private static final int FUEL_HEIGHT = 14;
 
     public WorktableScreen(WorktableMenu containerMenu, Inventory inventory, Component component) {
         super(containerMenu, inventory, component);
@@ -40,15 +42,15 @@ public class WorktableScreen extends AbstractContainerScreen<WorktableMenu> {
         blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         if (menu.isLit()) {
             int progress = menu.getLitProgress();
-            blit(poseStack, x + 82, y + 36 + 12 - progress, 176, 12 - progress, 14, progress + 2);
+            blit(poseStack, x + 81, y + 36 + PROGRESS_WIDTH - progress, 176, PROGRESS_WIDTH - progress, 14, progress);
         }
         int progress = menu.getBurnProgress();
-        blit(poseStack, x + 79, y + 18, 176, 14, progress + 1, 16);
+        blit(poseStack, x + 76, y + 20, 176, FUEL_HEIGHT, progress + 1, FUEL_HEIGHT);
     }
 
     @Override
     protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        font.draw(poseStack, title, (float) titleLabelX, (float) titleLabelY, 0x404040);
-        font.draw(poseStack, playerInventoryTitle, (float) inventoryLabelX, (float) inventoryLabelY, 0x404040);
+        font.draw(poseStack, title, titleLabelX, titleLabelY, 0x404040);
+        font.draw(poseStack, playerInventoryTitle, inventoryLabelX, inventoryLabelY, 0x404040);
     }
 }

@@ -33,7 +33,7 @@ public class SifterScreen extends AbstractContainerScreen<SifterMenu> {
         int y = (height - imageHeight) / 2;
         blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
         int var7 = menu.getSiftProgress() * 26 / 200;
-        blit(poseStack, x + 75, y + 33, 181, 2, 31, var7 + 1);
+        blit(poseStack, x + 75, y + 33, 176, 0, 31, var7 + 1);
     }
 
     @Override

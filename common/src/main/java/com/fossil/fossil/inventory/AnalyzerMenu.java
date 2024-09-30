@@ -26,7 +26,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
                 addSlot(new Slot(container, row + column * 3, 20 + row * 18, 17 + column * 18));
             }
         }
-        addSlot(new FurnaceResultSlot(playerInventory.player, container, 9, 116, 21));
+        addSlot(new FurnaceResultSlot(playerInventory.player, container, 9, 115, 21));
         for (int slot = 0; slot < 3; slot++) {
             addSlot(new FurnaceResultSlot(playerInventory.player, container, 10 + slot, 111 + 18 * slot, 53));
         }

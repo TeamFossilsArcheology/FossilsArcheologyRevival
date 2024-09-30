@@ -35,19 +35,19 @@ public class CultureVatMenu extends AbstractContainerMenu {
         this.container = container;
         this.containerData = containerData;
         this.level = playerInventory.player.level;
-        addSlot(new Slot(container, INPUT_SLOT_ID, 49, 20) {
+        addSlot(new Slot(container, INPUT_SLOT_ID, 45, 21) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return super.mayPlace(stack) && canPutStackInInput(stack);
             }
         });
-        addSlot(new Slot(container, FUEL_SLOT_ID, 81, 54) {
+        addSlot(new Slot(container, FUEL_SLOT_ID, 80, 54) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return super.mayPlace(stack) && getItemFuelTime(stack) > 0;
             }
         });
-        addSlot(new Slot(container, OUTPUT_SLOT_ID, 116, 21) {
+        addSlot(new Slot(container, OUTPUT_SLOT_ID, 115, 21) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return false;
@@ -93,7 +93,7 @@ public class CultureVatMenu extends AbstractContainerMenu {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (ModRecipes.CULTURE_VAT_FUEL_VALUES.containsKey(current.getItem())) {
+                } else if (ModRecipes.isCultureVatFuel(current.getItem())) {
                     if (!moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
