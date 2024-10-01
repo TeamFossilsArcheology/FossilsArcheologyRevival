@@ -6,6 +6,7 @@ import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import me.shedaniel.math.Point;
 import me.shedaniel.math.Rectangle;
+import me.shedaniel.rei.api.client.config.ConfigObject;
 import me.shedaniel.rei.api.client.gui.Renderer;
 import me.shedaniel.rei.api.client.gui.widgets.Widget;
 import me.shedaniel.rei.api.client.gui.widgets.Widgets;
@@ -23,7 +24,7 @@ import static com.fossil.fossil.client.gui.WorktableScreen.*;
 
 public class WorktableCategory implements DisplayCategory<WorktableDisplay> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/workbench.png");
-    private static final ResourceLocation DARK_TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/workbench.png");
+    private static final ResourceLocation DARK_TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/workbench_dark.png");
 
 
     @Override
@@ -43,18 +44,18 @@ public class WorktableCategory implements DisplayCategory<WorktableDisplay> {
 
     @Override
     public List<Widget> setupDisplay(WorktableDisplay display, Rectangle bounds) {
-        //TODO: Fuel duration, recipe duration and dark theme
+        //TODO: Fuel duration, recipe duration
         Point startPoint = new Point(bounds.getCenterX() - 48, bounds.getCenterY() - 28);
         List<Widget> widgets = Lists.newArrayList();
         widgets.add(Widgets.createRecipeBase(bounds));
         widgets.add(Widgets.createDrawableWidget((helper, matrices, mouseX, mouseY, delta) -> {
-            RenderSystem.setShaderTexture(0, TEXTURE);
+            RenderSystem.setShaderTexture(0, ConfigObject.getInstance().isUsingDarkTheme() ? DARK_TEXTURE : TEXTURE);
             helper.blit(matrices, startPoint.x, startPoint.y, 40, 16, 96, 55);
             long time = System.currentTimeMillis();
-            int width = FUEL_HEIGHT- Mth.ceil(time / 250d % (double) FUEL_HEIGHT);
-            helper.blit(matrices, startPoint.x + 41, startPoint.y + 20 + FUEL_HEIGHT - width, 176, FUEL_HEIGHT - width, FUEL_WIDTH, width);
-            width = Mth.ceil(time / 250d % (double) PROGRESS_WIDTH);
-            helper.blit(matrices, startPoint.x + 36, startPoint.y + 4, 176, FUEL_HEIGHT, width, PROGRESS_HEIGHT);
+            int progress = FUEL_HEIGHT - Mth.floor(time / 250d % (double) FUEL_HEIGHT);
+            helper.blit(matrices, startPoint.x + 41, startPoint.y + 20 + FUEL_HEIGHT - progress, 176, FUEL_HEIGHT - progress, FUEL_WIDTH, progress);
+            progress = Mth.ceil(time / 250d % (double) PROGRESS_WIDTH);
+            helper.blit(matrices, startPoint.x + 36, startPoint.y + 4, 176, FUEL_HEIGHT, progress, PROGRESS_HEIGHT);
         }));
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 5, startPoint.y + 5)).entries(display.getInputEntries().get(0)).disableBackground().markInput());
         widgets.add(Widgets.createSlot(new Point(startPoint.x + 40, startPoint.y + 38)).entries(display.getInputEntries().get(1)).disableBackground().markInput());

@@ -14,8 +14,8 @@ public class CultureVatDisplay extends WithFuelDisplay {
         super(recipe);
     }
 
-    protected CultureVatDisplay(EntryIngredient input, EntryIngredient fuel, EntryStack<?> output) {
-        super(input, fuel, output);
+    protected CultureVatDisplay(EntryIngredient input, EntryIngredient fuel, EntryStack<?> output, ResourceLocation location) {
+        super(input, fuel, output, location);
     }
 
     @Override

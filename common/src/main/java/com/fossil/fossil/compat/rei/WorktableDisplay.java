@@ -14,8 +14,8 @@ public class WorktableDisplay extends WithFuelDisplay {
         super(recipe);
     }
 
-    protected WorktableDisplay(EntryIngredient input, EntryIngredient fuel, EntryStack<?> output) {
-        super(input, fuel, output);
+    protected WorktableDisplay(EntryIngredient input, EntryIngredient fuel, EntryStack<?> output, ResourceLocation location) {
+        super(input, fuel, output, location);
     }
 
     @Override
