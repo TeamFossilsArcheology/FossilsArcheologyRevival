@@ -1,6 +1,6 @@
 {
   "type": "fossil:analyzer",
-  "ingredient": {
+  "input": {
     "item": "fossil:failuresaurus_flesh"
   },
   "outputs": [

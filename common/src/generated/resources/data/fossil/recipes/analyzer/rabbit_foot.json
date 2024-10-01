@@ -1,6 +1,6 @@
 {
   "type": "fossil:analyzer",
-  "ingredient": {
+  "input": {
     "item": "minecraft:rabbit_foot"
   },
   "outputs": [

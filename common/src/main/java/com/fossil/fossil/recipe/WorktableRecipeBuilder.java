@@ -1,7 +1,5 @@
-package com.fossil.fossil.forge.data.recipe;
+package com.fossil.fossil.recipe;
 
-import com.fossil.fossil.item.ModItems;
-import com.fossil.fossil.recipe.CultureVatRecipe;
 import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -12,12 +10,12 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
 
-public class CultureVatRecipeBuilder extends WithFuelRecipeBuilder {
-    public CultureVatRecipeBuilder(String modId, ItemLike itemInput, ItemLike itemOutput) {
-        this(modId, itemInput, ModItems.BIO_GOO.get(), itemOutput, 6000);
+public class WorktableRecipeBuilder extends WithFuelRecipeBuilder {
+    public WorktableRecipeBuilder(String modId, ItemLike itemInput, ItemLike itemFuel, ItemLike itemOutput) {
+        this(modId, itemInput, itemFuel, itemOutput, 300);
     }
 
-    public CultureVatRecipeBuilder(String modId, ItemLike itemInput, ItemLike itemFuel, ItemLike itemOutput, int duration) {
+    public WorktableRecipeBuilder(String modId, ItemLike itemInput, ItemLike itemFuel, ItemLike itemOutput, int duration) {
         super(modId, itemInput, itemFuel, itemOutput, duration);
     }
 
@@ -28,7 +26,7 @@ public class CultureVatRecipeBuilder extends WithFuelRecipeBuilder {
 
     @Override
     protected ResourceLocation getDefaultRecipeId() {
-        return new ResourceLocation(modId, "culture_vat/" + Registry.ITEM.getKey(itemInput.asItem()).getPath());
+        return new ResourceLocation(modId, "worktable/" + Registry.ITEM.getKey(itemInput.asItem()).getPath() + "_with_" + Registry.ITEM.getKey(itemFuel.asItem()).getPath());
     }
 
     public static class Result extends WithFuelRecipeBuilder.Result {
@@ -39,7 +37,7 @@ public class CultureVatRecipeBuilder extends WithFuelRecipeBuilder {
 
         @Override
         public @NotNull RecipeSerializer<?> getType() {
-            return CultureVatRecipe.Serializer.INSTANCE;
+            return WorktableRecipe.Serializer.INSTANCE;
         }
     }
 }

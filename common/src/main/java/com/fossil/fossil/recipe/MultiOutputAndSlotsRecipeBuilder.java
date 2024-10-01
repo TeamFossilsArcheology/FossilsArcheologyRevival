@@ -1,6 +1,5 @@
-package com.fossil.fossil.forge.data.recipe;
+package com.fossil.fossil.recipe;
 
-import com.fossil.fossil.recipe.AnalyzerRecipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriterionTriggerInstance;
@@ -12,7 +11,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.ItemLike;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -22,30 +20,30 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 
-public class AnalyzerRecipeBuilder implements RecipeBuilder {
-    private final String modId;
-    private final ItemLike itemInput;
-    private final TagKey<Item> tagInput;
-    private final NavigableMap<ItemHolder, Double> weightedOutputs = new TreeMap<>();
+public abstract class MultiOutputAndSlotsRecipeBuilder implements RecipeBuilder {
+    protected final String modId;
+    protected final ItemLike itemInput;
+    protected final TagKey<Item> tagInput;
+    protected final NavigableMap<ItemHolder, Double> weightedOutputs = new TreeMap<>();
     public double total;
 
-    public AnalyzerRecipeBuilder(String modId, ItemLike itemInput) {
+    protected MultiOutputAndSlotsRecipeBuilder(String modId, ItemLike itemInput) {
         this.modId = modId;
         this.itemInput = itemInput;
         this.tagInput = null;
     }
 
-    public AnalyzerRecipeBuilder(String modId, TagKey<Item> tagInput) {
+    protected MultiOutputAndSlotsRecipeBuilder(String modId, TagKey<Item> tagInput) {
         this.modId = modId;
         this.itemInput = null;
         this.tagInput = tagInput;
     }
 
-    public AnalyzerRecipeBuilder addOutput(ItemLike itemLike, double weight) {
+    public MultiOutputAndSlotsRecipeBuilder addOutput(ItemLike itemLike, double weight) {
         return addOutput(itemLike, 1, weight);
     }
 
-    public AnalyzerRecipeBuilder addOutput(ItemLike itemLike, int count, double weight) {
+    public MultiOutputAndSlotsRecipeBuilder addOutput(ItemLike itemLike, int count, double weight) {
         total += weight;
         weightedOutputs.put(new ItemHolder(Registry.ITEM.getKey(itemLike.asItem()), count), weight);
         return this;
@@ -68,11 +66,6 @@ public class AnalyzerRecipeBuilder implements RecipeBuilder {
     }
 
     @Override
-    public void save(Consumer<FinishedRecipe> consumer, @NotNull ResourceLocation recipeId) {
-        consumer.accept(new Result(recipeId, itemInput != null ? Ingredient.of(itemInput) : Ingredient.of(tagInput), weightedOutputs));
-    }
-
-    @Override
     public void save(@NotNull Consumer<FinishedRecipe> consumer) {
         save(consumer, getDefaultRecipeId());
     }
@@ -88,21 +81,14 @@ public class AnalyzerRecipeBuilder implements RecipeBuilder {
         }
     }
 
-    private ResourceLocation getDefaultRecipeId() {
-        if (itemInput != null) {
-            return new ResourceLocation(modId, "analyzer/" + Registry.ITEM.getKey(itemInput.asItem()).getPath());
-        } else if (tagInput != null) {
-            return new ResourceLocation(modId, "analyzer/" + tagInput.location().getPath());
-        }
-        return Registry.ITEM.getKey(Items.ENDER_PEARL);
-    }
+    protected abstract ResourceLocation getDefaultRecipeId();
 
-    public static class Result implements FinishedRecipe {
+    public abstract static class Result implements FinishedRecipe {
         private final ResourceLocation recipeLocation;
         private final Ingredient ingredient;
         private final NavigableMap<ItemHolder, Double> weightedOutputs;
 
-        public Result(ResourceLocation recipeLocation, Ingredient ingredient, NavigableMap<ItemHolder, Double> weightedOutputs) {
+        protected Result(ResourceLocation recipeLocation, Ingredient ingredient, NavigableMap<ItemHolder, Double> weightedOutputs) {
             this.recipeLocation = recipeLocation;
             this.ingredient = ingredient;
             this.weightedOutputs = weightedOutputs;
@@ -110,7 +96,7 @@ public class AnalyzerRecipeBuilder implements RecipeBuilder {
 
         @Override
         public void serializeRecipeData(JsonObject json) {
-            json.add("ingredient", ingredient.toJson());
+            json.add("input", ingredient.toJson());
 
             JsonArray outputs = new JsonArray();
             for (Map.Entry<ItemHolder, Double> output : weightedOutputs.entrySet()) {
@@ -131,11 +117,6 @@ public class AnalyzerRecipeBuilder implements RecipeBuilder {
             return recipeLocation;
         }
 
-        @Override
-        public @NotNull RecipeSerializer<?> getType() {
-            return AnalyzerRecipe.Serializer.INSTANCE;
-        }
-
         @Nullable
         @Override
         public JsonObject serializeAdvancement() {
@@ -149,7 +130,7 @@ public class AnalyzerRecipeBuilder implements RecipeBuilder {
         }
     }
 
-    private record ItemHolder(ResourceLocation location, int count) implements Comparable<ItemHolder> {
+    public record ItemHolder(ResourceLocation location, int count) implements Comparable<ItemHolder> {
 
         @Override
         public int compareTo(@NotNull ItemHolder o) {

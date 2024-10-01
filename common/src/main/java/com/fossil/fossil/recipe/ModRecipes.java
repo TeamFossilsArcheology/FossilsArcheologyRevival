@@ -1,9 +1,7 @@
 package com.fossil.fossil.recipe;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.entity.CustomBlockEntity;
-import com.fossil.fossil.block.entity.SifterBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.ModItems;
@@ -11,25 +9,19 @@ import com.fossil.fossil.util.Version;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Tuple;
-import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.Blocks;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ModRecipes {
     private static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
-    private static final Map<Item, AnalyzerRecipe> SIFTER_RECIPES = new HashMap<>();
     private static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new HashMap<>();
     private static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new HashMap<>();
 
@@ -41,10 +33,13 @@ public class ModRecipes {
             () -> AnalyzerRecipe.Serializer.INSTANCE);
     public static final RegistrySupplier<RecipeSerializer<CultureVatRecipe>> CULTURE_VAT_SERIALIZER = SERIALIZERS.register("culture_vat",
             () -> CultureVatRecipe.Serializer.INSTANCE);
+    public static final RegistrySupplier<RecipeSerializer<SifterRecipe>> SIFTER_SERIALIZER = SERIALIZERS.register("sifter",
+            () -> SifterRecipe.Serializer.INSTANCE);
     public static final RegistrySupplier<RecipeSerializer<WorktableRecipe>> WORKTABLE_SERIALIZER = SERIALIZERS.register("worktable",
             () -> WorktableRecipe.Serializer.INSTANCE);
     public static final RegistrySupplier<RecipeType<AnalyzerRecipe>> ANALYZER_TYPE = TYPES.register("analyzer", () -> AnalyzerRecipe.Type.INSTANCE);
     public static final RegistrySupplier<RecipeType<CultureVatRecipe>> CULTURE_VAT_TYPE = TYPES.register("culture_vat", () -> CultureVatRecipe.Type.INSTANCE);
+    public static final RegistrySupplier<RecipeType<SifterRecipe>> SIFTER_TYPE = TYPES.register("sifter", () -> SifterRecipe.Type.INSTANCE);
     public static final RegistrySupplier<RecipeType<WorktableRecipe>> WORKTABLE_TYPE = TYPES.register("worktable", () -> WorktableRecipe.Type.INSTANCE);
 
     public static void register() {
@@ -124,33 +119,9 @@ public class ModRecipes {
             }
         }
 
-        List<Tuple<ItemLike, Double>> outputs = new ArrayList<>();
-        outputs.add(new Tuple<>(Blocks.SAND, 20d));
-        outputs.add(new Tuple<>(Items.POTATO, 15d));
-        outputs.add(new Tuple<>(Items.CARROT, 10d));
-        outputs.add(new Tuple<>(Items.BONE_MEAL, 20d));
-        outputs.add(new Tuple<>(ModBlocks.AMBER_CHUNK_DOMINICAN.get(), 1d));
-        outputs.add(new Tuple<>(ModItems.FERN_SEED_FOSSIL.get(), 10d));
-        outputs.add(new Tuple<>(ModItems.PlANT_FOSSIL.get(), 14d));
-        outputs.add(new Tuple<>(ModItems.BIO_FOSSIL.get(), 2d));
-        outputs.add(new Tuple<>(ModItems.POTTERY_SHARD.get(), 5d));
-        for (Item item : Registry.ITEM) {
-            if (item instanceof BlockItem && SifterBlockEntity.getSiftTypeFromStack(new ItemStack(item)) != SifterBlockEntity.EnumSiftType.NONE) {
-                registerSifter(item, outputs);
-            }
-        }
-
         WORKTABLE_FUEL_VALUES.put(ModItems.POTTERY_SHARD.get(), 300);
         WORKTABLE_FUEL_VALUES.put(ModItems.RELIC_SCRAP.get(), 300);
         CULTURE_VAT_FUEL_VALUES.put(ModItems.BIO_GOO.get(), Version.debugEnabled() ? 1000 : 6000);
-    }
-
-    private static void registerSifter(ItemLike item, List<Tuple<ItemLike, Double>> outputs) {
-        NavigableMap<Double, ItemStack> map = new TreeMap<>();
-        for (Tuple<ItemLike, Double> output : outputs) {
-            map.put(output.getB(), new ItemStack(output.getA()));
-        }
-        SIFTER_RECIPES.put(item.asItem(), new AnalyzerRecipe(new ResourceLocation(Fossil.MOD_ID, item.toString()), Ingredient.of(item), map));
     }
 
     private static void registerAnalyzer(AnalyzerRecipe.Builder recipe) {
@@ -158,9 +129,8 @@ public class ModRecipes {
     }
 
     @Nullable
-    public static AnalyzerRecipe getSifterRecipeForItem(ItemStack itemStack, Level level) {
-        return SIFTER_RECIPES.computeIfAbsent(itemStack.getItem(), item -> (AnalyzerRecipe) level.getRecipeManager().byKey(
-                new ResourceLocation(Fossil.MOD_ID, "sifter/" + itemStack.getItem())).orElse(null));
+    public static SifterRecipe getSifterRecipeForItem(CustomBlockEntity container, Level level) {
+        return level.getRecipeManager().getRecipeFor(SIFTER_TYPE.get(), container, level).orElse(null);
     }
 
     @Nullable

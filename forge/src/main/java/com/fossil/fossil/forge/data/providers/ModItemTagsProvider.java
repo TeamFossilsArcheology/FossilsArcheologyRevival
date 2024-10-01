@@ -1,6 +1,7 @@
 package com.fossil.fossil.forge.data.providers;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
@@ -13,6 +14,7 @@ import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -122,6 +124,9 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModBlockTags.SIGILLARIA_LOGS, ModItemTags.SIGILLARIA_LOGS);
         copy(ModBlockTags.TEMPSKYA_LOGS, ModItemTags.TEMPSKYA_LOGS);
         copy(ModBlockTags.FIGURINES, ModItemTags.FIGURINES);
+
+        tag(ModItemTags.SIFTER_INPUTS).addTags(ItemTags.SAND, ItemTags.DIRT).add(ModBlocks.DENSE_SAND.get().asItem(),
+                ModBlocks.VOLCANIC_ASH.get().asItem(), Blocks.GRAVEL.asItem(), Blocks.SOUL_SAND.asItem());
     }
 
     @Override

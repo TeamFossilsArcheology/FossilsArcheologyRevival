@@ -116,7 +116,7 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
     }
 
     private boolean isAnalyzable(ItemStack itemStack) {
-        return ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(9, itemStack), level) != null;
+        return ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(1, itemStack), level) != null;
     }
 
     @Override

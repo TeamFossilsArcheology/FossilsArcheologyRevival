@@ -4,6 +4,7 @@ import com.fossil.fossil.block.custom_blocks.SifterBlock;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
 import com.fossil.fossil.fabric.block.entity.FabricContainerBlockEntity;
+import com.fossil.fossil.inventory.CustomSimpleContainer;
 import com.fossil.fossil.inventory.SifterMenu;
 import com.fossil.fossil.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
@@ -103,7 +104,7 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
     }
 
     public boolean isSiftable(ItemStack stack) {
-        return ModRecipes.getSifterRecipeForItem(stack, level) != null;
+        return ModRecipes.getSifterRecipeForItem(new CustomSimpleContainer(1, stack), level) != null;
     }
 
     protected boolean canProcess() {
@@ -123,7 +124,8 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
 
     protected void createItem() {
         if (canProcess()) {
-            ItemStack result = ModRecipes.getSifterRecipeForItem(items.get(0), level).assemble(this).copy();
+            ItemStack result = ModRecipes.getSifterRecipeForItem(new CustomSimpleContainer(1, items.get(0)), level)
+                    .assemble(this).copy();
             for (int slot = 1; slot < 5; slot++) {
                 ItemStack stackInSlot = items.get(slot);
                 if (!stackInSlot.isEmpty()) {
@@ -171,7 +173,7 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
 
     @Override
     public boolean canPlaceItem(int slot, @NotNull ItemStack stack) {
-        return slot == 0;
+        return slot == 0 && isSiftable(stack);
     }
 
     @Override

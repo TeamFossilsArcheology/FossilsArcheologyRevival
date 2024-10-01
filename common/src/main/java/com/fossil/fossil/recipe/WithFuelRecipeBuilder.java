@@ -1,4 +1,4 @@
-package com.fossil.fossil.forge.data.recipe;
+package com.fossil.fossil.recipe;
 
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.CriterionTriggerInstance;

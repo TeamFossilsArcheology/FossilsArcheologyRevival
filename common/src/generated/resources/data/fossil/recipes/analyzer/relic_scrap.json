@@ -1,6 +1,6 @@
 {
   "type": "fossil:analyzer",
-  "ingredient": {
+  "input": {
     "item": "fossil:relic_scrap"
   },
   "outputs": [

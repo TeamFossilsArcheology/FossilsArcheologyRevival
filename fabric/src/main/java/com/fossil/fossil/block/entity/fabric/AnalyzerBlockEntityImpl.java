@@ -119,7 +119,7 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
     }
 
     private boolean isAnalyzable(ItemStack itemStack) {
-        return ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(9, itemStack), level) != null;
+        return ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(1, itemStack), level) != null;
     }
 
     @Override
@@ -208,7 +208,7 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
 
     @Override
     public boolean canPlaceItem(int slot, @NotNull ItemStack stack) {
-        return slot < SLOTS_FOR_DOWN[0];
+        return slot < SLOTS_FOR_DOWN[0] && isAnalyzable(stack);
     }
 
     @Override

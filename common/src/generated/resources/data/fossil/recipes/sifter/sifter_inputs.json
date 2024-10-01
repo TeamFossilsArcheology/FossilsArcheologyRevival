@@ -1,0 +1,44 @@
+{
+  "type": "fossil:sifter",
+  "input": {
+    "tag": "fossil:sifter_inputs"
+  },
+  "outputs": [
+    {
+      "item": "fossil:amber_chunk_dominican",
+      "weight": 1.0
+    },
+    {
+      "item": "minecraft:bone_meal",
+      "weight": 20.0
+    },
+    {
+      "item": "minecraft:carrot",
+      "weight": 10.0
+    },
+    {
+      "item": "fossil:fossil_bio",
+      "weight": 2.0
+    },
+    {
+      "item": "fossil:fossil_plant",
+      "weight": 14.0
+    },
+    {
+      "item": "fossil:fossil_seed_fern",
+      "weight": 10.0
+    },
+    {
+      "item": "minecraft:potato",
+      "weight": 15.0
+    },
+    {
+      "item": "fossil:pottery_shard",
+      "weight": 5.0
+    },
+    {
+      "item": "minecraft:sand",
+      "weight": 20.0
+    }
+  ]
+}
