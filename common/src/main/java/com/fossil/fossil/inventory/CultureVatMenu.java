@@ -1,7 +1,8 @@
 package com.fossil.fossil.inventory;
 
+import com.fossil.fossil.recipe.CultureVatRecipe;
 import com.fossil.fossil.recipe.ModRecipes;
-import com.fossil.fossil.recipe.WorktableRecipe;
+import com.fossil.fossil.recipe.WithFuelRecipe;
 import com.fossil.fossil.util.Version;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
@@ -70,7 +71,7 @@ public class CultureVatMenu extends AbstractContainerMenu {
 
     public boolean canPutStackInInput(ItemStack stack) {
         if (stack != null && !stack.isEmpty()) {
-            WorktableRecipe recipe = ModRecipes.getCultureVatRecipeForItem(stack, level);
+            CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, stack), level);
             return recipe != null;
         }
         return false;
@@ -89,7 +90,7 @@ public class CultureVatMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (index != INPUT_SLOT_ID && index != FUEL_SLOT_ID) {
-                if (ModRecipes.getCultureVatRecipeForItem(current, level) != null) {
+                if (ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), level) != null) {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }

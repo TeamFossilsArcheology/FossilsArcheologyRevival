@@ -54,7 +54,7 @@ public class AnalyzerMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (index >= 13) {
-                if (ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(9, itemStack), player.level) != null) {
+                if (ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(1, itemStack), player.level) != null) {
                     if (!moveItemStackTo(current, 0, 9, false)) {
                         return ItemStack.EMPTY;
                     }

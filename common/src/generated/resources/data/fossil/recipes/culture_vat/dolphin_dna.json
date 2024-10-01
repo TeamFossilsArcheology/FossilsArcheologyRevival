@@ -1,0 +1,11 @@
+{
+  "type": "fossil:culture_vat",
+  "input": {
+    "item": "fossil:dolphin_dna"
+  },
+  "fuel": {
+    "item": "fossil:bio_goo"
+  },
+  "result": "fossil:syringe_dolphin",
+  "duration": 6000
+}

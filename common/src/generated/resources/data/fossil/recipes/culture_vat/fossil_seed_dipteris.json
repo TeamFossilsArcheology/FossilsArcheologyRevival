@@ -1,0 +1,11 @@
+{
+  "type": "fossil:culture_vat",
+  "input": {
+    "item": "fossil:fossil_seed_dipteris"
+  },
+  "fuel": {
+    "item": "fossil:bio_goo"
+  },
+  "result": "fossil:seed_dipteris",
+  "duration": 6000
+}

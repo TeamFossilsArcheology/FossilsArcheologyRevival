@@ -7,8 +7,9 @@ import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.fabric.block.entity.FabricEnergyContainerBlockEntity;
 import com.fossil.fossil.inventory.CultureVatMenu;
+import com.fossil.fossil.recipe.CultureVatRecipe;
 import com.fossil.fossil.recipe.ModRecipes;
-import com.fossil.fossil.recipe.WorktableRecipe;
+import com.fossil.fossil.recipe.WithFuelRecipe;
 import com.fossil.fossil.tags.ModItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -154,17 +155,23 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
         return CultureVatBlock.EmbryoType.GENERIC;
     }
 
+    private boolean isValidInput(ItemStack inputStack, ItemStack fuelStack) {
+        CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuelStack), level);
+        if (recipe != null) {
+            ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
+            return output.isEmpty() || output.sameItem(recipe.getResultItem());
+        }
+        return false;
+    }
+
     protected boolean canProcess() {
         if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) && energyStorage.amount < FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE)) {
             return false;
         }
         ItemStack inputStack = items.get(CultureVatMenu.INPUT_SLOT_ID);
-        if (!inputStack.isEmpty()) {
-            WorktableRecipe recipe = ModRecipes.getCultureVatRecipeForItem(inputStack, level);
-            if (recipe != null) {
-                ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
-                return output.isEmpty() || output.sameItem(recipe.getOutput());
-            }
+        ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
+        if (!inputStack.isEmpty() && !fuelStack.isEmpty()) {
+            return isValidInput(inputStack, fuelStack);
         }
         return false;
     }
@@ -172,9 +179,9 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
     protected void createItem() {
         if (this.canProcess()) {
             ItemStack inputStack = items.get(CultureVatMenu.INPUT_SLOT_ID);
-
-            WorktableRecipe recipe = ModRecipes.getCultureVatRecipeForItem(inputStack, level);
-            ItemStack result = recipe.getOutput().copy();
+            ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
+            CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuelStack), level);
+            ItemStack result = recipe.getResultItem();
             ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
             if (output.isEmpty()) {
                 items.set(CultureVatMenu.OUTPUT_SLOT_ID, result);
@@ -217,7 +224,7 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
         if (slot == CultureVatMenu.FUEL_SLOT_ID) {
             return ModRecipes.isCultureVatFuel(stack.getItem());
         }
-        return true;
+        return ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, items.get(CultureVatMenu.INPUT_SLOT_ID)), level) != null;
     }
 
     @Override

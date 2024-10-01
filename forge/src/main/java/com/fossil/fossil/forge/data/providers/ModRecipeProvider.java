@@ -9,6 +9,9 @@ import com.fossil.fossil.block.custom_blocks.VaseBlock;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.forge.data.recipe.AnalyzerRecipeBuilder;
+import com.fossil.fossil.forge.data.recipe.CultureVatRecipeBuilder;
+import com.fossil.fossil.forge.data.recipe.WorktableRecipeBuilder;
+import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.item.ToyBallItem;
 import com.fossil.fossil.item.ToyScratchingPostItem;
 import com.fossil.fossil.item.ToyTetheredLogItem;
@@ -80,7 +83,7 @@ public class ModRecipeProvider extends RecipeProvider {
     protected void buildCraftingRecipes(@NotNull Consumer<FinishedRecipe> consumer) {
         boolean cookingRecipes = true;
         boolean craftingRecipes = true;
-        boolean analyzerRecipes = true;
+        boolean machineRecipes = true;
         if (cookingRecipes) {
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
                 if (info.foodItem != null && info.cookedFoodItem != null) {
@@ -225,7 +228,7 @@ public class ModRecipeProvider extends RecipeProvider {
             stonecutter(consumer, VOLCANIC_TILE_WALL.get(), VOLCANIC_TILES.get());
         }
 
-        if (analyzerRecipes) {
+        if (machineRecipes) {
             AnalyzerRecipeBuilder plantFossil = analyzed(PlANT_FOSSIL.get())
                     .addOutput(Blocks.SAND, 35)
                     .addOutput(Blocks.CACTUS, 20)
@@ -358,6 +361,58 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(POTTERY_SHARD.get(), 4).addOutput(BROKEN_HELMET.get(), 4).addOutput(BROKEN_SWORD.get(), 4).addOutput(STONE_TABLET.get(), 30)
                     .addOutput(ANU_FIGURINE_DESTROYED.get(), 4).addOutput(ENDERMAN_FIGURINE_DESTROYED.get(), 4).addOutput(PIGLIN_FIGURINE_DESTROYED.get(), 4).addOutput(SKELETON_FIGURINE_DESTROYED.get(), 4).addOutput(STEVE_FIGURINE_DESTROYED.get(), 4).addOutput(ZOMBIE_FIGURINE_DESTROYED.get(), 4).save(consumer);
             analyzed(ItemTags.WOOL).addOutput(Items.STRING, 3, 60).addOutput(SHEEP.dnaItem, 27).addOutput(LLAMA.dnaItem, 13).save(consumer);
+
+            worktable(ModBlocks.AMPHORA_VASE_DAMAGED, ModBlocks.AMPHORA_VASE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.VOLUTE_VASE_DAMAGED, ModBlocks.VOLUTE_VASE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.KYLIX_VASE_DAMAGED, ModBlocks.KYLIX_VASE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.ANU_FIGURINE_DESTROYED, ModBlocks.ANU_FIGURINE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.ENDERMAN_FIGURINE_DESTROYED, ModBlocks.ENDERMAN_FIGURINE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.PIGLIN_FIGURINE_DESTROYED, ModBlocks.PIGLIN_FIGURINE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.SKELETON_FIGURINE_DESTROYED, ModBlocks.SKELETON_FIGURINE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.STEVE_FIGURINE_DESTROYED, ModBlocks.STEVE_FIGURINE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.ZOMBIE_FIGURINE_DESTROYED, ModBlocks.ZOMBIE_FIGURINE_RESTORED, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.ANU_FIGURINE_RESTORED, ModBlocks.ANU_FIGURINE_PRISTINE, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.ENDERMAN_FIGURINE_RESTORED, ModBlocks.ENDERMAN_FIGURINE_PRISTINE, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.PIGLIN_FIGURINE_RESTORED, ModBlocks.PIGLIN_FIGURINE_PRISTINE, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.SKELETON_FIGURINE_RESTORED, ModBlocks.SKELETON_FIGURINE_PRISTINE, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.STEVE_FIGURINE_RESTORED, ModBlocks.STEVE_FIGURINE_PRISTINE, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModBlocks.ZOMBIE_FIGURINE_RESTORED, ModBlocks.ZOMBIE_FIGURINE_PRISTINE, ModItems.POTTERY_SHARD, consumer);
+            worktable(ModItems.BROKEN_SWORD, ModItems.ANCIENT_SWORD, ModItems.RELIC_SCRAP, 3000, consumer);
+            worktable(ModItems.BROKEN_HELMET, ModItems.ANCIENT_HELMET, ModItems.RELIC_SCRAP, 3000, consumer);
+            worktable(ModItems.ANCIENT_SWORD, ModItems.ANCIENT_SWORD, ModItems.RELIC_SCRAP, 3000, consumer);
+            worktable(ModItems.ANCIENT_HELMET, ModItems.ANCIENT_HELMET, ModItems.RELIC_SCRAP, 3000, consumer);
+            worktable(ModItems.SCARAB_SWORD, ModItems.SCARAB_SWORD, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.SCARAB_PICKAXE, ModItems.SCARAB_PICKAXE, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.SCARAB_AXE, ModItems.SCARAB_AXE, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.SCARAB_SHOVEL, ModItems.SCARAB_SHOVEL, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.SCARAB_HOE, ModItems.SCARAB_HOE, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.WOODEN_JAVELIN, ModItems.WOODEN_JAVELIN, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.STONE_JAVELIN, ModItems.STONE_JAVELIN, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.IRON_JAVELIN, ModItems.IRON_JAVELIN, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.GOLD_JAVELIN, ModItems.GOLD_JAVELIN, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.DIAMOND_JAVELIN, ModItems.DIAMOND_JAVELIN, ModItems.RELIC_SCRAP, consumer);
+            worktable(ModItems.ANCIENT_JAVELIN, ModItems.ANCIENT_JAVELIN, ModItems.RELIC_SCRAP, consumer);
+
+
+            for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
+                if (info.dnaItem != null && info.getDNAResult() != null) {
+                    cultureVat(info.dnaItem, info.getDNAResult(), consumer);
+                }
+            }
+            for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
+                if (info.dnaItem != null && info.getDNAResult() != null) {
+                    cultureVat(info.dnaItem, info.getDNAResult(), consumer);
+                }
+            }
+            cultureVat(ModItems.FERN_SEED_FOSSIL, ModItems.FERN_SEED, consumer);
+            cultureVat(ModItems.CALAMITES_SAPLING_FOSSIL, ModBlocks.CALAMITES_SAPLING, consumer);
+            cultureVat(ModItems.CORDAITES_SAPLING_FOSSIL, ModBlocks.CORDAITES_SAPLING, consumer);
+            cultureVat(ModItems.PALM_SAPLING_FOSSIL, ModBlocks.PALM_SAPLING, consumer);
+            cultureVat(ModItems.SIGILLARIA_SAPLING_FOSSIL, ModBlocks.SIGILLARIA_SAPLING, consumer);
+            cultureVat(ModItems.TEMPSKYA_SAPLING_FOSSIL, ModBlocks.TEMPSKYA_SAPLING, consumer);
+            for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
+                cultureVat(info.getFossilizedPlantSeedItem(), info.getPlantSeedItem(), consumer);
+            }
         }
     }
 
@@ -367,6 +422,22 @@ public class ModRecipeProvider extends RecipeProvider {
 
     public AnalyzerRecipeBuilder analyzed(TagKey<Item> tagKey) {
         return new AnalyzerRecipeBuilder(Fossil.MOD_ID, tagKey);
+    }
+
+    public void worktable(RegistrySupplier<? extends ItemLike> itemInput, RegistrySupplier<? extends ItemLike> itemOutput, RegistrySupplier<? extends ItemLike> itemFuel, int duration, Consumer<FinishedRecipe> consumer) {
+        new WorktableRecipeBuilder(Fossil.MOD_ID, itemInput.get(), itemFuel.get(), itemOutput.get(), duration).save(consumer);
+    }
+
+    public void worktable(RegistrySupplier<? extends ItemLike> itemInput, RegistrySupplier<? extends ItemLike> itemOutput, RegistrySupplier<? extends ItemLike> itemFuel, Consumer<FinishedRecipe> consumer) {
+        new WorktableRecipeBuilder(Fossil.MOD_ID, itemInput.get(), itemFuel.get(), itemOutput.get()).save(consumer);
+    }
+
+    public void cultureVat(ItemLike itemInput, ItemLike itemOutput, Consumer<FinishedRecipe> consumer) {
+        new CultureVatRecipeBuilder(Fossil.MOD_ID, itemInput, itemOutput).save(consumer);
+    }
+
+    public void cultureVat(RegistrySupplier<? extends ItemLike> itemInput, RegistrySupplier<? extends ItemLike> itemOutput, Consumer<FinishedRecipe> consumer) {
+        new CultureVatRecipeBuilder(Fossil.MOD_ID, itemInput.get(), itemOutput.get()).save(consumer);
     }
 
     private Item colorToDye(DyeColor dyeColor) {

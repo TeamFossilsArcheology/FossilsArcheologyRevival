@@ -43,6 +43,12 @@
     ],
     "cardinal-components-entity": [
       "com.fossil.fossil.fabric.FossilFabric"
+    ],
+    "rei_client": [
+      "com.fossil.fossil.compat.rei.FossilREIClientPlugin"
+    ],
+    "rei_common": [
+      "com.fossil.fossil.compat.rei.FossilREICommonPlugin"
     ]
   },
   "mixins": [

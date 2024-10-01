@@ -7,6 +7,7 @@ import com.fossil.fossil.forge.block.entity.ForgeContainerBlockEntity;
 import com.fossil.fossil.inventory.WorktableMenu;
 import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.recipe.ModRecipes;
+import com.fossil.fossil.recipe.WithFuelRecipe;
 import com.fossil.fossil.recipe.WorktableRecipe;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -132,10 +133,10 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         }
     }
 
-    private ItemStack checkSmelt(ItemStack itemstack) {
-        WorktableRecipe recipeWorktable = ModRecipes.getWorktableRecipeForItem(itemstack, level);
+    private ItemStack checkSmelt(ItemStack input, ItemStack fuel) {
+        WorktableRecipe recipeWorktable = ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(input, fuel), level);
         if (recipeWorktable != null) {
-            return recipeWorktable.getOutput().copy();
+            return recipeWorktable.getResultItem();
         }
         return new ItemStack(ModItems.POTTERY_SHARD.get());
     }
@@ -144,22 +145,19 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         if (items.get(WorktableMenu.INPUT_SLOT_ID).isEmpty()) {
             return false;
         } else {
-            ItemStack var1 = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID));
-            return var1 != null && !var1.isEmpty() && (items.get(WorktableMenu.OUTPUT_SLOT_ID).isEmpty() || (items.get(
-                    WorktableMenu.OUTPUT_SLOT_ID).sameItem(var1) && (items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < 64
-                    && items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < items.get(WorktableMenu.OUTPUT_SLOT_ID).getMaxStackSize() || items.get(
-                    WorktableMenu.OUTPUT_SLOT_ID).getCount() < var1.getMaxStackSize())));
+            ItemStack result = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), items.get(WorktableMenu.FUEL_SLOT_ID));
+            return !result.isEmpty() && (items.get(WorktableMenu.OUTPUT_SLOT_ID).isEmpty() || items.get(
+                    WorktableMenu.OUTPUT_SLOT_ID).sameItem(result) && (items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < 64 && items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < items.get(WorktableMenu.OUTPUT_SLOT_ID).getMaxStackSize() || items.get(
+                    WorktableMenu.OUTPUT_SLOT_ID).getCount() < result.getMaxStackSize()));
         }
     }
 
     protected void createItem() {
         if (canProcess()) {
-            ItemStack var1 = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID));
+            ItemStack var1 = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), items.get(WorktableMenu.FUEL_SLOT_ID));
 
             if (items.get(WorktableMenu.OUTPUT_SLOT_ID).isEmpty()) {
-                if (var1 != null) {
-                    items.set(WorktableMenu.OUTPUT_SLOT_ID, var1.copy());
-                }
+                items.set(WorktableMenu.OUTPUT_SLOT_ID, var1.copy());
             } else if (items.get(WorktableMenu.OUTPUT_SLOT_ID).getItem() == var1.getItem()) {
                 items.get(WorktableMenu.OUTPUT_SLOT_ID).grow(var1.getCount());
             }
@@ -176,12 +174,11 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         }
     }
 
-    private int getItemBurnTime(ItemStack itemstack) {
-        if (!itemstack.isEmpty()) {
-            Item var2 = itemstack.getItem();
-            WorktableRecipe recipeWorktable = ModRecipes.getWorktableRecipeForItem(items.get(WorktableMenu.INPUT_SLOT_ID), level);
+    private int getItemBurnTime(ItemStack possibleFuel) {
+        if (!possibleFuel.isEmpty()) {
+            WorktableRecipe recipeWorktable = ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(items.get(WorktableMenu.INPUT_SLOT_ID), possibleFuel), level);
             if (recipeWorktable != null) {
-                return var2 == recipeWorktable.getFuel().getItem() ? getItemFuelTime(recipeWorktable.getFuel()) : 0;
+                return getItemFuelTime(possibleFuel);
             }
         }
         return 0;
@@ -233,7 +230,7 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         if (slot == WorktableMenu.FUEL_SLOT_ID) {
             return ModRecipes.isWorktableFuel(stack.getItem());
         }
-        return ModRecipes.getWorktableRecipeForItem(stack, getLevel()) != null;
+        return ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, stack), getLevel()) != null;
     }
 
 

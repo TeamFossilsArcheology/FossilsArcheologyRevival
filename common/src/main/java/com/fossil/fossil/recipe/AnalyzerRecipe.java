@@ -51,7 +51,7 @@ public class AnalyzerRecipe implements Recipe<CustomBlockEntity> {
         return false;
     }
 
-    public boolean matches(CustomBlockEntity container, int slot) {
+    private boolean matches(CustomBlockEntity container, int slot) {
         ItemStack itemStack = container.getItem(slot);
         if (itemStack.isEmpty()) return false;
         return ingredient.test(itemStack);

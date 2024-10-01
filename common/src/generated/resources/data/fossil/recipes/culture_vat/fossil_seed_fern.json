@@ -1,0 +1,11 @@
+{
+  "type": "fossil:culture_vat",
+  "input": {
+    "item": "fossil:fossil_seed_fern"
+  },
+  "fuel": {
+    "item": "fossil:bio_goo"
+  },
+  "result": "fossil:fern_seed",
+  "duration": 6000
+}

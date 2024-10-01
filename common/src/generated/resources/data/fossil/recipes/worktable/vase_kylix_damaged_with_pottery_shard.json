@@ -1,0 +1,11 @@
+{
+  "type": "fossil:worktable",
+  "input": {
+    "item": "fossil:vase_kylix_damaged"
+  },
+  "fuel": {
+    "item": "fossil:pottery_shard"
+  },
+  "result": "fossil:vase_kylix_restored",
+  "duration": 300
+}

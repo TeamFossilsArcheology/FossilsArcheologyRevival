@@ -2,7 +2,6 @@ package com.fossil.fossil.recipe;
 
 import com.fossil.fossil.Fossil;
 import com.fossil.fossil.block.ModBlocks;
-import com.fossil.fossil.block.PrehistoricPlantInfo;
 import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -31,9 +30,7 @@ import java.util.*;
 public class ModRecipes {
     private static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
     private static final Map<Item, AnalyzerRecipe> SIFTER_RECIPES = new HashMap<>();
-    private static final Map<Item, WorktableRecipe> WORKTABLE_RECIPES = new HashMap<>();
     private static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new HashMap<>();
-    private static final Map<ItemLike, WorktableRecipe> CULTURE_VAT_RECIPES = new HashMap<>();
     private static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new HashMap<>();
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Fossil.MOD_ID,
@@ -42,7 +39,13 @@ public class ModRecipes {
 
     public static final RegistrySupplier<RecipeSerializer<AnalyzerRecipe>> ANALYZER_SERIALIZER = SERIALIZERS.register("analyzer",
             () -> AnalyzerRecipe.Serializer.INSTANCE);
+    public static final RegistrySupplier<RecipeSerializer<CultureVatRecipe>> CULTURE_VAT_SERIALIZER = SERIALIZERS.register("culture_vat",
+            () -> CultureVatRecipe.Serializer.INSTANCE);
+    public static final RegistrySupplier<RecipeSerializer<WorktableRecipe>> WORKTABLE_SERIALIZER = SERIALIZERS.register("worktable",
+            () -> WorktableRecipe.Serializer.INSTANCE);
     public static final RegistrySupplier<RecipeType<AnalyzerRecipe>> ANALYZER_TYPE = TYPES.register("analyzer", () -> AnalyzerRecipe.Type.INSTANCE);
+    public static final RegistrySupplier<RecipeType<CultureVatRecipe>> CULTURE_VAT_TYPE = TYPES.register("culture_vat", () -> CultureVatRecipe.Type.INSTANCE);
+    public static final RegistrySupplier<RecipeType<WorktableRecipe>> WORKTABLE_TYPE = TYPES.register("worktable", () -> WorktableRecipe.Type.INSTANCE);
 
     public static void register() {
         SERIALIZERS.register();
@@ -136,56 +139,10 @@ public class ModRecipes {
                 registerSifter(item, outputs);
             }
         }
-        registerWorktable(ModBlocks.AMPHORA_VASE_DAMAGED.get(), ModBlocks.AMPHORA_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.VOLUTE_VASE_DAMAGED.get(), ModBlocks.VOLUTE_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.KYLIX_VASE_DAMAGED.get(), ModBlocks.KYLIX_VASE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.ANU_FIGURINE_DESTROYED.get(), ModBlocks.ANU_FIGURINE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.ENDERMAN_FIGURINE_DESTROYED.get(), ModBlocks.ENDERMAN_FIGURINE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.PIGLIN_FIGURINE_DESTROYED.get(), ModBlocks.PIGLIN_FIGURINE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.SKELETON_FIGURINE_DESTROYED.get(), ModBlocks.SKELETON_FIGURINE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.STEVE_FIGURINE_DESTROYED.get(), ModBlocks.STEVE_FIGURINE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.ZOMBIE_FIGURINE_DESTROYED.get(), ModBlocks.ZOMBIE_FIGURINE_RESTORED.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.ANU_FIGURINE_RESTORED.get(), ModBlocks.ANU_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.ENDERMAN_FIGURINE_RESTORED.get(), ModBlocks.ENDERMAN_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.PIGLIN_FIGURINE_RESTORED.get(), ModBlocks.PIGLIN_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.SKELETON_FIGURINE_RESTORED.get(), ModBlocks.SKELETON_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.STEVE_FIGURINE_RESTORED.get(), ModBlocks.STEVE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModBlocks.ZOMBIE_FIGURINE_RESTORED.get(), ModBlocks.ZOMBIE_FIGURINE_PRISTINE.get(), ModItems.POTTERY_SHARD.get());
-        registerWorktable(ModItems.BROKEN_SWORD.get(), ModItems.ANCIENT_SWORD.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.BROKEN_HELMET.get(), ModItems.ANCIENT_HELMET.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.ANCIENT_SWORD.get(), ModItems.ANCIENT_SWORD.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.ANCIENT_HELMET.get(), ModItems.ANCIENT_HELMET.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.SCARAB_SWORD.get(), ModItems.SCARAB_SWORD.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.SCARAB_PICKAXE.get(), ModItems.SCARAB_PICKAXE.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.SCARAB_AXE.get(), ModItems.SCARAB_AXE.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.SCARAB_SHOVEL.get(), ModItems.SCARAB_SHOVEL.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.SCARAB_HOE.get(), ModItems.SCARAB_HOE.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.WOODEN_JAVELIN.get(), ModItems.WOODEN_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.STONE_JAVELIN.get(), ModItems.STONE_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.IRON_JAVELIN.get(), ModItems.IRON_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.GOLD_JAVELIN.get(), ModItems.GOLD_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.DIAMOND_JAVELIN.get(), ModItems.DIAMOND_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
-        registerWorktable(ModItems.ANCIENT_JAVELIN.get(), ModItems.ANCIENT_JAVELIN.get(), ModItems.RELIC_SCRAP.get());
 
-        for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
-            if (info.dnaItem != null && info.getDNAResult() != null) {
-                registerCultureVat(info.dnaItem, info.getDNAResult(), ModItems.BIO_GOO.get());
-            }
-        }
-        for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
-            if (info.dnaItem != null && info.getDNAResult() != null) {
-                registerCultureVat(info.dnaItem, info.getDNAResult(), ModItems.BIO_GOO.get());
-            }
-        }
-        registerCultureVat(ModItems.FERN_SEED_FOSSIL.get(), ModItems.FERN_SEED.get(), ModItems.BIO_GOO.get());
-        registerCultureVat(ModItems.CALAMITES_SAPLING_FOSSIL.get(), ModBlocks.CALAMITES_SAPLING.get(), ModItems.BIO_GOO.get());
-        registerCultureVat(ModItems.CORDAITES_SAPLING_FOSSIL.get(), ModBlocks.CORDAITES_SAPLING.get(), ModItems.BIO_GOO.get());
-        registerCultureVat(ModItems.PALM_SAPLING_FOSSIL.get(), ModBlocks.PALM_SAPLING.get(), ModItems.BIO_GOO.get());
-        registerCultureVat(ModItems.SIGILLARIA_SAPLING_FOSSIL.get(), ModBlocks.SIGILLARIA_SAPLING.get(), ModItems.BIO_GOO.get());
-        registerCultureVat(ModItems.TEMPSKYA_SAPLING_FOSSIL.get(), ModBlocks.TEMPSKYA_SAPLING.get(), ModItems.BIO_GOO.get());
-        for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
-            registerCultureVat(info.getFossilizedPlantSeedItem(), info.getPlantSeedItem(), ModItems.BIO_GOO.get());
-        }
+        WORKTABLE_FUEL_VALUES.put(ModItems.POTTERY_SHARD.get(), 300);
+        WORKTABLE_FUEL_VALUES.put(ModItems.RELIC_SCRAP.get(), 300);
+        CULTURE_VAT_FUEL_VALUES.put(ModItems.BIO_GOO.get(), Version.debugEnabled() ? 1000 : 6000);
     }
 
     private static void registerSifter(ItemLike item, List<Tuple<ItemLike, Double>> outputs) {
@@ -200,54 +157,28 @@ public class ModRecipes {
         ANALYZER_RECIPES.put(recipe.item.asItem(), recipe.build());
     }
 
-    private static void registerWorktable(ItemLike item, ItemLike output, ItemLike fuel) {
-        WORKTABLE_FUEL_VALUES.putIfAbsent(fuel, 300);
-        WORKTABLE_RECIPES.put(item.asItem(), new WorktableRecipe(new ItemStack(item), new ItemStack(output), new ItemStack(fuel)));
-    }
-
-    private static void registerCultureVat(ItemLike item, ItemLike output, ItemLike fuel) {
-        CULTURE_VAT_FUEL_VALUES.putIfAbsent(fuel, Version.debugEnabled() ? 300 : 6000);
-        CULTURE_VAT_RECIPES.put(item, new WorktableRecipe(new ItemStack(item), new ItemStack(output), new ItemStack(fuel)));
-    }
-
     @Nullable
     public static AnalyzerRecipe getSifterRecipeForItem(ItemStack itemStack, Level level) {
-        if (!SIFTER_RECIPES.containsKey(itemStack.getItem())) {
-            AnalyzerRecipe recipe = (AnalyzerRecipe) level.getRecipeManager().byKey(
-                    new ResourceLocation(Fossil.MOD_ID, "sifter/" + itemStack.getItem())).orElse(null);
-            SIFTER_RECIPES.put(itemStack.getItem(), recipe);
-        }
-        return SIFTER_RECIPES.get(itemStack.getItem());
+        return SIFTER_RECIPES.computeIfAbsent(itemStack.getItem(), item -> (AnalyzerRecipe) level.getRecipeManager().byKey(
+                new ResourceLocation(Fossil.MOD_ID, "sifter/" + itemStack.getItem())).orElse(null));
     }
 
     @Nullable
     public static AnalyzerRecipe getAnalyzerRecipeForItem(CustomBlockEntity container, Level level) {
-        if (ANALYZER_RECIPES.containsKey(container.getItem(0).getItem())) {
-            return ANALYZER_RECIPES.get(container.getItem(0).getItem());
-        }
-        Optional<AnalyzerRecipe> optional = level.getRecipeManager().getRecipeFor(ANALYZER_TYPE.get(), container, level);
-        return optional.orElse(null);
+        return ANALYZER_RECIPES.computeIfAbsent(container.getItem(0).getItem(), item ->
+                level.getRecipeManager().getRecipeFor(ANALYZER_TYPE.get(), container, level).orElse(null));
     }
 
     @Nullable
-    public static WorktableRecipe getWorktableRecipeForItem(ItemStack itemStack, Level level) {
-        if (!WORKTABLE_RECIPES.containsKey(itemStack.getItem())) {
-            WorktableRecipe recipe = (WorktableRecipe) level.getRecipeManager().byKey(
-                    new ResourceLocation(Fossil.MOD_ID, "worktable/" + itemStack.getItem())).orElse(null);
-            WORKTABLE_RECIPES.put(itemStack.getItem(), recipe);
-        }
-        return WORKTABLE_RECIPES.get(itemStack.getItem());
+    public static WorktableRecipe getWorktableRecipeForItem(WithFuelRecipe.ContainerWithAnyFuel container, Level level) {
+        return level.getRecipeManager().getRecipeFor(WORKTABLE_TYPE.get(), container, level).orElse(null);
     }
 
     @Nullable
-    public static WorktableRecipe getCultureVatRecipeForItem(ItemStack itemStack, Level level) {
-        if (!CULTURE_VAT_RECIPES.containsKey(itemStack.getItem())) {
-            WorktableRecipe recipe = (WorktableRecipe) level.getRecipeManager().byKey(
-                    new ResourceLocation(Fossil.MOD_ID, "culture_vat/" + itemStack.getItem())).orElse(null);
-            CULTURE_VAT_RECIPES.put(itemStack.getItem(), recipe);
-        }
-        return CULTURE_VAT_RECIPES.get(itemStack.getItem());
+    public static CultureVatRecipe getCultureVatRecipeForItem(WithFuelRecipe.ContainerWithAnyFuel container, Level level) {
+        return level.getRecipeManager().getRecipeFor(CULTURE_VAT_TYPE.get(), container, level).orElse(null);
     }
+
     public static boolean isWorktableFuel(ItemLike itemLike) {
         return WORKTABLE_FUEL_VALUES.containsKey(itemLike);
     }
@@ -256,11 +187,11 @@ public class ModRecipes {
         return WORKTABLE_FUEL_VALUES.getOrDefault(itemLike, 0);
     }
 
-    public static boolean isCultureVatFuel(ItemLike itemLike){
+    public static boolean isCultureVatFuel(ItemLike itemLike) {
         return CULTURE_VAT_FUEL_VALUES.containsKey(itemLike);
     }
 
-    public static int getCultureVatFuelValue(ItemLike itemLike){
+    public static int getCultureVatFuelValue(ItemLike itemLike) {
         return CULTURE_VAT_FUEL_VALUES.getOrDefault(itemLike, 0);
     }
 }

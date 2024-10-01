@@ -1,0 +1,11 @@
+{
+  "type": "fossil:worktable",
+  "input": {
+    "item": "fossil:scarab_axe"
+  },
+  "fuel": {
+    "item": "fossil:relic_scrap"
+  },
+  "result": "fossil:scarab_axe",
+  "duration": 300
+}

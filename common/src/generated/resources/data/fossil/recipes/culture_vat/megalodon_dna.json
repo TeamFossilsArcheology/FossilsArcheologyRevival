@@ -1,0 +1,11 @@
+{
+  "type": "fossil:culture_vat",
+  "input": {
+    "item": "fossil:megalodon_dna"
+  },
+  "fuel": {
+    "item": "fossil:bio_goo"
+  },
+  "result": "fossil:egg_item_megalodon",
+  "duration": 6000
+}

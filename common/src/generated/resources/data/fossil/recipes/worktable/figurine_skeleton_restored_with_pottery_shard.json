@@ -1,0 +1,11 @@
+{
+  "type": "fossil:worktable",
+  "input": {
+    "item": "fossil:figurine_skeleton_restored"
+  },
+  "fuel": {
+    "item": "fossil:pottery_shard"
+  },
+  "result": "fossil:figurine_skeleton_pristine",
+  "duration": 300
+}

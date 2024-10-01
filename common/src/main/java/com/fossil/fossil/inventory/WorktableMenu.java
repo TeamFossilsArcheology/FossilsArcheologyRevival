@@ -1,6 +1,7 @@
 package com.fossil.fossil.inventory;
 
 import com.fossil.fossil.recipe.ModRecipes;
+import com.fossil.fossil.recipe.WithFuelRecipe;
 import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -73,7 +74,7 @@ public class WorktableMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (index != INPUT_SLOT_ID && index != FUEL_SLOT_ID) {
-                if (ModRecipes.getWorktableRecipeForItem(current, player.level) != null) {
+                if (ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), player.level) != null) {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }

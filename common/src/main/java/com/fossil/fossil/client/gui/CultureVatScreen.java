@@ -14,8 +14,10 @@ import net.minecraft.world.entity.player.Inventory;
 
 public class CultureVatScreen extends AbstractContainerScreen<CultureVatMenu> {
     private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/culture_vat.png");
-    private static final int PROGRESS_WIDTH = 21;
-    private static final int FUEL_HEIGHT = 12;
+    public static final int PROGRESS_WIDTH = 21;
+    public static final int PROGRESS_HEIGHT = 9;
+    public static final int FUEL_WIDTH = 14;
+    public static final int FUEL_HEIGHT = 14;
 
     public CultureVatScreen(CultureVatMenu containerMenu, Inventory inventory, Component component) {
         super(containerMenu, inventory, component);
@@ -45,11 +47,11 @@ public class CultureVatScreen extends AbstractContainerScreen<CultureVatMenu> {
 
         if (menu.getFuelTime() > 0) {
             int scaledProgress = menu.getFuelTime() * FUEL_HEIGHT / (menu.getTotalFuelTime() + 1);
-            blit(poseStack, x + 81, y + 36 + FUEL_HEIGHT - scaledProgress, 176, FUEL_HEIGHT - scaledProgress, 14, scaledProgress + 2);
+            blit(poseStack, x + 81, y + 36 + FUEL_HEIGHT - scaledProgress, 176, FUEL_HEIGHT - scaledProgress, FUEL_WIDTH, scaledProgress);
         }
 
         int scaledProgress = menu.getCultivationTime() * PROGRESS_WIDTH / CultureVatMenu.CULTIVATION_TIME;
-        blit(poseStack, x + 78, y + 22, 176, 14, scaledProgress + 1, 16);
+        blit(poseStack, x + 78, y + 22, 176, FUEL_HEIGHT, scaledProgress, PROGRESS_HEIGHT);
         if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
             int energyProgress = 35 * menu.getStoredEnergy() / FossilConfig.getInt(FossilConfig.MACHINE_MAX_ENERGY);
             blit(poseStack, x + 114, y + 44, 0, 166, 20, 35);

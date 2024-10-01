@@ -1,28 +1,45 @@
 package com.fossil.fossil.recipe;
 
+import com.fossil.fossil.block.ModBlocks;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
+import org.jetbrains.annotations.NotNull;
 
-public class WorktableRecipe {
-    private final ItemStack item;
-    private final ItemStack output;
-    private final ItemStack fuel;
-
-    public WorktableRecipe(ItemStack item, ItemStack output, ItemStack fuel) {
-        this.item = item;
-        this.output = output;
-        this.fuel = fuel;
+public class WorktableRecipe extends WithFuelRecipe {
+    protected WorktableRecipe(ResourceLocation location, Ingredient input, Ingredient fuel, ItemStack output, int duration) {
+        super(location, input, fuel, output, duration);
     }
 
-
-    public ItemStack getItem() {
-        return item;
+    @Override
+    public @NotNull ItemStack getToastSymbol() {
+        return new ItemStack(ModBlocks.WORKTABLE.get());
     }
 
-    public ItemStack getOutput() {
-        return output.copy();
+    @Override
+    public @NotNull RecipeSerializer<?> getSerializer() {
+        return Serializer.INSTANCE;
     }
 
-    public ItemStack getFuel() {
-        return fuel;
+    @Override
+    public @NotNull RecipeType<?> getType() {
+        return Type.INSTANCE;
+    }
+
+    public static class Type implements RecipeType<WorktableRecipe> {
+        public static final Type INSTANCE = new Type();
+
+        private Type() {
+        }
+    }
+
+    public static class Serializer extends WithFuelRecipeSerializer<WorktableRecipe> {
+        public static final Serializer INSTANCE = new Serializer(WorktableRecipe::new);
+
+        public Serializer(Constructor<WorktableRecipe> constructor) {
+            super(constructor);
+        }
     }
 }

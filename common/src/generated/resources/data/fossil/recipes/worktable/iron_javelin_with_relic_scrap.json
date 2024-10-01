@@ -1,0 +1,11 @@
+{
+  "type": "fossil:worktable",
+  "input": {
+    "item": "fossil:iron_javelin"
+  },
+  "fuel": {
+    "item": "fossil:relic_scrap"
+  },
+  "result": "fossil:iron_javelin",
+  "duration": 300
+}
