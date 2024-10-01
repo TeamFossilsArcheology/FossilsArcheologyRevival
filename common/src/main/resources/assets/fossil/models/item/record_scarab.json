@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "fossil:item/record_scarab"
+    "layer0": "fossil:item/music_disc_scarab"
   }
 }

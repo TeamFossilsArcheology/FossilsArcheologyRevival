@@ -179,12 +179,12 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "fossil:record_anu"
+          "name": "fossil:music_disc_anu"
         },
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "fossil:record_scarab"
+          "name": "fossil:music_disc_scarab"
         }
       ]
     }

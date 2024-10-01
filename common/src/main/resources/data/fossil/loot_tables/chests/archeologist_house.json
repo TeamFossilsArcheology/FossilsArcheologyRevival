@@ -146,12 +146,12 @@
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "fossil:record_discovery"
+          "name": "fossil:music_disc_discovery"
         },
         {
           "type": "minecraft:item",
           "weight": 1,
-          "name": "fossil:record_bones"
+          "name": "fossil:music_disc_bones"
         }
       ]
     }

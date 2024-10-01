@@ -1,9 +1,9 @@
 {
   "replace": false,
   "values": [
-    "fossil:record_anu",
-    "fossil:record_bones",
-    "fossil:record_discovery",
-    "fossil:record_scarab"
+    "fossil:music_disc_anu",
+    "fossil:music_disc_bones",
+    "fossil:music_disc_discovery",
+    "fossil:music_disc_scarab"
   ]
 }

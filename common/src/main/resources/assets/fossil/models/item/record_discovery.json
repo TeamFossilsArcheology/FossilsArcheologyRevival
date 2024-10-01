@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "fossil:item/record_discovery"
+    "layer0": "fossil:item/music_disc_discovery"
   }
 }
