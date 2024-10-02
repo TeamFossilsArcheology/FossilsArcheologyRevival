@@ -43,11 +43,12 @@ val terraBlenderVersion: String by rootProject
 val cardinalComponentsVersion: String by project
 val energyVersion: String by project
 val midnightConfigVersion: String by project
+val geckoLibVersion: String by project
 
 dependencies {
     "mappings"(loom.layered {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.18.2:$parchmentDate@zip")
+        parchment("org.parchmentmc.data:parchment-${minecraftVersion}:$parchmentDate@zip")
 
         addLayer(object : MappingsSpec<MappingLayer> {
             val getClasses = MappingTreeView::class.java.getDeclaredMethod("getClasses")
@@ -85,7 +86,7 @@ dependencies {
     })
 
     modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
-    modApi("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}")
+    modApi("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}+${minecraftVersion}")
     // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury-fabric:${architecturyVersion}")
     modApi("teamreborn:energy:${energyVersion}")
@@ -94,7 +95,7 @@ dependencies {
     modImplementation("maven.modrinth:Wd844r7Q:1.18.2-02")//Structurized Reborn
     include("maven.modrinth:Wd844r7Q:1.18.2-02")
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
-    modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:3.0.80")
+    modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:${geckoLibVersion}")
     modImplementation("com.github.glitchfiend:TerraBlender-fabric:${minecraftVersion}-${terraBlenderVersion}")
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinalComponentsVersion}")
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
@@ -102,7 +103,7 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
     modImplementation("maven.modrinth:midnightlib:${midnightConfigVersion}")
     include("maven.modrinth:midnightlib:${midnightConfigVersion}")
-    modImplementation("com.github.darkpred.multipartsupport:multipartsupport-fabric:1.18.2-${multiPartLibVersion}")
+    modImplementation("com.github.darkpred.multipartsupport:multipartsupport-fabric:${minecraftVersion}-${multiPartLibVersion}")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }
@@ -110,12 +111,6 @@ dependencies {
 
 tasks {
     processResources {
-        inputs.property("version", project.version)
-
-        filesMatching("fabric.mod.json") {
-            expand("version" to project.version)
-        }
-
         from(project(":common").sourceSets.main.get().resources)
     }
 
