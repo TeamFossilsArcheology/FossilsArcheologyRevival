@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.NavigableMap;
 import java.util.function.Consumer;
 
-public class SifterRecipeBuilder extends MultiOutputAndSlotsRecipeBuilder {
+public class SifterRecipeBuilder extends MultiOutputAndSlotsRecipeBuilder<SifterRecipeBuilder> {
     public SifterRecipeBuilder(String modId, ItemLike itemInput) {
         super(modId, itemInput);
     }

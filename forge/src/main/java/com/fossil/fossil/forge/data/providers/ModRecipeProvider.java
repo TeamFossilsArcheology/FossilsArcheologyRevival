@@ -407,6 +407,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 if (info.dnaItem != null && info.getDNAResult() != null) {
                     cultureVat(info.dnaItem, info.getDNAResult(), consumer);
                 }
+                if (info.cultivatedBirdEggItem != null) {
+                    analyzed(info.cultivatedBirdEggItem).addOutput(info.dnaItem, 100).save(consumer);
+                }
             }
             cultureVat(ModItems.FERN_SEED_FOSSIL, ModItems.FERN_SEED, consumer);
             cultureVat(ModItems.CALAMITES_SAPLING_FOSSIL, ModBlocks.CALAMITES_SAPLING, consumer);

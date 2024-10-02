@@ -15,6 +15,8 @@ public class FossilREICommonPlugin implements REIServerPlugin {
     public void registerDisplaySerializer(DisplaySerializerRegistry registry) {
         registry.register(WorktableDisplay.ID, new WithFuelDisplay.Serializer<>(WorktableDisplay::new));
         registry.register(CultureVatDisplay.ID, new WithFuelDisplay.Serializer<>(CultureVatDisplay::new));
-        registry.register(AnalyzerDisplay.ID, AnalyzerDisplay.Serializer.INSTANCE);
+        registry.register(AnalyzerDisplay.ID, new MultiOutputDisplay.Serializer<>(AnalyzerDisplay::new));
+        registry.register(SifterDisplay.ID, new MultiOutputDisplay.Serializer<>(SifterDisplay::new));
+        //TODO: DNA sources
     }
 }

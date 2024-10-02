@@ -20,7 +20,7 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 import java.util.function.Consumer;
 
-public abstract class MultiOutputAndSlotsRecipeBuilder implements RecipeBuilder {
+public abstract class MultiOutputAndSlotsRecipeBuilder<T extends MultiOutputAndSlotsRecipeBuilder<T>> implements RecipeBuilder {
     protected final String modId;
     protected final ItemLike itemInput;
     protected final TagKey<Item> tagInput;
@@ -39,14 +39,14 @@ public abstract class MultiOutputAndSlotsRecipeBuilder implements RecipeBuilder 
         this.tagInput = tagInput;
     }
 
-    public MultiOutputAndSlotsRecipeBuilder addOutput(ItemLike itemLike, double weight) {
+    public T addOutput(ItemLike itemLike, double weight) {
         return addOutput(itemLike, 1, weight);
     }
 
-    public MultiOutputAndSlotsRecipeBuilder addOutput(ItemLike itemLike, int count, double weight) {
+    public T addOutput(ItemLike itemLike, int count, double weight) {
         total += weight;
         weightedOutputs.put(new ItemHolder(Registry.ITEM.getKey(itemLike.asItem()), count), weight);
-        return this;
+        return (T) this;
     }
 
     @Override

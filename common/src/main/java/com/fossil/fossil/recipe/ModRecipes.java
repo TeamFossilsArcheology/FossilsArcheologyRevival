@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ModRecipes {
-    private static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
+    public static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
     private static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new HashMap<>();
     private static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new HashMap<>();
 
@@ -110,9 +110,6 @@ public class ModRecipes {
         for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
             if (info.eggItem != null) {
                 registerAnalyzer(new AnalyzerRecipe.Builder(info.eggItem).addOutput(info.dnaItem, 100));
-            }
-            if (info.cultivatedBirdEggItem != null) {
-                registerAnalyzer(new AnalyzerRecipe.Builder(info.cultivatedBirdEggItem).addOutput(info.dnaItem, 100));
             }
             if (info.embryoItem != null) {
                 registerAnalyzer(new AnalyzerRecipe.Builder(info.embryoItem).addOutput(info.dnaItem, 100));

@@ -1,0 +1,30 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:elasmotherium_dna",
+    "fossil:mammoth_dna",
+    "fossil:megaloceros_dna",
+    "fossil:platybelodon_dna",
+    "fossil:quagga_dna",
+    "fossil:smilodon_dna",
+    "fossil:bat_dna",
+    "fossil:cat_dna",
+    "fossil:cow_dna",
+    "fossil:dolphin_dna",
+    "fossil:donkey_dna",
+    "fossil:fox_dna",
+    "fossil:goat_dna",
+    "fossil:hoglin_dna",
+    "fossil:horse_dna",
+    "fossil:llama_dna",
+    "fossil:mooshroom_dna",
+    "fossil:ocelot_dna",
+    "fossil:panda_dna",
+    "fossil:pig_dna",
+    "fossil:polarbear_dna",
+    "fossil:rabbit_dna",
+    "fossil:sheep_dna",
+    "fossil:strider_dna",
+    "fossil:wolf_dna"
+  ]
+}

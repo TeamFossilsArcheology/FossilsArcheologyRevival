@@ -2378,6 +2378,8 @@ c4bbf71beb092c1fb590b7d2e4146b5ad2a7b4fd data/fossil/recipes/analyzer/amber_chun
 43253231586bad696f7917e25e394cba96ac6389 data/fossil/recipes/analyzer/beef.json
 b0a93f98708d8c83c31c1579cdb404dfa3ebb6b3 data/fossil/recipes/analyzer/chicken.json
 13a6995b922a6a2cdddc2eadb09ec3081a12264c data/fossil/recipes/analyzer/egg.json
+e22181c9c705f71e32ee9ba937957d67c1b4b624 data/fossil/recipes/analyzer/egg_item_chicken.json
+90c3a259de8390f5aaa23e422d29286babea0a9b data/fossil/recipes/analyzer/egg_item_parrot.json
 437f36c9a584f5ba6d4e515adc29d83c272de62b data/fossil/recipes/analyzer/failuresaurus_flesh.json
 9f7a517155dd81c410d714d48d19ec9b88d2fc2f data/fossil/recipes/analyzer/feather.json
 6201f246692dbca4c764fb482f3c13d0d1c3d85d data/fossil/recipes/analyzer/fishes.json
@@ -2969,6 +2971,7 @@ c14bc2c851ae4f2d91784207659b2999abe97384 data/fossil/tags/blocks/sigillaria_logs
 e1ba26717f02bcd63507bd94b3dadf4748d4719f data/fossil/tags/items/ancient_wood_logs.json
 bacdf3441a2951e40b2f233a957c51b9566563de data/fossil/tags/items/bones_all.json
 31dd5038235f2d3422f575d4b28bc56be701875f data/fossil/tags/items/bones_arm.json
+6a15d4a1b5e940efdca11189e98e34f17b2390ad data/fossil/tags/items/bones_dna.json
 035dc564a90e838fa2502de3d0e1bdf0f90e822f data/fossil/tags/items/bones_foot.json
 ab65395482e82071aeb1bd94349bb8884685377f data/fossil/tags/items/bones_leg.json
 26591150a850758b37e7969d21b48ba1599ac0cf data/fossil/tags/items/bones_ribcage.json
@@ -2979,11 +2982,13 @@ d2b28bfc941b8e4ec9aa5cf7bad6faad74935f16 data/fossil/tags/items/bones_tail.json
 be309a84eb640c90631d98e3906aa18ca049f0e3 data/fossil/tags/items/calamites_logs.json
 f9674824d2c80b5587cde58220951d29e1b12bb6 data/fossil/tags/items/cookable_eggs.json
 078e15eaee30669406aa4ce79abd0b5998d33e12 data/fossil/tags/items/cordaites_logs.json
+91ddbdd35ea35550484b747e54da15ca1048febc data/fossil/tags/items/dino_dna.json
 c8b4e8b2c5eabac14138656a2aed90eb2426faf0 data/fossil/tags/items/dino_eggs.json
 95a18b1eb7bf4af9c4e9527ffead2d89c5bd823a data/fossil/tags/items/dna.json
 7d3350650c1e2f827c07c45656fb267a4749d745 data/fossil/tags/items/dna_insects.json
 7b411bb20f79c982151662559157974ee41b563d data/fossil/tags/items/dna_limbless.json
 14bbd737f0e930f5441e6881b3db4a3d570c3baf data/fossil/tags/items/dna_plants.json
+6b180e7f36e2b71a80d1f92f4aba90e9f6683ff2 data/fossil/tags/items/embryo_dna.json
 212df8e039837a4da3c195f00bc77afc77d90755 data/fossil/tags/items/embryos.json
 10460075539ccb49e59b8e8db23a8234a217c4ba data/fossil/tags/items/figurines.json
 04e8131982f46c888108fe554b89dbcc9f1702a6 data/fossil/tags/items/filter_bones.json
@@ -2991,8 +2996,11 @@ dce2b8515233f9bac90c7a0f6748c983be5ba55e data/fossil/tags/items/filter_dna.json
 aa420c952d9fd5104adeaa1449d24bfb165c26cd data/fossil/tags/items/filter_eggs.json
 13a9d63a95e6f4c0e8da7e23904e85552be8e61e data/fossil/tags/items/filter_meat.json
 ae45310446ad45c080e08cdc6da3a4d729d6953e data/fossil/tags/items/filter_plants.json
+50627f0f1472c534fb092c480e8a5c77d69dceb7 data/fossil/tags/items/fish_dna.json
+fce9010f73b3c80811d72d9468b1722f0e7c377a data/fossil/tags/items/fish_eggs.json
 a0acc017da4b89f13b66c6f373e328d76b1e6f25 data/fossil/tags/items/fossil_saplings.json
 0dc37e6307f53036d6b388480e1af5e63066ecf8 data/fossil/tags/items/fossil_seeds.json
+e1b5b4498a6f9e5a741bb911017df73af1537855 data/fossil/tags/items/meat_dna.json
 43474a242d2ba4cec16f590e20ee73cf4018e0aa data/fossil/tags/items/meat_uncooked.json
 07ddf71d4d8f03aa869b645a414a77df2934ad74 data/fossil/tags/items/palm_logs.json
 ae428d765cf3d2d9df17c084b8b88783d4f164ef data/fossil/tags/items/restored_seeds.json

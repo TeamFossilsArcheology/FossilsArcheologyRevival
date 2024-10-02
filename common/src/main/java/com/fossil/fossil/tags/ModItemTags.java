@@ -46,4 +46,12 @@ public class ModItemTags {
     public static final TagKey<Item> FILTER_EGGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "filter_eggs"));
     public static final TagKey<Item> FILTER_MEAT = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "filter_meat"));
     public static final TagKey<Item> FILTER_PLANTS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "filter_plants"));
+
+    //REI Support
+    public static final TagKey<Item> FISH_EGGS = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "fish_eggs"));
+    public static final TagKey<Item> BONES_DNA = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "bones_dna"));
+    public static final TagKey<Item> MEAT_DNA = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "meat_dna"));
+    public static final TagKey<Item> DINO_DNA = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "dino_dna"));
+    public static final TagKey<Item> FISH_DNA = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "fish_dna"));
+    public static final TagKey<Item> EMBRYO_DNA = TagKey.create(key, new ResourceLocation(Fossil.MOD_ID, "embryo_dna"));
 }

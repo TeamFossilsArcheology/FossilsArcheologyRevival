@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:alligator_gar_dna",
+    "fossil:coelacanth_dna",
+    "fossil:nautilus_dna",
+    "fossil:sturgeon_dna",
+    "fossil:axolotl_dna",
+    "fossil:cod_dna",
+    "fossil:glow_squid_dna",
+    "fossil:pufferfish_dna",
+    "fossil:salmon_dna",
+    "fossil:squid_dna",
+    "fossil:tropical_fish_dna"
+  ]
+}

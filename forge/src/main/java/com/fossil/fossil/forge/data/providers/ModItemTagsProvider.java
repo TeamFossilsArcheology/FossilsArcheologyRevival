@@ -7,6 +7,7 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.BirdEggItem;
 import com.fossil.fossil.item.DinoEggItem;
+import com.fossil.fossil.item.FishEggItem;
 import com.fossil.fossil.tags.ModBlockTags;
 import com.fossil.fossil.tags.ModItemTags;
 import net.minecraft.data.DataGenerator;
@@ -51,8 +52,14 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModItemTags.DNA_LIMBLESS).add(ALLIGATOR_GAR.dnaItem, COELACANTH.dnaItem, STURGEON.dnaItem);
         tag(ModItemTags.DNA_PLANTS).addTags(ModItemTags.FOSSIL_SEEDS, ModItemTags.FOSSIL_SAPLINGS);
         var allDNA = tag(ModItemTags.DNA);
+        var bonesDNA = tag(ModItemTags.BONES_DNA);
+        var meatDNA = tag(ModItemTags.MEAT_DNA);
+        var dinoDNA = tag(ModItemTags.DINO_DNA);
+        var fishDNA = tag(ModItemTags.FISH_DNA);
+        var embryoDNA = tag(ModItemTags.EMBRYO_DNA);
         var embryos = tag(ModItemTags.EMBRYOS);
-        var allEgg = tag(ModItemTags.DINO_EGGS);
+        var dinoEgg = tag(ModItemTags.DINO_EGGS);
+        var fishEgg = tag(ModItemTags.FISH_EGGS);
         var allArm = tag(ModItemTags.ARM_BONES);
         var allFoot = tag(ModItemTags.FOOT_BONES);
         var allLeg = tag(ModItemTags.LEG_BONES);
@@ -63,17 +70,25 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         var allVertebrae = tag(ModItemTags.VERTEBRAE_BONES);
         var uncookedMeat = tag(ModItemTags.UNCOOKED_MEAT);
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
-            if (info.dnaItem != null) {
+            boolean hasDNA = info.dnaItem != null;
+            if (hasDNA) {
                 allDNA.add(info.dnaItem);
             }
             if (info.embryoItem != null) {
                 embryos.add(info.embryoItem);
+                if (hasDNA) embryoDNA.add(info.dnaItem);
             }
             if (info.eggItem instanceof DinoEggItem || info.eggItem instanceof BirdEggItem) {
-                allEgg.add(info.eggItem);
+                dinoEgg.add(info.eggItem);
+                if (hasDNA) dinoDNA.add(info.dnaItem);
+            }
+            if (info.eggItem instanceof FishEggItem) {
+                fishEgg.add(info.eggItem);
+                if (hasDNA) fishDNA.add(info.dnaItem);
             }
             if (info.armBoneItem != null) {
                 allArm.add(info.armBoneItem);
+                if (hasDNA) bonesDNA.add(info.dnaItem);
             }
             if (info.footBoneItem != null) {
                 allFoot.add(info.footBoneItem);
@@ -98,6 +113,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             }
             if (info.foodItem != null) {
                 uncookedMeat.add(info.foodItem);
+                if (hasDNA) meatDNA.add(info.dnaItem);
             }
             if (info.cookedFoodItem != null) {
                 filterMeat.add(info.cookedFoodItem);
@@ -107,11 +123,17 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             }
         }
         for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
-            if (info.dnaItem != null) {
+            boolean hasDNA = info.dnaItem != null;
+            if (hasDNA) {
                 allDNA.add(info.dnaItem);
             }
             if (info.embryoItem != null) {
                 embryos.add(info.embryoItem);
+                if (hasDNA) embryoDNA.add(info.dnaItem);
+            }
+            if (info.eggItem instanceof FishEggItem) {
+                fishEgg.add(info.eggItem);
+                if (hasDNA) fishDNA.add(info.dnaItem);
             }
         }
         tag(ModItemTags.COOKABLE_EGGS).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.NavigableMap;
 import java.util.function.Consumer;
 
-public class AnalyzerRecipeBuilder extends MultiOutputAndSlotsRecipeBuilder {
+public class AnalyzerRecipeBuilder extends MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> {
     public AnalyzerRecipeBuilder(String modId, ItemLike itemInput) {
         super(modId, itemInput);
     }

@@ -1,0 +1,16 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:egg_item_alligator_gar",
+    "fossil:egg_item_coelacanth",
+    "fossil:egg_item_nautilus",
+    "fossil:egg_item_sturgeon",
+    "fossil:egg_item_axolotl",
+    "fossil:egg_item_cod",
+    "fossil:egg_item_glow_squid",
+    "fossil:egg_item_pufferfish",
+    "fossil:egg_item_salmon",
+    "fossil:egg_item_squid",
+    "fossil:egg_item_tropical_fish"
+  ]
+}

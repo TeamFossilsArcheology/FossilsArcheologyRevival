@@ -7,20 +7,20 @@ import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
-public class AnalyzerCategory extends MultiOutputCategory {
+public class SifterCategory extends MultiOutputCategory {
 
     @Override
-    public CategoryIdentifier<? extends AnalyzerDisplay> getCategoryIdentifier() {
-        return AnalyzerDisplay.ID;
+    public CategoryIdentifier<? extends SifterDisplay> getCategoryIdentifier() {
+        return SifterDisplay.ID;
     }
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("category.fossil.rei.analyzer");
+        return new TranslatableComponent("category.fossil.rei.sifter");
     }
 
     @Override
     public Renderer getIcon() {
-        return EntryStacks.of(ModBlocks.ANALYZER.get());
+        return EntryStacks.of(ModBlocks.SIFTER.get());
     }
 }

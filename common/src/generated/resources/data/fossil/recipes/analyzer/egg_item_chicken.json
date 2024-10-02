@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "fossil:egg_item_chicken"
+  },
+  "outputs": [
+    {
+      "item": "fossil:chicken_dna",
+      "weight": 100.0
+    }
+  ]
+}
