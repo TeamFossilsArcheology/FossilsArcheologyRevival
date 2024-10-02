@@ -45,6 +45,9 @@ public class ModCapabilities {
         syncMammalWithClient(animal, 0, null);
     }
 
+    /**
+     * @return {@code true} if the player has hatched any dino before
+     */
     @ExpectPlatform
     public static boolean hasHatchedDinosaur(Player player) {
         throw new NotImplementedException();

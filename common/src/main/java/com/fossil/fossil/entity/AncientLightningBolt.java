@@ -42,15 +42,18 @@ public class AncientLightningBolt extends LightningBolt {
         this.flashes = random.nextInt(3) + 1;
     }
 
+    @Override
     public void setVisualOnly(boolean visualOnly) {
         this.visualOnly = visualOnly;
     }
 
+    @Override
     @Nullable
     public ServerPlayer getCause() {
         return cause;
     }
 
+    @Override
     public void setCause(@Nullable ServerPlayer cause) {
         this.cause = cause;
     }
@@ -128,10 +131,12 @@ public class AncientLightningBolt extends LightningBolt {
         }
     }
 
+    @Override
     public @NotNull Stream<Entity> getHitEntities() {
         return this.hitEntities.stream().filter(Entity::isAlive);
     }
 
+    @Override
     public int getBlocksSetOnFire() {
         return blocksSetOnFire;
     }

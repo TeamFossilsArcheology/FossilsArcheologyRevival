@@ -29,8 +29,14 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     public static final String EAT_CTRL = "Eat";
     public static final String ATTACK_CTRL = "Attack";
     private final Map<String, ActiveAnimationInfo> activeAnimations = new HashMap<>();
+    /**
+     * Any animation in here will replace the active animation on the next tick
+     */
     private final Map<String, ActiveAnimationInfo> nextAnimations = new HashMap<>();
     protected final T entity;
+    /**
+     * {@link net.minecraft.world.entity.ai.attributes.Attributes#MOVEMENT_SPEED} calculated for the animation speed calculation
+     */
     private double attributeSpeed;
 
     public AnimationLogic(T entity) {
@@ -40,26 +46,46 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
     }
 
+    /**
+     * Returns the active animation for the given controller if one is active
+     *
+     * @param controller the name of the controller to check
+     */
     public Optional<ActiveAnimationInfo> getActiveAnimation(String controller) {
         return Optional.ofNullable(activeAnimations.get(controller));
     }
 
+    /**
+     * Server side method that will trigger the animation on the client side of all players in range.
+     * The end tick of the animation will be determined by the client
+     *
+     * @param controller the name of the controller the animation will play on
+     * @param animation  the animation to play
+     * @param category   the category of the animation
+     */
     public void triggerAnimation(String controller, Animation animation, Category category) {
-        if (animation != null) {
-            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(),
+        if (animation != null && !entity.level.isClientSide) {
+            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName,
                     entity.level.getGameTime() + animation.animationLength, category, true, 5
             );
-            if (!entity.level.isClientSide) {
-                TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
-                var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
-                MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new S2CSyncActiveAnimationMessage(entity, controller, activeAnimationInfo));
-            }
+            TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
+            var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
+            MessageHandler.SYNC_CHANNEL.sendToPlayers(players, new S2CSyncActiveAnimationMessage(entity, controller, activeAnimationInfo));
         }
     }
 
+    /**
+     * This method can be used to debug force an animation
+     *
+     * @param controller       the name of the controller the animation will play on
+     * @param animation        the animation to play
+     * @param category         the category of the animation
+     * @param transitionLength the length of the transition from the previous animation in ticks
+     * @param loop             whether the animation should loop (until manually stopped because forced)
+     */
     public ActiveAnimationInfo forceAnimation(String controller, Animation animation, Category category, double transitionLength, boolean loop) {
         if (animation != null) {
-            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(),
+            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName,
                     entity.level.getGameTime() + animation.animationLength, category, true, transitionLength, loop
             );
             addNextAnimation(controller, activeAnimationInfo);
@@ -73,30 +99,43 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return null;
     }
 
+    /**
+     * Tries to add a new active animation
+     *
+     * @param controller the name of the controller the animation will play on
+     * @param animation  the animation to play
+     * @param category   the category of the animation
+     * @return {@code true} if the animation was successfully added
+     */
     public boolean addActiveAnimation(String controller, Animation animation, Category category) {
         if (animation == null) {
             return false;
         }
         ActiveAnimationInfo active = getActiveAnimation(controller).orElse(null);
         if (active == null) {
-            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, category.transitionLength));
+            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime() + animation.animationLength, category, false, category.transitionLength));
             return true;
         }
         boolean replaceAnim = false;
         boolean isLoop = entity.getAllAnimations().get(active.animationName).loop == LOOP;
         if (active.category == category && isAnimationDone(active)) {
+            //Loops in the same category can only replace sometimes
             replaceAnim = !isLoop || entity.getRandom().nextFloat() < category.chance;
         } else if (active.category != category) {
+            //Can only replace if loop or previous animation done
             replaceAnim = isLoop || isAnimationDone(active);
         }
         if (replaceAnim) {
             int transitionLength = Math.max(category.transitionLength, active.category.transitionLength);
-            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime(), entity.level.getGameTime() + animation.animationLength, category, false, transitionLength));
+            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime() + animation.animationLength, category, false, transitionLength));
             return true;
         }
         return false;
     }
 
+    /**
+     * The given animation will most likely be played on the next tick
+     */
     public void addNextAnimation(String controller, ActiveAnimationInfo activeAnimationInfo) {
         nextAnimations.put(controller, activeAnimationInfo);
     }
@@ -127,6 +166,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return entity instanceof Prehistoric prehistoric && entity.level.getGameTime() < prehistoric.getPlaceHolderName().getAttackBoxPlaceHolder().attackBoxEndTime();
     }
 
+    /**
+     * The action delay of an animation is defined server side by the {@link AnimationInfoManager} and represents a
+     * delay from the start of the animation until an action should be played
+     */
     public double getActionDelay(String controller) {
         if (activeAnimations.containsKey(controller)) {
             ActiveAnimationInfo activeAnimation = activeAnimations.get(controller);
@@ -190,8 +233,9 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
     /**
      * Sets the animation speed without changing the current point in the animation
+     *
      * @param animationSpeed the new animation speed
-     * @param animationTick the current animation tick returned by event.getAnimationTick()
+     * @param animationTick  the current animation tick returned by event.getAnimationTick()
      */
     @ExpectPlatform
     public static void setAnimationSpeed(AnimationController<?> controller, double animationSpeed, double animationTick) {
@@ -368,10 +412,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         this.attributeSpeed = attributeSpeed;
     }
 
-    public record ActiveAnimationInfo(String animationName, double startTick, double endTick, Category category,
+    public record ActiveAnimationInfo(String animationName, double endTick, Category category,
                                       boolean forced, double transitionLength, boolean loop) {
-        public ActiveAnimationInfo(String animationName, double startTick, double endTick, Category category, boolean forced, double speed) {
-            this(animationName, startTick, endTick, category, forced, speed, false);
+        public ActiveAnimationInfo(String animationName, double endTick, Category category, boolean forced, double speed) {
+            this(animationName, endTick, category, forced, speed, false);
         }
     }
 

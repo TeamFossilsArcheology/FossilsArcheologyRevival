@@ -15,7 +15,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ModFlammableRotatedPillarBlockImpl {
+public class FlammableRotatedPillarBlockImpl {
 
     private static final Map<Block, Block> STRIPPABLES = new HashMap<>();
 

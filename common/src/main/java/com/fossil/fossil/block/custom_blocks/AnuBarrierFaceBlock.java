@@ -18,6 +18,9 @@ import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Barrier like block with one-sided collision spawned by the {@link AnuBarrierOriginBlock origin block}
+ */
 public class AnuBarrierFaceBlock extends Block {
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     protected static final VoxelShape X_AXIS_AABB = Block.box(0, 0, 6, 16, 16, 10);

@@ -1,7 +1,7 @@
-package com.fossil.fossil.entity.prehistoric.swimming;
+package com.fossil.fossil.entity.prehistoric.system;
 
-import com.fossil.fossil.entity.prehistoric.base.AISystem;
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
+import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -13,6 +13,11 @@ import java.util.Random;
 
 import static com.fossil.fossil.entity.prehistoric.swimming.Meganeura.*;
 
+/**
+ * This system handles the AI for the meganeura attach process
+ * <p>
+ * See {@link com.fossil.fossil.client.renderer.entity.MeganeuraRenderer MeganeuraRenderer} for most of the client side logic
+ */
 public class MeganeuraAttachSystem extends AISystem {
     private static final int MAX_TRY_TICKS = 300;//15 sec
     private static final int MAX_ATTACH_TICKS = 1200;//1 min
@@ -94,7 +99,7 @@ public class MeganeuraAttachSystem extends AISystem {
     }
 
     /**
-     * Sync the target to the client to start approach
+     * Starts the approach. Syncs the target to the client
      */
     public void approachAttachPos() {
         attachCooldown = 150;
@@ -104,10 +109,10 @@ public class MeganeuraAttachSystem extends AISystem {
     }
 
     /**
-     * Set target but don't start the approach yet
+     * This will set the target but will not yet start the approach. A random offset will be added to the target
      *
-     * @param attachBlockPos
-     * @param attachFace
+     * @param attachBlockPos the target block position
+     * @param attachFace the {@code Direction} of the target block face
      */
     public void setAttachTarget(BlockPos attachBlockPos, Direction attachFace) {
         //Pick a random point on the hit face, offset by half the mobs width
@@ -132,22 +137,25 @@ public class MeganeuraAttachSystem extends AISystem {
     }
 
     /**
-     * Sync the attached state to the client to finish the approach
+     * Finishes the approach. Syncs the attached state to the client
      */
     public void startAttaching() {
         attachCooldown = 150;
         attachTicks = 0;
-        entityData.set(ATTACHED, true);
+        setAttached(true);
         mob.setPos(targetLocation.x, mob.getY(), targetLocation.z);
         mob.setDeltaMovement(Vec3.ZERO);
     }
 
+    /**
+     * @param attachCooldown the new attachment cooldown
+     */
     public void stopAttaching(int attachCooldown) {
         targetBlockPos = null;
         targetFace = null;
         targetLocation = null;
         this.attachCooldown = attachCooldown;
-        entityData.set(ATTACHED, false);
+        setAttached(false);
         setAttachmentPos(Vec3.ZERO);
         setAttachmentFace(Direction.UP);
     }
@@ -156,11 +164,14 @@ public class MeganeuraAttachSystem extends AISystem {
         stopAttaching(150);
     }
 
+    /**
+     * Returns {@code true} if the mob has finished the attachment process and is currently attached
+     */
     public boolean isAttached() {
         return entityData.get(ATTACHED);
     }
 
-    public void setAttached(boolean attached) {
+    private void setAttached(boolean attached) {
         entityData.set(ATTACHED, attached);
     }
 
@@ -172,25 +183,34 @@ public class MeganeuraAttachSystem extends AISystem {
         this.attachCooldown = attachCooldown;
     }
 
+    /**
+     * Returns {@code true} if the mob has started the attachment process or is currently attached
+     */
     public boolean attachStarted() {
         return getAttachmentFace() != Direction.UP;
     }
 
+    /**
+     * The initial attachment target used for rotation. Actual target might be different: See {@link #startAttaching()}
+     */
     public Vec3 getAttachmentPos() {
         return new Vec3(entityData.get(ATTACHED_X), entityData.get(ATTACHED_Y), entityData.get(ATTACHED_Z));
     }
 
-    public void setAttachmentPos(Vec3 location) {
+    private void setAttachmentPos(Vec3 location) {
         entityData.set(ATTACHED_X, (float) location.x);
         entityData.set(ATTACHED_Y, (float) location.y);
         entityData.set(ATTACHED_Z, (float) location.z);
     }
 
+    /**
+     * Returns the {@code Direction} of the target block face
+     */
     public Direction getAttachmentFace() {
         return entityData.get(ATTACHED_FACE);
     }
 
-    public void setAttachmentFace(Direction direction) {
+    private void setAttachmentFace(Direction direction) {
         entityData.set(ATTACHED_FACE, direction);
     }
 

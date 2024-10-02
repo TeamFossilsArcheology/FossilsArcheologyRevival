@@ -3,12 +3,13 @@ package com.fossil.fossil.entity.util;
 import com.fossil.fossil.client.gui.debug.instruction.Instruction;
 import com.fossil.fossil.entity.ai.BreachAttackGoal;
 import com.fossil.fossil.entity.animation.AnimationLogic;
-import com.fossil.fossil.entity.prehistoric.base.AISystem;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.prehistoric.swimming.Meganeura;
+import com.fossil.fossil.entity.prehistoric.system.AISystem;
 import com.fossil.fossil.network.MessageHandler;
 import com.fossil.fossil.network.debug.InstructionMessage;
+import com.fossil.fossil.util.Version;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
@@ -25,6 +26,10 @@ import net.minecraft.world.phys.Vec3;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This system handles custom instructions sent by the debug menu {@link com.fossil.fossil.client.gui.debug.InstructionTab InstructionTab}
+ * The instructions will be played in order and the mob will be unable to do anything else while this is running.
+ */
 public class InstructionSystem extends AISystem {
     private final List<Instruction> instructions = new ArrayList<>();
     private int index = -1;
@@ -42,7 +47,7 @@ public class InstructionSystem extends AISystem {
 
     @Override
     public void serverTick() {
-        if (instructions.isEmpty() || index >= instructions.size()) {
+        if (instructions.isEmpty() || index >= instructions.size() || !Version.debugEnabled()) {
             return;
         }
         if (!tickRunning()) {
@@ -266,23 +271,27 @@ public class InstructionSystem extends AISystem {
 
     @Override
     public void saveAdditional(CompoundTag tag) {
-        ListTag saved = new ListTag();
-        for (int i = 0; i < instructions.size(); i++) {
-            saved.addTag(i, instructions.get(i).encodeTag());
+        if (Version.debugEnabled()) {
+            ListTag saved = new ListTag();
+            for (int i = 0; i < instructions.size(); i++) {
+                saved.addTag(i, instructions.get(i).encodeTag());
+            }
+            tag.put("Instructions", saved);
+            tag.putBoolean("InstructionsLoop", shouldLoop);
         }
-        tag.put("Instructions", saved);
-        tag.putBoolean("InstructionsLoop", shouldLoop);
     }
 
     @Override
     public void load(CompoundTag tag) {
-        instructions.clear();
-        ListTag saved = tag.getList("Instructions", Tag.TAG_COMPOUND);
-        for (Tag savedTag : saved) {
-            instructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
+        if (Version.debugEnabled()) {
+            instructions.clear();
+            ListTag saved = tag.getList("Instructions", Tag.TAG_COMPOUND);
+            for (Tag savedTag : saved) {
+                instructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
+            }
+            shouldLoop = tag.getBoolean("InstructionsLoop");
+            start(instructions, shouldLoop);
+            syncWithClients();
         }
-        shouldLoop = tag.getBoolean("InstructionsLoop");
-        start(instructions, shouldLoop);
-        syncWithClients();
     }
 }

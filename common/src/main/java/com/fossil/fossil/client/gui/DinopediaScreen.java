@@ -6,9 +6,9 @@ import com.fossil.fossil.client.DinopediaBioManager;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.entity.Quagga;
 import com.fossil.fossil.entity.prehistoric.base.DinosaurEgg;
-import com.fossil.fossil.entity.prehistoric.base.MoodSystem;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricFish;
+import com.fossil.fossil.entity.prehistoric.system.MoodSystem;
 import com.fossil.fossil.util.FoodMappings;
 import com.fossil.fossil.util.Version;
 import com.mojang.blaze3d.platform.Lighting;
@@ -209,6 +209,9 @@ public class DinopediaScreen extends Screen {
         return Math.round(value * 2) / 2f;
     }
 
+    /**
+     * Renders the first page usually containing direct info about the mob/egg
+     */
     private void renderFirstPage(PoseStack poseStack, int mouseX, int mouseY) {
         int col = (157 << 16) | (126 << 8) | 103;
         if (entity instanceof Animal animal) {

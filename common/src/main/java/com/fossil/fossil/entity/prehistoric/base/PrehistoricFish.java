@@ -188,6 +188,11 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
+    public Animation getAnimation(String name) {
+        return getAllAnimations().get(name);
+    }
+
+    @Override
     public Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos() {
         return AnimationInfoManager.ANIMATIONS.getServerAnimations(animationLocation);
     }

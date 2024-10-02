@@ -17,11 +17,11 @@ public class IcedDirtBlock extends Block {
     @Override
     public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
         if (level.getBrightness(LightLayer.BLOCK, pos) > 11 - state.getLightBlock(level, pos)) {
-            turnIntoRock(level, pos);
+            melt(level, pos);
         }
     }
 
-    protected void turnIntoRock(ServerLevel level, BlockPos pos) {
+    protected void melt(ServerLevel level, BlockPos pos) {
         if (level.dimensionType().ultraWarm()) {
             level.removeBlock(pos, false);
             return;

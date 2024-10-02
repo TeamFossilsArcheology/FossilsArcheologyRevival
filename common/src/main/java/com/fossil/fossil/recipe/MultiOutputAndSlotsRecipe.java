@@ -1,6 +1,5 @@
 package com.fossil.fossil.recipe;
 
-import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -9,6 +8,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
@@ -21,7 +21,7 @@ import java.util.Map;
 import java.util.NavigableMap;
 import java.util.TreeMap;
 
-public abstract class MultiOutputAndSlotsRecipe implements Recipe<CustomBlockEntity> {
+public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
     private final ResourceLocation id;
     protected final Ingredient input;
     private final NavigableMap<Double, ItemStack> weightedOutputs;
@@ -46,8 +46,8 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<CustomBlockEnt
     }
 
     @Override
-    public boolean matches(CustomBlockEntity container, Level level) {
-        for (int i = 0; i < container.getIngredientsSize(); i++) {
+    public boolean matches(Container container, Level level) {
+        for (int i = 0; i < container.getContainerSize(); i++) {
             if (matches(container, i)) {
                 return true;
             }
@@ -55,14 +55,14 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<CustomBlockEnt
         return false;
     }
 
-    private boolean matches(CustomBlockEntity container, int slot) {
+    private boolean matches(Container container, int slot) {
         ItemStack itemStack = container.getItem(slot);
         if (itemStack.isEmpty()) return false;
         return input.test(itemStack);
     }
 
     @Override
-    public @NotNull ItemStack assemble(CustomBlockEntity container) {
+    public @NotNull ItemStack assemble(Container container) {
         if (container instanceof BlockEntity blockEntity) {
             return weightedOutputs.higherEntry(blockEntity.getLevel().random.nextDouble() * weightedOutputs.lastKey()).getValue().copy();
         }

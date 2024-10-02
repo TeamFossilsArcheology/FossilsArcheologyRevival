@@ -6,7 +6,6 @@ import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.config.FossilConfig;
 import com.fossil.fossil.forge.block.entity.ForgeEnergyContainerBlockEntity;
 import com.fossil.fossil.inventory.AnalyzerMenu;
-import com.fossil.fossil.inventory.CustomSimpleContainer;
 import com.fossil.fossil.recipe.AnalyzerRecipe;
 import com.fossil.fossil.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
@@ -14,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
@@ -116,7 +116,7 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
     }
 
     private boolean isAnalyzable(ItemStack itemStack) {
-        return ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(1, itemStack), level) != null;
+        return ModRecipes.getAnalyzerRecipeForItem(new SimpleContainer(itemStack), level) != null;
     }
 
     @Override
@@ -151,7 +151,7 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
     protected void createItem() {
         if (canProcess()) {
             ItemStack input = items.get(rawIndex);
-            AnalyzerRecipe recipe = ModRecipes.getAnalyzerRecipeForItem(new CustomSimpleContainer(9, input), level);
+            AnalyzerRecipe recipe = ModRecipes.getAnalyzerRecipeForItem(new SimpleContainer(input), level);
             if (recipe == null) {
                 return;
             }

@@ -105,8 +105,8 @@ public class ModBlocks {
     public static final RegistrySupplier<IcedDirtBlock> ICED_DIRT = registerBlock("iced_dirt",
             () -> new IcedDirtBlock(Properties.of(Material.DIRT).strength(1, 4).requiresCorrectToolForDrops()
                     .sound(SoundType.MOSS).randomTicks()));
-    public static final RegistrySupplier<DenseSandBlock> DENSE_SAND = registerBlock("dense_sand",
-            () -> new DenseSandBlock(0x8C765C, Properties.of(Material.SAND).strength(3f, 15f).sound(SoundType.SAND)));
+    public static final RegistrySupplier<SandBlock> DENSE_SAND = registerBlock("dense_sand",
+            () -> new SandBlock(0x8C765C, Properties.of(Material.SAND).strength(3f, 15f).sound(SoundType.SAND)));
     public static final RegistrySupplier<SkullBlock> SKULL_BLOCK = registerBlock("skull",
             () -> new SkullBlock(Properties.of(Material.STONE).strength(2, 15f)
                     .requiresCorrectToolForDrops().sound(SoundType.BONE_BLOCK)));
@@ -131,7 +131,7 @@ public class ModBlocks {
     public static final RegistrySupplier<SlabBlock> ANCIENT_WOOD_SLAB = registerBlock("ancient_wood_slab",
             () -> new SlabBlock(Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<RotatedPillarBlock> ANCIENT_WOOD_LOG = registerBlock("ancient_wood_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(ANCIENT_WOOD_PLANKS.get())));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<StairBlock> ANCIENT_WOOD_STAIRS = registerBlock("ancient_wood_stairs",
             () -> new StairBlock(ANCIENT_WOOD_PLANKS.get().defaultBlockState(), Properties.copy(ANCIENT_WOOD_PLANKS.get())));
     public static final RegistrySupplier<ClearGlassBlock> REINFORCED_GLASS = registerBlock("reinforced_glass",
@@ -200,13 +200,13 @@ public class ModBlocks {
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<RotatedPillarBlock> CALAMITES_LOG = registerBlock("calamites_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> CALAMITES_WOOD = registerBlock("calamites_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_CALAMITES_LOG = registerBlock("stripped_calamites_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_CALAMITES_WOOD = registerBlock("stripped_calamites_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
     public static final RegistrySupplier<LeavesBlock> CALAMITES_LEAVES = registerBlock("calamites_leaves",
             () -> FossilLeavesBlock.get(Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> CALAMITES_SAPLING = registerBlock("calamites_sapling",
@@ -232,13 +232,13 @@ public class ModBlocks {
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<RotatedPillarBlock> CORDAITES_LOG = registerBlock("cordaites_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> CORDAITES_WOOD = registerBlock("cordaites_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_CORDAITES_LOG = registerBlock("stripped_cordaites_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_CORDAITES_WOOD = registerBlock("stripped_cordaites_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
     public static final RegistrySupplier<LeavesBlock> CORDAITES_LEAVES = registerBlock("cordaites_leaves",
             () -> FossilLeavesBlock.get(Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<SaplingBlock> CORDAITES_SAPLING = registerBlock("cordaites_sapling",
@@ -264,13 +264,13 @@ public class ModBlocks {
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<RotatedPillarBlock> MUTANT_TREE_LOG = registerBlock("mutant_tree_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> MUTANT_TREE_WOOD = registerBlock("mutant_tree_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_MUTANT_TREE_LOG = registerBlock("stripped_mutant_tree_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_MUTANT_TREE_WOOD = registerBlock("stripped_mutant_tree_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
     public static final RegistrySupplier<LeavesBlock> MUTANT_TREE_LEAVES = registerBlock("mutant_tree_leaves",
             () -> FossilLeavesBlock.get(Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> MUTANT_TREE_SAPLING = registerBlock("mutant_tree_sapling",
@@ -300,13 +300,13 @@ public class ModBlocks {
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<RotatedPillarBlock> PALM_LOG = registerBlock("palm_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> PALM_WOOD = registerBlock("palm_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_PALM_LOG = registerBlock("stripped_palm_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_PALM_WOOD = registerBlock("stripped_palm_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
     public static final RegistrySupplier<LeavesBlock> PALM_LEAVES = registerBlock("palm_leaves",
             () -> FossilLeavesBlock.get(Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> PALM_SAPLING = registerBlock("palm_sapling",
@@ -332,13 +332,13 @@ public class ModBlocks {
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<RotatedPillarBlock> SIGILLARIA_LOG = registerBlock("sigillaria_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> SIGILLARIA_WOOD = registerBlock("sigillaria_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_SIGILLARIA_LOG = registerBlock("stripped_sigillaria_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_SIGILLARIA_WOOD = registerBlock("stripped_sigillaria_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
     public static final RegistrySupplier<LeavesBlock> SIGILLARIA_LEAVES = registerBlock("sigillaria_leaves",
             () -> FossilLeavesBlock.get(Properties.copy(Blocks.OAK_LEAVES)));
     public static final RegistrySupplier<Block> SIGILLARIA_SAPLING = registerBlock("sigillaria_sapling",
@@ -364,13 +364,13 @@ public class ModBlocks {
             () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.EVERYTHING, Properties.copy(Blocks.SPRUCE_PRESSURE_PLATE)
                     .strength(1f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<RotatedPillarBlock> TEMPSKYA_LOG = registerBlock("tempskya_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> TEMPSKYA_WOOD = registerBlock("tempskya_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.OAK_WOOD)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_TEMPSKYA_LOG = registerBlock("stripped_tempskya_log",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_LOG)));
     public static final RegistrySupplier<RotatedPillarBlock> STRIPPED_TEMPSKYA_WOOD = registerBlock("stripped_tempskya_wood",
-            () -> ModFlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
+            () -> FlammableRotatedPillarBlock.get(Properties.copy(Blocks.STRIPPED_OAK_WOOD)));
     public static final RegistrySupplier<Block> TEMPSKYA_SAPLING = registerBlock("tempskya_sapling",
             () -> new SaplingBlock(new TempskyaTreeGrower(), Properties.copy(Blocks.OAK_SAPLING)));
     public static final RegistrySupplier<Block> TEMPSKYA_TOP = registerBlock("tempskya_top",
@@ -527,7 +527,7 @@ public class ModBlocks {
 
     public static void register() {
         PrehistoricPlantInfo.register();
-        ModFlammableRotatedPillarBlock.registerAllStripped();
+        FlammableRotatedPillarBlock.registerAllStripped();
         BLOCKS.register();
     }
 }

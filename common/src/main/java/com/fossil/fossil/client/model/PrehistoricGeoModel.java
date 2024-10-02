@@ -13,6 +13,10 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel
     private final ResourceLocation modelLocation;
     private final ResourceLocation animationLocation;
 
+    /**
+     * @param modelName the file model name (including extension)
+     * @param animationName the animation model name (including extension)
+     */
     public PrehistoricGeoModel(String modelName, String animationName) {
         this.modelLocation = Fossil.location("geo/entity/" + modelName);
         this.animationLocation = Fossil.location("animations/" + animationName);

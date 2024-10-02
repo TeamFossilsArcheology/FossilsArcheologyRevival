@@ -1,10 +1,10 @@
 package com.fossil.fossil.forge.block.entity;
 
-import com.fossil.fossil.block.entity.CustomBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, CustomBlockEntity {
+public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Container {
     protected int litTime; //fuel goes from x to 0
     protected int litDuration; //fuel x
     protected int cookingProgress; //item goes from 0 to x

@@ -20,6 +20,13 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Statue that spawns the {@link com.fossil.fossil.entity.AnuTotem entity/effect} that opens the portal to the ancient lair
+ *
+ * @see AnuStatueBlock
+ * @see AnuStatueBlockEntity
+ * @see com.fossil.fossil.item.AnuStatueBlockItem
+ */
 public class AnuStatueBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(1, 0, 2, 16, 30, 16);

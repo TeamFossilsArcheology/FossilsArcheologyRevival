@@ -1,6 +1,7 @@
 package com.fossil.fossil.advancements;
 
 import com.fossil.fossil.Fossil;
+import com.fossil.fossil.item.ModItems;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.DeserializationContext;
@@ -10,6 +11,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Triggers whenever a {@link com.fossil.fossil.entity.prehistoric.base.Prehistoric Prehistoric} is tamed with a {@link ModItems#SCARAB_GEM}
+ */
 public class ScarabTameTrigger extends SimpleCriterionTrigger<OpenSarcophagusTrigger.TriggerInstance> {
     private static final ResourceLocation ID = Fossil.location("scarab_tame");
 

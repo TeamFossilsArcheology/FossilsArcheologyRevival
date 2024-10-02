@@ -1,6 +1,9 @@
-package com.fossil.fossil.entity.prehistoric.base;
+package com.fossil.fossil.entity.prehistoric.system;
 
-import com.fossil.fossil.entity.prehistoric.SleepSystem;
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricFlying;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.tags.BlockTags;

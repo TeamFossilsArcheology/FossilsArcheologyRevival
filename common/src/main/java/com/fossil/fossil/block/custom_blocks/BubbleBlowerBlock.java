@@ -1,6 +1,5 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.block.entity.BubbleBlowerBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.client.particle.ModParticles;
@@ -24,7 +23,12 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Random;
 
-public class BubbleBlowerBlock extends BaseEntityBlock implements IDinoUnbreakable {
+/**
+ * Mood increasing block
+ *
+ * @see BubbleBlowerBlockEntity
+ */
+public class BubbleBlowerBlock extends BaseEntityBlock {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 

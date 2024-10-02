@@ -1,12 +1,14 @@
-package com.fossil.fossil.entity.prehistoric;
+package com.fossil.fossil.entity.prehistoric.system;
 
-import com.fossil.fossil.entity.prehistoric.base.AISystem;
 import com.fossil.fossil.entity.prehistoric.base.OrderType;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.Pose;
 
+/**
+ * This system determines when a mob can and should sleep
+ */
 public class SleepSystem extends AISystem {
     private boolean sleepForced;
     protected boolean sleepDisabled;
@@ -83,10 +85,16 @@ public class SleepSystem extends AISystem {
         return mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
     }
 
+    /**
+     * @param sleepForced if {@code true} the mob will not stop sleeping
+     */
     public void setSleepForced(boolean sleepForced) {
         this.sleepForced = sleepForced;
     }
 
+    /**
+     * @param sleepDisabled if {@code true} the mob will not be able to start sleeping
+     */
     public void setSleepDisabled(boolean sleepDisabled) {
         this.sleepDisabled = sleepDisabled;
     }

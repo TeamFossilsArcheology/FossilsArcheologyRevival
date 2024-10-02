@@ -10,6 +10,9 @@ import net.minecraft.client.resources.model.ModelState;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 
+/**
+ * @see PlantBlockModel
+ */
 public class PlantModelBakery {
 
     public static BakedQuad bakeFace(PlantBlockModel.PlantBlockElement part, PlantBlockModel.PlantBlockElementFace partFace, TextureAtlasSprite sprite, Direction direction, ModelState modelState) {

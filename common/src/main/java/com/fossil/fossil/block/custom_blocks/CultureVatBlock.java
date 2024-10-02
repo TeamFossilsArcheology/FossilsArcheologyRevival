@@ -32,6 +32,11 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
+/**
+ * @see CultureVatBlockEntity
+ * @see com.fossil.fossil.inventory.CultureVatMenu
+ * @see com.fossil.fossil.client.gui.CultureVatScreen
+ */
 public class CultureVatBlock extends CustomEntityBlock {
 
     public static final EnumProperty<EmbryoType> EMBRYO = EnumProperty.create("embryo", EmbryoType.class);

@@ -1,6 +1,8 @@
-package com.fossil.fossil.entity.prehistoric.base;
+package com.fossil.fossil.entity.prehistoric.system;
 
 import com.fossil.fossil.entity.ToyBase;
+import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.entity.prehistoric.base.PrehistoricMoodType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
@@ -8,6 +10,11 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.material.Material;
 
+/**
+ * This system handles the mobs mood as well as some parts of the playing logic.
+ * <p>
+ * A mobs mood can determine how aggressive they are, whether they can breed or whether they can play
+ */
 public class MoodSystem extends AISystem {
     private int moodCheckCooldown = 0;
     private int playingCooldown;
@@ -18,6 +25,11 @@ public class MoodSystem extends AISystem {
         this.playingCooldown = prehistoric.getRandom().nextInt(6000) + 6000;
     }
 
+    /**
+     * @param entity the entity to check around
+     * @param range  the radius. Vertical radius is halved
+     * @return {@code true} if any block in range is of a plant-ish material
+     */
     public static boolean arePlantsNearby(Entity entity, int range) {
         for (int i = Mth.floor(entity.getX() - range); i < Mth.ceil(entity.getX() + range); i++) {
             for (int j = Mth.floor(entity.getY() - range / 2.0); j < Mth.ceil(entity.getY() + range / 2.0); j++) {
@@ -68,6 +80,9 @@ public class MoodSystem extends AISystem {
         setMood(getMood() + mood);
     }
 
+    /**
+     * Increases or decreases the mood if certain conditions are or aren't met
+     */
     public void doMoodCheck() {
         int overallMoodAddition = 0;
         if (arePlantsNearby(mob, 16)) {
@@ -91,6 +106,11 @@ public class MoodSystem extends AISystem {
         this.playingCooldown = ticks;
     }
 
+    /**
+     * Updates the mobs mood, sets a cooldown and displays some particles
+     *
+     * @param playBonus the amount of mood gained
+     */
     public void useToy(int playBonus) {
         if (getPlayingCooldown() == 0) {
             setMood(getMood() + playBonus);

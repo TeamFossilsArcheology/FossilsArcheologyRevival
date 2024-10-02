@@ -1,6 +1,5 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.block.IDinoUnbreakable;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -18,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-public class ClearGlassBlock extends AbstractGlassBlock implements IDinoUnbreakable {
+public class ClearGlassBlock extends AbstractGlassBlock {
     public static final BooleanProperty NORTH = BlockStateProperties.NORTH;
     public static final BooleanProperty EAST = BlockStateProperties.EAST;
     public static final BooleanProperty SOUTH = BlockStateProperties.SOUTH;

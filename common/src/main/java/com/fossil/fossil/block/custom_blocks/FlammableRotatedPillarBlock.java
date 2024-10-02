@@ -7,7 +7,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 
 import static com.fossil.fossil.block.ModBlocks.*;
 
-public class ModFlammableRotatedPillarBlock {
+public class FlammableRotatedPillarBlock {
     @ExpectPlatform
     public static void registerStripped(Block base, Block stripped) {
         throw new AssertionError();

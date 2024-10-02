@@ -1,9 +1,9 @@
 package com.fossil.fossil.fabric.block.entity;
 
-import com.fossil.fossil.block.entity.CustomBlockEntity;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class FabricContainerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, CustomBlockEntity {
+public abstract class FabricContainerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Container {
     protected int litTime; //fuel goes from x to 0
     protected int litDuration; //fuel x
     protected int cookingProgress; //item goes from 0 to x
@@ -41,11 +41,6 @@ public abstract class FabricContainerBlockEntity extends BaseContainerBlockEntit
         tag.putShort("CookingProgress", (short) this.cookingProgress);
         tag.putShort("CookingTotalTime", (short) this.cookingTotalTime);
         ContainerHelper.saveAllItems(tag, getItems());
-    }
-
-    @Override
-    public int getIngredientsSize() {
-        return 1;
     }
 
     protected boolean isProcessing() {

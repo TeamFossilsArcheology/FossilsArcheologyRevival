@@ -10,6 +10,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Triggers whenever an egg hatches
+ */
 public class IncubateEggTrigger extends SimpleCriterionTrigger<IncubateEggTrigger.TriggerInstance> {
     private static final ResourceLocation ID = Fossil.location("incubate_egg");
 

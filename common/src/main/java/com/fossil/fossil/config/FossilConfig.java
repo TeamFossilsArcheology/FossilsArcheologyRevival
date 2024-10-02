@@ -57,6 +57,9 @@ public class FossilConfig {
     public static final String MACHINE_ENERGY_USAGE = "machineEnergyUsage";
     public static final String FERN_TICK_RATE = "fernTickRate";
 
+    /**
+     * Maps hardcoded structure locations to a config option
+     */
     public static boolean isStructurePoolEnabled(ResourceLocation field) {
         switch (field.getPath()) {
             case "aztec_weapon_shop" -> {

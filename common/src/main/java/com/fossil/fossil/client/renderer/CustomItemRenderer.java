@@ -50,7 +50,10 @@ public class CustomItemRenderer extends BlockEntityWithoutLevelRenderer {
             } else if (block instanceof AncientChestBlock) {
                 blockEntityRenderDispatcher.renderItem(ancientChest, poseStack, buffer, packedLight, packedOverlay);
             } else if (block instanceof SarcophagusBlock) {
+                poseStack.pushPose();
+                poseStack.scale(1, 0.65f, 1);
                 blockEntityRenderDispatcher.renderItem(sarcophagus, poseStack, buffer, packedLight, packedOverlay);
+                poseStack.popPose();
             }
             return;
         }

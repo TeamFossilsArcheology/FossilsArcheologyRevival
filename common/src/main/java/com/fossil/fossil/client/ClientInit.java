@@ -91,8 +91,6 @@ public class ClientInit {
         ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH_EMITTER, new VolcanoVentAshEmitterParticle.Provider());
         ParticleProviderRegistry.register(ModParticles.BUBBLE, BubbleParticle.Provider::new);
         ParticleProviderRegistry.register(ModParticles.TAR_BUBBLE, TarBubbleParticle.Provider::new);
-        ParticleProviderRegistry.register(ModParticles.REDSTONE_EXPLOSION, RedstoneExplosionParticle.Provider::new);
-        ParticleProviderRegistry.register(ModParticles.REDSTONE_EXPLOSION_EMITTER, new RedstoneExplosionEmitterParticle.Provider());
     }
 
     public static void later() {

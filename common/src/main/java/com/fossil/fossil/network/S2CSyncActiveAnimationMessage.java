@@ -17,7 +17,6 @@ public class S2CSyncActiveAnimationMessage {
     private final int entityId;
     private final String controller;
     private final String animationName;
-    private final double startTick;
     private final AnimationLogic.Category category;
     private final double ticks;
     private final boolean loop;
@@ -26,7 +25,6 @@ public class S2CSyncActiveAnimationMessage {
         this.entityId = buf.readInt();
         this.controller = buf.readUtf();
         this.animationName = buf.readUtf();
-        this.startTick = buf.readDouble();
         this.category = buf.readEnum(AnimationLogic.Category.class);
         this.ticks = buf.readDouble();
         this.loop = buf.readBoolean();
@@ -36,7 +34,6 @@ public class S2CSyncActiveAnimationMessage {
         this.entityId = entity.getId();
         this.controller = controller;
         this.animationName = activeAnimationInfo.animationName();
-        this.startTick = activeAnimationInfo.startTick();
         this.category = activeAnimationInfo.category();
         this.ticks = activeAnimationInfo.transitionLength();
         this.loop = activeAnimationInfo.loop();
@@ -46,7 +43,6 @@ public class S2CSyncActiveAnimationMessage {
         buf.writeInt(entityId);
         buf.writeUtf(controller);
         buf.writeUtf(animationName);
-        buf.writeDouble(startTick);
         buf.writeEnum(category);
         buf.writeDouble(ticks);
         buf.writeBoolean(loop);
@@ -59,7 +55,7 @@ public class S2CSyncActiveAnimationMessage {
             if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
                 double endTick = entity.level.getGameTime() + prehistoric.getAllAnimations().getOrDefault(animationName, new Animation()).animationLength;
                 AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.ActiveAnimationInfo(
-                        animationName, startTick, endTick, category, true, ticks, loop
+                        animationName, endTick, category, true, ticks, loop
                 );
                 prehistoric.getAnimationLogic().addNextAnimation(controller, activeAnimationInfo);
             }

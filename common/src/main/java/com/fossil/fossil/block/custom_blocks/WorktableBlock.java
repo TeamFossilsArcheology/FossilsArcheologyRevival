@@ -19,6 +19,11 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * @see WorktableBlockEntity
+ * @see com.fossil.fossil.inventory.WorktableMenu
+ * @see com.fossil.fossil.client.gui.WorktableScreen
+ */
 public class WorktableBlock extends CustomEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 

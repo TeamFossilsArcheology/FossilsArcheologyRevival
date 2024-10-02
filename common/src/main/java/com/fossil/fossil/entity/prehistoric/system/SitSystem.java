@@ -1,9 +1,14 @@
-package com.fossil.fossil.entity.prehistoric.base;
+package com.fossil.fossil.entity.prehistoric.system;
 
+import com.fossil.fossil.entity.prehistoric.base.OrderType;
+import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.nbt.CompoundTag;
 
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.Moving;
 
+/**
+ * This system determines when a mob can and should sit
+ */
 public class SitSystem extends AISystem {
     protected boolean sittingDisabled;
     private int ticksSat;
@@ -47,6 +52,9 @@ public class SitSystem extends AISystem {
         }
     }
 
+    /**
+     * @param sittingDisabled if {@code true} the mob will not be able to start sitting
+     */
     public void setSittingDisabled(boolean sittingDisabled) {
         this.sittingDisabled = sittingDisabled;
     }

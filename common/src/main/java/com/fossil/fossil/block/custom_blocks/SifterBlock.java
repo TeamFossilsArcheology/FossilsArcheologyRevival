@@ -10,6 +10,11 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * @see SifterBlockEntity
+ * @see com.fossil.fossil.inventory.SifterMenu
+ * @see com.fossil.fossil.client.gui.SifterScreen
+ */
 public class SifterBlock extends CustomEntityBlock {
 
     public SifterBlock(Properties properties) {

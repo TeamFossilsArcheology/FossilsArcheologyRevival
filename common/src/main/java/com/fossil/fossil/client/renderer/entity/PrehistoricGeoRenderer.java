@@ -5,6 +5,7 @@ import com.fossil.fossil.client.model.PrehistoricGeoModel;
 import com.fossil.fossil.entity.prehistoric.Arthropleura;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.util.Util;
+import com.fossil.fossil.util.Version;
 import com.github.darkpred.multipartsupport.entity.MultiPartGeoEntityRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -24,6 +25,10 @@ import java.util.function.Function;
 public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRenderer<T> {
     private final Function<ResourceLocation, RenderType> renderType;
 
+    /**
+     * @param model the file model name (including extension)
+     * @param animation the animation model name (including extension)
+     */
     public PrehistoricGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, Function<ResourceLocation, RenderType> renderType) {
         super(renderManager, new PrehistoricGeoModel<>(model, animation));
         this.renderType = renderType;
@@ -37,10 +42,12 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
 
     @Override
     public Color getRenderColor(T animatable, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight) {
-        if (InstructionTab.entityListHighlight != null && InstructionTab.entityListHighlight.getId() == animatable.getId()) {
-            return Color.RED;
-        } else if (InstructionTab.highlightInstructionEntity != null && InstructionTab.highlightInstructionEntity.getId() == animatable.getId()) {
-            return Color.RED;
+        if (Version.debugEnabled()) {
+            if (InstructionTab.entityListHighlight != null && InstructionTab.entityListHighlight.getId() == animatable.getId()) {
+                return Color.RED;
+            } else if (InstructionTab.highlightInstructionEntity != null && InstructionTab.highlightInstructionEntity.getId() == animatable.getId()) {
+                return Color.RED;
+            }
         }
         if (animatable instanceof Arthropleura arthropleura && arthropleura.isBee()) {
             return Color.YELLOW;

@@ -7,7 +7,6 @@ import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricShearable;
 import com.fossil.fossil.entity.util.Util;
-import com.fossil.fossil.item.ModItems;
 import com.fossil.fossil.sounds.ModSounds;
 import com.fossil.fossil.util.Gender;
 import net.minecraft.nbt.CompoundTag;
@@ -15,13 +14,11 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -57,24 +54,6 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
         super(entityType, level);
     }
 
-    protected void tickCustomParts() {
-        /*parts[0].setPos(position());
-        Vec3 view = calculateViewVector(0, yBodyRot);
-        Vec3 offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[1].getBbWidth()) / 2);
-        float offsetVert = getPose() == Pose.SLEEPING ? getBbHeight() - parts[1].getBbHeight() / 1.9f : getBbHeight();
-        parts[1].setPos(position().add(offsetHor.x, offsetVert, offsetHor.z));
-
-        if (getPose() == Pose.SLEEPING) {
-            offsetHor = view.scale(getBbWidth() - parts[2].getBbWidth() / 2).reverse();
-            offsetVert = getBbHeight()- 0.6f * getScale() - parts[2].getBbHeight();
-            parts[2].setPos(position().add(offsetHor.x, offsetVert, offsetHor.z));
-        } else {
-            offsetHor = view.scale(getBbWidth() - (getBbWidth() - parts[2].getBbWidth()) / 2).reverse();
-            offsetVert = getBbHeight() - 0.3f * getScale() - parts[2].getBbHeight();
-            parts[2].setPos(position().add(offsetHor.x, offsetVert, offsetHor.z));
-        }*/
-    }
-
     @Override
     protected void registerGoals() {
         super.registerGoals();
@@ -99,7 +78,7 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
             }
         }
         if (isSleeping()) builder.append("_sleeping");
-        if (isSheared()) builder.append("_shaved");
+        //if (isSheared()) builder.append("_shaved");
         builder.append(".png");
         textureLocation = Fossil.location(builder.toString());
     }
@@ -164,13 +143,14 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
 
     @Override
     public void shear(SoundSource source) {
-        level.playSound(null, this, SoundEvents.SHEEP_SHEAR, source, 1, 1);
+        //Disabled because of missing texture
+        //level.playSound(null, this, SoundEvents.SHEEP_SHEAR, source, 1, 1);
         setSheared(true);
         int maxWool = 1 + random.nextInt(10);
         for (int i = 0; i < maxWool; i++) {
-            ItemEntity itemEntity = spawnAtLocation(ModItems.THERIZINOSAURUS_DOWN.get(), 1);
-            if (itemEntity == null) continue;
-            itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((random.nextFloat() - random.nextFloat()) * 0.1, random.nextFloat() * 0.05, (random.nextFloat() - random.nextFloat()) * 0.1));
+            //ItemEntity itemEntity = spawnAtLocation(ModItems.THERIZINOSAURUS_DOWN.get(), 1);
+            //if (itemEntity == null) continue;
+            //itemEntity.setDeltaMovement(itemEntity.getDeltaMovement().add((random.nextFloat() - random.nextFloat()) * 0.1, random.nextFloat() * 0.05, (random.nextFloat() - random.nextFloat()) * 0.1));
         }
     }
 

@@ -1,6 +1,5 @@
 package com.fossil.fossil.block.custom_blocks;
 
-import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.block.entity.FeederBlockEntity;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
@@ -21,7 +20,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-public class FeederBlock extends BaseEntityBlock implements IDinoUnbreakable {
+/**
+ * @see FeederBlockEntity
+ * @see com.fossil.fossil.inventory.FeederMenu
+ * @see com.fossil.fossil.client.gui.FeederScreen
+ */
+public class FeederBlock extends BaseEntityBlock {
 
     public static final BooleanProperty HERB = BooleanProperty.create("herb");
     public static final BooleanProperty CARN = BooleanProperty.create("carn");

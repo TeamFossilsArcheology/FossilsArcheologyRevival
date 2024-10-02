@@ -14,8 +14,11 @@ import com.fossil.fossil.entity.data.AI;
 import com.fossil.fossil.entity.data.Attribute;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.Deinonychus;
-import com.fossil.fossil.entity.prehistoric.SleepSystem;
 import com.fossil.fossil.entity.prehistoric.Velociraptor;
+import com.fossil.fossil.entity.prehistoric.system.AISystem;
+import com.fossil.fossil.entity.prehistoric.system.MoodSystem;
+import com.fossil.fossil.entity.prehistoric.system.SitSystem;
+import com.fossil.fossil.entity.prehistoric.system.SleepSystem;
 import com.fossil.fossil.entity.util.InstructionSystem;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.item.ModItems;
@@ -1291,6 +1294,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
         }
         return AnimationInfoManager.ANIMATIONS.getClientAnimations(animationLocation);
+    }
+
+    @Override
+    public Animation getAnimation(String name) {
+        return getAllAnimations().get(name);
     }
 
     @Override

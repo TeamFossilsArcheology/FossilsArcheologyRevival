@@ -4,7 +4,6 @@ import com.fossil.fossil.block.custom_blocks.SifterBlock;
 import com.fossil.fossil.block.entity.ModBlockEntities;
 import com.fossil.fossil.block.entity.SifterBlockEntity;
 import com.fossil.fossil.forge.block.entity.ForgeContainerBlockEntity;
-import com.fossil.fossil.inventory.CustomSimpleContainer;
 import com.fossil.fossil.inventory.SifterMenu;
 import com.fossil.fossil.recipe.ModRecipes;
 import net.minecraft.core.BlockPos;
@@ -12,6 +11,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
@@ -105,7 +105,7 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
 
 
     public boolean isSiftable(ItemStack stack) {
-        return ModRecipes.getSifterRecipeForItem(new CustomSimpleContainer(1, stack), level) != null;
+        return ModRecipes.getSifterRecipeForItem(new SimpleContainer(stack), level) != null;
     }
 
     protected boolean canProcess() {
@@ -125,7 +125,7 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
 
     protected void createItem() {
         if (canProcess()) {
-            ItemStack result = ModRecipes.getSifterRecipeForItem(new CustomSimpleContainer(1, items.get(0)), level)
+            ItemStack result = ModRecipes.getSifterRecipeForItem(new SimpleContainer(items.get(0)), level)
                     .assemble(this).copy();
             for (int slot = 1; slot < 5; slot++) {
                 ItemStack stackInSlot = items.get(slot);

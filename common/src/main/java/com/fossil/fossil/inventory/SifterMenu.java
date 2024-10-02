@@ -54,7 +54,7 @@ public class SifterMenu extends AbstractContainerMenu {
                     return ItemStack.EMPTY;
                 }
             } else if (index > 0) {
-                if (ModRecipes.getSifterRecipeForItem(new CustomSimpleContainer(1, itemStack), player.level) != null) {
+                if (ModRecipes.getSifterRecipeForItem(new SimpleContainer(itemStack), player.level) != null) {
                     if (!this.moveItemStackTo(current, 0, 1, false)) {
                         return ItemStack.EMPTY;
                     }

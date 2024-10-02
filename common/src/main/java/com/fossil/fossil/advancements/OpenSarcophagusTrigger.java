@@ -10,6 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Triggers whenever the {@link com.fossil.fossil.block.custom_blocks.SarcophagusBlock Sarcophagus} is opened
+ */
 public class OpenSarcophagusTrigger extends SimpleCriterionTrigger<OpenSarcophagusTrigger.TriggerInstance> {
     private static final ResourceLocation ID = Fossil.location("open_sarcophagus");
 

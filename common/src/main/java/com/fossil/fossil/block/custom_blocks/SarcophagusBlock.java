@@ -42,6 +42,11 @@ import org.jetbrains.annotations.Nullable;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * @see SarcophagusBlockEntity
+ * @see com.fossil.fossil.item.SarcophagusBlockItem
+ * @see com.fossil.fossil.client.renderer.blockentity.SarcophagusRenderer
+ */
 public class SarcophagusBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     public static final IntegerProperty LAYER = IntegerProperty.create("layer", 0, 2);

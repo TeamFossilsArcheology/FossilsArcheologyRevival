@@ -6,7 +6,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 
-public class ModFlammableRotatedPillarBlockImpl {
+public class FlammableRotatedPillarBlockImpl {
 
     public static RotatedPillarBlock get(BlockBehaviour.Properties properties) {
         RotatedPillarBlock block = new RotatedPillarBlock(properties);

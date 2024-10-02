@@ -64,15 +64,6 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
         return Mob.createMobAttributes().add(Attributes.MAX_HEALTH, 2);
     }
 
-    /**
-     * @param level
-     * @param x
-     * @param y
-     * @param z
-     * @param player
-     * @param info
-     * @param hatchMessage
-     */
     public static Entity hatchEgg(Level level, double x, double y, double z, @Nullable ServerPlayer player, PrehistoricEntityInfo info, boolean hatchMessage) {
         Entity entity = info.entityType().create(level);
         if (entity instanceof Prehistoric prehistoric) {
@@ -142,7 +133,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
                 double motionZ = random.nextFloat() - 0.5;
                 level.addParticle(new ItemParticleOption(ParticleTypes.ITEM, new ItemStack(prehistoricEntityInfo.eggItem)), x, y, z, motionX, 0.5, motionZ);
             }
-            kill();
+            discard();
         }
     }
 

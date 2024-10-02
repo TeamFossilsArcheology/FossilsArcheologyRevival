@@ -14,6 +14,9 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Changes the amount of food a {@link Prehistoric} drops based on age
+ */
 public class CustomizeToDinoFunction extends LootItemConditionalFunction {
     private final LootContext.EntityTarget entityTarget;
 
@@ -23,7 +26,7 @@ public class CustomizeToDinoFunction extends LootItemConditionalFunction {
     }
 
     public static LootItemConditionalFunction.Builder<?> apply(LootContext.EntityTarget target) {
-        return simpleBuilder((lootItemConditions) -> new CustomizeToDinoFunction(lootItemConditions, target));
+        return simpleBuilder(lootItemConditions -> new CustomizeToDinoFunction(lootItemConditions, target));
     }
 
     @Override

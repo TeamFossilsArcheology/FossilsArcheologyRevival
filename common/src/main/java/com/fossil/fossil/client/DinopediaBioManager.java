@@ -19,6 +19,9 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 
+/**
+ * Loads dinopedia bio entries for the currently selected language and fallback language
+ */
 public class DinopediaBioManager extends SimplePreparableReloadListener<Map<String, Map<String, String>>> {
     public static final DinopediaBioManager DINOPEDIA = new DinopediaBioManager();
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -82,12 +85,15 @@ public class DinopediaBioManager extends SimplePreparableReloadListener<Map<Stri
         englishFallback = fallbackBuilder.putAll(files.get(Language.DEFAULT)).build();
     }
 
-    public String getDinopediaBio(String fileName) {
-        if (dinopediaTexts.containsKey(fileName)) {
-            return dinopediaTexts.get(fileName);
+    /**
+     * Returns the text of a dinopedia bio in the currently selected language or in the fallback language
+     */
+    public String getDinopediaBio(String entityName) {
+        if (dinopediaTexts.containsKey(entityName)) {
+            return dinopediaTexts.get(entityName);
         }
-        if (englishFallback.containsKey(fileName)) {
-            return englishFallback.get(fileName);
+        if (englishFallback.containsKey(entityName)) {
+            return englishFallback.get(entityName);
         }
         return "No bio found. This should not have happened";
     }

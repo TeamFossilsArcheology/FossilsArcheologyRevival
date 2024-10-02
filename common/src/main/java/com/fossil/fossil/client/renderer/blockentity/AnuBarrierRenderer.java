@@ -41,6 +41,7 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
         poseStack.translate(-0.5, 0, -0.5);
         //Prevent z-fighting with half blocks
         poseStack.scale(0.0625f, 0.0625f, direction.getAxis() == Direction.Axis.X ? 0.063f : 0.062f);
+        //Replicate animated texture
         int i = (int) (blockEntity.getLevel().getGameTime() % LOCATIONS.length);
         VertexConsumer vertexConsumer = bufferSource.getBuffer(RenderType.entityTranslucentCull(LOCATIONS[i]));
         int fixedLight = LevelRenderer.getLightColor(blockEntity.getLevel(), blockEntity.getBlockPos().relative(direction));

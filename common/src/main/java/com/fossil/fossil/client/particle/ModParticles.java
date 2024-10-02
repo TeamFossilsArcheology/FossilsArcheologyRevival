@@ -12,9 +12,6 @@ public class ModParticles {
 
     public static final RegistrySupplier<Type> BUBBLE = register("bubble");
 
-    public static final RegistrySupplier<Type> REDSTONE_EXPLOSION = register("redstone_explosion");
-    public static final RegistrySupplier<Type> REDSTONE_EXPLOSION_EMITTER = register("redstone_explosion_emitter");
-
     public static final RegistrySupplier<Type> TAR_BUBBLE = register("tar_bubble");
 
     public static final RegistrySupplier<Type> VOLCANO_VENT_ASH = register("volcano_vent_ash");

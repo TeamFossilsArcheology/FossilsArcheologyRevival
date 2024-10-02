@@ -27,6 +27,9 @@ import java.util.function.Supplier;
 import static com.fossil.fossil.entity.prehistoric.base.PrehistoricMobType.*;
 import static com.fossil.fossil.util.TimePeriod.*;
 
+/**
+ * Stores entity info that is needed to dynamically create mob items
+ */
 public enum PrehistoricEntityInfo implements EntityInfo {
     ALLIGATOR_GAR(ModEntities.ALLIGATOR_GAR, FISH, MESOZOIC, 0X43462A, 0XAF4231),
     ALLOSAURUS(ModEntities.ALLOSAURUS, DINOSAUR, MESOZOIC, 0X907B6C, 0X5F422D),

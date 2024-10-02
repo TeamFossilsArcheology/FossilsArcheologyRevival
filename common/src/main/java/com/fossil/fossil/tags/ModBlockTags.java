@@ -17,4 +17,5 @@ public class ModBlockTags {
     public static final TagKey<Block> SIGILLARIA_LOGS = TagKey.create(key, Fossil.location("sigillaria_logs"));
     public static final TagKey<Block> TEMPSKYA_LOGS = TagKey.create(key, Fossil.location("tempskya_logs"));
     public static final TagKey<Block> FIGURINES = TagKey.create(key, Fossil.location("figurines"));
+    public static final TagKey<Block> UNBREAKABLE = TagKey.create(key, Fossil.location("unbreakable"));
 }

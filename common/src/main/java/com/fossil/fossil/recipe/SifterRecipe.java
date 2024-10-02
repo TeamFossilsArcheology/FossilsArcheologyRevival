@@ -1,14 +1,12 @@
 package com.fossil.fossil.recipe;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.entity.CustomBlockEntity;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.ItemLike;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.NavigableMap;
@@ -18,11 +16,6 @@ public class SifterRecipe extends MultiOutputAndSlotsRecipe {
 
     public SifterRecipe(ResourceLocation resourceLocation, Ingredient input, NavigableMap<Double, ItemStack> weightedOutputs) {
         super(resourceLocation, input, weightedOutputs);
-    }
-
-    @Override
-    public boolean matches(CustomBlockEntity container, Level level) {
-        return input.test(container.getItem(0));
     }
 
     @Override

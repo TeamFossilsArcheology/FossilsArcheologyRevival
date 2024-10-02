@@ -1,9 +1,9 @@
 package com.fossil.fossil.entity.util;
 
-import com.fossil.fossil.block.IDinoUnbreakable;
 import com.fossil.fossil.entity.data.Attribute;
 import com.fossil.fossil.entity.data.EntityDataManager;
 import com.fossil.fossil.entity.prehistoric.base.Prehistoric;
+import com.fossil.fossil.tags.ModBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
@@ -68,7 +68,7 @@ public class Util {
 
     public static boolean canBreak(Level level, BlockPos targetPos, float maxHardness) {
         BlockState state = level.getBlockState(targetPos);
-        if (state.getBlock() instanceof IDinoUnbreakable || state.getDestroySpeed(level, targetPos) >= maxHardness || state.getDestroySpeed(level, targetPos) < 0) {
+        if (state.is(ModBlockTags.UNBREAKABLE) || state.getDestroySpeed(level, targetPos) >= maxHardness || state.getDestroySpeed(level, targetPos) < 0) {
             return false;
         }
         return !state.getCollisionShape(level, targetPos).isEmpty() && state.getFluidState().isEmpty();
@@ -115,6 +115,14 @@ public class Util {
         return newSpeed;
     }
 
+    /**
+     * Returns the nearest visible entity of a given class
+     *
+     * @param entityClazz the class to search for
+     * @param attacker the mob to search around
+     * @param searchArea the area to search in
+     * @param predicate additional tests
+     */
     @Nullable
     public static <T extends Entity> T getNearestEntity(Class<? extends T> entityClazz, Mob attacker, AABB searchArea, Predicate<T> predicate) {
         List<? extends T> entities = attacker.level.getEntitiesOfClass(entityClazz, searchArea, entity -> true);
@@ -130,10 +138,16 @@ public class Util {
         return target;
     }
 
+    /**
+     * Rotates and wraps a given y rotation(0° pos Z, -90° pos X, 90° neg X, 180/-180° neg Z) 90° clockwise (90° pos Z, 0° pos X, 180/-180° neg X, -90 neg Z).
+     */
     public static float yRotToYaw(double yRot) {
         return (float) Mth.wrapDegrees(yRot + 90);
     }
 
+    /**
+     * Rotates and wraps a given yaw rotation(90° pos Z, 0° pos X, 180/-180° neg X, -90 neg Z) 90° counter-clockwise (0° pos Z, -90° pos X, 90° neg X, 180/-180° neg Z)
+     */
     public static float yawToYRot(double yaw) {
         return (float) Mth.wrapDegrees(yaw - 90);
     }

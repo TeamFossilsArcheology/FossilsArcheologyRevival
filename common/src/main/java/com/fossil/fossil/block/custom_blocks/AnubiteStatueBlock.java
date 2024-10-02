@@ -20,6 +20,10 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * @see AnubiteStatueBlockEntity
+ * @see com.fossil.fossil.item.AnubiteStatueBlockItem
+ */
 public class AnubiteStatueBlock extends BaseEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
     private static final VoxelShape SHAPE = Block.box(1, 0, 2, 16, 30, 16);

@@ -18,6 +18,9 @@ import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * Applies {@link com.fossil.fossil.world.effect.ModEffects#COMFY_BED}
+ */
 public class ComfyBedBlock extends BedBlock {
     protected static final VoxelShape BASE = Block.box(0, 1, 0, 16, 9, 16);
     protected static final VoxelShape LEG_NORTH_WEST = Block.box(0, 0, 0, 3, 3, 3);

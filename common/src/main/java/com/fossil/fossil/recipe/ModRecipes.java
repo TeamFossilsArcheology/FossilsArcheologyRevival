@@ -1,7 +1,6 @@
 package com.fossil.fossil.recipe;
 
 import com.fossil.fossil.Fossil;
-import com.fossil.fossil.block.entity.CustomBlockEntity;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.fossil.fossil.item.ModItems;
@@ -9,6 +8,7 @@ import com.fossil.fossil.util.Version;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -126,12 +126,12 @@ public class ModRecipes {
     }
 
     @Nullable
-    public static SifterRecipe getSifterRecipeForItem(CustomBlockEntity container, Level level) {
+    public static SifterRecipe getSifterRecipeForItem(Container container, Level level) {
         return level.getRecipeManager().getRecipeFor(SIFTER_TYPE.get(), container, level).orElse(null);
     }
 
     @Nullable
-    public static AnalyzerRecipe getAnalyzerRecipeForItem(CustomBlockEntity container, Level level) {
+    public static AnalyzerRecipe getAnalyzerRecipeForItem(Container container, Level level) {
         return ANALYZER_RECIPES.computeIfAbsent(container.getItem(0).getItem(), item ->
                 level.getRecipeManager().getRecipeFor(ANALYZER_TYPE.get(), container, level).orElse(null));
     }

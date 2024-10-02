@@ -19,6 +19,11 @@ import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+/**
+ * @see AnalyzerBlockEntity
+ * @see com.fossil.fossil.inventory.AnalyzerMenu
+ * @see com.fossil.fossil.client.gui.AnalyzerScreen
+ */
 public class AnalyzerBlock extends CustomEntityBlock {
     public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
 

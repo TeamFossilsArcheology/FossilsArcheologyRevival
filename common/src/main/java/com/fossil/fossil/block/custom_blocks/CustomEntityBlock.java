@@ -14,10 +14,13 @@ import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * Base class for our "machine" blocks
+ */
 public abstract class CustomEntityBlock extends BaseEntityBlock {
     public static final BooleanProperty ACTIVE = BooleanProperty.create("active");
 
-    public CustomEntityBlock(Properties properties) {
+    protected CustomEntityBlock(Properties properties) {
         super(properties);
     }
 

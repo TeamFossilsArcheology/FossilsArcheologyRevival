@@ -13,6 +13,8 @@ public interface PrehistoricAnimatable<T extends Mob & PrehistoricAnimatable<T>>
 
     Map<String, Animation> getAllAnimations();
 
+    Animation getAnimation(String name);
+
     Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos();
 
     AnimationLogic<T> getAnimationLogic();

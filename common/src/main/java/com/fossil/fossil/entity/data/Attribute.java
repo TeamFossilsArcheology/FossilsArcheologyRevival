@@ -6,6 +6,9 @@ import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
 
+/**
+ * Entity attributes ranges
+ */
 public record Attribute(double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double minSpeed,
                         double maxSpeed, double baseArmor, double maxArmor, double baseKnockBackResistance,
                         double maxKnockBackResistance) {

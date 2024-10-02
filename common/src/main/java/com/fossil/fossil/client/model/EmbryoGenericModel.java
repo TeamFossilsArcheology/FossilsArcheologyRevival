@@ -9,6 +9,9 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
+/**
+ * Model displayed in an active culture vat
+ */
 public class EmbryoGenericModel {
     public static final ResourceLocation TEXTURE_GENERIC = Fossil.location("textures/block/culture_vat/embryo_generic.png");
     public static final ResourceLocation TEXTURE_LIMBLESS = Fossil.location("textures/block/culture_vat/embryo_limbless.png");
