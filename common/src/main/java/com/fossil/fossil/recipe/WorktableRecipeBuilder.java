@@ -1,5 +1,6 @@
 package com.fossil.fossil.recipe;
 
+import com.fossil.fossil.inventory.WorktableMenu;
 import net.minecraft.core.Registry;
 import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +13,7 @@ import java.util.function.Consumer;
 
 public class WorktableRecipeBuilder extends WithFuelRecipeBuilder {
     public WorktableRecipeBuilder(String modId, ItemLike itemInput, ItemLike itemFuel, ItemLike itemOutput) {
-        this(modId, itemInput, itemFuel, itemOutput, 300);
+        this(modId, itemInput, itemFuel, itemOutput, WorktableMenu.DEFAULT_DURATION);
     }
 
     public WorktableRecipeBuilder(String modId, ItemLike itemInput, ItemLike itemFuel, ItemLike itemOutput, int duration) {

@@ -73,6 +73,10 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
         return fuel;
     }
 
+    public int getDuration() {
+        return duration;
+    }
+
     public static class ContainerWithAnyFuel extends SimpleContainer {
         public final boolean anyFuel;
 

@@ -110,7 +110,7 @@ public class WorktableBlockEntityImpl extends FabricContainerBlockEntity impleme
                 cookingProgress++;
                 if (cookingProgress == cookingTotalTime) {
                     cookingProgress = 0;
-                    cookingTotalTime = timeToSmelt();
+                    cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), items.get(WorktableMenu.FUEL_SLOT_ID));
                     createItem();
                     dirty = true;
                 }
@@ -183,12 +183,12 @@ public class WorktableBlockEntityImpl extends FabricContainerBlockEntity impleme
         return 0;
     }
 
-    private int timeToSmelt() {
-        ItemStack item = items.get(WorktableMenu.FUEL_SLOT_ID);
-        if (item.isEmpty()) {
-            return 3000;
+    private int timeToSmelt(ItemStack input, ItemStack fuel) {
+        var recipe = ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(input, fuel), level);
+        if (recipe != null) {
+            return recipe.getDuration();
         }
-        return 300;
+        return WorktableMenu.DEFAULT_DURATION;
     }
 
     @Override
@@ -215,9 +215,15 @@ public class WorktableBlockEntityImpl extends FabricContainerBlockEntity impleme
             stack.setCount(getMaxStackSize());
         }
         if (slot == WorktableMenu.INPUT_SLOT_ID && !bl) {
-            cookingTotalTime = timeToSmelt();
+            if (!items.get(WorktableMenu.FUEL_SLOT_ID).isEmpty()) {
+                cookingTotalTime = timeToSmelt(stack, items.get(WorktableMenu.FUEL_SLOT_ID));
+            }
             cookingProgress = 0;
             setChanged();
+        } else if (slot == WorktableMenu.FUEL_SLOT_ID && !bl) {
+            if (!items.get(WorktableMenu.INPUT_SLOT_ID).isEmpty()) {
+                cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), stack);
+            }
         }
     }
 

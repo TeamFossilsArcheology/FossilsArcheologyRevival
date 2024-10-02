@@ -13,6 +13,7 @@ import java.util.function.Consumer;
 
 public class CultureVatRecipeBuilder extends WithFuelRecipeBuilder {
     public CultureVatRecipeBuilder(String modId, ItemLike itemInput, ItemLike itemOutput) {
+        //TODO: Duration not actually used
         this(modId, itemInput, ModItems.BIO_GOO.get(), itemOutput, 6000);
     }
 
