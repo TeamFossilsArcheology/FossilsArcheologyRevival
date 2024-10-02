@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnubiteStatueRenderer implements BlockEntityRenderer<AnubiteStatueBlockEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anubite_statue.png");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anubite_statue.png");
 
     private final ModelPart anubiteModel;
 

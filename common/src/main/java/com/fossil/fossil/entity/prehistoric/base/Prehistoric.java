@@ -145,7 +145,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
-        this(entityType, level, new ResourceLocation(Fossil.MOD_ID, "animations/" + EntityType.getKey(entityType).getPath() + ".animation.json"));
+        this(entityType, level, Fossil.location("animations/" + EntityType.getKey(entityType).getPath() + ".animation.json"));
     }
 
     @Override
@@ -842,7 +842,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             } else {
                 hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
                 ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
-                //((ServerLevel)level).getServer().getAdvancements().getAdvancement(new ResourceLocation(Fossil.MOD_ID, "all_eggs"));
+                //((ServerLevel)level).getServer().getAdvancements().getAdvancement(Fossil.location("all_eggs"));
                 if (getOwner() instanceof ServerPlayer player && player.getRecipeBook().contains(DinosaurEgg.GOLDEN_EGG_RECIPE)) {
                     ((DinosaurEgg) hatchling).setGoldenEgg(random.nextFloat() < 0.05);
                 }
@@ -1110,7 +1110,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         if (isSleeping()) builder.append("_sleeping");
         builder.append(".png");
-        textureLocation = new ResourceLocation(Fossil.MOD_ID, builder.toString());
+        textureLocation = Fossil.location(builder.toString());
     }
 
     @Override

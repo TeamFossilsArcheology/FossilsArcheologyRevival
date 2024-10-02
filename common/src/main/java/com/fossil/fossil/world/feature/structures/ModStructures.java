@@ -17,7 +17,7 @@ public class ModStructures {
     public static final Tuple<NoneFeatureConfiguration, TreasureRoomFeature> TREASURE_ROOM = createStructure("treasure_room", new TreasureRoomFeature());
 
     private static <C extends FeatureConfiguration, F extends StructureFeature<C>> Tuple<C, F> createStructure(String name, F feature) {
-        return new Tuple<>(new ResourceLocation(Fossil.MOD_ID, name), feature);
+        return new Tuple<>(Fossil.location(name), feature);
     }
 
     @ExpectPlatform

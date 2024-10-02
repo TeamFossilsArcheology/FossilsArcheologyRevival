@@ -60,7 +60,7 @@ public class AnalyzerRecipe extends MultiOutputAndSlotsRecipe {
         }
 
         public AnalyzerRecipe build() {
-            return new AnalyzerRecipe(new ResourceLocation(Fossil.MOD_ID, item.toString()), Ingredient.of(item), map);
+            return new AnalyzerRecipe(Fossil.location(item.toString()), Ingredient.of(item), map);
         }
     }
 }

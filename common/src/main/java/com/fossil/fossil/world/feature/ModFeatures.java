@@ -22,7 +22,7 @@ public class ModFeatures {
     public static final Tuple<NoneFeatureConfiguration, VolcanoVentFeature> VOLCANO_VENT = create("volcano_vent", new VolcanoVentFeature());
 
     public static <C extends FeatureConfiguration, F extends Feature<C>> Tuple<C, F> create(String name, F feature) {
-        return new Tuple<>(new ResourceLocation(Fossil.MOD_ID, name), feature);
+        return new Tuple<>(Fossil.location(name), feature);
     }
 
     @ExpectPlatform

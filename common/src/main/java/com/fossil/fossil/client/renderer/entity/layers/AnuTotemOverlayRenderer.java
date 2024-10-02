@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnuTotemOverlayRenderer extends RenderLayer<AnuTotem, AnuTotemModel> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu_totem_layer.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anu_totem_layer.png");
 
     public AnuTotemOverlayRenderer(RenderLayerParent<AnuTotem, AnuTotemModel> renderLayerParent) {
         super(renderLayerParent);

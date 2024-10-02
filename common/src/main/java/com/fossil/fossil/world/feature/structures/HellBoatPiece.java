@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import java.util.Random;
 
 public class HellBoatPiece extends TemplateStructurePiece {
-    private static final ResourceLocation STRUCTURE = new ResourceLocation(Fossil.MOD_ID, "hell_boat");
+    private static final ResourceLocation STRUCTURE = Fossil.location("hell_boat");
 
     public HellBoatPiece(StructureManager structureManager, BlockPos blockPos, Rotation rotation) {
         super(StructurePieceType.NETHER_FOSSIL, 0, structureManager, STRUCTURE, STRUCTURE.toString(), makeSettings(rotation), blockPos);

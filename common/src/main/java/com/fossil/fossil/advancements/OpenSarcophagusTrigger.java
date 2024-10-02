@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class OpenSarcophagusTrigger extends SimpleCriterionTrigger<OpenSarcophagusTrigger.TriggerInstance> {
-    private static final ResourceLocation ID = new ResourceLocation(Fossil.MOD_ID, "open_sarcophagus");
+    private static final ResourceLocation ID = Fossil.location("open_sarcophagus");
 
     public void trigger(ServerPlayer player) {
         trigger(player, triggerInstance -> true);

@@ -9,8 +9,8 @@ import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 
 public class AncientHelmetItem {
-    public static final ResourceLocation MODEL = new ResourceLocation(Fossil.MOD_ID, "geo/armor/ancient_helmet.geo.json");
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/models/armor/ancient_helmet_texture.png");
+    public static final ResourceLocation MODEL = Fossil.location("geo/armor/ancient_helmet.geo.json");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/models/armor/ancient_helmet_texture.png");
 
     @ExpectPlatform
     public static ArmorItem get(ArmorMaterial material, EquipmentSlot slot, Item.Properties properties) {

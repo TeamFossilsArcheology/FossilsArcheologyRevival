@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public record PlantBlockModel(List<PlantBlockElement> elements, HashMap<String, Material> materials) {
 
-    public static final ResourceLocation LOADER = new ResourceLocation(Fossil.MOD_ID, "plant_loader");
+    public static final ResourceLocation LOADER = Fossil.location("plant_loader");
 
     public static class Deserializer implements JsonDeserializer<PlantBlockModel> {
 

@@ -48,7 +48,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     /**
      * Dummy recipe that awards the player with a chance to get a golden egg
      */
-    public static final ResourceLocation GOLDEN_EGG_RECIPE = new ResourceLocation(Fossil.MOD_ID, "golden_egg");
+    public static final ResourceLocation GOLDEN_EGG_RECIPE = Fossil.location("golden_egg");
     private static final EntityDataAccessor<Integer> HATCHING_TIME = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> GOLDEN_EGG = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.BOOLEAN);
     private static final Logger LOGGER = LogUtils.getLogger();

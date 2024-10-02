@@ -9,7 +9,6 @@ import net.minecraft.core.Registry;
 import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.block.Blocks;
@@ -77,6 +76,6 @@ public class ModConfiguredFeatures {
     }
 
     private static ResourceKey<ConfiguredStructureFeature<?, ?>> createKey(String name) {
-        return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, new ResourceLocation(Fossil.MOD_ID, name));
+        return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, Fossil.location(name));
     }
 }

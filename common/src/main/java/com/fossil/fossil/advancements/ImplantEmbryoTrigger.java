@@ -11,7 +11,7 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class ImplantEmbryoTrigger extends SimpleCriterionTrigger<ImplantEmbryoTrigger.TriggerInstance> {
-    private static final ResourceLocation ID = new ResourceLocation(Fossil.MOD_ID, "implant_embryo");
+    private static final ResourceLocation ID = Fossil.location("implant_embryo");
 
     public void trigger(ServerPlayer player, ItemStack stack) {
         trigger(player, triggerInstance -> triggerInstance.matches(stack));

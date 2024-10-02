@@ -141,11 +141,11 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
             return;
         }
         String name = info().resourceName;
-        textureLocation = new ResourceLocation(Fossil.MOD_ID, "textures/entity/" + name + "/" + name + "_skeleton.png");
+        textureLocation = Fossil.location("textures/entity/" + name + "/" + name + "_skeleton.png");
         if (info() == DICRANURUS || info() == LONCHODOMAS || info() == SCOTOHARPES || info() == WALLISEROPS) {
-            modelLocation = new ResourceLocation(Fossil.MOD_ID, "geo/entity/trilobite.geo.json");
+            modelLocation = Fossil.location("geo/entity/trilobite.geo.json");
         } else {
-            modelLocation = new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + name + ".geo.json");
+            modelLocation = Fossil.location("geo/entity/" + name + ".geo.json");
         }
     }
 

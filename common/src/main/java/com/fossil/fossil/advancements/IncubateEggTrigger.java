@@ -11,7 +11,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import org.jetbrains.annotations.NotNull;
 
 public class IncubateEggTrigger extends SimpleCriterionTrigger<IncubateEggTrigger.TriggerInstance> {
-    private static final ResourceLocation ID = new ResourceLocation(Fossil.MOD_ID, "incubate_egg");
+    private static final ResourceLocation ID = Fossil.location("incubate_egg");
 
     public void trigger(ServerPlayer player, Entity entity) {
         LootContext lootContext = EntityPredicate.createContext(player, entity);

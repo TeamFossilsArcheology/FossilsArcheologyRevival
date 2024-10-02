@@ -22,7 +22,7 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public class StoneTabletRenderer extends EntityRenderer<StoneTablet> implements RendererFabricFix {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/stone_tablet.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/entity/stone_tablet.png");
 
     public StoneTabletRenderer(EntityRendererProvider.Context context) {
         super(context);

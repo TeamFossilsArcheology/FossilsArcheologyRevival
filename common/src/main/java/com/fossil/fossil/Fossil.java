@@ -24,6 +24,7 @@ import com.fossil.fossil.world.feature.structures.ModStructures;
 import com.fossil.fossil.world.feature.village.ModVillages;
 import com.mojang.logging.LogUtils;
 import dev.architectury.registry.ReloadListenerRegistry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
 import org.slf4j.Logger;
 
@@ -31,6 +32,10 @@ import org.slf4j.Logger;
 public class Fossil {
     public static final String MOD_ID = "fossil";
     public static final Logger LOGGER = LogUtils.getLogger();
+
+    public static ResourceLocation location(String path) {
+        return new ResourceLocation(MOD_ID, path);
+    }
 
     public static void init() {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoManager.ANIMATIONS);

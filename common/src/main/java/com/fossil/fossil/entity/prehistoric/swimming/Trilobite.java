@@ -9,7 +9,6 @@ import com.fossil.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.fossil.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.fossil.fossil.entity.util.Util;
 import com.fossil.fossil.sounds.ModSounds;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -29,7 +28,7 @@ public abstract class Trilobite extends PrehistoricSwimming {
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     protected Trilobite(EntityType<? extends Trilobite> entityType, Level level) {
-        super(entityType, level, new ResourceLocation(Fossil.MOD_ID, "animations/trilobite.animation.json"));
+        super(entityType, level, Fossil.location("animations/trilobite.animation.json"));
     }
 
     @Override

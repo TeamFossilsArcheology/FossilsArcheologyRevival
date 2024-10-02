@@ -24,7 +24,7 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
     private final float textureWidth = 16;
     private final float textureHeight = 16;
     private static final ResourceLocation[] LOCATIONS = IntStream.range(1, 32)
-            .mapToObj(idx -> new ResourceLocation(Fossil.MOD_ID, "textures/block/anu_portal/anu_portal_" + idx + ".png"))
+            .mapToObj(idx -> Fossil.location("textures/block/anu_portal/anu_portal_" + idx + ".png"))
             .toArray(ResourceLocation[]::new);
 
     public AnuBarrierRenderer(BlockEntityRendererProvider.Context context) {

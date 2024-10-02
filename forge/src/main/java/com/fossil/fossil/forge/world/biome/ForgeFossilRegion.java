@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 
 public class ForgeFossilRegion extends Region {
     public ForgeFossilRegion(String location, RegionType regionType, int weight) {
-        super(new ResourceLocation(Fossil.MOD_ID, location), regionType, weight);
+        super(Fossil.location(location), regionType, weight);
     }
 
     @Override

@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/analyzer.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/analyzer.png");
 
     public AnalyzerScreen(AnalyzerMenu containerMenu, Inventory inventory, Component component) {
         super(containerMenu, inventory, component);

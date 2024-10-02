@@ -44,8 +44,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class DinopediaScreen extends Screen {
-    private static final ResourceLocation DINOPEDIA_BACKGROUND = new ResourceLocation(Fossil.MOD_ID, "textures/gui/dinopedia.png");
-    private static final ResourceLocation MOODS = new ResourceLocation(Fossil.MOD_ID, "textures/gui/dinopedia_mood.png");
+    private static final ResourceLocation DINOPEDIA_BACKGROUND = Fossil.location("textures/gui/dinopedia.png");
+    private static final ResourceLocation MOODS = Fossil.location("textures/gui/dinopedia_mood.png");
     private static final int MOOD_FACE_WIDTH = 16;
     private static final int MOOD_FACE_HEIGHT = 15;
     private static final int MOOD_BAR_WIDTH = 206;

@@ -16,7 +16,7 @@ import net.minecraft.resources.ResourceLocation;
 
 public class ToyBallModel extends EntityModel<ToyBall> {
 
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/toy/ball_white.png");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/toy/ball_white.png");
 
     private final ModelPart model = createBodyLayer().bakeRoot();
     private float rotationX;

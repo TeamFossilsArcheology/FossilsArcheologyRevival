@@ -13,7 +13,7 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public class QuaggaRenderer extends AbstractHorseRenderer<Quagga, HorseModel<Quagga>> implements RendererFabricFix {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/quagga/quagga_saddled.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/entity/quagga/quagga_saddled.png");
 
     public QuaggaRenderer(EntityRendererProvider.Context context) {
         super(context, new HorseModel<>(LayerDefinition.create(HorseModel.createBodyMesh(CubeDeformation.NONE), 64, 64).bakeRoot()), 1.1f);

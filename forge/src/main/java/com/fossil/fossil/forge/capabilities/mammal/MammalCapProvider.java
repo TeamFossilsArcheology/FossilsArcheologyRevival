@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
 public class MammalCapProvider implements ICapabilitySerializable<CompoundTag> {
-    public static final ResourceLocation IDENTIFIER = new ResourceLocation(Fossil.MOD_ID, "mammal");
+    public static final ResourceLocation IDENTIFIER = Fossil.location("mammal");
 
     public static final Capability<IMammalCap> MAMMAL_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
     });

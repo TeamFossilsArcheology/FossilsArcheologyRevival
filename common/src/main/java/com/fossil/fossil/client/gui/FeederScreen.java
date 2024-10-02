@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/feeder.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/feeder.png");
     private static final int BAR_HEIGHT = 47;
     private static final int BAR_WIDTH = 5;
 

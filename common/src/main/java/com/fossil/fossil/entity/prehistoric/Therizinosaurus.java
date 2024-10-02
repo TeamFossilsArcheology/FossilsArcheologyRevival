@@ -14,7 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
@@ -102,7 +101,7 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
         if (isSleeping()) builder.append("_sleeping");
         if (isSheared()) builder.append("_shaved");
         builder.append(".png");
-        textureLocation = new ResourceLocation(Fossil.MOD_ID, builder.toString());
+        textureLocation = Fossil.location(builder.toString());
     }
 
     @Override

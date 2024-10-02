@@ -67,7 +67,7 @@ public class SifterRecipe extends MultiOutputAndSlotsRecipe {
         }
 
         public SifterRecipe build() {
-            return new SifterRecipe(new ResourceLocation(Fossil.MOD_ID, item.toString()), Ingredient.of(item), map);
+            return new SifterRecipe(Fossil.location(item.toString()), Ingredient.of(item), map);
         }
     }
 }

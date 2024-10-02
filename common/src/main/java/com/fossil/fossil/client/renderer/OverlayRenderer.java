@@ -17,10 +17,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 
 public class OverlayRenderer {
-    private static final ResourceLocation ANCIENT_HELMET = new ResourceLocation(Fossil.MOD_ID, "textures/gui/ancient_helmet_blur.png");
-    private static final ResourceLocation BONE_HELMET = new ResourceLocation(Fossil.MOD_ID, "textures/gui/bone_helmet_blur.png");
-    private static final ResourceLocation TAR = new ResourceLocation(Fossil.MOD_ID, "textures/block/tar_still.png");
-    private static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registry.FLUID_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "tar"));
+    private static final ResourceLocation ANCIENT_HELMET = Fossil.location("textures/gui/ancient_helmet_blur.png");
+    private static final ResourceLocation BONE_HELMET = Fossil.location("textures/gui/bone_helmet_blur.png");
+    private static final ResourceLocation TAR = Fossil.location("textures/block/tar_still.png");
+    private static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registry.FLUID_REGISTRY, Fossil.location("tar"));
 
     public static void renderHelmet(int screenWidth, int screenHeight) {
         Minecraft mc = Minecraft.getInstance();

@@ -13,7 +13,6 @@ import net.minecraft.data.worldgen.features.CaveFeatures;
 import net.minecraft.data.worldgen.features.MiscOverworldFeatures;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.valueproviders.ClampedNormalInt;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.MobSpawnSettings;
@@ -38,7 +37,7 @@ public class ModPlacedFeatures {
     private static Holder<PlacedFeature> ventVolcano;
 
     static {
-        StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, new ResourceLocation(Fossil.MOD_ID, "hell_boat")),
+        StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, Fossil.location("hell_boat")),
                 ModConfiguredFeatures.HELL_BOAT, new LazyRandomSpreadPlacement(FossilConfig.HELL_SHIP_SPACING, FossilConfig.HELL_SHIP_SEPARATION,
                         RandomSpreadType.LINEAR, 92182587));
     }

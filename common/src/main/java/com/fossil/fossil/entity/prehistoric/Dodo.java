@@ -13,7 +13,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -88,7 +87,7 @@ public class Dodo extends Prehistoric {
         }
         if (isSleeping()) builder.append("_sleeping");
         builder.append(".png");
-        textureLocation = new ResourceLocation(Fossil.MOD_ID, builder.toString());
+        textureLocation = Fossil.location(builder.toString());
     }
 
     @Override

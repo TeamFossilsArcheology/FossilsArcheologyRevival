@@ -10,7 +10,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.NavigableMap;
 
 public class SifterDisplay extends MultiOutputDisplay {
-    public static final CategoryIdentifier<SifterDisplay> ID = CategoryIdentifier.of(new ResourceLocation(Fossil.MOD_ID, "sifter"));
+    public static final CategoryIdentifier<SifterDisplay> ID = CategoryIdentifier.of(Fossil.location("sifter"));
 
     public SifterDisplay(MultiOutputAndSlotsRecipe recipe) {
         super(recipe);

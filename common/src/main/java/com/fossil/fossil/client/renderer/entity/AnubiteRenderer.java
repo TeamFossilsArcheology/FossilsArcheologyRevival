@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public class AnubiteRenderer extends MobRenderer<Anubite, AnubiteModel> implements RendererFabricFix {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anubite.png");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anubite.png");
 
     public AnubiteRenderer(EntityRendererProvider.Context context, AnubiteModel entityModel) {
         super(context, entityModel, 0.3f);
@@ -19,7 +19,7 @@ public class AnubiteRenderer extends MobRenderer<Anubite, AnubiteModel> implemen
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(Anubite entity) {
-        return new ResourceLocation(Fossil.MOD_ID, "textures/entity/anubite.png");
+        return Fossil.location("textures/entity/anubite.png");
     }
 
     @Override

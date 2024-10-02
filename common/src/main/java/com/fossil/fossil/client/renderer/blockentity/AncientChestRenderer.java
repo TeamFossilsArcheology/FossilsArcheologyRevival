@@ -25,7 +25,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
 public class AncientChestRenderer implements BlockEntityRenderer<AncientChestBlockEntity> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/ancient_chest.png");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/ancient_chest.png");
     private final ModelPart chestModel;
 
     public AncientChestRenderer(BlockEntityRendererProvider.Context context) {

@@ -11,7 +11,7 @@ import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
 public class ScarabTameTrigger extends SimpleCriterionTrigger<OpenSarcophagusTrigger.TriggerInstance> {
-    private static final ResourceLocation ID = new ResourceLocation(Fossil.MOD_ID, "scarab_tame");
+    private static final ResourceLocation ID = Fossil.location("scarab_tame");
 
     public void trigger(ServerPlayer player) {
         trigger(player, triggerInstance -> true);

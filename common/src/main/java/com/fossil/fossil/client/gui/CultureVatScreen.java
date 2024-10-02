@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class CultureVatScreen extends AbstractContainerScreen<CultureVatMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/culture_vat.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/culture_vat.png");
     public static final int PROGRESS_WIDTH = 21;
     public static final int PROGRESS_HEIGHT = 9;
     public static final int FUEL_WIDTH = 14;

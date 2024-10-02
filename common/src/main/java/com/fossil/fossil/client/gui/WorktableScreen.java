@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class WorktableScreen extends AbstractContainerScreen<WorktableMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/workbench.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/workbench.png");
     public static final int PROGRESS_WIDTH = 24;
     public static final int PROGRESS_HEIGHT = 14;
     public static final int FUEL_WIDTH = 14;

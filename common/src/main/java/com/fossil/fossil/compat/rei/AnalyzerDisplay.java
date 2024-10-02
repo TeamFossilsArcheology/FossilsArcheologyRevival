@@ -15,7 +15,7 @@ import java.util.NavigableMap;
 import java.util.TreeMap;
 
 public class AnalyzerDisplay extends MultiOutputDisplay {
-    public static final CategoryIdentifier<AnalyzerDisplay> ID = CategoryIdentifier.of(new ResourceLocation(Fossil.MOD_ID, "analyzer"));
+    public static final CategoryIdentifier<AnalyzerDisplay> ID = CategoryIdentifier.of(Fossil.location("analyzer"));
 
     public AnalyzerDisplay(MultiOutputAndSlotsRecipe recipe) {
         super(recipe);

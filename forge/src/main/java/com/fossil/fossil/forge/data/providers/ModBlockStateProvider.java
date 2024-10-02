@@ -67,19 +67,19 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 }
             }
             var blockState = getVariantBuilder(FERNS.get());
-            ResourceLocation[] textures = IntStream.rangeClosed(0, FernsBlock.UPPER_MAX_AGE).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_ferns_stage" + age)).toArray(ResourceLocation[]::new);
+            ResourceLocation[] textures = IntStream.rangeClosed(0, FernsBlock.UPPER_MAX_AGE).mapToObj(age -> Fossil.location("block/plants/plant_ferns_stage" + age)).toArray(ResourceLocation[]::new);
             models().registerExistingTexture(textures);
-            ResourceLocation fernsCrop = new ResourceLocation(Fossil.MOD_ID, "block/plant_ferns_template");
+            ResourceLocation fernsCrop = Fossil.location("block/plant_ferns_template");
             models().registerExistingModel(fernsCrop);
             for (int i = 0; i <= FernsBlock.UPPER_MAX_AGE; i++) {
                 blockState.partialState().with(FernsBlock.AGE, i).setModels(new ConfiguredModel(models().singleTexture("block/plants/plant_ferns_stage" + i, fernsCrop, "crop", textures[i])));
             }
         }
         if (vases) {
-            ResourceLocation amphoraTemplateBase = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora_base");
-            ResourceLocation amphoraTemplateTop = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_amphora_top");
-            ResourceLocation kylixTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_kylix");
-            ResourceLocation voluteTemplate = new ResourceLocation(Fossil.MOD_ID, "block/template_vase_volute");
+            ResourceLocation amphoraTemplateBase = Fossil.location("block/template_vase_amphora_base");
+            ResourceLocation amphoraTemplateTop = Fossil.location("block/template_vase_amphora_top");
+            ResourceLocation kylixTemplate = Fossil.location("block/template_vase_kylix");
+            ResourceLocation voluteTemplate = Fossil.location("block/template_vase_volute");
             models().registerExistingModel(amphoraTemplateBase, amphoraTemplateTop, kylixTemplate, voluteTemplate);
             for (RegistrySupplier<VaseBlock> vaseReg : ModBlocks.VASES) {
                 VaseBlock block = vaseReg.get();
@@ -251,7 +251,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
     @Override
     public void logBlock(RotatedPillarBlock block) {
         itemModels().blockItem(block.getRegistryName());
-        models().registerExistingTexture(new ResourceLocation(Fossil.MOD_ID, blockTexture(block).getPath() + "_top"));
+        models().registerExistingTexture(Fossil.location(blockTexture(block).getPath() + "_top"));
         super.logBlock(block);
     }
 
@@ -347,11 +347,11 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     public void amphora(VaseBlock block, ResourceLocation templateBase, ResourceLocation templateTop) {
         itemModels().vaseItem(block.getRegistryName());
-        ResourceLocation base = new ResourceLocation(Fossil.MOD_ID, "block/vases/vase_amphora_base");
+        ResourceLocation base = Fossil.location("block/vases/vase_amphora_base");
         if (block == AMPHORA_VASE_DAMAGED.get()) {
-            base = new ResourceLocation(Fossil.MOD_ID, "block/vases/vase_amphora_base_damaged");
+            base = Fossil.location("block/vases/vase_amphora_base_damaged");
         }
-        ResourceLocation color = new ResourceLocation(Fossil.MOD_ID, "block/vases/" + block.getRegistryName().getPath());
+        ResourceLocation color = Fossil.location("block/vases/" + block.getRegistryName().getPath());
         models().registerExistingTexture(base, color);
         ModelFile fileBase = models().withExistingParent("block/vases/" + block.getRegistryName().getPath() + "_base", templateBase)
                 .texture("color", color)
@@ -367,17 +367,17 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     public void vaseBlock(VaseBlock block, ResourceLocation template) {
         itemModels().vaseItem(block.getRegistryName());
-        ResourceLocation texture = new ResourceLocation(Fossil.MOD_ID, "block/vases/" + block.getRegistryName().getPath());
+        ResourceLocation texture = Fossil.location("block/vases/" + block.getRegistryName().getPath());
         models().registerExistingTexture(texture);
         ModelFile file = models().singleTexture("block/vases/" + block.getRegistryName().getPath(), template, texture);
         horizontalBlock(block, file);
     }
 
     public void amberChunkBlock(Block block) {
-        ResourceLocation template = new ResourceLocation(Fossil.MOD_ID, "block/amber_chunk_template");
+        ResourceLocation template = Fossil.location("block/amber_chunk_template");
         models().registerExistingModel(template);
         itemModels().basicItem(block.getRegistryName());
-        ResourceLocation texture = new ResourceLocation(Fossil.MOD_ID, BLOCK_FOLDER2 + block.getRegistryName().getPath());
+        ResourceLocation texture = Fossil.location(BLOCK_FOLDER2 + block.getRegistryName().getPath());
         models().registerExistingTexture(texture);
         ModelFile file = models().singleTexture(BLOCK_FOLDER2 + block.getRegistryName().getPath(), template, "all", texture);
         horizontalBlock(block, file, 90);
@@ -387,7 +387,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
         itemModels().plantBlockItem(block, "_stage" + info.maxAge);
         String name = block.getRegistryName().getPath();
         var blockState = getVariantBuilder(block);
-        ResourceLocation[] textures = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] textures = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> Fossil.location("block/plants/plant_" + name + "_stage" + age)).toArray(ResourceLocation[]::new);
         models().registerExistingTexture(textures);
         for (int i = 0; i <= info.maxAge; i++) {
             blockState.partialState().with(block.ageProperty(), i).setModels(new ConfiguredModel(models().cross("block/plants/" + name + "_stage" + i, textures[i])));
@@ -398,8 +398,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
         itemModels().plantBlockItem(block, "_2_stage" + info.maxAge);
         String name = block.getRegistryName().getPath();
         var blockState = getVariantBuilder(block);
-        ResourceLocation[] lower = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);
-        ResourceLocation[] upper = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + name + "_2_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] lower = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> Fossil.location("block/plants/plant_" + name + "_1_stage" + age)).toArray(ResourceLocation[]::new);
+        ResourceLocation[] upper = IntStream.rangeClosed(0, info.maxAge).mapToObj(age -> Fossil.location("block/plants/plant_" + name + "_2_stage" + age)).toArray(ResourceLocation[]::new);
         models().registerExistingTexture(lower);
         models().registerExistingTexture(upper);
         for (int i = 0; i <= info.maxAge; i++) {
@@ -411,7 +411,7 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     public void shortFlowerBlock(ShortFlowerBlock block) {
         itemModels().plantBlockItem(block, "");
-        ResourceLocation flower = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath());
+        ResourceLocation flower = Fossil.location("block/plants/plant_" + block.getRegistryName().getPath());
         models().registerExistingTexture(flower);
         getVariantBuilder(block).partialState().setModels(
                 new ConfiguredModel(models().cross("block/plants/" + block.getRegistryName().getPath(), flower)));
@@ -419,8 +419,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     public void tallFlowerBlock(TallFlowerBlock block) {
         itemModels().plantBlockItem(block, "_2");
-        ResourceLocation lower = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_1");
-        ResourceLocation upper = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_2");
+        ResourceLocation lower = Fossil.location("block/plants/plant_" + block.getRegistryName().getPath() + "_1");
+        ResourceLocation upper = Fossil.location("block/plants/plant_" + block.getRegistryName().getPath() + "_2");
         models().registerExistingTexture(lower, upper);
         getVariantBuilder(block)
                 .partialState().with(TallFlowerBlock.HALF, DoubleBlockHalf.LOWER).setModels(
@@ -431,10 +431,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
     public void fourTallFlowerBlock(FourTallFlowerBlock block) {
         itemModels().plantBlockItem(block, "_1");
-        ResourceLocation first = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_1");
-        ResourceLocation second = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_2");
-        ResourceLocation third = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_3");
-        ResourceLocation fourth = new ResourceLocation(Fossil.MOD_ID, "block/plants/plant_" + block.getRegistryName().getPath() + "_4");
+        ResourceLocation first = Fossil.location("block/plants/plant_" + block.getRegistryName().getPath() + "_1");
+        ResourceLocation second = Fossil.location("block/plants/plant_" + block.getRegistryName().getPath() + "_2");
+        ResourceLocation third = Fossil.location("block/plants/plant_" + block.getRegistryName().getPath() + "_3");
+        ResourceLocation fourth = Fossil.location("block/plants/plant_" + block.getRegistryName().getPath() + "_4");
         models().registerExistingTexture(first, second, third, fourth);
         getVariantBuilder(block)
                 .partialState().with(FourTallFlowerBlock.LAYER, 0).setModels(

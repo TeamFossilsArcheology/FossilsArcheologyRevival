@@ -13,9 +13,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class ModCapabilitiesImpl {
     public static final ComponentKey<MammalComponent> MAMMAL =
-            ComponentRegistry.getOrCreate(new ResourceLocation(Fossil.MOD_ID, "mammal"), MammalComponent.class);
+            ComponentRegistry.getOrCreate(Fossil.location("mammal"), MammalComponent.class);
     public static final ComponentKey<FirstHatchComponent> PLAYER =
-            ComponentRegistry.getOrCreate(new ResourceLocation(Fossil.MOD_ID, "first_hatch"), FirstHatchComponent.class);
+            ComponentRegistry.getOrCreate(Fossil.location("first_hatch"), FirstHatchComponent.class);
 
     public static int getEmbryoProgress(Animal animal) {
         return MAMMAL.get(animal).getEmbryoProgress();

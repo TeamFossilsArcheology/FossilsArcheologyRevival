@@ -14,8 +14,8 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel
     private final ResourceLocation animationLocation;
 
     public PrehistoricGeoModel(String modelName, String animationName) {
-        this.modelLocation = new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + modelName);
-        this.animationLocation = new ResourceLocation(Fossil.MOD_ID, "animations/" + animationName);
+        this.modelLocation = Fossil.location("geo/entity/" + modelName);
+        this.animationLocation = Fossil.location("animations/" + animationName);
     }
 
     @Override

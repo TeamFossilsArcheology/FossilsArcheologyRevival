@@ -17,9 +17,9 @@ public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends GeoEn
 
     public PrehistoricFishGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, String texture) {
         super(renderManager, new PrehistoricFishGeoModel<>(
-                new ResourceLocation(Fossil.MOD_ID, "geo/entity/" + model),
-                new ResourceLocation(Fossil.MOD_ID, "animations/" + animation),
-                new ResourceLocation(Fossil.MOD_ID, "textures/entity/" + texture + "/texturemap.png")
+                Fossil.location("geo/entity/" + model),
+                Fossil.location("animations/" + animation),
+                Fossil.location("textures/entity/" + texture + "/texturemap.png")
         ));
     }
 

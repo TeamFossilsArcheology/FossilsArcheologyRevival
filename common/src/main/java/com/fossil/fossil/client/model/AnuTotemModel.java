@@ -14,7 +14,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnuTotemModel extends EntityModel<AnuTotem> {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu_totem.png");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anu_totem.png");
     private final ModelPart model = createBodyLayer().bakeRoot();
 
     public static LayerDefinition createBodyLayer() {

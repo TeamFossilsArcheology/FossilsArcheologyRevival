@@ -20,7 +20,7 @@ import java.util.stream.Collectors;
 
 public class ToyTetheredLogModel extends EntityModel<ToyTetheredLog> {
     public static final Map<String, ResourceLocation> TEXTURES = WoodType.values().filter(woodType -> !woodType.name().contains(":")).collect(Collectors.toMap(WoodType::name,
-            woodType -> new ResourceLocation(Fossil.MOD_ID, "textures/entity/toy/log_swing_" + woodType.name() + ".png")));
+            woodType -> Fossil.location("textures/entity/toy/log_swing_" + woodType.name() + ".png")));
 
     private final ModelPart model = createBodyLayer().bakeRoot();
     private final ModelPart rope1 = model.getChild("rope1");

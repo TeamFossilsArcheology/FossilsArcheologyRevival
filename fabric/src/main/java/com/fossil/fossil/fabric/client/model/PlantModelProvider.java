@@ -38,7 +38,7 @@ public class PlantModelProvider implements ModelResourceProvider {
         //TODO: Would probably be better to just get a list of valid locations from the Block registry (is a CustomPlantBlock)
         if (location.getNamespace().equals(Fossil.MOD_ID)) {
             try {
-                try (Resource resource = resourceManager.getResource(new ResourceLocation(Fossil.MOD_ID, "models/"+location.getPath()+".json"))) {
+                try (Resource resource = resourceManager.getResource(Fossil.location("models/"+location.getPath()+".json"))) {
                     try (InputStream inputStream = resource.getInputStream(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
                         JsonObject jsonObject = GsonHelper.fromJson(GSON, reader, JsonElement.class).getAsJsonObject();
                         if (jsonObject.has("loader") && jsonObject.get("loader").getAsString().equals(PlantBlockModel.LOADER.toString())) {

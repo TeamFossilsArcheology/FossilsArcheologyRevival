@@ -10,8 +10,8 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
 public class SarcophagusModel {
-    public static final ResourceLocation UNAWAKENED = new ResourceLocation(Fossil.MOD_ID, "textures/entity/sarcophagus.png");
-    public static final ResourceLocation AWAKENED = new ResourceLocation(Fossil.MOD_ID, "textures/entity/sarcophagus_awakened.png");
+    public static final ResourceLocation UNAWAKENED = Fossil.location("textures/entity/sarcophagus.png");
+    public static final ResourceLocation AWAKENED = Fossil.location("textures/entity/sarcophagus_awakened.png");
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();

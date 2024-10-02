@@ -11,7 +11,7 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public class BlankRenderer<T extends Entity> extends EntityRenderer<T> {
-    private static final ResourceLocation LOCATION = new ResourceLocation(Fossil.MOD_ID, "textures/item/blank.png");
+    private static final ResourceLocation LOCATION = Fossil.location("textures/item/blank.png");
     public BlankRenderer(EntityRendererProvider.Context context) {
         super(context);
     }

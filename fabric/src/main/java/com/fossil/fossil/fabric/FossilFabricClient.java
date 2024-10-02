@@ -39,8 +39,8 @@ public class FossilFabricClient implements ClientModInitializer {
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANCIENT_CHEST.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.SARCOPHAGUS.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         ClientSpriteRegistryCallback.event(TextureAtlas.LOCATION_BLOCKS).register((atlasTexture, registry) -> {
-            registry.register(new ResourceLocation(Fossil.MOD_ID, "block/tar_still"));
-            registry.register(new ResourceLocation(Fossil.MOD_ID, "block/tar_flowing"));
+            registry.register(Fossil.location("block/tar_still"));
+            registry.register(Fossil.location("block/tar_flowing"));
         });
         HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
             Minecraft mc = Minecraft.getInstance();

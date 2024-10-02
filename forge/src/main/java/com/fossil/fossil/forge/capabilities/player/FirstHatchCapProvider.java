@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
 public class FirstHatchCapProvider implements ICapabilitySerializable<CompoundTag> {
-    public static final ResourceLocation IDENTIFIER = new ResourceLocation(Fossil.MOD_ID, "player");
+    public static final ResourceLocation IDENTIFIER = Fossil.location("player");
 
     public static final Capability<IFirstHatchCap> FIRST_HATCH_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
     });

@@ -34,7 +34,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
         Advancement root = Advancement.Builder.advancement().display(BIO_FOSSIL.get(),
                         new TranslatableComponent("advancements.fossil.root.title"),
                         new TranslatableComponent("advancements.fossil.root.description"),
-                        new ResourceLocation(Fossil.MOD_ID, "textures/block/ancient_stone_bricks.png"), FrameType.TASK, true, false, false)
+                        Fossil.location("textures/block/ancient_stone_bricks.png"), FrameType.TASK, true, false, false)
                 .addCriterion("requirement", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CRAFTING_TABLE))
                 .save(consumer, Fossil.MOD_ID + ":fossil/root");
         Advancement breakFossil = simple(root, "break_fossil", consumer, RELIC_SCRAP, BIO_FOSSIL, PlANT_FOSSIL, SHALE_FOSSIL, SKULL_BLOCK);

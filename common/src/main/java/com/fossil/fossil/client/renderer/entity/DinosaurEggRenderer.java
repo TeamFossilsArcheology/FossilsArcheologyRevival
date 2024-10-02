@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, DinosaurEggModel> implements RendererFabricFix {
     private static final Map<String, ResourceLocation> TEXTURES = new HashMap<>();
-    private static final ResourceLocation GOLDEN_EGG = new ResourceLocation(Fossil.MOD_ID, "textures/entity/egg/golden.png");
+    private static final ResourceLocation GOLDEN_EGG = Fossil.location("textures/entity/egg/golden.png");
 
     public DinosaurEggRenderer(EntityRendererProvider.Context context, DinosaurEggModel entityModel) {
         super(context, entityModel, 0.25f);
@@ -63,12 +63,12 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
 
         return TEXTURES.computeIfAbsent(entity.getPrehistoricEntityInfo().resourceName,
                 name -> {
-                    ResourceLocation rl = new ResourceLocation(Fossil.MOD_ID, "textures/entity/egg/egg_" + name + ".png");
+                    ResourceLocation rl = Fossil.location("textures/entity/egg/egg_" + name + ".png");
                     //Calling getTexture twice is needed because the first call will not return the missing texture
                     Minecraft.getInstance().getTextureManager().getTexture(rl);
                     AbstractTexture tex = Minecraft.getInstance().getTextureManager().getTexture(rl);
                     if (tex == MissingTextureAtlasSprite.getTexture()) {
-                        return new ResourceLocation(Fossil.MOD_ID, "textures/entity/egg/fallback.png");
+                        return Fossil.location("textures/entity/egg/fallback.png");
                     } else {
                         return rl;
                     }

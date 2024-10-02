@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnuBossGlowLayer extends RenderLayer<AnuBoss, AnuBossModel> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu_boss_overlay.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anu_boss_overlay.png");
 
     public AnuBossGlowLayer(RenderLayerParent<AnuBoss, AnuBossModel> renderLayerParent) {
         super(renderLayerParent);

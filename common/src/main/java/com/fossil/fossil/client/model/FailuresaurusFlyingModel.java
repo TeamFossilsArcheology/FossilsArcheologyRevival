@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public class FailuresaurusFlyingModel extends FailuresaurusRenderer.FailuresaurusModel {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/failuresaurus/failuresaurus_flying.png");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/failuresaurus/failuresaurus_flying.png");
 
     private final ModelPart model = createBodyLayer().bakeRoot();
 

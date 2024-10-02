@@ -13,12 +13,12 @@ import net.minecraft.world.item.Tiers;
 import org.jetbrains.annotations.NotNull;
 
 public class JavelinRenderer extends ArrowRenderer<Javelin> implements RendererFabricFix {
-    private static final ResourceLocation WOODEN_JAVELIN = new ResourceLocation(Fossil.MOD_ID, "textures/entity/wooden_javelin.png");
-    private static final ResourceLocation STONE_JAVELIN = new ResourceLocation(Fossil.MOD_ID, "textures/entity/stone_javelin.png");
-    private static final ResourceLocation IRON_JAVELIN = new ResourceLocation(Fossil.MOD_ID, "textures/entity/iron_javelin.png");
-    private static final ResourceLocation GOLD_JAVELIN = new ResourceLocation(Fossil.MOD_ID, "textures/entity/gold_javelin.png");
-    private static final ResourceLocation DIAMOND_JAVELIN = new ResourceLocation(Fossil.MOD_ID, "textures/entity/diamond_javelin.png");
-    private static final ResourceLocation ANCIENT_JAVELIN = new ResourceLocation(Fossil.MOD_ID, "textures/entity/ancient_javelin.png");
+    private static final ResourceLocation WOODEN_JAVELIN = Fossil.location("textures/entity/wooden_javelin.png");
+    private static final ResourceLocation STONE_JAVELIN = Fossil.location("textures/entity/stone_javelin.png");
+    private static final ResourceLocation IRON_JAVELIN = Fossil.location("textures/entity/iron_javelin.png");
+    private static final ResourceLocation GOLD_JAVELIN = Fossil.location("textures/entity/gold_javelin.png");
+    private static final ResourceLocation DIAMOND_JAVELIN = Fossil.location("textures/entity/diamond_javelin.png");
+    private static final ResourceLocation ANCIENT_JAVELIN = Fossil.location("textures/entity/ancient_javelin.png");
 
     public JavelinRenderer(EntityRendererProvider.Context context) {
         super(context);

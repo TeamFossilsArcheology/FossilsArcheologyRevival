@@ -46,7 +46,7 @@ public class TreasureRoomFeature extends StructureFeature<NoneFeatureConfigurati
     }
 
     static class TreasureRoomPiece extends TemplateStructurePiece {
-        private static final ResourceLocation STRUCTURE = new ResourceLocation(Fossil.MOD_ID, "treasure_room");
+        private static final ResourceLocation STRUCTURE = Fossil.location("treasure_room");
 
         public TreasureRoomPiece(StructureManager structureManager, BlockPos blockPos, Rotation rotation) {
             super(StructurePieceType.NETHER_FOSSIL, 0, structureManager, STRUCTURE, STRUCTURE.toString(), makeSettings(rotation), blockPos);

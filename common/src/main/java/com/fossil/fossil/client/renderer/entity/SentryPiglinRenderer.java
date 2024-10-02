@@ -14,7 +14,7 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public class SentryPiglinRenderer extends HumanoidMobRenderer<SentryPiglin, SentryPiglinModel> implements RendererFabricFix {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/sentry_piglin.png");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/sentry_piglin.png");
 
     public SentryPiglinRenderer(EntityRendererProvider.Context context, SentryPiglinModel model) {
         super(context, model, 0.5f);
@@ -24,7 +24,7 @@ public class SentryPiglinRenderer extends HumanoidMobRenderer<SentryPiglin, Sent
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(SentryPiglin entity) {
-        return new ResourceLocation(Fossil.MOD_ID, "textures/entity/sentry_piglin.png");
+        return Fossil.location("textures/entity/sentry_piglin.png");
     }
 
     @Override

@@ -8,7 +8,7 @@ import me.shedaniel.rei.api.common.entry.EntryStack;
 import net.minecraft.resources.ResourceLocation;
 
 public class CultureVatDisplay extends WithFuelDisplay {
-    public static final CategoryIdentifier<CultureVatDisplay> ID = CategoryIdentifier.of(new ResourceLocation(Fossil.MOD_ID, "culture_vat"));
+    public static final CategoryIdentifier<CultureVatDisplay> ID = CategoryIdentifier.of(Fossil.location("culture_vat"));
 
     public CultureVatDisplay(CultureVatRecipe recipe) {
         super(recipe);

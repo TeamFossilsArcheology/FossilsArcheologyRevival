@@ -23,8 +23,8 @@ import java.util.List;
 import static com.fossil.fossil.client.gui.CultureVatScreen.*;
 
 public class CultureVatCategory implements DisplayCategory<CultureVatDisplay> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/culture_vat.png");
-    private static final ResourceLocation DARK_TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/culture_vat_dark.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/culture_vat.png");
+    private static final ResourceLocation DARK_TEXTURE = Fossil.location("textures/gui/culture_vat_dark.png");
 
 
     @Override

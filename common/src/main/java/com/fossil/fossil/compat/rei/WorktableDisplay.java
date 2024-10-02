@@ -8,7 +8,7 @@ import me.shedaniel.rei.api.common.entry.EntryStack;
 import net.minecraft.resources.ResourceLocation;
 
 public class WorktableDisplay extends WithFuelDisplay {
-    public static final CategoryIdentifier<WorktableDisplay> ID = CategoryIdentifier.of(new ResourceLocation(Fossil.MOD_ID, "worktable"));
+    public static final CategoryIdentifier<WorktableDisplay> ID = CategoryIdentifier.of(Fossil.location("worktable"));
 
     public WorktableDisplay(WorktableRecipe recipe) {
         super(recipe);

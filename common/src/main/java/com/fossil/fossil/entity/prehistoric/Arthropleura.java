@@ -14,7 +14,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.ItemTags;
@@ -158,7 +157,7 @@ public class Arthropleura extends Prehistoric {
             }
         }
         builder.append(".png");
-        textureLocation = new ResourceLocation(Fossil.MOD_ID, builder.toString());
+        textureLocation = Fossil.location(builder.toString());
     }
 
     @Override

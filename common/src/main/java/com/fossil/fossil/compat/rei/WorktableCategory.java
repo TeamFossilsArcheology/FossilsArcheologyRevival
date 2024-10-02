@@ -23,8 +23,8 @@ import java.util.List;
 import static com.fossil.fossil.client.gui.WorktableScreen.*;
 
 public class WorktableCategory implements DisplayCategory<WorktableDisplay> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/workbench.png");
-    private static final ResourceLocation DARK_TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/workbench_dark.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/workbench.png");
+    private static final ResourceLocation DARK_TEXTURE = Fossil.location("textures/gui/workbench_dark.png");
 
 
     @Override

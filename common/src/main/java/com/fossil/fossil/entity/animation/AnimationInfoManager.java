@@ -57,7 +57,7 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
                     innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), animationLength, actionDelay, blockSpeed, usesAttackBox));
                     clientInnerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), animationLength, actionDelay, blockSpeed, usesAttackBox));
                 }
-                ResourceLocation path = new ResourceLocation(Fossil.MOD_ID, "animations/" + fileEntry.getKey().getPath() + ".json");
+                ResourceLocation path = Fossil.location("animations/" + fileEntry.getKey().getPath() + ".json");
                 builder.put(path, innerBuilder.build());
                 clientBuilder.put(path, clientInnerBuilder.build());
             } catch (Exception e) {

@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class SifterScreen extends AbstractContainerScreen<SifterMenu> {
-    private static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/sifter.png");
+    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/sifter.png");
 
     public SifterScreen(SifterMenu containerMenu, Inventory inventory, Component component) {
         super(containerMenu, inventory, component);

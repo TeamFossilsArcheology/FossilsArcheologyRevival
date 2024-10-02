@@ -17,7 +17,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.HumanoidArm;
 
 public class AnuBossModel extends EntityModel<AnuBoss> implements ArmedModel {
-    public static final ResourceLocation TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/entity/anu_boss.png");
+    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anu_boss.png");
     private final ModelPart model = createBodyLayer().bakeRoot();
     private final ModelPart rightArm;
     private final ModelPart leftArm;

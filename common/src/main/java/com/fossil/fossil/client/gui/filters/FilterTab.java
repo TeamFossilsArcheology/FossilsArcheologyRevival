@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FilterTab {
-    private static final ResourceLocation FILTER_TEXTURE = new ResourceLocation(Fossil.MOD_ID, "textures/gui/filters.png");
+    private static final ResourceLocation FILTER_TEXTURE = Fossil.location("textures/gui/filters.png");
 
     private final List<FilterButton> buttons = new ArrayList<>();
 
