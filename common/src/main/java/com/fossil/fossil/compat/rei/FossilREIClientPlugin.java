@@ -4,16 +4,17 @@ import com.fossil.fossil.block.ModBlocks;
 import com.fossil.fossil.item.ModTabs;
 import com.fossil.fossil.recipe.*;
 import com.fossil.fossil.tags.ModItemTags;
+import me.shedaniel.math.Rectangle;
 import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ExclusionZones;
-import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.world.item.Items;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FossilREIClientPlugin implements REIClientPlugin {
 
@@ -30,16 +31,12 @@ public class FossilREIClientPlugin implements REIClientPlugin {
     }
 
     @Override
-    public void registerScreens(ScreenRegistry registry) {
-        //registry.registerContainerClickArea(new Rectangle(97, 16, 14, 30), WorktableScreen.class, WorktableDisplay.ID);
-        //registry.registerContainerClickArea(new Rectangle(97, 16, 14, 30), CultureVatScreen.class, CultureVatDisplay.ID);
-    }
-
-    @Override
     public void registerExclusionZones(ExclusionZones zones) {
         zones.register(CreativeModeInventoryScreen.class, screen -> {
             if (screen.getSelectedTab() == ModTabs.FAITEMTAB.getId()) {
-
+                int leftPos = (screen.width - 195) / 2;
+                int topPos = (screen.height - 136) / 2;
+                return List.of(new Rectangle(leftPos - 30, topPos, 30, 120), new Rectangle(leftPos + 200, topPos, 15, 30));
             }
             return new ArrayList<>();
         });

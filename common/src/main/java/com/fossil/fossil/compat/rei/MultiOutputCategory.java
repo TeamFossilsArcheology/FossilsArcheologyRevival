@@ -26,7 +26,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
 
     @Override
     public int getDisplayHeight() {
-        return 105;
+        return 106;
     }
 
     @Override
@@ -52,6 +52,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
         private final Map<Slot, Double> probabilities;
         private final List<Slot> widgets;
         private final ScrollingContainer scrolling = new ScrollingContainer() {
+            private boolean draggingScrollBar;
             @Override
             public Rectangle getBounds() {
                 Rectangle bounds = MultiOutputCategory.ScrollableSlotsWidget.this.getBounds();
@@ -61,11 +62,54 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
             @Override
             public int getMaxScrollHeight() {
                 double numPerRow = Math.floor(bounds.width / defaultSpace);
-                if (widgets.size() > 28) {
-                    //Adding bounds.height isn't great but fixes that the scrollbar cant be clicked
-                    return Mth.ceil(widgets.size() / numPerRow) * 18 + bounds.height;
+                return Mth.ceil(widgets.size() / numPerRow) * 24 + 4;
+            }
+
+            @Override
+            public boolean mouseDragged(double mouseX, double mouseY, int button, double dx, double dy, boolean snapToRows, double rowSize) {
+                if (button == 0 && this.draggingScrollBar) {
+                    float height = getMaxScrollHeight();
+                    Rectangle bounds = getBounds();
+                    int actualHeight = bounds.height;
+                    if (mouseY >= bounds.y && mouseY <= bounds.getMaxY()) {
+                        double maxScroll = Math.max(1, getMaxScroll());
+                        double int_3 = Mth.clamp((double)(actualHeight * actualHeight) / (double)height, 32.0, (actualHeight - 8));
+                        double double_6 = Math.max(1.0, maxScroll / (actualHeight - int_3));
+                        float to = Mth.clamp((float)(scrollAmount() + dy * double_6), 0.0F, getMaxScroll());
+                        if (snapToRows) {
+                            double nearestRow = Math.round(to / rowSize) * rowSize;
+                            scrollTo(nearestRow, false);
+                        } else {
+                            scrollTo(to, false);
+                        }
+                    }
+
+                    return true;
+                } else {
+                    return false;
                 }
-                return Mth.ceil(widgets.size() / numPerRow) * 18;
+            }
+
+            @Override
+            public boolean updateDraggingState(double mouseX, double mouseY, int button) {
+                if (!hasScrollBar()) {
+                    return false;
+                } else {
+                    //Fix cloth config scrolling
+                    int height = getMaxScroll() + bounds.height;
+                    Rectangle bounds = getBounds();
+                    int actualHeight = bounds.height;
+                    if (height > actualHeight && mouseY >= bounds.y && mouseY <= bounds.getMaxY()) {
+                        double scrollbarPositionMinX = this.getScrollBarX(bounds.getMaxX());
+                        if (mouseX >= scrollbarPositionMinX - 1.0 && mouseX <= scrollbarPositionMinX + 8.0) {
+                            this.draggingScrollBar = true;
+                            return true;
+                        }
+                    }
+
+                    this.draggingScrollBar = false;
+                    return false;
+                }
             }
         };
 
@@ -149,7 +193,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
             String string = FORMAT.format(stack);
             MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
             float xOffset = Math.min(11, fr.width(string) / 2f);
-            fr.drawInBatch(string, (xPosition + 8 - xOffset), (yPosition + 16), 16777215, true,
+            fr.drawInBatch(string, (xPosition + 8 - xOffset), (yPosition + 16 + 1), 16777215, true,
                     poseStack.last().pose(), bufferSource, false, 0, 15728880);
             bufferSource.endBatch();
             poseStack.popPose();
