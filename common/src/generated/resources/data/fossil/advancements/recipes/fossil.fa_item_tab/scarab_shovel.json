@@ -2,7 +2,7 @@
   "parent": "minecraft:recipes/root",
   "rewards": {
     "recipes": [
-      "fossil:scarab_gem_aquatic"
+      "fossil:scarab_shovel"
     ]
   },
   "criteria": {
@@ -21,7 +21,7 @@
     "has_the_recipe": {
       "trigger": "minecraft:recipe_unlocked",
       "conditions": {
-        "recipe": "fossil:scarab_gem_aquatic"
+        "recipe": "fossil:scarab_shovel"
       }
     }
   },

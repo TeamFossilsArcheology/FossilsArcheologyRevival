@@ -125,8 +125,15 @@ public class ModRecipeProvider extends RecipeProvider {
                         .define('W', ItemTags.WOOL).pattern("WWW").pattern("WSW").pattern(" X ").unlockedBy("has_slab",
                                 RecipeProvider.has(slab)).save(consumer));
             }
+            var hasScarabGem = RecipeProvider.has(SCARAB_GEM.get());
             ShapelessRecipeBuilder.shapeless(AQUATIC_SCARAB_GEM.get()).requires(SCARAB_GEM.get()).requires(AMBER_CHUNK_DOMINICAN.get())
-                    .unlockedBy("has_scarab_gem", RecipeProvider.has(AQUATIC_SCARAB_GEM.get())).save(consumer);
+                    .unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(SCARAB_AXE.get()).requires(Items.DIAMOND_AXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(SCARAB_HOE.get()).requires(Items.DIAMOND_HOE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(SCARAB_PICKAXE.get()).requires(Items.DIAMOND_PICKAXE).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(SCARAB_SHOVEL.get()).requires(Items.DIAMOND_SHOVEL).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+            ShapelessRecipeBuilder.shapeless(SCARAB_SWORD.get()).requires(Items.DIAMOND_SWORD).requires(SCARAB_GEM.get()).unlockedBy("has_scarab_gem", hasScarabGem).save(consumer);
+
             var bonesLeg = ModItemTags.LEG_BONES;
             var bonesFoot = ModItemTags.FOOT_BONES;
             var bonesVertebrae = ModItemTags.VERTEBRAE_BONES;

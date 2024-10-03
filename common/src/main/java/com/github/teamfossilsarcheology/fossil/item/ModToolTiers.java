@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public enum ModToolTiers implements Tier {
-    SCARAB(3, 1861, 8, 4, 25, Ingredient::of),
+    SCARAB(4, 1861, 9, 5, 25, Ingredient::of),
     TOOTH_DAGGER(3, 250, 6.4f, 2, 25, () -> Ingredient.of(PrehistoricEntityInfo.TYRANNOSAURUS.uniqueBoneItem));
 
     private final int level;
@@ -19,12 +19,12 @@ public enum ModToolTiers implements Tier {
     private final int enchantmentValue;
     private final LazyLoadedValue<Ingredient> repairIngredient;
 
-    ModToolTiers(int j, int k, float f, float g, int l, Supplier<Ingredient> supplier) {
-        this.level = j;
-        this.uses = k;
-        this.speed = f;
-        this.damage = g;
-        this.enchantmentValue = l;
+    ModToolTiers(int level, int uses, float speed, float damage, int enchantment, Supplier<Ingredient> supplier) {
+        this.level = level;
+        this.uses = uses;
+        this.speed = speed;
+        this.damage = damage;
+        this.enchantmentValue = enchantment;
         this.repairIngredient = new LazyLoadedValue<>(supplier);
     }
 
