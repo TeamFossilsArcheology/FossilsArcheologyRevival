@@ -5,25 +5,17 @@
   "name": "${modName}",
   "description": "${modDescription}",
   "authors": [
-    "4f6f3b",
-    "Alexthe666",
-    "ASDFGirlS7",
-    "Cannibal Vox",
-    "Elyasisly",
-    "gegy1000",
-    "iLexiconn",
-    "JTGhawk137",
-    "Javaraptor",
-    "LeHotApe",
-    "Microjunk",
-    "Robberto08",
-    "Shadowbeast007",
-    "Sunconure11",
-    "TheSleepySpino",
+    "Flo",
+    "SealManVI",
+    "Dipple_Effect",
     "TotallyNotAHobo",
-    "Totemaster",
-    "Tyranno66",
-    "tmvkrpxl0"
+    "DarkPred",
+    "Javaraptor",
+    "DDinoDan",
+    "Indominator",
+    "Robberti08",
+    "ASDFGirlS7",
+    "Totemaster"
   ],
   "contact": {
     "sources": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival",
@@ -34,22 +26,22 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.fossil.fossil.fabric.FossilFabric"
+      "com.github.teamfossilsarcheology.fossil.fabric.FossilFabric"
     ],
     "client": [
-      "com.fossil.fossil.fabric.FossilFabricClient"
+      "com.github.teamfossilsarcheology.fossil.fabric.FossilFabricClient"
     ],
     "terrablender": [
-      "com.fossil.fossil.fabric.FossilFabric"
+      "com.github.teamfossilsarcheology.fossil.fabric.FossilFabric"
     ],
     "cardinal-components-entity": [
-      "com.fossil.fossil.fabric.FossilFabric"
+      "com.github.teamfossilsarcheology.fossil.fabric.FossilFabric"
     ],
     "rei_client": [
-      "com.fossil.fossil.compat.rei.FossilREIClientPlugin"
+      "com.github.teamfossilsarcheology.fossil.compat.rei.FossilREIClientPlugin"
     ],
     "rei_common": [
-      "com.fossil.fossil.compat.rei.FossilREICommonPlugin"
+      "com.github.teamfossilsarcheology.fossil.compat.rei.FossilREICommonPlugin"
     ]
   },
   "mixins": [
