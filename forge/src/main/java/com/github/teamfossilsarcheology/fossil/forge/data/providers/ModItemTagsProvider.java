@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
+import com.github.teamfossilsarcheology.fossil.block.custom_blocks.VaseBlock;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.github.teamfossilsarcheology.fossil.item.BirdEggItem;
@@ -10,11 +11,15 @@ import com.github.teamfossilsarcheology.fossil.item.DinoEggItem;
 import com.github.teamfossilsarcheology.fossil.item.FishEggItem;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import com.github.teamfossilsarcheology.fossil.tags.ModItemTags;
+import dev.architectury.registry.registries.RegistrySupplier;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
@@ -30,16 +35,43 @@ public class ModItemTagsProvider extends ItemTagsProvider {
 
     @Override
     protected void addTags() {
+        copy(ModBlockTags.ANCIENT_WOOD_LOGS, ModItemTags.ANCIENT_WOOD_LOGS);
+        copy(ModBlockTags.CALAMITES_LOGS, ModItemTags.CALAMITES_LOGS);
+        copy(ModBlockTags.CORDAITES_LOGS, ModItemTags.CORDAITES_LOGS);
+        copy(ModBlockTags.MUTANT_TREE_LOGS, ModItemTags.MUTANT_TREE_LOGS);
+        copy(ModBlockTags.PALM_LOGS, ModItemTags.PALM_LOGS);
+        copy(ModBlockTags.SIGILLARIA_LOGS, ModItemTags.SIGILLARIA_LOGS);
+        copy(ModBlockTags.TEMPSKYA_LOGS, ModItemTags.TEMPSKYA_LOGS);
+        copy(ModBlockTags.FIGURINES, ModItemTags.FIGURINES);
+        copy(ModBlockTags.UNBREAKABLE, ModItemTags.FILTER_UNBREAKABLE);
         //Creative Tab Filters
         tag(ModItemTags.FILTER_BONES).addTags(ModItemTags.ALL_BONES);
         tag(ModItemTags.FILTER_DNA).addTags(ModItemTags.DNA, ModItemTags.EMBRYOS);
-        var filterEggs = tag(ModItemTags.FILTER_EGGS).addTags(ModItemTags.DINO_EGGS);
+        var filterEggs = tag(ModItemTags.FILTER_EGGS).addTags(ModItemTags.DINO_EGGS, ModItemTags.FISH_EGGS);
         var filterMeat = tag(ModItemTags.FILTER_MEAT).addTags(ModItemTags.UNCOOKED_MEAT).add(FAILURESAURUS_FLESH.get(),
                 COOKED_CHICKEN_SOUP.get(), RAW_CHICKEN_SOUP.get(), COOKED_EGG.get());
         var filterPlants = tag(ModItemTags.FILTER_PLANTS).addTags(ModItemTags.FOSSIL_SEEDS, ModItemTags.RESTORED_SEEDS);
+        var filterVases = tag(ModItemTags.FILTER_VASES);
+        for (RegistrySupplier<VaseBlock> vase : ModBlocks.VASES) {
+            filterVases.add(vase.get().asItem());
+        }
+        var filterTrees = tag(ModItemTags.FILTER_TREES).addTags(ModItemTags.ANCIENT_WOOD_LOGS, ModItemTags.CALAMITES_LOGS, ModItemTags.CALAMITES_LOGS,
+                ModItemTags.MUTANT_TREE_LOGS, ModItemTags.PALM_LOGS, ModItemTags.SIGILLARIA_LOGS, ModItemTags.TEMPSKYA_LOGS);
+        for (BlockFamily.Variant variant : BlockFamily.Variant.values()) {
+            addNullable(filterTrees, ModRecipeProvider.ANCIENT_WOOD_PLANKS.get(variant));
+            addNullable(filterTrees, ModRecipeProvider.CALAMITES_PLANKS.get(variant));
+            addNullable(filterTrees, ModRecipeProvider.CORDAITES_PLANKS.get(variant));
+            addNullable(filterTrees, ModRecipeProvider.MUTANT_TREE_PLANKS.get(variant));
+            addNullable(filterTrees, ModRecipeProvider.PALM_PLANKS.get(variant));
+            addNullable(filterTrees, ModRecipeProvider.SIGILLARIA_PLANKS.get(variant));
+            addNullable(filterTrees, ModRecipeProvider.TEMPSKYA_PLANKS.get(variant));
+        }
 
         var fossilSeeds = tag(ModItemTags.FOSSIL_SEEDS).add(FERN_SEED_FOSSIL.get());
         var restoredSeeds = tag(ModItemTags.RESTORED_SEEDS).add(FERN_SEED.get());
+        for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
+            filterPlants.add(info.getPlantBlock().asItem());
+        }
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
             fossilSeeds.add(info.getFossilizedPlantSeedItem());
             restoredSeeds.add(info.getPlantSeedItem());
@@ -139,16 +171,15 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         tag(ModItemTags.COOKABLE_EGGS).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);
         tag(ModItemTags.ALL_BONES).addTags(ModItemTags.ARM_BONES, ModItemTags.FOOT_BONES, ModItemTags.LEG_BONES, ModItemTags.RIBCAGE_BONES, ModItemTags.SKULL_BONES, ModItemTags.TAIL_BONES, ModItemTags.UNIQUE_BONES, ModItemTags.VERTEBRAE_BONES);
         tag(ItemTags.MUSIC_DISCS).add(RECORD_ANU.get(), RECORD_BONES.get(), RECORD_DISCOVERY.get(), RECORD_SCARAB.get());
-        copy(ModBlockTags.ANCIENT_WOOD_LOGS, ModItemTags.ANCIENT_WOOD_LOGS);
-        copy(ModBlockTags.CALAMITES_LOGS, ModItemTags.CALAMITES_LOGS);
-        copy(ModBlockTags.CORDAITES_LOGS, ModItemTags.CORDAITES_LOGS);
-        copy(ModBlockTags.PALM_LOGS, ModItemTags.PALM_LOGS);
-        copy(ModBlockTags.SIGILLARIA_LOGS, ModItemTags.SIGILLARIA_LOGS);
-        copy(ModBlockTags.TEMPSKYA_LOGS, ModItemTags.TEMPSKYA_LOGS);
-        copy(ModBlockTags.FIGURINES, ModItemTags.FIGURINES);
 
         tag(ModItemTags.SIFTER_INPUTS).addTags(ItemTags.SAND, ItemTags.DIRT).add(ModBlocks.DENSE_SAND.get().asItem(),
                 ModBlocks.VOLCANIC_ASH.get().asItem(), Blocks.GRAVEL.asItem(), Blocks.SOUL_SAND.asItem());
+    }
+
+    public void addNullable(TagAppender<Item> tag, Block block) {
+        if (block != null) {
+            tag.add(block.asItem());
+        }
     }
 
     @Override

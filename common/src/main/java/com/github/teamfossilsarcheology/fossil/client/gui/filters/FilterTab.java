@@ -33,7 +33,7 @@ public class FilterTab {
         int x = leftPos - 28;
         int y = topPos + 6;
         for (int i = 0; i < filters.size(); i++) {
-            buttons.add(new FilterButton(x, y, i <= 3, filters.get(i), button -> enableButton((FilterButton) button)));
+            buttons.add(new FilterButton(screen, x, y, i <= 3, filters.get(i), button -> enableButton((FilterButton) button)));
             y += 30;
             if (i == 3) {
                 x = rightPos;
@@ -89,11 +89,13 @@ public class FilterTab {
     }
 
     public static class FilterButton extends Button {
+        private final Screen screen;
         private final Filter filter;
         private final boolean left;
 
-        public FilterButton(int i, int j, boolean left, Filter filter, OnPress onPress) {
+        public FilterButton(Screen screen, int i, int j, boolean left, Filter filter, OnPress onPress) {
             super(i, j, 32, 28, TextComponent.EMPTY, onPress);
+            this.screen = screen;
             this.left = left;
             this.filter = filter;
             this.active = false;
@@ -117,6 +119,9 @@ public class FilterTab {
             itemRenderer.blitOffset = 100;
             itemRenderer.renderAndDecorateItem(filter.icon, x + 8, y + 6);
             itemRenderer.blitOffset = 0;
+            if (mouseX > x && mouseY > y && mouseX < x + 32 && mouseY < y + 28) {
+                screen.renderTooltip(poseStack, new TextComponent(filter.tag.location().getPath()), mouseX, mouseY);
+            }
         }
     }
 

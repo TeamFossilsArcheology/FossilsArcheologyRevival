@@ -45,6 +45,9 @@ public class ModItemTags {
     public static final TagKey<Item> FILTER_EGGS = TagKey.create(key, Fossil.location("filter_eggs"));
     public static final TagKey<Item> FILTER_MEAT = TagKey.create(key, Fossil.location("filter_meat"));
     public static final TagKey<Item> FILTER_PLANTS = TagKey.create(key, Fossil.location("filter_plants"));
+    public static final TagKey<Item> FILTER_TREES = TagKey.create(key, Fossil.location("filter_trees"));
+    public static final TagKey<Item> FILTER_VASES = TagKey.create(key, Fossil.location("filter_vases"));
+    public static final TagKey<Item> FILTER_UNBREAKABLE = TagKey.create(key, Fossil.location("filter_unbreakable"));
 
     //REI Support
     public static final TagKey<Item> FISH_EGGS = TagKey.create(key, Fossil.location("fish_eggs"));

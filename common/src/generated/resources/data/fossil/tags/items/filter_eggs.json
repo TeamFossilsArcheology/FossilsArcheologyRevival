@@ -2,6 +2,7 @@
   "replace": false,
   "values": [
     "#fossil:dino_eggs",
+    "#fossil:fish_eggs",
     "fossil:spawn_egg_alligator_gar",
     "fossil:spawn_egg_allosaurus",
     "fossil:spawn_egg_ankylosaurus",

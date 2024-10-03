@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:ancient_glass",
+    "fossil:bubble_blower",
+    "fossil:dense_sand",
+    "fossil:feeder",
+    "fossil:reinforced_glass"
+  ]
+}

@@ -1,5 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.filters;
 
+import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
+import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.item.ModTabs;
@@ -30,6 +32,13 @@ public class CreativeTabFilters {
         filters.add(new Filter(FILTER_EGGS, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.spawnEggItem)));
         filters.add(new Filter(FILTER_MEAT, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.foodItem)));
         filters.add(new Filter(FILTER_PLANTS, new ItemStack(ModItems.FERN_SEED.get())));
+
+        NonNullList<Filter> blocks = NonNullList.create();
+        blocks.add(new Filter(FILTER_TREES, new ItemStack(ModBlocks.MUTANT_TREE_LOG.get())));
+        blocks.add(new Filter(FILTER_VASES, new ItemStack(ModBlocks.AMPHORA_VASE_RESTORED.get())));
+        blocks.add(new Filter(FIGURINES, new ItemStack(ModBlocks.ANU_FIGURINE_DESTROYED.get())));
+        blocks.add(new Filter(FILTER_PLANTS, new ItemStack(PrehistoricPlantInfo.BENNETTITALES_LARGE.getPlantBlock())));
+        blocks.add(new Filter(FILTER_UNBREAKABLE, new ItemStack(ModBlocks.REINFORCED_GLASS.get())));
         ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
                 tabs.get(creativeScreen.getSelectedTab()).renderButtons(matrices, mouseX, mouseY, delta);
@@ -65,6 +74,7 @@ public class CreativeTabFilters {
         ClientGuiEvent.INIT_POST.register((screen, access) -> {
             if (screen instanceof CreativeModeInventoryScreen) {
                 tabs.put(ModTabs.FAITEMTAB.getId(), FilterTab.build(screen, filters, access));
+                tabs.put(ModTabs.FABLOCKTAB.getId(), FilterTab.build(screen, blocks, access));
                 activeTab = -1;
             }
         });
