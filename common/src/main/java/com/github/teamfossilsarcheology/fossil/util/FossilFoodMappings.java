@@ -121,7 +121,5 @@ public class FossilFoodMappings {
         FoodMappings.addFish(EntityType.SQUID, 40);
         FoodMappings.addInsect(EntityType.SPIDER, 30);
         FoodMappings.addInsect(EntityType.CAVE_SPIDER, 15);
-
-        //For the future: EntityType volume * 40 would be a decent food value
     }
 }

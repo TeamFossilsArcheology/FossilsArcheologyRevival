@@ -2,7 +2,6 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.item.*;
-import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.network.chat.Component;
@@ -145,16 +144,12 @@ public enum PrehistoricEntityInfo implements EntityInfo {
                 DinoBoneItem.registerItem("bone_unique", info, item -> info.uniqueBoneItem = item);
             }
             if (info.mobType == FISH) {
-                //TODO: Define value somewhere. Also should all dinos be added here?
-                info.entitySupplier.listen(entityType -> FoodMappings.addFish(entityType, 100));
                 registerItem("egg_item", info, properties -> new FishEggItem(info), item -> info.eggItem = item);
             } else if (info.mobType == DINOSAUR || info.mobType == DINOSAUR_AQUATIC || info.mobType == ARTHROPOD) {
-                info.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 registerItem("egg_item", info, p -> new DinoEggItem(info), item -> info.eggItem = item);
             } else if (info.mobType == MAMMAL) {
                 registerItem("syringe", info, properties -> new MammalEmbryoItem(info), item -> info.embryoItem = item);
             } else if (info.mobType == BIRD) {
-                info.entitySupplier.listen(entityType -> FoodMappings.addMeat(entityType, 100));
                 registerItem("egg", info, properties -> new BirdEggItem(info, false), item -> info.birdEggItem = item);
                 registerItem("egg_item", info, properties -> new BirdEggItem(info, true), item -> info.cultivatedBirdEggItem = item);
             }

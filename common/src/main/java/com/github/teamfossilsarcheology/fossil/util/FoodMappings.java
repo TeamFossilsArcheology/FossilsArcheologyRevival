@@ -24,13 +24,13 @@ public abstract class FoodMappings {
     private static final Map<ItemLike, Integer> PISCIVORE_DIET = new HashMap<>();
     private static final Map<ItemLike, Integer> PISCI_CARNIVORE_DIET = new HashMap<>();
     private static final Map<ItemLike, Integer> INSECTIVORE_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends Entity>, Integer> CARNIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends Entity>, Integer> CARNIVORE_EGG_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends Entity>, Integer> HERBIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends Entity>, Integer> OMNIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends Entity>, Integer> PISCIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends Entity>, Integer> PISCI_CARNIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends Entity>, Integer> INSECTIVORE_ENTITY_DIET = new HashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> CARNIVORE_ENTITY_DIET = new HashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> CARNIVORE_EGG_ENTITY_DIET = new HashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> HERBIVORE_ENTITY_DIET = new HashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> OMNIVORE_ENTITY_DIET = new HashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> PISCIVORE_ENTITY_DIET = new HashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> PISCI_CARNIVORE_ENTITY_DIET = new HashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> INSECTIVORE_ENTITY_DIET = new HashMap<>();
 
 
     public static void addToMappings(ItemLike itemLike, int food, Diet diet) {
@@ -45,7 +45,7 @@ public abstract class FoodMappings {
         }
     }
 
-    public static void addToMappings(EntityType<? extends Entity> entity, int food, Diet diet) {
+    public static void addToMappings(EntityType<? extends LivingEntity> entity, int food, Diet diet) {
         //TODO: Calculate based on bbwidth etc at runtime instead or maybe max health?
         switch (diet) {
             case CARNIVORE -> CARNIVORE_ENTITY_DIET.put(entity, food);
@@ -149,8 +149,8 @@ public abstract class FoodMappings {
     public static int getMobFoodPoints(LivingEntity entity, Diet diet) {
         if (entity != null) {
             int mappingsPoints = getFoodAmount(entity.getType(), diet);
-            int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
             if (mappingsPoints == 0 && FossilConfig.isEnabled(FossilConfig.DINOS_EAT_MODDED_MOBS)) {
+                int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
                 if (entity instanceof Animal && !isAquaticMob(entity)) {
                     if (diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCI_CARNIVORE) {
                         return widthPoints;
@@ -169,7 +169,7 @@ public abstract class FoodMappings {
         return entity.canBreatheUnderwater() || entity instanceof WaterAnimal || entity instanceof Mob mob && mob.getNavigation() instanceof WaterBoundPathNavigation;
     }
 
-    public static void addMeat(EntityType<? extends Entity> entity, int food) {
+    public static void addMeat(EntityType<? extends LivingEntity> entity, int food) {
         addToMappings(entity, food, Diet.CARNIVORE);
         addToMappings(entity, food, Diet.CARNIVORE_EGG);
         addToMappings(entity, food, Diet.OMNIVORE);
@@ -191,7 +191,7 @@ public abstract class FoodMappings {
         addToMappings(itemLike, food, Diet.PISCI_CARNIVORE);
     }
 
-    public static void addFish(EntityType<? extends Entity> entity, int food) {
+    public static void addFish(EntityType<? extends LivingEntity> entity, int food) {
         addToMappings(entity, food, Diet.PISCIVORE);
         addToMappings(entity, food, Diet.PISCI_CARNIVORE);
     }
@@ -228,7 +228,7 @@ public abstract class FoodMappings {
         addToMappings(item, food, Diet.OMNIVORE);
     }
 
-    public static void addInsect(EntityType<? extends Entity> entity, int food) {
+    public static void addInsect(EntityType<? extends LivingEntity> entity, int food) {
         addToMappings(entity, food, Diet.INSECTIVORE);
     }
 }
