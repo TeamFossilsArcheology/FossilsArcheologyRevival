@@ -5,7 +5,7 @@ val fabricLoaderVersion: String by rootProject
 val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
-val multiPartLibVersion: String by rootProject
+val moreHitboxesVersion: String by rootProject
 val reiVersion: String by rootProject
 
 architectury {
@@ -37,7 +37,7 @@ dependencies {
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${reiVersion}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${reiVersion}")
-    modCompileOnly("com.github.darkpred.multipartsupport:multipartsupport-common:1.18.2-${multiPartLibVersion}")
+    modCompileOnly("com.github.darkpred.morehitboxes:morehitboxes-common-1.18.2:${moreHitboxesVersion}")
 }
 
 publishing {

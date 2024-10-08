@@ -35,7 +35,7 @@ public class S2CActivateAttackBoxesMessage {
         contextSupplier.get().queue(() -> {
             Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
             if (entity instanceof Prehistoric prehistoric) {
-                prehistoric.getPlaceHolderName().getAttackBoxPlaceHolder().activateAttackBoxes(contextSupplier.get().getPlayer().level, attackDuration);
+                prehistoric.getEntityHitboxData().getAttackBoxData().activateAttackBoxes(contextSupplier.get().getPlayer().level, attackDuration);
             }
         });
     }

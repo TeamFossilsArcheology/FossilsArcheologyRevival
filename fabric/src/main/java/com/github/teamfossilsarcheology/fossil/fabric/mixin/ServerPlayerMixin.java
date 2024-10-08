@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.fabric.mixin;
 
-import com.github.darkpred.multipartsupport.mixin.ServerLevelMixin;
 import com.github.teamfossilsarcheology.fossil.world.effect.ComfyBedEffect;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
 import com.mojang.authlib.GameProfile;
@@ -17,11 +16,6 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * Fabric has no PartEntity so we mixin our own
- *
- * @see ServerLevelMixin
- */
 @Mixin(ServerPlayer.class)
 public abstract class ServerPlayerMixin extends Player {
 

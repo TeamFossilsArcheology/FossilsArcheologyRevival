@@ -29,7 +29,6 @@ public class ModItemTags {
     public static final TagKey<Item> DNA_INSECTS = TagKey.create(key, Fossil.location("dna_insects"));
     public static final TagKey<Item> DNA_LIMBLESS = TagKey.create(key, Fossil.location("dna_limbless"));
     public static final TagKey<Item> DNA_PLANTS = TagKey.create(key, Fossil.location("dna_plants"));
-    public static final TagKey<Item> DNA_TREES = TagKey.create(key, Fossil.location("dna_trees"));
     public static final TagKey<Item> ARM_BONES = TagKey.create(key, Fossil.location("bones_arm"));
     public static final TagKey<Item> FOOT_BONES = TagKey.create(key, Fossil.location("bones_foot"));
     public static final TagKey<Item> LEG_BONES = TagKey.create(key, Fossil.location("bones_leg"));

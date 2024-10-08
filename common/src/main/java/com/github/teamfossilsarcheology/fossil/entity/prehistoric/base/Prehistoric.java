@@ -1,9 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
-import com.github.darkpred.multipartsupport.api.IPlaceHolderName;
-import com.github.darkpred.multipartsupport.api.PlaceHolderNameFactory;
-import com.github.darkpred.multipartsupport.entity.GeckoLibMultiPartEntity;
-import com.github.darkpred.multipartsupport.entity.MultiPart;
+import com.github.darkpred.morehitboxes.api.EntityHitboxData;
+import com.github.darkpred.morehitboxes.api.EntityHitboxDataFactory;
+import com.github.darkpred.morehitboxes.api.GeckoLibMultiPartEntity;
+import com.github.darkpred.morehitboxes.api.MultiPart;
 import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.client.OptionalTextureManager;
@@ -126,7 +126,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
     private Vec3 eatPos;
-    private final IPlaceHolderName<Prehistoric> placeHolder = PlaceHolderNameFactory.create(this);
+    private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -152,8 +152,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public IPlaceHolderName<Prehistoric> getPlaceHolderName() {
-        return placeHolder;
+    public EntityHitboxData<Prehistoric> getEntityHitboxData() {
+        return hitboxData;
     }
 
     @Override

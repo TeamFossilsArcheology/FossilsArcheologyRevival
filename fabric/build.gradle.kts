@@ -38,7 +38,7 @@ val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
 val parchmentDate: String by rootProject
 val reiVersion: String by rootProject
-val multiPartLibVersion: String by rootProject
+val moreHitboxesVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 val cardinalComponentsVersion: String by project
 val energyVersion: String by project
@@ -103,7 +103,20 @@ dependencies {
     include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
     modImplementation("maven.modrinth:midnightlib:${midnightConfigVersion}")
     include("maven.modrinth:midnightlib:${midnightConfigVersion}")
-    modImplementation("com.github.darkpred.multipartsupport:multipartsupport-fabric:${minecraftVersion}-${multiPartLibVersion}")
+    modImplementation("com.github.darkpred.morehitboxes:morehitboxes-fabric-${minecraftVersion}:${moreHitboxesVersion}")
+
+    //Dev only
+    modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
+    modRuntimeOnly("curse.maven:worldedit-225608:3697298")
+    modRuntimeOnly("maven.modrinth:FWumhS4T:iy4eaYy2")//Smooth Boot
+    modRuntimeOnly("curse.maven:commandstructures-565119:3733097")
+    modRuntimeOnly("maven.modrinth:8shC1gFX:qUyRV6XT")//BetterF3
+    modRuntimeOnly("maven.modrinth:hvFnDODi:C6e265zK")//LazyDFU
+    modRuntimeOnly("curse.maven:camerautils-510234:3667404")
+    modRuntimeOnly("curse.maven:replay-775651:4262559")
+    //modRuntimeOnly("maven.modrinth:6pku8gW1:zbBHXeFQ")//Energized Power
+    modImplementation("curse.maven:debugutils-783010:5337485")//Debug Utils
+    modImplementation("com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }

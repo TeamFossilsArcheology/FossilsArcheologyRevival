@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 
-import com.github.darkpred.multipartsupport.entity.MultiPartGeoEntityRenderer;
+import com.github.darkpred.morehitboxes.internal.MultiPartGeoEntityRenderer;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.github.teamfossilsarcheology.fossil.client.model.PrehistoricGeoModel;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.Arthropleura;
