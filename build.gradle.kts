@@ -21,6 +21,7 @@ val modTeam: String by project
 val modLicense: String by project
 val modDescription: String by project
 val modVersion: String by project
+val modAuthors: String by project
 
 val mavenGroup: String by project
 val archivesName: String by project
@@ -91,7 +92,7 @@ allprojects {
         val props = mapOf(
             "minecraftVersion" to minecraftVersion, "minecraftVersionRange" to minecraftVersionRange,
             "modId" to modId, "modName" to modName, "modLicense" to modLicense, "modVersion" to modVersion,
-            "modDescription" to modDescription
+            "modDescription" to modDescription, "modAuthors" to modAuthors, "fabricModAuthors" to modAuthors.split(", ")
         )
         processResources {
             inputs.properties(props)

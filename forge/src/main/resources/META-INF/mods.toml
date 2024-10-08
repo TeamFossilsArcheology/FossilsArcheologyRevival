@@ -12,7 +12,7 @@ displayURL = "https://www.curseforge.com/minecraft/mc-mods/fossils"
 
 logoFile = "fossils.png"
 credits = "Original mod by Flammarilva and Team July!"
-authors = " 4f6f3b, Alexthe666, ASDFGirlS7, Cannibal Vox, Elyasisly, gegy1000, iLexiconn,Javaraptor, JTGhawk137, LeHotApe,Microjunk, Robberto08, Shadowbeast007, Sunconure11, TheSleepySpino, TotallyNotAHobo, Totemaster, Tyranno66"
+authors = "${modAuthors}"
 description = "${modDescription}"
 
 [[dependencies."${modId}"]]
@@ -57,8 +57,8 @@ versionRange = "[1.2.0,)"
 ordering = "NONE"
 side = "BOTH"
 [[dependencies."${modId}"]]
-modId = "multipartsupport"
+modId = "morehitboxes"
 mandatory = true
 versionRange = "[0.23.0,)"
-ordering = "NONE"
+ordering = "AFTER"
 side = "BOTH"

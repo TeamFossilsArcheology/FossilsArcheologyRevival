@@ -4,19 +4,7 @@
   "version": "${modVersion}",
   "name": "${modName}",
   "description": "${modDescription}",
-  "authors": [
-    "Flo",
-    "SealManVI",
-    "Dipple_Effect",
-    "TotallyNotAHobo",
-    "DarkPred",
-    "Javaraptor",
-    "DDinoDan",
-    "Indominator",
-    "Robberti08",
-    "ASDFGirlS7",
-    "Totemaster"
-  ],
+  "authors": ${fabricModAuthors},
   "contact": {
     "sources": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival",
     "issues": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/issues"
@@ -54,7 +42,7 @@
     "geckolib3": ">=3.0.62",
     "terrablender": ">=1.2.0",
     "cardinal-components-base": ">=4.1.4",
-    "multipartsupport": ">=0.23.0"
+    "morehitboxes": ">=1.0.0"
   },
   "suggests": {
     "cloth_config": ">=6.3.81",
