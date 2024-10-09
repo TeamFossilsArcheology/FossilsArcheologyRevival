@@ -1,7 +1,12 @@
 @file:Suppress("UnstableApiUsage")
 
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
+
+
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.modrinth.minotaur") version "2.+"
+    id("net.darkhax.curseforgegradle") version "1.1.25"
 }
 
 architectury {
@@ -100,17 +105,36 @@ val javaComponent = components["java"] as AdhocComponentWithVariants
 javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElements"]) {
     skip()
 }
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenForge") {
-            artifactId = archivesBaseName + "-" + project.name
-            from(components["java"])
-        }
+modrinth {
+    println(project.name)
+    token = System.getenv("MODRINTH_TOKEN") ?: "no value"
+    projectId = "IJY7IqPP"
+    versionNumber.set(project.version.toString())
+    versionType.set("release")
+    uploadFile.set(tasks.remapJar)
+    versionName = "${project.version} for Forge $minecraftVersion"
+    //debugMode = true
+    dependencies {
+        required.project("architectury-api")
+        required.project("geckolib")
+        required.project("terrablender")
+        required.project("cardinal-components-api")
+        required.project("more-hitboxes")
+        embedded.project("sructurized-reborn")
+        embedded.project("midnightlib")
     }
+    changelog.set(rootProject.file("CHANGELOG.md").readText())
+}
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
+tasks.register<TaskPublishCurseForge>("publishCurseForge") {
+    group = "publishing"
+    description = "Publishes jar to CurseForge"
+    apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "no value"
+    debugMode = true
+    val mainFile = upload(223908, tasks.remapJar)
+
+    mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
+    mainFile.releaseType = "release"
+    mainFile.addRequirement("architectury-api", "geckolib", "terrablender", "cardinal-components-api", "more-hitboxes")
+    mainFile.addEmbedded("midnightlib")
 }

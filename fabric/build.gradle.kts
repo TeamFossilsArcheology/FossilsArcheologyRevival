@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+import net.darkhax.curseforgegradle.TaskPublishCurseForge
 import net.fabricmc.loom.api.mappings.layered.MappingContext
 import net.fabricmc.loom.api.mappings.layered.MappingLayer
 import net.fabricmc.loom.api.mappings.layered.MappingsNamespace
@@ -11,6 +12,8 @@ import net.fabricmc.mappingio.tree.MemoryMappingTree
 
 plugins {
     id("com.github.johnrengelman.shadow") version "7.1.2"
+    id("com.modrinth.minotaur") version "2.+"
+    id("net.darkhax.curseforgegradle") version "1.1.25"
 }
 
 architectury {
@@ -151,16 +154,40 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
     skip()
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenFabric") {
-            artifactId = archivesBaseName + "-" + project.name
-            from(components["java"])
-        }
+modrinth {
+    println(project.name)
+    token = System.getenv("MODRINTH_TOKEN") ?: "no value"
+    projectId = "IJY7IqPP"
+    versionNumber.set(project.version.toString())
+    versionType.set("release")
+    uploadFile.set(tasks.remapJar)
+    versionName = "${project.version} for Fabric $minecraftVersion"
+    debugMode = true
+    dependencies {
+        required.project("fabric-api")
+        required.project("architectury-api")
+        required.project("geckolib")
+        required.project("terrablender")
+        required.project("cardinal-components-api")
+        required.project("more-hitboxes")
+        embedded.project("sructurized-reborn")
+        embedded.project("midnightlib")
     }
+    changelog.set(rootProject.file("CHANGELOG.md").readText())
+}
 
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
+tasks.register<TaskPublishCurseForge>("publishCurseForge") {
+    group = "publishing"
+    description = "Publishes jar to CurseForge"
+    apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "no value"
+    //debugMode = true
+    val mainFile = upload(223908, tasks.remapJar)
+    mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
+    mainFile.releaseType = "release"
+    mainFile.addRequirement("fabric-api", "architectury-api", "geckolib", "terrablender", "cardinal-components-api", "more-hitboxes")
+    mainFile.addEmbedded("midnightlib")
+}
+
+tasks.named("publish") {
+    finalizedBy("modrinth", "publishCurseForge")
 }
