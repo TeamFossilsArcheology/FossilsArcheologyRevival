@@ -92,8 +92,9 @@ allprojects {
         val props = mapOf(
             "minecraftVersion" to minecraftVersion, "minecraftVersionRange" to minecraftVersionRange,
             "modId" to modId, "modName" to modName, "modLicense" to modLicense, "modVersion" to modVersion,
-            "modDescription" to modDescription, "modAuthors" to modAuthors, "fabricModAuthors" to modAuthors.split(", ")
+            "modDescription" to modDescription, "modAuthors" to modAuthors, "fabricModAuthors" to modAuthors.split(", ").map { "\"" + it + "\"" }
         )
+
         processResources {
             inputs.properties(props)
             filesMatching(listOf("META-INF/mods.toml", "pack.mcmeta", "fabric.mod.json")) {

@@ -111,15 +111,16 @@ dependencies {
     //Dev only
     modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
     modRuntimeOnly("curse.maven:worldedit-225608:3697298")
-    modRuntimeOnly("maven.modrinth:FWumhS4T:iy4eaYy2")//Smooth Boot
+    modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.18.2-1.7.0")//Smooth Boot
     modRuntimeOnly("curse.maven:commandstructures-565119:3733097")
-    modRuntimeOnly("maven.modrinth:8shC1gFX:qUyRV6XT")//BetterF3
-    modRuntimeOnly("maven.modrinth:hvFnDODi:C6e265zK")//LazyDFU
+    modRuntimeOnly("maven.modrinth:betterf3:qUyRV6XT")
+    modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
+    modRuntimeOnly("maven.modrinth:modmenu:3.2.5")
     modRuntimeOnly("curse.maven:camerautils-510234:3667404")
     modRuntimeOnly("curse.maven:replay-775651:4262559")
     //modRuntimeOnly("maven.modrinth:6pku8gW1:zbBHXeFQ")//Energized Power
-    modImplementation("curse.maven:debugutils-783010:5337485")//Debug Utils
-    modImplementation("com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0")
+    modRuntimeOnly("curse.maven:debugutils-783010:5337485")//Debug Utils
+    //modRuntimeOnly("com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }
@@ -183,6 +184,7 @@ tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     //debugMode = true
     val mainFile = upload(223908, tasks.remapJar)
     mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
+    mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
     mainFile.addRequirement("fabric-api", "architectury-api", "geckolib", "terrablender", "cardinal-components-api", "more-hitboxes")
     mainFile.addEmbedded("midnightlib")

@@ -15,48 +15,48 @@ credits = "Original mod by Flammarilva and Team July!"
 authors = "${modAuthors}"
 description = "${modDescription}"
 
-[[dependencies."${modId}"]]
+[[dependencies.${modId}]]
 modId = "forge"
 mandatory = true
 versionRange = "[40,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies."${modId}"]]
+[[dependencies.${modId}]]
 modId = "minecraft"
 mandatory = true
 versionRange = "${minecraftVersionRange}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies."${modId}"]]
+[[dependencies.${modId}]]
 modId = "architectury"
 mandatory = true
 versionRange = "[4.12.94,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies."${modId}"]]
+[[dependencies.${modId}]]
 modId = "geckolib3"
 mandatory = true
 versionRange = "[3.0.55,)"
 ordering = "AFTER"
 side = "BOTH"
 
-[[dependencies."${modId}"]]
+[[dependencies.${modId}]]
 modId = "roughlyenoughitems"
 mandatory = false
 versionRange = "[8.3.495,)"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies."${modId}"]]
+[[dependencies.${modId}]]
 modId = "terrablender"
 mandatory = true
 versionRange = "[1.2.0,)"
 ordering = "NONE"
 side = "BOTH"
-[[dependencies."${modId}"]]
+[[dependencies.${modId}]]
 modId = "morehitboxes"
 mandatory = true
 versionRange = "[0.23.0,)"
