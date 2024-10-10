@@ -80,7 +80,7 @@ public class ModPlacedFeatures {
             if (FossilConfig.isEnabled(FossilConfig.GENERATE_VOLCANIC_ROCK)) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, volcanicRockPlaced);
             }
-            if (FossilConfig.isEnabled(FossilConfig.GENERATE_PERMAFROST)) {
+            if (FossilConfig.isEnabled(FossilConfig.GENERATE_PERMAFROST) && mutable.getClimateProperties().getTemperature() < 0.15) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, permafrostBlockPlaced);
             }
             mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, oreAmber);

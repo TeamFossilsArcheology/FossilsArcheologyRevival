@@ -38,11 +38,11 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry
     public static boolean generateFossils = true;
     @MidnightConfig.Entry(min = 1, max = 500)
-    public static int fossilOreRarity = 10;
+    public static int fossilOreRarity = 13;
     @MidnightConfig.Entry
     public static boolean generatePermafrost = true;
     @MidnightConfig.Entry(min = 1, max = 500)
-    public static int permafrostRarity = 4;
+    public static int permafrostRarity = 7;
     @MidnightConfig.Entry
     public static boolean generateVolcanicRock = true;
     @MidnightConfig.Entry

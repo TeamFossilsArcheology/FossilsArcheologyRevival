@@ -4,12 +4,14 @@ import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Holder;
 import net.minecraft.data.worldgen.features.FeatureUtils;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
+import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class ModOreFeatures {
             Feature.ORE, new OreConfiguration(OVERWORLD_VOLCANIC_ROCK, 24));
 
     private static final List<OreConfiguration.TargetBlockState> OVERWORLD_PERMAFROST_BLOCK = List.of(
-            OreConfiguration.target(STONE_ORE_REPLACEABLES, ModBlocks.PERMAFROST_BLOCK.get().defaultBlockState()));
+            OreConfiguration.target(new TagMatchTest(BlockTags.DIRT), ModBlocks.PERMAFROST_BLOCK.get().defaultBlockState()));
     public static final Holder<ConfiguredFeature<OreConfiguration, ?>> PERMAFROST_BLOCK = FeatureUtils.register("ore_permafrost_block",
             Feature.ORE, new OreConfiguration(OVERWORLD_PERMAFROST_BLOCK, 5));
 

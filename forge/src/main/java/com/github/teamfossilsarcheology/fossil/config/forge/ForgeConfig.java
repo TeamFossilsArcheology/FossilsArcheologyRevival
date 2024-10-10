@@ -79,8 +79,8 @@ public class ForgeConfig {
         GENERATE_MOAI = boolEntry("True if Moai Statues are to generate naturally", FossilConfig.GENERATE_MOAI, true);
         GENERATE_TAR_PITS = boolEntry("True if Tar Pits are to generate naturally. This only affects the small tar lakes without tent", FossilConfig.GENERATE_TAR_PITS, true);
         GENERATE_VOLCANO_BIOME = boolEntry("True if Volcano Biomes are to generate naturally", FossilConfig.GENERATE_VOLCANO_BIOME, true);
-        FOSSIL_ORE_RARITY = intEntry("Rarity of Fossil ore. Higher number = more tries per chunk", FossilConfig.FOSSIL_ORE_RARITY, 10, 1, 500);
-        PERMAFROST_RARITY = intEntry("Rarity of Permafrost. Higher number = more tries per chunk", FossilConfig.PERMAFROST_RARITY, 4, 1, 500);
+        FOSSIL_ORE_RARITY = intEntry("Rarity of Fossil ore. Higher number = more tries per chunk", FossilConfig.FOSSIL_ORE_RARITY, 13, 1, 500);
+        PERMAFROST_RARITY = intEntry("Rarity of Permafrost. Higher number = more tries per chunk", FossilConfig.PERMAFROST_RARITY, 7, 1, 500);
         HELL_SHIP_SPACING = intEntry("Maximum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SPACING, 24, 1, 100000000);
         HELL_SHIP_SEPARATION = intEntry("Minimum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SEPARATION, 5, 1, 100000000);
         Tar_PIT_RARITY = intEntry("Rarity of Tar Pits. Higher number = more rare", FossilConfig.TAR_PIT_RARITY, 900, 1, 100000000);
