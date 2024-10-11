@@ -25,7 +25,7 @@ public class Spinosaurus extends PrehistoricSwimming {
     public static final String GRAB = "animation.spinosaurus.grab";
     public static final String IDLE = "animation.spinosaurus.idle";
     public static final String RUN = "animation.spinosaurus.run";
-    public static final String SWIM = "animation.spinosaurus.swim";
+    public static final String SWIM = "animation.spinosaurus.swimidle";
     public static final String WALK = "animation.spinosaurus.walk";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);

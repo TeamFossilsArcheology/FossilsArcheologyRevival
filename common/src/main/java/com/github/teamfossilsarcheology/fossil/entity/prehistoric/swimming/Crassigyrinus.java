@@ -7,13 +7,11 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
-import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -46,11 +44,6 @@ public class Crassigyrinus extends PrehistoricSwimmingBucketable {
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
-    }
-
-    @Override
-    public @NotNull ItemStack getBucketItemStack() {
-        return new ItemStack(ModItems.CRASSIGYRINUS_BUCKET.get());
     }
 
     @Override

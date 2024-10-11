@@ -4,6 +4,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
@@ -18,8 +19,17 @@ import org.jetbrains.annotations.NotNull;
 public abstract class PrehistoricSwimmingBucketable extends PrehistoricSwimming implements Bucketable {
     private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(PrehistoricSwimmingBucketable.class, EntityDataSerializers.BOOLEAN);
 
+    protected PrehistoricSwimmingBucketable(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
+        super(entityType, level, animationLocation);
+    }
+
     protected PrehistoricSwimmingBucketable(EntityType<? extends Prehistoric> entityType, Level level) {
         super(entityType, level);
+    }
+
+    @Override
+    public @NotNull ItemStack getBucketItemStack() {
+        return new ItemStack(info().bucketItem);
     }
 
     @Override

@@ -5,8 +5,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -22,7 +21,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public abstract class Trilobite extends PrehistoricSwimming {
+public abstract class Trilobite extends PrehistoricSwimmingBucketable {
     public static final String IDLE = "placeholder";
 
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
@@ -42,11 +41,6 @@ public abstract class Trilobite extends PrehistoricSwimming {
 
     @Override
     public void refreshTexturePath() {
-    }
-
-    @Override
-    public PrehistoricEntityInfo info() {
-        return PrehistoricEntityInfo.DICRANURUS;
     }
 
     @Override

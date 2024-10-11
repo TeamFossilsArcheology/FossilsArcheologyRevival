@@ -9,19 +9,16 @@ import com.github.teamfossilsarcheology.fossil.material.ModFluids;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
 import dev.architectury.core.item.ArchitecturyBucketItem;
-import dev.architectury.core.item.ArchitecturyMobBucketItem;
 import dev.architectury.core.item.ArchitecturySpawnEggItem;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.minecraft.world.level.material.Fluids;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -35,23 +32,6 @@ public class ModItems {
             () -> new ArchitecturyBucketItem(ModFluids.TAR, new Item.Properties().stacksTo(1).craftRemainder(Items.BUCKET).tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<Item> TAR_DROP = ITEMS.register("tar_drop",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> ALLIGATOR_GAR_BUCKET = ITEMS.register("bucket_item_alligator_gar",
-            () -> new ArchitecturyMobBucketItem(ModEntities.ALLIGATOR_GAR, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> COELACANTH_BUCKET = ITEMS.register("bucket_item_coelacanth",
-            () -> new ArchitecturyMobBucketItem(ModEntities.COELACANTH, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> CRASSIGYRINUS_BUCKET = ITEMS.register("bucket_item_crassigyrinus",
-            () -> new ArchitecturyMobBucketItem(ModEntities.CRASSIGYRINUS, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> DIPLOCAULUS_BUCKET = ITEMS.register("bucket_item_diplocaulus",
-            () -> new ArchitecturyMobBucketItem(ModEntities.DIPLOCAULUS, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> ICHTHYOSAURUS_BUCKET = ITEMS.register("bucket_item_ichthyosaurus",
-            () -> new ArchitecturyMobBucketItem(ModEntities.ICHTHYOSAURUS, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> MEGALOGRAPTUS_BUCKET = ITEMS.register("bucket_item_megalograptus",
-            () -> new ArchitecturyMobBucketItem(ModEntities.MEGALOGRAPTUS, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> NAUTILUS_BUCKET = ITEMS.register("bucket_item_nautilus",
-            () -> new ArchitecturyMobBucketItem(ModEntities.NAUTILUS, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)));
-    public static final RegistrySupplier<Item> STURGEON_BUCKET = ITEMS.register("bucket_item_sturgeon",
-            () -> new ArchitecturyMobBucketItem(ModEntities.STURGEON, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)));
-
     public static final RegistrySupplier<RecordItem> RECORD_BONES = ITEMS.register("music_disc_bones",
             () -> CustomRecordItem.get(0, ModSounds.MUSIC_BONES, new Item.Properties().tab(ModTabs.FAITEMTAB)));
     public static final RegistrySupplier<RecordItem> RECORD_ANU = ITEMS.register("music_disc_anu",
@@ -135,7 +115,8 @@ public class ModItems {
             () -> new FoodBucketItem(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));
     public static final RegistrySupplier<Item> COOKED_EGG = ITEMS.register("cooked_egg",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB).food(new FoodProperties.Builder().nutrition(4).saturationMod(2).build())));
-
+    public static final RegistrySupplier<Item> ARTIFICIAL_HONEYCOMB = ITEMS.register("artificial_honeycomb",
+            () -> new ArtificialHoneycombItem(new Item.Properties().tab(ModTabs.FAITEMTAB)));
 
     public static final RegistrySupplier<Item> FERN_SEED_FOSSIL = ITEMS.register("fossil_seed_fern",
             () -> new Item(new Item.Properties().tab(ModTabs.FAITEMTAB)));

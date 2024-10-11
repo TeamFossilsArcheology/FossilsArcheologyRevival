@@ -5,7 +5,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -20,7 +20,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Aquilolamna extends PrehistoricSwimming {
+public class Aquilolamna extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "aquilolamna.animation.json";
     public static final String ATTACK = "attack/eat";
     public static final String BEACHED = "beached";

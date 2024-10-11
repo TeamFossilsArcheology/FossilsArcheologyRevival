@@ -102,6 +102,9 @@ public class ModItemProvider extends ItemModelProvider {
                 if (info.vertebraeBoneItem != null) {
                     boneItem(Objects.requireNonNull(info.vertebraeBoneItem.getRegistryName()), info, "vertebrae");
                 }
+                if (info.bucketItem != null) {
+                    basicItem(info.bucketItem.getRegistryName());
+                }
             }
             for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
                 if (info.dnaItem != null) {
@@ -117,14 +120,6 @@ public class ModItemProvider extends ItemModelProvider {
                     embyroItem(info.embryoItem.getRegistryName());
                 }
             }
-            basicItem(ModItems.ALLIGATOR_GAR_BUCKET.get().getRegistryName());
-            basicItem(ModItems.COELACANTH_BUCKET.get().getRegistryName());
-            basicItem(ModItems.CRASSIGYRINUS_BUCKET.get().getRegistryName());
-            basicItem(ModItems.DIPLOCAULUS_BUCKET.get().getRegistryName());
-            basicItem(ModItems.ICHTHYOSAURUS_BUCKET.get().getRegistryName());
-            basicItem(ModItems.MEGALOGRAPTUS_BUCKET.get().getRegistryName());
-            basicItem(ModItems.NAUTILUS_BUCKET.get().getRegistryName());
-            basicItem(ModItems.STURGEON_BUCKET.get().getRegistryName());
 
             spawnEggItem(ModItems.ANU_BOSS_SPAWN_EGG.get());
             spawnEggItem(ModItems.FAILURESAURUS_SPAWN_EGG.get());
@@ -135,6 +130,7 @@ public class ModItemProvider extends ItemModelProvider {
             basicItem(ModItems.MAMMOTH_FUR.get());
             basicItem(ModItems.THERIZINOSAURUS_DOWN.get());
             basicItem(ModItems.MAGIC_CONCH.get());
+            eggItem(ModItems.ARTIFICIAL_HONEYCOMB.get().getRegistryName());
         }
         if (plantItems) {
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {

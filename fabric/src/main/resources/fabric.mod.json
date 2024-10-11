@@ -4,7 +4,6 @@
   "version": "${modVersion}",
   "name": "${modName}",
   "description": "${modDescription}",
-  "authors": ${fabricModAuthors},
   "contact": {
     "sources": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival",
     "issues": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/issues"
@@ -53,5 +52,6 @@
       "fossil:mammal",
       "fossil:first_hatch"
     ]
-  }
+  },
+  "authors": ${fabricModAuthors}
 }

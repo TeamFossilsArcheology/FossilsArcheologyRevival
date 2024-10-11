@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -17,7 +17,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-public class Tiktaalik extends PrehistoricSwimming {
+public class Tiktaalik extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "tiktaalik.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
@@ -67,7 +67,7 @@ public class Tiktaalik extends PrehistoricSwimming {
     public @NotNull Animation nextIdleAnimation() {
         return getAllAnimations().get(IDLE);
     }
-    
+
     @Override
     public @NotNull Animation nextSittingAnimation() {
         return getAllAnimations().get(IDLE);

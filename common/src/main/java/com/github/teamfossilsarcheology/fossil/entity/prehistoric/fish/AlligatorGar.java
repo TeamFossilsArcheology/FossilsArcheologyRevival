@@ -2,9 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
-import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.builder.Animation;
@@ -21,11 +19,6 @@ public class AlligatorGar extends PrehistoricFish {
 
     public AlligatorGar(EntityType<AlligatorGar> entityType, Level level) {
         super(entityType, level);
-    }
-
-    @Override
-    public @NotNull ItemStack getBucketItemStack() {
-        return new ItemStack(ModItems.ALLIGATOR_GAR_BUCKET.get());
     }
 
     @Override

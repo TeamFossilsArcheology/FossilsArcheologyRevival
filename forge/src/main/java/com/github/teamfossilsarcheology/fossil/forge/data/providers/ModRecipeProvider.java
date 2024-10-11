@@ -418,6 +418,7 @@ public class ModRecipeProvider extends RecipeProvider {
                     analyzed(info.cultivatedBirdEggItem).addOutput(info.dnaItem, 100).save(consumer);
                 }
             }
+            cultureVat(VanillaEntityInfo.BEE.dnaItem, ARTIFICIAL_HONEYCOMB.get(), consumer);
             cultureVat(ModItems.FERN_SEED_FOSSIL, ModItems.FERN_SEED, consumer);
             cultureVat(ModItems.CALAMITES_SAPLING_FOSSIL, ModBlocks.CALAMITES_SAPLING, consumer);
             cultureVat(ModItems.CORDAITES_SAPLING_FOSSIL, ModBlocks.CORDAITES_SAPLING, consumer);

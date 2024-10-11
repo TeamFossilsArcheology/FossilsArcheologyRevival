@@ -88,6 +88,11 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
+    public @NotNull ItemStack getBucketItemStack() {
+        return new ItemStack(info().bucketItem);
+    }
+
+    @Override
     protected @NotNull SoundEvent getFlopSound() {
         return SoundEvents.COD_FLOP;
     }
