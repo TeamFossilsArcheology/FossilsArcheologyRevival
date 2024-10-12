@@ -106,14 +106,13 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
     skip()
 }
 modrinth {
-    println(project.name)
     token = System.getenv("MODRINTH_TOKEN") ?: "no value"
     projectId = "IJY7IqPP"
     versionNumber.set(project.version.toString())
     versionType.set("release")
     uploadFile.set(tasks.remapJar)
     versionName = "${project.version} for Forge $minecraftVersion"
-    //debugMode = true
+    debugMode = true
     dependencies {
         required.project("architectury-api")
         required.project("geckolib")
@@ -134,7 +133,12 @@ tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     val mainFile = upload(223908, tasks.remapJar)
 
     mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
+    mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
     mainFile.addRequirement("architectury-api", "geckolib", "terrablender", "cardinal-components-api", "more-hitboxes")
     mainFile.addEmbedded("midnightlib")
+}
+
+tasks.named("publish") {
+    finalizedBy("modrinth", "publishCurseForge")
 }

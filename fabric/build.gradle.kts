@@ -156,7 +156,6 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
 }
 
 modrinth {
-    println(project.name)
     token = System.getenv("MODRINTH_TOKEN") ?: "no value"
     projectId = "IJY7IqPP"
     versionNumber.set(project.version.toString())
@@ -181,7 +180,7 @@ tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     group = "publishing"
     description = "Publishes jar to CurseForge"
     apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "no value"
-    //debugMode = true
+    debugMode = true
     val mainFile = upload(223908, tasks.remapJar)
     mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
     mainFile.changelogType = "markdown"
