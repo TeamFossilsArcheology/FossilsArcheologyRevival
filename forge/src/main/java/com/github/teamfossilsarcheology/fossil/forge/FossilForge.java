@@ -12,6 +12,7 @@ import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.IMammal
 import com.github.teamfossilsarcheology.fossil.forge.client.ClientModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.client.model.PlantModelLoader;
 import com.github.teamfossilsarcheology.fossil.forge.client.renderer.armor.ForgeAncientHelmetRenderer;
+import com.github.teamfossilsarcheology.fossil.forge.compat.carryon.FossilPickupHandler;
 import com.github.teamfossilsarcheology.fossil.forge.world.biome.ForgeFossilRegion;
 import com.github.teamfossilsarcheology.fossil.item.forge.AncientHelmetItemImpl;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
@@ -29,6 +30,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.fml.DistExecutor;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.ModLoadingContext;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
@@ -49,6 +51,10 @@ public class FossilForge {
         EventBuses.registerModEventBus(Fossil.MOD_ID, modEventBus);
 
         Fossil.init();
+
+        if (ModList.get().isLoaded("carryon")) {
+            MinecraftForge.EVENT_BUS.register(FossilPickupHandler.class);
+        }
 
         modEventBus.addListener(this::onClient);
         modEventBus.addListener(this::onCommon);

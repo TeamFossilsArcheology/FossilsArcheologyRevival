@@ -271,7 +271,7 @@ public class InstructionSystem extends AISystem {
 
     @Override
     public void saveAdditional(CompoundTag tag) {
-        if (Version.debugEnabled()) {
+        if (Version.debugEnabled() && !mob.level.isClientSide) {
             ListTag saved = new ListTag();
             for (int i = 0; i < instructions.size(); i++) {
                 saved.addTag(i, instructions.get(i).encodeTag());
@@ -283,7 +283,7 @@ public class InstructionSystem extends AISystem {
 
     @Override
     public void load(CompoundTag tag) {
-        if (Version.debugEnabled()) {
+        if (Version.debugEnabled() && !mob.level.isClientSide) {
             instructions.clear();
             ListTag saved = tag.getList("Instructions", Tag.TAG_COMPOUND);
             for (Tag savedTag : saved) {

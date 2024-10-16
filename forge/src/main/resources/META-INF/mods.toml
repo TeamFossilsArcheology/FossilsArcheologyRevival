@@ -62,3 +62,10 @@ mandatory = true
 versionRange = "[0.23.0,)"
 ordering = "AFTER"
 side = "BOTH"
+
+[[dependencies.${modId}]]
+modId = "carryon"
+mandatory = false
+versionRange = "[1.17.2.15,)"
+ordering = "NONE"
+side = "BOTH"

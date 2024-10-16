@@ -41,6 +41,10 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel
 
     @Override
     public ResourceLocation getTextureLocation(T object) {
+        if (object.textureLocation == null) {
+            //Fix for mods that call render on entities not placed in the world
+            object.refreshTexturePath();
+        }
         return object.textureLocation;
     }
 

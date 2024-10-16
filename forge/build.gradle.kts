@@ -32,6 +32,7 @@ val reiVersion: String by rootProject
 val moreHitboxesVersion: String by rootProject
 val terraBlenderVersion: String by rootProject
 val geckoLibVersion: String by project
+val carryOnVersion: String by project
 
 dependencies {
     "mappings"(loom.layered {
@@ -50,6 +51,7 @@ dependencies {
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:${geckoLibVersion}")
     modImplementation("com.github.glitchfiend:TerraBlender-forge:${minecraftVersion}-${terraBlenderVersion}")
     modImplementation("com.github.darkpred.morehitboxes:morehitboxes-forge-${minecraftVersion}:${moreHitboxesVersion}")
+    modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
 
     annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1")?.let { compileOnly(it) }
     include("io.github.llamalad7:mixinextras-forge:0.4.1")?.let { implementation(it) }
