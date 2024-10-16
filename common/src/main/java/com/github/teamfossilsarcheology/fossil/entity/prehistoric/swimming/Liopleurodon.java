@@ -15,8 +15,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Liopleurodon extends PrehistoricSwimming {
     public static final String ANIMATIONS = "liopleurodon.animation.json";
@@ -30,7 +28,6 @@ public class Liopleurodon extends PrehistoricSwimming {
     public static final String SWIM = "animation.liopleurodon.swim";
     public static final String SWIM_FAST = "animation.liopleurodon.swimfast";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Liopleurodon(EntityType<Liopleurodon> entityType, Level level) {
         super(entityType, level);
@@ -101,11 +98,6 @@ public class Liopleurodon extends PrehistoricSwimming {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

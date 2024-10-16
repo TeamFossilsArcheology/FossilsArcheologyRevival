@@ -14,15 +14,12 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Smilodon extends Prehistoric {
     public static final String ANIMATIONS = "smilodon.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Smilodon(EntityType<Smilodon> entityType, Level level) {
         super(entityType, level);
@@ -88,11 +85,6 @@ public class Smilodon extends Prehistoric {
             return getAllAnimations().get(IDLE);
         }
         return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

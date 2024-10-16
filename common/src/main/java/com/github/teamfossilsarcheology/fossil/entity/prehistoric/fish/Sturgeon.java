@@ -6,8 +6,6 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Sturgeon extends PrehistoricFish {
     public static final String ANIMATIONS = "sturgeon.animation.json";
@@ -15,7 +13,6 @@ public class Sturgeon extends PrehistoricFish {
     public static final String IDLE = "animation.sturgeon.idle";
     public static final String SWIM = "animation.sturgeon.swim";
     public static final String SWIM_FAST = "animation.sturgeon.swim_fast";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Sturgeon(EntityType<Sturgeon> entityType, Level level) {
         super(entityType, level);
@@ -44,10 +41,5 @@ public class Sturgeon extends PrehistoricFish {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 }

@@ -28,8 +28,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Therizinosaurus extends Prehistoric implements PrehistoricShearable {
     public static final String ANIMATIONS = "therizinosaurus.animation.json";
@@ -47,7 +45,6 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
     public static final String SWIM = "animation.therizinosaurus.swim";
     public static final String WALK = "animation.therizinosaurus.walk";
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(Therizinosaurus.class, EntityDataSerializers.BOOLEAN);
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private int woolRegenTicks;
 
     public Therizinosaurus(EntityType<Therizinosaurus> entityType, Level level) {
@@ -172,11 +169,6 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Override

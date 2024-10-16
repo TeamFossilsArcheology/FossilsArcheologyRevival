@@ -24,8 +24,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Pteranodon extends PrehistoricFlying {
     public static final String ANIMATIONS = "pteranodon.animation.json";
@@ -42,7 +40,6 @@ public class Pteranodon extends PrehistoricFlying {
     public static final String SWIM = "animation.pteranodon.swim";
     public static final String TAKEOFF = "animation.pteranodon.takeoff";
     public static final String WALK = "animation.pteranodon.walk";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Pteranodon(EntityType<Pteranodon> entityType, Level level) {
         super(entityType, level);
@@ -179,11 +176,6 @@ public class Pteranodon extends PrehistoricFlying {
     @Override
     public @NotNull Animation nextTakeOffAnimation() {
         return getAllAnimations().get(TAKEOFF);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

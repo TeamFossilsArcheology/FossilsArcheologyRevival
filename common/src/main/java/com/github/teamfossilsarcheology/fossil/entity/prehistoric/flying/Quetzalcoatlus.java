@@ -17,13 +17,10 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Quetzalcoatlus extends PrehistoricFlying {
     public static final String ANIMATIONS = "quetzalcoatlus.animation.json";
     public static final String WALK = "walk";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Quetzalcoatlus(EntityType<Quetzalcoatlus> entityType, Level level) {
         super(entityType, level);
@@ -86,11 +83,6 @@ public class Quetzalcoatlus extends PrehistoricFlying {
     @Override
     public @NotNull Animation nextTakeOffAnimation() {
         return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

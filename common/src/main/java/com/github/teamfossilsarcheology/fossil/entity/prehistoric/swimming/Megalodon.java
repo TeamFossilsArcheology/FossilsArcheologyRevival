@@ -16,8 +16,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megalodon extends PrehistoricSwimming {
     public static final String ANIMATIONS = "megalodon.animation.json";
@@ -31,7 +29,6 @@ public class Megalodon extends PrehistoricSwimming {
     public static final String SLEEP = "animation.megalodon.sleep";
     public static final String SWIM = "animation.megalodon.swim";
     public static final String SWIM_FAST = "animation.megalodon.swim_fast";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Megalodon(EntityType<Megalodon> entityType, Level level) {
         super(entityType, level);
@@ -131,11 +128,6 @@ public class Megalodon extends PrehistoricSwimming {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

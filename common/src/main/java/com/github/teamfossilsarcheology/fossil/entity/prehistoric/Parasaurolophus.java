@@ -20,8 +20,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Parasaurolophus extends Prehistoric {
     public static final String ANIMATIONS = "parasaurolophus.animation.json";
@@ -29,7 +27,6 @@ public class Parasaurolophus extends Prehistoric {
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
     private static final EntityDataAccessor<Boolean> STANDING = SynchedEntityData.defineId(Parasaurolophus.class, EntityDataSerializers.BOOLEAN);
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private int ticksStanding;
 
     public Parasaurolophus(EntityType<Parasaurolophus> entityType, Level level) {
@@ -157,11 +154,6 @@ public class Parasaurolophus extends Prehistoric {
             return getAllAnimations().get(IDLE);
         }
         return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

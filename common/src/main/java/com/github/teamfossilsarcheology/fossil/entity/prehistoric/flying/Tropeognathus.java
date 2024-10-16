@@ -10,8 +10,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Tropeognathus extends PrehistoricFlying {
     public static final String ANIMATIONS = "tropeognathus.animation.json";
@@ -33,7 +31,6 @@ public class Tropeognathus extends PrehistoricFlying {
     public static final String TAKEOFF_GROUND = "fa.tropeognathus.groundtakeoff";
     public static final String TAKEOFF_WATER = "fa.tropeognathus.watertakeoff";
     public static final String WALK = "fa.tropeognathus.walk";
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tropeognathus(EntityType<Tropeognathus> entityType, Level level) {
         super(entityType, level);
@@ -131,10 +128,5 @@ public class Tropeognathus extends PrehistoricFlying {
         if (isInWater()) key = TAKEOFF_WATER;
 
         return getAllAnimations().get(key);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 }

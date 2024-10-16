@@ -87,10 +87,12 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.core.processor.IBone;
 import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
 import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.resource.GeckoLibCache;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.*;
 
@@ -108,6 +110,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final List<AISystem> aiSystems = new ArrayList<>();
     public final MoodSystem moodSystem = registerSystem(new MoodSystem(this));
     public final SleepSystem sleepSystem = registerSystem(createSleepSystem());
@@ -1338,6 +1341,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 playAmbientSound();
             }
         });
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
     }
 
     public AnimationLogic<Prehistoric> getAnimationLogic() {

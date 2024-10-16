@@ -17,8 +17,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Henodus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "henodus.animation.json";
@@ -32,7 +30,6 @@ public class Henodus extends PrehistoricSwimming {
     public static final String SWIM_FAST = "animation.henodus.swimfast";
     public static final String WALK = "animation.henodus.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Henodus(EntityType<Henodus> entityType, Level level) {
         super(entityType, level);
@@ -106,11 +103,6 @@ public class Henodus extends PrehistoricSwimming {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

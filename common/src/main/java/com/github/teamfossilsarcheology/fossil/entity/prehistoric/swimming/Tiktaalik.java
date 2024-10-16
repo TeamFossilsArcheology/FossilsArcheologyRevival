@@ -14,15 +14,12 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Tiktaalik extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "tiktaalik.animation.json";
     public static final String IDLE = "animation.dilophosaurus.idle";
     public static final String ATTACK1 = "animation.dilophosaurus.attack1";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tiktaalik(EntityType<Tiktaalik> entityType, Level level) {
         super(entityType, level);
@@ -92,11 +89,6 @@ public class Tiktaalik extends PrehistoricSwimmingBucketable {
             return getAllAnimations().get(IDLE);
         }
         return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

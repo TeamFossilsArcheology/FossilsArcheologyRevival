@@ -18,8 +18,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Deinonychus extends PrehistoricLeaping {
     public static final String ANIMATIONS = "deinonychus.animation.json";
@@ -32,7 +30,6 @@ public class Deinonychus extends PrehistoricLeaping {
     public static final String SLEEP = "animation.deinonychus.sleep";
     public static final String SWIM = "animation.deinonychus.swim";
     public static final String WALK = "animation.deinonychus.walk";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Deinonychus(EntityType<Deinonychus> entityType, Level level) {
         super(entityType, level, true);
@@ -123,11 +120,6 @@ public class Deinonychus extends PrehistoricLeaping {
     @Override
     public String getLeapingAnimationName() {
         return IDLE;
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

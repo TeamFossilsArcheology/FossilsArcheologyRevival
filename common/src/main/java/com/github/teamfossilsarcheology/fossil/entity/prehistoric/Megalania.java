@@ -15,8 +15,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megalania extends Prehistoric {
     public static final String ANIMATIONS = "megalania.animation.json";
@@ -29,7 +27,6 @@ public class Megalania extends Prehistoric {
     public static final String SLEEP = "animation.megalania.sleep";
     public static final String WALK = "animation.megalania.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Megalania(EntityType<Megalania> entityType, Level level) {
         super(entityType, level);
@@ -95,11 +92,6 @@ public class Megalania extends Prehistoric {
             return getAllAnimations().get(WALK);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

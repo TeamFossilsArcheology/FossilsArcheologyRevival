@@ -27,8 +27,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -48,7 +46,6 @@ public class Dodo extends Prehistoric {
     public static final String SWIM = "animation.dodo.swim";
     public static final String WALK = "animation.dodo.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Dodo(EntityType<Dodo> entityType, Level level) {
         super(entityType, level);
@@ -197,11 +194,6 @@ public class Dodo extends Prehistoric {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

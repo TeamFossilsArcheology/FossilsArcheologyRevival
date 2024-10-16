@@ -18,8 +18,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Velociraptor extends PrehistoricLeaping {
     public static final String ANIMATIONS = "velociraptor.animation.json";
@@ -32,7 +30,6 @@ public class Velociraptor extends PrehistoricLeaping {
     public static final String SLEEP = "animation.velociraptor.sleep";
     public static final String SWIM = "animation.velociraptor.swim";
     public static final String WALK = "animation.velociraptor.walk";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Velociraptor(EntityType<Velociraptor> entityType, Level level) {
         super(entityType, level, true);
@@ -124,11 +121,6 @@ public class Velociraptor extends PrehistoricLeaping {
     @Override
     public String getLeapingAnimationName() {
         return IDLE;
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

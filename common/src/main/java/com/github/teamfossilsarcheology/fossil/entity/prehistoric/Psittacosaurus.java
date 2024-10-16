@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Psittacosaurus extends Prehistoric {
     public static final String ATTACK = "animation.psittacosaurus.attack";
@@ -26,7 +24,6 @@ public class Psittacosaurus extends Prehistoric {
     public static final String SLEEP = "animation.psittacosaurus.sleep";
     public static final String SWIM = "animation.psittacosaurus.swim";
     public static final String WALK = "animation.psittacosaurus.walk";
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Psittacosaurus(EntityType<Psittacosaurus> type, Level level) {
         super(type, level);
@@ -47,11 +44,6 @@ public class Psittacosaurus extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Override

@@ -45,8 +45,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Random;
 
@@ -74,7 +72,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     public static final EntityDataAccessor<Float> ATTACHED_Z = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Direction> ATTACHED_FACE = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.DIRECTION);
     public static final EntityDataAccessor<Boolean> ATTACHED = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.BOOLEAN);
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final MeganeuraAttachSystem attachSystem = registerSystem(new MeganeuraAttachSystem(this));
     private final PathNavigation flightNav = new FlyingPathNavigation(this, level);
     private final PathNavigation amphibiousNav = new AmphibiousPathNavigation(this, level);
@@ -347,11 +344,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     @Override
     public @NotNull Animation nextAttackAnimation() {
         return getAllAnimations().get(isBaby() ? ATTACK_BABY : ATTACK);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

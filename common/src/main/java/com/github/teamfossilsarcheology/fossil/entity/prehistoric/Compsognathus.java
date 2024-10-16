@@ -17,8 +17,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Compsognathus extends PrehistoricLeaping {
     public static final String ANIMATIONS = "compsognathus.animation.json";
@@ -30,7 +28,6 @@ public class Compsognathus extends PrehistoricLeaping {
     public static final String SLEEP = "animation.compsognathus.sleep";
     public static final String SWIM = "animation.compsognathus.swim";
     public static final String WALK = "animation.compsognathus.walk";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Compsognathus(EntityType<Compsognathus> entityType, Level level) {
         super(entityType, level, false);
@@ -111,11 +108,6 @@ public class Compsognathus extends PrehistoricLeaping {
     @Override
     public String getLeapingAnimationName() {
         return ATTACK;
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

@@ -17,8 +17,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Aquilolamna extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "aquilolamna.animation.json";
@@ -29,7 +27,6 @@ public class Aquilolamna extends PrehistoricSwimmingBucketable {
     public static final String SLEEP = "sit/sleep";
     public static final String SWIM = "swim";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Aquilolamna(EntityType<Aquilolamna> entityType, Level level) {
         super(entityType, level);
@@ -97,11 +94,6 @@ public class Aquilolamna extends PrehistoricSwimmingBucketable {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

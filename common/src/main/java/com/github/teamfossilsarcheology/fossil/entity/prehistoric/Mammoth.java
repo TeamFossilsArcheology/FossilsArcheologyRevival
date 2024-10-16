@@ -33,8 +33,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable {
     public static final String ANIMATIONS = "mammoth.animation.json";
@@ -48,7 +46,6 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
     public static final String WALK = "animation.mammoth.walk";
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(Mammoth.class, EntityDataSerializers.BOOLEAN);
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private int woolRegenTicks;
 
     public Mammoth(EntityType<Mammoth> entityType, Level level) {
@@ -242,11 +239,6 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
             return getAllAnimations().get(IDLE);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

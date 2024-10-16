@@ -31,8 +31,6 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
     public static final String ANIMATIONS = "elasmotherium.animation.json";
@@ -45,7 +43,6 @@ public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
     public static final String SWIM = "animation.elasmotherium.swim";
     public static final String WALK = "animation.elasmotherium.walk";
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(Elasmotherium.class, EntityDataSerializers.BOOLEAN);
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private int woolRegenTicks;
 
     public Elasmotherium(EntityType<Elasmotherium> entityType, Level level) {
@@ -214,11 +211,6 @@ public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

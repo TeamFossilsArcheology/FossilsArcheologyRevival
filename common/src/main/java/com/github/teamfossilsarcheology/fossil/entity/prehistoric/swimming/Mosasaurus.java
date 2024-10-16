@@ -19,8 +19,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Mosasaurus extends PrehistoricSwimming {
     public static final String ANIMATIONS = "mosasaurus.animation.json";
@@ -34,7 +32,6 @@ public class Mosasaurus extends PrehistoricSwimming {
     public static final String SLEEP = "animation.mosasaurus.sleep";
     public static final String SWIM = "animation.mosasaurus.swim";
     public static final String SWIM_FAST = "animation.mosasaurus.swimfast";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Mosasaurus(EntityType<Mosasaurus> entityType, Level level) {
         super(entityType, level);
@@ -125,11 +122,6 @@ public class Mosasaurus extends PrehistoricSwimming {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

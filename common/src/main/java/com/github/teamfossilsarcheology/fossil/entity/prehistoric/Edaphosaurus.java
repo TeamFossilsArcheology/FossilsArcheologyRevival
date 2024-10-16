@@ -15,8 +15,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Edaphosaurus extends Prehistoric {
     public static final String ANIMATIONS = "edaphosaurus.animation.json";
@@ -28,7 +26,6 @@ public class Edaphosaurus extends Prehistoric {
     public static final String SLEEP = "animation.edaphosaurus.sleep/sit";
     public static final String WALK = "animation.edaphosaurus.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Edaphosaurus(EntityType<Edaphosaurus> entityType, Level level) {
         super(entityType, level);
@@ -90,11 +87,6 @@ public class Edaphosaurus extends Prehistoric {
             return getAllAnimations().get(IDLE);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

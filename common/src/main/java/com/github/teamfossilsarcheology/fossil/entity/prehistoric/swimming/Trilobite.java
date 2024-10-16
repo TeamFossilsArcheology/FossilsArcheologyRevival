@@ -18,13 +18,10 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public abstract class Trilobite extends PrehistoricSwimmingBucketable {
     public static final String IDLE = "placeholder";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     protected Trilobite(EntityType<? extends Trilobite> entityType, Level level) {
         super(entityType, level, Fossil.location("animations/trilobite.animation.json"));
@@ -102,11 +99,6 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
             return getAllAnimations().get(IDLE);
         }
         return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

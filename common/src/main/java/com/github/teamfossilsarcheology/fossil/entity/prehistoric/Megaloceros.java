@@ -20,8 +20,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megaloceros extends Prehistoric {
     public static final String ANIMATIONS = "megaloceros.animation.json";
@@ -34,7 +32,6 @@ public class Megaloceros extends Prehistoric {
     public static final String RUN = "animation.megaloceros.run";
     public static final String SWIM = "animation.megaloceros.swim";
     public static final String WALK = "animation.megaloceros.walk";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private Megaloceros lastMate;
 
     public Megaloceros(EntityType<Megaloceros> entityType, Level level) {
@@ -127,11 +124,6 @@ public class Megaloceros extends Prehistoric {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

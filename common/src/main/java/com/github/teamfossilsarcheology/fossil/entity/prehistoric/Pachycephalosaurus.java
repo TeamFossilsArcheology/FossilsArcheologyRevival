@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Pachycephalosaurus extends Prehistoric {
     public static final String ANIMATIONS = "pachycephalosaurus.animation.json";
@@ -28,7 +26,6 @@ public class Pachycephalosaurus extends Prehistoric {
     public static final String SLEEP = "animation.pachycephalosaurus.sleep1";
     public static final String SWIM = "animation.pachycephalosaurus.swim";
     public static final String WALK = "animation.pachycephalosaurus.walk";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Pachycephalosaurus(EntityType<Pachycephalosaurus> entityType, Level level) {
         super(entityType, level);
@@ -89,11 +86,6 @@ public class Pachycephalosaurus extends Prehistoric {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

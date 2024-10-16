@@ -27,8 +27,6 @@ import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
 
@@ -43,7 +41,6 @@ public class Nautilus extends PrehistoricFish {
     public static final String BEACHED = "animation.nautilus.land";
     private static final EntityDataAccessor<Boolean> IS_IN_SHELL = SynchedEntityData.defineId(Nautilus.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDimensions SHELL_DIMENSIONS = EntityDimensions.fixed(1, 0.5f);
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private float ticksUntilShellUpdate = 0;
     private float ticksInShell = -1;
 
@@ -259,10 +256,5 @@ public class Nautilus extends PrehistoricFish {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FORWARDS);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 }

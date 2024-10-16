@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Tyrannosaurus extends Prehistoric {
     public static final String ANIMATIONS = "tyrannosaurus.animation.json";
@@ -32,7 +30,6 @@ public class Tyrannosaurus extends Prehistoric {
     public static final String SWIM = "animation.tyrannosaurus.swim";
     public static final String WALK = "animation.tyrannosaurus.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Tyrannosaurus(EntityType<Tyrannosaurus> entityType, Level level) {
         super(entityType, level);
@@ -98,11 +95,6 @@ public class Tyrannosaurus extends Prehistoric {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

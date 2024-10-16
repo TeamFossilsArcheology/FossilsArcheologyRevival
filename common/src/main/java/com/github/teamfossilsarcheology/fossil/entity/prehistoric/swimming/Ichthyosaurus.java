@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Ichthyosaurus extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "ichthyosaurus.animation.json";
@@ -29,7 +27,6 @@ public class Ichthyosaurus extends PrehistoricSwimmingBucketable {
     public static final String SWIM = "animation.ichthyosaurus.swim";
     public static final String SWIM_FAST = "animation.ichthyosaurus.swim_fast";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Ichthyosaurus(EntityType<Ichthyosaurus> entityType, Level level) {
         super(entityType, level);
@@ -98,11 +95,6 @@ public class Ichthyosaurus extends PrehistoricSwimmingBucketable {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

@@ -18,8 +18,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Triceratops extends Prehistoric {
     public static final String ANIMATIONS = "triceratops.animation.json";
@@ -34,7 +32,6 @@ public class Triceratops extends Prehistoric {
     public static final String SLEEP2 = "animation.triceratops.sleep2";
     public static final String SWIM = "animation.triceratops.swim";
     public static final String WALK = "animation.triceratops.walk";
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(type, level);
@@ -70,11 +67,6 @@ public class Triceratops extends Prehistoric {
     @Override
     public double getPassengersRidingOffset() {
         return super.getPassengersRidingOffset() + 0.15;
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Override

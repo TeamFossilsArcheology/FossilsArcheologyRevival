@@ -9,8 +9,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelAccessor;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Random;
 
@@ -20,7 +18,6 @@ public class Coelacanth extends PrehistoricFish {
     public static final String BEACHED = "animation.coelacanth.land";
     public static final String SWIM = "animation.coelacanth.swim";
     public static final String SWIM_FAST = "animation.coelacanth.swim_fast";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Coelacanth(EntityType<Coelacanth> entityType, Level level) {
         super(entityType, level);
@@ -53,10 +50,5 @@ public class Coelacanth extends PrehistoricFish {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 }

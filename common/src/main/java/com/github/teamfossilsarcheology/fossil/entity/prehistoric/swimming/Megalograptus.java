@@ -18,8 +18,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Megalograptus extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "megalograptus.animation.json";
@@ -31,7 +29,6 @@ public class Megalograptus extends PrehistoricSwimmingBucketable {
     public static final String SWIM = "animation.megalograptus.swim";
     public static final String WALK = "animation.megalograptus.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Megalograptus(EntityType<Megalograptus> entityType, Level level) {
         super(entityType, level);
@@ -104,11 +101,6 @@ public class Megalograptus extends PrehistoricSwimmingBucketable {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

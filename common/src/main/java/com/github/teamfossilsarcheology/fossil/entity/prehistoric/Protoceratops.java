@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Protoceratops extends Prehistoric {
     public static final String ANIMATIONS = "protoceratops.animation.json";
@@ -27,7 +25,6 @@ public class Protoceratops extends Prehistoric {
     public static final String SLEEP = "animation.protoceratops.sleep/sit";
     public static final String SWIM = "animation.protoceratops.swim";
     public static final String WALK = "animation.protoceratops.walk";
-    public final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Protoceratops(EntityType<Protoceratops> type, Level level) {
         super(type, level);
@@ -48,11 +45,6 @@ public class Protoceratops extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Override

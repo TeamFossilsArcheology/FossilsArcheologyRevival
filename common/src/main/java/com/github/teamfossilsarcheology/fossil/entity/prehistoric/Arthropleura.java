@@ -39,8 +39,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.EnumSet;
 
@@ -56,7 +54,6 @@ public class Arthropleura extends Prehistoric {
     private final TemptGoal temptGoal = new TemptGoal(this, 1.25, Ingredient.of(ItemTags.FLOWERS), false);
     private final BeeWanderGoal wanderGoal = new BeeWanderGoal();
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Arthropleura(EntityType<Arthropleura> entityType, Level level) {
         super(entityType, level);
@@ -214,11 +211,6 @@ public class Arthropleura extends Prehistoric {
             return getAllAnimations().get(IDLE);
         }
         return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

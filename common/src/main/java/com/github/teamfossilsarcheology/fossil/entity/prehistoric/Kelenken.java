@@ -17,8 +17,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Kelenken extends Prehistoric {
     public static final String ANIMATIONS = "kelenken.animation.json";
@@ -32,7 +30,6 @@ public class Kelenken extends Prehistoric {
     public static final String SWIM = "animation.kelenken.swim";
     public static final String WALK = "animation.kelenken.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Kelenken(EntityType<Kelenken> entityType, Level level) {
         super(entityType, level);
@@ -106,11 +103,6 @@ public class Kelenken extends Prehistoric {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
 

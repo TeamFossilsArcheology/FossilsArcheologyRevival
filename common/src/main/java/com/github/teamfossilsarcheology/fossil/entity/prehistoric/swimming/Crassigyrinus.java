@@ -17,8 +17,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Crassigyrinus extends PrehistoricSwimmingBucketable {
     public static final String ANIMATIONS = "crassigyrinus.animation.json";
@@ -31,7 +29,6 @@ public class Crassigyrinus extends PrehistoricSwimmingBucketable {
     public static final String SWIM = "animation.crassigyrinus.swim";
     public static final String SWIM_FAST = "animation.crassigyrinus.swimfast";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Crassigyrinus(EntityType<Crassigyrinus> entityType, Level level) {
         super(entityType, level);
@@ -94,11 +91,6 @@ public class Crassigyrinus extends PrehistoricSwimmingBucketable {
     @Override
     public @NotNull Animation nextSprintingAnimation() {
         return getAllAnimations().get(SWIM_FAST);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

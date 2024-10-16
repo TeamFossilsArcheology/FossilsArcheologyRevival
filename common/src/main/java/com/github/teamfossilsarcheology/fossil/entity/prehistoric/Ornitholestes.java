@@ -14,8 +14,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Ornitholestes extends Prehistoric {
     public static final String ANIMATIONS = "ornitholestes.animation.json";
@@ -29,7 +27,6 @@ public class Ornitholestes extends Prehistoric {
     public static final String SWIM = "animation.ornitholestes.swim";
     public static final String WALK = "animation.ornitholestes.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Ornitholestes(EntityType<Ornitholestes> entityType, Level level) {
         super(entityType, level);
@@ -95,11 +92,6 @@ public class Ornitholestes extends Prehistoric {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

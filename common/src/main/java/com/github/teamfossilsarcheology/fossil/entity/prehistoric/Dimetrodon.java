@@ -15,8 +15,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Dimetrodon extends Prehistoric {
     public static final String ANIMATIONS = "dimetrodon.animation.json";
@@ -26,7 +24,6 @@ public class Dimetrodon extends Prehistoric {
     public static final String SLEEP = "animation.dimetrodon.sleep/sit";
     public static final String WALK = "animation.dimetrodon.walk";
 
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Dimetrodon(EntityType<Dimetrodon> entityType, Level level) {
         super(entityType, level);
@@ -88,11 +85,6 @@ public class Dimetrodon extends Prehistoric {
             return getAllAnimations().get(SLEEP);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable

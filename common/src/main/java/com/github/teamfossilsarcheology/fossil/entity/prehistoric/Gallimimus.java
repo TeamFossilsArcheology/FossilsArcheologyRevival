@@ -15,8 +15,6 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.util.GeckoLibUtil;
 
 public class Gallimimus extends PrehistoricFlocking {
     public static final String ANIMATIONS = "gallimimus.animation.json";
@@ -29,7 +27,6 @@ public class Gallimimus extends PrehistoricFlocking {
     public static final String SLEEP = "animation.gallimimus.sleep/sit";
     public static final String SWIM = "animation.gallimimus.swim";
     public static final String WALK = "animation.gallimimus.walk";
-    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Gallimimus(EntityType<Gallimimus> entityType, Level level) {
         super(entityType, level);
@@ -110,11 +107,6 @@ public class Gallimimus extends PrehistoricFlocking {
             return getAllAnimations().get(SWIM);
         }
         return getAllAnimations().get(RUN);
-    }
-
-    @Override
-    public AnimationFactory getFactory() {
-        return factory;
     }
 
     @Nullable
