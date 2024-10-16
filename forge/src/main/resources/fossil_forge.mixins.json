@@ -6,7 +6,7 @@
   "client": [
     "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
-  "mixins": ["AbstractFishMixin", "AnimationControllerAccessor", "CatMixin", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin"],
+  "mixins": ["AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin"],
   "injectors": {
     "defaultRequire": 1
   }

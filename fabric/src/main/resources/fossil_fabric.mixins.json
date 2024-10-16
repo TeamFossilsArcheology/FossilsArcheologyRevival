@@ -7,7 +7,7 @@
     "ScreenEffectRendererMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "AnimationControllerAccessor", "CatMixin", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin",
+    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin",
     "ServerPlayerMixin"
   ],
   "injectors": {
