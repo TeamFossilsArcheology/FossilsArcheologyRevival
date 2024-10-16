@@ -234,7 +234,7 @@ public class ModRecipeProvider extends RecipeProvider {
         }
 
         if (machineRecipes) {
-            MultiOutputAndSlotsRecipeBuilder plantFossil = analyzed(PlANT_FOSSIL.get())
+            MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> plantFossil = analyzed(PlANT_FOSSIL.get())
                     .addOutput(Blocks.SAND, 35)
                     .addOutput(Blocks.CACTUS, 20)
                     .addOutput(FERN_SEED_FOSSIL.get(), 5)
@@ -249,7 +249,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 plantFossil.addOutput(info.getFossilizedPlantSeedItem(), seedWeight);
             }
             plantFossil.save(consumer);
-            MultiOutputAndSlotsRecipeBuilder bioFossil = analyzed(BIO_FOSSIL.get())
+            MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> bioFossil = analyzed(BIO_FOSSIL.get())
                     .addOutput(Blocks.SAND, 35)
                     .addOutput(Items.BONE_MEAL, 50);
             List<PrehistoricEntityInfo> bioFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.MESOZOIC);
@@ -258,7 +258,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 bioFossil.addOutput(info.dnaItem, bioFossilDNAChance);
             }
             bioFossil.save(consumer);
-            MultiOutputAndSlotsRecipeBuilder shaleFossil = analyzed(SHALE_FOSSIL.get())
+            MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> shaleFossil = analyzed(SHALE_FOSSIL.get())
                     .addOutput(Blocks.TUFF, 35)
                     .addOutput(Items.BONE_MEAL, 50);
             List<PrehistoricEntityInfo> shaleFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.PALEOZOIC);
@@ -302,7 +302,7 @@ public class ModRecipeProvider extends RecipeProvider {
                     .addOutput(Items.CHARCOAL, 20)
                     .addOutput(TAR_FOSSIL.get(), 45)
                     .addOutput(VOLCANIC_ROCK.get(), 15).save(consumer);
-            MultiOutputAndSlotsRecipeBuilder tarFossil = analyzed(TAR_FOSSIL.get())
+            MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> tarFossil = analyzed(TAR_FOSSIL.get())
                     .addOutput(Items.BONE_MEAL, 15)
                     .addOutput(VOLCANIC_ROCK.get(), 30);
             List<PrehistoricEntityInfo> tarFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.CENOZOIC);
@@ -312,7 +312,7 @@ public class ModRecipeProvider extends RecipeProvider {
             }
             tarFossil.save(consumer);
 
-            MultiOutputAndSlotsRecipeBuilder failuresaurusFlesh = analyzed(FAILURESAURUS_FLESH.get())
+            MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> failuresaurusFlesh = analyzed(FAILURESAURUS_FLESH.get())
                     .addOutput(Items.ROTTEN_FLESH, 33);
             double failuresaurusDNAChance = 67F / (PrehistoricEntityInfo.values().length + VanillaEntityInfo.values().length);
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
@@ -337,7 +337,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 failuresaurusFlesh.addOutput(info.dnaItem, failuresaurusDNAChance);
             }
             failuresaurusFlesh.save(consumer);
-            MultiOutputAndSlotsRecipeBuilder frozenMeat = analyzed(FROZEN_MEAT.get())
+            MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> frozenMeat = analyzed(FROZEN_MEAT.get())
                     .addOutput(Items.CHICKEN, 15)
                     .addOutput(Items.MUTTON, 15)
                     .addOutput(Items.BEEF, 15)

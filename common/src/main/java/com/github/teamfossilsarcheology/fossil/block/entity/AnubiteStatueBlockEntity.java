@@ -20,7 +20,7 @@ public class AnubiteStatueBlockEntity extends BlockEntity {
         Player player = level.getNearestPlayer(pos.getX(), pos.getY(), pos.getZ(), 5, true);
         if (player != null) {
             level.explode(null, pos.getX() + 0.5, pos.getY(), pos.getZ() + 0.5, 5f, true, Explosion.BlockInteraction.BREAK);
-            ModEntities.ANUBITE.get().spawn((ServerLevel) level, null, null, null, pos.offset(0.5f, 0, 0.5f), MobSpawnType.EVENT, false, false);
+            ModEntities.ANUBITE.get().spawn((ServerLevel) level, null, null, pos, MobSpawnType.EVENT, false, false);
             level.removeBlock(pos, false);
         }
     }

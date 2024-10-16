@@ -65,7 +65,7 @@ public class Anubite extends PathfinderMob {
     @Override
     protected void customServerAiStep() {
         if (tickCount >= targetChangedTick + 600) {
-            float f = getBrightness();
+            float f = level.getBrightness(blockPosition());
             if (f > 0.5 && random.nextFloat() * 30 < (f - 0.4) * 2) {
                 teleportRandomly();
             }

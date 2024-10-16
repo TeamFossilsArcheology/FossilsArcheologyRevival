@@ -10,6 +10,7 @@ import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -47,7 +48,8 @@ public class DinoEggItem extends PrehistoricEntityItem {
             level.addFreshEntity(egg);
             level.gameEvent(player, GameEvent.ENTITY_PLACE, egg);
         } else {
-            DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, info, false);
+            Entity entity = DinosaurEgg.hatchEgg(level, x, y, z, (ServerPlayer) player, info, false);
+            level.gameEvent(player, GameEvent.ENTITY_PLACE, entity);
         }
         return true;
     }
@@ -90,7 +92,6 @@ public class DinoEggItem extends PrehistoricEntityItem {
                 itemStack.shrink(1);
             }
             player.awardStat(Stats.ITEM_USED.get(this));
-            level.gameEvent(GameEvent.ENTITY_PLACE, player);
             return InteractionResultHolder.consume(itemStack);
         }
         return InteractionResultHolder.pass(itemStack);

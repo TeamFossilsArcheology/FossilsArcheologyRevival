@@ -77,7 +77,7 @@ public class FriendlyPiglin extends TamableAnimal {
     @Override
     public void aiStep() {
         updateSwingTime();
-        if (getBrightness() > 0.5F) {
+        if (level.getBrightness(blockPosition()) > 0.5F) {
             noActionTime += 2;
         }
         super.aiStep();
