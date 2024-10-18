@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
+import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
@@ -7,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -38,6 +40,18 @@ public class Parasaurolophus extends Prehistoric {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
         goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+    }
+
+    @Override
+    public void refreshTexturePath() {
+        if (!level.isClientSide) {
+            return;
+        }
+        if ("Jackabird".equals(ChatFormatting.stripFormatting(getName().getString()))) {
+            textureLocation = Fossil.location("textures/entity/parasaurolophus/parasaurolophus_jackabird");
+            return;
+        }
+        super.refreshTexturePath();
     }
 
     @Override
