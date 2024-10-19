@@ -12,7 +12,7 @@ import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.IMammal
 import com.github.teamfossilsarcheology.fossil.forge.client.ClientModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.client.model.PlantModelLoader;
 import com.github.teamfossilsarcheology.fossil.forge.client.renderer.armor.ForgeAncientHelmetRenderer;
-import com.github.teamfossilsarcheology.fossil.forge.compat.carryon.FossilPickupHandler;
+import com.github.teamfossilsarcheology.fossil.forge.compat.carryon.CarryOnCompat;
 import com.github.teamfossilsarcheology.fossil.forge.world.biome.ForgeFossilRegion;
 import com.github.teamfossilsarcheology.fossil.item.forge.AncientHelmetItemImpl;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
@@ -53,7 +53,7 @@ public class FossilForge {
         Fossil.init();
 
         if (ModList.get().isLoaded("carryon")) {
-            MinecraftForge.EVENT_BUS.register(FossilPickupHandler.class);
+            MinecraftForge.EVENT_BUS.register(CarryOnCompat.class);
         }
 
         modEventBus.addListener(this::onClient);

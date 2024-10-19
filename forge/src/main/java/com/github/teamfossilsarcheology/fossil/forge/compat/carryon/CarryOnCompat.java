@@ -6,7 +6,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import tschipp.carryon.common.handler.PickupHandler;
 
-public class FossilPickupHandler {
+public class CarryOnCompat {
 
     @SubscribeEvent
     public static void addCustomTrades(PickupHandler.PickUpEntityEvent event) {
