@@ -3,7 +3,7 @@ package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.client.model.DinosaurEggModel;
 import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataManager;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
@@ -30,7 +30,7 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
 
     @Override
     protected void scale(DinosaurEgg egg, PoseStack poseStack, float partialTickTime) {
-        float scale = EntityDataManager.ENTITY_DATA.getData(egg.getPrehistoricEntityInfo().resourceName).eggScale();
+        float scale = EntityDataLoader.ENTITY_DATA.getData(egg.getPrehistoricEntityInfo().resourceName).eggScale();
         shadowRadius = 0.25f * scale;
         poseStack.scale(scale, scale, scale);
         super.scale(egg, poseStack, partialTickTime);

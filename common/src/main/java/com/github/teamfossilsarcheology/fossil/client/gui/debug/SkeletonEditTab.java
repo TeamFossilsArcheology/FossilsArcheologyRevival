@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
 import com.github.teamfossilsarcheology.fossil.entity.PrehistoricSkeleton;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataManager;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.SyncDebugInfoMessage;
@@ -45,7 +45,7 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
         addWidget(new ModelsList());
         addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0, 0));
-            ageSlider.maxValue = EntityDataManager.ENTITY_DATA.getData(info.resourceName).adultAgeDays();
+            ageSlider.maxValue = EntityDataLoader.ENTITY_DATA.getData(info.resourceName).adultAgeDays();
             age = (int) Math.min(age, ageSlider.maxValue);
             ageSlider.setValue(age);
         }));

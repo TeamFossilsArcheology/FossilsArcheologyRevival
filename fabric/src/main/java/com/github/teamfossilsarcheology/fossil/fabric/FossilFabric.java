@@ -8,7 +8,7 @@ import com.github.teamfossilsarcheology.fossil.block.entity.fabric.CultureVatBlo
 import com.github.teamfossilsarcheology.fossil.capabilities.fabric.ModCapabilitiesImpl;
 import com.github.teamfossilsarcheology.fossil.config.fabric.FossilConfigImpl;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataManager;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacanth;
 import com.github.teamfossilsarcheology.fossil.fabric.capabilities.FirstHatchComponent;
@@ -66,7 +66,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
         ModRegistries.register();
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (joined && Platform.getEnv() == EnvType.SERVER) {
-                MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
+                MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.ENTITY_DATA.getEntities()));
             }
         });
         ModBlockEntities.ANALYZER.listen(blockEntityType -> {

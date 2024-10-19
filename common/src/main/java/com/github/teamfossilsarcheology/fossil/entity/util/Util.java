@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.util;
 
 import com.github.teamfossilsarcheology.fossil.entity.data.Attribute;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataManager;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import net.minecraft.core.BlockPos;
@@ -88,7 +88,7 @@ public class Util {
         return 23.55 * Mth.square(speed);
     }
 
-    public static double calculateSpeed(EntityDataManager.Data data, float scale) {
+    public static double calculateSpeed(EntityDataLoader.Data data, float scale) {
         Attribute attributes = data.attributes();
         double newSpeed = attributes.baseSpeed();
         boolean minAbove1 = data.minScale() >= 1;

@@ -167,13 +167,13 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     /**
-     * The action delay of an animation is defined server side by the {@link AnimationInfoManager} and represents a
+     * The action delay of an animation is defined server side by the {@link AnimationInfoLoader} and represents a
      * delay from the start of the animation until an action should be played
      */
     public double getActionDelay(String controller) {
         if (activeAnimations.containsKey(controller)) {
             ActiveAnimationInfo activeAnimation = activeAnimations.get(controller);
-            Map<String, AnimationInfoManager.ServerAnimationInfo> animationData = entity.getServerAnimationInfos();
+            Map<String, AnimationInfoLoader.ServerAnimationInfo> animationData = entity.getServerAnimationInfos();
             if (animationData.containsKey(activeAnimation.animationName)) {
                 return animationData.get(activeAnimation.animationName).actionDelay;
             }
@@ -182,7 +182,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public static double getAnimationTargetSpeed(PrehistoricAnimatable<Prehistoric> entity, String animationName) {
-        Map<String, AnimationInfoManager.ServerAnimationInfo> animationData = entity.getServerAnimationInfos();
+        Map<String, AnimationInfoLoader.ServerAnimationInfo> animationData = entity.getServerAnimationInfos();
         if (animationData.containsKey(animationName)) {
             return animationData.get(animationName).blocksPerSecond;
         }

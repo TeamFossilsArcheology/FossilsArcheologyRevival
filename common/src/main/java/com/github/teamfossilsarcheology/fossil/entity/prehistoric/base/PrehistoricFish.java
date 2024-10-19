@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.Fossil;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoManager;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -201,8 +201,8 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
-    public Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos() {
-        return AnimationInfoManager.ANIMATIONS.getServerAnimations(animationLocation);
+    public Map<String, AnimationInfoLoader.ServerAnimationInfo> getServerAnimationInfos() {
+        return AnimationInfoLoader.ANIMATIONS.getServerAnimations(animationLocation);
     }
 
     @Override

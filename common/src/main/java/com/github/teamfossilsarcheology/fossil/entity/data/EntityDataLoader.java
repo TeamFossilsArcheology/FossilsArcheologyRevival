@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.data;
 
+import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.util.Diet;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
@@ -17,14 +18,14 @@ import java.util.Map;
 /**
  * Loads static dino information from data/entity_info files
  */
-public class EntityDataManager extends SimpleJsonResourceReloadListener {
+public class EntityDataLoader extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().registerTypeAdapter(Attribute.class, new Attribute.Supplier())
             .registerTypeAdapter(AI.class, new AI.Supplier()).registerTypeAdapter(Diet.class, new Diet.Supplier())
             .disableHtmlEscaping().create();
-    public static final EntityDataManager ENTITY_DATA = new EntityDataManager(GSON);
+    public static final EntityDataLoader ENTITY_DATA = new EntityDataLoader(GSON);
     private ImmutableMap<String, Data> entities = ImmutableMap.of();
 
-    public EntityDataManager(Gson gson) {
+    public EntityDataLoader(Gson gson) {
         super(gson, "entity_info");
     }
 
@@ -32,7 +33,7 @@ public class EntityDataManager extends SimpleJsonResourceReloadListener {
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
         ImmutableMap.Builder<String, Data> builder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
-            if (!(fileEntry.getValue() instanceof JsonObject root)) {
+            if (!(fileEntry.getValue() instanceof JsonObject root) || !fileEntry.getKey().getNamespace().equals(Fossil.MOD_ID)) {
                 continue;
             }
             Attribute attribute = GSON.getAdapter(Attribute.class).fromJsonTree(root.getAsJsonObject("attributes"));

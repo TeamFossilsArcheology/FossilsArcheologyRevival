@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoManager;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.NotNull;
@@ -15,7 +15,7 @@ public interface PrehistoricAnimatable<T extends Mob & PrehistoricAnimatable<T>>
 
     Animation getAnimation(String name);
 
-    Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos();
+    Map<String, AnimationInfoLoader.ServerAnimationInfo> getServerAnimationInfos();
 
     AnimationLogic<T> getAnimationLogic();
 

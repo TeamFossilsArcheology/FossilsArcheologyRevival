@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataManager;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2STameMessage;
@@ -60,7 +60,7 @@ public class InfoTab extends DebugTab<Prehistoric> {
             public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                 super.render(poseStack, mouseX, mouseY, partialTick);
                 int j = active ? 16777215 : 10526880;
-                EntityDataManager.Data data = entity.data();
+                EntityDataLoader.Data data = entity.data();
                 DecimalFormat format = new DecimalFormat("0.00");
                 float step = (data.maxScale() - data.minScale()) / ((data.adultAgeDays() * 24000) + 1);
                 String min = format.format(data.minScale() + step * minValue);
@@ -70,7 +70,7 @@ public class InfoTab extends DebugTab<Prehistoric> {
             }
         };
         addWidget(new Button(275, 30, 150, 20, new TextComponent("Scale 1"), button -> {
-            EntityDataManager.Data data = entity.data();
+            EntityDataLoader.Data data = entity.data();
             ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeDays() * 24000 + 1)) / (data.maxScale() - data.minScale()));
             ageSlider.setValue(ageInTicks);
         }));
@@ -88,7 +88,7 @@ public class InfoTab extends DebugTab<Prehistoric> {
             public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
                 super.render(poseStack, mouseX, mouseY, partialTick);
                 int j = active ? 16777215 : 10526880;
-                EntityDataManager.Data data = entity.data();
+                EntityDataLoader.Data data = entity.data();
                 String min = String.valueOf(0);
                 int minX = (int) (((data.minScale() - minValue) / (maxValue - minValue)) * width);
                 String max = String.valueOf(entity.data().adultAgeDays());

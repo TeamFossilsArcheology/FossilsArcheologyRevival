@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity;
 
 import com.github.teamfossilsarcheology.fossil.Fossil;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataManager;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -188,8 +188,8 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     }
 
 
-    public EntityDataManager.Data data() {
-        return EntityDataManager.ENTITY_DATA.getData(info().resourceName);
+    public EntityDataLoader.Data data() {
+        return EntityDataLoader.ENTITY_DATA.getData(info().resourceName);
     }
 
     @Override

@@ -12,11 +12,11 @@ import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.PrehistoricPathNavigation;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoManager;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.data.AI;
 import com.github.teamfossilsarcheology.fossil.entity.data.Attribute;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataManager;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.Deinonychus;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.Velociraptor;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.AISystem;
@@ -1165,8 +1165,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         return isBaby() ? super.getSoundVolume() * 0.75f : 1;
     }
 
-    public AnimationInfoManager.ServerAnimationInfo startAttack() {
-        AnimationInfoManager.ServerAnimationInfo attackAnim = (AnimationInfoManager.ServerAnimationInfo) nextAttackAnimation();
+    public AnimationInfoLoader.ServerAnimationInfo startAttack() {
+        AnimationInfoLoader.ServerAnimationInfo attackAnim = (AnimationInfoLoader.ServerAnimationInfo) nextAttackAnimation();
         getAnimationLogic().triggerAnimation(AnimationLogic.ATTACK_CTRL, attackAnim, AnimationLogic.Category.ATTACK);
         return attackAnim;
     }
@@ -1235,8 +1235,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     public abstract Item getOrderItem();
 
-    public EntityDataManager.Data data() {
-        return EntityDataManager.ENTITY_DATA.getData(info().resourceName);
+    public EntityDataLoader.Data data() {
+        return EntityDataLoader.ENTITY_DATA.getData(info().resourceName);
     }
 
     public Attribute attributes() {
@@ -1296,7 +1296,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (level.isClientSide) {
             return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
         }
-        return AnimationInfoManager.ANIMATIONS.getClientAnimations(animationLocation);
+        return AnimationInfoLoader.ANIMATIONS.getClientAnimations(animationLocation);
     }
 
     @Override
@@ -1305,8 +1305,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public Map<String, AnimationInfoManager.ServerAnimationInfo> getServerAnimationInfos() {
-        return AnimationInfoManager.ANIMATIONS.getServerAnimations(animationLocation);
+    public Map<String, AnimationInfoLoader.ServerAnimationInfo> getServerAnimationInfos() {
+        return AnimationInfoLoader.ANIMATIONS.getServerAnimations(animationLocation);
     }
 
     public abstract @NotNull Animation nextAttackAnimation();

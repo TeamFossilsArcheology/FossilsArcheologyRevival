@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
-import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataManager;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.event.ModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.MammalCapProvider;
@@ -141,7 +141,7 @@ public class ForgeModEvents {
     @SubscribeEvent
     public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
         if (Platform.getEnv() == Dist.DEDICATED_SERVER) {
-            MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataManager.ENTITY_DATA.getEntities()));
+            MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataLoader.ENTITY_DATA.getEntities()));
         }
     }
 }

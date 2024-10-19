@@ -21,14 +21,14 @@ import java.util.Map;
 /**
  * Loads dino animation server information from data/animations files
  */
-public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
+public class AnimationInfoLoader extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    public static final AnimationInfoManager ANIMATIONS = new AnimationInfoManager(GSON);
+    public static final AnimationInfoLoader ANIMATIONS = new AnimationInfoLoader(GSON);
     private static final Logger LOGGER = LogUtils.getLogger();
     private ImmutableMap<ResourceLocation, ImmutableMap<String, ServerAnimationInfo>> animationInfos = ImmutableMap.of();
     private ImmutableMap<ResourceLocation, ImmutableMap<String, Animation>> clientAnimationInfos = ImmutableMap.of();
 
-    public AnimationInfoManager(Gson gson) {
+    private AnimationInfoLoader(Gson gson) {
         super(gson, "animations");
     }
 
@@ -37,7 +37,7 @@ public class AnimationInfoManager extends SimpleJsonResourceReloadListener {
         ImmutableMap.Builder<ResourceLocation, ImmutableMap<String, ServerAnimationInfo>> builder = ImmutableMap.builder();
         ImmutableMap.Builder<ResourceLocation, ImmutableMap<String, Animation>> clientBuilder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
-            if (!(fileEntry.getValue() instanceof JsonObject)) {
+            if (!(fileEntry.getValue() instanceof JsonObject) || !fileEntry.getKey().getNamespace().equals(Fossil.MOD_ID)) {
                 continue;
             }
             try {

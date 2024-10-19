@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoManager;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.OrderType;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -20,7 +20,7 @@ import java.util.function.Predicate;
 
 /**
  * Similar to {@link net.minecraft.world.entity.ai.goal.MeleeAttackGoal MeleeAttackGoal} but with the option to delay
- * the damage by {@link com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoManager.ServerAnimationInfo#actionDelay} ticks
+ * the damage by {@link AnimationInfoLoader.ServerAnimationInfo#actionDelay} ticks
  * or defer the hit logic to the targets client
  */
 public class DelayedAttackGoal extends Goal {
@@ -164,7 +164,7 @@ public class DelayedAttackGoal extends Goal {
         long currentTime = prehistoric.level.getGameTime();
         if (canHit(enemy)) {
             if (currentTime > attackEndTick + 20) {
-                AnimationInfoManager.ServerAnimationInfo animation = prehistoric.startAttack();
+                AnimationInfoLoader.ServerAnimationInfo animation = prehistoric.startAttack();
                 if (animation.usesAttackBox && enemy instanceof ServerPlayer player) {
                     MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(prehistoric, animation.animationLength));
                     doingHeavyAttack = true;
