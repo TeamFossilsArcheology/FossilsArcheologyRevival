@@ -17,17 +17,9 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Liopleurodon extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "liopleurodon.animation.json";
-    public static final String ATTACK = "animation.liopleurodon.attack1";
-    public static final String BEACHED = "animation.liopleurodon.beached";
-    public static final String EAT = "animation.liopleurodon.eat";
     public static final String GRAB = "animation.liopleurodon.grab";
     public static final String IDLE1 = "animation.liopleurodon.idle/sleep";
-    public static final String IDLE2 = "animation.liopleurodon.randomidle";
-    public static final String SLEEP = "animation.liopleurodon.idle/sleep";
-    public static final String SWIM = "animation.liopleurodon.swim";
-    public static final String SWIM_FAST = "animation.liopleurodon.swimfast";
-
+    public static final String IDLE2 = "animation.liopleurodon.idle";
 
     public Liopleurodon(EntityType<Liopleurodon> entityType, Level level) {
         super(entityType, level);
@@ -56,21 +48,6 @@ public class Liopleurodon extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return getAllAnimations().get(BEACHED);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
     public @NotNull Animation nextGrabbingAnimation() {
         return getAllAnimations().get(GRAB);
     }
@@ -78,26 +55,6 @@ public class Liopleurodon extends PrehistoricSwimming {
     @Override
     public @NotNull Animation nextIdleAnimation() {
         return random.nextFloat() > 0.1 ? getAllAnimations().get(IDLE1) : getAllAnimations().get(IDLE2);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        return getAllAnimations().get(SWIM);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Nullable

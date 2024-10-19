@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -20,20 +21,8 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Ankylosaurus extends Prehistoric {
-    public static final String ANIMATIONS = "ankylosaurus.animation.json";
     public static final String ATTACK_FRONT_RIGHT = "animation.ankylosaurus.attack_strong_right";
     public static final String ATTACK_FRONT_LEFT = "animation.ankylosaurus.attack_strong_left";
-    public static final String ATTACK_BACK_RIGHT = "animation.ankylosaurus.attack_back1";
-    public static final String ATTACK_BACK_LEFT = "animation.ankylosaurus.attack_back2";
-    public static final String EAT = "animation.ankylosaurus.eat";
-    public static final String FALL = "animation.ankylosaurus.jump/fall";
-    public static final String IDLE = "animation.ankylosaurus.idle";
-    public static final String RUN = "animation.ankylosaurus.run";
-    public static final String SIT = "animation.ankylosaurus.sit1";
-    public static final String SLEEP = "animation.ankylosaurus.sleep1";
-    public static final String SWIM = "animation.ankylosaurus.swim";
-    public static final String WALK = "animation.ankylosaurus.walk";
-
 
     public Ankylosaurus(EntityType<Ankylosaurus> entityType, Level level) {
         super(entityType, level);
@@ -65,6 +54,20 @@ public class Ankylosaurus extends Prehistoric {
     }
 
     @Override
+    public Animation getAnimation(AnimationCategory category) {
+        if (category == AnimationCategory.ATTACK) {
+            if (getTarget() != null) {
+                double x = getTarget().getX() - getX();
+                double z = getTarget().getZ() - getZ();
+                double yawDiff = (Mth.atan2(z, x) * Mth.RAD_TO_DEG);
+                float yRotD = Mth.degreesDifference(yBodyRot, Util.yawToYRot(yawDiff));
+                return getAllAnimations().get(yRotD < 0 ? ATTACK_FRONT_RIGHT : ATTACK_FRONT_LEFT);
+            }
+        }
+        return super.getAnimation(category);
+    }
+
+    @Override
     public @NotNull Animation nextAttackAnimation() {
         if (getTarget() != null) {
             double x = getTarget().getX() - getX();
@@ -78,43 +81,6 @@ public class Ankylosaurus extends Prehistoric {
             return false;*/
         return getAllAnimations().get(ATTACK_FRONT_RIGHT);
     }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SIT);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(RUN);
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

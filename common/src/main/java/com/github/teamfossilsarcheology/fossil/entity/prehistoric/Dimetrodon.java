@@ -12,18 +12,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Dimetrodon extends Prehistoric {
-    public static final String ANIMATIONS = "dimetrodon.animation.json";
-    public static final String ATTACK = "animation.dimetrodon.attack";
-    public static final String EAT = "animation.dimetrodon.eat";
-    public static final String RUN = "animation.dimetrodon.run";
-    public static final String SLEEP = "animation.dimetrodon.sleep/sit";
-    public static final String WALK = "animation.dimetrodon.walk";
-
 
     public Dimetrodon(EntityType<Dimetrodon> entityType, Level level) {
         super(entityType, level);
@@ -44,47 +35,6 @@ public class Dimetrodon extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SLEEP);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SLEEP);
-        }
-        return getAllAnimations().get(RUN);
     }
 
     @Nullable

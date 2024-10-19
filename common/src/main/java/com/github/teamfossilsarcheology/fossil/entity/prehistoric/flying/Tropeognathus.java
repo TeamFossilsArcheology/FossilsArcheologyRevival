@@ -12,25 +12,14 @@ import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Tropeognathus extends PrehistoricFlying {
-    public static final String ANIMATIONS = "tropeognathus.animation.json";
-    public static final String ATTACK = "fa.tropeognathus.biteattack";
-    public static final String ATTACK_WATER = "fa.tropeognathus.biteattackwater";
-    public static final String ATTACK_AIR = "fa.tropeognathus.bitefly";
-    public static final String DISPLAY = "fa.tropeognathus.display";
-    public static final String EAT = "fa.tropeognathus.biteeat";
-    public static final String EAT_WATER = "fa.tropeognathus.biteeatwater";
     public static final String FLY = "fa.tropeognathus.fly";
     public static final String IDLE = "fa.tropeognathus.idle";
     public static final String IDLE_CALL = "fa.tropeognathus.idlecall";
     public static final String IDLE_LOOKAROUND = "fa.tropeognathus.idlelookaround";
     public static final String IDLE_PREEN = "fa.tropeognathus.idlepreen";
     public static final String IDLE_SWIM = "fa.tropeognathus.idleswim";
-    public static final String RUN = "fa.tropeognathus.run";
-    public static final String SLEEP = "fa.tropeognathus.sleep";
-    public static final String SWIM = "fa.tropeognathus.swim";
     public static final String TAKEOFF_GROUND = "fa.tropeognathus.groundtakeoff";
     public static final String TAKEOFF_WATER = "fa.tropeognathus.watertakeoff";
-    public static final String WALK = "fa.tropeognathus.walk";
 
     public Tropeognathus(EntityType<Tropeognathus> entityType, Level level) {
         super(entityType, level);
@@ -57,11 +46,6 @@ public class Tropeognathus extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
     public @NotNull Animation nextIdleAnimation() {
         String key = IDLE;
 
@@ -72,52 +56,11 @@ public class Tropeognathus extends PrehistoricFlying {
         } else {
             int number = random.nextInt(10);
             switch (number) {
-                case 0, 1, 2, 3, 4, 5, 6 -> key = IDLE;
                 case 7 -> key = IDLE_PREEN;
                 case 8 -> key = IDLE_LOOKAROUND;
                 case 9 -> key = IDLE_CALL;
             }
         }
-
-        return getAllAnimations().get(key);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        String key = WALK;
-        boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DelayedAttackGoal);
-
-        if (isChasing) key = RUN;
-        if (isInWater()) key = SWIM;
-        if (isFlying()) key = FLY;
-
-        return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        String key = RUN;
-        if (isInWater()) key = SWIM;
-        if (isFlying()) key = FLY;
-
-        return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        String key = ATTACK;
-        if (isInWater()) key = ATTACK_WATER;
-        if (isFlying()) key = ATTACK_AIR;
 
         return getAllAnimations().get(key);
     }

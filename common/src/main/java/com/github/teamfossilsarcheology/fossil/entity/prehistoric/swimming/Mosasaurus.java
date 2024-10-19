@@ -21,17 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Mosasaurus extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "mosasaurus.animation.json";
-    public static final String ATTACK = "animation.mosasaurus.attack";
-    public static final String BEACHED = "animation.mosasaurus.beached";
-    public static final String EAT = "animation.mosasaurus.eat";
-    public static final String IDLE = "animation.mosasaurus.idle";
-    public static final String FALL = "animation.mosasaurus.jump/fall";
     public static final String GRAB = "animation.mosasaurus.grab";
-    public static final String LEAP = "animation.mosasaurus.leap";
-    public static final String SLEEP = "animation.mosasaurus.sleep";
-    public static final String SWIM = "animation.mosasaurus.swim";
-    public static final String SWIM_FAST = "animation.mosasaurus.swimfast";
 
     public Mosasaurus(EntityType<Mosasaurus> entityType, Level level) {
         super(entityType, level);
@@ -80,48 +70,8 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return getAllAnimations().get(BEACHED);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
     public @NotNull Animation nextGrabbingAnimation() {
         return getAllAnimations().get(GRAB);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        return getAllAnimations().get(SWIM);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Nullable

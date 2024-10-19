@@ -27,23 +27,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Therizinosaurus extends Prehistoric implements PrehistoricShearable {
-    public static final String ANIMATIONS = "therizinosaurus.animation.json";
-    public static final String ATTACK1 = "animation.therizinosaurus.attack1";
-    public static final String ATTACK2 = "animation.therizinosaurus.attack2";
-    public static final String EAT1 = "animation.therizinosaurus.eat1";
-    public static final String EAT2 = "animation.therizinosaurus.eat2";
-    public static final String EAT3 = "animation.therizinosaurus.eat3";
-    public static final String IDLE = "animation.therizinosaurus.idle";
-    public static final String RUN = "animation.therizinosaurus.run";
-    public static final String RUN_BABY = "animation.therizinosaurus.run_baby";
-    public static final String SIT = "animation.therizinosaurus.sit";
-    public static final String SLEEP1 = "animation.therizinosaurus.sleep1";
-    public static final String SLEEP2 = "animation.therizinosaurus.sleep2";
-    public static final String SWIM = "animation.therizinosaurus.swim";
-    public static final String WALK = "animation.therizinosaurus.walk";
+    //TODO: Eat1 and Eat2 are for blocks on head height. Eat3 is for blocks on ground height
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(Therizinosaurus.class, EntityDataSerializers.BOOLEAN);
     private int woolRegenTicks;
 
@@ -169,48 +155,6 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK1 : ATTACK2);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        //TODO: Eat1 and Eat2 are for blocks on head height. Eat3 is for blocks on ground height
-        return getAllAnimations().get(random.nextInt(2) == 0 ? EAT1 : EAT2);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SIT);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(isBaby() ? SLEEP1 : SLEEP2);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return isBaby() ? getAllAnimations().get(RUN_BABY) : getAllAnimations().get(RUN);
     }
 
     @Nullable

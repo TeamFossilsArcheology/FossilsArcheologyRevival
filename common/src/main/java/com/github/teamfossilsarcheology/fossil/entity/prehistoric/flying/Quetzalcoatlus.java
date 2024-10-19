@@ -19,7 +19,6 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Quetzalcoatlus extends PrehistoricFlying {
-    public static final String ANIMATIONS = "quetzalcoatlus.animation.json";
     public static final String WALK = "walk";
 
     public Quetzalcoatlus(EntityType<Quetzalcoatlus> entityType, Level level) {
@@ -43,41 +42,6 @@ public class Quetzalcoatlus extends PrehistoricFlying {
     @Override
     public Item getOrderItem() {
         return Items.ARROW;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(WALK);
     }
 
     @Override

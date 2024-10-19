@@ -50,21 +50,13 @@ import java.util.Random;
 
 
 public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
-    public static final String ANIMATIONS = "meganeura.animation.json";
     public static final String ATTACK = "animation.meganeura.attack";
-    public static final String ATTACK_BABY = "animation.meganeura.attack_baby";
     public static final String DROWN = "animation.meganeura.drown";
-    public static final String EAT = "animation.meganeura.eat";
-    public static final String EAT_BABY = "animation.meganeura.eat_baby";
     public static final String FLY = "animation.meganeura.fly";
     public static final String IDLE = "animation.meganeura.idle";
     public static final String IDLE_BABY = "animation.meganeura.idle_baby";
     public static final String HOVER = "animation.meganeura.hover";
-    public static final String SIT = "animation.meganeura.sit";
-    public static final String SIT_BABY = "animation.meganeura.sit_baby";
     public static final String SWIM_BABY = "animation.meganeura.swim_baby";
-    public static final String SLEEP = "animation.meganeura.sleep";
-    public static final String SLEEP_BABY = "animation.meganeura.sleep_baby";
     public static final String WALK = "animation.meganeura.walk";
     public static final String WALK_BABY = "animation.meganeura.walk_baby";
     public static final EntityDataAccessor<Float> ATTACHED_X = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.FLOAT);
@@ -289,16 +281,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return nextIdleAnimation();
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(isBaby() ? EAT_BABY : EAT);
-    }
-
-    @Override
     public @NotNull Animation nextIdleAnimation() {
         if (isBaby()) {
             return getAllAnimations().get(IDLE_BABY);
@@ -313,16 +295,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(isBaby() ? SIT_BABY : SIT);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(isBaby() ? SLEEP_BABY : SLEEP);
-    }
-
-    @Override
     public @NotNull Animation nextWalkingAnimation() {
         if (isBaby()) {
             if (isInWater()) {
@@ -334,16 +306,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
             return getAllAnimations().get(FLY);
         }
         return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        return nextWalkingAnimation();
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(isBaby() ? ATTACK_BABY : ATTACK);
     }
 
     @Nullable

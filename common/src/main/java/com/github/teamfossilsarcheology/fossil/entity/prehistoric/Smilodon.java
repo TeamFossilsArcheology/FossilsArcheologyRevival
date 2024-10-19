@@ -11,15 +11,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Smilodon extends Prehistoric {
-    public static final String ANIMATIONS = "smilodon.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-
 
     public Smilodon(EntityType<Smilodon> entityType, Level level) {
         super(entityType, level);
@@ -44,47 +38,6 @@ public class Smilodon extends Prehistoric {
     @Override
     public float getTargetScale() {
         return 2;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(IDLE);
     }
 
     @Nullable

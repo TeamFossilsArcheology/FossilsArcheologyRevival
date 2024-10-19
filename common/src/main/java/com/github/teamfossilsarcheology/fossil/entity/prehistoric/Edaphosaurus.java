@@ -12,20 +12,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Edaphosaurus extends Prehistoric {
-    public static final String ANIMATIONS = "edaphosaurus.animation.json";
-    public static final String ATTACK = "animation.edaphosaurus.attack";
-    public static final String EAT = "animation.edaphosaurus.eat";
-    public static final String FALL = "animation.edaphosaurus.jump/fall";
-    public static final String IDLE = "animation.edaphosaurus.idle";
-    public static final String RUN = "animation.edaphosaurus.run";
-    public static final String SLEEP = "animation.edaphosaurus.sleep/sit";
-    public static final String WALK = "animation.edaphosaurus.walk";
-
 
     public Edaphosaurus(EntityType<Edaphosaurus> entityType, Level level) {
         super(entityType, level);
@@ -46,47 +35,6 @@ public class Edaphosaurus extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(RUN);
     }
 
     @Nullable

@@ -17,11 +17,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public abstract class Trilobite extends PrehistoricSwimmingBucketable {
-    public static final String IDLE = "placeholder";
-
 
     protected Trilobite(EntityType<? extends Trilobite> entityType, Level level) {
         super(entityType, level, Fossil.location("animations/trilobite.animation.json"));
@@ -53,52 +50,6 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
     @Override
     public boolean canHuntMobsOnLand() {
         return false;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return nextIdleAnimation();
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(IDLE);
     }
 
     @Nullable

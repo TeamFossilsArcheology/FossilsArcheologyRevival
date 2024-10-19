@@ -16,7 +16,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Dilophosaurus extends Prehistoric {
     public static final String ANIMATIONS = "dilophosaurus.animation.json";
@@ -72,53 +71,6 @@ public class Dilophosaurus extends Prehistoric {
     @Override
     public double getPassengersRidingOffset() {
         return super.getPassengersRidingOffset() - 0.25;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        String key;
-        switch (getRandom().nextInt(3)) {
-            case 0 -> key = ATTACK1;
-            case 1 -> key = ATTACK2;
-            default -> key = ATTACK3;
-        }
-        return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? SIT1 : SIT2);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? SLEEP1 : SLEEP2);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(RUN);
     }
 
     @Nullable

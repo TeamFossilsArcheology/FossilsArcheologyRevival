@@ -26,20 +26,7 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Pteranodon extends PrehistoricFlying {
-    public static final String ANIMATIONS = "pteranodon.animation.json";
-    public static final String ATTACK = "animation.pteranodon.attack";
-    public static final String DIVE = "animation.pteranodon.dive";
-    public static final String EAT = "animation.pteranodon.eat";
-    public static final String FLY = "animation.pteranodon.fly";
-    public static final String FLY_FLAST = "animation.pteranodon.flyfast";
-    public static final String HOVER = "animation.pteranodon.hover";
-    public static final String IDLE = "animation.pteranodon.idle";
-    public static final String IDLE_SWIM = "animation.pteranodon.swimidle";
-    public static final String SIT = "animation.pteranodon.sit";
-    public static final String SLEEP = "animation.pteranodon.sleep";
-    public static final String SWIM = "animation.pteranodon.swim";
     public static final String TAKEOFF = "animation.pteranodon.takeoff";
-    public static final String WALK = "animation.pteranodon.walk";
 
     public Pteranodon(EntityType<Pteranodon> entityType, Level level) {
         super(entityType, level);
@@ -120,57 +107,6 @@ public class Pteranodon extends PrehistoricFlying {
                 }
             }
         }
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        String key = IDLE;
-
-        if (isInWater()) {
-            key = IDLE_SWIM;
-        } else if (isFlying()) {
-            key = HOVER;
-        }
-
-        return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SIT);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        String key = WALK;
-        if (isInWater()) key = SWIM;
-        if (isFlying()) key = FLY;
-
-        return getAllAnimations().get(key);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        String key = WALK;
-        if (isInWater()) key = SWIM;
-        if (isFlying()) key = FLY_FLAST;
-
-        return getAllAnimations().get(key);
     }
 
     @Override

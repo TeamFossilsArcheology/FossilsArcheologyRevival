@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOtherLeapAtTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -14,20 +15,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Compsognathus extends PrehistoricLeaping {
-    public static final String ANIMATIONS = "compsognathus.animation.json";
     public static final String ATTACK = "animation.compsognathus.attack";
-    public static final String EAT = "animation.compsognathus.eat";
-    public static final String FALL = "animation.compsognathus.jump/fall2";
-    public static final String IDLE = "animation.compsognathus.idle";
-    public static final String RUN = "animation.compsognathus.run";
-    public static final String SLEEP = "animation.compsognathus.sleep";
-    public static final String SWIM = "animation.compsognathus.swim";
-    public static final String WALK = "animation.compsognathus.walk";
 
     public Compsognathus(EntityType<Compsognathus> entityType, Level level) {
         super(entityType, level, false);
@@ -65,44 +57,11 @@ public class Compsognathus extends PrehistoricLeaping {
     }
 
     @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
+    public Animation getAnimation(AnimationCategory category) {
+        if (category == AnimationCategory.WALK) {
+            return getAnimation(AnimationCategory.SPRINT);//Walk to slow
         }
-        return getAllAnimations().get(RUN);//Walk to slow
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(RUN);
+        return super.getAnimation(category);
     }
 
     @Override

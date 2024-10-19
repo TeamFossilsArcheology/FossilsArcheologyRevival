@@ -11,15 +11,9 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Sarcosuchus extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "sarcosuchus.animation.json";
-    public static final String IDLE = "animation.dilophosaurus.idle";
-    public static final String ATTACK1 = "animation.dilophosaurus.attack1";
-
 
     public Sarcosuchus(EntityType<Sarcosuchus> entityType, Level level) {
         super(entityType, level);
@@ -48,52 +42,6 @@ public class Sarcosuchus extends PrehistoricSwimming {
     @Override
     public float getTargetScale() {
         return 2;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK1);
-    }
-
-    @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return nextIdleAnimation();
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return nextIdleAnimation();
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(IDLE);
     }
 
     @Nullable

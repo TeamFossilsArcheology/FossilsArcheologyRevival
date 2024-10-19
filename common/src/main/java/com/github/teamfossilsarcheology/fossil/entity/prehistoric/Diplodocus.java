@@ -16,20 +16,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Diplodocus extends Prehistoric {
-    public static final String ANIMATIONS = "diplodocus.animation.json";
-    public static final String ATTACK = "animation.diplodocus.attack";
-    public static final String EAT = "animation.diplodocus.eat";
-    public static final String FALL = "animation.diplodocus.jump/fall";
-    public static final String IDLE = "animation.diplodocus.idle";
-    public static final String RUN = "animation.diplodocus.sprint";
-    public static final String SIT = "animation.diplodocus.sit";
-    public static final String SLEEP = "animation.diplodocus.sleep";
-    public static final String SWIM = "animation.diplodocus.swim";
-    public static final String WALK = "animation.diplodocus.walk";
-
 
     public Diplodocus(EntityType<Diplodocus> entityType, Level level) {
         super(entityType, level);
@@ -58,47 +46,6 @@ public class Diplodocus extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SIT);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(RUN);
     }
 
     @Nullable

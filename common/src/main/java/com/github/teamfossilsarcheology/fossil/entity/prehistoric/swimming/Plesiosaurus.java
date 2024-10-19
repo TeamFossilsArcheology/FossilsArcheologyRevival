@@ -13,20 +13,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Plesiosaurus extends PrehistoricSwimmingBucketable {
-    public static final String ANIMATIONS = "plesiosaurus.animation.json";
-    public static final String ATTACK = "animation.plesiosaurus.attack";
-    public static final String BEACHED = "animation.plesiosaurus.beached";
-    public static final String EAT = "animation.plesiosaurus.eat";
-    public static final String IDLE = "animation.plesiosaurus.randomidle";
-    public static final String SLEEP = "animation.plesiosaurus.sleep";
-    public static final String SWIM = "animation.plesiosaurus.swim";
-    public static final String SWIM_FAST = "animation.plesiosaurus.swimfast";
-
 
     public Plesiosaurus(EntityType<Plesiosaurus> entityType, Level level) {
         super(entityType, level);
@@ -53,46 +42,6 @@ public class Plesiosaurus extends PrehistoricSwimmingBucketable {
     @Override
     public boolean canHuntMobsOnLand() {
         return false;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return getAllAnimations().get(BEACHED);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        return getAllAnimations().get(SWIM);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Nullable

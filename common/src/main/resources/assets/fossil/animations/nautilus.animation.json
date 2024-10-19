@@ -1,6 +1,73 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
+		"animation.nautilus.swimSpeedDemoBack": {
+			"loop": true,
+			"animation_length": 8,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "-100+query.anim_time*40"]
+					}
+				}
+			}
+		},
+		"animation.nautilus.swimSpeedDemoFront": {
+			"loop": true,
+			"animation_length": 8,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "100+query.anim_time*-20"]
+					}
+				}
+			}
+		},
+		"animation.nautilus.beached": {
+			"loop": true,
+			"animation_length": 4,
+			"bones": {
+				"head": {
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": ["-1+math.cos(query.anim_time*180)*0.2", 0, 0.4]
+					},
+					"scale": {
+						"vector": ["0.9+math.cos(query.anim_time*180)*0.1", 1, 1]
+					}
+				},
+				"upperRightTentacle": {
+					"rotation": {
+						"vector": [-10, "math.cos(query.anim_time*180)*2", 0]
+					}
+				},
+				"lowerRightTentacle": {
+					"rotation": {
+						"vector": [10, "math.cos(query.anim_time*180)*2", 0]
+					}
+				},
+				"upperLeftTentacle": {
+					"rotation": {
+						"vector": [0, "17+math.cos(query.anim_time*180)*2", 0]
+					}
+				},
+				"lowerLeftTentacle": {
+					"rotation": {
+						"vector": [0, "20+math.cos(query.anim_time*180)*2", 0]
+					}
+				},
+				"beached_bone": {
+					"rotation": {
+						"vector": [0, 0, -90]
+					},
+					"position": {
+						"vector": [0, -3.5, 0]
+					}
+				}
+			}
+		},
 		"animation.nautilus.idle": {
 			"loop": true,
 			"animation_length": 4,
@@ -56,109 +123,6 @@
 					},
 					"scale": {
 						"vector": ["1+math.cos(query.anim_time*360)*-0.1", 1, "1+math.cos(query.anim_time*360)*-0.1"]
-					}
-				}
-			}
-		},
-		"animation.nautilus.swim_backwards": {
-			"loop": true,
-			"animation_length": 2,
-			"bones": {
-				"shell": {
-					"rotation": {
-						"vector": ["math.cos(query.anim_time*360)*5", 0, "math.cos(query.anim_time*180-60)*5"]
-					},
-					"position": {
-						"vector": [0, "1+math.cos(query.anim_time*360+30)*-1", "math.cos(query.anim_time*360-60)*3"]
-					}
-				},
-				"opercule": {
-					"rotation": {
-						"vector": ["math.cos(query.anim_time*360)*-5", 0, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": ["math.cos(query.anim_time*360)*-5", 0, 0]
-					},
-					"scale": {
-						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.1"]
-					}
-				},
-				"upperRightTentacle": {
-					"rotation": {
-						"vector": ["-5+math.cos(query.anim_time*360-30)*5", "5+math.cos(query.anim_time*360-30)*-5", 0]
-					},
-					"scale": {
-						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
-					}
-				},
-				"lowerRightTentacle": {
-					"rotation": {
-						"vector": ["5+math.cos(query.anim_time*360-30)*-5", "5+math.cos(query.anim_time*360-30)*-5", 0]
-					},
-					"scale": {
-						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
-					}
-				},
-				"upperLeftTentacle": {
-					"rotation": {
-						"vector": ["-5+math.cos(query.anim_time*360-30)*5", "-5+math.cos(query.anim_time*360-30)*5", 0]
-					},
-					"scale": {
-						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
-					}
-				},
-				"lowerLeftTentacle": {
-					"rotation": {
-						"vector": ["5+math.cos(query.anim_time*360-30)*-5", "-5+math.cos(query.anim_time*360-30)*5", 0]
-					},
-					"scale": {
-						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
-					}
-				}
-			}
-		},
-		"animation.nautilus.swim_forwards": {
-			"loop": true,
-			"animation_length": 2,
-			"bones": {
-				"shell": {
-					"rotation": {
-						"vector": ["40+math.cos(query.anim_time*360)*5", 0, "math.cos(query.anim_time*180-60)*5"]
-					},
-					"position": {
-						"vector": [0, "6+math.cos(query.anim_time*360+90)*-1", "math.cos(query.anim_time*360-30)*-1.5"]
-					}
-				},
-				"opercule": {
-					"rotation": {
-						"vector": ["5+math.cos(query.anim_time*360-60)*5", 0, 0]
-					}
-				},
-				"head": {
-					"rotation": {
-						"vector": ["5+math.cos(query.anim_time*360-60)*5", 0, 0]
-					}
-				},
-				"upperRightTentacle": {
-					"rotation": {
-						"vector": ["5+math.cos(query.anim_time*360-90)*5", -5, 0]
-					}
-				},
-				"lowerRightTentacle": {
-					"rotation": {
-						"vector": ["5+math.cos(query.anim_time*360-90)*5", -5, 0]
-					}
-				},
-				"upperLeftTentacle": {
-					"rotation": {
-						"vector": ["5+math.cos(query.anim_time*360-90)*5", 5, 0]
-					}
-				},
-				"lowerLeftTentacle": {
-					"rotation": {
-						"vector": ["5+math.cos(query.anim_time*360-90)*5", 5, 0]
 					}
 				}
 			}
@@ -469,69 +433,110 @@
 				}
 			}
 		},
-		"animation.nautilus.land": {
+		"animation.nautilus.swim_backwards": {
 			"loop": true,
-			"animation_length": 4,
+			"animation_length": 2,
 			"bones": {
-				"head": {
+				"shell": {
 					"rotation": {
-						"vector": [0, 0, 0]
+						"vector": ["math.cos(query.anim_time*360)*5", 0, "math.cos(query.anim_time*180-60)*5"]
 					},
 					"position": {
-						"vector": ["-1+math.cos(query.anim_time*180)*0.2", 0, 0.4]
+						"vector": [0, "1+math.cos(query.anim_time*360+30)*-1", "math.cos(query.anim_time*360-60)*3"]
+					}
+				},
+				"opercule": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time*360)*-5", 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["math.cos(query.anim_time*360)*-5", 0, 0]
 					},
 					"scale": {
-						"vector": ["0.9+math.cos(query.anim_time*180)*0.1", 1, 1]
+						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.1"]
 					}
 				},
 				"upperRightTentacle": {
 					"rotation": {
-						"vector": [-10, "math.cos(query.anim_time*180)*2", 0]
+						"vector": ["-5+math.cos(query.anim_time*360-30)*5", "5+math.cos(query.anim_time*360-30)*-5", 0]
+					},
+					"scale": {
+						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
 					}
 				},
 				"lowerRightTentacle": {
 					"rotation": {
-						"vector": [10, "math.cos(query.anim_time*180)*2", 0]
+						"vector": ["5+math.cos(query.anim_time*360-30)*-5", "5+math.cos(query.anim_time*360-30)*-5", 0]
+					},
+					"scale": {
+						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
 					}
 				},
 				"upperLeftTentacle": {
 					"rotation": {
-						"vector": [0, "17+math.cos(query.anim_time*180)*2", 0]
+						"vector": ["-5+math.cos(query.anim_time*360-30)*5", "-5+math.cos(query.anim_time*360-30)*5", 0]
+					},
+					"scale": {
+						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
 					}
 				},
 				"lowerLeftTentacle": {
 					"rotation": {
-						"vector": [0, "20+math.cos(query.anim_time*180)*2", 0]
+						"vector": ["5+math.cos(query.anim_time*360-30)*-5", "-5+math.cos(query.anim_time*360-30)*5", 0]
+					},
+					"scale": {
+						"vector": [1, 1, "1.1+math.cos(query.anim_time*360+30)*0.2"]
 					}
 				},
-				"beached_bone": {
+				"root": {
 					"rotation": {
-						"vector": [0, 0, -90]
+						"vector": [0, 180, 0]
+					}
+				}
+			}
+		},
+		"animation.nautilus.swim_forwards": {
+			"loop": true,
+			"animation_length": 2,
+			"bones": {
+				"shell": {
+					"rotation": {
+						"vector": ["40+math.cos(query.anim_time*360)*5", 0, "math.cos(query.anim_time*180-60)*5"]
 					},
 					"position": {
-						"vector": [0, -3.5, 0]
+						"vector": [0, "6+math.cos(query.anim_time*360+90)*-1", "math.cos(query.anim_time*360-30)*-1.5"]
 					}
-				}
-			}
-		},
-		"animation.nautilus.swimSpeedDemoBack": {
-			"loop": true,
-			"animation_length": 8,
-			"bones": {
-				"root": {
-					"position": {
-						"vector": [0, 0, "-100+query.anim_time*40"]
+				},
+				"opercule": {
+					"rotation": {
+						"vector": ["5+math.cos(query.anim_time*360-60)*5", 0, 0]
 					}
-				}
-			}
-		},
-		"animation.nautilus.swimSpeedDemoFront": {
-			"loop": true,
-			"animation_length": 8,
-			"bones": {
-				"root": {
-					"position": {
-						"vector": [0, 0, "100+query.anim_time*-20"]
+				},
+				"head": {
+					"rotation": {
+						"vector": ["5+math.cos(query.anim_time*360-60)*5", 0, 0]
+					}
+				},
+				"upperRightTentacle": {
+					"rotation": {
+						"vector": ["5+math.cos(query.anim_time*360-90)*5", -5, 0]
+					}
+				},
+				"lowerRightTentacle": {
+					"rotation": {
+						"vector": ["5+math.cos(query.anim_time*360-90)*5", -5, 0]
+					}
+				},
+				"upperLeftTentacle": {
+					"rotation": {
+						"vector": ["5+math.cos(query.anim_time*360-90)*5", 5, 0]
+					}
+				},
+				"lowerLeftTentacle": {
+					"rotation": {
+						"vector": ["5+math.cos(query.anim_time*360-90)*5", 5, 0]
 					}
 				}
 			}

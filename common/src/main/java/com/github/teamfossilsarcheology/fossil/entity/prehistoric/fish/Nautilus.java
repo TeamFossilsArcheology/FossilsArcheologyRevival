@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish;
 
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -239,22 +240,12 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return getAllAnimations().get(BEACHED);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        return getAllAnimations().get(SWIM_BACKWARDS);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(SWIM_FORWARDS);
+    public Animation getAnimation(AnimationCategory category) {
+        if (category == AnimationCategory.SWIM) {
+            return getAllAnimations().get(SWIM_BACKWARDS);
+        } else if (category == AnimationCategory.SWIM_FAST) {
+            return getAllAnimations().get(SWIM_FORWARDS);
+        }
+        return super.getAnimation(category);
     }
 }

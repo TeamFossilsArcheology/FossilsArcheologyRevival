@@ -17,21 +17,9 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Megaloceros extends Prehistoric {
-    public static final String ANIMATIONS = "megaloceros.animation.json";
-    public static final String ATTACK = "animation.megaloceros.attack";
-    public static final String EAT = "animation.megaloceros.eat";
-    public static final String FALL = "animation.megaloceros.jump/fall";
-    public static final String IDLE = "animation.megaloceros.idle";
-    public static final String IDLE2 = "animation.megaloceros.idle2";
-    public static final String IDLE3 = "animation.megaloceros.idle3";
-    public static final String RUN = "animation.megaloceros.run";
-    public static final String SWIM = "animation.megaloceros.swim";
-    public static final String WALK = "animation.megaloceros.walk";
     private Megaloceros lastMate;
 
     public Megaloceros(EntityType<Megaloceros> entityType, Level level) {
@@ -77,53 +65,6 @@ public class Megaloceros extends Prehistoric {
     @Override
     public PrehistoricEntityInfoAI.Response aiResponseType() {
         return getGender() == Gender.MALE && !isBaby() ? PrehistoricEntityInfoAI.Response.TERRITORIAL : PrehistoricEntityInfoAI.Response.SCARED;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        float rand = random.nextFloat();
-        if (rand <= 0.1) {
-            return getAllAnimations().get(IDLE3);
-        } else if (rand <= 0.2) {
-            return getAllAnimations().get(IDLE2);
-        }
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(RUN);
     }
 
     @Nullable

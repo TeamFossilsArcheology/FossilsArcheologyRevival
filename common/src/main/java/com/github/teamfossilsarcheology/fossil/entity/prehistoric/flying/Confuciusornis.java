@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -17,17 +18,6 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Confuciusornis extends PrehistoricFlying {
-    public static final String ANIMATIONS = "confuciusornis.animation.json";
-    public static final String ATTACK = "animation.confuciusornis.attack1";
-    public static final String EAT = "animation.confuciusornis.eating";
-    public static final String FALL = "animation.confuciusornis.jump/fall";
-    public static final String FLY = "animation.confuciusornis.flying";
-    public static final String IDLE = "animation.confuciusornis.extra1";
-    public static final String FLY_FAST = "animation.confuciusornis.flyfast";
-    public static final String SLEEP = "animation.confuciusornis.sleep/sit";
-    public static final String SWIM = "animation.confuciusornis.swim";
-    public static final String WALK = "animation.confuciusornis.walk";
-
 
     public Confuciusornis(EntityType<Confuciusornis> entityType, Level level) {
         super(entityType, level);
@@ -55,53 +45,8 @@ public class Confuciusornis extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isFlying()) {
-            return getAllAnimations().get(FLY);
-        } else if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isFlying()) {
-            return getAllAnimations().get(FLY_FAST);
-        } else if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
     public @NotNull Animation nextTakeOffAnimation() {
-        return getAllAnimations().get(FLY);
+        return getAnimation(AnimationCategory.FLY);
     }
 
     @Nullable

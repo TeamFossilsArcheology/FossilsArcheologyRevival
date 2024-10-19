@@ -17,21 +17,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Triceratops extends Prehistoric {
-    public static final String ANIMATIONS = "triceratops.animation.json";
-    public static final String ATTACK1 = "animation.triceratops.attack1";
-    public static final String ATTACK2 = "animation.triceratops.attack2";
-    public static final String EAT = "animation.triceratops.eat";
-    public static final String FALL = "animation.triceratops.jump/fall";
-    public static final String IDLE = "animation.triceratops.idle";
-    public static final String RUN = "animation.triceratops.run";
-    public static final String SIT = "animation.triceratops.sit";
-    public static final String SLEEP1 = "animation.triceratops.sleep1";
-    public static final String SLEEP2 = "animation.triceratops.sleep2";
-    public static final String SWIM = "animation.triceratops.swim";
-    public static final String WALK = "animation.triceratops.walk";
 
     public Triceratops(EntityType<Triceratops> type, Level level) {
         super(type, level);
@@ -67,47 +54,6 @@ public class Triceratops extends Prehistoric {
     @Override
     public double getPassengersRidingOffset() {
         return super.getPassengersRidingOffset() + 0.15;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK1 : ATTACK2);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SIT);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? SLEEP1 : SLEEP2);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(RUN);
     }
 
     @Nullable

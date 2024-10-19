@@ -12,25 +12,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Stegosaurus extends Prehistoric {
-    public static final String ANIMATIONS = "stegosaurus.animation.json";
-    public static final String ATTACK_FRONT1 = "animation.stegosaurus.attack_front1";
-    public static final String ATTACK_FRONT2 = "animation.stegosaurus.attack_front2";
-    public static final String EAT = "animation.stegosaurus.eat";
-    public static final String FALL = "animation.stegosaurus.jump/fall";
-    public static final String IDLE = "animation.stegosaurus.idle";
-    public static final String RUN = "animation.stegosaurus.run";
-    public static final String SIT1 = "animation.stegosaurus.sit1";
-    public static final String SIT2 = "animation.stegosaurus.sit2";
-    public static final String SLEEP1 = "animation.stegosaurus.sleep1";
-    public static final String SLEEP2 = "animation.stegosaurus.sleep2";
-    public static final String SWIM = "animation.stegosaurus.swim";
-    public static final String WALK = "animation.stegosaurus.walk";
-
 
     public Stegosaurus(EntityType<Stegosaurus> entityType, Level level) {
         super(entityType, level);
@@ -51,47 +35,6 @@ public class Stegosaurus extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? ATTACK_FRONT1 : ATTACK_FRONT2);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? SIT1 : SIT2);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? SLEEP1 : SLEEP2);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(SWIM);
-        }
-        return getAllAnimations().get(RUN);
     }
 
     @Nullable

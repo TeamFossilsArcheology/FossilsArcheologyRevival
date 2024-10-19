@@ -32,18 +32,8 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.gameevent.GameEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable {
-    public static final String ANIMATIONS = "mammoth.animation.json";
-    public static final String ATTACK = "animation.mammoth.attack1";
-    public static final String EAT = "animation.mammoth.eating";
-    public static final String FALL = "animation.mammoth.jump/fall";
-    public static final String IDLE = "animation.mammoth.idle";
-    public static final String IDLE2 = "animation.mammoth.idle2";
-    public static final String RUN = "animation.mammoth.run";
-    public static final String SLEEP = "animation.mammoth.rest/sleep";
-    public static final String WALK = "animation.mammoth.walk";
     private static final EntityDataAccessor<Boolean> SHEARED = SynchedEntityData.defineId(Mammoth.class, EntityDataSerializers.BOOLEAN);
 
     private int woolRegenTicks;
@@ -198,47 +188,6 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
     @Override
     public float getTargetScale() {
         return 1.5f;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return random.nextFloat() > 0.1 ? getAllAnimations().get(IDLE) : getAllAnimations().get(IDLE2);
-    }
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(WALK);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        if (isInWater()) {
-            return getAllAnimations().get(IDLE);
-        }
-        return getAllAnimations().get(RUN);
     }
 
     @Nullable

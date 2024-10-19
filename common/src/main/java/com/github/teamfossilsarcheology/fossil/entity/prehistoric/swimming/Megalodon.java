@@ -18,17 +18,7 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 
 public class Megalodon extends PrehistoricSwimming {
-    public static final String ANIMATIONS = "megalodon.animation.json";
-    public static final String ATTACK = "animation.megalodon.attack";
-    public static final String BEACHED = "animation.megalodon.beached1";
-    public static final String BEACHED2 = "animation.megalodon.beached2";
-    public static final String EAT = "animation.megalodon.eat";
-    public static final String FALL = "animation.megalodon.jump/fall";
     public static final String GRAB = "animation.megalodon.grab";
-    public static final String IDLE = "animation.megalodon.idle";
-    public static final String SLEEP = "animation.megalodon.sleep";
-    public static final String SWIM = "animation.megalodon.swim";
-    public static final String SWIM_FAST = "animation.megalodon.swim_fast";
 
     public Megalodon(EntityType<Megalodon> entityType, Level level) {
         super(entityType, level);
@@ -86,55 +76,14 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return getAllAnimations().get(random.nextInt(2) == 0 ? BEACHED : BEACHED2);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
     public @NotNull Animation nextGrabbingAnimation() {
         return getAllAnimations().get(GRAB);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(IDLE);
-    }
-    
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        return getAllAnimations().get(SWIM);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(SWIM_FAST);
     }
 
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
         return isInWater() ? ModSounds.MEGALODON_AMBIENT.get() : ModSounds.MOSASAURUS_AMBIENT_OUTSIDE.get();
-
     }
 
     @Nullable

@@ -14,19 +14,9 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Aquilolamna extends PrehistoricSwimmingBucketable {
-    public static final String ANIMATIONS = "aquilolamna.animation.json";
-    public static final String ATTACK = "attack/eat";
-    public static final String BEACHED = "beached";
-    public static final String EAT = "attack/eat";
-    public static final String SIT = "sit/sleep";
-    public static final String SLEEP = "sit/sleep";
-    public static final String SWIM = "swim";
-
 
     public Aquilolamna(EntityType<Aquilolamna> entityType, Level level) {
         super(entityType, level);
@@ -54,46 +44,6 @@ public class Aquilolamna extends PrehistoricSwimmingBucketable {
     @Override
     public boolean canHuntMobsOnLand() {
         return false;
-    }
-
-    @Override
-    public @NotNull Animation nextAttackAnimation() {
-        return getAllAnimations().get(ATTACK);
-    }
-
-    @Override
-    public @NotNull Animation nextBeachedAnimation() {
-        return getAllAnimations().get(BEACHED);
-    }
-
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return getAllAnimations().get(EAT);
-    }
-
-    @Override
-    public @NotNull Animation nextIdleAnimation() {
-        return getAllAnimations().get(BEACHED);
-    }
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return getAllAnimations().get(SIT);
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return getAllAnimations().get(SLEEP);
-    }
-
-    @Override
-    public @NotNull Animation nextWalkingAnimation() {
-        return getAllAnimations().get(SWIM);
-    }
-
-    @Override
-    public @NotNull Animation nextSprintingAnimation() {
-        return getAllAnimations().get(SWIM);
     }
 
     @Nullable
