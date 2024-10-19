@@ -93,7 +93,7 @@ public class Tropeognathus extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         String key = WALK;
         boolean isChasing = goalSelector.getRunningGoals().anyMatch(it -> it.getGoal() instanceof DelayedAttackGoal);
 

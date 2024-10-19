@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.entity.ToyBase;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -116,16 +117,16 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         AnimationController<PrehistoricLeaping> controller = event.getController();
         double animSpeed = 1;
         if (isLeaping()) {
-            getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation(), AnimationLogic.Category.ATTACK);
+            getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation(), AnimationCategory.ATTACK);
         } else {
             if (event.isMoving() || isClimbing()) {
                 Animation movementAnim;
                 if (isSprinting()) {
                     movementAnim = nextSprintingAnimation();
                 } else {
-                    movementAnim = nextMovingAnimation();
+                    movementAnim = nextWalkingAnimation();
                 }
-                getAnimationLogic().addActiveAnimation(controller.getName(), movementAnim, AnimationLogic.Category.WALK);
+                getAnimationLogic().addActiveAnimation(controller.getName(), movementAnim, AnimationCategory.WALK);
                 //TODO: Refactor to use the same code for AnimationLogic, PrehistoricFlying and this
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                 animSpeed = 1 / event.getAnimatable().getScale();
@@ -142,7 +143,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                     animSpeed = lastSpeed;
                 }
             } else {
-                getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation(), AnimationLogic.Category.IDLE);
+                getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation(), AnimationCategory.IDLE);
             }
         }
         lastSpeed = animSpeed;

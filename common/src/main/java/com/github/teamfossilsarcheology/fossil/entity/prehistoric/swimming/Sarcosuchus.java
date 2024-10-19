@@ -81,7 +81,7 @@ public class Sarcosuchus extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         if (isInWater()) {
             return getAllAnimations().get(IDLE);
         }

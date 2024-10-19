@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -36,7 +37,7 @@ public class EatBlockGoal extends MoveToFoodGoal {
             entity.level.destroyBlock(targetPos, false);
             if (entity.level.getGameTime() > animEndTick) {
                 Animation anim = entity.nextEatingAnimation();
-                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, anim, AnimationLogic.Category.EAT);
+                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, anim, AnimationCategory.EAT);
                 animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
             }
         }

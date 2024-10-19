@@ -80,7 +80,7 @@ public class Confuciusornis extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         if (isFlying()) {
             return getAllAnimations().get(FLY);
         } else if (isInWater()) {

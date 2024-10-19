@@ -92,7 +92,7 @@ public class Platybelodon extends Prehistoric {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         if (isInWater()) {
             return getAllAnimations().get(SWIM);
         }

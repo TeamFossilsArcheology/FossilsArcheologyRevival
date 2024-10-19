@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.network.debug;
 
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
@@ -40,7 +40,7 @@ public class C2SForceAnimationMessage {
         contextSupplier.get().queue(() -> {
             Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
             if (entity instanceof PrehistoricAnimatable<?> animatable && Version.debugEnabled()) {
-                animatable.getAnimationLogic().forceAnimation(controller, animatable.getAllAnimations().get(animation), AnimationLogic.Category.IDLE, transitionLength, loop);
+                animatable.getAnimationLogic().forceAnimation(controller, animatable.getAllAnimations().get(animation), AnimationCategory.IDLE, transitionLength, loop);
             }
         });
     }

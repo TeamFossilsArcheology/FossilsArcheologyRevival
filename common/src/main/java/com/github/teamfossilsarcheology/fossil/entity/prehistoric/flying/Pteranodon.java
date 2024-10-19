@@ -156,7 +156,7 @@ public class Pteranodon extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         String key = WALK;
         if (isInWater()) key = SWIM;
         if (isFlying()) key = FLY;

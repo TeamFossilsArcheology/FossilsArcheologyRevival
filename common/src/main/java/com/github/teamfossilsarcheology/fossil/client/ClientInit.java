@@ -15,6 +15,7 @@ import com.github.teamfossilsarcheology.fossil.client.particle.*;
 import com.github.teamfossilsarcheology.fossil.client.renderer.blockentity.*;
 import com.github.teamfossilsarcheology.fossil.client.renderer.entity.*;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategoryLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.GeoModelManager;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
@@ -85,6 +86,7 @@ public class ClientInit {
             ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, GeoModelManager.SKELETON_MODELS);
             ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, DinopediaBioManager.DINOPEDIA);
             ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, OptionalTextureManager.TEXTURE_MANAGER);
+            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, AnimationCategoryLoader.INSTANCE);
         }
         registerEntityRenderers();
         ParticleProviderRegistry.register(ModParticles.VOLCANO_VENT_ASH, VolcanoVentAshParticle.Provider::new);

@@ -121,7 +121,7 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         return getAllAnimations().get(SWIM);
     }
 

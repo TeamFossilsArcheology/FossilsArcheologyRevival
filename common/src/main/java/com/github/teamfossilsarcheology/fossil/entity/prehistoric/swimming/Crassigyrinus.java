@@ -84,7 +84,7 @@ public class Crassigyrinus extends PrehistoricSwimmingBucketable {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         return getAllAnimations().get(SWIM);
     }
 

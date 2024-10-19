@@ -12,8 +12,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.PrehistoricPathNavigation;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.*;
 import com.github.teamfossilsarcheology.fossil.entity.data.AI;
 import com.github.teamfossilsarcheology.fossil.entity.data.Attribute;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
@@ -81,16 +80,12 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
-import software.bernie.geckolib3.geo.render.built.GeoBone;
 import software.bernie.geckolib3.resource.GeckoLibCache;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
@@ -129,6 +124,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
     private Vec3 eatPos;
+    public Vec3 riderPos;
     private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
@@ -168,15 +164,14 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public void setAnchorPos(String boneName, Vec3 localPos) {
         if ("eat_pos".equals(boneName)) {
             eatPos = position().add(localPos);
+        } else if ("rider_pos".equals(boneName)) {
+            riderPos = position().add(localPos);
         }
     }
 
     @Override
     public boolean canSetAnchorPos(String boneName) {
-        if ("eat_pos".equals(boneName)) {
-            return true;
-        }
-        return false;
+        return "eat_pos".equals(boneName) || "rider_pos".equals(boneName);
     }
 
     @Override
@@ -403,19 +398,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         Player rider = getRidingPlayer();
         if (rider != null && isOwnedBy(rider) && getTarget() != rider) {
-            if (level.isClientSide) {
-                AnimationData data = getFactory().getOrCreateAnimationData(getId());
-                Map<String, Pair<IBone, BoneSnapshot>> map = data.getBoneSnapshotCollection();
-                if (map.get("rider_pos") != null) {
-                    if (map.get("rider_pos").getLeft() instanceof GeoBone geoBone) {
-                        float radius = (geoBone.getPivotZ() * getScale() / 16) * -1;
-                        float angle = (Mth.DEG_TO_RAD * yBodyRot);
-                        double extraX = radius * Mth.sin((float) (Math.PI + angle));
-                        double extraY = geoBone.getPivotY() * getScale() / 16 - 0.2;
-                        double extraZ = radius * Mth.cos(angle);
-                        rider.setPos(getX() + extraX, getY() + extraY + rider.getMyRidingOffset(), getZ() + extraZ);
-                    }
-                }
+            if (level.isClientSide && riderPos != null) {
+                rider.setPos(riderPos.x, riderPos.y - 0.55, riderPos.z);
             } else {
                 //Not sure if this will be accurate enough for larger dinos. Need to await player feedback
                 rider.setPos(getX(), getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ());
@@ -918,7 +902,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             moodSystem.increaseMood(5);
             feed(FoodMappings.getFoodAmount(stack.getItem(), data().diet()));
             stack.shrink(1);
-            animationLogic.triggerAnimation(AnimationLogic.IDLE_CTRL, nextEatingAnimation(), AnimationLogic.Category.EAT);
+            animationLogic.triggerAnimation(AnimationLogic.IDLE_CTRL, getAnimation(AnimationCategory.EAT), AnimationCategory.EAT);
         }
     }
 
@@ -1148,7 +1132,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         return system;
     }
 
-
     public List<? extends Prehistoric> getNearbySpeciesMembers(int range) {
         return level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(range, 4.0D, range), prehistoric -> prehistoric != this);
     }
@@ -1167,7 +1150,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     public AnimationInfoLoader.ServerAnimationInfo startAttack() {
         AnimationInfoLoader.ServerAnimationInfo attackAnim = (AnimationInfoLoader.ServerAnimationInfo) nextAttackAnimation();
-        getAnimationLogic().triggerAnimation(AnimationLogic.ATTACK_CTRL, attackAnim, AnimationLogic.Category.ATTACK);
+        getAnimationLogic().triggerAnimation(AnimationLogic.ATTACK_CTRL, attackAnim, AnimationCategory.ATTACK);
         return attackAnim;
     }
 
@@ -1292,6 +1275,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
+    public Map<AnimationCategory, AnimationHolder> getAnimations() {
+        return AnimationCategoryLoader.INSTANCE.getAnimations(animationLocation);
+    }
+
+    @Override
     public Map<String, Animation> getAllAnimations() {
         if (level.isClientSide) {
             return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
@@ -1300,8 +1288,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public Animation getAnimation(String name) {
-        return getAllAnimations().get(name);
+    public Animation getAnimation(AnimationCategory category) {
+        return getRandomAnimation(category, this);
     }
 
     @Override
@@ -1309,7 +1297,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         return AnimationInfoLoader.ANIMATIONS.getServerAnimations(animationLocation);
     }
 
-    public abstract @NotNull Animation nextAttackAnimation();
+    public @NotNull Animation nextAttackAnimation() {
+        return getAnimation(AnimationCategory.ATTACK);
+    }
 
     @Override
     public void registerControllers(AnimationData data) {

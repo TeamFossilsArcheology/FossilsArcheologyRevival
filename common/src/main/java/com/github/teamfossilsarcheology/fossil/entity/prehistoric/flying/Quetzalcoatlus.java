@@ -71,7 +71,7 @@ public class Quetzalcoatlus extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         return getAllAnimations().get(WALK);
     }
 

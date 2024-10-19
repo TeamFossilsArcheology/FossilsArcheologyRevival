@@ -226,7 +226,7 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         if (isInWater()) {
             return getAllAnimations().get(IDLE);
         }

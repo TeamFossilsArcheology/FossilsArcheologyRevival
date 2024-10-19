@@ -198,7 +198,7 @@ public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         if (isInWater()) {
             return getAllAnimations().get(SWIM);
         }

@@ -214,7 +214,7 @@ public class Nautilus extends PrehistoricFish {
             } else if (isInShell() && isInWater()) {
                 return PlayState.STOP;
             } else if (event.isMoving()) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextMovingAnimation().animationName));
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextWalkingAnimation().animationName));
             } else {
                 ctrl.setAnimation(new AnimationBuilder().addAnimation(nextIdleAnimation().animationName));
             }
@@ -249,7 +249,7 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         return getAllAnimations().get(SWIM_BACKWARDS);
     }
 

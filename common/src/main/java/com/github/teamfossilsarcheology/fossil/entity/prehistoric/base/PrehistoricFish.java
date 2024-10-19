@@ -1,8 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.Fossil;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -191,13 +190,18 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
+    public Map<AnimationCategory, AnimationHolder> getAnimations() {
+        return AnimationCategoryLoader.INSTANCE.getAnimations(animationLocation);
+    }
+
+    @Override
     public Map<String, Animation> getAllAnimations() {
         return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
     }
 
     @Override
-    public Animation getAnimation(String name) {
-        return getAllAnimations().get(name);
+    public Animation getAnimation(AnimationCategory category) {
+        return getRandomAnimation(category, this);
     }
 
     @Override
@@ -220,25 +224,8 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         return animationLogic;
     }
 
-    @Override
-    public @NotNull Animation nextEatingAnimation() {
-        return nextIdleAnimation();
-    }
-
-    public abstract @NotNull Animation nextBeachedAnimation();
-
-    @Override
-    public @NotNull Animation nextSittingAnimation() {
-        return nextIdleAnimation();
-    }
-
-    @Override
-    public @NotNull Animation nextSleepingAnimation() {
-        return nextIdleAnimation();
-    }
-
-    public @Nullable Animation nextTurningAnimation() {
-        return null;
+    public @NotNull Animation nextBeachedAnimation() {
+        return getAnimation(AnimationCategory.BEACHED);
     }
 
     public void disableCustomAI(byte type, boolean disableAI) {

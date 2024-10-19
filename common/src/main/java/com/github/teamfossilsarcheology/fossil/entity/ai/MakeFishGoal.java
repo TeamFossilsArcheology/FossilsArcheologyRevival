@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import net.minecraft.world.entity.ai.goal.Goal;
@@ -36,7 +37,8 @@ public class MakeFishGoal extends Goal {
     @Override
     public void start() {
         tick = 0;
-        dino.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, dino.nextEatingAnimation(), AnimationLogic.Category.NONE);
+        //TODO Check usage of none
+        dino.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, dino.nextEatingAnimation(), AnimationCategory.NONE);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.mojang.math.Vector3d;
@@ -399,9 +400,12 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         entityData.set(GRABBING, grabbing);
     }
 
-    public abstract @NotNull Animation nextBeachedAnimation();
+    public @NotNull Animation nextBeachedAnimation() {
+        return getAnimation(AnimationCategory.BEACHED);
+    }
 
     public @NotNull Animation nextGrabbingAnimation() {
+        //TODO: Grab category
         return nextIdleAnimation();
     }
 

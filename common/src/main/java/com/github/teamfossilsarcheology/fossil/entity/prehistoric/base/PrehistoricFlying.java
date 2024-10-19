@@ -6,6 +6,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomFlightBod
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomFlightLookControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomFlightMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.FlightPathNavigation;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.FlyingSleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SleepSystem;
@@ -235,7 +236,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     public void startTakeOff() {
         entityData.set(TAKING_OFF, true);
         takeOffStartTick = level.getGameTime();
-        getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, nextTakeOffAnimation(), AnimationLogic.Category.NONE);
+        getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, nextTakeOffAnimation(), AnimationCategory.NONE);
     }
 
     /**

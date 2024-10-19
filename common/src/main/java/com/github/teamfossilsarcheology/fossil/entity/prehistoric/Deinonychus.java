@@ -102,7 +102,7 @@ public class Deinonychus extends PrehistoricLeaping {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         if (isInWater()) {
             return getAllAnimations().get(SWIM);
         }

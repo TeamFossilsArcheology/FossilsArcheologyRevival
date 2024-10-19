@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.util;
 
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
 import com.github.teamfossilsarcheology.fossil.entity.ai.BreachAttackGoal;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
@@ -105,7 +106,7 @@ public class InstructionSystem extends AISystem {
                 if (mob.getAnimationLogic().isAnimationDone(activeAnim)) {
                     animCount--;
                     if (animCount > 0) {
-                        activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationLogic.Category.IDLE, 5, false);
+                        activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5, false);
                     } else {
                         return false;
                     }
@@ -211,10 +212,10 @@ public class InstructionSystem extends AISystem {
         } else if (current instanceof Instruction.PlayAnim playAnim) {
             if (playAnim.timeBased) {
                 animCount = mob.level.getGameTime() + playAnim.count * 20L;
-                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationLogic.Category.IDLE, 5, true);
+                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5, true);
             } else {
                 animCount = playAnim.count;
-                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationLogic.Category.IDLE, 5, false);
+                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5, false);
             }
         } else if (current instanceof Instruction.Breach breach) {
             Entity target = mob.level.getEntity(breach.targetId);

@@ -323,7 +323,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         if (isBaby()) {
             if (isInWater()) {
                 return getAllAnimations().get(SWIM_BABY);
@@ -338,7 +338,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
 
     @Override
     public @NotNull Animation nextSprintingAnimation() {
-        return nextMovingAnimation();
+        return nextWalkingAnimation();
     }
 
     @Override

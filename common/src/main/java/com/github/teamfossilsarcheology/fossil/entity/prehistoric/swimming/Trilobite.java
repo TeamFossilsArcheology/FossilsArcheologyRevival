@@ -86,7 +86,7 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         if (isInWater()) {
             return getAllAnimations().get(IDLE);
         }

@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.network;
 
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import dev.architectury.networking.NetworkManager;
@@ -17,7 +18,7 @@ public class S2CSyncActiveAnimationMessage {
     private final int entityId;
     private final String controller;
     private final String animationName;
-    private final AnimationLogic.Category category;
+    private final AnimationCategory category;
     private final double ticks;
     private final boolean loop;
 
@@ -25,7 +26,8 @@ public class S2CSyncActiveAnimationMessage {
         this.entityId = buf.readInt();
         this.controller = buf.readUtf();
         this.animationName = buf.readUtf();
-        this.category = buf.readEnum(AnimationLogic.Category.class);
+        String name = buf.readUtf();
+        this.category = AnimationCategory.CATEGORIES.stream().filter(category1 -> category1.name().equals(name)).findFirst().orElse(AnimationCategory.NONE);
         this.ticks = buf.readDouble();
         this.loop = buf.readBoolean();
     }
@@ -43,7 +45,7 @@ public class S2CSyncActiveAnimationMessage {
         buf.writeInt(entityId);
         buf.writeUtf(controller);
         buf.writeUtf(animationName);
-        buf.writeEnum(category);
+        buf.writeUtf(category.name());
         buf.writeDouble(ticks);
         buf.writeBoolean(loop);
     }

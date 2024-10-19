@@ -34,7 +34,7 @@ public class Sturgeon extends PrehistoricFish {
     }
 
     @Override
-    public @NotNull Animation nextMovingAnimation() {
+    public @NotNull Animation nextWalkingAnimation() {
         return getAllAnimations().get(SWIM);
     }
 
