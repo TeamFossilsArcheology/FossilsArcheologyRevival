@@ -7,6 +7,8 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.Registry;
 import net.minecraft.world.Container;
 import net.minecraft.world.item.Item;
@@ -17,13 +19,12 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class ModRecipes {
-    public static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new HashMap<>();
-    private static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new HashMap<>();
-    private static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new HashMap<>();
+    public static final Map<Item, AnalyzerRecipe> ANALYZER_RECIPES = new Object2ObjectOpenHashMap<>();
+    private static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new Object2IntOpenHashMap<>();
+    private static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new Object2IntOpenHashMap<>();
 
     public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Fossil.MOD_ID,
             Registry.RECIPE_SERIALIZER_REGISTRY);

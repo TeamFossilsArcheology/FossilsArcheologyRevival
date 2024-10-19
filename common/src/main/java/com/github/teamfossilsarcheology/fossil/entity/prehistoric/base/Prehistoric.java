@@ -6,7 +6,7 @@ import com.github.darkpred.morehitboxes.api.GeckoLibMultiPartEntity;
 import com.github.darkpred.morehitboxes.api.MultiPart;
 import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
-import com.github.teamfossilsarcheology.fossil.client.OptionalTextureManager;
+import com.github.teamfossilsarcheology.fossil.client.OptionalTextureLoader;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
@@ -1077,7 +1077,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     protected boolean hasTeenTexture() {
-        return OptionalTextureManager.TEXTURE_MANAGER.hasTeenTexture(info().resourceName);
+        return OptionalTextureLoader.INSTANCE.hasTeenTexture(info().resourceName);
     }
 
     public void refreshTexturePath() {
@@ -1220,7 +1220,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public abstract Item getOrderItem();
 
     public EntityDataLoader.Data data() {
-        return EntityDataLoader.ENTITY_DATA.getData(info().resourceName);
+        return EntityDataLoader.INSTANCE.getData(info().resourceName);
     }
 
     public Attribute attributes() {
@@ -1285,7 +1285,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (level.isClientSide) {
             return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
         }
-        return AnimationInfoLoader.ANIMATIONS.getClientAnimations(animationLocation);
+        return AnimationInfoLoader.INSTANCE.getClientAnimations(animationLocation);
     }
 
     @Override
@@ -1295,7 +1295,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public Map<String, AnimationInfoLoader.ServerAnimationInfo> getServerAnimationInfos() {
-        return AnimationInfoLoader.ANIMATIONS.getServerAnimations(animationLocation);
+        return AnimationInfoLoader.INSTANCE.getServerAnimations(animationLocation);
     }
 
     public @NotNull Animation nextAttackAnimation() {

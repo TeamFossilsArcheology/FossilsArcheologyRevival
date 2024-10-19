@@ -22,7 +22,7 @@ public record Attribute(double baseDamage, double maxDamage, double baseHealth, 
                 .writeDouble(attribute.maxArmor).writeDouble(attribute.baseKnockBackResistance).writeDouble(attribute.maxKnockBackResistance);
     }
 
-    public static class Supplier implements JsonDeserializer<Attribute> {
+    public static class Deserializer implements JsonDeserializer<Attribute> {
 
         @Override
         public Attribute deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

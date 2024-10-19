@@ -16,7 +16,7 @@ import com.github.teamfossilsarcheology.fossil.client.renderer.blockentity.*;
 import com.github.teamfossilsarcheology.fossil.client.renderer.entity.*;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategoryLoader;
-import com.github.teamfossilsarcheology.fossil.entity.animation.GeoModelManager;
+import com.github.teamfossilsarcheology.fossil.entity.animation.SkeletonGeoModelLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -83,9 +83,9 @@ public class ClientInit {
                     "category.fossil.debug");
         }
         if (Minecraft.getInstance() != null) {
-            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, GeoModelManager.SKELETON_MODELS);
-            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, DinopediaBioManager.DINOPEDIA);
-            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, OptionalTextureManager.TEXTURE_MANAGER);
+            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, SkeletonGeoModelLoader.INSTANCE);
+            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, DinopediaBioLoader.INSTANCE);
+            ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, OptionalTextureLoader.INSTANCE);
             ReloadListenerRegistry.register(PackType.CLIENT_RESOURCES, AnimationCategoryLoader.INSTANCE);
         }
         registerEntityRenderers();

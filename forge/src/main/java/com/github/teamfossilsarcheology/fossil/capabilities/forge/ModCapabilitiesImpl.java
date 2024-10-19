@@ -7,19 +7,19 @@ import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.FirstHa
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.IFirstHatchCap;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
 public class ModCapabilitiesImpl {
-    private static final Map<Animal, LazyOptional<IMammalCap>> cachedMammals = new HashMap<>();
-    private static final Map<Player, LazyOptional<IFirstHatchCap>> cachedPlayers = new HashMap<>();
+    private static final Map<Animal, LazyOptional<IMammalCap>> cachedMammals = new Object2ObjectOpenHashMap<>();
+    private static final Map<Player, LazyOptional<IFirstHatchCap>> cachedPlayers = new Object2ObjectOpenHashMap<>();
 
     public static Optional<IMammalCap> getMammalCap(Animal animal) {
         LazyOptional<IMammalCap> cap = cachedMammals.get(animal);

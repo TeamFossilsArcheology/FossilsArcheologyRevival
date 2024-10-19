@@ -6,6 +6,7 @@ import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.mojang.blaze3d.vertex.PoseStack;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -17,11 +18,10 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, DinosaurEggModel> implements RendererFabricFix {
-    private static final Map<String, ResourceLocation> TEXTURES = new HashMap<>();
+    private static final Map<String, ResourceLocation> TEXTURES = new Object2ObjectOpenHashMap<>();
     private static final ResourceLocation GOLDEN_EGG = Fossil.location("textures/entity/egg/golden.png");
 
     public DinosaurEggRenderer(EntityRendererProvider.Context context, DinosaurEggModel entityModel) {
@@ -30,7 +30,7 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
 
     @Override
     protected void scale(DinosaurEgg egg, PoseStack poseStack, float partialTickTime) {
-        float scale = EntityDataLoader.ENTITY_DATA.getData(egg.getPrehistoricEntityInfo().resourceName).eggScale();
+        float scale = EntityDataLoader.INSTANCE.getData(egg.getPrehistoricEntityInfo().resourceName).eggScale();
         shadowRadius = 0.25f * scale;
         poseStack.scale(scale, scale, scale);
         super.scale(egg, poseStack, partialTickTime);

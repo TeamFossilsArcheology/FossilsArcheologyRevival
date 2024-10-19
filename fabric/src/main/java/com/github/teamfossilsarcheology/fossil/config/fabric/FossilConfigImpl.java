@@ -1,9 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.config.fabric;
 
 import eu.midnightdust.lib.config.MidnightConfig;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 
 import java.lang.reflect.Field;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -121,7 +121,7 @@ public class FossilConfigImpl extends MidnightConfig {
     public static boolean helmetOverlays = true;
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int fernTickRate = 2;
-    private static final Map<String, Field> MAPPED_ENTRIES = new HashMap<>();
+    private static final Map<String, Field> MAPPED_ENTRIES = new Object2ObjectOpenHashMap<>();
 
     public static void initFabricConfig() {
         Field[] allFields = FossilConfigImpl.class.getDeclaredFields();

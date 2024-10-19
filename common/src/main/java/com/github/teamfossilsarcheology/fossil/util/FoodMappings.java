@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.util;
 
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
@@ -13,24 +14,23 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public abstract class FoodMappings {
-    private static final Map<ItemLike, Integer> CARNIVORE_DIET = new HashMap<>();
-    private static final Map<ItemLike, Integer> CARNIVORE_EGG_DIET = new HashMap<>();
-    private static final Map<ItemLike, Integer> HERBIVORE_DIET = new HashMap<>();
-    private static final Map<ItemLike, Integer> OMNIVORE_DIET = new HashMap<>();
-    private static final Map<ItemLike, Integer> PISCIVORE_DIET = new HashMap<>();
-    private static final Map<ItemLike, Integer> PISCI_CARNIVORE_DIET = new HashMap<>();
-    private static final Map<ItemLike, Integer> INSECTIVORE_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> CARNIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> CARNIVORE_EGG_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> HERBIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> OMNIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> PISCIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> PISCI_CARNIVORE_ENTITY_DIET = new HashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> INSECTIVORE_ENTITY_DIET = new HashMap<>();
+    private static final Map<ItemLike, Integer> CARNIVORE_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<ItemLike, Integer> CARNIVORE_EGG_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<ItemLike, Integer> HERBIVORE_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<ItemLike, Integer> OMNIVORE_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<ItemLike, Integer> PISCIVORE_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<ItemLike, Integer> PISCI_CARNIVORE_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<ItemLike, Integer> INSECTIVORE_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> CARNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> CARNIVORE_EGG_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> HERBIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> OMNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> PISCIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> PISCI_CARNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<? extends LivingEntity>, Integer> INSECTIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
 
 
     public static void addToMappings(ItemLike itemLike, int food, Diet diet) {

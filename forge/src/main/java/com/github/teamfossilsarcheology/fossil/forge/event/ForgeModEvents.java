@@ -141,7 +141,7 @@ public class ForgeModEvents {
     @SubscribeEvent
     public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
         if (Platform.getEnv() == Dist.DEDICATED_SERVER) {
-            MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataLoader.ENTITY_DATA.getEntities()));
+            MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
         }
     }
 }

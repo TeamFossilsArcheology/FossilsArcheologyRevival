@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class AnimationInfoLoader extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
-    public static final AnimationInfoLoader ANIMATIONS = new AnimationInfoLoader(GSON);
+    public static final AnimationInfoLoader INSTANCE = new AnimationInfoLoader(GSON);
     private static final Logger LOGGER = LogUtils.getLogger();
     private ImmutableMap<ResourceLocation, ImmutableMap<String, ServerAnimationInfo>> animationInfos = ImmutableMap.of();
     private ImmutableMap<ResourceLocation, ImmutableMap<String, Animation>> clientAnimationInfos = ImmutableMap.of();

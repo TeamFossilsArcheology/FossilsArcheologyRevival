@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.HashSet;
 import java.util.Set;
 
-public class OptionalTextureManager extends SimplePreparableReloadListener<Pair<Set<String>, Set<String>>> {
-    public static final OptionalTextureManager TEXTURE_MANAGER = new OptionalTextureManager();
+public class OptionalTextureLoader extends SimplePreparableReloadListener<Pair<Set<String>, Set<String>>> {
+    public static final OptionalTextureLoader INSTANCE = new OptionalTextureLoader();
     private static final String DIRECTORY = "textures/entity";
     private static final String PATH_SUFFIX = ".png";
     private static final int PATH_SUFFIX_LENGTH = PATH_SUFFIX.length();

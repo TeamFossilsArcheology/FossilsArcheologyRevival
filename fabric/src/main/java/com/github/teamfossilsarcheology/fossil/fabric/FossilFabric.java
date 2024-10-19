@@ -66,7 +66,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
         ModRegistries.register();
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (joined && Platform.getEnv() == EnvType.SERVER) {
-                MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.ENTITY_DATA.getEntities()));
+                MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
             }
         });
         ModBlockEntities.ANALYZER.listen(blockEntityType -> {

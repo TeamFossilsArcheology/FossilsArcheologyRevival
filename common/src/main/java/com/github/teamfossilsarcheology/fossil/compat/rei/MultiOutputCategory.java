@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.compat.rei;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import it.unimi.dsi.fastutil.objects.Object2DoubleOpenHashMap;
 import me.shedaniel.clothconfig2.ClothConfigInitializer;
 import me.shedaniel.clothconfig2.api.scroll.ScrollingContainer;
 import me.shedaniel.math.Point;
@@ -20,7 +21,10 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public abstract class MultiOutputCategory implements DisplayCategory<MultiOutputDisplay> {
 
@@ -115,7 +119,7 @@ public abstract class MultiOutputCategory implements DisplayCategory<MultiOutput
 
         public ScrollableSlotsWidget(Rectangle bounds, List<MultiOutputDisplay.WeightedItem> outputs) {
             this.bounds = Objects.requireNonNull(bounds);
-            this.probabilities = new HashMap<>();
+            this.probabilities = new Object2DoubleOpenHashMap<>();
             this.widgets = new ArrayList<>();
             for (MultiOutputDisplay.WeightedItem weightedItem : outputs) {
                 Slot slot = Widgets.createSlot(new Point(0, 0)).disableBackground().entries(weightedItem.item()).markOutput();

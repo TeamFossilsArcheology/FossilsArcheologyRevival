@@ -189,7 +189,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
 
 
     public EntityDataLoader.Data data() {
-        return EntityDataLoader.ENTITY_DATA.getData(info().resourceName);
+        return EntityDataLoader.INSTANCE.getData(info().resourceName);
     }
 
     @Override

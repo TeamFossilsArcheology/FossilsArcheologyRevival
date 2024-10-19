@@ -3,26 +3,25 @@ package com.github.teamfossilsarcheology.fossil.entity.data;
 import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.util.Diet;
 import com.google.common.collect.ImmutableMap;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 
+import java.lang.reflect.Type;
 import java.util.Map;
 
 /**
  * Loads static dino information from data/entity_info files
  */
 public class EntityDataLoader extends SimpleJsonResourceReloadListener {
-    private static final Gson GSON = new GsonBuilder().registerTypeAdapter(Attribute.class, new Attribute.Supplier())
-            .registerTypeAdapter(AI.class, new AI.Supplier()).registerTypeAdapter(Diet.class, new Diet.Supplier())
+    private static final Gson GSON = new GsonBuilder().registerTypeAdapter(Attribute.class, new Attribute.Deserializer())
+            .registerTypeAdapter(AI.class, new AI.Deserializer()).registerTypeAdapter(Diet.class, new Diet.Deserializer())
+            .registerTypeAdapter(Data.class, new Data.Deserializer())
             .disableHtmlEscaping().create();
-    public static final EntityDataLoader ENTITY_DATA = new EntityDataLoader(GSON);
+    public static final EntityDataLoader INSTANCE = new EntityDataLoader(GSON);
     private ImmutableMap<String, Data> entities = ImmutableMap.of();
 
     public EntityDataLoader(Gson gson) {
@@ -36,20 +35,7 @@ public class EntityDataLoader extends SimpleJsonResourceReloadListener {
             if (!(fileEntry.getValue() instanceof JsonObject root) || !fileEntry.getKey().getNamespace().equals(Fossil.MOD_ID)) {
                 continue;
             }
-            Attribute attribute = GSON.getAdapter(Attribute.class).fromJsonTree(root.getAsJsonObject("attributes"));
-            AI ai = GSON.getAdapter(AI.class).fromJsonTree(root.getAsJsonObject("ai"));
-            Diet diet = GSON.fromJson(root, Diet.class);
-            float eggScale = root.has("eggScale") ? root.get("eggScale").getAsFloat() : 1;
-            float minScale = root.get("scaleBase").getAsFloat();
-            float maxScale = root.get("scaleMax").getAsFloat();
-            int teenAgeDays = root.get("teenAgeDays").getAsInt();
-            int adultAgeDays = root.get("adultAgeDays").getAsInt();
-            int maxHunger = root.get("maxHunger").getAsInt();
-            int maxPopulation = root.has("maxPopulation") ? root.get("maxPopulation").getAsInt() : 15;
-            boolean canBeRidden = root.has("canBeRidden") && root.get("canBeRidden").getAsBoolean();
-            boolean breaksBlocks = root.has("breaksBlocks") && root.get("breaksBlocks").getAsBoolean();
-            builder.put(fileEntry.getKey().getPath(), new Data(attribute, ai, diet, eggScale, minScale, maxScale, teenAgeDays, adultAgeDays,
-                    maxHunger, maxPopulation, canBeRidden, breaksBlocks));
+            builder.put(fileEntry.getKey().getPath(), GSON.fromJson(root, Data.class));
         }
         entities = builder.build();
     }
@@ -80,6 +66,27 @@ public class EntityDataLoader extends SimpleJsonResourceReloadListener {
             Diet.writeBuf(buf, data.diet);
             buf.writeFloat(data.eggScale).writeFloat(data.minScale).writeFloat(data.maxScale).writeInt(data.teenAgeDays).writeInt(data.adultAgeDays)
                     .writeInt(data.maxHunger).writeInt(data.maxPopulation).writeBoolean(data.canBeRidden).writeBoolean(data.breaksBlocks);
+        }
+
+        public static class Deserializer implements JsonDeserializer<Data> {
+            @Override
+            public Data deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+                JsonObject root = json.getAsJsonObject();
+                Attribute attribute = GSON.getAdapter(Attribute.class).fromJsonTree(root.getAsJsonObject("attributes"));
+                AI ai = GSON.getAdapter(AI.class).fromJsonTree(root.getAsJsonObject("ai"));
+                Diet diet = GSON.fromJson(root, Diet.class);
+                float eggScale = root.has("eggScale") ? root.get("eggScale").getAsFloat() : 1;
+                float minScale = root.get("scaleBase").getAsFloat();
+                float maxScale = root.get("scaleMax").getAsFloat();
+                int teenAgeDays = root.get("teenAgeDays").getAsInt();
+                int adultAgeDays = root.get("adultAgeDays").getAsInt();
+                int maxHunger = root.get("maxHunger").getAsInt();
+                int maxPopulation = root.has("maxPopulation") ? root.get("maxPopulation").getAsInt() : 15;
+                boolean canBeRidden = root.has("canBeRidden") && root.get("canBeRidden").getAsBoolean();
+                boolean breaksBlocks = root.has("breaksBlocks") && root.get("breaksBlocks").getAsBoolean();
+                return new Data(attribute, ai, diet, eggScale, minScale, maxScale, teenAgeDays, adultAgeDays,
+                        maxHunger, maxPopulation, canBeRidden, breaksBlocks);
+            }
         }
     }
 }

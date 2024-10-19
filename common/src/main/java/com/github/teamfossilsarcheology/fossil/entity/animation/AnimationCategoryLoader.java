@@ -7,6 +7,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mojang.logging.LogUtils;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
@@ -15,13 +16,12 @@ import org.slf4j.Logger;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.resource.GeckoLibCache;
 
-import java.util.HashMap;
 import java.util.Map;
 
 public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
-    private Map<ResourceLocation, Map<AnimationCategory, AnimationHolder>> stuff = new HashMap<>();
+    private Map<ResourceLocation, Map<AnimationCategory, AnimationHolder>> stuff = new Object2ObjectOpenHashMap<>();
     public static final AnimationCategoryLoader INSTANCE = new AnimationCategoryLoader(GSON);
     private static final AnimationHolder EMPTY = new AnimationHolder();
 
@@ -37,7 +37,7 @@ public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
             if (!(fileEntry.getValue() instanceof JsonObject) || !fileEntry.getKey().getNamespace().equals(Fossil.MOD_ID)) {
                 continue;
             }
-            Map<AnimationCategory, AnimationHolder> map = new HashMap<>();
+            Map<AnimationCategory, AnimationHolder> map = new Object2ObjectOpenHashMap<>();
             ResourceLocation path = Fossil.location("animations/" + fileEntry.getKey().getPath() + ".json");
             if (!allAnimations.containsKey(path)) {
                 continue;

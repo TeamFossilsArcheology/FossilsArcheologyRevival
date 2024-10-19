@@ -7,6 +7,7 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.item.ModTabs;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.client.ClientGuiEvent;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.NonNullList;
 import net.minecraft.tags.TagKey;
@@ -14,7 +15,6 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -22,7 +22,7 @@ import static com.github.teamfossilsarcheology.fossil.client.gui.filters.FilterT
 import static com.github.teamfossilsarcheology.fossil.tags.ModItemTags.*;
 
 public class CreativeTabFilters {
-    private static final Map<Integer, FilterTab> tabs = new HashMap<>();
+    private static final Map<Integer, FilterTab> tabs = new Int2ObjectOpenHashMap<>();
     private static int activeTab = -1;
 
     public static void register() {

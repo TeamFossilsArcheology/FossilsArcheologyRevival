@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.animation;
 
 import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.google.common.collect.ImmutableMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
@@ -15,24 +16,23 @@ import software.bernie.geckolib3.geo.render.GeoBuilder;
 import software.bernie.geckolib3.geo.render.built.GeoModel;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 /**
  * Loads different instances of the geo models to prevent the skeletons from playing geckolib animations
  */
-public class GeoModelManager extends SimplePreparableReloadListener<Map<ResourceLocation, GeoModel>> {
-    public static final GeoModelManager SKELETON_MODELS = new GeoModelManager();
+public class SkeletonGeoModelLoader extends SimplePreparableReloadListener<Map<ResourceLocation, GeoModel>> {
+    public static final SkeletonGeoModelLoader INSTANCE = new SkeletonGeoModelLoader();
     private static final String DIRECTORY = "geo/entity";
     private static final String PATH_SUFFIX = ".json";
     private Map<ResourceLocation, GeoModel> geoModels = ImmutableMap.of();
 
-    public GeoModelManager() {
+    public SkeletonGeoModelLoader() {
     }
 
     @Override
     protected @NotNull Map<ResourceLocation, GeoModel> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
-        Map<ResourceLocation, GeoModel> map = new HashMap<>();
+        Map<ResourceLocation, GeoModel> map = new Object2ObjectOpenHashMap<>();
         for (ResourceLocation resourceLocation : resourceManager.listResources(DIRECTORY, string -> string.endsWith(PATH_SUFFIX))) {
             try {
                 if (resourceLocation.getNamespace().equals(Fossil.MOD_ID)) {

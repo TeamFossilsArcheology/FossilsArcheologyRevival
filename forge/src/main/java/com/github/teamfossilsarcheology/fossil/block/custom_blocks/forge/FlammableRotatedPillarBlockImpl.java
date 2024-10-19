@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block.custom_blocks.forge;
 
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.context.UseOnContext;
@@ -12,12 +13,11 @@ import net.minecraftforge.common.ToolAction;
 import net.minecraftforge.common.ToolActions;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.Map;
 
 public class FlammableRotatedPillarBlockImpl {
 
-    private static final Map<Block, Block> STRIPPABLES = new HashMap<>();
+    private static final Map<Block, Block> STRIPPABLES = new Object2ObjectOpenHashMap<>();
 
     public static RotatedPillarBlock get(BlockBehaviour.Properties properties) {
         return new RotatedPillarBlock(properties) {

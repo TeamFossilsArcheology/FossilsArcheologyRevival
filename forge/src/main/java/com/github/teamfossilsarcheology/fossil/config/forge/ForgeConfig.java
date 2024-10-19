@@ -2,9 +2,9 @@ package com.github.teamfossilsarcheology.fossil.config.forge;
 
 import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.HashMap;
 import java.util.Map;
 //TODO: Use MidnightLib in the future
 public class ForgeConfig {
@@ -63,9 +63,9 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue MACHINE_TRANSFER_RATE;
     public static final ForgeConfigSpec.IntValue MACHINE_ENERGY_USAGE;
     public static final ForgeConfigSpec.IntValue FERN_TICK_RATE;
-    public static final Map<String, ForgeConfigSpec.BooleanValue> MAPPED_BOOLS = new HashMap<>();
-    public static final Map<String, ForgeConfigSpec.IntValue> MAPPED_INTS = new HashMap<>();
-    public static final Map<String, ForgeConfigSpec.DoubleValue> MAPPED_DOUBLES = new HashMap<>();
+    public static final Map<String, ForgeConfigSpec.BooleanValue> MAPPED_BOOLS = new Object2ObjectOpenHashMap<>();
+    public static final Map<String, ForgeConfigSpec.IntValue> MAPPED_INTS = new Object2ObjectOpenHashMap<>();
+    public static final Map<String, ForgeConfigSpec.DoubleValue> MAPPED_DOUBLES = new Object2ObjectOpenHashMap<>();
 
     static {
         BUILDER.push("Generation Config");

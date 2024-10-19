@@ -45,7 +45,7 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
         addWidget(new ModelsList());
         addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0, 0));
-            ageSlider.maxValue = EntityDataLoader.ENTITY_DATA.getData(info.resourceName).adultAgeDays();
+            ageSlider.maxValue = EntityDataLoader.INSTANCE.getData(info.resourceName).adultAgeDays();
             age = (int) Math.min(age, ageSlider.maxValue);
             ageSlider.setValue(age);
         }));

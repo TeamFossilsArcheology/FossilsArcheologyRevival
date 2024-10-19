@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.Pathi
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.Pair;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LevelRenderer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,12 +18,11 @@ import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib3.core.util.Color;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class InstructionRenderer {
-    static Map<BlockPos, Integer> countAtPos = new HashMap<>();
+    static Map<BlockPos, Integer> countAtPos = new Object2IntOpenHashMap<>();
     static List<Pair<Vec3, Instruction>> texts = new ArrayList<>();
 
     public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks, long finishNanoTime, Frustum frustum) {

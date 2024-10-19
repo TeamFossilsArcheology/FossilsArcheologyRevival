@@ -6,6 +6,7 @@ import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncActiveAnimationMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.S2CCancelAnimationMessage;
 import dev.architectury.injectables.annotations.ExpectPlatform;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -17,7 +18,6 @@ import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -28,11 +28,11 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     public static final String IDLE_CTRL = "Movement/Idle";
     public static final String EAT_CTRL = "Eat";
     public static final String ATTACK_CTRL = "Attack";
-    private final Map<String, ActiveAnimationInfo> activeAnimations = new HashMap<>();
+    private final Map<String, ActiveAnimationInfo> activeAnimations = new Object2ObjectOpenHashMap<>();
     /**
      * Any animation in here will replace the active animation on the next tick
      */
-    private final Map<String, ActiveAnimationInfo> nextAnimations = new HashMap<>();
+    private final Map<String, ActiveAnimationInfo> nextAnimations = new Object2ObjectOpenHashMap<>();
     protected final T entity;
     /**
      * {@link net.minecraft.world.entity.ai.attributes.Attributes#MOVEMENT_SPEED} calculated for the animation speed calculation

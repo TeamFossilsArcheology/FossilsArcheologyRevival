@@ -22,8 +22,8 @@ import java.util.Map;
 /**
  * Loads dinopedia bio entries for the currently selected language and fallback language
  */
-public class DinopediaBioManager extends SimplePreparableReloadListener<Map<String, Map<String, String>>> {
-    public static final DinopediaBioManager DINOPEDIA = new DinopediaBioManager();
+public class DinopediaBioLoader extends SimplePreparableReloadListener<Map<String, Map<String, String>>> {
+    public static final DinopediaBioLoader INSTANCE = new DinopediaBioLoader();
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final String DIRECTORY = "dinopedia";
     private static final String PATH_SUFFIX = ".txt";
@@ -31,7 +31,7 @@ public class DinopediaBioManager extends SimplePreparableReloadListener<Map<Stri
     private ImmutableMap<String, String> englishFallback = ImmutableMap.of();
     private ImmutableMap<String, String> dinopediaTexts = ImmutableMap.of();
 
-    public DinopediaBioManager() {
+    public DinopediaBioLoader() {
     }
 
     @Override

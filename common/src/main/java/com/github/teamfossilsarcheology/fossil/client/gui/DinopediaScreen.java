@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.client.gui;
 
 import com.github.teamfossilsarcheology.fossil.Fossil;
 import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
-import com.github.teamfossilsarcheology.fossil.client.DinopediaBioManager;
+import com.github.teamfossilsarcheology.fossil.client.DinopediaBioLoader;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.Quagga;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
@@ -372,7 +372,7 @@ public class DinopediaScreen extends Screen {
         } else {
             return List.of();
         }
-        String bio = DinopediaBioManager.DINOPEDIA.getDinopediaBio(name);
+        String bio = DinopediaBioLoader.INSTANCE.getDinopediaBio(name);
         StringSplitter stringSplitter = font.getSplitter();
         List<String> list = new ArrayList<>();
         stringSplitter.splitLines(bio, xSize / 2, Style.EMPTY, true, (style, i, j) -> {

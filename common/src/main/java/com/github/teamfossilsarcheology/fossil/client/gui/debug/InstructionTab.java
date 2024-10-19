@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Megan
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.InstructionMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
+import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.BlockPos;
@@ -22,7 +23,7 @@ import java.text.DecimalFormatSymbols;
 import java.util.*;
 
 public class InstructionTab extends DebugTab<Prehistoric> {
-    public static final Map<UUID, Pair> INSTRUCTIONS = new HashMap<>();
+    public static final Map<UUID, Pair> INSTRUCTIONS = new Object2ObjectOpenHashMap<>();
     private InstructionsList instructions;
     private AnimationList animations;
     private EntityList attackEntities;

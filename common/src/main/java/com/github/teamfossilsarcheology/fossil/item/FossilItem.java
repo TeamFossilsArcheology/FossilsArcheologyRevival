@@ -46,7 +46,7 @@ public class FossilItem extends Item {
         }
         BlockPos blockPos = new BlockPlaceContext(context).getClickedPos();
         Vec3 vec3 = Vec3.atBottomCenterOf(blockPos);
-        AABB aABB = info.entityType().getDimensions().scale(EntityDataLoader.ENTITY_DATA.getData(info.resourceName).minScale()).makeBoundingBox(vec3.x, vec3.y, vec3.z);
+        AABB aABB = info.entityType().getDimensions().scale(EntityDataLoader.INSTANCE.getData(info.resourceName).minScale()).makeBoundingBox(vec3.x, vec3.y, vec3.z);
         if (!level.noCollision(null, aABB) || !level.getEntities(null, aABB).isEmpty()) {
             return InteractionResult.FAIL;
         }

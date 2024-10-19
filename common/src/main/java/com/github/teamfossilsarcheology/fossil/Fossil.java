@@ -39,8 +39,8 @@ public class Fossil {
     }
 
     public static void init() {
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoLoader.ANIMATIONS);
-        ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataLoader.ENTITY_DATA);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationInfoLoader.INSTANCE);
+        ReloadListenerRegistry.register(PackType.SERVER_DATA, EntityDataLoader.INSTANCE);
         ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationCategoryLoader.INSTANCE);
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();

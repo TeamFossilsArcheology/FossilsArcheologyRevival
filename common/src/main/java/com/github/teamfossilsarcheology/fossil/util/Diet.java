@@ -51,7 +51,7 @@ public enum Diet implements DinopediaInfo {
         buf.writeUtf(diet.name());
     }
 
-    public static class Supplier implements JsonDeserializer<Diet> {
+    public static class Deserializer implements JsonDeserializer<Diet> {
         @Override
         public Diet deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
             return Diet.valueOf(GsonHelper.getAsString(json.getAsJsonObject(), "diet", Diet.NONE.name()));

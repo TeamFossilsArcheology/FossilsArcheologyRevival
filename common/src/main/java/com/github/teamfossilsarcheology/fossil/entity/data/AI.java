@@ -36,7 +36,7 @@ public record AI(Activity activity, Attacking attacking, Climbing climbing, Foll
                 .writeUtf(ai.untaming.name()).writeUtf(ai.moving.name()).writeUtf(ai.waterAbility.name());
     }
 
-    public static class Supplier implements JsonDeserializer<AI> {
+    public static class Deserializer implements JsonDeserializer<AI> {
 
         @Override
         public AI deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {

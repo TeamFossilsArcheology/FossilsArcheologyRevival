@@ -26,6 +26,6 @@ public class S2CSyncEntityInfoMessage {
 
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
-        contextSupplier.get().queue(() -> EntityDataLoader.ENTITY_DATA.replaceData(data));
+        contextSupplier.get().queue(() -> EntityDataLoader.INSTANCE.replaceData(data));
     }
 }
