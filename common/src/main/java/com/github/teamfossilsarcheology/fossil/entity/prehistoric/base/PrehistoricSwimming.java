@@ -7,7 +7,6 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPa
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
-import com.mojang.math.Vector3d;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -31,16 +30,10 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
-import software.bernie.geckolib3.geo.render.built.GeoBone;
-
-import java.util.Map;
 
 public abstract class PrehistoricSwimming extends Prehistoric {
     public static final int MAX_TIME_IN_WATER = 1000;
@@ -56,6 +49,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected boolean isLandNavigator;
     public boolean breachTargetReached = false;
     private boolean beached;
+    private Vec3 grabPos;
 
     protected PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level, animationLocation);
@@ -231,18 +225,24 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     }
 
     @Override
+    public void setAnchorPos(String boneName, Vec3 localPos) {
+        super.setAnchorPos(boneName, localPos);
+        if ("grab_pos".equals(boneName)) {
+            grabPos = position().add(localPos);
+        }
+    }
+
+    @Override
+    public boolean canSetAnchorPos(String boneName) {
+        return super.canSetAnchorPos(boneName) || "grab_pos".equals(boneName);
+    }
+
+    @Override
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
         if (passenger != getRidingPlayer() && isDoingGrabAttack()) {
             if (level.isClientSide) {
-                AnimationData data = getFactory().getOrCreateAnimationData(getId());
-                Map<String, Pair<IBone, BoneSnapshot>> map = data.getBoneSnapshotCollection();
-                if (map.get("grab_pos") != null) {
-                    if (map.get("grab_pos").getLeft() instanceof GeoBone geoBone) {
-                        Vector3d pos = geoBone.getLocalPosition();
-                        passenger.setPos(getX() + pos.x, getY() + pos.y - 0.2 + passenger.getMyRidingOffset(), getZ() + pos.z);
-                    }
-                }
+                passenger.setPos(grabPos.x, grabPos.y - 0.55, grabPos.z);
             } else {
                 float t = 5 * Mth.sin(Mth.PI + tickCount * 0.275f);
                 float radius = 0.35f * 0.7f * getScale() * -3;

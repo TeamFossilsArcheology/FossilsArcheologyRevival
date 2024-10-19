@@ -11,7 +11,6 @@ accessible method net/minecraft/world/entity/ai/village/poi/PoiType registerBloc
 accessible method net/minecraft/world/entity/ai/village/poi/PoiType <init> (Ljava/lang/String;Ljava/util/Set;II)V
 accessible method net/minecraft/world/entity/npc/VillagerProfession <init> (Ljava/lang/String;Lnet/minecraft/world/entity/ai/village/poi/PoiType;Lcom/google/common/collect/ImmutableSet;Lcom/google/common/collect/ImmutableSet;Lnet/minecraft/sounds/SoundEvent;)V
 accessible field net/minecraft/world/item/Item$Properties maxStackSize I
-accessible method net/minecraft/world/entity/animal/horse/Horse setTypeVariant (I)V
 accessible field net/minecraft/world/entity/Entity portalTime I
 accessible field net/minecraft/world/entity/Entity portalEntrancePos Lnet/minecraft/core/BlockPos;
 accessible field net/minecraft/world/level/chunk/ChunkGenerator ringPositions Ljava/util/Map;
@@ -20,7 +19,6 @@ accessible field net/minecraft/world/level/chunk/ChunkGenerator hasGeneratedPosi
 accessible class net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$PieceState
 accessible method net/minecraft/world/level/levelgen/structure/pools/JigsawPlacement$PieceState <init> (Lnet/minecraft/world/level/levelgen/structure/PoolElementStructurePiece;Lorg/apache/commons/lang3/mutable/MutableObject;I)V
 accessible class net/minecraft/world/entity/ai/control/MoveControl$Operation
-accessible class net/minecraft/server/network/ServerGamePacketListenerImpl$EntityInteraction
 accessible method net/minecraft/world/level/pathfinder/Path setDebug ([Lnet/minecraft/world/level/pathfinder/Node;[Lnet/minecraft/world/level/pathfinder/Node;Ljava/util/Set;)V
 extendable method net/minecraft/client/gui/components/AbstractSelectionList getEntryAtPosition (DD)Lnet/minecraft/client/gui/components/AbstractSelectionList$Entry;
 accessible field net/minecraft/world/entity/Entity DATA_CUSTOM_NAME Lnet/minecraft/network/syncher/EntityDataAccessor;

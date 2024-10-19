@@ -124,7 +124,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
     private Vec3 eatPos;
-    public Vec3 riderPos;
+    private Vec3 riderPos;
     private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
@@ -402,6 +402,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 rider.setPos(riderPos.x, riderPos.y - 0.55, riderPos.z);
             } else {
                 //Not sure if this will be accurate enough for larger dinos. Need to await player feedback
+                //TODO: Just debug render it (+ grab pos)
                 rider.setPos(getX(), getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ());
             }
         }
