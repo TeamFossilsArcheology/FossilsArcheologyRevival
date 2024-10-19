@@ -15,7 +15,6 @@ public class VolcanoVentFeature extends Feature<NoneFeatureConfiguration> {
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel level = context.level();
         level.setBlock(context.origin(), ModBlocks.ASH_VENT.get().defaultBlockState(), 18);
-        System.out.println("VENT: " + context.origin());
         return true;
     }
 }

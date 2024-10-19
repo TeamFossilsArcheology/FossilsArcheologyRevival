@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 
-import com.github.darkpred.morehitboxes.internal.MultiPartGeoEntityRenderer;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.github.teamfossilsarcheology.fossil.client.model.PrehistoricGeoModel;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.Arthropleura;
@@ -17,7 +16,6 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib3.core.util.Color;
-import software.bernie.geckolib3.geo.render.built.GeoModel;
 import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 import java.util.function.Function;
@@ -58,14 +56,6 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
     @Override
     protected float getSwingMotionAnimThreshold() {
         return Util.SWING_ANIM_THRESHOLD;
-    }
-
-    @Override
-    public void render(GeoModel model, T animatable, float partialTick, RenderType type, PoseStack poseStack, MultiBufferSource bufferSource, VertexConsumer buffer, int packedLight, int packedOverlay, float red, float green, float blue, float alpha) {
-        super.render(model, animatable, partialTick, type, poseStack, bufferSource, buffer, packedLight, packedOverlay, red, green, blue, alpha);
-        if (this instanceof MultiPartGeoEntityRenderer renderer) {
-            renderer.updateTickForEntity(animatable);
-        }
     }
 
     @Override
