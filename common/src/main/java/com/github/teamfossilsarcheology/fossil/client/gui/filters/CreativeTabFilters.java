@@ -12,6 +12,7 @@ import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.core.NonNullList;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
@@ -26,12 +27,14 @@ public class CreativeTabFilters {
     private static int activeTab = -1;
 
     public static void register() {
-        NonNullList<Filter> filters = NonNullList.create();
-        filters.add(new Filter(FILTER_BONES, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.skullBoneItem)));
-        filters.add(new Filter(FILTER_DNA, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.dnaItem)));
-        filters.add(new Filter(FILTER_EGGS, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.spawnEggItem)));
-        filters.add(new Filter(FILTER_MEAT, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.foodItem)));
-        filters.add(new Filter(FILTER_PLANTS, new ItemStack(ModItems.FERN_SEED.get())));
+        NonNullList<Filter> entityItems = NonNullList.create();
+        entityItems.add(new Filter(FILTER_BONES, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.skullBoneItem)));
+        entityItems.add(new Filter(FILTER_DNA, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.dnaItem)));
+        entityItems.add(new Filter(FILTER_EGGS, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.spawnEggItem)));
+        entityItems.add(new Filter(FILTER_MEAT, new ItemStack(PrehistoricEntityInfo.TRICERATOPS.foodItem)));
+        entityItems.add(new Filter(FILTER_PLANTS, new ItemStack(ModItems.FERN_SEED.get())));
+        entityItems.add(new Filter(FILTER_BUCKETS, new ItemStack(PrehistoricEntityInfo.NAUTILUS.bucketItem)));
+        entityItems.add(new Filter(FILTER_OTHER, new ItemStack(ModItems.MAMMOTH_FUR.get())));
 
         NonNullList<Filter> blocks = NonNullList.create();
         blocks.add(new Filter(FILTER_TREES, new ItemStack(ModBlocks.MUTANT_TREE_LOG.get())));
@@ -39,6 +42,14 @@ public class CreativeTabFilters {
         blocks.add(new Filter(FIGURINES, new ItemStack(ModBlocks.ANU_FIGURINE_DESTROYED.get())));
         blocks.add(new Filter(FILTER_PLANTS, new ItemStack(PrehistoricPlantInfo.BENNETTITALES_LARGE.getPlantBlock())));
         blocks.add(new Filter(FILTER_UNBREAKABLE, new ItemStack(ModBlocks.REINFORCED_GLASS.get())));
+        blocks.add(new Filter(FILTER_MACHINES, new ItemStack(ModBlocks.ANALYZER.get())));
+        blocks.add(new Filter(FILTER_BUILDING_BLOCKS, new ItemStack(ModBlocks.ANCIENT_STONE_BRICKS.get())));
+
+        NonNullList<Filter> items = NonNullList.create();
+        items.add(new Filter(FILTER_PARK, new ItemStack(ModItems.TOY_BALLS.get(DyeColor.RED).get())));
+        items.add(new Filter(FILTER_TOOLS, new ItemStack(ModItems.SCARAB_SWORD.get())));
+        items.add(new Filter(FILTER_MACHINES, new ItemStack(ModItems.BIO_FOSSIL.get())));
+
         ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
                 tabs.get(creativeScreen.getSelectedTab()).renderButtons(matrices, mouseX, mouseY, delta);
@@ -46,20 +57,21 @@ public class CreativeTabFilters {
         });
         ClientGuiEvent.RENDER_PRE.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
-                FilterTab filterTab = tabs.get(creativeScreen.getSelectedTab());
                 boolean first = activeTab == -1;
-                boolean switchedTab = activeTab != creativeScreen.getSelectedTab();
+                int oldTab = activeTab;
+                activeTab = creativeScreen.getSelectedTab();
+                boolean switchedTab = activeTab != oldTab;
                 creativeScreen.getMenu().items.clear();
+                FilterTab filterTab = tabs.get(activeTab);
                 if (first) {
                     filterTab.enableButtons();
                 } else if (switchedTab) {
-                    tabs.get(activeTab).disableButtons();
+                    tabs.get(oldTab).disableButtons();
                     filterTab.enableButtons();
                 }
                 NonNullList<ItemStack> stacks = NonNullList.create();
-                CreativeModeTab.TABS[creativeScreen.getSelectedTab()].fillItemList(stacks);
-                activeTab = creativeScreen.getSelectedTab();
-                Optional<TagKey<Item>> selectedTag = tabs.get(creativeScreen.getSelectedTab()).getTag();
+                CreativeModeTab.TABS[activeTab].fillItemList(stacks);
+                Optional<TagKey<Item>> selectedTag = filterTab.getTag();
                 selectedTag.ifPresent(tag -> stacks.removeIf(stack -> !stack.is(tag)));
                 creativeScreen.getMenu().items.addAll(stacks);
                 //List<Item> list = tabs.get(creativeScreen.getSelectedTab()).getItems();
@@ -73,8 +85,9 @@ public class CreativeTabFilters {
         });
         ClientGuiEvent.INIT_POST.register((screen, access) -> {
             if (screen instanceof CreativeModeInventoryScreen) {
-                tabs.put(ModTabs.FAITEMTAB.getId(), FilterTab.build(screen, filters, access));
+                tabs.put(ModTabs.FAITEMTAB.getId(), FilterTab.build(screen, entityItems, access));
                 tabs.put(ModTabs.FABLOCKTAB.getId(), FilterTab.build(screen, blocks, access));
+                tabs.put(ModTabs.FAPARKTAB.getId(), FilterTab.build(screen, items, access));
                 activeTab = -1;
             }
         });

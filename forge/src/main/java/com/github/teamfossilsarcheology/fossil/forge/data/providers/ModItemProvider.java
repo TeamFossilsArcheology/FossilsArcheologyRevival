@@ -145,11 +145,11 @@ public class ModItemProvider extends ItemModelProvider {
                     plantSeedItem(info.getFossilizedPlantSeedItem().getRegistryName());
                 }
             }
-            basicItem(ModItems.CALAMITES_SAPLING_FOSSIL.get());
-            basicItem(ModItems.CORDAITES_SAPLING_FOSSIL.get());
-            basicItem(ModItems.PALM_SAPLING_FOSSIL.get());
-            basicItem(ModItems.SIGILLARIA_SAPLING_FOSSIL.get());
-            basicItem(ModItems.TEMPSKYA_SAPLING_FOSSIL.get());
+            basicItem(ModItems.CALAMITES_FOSSIL_SAPLING.get());
+            basicItem(ModItems.CORDAITES_FOSSIL_SAPLING.get());
+            basicItem(ModItems.PALM_FOSSIL_SAPLING.get());
+            basicItem(ModItems.SIGILLARIA_FOSSIL_SAPLING.get());
+            basicItem(ModItems.TEMPSKYA_FOSSIL_SAPLING.get());
         }
     }
 

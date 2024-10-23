@@ -19,7 +19,7 @@ public class JavelinItem extends TieredItem {
     private final boolean ancient;
 
     public JavelinItem(Tier tier, boolean ancient) {
-        super(tier, new JavelinProperties().stacksToWithDurability(16, 30).tab(ModTabs.FAITEMTAB));
+        super(tier, new JavelinProperties().stacksToWithDurability(16, 30).tab(ModTabs.FAPARKTAB));
         this.ancient = ancient;
     }
 

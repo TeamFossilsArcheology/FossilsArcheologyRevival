@@ -3,6 +3,11 @@
   "values": [
     "#fossil:fossil_seeds",
     "#fossil:restored_seeds",
+    "fossil:fossil_sapling_calamites",
+    "fossil:fossil_sapling_cordaites",
+    "fossil:fossil_sapling_palm",
+    "fossil:fossil_sapling_sigillaria",
+    "fossil:fossil_sapling_tempskya",
     "fossil:bennettitales_large",
     "fossil:bennettitales_small",
     "fossil:cephalotaxus",

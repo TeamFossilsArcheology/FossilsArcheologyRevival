@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "fossil:item/dna/polarbear_dna"
+    "layer0": "fossil:item/dna/polar_bear_dna"
   }
 }

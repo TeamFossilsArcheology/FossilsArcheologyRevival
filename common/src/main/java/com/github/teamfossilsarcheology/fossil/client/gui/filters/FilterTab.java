@@ -11,7 +11,9 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -120,19 +122,21 @@ public class FilterTab {
             itemRenderer.renderAndDecorateItem(filter.icon, x + 8, y + 6);
             itemRenderer.blitOffset = 0;
             if (mouseX > x && mouseY > y && mouseX < x + 32 && mouseY < y + 28) {
-                screen.renderTooltip(poseStack, new TextComponent(filter.tag.location().getPath()), mouseX, mouseY);
+                screen.renderTooltip(poseStack, filter.tooltip, mouseX, mouseY);
             }
         }
     }
 
     public static class Filter {
-        private final TagKey<Item> tag;
+        public final TagKey<Item> tag;
         private final ItemStack icon;
+        private final Component tooltip;
         private boolean enabled;
 
         public Filter(TagKey<Item> tag, ItemStack icon) {
             this.tag = tag;
             this.icon = icon;
+            this.tooltip = new TranslatableComponent("filter.fossil." + tag.location().getPath());
         }
     }
 }

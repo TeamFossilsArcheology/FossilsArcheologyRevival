@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:fur_elasmotherium",
+    "fossil:fur_mammoth",
+    "fossil:fur_therizinosaurus",
+    "fossil:magic_conch"
+  ]
+}

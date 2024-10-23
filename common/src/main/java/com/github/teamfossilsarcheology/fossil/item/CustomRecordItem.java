@@ -7,10 +7,7 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.RecordItem;
 import org.apache.commons.lang3.NotImplementedException;
 
-public class CustomRecordItem extends RecordItem {
-    private CustomRecordItem(int i, SoundEvent soundEvent, Properties properties) {
-        super(i, soundEvent, properties);
-    }
+public class CustomRecordItem {
 
     @ExpectPlatform
     public static RecordItem get(int analogOutput, RegistrySupplier<SoundEvent> sound, Item.Properties properties) {

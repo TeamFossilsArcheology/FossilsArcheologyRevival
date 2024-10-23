@@ -1,0 +1,26 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:broken_sword",
+    "fossil:broken_helmet",
+    "fossil:ancient_sword",
+    "fossil:ancient_helmet",
+    "fossil:frozen_meat",
+    "fossil:tooth_dagger",
+    "fossil:wooden_javelin",
+    "fossil:stone_javelin",
+    "fossil:gold_javelin",
+    "fossil:iron_javelin",
+    "fossil:diamond_javelin",
+    "fossil:ancient_javelin",
+    "fossil:scarab_sword",
+    "fossil:scarab_pickaxe",
+    "fossil:scarab_axe",
+    "fossil:scarab_shovel",
+    "fossil:scarab_hoe",
+    "fossil:bone_helmet",
+    "fossil:bone_chestplate",
+    "fossil:bone_leggings",
+    "fossil:bone_boots"
+  ]
+}

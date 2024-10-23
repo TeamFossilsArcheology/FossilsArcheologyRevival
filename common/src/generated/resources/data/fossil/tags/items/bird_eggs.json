@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:egg_confuciusornis",
+    "fossil:egg_item_confuciusornis",
+    "fossil:egg_dodo",
+    "fossil:egg_item_dodo",
+    "fossil:egg_gastornis",
+    "fossil:egg_item_gastornis",
+    "fossil:egg_kelenken",
+    "fossil:egg_item_kelenken",
+    "fossil:egg_phorusrhacos",
+    "fossil:egg_item_phorusrhacos",
+    "fossil:egg_titanis",
+    "fossil:egg_item_titanis",
+    "fossil:egg_item_chicken",
+    "fossil:egg_item_parrot"
+  ]
+}

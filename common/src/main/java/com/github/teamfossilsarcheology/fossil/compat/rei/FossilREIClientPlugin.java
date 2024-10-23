@@ -36,7 +36,7 @@ public class FossilREIClientPlugin implements REIClientPlugin {
             if (screen.getSelectedTab() == ModTabs.FAITEMTAB.getId() || screen.getSelectedTab() == ModTabs.FABLOCKTAB.getId()) {
                 int leftPos = (screen.width - 195) / 2;
                 int topPos = (screen.height - 136) / 2;
-                return List.of(new Rectangle(leftPos - 30, topPos, 30, 120), new Rectangle(leftPos + 200, topPos, 15, 30));
+                return List.of(new Rectangle(leftPos - 30, topPos, 30, 120), new Rectangle(leftPos + 200, topPos, 15, 90));
             }
             return new ArrayList<>();
         });

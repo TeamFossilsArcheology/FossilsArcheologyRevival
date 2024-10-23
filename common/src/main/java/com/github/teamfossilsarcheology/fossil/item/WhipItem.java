@@ -12,8 +12,8 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 public class WhipItem extends Item {
-    public WhipItem(Properties properties) {
-        super(properties);
+    public WhipItem() {
+        super(new Item.Properties().tab(ModTabs.FAPARKTAB));
     }
 
     @Override

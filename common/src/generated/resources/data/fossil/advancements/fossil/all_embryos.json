@@ -219,12 +219,12 @@
         }
       }
     },
-    "syringe_polarbear": {
+    "syringe_polar_bear": {
       "trigger": "fossil:implant_embryo",
       "conditions": {
         "item": {
           "items": [
-            "fossil:syringe_polarbear"
+            "fossil:syringe_polar_bear"
           ]
         }
       }
@@ -332,7 +332,7 @@
       "syringe_pig"
     ],
     [
-      "syringe_polarbear"
+      "syringe_polar_bear"
     ],
     [
       "syringe_rabbit"

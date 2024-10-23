@@ -238,11 +238,11 @@ public class ModRecipeProvider extends RecipeProvider {
                     .addOutput(Blocks.SAND, 35)
                     .addOutput(Blocks.CACTUS, 20)
                     .addOutput(FERN_SEED_FOSSIL.get(), 5)
-                    .addOutput(CALAMITES_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(CORDAITES_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(PALM_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(SIGILLARIA_SAPLING_FOSSIL.get(), 2.5)
-                    .addOutput(TEMPSKYA_SAPLING_FOSSIL.get(), 2.5);
+                    .addOutput(CALAMITES_FOSSIL_SAPLING.get(), 2.5)
+                    .addOutput(CORDAITES_FOSSIL_SAPLING.get(), 2.5)
+                    .addOutput(PALM_FOSSIL_SAPLING.get(), 2.5)
+                    .addOutput(SIGILLARIA_FOSSIL_SAPLING.get(), 2.5)
+                    .addOutput(TEMPSKYA_FOSSIL_SAPLING.get(), 2.5);
 
             double seedWeight = (100F - plantFossil.total) / (double) PrehistoricPlantInfo.plantsWithSeeds().size();
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
@@ -350,12 +350,12 @@ public class ModRecipeProvider extends RecipeProvider {
             frozenMeat.save(consumer);
             analyzed(AMBER_CHUNK_DOMINICAN.get()).addOutput(Items.SPIDER_EYE, 9).addOutput(Items.STRING, 10).addOutput(Blocks.DIRT, 25).addOutput(Blocks.GRAVEL, 25)
                     .addOutput(Items.WHEAT_SEEDS, 1).addOutput(Items.BEETROOT_SEEDS, 1).addOutput(Items.PUMPKIN_SEEDS, 1).addOutput(Items.MELON_SEEDS, 1)
-                    .addOutput(CALAMITES_SAPLING_FOSSIL.get(), 1).addOutput(CORDAITES_SAPLING_FOSSIL.get(), 1).addOutput(PALM_SAPLING_FOSSIL.get(), 1).addOutput(SIGILLARIA_SAPLING_FOSSIL.get(), 1).addOutput(TEMPSKYA_SAPLING_FOSSIL.get(), 1).save(consumer);
+                    .addOutput(CALAMITES_FOSSIL_SAPLING.get(), 1).addOutput(CORDAITES_FOSSIL_SAPLING.get(), 1).addOutput(PALM_FOSSIL_SAPLING.get(), 1).addOutput(SIGILLARIA_FOSSIL_SAPLING.get(), 1).addOutput(TEMPSKYA_FOSSIL_SAPLING.get(), 1).save(consumer);
             analyzed(Items.BEEF).addOutput(COW.dnaItem, 100).save(consumer);
             analyzed(Items.CHICKEN).addOutput(CHICKEN.dnaItem, 100).save(consumer);
             analyzed(Items.EGG).addOutput(CHICKEN.dnaItem, 100).save(consumer);
             analyzed(Items.FEATHER).addOutput(CHICKEN.dnaItem, 95).addOutput(PARROT.dnaItem, 5).save(consumer);
-            analyzed(ItemTags.FISHES).addOutput(Items.PRISMARINE_CRYSTALS, 15).addOutput(Items.BONE_MEAL, 75).addOutput(POLARBEAR.dnaItem, 10).save(consumer);
+            analyzed(ItemTags.FISHES).addOutput(Items.PRISMARINE_CRYSTALS, 15).addOutput(Items.BONE_MEAL, 75).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
             analyzed(Items.LEATHER).addOutput(COW.dnaItem, 60).addOutput(DONKEY.dnaItem, 10).addOutput(HORSE.dnaItem, 30).save(consumer);
             analyzed(Items.MUTTON).addOutput(SHEEP.dnaItem, 100).save(consumer);
             //Nautilus Shell
@@ -420,11 +420,11 @@ public class ModRecipeProvider extends RecipeProvider {
             }
             cultureVat(VanillaEntityInfo.BEE.dnaItem, ARTIFICIAL_HONEYCOMB.get(), consumer);
             cultureVat(ModItems.FERN_SEED_FOSSIL, ModItems.FERN_SEED, consumer);
-            cultureVat(ModItems.CALAMITES_SAPLING_FOSSIL, ModBlocks.CALAMITES_SAPLING, consumer);
-            cultureVat(ModItems.CORDAITES_SAPLING_FOSSIL, ModBlocks.CORDAITES_SAPLING, consumer);
-            cultureVat(ModItems.PALM_SAPLING_FOSSIL, ModBlocks.PALM_SAPLING, consumer);
-            cultureVat(ModItems.SIGILLARIA_SAPLING_FOSSIL, ModBlocks.SIGILLARIA_SAPLING, consumer);
-            cultureVat(ModItems.TEMPSKYA_SAPLING_FOSSIL, ModBlocks.TEMPSKYA_SAPLING, consumer);
+            cultureVat(ModItems.CALAMITES_FOSSIL_SAPLING, ModBlocks.CALAMITES_SAPLING, consumer);
+            cultureVat(ModItems.CORDAITES_FOSSIL_SAPLING, ModBlocks.CORDAITES_SAPLING, consumer);
+            cultureVat(ModItems.PALM_FOSSIL_SAPLING, ModBlocks.PALM_SAPLING, consumer);
+            cultureVat(ModItems.SIGILLARIA_FOSSIL_SAPLING, ModBlocks.SIGILLARIA_SAPLING, consumer);
+            cultureVat(ModItems.TEMPSKYA_FOSSIL_SAPLING, ModBlocks.TEMPSKYA_SAPLING, consumer);
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
                 cultureVat(info.getFossilizedPlantSeedItem(), info.getPlantSeedItem(), consumer);
             }

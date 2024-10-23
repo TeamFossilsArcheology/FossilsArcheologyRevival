@@ -1,0 +1,19 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:fossil_bio",
+    "fossil:fossil_plant",
+    "fossil:fossil_shale",
+    "fossil:fossil_tar",
+    "fossil:bio_goo",
+    "fossil:pottery_shard",
+    "fossil:tar_drop",
+    "fossil:relic_scrap",
+    "fossil:analyzer",
+    "fossil:culture_vat",
+    "fossil:feeder",
+    "fossil:sifter",
+    "fossil:worktable",
+    "fossil:drum"
+  ]
+}

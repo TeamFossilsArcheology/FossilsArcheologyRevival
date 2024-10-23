@@ -36,7 +36,7 @@ public enum VanillaEntityInfo implements EntityInfo {
     PANDA(EntityType.PANDA, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     PARROT(EntityType.PARROT, PrehistoricMobType.VANILLA_BIRD, Diet.HERBIVORE),
     PIG(EntityType.PIG, PrehistoricMobType.MAMMAL, Diet.OMNIVORE),
-    POLARBEAR(EntityType.POLAR_BEAR, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
+    POLAR_BEAR(EntityType.POLAR_BEAR, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     PUFFERFISH(EntityType.PUFFERFISH, PrehistoricMobType.FISH, Diet.OMNIVORE),
     RABBIT(EntityType.RABBIT, PrehistoricMobType.MAMMAL, Diet.HERBIVORE),
     SALMON(EntityType.SALMON, PrehistoricMobType.FISH, Diet.PISCI_CARNIVORE),

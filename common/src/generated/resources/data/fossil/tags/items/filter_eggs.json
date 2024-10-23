@@ -3,6 +3,12 @@
   "values": [
     "#fossil:dino_eggs",
     "#fossil:fish_eggs",
+    "#fossil:bird_eggs",
+    "fossil:spawn_egg_anu_boss",
+    "fossil:spawn_egg_failuresaurus",
+    "fossil:spawn_egg_sentry_piglin",
+    "fossil:spawn_egg_tar_slime",
+    "fossil:artificial_honeycomb",
     "fossil:spawn_egg_alligator_gar",
     "fossil:spawn_egg_allosaurus",
     "fossil:spawn_egg_ankylosaurus",

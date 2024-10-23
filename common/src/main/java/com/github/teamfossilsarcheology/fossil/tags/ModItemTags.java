@@ -21,6 +21,7 @@ public class ModItemTags {
     public static final TagKey<Item> RESTORED_SEEDS = TagKey.create(key, Fossil.location("restored_seeds"));
     public static final TagKey<Item> FOSSIL_SAPLINGS = TagKey.create(key, Fossil.location("fossil_saplings"));
     public static final TagKey<Item> FIGURINES = TagKey.create(key, Fossil.location("figurines"));
+    public static final TagKey<Item> BIRD_EGGS = TagKey.create(key, Fossil.location("bird_eggs"));
     public static final TagKey<Item> DINO_EGGS = TagKey.create(key, Fossil.location("dino_eggs"));
     public static final TagKey<Item> COOKABLE_EGGS = TagKey.create(key, Fossil.location("cookable_eggs"));
     public static final TagKey<Item> SIFTER_INPUTS = TagKey.create(key, Fossil.location("sifter_inputs"));
@@ -39,14 +40,23 @@ public class ModItemTags {
     public static final TagKey<Item> VERTEBRAE_BONES = TagKey.create(key, Fossil.location("bones_vertebrae"));
     public static final TagKey<Item> ALL_BONES = TagKey.create(key, Fossil.location("bones_all"));
     public static final TagKey<Item> UNCOOKED_MEAT = TagKey.create(key, Fossil.location("meat_uncooked"));
+
     public static final TagKey<Item> FILTER_BONES = TagKey.create(key, Fossil.location("filter_bones"));
     public static final TagKey<Item> FILTER_DNA = TagKey.create(key, Fossil.location("filter_dna"));
     public static final TagKey<Item> FILTER_EGGS = TagKey.create(key, Fossil.location("filter_eggs"));
     public static final TagKey<Item> FILTER_MEAT = TagKey.create(key, Fossil.location("filter_meat"));
+    public static final TagKey<Item> FILTER_BUCKETS = TagKey.create(key, Fossil.location("filter_buckets"));
+
     public static final TagKey<Item> FILTER_PLANTS = TagKey.create(key, Fossil.location("filter_plants"));
+    public static final TagKey<Item> FILTER_OTHER = TagKey.create(key, Fossil.location("filter_other"));
     public static final TagKey<Item> FILTER_TREES = TagKey.create(key, Fossil.location("filter_trees"));
     public static final TagKey<Item> FILTER_VASES = TagKey.create(key, Fossil.location("filter_vases"));
     public static final TagKey<Item> FILTER_UNBREAKABLE = TagKey.create(key, Fossil.location("filter_unbreakable"));
+    public static final TagKey<Item> FILTER_MACHINES = TagKey.create(key, Fossil.location("filter_machines"));
+    public static final TagKey<Item> FILTER_BUILDING_BLOCKS = TagKey.create(key, Fossil.location("filter_building_blocks"));
+
+    public static final TagKey<Item> FILTER_PARK = TagKey.create(key, Fossil.location("filter_park"));
+    public static final TagKey<Item> FILTER_TOOLS = TagKey.create(key, Fossil.location("filter_tools"));
 
     //REI Support
     public static final TagKey<Item> FISH_EGGS = TagKey.create(key, Fossil.location("fish_eggs"));

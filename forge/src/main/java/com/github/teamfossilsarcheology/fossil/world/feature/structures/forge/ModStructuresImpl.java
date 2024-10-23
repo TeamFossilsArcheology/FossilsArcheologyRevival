@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.structures.forge;
 
+import com.github.teamfossilsarcheology.fossil.Fossil;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -8,7 +9,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import static com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructures.*;
 
-@Mod.EventBusSubscriber(bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = Fossil.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModStructuresImpl {
     public static void register() {
         HELL_BOAT.feature().setRegistryName(HELL_BOAT.location());
