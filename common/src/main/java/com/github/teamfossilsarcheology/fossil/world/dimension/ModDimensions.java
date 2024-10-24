@@ -32,7 +32,7 @@ public class ModDimensions {
      */
     public static void teleportToAnuLair(MinecraftServer server, Entity entity) {
         ServerLevel anuLair = server.getLevel(ModDimensions.ANU_LAIR);
-        Vec3 spawnPoint = new Vec3(70, 63, -17);
+        Vec3 spawnPoint = new Vec3(70.5, 63, -17.5);
         int x = (int) spawnPoint.x;
         int y = (int) (spawnPoint.y - 2);
         int z = (int) spawnPoint.z;

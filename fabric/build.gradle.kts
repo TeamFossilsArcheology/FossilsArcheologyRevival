@@ -109,7 +109,7 @@ dependencies {
     modImplementation("com.github.darkpred.morehitboxes:morehitboxes-fabric-${minecraftVersion}:${moreHitboxesVersion}")
 
     //Dev only
-    modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
+    /*modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
     modRuntimeOnly("curse.maven:worldedit-225608:3697298")
     modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.18.2-1.7.0")//Smooth Boot
     modRuntimeOnly("curse.maven:commandstructures-565119:3733097")
@@ -120,6 +120,8 @@ dependencies {
     modRuntimeOnly("curse.maven:replay-775651:4262559")
     //modRuntimeOnly("maven.modrinth:6pku8gW1:zbBHXeFQ")//Energized Power
     modRuntimeOnly("curse.maven:debugutils-783010:5337485")//Debug Utils
+    modRuntimeOnly("curse.maven:debugutils-783010:5337485")//Debug Utils
+    */
     //modRuntimeOnly("com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
