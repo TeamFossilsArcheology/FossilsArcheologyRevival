@@ -576,40 +576,40 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     @Override
     public void tick() {
         super.tick();
-
-        if (!level.isClientSide && !isAgingDisabled() && canAgeUpNaturally()) {
-            setAgeInTicks(getAge() + 1);
-        }
-        if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.ENABLE_HUNGER)) {
-            if (!isNoAi()) {
-                setHunger(getHunger() - 1);
-            } else {
-                setHunger(getMaxHunger());
-                setHealth(getMaxHealth());
+        if (!level.isClientSide) {
+            if (!isAgingDisabled() && canAgeUpNaturally()) {
+                setAgeInTicks(getAge() + 1);
             }
-        }
-        if (tickCount % 40 == 0 && getHunger() == 0) {
-            if (getHealth() > (FossilConfig.isEnabled(FossilConfig.ENABLE_STARVATION) ? 0 : getMaxHealth() / 2)) {
+            if (tickCount % 1200 == 0 && getHunger() > 0 && FossilConfig.isEnabled(FossilConfig.ENABLE_HUNGER)) {
+                if (!isNoAi()) {
+                    setHunger(getHunger() - 1);
+                } else {
+                    setHunger(getMaxHunger());
+                    setHealth(getMaxHealth());
+                }
+            }
+            if (tickCount % 40 == 0 && getHunger() == 0 && getHealth() > (FossilConfig.isEnabled(FossilConfig.ENABLE_STARVATION) ? 0 : getMaxHealth() / 2)) {
                 hurt(DamageSource.STARVE, 1);
             }
-        }
-        if (!level.isClientSide && aiClimbType() == Climbing.ARTHROPOD) {
-            if (isClimbing()) {
-                ticksClimbing++;
-                boolean onCooldown = ticksClimbing >= 100 || level.getBlockState(blockPosition().above()).getMaterial().isSolid();
-                if (isSleeping() || sleepSystem.wantsToSleep() || onCooldown || !horizontalCollision) {
-                    setClimbing(false);
-                    ticksClimbing = 0;
-                    if (onCooldown) {
-                        climbingCooldown = 900;
+
+            if (aiClimbType() == Climbing.ARTHROPOD) {
+                if (isClimbing()) {
+                    ticksClimbing++;
+                    boolean onCooldown = ticksClimbing >= 100 || level.getBlockState(blockPosition().above()).getMaterial().isSolid();
+                    if (isSleeping() || sleepSystem.wantsToSleep() || onCooldown || !horizontalCollision) {
+                        setClimbing(false);
+                        ticksClimbing = 0;
+                        if (onCooldown) {
+                            climbingCooldown = 900;
+                        }
                     }
-                }
-            } else {
-                climbingCooldown--;
-                //TODO: ticksClimbing==0 seems to be wrong
-                if (ticksClimbing == 0 && climbingCooldown <= 0 && horizontalCollision && !sleepSystem.wantsToSleep() && !isSleeping()) {
-                    ticksClimbing = 0;
-                    setClimbing(true);
+                } else {
+                    climbingCooldown--;
+                    //TODO: ticksClimbing==0 seems to be wrong
+                    if (ticksClimbing == 0 && climbingCooldown <= 0 && horizontalCollision && !sleepSystem.wantsToSleep() && !isSleeping()) {
+                        ticksClimbing = 0;
+                        setClimbing(true);
+                    }
                 }
             }
         }
@@ -973,9 +973,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 stack.shrink(1);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-
-        if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM) {
+        } else if (stack.is(ModItems.CHICKEN_ESSENCE.get()) && aiTameType() != Taming.GEM && aiTameType() != Taming.AQUATIC_GEM) {
             //Grow up with chicken essence
             if (!level.isClientSide) {
                 if (isAdult()) {
@@ -994,8 +992,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 setHunger(1 + random.nextInt(getHunger()));
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (stack.is(ModItems.STUNTED_ESSENCE.get()) && !isAgingDisabled()) {
+        } else if (stack.is(ModItems.STUNTED_ESSENCE.get()) && !isAgingDisabled()) {
             //Stunt growth with stunted essence
             if (!level.isClientSide) {
                 setHunger(getHunger() + 20);
@@ -1012,8 +1009,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 Util.spawnItemParticles(level, Items.EGG, 15, aabb);
             }
             return InteractionResult.sidedSuccess(level.isClientSide);
-        }
-        if (FoodMappings.getFoodAmount(stack.getItem(), data().diet()) > 0) {
+        } else if (FoodMappings.getFoodAmount(stack.getItem(), data().diet()) > 0) {
             //Feed dino
             if (getHunger() < getMaxHunger() || getHealth() < getMaxHealth() && FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) || !isTame() && aiTameType() == Taming.FEEDING) {
                 if (!level.isClientSide) {
@@ -1031,41 +1027,38 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 }
                 return InteractionResult.sidedSuccess(level.isClientSide);
             }
-        } else {
-            if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
-                if (isOwnedBy(player) && data().canBeRidden()) {
-                    if (getRidingPlayer() == null && !level.isClientSide) {
-                        player.yBodyRot = this.yBodyRot;
-                        player.setXRot(getXRot());
-                        player.startRiding(this);
-                        sitSystem.setSitting(false);
-                        sleepSystem.setSleeping(false);
-                        setCurrentOrder(OrderType.WANDER);
-                    } else if (getRidingPlayer() == player) {
-                        setSprinting(true);
-                        moodSystem.increaseMood(-5);
-                    }
-                } else if (FossilConfig.isEnabled(FossilConfig.WHIP_TO_TAME_DINO) && !isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {
-                    if (!level.isClientSide) {
-                        moodSystem.increaseMood(-5);
-                        if (random.nextInt(5) == 0) {
-                            player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", info().displayName.get()), true);
-                            moodSystem.increaseMood(-25);
-                            tame(player);
-                        }
-                    }
+        } else if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
+            if (isOwnedBy(player) && data().canBeRidden()) {
+                if (getRidingPlayer() == null && !level.isClientSide) {
+                    player.yBodyRot = this.yBodyRot;
+                    player.setXRot(getXRot());
+                    player.startRiding(this);
+                    sitSystem.setSitting(false);
+                    sleepSystem.setSleeping(false);
+                    setCurrentOrder(OrderType.WANDER);
+                } else if (getRidingPlayer() == player) {
+                    setSprinting(true);
+                    moodSystem.increaseMood(-5);
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
-            }
-            if (stack.is(getOrderItem()) && isOwnedBy(player) && !player.isPassenger()) {
+            } else if (FossilConfig.isEnabled(FossilConfig.WHIP_TO_TAME_DINO) && !isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {
                 if (!level.isClientSide) {
-                    jumping = false;
-                    getNavigation().stop();
-                    setCurrentOrder(OrderType.values()[(currentOrder.ordinal() + 1) % 3]);
-                    sendOrderMessage(currentOrder);
+                    moodSystem.increaseMood(-5);
+                    if (random.nextInt(5) == 0) {
+                        player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", info().displayName.get()), true);
+                        moodSystem.increaseMood(-25);
+                        tame(player);
+                    }
                 }
-                return InteractionResult.sidedSuccess(level.isClientSide);
             }
+            return InteractionResult.sidedSuccess(level.isClientSide);
+        } else if (stack.is(getOrderItem()) && isOwnedBy(player) && !player.isPassenger()) {
+            if (!level.isClientSide) {
+                jumping = false;
+                getNavigation().stop();
+                setCurrentOrder(OrderType.values()[(currentOrder.ordinal() + 1) % 3]);
+                sendOrderMessage(currentOrder);
+            }
+            return InteractionResult.sidedSuccess(level.isClientSide);
         }
         return InteractionResult.PASS;
     }
