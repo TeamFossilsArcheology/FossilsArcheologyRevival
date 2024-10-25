@@ -7,6 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SDisableAIMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SDiscardMessage;
+import com.github.teamfossilsarcheology.fossil.network.debug.C2SSlowMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SStructureMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
@@ -16,6 +17,7 @@ import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.animal.Sheep;
@@ -40,6 +42,7 @@ public class DebugScreen extends Screen {
     private final List<DebugTab<? extends Entity>> tabs = new ArrayList<>();
     private static int tabShift = 0;
     private DebugTab<? extends Entity> currentTab;
+    private double speedMod = 0.5;
 
     public DebugScreen(@Nullable Entity newEntity) {
         super(new TextComponent("Debug Screen"));
@@ -150,6 +153,15 @@ public class DebugScreen extends Screen {
                 if (currentTab != null) currentTab.onClose();
             }));
         }
+        addRenderableWidget(new Button(width / 2 + 95, height - 70, 59, 20, new TextComponent("Slow Self"), button -> {
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSlowMessage(speedMod));
+        }));
+        addRenderableWidget(new DebugSlider(width / 2 + 154, height - 70, 65, 20, new TextComponent("Mod: "), new TextComponent(""), 0.1, 1, speedMod, 0.05, 2, true) {
+            @Override
+            protected void applyValue() {
+                speedMod = (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+            }
+        });
         builder.withInitialValue(showPaths);
         addRenderableWidget(builder.create(width / 2 - 91, height - 45, 91, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
             showPaths = (boolean) cycleButton.getValue();

@@ -12,6 +12,7 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.*;
 import com.github.teamfossilsarcheology.fossil.client.gui.filters.CreativeTabFilters;
 import com.github.teamfossilsarcheology.fossil.client.model.*;
 import com.github.teamfossilsarcheology.fossil.client.particle.*;
+import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
 import com.github.teamfossilsarcheology.fossil.client.renderer.blockentity.*;
 import com.github.teamfossilsarcheology.fossil.client.renderer.entity.*;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
@@ -26,6 +27,7 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.architectury.event.EventResult;
+import dev.architectury.event.events.client.ClientGuiEvent;
 import dev.architectury.event.events.client.ClientPlayerEvent;
 import dev.architectury.event.events.client.ClientTickEvent;
 import dev.architectury.event.events.common.EntityEvent;
@@ -145,6 +147,9 @@ public class ClientInit {
                     ((Player) entity).displayClientMessage(new TextComponent("You're running a development build of F/A: Revival").withStyle(ChatFormatting.RED, ChatFormatting.BOLD), false);
                 }
                 return EventResult.pass();
+            });
+            ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> {
+                PathingRenderer.renderOverlay(poseStack);
             });
         }
         registerBlockRenderers();
@@ -271,6 +276,10 @@ public class ClientInit {
                 }
             }
             return EventResult.pass();
+        });
+        ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> {
+            Minecraft mc = Minecraft.getInstance();
+            OverlayRenderer.renderHelmet(mc.getWindow().getGuiScaledWidth(), mc.getWindow().getGuiScaledHeight());
         });
     }
 
