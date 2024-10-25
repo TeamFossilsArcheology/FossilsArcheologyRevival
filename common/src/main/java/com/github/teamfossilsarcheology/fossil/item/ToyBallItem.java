@@ -1,10 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.item;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ToyBall;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -20,7 +17,6 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 import java.util.function.Predicate;
@@ -28,17 +24,10 @@ import java.util.function.Predicate;
 public class ToyBallItem extends Item {
     private static final Predicate<Entity> ENTITY_PREDICATE = EntitySelector.NO_SPECTATORS.and(Entity::isPickable);
     private final DyeColor color;
-    private final Component name;
 
     public ToyBallItem(DyeColor color, Properties properties) {
         super(properties);
         this.color = color;
-        this.name = new TranslatableComponent("item." + FossilMod.MOD_ID + ".toy_ball", new TranslatableComponent("color.minecraft." + color.getName()));
-    }
-
-    @Override
-    public @NotNull Component getName(ItemStack stack) {
-        return name;
     }
 
     @Override

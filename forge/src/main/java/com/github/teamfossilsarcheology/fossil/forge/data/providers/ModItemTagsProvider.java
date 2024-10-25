@@ -222,7 +222,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         }
         tag(ModItemTags.COOKABLE_EGGS).addTags(ModItemTags.DINO_EGGS).add(Items.EGG);
         tag(ModItemTags.ALL_BONES).addTags(ModItemTags.ARM_BONES, ModItemTags.FOOT_BONES, ModItemTags.LEG_BONES, ModItemTags.RIBCAGE_BONES, ModItemTags.SKULL_BONES, ModItemTags.TAIL_BONES, ModItemTags.UNIQUE_BONES, ModItemTags.VERTEBRAE_BONES);
-        tag(ItemTags.MUSIC_DISCS).add(RECORD_ANU.get(), RECORD_BONES.get(), RECORD_DISCOVERY.get(), RECORD_SCARAB.get());
+        tag(ItemTags.MUSIC_DISCS).add(MUSIC_DISC_ANU.get(), MUSIC_DISC_BONES.get(), MUSIC_DISC_DISCOVERY.get(), MUSIC_DISC_SCARAB.get());
 
         tag(ModItemTags.SIFTER_INPUTS).addTags(ItemTags.SAND, ItemTags.DIRT).add(DENSE_SAND.get().asItem(),
                 VOLCANIC_ASH.get().asItem(), Blocks.GRAVEL.asItem(), Blocks.SOUL_SAND.asItem());

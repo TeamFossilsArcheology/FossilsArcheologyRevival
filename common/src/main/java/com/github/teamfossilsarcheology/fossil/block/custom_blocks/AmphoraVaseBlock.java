@@ -1,14 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 
-import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
@@ -31,23 +27,9 @@ import org.jetbrains.annotations.Nullable;
 public class AmphoraVaseBlock extends VaseBlock {
     public static final EnumProperty<DoubleBlockHalf> HALF = BlockStateProperties.DOUBLE_BLOCK_HALF;
     private static final VoxelShape SHAPE = Block.box(1, 0, 2, 15, 32, 14);
-    private final MutableComponent name;
 
-    public AmphoraVaseBlock(DyeColor color) {
-        super();
+    public AmphoraVaseBlock() {
         registerDefaultState(stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, Direction.NORTH));
-        this.name = new TranslatableComponent("block." + FossilMod.MOD_ID + ".vase_amphora_color", new TranslatableComponent("color.minecraft." + color.getName()));
-    }
-
-    public AmphoraVaseBlock(VaseVariant vaseVariant) {
-        super();
-        registerDefaultState(stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, Direction.NORTH));
-        this.name = new TranslatableComponent("block." + FossilMod.MOD_ID + ".vase_amphora_" + vaseVariant.getSerializedName());
-    }
-
-    @Override
-    public @NotNull MutableComponent getName() {
-        return name;
     }
 
     @Override

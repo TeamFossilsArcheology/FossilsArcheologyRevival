@@ -406,9 +406,9 @@ public class ModBlocks {
 
     static {
         for (DyeColor color : DyeColor.values()) {
-            registerVase("amphora", color.getSerializedName(), () -> new AmphoraVaseBlock(color));
-            registerVase("kylix", color.getSerializedName(), () -> new KylixVaseBlock(color));
-            registerVase("volute", color.getSerializedName(), () -> new VoluteVaseBlock(color));
+            registerVase("amphora", color.getSerializedName(), AmphoraVaseBlock::new);
+            registerVase("kylix", color.getSerializedName(), KylixVaseBlock::new);
+            registerVase("volute", color.getSerializedName(), VoluteVaseBlock::new);
         }
     }
 
@@ -425,15 +425,15 @@ public class ModBlocks {
     }
 
     private static RegistrySupplier<VaseBlock> registerVolute(VaseBlock.VaseVariant variant) {
-        return registerVase("volute", variant.getSerializedName(), () -> new VoluteVaseBlock(variant));
+        return registerVase("volute", variant.getSerializedName(), VoluteVaseBlock::new);
     }
 
     private static RegistrySupplier<VaseBlock> registerKylix(VaseBlock.VaseVariant variant) {
-        return registerVase("kylix", variant.getSerializedName(), () -> new KylixVaseBlock(variant));
+        return registerVase("kylix", variant.getSerializedName(), KylixVaseBlock::new);
     }
 
     private static RegistrySupplier<VaseBlock> registerAmphora(VaseBlock.VaseVariant variant) {
-        return registerVase("amphora", variant.getSerializedName(), () -> new AmphoraVaseBlock(variant));
+        return registerVase("amphora", variant.getSerializedName(), AmphoraVaseBlock::new);
     }
 
     private static RegistrySupplier<VaseBlock> registerVase(String name, String variant, Supplier<VaseBlock> supplier) {

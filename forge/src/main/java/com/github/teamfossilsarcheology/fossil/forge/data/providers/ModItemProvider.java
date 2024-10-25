@@ -151,6 +151,10 @@ public class ModItemProvider extends ItemModelProvider {
             basicItem(ModItems.SIGILLARIA_FOSSIL_SAPLING.get());
             basicItem(ModItems.TEMPSKYA_FOSSIL_SAPLING.get());
         }
+        basicItem(ModItems.MUSIC_DISC_ANU.get());
+        basicItem(ModItems.MUSIC_DISC_BONES.get());
+        basicItem(ModItems.MUSIC_DISC_DISCOVERY.get());
+        basicItem(ModItems.MUSIC_DISC_SCARAB.get());
     }
 
     @Override
