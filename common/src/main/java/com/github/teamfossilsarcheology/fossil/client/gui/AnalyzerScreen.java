@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.gui;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.inventory.AnalyzerMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
-    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/analyzer.png");
+    private static final ResourceLocation TEXTURE = FossilMod.location("textures/gui/analyzer.png");
 
     public AnalyzerScreen(AnalyzerMenu containerMenu, Inventory inventory, Component component) {
         super(containerMenu, inventory, component);

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEntityInfo;
@@ -24,7 +24,7 @@ import static com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo
 
 public class ModItemProvider extends ItemModelProvider {
     public ModItemProvider(DataGenerator generator, ExistingFileHelper existingFileHelper) {
-        super(generator, Fossil.MOD_ID, existingFileHelper);
+        super(generator, FossilMod.MOD_ID, existingFileHelper);
     }
 
     @Override

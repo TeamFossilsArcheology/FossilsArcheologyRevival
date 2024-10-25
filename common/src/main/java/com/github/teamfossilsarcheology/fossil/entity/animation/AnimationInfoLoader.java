@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -37,7 +37,7 @@ public class AnimationInfoLoader extends SimpleJsonResourceReloadListener {
         ImmutableMap.Builder<ResourceLocation, ImmutableMap<String, ServerAnimationInfo>> builder = ImmutableMap.builder();
         ImmutableMap.Builder<ResourceLocation, ImmutableMap<String, Animation>> clientBuilder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
-            if (!(fileEntry.getValue() instanceof JsonObject) || !fileEntry.getKey().getNamespace().equals(Fossil.MOD_ID)) {
+            if (!(fileEntry.getValue() instanceof JsonObject) || !fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
                 continue;
             }
             try {
@@ -57,7 +57,7 @@ public class AnimationInfoLoader extends SimpleJsonResourceReloadListener {
                     innerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), animationLength, actionDelay, blockSpeed, usesAttackBox));
                     clientInnerBuilder.put(animationEntry.getKey(), new ServerAnimationInfo(animationEntry.getKey(), animationLength, actionDelay, blockSpeed, usesAttackBox));
                 }
-                ResourceLocation path = Fossil.location("animations/" + fileEntry.getKey().getPath() + ".json");
+                ResourceLocation path = FossilMod.location("animations/" + fileEntry.getKey().getPath() + ".json");
                 builder.put(path, innerBuilder.build());
                 clientBuilder.put(path, clientInnerBuilder.build());
             } catch (Exception e) {

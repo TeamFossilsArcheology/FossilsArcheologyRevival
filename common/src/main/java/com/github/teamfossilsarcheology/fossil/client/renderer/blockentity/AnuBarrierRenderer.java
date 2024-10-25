@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.blockentity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AnuBarrierOriginBlock;
 import com.github.teamfossilsarcheology.fossil.block.entity.AnuBarrierBlockEntity;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -24,7 +24,7 @@ public class AnuBarrierRenderer implements BlockEntityRenderer<AnuBarrierBlockEn
     private final float textureWidth = 16;
     private final float textureHeight = 16;
     private static final ResourceLocation[] LOCATIONS = IntStream.range(1, 32)
-            .mapToObj(idx -> Fossil.location("textures/block/anu_portal/anu_portal_" + idx + ".png"))
+            .mapToObj(idx -> FossilMod.location("textures/block/anu_portal/anu_portal_" + idx + ".png"))
             .toArray(ResourceLocation[]::new);
 
     public AnuBarrierRenderer(BlockEntityRendererProvider.Context context) {

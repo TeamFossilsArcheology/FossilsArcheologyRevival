@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.model.block;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.Maps;
 import com.google.gson.*;
 import com.mojang.math.Vector3f;
@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public record PlantBlockModel(List<PlantBlockElement> elements, HashMap<String, Material> materials) {
 
-    public static final ResourceLocation LOADER = Fossil.location("plant_loader");
+    public static final ResourceLocation LOADER = FossilMod.location("plant_loader");
 
     public static class Deserializer implements JsonDeserializer<PlantBlockModel> {
 

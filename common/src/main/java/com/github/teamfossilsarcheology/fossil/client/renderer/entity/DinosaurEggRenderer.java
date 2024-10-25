@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.model.DinosaurEggModel;
 import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, DinosaurEggModel> implements RendererFabricFix {
     private static final Map<String, ResourceLocation> TEXTURES = new Object2ObjectOpenHashMap<>();
-    private static final ResourceLocation GOLDEN_EGG = Fossil.location("textures/entity/egg/golden.png");
+    private static final ResourceLocation GOLDEN_EGG = FossilMod.location("textures/entity/egg/golden.png");
 
     public DinosaurEggRenderer(EntityRendererProvider.Context context, DinosaurEggModel entityModel) {
         super(context, entityModel, 0.25f);
@@ -63,12 +63,12 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
 
         return TEXTURES.computeIfAbsent(entity.getPrehistoricEntityInfo().resourceName,
                 name -> {
-                    ResourceLocation rl = Fossil.location("textures/entity/egg/egg_" + name + ".png");
+                    ResourceLocation rl = FossilMod.location("textures/entity/egg/egg_" + name + ".png");
                     //Calling getTexture twice is needed because the first call will not return the missing texture
                     Minecraft.getInstance().getTextureManager().getTexture(rl);
                     AbstractTexture tex = Minecraft.getInstance().getTextureManager().getTexture(rl);
                     if (tex == MissingTextureAtlasSprite.getTexture()) {
-                        return Fossil.location("textures/entity/egg/fallback.png");
+                        return FossilMod.location("textures/entity/egg/fallback.png");
                     } else {
                         return rl;
                     }

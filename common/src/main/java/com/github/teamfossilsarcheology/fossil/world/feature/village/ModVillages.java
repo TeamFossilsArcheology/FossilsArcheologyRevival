@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.village;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.mojang.datafixers.util.Pair;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.Holder;
@@ -30,7 +30,7 @@ public class ModVillages {
             Registry.PROCESSOR_LIST_REGISTRY, new ResourceLocation("minecraft", "empty"));
 
     private static Tuple createStructure(String name, int weight) {
-        return new Tuple(Fossil.MOD_ID + ":" + name, weight);
+        return new Tuple(FossilMod.MOD_ID + ":" + name, weight);
     }
 
     public static void addBuildingToPool(StructureTemplatePool pool, Registry<StructureProcessorList> registry, Tuple building) {

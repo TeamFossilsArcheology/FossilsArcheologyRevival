@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.monster.*;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.*;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
@@ -26,7 +26,7 @@ import net.minecraft.world.entity.MobCategory;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
 
 public class ModEntities {
-    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(Fossil.MOD_ID, Registry.ENTITY_TYPE_REGISTRY);
+    private static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(FossilMod.MOD_ID, Registry.ENTITY_TYPE_REGISTRY);
 
     public static final RegistrySupplier<EntityType<ToyBall>> TOY_BALL = registerMisc("toy_ball", ToyBall::new, 0.5f, 0.5f, 5, 3);
     public static final RegistrySupplier<EntityType<ToyTetheredLog>> TOY_TETHERED_LOG = registerMisc("toy_tethered_log", ToyTetheredLog::new, 0.6f, 1.9375f, 5, 20);

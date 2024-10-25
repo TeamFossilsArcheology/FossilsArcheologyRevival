@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -45,7 +45,7 @@ public abstract class Instruction {
                 case SLEEP -> Sleep.decodeTag(tag);
             };
         } catch (RuntimeException e) {
-            Fossil.LOGGER.error("Could not read Instruction enum from tag: ", e);
+            FossilMod.LOGGER.error("Could not read Instruction enum from tag: ", e);
             return new Idle(0);
         }
     }
@@ -60,7 +60,7 @@ public abstract class Instruction {
                 }
                 list.add(decodeFromTag(tag));
             } catch (RuntimeException e) {
-                Fossil.LOGGER.error("Could not read Instruction enum from buffer: ", e);
+                FossilMod.LOGGER.error("Could not read Instruction enum from buffer: ", e);
                 return List.of();
             }
         }

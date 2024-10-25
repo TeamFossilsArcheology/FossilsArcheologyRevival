@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.mixin;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.mojang.authlib.GameProfile;
 import net.minecraft.client.multiplayer.PlayerInfo;
 import net.minecraft.resources.ResourceLocation;
@@ -39,13 +39,13 @@ public class PlayerInfoMixin {
             /* Krimpomp */UUID.fromString("7a4804fe-a6df-4243-9076-ff719f5ec627"),
             /* NotThatHyper */UUID.fromString("13d60612-a851-4945-bf88-4183dd281d7a")};
     @Unique
-    private static final ResourceLocation DEVELOPER_CAPE_TEXTURE = Fossil.location("textures/skins/developer_cape.png");
+    private static final ResourceLocation DEVELOPER_CAPE_TEXTURE = FossilMod.location("textures/skins/developer_cape.png");
     @Unique
-    private static final ResourceLocation CONTRIBUTOR_CAPE_TEXTURE = Fossil.location("textures/skins/contributor_cape.png");
+    private static final ResourceLocation CONTRIBUTOR_CAPE_TEXTURE = FossilMod.location("textures/skins/contributor_cape.png");
     @Unique
-    private static final ResourceLocation DEVELOPER_ELYTRA_TEXTURE = Fossil.location("textures/skins/developer_elytra.png");
+    private static final ResourceLocation DEVELOPER_ELYTRA_TEXTURE = FossilMod.location("textures/skins/developer_elytra.png");
     @Unique
-    private static final ResourceLocation CONTRIBUTOR_ELYTRA_TEXTURE = Fossil.location("textures/skins/contributor_elytra.png");
+    private static final ResourceLocation CONTRIBUTOR_ELYTRA_TEXTURE = FossilMod.location("textures/skins/contributor_elytra.png");
 
     @Inject(method = "getCapeLocation", at = @At("RETURN"), cancellable = true)
     private void fossilsArcheologyRevival$getCape(CallbackInfoReturnable<ResourceLocation> cir) {

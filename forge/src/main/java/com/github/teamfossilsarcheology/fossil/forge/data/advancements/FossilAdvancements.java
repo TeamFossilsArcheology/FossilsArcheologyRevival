@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.advancements;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.advancements.ImplantEmbryoTrigger;
 import com.github.teamfossilsarcheology.fossil.advancements.IncubateEggTrigger;
 import com.github.teamfossilsarcheology.fossil.advancements.OpenSarcophagusTrigger;
@@ -33,9 +33,9 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
         Advancement root = Advancement.Builder.advancement().display(BIO_FOSSIL.get(),
                         new TranslatableComponent("advancements.fossil.root.title"),
                         new TranslatableComponent("advancements.fossil.root.description"),
-                        Fossil.location("textures/block/ancient_stone_bricks.png"), FrameType.TASK, true, false, false)
+                        FossilMod.location("textures/block/ancient_stone_bricks.png"), FrameType.TASK, true, false, false)
                 .addCriterion("requirement", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CRAFTING_TABLE))
-                .save(consumer, Fossil.MOD_ID + ":fossil/root");
+                .save(consumer, FossilMod.MOD_ID + ":fossil/root");
         Advancement breakFossil = simple(root, "break_fossil", consumer, RELIC_SCRAP, BIO_FOSSIL, PlANT_FOSSIL, SHALE_FOSSIL, SKULL_BLOCK);
         Advancement analyzer = simple(breakFossil, consumer, ANALYZER);
         Advancement fossilSeed = tag(FERN_SEED_FOSSIL.get(), ModItemTags.FOSSIL_SEEDS, analyzer, consumer);
@@ -79,7 +79,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
                 builder.addCriterion(info.entityType().getRegistryName().getPath(), IncubateEggTrigger.TriggerInstance.incubateEgg(info.entityType()));
             }
         }
-        builder.save(consumer, Fossil.MOD_ID + ":fossil/all_eggs");
+        builder.save(consumer, FossilMod.MOD_ID + ":fossil/all_eggs");
 
         builder = Advancement.Builder.advancement().display(MAMMOTH.embryoItem, title("all_embryos"), description("all_embryos"),
                         null, FrameType.CHALLENGE, true, true, false)
@@ -93,7 +93,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
                 builder.addCriterion(info.embryoItem.getRegistryName().getPath(), ImplantEmbryoTrigger.TriggerInstance.implantEmbryo(info.embryoItem));
             }
         }
-        builder.save(consumer, Fossil.MOD_ID + ":fossil/all_embryos");
+        builder.save(consumer, FossilMod.MOD_ID + ":fossil/all_embryos");
 
     }
 
@@ -102,7 +102,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
                         null, FrameType.TASK, true, true, false)
                 .parent(parent)
                 .addCriterion("requirement", trigger)
-                .save(consumer, Fossil.MOD_ID + ":fossil/" + key);
+                .save(consumer, FossilMod.MOD_ID + ":fossil/" + key);
     }
 
     private Advancement simple(Advancement parent, String key, Consumer<Advancement> consumer, ItemLike... items) {
@@ -113,7 +113,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
         for (int i = 0; i < items.length; i++) {
             builder.addCriterion(items[i].asItem().getRegistryName().getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(items[i]));
         }
-        return builder.save(consumer, Fossil.MOD_ID + ":fossil/" + key);
+        return builder.save(consumer, FossilMod.MOD_ID + ":fossil/" + key);
     }
 
     @SafeVarargs
@@ -132,14 +132,14 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
                         null, FrameType.TASK, true, true, false)
                 .parent(parent)
                 .addCriterion("requirement", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(tag).build()))
-                .save(consumer, Fossil.MOD_ID + ":fossil/" + key);
+                .save(consumer, FossilMod.MOD_ID + ":fossil/" + key);
     }
 
     private TranslatableComponent title(String key) {
-        return new TranslatableComponent(String.format("advancements.%s.%s.title", Fossil.MOD_ID, key));
+        return new TranslatableComponent(String.format("advancements.%s.%s.title", FossilMod.MOD_ID, key));
     }
 
     private TranslatableComponent description(String key) {
-        return new TranslatableComponent(String.format("advancements.%s.%s.description", Fossil.MOD_ID, key));
+        return new TranslatableComponent(String.format("advancements.%s.%s.description", FossilMod.MOD_ID, key));
     }
 }

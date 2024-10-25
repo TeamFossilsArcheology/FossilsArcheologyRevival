@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.animation.*;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -50,7 +50,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     protected PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
         super(entityType, level);
-        this.animationLocation = Fossil.location("animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
+        this.animationLocation = FossilMod.location("animations/" + EntityType.getKey(entityType).getPath() + ".animation.json");
         this.moveControl = new SmoothSwimmingMoveControl(this, 85, 10, 0.2f, 0.1f, true);
         this.lookControl = new SmoothSwimmingLookControl(this, 10);
     }

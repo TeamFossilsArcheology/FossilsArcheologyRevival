@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.advancements;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.AbstractCriterionTriggerInstance;
 import net.minecraft.advancements.critereon.DeserializationContext;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * Triggers whenever the {@link com.github.teamfossilsarcheology.fossil.block.custom_blocks.SarcophagusBlock Sarcophagus} is opened
  */
 public class OpenSarcophagusTrigger extends SimpleCriterionTrigger<OpenSarcophagusTrigger.TriggerInstance> {
-    private static final ResourceLocation ID = Fossil.location("open_sarcophagus");
+    private static final ResourceLocation ID = FossilMod.location("open_sarcophagus");
 
     public void trigger(ServerPlayer player) {
         trigger(player, triggerInstance -> true);

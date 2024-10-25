@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.gui;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.inventory.FeederMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -11,7 +11,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class FeederScreen extends AbstractContainerScreen<FeederMenu> {
-    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/feeder.png");
+    private static final ResourceLocation TEXTURE = FossilMod.location("textures/gui/feeder.png");
     private static final int BAR_HEIGHT = 47;
     private static final int BAR_WIDTH = 5;
 

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.blockentity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AncientChestBlock;
 import com.github.teamfossilsarcheology.fossil.block.entity.AncientChestBlockEntity;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -25,7 +25,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 
 public class AncientChestRenderer implements BlockEntityRenderer<AncientChestBlockEntity> {
-    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/ancient_chest.png");
+    public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/ancient_chest.png");
     private final ModelPart chestModel;
 
     public AncientChestRenderer(BlockEntityRendererProvider.Context context) {

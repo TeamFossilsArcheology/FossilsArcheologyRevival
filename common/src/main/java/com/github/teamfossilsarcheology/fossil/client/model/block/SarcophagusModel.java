@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.client.model.block;
 
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -10,8 +10,8 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
 public class SarcophagusModel {
-    public static final ResourceLocation UNAWAKENED = Fossil.location("textures/entity/sarcophagus.png");
-    public static final ResourceLocation AWAKENED = Fossil.location("textures/entity/sarcophagus_awakened.png");
+    public static final ResourceLocation UNAWAKENED = FossilMod.location("textures/entity/sarcophagus.png");
+    public static final ResourceLocation AWAKENED = FossilMod.location("textures/entity/sarcophagus_awakened.png");
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();

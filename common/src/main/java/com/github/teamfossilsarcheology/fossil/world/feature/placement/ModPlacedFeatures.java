@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.placement;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModOreFeatures;
@@ -37,7 +37,7 @@ public class ModPlacedFeatures {
     private static Holder<PlacedFeature> ventVolcano;
 
     static {
-        StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, Fossil.location("hell_boat")),
+        StructureSets.register(ResourceKey.create(Registry.STRUCTURE_SET_REGISTRY, FossilMod.location("hell_boat")),
                 ModConfiguredFeatures.HELL_BOAT, new LazyRandomSpreadPlacement(FossilConfig.HELL_SHIP_SPACING, FossilConfig.HELL_SHIP_SEPARATION,
                         RandomSpreadType.LINEAR, 92182587));
     }

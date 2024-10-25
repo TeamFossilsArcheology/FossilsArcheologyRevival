@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.network.chat.MutableComponent;
@@ -36,13 +36,13 @@ public class AmphoraVaseBlock extends VaseBlock {
     public AmphoraVaseBlock(DyeColor color) {
         super();
         registerDefaultState(stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, Direction.NORTH));
-        this.name = new TranslatableComponent("block." + Fossil.MOD_ID + ".vase_amphora_color", new TranslatableComponent("color.minecraft." + color.getName()));
+        this.name = new TranslatableComponent("block." + FossilMod.MOD_ID + ".vase_amphora_color", new TranslatableComponent("color.minecraft." + color.getName()));
     }
 
     public AmphoraVaseBlock(VaseVariant vaseVariant) {
         super();
         registerDefaultState(stateDefinition.any().setValue(HALF, DoubleBlockHalf.LOWER).setValue(FACING, Direction.NORTH));
-        this.name = new TranslatableComponent("block." + Fossil.MOD_ID + ".vase_amphora_" + vaseVariant.getSerializedName());
+        this.name = new TranslatableComponent("block." + FossilMod.MOD_ID + ".vase_amphora_" + vaseVariant.getSerializedName());
     }
 
     @Override

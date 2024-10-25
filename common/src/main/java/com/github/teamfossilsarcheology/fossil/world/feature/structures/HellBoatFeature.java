@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.structures;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.QuartPos;
@@ -31,21 +31,21 @@ public class HellBoatFeature extends StructureFeature<RangeConfiguration> {
     private static void generatePieces(StructurePiecesBuilder builder, PieceGenerator.Context<RangeConfiguration> context) {
         BlockPos origin = context.chunkPos().getMiddleBlockPosition(0);
         NoiseColumn noiseColumn = context.chunkGenerator().getBaseColumn(origin.getX(), origin.getZ(), context.heightAccessor());
-        Fossil.LOGGER.debug("Hellboat: Trying to place at " + origin.atY(30));
+        FossilMod.LOGGER.debug("Hellboat: Trying to place at " + origin.atY(30));
         if (noiseColumn.getBlock(31).getBlock() != Blocks.LAVA) {
-            Fossil.LOGGER.debug("Hellboat: No Lava");
+            FossilMod.LOGGER.debug("Hellboat: No Lava");
             return;
         }
         for (int i = 32; i < 50; i++) {
             Block block = noiseColumn.getBlock(i).getBlock();
             if (block != Blocks.AIR && block != Blocks.CAVE_AIR) {
-                Fossil.LOGGER.debug("Hellboat: No Air");
+                FossilMod.LOGGER.debug("Hellboat: No Air");
                 return;
             }
         }
         WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
         Rotation rotation = Rotation.getRandom(worldgenRandom);
-        Fossil.LOGGER.debug("Hellboat: Placed");
+        FossilMod.LOGGER.debug("Hellboat: Placed");
         builder.addPiece(new HellBoatPiece(context.structureManager(), origin.atY(30), rotation));
     }
 

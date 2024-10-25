@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.item;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -19,7 +19,7 @@ public abstract class PrehistoricEntityItem extends Item {
     protected PrehistoricEntityItem(Properties properties, EntityInfo info, String category) {
         super(properties.tab(ModTabs.FAITEMTAB));
         this.info = info;
-        this.name = new TranslatableComponent("item." + Fossil.MOD_ID + "." + category, info.displayName().get());
+        this.name = new TranslatableComponent("item." + FossilMod.MOD_ID + "." + category, info.displayName().get());
     }
 
     @Override

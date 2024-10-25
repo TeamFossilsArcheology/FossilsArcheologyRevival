@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
@@ -35,13 +35,13 @@ public class SkeletonGeoModelLoader extends SimplePreparableReloadListener<Map<R
         Map<ResourceLocation, GeoModel> map = new Object2ObjectOpenHashMap<>();
         for (ResourceLocation resourceLocation : resourceManager.listResources(DIRECTORY, string -> string.endsWith(PATH_SUFFIX))) {
             try {
-                if (resourceLocation.getNamespace().equals(Fossil.MOD_ID)) {
+                if (resourceLocation.getNamespace().equals(FossilMod.MOD_ID)) {
                     RawGeoModel rawModel = Converter.fromJsonString(AnimationFileLoader.getResourceAsString(resourceLocation, resourceManager));
                     RawGeometryTree rawGeometryTree = RawGeometryTree.parseHierarchy(rawModel);
-                    map.put(resourceLocation, GeoBuilder.getGeoBuilder(Fossil.MOD_ID).constructGeoModel(rawGeometryTree));
+                    map.put(resourceLocation, GeoBuilder.getGeoBuilder(FossilMod.MOD_ID).constructGeoModel(rawGeometryTree));
                 }
             } catch (IOException e) {
-                Fossil.LOGGER.error(String.format("Error parsing %S", resourceLocation), e);
+                FossilMod.LOGGER.error(String.format("Error parsing %S", resourceLocation), e);
                 throw new RuntimeException(e);
             }
         }

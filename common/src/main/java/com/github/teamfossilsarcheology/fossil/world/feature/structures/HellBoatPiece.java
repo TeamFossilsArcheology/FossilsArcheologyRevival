@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.structures;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -16,7 +16,7 @@ import net.minecraft.world.level.levelgen.structure.templatesystem.StructurePlac
 import java.util.Random;
 
 public class HellBoatPiece extends TemplateStructurePiece {
-    private static final ResourceLocation STRUCTURE = Fossil.location("hell_boat");
+    private static final ResourceLocation STRUCTURE = FossilMod.location("hell_boat");
 
     public HellBoatPiece(StructureManager structureManager, BlockPos blockPos, Rotation rotation) {
         super(StructurePieceType.NETHER_FOSSIL, 0, structureManager, STRUCTURE, STRUCTURE.toString(), makeSettings(rotation), blockPos);

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.tags.ModEntityTypeTags;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.EntityTypeTagsProvider;
@@ -13,7 +13,7 @@ import static net.minecraft.world.entity.EntityType.*;
 public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
 
     public ModEntityTypeTagsProvider(DataGenerator arg, @Nullable ExistingFileHelper existingFileHelper) {
-        super(arg, Fossil.MOD_ID, existingFileHelper);
+        super(arg, FossilMod.MOD_ID, existingFileHelper);
     }
 
     @Override

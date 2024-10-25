@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
@@ -28,7 +28,7 @@ public class OptionalTextureLoader extends SimplePreparableReloadListener<Pair<S
         int i = DIRECTORY.length() + 1;
 
         for (ResourceLocation resourceLocation : resourceManager.listResources(DIRECTORY, string -> string.endsWith(PATH_SUFFIX))) {
-            if (!resourceLocation.getNamespace().equals(Fossil.MOD_ID)) {
+            if (!resourceLocation.getNamespace().equals(FossilMod.MOD_ID)) {
                 continue;
             }
             String path = resourceLocation.getPath();

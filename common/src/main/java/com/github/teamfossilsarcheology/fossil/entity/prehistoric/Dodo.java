@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
@@ -71,7 +71,7 @@ public class Dodo extends Prehistoric {
         }
         if (isSleeping()) builder.append("_sleeping");
         builder.append(".png");
-        textureLocation = Fossil.location(builder.toString());
+        textureLocation = FossilMod.location(builder.toString());
     }
 
     @Override

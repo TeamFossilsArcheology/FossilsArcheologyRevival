@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block.entity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES =
-            DeferredRegister.create(Fossil.MOD_ID, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
+            DeferredRegister.create(FossilMod.MOD_ID, Registry.BLOCK_ENTITY_TYPE_REGISTRY);
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> SIFTER = BLOCK_ENTITIES.register("sifter",
             () -> BlockEntityType.Builder.of(SifterBlockEntity::get, ModBlocks.SIFTER.get()).build(null));
     public static final RegistrySupplier<BlockEntityType<BlockEntity>> ANALYZER = BLOCK_ENTITIES.register("analyzer",

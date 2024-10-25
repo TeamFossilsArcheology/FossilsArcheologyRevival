@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -19,12 +19,12 @@ public class VoluteVaseBlock extends VaseBlock {
 
     public VoluteVaseBlock(DyeColor color) {
         super();
-        this.name = new TranslatableComponent("block." + Fossil.MOD_ID + ".vase_volute_color", new TranslatableComponent("color.minecraft." + color.getName()));
+        this.name = new TranslatableComponent("block." + FossilMod.MOD_ID + ".vase_volute_color", new TranslatableComponent("color.minecraft." + color.getName()));
     }
 
     public VoluteVaseBlock(VaseVariant vaseVariant) {
         super();
-        this.name = new TranslatableComponent("block." + Fossil.MOD_ID + ".vase_volute_" + vaseVariant.getSerializedName());
+        this.name = new TranslatableComponent("block." + FossilMod.MOD_ID + ".vase_volute_" + vaseVariant.getSerializedName());
     }
 
     @Override

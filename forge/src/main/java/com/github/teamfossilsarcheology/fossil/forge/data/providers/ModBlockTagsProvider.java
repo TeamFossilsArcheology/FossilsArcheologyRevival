@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.FigurineBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.VaseBlock;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
@@ -22,7 +22,7 @@ import static com.github.teamfossilsarcheology.fossil.block.ModBlocks.*;
 public class ModBlockTagsProvider extends BlockTagsProvider {
 
     public ModBlockTagsProvider(DataGenerator arg, @Nullable ExistingFileHelper existingFileHelper) {
-        super(arg, Fossil.MOD_ID, existingFileHelper);
+        super(arg, FossilMod.MOD_ID, existingFileHelper);
     }
 
     @Override

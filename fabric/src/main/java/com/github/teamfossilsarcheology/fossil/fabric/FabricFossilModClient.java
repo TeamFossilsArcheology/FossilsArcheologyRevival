@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.fabric;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.client.ClientInit;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingRenderer;
@@ -26,7 +26,7 @@ import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
 
 import java.util.Optional;
 
-public class FossilFabricClient implements ClientModInitializer {
+public class FabricFossilModClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ClientInit.immediate();
@@ -38,8 +38,8 @@ public class FossilFabricClient implements ClientModInitializer {
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.ANCIENT_CHEST.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         BuiltinItemRendererRegistry.INSTANCE.register(ModBlocks.SARCOPHAGUS.get().asItem(), CustomItemRendererFabricImpl.INSTANCE);
         ClientSpriteRegistryCallback.event(TextureAtlas.LOCATION_BLOCKS).register((atlasTexture, registry) -> {
-            registry.register(Fossil.location("block/tar_still"));
-            registry.register(Fossil.location("block/tar_flowing"));
+            registry.register(FossilMod.location("block/tar_still"));
+            registry.register(FossilMod.location("block/tar_flowing"));
         });
         HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
             Minecraft mc = Minecraft.getInstance();

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
@@ -21,7 +21,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class Trilobite extends PrehistoricSwimmingBucketable {
 
     protected Trilobite(EntityType<? extends Trilobite> entityType, Level level) {
-        super(entityType, level, Fossil.location("animations/trilobite.animation.json"));
+        super(entityType, level, FossilMod.location("animations/trilobite.animation.json"));
     }
 
     @Override

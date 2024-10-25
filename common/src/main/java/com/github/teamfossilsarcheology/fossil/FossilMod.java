@@ -30,7 +30,7 @@ import net.minecraft.server.packs.PackType;
 import org.slf4j.Logger;
 
 
-public class Fossil {
+public class FossilMod {
     public static final String MOD_ID = "fossil";
     public static final Logger LOGGER = LogUtils.getLogger();
 
@@ -44,7 +44,7 @@ public class Fossil {
         ReloadListenerRegistry.register(PackType.SERVER_DATA, AnimationCategoryLoader.INSTANCE);
         ModFluids.register(); //Before ModBlocks
         ModBlocks.register();
-        ModEntities.register();
+        ModEntities.register(); //Before ModItems
         ModSounds.register();
         ModItems.register();
         ModMenus.register();

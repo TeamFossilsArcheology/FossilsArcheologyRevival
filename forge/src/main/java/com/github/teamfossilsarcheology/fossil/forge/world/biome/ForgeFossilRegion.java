@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.world.biome;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.world.biome.ModBiomes;
 import com.mojang.datafixers.util.Pair;
@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 
 public class ForgeFossilRegion extends Region {
     public ForgeFossilRegion(String location, RegionType regionType, int weight) {
-        super(Fossil.location(location), regionType, weight);
+        super(FossilMod.location(location), regionType, weight);
     }
 
     @Override

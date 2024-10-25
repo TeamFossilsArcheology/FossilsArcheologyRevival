@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.recipe;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -26,9 +26,9 @@ public class ModRecipes {
     private static final Map<ItemLike, Integer> WORKTABLE_FUEL_VALUES = new Object2IntOpenHashMap<>();
     private static final Map<ItemLike, Integer> CULTURE_VAT_FUEL_VALUES = new Object2IntOpenHashMap<>();
 
-    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(Fossil.MOD_ID,
+    public static final DeferredRegister<RecipeSerializer<?>> SERIALIZERS = DeferredRegister.create(FossilMod.MOD_ID,
             Registry.RECIPE_SERIALIZER_REGISTRY);
-    public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(Fossil.MOD_ID, Registry.RECIPE_TYPE_REGISTRY);
+    public static final DeferredRegister<RecipeType<?>> TYPES = DeferredRegister.create(FossilMod.MOD_ID, Registry.RECIPE_TYPE_REGISTRY);
 
     public static final RegistrySupplier<RecipeSerializer<AnalyzerRecipe>> ANALYZER_SERIALIZER = SERIALIZERS.register("analyzer",
             () -> AnalyzerRecipe.Serializer.INSTANCE);

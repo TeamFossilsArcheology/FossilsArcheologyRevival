@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.compat.rei;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -23,8 +23,8 @@ import java.util.List;
 import static com.github.teamfossilsarcheology.fossil.client.gui.WorktableScreen.*;
 
 public class WorktableCategory implements DisplayCategory<WorktableDisplay> {
-    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/workbench.png");
-    private static final ResourceLocation DARK_TEXTURE = Fossil.location("textures/gui/workbench_dark.png");
+    private static final ResourceLocation TEXTURE = FossilMod.location("textures/gui/workbench.png");
+    private static final ResourceLocation DARK_TEXTURE = FossilMod.location("textures/gui/workbench_dark.png");
 
 
     @Override

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.item;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
@@ -22,7 +22,7 @@ public class MeatItem extends PrehistoricEntityItem {
         super(new Item.Properties().food(new FoodProperties.Builder().nutrition(cooked ? 8 : 3)
                 .saturationMod(saturation).build()), info, cooked ? "cooked_meat" : "meat");
         if (info == NAUTILUS && cooked) {
-            nautilusName = new TranslatableComponent("item." + Fossil.MOD_ID + ".cooked_nautilus");
+            nautilusName = new TranslatableComponent("item." + FossilMod.MOD_ID + ".cooked_nautilus");
         }
     }
 

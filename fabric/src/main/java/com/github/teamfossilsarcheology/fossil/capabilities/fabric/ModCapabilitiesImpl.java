@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.capabilities.fabric;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
 import com.github.teamfossilsarcheology.fossil.fabric.capabilities.FirstHatchComponent;
 import com.github.teamfossilsarcheology.fossil.fabric.capabilities.MammalComponent;
@@ -12,9 +12,9 @@ import org.jetbrains.annotations.Nullable;
 
 public class ModCapabilitiesImpl {
     public static final ComponentKey<MammalComponent> MAMMAL =
-            ComponentRegistry.getOrCreate(Fossil.location("mammal"), MammalComponent.class);
+            ComponentRegistry.getOrCreate(FossilMod.location("mammal"), MammalComponent.class);
     public static final ComponentKey<FirstHatchComponent> PLAYER =
-            ComponentRegistry.getOrCreate(Fossil.location("first_hatch"), FirstHatchComponent.class);
+            ComponentRegistry.getOrCreate(FossilMod.location("first_hatch"), FirstHatchComponent.class);
 
     public static int getEmbryoProgress(Animal animal) {
         return MAMMAL.get(animal).getEmbryoProgress();

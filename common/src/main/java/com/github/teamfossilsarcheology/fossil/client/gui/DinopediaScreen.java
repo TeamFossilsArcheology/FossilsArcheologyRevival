@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.gui;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.client.DinopediaBioLoader;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
@@ -44,8 +44,8 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class DinopediaScreen extends Screen {
-    private static final ResourceLocation DINOPEDIA_BACKGROUND = Fossil.location("textures/gui/dinopedia.png");
-    private static final ResourceLocation MOODS = Fossil.location("textures/gui/dinopedia_mood.png");
+    private static final ResourceLocation DINOPEDIA_BACKGROUND = FossilMod.location("textures/gui/dinopedia.png");
+    private static final ResourceLocation MOODS = FossilMod.location("textures/gui/dinopedia_mood.png");
     private static final int MOOD_FACE_WIDTH = 16;
     private static final int MOOD_FACE_HEIGHT = 15;
     private static final int MOOD_BAR_WIDTH = 206;

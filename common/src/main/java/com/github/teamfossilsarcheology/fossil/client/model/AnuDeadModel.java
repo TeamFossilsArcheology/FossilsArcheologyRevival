@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.model;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.AnuDead;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -15,7 +15,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnuDeadModel extends EntityModel<AnuDead> {
-    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anu_boss.png");
+    public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/anu_boss.png");
     private final ModelPart model = createBodyLayer().bakeRoot();
 
     public AnuDeadModel() {

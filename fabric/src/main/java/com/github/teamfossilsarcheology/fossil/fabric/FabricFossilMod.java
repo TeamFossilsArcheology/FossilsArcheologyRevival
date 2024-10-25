@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.fabric;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.block.entity.ModBlockEntities;
 import com.github.teamfossilsarcheology.fossil.block.entity.fabric.AnalyzerBlockEntityImpl;
@@ -42,7 +42,7 @@ import terrablender.api.Regions;
 import terrablender.api.SurfaceRuleManager;
 import terrablender.api.TerraBlenderApi;
 
-public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComponentInitializer {
+public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityComponentInitializer {
     private static boolean initialized = false;
 
     public static void init() {
@@ -50,15 +50,15 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
             return;
         }
         initialized = true;
-        MidnightConfig.init(Fossil.MOD_ID, FossilConfigImpl.class);
+        MidnightConfig.init(FossilMod.MOD_ID, FossilConfigImpl.class);
         FossilConfigImpl.initFabricConfig();
-        Fossil.init();
+        FossilMod.init();
         SpawnRestrictionAccessor.callRegister(ModEntities.ALLIGATOR_GAR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
         SpawnRestrictionAccessor.callRegister(ModEntities.COELACANTH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Coelacanth::canCoelacanthSpawn);
         SpawnRestrictionAccessor.callRegister(ModEntities.NAUTILUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
         SpawnRestrictionAccessor.callRegister(ModEntities.STURGEON.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
-        Registry.register(Registry.CHUNK_GENERATOR, Fossil.location("treasure_room"), TreasureChunkGenerator.CODEC);
-        Registry.register(Registry.CHUNK_GENERATOR, Fossil.location("anu_lair"), AnuLairChunkGenerator.CODEC);
+        Registry.register(Registry.CHUNK_GENERATOR, FossilMod.location("treasure_room"), TreasureChunkGenerator.CODEC);
+        Registry.register(Registry.CHUNK_GENERATOR, FossilMod.location("anu_lair"), AnuLairChunkGenerator.CODEC);
         ModPlacementTypes.register();
         ModTriggers.register();
         ModPlacedFeatures.register();
@@ -86,7 +86,7 @@ public class FossilFabric implements ModInitializer, TerraBlenderApi, EntityComp
     public void onTerraBlenderInitialized() {
         init();
         Regions.register(new FabricFossilRegion("overworld", RegionType.OVERWORLD, 4));
-        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Fossil.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
+        SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, FossilMod.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
     }
 
     @Override

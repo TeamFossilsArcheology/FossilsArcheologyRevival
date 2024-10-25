@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.structures;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.levelgen.feature.StructureFeature;
@@ -17,7 +17,7 @@ public class ModStructures {
     public static final Tuple<NoneFeatureConfiguration, TreasureRoomFeature> TREASURE_ROOM = createStructure("treasure_room", new TreasureRoomFeature());
 
     private static <C extends FeatureConfiguration, F extends StructureFeature<C>> Tuple<C, F> createStructure(String name, F feature) {
-        return new Tuple<>(Fossil.location(name), feature);
+        return new Tuple<>(FossilMod.location(name), feature);
     }
 
     @ExpectPlatform

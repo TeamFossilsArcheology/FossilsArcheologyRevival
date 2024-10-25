@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -17,10 +17,10 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.material.Fluid;
 
 public class OverlayRenderer {
-    private static final ResourceLocation ANCIENT_HELMET = Fossil.location("textures/gui/ancient_helmet_blur.png");
-    private static final ResourceLocation BONE_HELMET = Fossil.location("textures/gui/bone_helmet_blur.png");
-    private static final ResourceLocation TAR = Fossil.location("textures/block/tar_still.png");
-    private static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registry.FLUID_REGISTRY, Fossil.location("tar"));
+    private static final ResourceLocation ANCIENT_HELMET = FossilMod.location("textures/gui/ancient_helmet_blur.png");
+    private static final ResourceLocation BONE_HELMET = FossilMod.location("textures/gui/bone_helmet_blur.png");
+    private static final ResourceLocation TAR = FossilMod.location("textures/block/tar_still.png");
+    private static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registry.FLUID_REGISTRY, FossilMod.location("tar"));
 
     public static void renderHelmet(int screenWidth, int screenHeight) {
         Minecraft mc = Minecraft.getInstance();

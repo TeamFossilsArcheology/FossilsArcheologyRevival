@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.model.PrehistoricFishGeoModel;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Nautilus;
@@ -17,9 +17,9 @@ public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends GeoEn
 
     public PrehistoricFishGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, String texture) {
         super(renderManager, new PrehistoricFishGeoModel<>(
-                Fossil.location("geo/entity/" + model),
-                Fossil.location("animations/" + animation),
-                Fossil.location("textures/entity/" + texture + "/texturemap.png")
+                FossilMod.location("geo/entity/" + model),
+                FossilMod.location("animations/" + animation),
+                FossilMod.location("textures/entity/" + texture + "/texturemap.png")
         ));
     }
 

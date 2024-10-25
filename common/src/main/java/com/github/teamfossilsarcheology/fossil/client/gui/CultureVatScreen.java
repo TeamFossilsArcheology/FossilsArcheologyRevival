@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.gui;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.inventory.CultureVatMenu;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -13,7 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
 public class CultureVatScreen extends AbstractContainerScreen<CultureVatMenu> {
-    private static final ResourceLocation TEXTURE = Fossil.location("textures/gui/culture_vat.png");
+    private static final ResourceLocation TEXTURE = FossilMod.location("textures/gui/culture_vat.png");
     public static final int PROGRESS_WIDTH = 21;
     public static final int PROGRESS_HEIGHT = 9;
     public static final int FUEL_WIDTH = 14;

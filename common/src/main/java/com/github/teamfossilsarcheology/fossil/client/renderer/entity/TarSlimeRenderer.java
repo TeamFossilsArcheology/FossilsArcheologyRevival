@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.client.renderer.entity.SlimeRenderer;
@@ -10,7 +10,7 @@ import net.minecraft.world.entity.monster.Slime;
 import org.jetbrains.annotations.NotNull;
 
 public class TarSlimeRenderer extends SlimeRenderer implements RendererFabricFix {
-    private static final ResourceLocation TAR_SLIME_LOCATION = Fossil.location("textures/entity/tar_slime.png");
+    private static final ResourceLocation TAR_SLIME_LOCATION = FossilMod.location("textures/entity/tar_slime.png");
 
     public TarSlimeRenderer(EntityRendererProvider.Context context) {
         super(context);

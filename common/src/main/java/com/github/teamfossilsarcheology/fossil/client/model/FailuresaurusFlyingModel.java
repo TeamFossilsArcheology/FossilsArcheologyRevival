@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.model;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.renderer.entity.FailuresaurusRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 
 public class FailuresaurusFlyingModel extends FailuresaurusRenderer.FailuresaurusModel {
-    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/failuresaurus/failuresaurus_flying.png");
+    public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/failuresaurus/failuresaurus_flying.png");
 
     private final ModelPart model = createBodyLayer().bakeRoot();
 

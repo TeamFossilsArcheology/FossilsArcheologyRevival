@@ -1,40 +1,40 @@
 package com.github.teamfossilsarcheology.fossil.sounds;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.sounds.SoundEvent;
 
 public class ModSounds {
-    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(Fossil.MOD_ID, Registry.SOUND_EVENT_REGISTRY);
+    public static final DeferredRegister<SoundEvent> SOUND_EVENTS = DeferredRegister.create(FossilMod.MOD_ID, Registry.SOUND_EVENT_REGISTRY);
 
     public static final RegistrySupplier<SoundEvent> MUSIC_BONES = SOUND_EVENTS.register("music_bones",
-            () -> new SoundEvent(Fossil.location("music_bones")));
+            () -> new SoundEvent(FossilMod.location("music_bones")));
     public static final RegistrySupplier<SoundEvent> MUSIC_FIRST_DINOSAUR = SOUND_EVENTS.register("music_first_dinosaur",
-            () -> new SoundEvent(Fossil.location("music_first_dinosaur")));
+            () -> new SoundEvent(FossilMod.location("music_first_dinosaur")));
     public static final RegistrySupplier<SoundEvent> MUSIC_SCARAB = SOUND_EVENTS.register("music_scarab",
-            () -> new SoundEvent(Fossil.location("music_scarab")));
+            () -> new SoundEvent(FossilMod.location("music_scarab")));
     public static final RegistrySupplier<SoundEvent> MUSIC_DISCOVERY = SOUND_EVENTS.register("music_discovery",
-            () -> new SoundEvent(Fossil.location("music_discovery")));
+            () -> new SoundEvent(FossilMod.location("music_discovery")));
     public static final RegistrySupplier<SoundEvent> MUSIC_MATING = SOUND_EVENTS.register("music_mating",
-            () -> new SoundEvent(Fossil.location("music_mating")));
+            () -> new SoundEvent(FossilMod.location("music_mating")));
     public static final RegistrySupplier<SoundEvent> ANU_TOTEM = SOUND_EVENTS.register("anu_totem",
-            () -> new SoundEvent(Fossil.location("anu_totem")));
+            () -> new SoundEvent(FossilMod.location("anu_totem")));
     public static final RegistrySupplier<SoundEvent> ANU_COUGH = SOUND_EVENTS.register("anu_cough",
-            () -> new SoundEvent(Fossil.location("anu_cough")));
+            () -> new SoundEvent(FossilMod.location("anu_cough")));
     public static final RegistrySupplier<SoundEvent> ANU_DEATH = SOUND_EVENTS.register("anu_death",
-            () -> new SoundEvent(Fossil.location("anu_death")));
+            () -> new SoundEvent(FossilMod.location("anu_death")));
     public static final RegistrySupplier<SoundEvent> ANU_LAUGH = SOUND_EVENTS.register("anu_laugh",
-            () -> new SoundEvent(Fossil.location("anu_laugh")));
+            () -> new SoundEvent(FossilMod.location("anu_laugh")));
     public static final RegistrySupplier<SoundEvent> MUSIC_ANU = SOUND_EVENTS.register("music_anu",
-            () -> new SoundEvent(Fossil.location("music_anu")));
+            () -> new SoundEvent(FossilMod.location("music_anu")));
     public static final RegistrySupplier<SoundEvent> DRUM_SINGLE = SOUND_EVENTS.register("drum_single",
-            () -> new SoundEvent(Fossil.location("drum_single")));
+            () -> new SoundEvent(FossilMod.location("drum_single")));
     public static final RegistrySupplier<SoundEvent> TAR = SOUND_EVENTS.register("tar",
-            () -> new SoundEvent(Fossil.location("tar")));
+            () -> new SoundEvent(FossilMod.location("tar")));
     public static final RegistrySupplier<SoundEvent> WHIP = SOUND_EVENTS.register("whip",
-            () -> new SoundEvent(Fossil.location("whip")));
+            () -> new SoundEvent(FossilMod.location("whip")));
 
     public static final RegistrySupplier<SoundEvent> ALLOSAURUS_AMBIENT = registerSound("allosaurus_ambient");
     public static final RegistrySupplier<SoundEvent> ALLOSAURUS_HURT = registerSound("allosaurus_hurt");
@@ -175,7 +175,7 @@ public class ModSounds {
     public static final RegistrySupplier<SoundEvent> VELOCIRAPTOR_DEATH = registerSound("velociraptor_death");
 
     private static RegistrySupplier<SoundEvent> registerSound(String id) {
-        return SOUND_EVENTS.register(id, () -> new SoundEvent(Fossil.location(id)));
+        return SOUND_EVENTS.register(id, () -> new SoundEvent(FossilMod.location(id)));
     }
 
     public static void register() {

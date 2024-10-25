@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.blockentity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AnubiteStatueBlock;
 import com.github.teamfossilsarcheology.fossil.block.entity.AnubiteStatueBlockEntity;
 import com.github.teamfossilsarcheology.fossil.client.model.AnubiteModel;
@@ -14,7 +14,7 @@ import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnubiteStatueRenderer implements BlockEntityRenderer<AnubiteStatueBlockEntity> {
-    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anubite_statue.png");
+    public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/anubite_statue.png");
 
     private final ModelPart anubiteModel;
 

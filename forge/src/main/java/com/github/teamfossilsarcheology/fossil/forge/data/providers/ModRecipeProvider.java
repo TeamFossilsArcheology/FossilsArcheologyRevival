@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AmphoraVaseBlock;
@@ -101,9 +101,9 @@ public class ModRecipeProvider extends RecipeProvider {
                 ToyBallItem ball = entry.getValue().get();
                 if (color == DyeColor.WHITE) continue;
                 ShapelessRecipeBuilder.shapeless(ball).requires(colorToDye(color)).requires(white).unlockedBy("has_ball",
-                        RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID + ":toy_ball_white_to_" + color.getName());
+                        RecipeProvider.has(white)).save(consumer, FossilMod.MOD_ID + ":toy_ball_white_to_" + color.getName());
                 ShapelessRecipeBuilder.shapeless(white).requires(Items.WHITE_DYE).requires(ball).unlockedBy("has_ball",
-                        RecipeProvider.has(white)).save(consumer, Fossil.MOD_ID + ":toy_ball_" + color.getName() + "_to_white");
+                        RecipeProvider.has(white)).save(consumer, FossilMod.MOD_ID + ":toy_ball_" + color.getName() + "_to_white");
                 ShapedRecipeBuilder.shaped(ball).define('W', ITEM_BY_DYE.get(entry.getKey())).define('S', Items.STRING)
                         .define('B', Items.SLIME_BALL).pattern("SWS").pattern("WBW").pattern("SWS").unlockedBy("has_wool",
                                 RecipeProvider.has(ItemTags.WOOL)).save(consumer, RecipeBuilder.getDefaultRecipeId(ball));
@@ -143,8 +143,8 @@ public class ModRecipeProvider extends RecipeProvider {
             ShapedRecipeBuilder.shaped(BONE_CHESTPLATE.get()).define('B', Items.BONE).define('V', bonesVertebrae).define('R', bonesRibcage).pattern("B B").pattern(" V ").pattern("BRB").unlockedBy("has_bones", RecipeProvider.has(bonesRibcage)).save(consumer);
             ShapedRecipeBuilder.shaped(BONE_HELMET.get()).define('B', Items.BONE).define('S', bonesSkull).pattern("BSB").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesSkull)).save(consumer);
             ShapedRecipeBuilder.shaped(BONE_LEGGINGS.get()).define('B', Items.BONE).define('L', bonesLeg).pattern("BBB").pattern("L L").pattern("B B").unlockedBy("has_bones", RecipeProvider.has(bonesLeg)).save(consumer);
-            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(VOLCANIC_ASH.get(), 4).unlockedBy("has_volcanic_ash", RecipeProvider.has(VOLCANIC_ASH.get())).save(consumer, Fossil.MOD_ID + ":bone_meal_from_ash");
-            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(ModItemTags.ALL_BONES).unlockedBy("has_bone", RecipeProvider.has(ModItemTags.ALL_BONES)).save(consumer, Fossil.MOD_ID + ":bone_meal_from_bone");
+            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(VOLCANIC_ASH.get(), 4).unlockedBy("has_volcanic_ash", RecipeProvider.has(VOLCANIC_ASH.get())).save(consumer, FossilMod.MOD_ID + ":bone_meal_from_ash");
+            ShapelessRecipeBuilder.shapeless(Items.BONE_MEAL).requires(ModItemTags.ALL_BONES).unlockedBy("has_bone", RecipeProvider.has(ModItemTags.ALL_BONES)).save(consumer, FossilMod.MOD_ID + ":bone_meal_from_bone");
             ShapedRecipeBuilder.shaped(CHICKEN_ESSENCE.get(), 8).define('G', Items.GLASS_BOTTLE).define('C', COOKED_CHICKEN_SOUP.get()).pattern("GGG").pattern("GCG").pattern("GGG").unlockedBy("has_cooked_chicken_soup", RecipeProvider.has(COOKED_CHICKEN_SOUP.get())).save(consumer);
             ShapedRecipeBuilder.shaped(STUNTED_ESSENCE.get()).define('P', Items.POISONOUS_POTATO).define('C', CHICKEN_ESSENCE.get()).pattern(" P ").pattern("PCP").pattern(" P ").unlockedBy("has_chicken_essence", RecipeProvider.has(CHICKEN_ESSENCE.get())).save(consumer);
 
@@ -432,31 +432,31 @@ public class ModRecipeProvider extends RecipeProvider {
     }
 
     public AnalyzerRecipeBuilder analyzed(ItemLike itemLike) {
-        return new AnalyzerRecipeBuilder(Fossil.MOD_ID, itemLike);
+        return new AnalyzerRecipeBuilder(FossilMod.MOD_ID, itemLike);
     }
 
     public AnalyzerRecipeBuilder analyzed(TagKey<Item> tagKey) {
-        return new AnalyzerRecipeBuilder(Fossil.MOD_ID, tagKey);
+        return new AnalyzerRecipeBuilder(FossilMod.MOD_ID, tagKey);
     }
 
     public SifterRecipeBuilder sifter(TagKey<Item> tagKey) {
-        return new SifterRecipeBuilder(Fossil.MOD_ID, tagKey);
+        return new SifterRecipeBuilder(FossilMod.MOD_ID, tagKey);
     }
 
     public void worktable(RegistrySupplier<? extends ItemLike> itemInput, RegistrySupplier<? extends ItemLike> itemOutput, RegistrySupplier<? extends ItemLike> itemFuel, int duration, Consumer<FinishedRecipe> consumer) {
-        new WorktableRecipeBuilder(Fossil.MOD_ID, itemInput.get(), itemFuel.get(), itemOutput.get(), duration).save(consumer);
+        new WorktableRecipeBuilder(FossilMod.MOD_ID, itemInput.get(), itemFuel.get(), itemOutput.get(), duration).save(consumer);
     }
 
     public void worktable(RegistrySupplier<? extends ItemLike> itemInput, RegistrySupplier<? extends ItemLike> itemOutput, RegistrySupplier<? extends ItemLike> itemFuel, Consumer<FinishedRecipe> consumer) {
-        new WorktableRecipeBuilder(Fossil.MOD_ID, itemInput.get(), itemFuel.get(), itemOutput.get()).save(consumer);
+        new WorktableRecipeBuilder(FossilMod.MOD_ID, itemInput.get(), itemFuel.get(), itemOutput.get()).save(consumer);
     }
 
     public void cultureVat(ItemLike itemInput, ItemLike itemOutput, Consumer<FinishedRecipe> consumer) {
-        new CultureVatRecipeBuilder(Fossil.MOD_ID, itemInput, itemOutput).save(consumer);
+        new CultureVatRecipeBuilder(FossilMod.MOD_ID, itemInput, itemOutput).save(consumer);
     }
 
     public void cultureVat(RegistrySupplier<? extends ItemLike> itemInput, RegistrySupplier<? extends ItemLike> itemOutput, Consumer<FinishedRecipe> consumer) {
-        new CultureVatRecipeBuilder(Fossil.MOD_ID, itemInput.get(), itemOutput.get()).save(consumer);
+        new CultureVatRecipeBuilder(FossilMod.MOD_ID, itemInput.get(), itemOutput.get()).save(consumer);
     }
 
     private Item colorToDye(DyeColor dyeColor) {
@@ -521,7 +521,7 @@ public class ModRecipeProvider extends RecipeProvider {
     protected void stonecutter(Consumer<FinishedRecipe> finishedRecipeConsumer, ItemLike result, ItemLike material, int resultCount) {
         SingleItemRecipeBuilder builder = SingleItemRecipeBuilder.stonecutting(Ingredient.of(material), result, resultCount).unlockedBy(getHasName(material), has(material));
         String id = getConversionRecipeName(result, material);
-        builder.save(finishedRecipeConsumer, Fossil.MOD_ID + ":" + id + "_stonecutting");
+        builder.save(finishedRecipeConsumer, FossilMod.MOD_ID + ":" + id + "_stonecutting");
     }
 
     private static void generateFamilyRecipes(BlockFamily family, Consumer<FinishedRecipe> finishedRecipeConsumer) {

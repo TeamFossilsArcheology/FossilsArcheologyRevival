@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.biome;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.biome.Biome;
@@ -14,6 +14,6 @@ public class ModBiomes {
     public static final ResourceKey<Biome> ANU_LAIR_KEY = resource("anu_lair");
 
     private static ResourceKey<Biome> resource(String name) {
-        return ResourceKey.create(Registry.BIOME_REGISTRY, Fossil.location(name));
+        return ResourceKey.create(Registry.BIOME_REGISTRY, FossilMod.location(name));
     }
 }

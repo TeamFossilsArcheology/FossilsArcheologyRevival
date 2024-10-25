@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.villager;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.google.common.collect.ImmutableSet;
 import dev.architectury.event.events.common.LifecycleEvent;
@@ -16,8 +16,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import java.util.Set;
 
 public class ModVillagers {
-    public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(Fossil.MOD_ID, Registry.POINT_OF_INTEREST_TYPE_REGISTRY);
-    public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(Fossil.MOD_ID,
+    public static final DeferredRegister<PoiType> POI_TYPES = DeferredRegister.create(FossilMod.MOD_ID, Registry.POINT_OF_INTEREST_TYPE_REGISTRY);
+    public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(FossilMod.MOD_ID,
             Registry.VILLAGER_PROFESSION_REGISTRY);
 
 

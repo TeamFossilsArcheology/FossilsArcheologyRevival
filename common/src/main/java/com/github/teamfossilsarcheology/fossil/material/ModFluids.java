@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.material;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
@@ -13,7 +13,7 @@ import net.minecraft.world.level.material.Fluid;
 
 public class ModFluids {
     public static final DeferredRegister<Fluid> FLUIDS =
-            DeferredRegister.create(Fossil.MOD_ID, Registry.FLUID_REGISTRY);
+            DeferredRegister.create(FossilMod.MOD_ID, Registry.FLUID_REGISTRY);
 
     public static void register() {
         FLUIDS.register();
@@ -21,8 +21,8 @@ public class ModFluids {
 
     public static final ArchitecturyFluidAttributes TAR_ATTRIBUTES =
             SimpleArchitecturyFluidAttributes.ofSupplier(() -> ModFluids.TAR_FLOWING, () -> ModFluids.TAR).blockSupplier(() -> ModBlocks.TAR)
-                    .bucketItemSupplier(() -> ModItems.TAR_BUCKET).sourceTexture(Fossil.location("block/tar_still"))
-                    .flowingTexture(Fossil.location("block/tar_flowing")).temperature(400).density(3000).viscosity(8000).tickDelay(40);
+                    .bucketItemSupplier(() -> ModItems.TAR_BUCKET).sourceTexture(FossilMod.location("block/tar_still"))
+                    .flowingTexture(FossilMod.location("block/tar_flowing")).temperature(400).density(3000).viscosity(8000).tickDelay(40);
     public static final RegistrySupplier<FlowingFluid> TAR = FLUIDS.register("tar", () -> new TarFluid.Source(TAR_ATTRIBUTES));
     public static final RegistrySupplier<FlowingFluid> TAR_FLOWING = FLUIDS.register("tar_flowing",
             () -> new TarFluid.Flowing(TAR_ATTRIBUTES));

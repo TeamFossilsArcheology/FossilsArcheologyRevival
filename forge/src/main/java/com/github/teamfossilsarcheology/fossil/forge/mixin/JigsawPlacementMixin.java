@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.mixin;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -66,7 +66,7 @@ public abstract class JigsawPlacementMixin {
         String name = structurePiece.getElement().toString();
         boolean isTop = name.contains("house_taiga_top") || name.contains("house_plains_top") || name.contains("tent_option");
         boolean isBottom = name.contains("house_taiga_base") || name.contains("house_plains_base");
-        if (name.contains(Fossil.MOD_ID) && (isTop || isBottom)) {
+        if (name.contains(FossilMod.MOD_ID) && (isTop || isBottom)) {
             ci.cancel();
             StructurePoolElement structurePoolElement = structurePiece.getElement();
             BlockPos baseStructurePosition = structurePiece.getPosition();

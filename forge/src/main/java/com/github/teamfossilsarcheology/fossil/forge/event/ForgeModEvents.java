@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.event;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.capabilities.forge.ModCapabilitiesImpl;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
@@ -37,7 +37,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber(modid = Fossil.MOD_ID)
+@Mod.EventBusSubscriber(modid = FossilMod.MOD_ID)
 public class ForgeModEvents {
 
     @SubscribeEvent

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.world.feature.configuration.AshDiskConfiguration;
 import com.github.teamfossilsarcheology.fossil.world.feature.tree.*;
 import dev.architectury.injectables.annotations.ExpectPlatform;
@@ -22,7 +22,7 @@ public class ModFeatures {
     public static final Tuple<NoneFeatureConfiguration, VolcanoVentFeature> VOLCANO_VENT = create("volcano_vent", new VolcanoVentFeature());
 
     public static <C extends FeatureConfiguration, F extends Feature<C>> Tuple<C, F> create(String name, F feature) {
-        return new Tuple<>(Fossil.location(name), feature);
+        return new Tuple<>(FossilMod.location(name), feature);
     }
 
     @ExpectPlatform

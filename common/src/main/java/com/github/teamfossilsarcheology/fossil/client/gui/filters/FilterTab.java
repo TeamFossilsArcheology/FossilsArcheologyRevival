@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.filters;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import dev.architectury.hooks.client.screen.ScreenAccess;
@@ -24,7 +24,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class FilterTab {
-    private static final ResourceLocation FILTER_TEXTURE = Fossil.location("textures/gui/filters.png");
+    private static final ResourceLocation FILTER_TEXTURE = FossilMod.location("textures/gui/filters.png");
 
     private final List<FilterButton> buttons = new ArrayList<>();
 

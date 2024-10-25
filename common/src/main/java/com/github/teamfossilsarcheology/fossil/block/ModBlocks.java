@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.SkullBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.TallFlowerBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.*;
@@ -32,7 +32,7 @@ import java.util.function.ToIntFunction;
 import static net.minecraft.world.level.block.state.BlockBehaviour.Properties;
 
 public class ModBlocks {
-    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(Fossil.MOD_ID, Registry.BLOCK_REGISTRY);
+    public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(FossilMod.MOD_ID, Registry.BLOCK_REGISTRY);
 
     public static final RegistrySupplier<BubbleBlowerBlock> BUBBLE_BLOWER = registerBlock("bubble_blower",
             () -> new BubbleBlowerBlock(Properties.of(Material.METAL).strength(3).sound(SoundType.METAL).requiresCorrectToolForDrops())

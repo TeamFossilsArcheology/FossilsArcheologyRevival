@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -32,7 +32,7 @@ public class MoaiStatueFeature extends Feature<NoneFeatureConfiguration> {
                 pos = pos.atY(floorHeight);
             }
         }
-        Fossil.LOGGER.info("Placed moai: " + pos);
+        FossilMod.LOGGER.info("Placed moai: " + pos);
 
         BlockState bricks = ModBlocks.ANCIENT_STONE_BRICKS.get().defaultBlockState();
         BlockState stairs = ModBlocks.ANCIENT_STONE_STAIRS.get().defaultBlockState();

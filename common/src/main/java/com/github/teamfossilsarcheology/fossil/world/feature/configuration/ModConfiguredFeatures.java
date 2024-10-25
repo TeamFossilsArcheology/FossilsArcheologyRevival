@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.configuration;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures;
 import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructures;
@@ -68,7 +68,7 @@ public class ModConfiguredFeatures {
             ModFeatures.VOLCANO_VENT.feature(), NoneFeatureConfiguration.INSTANCE);
 
     private static <C extends FeatureConfiguration, F extends Feature<C>> Holder<ConfiguredFeature<C, ?>> register(String name, F feature, C config) {
-        return FeatureUtils.register(Fossil.MOD_ID + ":" + name, feature, config);
+        return FeatureUtils.register(FossilMod.MOD_ID + ":" + name, feature, config);
     }
 
     private static <FC extends FeatureConfiguration, F extends StructureFeature<FC>> Holder<ConfiguredStructureFeature<?, ?>> register(ResourceKey<ConfiguredStructureFeature<?, ?>> id, ConfiguredStructureFeature<FC, F> configuredStructureFeature) {
@@ -76,6 +76,6 @@ public class ModConfiguredFeatures {
     }
 
     private static ResourceKey<ConfiguredStructureFeature<?, ?>> createKey(String name) {
-        return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, Fossil.location(name));
+        return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, FossilMod.location(name));
     }
 }

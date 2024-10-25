@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.dimension;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
@@ -16,8 +16,8 @@ import net.minecraft.world.phys.Vec3;
 import org.apache.commons.lang3.NotImplementedException;
 
 public class ModDimensions {
-    public static final ResourceKey<Level> TREASURE_ROOM = ResourceKey.create(Registry.DIMENSION_REGISTRY, Fossil.location("treasure_room"));
-    public static final ResourceKey<Level> ANU_LAIR = ResourceKey.create(Registry.DIMENSION_REGISTRY, Fossil.location("anu_lair"));
+    public static final ResourceKey<Level> TREASURE_ROOM = ResourceKey.create(Registry.DIMENSION_REGISTRY, FossilMod.location("treasure_room"));
+    public static final ResourceKey<Level> ANU_LAIR = ResourceKey.create(Registry.DIMENSION_REGISTRY, FossilMod.location("anu_lair"));
     public static final ResourceKey<DimensionType> TREASURE_ROOM_TYPE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, TREASURE_ROOM.registry());
     public static final ResourceKey<DimensionType> ANU_LAIR_TYPE = ResourceKey.create(Registry.DIMENSION_TYPE_REGISTRY, ANU_LAIR.registry());
 

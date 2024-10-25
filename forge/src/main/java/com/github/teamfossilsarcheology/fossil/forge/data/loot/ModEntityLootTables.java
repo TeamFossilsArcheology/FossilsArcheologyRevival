@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.loot;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -28,25 +28,25 @@ public class ModEntityLootTables extends EntityLoot {
     protected void addTables() {
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
             if (info.hasBones()) {
-                add(Fossil.location("entities/" + info.resourceName), defaultLoot(info));
+                add(FossilMod.location("entities/" + info.resourceName), defaultLoot(info));
             } else if(info.uniqueBoneItem != null) {
                 var meat = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).
                         add(LootItem.lootTableItem(info.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS))
                                 .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 2))));
                 var unique = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(info.uniqueBoneItem).setWeight(50)).add(EmptyLootItem.emptyItem().setWeight(50));
-                add(Fossil.location("entities/" + info.resourceName), LootTable.lootTable().withPool(meat).withPool(unique));
+                add(FossilMod.location("entities/" + info.resourceName), LootTable.lootTable().withPool(meat).withPool(unique));
             } else if (info.foodItem != null) {
                 var meat = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).
                         add(LootItem.lootTableItem(info.foodItem).apply(CustomizeToDinoFunction.apply(LootContext.EntityTarget.THIS))
                                 .apply(LootingEnchantFunction.lootingMultiplier(UniformGenerator.between(0, 2))));
-                add(Fossil.location("entities/" + info.resourceName), LootTable.lootTable().withPool(meat));
+                add(FossilMod.location("entities/" + info.resourceName), LootTable.lootTable().withPool(meat));
             }
         }
         var wool = uniformLoot(Items.BROWN_WOOL, 6, 8);
-        add(Fossil.location("entities/" + PrehistoricEntityInfo.MAMMOTH.resourceName), defaultLoot(PrehistoricEntityInfo.MAMMOTH).withPool(wool));
+        add(FossilMod.location("entities/" + PrehistoricEntityInfo.MAMMOTH.resourceName), defaultLoot(PrehistoricEntityInfo.MAMMOTH).withPool(wool));
         var shell = LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(Items.NAUTILUS_SHELL).setWeight(95))
                 .add(LootItem.lootTableItem(ModItems.MAGIC_CONCH.get()).setWeight(5));
-        add(Fossil.location("entities/" + PrehistoricEntityInfo.NAUTILUS.resourceName), LootTable.lootTable().withPool(shell));
+        add(FossilMod.location("entities/" + PrehistoricEntityInfo.NAUTILUS.resourceName), LootTable.lootTable().withPool(shell));
         add(ModEntities.FAILURESAURUS.get(), LootTable.lootTable().withPool(
                 LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(ModItems.FAILURESAURUS_FLESH.get()))));
     }

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix;
 import com.github.teamfossilsarcheology.fossil.entity.Javelin;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -13,12 +13,12 @@ import net.minecraft.world.item.Tiers;
 import org.jetbrains.annotations.NotNull;
 
 public class JavelinRenderer extends ArrowRenderer<Javelin> implements RendererFabricFix {
-    private static final ResourceLocation WOODEN_JAVELIN = Fossil.location("textures/entity/wooden_javelin.png");
-    private static final ResourceLocation STONE_JAVELIN = Fossil.location("textures/entity/stone_javelin.png");
-    private static final ResourceLocation IRON_JAVELIN = Fossil.location("textures/entity/iron_javelin.png");
-    private static final ResourceLocation GOLD_JAVELIN = Fossil.location("textures/entity/gold_javelin.png");
-    private static final ResourceLocation DIAMOND_JAVELIN = Fossil.location("textures/entity/diamond_javelin.png");
-    private static final ResourceLocation ANCIENT_JAVELIN = Fossil.location("textures/entity/ancient_javelin.png");
+    private static final ResourceLocation WOODEN_JAVELIN = FossilMod.location("textures/entity/wooden_javelin.png");
+    private static final ResourceLocation STONE_JAVELIN = FossilMod.location("textures/entity/stone_javelin.png");
+    private static final ResourceLocation IRON_JAVELIN = FossilMod.location("textures/entity/iron_javelin.png");
+    private static final ResourceLocation GOLD_JAVELIN = FossilMod.location("textures/entity/gold_javelin.png");
+    private static final ResourceLocation DIAMOND_JAVELIN = FossilMod.location("textures/entity/diamond_javelin.png");
+    private static final ResourceLocation ANCIENT_JAVELIN = FossilMod.location("textures/entity/ancient_javelin.png");
 
     public JavelinRenderer(EntityRendererProvider.Context context) {
         super(context);

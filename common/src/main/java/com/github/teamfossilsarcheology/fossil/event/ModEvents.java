@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.event;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.Quagga;
@@ -89,7 +89,7 @@ public class ModEvents {
         try {
             className = mob.getClass().getSimpleName();
         } catch (Exception e) {
-            Fossil.LOGGER.debug(e.getMessage());
+            FossilMod.LOGGER.debug(e.getMessage());
         }
         return !className.isEmpty() && (className.contains("Cow") || className.contains("Sheep") || (className.contains("Pig") && !className.contains("piglin")) || className.contains("Chicken")
                 || className.contains("Rabbit") || className.contains("Peacock") || className.contains("Goat") || className.contains("Ferret")

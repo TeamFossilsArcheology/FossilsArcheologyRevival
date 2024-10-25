@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
@@ -48,7 +48,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     /**
      * Dummy recipe that awards the player with a chance to get a golden egg
      */
-    public static final ResourceLocation GOLDEN_EGG_RECIPE = Fossil.location("golden_egg");
+    public static final ResourceLocation GOLDEN_EGG_RECIPE = FossilMod.location("golden_egg");
     private static final EntityDataAccessor<Integer> HATCHING_TIME = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> GOLDEN_EGG = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.BOOLEAN);
     private static final Logger LOGGER = LogUtils.getLogger();

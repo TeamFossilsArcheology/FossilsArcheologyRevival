@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
@@ -12,7 +12,7 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.NotNull;
 
 public class MammalCapProvider implements ICapabilitySerializable<CompoundTag> {
-    public static final ResourceLocation IDENTIFIER = Fossil.location("mammal");
+    public static final ResourceLocation IDENTIFIER = FossilMod.location("mammal");
 
     public static final Capability<IMammalCap> MAMMAL_CAPABILITY = CapabilityManager.get(new CapabilityToken<>() {
     });

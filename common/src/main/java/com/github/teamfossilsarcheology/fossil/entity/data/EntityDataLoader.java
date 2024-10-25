@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.data;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.util.Diet;
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.*;
@@ -32,7 +32,7 @@ public class EntityDataLoader extends SimpleJsonResourceReloadListener {
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
         ImmutableMap.Builder<String, Data> builder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
-            if (!(fileEntry.getValue() instanceof JsonObject root) || !fileEntry.getKey().getNamespace().equals(Fossil.MOD_ID)) {
+            if (!(fileEntry.getValue() instanceof JsonObject root) || !fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
                 continue;
             }
             builder.put(fileEntry.getKey().getPath(), GSON.fromJson(root, Data.class));

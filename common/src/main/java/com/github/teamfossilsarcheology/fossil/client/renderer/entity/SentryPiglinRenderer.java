@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.model.SentryPiglinModel;
 import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix;
 import com.github.teamfossilsarcheology.fossil.entity.monster.SentryPiglin;
@@ -14,7 +14,7 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public class SentryPiglinRenderer extends HumanoidMobRenderer<SentryPiglin, SentryPiglinModel> implements RendererFabricFix {
-    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/sentry_piglin.png");
+    public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/sentry_piglin.png");
 
     public SentryPiglinRenderer(EntityRendererProvider.Context context, SentryPiglinModel model) {
         super(context, model, 0.5f);
@@ -24,7 +24,7 @@ public class SentryPiglinRenderer extends HumanoidMobRenderer<SentryPiglin, Sent
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(SentryPiglin entity) {
-        return Fossil.location("textures/entity/sentry_piglin.png");
+        return FossilMod.location("textures/entity/sentry_piglin.png");
     }
 
     @Override

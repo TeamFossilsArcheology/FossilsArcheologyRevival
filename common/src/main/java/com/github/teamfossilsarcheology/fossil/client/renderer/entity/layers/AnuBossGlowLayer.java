@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity.layers;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.model.AnuBossModel;
 import com.github.teamfossilsarcheology.fossil.entity.monster.AnuBoss;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnuBossGlowLayer extends RenderLayer<AnuBoss, AnuBossModel> {
-    private static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anu_boss_overlay.png");
+    private static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/anu_boss_overlay.png");
 
     public AnuBossGlowLayer(RenderLayerParent<AnuBoss, AnuBossModel> renderLayerParent) {
         super(renderLayerParent);

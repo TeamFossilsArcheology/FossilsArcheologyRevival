@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.structures;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import net.minecraft.core.BlockPos;
@@ -126,7 +126,7 @@ public class CastleFeature extends StructureFeature<JigsawConfiguration> {
                 ResourceLocation poolLocation = new ResourceLocation(baseStructureJigSaw.nbt.getString("pool"));
                 Optional<StructureTemplatePool> baseTargetPool = pools.getOptional(poolLocation);
                 if (baseTargetPool.isEmpty() || baseTargetPool.get().size() == 0 && !Objects.equals(poolLocation, Pools.EMPTY.location())) {
-                    Fossil.LOGGER.warn("Empty or non-existent pool: {}", poolLocation);
+                    FossilMod.LOGGER.warn("Empty or non-existent pool: {}", poolLocation);
                     continue;
                 }
                 ArrayList<StructurePoolElement> targetPoolElements = Lists.newArrayList();

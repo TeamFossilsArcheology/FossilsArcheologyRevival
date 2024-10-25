@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.fabric.client.model;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel.PlantBlockElement;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel.PlantBlockElementFace;
@@ -36,16 +36,16 @@ public class PlantModelProvider implements ModelResourceProvider {
     @Override
     public @Nullable UnbakedModel loadModelResource(ResourceLocation location, ModelProviderContext context) {
         //TODO: Would probably be better to just get a list of valid locations from the Block registry (is a CustomPlantBlock)
-        if (location.getNamespace().equals(Fossil.MOD_ID)) {
+        if (location.getNamespace().equals(FossilMod.MOD_ID)) {
             try {
-                try (Resource resource = resourceManager.getResource(Fossil.location("models/"+location.getPath()+".json"))) {
+                try (Resource resource = resourceManager.getResource(FossilMod.location("models/"+location.getPath()+".json"))) {
                     try (InputStream inputStream = resource.getInputStream(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
                         JsonObject jsonObject = GsonHelper.fromJson(GSON, reader, JsonElement.class).getAsJsonObject();
                         if (jsonObject.has("loader") && jsonObject.get("loader").getAsString().equals(PlantBlockModel.LOADER.toString())) {
                             return new FabricPlantUnbakedModel(GSON.getAdapter(PlantBlockModel.class).fromJsonTree(jsonObject));
                         }
                     } catch (JsonParseException | IOException | IllegalArgumentException exception) {
-                        Fossil.LOGGER.error("Couldn't parse data file {}: {}", location, exception);
+                        FossilMod.LOGGER.error("Couldn't parse data file {}: {}", location, exception);
                     }
                 }
             } catch (IOException exception) {

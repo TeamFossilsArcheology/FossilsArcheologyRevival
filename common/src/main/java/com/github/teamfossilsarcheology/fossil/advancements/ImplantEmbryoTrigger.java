@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.advancements;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * Triggers whenever a player inserts an embryo into a mob
  */
 public class ImplantEmbryoTrigger extends SimpleCriterionTrigger<ImplantEmbryoTrigger.TriggerInstance> {
-    private static final ResourceLocation ID = Fossil.location("implant_embryo");
+    private static final ResourceLocation ID = FossilMod.location("implant_embryo");
 
     public void trigger(ServerPlayer player, ItemStack stack) {
         trigger(player, triggerInstance -> triggerInstance.matches(stack));

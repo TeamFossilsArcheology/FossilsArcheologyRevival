@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
@@ -59,12 +59,12 @@ public abstract class FigurineBlock extends HorizontalDirectionalBlock {
 
         FigurineVariant(String name) {
             this.name = name;
-            this.anuTexture = Fossil.location("textures/block/figurines/figurine_anu_" + name + ".png");
-            this.endermanTexture = Fossil.location("textures/block/figurines/figurine_enderman_" + name + ".png");
-            this.piglinTexture = Fossil.location("textures/block/figurines/figurine_piglin_" + name + ".png");
-            this.skeletonTexture = Fossil.location("textures/block/figurines/figurine_skeleton_" + name + ".png");
-            this.steveTexture = Fossil.location("textures/block/figurines/figurine_steve_" + name + ".png");
-            this.zombieTexture = Fossil.location("textures/block/figurines/figurine_zombie_" + name + ".png");
+            this.anuTexture = FossilMod.location("textures/block/figurines/figurine_anu_" + name + ".png");
+            this.endermanTexture = FossilMod.location("textures/block/figurines/figurine_enderman_" + name + ".png");
+            this.piglinTexture = FossilMod.location("textures/block/figurines/figurine_piglin_" + name + ".png");
+            this.skeletonTexture = FossilMod.location("textures/block/figurines/figurine_skeleton_" + name + ".png");
+            this.steveTexture = FossilMod.location("textures/block/figurines/figurine_steve_" + name + ".png");
+            this.zombieTexture = FossilMod.location("textures/block/figurines/figurine_zombie_" + name + ".png");
         }
 
         public ResourceLocation getAnuTexture() {

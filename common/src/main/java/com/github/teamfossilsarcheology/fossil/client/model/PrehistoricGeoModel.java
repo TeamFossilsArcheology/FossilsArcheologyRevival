@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.model;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
@@ -18,8 +18,8 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends AnimatedGeoModel
      * @param animationName the animation model name (including extension)
      */
     public PrehistoricGeoModel(String modelName, String animationName) {
-        this.modelLocation = Fossil.location("geo/entity/" + modelName);
-        this.animationLocation = Fossil.location("animations/" + animationName);
+        this.modelLocation = FossilMod.location("geo/entity/" + modelName);
+        this.animationLocation = FossilMod.location("animations/" + animationName);
     }
 
     @Override

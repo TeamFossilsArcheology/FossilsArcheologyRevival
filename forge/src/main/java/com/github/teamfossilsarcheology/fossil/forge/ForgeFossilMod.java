@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.client.ClientInit;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel;
@@ -42,15 +42,15 @@ import terrablender.api.RegionType;
 import terrablender.api.Regions;
 import terrablender.api.SurfaceRuleManager;
 
-@Mod(Fossil.MOD_ID)
-public class FossilForge {
+@Mod(FossilMod.MOD_ID)
+public class ForgeFossilMod {
 
-    public FossilForge() {
+    public ForgeFossilMod() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
         MinecraftForge.EVENT_BUS.register(this);
-        EventBuses.registerModEventBus(Fossil.MOD_ID, modEventBus);
+        EventBuses.registerModEventBus(FossilMod.MOD_ID, modEventBus);
 
-        Fossil.init();
+        FossilMod.init();
 
         if (ModList.get().isLoaded("carryon")) {
             MinecraftForge.EVENT_BUS.register(CarryOnCompat.class);
@@ -75,9 +75,9 @@ public class FossilForge {
             ModPlacementTypes.register();
             ModTriggers.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
-            SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, Fossil.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
-            Registry.register(Registry.CHUNK_GENERATOR, Fossil.location("treasure_room"), TreasureChunkGenerator.CODEC);
-            Registry.register(Registry.CHUNK_GENERATOR, Fossil.location("anu_lair"), AnuLairChunkGenerator.CODEC);
+            SurfaceRuleManager.addSurfaceRules(SurfaceRuleManager.RuleCategory.OVERWORLD, FossilMod.MOD_ID, ModSurfaceRules.VOLCANIC_SURFACE_RULE);
+            Registry.register(Registry.CHUNK_GENERATOR, FossilMod.location("treasure_room"), TreasureChunkGenerator.CODEC);
+            Registry.register(Registry.CHUNK_GENERATOR, FossilMod.location("anu_lair"), AnuLairChunkGenerator.CODEC);
             SpawnPlacements.register(ModEntities.ALLIGATOR_GAR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
             SpawnPlacements.register(ModEntities.COELACANTH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Coelacanth::canCoelacanthSpawn);
             SpawnPlacements.register(ModEntities.NAUTILUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);

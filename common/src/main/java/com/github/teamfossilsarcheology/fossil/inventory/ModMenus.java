@@ -1,13 +1,13 @@
 package com.github.teamfossilsarcheology.fossil.inventory;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
 import net.minecraft.world.inventory.MenuType;
 
 public class ModMenus {
-    private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(Fossil.MOD_ID, Registry.MENU_REGISTRY);
+    private static final DeferredRegister<MenuType<?>> MENUS = DeferredRegister.create(FossilMod.MOD_ID, Registry.MENU_REGISTRY);
 
     public static void register() {
         MENUS.register();

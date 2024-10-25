@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.recipe;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -60,7 +60,7 @@ public class SifterRecipe extends MultiOutputAndSlotsRecipe {
         }
 
         public SifterRecipe build() {
-            return new SifterRecipe(Fossil.location(item.toString()), Ingredient.of(item), map);
+            return new SifterRecipe(FossilMod.location(item.toString()), Ingredient.of(item), map);
         }
     }
 }

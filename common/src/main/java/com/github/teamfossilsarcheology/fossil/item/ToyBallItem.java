@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.item;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ToyBall;
 import net.minecraft.network.chat.Component;
@@ -33,7 +33,7 @@ public class ToyBallItem extends Item {
     public ToyBallItem(DyeColor color, Properties properties) {
         super(properties);
         this.color = color;
-        this.name = new TranslatableComponent("item." + Fossil.MOD_ID + ".toy_ball", new TranslatableComponent("color.minecraft." + color.getName()));
+        this.name = new TranslatableComponent("item." + FossilMod.MOD_ID + ".toy_ball", new TranslatableComponent("color.minecraft." + color.getName()));
     }
 
     @Override

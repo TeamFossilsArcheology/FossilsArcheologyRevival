@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.forge;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -9,7 +9,7 @@ import net.minecraftforge.registries.IForgeRegistry;
 
 import static com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures.*;
 
-@Mod.EventBusSubscriber(modid = Fossil.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
+@Mod.EventBusSubscriber(modid = FossilMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public class ModFeaturesImpl {
     public static void register() {
         ASH_DISK.feature().setRegistryName(ASH_DISK.location());

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.advancements;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.gson.JsonObject;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.resources.ResourceLocation;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * Triggers whenever an egg hatches
  */
 public class IncubateEggTrigger extends SimpleCriterionTrigger<IncubateEggTrigger.TriggerInstance> {
-    private static final ResourceLocation ID = Fossil.location("incubate_egg");
+    private static final ResourceLocation ID = FossilMod.location("incubate_egg");
 
     public void trigger(ServerPlayer player, Entity entity) {
         LootContext lootContext = EntityPredicate.createContext(player, entity);

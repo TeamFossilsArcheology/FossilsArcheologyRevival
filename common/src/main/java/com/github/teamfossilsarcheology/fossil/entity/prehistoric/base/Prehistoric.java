@@ -4,7 +4,7 @@ import com.github.darkpred.morehitboxes.api.EntityHitboxData;
 import com.github.darkpred.morehitboxes.api.EntityHitboxDataFactory;
 import com.github.darkpred.morehitboxes.api.GeckoLibMultiPartEntity;
 import com.github.darkpred.morehitboxes.api.MultiPart;
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.client.OptionalTextureLoader;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
@@ -141,13 +141,13 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         setPersistenceRequired();
         if (level.isClientSide) {
             for (Animation anim : getAllAnimations().values()) {
-                Fossil.LOGGER.debug("{} is loop: {}", anim.animationName, anim.loop);
+                FossilMod.LOGGER.debug("{} is loop: {}", anim.animationName, anim.loop);
             }
         }
     }
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
-        this(entityType, level, Fossil.location("animations/" + EntityType.getKey(entityType).getPath() + ".animation.json"));
+        this(entityType, level, FossilMod.location("animations/" + EntityType.getKey(entityType).getPath() + ".animation.json"));
     }
 
     @Override
@@ -1101,7 +1101,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         if (isSleeping()) builder.append("_sleeping");
         builder.append(".png");
-        textureLocation = Fossil.location(builder.toString());
+        textureLocation = FossilMod.location(builder.toString());
     }
 
     @Override

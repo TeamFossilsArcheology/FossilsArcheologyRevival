@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.config.forge;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraftforge.common.ForgeConfigSpec;
@@ -132,19 +132,19 @@ public class ForgeConfig {
     }
 
     private static ForgeConfigSpec.BooleanValue boolEntry(String comment, String path, boolean defaultValue) {
-        ForgeConfigSpec.BooleanValue entry = BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).define(path, defaultValue);
+        ForgeConfigSpec.BooleanValue entry = BUILDER.comment(comment).translation(FossilMod.MOD_ID + ".midnightconfig." + path).define(path, defaultValue);
         MAPPED_BOOLS.put(path, entry);
         return entry;
     }
 
     private static ForgeConfigSpec.IntValue intEntry(String comment, String path, int defaultValue, int min, int max) {
-        ForgeConfigSpec.IntValue entry = BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
+        ForgeConfigSpec.IntValue entry = BUILDER.comment(comment).translation(FossilMod.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
         MAPPED_INTS.put(path, entry);
         return entry;
     }
 
     private static ForgeConfigSpec.DoubleValue doubleEntry(String comment, String path, double defaultValue, double min, double max) {
-        ForgeConfigSpec.DoubleValue entry = BUILDER.comment(comment).translation(Fossil.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
+        ForgeConfigSpec.DoubleValue entry = BUILDER.comment(comment).translation(FossilMod.MOD_ID + ".midnightconfig." + path).defineInRange(path, defaultValue, min, max);
         MAPPED_DOUBLES.put(path, entry);
         return entry;
     }

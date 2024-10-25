@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.village.forge;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.event.server.ServerAboutToStartEvent;
@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 
 import static com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages.*;
 
-@Mod.EventBusSubscriber(modid = Fossil.MOD_ID)
+@Mod.EventBusSubscriber(modid = FossilMod.MOD_ID)
 public class ModVillagesImpl {
     public static void register() {
     }

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.client;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingRenderer;
 import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
@@ -12,7 +12,7 @@ import net.minecraftforge.client.gui.OverlayRegistry;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
-@Mod.EventBusSubscriber(modid = Fossil.MOD_ID, value = Dist.CLIENT)
+@Mod.EventBusSubscriber(modid = FossilMod.MOD_ID, value = Dist.CLIENT)
 public class ClientModEvents {
 
     @SubscribeEvent

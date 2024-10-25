@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.model;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.AnuTotem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -14,7 +14,7 @@ import net.minecraft.client.model.geom.builders.PartDefinition;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnuTotemModel extends EntityModel<AnuTotem> {
-    public static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anu_totem.png");
+    public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/anu_totem.png");
     private final ModelPart model = createBodyLayer().bakeRoot();
 
     public static LayerDefinition createBodyLayer() {

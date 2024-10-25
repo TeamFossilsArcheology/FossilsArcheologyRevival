@@ -14,16 +14,16 @@
   "environment": "*",
   "entrypoints": {
     "main": [
-      "com.github.teamfossilsarcheology.fossil.fabric.FossilFabric"
+      "com.github.teamfossilsarcheology.fossil.fabric.FabricFossilMod"
     ],
     "client": [
-      "com.github.teamfossilsarcheology.fossil.fabric.FossilFabricClient"
+      "com.github.teamfossilsarcheology.fossil.fabric.FabricFossilModClient"
     ],
     "terrablender": [
-      "com.github.teamfossilsarcheology.fossil.fabric.FossilFabric"
+      "com.github.teamfossilsarcheology.fossil.fabric.FabricFossilMod"
     ],
     "cardinal-components-entity": [
-      "com.github.teamfossilsarcheology.fossil.fabric.FossilFabric"
+      "com.github.teamfossilsarcheology.fossil.fabric.FabricFossilMod"
     ],
     "rei_client": [
       "com.github.teamfossilsarcheology.fossil.compat.rei.FossilREIClientPlugin"

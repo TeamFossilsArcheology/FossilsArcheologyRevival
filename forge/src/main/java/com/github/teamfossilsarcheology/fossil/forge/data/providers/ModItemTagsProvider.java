@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.VaseBlock;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -29,7 +29,7 @@ import static com.github.teamfossilsarcheology.fossil.item.ModItems.*;
 public class ModItemTagsProvider extends ItemTagsProvider {
 
     public ModItemTagsProvider(DataGenerator arg, BlockTagsProvider blockTagsProvider, ExistingFileHelper exFileHelper) {
-        super(arg, blockTagsProvider, Fossil.MOD_ID, exFileHelper);
+        super(arg, blockTagsProvider, FossilMod.MOD_ID, exFileHelper);
     }
 
     @Override

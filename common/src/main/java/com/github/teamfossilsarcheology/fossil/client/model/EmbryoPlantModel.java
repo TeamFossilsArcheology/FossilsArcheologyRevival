@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.model;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import net.minecraft.client.model.geom.PartPose;
 import net.minecraft.client.model.geom.builders.CubeListBuilder;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -13,7 +13,7 @@ import net.minecraft.util.Mth;
  * Model displayed in an active culture vat
  */
 public class EmbryoPlantModel {
-    public static final ResourceLocation TEXTURE = Fossil.location("textures/block/culture_vat/embryo_plant.png");
+    public static final ResourceLocation TEXTURE = FossilMod.location("textures/block/culture_vat/embryo_plant.png");
 
     public static LayerDefinition createBodyLayer() {
         MeshDefinition meshDefinition = new MeshDefinition();

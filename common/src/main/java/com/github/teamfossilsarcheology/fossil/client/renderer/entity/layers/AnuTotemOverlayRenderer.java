@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.renderer.entity.layers;
 
-import com.github.teamfossilsarcheology.fossil.Fossil;
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.model.AnuTotemModel;
 import com.github.teamfossilsarcheology.fossil.entity.AnuTotem;
 import com.mojang.blaze3d.vertex.PoseStack;
@@ -13,7 +13,7 @@ import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.resources.ResourceLocation;
 
 public class AnuTotemOverlayRenderer extends RenderLayer<AnuTotem, AnuTotemModel> {
-    private static final ResourceLocation TEXTURE = Fossil.location("textures/entity/anu_totem_layer.png");
+    private static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/anu_totem_layer.png");
 
     public AnuTotemOverlayRenderer(RenderLayerParent<AnuTotem, AnuTotemModel> renderLayerParent) {
         super(renderLayerParent);
