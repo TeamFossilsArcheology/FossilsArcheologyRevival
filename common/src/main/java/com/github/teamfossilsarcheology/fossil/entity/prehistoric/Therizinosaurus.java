@@ -1,7 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -41,7 +40,6 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1.0D));
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1.0, true));
     }
 
     @Override

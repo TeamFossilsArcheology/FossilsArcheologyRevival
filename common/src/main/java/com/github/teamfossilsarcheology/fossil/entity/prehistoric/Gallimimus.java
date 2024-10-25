@@ -1,10 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlocking;
-import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -23,7 +21,6 @@ public class Gallimimus extends PrehistoricFlocking {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
     }
 
     @Override

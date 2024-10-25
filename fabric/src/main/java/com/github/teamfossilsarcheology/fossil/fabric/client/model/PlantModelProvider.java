@@ -35,7 +35,6 @@ public class PlantModelProvider implements ModelResourceProvider {
 
     @Override
     public @Nullable UnbakedModel loadModelResource(ResourceLocation location, ModelProviderContext context) {
-        //TODO: Would probably be better to just get a list of valid locations from the Block registry (is a CustomPlantBlock)
         if (location.getNamespace().equals(FossilMod.MOD_ID)) {
             try {
                 try (Resource resource = resourceManager.getResource(FossilMod.location("models/"+location.getPath()+".json"))) {

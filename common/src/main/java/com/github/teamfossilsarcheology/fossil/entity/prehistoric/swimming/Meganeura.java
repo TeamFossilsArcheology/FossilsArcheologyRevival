@@ -80,7 +80,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(Util.IMMOBILE, new DinoPanicGoal(this, 1.5));
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));

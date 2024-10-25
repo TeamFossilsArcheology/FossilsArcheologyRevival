@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.OrderType;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
@@ -30,7 +29,6 @@ public class Megaloceros extends Prehistoric {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         targetSelector.addGoal(4, new LastMateHurtByTargetGoal(this));
     }
 

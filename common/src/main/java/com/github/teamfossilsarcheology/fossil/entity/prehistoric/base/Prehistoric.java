@@ -193,6 +193,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         goalSelector.addGoal(Util.IMMOBILE, new DinoStayGoal(this));
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
+        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
@@ -387,8 +388,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public double getPassengersRidingOffset() {
-        return getBbHeight() * 0.72;
+        return getBbHeight() * 0.8 + 0.15;
     }
+
+    public static Vec3 wanted;
 
     @Override
     public void positionRider(Entity passenger) {
@@ -402,7 +405,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 rider.setPos(riderPos.x, riderPos.y - 0.55, riderPos.z);
             } else {
                 //Not sure if this will be accurate enough for larger dinos. Need to await player feedback
-                //TODO: Just debug render it (+ grab pos)
                 rider.setPos(getX(), getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ());
             }
         }

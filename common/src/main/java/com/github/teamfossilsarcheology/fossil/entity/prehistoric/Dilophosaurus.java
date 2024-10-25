@@ -1,16 +1,13 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -41,13 +38,6 @@ public class Dilophosaurus extends Prehistoric {
 
     public Dilophosaurus(EntityType<Dilophosaurus> type, Level level) {
         super(type, level);
-    }
-
-    @Override
-    public void registerGoals() {
-        super.registerGoals();
-        double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, speed, false));
     }
 
     @Override

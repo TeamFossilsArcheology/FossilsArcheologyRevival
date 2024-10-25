@@ -1,9 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -17,13 +15,6 @@ public class Protoceratops extends Prehistoric {
 
     public Protoceratops(EntityType<Protoceratops> type, Level level) {
         super(type, level);
-    }
-
-    @Override
-    public void registerGoals() {
-        super.registerGoals();
-        //TODO: Use activity type to set this in Prehistoric
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
     }
 
     @Override

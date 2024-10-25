@@ -1,11 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
-import com.github.teamfossilsarcheology.fossil.entity.ai.GrabMeleeAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
-import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -34,7 +32,6 @@ public class Mosasaurus extends PrehistoricSwimming {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, 1, false));
         //goalSelector.addGoal(Util.ATTACK + 1, new BreachAttackGoal(this, 1));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
     }

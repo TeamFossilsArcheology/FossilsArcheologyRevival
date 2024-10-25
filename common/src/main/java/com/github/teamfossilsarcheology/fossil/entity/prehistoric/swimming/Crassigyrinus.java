@@ -1,12 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
-import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,7 +23,6 @@ public class Crassigyrinus extends PrehistoricSwimmingBucketable {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));

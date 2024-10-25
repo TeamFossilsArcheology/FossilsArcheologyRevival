@@ -70,9 +70,8 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
     }
 
     @Override
-    //TODO: Change for all recipes
     public boolean canCraftInDimensions(int width, int height) {
-        return true;
+        return false;
     }
 
     @Override

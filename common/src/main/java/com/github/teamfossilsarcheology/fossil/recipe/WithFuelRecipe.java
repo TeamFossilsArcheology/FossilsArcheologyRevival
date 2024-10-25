@@ -48,7 +48,7 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
 
     @Override
     public boolean canCraftInDimensions(int width, int height) {
-        return true;
+        return false;
     }
 
     @Override

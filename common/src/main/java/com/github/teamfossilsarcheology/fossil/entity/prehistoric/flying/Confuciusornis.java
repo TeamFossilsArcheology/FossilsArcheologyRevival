@@ -1,10 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
-import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
@@ -26,7 +24,6 @@ public class Confuciusornis extends PrehistoricFlying {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
     }
 
     @Override

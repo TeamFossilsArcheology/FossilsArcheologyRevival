@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -11,7 +10,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Pose;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
@@ -35,10 +33,7 @@ public class Triceratops extends Prehistoric {
     @Override
     public void registerGoals() {
         super.registerGoals();
-
-        double speed = getAttributeValue(Attributes.MOVEMENT_SPEED);
-        goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1.5 * speed));
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, speed * 1.5, false));
+        goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1.5));
     }
 
     @Override
@@ -49,11 +44,6 @@ public class Triceratops extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public double getPassengersRidingOffset() {
-        return super.getPassengersRidingOffset() + 0.15;
     }
 
     @Nullable

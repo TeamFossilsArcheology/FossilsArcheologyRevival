@@ -1,6 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.*;
+import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.ai.LeaveWaterGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -22,7 +25,6 @@ public class Tiktaalik extends PrehistoricSwimmingBucketable {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(Util.WANDER + 1, new LeaveWaterGoal(this, 1));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));

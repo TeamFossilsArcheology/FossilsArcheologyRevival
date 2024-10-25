@@ -1,11 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOtherLeapAtTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
-import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -27,7 +25,6 @@ public class Deinonychus extends PrehistoricLeaping {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(0, new DinoOtherLeapAtTargetGoal(this));
         goalSelector.addGoal(5, new RestrictSunGoal(this));
     }

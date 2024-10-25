@@ -1,6 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.*;
+import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -29,7 +32,6 @@ public class Tropeognathus extends PrehistoricFlying {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1.0D));
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1.0, true));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));

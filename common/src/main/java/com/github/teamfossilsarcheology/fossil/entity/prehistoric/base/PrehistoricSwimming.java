@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.nbt.CompoundTag;
@@ -67,6 +66,11 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
+        if (aiAttackType() == PrehistoricEntityInfoAI.Attacking.GRAB) {
+            goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, 1, false));
+        } else {
+            goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+        }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
@@ -398,10 +402,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     public void setDoingGrabAttack(boolean grabbing) {
         entityData.set(GRABBING, grabbing);
-    }
-
-    public @NotNull Animation nextBeachedAnimation() {
-        return getAnimation(AnimationCategory.BEACHED);
     }
 
     public @NotNull Animation nextGrabbingAnimation() {

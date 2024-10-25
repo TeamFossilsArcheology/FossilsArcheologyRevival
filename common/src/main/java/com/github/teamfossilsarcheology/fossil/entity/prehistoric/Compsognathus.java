@@ -1,6 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.github.teamfossilsarcheology.fossil.entity.ai.DelayedAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOtherLeapAtTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -28,7 +27,6 @@ public class Compsognathus extends PrehistoricLeaping {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         goalSelector.addGoal(5, new DinoOtherLeapAtTargetGoal(this));
         goalSelector.addGoal(Util.NEEDS + 4, new RestrictSunGoal(this));
     }
