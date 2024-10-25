@@ -1,28 +1,6 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.nautilus.swimSpeedDemoBack": {
-			"loop": true,
-			"animation_length": 8,
-			"bones": {
-				"root": {
-					"position": {
-						"vector": [0, 0, "-100+query.anim_time*40"]
-					}
-				}
-			}
-		},
-		"animation.nautilus.swimSpeedDemoFront": {
-			"loop": true,
-			"animation_length": 8,
-			"bones": {
-				"root": {
-					"position": {
-						"vector": [0, 0, "100+query.anim_time*-20"]
-					}
-				}
-			}
-		},
 		"animation.nautilus.beached": {
 			"loop": true,
 			"animation_length": 4,

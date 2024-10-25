@@ -227,7 +227,7 @@
 				}
 			}
 		},
-		"animation.megaloceros.idle_1": {
+		"animation.megaloceros.idle_1_80": {
 			"loop": true,
 			"animation_length": 12,
 			"bones": {
@@ -248,7 +248,7 @@
 				}
 			}
 		},
-		"animation.megaloceros.idle_2": {
+		"animation.megaloceros.idle_2_10": {
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
@@ -293,7 +293,7 @@
 				}
 			}
 		},
-		"animation.megaloceros.idle_3": {
+		"animation.megaloceros.idle_3_10": {
 			"loop": true,
 			"animation_length": 2.5,
 			"bones": {

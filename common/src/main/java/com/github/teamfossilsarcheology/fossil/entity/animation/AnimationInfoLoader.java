@@ -25,8 +25,8 @@ public class AnimationInfoLoader extends SimpleJsonResourceReloadListener {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().disableHtmlEscaping().create();
     public static final AnimationInfoLoader INSTANCE = new AnimationInfoLoader(GSON);
     private static final Logger LOGGER = LogUtils.getLogger();
-    private ImmutableMap<ResourceLocation, ImmutableMap<String, ServerAnimationInfo>> animationInfos = ImmutableMap.of();
-    private ImmutableMap<ResourceLocation, ImmutableMap<String, Animation>> clientAnimationInfos = ImmutableMap.of();
+    private Map<ResourceLocation, Map<String, ServerAnimationInfo>> animationInfos = ImmutableMap.of();
+    private Map<ResourceLocation, Map<String, Animation>> clientAnimationInfos = ImmutableMap.of();
 
     private AnimationInfoLoader(Gson gson) {
         super(gson, "animations");
@@ -34,8 +34,8 @@ public class AnimationInfoLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        ImmutableMap.Builder<ResourceLocation, ImmutableMap<String, ServerAnimationInfo>> builder = ImmutableMap.builder();
-        ImmutableMap.Builder<ResourceLocation, ImmutableMap<String, Animation>> clientBuilder = ImmutableMap.builder();
+        ImmutableMap.Builder<ResourceLocation, Map<String, ServerAnimationInfo>> builder = ImmutableMap.builder();
+        ImmutableMap.Builder<ResourceLocation, Map<String, Animation>> clientBuilder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
             if (!(fileEntry.getValue() instanceof JsonObject) || !fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
                 continue;
@@ -66,6 +66,10 @@ public class AnimationInfoLoader extends SimpleJsonResourceReloadListener {
         }
         animationInfos = builder.build();
         clientAnimationInfos = clientBuilder.build();
+    }
+
+    public Map<ResourceLocation, Map<String, ServerAnimationInfo>> getServerAnimationInfos() {
+        return animationInfos;
     }
 
     /**

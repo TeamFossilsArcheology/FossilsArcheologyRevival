@@ -17,6 +17,7 @@ import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.resource.GeckoLibCache;
 
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -31,7 +32,12 @@ public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        var allAnimations = GeckoLibCache.getInstance().getAnimations();
+        Map<ResourceLocation, Map<String, Animation>> allAnimations;
+        if (GeckoLibCache.getInstance().getAnimations().isEmpty()) {
+            allAnimations = (Map) AnimationInfoLoader.INSTANCE.getServerAnimationInfos();
+        } else {
+            allAnimations = GeckoLibCache.getInstance().getAnimations().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().animations()));
+        }
         ImmutableMap.Builder<ResourceLocation, Map<AnimationCategory, AnimationHolder>> builder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
             if (!(fileEntry.getValue() instanceof JsonObject) || !fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
@@ -44,7 +50,7 @@ public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
             }
             AnimationCategory backup = null;
             for (AnimationCategory category : AnimationCategory.CATEGORIES) {
-                for (Map.Entry<String, Animation> entry : allAnimations.get(path).animations().entrySet()) {
+                for (Map.Entry<String, Animation> entry : allAnimations.get(path).entrySet()) {
                     if (category.canMapAnimation(entry.getKey())) {
                         map.computeIfAbsent(category, cat -> new AnimationHolder()).add(entry.getValue());
                         backup = category;

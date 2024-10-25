@@ -9,7 +9,7 @@ import java.util.function.Predicate;
 public record AnimationCategory(String name, @Nullable AnimationCategory backup, boolean canBeReplaced, float chance, int transitionLength,
                                 Predicate<String> predicate) {
     public static final List<AnimationCategory> CATEGORIES = new ArrayList<>();
-    public static final AnimationCategory NONE = register("none", null, s -> s.equals("placeholder"));
+    public static final AnimationCategory NONE = register("none", null, s -> s.contains("placeholder"));
     public static final AnimationCategory IDLE = register("idle", null);
 
     public static final AnimationCategory ATTACK = register("attack", IDLE);
@@ -27,7 +27,7 @@ public record AnimationCategory(String name, @Nullable AnimationCategory backup,
     public static final AnimationCategory SWIM_FAST = register("swim_fast", FLY, s -> s.contains("swim") && s.contains("fast"));
 
     public boolean canMapAnimation(String key) {
-        return predicate.test(key);
+        return predicate.test(key) && !key.contains("!");
     }
 
     public static AnimationCategory register(String name, @Nullable AnimationCategory backup) {

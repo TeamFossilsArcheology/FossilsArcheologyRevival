@@ -455,7 +455,7 @@
 				}
 			}
 		},
-		"animation.platybelodon.idle_1": {
+		"animation.platybelodon.idle_1_90": {
 			"loop": true,
 			"animation_length": 3.3333,
 			"bones": {
@@ -500,7 +500,7 @@
 				}
 			}
 		},
-		"animation.platybelodon.idle_2": {
+		"animation.platybelodon.idle_2_10": {
 			"loop": true,
 			"animation_length": 4,
 			"bones": {

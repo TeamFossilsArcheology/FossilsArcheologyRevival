@@ -720,52 +720,62 @@
 			"bones": {
 				"body": {
 					"position": {
-						"vector": [0, -3, 0]
+						"vector": [0, -3, 0],
+						"easing": "linear"
 					}
 				},
 				"rightWing": {
 					"rotation": {
-						"vector": [-12.54624, -4.8812, 1.0848]
+						"vector": [-12.54624, -4.8812, 1.0848],
+						"easing": "linear"
 					}
 				},
 				"leftWing": {
 					"rotation": {
-						"vector": [-12.54624, 4.88119, -1.08482]
+						"vector": [-12.54624, 4.88119, -1.08482],
+						"easing": "linear"
 					}
 				},
 				"neck": {
 					"rotation": {
-						"vector": [-15, 0, 0]
+						"vector": [-15, 0, 0],
+						"easing": "linear"
 					}
 				},
 				"head": {
 					"rotation": {
-						"vector": [15, 0, 0]
+						"vector": [15, 0, 0],
+						"easing": "linear"
 					}
 				},
 				"rightLeg": {
 					"rotation": {
-						"vector": [-90, -7.5, 0]
+						"vector": [-90, -7.5, 0],
+						"easing": "linear"
 					}
 				},
 				"rightFoot": {
 					"rotation": {
-						"vector": [87.5, 0, 0]
+						"vector": [87.5, 0, 0],
+						"easing": "linear"
 					}
 				},
 				"leftLeg": {
 					"rotation": {
-						"vector": [-90, 7.5, 0]
+						"vector": [-90, 7.5, 0],
+						"easing": "linear"
 					}
 				},
 				"leftFoot": {
 					"rotation": {
-						"vector": [87.5, 0, 0]
+						"vector": [87.5, 0, 0],
+						"easing": "linear"
 					}
 				},
 				"torso": {
 					"rotation": {
-						"vector": [2.5, 0, 0]
+						"vector": [2.5, 0, 0],
+						"easing": "linear"
 					}
 				}
 			}
@@ -1062,69 +1072,84 @@
 			"bones": {
 				"rightWing2": {
 					"rotation": {
-						"vector": [-77.5, 0, 0]
+						"vector": [-77.5, 0, 0],
+						"easing": "linear"
 					}
 				},
 				"bone": {
 					"rotation": {
-						"vector": ["2+math.sin(query.anim_time*1440/4-60)*-2", "math.sin(query.anim_time*720/4-30)*10", "math.sin(query.anim_time*720/4-30)*-3"]
+						"vector": ["2+math.sin(query.anim_time*1440/4-60)*-2", "math.sin(query.anim_time*720/4-30)*10", "math.sin(query.anim_time*720/4-30)*-3"],
+						"easing": "linear"
 					},
 					"position": {
-						"vector": ["math.sin(query.anim_time*720/4)*1", "-2+math.sin(query.anim_time*1440/4+90)*-0.5", "math.sin(query.anim_time*1440/4-30)*-0.75"]
+						"vector": ["math.sin(query.anim_time*720/4)*1", "-2+math.sin(query.anim_time*1440/4+90)*-0.5", "math.sin(query.anim_time*1440/4-30)*-0.75"],
+						"easing": "linear"
 					}
 				},
 				"tailFeathers": {
 					"rotation": {
-						"vector": ["-2+math.sin(query.anim_time*1440/4)*2.5", "math.sin(query.anim_time*720/4+30)*-10", "math.sin(query.anim_time*720/4+30)*3"]
+						"vector": ["-2+math.sin(query.anim_time*1440/4)*2.5", "math.sin(query.anim_time*720/4+30)*-10", "math.sin(query.anim_time*720/4+30)*3"],
+						"easing": "linear"
 					}
 				},
 				"leftWing2": {
 					"rotation": {
-						"vector": [-67.5, 0, 0]
+						"vector": [-67.5, 0, 0],
+						"easing": "linear"
 					}
 				},
 				"body": {
 					"rotation": {
-						"vector": ["2+math.sin(query.anim_time*1440/4-60)*-2", "math.sin(query.anim_time*720/4-30)*10", "math.sin(query.anim_time*720/4-30)*-3"]
+						"vector": ["2+math.sin(query.anim_time*1440/4-60)*-2", "math.sin(query.anim_time*720/4-30)*10", "math.sin(query.anim_time*720/4-30)*-3"],
+						"easing": "linear"
 					},
 					"position": {
-						"vector": ["math.sin(query.anim_time*720/4)*1", "-2+math.sin(query.anim_time*1440/4+90)*-0.5", "math.sin(query.anim_time*1440/4-30)*-0.75"]
+						"vector": ["math.sin(query.anim_time*720/4)*1", "-2+math.sin(query.anim_time*1440/4+90)*-0.5", "math.sin(query.anim_time*1440/4-30)*-0.75"],
+						"easing": "linear"
 					}
 				},
 				"rightWing": {
 					"rotation": {
-						"vector": ["-4.7082+math.sin(query.anim_time*1440/4)*5", -27.68895, 83.27266]
+						"vector": ["-4.7082+math.sin(query.anim_time*1440/4)*5", -27.68895, 83.27266],
+						"easing": "linear"
 					}
 				},
 				"leftWing": {
 					"rotation": {
-						"vector": ["-2.2082+math.sin(query.anim_time*1440/4)*5", 27.68885, -83.27265]
+						"vector": ["-2.2082+math.sin(query.anim_time*1440/4)*5", 27.68885, -83.27265],
+						"easing": "linear"
 					}
 				},
 				"neck": {
 					"rotation": {
-						"vector": ["-5+math.sin(query.anim_time*1440/4+60)*-2", "math.sin(query.anim_time*720/4)*-7.5", "math.sin(query.anim_time*720/4)*3"]
+						"vector": ["-5+math.sin(query.anim_time*1440/4+60)*-2", "math.sin(query.anim_time*720/4)*-7.5", "math.sin(query.anim_time*720/4)*3"],
+						"easing": "linear"
 					}
 				},
 				"head": {
 					"rotation": {
-						"vector": ["-20+math.sin(query.anim_time*720/4+120)*5", "math.sin(query.anim_time*720/4+60)*-5", "math.sin(query.anim_time*720/4+60)*3"]
+						"vector": ["-20+math.sin(query.anim_time*720/4+120)*5", "math.sin(query.anim_time*720/4+60)*-5", "math.sin(query.anim_time*720/4+60)*3"],
+						"easing": "linear"
 					}
 				},
 				"rightLeg": {
 					"rotation": {
-						"vector": ["-10+math.sin(query.anim_time*720/4-30)*-30", "math.sin(query.anim_time*720/4-30)*-5", "math.sin(query.anim_time*720/4-30)*3"]
+						"vector": ["-10+math.sin(query.anim_time*720/4-30)*-30", "math.sin(query.anim_time*720/4-30)*-5", "math.sin(query.anim_time*720/4-30)*3"],
+						"easing": "linear"
 					},
 					"position": {
-						"vector": [0, "math.sin(query.anim_time*720/4-160)*-0.5", "math.sin(query.anim_time*720/4-90)*-1"]
+						"vector": [0, "math.sin(query.anim_time*720/4-160)*-0.5", "math.sin(query.anim_time*720/4-90)*-1"],
+						"easing": "linear"
 					}
 				},
 				"leftLeg": {
 					"rotation": {
-						"vector": ["-10+math.sin(query.anim_time*720/4-30)*30", "math.sin(query.anim_time*720/4-30)*-5", "math.sin(query.anim_time*720/4-30)*3"]
+						"vector": ["-10+math.sin(query.anim_time*720/4-30)*30", "math.sin(query.anim_time*720/4-30)*-5", "math.sin(query.anim_time*720/4-30)*3"],
+						"easing": "linear"
 					},
 					"position": {
-						"vector": [0, "math.sin(query.anim_time*720/4-160)*0.5", "math.sin(query.anim_time*720/4-90)*1"]
+						"vector": [0, "math.sin(query.anim_time*720/4-160)*0.5", "math.sin(query.anim_time*720/4-90)*1"],
+						"easing": "linear"
 					}
 				}
 			}
