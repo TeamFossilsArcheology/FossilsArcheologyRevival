@@ -196,23 +196,33 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
         return super.hurt(source, isWeak() ? amount * 1.25f : amount);
     }
 
+    private void removeBarriers() {
+        if (!level.isClientSide && level.dimension() == ModDimensions.ANU_LAIR) {
+            AnuLair anuLair = ((ServerLevel) level).getDataStorage().get(AnuLair::load, "anu_lair");
+            if (anuLair != null) {
+                for (BlockPos barrierPosition : anuLair.barrierPositions) {
+                    if (level.getBlockEntity(barrierPosition) instanceof AnuBarrierBlockEntity blockEntity) {
+                        blockEntity.disable();
+                    }
+                }
+            }
+            ((ServerLevel) level).getDataStorage().set("anu_lair", AnuLair.killed());
+        }
+    }
+
+    @Override
+    public void remove(RemovalReason reason) {
+        super.remove(reason);
+        removeBarriers();
+    }
+
     @Override
     public void die(DamageSource damageSource) {
         if (!level.isClientSide) {
             AnuDead anuDead = ModEntities.ANU_DEAD.get().create(level);
             anuDead.moveTo(getX(), getY(), getZ(), getYRot(), getXRot());
             level.addFreshEntity(anuDead);
-            if (level.dimension() == ModDimensions.ANU_LAIR) {
-                AnuLair anuLair = ((ServerLevel) level).getDataStorage().get(AnuLair::load, "anu_lair");
-                if (anuLair != null) {
-                    for (BlockPos barrierPosition : anuLair.barrierPositions) {
-                        if (level.getBlockEntity(barrierPosition) instanceof AnuBarrierBlockEntity blockEntity) {
-                            blockEntity.disable();
-                        }
-                    }
-                }
-                ((ServerLevel) level).getDataStorage().set("anu_lair", AnuLair.killed());
-            }
+            removeBarriers();
         } else {
             MusicHandler.stopMusic(ModSounds.MUSIC_ANU.get());
             List<Player> players = level.getNearbyPlayers(TargetingConditions.forCombat(), this, getBoundingBox().inflate(30, 15, 30));

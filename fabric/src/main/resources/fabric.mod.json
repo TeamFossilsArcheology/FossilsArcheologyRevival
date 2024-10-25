@@ -5,6 +5,7 @@
   "name": "${modName}",
   "description": "${modDescription}",
   "contact": {
+    "homepage": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival",
     "sources": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival",
     "issues": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/issues"
   },
