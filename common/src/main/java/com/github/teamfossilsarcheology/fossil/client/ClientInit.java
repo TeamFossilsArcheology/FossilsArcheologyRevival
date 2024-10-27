@@ -219,7 +219,6 @@ public class ClientInit {
         registerDino(ModEntities.TIKTAALIK, "tiktaalik");
         registerDino(ModEntities.TITANIS, "titanis");
         registerDino(ModEntities.TRICERATOPS, "triceratops", RenderType::entityCutout);
-        registerDino(ModEntities.TROPEOGNATHUS, "tropeognathus", RenderType::entityCutout);
         registerDino(ModEntities.TYRANNOSAURUS, "tyrannosaurus", RenderType::entityCutout);
         registerDino(ModEntities.VELOCIRAPTOR, "velociraptor", RenderType::entityCutout);
 

@@ -14,7 +14,6 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Sturgeon;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying.Confuciusornis;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying.Pteranodon;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying.Quetzalcoatlus;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying.Tropeognathus;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.*;
 import dev.architectury.registry.level.entity.EntityAttributeRegistry;
 import dev.architectury.registry.registries.DeferredRegister;
@@ -87,7 +86,6 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Tiktaalik>> TIKTAALIK = registerDino("tiktaalik", Tiktaalik::new, 1.7f, 0.4f);
     public static final RegistrySupplier<EntityType<Titanis>> TITANIS = registerDino("titanis", Titanis::new, 1.3f, 2f);
     public static final RegistrySupplier<EntityType<Triceratops>> TRICERATOPS = registerDino("triceratops", Triceratops::new, 0.8f, 1);
-    public static final RegistrySupplier<EntityType<Tropeognathus>> TROPEOGNATHUS = registerDino("tropeognathus", Tropeognathus::new, 1.25f, 1.1f);
     public static final RegistrySupplier<EntityType<Tyrannosaurus>> TYRANNOSAURUS = registerDino("tyrannosaurus", Tyrannosaurus::new, 1.1f, 1.25f);
     public static final RegistrySupplier<EntityType<Velociraptor>> VELOCIRAPTOR = registerDino("velociraptor", Velociraptor::new, 1.6f, 1.5f);
     public static final RegistrySupplier<EntityType<Dicranurus>> DICRANURUS = registerDino("dicranurus", Dicranurus::new, 1.1f, 0.8f);
@@ -194,7 +192,6 @@ public class ModEntities {
         EntityAttributeRegistry.register(TIKTAALIK, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TITANIS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(TRICERATOPS, Prehistoric::createAttributes);
-        EntityAttributeRegistry.register(TROPEOGNATHUS, PrehistoricFlying::createAttributes);
         EntityAttributeRegistry.register(TYRANNOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(VELOCIRAPTOR, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DICRANURUS, Prehistoric::createAttributes);
