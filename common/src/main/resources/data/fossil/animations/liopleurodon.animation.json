@@ -1,13 +1,16 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.liopleurodon.swim": {
+    "animation.liopleurodon.attack": {
       "loop": true,
-      "animation_length": 3.75
+      "animation_length": 1.25,
+      "action_delay": [
+        0.58
+      ]
     },
-    "animation.liopleurodon.swimfast": {
+    "animation.liopleurodon.beached": {
       "loop": true,
-      "animation_length": 1.4583
+      "animation_length": 8
     },
     "animation.liopleurodon.eat": {
       "loop": true,
@@ -17,14 +20,7 @@
       "loop": true,
       "animation_length": 2.4583
     },
-    "animation.liopleurodon.attack1": {
-      "loop": true,
-      "animation_length": 1.25,
-      "action_delay": [
-        0.58
-      ]
-    },
-    "animation.liopleurodon.randomidle": {
+    "animation.liopleurodon.idle": {
       "loop": true,
       "animation_length": 1.5
     },
@@ -32,9 +28,13 @@
       "loop": true,
       "animation_length": 20.0833
     },
-    "animation.liopleurodon.beached": {
+    "animation.liopleurodon.swim": {
       "loop": true,
-      "animation_length": 8
+      "animation_length": 3.75
+    },
+    "animation.liopleurodon.swim_fast": {
+      "loop": true,
+      "animation_length": 1.4583
     }
   },
   "geckolib_format_version": 2

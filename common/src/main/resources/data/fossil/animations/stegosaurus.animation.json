@@ -1,29 +1,61 @@
 {
   "format_version": "1.8.0",
   "animations": {
+    "animation.stegosaurus.attack_back_right": {
+      "animation_length": 1,
+      "action_delay": [
+        0.58
+      ]
+    },
+    "animation.stegosaurus.attack_back_left": {
+      "animation_length": 1,
+      "action_delay": [
+        0.58
+      ]
+    },
+    "animation.stegosaurus.attack_front_right": {
+      "animation_length": 1,
+      "action_delay": [
+        0.54
+      ]
+    },
+    "animation.stegosaurus.attack_front_left": {
+      "animation_length": 1,
+      "action_delay": [
+        0.54
+      ]
+    },
+    "animation.stegosaurus.attack_front_strong_right": {
+      "animation_length": 3,
+      "action_delay": [
+        1.5
+      ]
+    },
+    "animation.stegosaurus.attack_front_strong_left": {
+      "animation_length": 3,
+      "action_delay": [
+        1.5
+      ]
+    },
+    "animation.stegosaurus.call_1": {
+      "animation_length": 3
+    },
+    "animation.stegosaurus.call_2": {
+      "animation_length": 3
+    },
+    "animation.stegosaurus.drink": {
+      "animation_length": 3
+    },
+    "animation.stegosaurus.eat": {
+      "animation_length": 3
+    },
+    "animation.stegosaurus.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
     "animation.stegosaurus.idle": {
       "loop": true,
       "animation_length": 12
-    },
-    "animation.stegosaurus.sit1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.stegosaurus.sit2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.stegosaurus.sleep1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.stegosaurus.sleep2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.stegosaurus.walk": {
-      "loop": true,
-      "animation_length": 2
     },
     "animation.stegosaurus.run": {
       "loop": true,
@@ -33,58 +65,32 @@
       "loop": true,
       "animation_length": 0.75
     },
-    "animation.stegosaurus.jump/fall": {
+    "animation.stegosaurus.sit_1": {
       "loop": true,
+      "animation_length": 12
+    },
+    "animation.stegosaurus.sit_2": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.stegosaurus.sleep_1": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.stegosaurus.sleep_2": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.stegosaurus.speak": {
       "animation_length": 2
     },
     "animation.stegosaurus.swim": {
       "loop": true,
       "animation_length": 6
     },
-    "animation.stegosaurus.drink": {
-      "animation_length": 3
-    },
-    "animation.stegosaurus.eat": {
-      "animation_length": 3
-    },
-    "animation.stegosaurus.speak": {
+    "animation.stegosaurus.walk": {
+      "loop": true,
       "animation_length": 2
-    },
-    "animation.stegosaurus.call1": {
-      "animation_length": 3
-    },
-    "animation.stegosaurus.call2": {
-      "animation_length": 3
-    },
-    "animation.stegosaurus.attack_front1": {
-      "animation_length": 1,
-      "action_delay": [
-        0.54
-      ]
-    },
-    "animation.stegosaurus.attack_front2": {
-      "animation_length": 1,
-      "action_delay": [
-        0.54
-      ]
-    },
-    "animation.stegosaurus.attack_front_strong1": {
-      "animation_length": 3,
-      "action_delay": [
-        1.5
-      ]
-    },
-    "animation.stegosaurus.attack_front_strong2": {
-      "animation_length": 3,
-      "action_delay": [
-        1.5
-      ]
-    },
-    "animation.stegosaurus.attack_back1": {
-      "animation_length": 1
-    },
-    "animation.stegosaurus.attack_back2": {
-      "animation_length": 1
     }
   },
   "geckolib_format_version": 2

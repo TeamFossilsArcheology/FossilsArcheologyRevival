@@ -3,6 +3,18 @@
   "animations": {
     "placeholder": {
       "loop": true
+    },
+    "eat": {
+      "loop": true,
+      "animation_length": 5.8333
+    },
+    "idle": {
+      "loop": true,
+      "animation_length": 7
+    },
+    "walk": {
+      "loop": true,
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

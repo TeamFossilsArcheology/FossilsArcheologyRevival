@@ -1,19 +1,23 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.arthropleura.walk/run": {
-      "loop": true,
-      "animation_length": 8
+    "animation.arthropleura.eat/drink": {
+      "animation_length": 3
     },
     "animation.arthropleura.idle": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.arthropleura.eat/drink": {
-      "animation_length": 3
-    },
     "animation.arthropleura.sleep/sit": {
       "loop": true
+    },
+    "animation.arthropleura.swim": {
+      "loop": true,
+      "animation_length": 3
+    },
+    "animation.arthropleura.walk/run": {
+      "loop": true,
+      "animation_length": 8
     }
   },
   "geckolib_format_version": 2

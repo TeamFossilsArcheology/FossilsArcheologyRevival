@@ -1,29 +1,28 @@
 {
   "format_version": "1.8.0",
   "animations": {
+    "animation.ichthyosaurus.attack": {
+      "animation_length": 0.5,
+      "action_delay": [
+        0.29
+      ]
+    },
+    "animation.ichthyosaurus.beached": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.ichthyosaurus.eat": {
+      "animation_length": 2
+    },
+    "animation.ichthyosaurus.emote_1": {
+      "animation_length": 3
+    },
+    "animation.ichthyosaurus.emote_2": {
+      "animation_length": 3
+    },
     "animation.ichthyosaurus.idle": {
       "loop": true,
       "animation_length": 8
-    },
-    "animation.ichthyosaurus.sit": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.ichthyosaurus.sleep1": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.ichthyosaurus.sleep2": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.ichthyosaurus.swim": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.ichthyosaurus.swim_fast": {
-      "loop": true,
-      "animation_length": 12
     },
     "animation.ichthyosaurus.jump_start": {
       "loop": "hold_on_last_frame",
@@ -37,27 +36,28 @@
       "loop": "hold_on_last_frame",
       "animation_length": 3
     },
-    "animation.ichthyosaurus.beached": {
+    "animation.ichthyosaurus.sit": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.ichthyosaurus.sleep_1": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.ichthyosaurus.sleep_2": {
       "loop": true,
       "animation_length": 8
     },
     "animation.ichthyosaurus.speak": {
       "animation_length": 2
     },
-    "animation.ichthyosaurus.emote1": {
-      "animation_length": 3
+    "animation.ichthyosaurus.swim": {
+      "loop": true,
+      "animation_length": 4
     },
-    "animation.ichthyosaurus.emote2": {
-      "animation_length": 3
-    },
-    "animation.ichthyosaurus.attack": {
-      "animation_length": 0.5,
-      "action_delay": [
-        0.29
-      ]
-    },
-    "animation.ichthyosaurus.eat": {
-      "animation_length": 2
+    "animation.ichthyosaurus.swim_fast": {
+      "loop": true,
+      "animation_length": 12
     }
   },
   "geckolib_format_version": 2

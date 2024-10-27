@@ -1,29 +1,29 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.kelenken.walk": {
-      "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 1.3125
-    },
-    "animation.kelenken.drink": {
-      "animation_length": 3
-    },
-    "animation.kelenken.swim": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.kelenken.eat": {
-      "animation_length": 4.4583
-    },
-    "animation.kelenken.speak": {
-      "animation_length": 1
-    },
     "animation.kelenken.attack": {
       "animation_length": 0.5,
       "action_delay": [
         0.38
       ]
+    },
+    "animation.kelenken.drink": {
+      "animation_length": 3
+    },
+    "animation.kelenken.eat": {
+      "animation_length": 4.4583
+    },
+    "animation.kelenken.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.kelenken.idle": {
+      "loop": true
+    },
+    "animation.kelenken.run": {
+      "loop": true,
+      "animation_length": 0.9583,
+      "blocks_per_second": 4.1
     },
     "animation.kelenken.sit": {
       "loop": true
@@ -31,17 +31,17 @@
     "animation.kelenken.sleep": {
       "loop": true
     },
-    "animation.kelenken.idle": {
-      "loop": true
+    "animation.kelenken.speak": {
+      "animation_length": 1
     },
-    "animation.kelenken.jump/fall": {
+    "animation.kelenken.swim": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 4
     },
-    "animation.kelenken.run": {
+    "animation.kelenken.walk": {
       "loop": true,
-      "animation_length": 0.9583,
-      "blocks_per_second": 4.1
+      "animation_length": 2,
+      "blocks_per_second": 1.3125
     }
   },
   "geckolib_format_version": 2

@@ -1,29 +1,30 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.phorusrhacos.walk": {
-      "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 1.3125
-    },
-    "animation.phorusrhacos.drink": {
-      "animation_length": 3
-    },
-    "animation.phorusrhacos.swim": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.phorusrhacos.eat": {
-      "animation_length": 4.4583
-    },
-    "animation.phorusrhacos.speak": {
-      "animation_length": 1
-    },
     "animation.phorusrhacos.attack": {
       "animation_length": 0.5,
       "action_delay": [
         0.38
       ]
+    },
+    "animation.phorusrhacos.drink": {
+      "animation_length": 3
+    },
+    "animation.phorusrhacos.eat": {
+      "animation_length": 4.4583
+    },
+    "animation.phorusrhacos.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.phorusrhacos.idle": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.phorusrhacos.run": {
+      "loop": true,
+      "animation_length": 0.9583,
+      "blocks_per_second": 4.1
     },
     "animation.phorusrhacos.sit": {
       "loop": true,
@@ -33,18 +34,17 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.phorusrhacos.idle": {
-      "loop": true,
-      "animation_length": 2
+    "animation.phorusrhacos.speak": {
+      "animation_length": 1
     },
-    "animation.phorusrhacos.jump/fall": {
+    "animation.phorusrhacos.swim": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 4
     },
-    "animation.phorusrhacos.run": {
+    "animation.phorusrhacos.walk": {
       "loop": true,
-      "animation_length": 0.9583,
-      "blocks_per_second": 4.1
+      "animation_length": 2,
+      "blocks_per_second": 1.3125
     }
   },
   "geckolib_format_version": 2

@@ -1,41 +1,44 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.platybelodon.idle2": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.platybelodon.attack1": {
-      "animation_length": 1.25
-    },
-    "animation.platybelodon.speak": {
-      "animation_length": 2
+    "animation.platybelodon.attack": {
+      "animation_length": 1.25,
+      "action_delay": [
+        0.5
+      ]
     },
     "animation.platybelodon.drink": {
       "animation_length": 4
-    },
-    "animation.platybelodon.sleep": {
-      "loop": true,
-      "animation_length": 3.125
-    },
-    "animation.platybelodon.walk": {
-      "loop": true,
-      "animation_length": 3.3333
     },
     "animation.platybelodon.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.platybelodon.swim": {
-      "loop": true
-    },
-    "animation.platybelodon.idle": {
+    "animation.platybelodon.idle_1_90": {
       "loop": true,
       "animation_length": 3.3333
+    },
+    "animation.platybelodon.idle_2_10": {
+      "loop": true,
+      "animation_length": 4
     },
     "animation.platybelodon.run": {
       "loop": true,
       "animation_length": 1.625
+    },
+    "animation.platybelodon.sleep": {
+      "loop": true,
+      "animation_length": 3.125
+    },
+    "animation.platybelodon.speak": {
+      "animation_length": 2
+    },
+    "animation.platybelodon.swim": {
+      "loop": true
+    },
+    "animation.platybelodon.walk": {
+      "loop": true,
+      "animation_length": 3.3333
     }
   },
   "geckolib_format_version": 2

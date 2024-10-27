@@ -1,40 +1,48 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.pachycephalosaurus.run": {
-      "loop": true,
-      "animation_length": 0.75,
-      "blocks_per_second": 2.7
+    "animation.pachycephalosaurus.attack_1": {
+      "animation_length": 1,
+      "action_delay": [
+        0.33
+      ]
     },
-    "animation.pachycephalosaurus.walk": {
-      "loop": true,
-      "animation_length": 2.6667,
-      "blocks_per_second": 0.75
+    "animation.pachycephalosaurus.attack_2": {
+      "animation_length": 1,
+      "action_delay": [
+        0.42
+      ]
     },
-    "animation.pachycephalosaurus.attack1": {
-      "animation_length": 1
-    },
-    "animation.pachycephalosaurus.attack2": {
-      "animation_length": 1
+    "animation.pachycephalosaurus.call": {
+      "animation_length": 2.7083
     },
     "animation.pachycephalosaurus.charge": {
       "loop": true,
       "animation_length": 0.75
     },
-    "animation.pachycephalosaurus.eat": {
-      "animation_length": 2.25
+    "animation.pachycephalosaurus.display": {
+      "animation_length": 8
     },
     "animation.pachycephalosaurus.drink": {
       "animation_length": 2.25
     },
-    "animation.pachycephalosaurus.call": {
-      "animation_length": 2.7083
+    "animation.pachycephalosaurus.eat": {
+      "animation_length": 2.25
     },
     "animation.pachycephalosaurus.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.pachycephalosaurus.sleep1": {
+    "animation.pachycephalosaurus.idle": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.pachycephalosaurus.run": {
+      "loop": true,
+      "animation_length": 0.75,
+      "blocks_per_second": 2.7
+    },
+    "animation.pachycephalosaurus.sleep": {
       "loop": true,
       "animation_length": 12
     },
@@ -45,12 +53,10 @@
       "loop": true,
       "animation_length": 4
     },
-    "animation.pachycephalosaurus.idle": {
+    "animation.pachycephalosaurus.walk": {
       "loop": true,
-      "animation_length": 12
-    },
-    "animation.pachycephalosaurus.display": {
-      "animation_length": 8
+      "animation_length": 2.6667,
+      "blocks_per_second": 0.75
     }
   },
   "geckolib_format_version": 2

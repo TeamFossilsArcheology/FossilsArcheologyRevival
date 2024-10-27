@@ -1,49 +1,49 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.compsognathus.idle": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.compsognathus.walk": {
-      "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 0.46875
-    },
-    "animation.compsognathus.run": {
-      "loop": true,
-      "animation_length": 0.5833,
-      "blocks_per_second": 1.5
-    },
-    "animation.compsognathus.swim": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.compsognathus.eat": {
-      "animation_length": 1.9167
-    },
-    "animation.compsognathus.drink": {
-      "animation_length": 1.4583
-    },
     "animation.compsognathus.attack": {
       "animation_length": 0.75,
       "action_delay": [
         0.42
       ]
     },
-    "animation.compsognathus.speak": {
-      "animation_length": 1
-    },
     "animation.compsognathus.call": {
       "animation_length": 2.25
+    },
+    "animation.compsognathus.drink": {
+      "animation_length": 1.4583
+    },
+    "animation.compsognathus.eat": {
+      "animation_length": 1.9167
+    },
+    "animation.compsognathus.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.compsognathus.idle": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.compsognathus.run": {
+      "loop": true,
+      "animation_length": 0.5833,
+      "blocks_per_second": 1.5
     },
     "animation.compsognathus.sleep": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.compsognathus.jump/fall": {
+    "animation.compsognathus.speak": {
+      "animation_length": 1
+    },
+    "animation.compsognathus.swim": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.compsognathus.walk": {
+      "loop": true,
+      "animation_length": 1,
+      "blocks_per_second": 0.46875
     }
   },
   "geckolib_format_version": 2

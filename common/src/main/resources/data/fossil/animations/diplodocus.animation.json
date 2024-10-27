@@ -1,16 +1,6 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.diplodocus.walk": {
-      "loop": true,
-      "animation_length": 3.75,
-      "blocks_per_second": 0.33
-    },
-    "animation.diplodocus.sprint": {
-      "loop": true,
-      "animation_length": 2.25,
-      "blocks_per_second": 0.5
-    },
     "animation.diplodocus.attack": {
       "animation_length": 5.5,
       "action_delay": [
@@ -23,34 +13,37 @@
     "animation.diplodocus.eat": {
       "animation_length": 7.2917
     },
+    "animation.diplodocus.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
     "animation.diplodocus.idle": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.diplodocus.sleep": {
+    "animation.diplodocus.run": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 2.25
     },
     "animation.diplodocus.sit": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.diplodocus.jump/fall": {
-      "loop": true,
+    "animation.diplodocus.speak": {
       "animation_length": 2
+    },
+    "animation.diplodocus.sleep": {
+      "loop": true,
+      "animation_length": 12
     },
     "animation.diplodocus.swim": {
       "loop": true,
       "animation_length": 15.7083
     },
-    "animation.diplodocus.speak": {
-      "animation_length": 2
-    },
-    "animation.diplodocus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.diplodocus.runspeeddemo": {
-      "loop": true
+    "animation.diplodocus.walk": {
+      "loop": true,
+      "animation_length": 3.75,
+      "blocks_per_second": 0.33
     }
   },
   "geckolib_format_version": 2

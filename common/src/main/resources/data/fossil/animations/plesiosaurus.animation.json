@@ -1,18 +1,20 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.plesiosaurus.swim": {
-      "loop": true,
-      "animation_length": 1.5
+    "animation.plesiosaurus.attack": {
+      "animation_length": 0.7917,
+      "action_delay": [
+        0.63
+      ]
     },
-    "animation.plesiosaurus.swimfast": {
+    "animation.plesiosaurus.beached": {
       "loop": true,
-      "animation_length": 0.9583
+      "animation_length": 8
     },
     "animation.plesiosaurus.eat": {
       "animation_length": 1.75
     },
-    "animation.plesiosaurus.randomidle": {
+    "animation.plesiosaurus.idle": {
       "loop": true,
       "animation_length": 1.5
     },
@@ -20,15 +22,13 @@
       "loop": true,
       "animation_length": 8
     },
-    "animation.plesiosaurus.beached": {
+    "animation.plesiosaurus.swim": {
       "loop": true,
-      "animation_length": 8
+      "animation_length": 1.5
     },
-    "animation.plesiosaurus.attack": {
-      "animation_length": 0.7917,
-      "action_delay": [
-        0.63
-      ]
+    "animation.plesiosaurus.swim_fast": {
+      "loop": true,
+      "animation_length": 0.9583
     }
   },
   "geckolib_format_version": 2

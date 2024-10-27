@@ -1,53 +1,17 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dodo.idle": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.dodo.walk": {
-      "loop": true,
-      "animation_length": 2,
-      "blocks_per_second": 0.25
-    },
-    "animation.dodo.run": {
-      "loop": true,
-      "animation_length": 1,
-      "blocks_per_second": 0.9
-    },
-    "animation.dodo.speak1": {
-      "animation_length": 1.5
-    },
-    "animation.dodo.speak2": {
-      "animation_length": 2
-    },
-    "animation.dodo.sit": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dodo.bite1": {
+    "animation.dodo.attack_1": {
       "animation_length": 1,
       "action_delay": [
         0.42
       ]
     },
-    "animation.dodo.bite2": {
+    "animation.dodo.attack_2": {
       "animation_length": 1,
       "action_delay": [
         0.42
       ]
-    },
-    "animation.dodo.sleep1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dodo.sleep2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.dodo.idle_logo": {
-      "loop": true,
-      "animation_length": 8
     },
     "animation.dodo.eat": {
       "animation_length": 3.0417
@@ -56,9 +20,45 @@
       "loop": true,
       "animation_length": 2
     },
+    "animation.dodo.idle": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.dodo.idle_logo": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.dodo.run": {
+      "loop": true,
+      "animation_length": 1,
+      "blocks_per_second": 0.9
+    },
+    "animation.dodo.sit": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.dodo.speak_1": {
+      "animation_length": 1.5
+    },
+    "animation.dodo.speak_2": {
+      "animation_length": 2
+    },
+    "animation.dodo.sleep_1": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.dodo.sleep_2": {
+      "loop": true,
+      "animation_length": 12
+    },
     "animation.dodo.swim": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.dodo.walk": {
+      "loop": true,
+      "animation_length": 2,
+      "blocks_per_second": 0.25
     }
   },
   "geckolib_format_version": 2

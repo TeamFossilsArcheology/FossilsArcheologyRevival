@@ -1,39 +1,39 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.mosasaurus.swim": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.mosasaurus.swimfast": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.mosasaurus.eat": {
-      "animation_length": 1.75
-    },
-    "animation.mosasaurus.grab": {
-      "loop": true,
-      "animation_length": 2.4583
-    },
     "animation.mosasaurus.attack": {
       "animation_length": 1.25,
       "action_delay": [
         0.58
       ]
     },
-    "animation.mosasaurus.leap": {
-      "animation_length": 8.0417
+    "animation.mosasaurus.beached": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.mosasaurus.eat": {
+      "animation_length": 1.75
     },
     "animation.mosasaurus.idle": {
       "loop": true,
       "animation_length": 16.3333
     },
+    "animation.mosasaurus.grab": {
+      "loop": true,
+      "animation_length": 2.4583
+    },
+    "animation.mosasaurus.leap": {
+      "animation_length": 8.0417
+    },
     "animation.mosasaurus.sleep": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.mosasaurus.beached": {
+    "animation.mosasaurus.swim": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.mosasaurus.swim_fast": {
       "loop": true,
       "animation_length": 8
     }

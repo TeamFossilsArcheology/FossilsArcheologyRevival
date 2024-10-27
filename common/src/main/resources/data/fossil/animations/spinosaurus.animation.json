@@ -1,48 +1,23 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.spinosaurus.walk": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.spinosaurus.speak": {
-      "animation_length": 2
-    },
     "animation.spinosaurus.attack": {
-      "animation_length": 1.33333,
+      "animation_length": 1.3333,
       "action_delay": [
         0.46
       ]
     },
-    "animation.spinosaurus.jump/fall": {
+    "animation.spinosaurus.drink": {
+      "animation_length": 4.125
+    },
+    "animation.spinosaurus.eat": {
+      "animation_length": 3
+    },
+    "animation.spinosaurus.jump/fall_1": {
       "loop": true,
       "animation_length": 2
     },
-    "SPINOSAURUSWALKDEMO": {
-      "loop": true,
-      "animation_length": 100
-    },
-    "animation.spinosaurus.swimunderwater": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.spinosaurus.waterwalk": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.spinosaurus.swimfloating": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.spinosaurus.jump/fall2": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.spinosaurus.swimidle": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.spinosaurus.floatidle": {
+    "animation.spinosaurus.jump/fall_2": {
       "loop": true,
       "animation_length": 4
     },
@@ -50,20 +25,35 @@
       "loop": true,
       "animation_length": 4
     },
-    "animation.spinosaurus.eat": {
-      "animation_length": 3
+    "animation.spinosaurus.idle_water": {
+      "loop": true,
+      "animation_length": 4
     },
-    "animation.spinosaurus.drink": {
-      "animation_length": 4.125
+    "animation.spinosaurus.idle_water_float": {
+      "loop": true,
+      "animation_length": 4
     },
     "animation.spinosaurus.grab": {
-      "animation_length": 4.41667
+      "animation_length": 4.4167
     },
-    "animation.spinosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
+    "animation.spinosaurus.swim_floating": {
+      "loop": true,
+      "animation_length": 2
     },
-    "animation.spinosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
+    "animation.spinosaurus.swim_underwater": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.spinosaurus.speak": {
+      "animation_length": 2
+    },
+    "animation.spinosaurus.walk": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.spinosaurus.walk_water": {
+      "loop": true,
+      "animation_length": 4
     }
   },
   "geckolib_format_version": 2

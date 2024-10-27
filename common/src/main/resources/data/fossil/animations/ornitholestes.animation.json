@@ -1,28 +1,17 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.ornitholestes.walk": {
-      "loop": true,
-      "animation_length": 1.4167,
-      "blocks_per_second": 1.2
-    },
     "animation.ornitholestes.attack": {
       "animation_length": 1,
       "action_delay": [
         0.58
       ]
     },
-    "animation.ornitholestes.sleep": {
-      "loop": true,
-      "animation_length": 6
+    "animation.ornitholestes.display": {
+      "animation_length": 2.4583
     },
-    "animation.ornitholestes.sit": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.ornitholestes.swim": {
-      "loop": true,
-      "animation_length": 6
+    "animation.ornitholestes.call": {
+      "animation_length": 1.2083
     },
     "animation.ornitholestes.drink": {
       "animation_length": 3
@@ -34,20 +23,31 @@
       "loop": true,
       "animation_length": 2
     },
-    "animation.ornitholestes.call": {
-      "animation_length": 1.2083
+    "animation.ornitholestes.idle": {
+      "loop": true,
+      "animation_length": 12
     },
     "animation.ornitholestes.run": {
       "loop": true,
       "animation_length": 0.75,
       "blocks_per_second": 3.25
     },
-    "animation.ornitholestes.idle": {
+    "animation.ornitholestes.sit": {
       "loop": true,
       "animation_length": 12
     },
-    "animation.ornitholestes.display": {
-      "animation_length": 2.4583
+    "animation.ornitholestes.sleep": {
+      "loop": true,
+      "animation_length": 6
+    },
+    "animation.ornitholestes.swim": {
+      "loop": true,
+      "animation_length": 6
+    },
+    "animation.ornitholestes.walk": {
+      "loop": true,
+      "animation_length": 1.4167,
+      "blocks_per_second": 1.2
     }
   },
   "geckolib_format_version": 2

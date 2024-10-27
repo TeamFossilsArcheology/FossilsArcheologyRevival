@@ -1,7 +1,44 @@
 {
   "format_version": "1.8.0",
   "animations": {
+    "animation.meganeura.attack": {
+      "animation_length": 0.5,
+      "action_delay": [
+        0.33
+      ]
+    },
+    "animation.meganeura.attack_baby": {
+      "animation_length": 0.5
+    },
+    "animation.meganeura.drown": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.meganeura.eat": {
+      "animation_length": 2.5833
+    },
+    "animation.meganeura.eat_baby": {
+      "animation_length": 2.6667
+    },
+    "animation.meganeura.emote_1": {
+      "animation_length": 3
+    },
+    "animation.meganeura.emote_2": {
+      "animation_length": 2
+    },
+    "animation.meganeura.fly": {
+      "loop": true,
+      "animation_length": 2
+    },
     "animation.meganeura.idle": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.meganeura.idle_air": {
+      "loop": true,
+      "animation_length": 6
+    },
+    "animation.meganeura.idle_baby": {
       "loop": true,
       "animation_length": 8
     },
@@ -9,46 +46,11 @@
       "loop": true,
       "animation_length": 8
     },
-    "animation.meganeura.sleep": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.meganeura.walk": {
-      "loop": true,
-      "animation_length": 1
-    },
-    "animation.meganeura.vertical_idle": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.meganeura.vertical_sleep": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.meganeura.vertical_climb": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.meganeura.hover": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.meganeura.fly": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.meganeura.drown": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.meganeura.eat": {
-      "animation_length": 3
-    },
-    "animation.meganeura.idle_baby": {
-      "loop": true,
-      "animation_length": 8
-    },
     "animation.meganeura.sit_baby": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.meganeura.sleep": {
       "loop": true,
       "animation_length": 8
     },
@@ -56,46 +58,17 @@
       "loop": true,
       "animation_length": 8
     },
-    "animation.meganeura.walk_baby": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.meganeura.vertical_idle_baby": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.meganeura.vertical_sleep_baby": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.meganeura.vertical_climb_baby": {
-      "loop": true,
-      "animation_length": 8
-    },
     "animation.meganeura.swim_baby": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.meganeura.eat_baby": {
-      "animation_length": 3
+    "animation.meganeura.walk": {
+      "loop": true,
+      "animation_length": 1
     },
-    "animation.meganeura.attack_baby": {
-      "animation_length": 0.5
-    },
-    "animation.meganeura.turn_left(flight)": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.meganeura.turn_right(flight)": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.meganeura.emote1": {
-      "animation_length": 3
-    },
-    "animation.meganeura.emote2": {
-      "animation_length": 2
-    },
-    "animation.meganeura.attack": {
-      "animation_length": 0.5
+    "animation.meganeura.walk_baby": {
+      "loop": true,
+      "animation_length": 8
     }
   },
   "geckolib_format_version": 2

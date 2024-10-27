@@ -1,40 +1,40 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.elasmotherium.walk": {
-      "loop": true,
-      "animation_length": 3.3333,
-      "blocks_per_second": 0.2
-    },
-    "animation.elasmotherium.run": {
-      "loop": true,
-      "animation_length": 1.125,
-      "blocks_per_second": 1.0
-    },
-    "animation.elasmotherium.idle": {
-      "loop": true,
-      "animation_length": 3.3333
-    },
-    "animation.elasmotherium.rest/sleep": {
-      "loop": true,
-      "animation_length": 3.125
-    },
-    "animation.elasmotherium.jump/fall": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.elasmotherium.attack1": {
+    "animation.elasmotherium.attack": {
       "loop": true,
       "animation_length": 1.25,
       "action_delay": [
         0.42
       ]
     },
+    "animation.elasmotherium.eat/drink": {
+      "animation_length": 3
+    },
+    "animation.elasmotherium.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.elasmotherium.idle": {
+      "loop": true,
+      "animation_length": 3.3333
+    },
+    "animation.elasmotherium.sit/sleep": {
+      "loop": true,
+      "animation_length": 3.125
+    },
+    "animation.elasmotherium.run": {
+      "loop": true,
+      "animation_length": 1.125,
+      "blocks_per_second": 1.0
+    },
     "animation.elasmotherium.swim": {
       "loop": true
     },
-    "animation.elasmotherium.eat/drink": {
-      "animation_length": 3
+    "animation.elasmotherium.walk": {
+      "loop": true,
+      "animation_length": 3.3333,
+      "blocks_per_second": 0.2
     }
   },
   "geckolib_format_version": 2

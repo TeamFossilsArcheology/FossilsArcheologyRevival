@@ -1,6 +1,10 @@
 {
   "format_version": "1.8.0",
   "animations": {
+    "animation.sturgeon.beached": {
+      "loop": true,
+      "animation_length": 4
+    },
     "animation.sturgeon.idle": {
       "loop": true,
       "animation_length": 6
@@ -12,16 +16,6 @@
     "animation.sturgeon.swim_fast": {
       "loop": true,
       "animation_length": 4
-    },
-    "animation.sturgeon.land": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.sturgeon.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.sturgeon.turn_right": {
-      "loop": "hold_on_last_frame"
     }
   },
   "geckolib_format_version": 2

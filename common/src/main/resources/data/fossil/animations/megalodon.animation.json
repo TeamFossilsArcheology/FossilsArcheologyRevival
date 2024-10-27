@@ -1,7 +1,44 @@
 {
   "format_version": "1.8.0",
   "animations": {
+    "animation.megalodon.attack": {
+      "animation_length": 1,
+      "action_delay": [
+        0.75
+      ]
+    },
+    "animation.megalodon.beached_1": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.megalodon.beached_2": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.megalodon.eat": {
+      "animation_length": 2.4167
+    },
+    "animation.megalodon.jump/fall": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.megalodon.idle": {
+      "loop": true,
+      "animation_length": 16.3333
+    },
     "animation.megalodon.knockout": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.megalodon.grab": {
+      "loop": true,
+      "animation_length": 2.5417
+    },
+    "animation.megalodon.ram_attack": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.megalodon.sleep": {
       "loop": true,
       "animation_length": 8
     },
@@ -9,48 +46,11 @@
       "loop": true,
       "animation_length": 8
     },
-    "animation.megalodon.idle": {
-      "loop": true,
-      "animation_length": 16.3333
-    },
     "animation.megalodon.swim_fast": {
       "loop": true,
       "animation_length": 8
     },
-    "animation.megalodon.ram_attack": {
-      "loop": true,
-      "animation_length": 2
-    },
-    "animation.megalodon.jump/fall": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.megalodon.beached1": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.megalodon.beached2": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.megalodon.eat": {
-      "animation_length": 2.4167
-    },
-    "animation.megalodon.grab": {
-      "loop": true,
-      "animation_length": 2.5417
-    },
     "animation.megalodon.threat": {
-      "loop": true,
-      "animation_length": 8
-    },
-    "animation.megalodon.attack": {
-      "animation_length": 1,
-      "action_delay": [
-        0.75
-      ]
-    },
-    "animation.megalodon.sleep": {
       "loop": true,
       "animation_length": 8
     }

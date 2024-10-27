@@ -1,54 +1,58 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.megaloceros.idle": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.megaloceros.idle2": {
-      "loop": true,
-      "animation_length": 1
-    },
-    "animation.megaloceros.idle3": {
-      "loop": true,
-      "animation_length": 2.5
-    },
-    "animation.megaloceros.idleneartree2": {
-      "loop": true,
-      "animation_length": 3
-    },
     "animation.megaloceros.attack": {
       "animation_length": 1,
       "action_delay": [
         0.46
       ]
     },
+    "animation.megaloceros.drink": {
+      "animation_length": 4
+    },
     "animation.megaloceros.eat": {
       "animation_length": 3
     },
-    "animation.megaloceros.drinking": {
-      "animation_length": 4
-    },
-    "animation.megaloceros.walk": {
+    "animation.megaloceros.jump/fall": {
       "loop": true,
-      "animation_length": 1.875,
-      "blocks_per_second": 0.5
+      "animation_length": 2
+    },
+    "animation.megaloceros.idle_1_80": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.megaloceros.idle_2_10": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "animation.megaloceros.idle_3_10": {
+      "loop": true,
+      "animation_length": 2.5
+    },
+    "animation.megaloceros.near_tree": {
+      "loop": true,
+      "animation_length": 3
     },
     "animation.megaloceros.run": {
       "loop": true,
       "animation_length": 1,
       "blocks_per_second": 1.4
     },
+    "animation.megaloceros.sleep": {
+      "loop": true,
+      "animation_length": 10
+    },
     "animation.megaloceros.speak": {
       "animation_length": 1.5
-    },
-    "animation.megaloceros.jump/fall": {
-      "loop": true,
-      "animation_length": 2
     },
     "animation.megaloceros.swim": {
       "loop": true,
       "animation_length": 4
+    },
+    "animation.megaloceros.walk": {
+      "loop": true,
+      "animation_length": 1.9,
+      "blocks_per_second": 0.5
     }
   },
   "geckolib_format_version": 2

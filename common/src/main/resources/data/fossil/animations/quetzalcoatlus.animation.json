@@ -1,6 +1,35 @@
 {
   "format_version": "1.8.0",
   "animations": {
+    "attack": {
+      "animation_length": 0.8242,
+      "action_delay": [
+        0.27
+      ]
+    },
+    "eat": {
+      "loop": true,
+      "animation_length": 3.75
+    },
+    "fly": {
+      "loop": true,
+      "animation_length": 1.4286
+    },
+    "pose": {
+      "loop": true
+    },
+    "idle": {
+      "loop": true,
+      "animation_length": 6.6667
+    },
+    "run": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "sleep": {
+      "loop": true,
+      "animation_length": 6.6667
+    },
     "walk": {
       "loop": true,
       "animation_length": 2.9583

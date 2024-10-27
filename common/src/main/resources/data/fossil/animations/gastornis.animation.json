@@ -1,26 +1,26 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.gastornis.walk": {
-      "loop": true,
-      "animation_length": 3.25,
-      "blocks_per_second": 0.825
-    },
-    "animation.gastornis.drink": {
-      "animation_length": 3
-    },
-    "animation.gastornis.swim": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.gastornis.speak": {
-      "animation_length": 1
-    },
     "animation.gastornis.attack": {
       "animation_length": 0.5,
       "action_delay": [
         0.38
       ]
+    },
+    "animation.gastornis.drink": {
+      "animation_length": 3
+    },
+    "animation.gastornis.eat": {
+      "animation_length": 3
+    },
+    "animation.gastornis.idle": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.gastornis.run": {
+      "loop": true,
+      "animation_length": 1.75,
+      "blocks_per_second": 2.0
     },
     "animation.gastornis.sit": {
       "loop": true,
@@ -30,17 +30,17 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.gastornis.idle": {
+    "animation.gastornis.speak": {
+      "animation_length": 1
+    },
+    "animation.gastornis.swim": {
       "loop": true,
       "animation_length": 4
     },
-    "animation.gastornis.eat": {
-      "animation_length": 3
-    },
-    "animation.gastornis.run": {
+    "animation.gastornis.walk": {
       "loop": true,
-      "animation_length": 1.75,
-      "blocks_per_second": 2.0
+      "animation_length": 3.25,
+      "blocks_per_second": 0.825
     }
   },
   "geckolib_format_version": 2

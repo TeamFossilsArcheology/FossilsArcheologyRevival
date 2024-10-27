@@ -1,31 +1,47 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.deinonychus.idle": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.deinonychus.walk": {
-      "loop": true,
-      "animation_length": 1.4167,
-      "blocks_per_second": 1.1
-    },
-    "animation.deinonychus.run": {
-      "loop": true,
-      "animation_length": 0.75,
-      "blocks_per_second": 3.3
-    },
-    "animation.deinonychus.display": {
-      "animation_length": 2
-    },
-    "animation.deinonychus.call": {
-      "animation_length": 1
-    },
     "animation.deinonychus.attack": {
       "animation_length": 1,
       "action_delay": [
         0.58
       ]
+    },
+    "animation.deinonychus.call": {
+      "animation_length": 1
+    },
+    "animation.deinonychus.climb": {
+      "loop": true,
+      "animation_length": 2.5
+    },
+    "animation.deinonychus.display": {
+      "animation_length": 2
+    },
+    "animation.deinonychus.drink": {
+      "animation_length": 3
+    },
+    "animation.deinonychus.eat": {
+      "animation_length": 3
+    },
+    "animation.deinonychus.jump/fall": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.deinonychus.idle": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.deinonychus.leap": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 0.6993
+    },
+    "animation.deinonychus.land": {
+      "animation_length": 1.1161
+    },
+    "animation.deinonychus.run": {
+      "loop": true,
+      "animation_length": 0.75,
+      "blocks_per_second": 3.3
     },
     "animation.deinonychus.sit": {
       "loop": true,
@@ -39,15 +55,10 @@
       "loop": true,
       "animation_length": 2
     },
-    "animation.deinonychus.drink": {
-      "animation_length": 3
-    },
-    "animation.deinonychus.eat": {
-      "animation_length": 3
-    },
-    "animation.deinonychus.jump/fall": {
+    "animation.deinonychus.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 1.4167,
+      "blocks_per_second": 1.1
     }
   },
   "geckolib_format_version": 2

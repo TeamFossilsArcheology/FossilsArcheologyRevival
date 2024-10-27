@@ -1,17 +1,13 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.nautilus.idle": {
+    "animation.nautilus.beached": {
       "loop": true,
       "animation_length": 4
     },
-    "animation.nautilus.swim_backwards": {
+    "animation.nautilus.idle": {
       "loop": true,
-      "animation_length": 2
-    },
-    "animation.nautilus.swim_forwards": {
-      "loop": true,
-      "animation_length": 2
+      "animation_length": 4
     },
     "animation.nautilus.shell_retract": {
       "loop": "hold_on_last_frame",
@@ -24,17 +20,13 @@
       "loop": "hold_on_last_frame",
       "animation_length": 1
     },
-    "animation.nautilus.land": {
+    "animation.nautilus.swim_backwards": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 2
     },
-    "animation.nautilus.swimSpeedDemoBack": {
+    "animation.nautilus.swim_forwards": {
       "loop": true,
-      "animation_length": 8
-    },
-    "animation.nautilus.swimSpeedDemoFront": {
-      "loop": true,
-      "animation_length": 8
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

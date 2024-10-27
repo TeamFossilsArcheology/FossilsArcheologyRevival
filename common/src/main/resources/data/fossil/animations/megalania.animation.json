@@ -1,51 +1,55 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.megalania.walk": {
-      "loop": true,
-      "animation_length": 1.5,
-      "blocks_per_second": 0.41
-    },
-    "animation.megalania.idle": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.megalania.speak": {
-      "animation_length": 3
-    },
-    "animation.megalania.sleep": {
-      "loop": true,
-      "animation_length": 3
-    },
-    "animation.megalania.bite": {
+    "animation.megalania.attack_1": {
       "animation_length": 0.7083,
       "action_delay": [
         0.33
       ]
     },
-    "animation.megalania.bite2": {
+    "animation.megalania.attack_2": {
       "animation_length": 1.5,
       "action_delay": [
         0.33
       ]
     },
-    "animation.megalania.eat": {
-      "animation_length": 1.5
-    },
-    "animation.megalania.TongueFlick": {
-      "animation_length": 1.6667
-    },
     "animation.megalania.drink": {
       "animation_length": 4.125
+    },
+    "animation.megalania.eat": {
+      "animation_length": 1.5
     },
     "animation.megalania.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
+    "animation.megalania.idle": {
+      "loop": true,
+      "animation_length": 4
+    },
     "animation.megalania.run": {
       "loop": true,
       "animation_length": 1.0417,
       "blocks_per_second": 0.6
+    },
+    "animation.megalania.sleep": {
+      "loop": true,
+      "animation_length": 3
+    },
+    "animation.megalania.speak": {
+      "animation_length": 3
+    },
+    "animation.megalania.swim": {
+      "loop": true,
+      "animation_length": 2.0408
+    },
+    "animation.megalania.tongueflick": {
+      "animation_length": 1.6667
+    },
+    "animation.megalania.walk": {
+      "loop": true,
+      "animation_length": 1.5,
+      "blocks_per_second": 0.41
     }
   },
   "geckolib_format_version": 2

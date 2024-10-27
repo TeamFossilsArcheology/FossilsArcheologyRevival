@@ -1,47 +1,47 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.mammoth.idle2": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.mammoth.attack1": {
+    "animation.mammoth.attack": {
       "animation_length": 1.25,
       "action_delay": [
         0.46
       ]
     },
-    "animation.mammoth.drinking": {
+    "animation.mammoth.drink": {
       "animation_length": 4
     },
-    "animation.mammoth.eating": {
+    "animation.mammoth.eat": {
       "animation_length": 4
-    },
-    "animation.mammoth.speak": {
-      "animation_length": 2
-    },
-    "animation.mammoth.walk": {
-      "loop": true,
-      "animation_length": 3.3333
-    },
-    "animation.mammoth.run": {
-      "loop": true,
-      "animation_length": 1.4167
     },
     "animation.mammoth.jump/fall": {
       "loop": true,
       "animation_length": 2
     },
+    "animation.mammoth.idle_1_90": {
+      "loop": true,
+      "animation_length": 3.3333
+    },
+    "animation.mammoth.idle_2_10": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.mammoth.run": {
+      "loop": true,
+      "animation_length": 1.4167
+    },
     "animation.mammoth.rest/sleep": {
       "loop": true,
       "animation_length": 3.125
     },
-    "animation.mammoth.idle": {
-      "loop": true,
-      "animation_length": 3.3333
+    "animation.mammoth.speak": {
+      "animation_length": 2
     },
     "animation.mammoth.swim": {
       "loop": true
+    },
+    "animation.mammoth.walk": {
+      "loop": true,
+      "animation_length": 3.3333
     }
   },
   "geckolib_format_version": 2

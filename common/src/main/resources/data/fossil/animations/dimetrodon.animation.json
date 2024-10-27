@@ -1,19 +1,25 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.dimetrodon.run": {
-      "loop": true,
-      "animation_length": 1
-    },
-    "animation.dimetrodon.walk": {
-      "loop": true,
-      "animation_length": 1.5
-    },
     "animation.dimetrodon.attack": {
       "animation_length": 0.4583,
       "action_delay": [
         0.33
       ]
+    },
+    "animation.dimetrodon.drink": {
+      "animation_length": 4.4583
+    },
+    "animation.dimetrodon.eat": {
+      "animation_length": 1.5
+    },
+    "animation.dimetrodon.idle": {
+      "loop": true,
+      "animation_length": 5
+    },
+    "animation.dimetrodon.run": {
+      "loop": true,
+      "animation_length": 1
     },
     "animation.dimetrodon.sleep/sit": {
       "loop": true,
@@ -22,11 +28,13 @@
     "animation.dimetrodon.speak": {
       "animation_length": 2.3333
     },
-    "animation.dimetrodon.eat": {
-      "animation_length": 1.5
+    "animation.dimetrodon.swim": {
+      "loop": true,
+      "animation_length": 3.3333
     },
-    "animation.dimetrodon.drink": {
-      "animation_length": 4.4583
+    "animation.dimetrodon.walk": {
+      "loop": true,
+      "animation_length": 1.5
     }
   },
   "geckolib_format_version": 2

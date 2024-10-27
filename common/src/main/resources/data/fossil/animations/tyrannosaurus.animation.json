@@ -1,78 +1,14 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.tyrannosaurus.idle": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.tyrannosaurus.sit1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.tyrannosaurus.sit2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.tyrannosaurus.sleep1": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.tyrannosaurus.sleep2": {
-      "loop": true,
-      "animation_length": 12
-    },
-    "animation.tyrannosaurus.walk": {
-      "loop": true,
-      "animation_length": 3
-    },
-    "animation.tyrannosaurus.run": {
-      "loop": true,
-      "animation_length": 1.5
-    },
-    "animation.tyrannosaurus.run_baby": {
-      "loop": true,
-      "animation_length": 0.75
-    },
-    "animation.tyrannosaurus.jump/fall": {
-      "loop": true,
-      "animation_length": 4
-    },
-    "animation.tyrannosaurus.swim": {
-      "loop": true,
-      "animation_length": 6
-    },
-    "animation.tyrannosaurus.drink": {
-      "animation_length": 3
-    },
-    "animation.tyrannosaurus.eat": {
-      "animation_length": 3
-    },
-    "animation.tyrannosaurus.turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.tyrannosaurus.turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "animation.tyrannosaurus.speak": {
-      "animation_length": 2
-    },
-    "animation.tyrannosaurus.call": {
-      "animation_length": 3
-    },
-    "animation.tyrannosaurus.emote1": {
-      "animation_length": 3
-    },
-    "animation.tyrannosaurus.emote2": {
-      "animation_length": 3
-    },
-    "animation.tyrannosaurus.attack_normal1": {
+    "animation.tyrannosaurus.attack_normal_1": {
       "loop": true,
       "animation_length": 1.5,
       "action_delay": [
         1
       ]
     },
-    "animation.tyrannosaurus.attack_normal2": {
+    "animation.tyrannosaurus.attack_normal_2": {
       "loop": true,
       "animation_length": 1.5,
       "action_delay": [
@@ -93,11 +29,63 @@
         0.58
       ]
     },
-    "animation.tyrannosaurus.ontogeny_baby": {
-      "loop": "hold_on_last_frame"
+    "animation.tyrannosaurus.call": {
+      "animation_length": 3
     },
-    "animation.tyrannosaurus.ontogeny_teen": {
-      "loop": "hold_on_last_frame"
+    "animation.tyrannosaurus.drink": {
+      "animation_length": 3
+    },
+    "animation.tyrannosaurus.eat": {
+      "animation_length": 3
+    },
+    "animation.tyrannosaurus.emote_1": {
+      "animation_length": 3
+    },
+    "animation.tyrannosaurus.emote_2": {
+      "animation_length": 3
+    },
+    "animation.tyrannosaurus.jump/fall": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.tyrannosaurus.idle": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.tyrannosaurus.run": {
+      "loop": true,
+      "animation_length": 1.5
+    },
+    "animation.tyrannosaurus.run_baby": {
+      "loop": true,
+      "animation_length": 0.75
+    },
+    "animation.tyrannosaurus.sit_1": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.tyrannosaurus.sit_2": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.tyrannosaurus.sleep_1": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.tyrannosaurus.sleep_2": {
+      "loop": true,
+      "animation_length": 12
+    },
+    "animation.tyrannosaurus.speak": {
+      "animation_length": 2
+    },
+    "animation.tyrannosaurus.swim": {
+      "loop": true,
+      "animation_length": 6
+    },
+    "animation.tyrannosaurus.walk": {
+      "loop": true,
+      "animation_length": 3
     }
   },
   "geckolib_format_version": 2

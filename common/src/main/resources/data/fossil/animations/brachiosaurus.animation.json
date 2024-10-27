@@ -1,15 +1,6 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "animation.brachiosaurus.walk": {
-      "loop": true,
-      "animation_length": 4.4583,
-      "blocks_per_second": 0.16874999999999998
-    },
-    "animation.brachiosaurus.sprint": {
-      "loop": true,
-      "animation_length": 2.8333
-    },
     "animation.brachiosaurus.attack": {
       "animation_length": 5.5,
       "action_delay": [
@@ -22,11 +13,11 @@
     "animation.brachiosaurus.eat": {
       "animation_length": 6.8333
     },
-    "animation.brachiosaurus.idle": {
+    "animation.brachiosaurus.jump/fall": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 2
     },
-    "animation.brachiosaurus.sleep": {
+    "animation.brachiosaurus.idle": {
       "loop": true,
       "animation_length": 12
     },
@@ -34,16 +25,25 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.brachiosaurus.jump/fall": {
+    "animation.brachiosaurus.sleep": {
       "loop": true,
+      "animation_length": 12
+    },
+    "animation.brachiosaurus.speak": {
       "animation_length": 2
+    },
+    "animation.brachiosaurus.sprint": {
+      "loop": true,
+      "animation_length": 2.8333
     },
     "animation.brachiosaurus.swim": {
       "loop": true,
       "animation_length": 15.7083
     },
-    "animation.brachiosaurus.speak": {
-      "animation_length": 2
+    "animation.brachiosaurus.walk": {
+      "loop": true,
+      "animation_length": 4.4583,
+      "blocks_per_second": 0.16874999999999998
     }
   },
   "geckolib_format_version": 2
