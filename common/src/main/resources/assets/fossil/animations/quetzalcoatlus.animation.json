@@ -512,6 +512,34 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"1.4": {
+					"effect": "eat"
+				},
+				"1.7": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"3.0": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"1.4": {
+					"effect": "eat"
+				},
+				"1.7": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"3.0": {
+					"effect": "eat"
+				}
 			}
 		},
 		"fly": {

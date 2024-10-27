@@ -393,8 +393,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         return getBbHeight() * 0.8 + 0.15;
     }
 
-    public static Vec3 wanted;
-
     @Override
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
@@ -1143,7 +1141,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     protected float getSoundVolume() {
-        return isBaby() ? super.getSoundVolume() * 0.75f : 1;
+        return isBaby() ? super.getSoundVolume() * 0.375f : 0.5f;
     }
 
     public AnimationInfoLoader.ServerAnimationInfo startAttack() {

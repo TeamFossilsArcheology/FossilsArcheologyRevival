@@ -1018,6 +1018,58 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"1.5": {
+					"effect": "eat"
+				},
+				"1.9": {
+					"effect": "eat"
+				},
+				"2.3": {
+					"effect": "eat"
+				},
+				"2.7": {
+					"effect": "eat"
+				},
+				"3.1": {
+					"effect": "eat"
+				},
+				"3.5": {
+					"effect": "eat"
+				},
+				"3.9": {
+					"effect": "eat"
+				},
+				"7.1": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"1.5": {
+					"effect": "eat"
+				},
+				"1.9": {
+					"effect": "eat"
+				},
+				"2.3": {
+					"effect": "eat"
+				},
+				"2.7": {
+					"effect": "eat"
+				},
+				"3.1": {
+					"effect": "eat"
+				},
+				"3.5": {
+					"effect": "eat"
+				},
+				"3.9": {
+					"effect": "eat"
+				},
+				"7.1": {
+					"effect": "eat"
+				}
 			}
 		},
 		"idle": {

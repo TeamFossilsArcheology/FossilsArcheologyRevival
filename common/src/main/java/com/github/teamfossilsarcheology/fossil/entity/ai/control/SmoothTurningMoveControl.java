@@ -42,6 +42,9 @@ public class SmoothTurningMoveControl extends MoveControl {
                 mob.setYRot(rotlerp(mob.getYRot(), newYRot, maxTurn));
             }
             mob.setSpeed((float) (turnMod * speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)));
+            if (mob.isInWater()) {
+                mob.setSpeed(mob.getSpeed() * 2);
+            }
             BlockPos blockPos = mob.blockPosition();
             BlockState blockState = mob.level.getBlockState(blockPos);
             VoxelShape voxelShape = blockState.getCollisionShape(mob.level, blockPos);

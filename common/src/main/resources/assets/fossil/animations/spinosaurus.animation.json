@@ -1310,6 +1310,34 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.6667": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.5417": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.6667": {
+					"effect": "eat"
+				},
+				"2.0": {
+					"effect": "eat"
+				},
+				"2.5417": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.spinosaurus.jump/fall_1": {

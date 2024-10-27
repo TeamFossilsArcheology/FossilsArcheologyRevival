@@ -1742,6 +1742,34 @@
 						}
 					}
 				}
+			},
+			"sound_effects": {
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.125": {
+					"effect": "eat"
+				},
+				"1.75": {
+					"effect": "eat"
+				},
+				"2.125": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"0.75": {
+					"effect": "eat"
+				},
+				"1.125": {
+					"effect": "eat"
+				},
+				"1.75": {
+					"effect": "eat"
+				},
+				"2.125": {
+					"effect": "eat"
+				}
 			}
 		},
 		"animation.tyrannosaurus.emote_1": {

@@ -23,8 +23,8 @@ public record AnimationCategory(String name, @Nullable AnimationCategory backup,
     public static final AnimationCategory FLY_FAST = register("fly_fast", FLY, s -> s.contains("fly") && s.contains("fast"));
     public static final AnimationCategory WALK = register("walk", IDLE);
     public static final AnimationCategory SPRINT = register("sprint", WALK, s -> s.contains("sprint") || s.contains("run"));
-    public static final AnimationCategory SWIM = register("swim", IDLE, s -> s.contains("swim") && !s.contains("fast"));
-    public static final AnimationCategory SWIM_FAST = register("swim_fast", FLY, s -> s.contains("swim") && s.contains("fast"));
+    public static final AnimationCategory SWIM = register("swim", WALK, s -> s.contains("swim") && !s.contains("fast"));
+    public static final AnimationCategory SWIM_FAST = register("swim_fast", SWIM, s -> s.contains("swim") && s.contains("fast"));
 
     public boolean canMapAnimation(String key) {
         return predicate.test(key) && !key.contains("!");
