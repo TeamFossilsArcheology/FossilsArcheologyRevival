@@ -193,7 +193,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         goalSelector.addGoal(Util.IMMOBILE, new DinoStayGoal(this));
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
-        goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+        if (aiAttackType() != PrehistoricEntityInfoAI.Attacking.NONE) {
+            goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+        }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
@@ -1194,7 +1196,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     private void makeEatingSounds() {
-        playSound(SoundEvents.GENERIC_EAT, getSoundVolume(), getVoicePitch());
+        level.playLocalSound(getX(), getY(), getZ(), SoundEvents.GENERIC_EAT, getSoundSource(), getSoundVolume(), getVoicePitch(), false);
     }
 
     public float getMaxTurnDistancePerTick() {

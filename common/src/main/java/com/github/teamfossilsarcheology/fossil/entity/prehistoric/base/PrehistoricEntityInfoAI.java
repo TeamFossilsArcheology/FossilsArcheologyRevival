@@ -69,7 +69,7 @@ public class PrehistoricEntityInfoAI {
     }
 
     public enum Attacking {
-        BASIC, KNOCK_UP, GRAB, TAIL_SWING, CHARGE, DROWN, DROP, STOMP, JUMP
+        BASIC, KNOCK_UP, GRAB, TAIL_SWING, CHARGE, DROWN, DROP, STOMP, JUMP, NONE
     }
 
     public enum WaterAbility {

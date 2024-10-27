@@ -1581,12 +1581,6 @@
 					}
 				},
 				"head_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [5.22, 0, 0]
-					},
 					"position": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1812,12 +1806,6 @@
 					}
 				},
 				"head_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [5.22, 0, 0]
-					},
 					"position": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -2721,12 +2709,6 @@
 					}
 				},
 				"head_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [5.22, 0, 0]
-					},
 					"position": {
 						"0.0": {
 							"vector": [3, 8, 0]

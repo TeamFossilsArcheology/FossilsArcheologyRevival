@@ -68,7 +68,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         if (aiAttackType() == PrehistoricEntityInfoAI.Attacking.GRAB) {
             goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, 1, false));
-        } else {
+        } else if (aiAttackType() != PrehistoricEntityInfoAI.Attacking.NONE){
             goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);

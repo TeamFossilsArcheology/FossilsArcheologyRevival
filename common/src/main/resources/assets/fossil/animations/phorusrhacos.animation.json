@@ -2219,12 +2219,6 @@
 					}
 				},
 				"body_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [-26.09, 0, 0]
-					},
 					"position": {
 						"vector": [0, 0, 0]
 					}
@@ -2314,12 +2308,6 @@
 					}
 				},
 				"head_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [4.78, 0, 0]
-					},
 					"position": {
 						"vector": [0, 18, 5]
 					},
@@ -2328,12 +2316,6 @@
 					}
 				},
 				"body_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [-26.09, 0, 0]
-					},
 					"position": {
 						"vector": [-4, 13, -12]
 					},

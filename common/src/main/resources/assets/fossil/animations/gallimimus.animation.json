@@ -1226,12 +1226,6 @@
 					}
 				},
 				"head_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [72.48, 0, 0]
-					},
 					"position": {
 						"0.0": {
 							"vector": [0, 0, 0]

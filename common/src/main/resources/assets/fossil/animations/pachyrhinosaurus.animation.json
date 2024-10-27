@@ -4062,34 +4062,16 @@
 					}
 				},
 				"head_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [-4, 0, 0]
-					},
 					"position": {
 						"vector": [-5, 7, 0]
 					}
 				},
 				"tail_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [-22, 0, 0]
-					},
 					"position": {
 						"vector": [-2, 3, 0]
 					}
 				},
 				"body_hitbox": {
-					"relative_to": {
-						"rotation": "entity"
-					},
-					"rotation": {
-						"vector": [-3, 0, 0]
-					},
 					"position": {
 						"vector": [-6.5, 16, -1]
 					}
