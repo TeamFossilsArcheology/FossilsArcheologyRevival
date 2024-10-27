@@ -9,7 +9,7 @@
     },
     "eat": {
       "loop": true,
-      "animation_length": 7.5714
+      "animation_length": 6.4286
     },
     "idle": {
       "loop": true,

@@ -1,26 +1,26 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "attack": {
-      "animation_length": 1,
-      "action_delay": [
-        0.58
-      ]
-    },
-    "beached": {
-      "loop": true
-    },
-    "eat": {
-      "animation_length": 1
-    },
     "idle": {
       "loop": true,
       "animation_length": 10
     },
-    "sit/sleep": {
+    "swim": {
       "loop": true
     },
-    "swim": {
+    "attack/eat": {
+      "animation_length": 1
+    },
+    "beached": {
+      "loop": true
+    },
+    "turn_right": {
+      "loop": "hold_on_last_frame"
+    },
+    "turn_left": {
+      "loop": "hold_on_last_frame"
+    },
+    "sit/sleep": {
       "loop": true
     }
   },
