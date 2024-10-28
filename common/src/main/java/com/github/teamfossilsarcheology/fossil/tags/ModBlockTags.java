@@ -18,4 +18,6 @@ public class ModBlockTags {
     public static final TagKey<Block> TEMPSKYA_LOGS = TagKey.create(key, FossilMod.location("tempskya_logs"));
     public static final TagKey<Block> FIGURINES = TagKey.create(key, FossilMod.location("figurines"));
     public static final TagKey<Block> UNBREAKABLE = TagKey.create(key, FossilMod.location("unbreakable"));
+    public static final TagKey<Block> MOOD_BONUS = TagKey.create(key, FossilMod.location("mood_bonus"));
+    public static final TagKey<Block> PLANTS = TagKey.create(key, FossilMod.location("plants"));
 }

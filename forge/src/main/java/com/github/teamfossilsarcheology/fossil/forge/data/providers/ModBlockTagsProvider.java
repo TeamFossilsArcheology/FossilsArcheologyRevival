@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
+import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.FigurineBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.VaseBlock;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
@@ -10,6 +11,7 @@ import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -76,14 +78,24 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addTag(BlockTags.NEEDS_IRON_TOOL, CALCITE_FOSSIL, DEEPSLATE_FOSSIL, DRIPSTONE_FOSSIL, RED_SANDSTONE_FOSSIL, SANDSTONE_FOSSIL, STONE_FOSSIL, TUFF_FOSSIL, PERMAFROST_BLOCK, AMBER_ORE);
         addTag(BlockTags.NEEDS_STONE_TOOL, ANCIENT_GLASS, REINFORCED_GLASS, ICED_DIRT, PERMAFROST_BLOCK);
         addTag(BlockTags.REPLACEABLE_PLANTS, MUTANT_TREE_VINE);
+        var plants = tag(ModBlockTags.PLANTS).add(MUTANT_TREE_VINE.get());
+        for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
+            plants.add(info.getPlantBlock());
+        }
 
         addTag(ModBlockTags.UNBREAKABLE, ANCIENT_GLASS, BUBBLE_BLOWER, DENSE_SAND, FEEDER, REINFORCED_GLASS);
+        tag(ModBlockTags.MOOD_BONUS).add(Blocks.CACTUS, Blocks.MOSS_BLOCK, Blocks.PUMPKIN, Blocks.CARVED_PUMPKIN,
+                        Blocks.MELON, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM, Blocks.GRASS, Blocks.FERN,
+                        Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY,
+                        Blocks.TALL_GRASS, Blocks.LARGE_FERN, Blocks.HANGING_ROOTS)
+                .addTags(BlockTags.CROPS, BlockTags.LEAVES, BlockTags.SAPLINGS, BlockTags.SMALL_FLOWERS, ModBlockTags.PLANTS);
     }
 
     @SafeVarargs
     private void addTag(TagKey<Block> tag, RegistrySupplier<? extends Block>... toAdd) {
         tag(tag).add(Arrays.stream(toAdd).map(Supplier::get).toArray(Block[]::new));
     }
+
     private void addTag(TagKey<Block> tag, RegistrySupplier<Block> toAdd) {
         tag(tag).add(toAdd.get());
     }

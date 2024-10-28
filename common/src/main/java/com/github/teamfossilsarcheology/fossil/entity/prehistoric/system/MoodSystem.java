@@ -3,12 +3,12 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.system;
 import com.github.teamfossilsarcheology.fossil.entity.ToyBase;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricMoodType;
+import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 /**
  * This system handles the mobs mood as well as some parts of the playing logic.
@@ -44,9 +44,7 @@ public class MoodSystem extends AISystem {
     }
 
     private static boolean isPlantBlock(BlockState block) {
-        Material material = block.getMaterial();
-        return material == Material.CACTUS || material == Material.PLANT || material == Material.LEAVES ||
-                material == Material.MOSS || material == Material.VEGETABLE;
+        return block.is(ModBlockTags.MOOD_BONUS);
     }
 
     public PrehistoricMoodType getMoodFace() {

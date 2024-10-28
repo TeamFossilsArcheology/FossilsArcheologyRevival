@@ -2,13 +2,9 @@ package com.github.teamfossilsarcheology.fossil.block.entity;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.block.ConcretePowderBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.material.Material;
 
 
 /**
@@ -24,22 +20,5 @@ public interface SifterBlockEntity {
         ((SifterBlockEntity) blockEntity).serverTick(level, pos, state);
     }
 
-    static EnumSiftType getSiftTypeFromStack(ItemStack stack) {
-        if (stack.getItem() instanceof BlockItem) {
-            BlockState blockState = ((BlockItem) stack.getItem()).getBlock().defaultBlockState();
-            if (blockState.getMaterial() == Material.SAND && !(blockState.getBlock() instanceof ConcretePowderBlock)) {
-                return EnumSiftType.SAND;
-            }
-            if (blockState.getMaterial() == Material.DIRT) {
-                return EnumSiftType.GROUND;
-            }
-        }
-        return EnumSiftType.NONE;
-    }
-
     void serverTick(Level level, BlockPos pos, BlockState state);
-
-    enum EnumSiftType {
-        NONE, GROUND, SAND
-    }
 }
