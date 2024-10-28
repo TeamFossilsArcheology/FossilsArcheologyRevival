@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "ingredient": {
-    "item": "fossil:meat_tropeognathus"
-  },
-  "result": "fossil:cooked_tropeognathus",
-  "experience": 1.5,
-  "cookingtime": 100
-}

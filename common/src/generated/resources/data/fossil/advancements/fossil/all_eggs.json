@@ -761,20 +761,6 @@
         ]
       }
     },
-    "tropeognathus": {
-      "trigger": "fossil:incubate_egg",
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "type": "fossil:tropeognathus"
-            },
-            "entity": "this"
-          }
-        ]
-      }
-    },
     "tyrannosaurus": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
@@ -977,9 +963,6 @@
     ],
     [
       "triceratops"
-    ],
-    [
-      "tropeognathus"
     ],
     [
       "tyrannosaurus"

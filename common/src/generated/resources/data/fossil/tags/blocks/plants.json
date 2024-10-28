@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:mutant_tree_vine",
+    "fossil:bennettitales_large",
+    "fossil:bennettitales_small",
+    "fossil:cephalotaxus",
+    "fossil:crataegus",
+    "fossil:cyathea",
+    "fossil:dictyophyllum",
+    "fossil:dillhoffia",
+    "fossil:dipteris",
+    "fossil:duisbergia",
+    "fossil:ephedra",
+    "fossil:florissantia",
+    "fossil:foozia",
+    "fossil:horsetail_large",
+    "fossil:horsetail_small",
+    "fossil:licopodiophyta",
+    "fossil:mutant_plant",
+    "fossil:osmunda",
+    "fossil:sagenopteris",
+    "fossil:sarracenia",
+    "fossil:vaccinium",
+    "fossil:welwitschia",
+    "fossil:zamites"
+  ]
+}

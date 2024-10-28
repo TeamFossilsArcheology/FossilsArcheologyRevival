@@ -1,0 +1,28 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:cactus",
+    "minecraft:moss_block",
+    "minecraft:pumpkin",
+    "minecraft:carved_pumpkin",
+    "minecraft:melon",
+    "minecraft:brown_mushroom",
+    "minecraft:red_mushroom",
+    "minecraft:grass",
+    "minecraft:fern",
+    "minecraft:vine",
+    "minecraft:glow_lichen",
+    "minecraft:sunflower",
+    "minecraft:lilac",
+    "minecraft:rose_bush",
+    "minecraft:peony",
+    "minecraft:tall_grass",
+    "minecraft:large_fern",
+    "minecraft:hanging_roots",
+    "#minecraft:crops",
+    "#minecraft:leaves",
+    "#minecraft:saplings",
+    "#minecraft:small_flowers",
+    "#fossil:plants"
+  ]
+}
