@@ -118,7 +118,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         AnimationController<PrehistoricLeaping> controller = event.getController();
         double animSpeed = 1;
         if (isLeaping()) {
-            getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation().animation, AnimationCategory.ATTACK);
+            getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation().animation, AnimationCategory.ATTACK, false);
         } else {
             if (event.isMoving() || isClimbing()) {
                 Animation movementAnim;
@@ -127,7 +127,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                 } else {
                     movementAnim = nextWalkingAnimation().animation;
                 }
-                getAnimationLogic().addActiveAnimation(controller.getName(), movementAnim, AnimationCategory.WALK);
+                getAnimationLogic().addActiveAnimation(controller.getName(), movementAnim, AnimationCategory.WALK, false);
                 //TODO: Refactor to use the same code for AnimationLogic, PrehistoricFlying and this
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                 animSpeed = 1 / event.getAnimatable().getScale();
@@ -144,7 +144,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                     animSpeed = lastSpeed;
                 }
             } else {
-                getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation().animation, AnimationCategory.IDLE);
+                getAnimationLogic().addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
             }
         }
         lastSpeed = animSpeed;
