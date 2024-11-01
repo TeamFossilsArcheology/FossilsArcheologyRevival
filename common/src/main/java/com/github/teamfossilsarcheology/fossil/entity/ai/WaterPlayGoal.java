@@ -2,7 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.ai;
 
 import com.github.teamfossilsarcheology.fossil.entity.ToyBall;
 import com.github.teamfossilsarcheology.fossil.entity.ToyBase;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
+import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.world.damagesource.DamageSource;
@@ -79,9 +79,9 @@ public class WaterPlayGoal extends PlayGoal {
             boolean tooBig = !Util.isEntitySmallerThan(target, 2 * swimming.getScale() / swimming.data().maxScale());
             if (swimming.aiAttackType() != Attacking.GRAB || tooBig || swimming.getRandom().nextInt(5) > 0) {
                 attackType = ATTACK;
-                AnimationInfoLoader.ServerAnimationInfo animation = dino.startAttack();
-                attackDamageTick = (long) (currentTime + animation.actionDelay);
-                attackEndTick = (long) (currentTime + animation.animationLength);
+                ServerAnimationInfo animationInfo = dino.startAttack();
+                attackDamageTick = (long) (currentTime + animationInfo.actionDelay);
+                attackEndTick = (long) (currentTime + animationInfo.animation.animationLength);
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
             } else {
                 attackType = GRAB;

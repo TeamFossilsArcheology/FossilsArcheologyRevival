@@ -7,6 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomFlightLoo
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomFlightMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.FlightPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.FlyingSleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SleepSystem;
@@ -40,7 +41,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -325,5 +325,5 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }
 
-    public abstract @NotNull Animation nextTakeOffAnimation();
+    public abstract @NotNull AnimationInfo nextTakeOffAnimation();
 }

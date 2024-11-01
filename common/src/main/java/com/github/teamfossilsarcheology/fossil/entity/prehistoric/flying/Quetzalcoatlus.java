@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
@@ -14,7 +15,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Quetzalcoatlus extends PrehistoricFlying {
     public static final String WALK = "walk";
@@ -42,7 +42,7 @@ public class Quetzalcoatlus extends PrehistoricFlying {
     }
 
     @Override
-    public @NotNull Animation nextTakeOffAnimation() {
+    public @NotNull AnimationInfo nextTakeOffAnimation() {
         return getAllAnimations().get(WALK);
     }
 

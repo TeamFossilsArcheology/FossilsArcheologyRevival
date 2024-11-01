@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveC
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.MeganeuraFlyingMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
@@ -44,7 +45,6 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.Random;
 
@@ -280,7 +280,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public @NotNull Animation nextIdleAnimation() {
+    public @NotNull AnimationInfo nextIdleAnimation() {
         if (isBaby()) {
             return getAllAnimations().get(IDLE_BABY);
         }
@@ -294,7 +294,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     }
 
     @Override
-    public @NotNull Animation nextWalkingAnimation() {
+    public @NotNull AnimationInfo nextWalkingAnimation() {
         if (isBaby()) {
             if (isInWater()) {
                 return getAllAnimations().get(SWIM_BABY);

@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
@@ -13,7 +14,6 @@ import net.minecraft.util.Mth;
 import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.List;
 import java.util.Map;
@@ -25,12 +25,12 @@ public class AnimationList extends DebugSelectionList<AnimationList.AnimationEnt
     private double transitionLength = 1;
     private boolean loop;
 
-    public AnimationList(int x0, int height, Map<String, Animation> animations, List<String> controllers, boolean instruction, Minecraft minecraft, Consumer<AnimationObject> function) {
+    public AnimationList(int x0, int height, Map<String, ? extends AnimationInfo> animations, List<String> controllers, boolean instruction, Minecraft minecraft, Consumer<AnimationObject> function) {
         super(minecraft, 100, 215, height, 60, height + 60, 25);
         this.x0 = x0;
         this.x1 = x0 + width;
         int buttonX = x0 + rowWidth + 15;
-        List<Map.Entry<String, Animation>> sortedAnimations = animations.entrySet().stream().sorted(Map.Entry.comparingByKey()).toList();
+        List<String> sortedAnimations = animations.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getKey).toList();
         sortedAnimations.forEach(animation -> addEntry(new AnimationEntry(animation)));
         if (!controllers.isEmpty()) {
             currentController = controllers.get(0);
@@ -71,11 +71,11 @@ public class AnimationList extends DebugSelectionList<AnimationList.AnimationEnt
     protected class AnimationEntry extends ContainerObjectSelectionList.Entry<AnimationEntry> {
         private final Button changeButton;
 
-        AnimationEntry(Map.Entry<String, Animation> animation) {
-            String[] split = animation.getKey().split("\\.");
+        AnimationEntry(String animation) {
+            String[] split = animation.split("\\.");
             TextComponent display = new TextComponent(split.length > 0 ? StringUtils.capitalize(split[split.length - 1]) : "");
             changeButton = new Button(0, 0, 100, 20, display, button -> {
-                consumer.accept(new AnimationObject(animation.getKey(), currentController, transitionLength, loop));
+                consumer.accept(new AnimationObject(animation, currentController, transitionLength, loop));
             });
         }
 

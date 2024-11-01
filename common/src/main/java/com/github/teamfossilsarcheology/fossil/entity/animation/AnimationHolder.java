@@ -2,20 +2,19 @@ package com.github.teamfossilsarcheology.fossil.entity.animation;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.world.entity.Mob;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.NavigableMap;
 import java.util.Random;
 import java.util.TreeMap;
 
 public class AnimationHolder {
-    private final NavigableMap<Integer, Animation> animations = new TreeMap<>();
-    private final NavigableMap<Integer, Animation> babyAnimations = new TreeMap<>();
-    private final NavigableMap<Integer, Animation> waterAnimations = new TreeMap<>();
-    private final NavigableMap<Integer, Animation> airAnimations = new TreeMap<>();
+    private final NavigableMap<Integer, AnimationInfo> animations = new TreeMap<>();
+    private final NavigableMap<Integer, AnimationInfo> babyAnimations = new TreeMap<>();
+    private final NavigableMap<Integer, AnimationInfo> waterAnimations = new TreeMap<>();
+    private final NavigableMap<Integer, AnimationInfo> airAnimations = new TreeMap<>();
 
-    public void add(Animation animation) {
-        String name = animation.animationName.toLowerCase();
+    public void add(AnimationInfo animation) {
+        String name = animation.animation.animationName.toLowerCase();
         String[] parts = name.split("_");
         int weight = 1;
         if (parts.length >= 3) {
@@ -37,7 +36,7 @@ public class AnimationHolder {
         }
     }
 
-    private static void addAnimation(NavigableMap<Integer, Animation> map, Animation animation, int weight) {
+    private static void addAnimation(NavigableMap<Integer, AnimationInfo> map, AnimationInfo animation, int weight) {
         if (!map.isEmpty()) {
             map.put(map.lastKey() + weight, animation);
         } else {
@@ -45,7 +44,7 @@ public class AnimationHolder {
         }
     }
 
-    public Animation getRandomAnimation(Mob entity) {
+    public AnimationInfo getRandomAnimation(Mob entity) {
         if (!babyAnimations.isEmpty() && entity.isBaby()) {
             return getRandomAnimation(babyAnimations, entity.getRandom());
         } else if (!waterAnimations.isEmpty() && entity.isInWater()) {
@@ -56,7 +55,7 @@ public class AnimationHolder {
         return getRandomAnimation(animations, entity.getRandom());
     }
 
-    private static Animation getRandomAnimation(NavigableMap<Integer, Animation> map, Random random) {
+    private static AnimationInfo getRandomAnimation(NavigableMap<Integer, AnimationInfo> map, Random random) {
         return map.ceilingEntry((int) (random.nextDouble() * map.lastKey())).getValue();
     }
 }

@@ -7,7 +7,6 @@ import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.world.entity.Entity;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.function.Supplier;
 
@@ -55,11 +54,13 @@ public class S2CSyncActiveAnimationMessage {
         contextSupplier.get().queue(() -> {
             Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
             if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
-                double endTick = entity.level.getGameTime() + prehistoric.getAllAnimations().getOrDefault(animationName, new Animation()).animationLength;
-                AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.ActiveAnimationInfo(
-                        animationName, endTick, category, true, ticks, loop
-                );
-                prehistoric.getAnimationLogic().addNextAnimation(controller, activeAnimationInfo);
+                if (prehistoric.getAllAnimations().containsKey(animationName)) {
+                    double endTick = entity.level.getGameTime() + prehistoric.getAnimation(animationName).animation.animationLength;
+                    AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.ActiveAnimationInfo(
+                            animationName, endTick, category, true, ticks, loop
+                    );
+                    prehistoric.getAnimationLogic().addNextAnimation(controller, activeAnimationInfo);
+                }
             }
         });
     }

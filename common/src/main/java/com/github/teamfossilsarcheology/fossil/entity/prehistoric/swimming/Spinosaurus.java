@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.LeaveWaterGoal;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -16,7 +17,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Spinosaurus extends PrehistoricSwimming {
     public static final String GRAB = "animation.spinosaurus.grab";
@@ -50,7 +50,7 @@ public class Spinosaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextGrabbingAnimation() {
+    public @NotNull AnimationInfo nextGrabbingAnimation() {
         return getAllAnimations().get(GRAB);
     }
 

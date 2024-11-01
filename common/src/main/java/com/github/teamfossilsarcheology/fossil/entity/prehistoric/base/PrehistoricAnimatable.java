@@ -1,61 +1,61 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationHolder;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.*;
 import net.minecraft.world.entity.Mob;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.Map;
 
 public interface PrehistoricAnimatable<T extends Mob & PrehistoricAnimatable<T>> extends IAnimatable {
-    default Animation getRandomAnimation(AnimationCategory category, T mob) {
+    default AnimationInfo getRandomAnimation(AnimationCategory category, T mob) {
         var animations = getAnimations().get(category);
         return animations.getRandomAnimation(mob);
     }
 
     Map<AnimationCategory, AnimationHolder> getAnimations();
 
-    Map<String, Animation> getAllAnimations();
+    Map<String, ? extends AnimationInfo> getAllAnimations();
 
-    Animation getAnimation(AnimationCategory category);
+    AnimationInfo getAnimation(AnimationCategory category);
 
-    Map<String, AnimationInfoLoader.ServerAnimationInfo> getServerAnimationInfos();
+    default AnimationInfo getAnimation(String name) {
+        return getAllAnimations().get(name);
+    }
+
+    Map<String, ServerAnimationInfo> getServerAnimationInfos();
 
     AnimationLogic<T> getAnimationLogic();
 
-    default @NotNull Animation nextEatingAnimation() {
+    default @NotNull AnimationInfo nextEatingAnimation() {
         return getAnimation(AnimationCategory.EAT);
     }
 
-    default @NotNull Animation nextIdleAnimation() {
+    default @NotNull AnimationInfo nextIdleAnimation() {
         return getAnimation(AnimationCategory.IDLE);
     }
 
-    default @NotNull Animation nextSittingAnimation() {
+    default @NotNull AnimationInfo nextSittingAnimation() {
         return getAnimation(AnimationCategory.SIT);
     }
 
-    default @NotNull Animation nextSleepingAnimation() {
+    default @NotNull AnimationInfo nextSleepingAnimation() {
         return getAnimation(AnimationCategory.SLEEP);
     }
 
-    default @NotNull Animation nextSprintingAnimation() {
+    default @NotNull AnimationInfo nextSprintingAnimation() {
         return getAnimation(AnimationCategory.SPRINT);
     }
 
-    default @NotNull Animation nextSwimmingAnimation() {
+    default @NotNull AnimationInfo nextSwimmingAnimation() {
         return getAnimation(AnimationCategory.SWIM);
     }
 
-    default @NotNull Animation nextSwimFastAnimation() {
+    default @NotNull AnimationInfo nextSwimFastAnimation() {
         return getAnimation(AnimationCategory.SWIM_FAST);
     }
 
-    default @NotNull Animation nextWalkingAnimation() {
+    default @NotNull AnimationInfo nextWalkingAnimation() {
         return getAnimation(AnimationCategory.WALK);
     }
 }

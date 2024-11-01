@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.nbt.CompoundTag;
@@ -30,7 +31,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -404,7 +404,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         entityData.set(GRABBING, grabbing);
     }
 
-    public @NotNull Animation nextGrabbingAnimation() {
+    public @NotNull AnimationInfo nextGrabbingAnimation() {
         //TODO: Grab category
         return nextIdleAnimation();
     }

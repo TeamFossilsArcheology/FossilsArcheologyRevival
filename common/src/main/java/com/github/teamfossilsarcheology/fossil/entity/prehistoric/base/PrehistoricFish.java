@@ -2,6 +2,8 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.animation.*;
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.Env;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -27,11 +29,9 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.resource.GeckoLibCache;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.List;
@@ -195,18 +195,21 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     @Override
-    public Map<String, Animation> getAllAnimations() {
-        return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
+    public Map<String, ? extends AnimationInfo> getAllAnimations() {
+        if (Platform.getEnvironment() == Env.CLIENT) {
+            return ClientAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
+        }
+        return ServerAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
     }
 
     @Override
-    public Animation getAnimation(AnimationCategory category) {
+    public AnimationInfo getAnimation(AnimationCategory category) {
         return getRandomAnimation(category, this);
     }
 
     @Override
-    public Map<String, AnimationInfoLoader.ServerAnimationInfo> getServerAnimationInfos() {
-        return AnimationInfoLoader.INSTANCE.getServerAnimations(animationLocation);
+    public Map<String, ServerAnimationInfo> getServerAnimationInfos() {
+        return ServerAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
     }
 
     @Override
@@ -224,7 +227,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
         return animationLogic;
     }
 
-    public @NotNull Animation nextBeachedAnimation() {
+    public @NotNull AnimationInfo nextBeachedAnimation() {
         return getAnimation(AnimationCategory.BEACHED);
     }
 

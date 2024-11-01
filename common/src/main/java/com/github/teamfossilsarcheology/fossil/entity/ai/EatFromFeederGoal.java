@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.ai;
 
 import com.github.teamfossilsarcheology.fossil.block.entity.FeederBlockEntity;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -9,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.block.entity.BlockEntity;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -43,9 +43,9 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
                 feeder.feedDinosaur(entity);
                 entity.heal(0.1f);
                 if (entity.level.getGameTime() > animEndTick) {
-                    Animation anim = entity.nextEatingAnimation();
-                    entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, anim, AnimationCategory.EAT);
-                    animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
+                    AnimationInfo animationInfo = entity.nextEatingAnimation();
+                    entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
+                    animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.animationLength);
                 }
             }
         }

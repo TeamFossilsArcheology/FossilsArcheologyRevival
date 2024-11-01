@@ -59,14 +59,14 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      * Server side method that will trigger the animation on the client side of all players in range.
      * The end tick of the animation will be determined by the client
      *
-     * @param controller the name of the controller the animation will play on
-     * @param animation  the animation to play
-     * @param category   the category of the animation
+     * @param controller    the name of the controller the animation will play on
+     * @param animationInfo the animation to play
+     * @param category      the category of the animation
      */
-    public void triggerAnimation(String controller, Animation animation, AnimationCategory category) {
-        if (animation != null && !entity.level.isClientSide) {
-            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName,
-                    entity.level.getGameTime() + animation.animationLength, category, true, 5
+    public void triggerAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category) {
+        if (animationInfo != null && !entity.level.isClientSide) {
+            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animationInfo.animation.animationName,
+                    entity.level.getGameTime() + animationInfo.animation.animationLength, category, true, 5
             );
             TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
             var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
@@ -78,15 +78,15 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      * This method can be used to debug force an animation
      *
      * @param controller       the name of the controller the animation will play on
-     * @param animation        the animation to play
+     * @param animationInfo    the animation to play
      * @param category         the category of the animation
      * @param transitionLength the length of the transition from the previous animation in ticks
      * @param loop             whether the animation should loop (until manually stopped because forced)
      */
-    public ActiveAnimationInfo forceAnimation(String controller, Animation animation, AnimationCategory category, double transitionLength, boolean loop) {
-        if (animation != null) {
-            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animation.animationName,
-                    entity.level.getGameTime() + animation.animationLength, category, true, transitionLength, loop
+    public ActiveAnimationInfo forceAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category, double transitionLength, boolean loop) {
+        if (animationInfo != null) {
+            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animationInfo.animation.animationName,
+                    entity.level.getGameTime() + animationInfo.animation.animationLength, category, true, transitionLength, loop
             );
             addNextAnimation(controller, activeAnimationInfo);
             if (!entity.level.isClientSide) {
@@ -107,7 +107,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      * @return {@code true} if the animation was successfully added
      */
     public boolean addActiveAnimation(String controller, AnimationCategory category) {
-        return addActiveAnimation(controller, entity.getAnimation(category), category);
+        return addActiveAnimation(controller, entity.getAnimation(category).animation, category);
     }
 
     /**
@@ -129,7 +129,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return true;
         }
         boolean replaceAnim = false;
-        boolean isLoop = entity.getAllAnimations().get(active.animationName).loop == LOOP;
+        boolean isLoop = entity.getAllAnimations().get(active.animationName).animation.loop == LOOP;
         if (active.category == category && isAnimationDone(active)) {
             //Loops in the same category can only replace sometimes
             replaceAnim = !isLoop || entity.getRandom().nextFloat() < category.chance();
@@ -185,7 +185,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     public double getActionDelay(String controller) {
         if (activeAnimations.containsKey(controller)) {
             ActiveAnimationInfo activeAnimation = activeAnimations.get(controller);
-            Map<String, AnimationInfoLoader.ServerAnimationInfo> animationData = entity.getServerAnimationInfos();
+            Map<String, ServerAnimationInfo> animationData = entity.getServerAnimationInfos();
             if (animationData.containsKey(activeAnimation.animationName)) {
                 return animationData.get(activeAnimation.animationName).actionDelay;
             }
@@ -194,7 +194,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public static double getAnimationTargetSpeed(PrehistoricAnimatable<Prehistoric> entity, String animationName) {
-        Map<String, AnimationInfoLoader.ServerAnimationInfo> animationData = entity.getServerAnimationInfos();
+        Map<String, ServerAnimationInfo> animationData = entity.getServerAnimationInfos();
         if (animationData.containsKey(animationName)) {
             return animationData.get(animationName).blocksPerSecond;
         }
@@ -294,8 +294,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 if (entity.isInWater()) {
                     addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
                 } else {
-                    Animation walkAnim = entity.nextWalkingAnimation();
-                    Animation sprintAnim = entity.nextSprintingAnimation();
+                    Animation walkAnim = entity.nextWalkingAnimation().animation;
+                    Animation sprintAnim = entity.nextSprintingAnimation().animation;
                     //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                     double scaleMult = 1 / event.getAnimatable().getScale();
                     //the deltaMovement of the animation should match the mobs deltaMovement
@@ -370,7 +370,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return PlayState.CONTINUE;
         }
         if (event.getAnimatable().isDoingGrabAttack()) {
-            addActiveAnimation(controller.getName(), event.getAnimatable().nextGrabbingAnimation(), AnimationCategory.ATTACK);
+            addActiveAnimation(controller.getName(), event.getAnimatable().nextGrabbingAnimation().animation, AnimationCategory.ATTACK);
         } else if (isAnimationDone(controller.getName())) {
             activeAnimations.remove(controller.getName());
         }
@@ -429,7 +429,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                         addActiveAnimation(controller.getName(), AnimationCategory.FLY);
                     }
                 } else {
-                    Animation animation = entity.nextWalkingAnimation();
+                    Animation animation = entity.nextWalkingAnimation().animation;
                     addActiveAnimation(controller.getName(), animation, AnimationCategory.WALK);
                     //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                     double scaleMult = 1 / event.getAnimatable().getScale();

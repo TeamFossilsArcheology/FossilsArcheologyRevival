@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
@@ -16,7 +17,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Mosasaurus extends PrehistoricSwimming {
     public static final String GRAB = "animation.mosasaurus.grab";
@@ -67,7 +67,7 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public @NotNull Animation nextGrabbingAnimation() {
+    public @NotNull AnimationInfo nextGrabbingAnimation() {
         return getAllAnimations().get(GRAB);
     }
 

@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
+import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.OrderType;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -164,14 +164,14 @@ public class DelayedAttackGoal extends Goal {
         long currentTime = prehistoric.level.getGameTime();
         if (canHit(enemy)) {
             if (currentTime > attackEndTick + 20) {
-                AnimationInfoLoader.ServerAnimationInfo animation = prehistoric.startAttack();
-                if (animation.usesAttackBox && enemy instanceof ServerPlayer player) {
-                    MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(prehistoric, animation.animationLength));
+                ServerAnimationInfo animationInfo = prehistoric.startAttack();
+                if (animationInfo.usesAttackBox && enemy instanceof ServerPlayer player) {
+                    MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(prehistoric, animationInfo.animation.animationLength));
                     doingHeavyAttack = true;
                 } else {
-                    attackDamageTick = (long) (currentTime + animation.actionDelay);
+                    attackDamageTick = (long) (currentTime + animationInfo.actionDelay);
                 }
-                attackEndTick = (long) (currentTime + animation.animationLength);
+                attackEndTick = (long) (currentTime + animationInfo.animation.animationLength);
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
             }
             if (attackDamageTick > 0 && currentTime == attackDamageTick) {

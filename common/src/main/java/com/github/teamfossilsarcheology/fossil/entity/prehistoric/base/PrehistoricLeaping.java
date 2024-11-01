@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.entity.ToyBase;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -105,7 +106,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         leapStartTick = level.getGameTime();
     }
 
-    public @NotNull Animation getLeapingAnimation() {
+    public @NotNull AnimationInfo getLeapingAnimation() {
         return getAllAnimations().get(getLeapingAnimationName());
     }
 
@@ -117,14 +118,14 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         AnimationController<PrehistoricLeaping> controller = event.getController();
         double animSpeed = 1;
         if (isLeaping()) {
-            getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation(), AnimationCategory.ATTACK);
+            getAnimationLogic().addActiveAnimation(controller.getName(), getLeapingAnimation().animation, AnimationCategory.ATTACK);
         } else {
             if (event.isMoving() || isClimbing()) {
                 Animation movementAnim;
                 if (isSprinting()) {
-                    movementAnim = nextSprintingAnimation();
+                    movementAnim = nextSprintingAnimation().animation;
                 } else {
-                    movementAnim = nextWalkingAnimation();
+                    movementAnim = nextWalkingAnimation().animation;
                 }
                 getAnimationLogic().addActiveAnimation(controller.getName(), movementAnim, AnimationCategory.WALK);
                 //TODO: Refactor to use the same code for AnimationLogic, PrehistoricFlying and this
@@ -143,7 +144,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                     animSpeed = lastSpeed;
                 }
             } else {
-                getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation(), AnimationCategory.IDLE);
+                getAnimationLogic().addActiveAnimation(controller.getName(), nextIdleAnimation().animation, AnimationCategory.IDLE);
             }
         }
         lastSpeed = animSpeed;

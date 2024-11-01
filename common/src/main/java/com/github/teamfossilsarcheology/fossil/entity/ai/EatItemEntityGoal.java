@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.entity.EntityTypeTest;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.util.List;
 
@@ -59,9 +59,9 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
             targetItem.getItem().shrink(1);
             recentlyAte = true;
             if (entity.level.getGameTime() > animEndTick) {
-                Animation anim = entity.nextEatingAnimation();
-                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, anim, AnimationCategory.EAT);
-                animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
+                AnimationInfo animationInfo = entity.nextEatingAnimation();
+                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
+                animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.animationLength);
             }
         }
     }

@@ -2,13 +2,13 @@ package com.github.teamfossilsarcheology.fossil.entity.ai;
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelReader;
-import software.bernie.geckolib3.core.builder.Animation;
 
 /**
  * A Goal that will move the entity to the closest block if the entity is hungry, it can eat the plant and the entity can see it. Afterwards it will
@@ -36,9 +36,9 @@ public class EatBlockGoal extends MoveToFoodGoal {
             entity.heal(foodAmount / 10f);
             entity.level.destroyBlock(targetPos, false);
             if (entity.level.getGameTime() > animEndTick) {
-                Animation anim = entity.nextEatingAnimation();
-                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, anim, AnimationCategory.EAT);
-                animEndTick = (long) (entity.level.getGameTime() + anim.animationLength);
+                AnimationInfo animationInfo = entity.nextEatingAnimation();
+                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
+                animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.animationLength);
             }
         }
     }

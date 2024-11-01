@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
@@ -24,7 +25,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 import java.time.LocalDate;
 import java.time.Month;
@@ -140,7 +140,7 @@ public class Dodo extends Prehistoric {
     }
 
     @Override
-    public Animation getAnimation(AnimationCategory category) {
+    public AnimationInfo getAnimation(AnimationCategory category) {
         if (category == AnimationCategory.WALK) {
             return getAnimation(AnimationCategory.SPRINT);//Walk to slow
         }

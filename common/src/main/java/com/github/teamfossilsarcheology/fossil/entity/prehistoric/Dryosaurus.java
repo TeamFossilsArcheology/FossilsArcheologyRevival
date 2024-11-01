@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -13,7 +14,6 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Dryosaurus extends Prehistoric {
 
@@ -38,7 +38,7 @@ public class Dryosaurus extends Prehistoric {
     }
 
     @Override
-    public Animation getAnimation(AnimationCategory category) {
+    public AnimationInfo getAnimation(AnimationCategory category) {
         if (category == AnimationCategory.WALK) {
             return getAnimation(AnimationCategory.SPRINT);//Walk to slow
         }

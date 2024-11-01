@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -17,7 +18,6 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 
 public class Ankylosaurus extends Prehistoric {
     public static final String ATTACK_FRONT_RIGHT = "animation.ankylosaurus.attack_strong_right";
@@ -52,7 +52,7 @@ public class Ankylosaurus extends Prehistoric {
     }
 
     @Override
-    public Animation getAnimation(AnimationCategory category) {
+    public AnimationInfo getAnimation(AnimationCategory category) {
         if (category == AnimationCategory.ATTACK) {
             if (getTarget() != null) {
                 double x = getTarget().getX() - getX();
@@ -66,7 +66,7 @@ public class Ankylosaurus extends Prehistoric {
     }
 
     @Override
-    public @NotNull Animation nextAttackAnimation() {
+    public @NotNull AnimationInfo nextAttackAnimation() {
         if (getTarget() != null) {
             double x = getTarget().getX() - getX();
             double z = getTarget().getZ() - getZ();

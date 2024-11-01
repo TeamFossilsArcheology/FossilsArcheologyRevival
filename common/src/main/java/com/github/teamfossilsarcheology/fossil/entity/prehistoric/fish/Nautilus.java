@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish;
 
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -23,7 +24,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.PlayState;
-import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
@@ -211,13 +211,13 @@ public class Nautilus extends PrehistoricFish {
         data.addAnimationController(new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 20, event -> {
             var ctrl = event.getController();
             if (shouldBeBeached()) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextBeachedAnimation().animationName));
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextBeachedAnimation().animation.animationName));
             } else if (isInShell() && isInWater()) {
                 return PlayState.STOP;
             } else if (event.isMoving()) {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextWalkingAnimation().animationName));
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextWalkingAnimation().animation.animationName));
             } else {
-                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextIdleAnimation().animationName));
+                ctrl.setAnimation(new AnimationBuilder().addAnimation(nextIdleAnimation().animation.animationName));
             }
             return PlayState.CONTINUE;
         }));
@@ -240,7 +240,7 @@ public class Nautilus extends PrehistoricFish {
     }
 
     @Override
-    public Animation getAnimation(AnimationCategory category) {
+    public AnimationInfo getAnimation(AnimationCategory category) {
         if (category == AnimationCategory.SWIM) {
             return getAllAnimations().get(SWIM_BACKWARDS);
         } else if (category == AnimationCategory.SWIM_FAST) {

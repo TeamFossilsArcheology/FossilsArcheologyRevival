@@ -13,11 +13,8 @@ import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimpleJsonResourceReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.slf4j.Logger;
-import software.bernie.geckolib3.core.builder.Animation;
-import software.bernie.geckolib3.resource.GeckoLibCache;
 
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -32,12 +29,13 @@ public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
 
     @Override
     protected void apply(Map<ResourceLocation, JsonElement> jsons, ResourceManager resourceManager, ProfilerFiller profiler) {
-        Map<ResourceLocation, Map<String, Animation>> allAnimations;
-        if (GeckoLibCache.getInstance().getAnimations().isEmpty()) {
-            allAnimations = (Map) AnimationInfoLoader.INSTANCE.getServerAnimationInfos();
+        AnimationInfoLoader<? extends AnimationInfo> animationInfoLoader;
+        if (!ServerAnimationInfoLoader.INSTANCE.getAnimationInfos().isEmpty()) {
+            animationInfoLoader = ServerAnimationInfoLoader.INSTANCE;
         } else {
-            allAnimations = GeckoLibCache.getInstance().getAnimations().entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> e.getValue().animations()));
+            animationInfoLoader = ClientAnimationInfoLoader.INSTANCE;
         }
+        Map<ResourceLocation, ? extends BakedAnimationInfo<? extends AnimationInfo>> allAnimations = animationInfoLoader.getAnimationInfos();
         ImmutableMap.Builder<ResourceLocation, Map<AnimationCategory, AnimationHolder>> builder = ImmutableMap.builder();
         for (Map.Entry<ResourceLocation, JsonElement> fileEntry : jsons.entrySet()) {
             if (!(fileEntry.getValue() instanceof JsonObject) || !fileEntry.getKey().getNamespace().equals(FossilMod.MOD_ID)) {
@@ -50,7 +48,7 @@ public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
             }
             AnimationCategory backup = null;
             for (AnimationCategory category : AnimationCategory.CATEGORIES) {
-                for (Map.Entry<String, Animation> entry : allAnimations.get(path).entrySet()) {
+                for (Map.Entry<String, ? extends AnimationInfo> entry : allAnimations.get(path).animations().entrySet()) {
                     if (category.canMapAnimation(entry.getKey())) {
                         map.computeIfAbsent(category, cat -> new AnimationHolder()).add(entry.getValue());
                         backup = category;

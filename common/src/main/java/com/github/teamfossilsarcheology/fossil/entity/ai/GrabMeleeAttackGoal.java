@@ -1,6 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
+import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.OrderType;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -92,9 +92,9 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
             boolean tooBig = !Util.isEntitySmallerThan(enemy, 2 * swimming.getScale() / swimming.data().maxScale());
             if (tooBig || swimming.getRandom().nextInt(5) > 0) {
                 attackType = ATTACK;
-                AnimationInfoLoader.ServerAnimationInfo animation = swimming.startAttack();
-                attackEndTick = (long) (currentTime + animation.animationLength);
-                attackDamageTick = Math.min((long) (currentTime + animation.actionDelay), attackEndTick);
+                ServerAnimationInfo animationInfo = swimming.startAttack();
+                attackEndTick = (long) (currentTime + animationInfo.animation.animationLength);
+                attackDamageTick = Math.min((long) (currentTime + animationInfo.actionDelay), attackEndTick);
             } else {
                 attackType = GRAB;
                 swimming.destroyBoat(enemy);

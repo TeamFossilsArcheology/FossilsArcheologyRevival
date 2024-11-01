@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
 import com.github.teamfossilsarcheology.fossil.entity.ToyBase;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfoLoader;
+import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.OrderType;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
@@ -108,9 +108,9 @@ public class PlayGoal extends Goal {
         long currentTime = dino.level.getGameTime();
         if (Util.canReachPrey(dino, target)) {
             if (currentTime > attackEndTick + 20) {
-                AnimationInfoLoader.ServerAnimationInfo animation = dino.startAttack();
+                ServerAnimationInfo animation = dino.startAttack();
                 attackDamageTick = (long) (currentTime + animation.actionDelay);
-                attackEndTick = (long) (currentTime + animation.animationLength);
+                attackEndTick = (long) (currentTime + animation.animation.animationLength);
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
                 dino.getNavigation().stop();
             }

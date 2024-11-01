@@ -36,6 +36,8 @@ import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
+import dev.architectury.platform.Platform;
+import dev.architectury.utils.Env;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -82,11 +84,9 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
-import software.bernie.geckolib3.resource.GeckoLibCache;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.*;
@@ -139,11 +139,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             this.getNavigation().getNodeEvaluator().setCanFloat(true);
         }
         setPersistenceRequired();
-        if (level.isClientSide) {
-            for (Animation anim : getAllAnimations().values()) {
-                FossilMod.LOGGER.debug("{} is loop: {}", anim.animationName, anim.loop);
-            }
-        }
     }
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level) {
@@ -1144,8 +1139,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         return isBaby() ? super.getSoundVolume() * 0.375f : 0.5f;
     }
 
-    public AnimationInfoLoader.ServerAnimationInfo startAttack() {
-        AnimationInfoLoader.ServerAnimationInfo attackAnim = (AnimationInfoLoader.ServerAnimationInfo) nextAttackAnimation();
+    public ServerAnimationInfo startAttack() {
+        ServerAnimationInfo attackAnim = (ServerAnimationInfo) nextAttackAnimation();
         getAnimationLogic().triggerAnimation(AnimationLogic.ATTACK_CTRL, attackAnim, AnimationCategory.ATTACK);
         return attackAnim;
     }
@@ -1276,24 +1271,24 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public Map<String, Animation> getAllAnimations() {
-        if (level.isClientSide) {
-            return GeckoLibCache.getInstance().getAnimations().get(animationLocation).animations();
+    public Map<String, ? extends AnimationInfo> getAllAnimations() {
+        if (Platform.getEnvironment() == Env.CLIENT) {
+            return ClientAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
         }
-        return AnimationInfoLoader.INSTANCE.getClientAnimations(animationLocation);
+        return ServerAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
     }
 
     @Override
-    public Animation getAnimation(AnimationCategory category) {
+    public AnimationInfo getAnimation(AnimationCategory category) {
         return getRandomAnimation(category, this);
     }
 
     @Override
-    public Map<String, AnimationInfoLoader.ServerAnimationInfo> getServerAnimationInfos() {
-        return AnimationInfoLoader.INSTANCE.getServerAnimations(animationLocation);
+    public Map<String, ServerAnimationInfo> getServerAnimationInfos() {
+        return ServerAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
     }
 
-    public @NotNull Animation nextAttackAnimation() {
+    public @NotNull AnimationInfo nextAttackAnimation() {
         return getAnimation(AnimationCategory.ATTACK);
     }
 
