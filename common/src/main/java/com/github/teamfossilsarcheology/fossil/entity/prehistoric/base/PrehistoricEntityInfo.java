@@ -36,6 +36,7 @@ import static com.github.teamfossilsarcheology.fossil.util.TimePeriod.*;
  * Stores entity info that is needed to dynamically create mob items
  */
 public enum PrehistoricEntityInfo implements EntityInfo {
+    //TODO: Replace mobtype with smth better
     ALLIGATOR_GAR(ModEntities.ALLIGATOR_GAR, FISH, MESOZOIC, 0X43462A, 0XAF4231, bucketable()),
     ALLOSAURUS(ModEntities.ALLOSAURUS, DINOSAUR, MESOZOIC, 0X907B6C, 0X5F422D),
     ANKYLOSAURUS(ModEntities.ANKYLOSAURUS, DINOSAUR, MESOZOIC, 0X8A5B49, 0X211B13),
@@ -47,12 +48,12 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     COELACANTH(ModEntities.COELACANTH, FISH, MESOZOIC, 0X363941, 0X9BA1A9, bucketable()),
     COMPSOGNATHUS(ModEntities.COMPSOGNATHUS, DINOSAUR, MESOZOIC, 0XCBC7C4, 0X3A312C),
     CONFUCIUSORNIS(ModEntities.CONFUCIUSORNIS, BIRD, MESOZOIC, 0XDAE5E9, 0X8B8B8D),
-    CRASSIGYRINUS(ModEntities.CRASSIGYRINUS, FISH, PALEOZOIC, 0XCA773A, 0X8F4B2D, bucketable()),
+    CRASSIGYRINUS(ModEntities.CRASSIGYRINUS, DINOSAUR_FISH, PALEOZOIC, 0XCA773A, 0X8F4B2D, bucketable()),
     DEINONYCHUS(ModEntities.DEINONYCHUS, DINOSAUR, MESOZOIC, 0X2B2424, 0XC8C8C8),
     DICRANURUS(ModEntities.DICRANURUS, ARTHROPOD, PALEOZOIC, 0X998042, 0X1D1D1D, bucketable()),
     DILOPHOSAURUS(ModEntities.DILOPHOSAURUS, DINOSAUR, MESOZOIC, 0X4E5931, 0XF25314),
     DIMETRODON(ModEntities.DIMETRODON, DINOSAUR, PALEOZOIC, 0X422E23, 0X914328),
-    DIPLOCAULUS(ModEntities.DIPLOCAULUS, FISH, PALEOZOIC, 0XB0A380, 0X7C9694, bucketable()),
+    DIPLOCAULUS(ModEntities.DIPLOCAULUS, DINOSAUR_FISH, PALEOZOIC, 0XB0A380, 0X7C9694, bucketable()),
     DIPLODOCUS(ModEntities.DIPLODOCUS, DINOSAUR, MESOZOIC, 0X937373, 0XDAD8C7),
     DODO(ModEntities.DODO, BIRD, CENOZOIC, 0X704C26, 0XC5C09A),
     DRYOSAURUS(ModEntities.DRYOSAURUS, DINOSAUR, MESOZOIC, 0X655751, 0XBEA47B),
@@ -92,7 +93,7 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     STEGOSAURUS(ModEntities.STEGOSAURUS, DINOSAUR, MESOZOIC, 0X9C8138, 0X651817),
     STURGEON(ModEntities.STURGEON, FISH, MESOZOIC, 0X655D5B, 0XE6E3E3, bucketable()),
     THERIZINOSAURUS(ModEntities.THERIZINOSAURUS, DINOSAUR, MESOZOIC, 0X322212, 0XCA9C72),
-    TIKTAALIK(ModEntities.TIKTAALIK, FISH, PALEOZOIC, 0X6A5A1A, 0XD7CF99, bucketable()),
+    TIKTAALIK(ModEntities.TIKTAALIK, DINOSAUR_FISH, PALEOZOIC, 0X6A5A1A, 0XD7CF99, bucketable()),
     TITANIS(ModEntities.TITANIS, BIRD, CENOZOIC, 0X484848, 0XEFEFEF),
     TRICERATOPS(ModEntities.TRICERATOPS, DINOSAUR, MESOZOIC, 0X64352D, 0X251A17),
     TYRANNOSAURUS(ModEntities.TYRANNOSAURUS, DINOSAUR, MESOZOIC, 0X9D8A74, 0X4C3116),
@@ -155,7 +156,7 @@ public enum PrehistoricEntityInfo implements EntityInfo {
             } else if (info == MEGALODON) {
                 DinoBoneItem.registerItem("bone_unique", info, item -> info.uniqueBoneItem = item);
             }
-            if (info.mobType == FISH) {
+            if (info.mobType == FISH || info.mobType == DINOSAUR_FISH) {
                 registerItem("egg_item", info, properties -> new FishEggItem(info), item -> info.eggItem = item);
             } else if (info.mobType == DINOSAUR || info.mobType == DINOSAUR_AQUATIC || info.mobType == ARTHROPOD) {
                 registerItem("egg_item", info, p -> new DinoEggItem(info), item -> info.eggItem = item);

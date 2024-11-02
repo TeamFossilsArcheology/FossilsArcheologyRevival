@@ -7,9 +7,9 @@ import com.github.teamfossilsarcheology.fossil.client.model.block.PlantModelBake
 import com.mojang.datafixers.util.Pair;
 import net.fabricmc.fabric.api.renderer.v1.Renderer;
 import net.fabricmc.fabric.api.renderer.v1.RendererAccess;
-import net.fabricmc.fabric.api.renderer.v1.material.RenderMaterial;
 import net.fabricmc.fabric.api.renderer.v1.mesh.MeshBuilder;
 import net.fabricmc.fabric.api.renderer.v1.mesh.QuadEmitter;
+import net.fabricmc.fabric.impl.client.indigo.renderer.IndigoRenderer;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.*;
@@ -24,7 +24,8 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class FabricPlantUnbakedModel implements UnbakedModel {
-    public static final RenderMaterial MATERIAL_STANDARD = RendererAccess.INSTANCE.getRenderer().materialFinder().find();
+    @Nullable
+    public static final Renderer RENDERER = RendererAccess.INSTANCE.getRenderer();
 
     private final PlantBlockModel model;
 
@@ -45,7 +46,7 @@ public class FabricPlantUnbakedModel implements UnbakedModel {
     @Nullable
     @Override
     public BakedModel bake(ModelBakery modelBakery, Function<Material, TextureAtlasSprite> spriteGetter, ModelState modelState, ResourceLocation location) {
-        Renderer renderer = RendererAccess.INSTANCE.getRenderer();
+        Renderer renderer = RENDERER == null ? IndigoRenderer.INSTANCE : RENDERER;
         MeshBuilder builder = renderer.meshBuilder();
         QuadEmitter emitter = builder.getEmitter();
 
@@ -56,7 +57,7 @@ public class FabricPlantUnbakedModel implements UnbakedModel {
                 TextureAtlasSprite texture = spriteGetter.apply(model.materials().get(face.texture().substring(1)));
                 BakedQuad bakedQuad = PlantModelBakery.bakeFace(element, face, texture, direction, modelState);
                 //I'm sure that this isn't the best, but it's really easy
-                emitter.fromVanilla(bakedQuad, MATERIAL_STANDARD, direction);
+                emitter.fromVanilla(bakedQuad, renderer.materialFinder().find(), direction);
                 emitter.cullFace(null);
                 emitter.nominalFace(direction);
                 emitter.emit();
