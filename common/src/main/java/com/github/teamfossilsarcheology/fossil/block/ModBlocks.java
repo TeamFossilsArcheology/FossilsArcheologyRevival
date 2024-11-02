@@ -82,7 +82,7 @@ public class ModBlocks {
             VolcanoAshVent::new);
 
     public static final RegistrySupplier<DrumBlock> DRUM = registerBlock("drum",
-            () -> new DrumBlock(Properties.of(Material.WOOD).sound(SoundType.WOOD)));
+            () -> new DrumBlock(Properties.of(Material.WOOD).sound(SoundType.WOOD).strength(2.5f)));
     public static final RegistrySupplier<BedBlock> COMFY_BED = registerBlock("comfy_bed", () -> new ComfyBedBlock(
             Properties.of(Material.WOOL).sound(SoundType.WOOD).strength(0.2f).noOcclusion()));
 

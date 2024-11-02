@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class DinoEggItem extends PrehistoricEntityItem {
     public DinoEggItem(PrehistoricEntityInfo info) {
-        super(new Properties().stacksTo(8), info, info.mobType == PrehistoricMobType.DINOSAUR_AQUATIC ? "fish_egg" : "egg");
+        super(new Properties().stacksTo(8), info, info.mobType == PrehistoricMobType.DINOSAUR_AQUATIC ? "sac" : "egg");
     }
 
     public static boolean spawnEgg(Level level, PrehistoricEntityInfo info, double x, double y, double z, Player player) {

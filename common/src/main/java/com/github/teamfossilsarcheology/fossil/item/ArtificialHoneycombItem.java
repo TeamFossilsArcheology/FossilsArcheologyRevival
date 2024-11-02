@@ -2,9 +2,9 @@ package com.github.teamfossilsarcheology.fossil.item;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionResult;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobSpawnType;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
@@ -26,8 +26,12 @@ public class ArtificialHoneycombItem extends Item {
         BlockState blockState = level.getBlockState(blockPos);
         if (blockState.is(Blocks.BEEHIVE)) {
             if (level instanceof ServerLevel serverLevel) {
-                ItemStack stack = context.getItemInHand();
-                if (EntityType.BEE.spawn(serverLevel, stack, context.getPlayer(), blockPos, MobSpawnType.SPAWN_EGG, true, false) != null) {
+                Entity bee = EntityType.BEE.create(serverLevel);
+                if (bee instanceof Mob mob) {
+                    ItemStack stack = context.getItemInHand();
+                    mob.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.SPAWN_EGG, new AgeableMob.AgeableMobGroupData(1), stack.getTag());
+                    mob.playAmbientSound();
+                    mob.moveTo(blockPos.getX() + 0.5, blockPos.getY() + 1, blockPos.getZ() + 0.5, Mth.wrapDegrees(level.random.nextFloat() * 360), 0.0F);
                     stack.shrink(1);
                     level.gameEvent(GameEvent.ENTITY_PLACE, blockPos);
                 }
