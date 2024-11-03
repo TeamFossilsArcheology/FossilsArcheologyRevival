@@ -323,7 +323,7 @@
 				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 16.2, 24],
+					"pivot": [0, 12.2, 23],
 					"cubes": []
 				},
 				{

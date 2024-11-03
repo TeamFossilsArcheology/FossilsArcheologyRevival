@@ -175,6 +175,53 @@
 							"vector": [0, "-5+math.sin(query.anim_time*90-60)*-5", "math.sin(query.anim_time*90-60)*5"]
 						}
 					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-7.83, 0, 0]
+					},
+					"position": {
+						"vector": [-3.5, 4, 0]
+					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [4.45, 0, 0]
+					},
+					"position": {
+						"vector": [-1.5, 2, 0]
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [1, 0, 0]
+					},
+					"position": {
+						"vector": [-4.5, 5, 0]
+					}
+				},
+				"body2_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-2.61, 0, 0]
+					},
+					"position": {
+						"vector": [-5, 6, 0]
+					},
+					"scale": {
+						"vector": [1, 1.2, 1]
+					}
 				}
 			}
 		},

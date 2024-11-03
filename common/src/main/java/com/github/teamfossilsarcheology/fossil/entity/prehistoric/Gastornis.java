@@ -3,7 +3,6 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
-import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
@@ -37,11 +36,6 @@ public class Gastornis extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.BONE;
-    }
-
-    @Override
-    public float getGenderedScale() {
-        return getGender() == Gender.MALE ? 1.25f : super.getGenderedScale();
     }
 
     @Nullable
