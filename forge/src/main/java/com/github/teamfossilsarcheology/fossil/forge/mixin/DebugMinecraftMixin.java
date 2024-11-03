@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.forge.mixin;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.DebugScreen;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
+import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.InstructionRenderer;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingDebug;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import net.minecraft.client.Minecraft;
@@ -47,8 +48,14 @@ public class DebugMinecraftMixin {
         if (!Version.debugEnabled()) {
             return;
         }
-        if (InstructionTab.positionActive()) {
+        if (DebugScreen.rulerMode == 2) {
+            DebugScreen.rulerMode = 0;
+            InstructionRenderer.rulerEndPos = PathingDebug.getHitResult((Minecraft) (Object) this);
+            this.rightClickDelay = 4;
+            ci.cancel();
+        } else if (InstructionTab.positionActive()) {
             InstructionTab.positionMode = Instruction.Type.IDLE;
+            this.rightClickDelay = 4;
             ci.cancel();
         } else if (PathingDebug.showHelpMenu) {
             BlockPos hitResult = PathingDebug.getBlockHitResult((Minecraft) (Object) this);
@@ -67,7 +74,11 @@ public class DebugMinecraftMixin {
         if (!Version.debugEnabled()) {
             return;
         }
-        if (InstructionTab.positionActive()) {
+        if (DebugScreen.rulerMode == 1) {
+            DebugScreen.rulerMode = 2;
+            InstructionRenderer.rulerStartPos = PathingDebug.getHitResult((Minecraft) (Object) this);
+            cir.setReturnValue(false);
+        } else if (InstructionTab.positionActive()) {
             BlockHitResult hitResult = PathingDebug.getFullHitResult((Minecraft) (Object) this);
             InstructionTab.addPosition(hitResult);
             cir.setReturnValue(false);
@@ -87,7 +98,7 @@ public class DebugMinecraftMixin {
         if (!Version.debugEnabled()) {
             return;
         }
-        if (InstructionTab.positionActive() || PathingDebug.showHelpMenu) {
+        if (InstructionTab.positionActive() || PathingDebug.showHelpMenu || DebugScreen.rulerMode == 1) {
             ci.cancel();
         }
     }

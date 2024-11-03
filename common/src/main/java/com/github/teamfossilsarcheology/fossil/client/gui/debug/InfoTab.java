@@ -77,7 +77,7 @@ public class InfoTab extends DebugTab<Prehistoric> {
         addWidget(new Button(275, 55, 50, 20, new TextComponent("Tame"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
         }));
-        scaleSlider = new DebugSlider(20, yPos += 30, 150, 20, new TextComponent("Scale: "), new TextComponent(""), 0.1, 2.5, entity.getScale(), 0.05, 2, true) {
+        scaleSlider = new DebugSlider(20, yPos += 30, 150, 20, new TextComponent("Scale: "), new TextComponent(""), 0.1, Math.max(2.5, entity.data().maxScale()), entity.getScale(), 0.05, 2, true) {
             @Override
             protected void applyValue() {
                 scaleOverride = (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
@@ -142,6 +142,8 @@ public class InfoTab extends DebugTab<Prehistoric> {
             entity.setGender(gender);
             entity.setScaleOverride(-1);
             MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), gender.name(), ageInTicks, matingCooldown, playingCooldown, climbingCooldown, hunger, mood));
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("Set the info above on the server"), i, j);
         }));
     }
 

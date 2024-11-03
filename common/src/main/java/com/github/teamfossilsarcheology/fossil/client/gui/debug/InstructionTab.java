@@ -70,12 +70,16 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             positionMode = Instruction.Type.MOVE_TO;
             debugScreen.onClose();
             //TODO: Custom icons next to crosshair for walk/teleport
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("Left click to place, Right click to cancel"), i, j);
         }));
 
         addWidget(new Button(220, 30, 100, 20, new TextComponent("Teleport Builder"), button -> {
             positionMode = Instruction.Type.TELEPORT_TO;
             teleportRotation = 0;
             debugScreen.onClose();
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("Left click to place, Right click to cancel, Mousewheel to rotate"), i, j);
         }));
         if (entity instanceof Meganeura) {
             addWidget(new Button(220, 55, 100, 20, new TextComponent("Attach Builder"), button -> {
@@ -93,6 +97,8 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             widgets.remove(animations);
             renderables.remove(animations);
             addWidget(attackEntities);
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("Unused"), i, j);
         }));
         List<String> controllers = entity.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
         animations = new AnimationList(width - 315, 300, entity.getAllAnimations(), controllers, true, minecraft, animationObject -> {
@@ -104,6 +110,8 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             widgets.remove(attackEntities);
             renderables.remove(attackEntities);
             addWidget(animations);
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("Stops and plays animation x times or for x seconds"), i, j);
         }));
 
         EditBox zPosInput = addWidget(new EditBox(minecraft.font, 325, 30, 30, 20, new TextComponent("")));

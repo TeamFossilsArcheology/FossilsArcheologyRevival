@@ -38,8 +38,8 @@ public class PathingRenderUtil {
         poseStack.popPose();
     }
 
-    public static void renderLine(PoseStack poseStack, Vec3 start, Vec3 end, Color color) {
-        renderLine(poseStack, start.x, start.y, start.z, end.x, end.y, end.z, color);
+    public static void renderLine(PoseStack poseStack, Vec3 start, Vec3 end) {
+        renderLine(poseStack, start.x, start.y, start.z, end.x, end.y, end.z, Color.WHITE);
     }
 
     public static void renderLine(PoseStack poseStack, Node start, Node end) {

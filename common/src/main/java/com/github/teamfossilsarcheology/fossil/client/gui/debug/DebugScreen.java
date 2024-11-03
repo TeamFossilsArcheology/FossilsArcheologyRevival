@@ -43,7 +43,8 @@ public class DebugScreen extends Screen {
     private static int tabShift = 0;
     private DebugTab<? extends Entity> currentTab;
     private double speedMod = 0.5;
-
+    public static int rulerMode;
+    //TODO: Egg, Embryo, etc helper
     public DebugScreen(@Nullable Entity newEntity) {
         super(new TextComponent("Debug Screen"));
         entity = newEntity;
@@ -143,9 +144,16 @@ public class DebugScreen extends Screen {
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InstructionTab(this, prehistoric));
         }
+        addRenderableWidget(new Button(width / 2 - 91, height - 95, 91, 20, new TextComponent("Ruler"), button -> {
+            rulerMode = 1;
+            onClose();
+            if (currentTab != null) currentTab.onClose();
+        }));
         addRenderableWidget(new Button(width / 2 - 91, height - 70, 91, 20, new TextComponent("Discard All"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(-1));
             if (currentTab != null) currentTab.onClose();
+        }, (button, poseStack, i, j) -> {
+            renderTooltip(poseStack, new TextComponent("Kills all non-player entities"), i, j);
         }));
         if (entity != null) {
             addRenderableWidget(new Button(width / 2, height - 70, 91, 20, new TextComponent("Discard This"), button -> {
@@ -155,6 +163,8 @@ public class DebugScreen extends Screen {
         }
         addRenderableWidget(new Button(width / 2 + 95, height - 70, 59, 20, new TextComponent("Slow Self"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSlowMessage(speedMod));
+        }, (button, poseStack, i, j) -> {
+            renderTooltip(poseStack, new TextComponent("If clicked multiply your walkspeed by the value on the right"), i, j);
         }));
         addRenderableWidget(new DebugSlider(width / 2 + 154, height - 70, 65, 20, new TextComponent("Mod: "), new TextComponent(""), 0.1, 1, speedMod, 0.05, 2, true) {
             @Override
@@ -166,7 +176,9 @@ public class DebugScreen extends Screen {
         addRenderableWidget(builder.create(width / 2 - 91, height - 45, 91, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
             showPaths = (boolean) cycleButton.getValue();
         }));
-        addRenderableWidget(new Button(width / 2, height - 45, 91, 20, new TextComponent("Clear Paths"), button -> clearPaths()));
+        addRenderableWidget(new Button(width / 2, height - 45, 91, 20, new TextComponent("Clear Paths"), button -> clearPaths(), (button, poseStack, i, j) -> {
+            renderTooltip(poseStack, new TextComponent("Mostly unused"), i, j);
+        }));
         addRenderableWidget(new Button(width / 2 + 95, height - 45, 125, 20, new TextComponent("Spawn Test Structure"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SStructureMessage(true));
         }, (button, poseStack, i, j) -> {
@@ -186,6 +198,8 @@ public class DebugScreen extends Screen {
                     }).createButton(Minecraft.getInstance().options, width / 2, 60, 100));
             addRenderableWidget(new Button(width / 2, 35, 100, 20, new TextComponent("Set default"), button -> {
                 tabShift += tabs.indexOf(currentTab);
+            }, (button, poseStack, i, j) -> {
+                renderTooltip(poseStack, new TextComponent("Sets the current tab as default tab when opening screen"), i, j);
             }));
             addWidget(currentTab);
             currentTab.onOpen();

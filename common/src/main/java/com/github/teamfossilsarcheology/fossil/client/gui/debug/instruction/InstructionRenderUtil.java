@@ -53,6 +53,25 @@ public class InstructionRenderUtil {
         poseStack.popPose();
     }
 
+    public static void renderFloatingText(PoseStack poseStack, Minecraft minecraft, String text, Vec3 pos) {
+        RenderSystem.enableTexture();
+        RenderSystem.depthMask(true);
+        MultiBufferSource.BufferSource bufferSource = MultiBufferSource.immediate(Tesselator.getInstance().getBuilder());
+
+        poseStack.pushPose();
+        poseStack.translate(pos.x, pos.y, pos.z);
+        poseStack.mulPoseMatrix(new Matrix4f(minecraft.gameRenderer.getMainCamera().rotation()));
+        poseStack.scale(0.02f, -0.02f, 0.02f);
+        poseStack.scale(-1, 1, 1);
+        float g = -minecraft.font.width(text) / 2f;
+        int color = -1;
+        minecraft.font.drawInBatch(text, g, 0, color, false, poseStack.last().pose(), bufferSource, true, 0, 15728880);
+        bufferSource.endBatch();
+        RenderSystem.setShaderColor(1, 1, 1, 1);
+        RenderSystem.enableDepthTest();
+        poseStack.popPose();
+    }
+
     private static float nanoToPulse(long finishNanoTime) {
         return 0.1f + 0.5f * Math.abs(Mth.sin(finishNanoTime / 5E8f));
     }

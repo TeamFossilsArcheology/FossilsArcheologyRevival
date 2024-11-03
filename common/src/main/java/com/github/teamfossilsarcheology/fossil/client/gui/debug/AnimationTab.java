@@ -103,6 +103,8 @@ public class AnimationTab extends DebugTab<Entity> {
             rotXBase = 0;
             sliderY.setSliderValue(0, true);
             sliderX.setSliderValue(0, true);
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("client side only"), i, j);
         }));
         if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
             List<String> controllers = prehistoric.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
@@ -116,7 +118,7 @@ public class AnimationTab extends DebugTab<Entity> {
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
         if (entity != null) {
-            renderEntityInDebug(70, 280, entity, scale);
+           // renderEntityInDebug(70, 280, entity, scale);
             drawString(poseStack, minecraft.font, new TextComponent("Rotation: " + entity.getYRot()), 20, 160, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Rotation Body: " + (entity instanceof LivingEntity livingEntity ? livingEntity.yBodyRot : entity.getYRot())), 20, 180, 16777215);
             drawString(poseStack, minecraft.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
