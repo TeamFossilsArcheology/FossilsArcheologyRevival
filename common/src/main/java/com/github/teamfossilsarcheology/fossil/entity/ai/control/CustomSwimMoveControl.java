@@ -1,16 +1,17 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai.control;
 
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 
-public class CustomSwimMoveControl extends SmoothSwimmingMoveControl {
+public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> extends SmoothSwimmingMoveControl {
 
-    private final PrehistoricSwimming mob;
+    private final T mob;
 
-    public CustomSwimMoveControl(PrehistoricSwimming mob) {
+    public CustomSwimMoveControl(T mob) {
         super(mob, 85, 10, 0.1f, 0.1f, true);
         this.mob = mob;
     }

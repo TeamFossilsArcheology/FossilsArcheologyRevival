@@ -34,12 +34,12 @@ import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-public abstract class PrehistoricSwimming extends Prehistoric {
+public abstract class PrehistoricSwimming extends Prehistoric implements SwimmingAnimal {
     public static final int MAX_TIME_IN_WATER = 1000;
     public static final int MAX_TIME_ON_LAND = 1000;
     private static final EntityDataAccessor<Boolean> GRABBING = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.BOOLEAN);
-    public int timeInWater = 0;
-    public int timeOnLand = 0;
+    private int timeInWater = 0;
+    private int timeOnLand = 0;
     /**
      * Cache check for current navigator
      */
@@ -114,7 +114,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     @Override
     protected @NotNull PathNavigation createNavigation(Level level) {
-        return new AmphibiousPathNavigation(this, level);
+        return new AmphibiousPathNavigation<>(this, level);
     }
 
     protected void switchNavigator(boolean onLand) {
@@ -123,7 +123,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
             lookControl = new LookControl(this);
             isLandNavigator = true;
         } else {
-            moveControl = new CustomSwimMoveControl(this);
+            moveControl = new CustomSwimMoveControl<>(this);
             lookControl = new SmoothSwimmingLookControl(this, 20);
             isLandNavigator = false;
         }
@@ -144,10 +144,12 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return false;
     }
 
+    @Override
     public boolean isAmphibious() {
         return aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC;
     }
 
+    @Override
     public boolean canSwim() {
         return aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC || aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC;
     }
@@ -155,10 +157,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     public boolean canBreatheUnderwater() {
         return true;
-    }
-
-    public boolean canBreatheOnLand() {
-        return isAmphibious();
     }
 
     @Override
@@ -170,7 +168,7 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     public void aiStep() {
         super.aiStep();
         if (!level.isClientSide) {
-            if (isInWater() && canSwim() && isLandNavigator) {
+            if (isInWater() && isLandNavigator) {
                 switchNavigator(false);
             } else if (!isInWater() && isOnGround() && isAmphibious() && !isLandNavigator) {
                 switchNavigator(true);
@@ -321,10 +319,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return false;
     }
 
-    public boolean canHuntMobsOnLand() {
-        return true;
-    }
-
     public void destroyBoat(Entity targetSailor) {
         if (targetSailor.getVehicle() instanceof Boat boat && !level.isClientSide) {
             boat.kill();
@@ -348,6 +342,16 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     public boolean isBeached() {
         return beached;
+    }
+
+    @Override
+    public int timeInWater() {
+        return timeInWater;
+    }
+
+    @Override
+    public int timeOnLand() {
+        return timeOnLand;
     }
 
     public boolean isDoingGrabAttack() {

@@ -63,11 +63,6 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean canHuntMobsOnLand() {
-        return false;
-    }
-
-    @Override
     public @NotNull AnimationInfo nextGrabbingAnimation() {
         return getAllAnimations().get(GRAB);
     }

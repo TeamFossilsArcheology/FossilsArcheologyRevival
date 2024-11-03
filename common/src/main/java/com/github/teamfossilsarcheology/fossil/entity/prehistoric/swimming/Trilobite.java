@@ -44,11 +44,6 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
         return Items.NAUTILUS_SHELL;
     }
 
-    @Override
-    public boolean canHuntMobsOnLand() {
-        return false;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai.navigation;
 
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.Path;
@@ -16,8 +17,8 @@ import java.util.Objects;
  * found at https://www.curseforge.com/minecraft/mc-mods/mowzies-mobs
  * with source code at https://github.com/BobMowzie/MowziesMobs/blob/master/src/main/java/com/bobmowzie/mowziesmobs/server/ai/MMPathNavigateGround.java
  */
-public class AmphibiousPathNavigation extends WaterBoundPathNavigation {
-    public AmphibiousPathNavigation(PrehistoricSwimming mob, Level level) {
+public class AmphibiousPathNavigation<T extends Prehistoric & SwimmingAnimal> extends WaterBoundPathNavigation {
+    public AmphibiousPathNavigation(T mob, Level level) {
         super(mob, level);
     }
 
@@ -29,7 +30,7 @@ public class AmphibiousPathNavigation extends WaterBoundPathNavigation {
 
     @Override
     protected boolean canUpdatePath() {
-        return ((PrehistoricSwimming) mob).isAmphibious() || super.canUpdatePath();
+        return ((T) mob).isAmphibious() || super.canUpdatePath();
     }
 
     @Override

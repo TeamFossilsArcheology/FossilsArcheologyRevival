@@ -38,11 +38,6 @@ public class Henodus extends PrehistoricSwimming {
         return Items.NAUTILUS_SHELL;
     }
 
-    @Override
-    public boolean canHuntMobsOnLand() {
-        return false;
-    }
-
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

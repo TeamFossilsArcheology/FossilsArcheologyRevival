@@ -1,7 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.OrderType;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
@@ -14,10 +15,10 @@ import java.util.Random;
 /**
  * Will move the mob to a random spot in water if it is not in combat
  */
-public class DinoRandomSwimGoal extends RandomSwimmingGoal {
-    private final PrehistoricSwimming dino;
+public class DinoRandomSwimGoal<T extends Prehistoric & SwimmingAnimal> extends RandomSwimmingGoal {
+    private final T dino;
 
-    public DinoRandomSwimGoal(PrehistoricSwimming dino, double speedModifier) {
+    public DinoRandomSwimGoal(T dino, double speedModifier) {
         super(dino, speedModifier, 10);
         this.dino = dino;
     }

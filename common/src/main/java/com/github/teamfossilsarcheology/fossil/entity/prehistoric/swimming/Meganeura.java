@@ -5,10 +5,12 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveC
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.MeganeuraFlyingMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.MeganeuraAttachSystem;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -45,20 +47,23 @@ import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.builder.ILoopType;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.manager.AnimationData;
 
+import java.util.Optional;
 import java.util.Random;
 
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
 
-public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
+
+public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnimal {
     public static final String ATTACK = "animation.meganeura.attack";
-    public static final String DROWN = "animation.meganeura.drown";
-    public static final String FLY = "animation.meganeura.fly";
     public static final String IDLE = "animation.meganeura.idle";
-    public static final String IDLE_BABY = "animation.meganeura.idle_baby";
-    public static final String HOVER = "animation.meganeura.hover";
-    public static final String SWIM_BABY = "animation.meganeura.swim_baby";
     public static final String WALK = "animation.meganeura.walk";
-    public static final String WALK_BABY = "animation.meganeura.walk_baby";
     public static final EntityDataAccessor<Float> ATTACHED_X = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> ATTACHED_Y = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.FLOAT);
     public static final EntityDataAccessor<Float> ATTACHED_Z = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.FLOAT);
@@ -66,11 +71,14 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     public static final EntityDataAccessor<Boolean> ATTACHED = SynchedEntityData.defineId(Meganeura.class, EntityDataSerializers.BOOLEAN);
     private final MeganeuraAttachSystem attachSystem = registerSystem(new MeganeuraAttachSystem(this));
     private final PathNavigation flightNav = new FlyingPathNavigation(this, level);
-    private final PathNavigation amphibiousNav = new AmphibiousPathNavigation(this, level);
+    private final PathNavigation amphibiousNav = new AmphibiousPathNavigation<>(this, level);
     private final MoveControl flightMoveControl = new MeganeuraFlyingMoveControl(this);
-    private final MoveControl aquaticMoveControl = new CustomSwimMoveControl(this);
+    private final MoveControl aquaticMoveControl = new CustomSwimMoveControl<>(this);
     private final MoveControl landMoveControl = new SmoothTurningMoveControl(this);
+    protected boolean isLandNavigator;
     protected boolean isAirNavigator;
+    private int timeInWater = 0;
+    private int timeOnLand = 0;
 
     public Meganeura(EntityType<Meganeura> entityType, Level level) {
         super(entityType, level);
@@ -83,11 +91,11 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 2, new WaterPlayGoal(this, 1));
+        goalSelector.addGoal(Util.NEEDS + 2, new WaterPlayGoal<>(this, 1));
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 5, 2, false));
-        goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal<>(this, 1));
         goalSelector.addGoal(Util.WANDER + 2, new MeganeuraWanderAndAttachGoal(this));
-        goalSelector.addGoal(Util.WANDER + 3, new DinoRandomSwimGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER + 3, new DinoRandomSwimGoal<>(this, 1));
         goalSelector.addGoal(Util.LOOK, new RandomLookAroundGoal(this));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
@@ -171,6 +179,13 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     protected void customServerAiStep() {
         switchNavigator();
         super.customServerAiStep();
+        if (isInWater()) {
+            timeInWater++;
+            timeOnLand = 0;
+        } else if (onGround) {
+            timeInWater = 0;
+            timeOnLand++;
+        }
     }
 
     @Override
@@ -243,10 +258,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         }
     }
 
-    @Override
-    protected void switchNavigator(boolean onLand) {
-    }
-
     public MeganeuraAttachSystem getAttachSystem() {
         return attachSystem;
     }
@@ -257,6 +268,35 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
 
     public float getAttachHitBoxScale() {
         return 0.5f;
+    }
+
+    @Override
+    public int timeInWater() {
+        return timeInWater;
+    }
+
+    @Override
+    public int timeOnLand() {
+        return timeOnLand;
+    }
+
+    public boolean isPushedByFluid() {
+        return !isBaby();
+    }
+
+    @Override
+    public boolean canBreatheUnderwater() {
+        return isBaby();
+    }
+
+    @Override
+    public boolean isAmphibious() {
+        return isBaby();
+    }
+
+    @Override
+    public boolean canSwim() {
+        return isBaby();
     }
 
     @Override
@@ -277,34 +317,6 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
     @Override
     public @NotNull MobType getMobType() {
         return MobType.ARTHROPOD;
-    }
-
-    @Override
-    public @NotNull AnimationInfo nextIdleAnimation() {
-        if (isBaby()) {
-            return getAllAnimations().get(IDLE_BABY);
-        }
-        if (isInWater()) {
-            return getAllAnimations().get(DROWN);
-        }
-        if (isFlying()) {
-            return getAllAnimations().get(HOVER);
-        }
-        return getAllAnimations().get(IDLE);
-    }
-
-    @Override
-    public @NotNull AnimationInfo nextWalkingAnimation() {
-        if (isBaby()) {
-            if (isInWater()) {
-                return getAllAnimations().get(SWIM_BABY);
-            }
-            return getAllAnimations().get(WALK_BABY);
-        }
-        if (isFlying()) {
-            return getAllAnimations().get(FLY);
-        }
-        return getAllAnimations().get(WALK);
     }
 
     @Nullable
@@ -330,9 +342,57 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
         return super.getSoundVolume() * 0.5f;
     }
 
+    @Override
+    public void registerControllers(AnimationData data) {
+        AnimationLogic<Prehistoric> animationLogic = getAnimationLogic();
+        var ctrl = new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, event -> {
+            AnimationController<Meganeura> controller = event.getController();
+            if (animationLogic.tryNextAnimation(controller)) {
+                return PlayState.CONTINUE;
+            }
+            Optional<AnimationLogic.ActiveAnimationInfo> activeAnimation = animationLogic.getActiveAnimation(controller.getName());
+            ILoopType loopType = null;
+            if (activeAnimation.isPresent() && activeAnimation.get().forced() && !animationLogic.isAnimationDone(controller.getName())) {
+                loopType = activeAnimation.get().loop() ? LOOP : PLAY_ONCE;
+            } else {
+                if (isSleeping()) {
+                    animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
+                } else if (sitSystem.isSitting()) {
+                    animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.SIT);
+                } else if (event.isMoving()) {
+                    if (isBaby()) {
+                        if (isInWater()) {
+                            animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
+                        }
+                    } else {
+                        if (isInWater()) {
+                            animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.IDLE);//Drown
+                        } else if (isFlying()) {
+                            animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.FLY);
+                        }
+                    }
+                } else {
+                    animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                }
+            }
+            Optional<AnimationLogic.ActiveAnimationInfo> newAnimation = animationLogic.getActiveAnimation(controller.getName());
+            if (newAnimation.isPresent()) {
+                if (loopType == null) {
+                    loopType = newAnimation.get().loop() ? LOOP : PLAY_ONCE;
+                }
+                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName(), loopType));
+            }
+            return PlayState.CONTINUE;
+        });
+        registerEatingListeners(ctrl);
+        data.addAnimationController(ctrl);
+        data.addAnimationController(new AnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
+    }
+
     class MeganeuraSleepSystem extends SleepSystem {
 
-        public MeganeuraSleepSystem(PrehistoricSwimming mob) {
+        public MeganeuraSleepSystem(Meganeura mob) {
             super(mob);
         }
 
@@ -370,7 +430,7 @@ public class Meganeura extends PrehistoricSwimming implements FlyingAnimal {
             if (meganeura.attachSystem.getAttachCooldown() == 0) {
                 Random random = meganeura.random;
                 Level level = mob.level;
-                for (int i = 0; i < 15; i++) {
+                for (int i = 0; i < 5; i++) {
                     BlockPos blockPos = mob.blockPosition().offset(random.nextInt(16) - 8, random.nextInt(10) - 2, random.nextInt(16) - 8);
                     BlockHitResult hitResult = level.clip(new ClipContext(mob.getEyePosition(), Vec3.atCenterOf(blockPos), ClipContext.Block.COLLIDER, ClipContext.Fluid.WATER, mob));
                     if (hitResult.getType() == HitResult.Type.MISS || hitResult.getDirection().getAxis().isVertical()) {

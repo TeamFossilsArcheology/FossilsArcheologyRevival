@@ -10,10 +10,6 @@
     "animation.meganeura.attack_baby": {
       "animation_length": 0.5
     },
-    "animation.meganeura.drown": {
-      "loop": true,
-      "animation_length": 4
-    },
     "animation.meganeura.eat": {
       "animation_length": 2.5833
     },
@@ -41,6 +37,10 @@
     "animation.meganeura.idle_baby": {
       "loop": true,
       "animation_length": 8
+    },
+    "animation.meganeura.idle_water/drown": {
+      "loop": true,
+      "animation_length": 4
     },
     "animation.meganeura.sit": {
       "loop": true,

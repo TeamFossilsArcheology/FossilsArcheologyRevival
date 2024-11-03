@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
@@ -14,12 +15,12 @@ import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Pr
 /**
  * A Goal that will move an amphibious entity out of the water if it has been in there for too long
  */
-public class LeaveWaterGoal extends Goal {
-    private final PrehistoricSwimming dino;
+public class LeaveWaterGoal<T extends Prehistoric & SwimmingAnimal> extends Goal {
+    private final T dino;
     private final double speedModifier;
     private BlockPos shelterPos;
 
-    public LeaveWaterGoal(PrehistoricSwimming dino, double speedModifier) {
+    public LeaveWaterGoal(T dino, double speedModifier) {
         this.dino = dino;
         this.speedModifier = speedModifier;
         setFlags(EnumSet.of(Flag.MOVE));
@@ -30,7 +31,7 @@ public class LeaveWaterGoal extends Goal {
         if (!dino.isInWater() || !dino.isAmphibious()) {
             return false;
         }
-        if (dino.timeInWater <= MAX_TIME_IN_WATER || dino.timeOnLand >= MAX_TIME_ON_LAND) {
+        if (dino.timeInWater() <= MAX_TIME_IN_WATER || dino.timeOnLand() >= MAX_TIME_ON_LAND) {
             return false;
         }
         return findPossibleShelter();

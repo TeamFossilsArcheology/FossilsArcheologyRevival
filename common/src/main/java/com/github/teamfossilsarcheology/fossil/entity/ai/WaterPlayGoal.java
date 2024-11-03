@@ -3,22 +3,23 @@ package com.github.teamfossilsarcheology.fossil.entity.ai;
 import com.github.teamfossilsarcheology.fossil.entity.ToyBall;
 import com.github.teamfossilsarcheology.fossil.entity.ToyBase;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.Attacking;
 
-public class WaterPlayGoal extends PlayGoal {
+public class WaterPlayGoal<T extends Prehistoric & SwimmingAnimal> extends PlayGoal {
     private static final int ATTACK = 0;
     private static final int GRAB = 1;
     private static final int GRAB_DURATION = 55;
-    private final PrehistoricSwimming swimming;
+    private final T swimming;
     private int attackType = -1;
     private long grabStartTick = -1;
 
-    public WaterPlayGoal(PrehistoricSwimming dino, double speedModifier) {
+    public WaterPlayGoal(T dino, double speedModifier) {
         super(dino, speedModifier);
         this.swimming = dino;
     }
