@@ -81,9 +81,6 @@ public class HuntingTargetGoal extends TargetGoal {
         if (target instanceof Player player) {
             return !player.isCreative() && canTargetPlayer(player);
         }
-        if (dino instanceof PrehistoricSwimming swimming && !swimming.canDoBreachAttack()) {
-            return target.isInWater() || swimming.canHuntMobsOnLand();
-        }
         return true;
     }
 
@@ -93,11 +90,7 @@ public class HuntingTargetGoal extends TargetGoal {
         }
         boolean canTarget = false;
         if (dino instanceof PrehistoricSwimming swimming) {
-            if (swimming.canDoBreachAttack() && PrehistoricSwimming.isOverWater(target)) {
-                canTarget = true;
-            } else {
-                canTarget = target.isInWater() || swimming.canHuntMobsOnLand();
-            }
+            canTarget = target.isInWater() || swimming.canHuntMobsOnLand();
         }
         boolean isFood = FoodMappings.getMobFoodPoints(target, dino.data().diet()) > 0;
         boolean smallEnough = dino.getBoundingBox().getSize() * dino.getTargetScale() >= target.getBoundingBox().getSize();
@@ -120,10 +113,8 @@ public class HuntingTargetGoal extends TargetGoal {
 
     private @NotNull AABB getTargetSearchArea(double targetDistance) {
         double yDist = 4;
-        if (dino instanceof PrehistoricFlying) {
+        if (dino instanceof PrehistoricFlying || dino instanceof PrehistoricSwimming) {
             yDist = targetDistance;
-        } else if (dino instanceof PrehistoricSwimming swimming) {
-            yDist = swimming.canDoBreachAttack() ? 50 : targetDistance;
         }
         return mob.getBoundingBox().inflate(targetDistance, yDist, targetDistance);
     }

@@ -39,7 +39,6 @@ public abstract class Instruction {
                 case TELEPORT_TO -> TeleportTo.decodeTag(tag);
                 case ATTACH_TO -> AttachTo.decodeTag(tag);
                 case ATTACK -> Attack.decodeTag(tag);
-                case BREACH -> Breach.decodeTag(tag);
                 case PLAY_ANIM -> PlayAnim.decodeTag(tag);
                 case IDLE -> Idle.decodeTag(tag);
                 case SLEEP -> Sleep.decodeTag(tag);
@@ -203,31 +202,6 @@ public abstract class Instruction {
         }
     }
 
-    public static class Breach extends Instruction {
-        public final int targetId;
-
-        public Breach(int targetId) {
-            super(Type.BREACH);
-            this.targetId = targetId;
-        }
-
-        @Override
-        public CompoundTag encodeTag() {
-            CompoundTag tag = super.encodeTag();
-            tag.putInt("TargetId", targetId);
-            return tag;
-        }
-
-        protected static Instruction decodeTag(CompoundTag tag) {
-            return new Breach(tag.getInt("TargetId"));
-        }
-
-        @Override
-        public String toString() {
-            return type.name() + ": " + targetId;
-        }
-    }
-
     public static class PlayAnim extends Instruction {
         public final String name;
         public final String controller;
@@ -294,6 +268,6 @@ public abstract class Instruction {
     }
 
     public enum Type {
-        ATTACK, MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, BREACH, ATTACH_TO, SLEEP;
+        ATTACK, MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, ATTACH_TO, SLEEP;
     }
 }

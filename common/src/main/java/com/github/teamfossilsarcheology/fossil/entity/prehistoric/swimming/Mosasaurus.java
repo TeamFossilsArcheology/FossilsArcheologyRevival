@@ -37,11 +37,6 @@ public class Mosasaurus extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean canDoBreachAttack() {
-        return true;
-    }
-
-    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.MOSASAURUS;
     }

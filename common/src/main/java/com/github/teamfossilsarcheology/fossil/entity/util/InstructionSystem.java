@@ -1,11 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.entity.util;
 
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
-import com.github.teamfossilsarcheology.fossil.entity.ai.BreachAttackGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.AISystem;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
@@ -16,8 +14,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
@@ -115,25 +111,6 @@ public class InstructionSystem extends AISystem {
             }
         } else if (current instanceof Instruction.Attack attack) {
 
-        } else if (current instanceof Instruction.Breach breach) {
-            PrehistoricSwimming swimming = (PrehistoricSwimming) mob;
-            Entity target = mob.level.getEntity(breach.targetId);
-            if (target instanceof LivingEntity livingEntity) {
-                if (!livingEntity.isAlive() || BreachAttackGoal.isEntitySubmerged(livingEntity) || !PrehistoricSwimming.isOverWater(livingEntity)) {
-                    return false;
-                }
-                if (Util.canReachPrey(mob, target)) {
-                    breachTargetReached = true;
-                    //swimming.startGrabAttack(target);
-                }
-                if (breachTargetReached && mob.isInWater()) {
-                    swimming.setBreaching(false);
-                    breachTargetReached = false;
-                    swimming.stopGrabAttack(livingEntity);
-                    return false;
-                }
-                return true;
-            }
         }
         return false;
     }
@@ -216,13 +193,6 @@ public class InstructionSystem extends AISystem {
             } else {
                 animCount = playAnim.count;
                 activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5, false);
-            }
-        } else if (current instanceof Instruction.Breach breach) {
-            Entity target = mob.level.getEntity(breach.targetId);
-            if (target instanceof LivingEntity livingEntity && mob instanceof PrehistoricSwimming swimming) {
-                mob.setTarget(livingEntity);
-                mob.getMoveControl().setWantedPosition(target.position().x, target.position().y + 4, target.position().z, 1);
-                swimming.setBreaching(true);
             }
         } else if (current instanceof Instruction.Sleep sleep) {
             endTick = mob.level.getGameTime() + sleep.duration;

@@ -30,11 +30,6 @@ public class Megalodon extends PrehistoricSwimming {
     }
 
     @Override
-    public boolean canDoBreachAttack() {
-        return true;
-    }
-
-    @Override
     protected void handleAirSupply(int airSupply) {
         if (isAlive() && !isInWaterOrBubble() && !isNoAi()) {
             setAirSupply(airSupply - 1);

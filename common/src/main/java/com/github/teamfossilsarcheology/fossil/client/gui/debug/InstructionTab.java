@@ -27,7 +27,6 @@ public class InstructionTab extends DebugTab<Prehistoric> {
     private InstructionsList instructions;
     private AnimationList animations;
     private EntityList attackEntities;
-    private EntityList breachEntities;
     public static Entity entityListHighlight;
     public static Entity highlightInstructionEntity;
     public static Instruction highlightInstruction;
@@ -91,28 +90,10 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         });
         addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
-            widgets.remove(breachEntities);
-            renderables.remove(breachEntities);
             widgets.remove(animations);
             renderables.remove(animations);
             addWidget(attackEntities);
         }));
-        /*if (entity instanceof PrehistoricSwimming swimming && swimming.canDoBreachAttack()) {
-            list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight()
-                    .selector(target -> !BreachAttackGoal.isEntitySubmerged(target) && PrehistoricSwimming.isOverWater(target)), entity, entity.getBoundingBox().inflate(30));
-            breachEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
-                Instruction instruction = new Instruction.Breach(entity1.getId());
-                instructions.addInstruction(instruction);
-                INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
-            });
-            addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Breach"), button -> {
-                widgets.remove(attackEntities);
-                renderables.remove(attackEntities);
-                widgets.remove(animations);
-                renderables.remove(animations);
-                addWidget(breachEntities);
-            }));
-        }*/
         List<String> controllers = entity.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
         animations = new AnimationList(width - 315, 300, entity.getAllAnimations(), controllers, true, minecraft, animationObject -> {
             Instruction instruction = new Instruction.PlayAnim(animationObject.name(), animationObject.controller(), animationObject.loop(), (int) animationObject.transitionLength());
@@ -122,8 +103,6 @@ public class InstructionTab extends DebugTab<Prehistoric> {
         addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Animations"), button -> {
             widgets.remove(attackEntities);
             renderables.remove(attackEntities);
-            widgets.remove(breachEntities);
-            renderables.remove(breachEntities);
             addWidget(animations);
         }));
 

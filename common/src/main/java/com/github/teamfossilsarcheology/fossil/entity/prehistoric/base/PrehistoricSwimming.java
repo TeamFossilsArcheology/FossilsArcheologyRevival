@@ -37,8 +37,6 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 public abstract class PrehistoricSwimming extends Prehistoric {
     public static final int MAX_TIME_IN_WATER = 1000;
     public static final int MAX_TIME_ON_LAND = 1000;
-    private static final EntityDataAccessor<Boolean> IS_BREACHING = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.BOOLEAN);
-    private static final EntityDataAccessor<Float> BREACHING_PITCH = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.FLOAT);
     private static final EntityDataAccessor<Boolean> GRABBING = SynchedEntityData.defineId(PrehistoricSwimming.class, EntityDataSerializers.BOOLEAN);
     public int timeInWater = 0;
     public int timeOnLand = 0;
@@ -46,7 +44,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
      * Cache check for current navigator
      */
     protected boolean isLandNavigator;
-    public boolean breachTargetReached = false;
     private boolean beached;
     private Vec3 grabPos;
 
@@ -98,8 +95,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(IS_BREACHING, false);
-        entityData.define(BREACHING_PITCH, 0f);
         entityData.define(GRABBING, false);
     }
 
@@ -108,8 +103,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         super.addAdditionalSaveData(compound);
         compound.putInt("TimeInWater", timeInWater);
         compound.putInt("TimeOnLand", timeOnLand);
-        compound.putBoolean("Breaching", isBreaching());
-        compound.putFloat("BreachPitch", getBreachPitch());
     }
 
     @Override
@@ -117,8 +110,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         super.readAdditionalSaveData(compound);
         timeInWater = compound.getInt("TimeInWater");
         timeOnLand = compound.getInt("TimeOnLand");
-        setBreaching(compound.getBoolean("Breaching"));
-        setBreachPitch(compound.getFloat("BreachPitch"));
     }
 
     @Override
@@ -178,15 +169,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
     @Override
     public void aiStep() {
         super.aiStep();
-        if (canDoBreachAttack() && !level.isClientSide) {
-            LivingEntity target = getTarget();
-            if (target != null) {
-                if (!BreachAttackGoal.isEntitySubmerged(target) && !isOverWater(target)) {
-                    //If target out of reach
-                    setTarget(null);
-                }
-            }
-        }
         if (!level.isClientSide) {
             if (isInWater() && canSwim() && isLandNavigator) {
                 switchNavigator(false);
@@ -343,10 +325,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
         return true;
     }
 
-    public boolean canDoBreachAttack() {
-        return false;
-    }
-
     public void destroyBoat(Entity targetSailor) {
         if (targetSailor.getVehicle() instanceof Boat boat && !level.isClientSide) {
             boat.kill();
@@ -370,30 +348,6 @@ public abstract class PrehistoricSwimming extends Prehistoric {
 
     public boolean isBeached() {
         return beached;
-    }
-
-    public boolean isBreaching() {
-        return entityData.get(IS_BREACHING);
-    }
-
-    public void setBreaching(boolean breaching) {
-        entityData.set(IS_BREACHING, breaching);
-    }
-
-    public float getBreachPitch() {
-        return entityData.get(BREACHING_PITCH);
-    }
-
-    public void setBreachPitch(float pitch) {
-        entityData.set(BREACHING_PITCH, pitch);
-    }
-
-    public void incrementBreachPitch(float pitch) {
-        entityData.set(BREACHING_PITCH, getBreachPitch() + pitch);
-    }
-
-    public void decrementBreachPitch(float pitch) {
-        entityData.set(BREACHING_PITCH, getBreachPitch() - pitch);
     }
 
     public boolean isDoingGrabAttack() {
