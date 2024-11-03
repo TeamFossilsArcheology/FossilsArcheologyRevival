@@ -36,6 +36,10 @@
       "loop": true,
       "animation_length": 0.4167
     },
+    "animation.confuciusornis.idle": {
+      "loop": true,
+      "animation_length": 1.4167
+    },
     "animation.confuciusornis.sleep/sit": {
       "loop": true,
       "animation_length": 12

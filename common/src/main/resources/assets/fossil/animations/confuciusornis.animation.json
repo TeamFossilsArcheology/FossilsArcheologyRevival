@@ -1190,6 +1190,86 @@
 				}
 			}
 		},
+		"animation.confuciusornis.idle": {
+			"loop": true,
+			"animation_length": 1.4167,
+			"bones": {
+				"body": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [2.1077, -0.03007, 0.58867]
+						},
+						"1.0": {
+							"vector": [-2, 0, 0]
+						},
+						"1.4167": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"neck": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [7.5, 0, 0]
+						},
+						"1.0": {
+							"vector": [-5, 0, 0]
+						},
+						"1.4167": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"head": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [-15, 0, 0]
+						},
+						"1.0": {
+							"vector": [5, 0, 0]
+						},
+						"1.4167": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"leftWing": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [-1.72134, 7.8109, -4.96646]
+						},
+						"1.4167": {
+							"vector": [0, 0, 0]
+						}
+					}
+				},
+				"rightWing": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [0.07101, -7.49203, 4.64689]
+						},
+						"1.4167": {
+							"vector": [0, 0, 0]
+						}
+					}
+				}
+			}
+		},
 		"animation.confuciusornis.sleep/sit": {
 			"loop": true,
 			"animation_length": 12,
