@@ -51,7 +51,6 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     private int flyingTicks = 0;
     private int groundTicks = 0;
     private long takeOffStartTick = 0;
-    private boolean takeOffAnimationStarted;
     private boolean usingStuckNavigation;
 
     protected PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level) {
@@ -94,6 +93,14 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         super.defineSynchedData();
         entityData.define(FLYING, false);
         entityData.define(TAKING_OFF, false);
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (FLYING.equals(key)) {
+            setXRot(0);
+        }
+        super.onSyncedDataUpdated(key);
     }
 
     @Override
@@ -171,7 +178,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             }
             boolean debug = false;
             if (debug || flyingTicks > getMaxExhaustion()) {
-                moveTo(Vec3.atCenterOf(findLandPosition(true)), true);
+                moveTo(Vec3.atCenterOf(findLandPosition(true)), true, true);
             }
         }
     }
@@ -211,18 +218,24 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         return (CustomFlightMoveControl) super.getMoveControl();
     }
 
-    public void moveTo(Vec3 pos, boolean shouldLand) {
+    public void moveTo(Vec3 pos, boolean shouldLand, boolean shouldFly) {
         if (isFlying()) {
             getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
             getMoveControl().setOperation(Operation.MOVE_TO);
         } else if (isTakingOff()) {
             getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
             getMoveControl().setOperation(Operation.WAIT);
-        } else if (distanceToSqr(pos) > 40) {
+        } else if (distanceToSqr(pos) > 40 || shouldFly) {
             //start fly
-            startTakeOff();
-            getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
-            getMoveControl().setOperation(Operation.WAIT);
+            if (hasTakeOffAnimation()) {
+                startTakeOff();
+                getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
+                getMoveControl().setOperation(Operation.WAIT);
+            } else {
+                setFlying(true);
+                getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
+                getMoveControl().setOperation(Operation.MOVE_TO);
+            }
         } else {
             //walk
             getNavigation().moveTo(pos.x, pos.y, pos.z, 1);
@@ -323,6 +336,10 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         data.addAnimationController(controller);
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
+    }
+
+    public boolean hasTakeOffAnimation() {
+        return true;
     }
 
     public abstract @NotNull AnimationInfo nextTakeOffAnimation();

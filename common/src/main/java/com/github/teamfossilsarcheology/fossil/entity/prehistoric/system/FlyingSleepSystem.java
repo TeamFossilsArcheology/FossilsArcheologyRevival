@@ -45,7 +45,7 @@ public class FlyingSleepSystem extends SleepSystem {
         if (mob.isFlying() || mob.isTakingOff()) {
             landingPos = findGroundTarget();
             if (landingPos != null) {
-                mob.moveTo(Vec3.atCenterOf(landingPos), true);
+                mob.moveTo(Vec3.atCenterOf(landingPos), true, true);
             } else {
                 nextTryTick = mob.level.getGameTime() + 20;
             }
@@ -71,7 +71,7 @@ public class FlyingSleepSystem extends SleepSystem {
         super.serverTick();
         if (landingPos != null) {
             if (mob.isFlying()) {
-                mob.moveTo(Vec3.atCenterOf(landingPos), true);
+                mob.moveTo(Vec3.atCenterOf(landingPos), true, true);
             } else {
                 landingPos = null;
             }

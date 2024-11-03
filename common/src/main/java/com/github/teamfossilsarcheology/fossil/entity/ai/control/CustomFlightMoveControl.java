@@ -118,7 +118,7 @@ public class CustomFlightMoveControl extends SmoothTurningMoveControl {
                         //Just walk if close enough
                         mob.setFlying(false);
                         operation = Operation.WAIT;
-                        mob.moveTo(flyingWanted, true);
+                        mob.moveTo(flyingWanted, true, false);
                         //TODO: Maybe onReachGroundTarget?
                     } else {
                         mob.doStuckNavigation(flyingWanted);

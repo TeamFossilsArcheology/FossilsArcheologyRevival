@@ -61,7 +61,7 @@ public class FlyingWanderGoal extends Goal {
         dino.getLookControl().setLookAt(targetPos);
         dino.getNavigation().stop();
         if (dino.isFlying()) {
-            dino.moveTo(targetPos, shouldLand);
+            dino.moveTo(targetPos, shouldLand, true);
         } else {
             performTakeOff();
         }
@@ -91,8 +91,7 @@ public class FlyingWanderGoal extends Goal {
                 dino.getLookControl().setLookAt(targetPos);
             } else {
                 isRotating = false;
-                dino.startTakeOff();
-                dino.moveTo(targetPos, false);
+                dino.moveTo(targetPos, false, true);
             }
         }
     }

@@ -42,6 +42,11 @@ public class Quetzalcoatlus extends PrehistoricFlying {
     }
 
     @Override
+    public boolean hasTakeOffAnimation() {
+        return false;
+    }
+
+    @Override
     public @NotNull AnimationInfo nextTakeOffAnimation() {
         return getAllAnimations().get(WALK);
     }

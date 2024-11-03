@@ -42,6 +42,11 @@ public class Confuciusornis extends PrehistoricFlying {
     }
 
     @Override
+    public boolean hasTakeOffAnimation() {
+        return false;
+    }
+
+    @Override
     public @NotNull AnimationInfo nextTakeOffAnimation() {
         return getAnimation(AnimationCategory.FLY);
     }

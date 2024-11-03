@@ -82,7 +82,6 @@
 					"name": "Beak2",
 					"parent": "Beak1",
 					"pivot": [-0.5, 54, -7.2],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.8, 51, -15.7], "size": [3, 4, 10], "uv": [117, 6]}
 					]
@@ -91,7 +90,6 @@
 					"name": "part34",
 					"parent": "Beak1",
 					"pivot": [0, 53.1, -15.7],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.5, 51.1, -26.7], "size": [3, 3, 11], "uv": [134, 16]}
 					]
@@ -109,7 +107,6 @@
 					"name": "part33",
 					"parent": "Jaw1",
 					"pivot": [0, 51.3, -14.7],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1, 49.3, -25.7], "size": [2, 2, 11], "uv": [115, 21]}
 					]
@@ -141,7 +138,6 @@
 					"name": "neckfloof1",
 					"parent": "neck2",
 					"pivot": [0, 49.6, -5.7],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1, 34.6, -9.7], "size": [3, 15, 4], "uv": [85, 27]}
 					]
@@ -150,10 +146,14 @@
 					"name": "neckfloof2",
 					"parent": "neck2",
 					"pivot": [0, 49.6, -5.7],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-2, 34.6, -9.7], "size": [3, 15, 4], "uv": [85, 27]}
 					]
+				},
+				{
+					"name": "rider_pos",
+					"parent": "body",
+					"pivot": [0, 26, 0]
 				},
 				{
 					"name": "wing1L",
