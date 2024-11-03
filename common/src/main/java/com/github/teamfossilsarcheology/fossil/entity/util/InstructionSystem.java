@@ -261,7 +261,7 @@ public class InstructionSystem extends AISystem {
                 instructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
             }
             shouldLoop = tag.getBoolean("InstructionsLoop");
-            start(instructions, shouldLoop);
+            if (!instructions.isEmpty()) start(instructions, shouldLoop);
             syncWithClients();
         }
     }

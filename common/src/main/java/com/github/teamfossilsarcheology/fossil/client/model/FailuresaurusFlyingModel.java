@@ -29,7 +29,7 @@ public class FailuresaurusFlyingModel extends FailuresaurusRenderer.Failuresauru
         PartDefinition body1 = root.addOrReplaceChild("body1", CubeListBuilder.create().texOffs(85, 1).addBox(-4.5f, 0, -5, 9, 4, 10), PartPose.offset(0, 20, 2));
         PartDefinition body2 = body1.addOrReplaceChild("body2", CubeListBuilder.create().texOffs(50, 1).addBox(-3.5f, -3, -4, 7, 4, 8), PartPose.rotation(0, 0, 0.0873f));
         PartDefinition lwing1 = body2.addOrReplaceChild("lwing1", CubeListBuilder.create().texOffs(80, 20).mirror().addBox(-10, 0, -3, 10, 1, 6).mirror(false), PartPose.offsetAndRotation(-0.5f, -2.5f, 0, 0, 0, 1.0821f));
-        lwing1.addOrReplaceChild("lwing2", CubeListBuilder.create().texOffs(80, 35).mirror().addBox(-14, -0.5f, -2, 14, 1, 4).mirror(false), PartPose.offsetAndRotation(-9.5f, 0.5f, 0.5f, 0, 0, -2.5831f));
+        lwing1.addOrReplaceChild("lwing2", CubeListBuilder.create().texOffs(80, 35).addBox(-14, -0.5f, -2, 14, 1, 4).mirror(false), PartPose.offsetAndRotation(-9.5f, 0.5f, 0.5f, 0, 0, -2.5831f));
         lwing1.addOrReplaceChild("lhand", CubeListBuilder.create().texOffs(80, 45).mirror().addBox(-1, 0, -4, 1, 1, 4).mirror(false), PartPose.offsetAndRotation(-9.5f, 0, -2, 0.0873f, -0.2618f, -0.0873f));
 
         PartDefinition rwing1 = body2.addOrReplaceChild("rwing1", CubeListBuilder.create().texOffs(40, 20).mirror().addBox(-10, -1, -3, 10, 1, 6).mirror(false), PartPose.offsetAndRotation(0.5f, -2.5f, 0, 0, 0, 1.9548f));
