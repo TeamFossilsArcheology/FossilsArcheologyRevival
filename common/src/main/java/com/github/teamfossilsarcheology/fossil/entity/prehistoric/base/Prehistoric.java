@@ -1353,7 +1353,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             case 3 -> tag.putBoolean("disableLookAI", disableAI);
         }
         entityData.set(DEBUG, tag);
-        if (level instanceof ServerLevel serverLevel) {
+        if (level instanceof ServerLevel serverLevel && tickCount > 5) {
             MessageHandler.DEBUG_CHANNEL.sendToPlayers(serverLevel.getPlayers(serverPlayer -> serverPlayer.distanceTo(this) < 32),
                     new C2SDisableAIMessage(getId(), disableAI, type));
         }

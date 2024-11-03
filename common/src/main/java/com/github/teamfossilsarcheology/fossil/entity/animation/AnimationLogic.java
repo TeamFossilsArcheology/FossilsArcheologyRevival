@@ -133,13 +133,12 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return true;
         }
         boolean replaceAnim = false;
-        boolean isLoop = entity.getAllAnimations().get(active.animationName).animation.loop == LOOP;
         if (active.category == category && isAnimationDone(active)) {
             //Loops in the same category can only replace sometimes
-            replaceAnim = !isLoop || entity.getRandom().nextFloat() < category.chance();
+            replaceAnim = !active.loop || entity.getRandom().nextFloat() < category.chance();
         } else if (active.category != category) {
             //Can only replace if loop or previous animation done
-            replaceAnim = (!active.keepActive && isLoop) || isAnimationDone(active);
+            replaceAnim = (!active.keepActive && active.loop) || isAnimationDone(active);
         }
         if (replaceAnim) {
             int transitionLength = Math.max(category.transitionLength(), active.category.transitionLength());
