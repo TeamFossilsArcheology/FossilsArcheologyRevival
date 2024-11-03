@@ -31,6 +31,6 @@
   "diet": "PISCIVORE",
   "maxHunger": 125,
   "maxPopulation": 15,
-  "scaleBase": 0.65,
-  "scaleMax": 0.9
+  "scaleBase": 0.35,
+  "scaleMax": 0.77
 }

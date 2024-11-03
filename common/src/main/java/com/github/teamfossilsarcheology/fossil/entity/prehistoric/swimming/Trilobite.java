@@ -47,18 +47,18 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.HENODUS_AMBIENT.get();
+        return ModSounds.ARTHROPLEURA_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.HENODUS_HURT.get();
+        return ModSounds.ARTHROPLEURA_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.HENODUS_DEATH.get();
+        return ModSounds.ARTHROPLEURA_DEATH.get();
     }
 }

@@ -30,18 +30,18 @@ public class Protoceratops extends Prehistoric {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.TRICERATOPS_AMBIENT.get();
+        return ModSounds.DRYOSAURUS_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.TRICERATOPS_HURT.get();
+        return ModSounds.DRYOSAURUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.TRICERATOPS_DEATH.get();
+        return ModSounds.DRYOSAURUS_DEATH.get();
     }
 }

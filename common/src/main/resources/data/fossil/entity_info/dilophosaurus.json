@@ -31,7 +31,7 @@
   "diet": "CARNIVORE",
   "maxHunger": 100,
   "maxPopulation": 7,
-  "eggScale": 0.5,
+  "eggScale": 0.75,
   "scaleBase": 0.18,
-  "scaleMax": 1.08
+  "scaleMax": 1.11
 }

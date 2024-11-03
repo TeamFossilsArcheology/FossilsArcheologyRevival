@@ -31,6 +31,6 @@
   "diet": "HERBIVORE",
   "maxHunger": 175,
   "maxPopulation": 6,
-  "scaleBase": 0.15,
-  "scaleMax": 1.6
+  "scaleBase": 0.25,
+  "scaleMax": 1.65
 }

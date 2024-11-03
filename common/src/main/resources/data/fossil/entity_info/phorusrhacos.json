@@ -32,5 +32,5 @@
   "maxHunger": 75,
   "maxPopulation": 3,
   "scaleBase": 0.2,
-  "scaleMax": 0.85
+  "scaleMax": 0.7
 }

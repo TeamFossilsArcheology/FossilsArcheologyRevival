@@ -31,6 +31,6 @@
   "diet": "PISCI_CARNIVORE",
   "maxHunger": 175,
   "maxPopulation": 15,
-  "scaleBase": 2.25,
-  "scaleMax": 2.5
+  "scaleBase": 0.3,
+  "scaleMax": 2.1
 }

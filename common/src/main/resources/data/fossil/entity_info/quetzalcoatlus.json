@@ -27,10 +27,11 @@
   "adultAgeDays": 9,
   "teenAgeDays": 4,
   "breaksBlocks": false,
-  "canBeRidden": false,
+  "canBeRidden": true,
   "diet": "CARNIVORE",
   "maxHunger": 50,
   "maxPopulation": 15,
+  "eggScale": 1.25,
   "scaleBase": 0.3,
-  "scaleMax": 1.6
+  "scaleMax": 1.75
 }
