@@ -1,6 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
+import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.entity.PrehistoricSkeleton;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricDebug;
@@ -20,6 +22,7 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Sheep;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
@@ -44,7 +47,7 @@ public class DebugScreen extends Screen {
     private DebugTab<? extends Entity> currentTab;
     private double speedMod = 0.5;
     public static int rulerMode;
-    //TODO: Egg, Embryo, etc helper
+    //TODO: Embryo, etc helper
     public DebugScreen(@Nullable Entity newEntity) {
         super(new TextComponent("Debug Screen"));
         entity = newEntity;
@@ -118,6 +121,10 @@ public class DebugScreen extends Screen {
             tabs.add(new InfoTab(this, prehistoric));
         } else if (entity instanceof PrehistoricSkeleton skeleton) {
             tabs.add(new SkeletonEditTab(this, skeleton));
+        } else if (entity instanceof DinosaurEgg egg) {
+            tabs.add(new EggTab(this, egg));
+        } else if (entity instanceof Animal animal && ModCapabilities.getEmbryoProgress(animal) > 0) {
+            tabs.add(new EmbryoTab(this, animal));
         }
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {
             builder.withInitialValue(mob.isNoAi());
@@ -148,6 +155,8 @@ public class DebugScreen extends Screen {
             rulerMode = 1;
             onClose();
             if (currentTab != null) currentTab.onClose();
+        }, (button, poseStack, i, j) -> {
+            renderTooltip(poseStack, new TextComponent("Measure length. Left click for 1st pos. Right click for 2nd pos"), i, j);
         }));
         addRenderableWidget(new Button(width / 2 - 91, height - 70, 91, 20, new TextComponent("Discard All"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(-1));

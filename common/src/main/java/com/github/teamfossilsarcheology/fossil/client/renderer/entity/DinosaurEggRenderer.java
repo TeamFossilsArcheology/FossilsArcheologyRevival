@@ -31,6 +31,9 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
     @Override
     protected void scale(DinosaurEgg egg, PoseStack poseStack, float partialTickTime) {
         float scale = EntityDataLoader.INSTANCE.getData(egg.getPrehistoricEntityInfo().resourceName).eggScale();
+        if (egg.getScaleOverride() > 0) {
+            scale = egg.getScaleOverride();
+        }
         shadowRadius = 0.25f * scale;
         poseStack.scale(scale, scale, scale);
         super.scale(egg, poseStack, partialTickTime);

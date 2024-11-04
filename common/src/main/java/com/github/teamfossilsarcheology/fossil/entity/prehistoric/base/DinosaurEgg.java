@@ -7,7 +7,6 @@ import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMusicMessage;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
-import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.mojang.logging.LogUtils;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
@@ -44,7 +43,7 @@ import org.slf4j.Logger;
 import java.util.Collections;
 
 public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
-    public static final int TOTAL_HATCHING_TIME = Version.debugEnabled() ? 1000 : 3000;
+    public static final int TOTAL_HATCHING_TIME = 3000;
     /**
      * Dummy recipe that awards the player with a chance to get a golden egg
      */
@@ -53,6 +52,8 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     private static final EntityDataAccessor<Boolean> GOLDEN_EGG = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.BOOLEAN);
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final TranslatableComponent EGG_HATCHED = new TranslatableComponent("entity.fossil.dinosaur_egg.hatched");
+
+    private float scaleOverride = -1;
 
     private PrehistoricEntityInfo prehistoricEntityInfo;
 
@@ -225,6 +226,14 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     public void setPrehistoricEntityInfo(PrehistoricEntityInfo prehistoricEntityInfo) {
         this.prehistoricEntityInfo = prehistoricEntityInfo;
+    }
+
+    public void setScaleOverride(float scaleOverride) {
+        this.scaleOverride = scaleOverride;
+    }
+
+    public float getScaleOverride() {
+        return scaleOverride;
     }
 
     @Override

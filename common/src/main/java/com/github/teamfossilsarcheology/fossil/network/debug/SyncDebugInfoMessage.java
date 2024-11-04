@@ -1,7 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.network.debug;
 
+import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.DebugScreen;
 import com.github.teamfossilsarcheology.fossil.entity.PrehistoricSkeleton;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
@@ -9,6 +11,7 @@ import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Supplier;
@@ -78,6 +81,11 @@ public class SyncDebugInfoMessage {
                 } else if (player.level.getEntity(entityId) instanceof PrehistoricSkeleton fossil) {
                     fossil.setType(PrehistoricEntityInfo.valueOf(enumString));
                     fossil.setAge(age);
+                } else if (player.level.getEntity(entityId) instanceof DinosaurEgg egg) {
+                    egg.setHatchingTime(age);
+                } else if (player.level.getEntity(entityId) instanceof Animal animal && ModCapabilities.getEmbryoProgress(animal) > 0) {
+                    ModCapabilities.setEmbryoProgress(animal, age);
+                    ModCapabilities.syncMammalWithClient(animal, age, ModCapabilities.getEmbryo(animal));
                 }
             }
         });
