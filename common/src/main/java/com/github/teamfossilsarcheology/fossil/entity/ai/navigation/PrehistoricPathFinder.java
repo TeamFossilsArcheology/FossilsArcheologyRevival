@@ -120,7 +120,7 @@ public class PrehistoricPathFinder extends PathFinder {
             list.add(0, node);
         }
         //This should help some of the smaller mobs reach their target
-        if (mob.getBbWidth() < 0.75) {
+        if (mob.getBbWidth() < 1) {
             list.add(target);
         }
         return new PatchedPath(list, targetPos, reachesTarget);

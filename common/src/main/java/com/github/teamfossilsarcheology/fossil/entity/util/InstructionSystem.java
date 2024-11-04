@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.util;
 
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
+import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
@@ -124,7 +125,7 @@ public class InstructionSystem extends AISystem {
         if (navigation instanceof GroundPathNavigation && !mob.isOnGround() && !mob.isInWaterOrBubble()) {
             return true;
         }
-        if (navigation instanceof WaterBoundPathNavigation && !mob.isInWaterOrBubble()) {
+        if (navigation instanceof WaterBoundPathNavigation && !mob.isInWaterOrBubble() && !(navigation instanceof AmphibiousPathNavigation<?>)) {
             return true;
         }
 
