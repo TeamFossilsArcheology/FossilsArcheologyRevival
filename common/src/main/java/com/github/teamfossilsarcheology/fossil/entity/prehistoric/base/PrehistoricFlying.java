@@ -61,7 +61,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     @Override
     protected @NotNull BodyRotationControl createBodyControl() {
-        return new CustomFlightBodyRotationControl(this);
+        return new CustomFlightBodyRotationControl<>(this);
     }
 
     public static AttributeSupplier.Builder createAttributes() {

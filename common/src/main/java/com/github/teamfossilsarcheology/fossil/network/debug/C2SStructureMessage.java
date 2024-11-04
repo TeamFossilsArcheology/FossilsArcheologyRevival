@@ -47,15 +47,15 @@ public class C2SStructureMessage {
         List<Prehistoric> toAdd = new ArrayList<>();
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
             Entity entity = info.entityType().create(level);
-            if (entity instanceof PrehistoricSwimming swimming && !swimming.isAmphibious()) {
-                continue;
-            }
-            if (entity instanceof PrehistoricFlying) {
-                continue;
-            }
             if (entity instanceof Prehistoric prehistoric) {
                 toAdd.add(prehistoric);
                 length++;
+            }
+            if (entity instanceof PrehistoricSwimming swimming && !swimming.canBreatheUnderwater()) {
+                swimming.setNoAi(true);
+            }
+            if (entity instanceof PrehistoricFlying flying) {
+                flying.setNoAi(true);
             }
         }
         BlockState ironBlock = Blocks.JUNGLE_PLANKS.defaultBlockState();
