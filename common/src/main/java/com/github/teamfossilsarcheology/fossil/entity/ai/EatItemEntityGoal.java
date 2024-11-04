@@ -55,7 +55,7 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
     public void tick() {
         super.tick();
         if (isReachedTarget()) {
-            entity.eatItem(targetItem.getItem());
+            entity.feed(FoodMappings.getFoodAmount(targetItem.getItem().getItem(), entity.data().diet()));
             targetItem.getItem().shrink(1);
             recentlyAte = true;
             if (entity.level.getGameTime() > animEndTick) {

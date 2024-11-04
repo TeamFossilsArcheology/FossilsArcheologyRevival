@@ -40,7 +40,10 @@ public class EatFromFeederGoal extends MoveToFoodGoal {
             //Only start if entity has stopped because eating and moving animations cant stack
             if (entity.level.getBlockEntity(targetPos) instanceof FeederBlockEntity feeder && Math.abs(entity.animationSpeed) <= Util.SWING_ANIM_THRESHOLD) {
                 feedingTicks++;
-                feeder.feedDinosaur(entity);
+                if (entity.getHunger() < entity.getMaxHunger()) {
+                    //Prevent overfeeding when goal is not done due to the running animation
+                    feeder.feedDinosaur(entity);
+                }
                 entity.heal(0.1f);
                 if (entity.level.getGameTime() > animEndTick) {
                     AnimationInfo animationInfo = entity.nextEatingAnimation();

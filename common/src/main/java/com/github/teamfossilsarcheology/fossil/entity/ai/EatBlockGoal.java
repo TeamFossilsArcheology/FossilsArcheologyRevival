@@ -15,8 +15,16 @@ import net.minecraft.world.level.LevelReader;
  * destroy the block and feed the entity.
  */
 public class EatBlockGoal extends MoveToFoodGoal {
+    private boolean done;
+
     public EatBlockGoal(Prehistoric entity) {
         super(entity, 1, 32);
+    }
+
+    @Override
+    public void start() {
+        super.start();
+        done = false;
     }
 
     @Override
@@ -30,16 +38,15 @@ public class EatBlockGoal extends MoveToFoodGoal {
     @Override
     public void tick() {
         super.tick();
-        if (isReachedTarget()) {
+        if (isReachedTarget() && !done) {
             int foodAmount = FoodMappings.getFoodAmount(entity.level.getBlockState(targetPos).getBlock(), entity.data().diet());
             entity.feed(foodAmount);
             entity.heal(foodAmount / 10f);
             entity.level.destroyBlock(targetPos, false);
-            if (entity.level.getGameTime() > animEndTick) {
-                AnimationInfo animationInfo = entity.nextEatingAnimation();
-                entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
-                animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.animationLength);
-            }
+            AnimationInfo animationInfo = entity.nextEatingAnimation();
+            entity.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animationInfo, AnimationCategory.EAT);
+            animEndTick = (long) (entity.level.getGameTime() + animationInfo.animation.animationLength);
+            done = true;
         }
     }
 
