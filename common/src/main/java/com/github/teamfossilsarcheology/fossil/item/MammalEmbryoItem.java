@@ -25,7 +25,7 @@ public class MammalEmbryoItem extends PrehistoricEntityItem {
     @Override
     public @NotNull InteractionResult interactLivingEntity(ItemStack stack, Player player, LivingEntity interactionTarget, InteractionHand usedHand) {
         if (interactionTarget instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && !animal.isBaby()) {
-            if (ModCapabilities.getEmbryoProgress(animal) > 0) {
+            if (ModCapabilities.hasEmbryo(animal)) {
                 return InteractionResult.PASS;
             }
             if (player instanceof ServerPlayer serverPlayer) {

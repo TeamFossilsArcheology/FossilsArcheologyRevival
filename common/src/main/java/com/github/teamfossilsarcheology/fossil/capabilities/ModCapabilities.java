@@ -10,6 +10,11 @@ import org.jetbrains.annotations.Nullable;
 public class ModCapabilities {
 
     @ExpectPlatform
+    public static boolean hasEmbryo(Animal animal) {
+        return false;
+    }
+
+    @ExpectPlatform
     public static int getEmbryoProgress(Animal animal) {
         return 0;
     }

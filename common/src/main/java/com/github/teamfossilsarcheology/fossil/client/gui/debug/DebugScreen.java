@@ -123,7 +123,7 @@ public class DebugScreen extends Screen {
             tabs.add(new SkeletonEditTab(this, skeleton));
         } else if (entity instanceof DinosaurEgg egg) {
             tabs.add(new EggTab(this, egg));
-        } else if (entity instanceof Animal animal && ModCapabilities.getEmbryoProgress(animal) > 0) {
+        } else if (entity instanceof Animal animal && ModCapabilities.hasEmbryo(animal)) {
             tabs.add(new EmbryoTab(this, animal));
         }
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {

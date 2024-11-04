@@ -83,7 +83,7 @@ public class SyncDebugInfoMessage {
                     fossil.setAge(age);
                 } else if (player.level.getEntity(entityId) instanceof DinosaurEgg egg) {
                     egg.setHatchingTime(age);
-                } else if (player.level.getEntity(entityId) instanceof Animal animal && ModCapabilities.getEmbryoProgress(animal) > 0) {
+                } else if (player.level.getEntity(entityId) instanceof Animal animal && ModCapabilities.hasEmbryo(animal)) {
                     ModCapabilities.setEmbryoProgress(animal, age);
                     ModCapabilities.syncMammalWithClient(animal, age, ModCapabilities.getEmbryo(animal));
                 }

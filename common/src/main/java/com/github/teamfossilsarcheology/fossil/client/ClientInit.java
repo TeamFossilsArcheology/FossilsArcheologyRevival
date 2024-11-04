@@ -269,7 +269,7 @@ public class ClientInit {
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             if (player.level.isClientSide) {
                 if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
-                    if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.getEmbryoProgress(animal) > 0) {
+                    if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.hasEmbryo(animal)) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
                     } else if (entity instanceof DinosaurEgg || entity instanceof Prehistoric) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen((LivingEntity) entity));

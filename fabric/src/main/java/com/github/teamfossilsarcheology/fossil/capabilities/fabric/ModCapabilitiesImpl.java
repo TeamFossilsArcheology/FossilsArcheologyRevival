@@ -16,6 +16,10 @@ public class ModCapabilitiesImpl {
     public static final ComponentKey<FirstHatchComponent> PLAYER =
             ComponentRegistry.getOrCreate(FossilMod.location("first_hatch"), FirstHatchComponent.class);
 
+    public static boolean hasEmbryo(Animal animal) {
+        return MAMMAL.get(animal).getEmbryo() != null;
+    }
+
     public static int getEmbryoProgress(Animal animal) {
         return MAMMAL.get(animal).getEmbryoProgress();
     }

@@ -7,19 +7,19 @@ import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.FirstHa
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.IFirstHatchCap;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.common.util.LazyOptional;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class ModCapabilitiesImpl {
-    private static final Map<Animal, LazyOptional<IMammalCap>> cachedMammals = new Object2ObjectOpenHashMap<>();
-    private static final Map<Player, LazyOptional<IFirstHatchCap>> cachedPlayers = new Object2ObjectOpenHashMap<>();
+    private static final ConcurrentMap<Animal, LazyOptional<IMammalCap>> cachedMammals = new ConcurrentHashMap<>();
+    private static final ConcurrentMap<Player, LazyOptional<IFirstHatchCap>> cachedPlayers = new ConcurrentHashMap<>();
 
     public static Optional<IMammalCap> getMammalCap(Animal animal) {
         LazyOptional<IMammalCap> cap = cachedMammals.get(animal);
@@ -47,24 +47,24 @@ public class ModCapabilitiesImpl {
         return Optional.empty();
     }
 
+    public static boolean hasEmbryo(Animal animal) {
+        return getMammalCap(animal).map(iMammalCap -> iMammalCap.getEmbryo() != null).orElse(false);
+    }
+
     public static int getEmbryoProgress(Animal animal) {
-        Optional<IMammalCap> cap = getMammalCap(animal);
-        return cap.map(IMammalCap::getEmbryoProgress).orElse(0);
+        return getMammalCap(animal).map(IMammalCap::getEmbryoProgress).orElse(0);
     }
 
     public static EntityInfo getEmbryo(Animal animal) {
-        Optional<IMammalCap> cap = getMammalCap(animal);
-        return cap.map(IMammalCap::getEmbryo).orElse(null);
+        return getMammalCap(animal).map(IMammalCap::getEmbryo).orElse(null);
     }
 
     public static void setEmbryoProgress(Animal animal, int embryoProgress) {
-        Optional<IMammalCap> cap = getMammalCap(animal);
-        cap.ifPresent(iMammalCap -> iMammalCap.setEmbryoProgress(embryoProgress));
+        getMammalCap(animal).ifPresent(iMammalCap -> iMammalCap.setEmbryoProgress(embryoProgress));
     }
 
     public static void setEmbryo(Animal animal, @Nullable EntityInfo embryo) {
-        Optional<IMammalCap> cap = getMammalCap(animal);
-        cap.ifPresent(iMammalCap -> iMammalCap.setEmbryo(embryo));
+        getMammalCap(animal).ifPresent(iMammalCap -> iMammalCap.setEmbryo(embryo));
     }
 
     public static void syncMammalWithClient(Animal animal, int embryoProgress, EntityInfo embryo) {
@@ -73,12 +73,10 @@ public class ModCapabilitiesImpl {
     }
 
     public static boolean hasHatchedDinosaur(Player player) {
-        Optional<IFirstHatchCap> cap = getFirstHatchCap(player);
-        return cap.map(IFirstHatchCap::hasHatchedDinosaur).orElse(false);
+        return getFirstHatchCap(player).map(IFirstHatchCap::hasHatchedDinosaur).orElse(false);
     }
 
     public static void setHatchedDinosaur(Player player, boolean hatched) {
-        Optional<IFirstHatchCap> cap = getFirstHatchCap(player);
-        cap.ifPresent(iFirstHatchCap -> iFirstHatchCap.setHatchedDinosaur(hatched));
+        getFirstHatchCap(player).ifPresent(iFirstHatchCap -> iFirstHatchCap.setHatchedDinosaur(hatched));
     }
 }
