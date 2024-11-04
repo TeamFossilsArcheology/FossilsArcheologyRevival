@@ -180,7 +180,7 @@ public class ClientInit {
         registerDino(ModEntities.DEINONYCHUS, "deinonychus", RenderType::entityCutout);
         registerDino(ModEntities.DILOPHOSAURUS, "dilophosaurus", RenderType::entityCutout);
         registerDino(ModEntities.DIMETRODON, "dimetrodon", RenderType::entityCutout);
-        registerDino(ModEntities.DIMORPHODON, "dimorphodon", RenderType::entityCutout);
+        registerDino(ModEntities.DIMORPHODON, "dimorphodon");
         registerDino(ModEntities.DIPLOCAULUS, "diplocaulus");
         registerDino(ModEntities.DIPLODOCUS, "diplodocus", RenderType::entityCutout);
         registerDino(ModEntities.DODO, "dodo");

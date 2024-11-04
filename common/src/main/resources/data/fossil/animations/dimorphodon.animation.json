@@ -14,7 +14,7 @@
       "loop": true,
       "animation_length": 2
     },
-    "animation.dimorphodon.climb_idle": {
+    "animation.dimorphodon.!climb_idle": {
       "loop": true,
       "animation_length": 12
     },

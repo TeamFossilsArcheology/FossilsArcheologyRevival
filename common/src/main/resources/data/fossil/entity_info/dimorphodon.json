@@ -1,0 +1,37 @@
+{
+  "ai": {
+    "activity": "DIURNAL",
+    "attacking": "BASIC",
+    "climbing": "ARTHROPOD",
+    "following": "NORMAL",
+    "jumping": "BASIC",
+    "moving": "FLIGHT",
+    "response": "CALM",
+    "stalking": "NONE",
+    "taming": "IMPRINTING",
+    "untaming": "NONE",
+    "waterAbility": "NONE"
+  },
+  "attributes": {
+    "damageBase": 1.0,
+    "damageMax": 1.0,
+    "healthBase": 6.0,
+    "healthMax": 16.0,
+    "speedBase": 0.2,
+    "speedMax": 0.35,
+    "armorBase": 0.0,
+    "armorMax": 0.0,
+    "knockBackResistanceBase": 0.0,
+    "knockBackResistanceMax": 0.0
+  },
+  "adultAgeDays": 5,
+  "teenAgeDays": 2,
+  "breaksBlocks": false,
+  "canBeRidden": false,
+  "diet": "HERBIVORE",
+  "maxHunger": 50,
+  "maxPopulation": 10,
+  "eggScale": 0.6,
+  "scaleBase": 0.12,
+  "scaleMax": 1
+}
