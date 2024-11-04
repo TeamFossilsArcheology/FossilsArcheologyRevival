@@ -243,6 +243,20 @@
         ]
       }
     },
+    "dimorphodon": {
+      "trigger": "fossil:incubate_egg",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "fossil:dimorphodon"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
     "diplocaulus": {
       "trigger": "fossil:incubate_egg",
       "conditions": {
@@ -852,6 +866,9 @@
     ],
     [
       "dimetrodon"
+    ],
+    [
+      "dimorphodon"
     ],
     [
       "diplocaulus"

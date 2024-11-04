@@ -3,8 +3,11 @@
   "values": [
     "fossil:alligator_gar_dna",
     "fossil:coelacanth_dna",
+    "fossil:crassigyrinus_dna",
+    "fossil:diplocaulus_dna",
     "fossil:nautilus_dna",
     "fossil:sturgeon_dna",
+    "fossil:tiktaalik_dna",
     "fossil:axolotl_dna",
     "fossil:cod_dna",
     "fossil:glow_squid_dna",

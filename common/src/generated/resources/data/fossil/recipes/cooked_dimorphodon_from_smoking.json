@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smoking",
+  "ingredient": {
+    "item": "fossil:meat_dimorphodon"
+  },
+  "result": "fossil:cooked_dimorphodon",
+  "experience": 1.5,
+  "cookingtime": 100
+}

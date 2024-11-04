@@ -3,8 +3,11 @@
   "values": [
     "fossil:egg_item_alligator_gar",
     "fossil:egg_item_coelacanth",
+    "fossil:egg_item_crassigyrinus",
+    "fossil:egg_item_diplocaulus",
     "fossil:egg_item_nautilus",
     "fossil:egg_item_sturgeon",
+    "fossil:egg_item_tiktaalik",
     "fossil:egg_item_axolotl",
     "fossil:egg_item_cod",
     "fossil:egg_item_glow_squid",

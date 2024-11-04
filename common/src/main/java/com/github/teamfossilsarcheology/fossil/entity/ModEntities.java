@@ -12,6 +12,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacant
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Nautilus;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Sturgeon;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying.Confuciusornis;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying.Dimorphodon;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying.Pteranodon;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.flying.Quetzalcoatlus;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.*;
@@ -45,6 +46,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Deinonychus>> DEINONYCHUS = registerDino("deinonychus", Deinonychus::new, 1.2f, 1.3f);
     public static final RegistrySupplier<EntityType<Dilophosaurus>> DILOPHOSAURUS = registerDino("dilophosaurus", Dilophosaurus::new, 1.25f, 1.5f);
     public static final RegistrySupplier<EntityType<Dimetrodon>> DIMETRODON = registerDino("dimetrodon", Dimetrodon::new, 1.3f, 1.3f);
+    public static final RegistrySupplier<EntityType<Dimorphodon>> DIMORPHODON = registerDino("dimorphodon", Dimorphodon::new, 1.3f, 1.3f);
     public static final RegistrySupplier<EntityType<Diplocaulus>> DIPLOCAULUS = registerDino("diplocaulus", Diplocaulus::new, 1.5f, 0.9f);
     public static final RegistrySupplier<EntityType<Diplodocus>> DIPLODOCUS = registerDino("diplodocus", Diplodocus::new, 1.85f, 1.85f);
     public static final RegistrySupplier<EntityType<Dodo>> DODO = registerDino("dodo", Dodo::new, 1, 1);
@@ -151,6 +153,7 @@ public class ModEntities {
         EntityAttributeRegistry.register(DEINONYCHUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DILOPHOSAURUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DIMETRODON, Prehistoric::createAttributes);
+        EntityAttributeRegistry.register(DIMORPHODON, PrehistoricFlying::createAttributes);
         EntityAttributeRegistry.register(DIPLOCAULUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DIPLODOCUS, Prehistoric::createAttributes);
         EntityAttributeRegistry.register(DODO, Prehistoric::createAttributes);

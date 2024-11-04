@@ -12,12 +12,12 @@
 			},
 			"bones": [
 				{
-					"name": "root",
+					"name": "pitch_root",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "lowerBody",
-					"parent": "root",
+					"parent": "pitch_root",
 					"pivot": [0, 5.45, 0],
 					"rotation": [-10, 0, 0],
 					"cubes": [
