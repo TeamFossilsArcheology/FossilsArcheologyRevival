@@ -1233,36 +1233,16 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         return ai().climbing();
     }
 
-    public Following aiFollowType() {
-        return ai().following();
-    }
-
-    public Jumping aiJumpType() {
-        return ai().jumping();
-    }
-
     public Response aiResponseType() {
         return isBaby() ? Response.SCARED : ai().response();
-    }
-
-    public Stalking aiStalkType() {
-        return ai().stalking();
     }
 
     public Taming aiTameType() {
         return ai().taming();
     }
 
-    public Untaming aiUntameType() {
-        return ai().untaming();
-    }
-
     public Moving aiMovingType() {
         return ai().moving();
-    }
-
-    public WaterAbility aiWaterAbilityType() {
-        return ai().waterAbility();
     }
 
     @Override

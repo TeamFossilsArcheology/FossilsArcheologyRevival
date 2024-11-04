@@ -3,14 +3,9 @@
     "activity": "DIURNAL",
     "attacking": "GRAB",
     "climbing": "NONE",
-    "following": "AGGRESSIVE",
-    "jumping": "BASIC",
     "moving": "SEMI_AQUATIC",
     "response": "AGGRESSIVE",
-    "stalking": "NONE",
-    "taming": "AQUATIC_GEM",
-    "untaming": "NONE",
-    "waterAbility": "ATTACK"
+    "taming": "AQUATIC_GEM"
   },
   "attributes": {
     "damageBase": 2.0,

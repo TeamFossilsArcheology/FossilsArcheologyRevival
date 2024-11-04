@@ -6,6 +6,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 
 /**
  * Many of these are unused
+ * @see com.github.teamfossilsarcheology.fossil.entity.data.AI
  */
 public class PrehistoricEntityInfoAI {
     public enum Moving {

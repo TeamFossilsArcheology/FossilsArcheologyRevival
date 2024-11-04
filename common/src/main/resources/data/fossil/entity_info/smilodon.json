@@ -3,14 +3,9 @@
     "activity": "DIURNAL",
     "attacking": "JUMP",
     "climbing": "NONE",
-    "following": "AGGRESSIVE",
-    "jumping": "BASIC",
     "moving": "WALK",
     "response": "AGGRESSIVE",
-    "stalking": "NONE",
-    "taming": "IMPRINTING",
-    "untaming": "STARVE",
-    "waterAbility": "NONE"
+    "taming": "IMPRINTING"
   },
   "attributes": {
     "damageBase": 1.0,

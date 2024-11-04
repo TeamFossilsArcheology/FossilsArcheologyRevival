@@ -3,14 +3,9 @@
     "activity": "DIURNAL",
     "attacking": "BASIC",
     "climbing": "NONE",
-    "following": "NORMAL",
-    "jumping": "BASIC",
     "moving": "SEMI_AQUATIC",
     "response": "TERRITORIAL",
-    "stalking": "NONE",
-    "taming": "FEEDING",
-    "untaming": "NONE",
-    "waterAbility": "ATTACK"
+    "taming": "FEEDING"
   },
   "attributes": {
     "damageBase": 1.0,

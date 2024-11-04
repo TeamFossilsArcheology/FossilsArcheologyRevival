@@ -3,14 +3,9 @@
     "activity": "BOTH",
     "attacking": "BASIC",
     "climbing": "NONE",
-    "following": "NORMAL",
-    "jumping": "BASIC",
     "moving": "SEMI_AQUATIC",
     "response": "WATER_CALM",
-    "stalking": "NONE",
-    "taming": "IMPRINTING",
-    "untaming": "STARVE",
-    "waterAbility": "IGNORE_AND_FISH"
+    "taming": "IMPRINTING"
   },
   "attributes": {
     "damageBase": 1.0,

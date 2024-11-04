@@ -3,14 +3,9 @@
     "activity": "NOCTURNAL",
     "attacking": "JUMP",
     "climbing": "ARTHROPOD",
-    "following": "AGGRESSIVE",
-    "jumping": "TWO_BLOCKS",
     "moving": "WALK",
     "response": "TERRITORIAL",
-    "stalking": "STEALTH",
-    "taming": "IMPRINTING",
-    "untaming": "ATTACK",
-    "waterAbility": "NONE"
+    "taming": "IMPRINTING"
   },
   "attributes": {
     "damageBase": 2.0,

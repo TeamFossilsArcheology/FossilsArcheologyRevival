@@ -3,14 +3,9 @@
     "activity": "DIURNAL",
     "attacking": "BASIC",
     "climbing": "ARTHROPOD",
-    "following": "NORMAL",
-    "jumping": "BASIC",
     "moving": "FLIGHT",
     "response": "CALM",
-    "stalking": "NONE",
-    "taming": "IMPRINTING",
-    "untaming": "NONE",
-    "waterAbility": "NONE"
+    "taming": "IMPRINTING"
   },
   "attributes": {
     "damageBase": 1.0,

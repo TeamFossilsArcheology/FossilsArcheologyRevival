@@ -3,14 +3,9 @@
     "activity": "DIURNAL",
     "attacking": "BASIC",
     "climbing": "NONE",
-    "following": "SKITTISH",
-    "jumping": "BASIC",
     "moving": "FLIGHT",
     "response": "SCARED",
-    "stalking": "STEALTH",
-    "taming": "FEEDING",
-    "untaming": "NONE",
-    "waterAbility": "NONE"
+    "taming": "FEEDING"
   },
   "attributes": {
     "damageBase": 1.0,

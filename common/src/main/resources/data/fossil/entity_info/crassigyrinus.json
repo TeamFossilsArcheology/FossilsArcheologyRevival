@@ -3,14 +3,9 @@
     "activity": "NOCTURNAL",
     "attacking": "BASIC",
     "climbing": "NONE",
-    "following": "NORMAL",
-    "jumping": "BASIC",
     "moving": "AQUATIC",
     "response": "WATER_AGGRESSIVE",
-    "stalking": "NONE",
-    "taming": "FEEDING",
-    "untaming": "NONE",
-    "waterAbility": "ATTACK"
+    "taming": "FEEDING"
   },
   "attributes": {
     "damageBase": 1.0,

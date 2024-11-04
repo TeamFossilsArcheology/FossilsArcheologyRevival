@@ -3,14 +3,9 @@
     "activity": "DIURNAL",
     "attacking": "BASIC",
     "climbing": "NONE",
-    "following": "NONE",
-    "jumping": "BASIC",
     "moving": "WALK",
     "response": "TERRITORIAL",
-    "stalking": "NONE",
-    "taming": "GEM",
-    "untaming": "ATTACK",
-    "waterAbility": "NONE"
+    "taming": "GEM"
   },
   "attributes": {
     "damageBase": 2.0,
