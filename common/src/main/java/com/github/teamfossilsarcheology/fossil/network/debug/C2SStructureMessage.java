@@ -51,12 +51,6 @@ public class C2SStructureMessage {
                 toAdd.add(prehistoric);
                 length++;
             }
-            if (entity instanceof PrehistoricSwimming swimming && !swimming.canBreatheUnderwater()) {
-                swimming.setNoAi(true);
-            }
-            if (entity instanceof PrehistoricFlying flying) {
-                flying.setNoAi(true);
-            }
         }
         BlockState ironBlock = Blocks.JUNGLE_PLANKS.defaultBlockState();
         for (BlockPos blockPos : BlockPos.betweenClosed(0, 119, 0, length * 5 + 20, 119, 30)) {
@@ -68,10 +62,17 @@ public class C2SStructureMessage {
             List<Instruction> instructions = List.of(
                     new Instruction.TeleportTo(new BlockPos(xOffset, 120, 0), 0),
                     new Instruction.MoveTo(new BlockPos(xOffset, 120, 25)));
-            prehistoric.getInstructionSystem().start(instructions, true);
-            prehistoric.getInstructionSystem().syncWithClients();
             prehistoric.finalizeSpawn(level, level.getCurrentDifficultyAt(prehistoric.blockPosition()), MobSpawnType.SPAWN_EGG, null, null);
             prehistoric.moveTo(xOffset, 120, 0, 0, 0);
+            if (prehistoric instanceof PrehistoricSwimming swimming && !swimming.isAmphibious()) {
+                swimming.setNoAi(true);
+            } else {
+                prehistoric.getInstructionSystem().start(instructions, true);
+            }
+            if (prehistoric instanceof PrehistoricFlying flying) {
+                flying.setNoAi(true);
+            }
+            prehistoric.getInstructionSystem().syncWithClients();
             level.addFreshEntity(prehistoric);
         }
     }
