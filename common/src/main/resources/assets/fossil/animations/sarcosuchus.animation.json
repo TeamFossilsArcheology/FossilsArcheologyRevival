@@ -114,7 +114,7 @@
 						}
 					}
 				},
-				"pitch_root": {
+				"body": {
 					"position": {
 						"vector": [0, -5, 0]
 					}
@@ -220,7 +220,7 @@
 		"animation.sarcosuchus.eat": {
 			"animation_length": 3.3,
 			"bones": {
-				"pitch_root": {
+				"body": {
 					"position": {
 						"vector": [0, -5, 0]
 					}
@@ -533,7 +533,7 @@
 		"animation.sarcosuchus.!eat_long": {
 			"animation_length": 8.3333,
 			"bones": {
-				"pitch_root": {
+				"body": {
 					"rotation": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1939,7 +1939,7 @@
 			"loop": true,
 			"animation_length": 10,
 			"bones": {
-				"pitch_root": {
+				"body": {
 					"position": {
 						"vector": [0, -5, 0]
 					}
@@ -2504,7 +2504,7 @@
 		"animation.sarcosuchus.sleep": {
 			"loop": true,
 			"bones": {
-				"pitch_root": {
+				"body": {
 					"position": {
 						"vector": [0, -5, 0]
 					}
@@ -2624,7 +2624,7 @@
 			"loop": true,
 			"animation_length": 3.3333,
 			"bones": {
-				"pitch_root": {
+				"body": {
 					"rotation": {
 						"0.0": {
 							"vector": [-5.019, 4.98093, -0.43688]
@@ -2862,7 +2862,7 @@
 			"loop": true,
 			"animation_length": 2.8571,
 			"bones": {
-				"pitch_root": {
+				"body": {
 					"position": {
 						"vector": [0, -5, 0]
 					}
