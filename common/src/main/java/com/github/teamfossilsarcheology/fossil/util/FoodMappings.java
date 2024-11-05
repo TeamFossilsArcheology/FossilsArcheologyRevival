@@ -207,6 +207,12 @@ public abstract class FoodMappings {
         addToMappings(item, food, Diet.PISCI_CARNIVORE);
     }
 
+    public static void addEgg(Item item) {
+        int food = item.getFoodProperties() != null ? item.getFoodProperties().getNutrition() * 7 : 15;
+        addToMappings(item, food, Diet.CARNIVORE_EGG);
+        addToMappings(item, food, Diet.OMNIVORE);
+    }
+
     public static void addEgg(Item item, int food) {
         addToMappings(item, food, Diet.CARNIVORE_EGG);
         addToMappings(item, food, Diet.OMNIVORE);

@@ -13,6 +13,7 @@ import com.github.teamfossilsarcheology.fossil.forge.client.ClientModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.client.model.PlantModelLoader;
 import com.github.teamfossilsarcheology.fossil.forge.client.renderer.armor.ForgeAncientHelmetRenderer;
 import com.github.teamfossilsarcheology.fossil.forge.compat.carryon.CarryOnCompat;
+import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.forge.world.biome.ForgeFossilRegion;
 import com.github.teamfossilsarcheology.fossil.item.forge.AncientHelmetItemImpl;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
@@ -72,6 +73,9 @@ public class ForgeFossilMod {
 
     public void onCommon(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            if (ModList.get().isLoaded("farmersdelight")) {
+                FarmersDelightCompat.registerFoodMappings();
+            }
             ModPlacementTypes.register();
             ModTriggers.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
