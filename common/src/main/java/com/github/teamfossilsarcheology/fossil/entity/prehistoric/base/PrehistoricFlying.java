@@ -213,28 +213,26 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         return 20 * 60 * 5;
     }
 
-    @Override
-    public @NotNull CustomFlightMoveControl getMoveControl() {
-        return (CustomFlightMoveControl) super.getMoveControl();
-    }
-
     public void moveTo(Vec3 pos, boolean shouldLand, boolean shouldFly) {
+        if (!(getMoveControl() instanceof CustomFlightMoveControl control)) {
+            return;
+        }
         if (isFlying()) {
-            getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
-            getMoveControl().setOperation(Operation.MOVE_TO);
+            control.setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
+            control.setOperation(Operation.MOVE_TO);
         } else if (isTakingOff()) {
-            getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
-            getMoveControl().setOperation(Operation.WAIT);
+            control.setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
+            control.setOperation(Operation.WAIT);
         } else if (distanceToSqr(pos) > 40 || shouldFly) {
             //start fly
             if (hasTakeOffAnimation()) {
                 startTakeOff();
-                getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
-                getMoveControl().setOperation(Operation.WAIT);
+                control.setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
+                control.setOperation(Operation.WAIT);
             } else {
                 setFlying(true);
-                getMoveControl().setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
-                getMoveControl().setOperation(Operation.MOVE_TO);
+                control.setFlyingTarget(pos.x, pos.y, pos.z, shouldLand);
+                control.setOperation(Operation.MOVE_TO);
             }
         } else {
             //walk
@@ -259,7 +257,9 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         entityData.set(TAKING_OFF, false);
         takeOffStartTick = -1;
         setFlying(true);
-        getMoveControl().setOperation(Operation.MOVE_TO);
+        if (getMoveControl() instanceof CustomFlightMoveControl control) {
+            control.setOperation(Operation.MOVE_TO);
+        }
     }
 
     /**
