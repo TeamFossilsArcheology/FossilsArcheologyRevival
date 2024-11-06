@@ -5,7 +5,6 @@ import com.github.teamfossilsarcheology.fossil.block.entity.ModBlockEntities;
 import com.github.teamfossilsarcheology.fossil.block.entity.WorktableBlockEntity;
 import com.github.teamfossilsarcheology.fossil.forge.block.entity.ForgeContainerBlockEntity;
 import com.github.teamfossilsarcheology.fossil.inventory.WorktableMenu;
-import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.recipe.ModRecipes;
 import com.github.teamfossilsarcheology.fossil.recipe.WithFuelRecipe;
 import com.github.teamfossilsarcheology.fossil.recipe.WorktableRecipe;
@@ -14,11 +13,9 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
-import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -67,13 +64,13 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+    private ItemStack fuel = ItemStack.EMPTY;
 
     public WorktableBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.WORKTABLE.get(), blockPos, blockState);
     }
 
     public static BlockEntity get(BlockPos pos, BlockState state) {
-
         return new WorktableBlockEntityImpl(pos, state);
     }
 
@@ -83,48 +80,57 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
-        boolean var1 = isProcessing();
+        boolean wasActive = cookingProgress > 0;
         boolean dirty = false;
+
+        if (cookingProgress == 0 && fuel == ItemStack.EMPTY && canProcess()) {
+            ItemStack fuelStack = items.get(WorktableMenu.FUEL_SLOT_ID);
+            litDuration = litTime = getItemFuelTime(fuelStack);
+            fuel = fuelStack.copy();
+            dirty = true;
+
+            if (!fuelStack.isEmpty()) {
+                if (fuelStack.getItem().hasCraftingRemainingItem()) {
+                    items.set(WorktableMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
+                } else {
+                    fuelStack.shrink(1);
+                }
+            }
+        }
+
+        if (canProcess(fuel) && isProcessing()) {
+            cookingProgress++;
+            if (cookingProgress == cookingTotalTime) {
+                cookingProgress = 0;
+                cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuel);
+                createItem();
+                dirty = true;
+            }
+        } else if (cookingProgress != 0) {
+            cookingProgress = 0;
+        }
 
         if (isProcessing()) {
             --litTime;
         }
+        if (!isProcessing() && fuel != ItemStack.EMPTY && canProcess()) {
+            ItemStack fuelStack = items.get(WorktableMenu.FUEL_SLOT_ID);
+            litDuration = litTime = getItemFuelTime(fuelStack);
+            fuel = fuelStack.copy();
+            dirty = true;
 
-        ItemStack fuel = items.get(WorktableMenu.FUEL_SLOT_ID);
-        if (isProcessing() || !fuel.isEmpty() && !items.get(WorktableMenu.INPUT_SLOT_ID).isEmpty()) {
-
-            if (!(isProcessing()) && canProcess()) {
-                litDuration = litTime = getItemBurnTime(items.get(WorktableMenu.FUEL_SLOT_ID));
-                if (litTime > 1) {
-                    dirty = true;
-                    if (!fuel.isEmpty()) {
-                        Item item = fuel.getItem();
-                        fuel.shrink(1);
-                        if (fuel.isEmpty()) {
-                            Item item2 = item.getCraftingRemainingItem();
-                            items.set(WorktableMenu.FUEL_SLOT_ID, item2 == null ? ItemStack.EMPTY : new ItemStack(item2));
-                        }
-                    }
+            if (!fuelStack.isEmpty()) {
+                if (fuelStack.getItem().hasCraftingRemainingItem()) {
+                    items.set(WorktableMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
+                } else {
+                    fuelStack.shrink(1);
                 }
             }
-            if (isProcessing() && canProcess()) {
-                cookingProgress++;
-                if (cookingProgress == cookingTotalTime) {
-                    cookingProgress = 0;
-                    cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), items.get(WorktableMenu.FUEL_SLOT_ID));
-                    createItem();
-                    dirty = true;
-                }
-            } else {
-                cookingProgress = 0;
-            }
-        } else if (!(isProcessing()) && cookingProgress > 0) {
-            cookingProgress = Mth.clamp(cookingProgress - 2, 0, cookingTotalTime);
         }
 
-        if (var1 != isProcessing()) {
+        if (wasActive != cookingProgress > 0) {
             dirty = true;
-            state = state.setValue(WorktableBlock.ACTIVE, isProcessing());
+            state = state.setValue(WorktableBlock.ACTIVE, cookingProgress > 0);
             level.setBlock(pos, state, 3);
         }
 
@@ -138,23 +144,27 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         if (recipeWorktable != null) {
             return recipeWorktable.getResultItem();
         }
-        return new ItemStack(ModItems.POTTERY_SHARD.get());
+        return ItemStack.EMPTY;
     }
 
-    protected boolean canProcess() {
+    protected boolean canProcess(ItemStack fuelStack) {
         if (items.get(WorktableMenu.INPUT_SLOT_ID).isEmpty()) {
             return false;
         } else {
-            ItemStack result = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), items.get(WorktableMenu.FUEL_SLOT_ID));
+            ItemStack result = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuelStack);
             return !result.isEmpty() && (items.get(WorktableMenu.OUTPUT_SLOT_ID).isEmpty() || items.get(
                     WorktableMenu.OUTPUT_SLOT_ID).sameItem(result) && (items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < 64 && items.get(WorktableMenu.OUTPUT_SLOT_ID).getCount() < items.get(WorktableMenu.OUTPUT_SLOT_ID).getMaxStackSize() || items.get(
                     WorktableMenu.OUTPUT_SLOT_ID).getCount() < result.getMaxStackSize()));
         }
     }
 
+    protected boolean canProcess() {
+        return canProcess(items.get(WorktableMenu.FUEL_SLOT_ID));
+    }
+
     protected void createItem() {
-        if (canProcess()) {
-            ItemStack var1 = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), items.get(WorktableMenu.FUEL_SLOT_ID));
+        if (canProcess(fuel)) {
+            ItemStack var1 = checkSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuel);
 
             if (items.get(WorktableMenu.OUTPUT_SLOT_ID).isEmpty()) {
                 items.set(WorktableMenu.OUTPUT_SLOT_ID, var1.copy());
@@ -209,23 +219,11 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
     @Override
     public void setItem(int slot, ItemStack stack) {
-        ItemStack itemStack = items.get(slot);
-        boolean bl = (!stack.isEmpty() && stack.sameItem(itemStack) && ItemStack.tagMatches(stack, itemStack));
         items.set(slot, stack);
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());
         }
-        if (slot == WorktableMenu.INPUT_SLOT_ID && !bl) {
-            if (!items.get(WorktableMenu.FUEL_SLOT_ID).isEmpty()) {
-                cookingTotalTime = timeToSmelt(stack, items.get(WorktableMenu.FUEL_SLOT_ID));
-            }
-            cookingProgress = 0;
-            setChanged();
-        } else if (slot == WorktableMenu.FUEL_SLOT_ID && !bl) {
-            if (!items.get(WorktableMenu.INPUT_SLOT_ID).isEmpty()) {
-                cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), stack);
-            }
-        }
+        setChanged();
     }
 
     @Override

@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity implements CultureVatBlockEntity {
 
     private static final int[] SLOTS_FOR_UP = new int[]{CultureVatMenu.INPUT_SLOT_ID}; //Input
-    private static final int[] SLOTS_FOR_SIDES = new int[]{CultureVatMenu.FUEL_SLOT_ID, CultureVatMenu.OUTPUT_SLOT_ID}; //Fuel+Output
+    private static final int[] SLOTS_FOR_SIDES = new int[]{CultureVatMenu.FUEL_SLOT_ID}; //Fuel
     private static final int[] SLOTS_FOR_DOWN = new int[]{CultureVatMenu.OUTPUT_SLOT_ID}; //Output
     private final ContainerData dataAccess = new ContainerData() {
 
@@ -67,6 +67,7 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(3, ItemStack.EMPTY);
+    private ItemStack fuel = ItemStack.EMPTY;
 
     public CultureVatBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.CULTURE_VAT.get(), blockPos, blockState);
@@ -84,43 +85,53 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
     public void serverTick(Level level, BlockPos pos, BlockState state) {
         boolean wasActive = cookingProgress > 0;
         boolean dirty = false;
-        if (isProcessing()) {
-            if (!FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) || energyStorage.amount > 0) {
-                energyStorage.amount -= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE);
-                dirty = true;
-            }
-            --litTime;
-        }
 
-        if (litTime == 0 && canProcess()) {
+        if (cookingProgress == 0 && fuel == ItemStack.EMPTY && canProcess()) {
             ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
             litDuration = litTime = getItemFuelTime(fuelStack);
+            fuel = fuelStack.copy();
+            dirty = true;
 
-            if (isProcessing()) {
-                dirty = true;
-                if (!fuelStack.isEmpty()) {
-                    if (fuelStack.getItem().hasCraftingRemainingItem()) {
-                        items.set(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
-                    } else {
-                        fuelStack.shrink(1);
-                    }
+            if (!fuelStack.isEmpty()) {
+                if (fuelStack.getItem().hasCraftingRemainingItem()) {
+                    items.set(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
+                } else {
+                    fuelStack.shrink(1);
                 }
             }
         }
 
-        if (isProcessing() && canProcess()) {
-            cookingProgress++;
-            if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
-                energyStorage.amount -= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE);
-                dirty = true;
+        if (canProcess(fuel)) {
+            if (isProcessing()) {
+                cookingProgress++;
+                if (cookingProgress >= CultureVatMenu.CULTIVATION_TIME) {
+                    cookingProgress = 0;
+                    createItem();
+                }
             }
-            if (cookingProgress >= CultureVatMenu.CULTIVATION_TIME) {
-                cookingProgress = 0;
-                createItem();
-                dirty = true;
-            }
-        } else if (cookingProgress != 0 && !canProcess()) {
+        } else if (cookingProgress != 0) {
             cookingProgress = 0;
+        }
+
+        if (isProcessing()) {
+            if (!FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) || energyStorage.getAmount() > 0) {
+                energyStorage.amount -= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE);
+                --litTime;
+            }
+        }
+        if (!isProcessing() && fuel != ItemStack.EMPTY) {
+            ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
+            litDuration = litTime = getItemFuelTime(fuelStack);
+            fuel = fuelStack.copy();
+            dirty = true;
+
+            if (!fuelStack.isEmpty()) {
+                if (fuelStack.getItem().hasCraftingRemainingItem()) {
+                    items.set(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
+                } else {
+                    fuelStack.shrink(1);
+                }
+            }
         }
 
         if (wasActive != cookingProgress > 0) {
@@ -164,23 +175,25 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
         return false;
     }
 
-    protected boolean canProcess() {
+    protected boolean canProcess(ItemStack fuelStack) {
         if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) && energyStorage.amount < FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE)) {
             return false;
         }
         ItemStack inputStack = items.get(CultureVatMenu.INPUT_SLOT_ID);
-        ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
         if (!inputStack.isEmpty() && !fuelStack.isEmpty()) {
             return isValidInput(inputStack, fuelStack);
         }
         return false;
     }
 
+    protected boolean canProcess() {
+        return canProcess(items.get(CultureVatMenu.FUEL_SLOT_ID));
+    }
+
     protected void createItem() {
-        if (this.canProcess()) {
+        if (canProcess(fuel)) {
             ItemStack inputStack = items.get(CultureVatMenu.INPUT_SLOT_ID);
-            ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
-            CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuelStack), level);
+            CultureVatRecipe recipe = ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(inputStack, fuel), level);
             ItemStack result = recipe.getResultItem();
             ItemStack output = items.get(CultureVatMenu.OUTPUT_SLOT_ID);
             if (output.isEmpty()) {
@@ -217,11 +230,11 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
     }
 
     @Override
-    public boolean canPlaceItem(int slot, @NotNull ItemStack stack) {
-        if (slot == CultureVatMenu.OUTPUT_SLOT_ID) {
+    public boolean canPlaceItem(int index, @NotNull ItemStack stack) {
+        if (index == CultureVatMenu.OUTPUT_SLOT_ID) {
             return false;
         }
-        if (slot == CultureVatMenu.FUEL_SLOT_ID) {
+        if (index == CultureVatMenu.FUEL_SLOT_ID) {
             return ModRecipes.isCultureVatFuel(stack.getItem());
         }
         return ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, items.get(CultureVatMenu.INPUT_SLOT_ID)), level) != null;
@@ -233,8 +246,8 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
     }
 
     @Override
-    public boolean canPlaceItemThroughFace(int slot, @NotNull ItemStack itemStack, @Nullable Direction direction) {
-        return canPlaceItem(slot, itemStack);
+    public boolean canPlaceItemThroughFace(int index, @NotNull ItemStack itemStack, @Nullable Direction direction) {
+        return this.canPlaceItem(index, itemStack);
     }
 
     @Override

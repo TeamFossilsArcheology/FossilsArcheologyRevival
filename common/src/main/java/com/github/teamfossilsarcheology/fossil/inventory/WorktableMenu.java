@@ -28,9 +28,9 @@ public class WorktableMenu extends AbstractContainerMenu {
         super(ModMenus.WORKTABLE.get(), id);
         this.container = container;
         this.containerData = containerData;
-        addSlot(new Slot(container, INPUT_SLOT_ID, 44, 20));
+        addSlot(new Slot(container, INPUT_SLOT_ID, 45, 21));
         addSlot(new Slot(container, FUEL_SLOT_ID, 80, 54));
-        addSlot(new FurnaceResultSlot(playerInventory.player, container, OUTPUT_SLOT_ID, 114, 20));
+        addSlot(new FurnaceResultSlot(playerInventory.player, container, OUTPUT_SLOT_ID, 115, 21));
         for (int y = 0; y < 3; y++) {
             for (int x = 0; x < 9; x++) {
                 addSlot(new Slot(playerInventory, x + y * 9 + 9, 8 + x * 18, 84 + y * 18));
