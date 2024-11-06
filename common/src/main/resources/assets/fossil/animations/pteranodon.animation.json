@@ -1379,6 +1379,20 @@
 					"rotation": {
 						"vector": [67.5, 0, 0]
 					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-46.96, 0, 0]
+					},
+					"position": {
+						"vector": [0, 4, -7]
+					},
+					"scale": {
+						"vector": [1.5, 0.5, 1.5]
+					}
 				}
 			}
 		},
@@ -2335,6 +2349,17 @@
 					"rotation": {
 						"vector": [67.5, 0, 0]
 					}
+				},
+				"body_hitbox": {
+					"rotation": {
+						"vector": [-46.96, 0, 0]
+					},
+					"position": {
+						"vector": [0, 4, -7]
+					},
+					"scale": {
+						"vector": [1.5, 0.5, 1.5]
+					}
 				}
 			}
 		},
@@ -2794,6 +2819,20 @@
 							"vector": [27.5, 0, 0]
 						}
 					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-46.96, 0, 0]
+					},
+					"position": {
+						"vector": [0, 4, -7]
+					},
+					"scale": {
+						"vector": [1.5, 0.5, 1.5]
+					}
 				}
 			}
 		},
@@ -2964,6 +3003,20 @@
 				"feetL": {
 					"rotation": {
 						"vector": [85, 0, 0]
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-46.96, 0, 0]
+					},
+					"position": {
+						"vector": [1, 5, -5]
+					},
+					"scale": {
+						"vector": [1.5, 0.5, 1.5]
 					}
 				}
 			}
@@ -3510,6 +3563,25 @@
 						"1.5": {
 							"vector": [176.31423, -23.2313, 184.8701]
 						}
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-46.96, 0, 0]
+					},
+					"position": {
+						"0.0": {
+							"vector": [0, -3, -5]
+						},
+						"0.75": {
+							"vector": [0, 0, -5]
+						}
+					},
+					"scale": {
+						"vector": [1.5, 0.5, 1.5]
 					}
 				}
 			}

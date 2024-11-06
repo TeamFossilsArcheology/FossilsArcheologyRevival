@@ -1696,7 +1696,7 @@
 			}
 		},
 		"animation.diplodocus.eat": {
-			"animation_length": 7.2917,
+			"animation_length": 6.8333,
 			"bones": {
 				"neck1": {
 					"rotation": {
@@ -2414,6 +2414,58 @@
 							"vector": [0, 0, 0]
 						}
 					}
+				}
+			},
+			"sound_effects": {
+				"1.625": {
+					"effect": "eat"
+				},
+				"1.9583": {
+					"effect": "eat"
+				},
+				"4.0": {
+					"effect": "eat"
+				},
+				"4.375": {
+					"effect": "eat"
+				},
+				"4.75": {
+					"effect": "eat"
+				},
+				"5.125": {
+					"effect": "eat"
+				},
+				"5.5": {
+					"effect": "eat"
+				},
+				"5.875": {
+					"effect": "eat"
+				}
+			},
+			"particle_effects": {
+				"1.625": {
+					"effect": "eat"
+				},
+				"1.9583": {
+					"effect": "eat"
+				},
+				"4.0": {
+					"effect": "eat"
+				},
+				"4.375": {
+					"effect": "eat"
+				},
+				"4.75": {
+					"effect": "eat"
+				},
+				"5.125": {
+					"effect": "eat"
+				},
+				"5.5": {
+					"effect": "eat"
+				},
+				"5.875": {
+					"effect": "eat"
 				}
 			}
 		},

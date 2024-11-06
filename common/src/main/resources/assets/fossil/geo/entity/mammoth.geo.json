@@ -7,8 +7,8 @@
 				"texture_width": 180,
 				"texture_height": 200,
 				"visible_bounds_width": 6,
-				"visible_bounds_height": 3.5,
-				"visible_bounds_offset": [0, 1.25, 0]
+				"visible_bounds_height": 5.5,
+				"visible_bounds_offset": [0, 2.25, 0]
 			},
 			"bones": [
 				{
@@ -21,7 +21,7 @@
 					"pivot": [0, 26.9, 0],
 					"rotation": [-2.54, 0, 0],
 					"cubes": [
-						{"origin": [-7, 12, -8.5], "size": [14, 20, 19], "uv": [0, 0]}
+						{"origin": [-7, 12, -8.5], "size": [14, 20, 19], "pivot": [0, 0, 0], "rotation": [-2.53, 0, 0], "uv": [0, 0]}
 					]
 				},
 				{
@@ -100,7 +100,6 @@
 					"name": "jaw",
 					"parent": "head",
 					"pivot": [0, 22.7, -21.1],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-3.5, 19.6, -26.1], "size": [7, 3, 7], "uv": [151, 28]},
 						{"origin": [-3.5, 19.6, -26.1], "size": [7, 3, 7], "uv": [151, 28], "mirror": true}
@@ -178,7 +177,6 @@
 					"name": "bump1",
 					"parent": "head",
 					"pivot": [0, 29.2, -23.4],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-4.5, 29.2, -26.9], "size": [9, 6, 9], "uv": [74, 58]}
 					]
@@ -200,6 +198,12 @@
 					"cubes": [
 						{"origin": [-5.5, 28.3, -27.4], "size": [11, 4, 10], "uv": [55, 119]}
 					]
+				},
+				{
+					"name": "head_hitbox",
+					"parent": "head",
+					"pivot": [0, 14.2, -23.4],
+					"cubes": []
 				},
 				{
 					"name": "neckhair",
@@ -259,7 +263,6 @@
 					"name": "handR",
 					"parent": "armR",
 					"pivot": [-4.8, 6, -11.4],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-7.8, 0, -12.9], "size": [6, 6, 7], "uv": [5, 64], "mirror": true}
 					]
@@ -277,7 +280,6 @@
 					"name": "handL",
 					"parent": "armL",
 					"pivot": [4.8, 6, -10.9],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [1.8, 0, -12.4], "size": [6, 6, 7], "uv": [5, 64]}
 					]

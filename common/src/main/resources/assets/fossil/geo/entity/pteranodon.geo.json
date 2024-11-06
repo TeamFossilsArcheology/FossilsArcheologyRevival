@@ -7,8 +7,8 @@
 				"texture_width": 128,
 				"texture_height": 64,
 				"visible_bounds_width": 5,
-				"visible_bounds_height": 3.5,
-				"visible_bounds_offset": [0, 1.25, 0]
+				"visible_bounds_height": 4,
+				"visible_bounds_offset": [0, 1, 0]
 			},
 			"bones": [
 				{
@@ -240,6 +240,12 @@
 					"cubes": [
 						{"origin": [0.38, 4.7, 4.2], "size": [2, 0, 4], "uv": [23, 53]}
 					]
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "body",
+					"pivot": [-0.02, 4.1, 9.5],
+					"cubes": []
 				}
 			]
 		}
