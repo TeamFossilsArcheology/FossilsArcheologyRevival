@@ -23,7 +23,7 @@
   "teenAgeDays": 2,
   "breaksBlocks": false,
   "canBeRidden": false,
-  "diet": "HERBIVORE",
+  "diet": "CARNIVORE",
   "maxHunger": 50,
   "maxPopulation": 10,
   "eggScale": 0.6,
