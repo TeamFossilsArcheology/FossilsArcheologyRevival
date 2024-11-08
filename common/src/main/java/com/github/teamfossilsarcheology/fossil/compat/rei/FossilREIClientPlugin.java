@@ -1,6 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.compat.rei;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
+import com.github.teamfossilsarcheology.fossil.client.gui.AnalyzerScreen;
+import com.github.teamfossilsarcheology.fossil.client.gui.CultureVatScreen;
+import com.github.teamfossilsarcheology.fossil.client.gui.SifterScreen;
+import com.github.teamfossilsarcheology.fossil.client.gui.WorktableScreen;
 import com.github.teamfossilsarcheology.fossil.item.ModTabs;
 import com.github.teamfossilsarcheology.fossil.recipe.*;
 import com.github.teamfossilsarcheology.fossil.tags.ModItemTags;
@@ -9,6 +13,7 @@ import me.shedaniel.rei.api.client.plugins.REIClientPlugin;
 import me.shedaniel.rei.api.client.registry.category.CategoryRegistry;
 import me.shedaniel.rei.api.client.registry.display.DisplayRegistry;
 import me.shedaniel.rei.api.client.registry.screen.ExclusionZones;
+import me.shedaniel.rei.api.client.registry.screen.ScreenRegistry;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.client.gui.screens.inventory.CreativeModeInventoryScreen;
 import net.minecraft.world.item.Items;
@@ -28,6 +33,14 @@ public class FossilREIClientPlugin implements REIClientPlugin {
         registry.addWorkstations(AnalyzerDisplay.ID, EntryStacks.of(ModBlocks.ANALYZER.get()));
         registry.add(new SifterCategory());
         registry.addWorkstations(SifterDisplay.ID, EntryStacks.of(ModBlocks.SIFTER.get()));
+    }
+
+    @Override
+    public void registerScreens(ScreenRegistry registry) {
+        registry.registerContainerClickArea(new Rectangle(80, 21, 23, 11), AnalyzerScreen.class, AnalyzerDisplay.ID);
+        registry.registerContainerClickArea(new Rectangle(78, 22, 21, 9), CultureVatScreen.class, CultureVatDisplay.ID);
+        registry.registerContainerClickArea(new Rectangle(75, 19, 26, 16), WorktableScreen.class, WorktableDisplay.ID);
+        registry.registerContainerClickArea(new Rectangle(75, 33, 26, 26), SifterScreen.class, SifterDisplay.ID);
     }
 
     @Override
