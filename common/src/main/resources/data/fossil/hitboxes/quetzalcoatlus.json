@@ -1,0 +1,10 @@
+{
+	"elements": [
+		{
+			"name": "rider_pos",
+			"pos": [0, 28, 0],
+			"ref": "rider_pos",
+			"is_anchor": true
+		}
+	]
+}

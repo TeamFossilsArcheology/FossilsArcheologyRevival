@@ -124,7 +124,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
     private Vec3 eatPos;
-    private Vec3 riderPos;
     private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
@@ -159,14 +158,12 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public void setAnchorPos(String boneName, Vec3 localPos) {
         if ("eat_pos".equals(boneName)) {
             eatPos = position().add(localPos);
-        } else if ("rider_pos".equals(boneName)) {
-            riderPos = position().add(localPos);
         }
     }
 
     @Override
     public boolean canSetAnchorPos(String boneName) {
-        return "eat_pos".equals(boneName) || "rider_pos".equals(boneName);
+        return "eat_pos".equals(boneName);
     }
 
     @Override
@@ -396,12 +393,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         Player rider = getRidingPlayer();
         if (rider != null && isOwnedBy(rider) && getTarget() != rider) {
-            if (level.isClientSide && riderPos != null) {
-                rider.setPos(riderPos.x, riderPos.y - 0.55, riderPos.z);
-            } else {
-                //Not sure if this will be accurate enough for larger dinos. Need to await player feedback
+            getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
+                rider.setPos(pos.x, pos.y + rider.getMyRidingOffset() * getScale(), pos.z);
+            }, () -> {
                 rider.setPos(getX(), getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ());
-            }
+            });
         }
         if (passenger instanceof Velociraptor || passenger instanceof Deinonychus) {
             //TODO: Offset for leap attack

@@ -25,6 +25,12 @@
 			"width": 12.5,
 			"height": 10,
 			"ref": "head_hitbox"
+		},
+		{
+			"name": "grab_pos",
+			"pos": [0, 12, -41],
+			"ref": "grab_pos",
+			"is_anchor": true
 		}
 	]
 }

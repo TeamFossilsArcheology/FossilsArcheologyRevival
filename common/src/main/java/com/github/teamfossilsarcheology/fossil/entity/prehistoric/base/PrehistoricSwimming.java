@@ -45,7 +45,6 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
      */
     protected boolean isLandNavigator;
     private boolean beached;
-    private Vec3 grabPos;
 
     protected PrehistoricSwimming(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level, animationLocation);
@@ -65,17 +64,17 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         if (aiAttackType() == PrehistoricEntityInfoAI.Attacking.GRAB) {
             goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, 1, false));
-        } else if (aiAttackType() != PrehistoricEntityInfoAI.Attacking.NONE){
+        } else if (aiAttackType() != PrehistoricEntityInfoAI.Attacking.NONE) {
             goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
         }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
         goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 3, new WaterPlayGoal(this, 1));
+        goalSelector.addGoal(Util.NEEDS + 3, new WaterPlayGoal<>(this, 1));
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
-        goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal(this, 1));
-        goalSelector.addGoal(Util.WANDER + 2, new DinoRandomSwimGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal<>(this, 1));
+        goalSelector.addGoal(Util.WANDER + 2, new DinoRandomSwimGoal<>(this, 1));
         goalSelector.addGoal(Util.WANDER + 3, new AmphibiousWanderGoal(this, 1));
         goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8.0f));
         goalSelector.addGoal(Util.LOOK + 1, new RandomLookAroundGoal(this));
@@ -209,25 +208,12 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     }
 
     @Override
-    public void setAnchorPos(String boneName, Vec3 localPos) {
-        super.setAnchorPos(boneName, localPos);
-        if ("grab_pos".equals(boneName)) {
-            grabPos = position().add(localPos);
-        }
-    }
-
-    @Override
-    public boolean canSetAnchorPos(String boneName) {
-        return super.canSetAnchorPos(boneName) || "grab_pos".equals(boneName);
-    }
-
-    @Override
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
         if (passenger != getRidingPlayer() && isDoingGrabAttack()) {
-            if (level.isClientSide && grabPos != null) {
-                passenger.setPos(grabPos.x, grabPos.y - 0.55, grabPos.z);
-            } else {
+            getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
+                passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset(), pos.z);
+            }, () -> {
                 float t = 5 * Mth.sin(Mth.PI + tickCount * 0.275f);
                 float radius = 0.35f * 0.7f * getScale() * -3;
                 float angle = Mth.DEG_TO_RAD * yBodyRot + 3.15f + t * 1.75f * 0.05f;
@@ -235,7 +221,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 double extraY = 0.065 * getScale();
                 double extraZ = radius * Mth.cos(angle);
                 passenger.setPos(getX() + extraX, getY() + extraY, getZ() + extraZ);
-            }
+            });
         }
     }
 
@@ -258,12 +244,11 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
 
     @Override
     public void disableCustomAI(byte type, boolean disableAI) {
-        switch (type) {
-            case 0, 2 -> {
-                super.disableCustomAI(type, disableAI);
-                setNoGravity(disableAI);
-            }
-            default -> super.disableCustomAI(type, disableAI);
+        if (type == 0 || type == 2) {
+            super.disableCustomAI(type, disableAI);
+            setNoGravity(disableAI);
+        } else {
+            super.disableCustomAI(type, disableAI);
         }
     }
 

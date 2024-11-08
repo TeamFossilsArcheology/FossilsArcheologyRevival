@@ -27,6 +27,18 @@
 			"width": 12.2,
 			"height": 8,
 			"ref": "tail_hitbox"
+		},
+		{
+			"name": "rider_pos",
+			"pos": [0, 10, -6],
+			"ref": "rider_pos",
+			"is_anchor": true
+		},
+		{
+			"name": "grab_pos",
+			"pos": [0, 4, -32],
+			"ref": "grab_pos",
+			"is_anchor": true
 		}
 	]
 }

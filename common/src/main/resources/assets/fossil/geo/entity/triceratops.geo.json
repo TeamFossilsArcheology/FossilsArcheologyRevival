@@ -30,6 +30,11 @@
 					]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "lowerBodyBreathing",
+					"pivot": [0, 12.5, 0]
+				},
+				{
 					"name": "upperBody",
 					"parent": "lowerBody",
 					"pivot": [0, 10, 0],
@@ -146,7 +151,6 @@
 					"name": "beakbottom",
 					"parent": "head",
 					"pivot": [0, 8.43021, -10.01912],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1, 7.43021, -14.01912], "size": [2, 1, 5], "uv": [76, 22]}
 					]
@@ -184,7 +188,6 @@
 					"name": "leftHand",
 					"parent": "leftLowerArm",
 					"pivot": [2.6, 4.85198, -7.70546],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [1.1, 4.35198, -8.20546], "size": [3, 2, 1], "uv": [1, 30], "mirror": true}
 					]
@@ -211,7 +214,6 @@
 					"name": "rightHand",
 					"parent": "rightLowerArm",
 					"pivot": [-2.6, 4.85198, -7.70546],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-4.1, 4.35198, -8.20546], "size": [3, 2, 1], "uv": [1, 30]}
 					]
@@ -238,7 +240,6 @@
 					"name": "leftFoot",
 					"parent": "leftLeg",
 					"pivot": [3.3, 4.225, 3],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [1.8, 4.225, 2], "size": [3, 2, 1], "uv": [13, 38], "mirror": true}
 					]
@@ -265,7 +266,6 @@
 					"name": "rightFoot",
 					"parent": "rightLeg",
 					"pivot": [-3.3, 4.225, 3],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-4.8, 4.225, 2], "size": [3, 2, 1], "uv": [13, 38]}
 					]

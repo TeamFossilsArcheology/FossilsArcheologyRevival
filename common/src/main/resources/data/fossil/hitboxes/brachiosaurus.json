@@ -48,6 +48,12 @@
 			"width": 6.9,
 			"height": 7,
 			"ref": "head3_hitbox"
+		},
+		{
+			"name": "rider_pos",
+			"pos": [0, 24, -9],
+			"ref": "rider_pos",
+			"is_anchor": true
 		}
 	]
 }
