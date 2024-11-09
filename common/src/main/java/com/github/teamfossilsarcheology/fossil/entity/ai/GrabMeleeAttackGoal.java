@@ -8,7 +8,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.level.block.Blocks;
 
 public class GrabMeleeAttackGoal extends DelayedAttackGoal {
     private static final int ATTACK = 0;
@@ -22,15 +21,6 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
     public GrabMeleeAttackGoal(PrehistoricSwimming entity, double speed, boolean followTargetEvenIfNotSeen) {
         super(entity, speed, followTargetEvenIfNotSeen);
         this.swimming = entity;
-    }
-
-    @Override
-    public boolean canUse() {
-        LivingEntity target = prehistoric.getTarget();
-        if (target != null && (target.isInWater() || target.isPassenger() && target.level.getBlockState(target.blockPosition()) == Blocks.WATER.defaultBlockState())) {
-            return super.canUse();
-        }
-        return false;
     }
 
     @Override
