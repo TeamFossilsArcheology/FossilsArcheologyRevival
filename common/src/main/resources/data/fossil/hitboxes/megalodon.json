@@ -30,13 +30,13 @@
 		},
 		{
 			"name": "rider_pos",
-			"pos": [0, 17.7, -21],
+			"pos": [0, 17.7, 21],
 			"ref": "rider_pos",
 			"is_anchor": true
 		},
 		{
 			"name": "grab_pos",
-			"pos": [0, 6, -39],
+			"pos": [0, 6, 39],
 			"ref": "grab_pos",
 			"is_anchor": true
 		}

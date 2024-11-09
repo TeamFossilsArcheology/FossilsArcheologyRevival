@@ -211,7 +211,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
         if (passenger != getRidingPlayer() && isDoingGrabAttack()) {
-            getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
+            getEntityHitboxData().getAnchorData().getAnchorPos("grab_pos").ifPresentOrElse(pos -> {
                 passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset(), pos.z);
             }, () -> {
                 float t = 5 * Mth.sin(Mth.PI + tickCount * 0.275f);

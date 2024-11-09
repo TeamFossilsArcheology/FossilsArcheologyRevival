@@ -15,6 +15,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
     private static final int GRAB = 1;
     private static final int GRAB_DURATION = 55;
     private final PrehistoricSwimming swimming;
+    private LivingEntity attackTarget;
     private int attackType = -1;
     private long grabStartTick = -1;
 
@@ -37,19 +38,20 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal {
         if (attackType == ATTACK) {
             return super.canContinueToUse();
         }
-        LivingEntity target = prehistoric.getTarget();
-        if (target == null || !target.isAlive() || prehistoric.getCurrentOrder() == OrderType.STAY) {
+        if (attackTarget == null || attackTarget.isRemoved() || prehistoric.getCurrentOrder() == OrderType.STAY) {
             return false;
         }
-        if (attackType == GRAB && (!swimming.isDoingGrabAttack() || !swimming.hasPassenger(target))) {
+        if (attackType == GRAB && (!swimming.isDoingGrabAttack() || !swimming.hasPassenger(attackTarget))) {
+            attackEndTick = prehistoric.level.getGameTime() + 20;
             return false;
         }
-        return CAN_ATTACK_TARGET.test(target);
+        return CAN_ATTACK_TARGET.test(attackTarget);
     }
 
     @Override
     public void start() {
         super.start();
+        attackTarget = prehistoric.getTarget();
         attackType = -1;
         grabStartTick = -1;
     }

@@ -21,7 +21,7 @@
 		},
 		{
 			"name": "rider_pos",
-			"pos": [0, 13.4, -5],
+			"pos": [0, 13.4, 5],
 			"ref": "rider_pos",
 			"is_anchor": true
 		}

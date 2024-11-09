@@ -9,7 +9,6 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,11 +43,6 @@ public class Mosasaurus extends PrehistoricSwimming {
     @Override
     public Item getOrderItem() {
         return ModItems.SKULL_STICK.get();
-    }
-
-    @Override
-    public boolean doHurtTarget(Entity target) {
-        return true;
     }
 
     @Override

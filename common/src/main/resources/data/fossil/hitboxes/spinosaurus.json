@@ -28,7 +28,7 @@
 		},
 		{
 			"name": "grab_pos",
-			"pos": [0, 12, -41],
+			"pos": [0, 12, 41],
 			"ref": "grab_pos",
 			"is_anchor": true
 		}
