@@ -37,7 +37,7 @@ public class CreativeTabFilters {
         entityItems.add(new Filter(FILTER_OTHER, new ItemStack(ModItems.MAMMOTH_FUR.get())));
 
         NonNullList<Filter> blocks = NonNullList.create();
-        blocks.add(new Filter(FILTER_TREES, new ItemStack(ModBlocks.MUTANT_TREE_LOG.get())));
+        blocks.add(new Filter(FILTER_TREES, new ItemStack(ModBlocks.PALM_LOG.get())));
         blocks.add(new Filter(FILTER_VASES, new ItemStack(ModBlocks.AMPHORA_VASE_RESTORED.get())));
         blocks.add(new Filter(FIGURINES, new ItemStack(ModBlocks.ANU_FIGURINE_DESTROYED.get())));
         blocks.add(new Filter(FILTER_PLANTS, new ItemStack(PrehistoricPlantInfo.BENNETTITALES_LARGE.getPlantBlock())));
@@ -76,9 +76,6 @@ public class CreativeTabFilters {
                 creativeScreen.getMenu().items.addAll(stacks);
                 //List<Item> list = tabs.get(creativeScreen.getSelectedTab()).getItems();
                 //creativeScreen.getMenu().items.addAll(stacks.stream().filter(stack -> list.contains(stack.getItem())).toList());
-                if (creativeScreen.getMenu().items.isEmpty()) {
-                    CreativeModeTab.TABS[creativeScreen.getSelectedTab()].fillItemList(creativeScreen.getMenu().items);
-                }
                 creativeScreen.getMenu().scrollTo(switchedTab ? 0 : creativeScreen.scrollOffs);
             }
             return EventResult.pass();

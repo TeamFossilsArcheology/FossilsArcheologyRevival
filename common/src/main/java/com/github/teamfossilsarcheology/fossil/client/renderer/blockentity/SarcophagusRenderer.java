@@ -47,9 +47,19 @@ public class SarcophagusRenderer implements BlockEntityRenderer<SarcophagusBlock
             }
             sarcophagusModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
             if (blockEntity.getState() == SarcophagusBlockEntity.STATE_OPENING) {
-                poseStack.translate(0, -0.2, -0.2);
+                poseStack.translate(0, -0.1, 0.02);
                 vertexConsumer = bufferSource.getBuffer(RenderType.entityCutout(AnuBossModel.TEXTURE));
+                poseStack.pushPose();
+                poseStack.translate(0, 0, 0.01);
+                poseStack.scale(0.85f, 1, 1);
+                anuModel.getChild("left_arm").render(poseStack, vertexConsumer, packedLight, packedOverlay);
+                anuModel.getChild("right_arm").render(poseStack, vertexConsumer, packedLight, packedOverlay);
+                poseStack.popPose();
+                anuModel.getChild("left_arm").visible = false;
+                anuModel.getChild("right_arm").visible = false;
                 anuModel.render(poseStack, vertexConsumer, packedLight, packedOverlay);
+                anuModel.getChild("left_arm").visible = true;
+                anuModel.getChild("right_arm").visible = true;
             }
             poseStack.popPose();
         }
