@@ -671,7 +671,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             if (Util.canBreak(level, targetPos, maxHardness)) {
                 setDeltaMovement(getDeltaMovement().multiply(0.6, 1, 0.6));
                 level.destroyBlock(targetPos, random.nextInt(10) == 0, this);
-                if (waterMob && targetPos.getY() == lowest) {
+                if (waterMob && targetPos.getY() == lowest && isInWater()) {
                     level.setBlock(targetPos, Blocks.WATER.defaultBlockState(), 3);
                 }
             }
