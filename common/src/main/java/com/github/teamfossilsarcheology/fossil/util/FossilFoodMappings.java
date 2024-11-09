@@ -8,10 +8,14 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import dev.architectury.event.events.common.LifecycleEvent;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
+
+import static com.github.teamfossilsarcheology.fossil.util.FoodMappings.addFishEntity;
+import static com.github.teamfossilsarcheology.fossil.util.FoodMappings.addMeatEntity;
 
 public class FossilFoodMappings {
     public static void register() {
@@ -121,5 +125,90 @@ public class FossilFoodMappings {
         FoodMappings.addFish(EntityType.SQUID, 40);
         FoodMappings.addInsect(EntityType.SPIDER, 30);
         FoodMappings.addInsect(EntityType.CAVE_SPIDER, 15);
+
+        addMeatEntity(new ResourceLocation("rats", "rat"), 5);
+        
+        addMeatEntity(new ResourceLocation("bewitchment", "owl"), 7);
+        addMeatEntity(new ResourceLocation("bewitchment", "raven"), 5);
+        addMeatEntity(new ResourceLocation("bewitchment", "snake"), 4);
+        addMeatEntity(new ResourceLocation("bewitchment", "toad"), 3);
+        
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "deer"), 35);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "pheasant"), 10);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "turkey"), 10);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "goose"), 10);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "boar"), 30);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "moose"), 45);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "reindeer"), 35);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "squirrel"), 3);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "songbird"), 3);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "lammergeier"), 8);
+        addMeatEntity(new ResourceLocation("betteranimalsplus", "gazelle"), 15);
+        addFishEntity(new ResourceLocation("betteranimalsplus", "horseshoecrab"), 7);
+        addFishEntity(new ResourceLocation("betteranimalsplus", "nautilus"), 10);
+        addFishEntity(new ResourceLocation("betteranimalsplus", "lamprey"), 5);
+        addFishEntity(new ResourceLocation("betteranimalsplus", "crab"), 5);
+        addFishEntity(new ResourceLocation("betteranimalsplus", "shark"), 40);
+        addFishEntity(new ResourceLocation("betteranimalsplus", "eel"), 20);
+        addFishEntity(new ResourceLocation("betteranimalsplus", "whale"), 60);
+        addFishEntity(new ResourceLocation("betteranimalsplus", "flying_fish"), 5);
+
+        addMeatEntity(new ResourceLocation("totemic", "buffalo"), 55);
+        addMeatEntity(new ResourceLocation("totemic", "bald_eagle"), 8);
+
+        addMeatEntity(new ResourceLocation("quark", "crab"), 5);
+        addMeatEntity(new ResourceLocation("quark", "frog"), 3);
+
+        addMeatEntity(new ResourceLocation("exoticbirds", "cassowary"), 25);
+        addMeatEntity(new ResourceLocation("exoticbirds", "duck"), 10);
+        addMeatEntity(new ResourceLocation("exoticbirds", "flamingo"), 7);
+        addMeatEntity(new ResourceLocation("exoticbirds", "gouldianfinch"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "hummingbird"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "kingfisher"), 5);
+        addMeatEntity(new ResourceLocation("exoticbirds", "kiwi"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "lyrebird"), 5);
+        addMeatEntity(new ResourceLocation("exoticbirds", "magpie"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "ostrich"), 27);
+        addMeatEntity(new ResourceLocation("exoticbirds", "owl"), 7);
+        addMeatEntity(new ResourceLocation("exoticbirds", "parrot"), 5);
+        addMeatEntity(new ResourceLocation("exoticbirds", "peafowl"), 10);
+        addMeatEntity(new ResourceLocation("exoticbirds", "pelican"), 5);
+        addMeatEntity(new ResourceLocation("exoticbirds", "emperorpenguin"), 7);
+        addMeatEntity(new ResourceLocation("exoticbirds", "pigeon"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "roadrunner"), 5);
+        addMeatEntity(new ResourceLocation("exoticbirds", "seagull"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "swan"), 12);
+        addMeatEntity(new ResourceLocation("exoticbirds", "toucan"), 7);
+        addMeatEntity(new ResourceLocation("exoticbirds", "vulture"), 7);
+        addMeatEntity(new ResourceLocation("exoticbirds", "woodpecker"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "heron"), 15);
+        addMeatEntity(new ResourceLocation("exoticbirds", "booby"), 7);
+        addMeatEntity(new ResourceLocation("exoticbirds", "cardinal"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "bluejay"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "robin"), 3);
+        addMeatEntity(new ResourceLocation("exoticbirds", "crane"), 15);
+        addMeatEntity(new ResourceLocation("exoticbirds", "kookaburra"), 5);
+        addMeatEntity(new ResourceLocation("exoticbirds", "budgerigar"), 3);
+
+        addMeatEntity(new ResourceLocation("twilightforest", "boar"), 20);
+        addMeatEntity(new ResourceLocation("twilightforest", "bighorn_sheep"), 35);
+        addMeatEntity(new ResourceLocation("twilightforest", "deer"), 35);
+        addMeatEntity(new ResourceLocation("twilightforest", "penguin"), 10);
+        addMeatEntity(new ResourceLocation("twilightforest", "squirrel"), 3);
+
+        addMeatEntity(new ResourceLocation("naturalist", "boar"), 10);
+        addMeatEntity(new ResourceLocation("naturalist", "bear"), 35);
+        addMeatEntity(new ResourceLocation("naturalist", "deer"), 40);
+        addMeatEntity(new ResourceLocation("naturalist", "snake"), 10);
+        addMeatEntity(new ResourceLocation("naturalist", "coral_snake"), 10);
+        addMeatEntity(new ResourceLocation("naturalist", "rattlesnake"), 10);
+        addMeatEntity(new ResourceLocation("naturalist", "rhino"), 60);
+        addMeatEntity(new ResourceLocation("naturalist", "zebra"), 40);
+        addMeatEntity(new ResourceLocation("naturalist", "giraffe"), 50);
+        addMeatEntity(new ResourceLocation("naturalist", "vulture"), 15);
+        addMeatEntity(new ResourceLocation("naturalist", "ostrich"), 35);
+        addFishEntity(new ResourceLocation("naturalist", "catfish"), 10);
+        addFishEntity(new ResourceLocation("naturalist", "bass"), 10);
+        addFishEntity(new ResourceLocation("naturalist", "duck"), 10);
     }
 }

@@ -3,10 +3,13 @@ package com.github.teamfossilsarcheology.fossil.util;
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
@@ -15,6 +18,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 
 import java.util.Map;
+import java.util.Optional;
 
 public abstract class FoodMappings {
     private static final Map<ItemLike, Integer> CARNIVORE_DIET = new Object2IntOpenHashMap<>();
@@ -24,13 +28,13 @@ public abstract class FoodMappings {
     private static final Map<ItemLike, Integer> PISCIVORE_DIET = new Object2IntOpenHashMap<>();
     private static final Map<ItemLike, Integer> PISCI_CARNIVORE_DIET = new Object2IntOpenHashMap<>();
     private static final Map<ItemLike, Integer> INSECTIVORE_DIET = new Object2IntOpenHashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> CARNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> CARNIVORE_EGG_ENTITY_DIET = new Object2IntOpenHashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> HERBIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> OMNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> PISCIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> PISCI_CARNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
-    private static final Map<EntityType<? extends LivingEntity>, Integer> INSECTIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<?>, Integer> CARNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<?>, Integer> CARNIVORE_EGG_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<?>, Integer> HERBIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<?>, Integer> OMNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<?>, Integer> PISCIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<?>, Integer> PISCI_CARNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<EntityType<?>, Integer> INSECTIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
 
 
     public static void addToMappings(ItemLike itemLike, int food, Diet diet) {
@@ -45,7 +49,7 @@ public abstract class FoodMappings {
         }
     }
 
-    public static void addToMappings(EntityType<? extends LivingEntity> entity, int food, Diet diet) {
+    public static void addToMappings(EntityType<?> entity, int food, Diet diet) {
         //TODO: Calculate based on bbwidth etc at runtime instead or maybe max health?
         switch (diet) {
             case CARNIVORE -> CARNIVORE_ENTITY_DIET.put(entity, food);
@@ -150,6 +154,9 @@ public abstract class FoodMappings {
         if (entity != null) {
             int mappingsPoints = getFoodAmount(entity.getType(), diet);
             if (mappingsPoints == 0 && FossilConfig.isEnabled(FossilConfig.DINOS_EAT_MODDED_MOBS)) {
+                if (entity.getAttribute(Attributes.ATTACK_DAMAGE) != null) {
+                    return 0;
+                }
                 int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
                 if (entity instanceof Animal && !isAquaticMob(entity)) {
                     if (diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCI_CARNIVORE) {
@@ -169,7 +176,17 @@ public abstract class FoodMappings {
         return entity.canBreatheUnderwater() || entity instanceof WaterAnimal || entity instanceof Mob mob && mob.getNavigation() instanceof WaterBoundPathNavigation;
     }
 
-    public static void addMeat(EntityType<? extends LivingEntity> entity, int food) {
+    public static void addMeatEntity(ResourceLocation location, int food) {
+        Optional<EntityType<?>> entity = Registry.ENTITY_TYPE.getOptional(location);
+        entity.ifPresent(entityType -> addMeat(entityType, food));
+    }
+
+    public static void addFishEntity(ResourceLocation location, int food) {
+        Optional<EntityType<?>> entity = Registry.ENTITY_TYPE.getOptional(location);
+        entity.ifPresent(entityType -> addFish(entityType, food));
+    }
+
+    public static void addMeat(EntityType<?> entity, int food) {
         addToMappings(entity, food, Diet.CARNIVORE);
         addToMappings(entity, food, Diet.CARNIVORE_EGG);
         addToMappings(entity, food, Diet.OMNIVORE);
@@ -191,7 +208,7 @@ public abstract class FoodMappings {
         addToMappings(itemLike, food, Diet.PISCI_CARNIVORE);
     }
 
-    public static void addFish(EntityType<? extends LivingEntity> entity, int food) {
+    public static void addFish(EntityType<?> entity, int food) {
         addToMappings(entity, food, Diet.PISCIVORE);
         addToMappings(entity, food, Diet.PISCI_CARNIVORE);
     }
