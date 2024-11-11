@@ -64,9 +64,13 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      * @param category      the category of the animation
      */
     public void triggerAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category) {
+        triggerAnimation(controller, animationInfo, category, 5, 1);
+    }
+
+    public void triggerAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category, double transitionLength, double speed) {
         if (animationInfo != null && !entity.level.isClientSide) {
             ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animationInfo.animation.animationName,
-                    entity.level.getGameTime() + animationInfo.animation.animationLength, category, true, 5
+                    entity.level.getGameTime() + animationInfo.animation.animationLength, category, true, transitionLength, speed, false
             );
             TargetingConditions conditions = TargetingConditions.forNonCombat().ignoreLineOfSight().range(30);
             var players = ((ServerLevel) entity.level).getPlayers(serverPlayer -> conditions.test(serverPlayer, entity));
@@ -85,7 +89,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      */
     public ActiveAnimationInfo forceAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category, double transitionLength, boolean loop) {
         if (animationInfo != null) {
-            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animationInfo.animation.animationName,
+            ActiveAnimationInfo activeAnimationInfo = ActiveAnimationInfo.transition(animationInfo.animation.animationName,
                     entity.level.getGameTime() + animationInfo.animation.animationLength, category, true, transitionLength, loop
             );
             addNextAnimation(controller, activeAnimationInfo);
@@ -129,7 +133,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
         ActiveAnimationInfo active = getActiveAnimation(controller).orElse(null);
         if (active == null) {
-            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime() + animation.animationLength, category, false, category.transitionLength(), animation.loop.isRepeatingAfterEnd(), keepActive));
+            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime() + animation.animationLength, category, false, category.transitionLength(), 1, animation.loop.isRepeatingAfterEnd(), keepActive));
             return true;
         }
         boolean replaceAnim = false;
@@ -142,7 +146,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
         if (replaceAnim) {
             int transitionLength = Math.max(category.transitionLength(), active.category.transitionLength());
-            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime() + animation.animationLength, category, false, transitionLength, animation.loop.isRepeatingAfterEnd(), keepActive));
+            activeAnimations.put(controller, new ActiveAnimationInfo(animation.animationName, entity.level.getGameTime() + animation.animationLength, category, false, transitionLength, 1, animation.loop.isRepeatingAfterEnd(), keepActive));
             return true;
         }
         return false;
@@ -517,13 +521,18 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public record ActiveAnimationInfo(String animationName, double endTick, AnimationCategory category,
-                                      boolean forced, double transitionLength, boolean loop, boolean keepActive) {
-        public ActiveAnimationInfo(String animationName, double endTick, AnimationCategory category, boolean forced, double speed, boolean loop) {
-            this(animationName, endTick, category, forced, speed, loop, false);
+                                      boolean forced, double transitionLength, double speed, boolean loop,
+                                      boolean keepActive) {
+        public static ActiveAnimationInfo transition(String animationName, double endTick, AnimationCategory category, boolean forced, double transitionLength, boolean loop) {
+            return new ActiveAnimationInfo(animationName, endTick, category, forced, transitionLength, 1, loop, false);
         }
 
-        public ActiveAnimationInfo(String animationName, double endTick, AnimationCategory category, boolean forced, double speed) {
-            this(animationName, endTick, category, forced, speed, false, false);
+        public static ActiveAnimationInfo speed(String animationName, double endTick, AnimationCategory category, boolean forced, double speed) {
+            return new ActiveAnimationInfo(animationName, endTick, category, forced, 5, speed, false, false);
+        }
+
+        public ActiveAnimationInfo(String animationName, double endTick, AnimationCategory category, boolean forced, double transitionLength, double speed, boolean loop) {
+            this(animationName, endTick, category, forced, transitionLength, speed, loop, false);
         }
     }
 
