@@ -12,8 +12,8 @@
     "damageMax": 4.0,
     "healthBase": 4.0,
     "healthMax": 20.0,
-    "speedBase": 0.1,
-    "speedMax": 0.2,
+    "speedBase": 0.2,
+    "speedMax": 0.25,
     "armorBase": 1.0,
     "armorMax": 2.0,
     "knockBackResistanceBase": 0.0,
@@ -26,6 +26,6 @@
   "diet": "PISCIVORE",
   "maxHunger": 70,
   "maxPopulation": 15,
-  "scaleBase": 0.78,
+  "scaleBase": 0.35,
   "scaleMax": 0.78
 }
