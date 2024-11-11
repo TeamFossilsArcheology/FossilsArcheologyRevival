@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Enti
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.InstructionsList;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.InstructionMessage;
@@ -27,6 +28,7 @@ public class InstructionTab extends DebugTab<Prehistoric> {
     private InstructionsList instructions;
     private AnimationList animations;
     private EntityList attackEntities;
+    private EntityList leapEntities;
     public static Entity entityListHighlight;
     public static Entity highlightInstructionEntity;
     public static Instruction highlightInstruction;
@@ -88,14 +90,28 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             }));
         }
         var list = entity.level.getNearbyEntities(LivingEntity.class, TargetingConditions.forNonCombat().range(30).ignoreLineOfSight(), entity, entity.getBoundingBox().inflate(30));
+        leapEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
+            Instruction instruction = new Instruction.LeapAttack(entity1.getId());
+            instructions.addInstruction(instruction);
+            INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
+        });
+        if (entity instanceof PrehistoricLeaping) {
+            addWidget(new Button(220, 55, 100, 20, new TextComponent("Leap Builder"), button -> {
+                positionMode = Instruction.Type.LEAP_LAND;
+                debugScreen.onClose();
+            }));
+            addWidget(new Button(width - 115, 5, 90, 20, new TextComponent("Open Leap"), button -> {
+                closeLists();
+                addWidget(leapEntities);
+            }));
+        }
         attackEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
             Instruction instruction = new Instruction.Attack(entity1.getId());
             instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         });
         addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
-            widgets.remove(animations);
-            renderables.remove(animations);
+            closeLists();
             addWidget(attackEntities);
         }, (button, poseStack, i, j) -> {
             debugScreen.renderTooltip(poseStack, new TextComponent("Unused"), i, j);
@@ -107,8 +123,7 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         });
         addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Animations"), button -> {
-            widgets.remove(attackEntities);
-            renderables.remove(attackEntities);
+            closeLists();
             addWidget(animations);
         }, (button, poseStack, i, j) -> {
             debugScreen.renderTooltip(poseStack, new TextComponent("Stops and plays animation x times or for x seconds"), i, j);
@@ -126,6 +141,13 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         }));
+    }
+
+    private void closeLists() {
+        widgets.remove(leapEntities);
+        renderables.remove(leapEntities);
+        widgets.remove(animations);
+        renderables.remove(animations);
     }
 
     @Override
@@ -149,6 +171,8 @@ public class InstructionTab extends DebugTab<Prehistoric> {
         } else if (positionMode == Instruction.Type.ATTACH_TO) {
             BlockPos target = hitResult.getBlockPos();
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.AttachTo(target, hitResult.getDirection(), hitResult.getLocation()));
+        } else if (positionMode == Instruction.Type.LEAP_LAND) {
+            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.LeapLand(hitResult.getLocation(), hitResult.getLocation().add(0, 2, 0)));
         }
     }
 

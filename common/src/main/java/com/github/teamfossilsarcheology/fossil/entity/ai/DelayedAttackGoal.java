@@ -20,13 +20,12 @@ import java.util.function.Predicate;
 
 /**
  * Similar to {@link net.minecraft.world.entity.ai.goal.MeleeAttackGoal MeleeAttackGoal} but with the option to delay
- * the damage by {@link AnimationInfoLoader.ServerAnimationInfo#actionDelay} ticks
- * or defer the hit logic to the targets client
+ * the damage by {@link ServerAnimationInfo#actionDelay} ticks or defer the hit logic to the targets client
  */
-public class DelayedAttackGoal extends Goal {
+public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
     protected static final Predicate<Entity> CAN_ATTACK_TARGET = target -> !(target instanceof Player player) || (!player.isSpectator() && !player.isCreative() && target.level.getDifficulty() != Difficulty.PEACEFUL);
     protected static final long COOLDOWN_BETWEEN_CAN_USE_CHECKS = 20L;
-    protected final Prehistoric prehistoric;
+    protected final T mob;
     private final double speedModifier;
     private final boolean followingTargetEvenIfNotSeen;
     protected Path path;
@@ -40,8 +39,8 @@ public class DelayedAttackGoal extends Goal {
     private boolean doingHeavyAttack;
 
 
-    public DelayedAttackGoal(Prehistoric prehistoric, double speedModifier, boolean followingTargetEvenIfNotSeen) {
-        this.prehistoric = prehistoric;
+    public DelayedAttackGoal(T mob, double speedModifier, boolean followingTargetEvenIfNotSeen) {
+        this.mob = mob;
         this.speedModifier = speedModifier;
         this.followingTargetEvenIfNotSeen = followingTargetEvenIfNotSeen;
         setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
@@ -50,42 +49,43 @@ public class DelayedAttackGoal extends Goal {
 
     @Override
     public boolean canUse() {
-        long l = prehistoric.level.getGameTime();
+        long l = mob.level.getGameTime();
         if (l - lastCanUseCheck < COOLDOWN_BETWEEN_CAN_USE_CHECKS) {
             return false;
         }
         lastCanUseCheck = l;
-        if (prehistoric.isFleeing() || prehistoric.getCurrentOrder() == OrderType.STAY) {
+        if (mob.isFleeing() || mob.getCurrentOrder() == OrderType.STAY) {
             return false;
         }
-        LivingEntity target = prehistoric.getTarget();
+        LivingEntity target = mob.getTarget();
         if (target == null || !target.isAlive()) {
             return false;
         }
-        if (prehistoric.level.getDifficulty() == Difficulty.PEACEFUL && target instanceof Player) {
+        if (mob.level.getDifficulty() == Difficulty.PEACEFUL && target instanceof Player) {
             return false;
         }
-        path = prehistoric.getNavigation().createPath(target, 0);
+        path = mob.getNavigation().createPath(target, 0);
         if (path != null) {
             return true;
         }
-        return canHit(target);
+        return isInRange(target);
     }
 
     @Override
     public boolean canContinueToUse() {
-        if (prehistoric.level.getGameTime() < attackEndTick) {
+        if (mob.level.getGameTime() < attackEndTick) {
             //Prevent the goal from ending before the animation is over
             return true;
         }
-        LivingEntity target = prehistoric.getTarget();
-        if (target == null || !target.isAlive() || prehistoric.getCurrentOrder() == OrderType.STAY) {
+        LivingEntity target = mob.getTarget();
+        if (target == null || !target.isAlive() || mob.getCurrentOrder() == OrderType.STAY) {
+            System.out.println("Cant continue attacking because: " + (target == null));
             return false;
         }
         if (!followingTargetEvenIfNotSeen) {
-            return !prehistoric.getNavigation().isDone();
+            return !mob.getNavigation().isDone();
         }
-        if (!prehistoric.isWithinRestriction(target.blockPosition())) {
+        if (!mob.isWithinRestriction(target.blockPosition())) {
             return false;
         }
         if (!CAN_ATTACK_TARGET.test(target)) {
@@ -96,8 +96,8 @@ public class DelayedAttackGoal extends Goal {
 
     @Override
     public void start() {
-        prehistoric.getNavigation().moveTo(path, speedModifier);
-        prehistoric.setAggressive(true);
+        mob.getNavigation().moveTo(path, speedModifier);
+        mob.setAggressive(true);
         ticksUntilNextPathRecalculation = 0;
         attackEndTick = -1;
         attackDamageTick = -1;
@@ -106,12 +106,12 @@ public class DelayedAttackGoal extends Goal {
 
     @Override
     public void stop() {
-        LivingEntity target = prehistoric.getTarget();
+        LivingEntity target = mob.getTarget();
         if (!CAN_ATTACK_TARGET.test(target)) {
-            prehistoric.setTarget(null);
+            mob.setTarget(null);
         }
-        prehistoric.setAggressive(false);
-        prehistoric.getNavigation().stop();
+        mob.setAggressive(false);
+        mob.getNavigation().stop();
     }
 
     @Override
@@ -121,30 +121,30 @@ public class DelayedAttackGoal extends Goal {
 
     @Override
     public void tick() {
-        LivingEntity target = prehistoric.getTarget();
+        LivingEntity target = mob.getTarget();
         if (target == null) {
             return;
         }
-        double dist = prehistoric.distanceToSqr(target);
+        double dist = mob.distanceToSqr(target);
         ticksUntilNextPathRecalculation = Math.max(ticksUntilNextPathRecalculation - 1, 0);
         if (canUpdateMovement()) {
-            prehistoric.getLookControl().setLookAt(target, 30, 30);
+            mob.getLookControl().setLookAt(target, 30, 30);
         } else {
             ticksUntilNextPathRecalculation = 15;
         }
-        if (prehistoric.level.getGameTime() <= attackEndTick && doingHeavyAttack) {
+        if (mob.level.getGameTime() <= attackEndTick && doingHeavyAttack) {
             //Prevent movement
-        } else if ((followingTargetEvenIfNotSeen || prehistoric.getSensing().hasLineOfSight(target)) && ticksUntilNextPathRecalculation <= 0 && (pathedTargetX == 0.0 && pathedTargetY == 0.0 && pathedTargetZ == 0.0 || target.distanceToSqr(pathedTargetX, pathedTargetY, pathedTargetZ) >= 1.0 || prehistoric.getRandom().nextFloat() < 0.05f)) {
+        } else if ((followingTargetEvenIfNotSeen || mob.getSensing().hasLineOfSight(target)) && ticksUntilNextPathRecalculation <= 0 && (pathedTargetX == 0.0 && pathedTargetY == 0.0 && pathedTargetZ == 0.0 || target.distanceToSqr(pathedTargetX, pathedTargetY, pathedTargetZ) >= 1.0 || mob.getRandom().nextFloat() < 0.05f)) {
             pathedTargetX = target.getX();
             pathedTargetY = target.getY();
             pathedTargetZ = target.getZ();
-            ticksUntilNextPathRecalculation = 4 + prehistoric.getRandom().nextInt(7);
+            ticksUntilNextPathRecalculation = 4 + mob.getRandom().nextInt(7);
             if (dist > 1024) {
                 ticksUntilNextPathRecalculation += 10;
             } else if (dist > 256) {
                 ticksUntilNextPathRecalculation += 5;
             }
-            if (!prehistoric.getNavigation().moveTo(target, speedModifier)) {
+            if (!mob.getNavigation().moveTo(target, speedModifier)) {
                 ticksUntilNextPathRecalculation += 15;
             }
             ticksUntilNextPathRecalculation = adjustedTickDelay(ticksUntilNextPathRecalculation);
@@ -156,17 +156,17 @@ public class DelayedAttackGoal extends Goal {
         return true;
     }
 
-    protected boolean canHit(Entity attackTarget) {
-        return Util.canReachPrey(prehistoric, attackTarget);
+    protected boolean isInRange(Entity attackTarget) {
+        return Util.canReachPrey(mob, attackTarget);
     }
 
     protected void checkAndPerformAttack(LivingEntity enemy) {
-        long currentTime = prehistoric.level.getGameTime();
-        if (canHit(enemy)) {
+        long currentTime = mob.level.getGameTime();
+        if (isInRange(enemy)) {
             if (currentTime > attackEndTick + 20) {
-                ServerAnimationInfo animationInfo = prehistoric.startAttack();
+                ServerAnimationInfo animationInfo = mob.startAttack();
                 if (animationInfo.usesAttackBox && enemy instanceof ServerPlayer player) {
-                    MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(prehistoric, animationInfo.animation.animationLength));
+                    MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(mob, animationInfo.animation.animationLength));
                     doingHeavyAttack = true;
                 } else {
                     attackDamageTick = (long) (currentTime + animationInfo.actionDelay);
@@ -175,7 +175,7 @@ public class DelayedAttackGoal extends Goal {
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
             }
             if (attackDamageTick > 0 && currentTime == attackDamageTick) {
-                prehistoric.attackTarget(enemy);
+                mob.attackTarget(enemy);
                 attackDamageTick = -1;
             }
         }

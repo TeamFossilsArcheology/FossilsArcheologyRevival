@@ -14,7 +14,6 @@ import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class Compsognathus extends PrehistoricLeaping {
@@ -29,19 +28,6 @@ public class Compsognathus extends PrehistoricLeaping {
         super.registerGoals();
         goalSelector.addGoal(5, new DinoOtherLeapAtTargetGoal(this));
         goalSelector.addGoal(Util.NEEDS + 4, new RestrictSunGoal(this));
-    }
-
-    @Override
-    public void doLeapMovement() {
-        if (getTarget() != null) {
-            Vec3 offset = getTarget().position().subtract(position().add(0, getTarget().getBbHeight(), 0));
-            setDeltaMovement(offset.normalize());
-        }
-    }
-
-    @Override
-    public boolean useLeapAttack() {
-        return true;
     }
 
     @Override
@@ -63,7 +49,17 @@ public class Compsognathus extends PrehistoricLeaping {
     }
 
     @Override
-    public String getLeapingAnimationName() {
+    public String getLandAnimationName() {
+        return ATTACK;
+    }
+
+    @Override
+    public String getLeapStartAnimationName() {
+        return ATTACK;
+    }
+
+    @Override
+    public String getLeapAttackAnimationName() {
         return ATTACK;
     }
 

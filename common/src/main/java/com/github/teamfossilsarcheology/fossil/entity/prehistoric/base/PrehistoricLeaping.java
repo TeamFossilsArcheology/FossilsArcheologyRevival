@@ -89,30 +89,23 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         }
     }
 
-    public abstract void doLeapMovement();
-
-    public abstract boolean useLeapAttack();
-
-    public boolean isLeaping() {
-        return entityData.get(LEAPING);
+    public @NotNull AnimationInfo getLeapStartAnimation() {
+        return getAllAnimations().get(getLeapStartAnimationName());
     }
 
-    public void setLeaping(boolean leaping) {
-        entityData.set(LEAPING, leaping);
+    public @NotNull AnimationInfo getLandAnimation() {
+        return getAllAnimations().get(getLandAnimationName());
     }
 
-    public void startLeaping() {
-        setLeaping(true);
-        leapStartTick = level.getGameTime();
+    public @NotNull AnimationInfo getLeapAttackAnimation() {
+        return getAllAnimations().get(getLeapAttackAnimationName());
     }
 
-    public @NotNull AnimationInfo getLeapingAnimation() {
-        return getAllAnimations().get(getLeapingAnimationName());
-    }
+    public abstract String getLandAnimationName();
 
-    public abstract String getLeapingAnimationName();
+    public abstract String getLeapStartAnimationName();
 
-    private double lastSpeed = 0;
+    public abstract String getLeapAttackAnimationName();
 
     private PlayState leapingPredicate(AnimationEvent<PrehistoricLeaping> event) {
         AnimationController<PrehistoricLeaping> controller = event.getController();
@@ -159,7 +152,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     @Override
     public void registerControllers(AnimationData data) {
         data.addAnimationController(new AnimationController<>(
-                this, AnimationLogic.IDLE_CTRL, 5, this::leapingPredicate));
+                this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::leapingPredicate));
         data.addAnimationController(new AnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }

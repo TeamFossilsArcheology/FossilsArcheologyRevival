@@ -24,7 +24,7 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
     private final Function<ResourceLocation, RenderType> renderType;
 
     /**
-     * @param model the file model name (including extension)
+     * @param model     the file model name (including extension)
      * @param animation the animation model name (including extension)
      */
     public PrehistoricGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, Function<ResourceLocation, RenderType> renderType) {

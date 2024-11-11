@@ -1,9 +1,10 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
-import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOtherLeapAtTargetGoal;
+import com.github.teamfossilsarcheology.fossil.entity.ai.DinoLeapAtTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
+import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
@@ -12,11 +13,12 @@ import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
 public class Deinonychus extends PrehistoricLeaping {
-    public static final String IDLE = "animation.deinonychus.idle";
+    public static final String LEAP = "animation.deinonychus.leap";
+    public static final String CLIMB = "animation.deinonychus.climb";
+    public static final String LAND = "animation.deinonychus.land";
 
     public Deinonychus(EntityType<Deinonychus> entityType, Level level) {
         super(entityType, level, true);
@@ -27,19 +29,6 @@ public class Deinonychus extends PrehistoricLeaping {
         super.registerGoals();
         goalSelector.addGoal(0, new DinoOtherLeapAtTargetGoal(this));
         goalSelector.addGoal(5, new RestrictSunGoal(this));
-    }
-
-    @Override
-    public void doLeapMovement() {
-        if (getTarget() != null) {
-            Vec3 offset = getTarget().position().subtract(position().add(0, getTarget().getBbHeight(), 0));
-            setDeltaMovement(offset.normalize());
-        }
-    }
-
-    @Override
-    public boolean useLeapAttack() {
-        return true;//TODO: Implement
     }
 
     @Override
@@ -63,8 +52,18 @@ public class Deinonychus extends PrehistoricLeaping {
     }
 
     @Override
-    public String getLeapingAnimationName() {
-        return IDLE;
+    public String getLandAnimationName() {
+        return LAND;
+    }
+
+    @Override
+    public String getLeapStartAnimationName() {
+        return LEAP;
+    }
+
+    @Override
+    public String getLeapAttackAnimationName() {
+        return CLIMB;
     }
 
     @Nullable

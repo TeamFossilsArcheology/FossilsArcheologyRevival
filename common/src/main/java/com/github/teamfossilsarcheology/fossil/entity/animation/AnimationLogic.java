@@ -278,6 +278,82 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return true;
     }
 
+    public PlayState leapingPredicate(AnimationEvent<PrehistoricLeaping> event) {
+        AnimationController<PrehistoricLeaping> controller = event.getController();
+        if (tryNextAnimation(controller)) {
+            return PlayState.CONTINUE;
+        }
+        Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
+        ILoopType loopType = null;
+        double animationSpeed = 1;
+        if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
+            loopType = activeAnimation.get().loop ? LOOP : PLAY_ONCE;
+            if (activeAnimation.get().animationName.contains("land")) {
+                animationSpeed = activeAnimation.get().speed;
+            }
+        } else {
+            if (event.getAnimatable().isLeapStart()) {
+                controller.setAnimationSpeed(1);
+                controller.setAnimation(new AnimationBuilder().playOnce(event.getAnimatable().getLeapStartAnimationName()).loop(entity.getAnimation(AnimationCategory.FALL).animation.animationName));
+                return PlayState.CONTINUE;
+            } else if (event.getAnimatable().isAttackRiding()) {
+                controller.setAnimationSpeed(1);
+                controller.setAnimation(new AnimationBuilder().loop(event.getAnimatable().getLeapAttackAnimation().animation.animationName));
+                return PlayState.CONTINUE;
+            } else if (entity.isSleeping()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
+            } else if (event.getAnimatable().sitSystem.isSitting()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.SIT);
+            } else if (event.getAnimatable().isClimbing()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
+            } else if (event.isMoving()) {
+                if (entity.isInWater()) {
+                    addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
+                } else {
+                    Animation walkAnim = entity.nextWalkingAnimation().animation;
+                    Animation sprintAnim = entity.nextSprintingAnimation().animation;
+                    //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
+                    double scaleMult = 1 / event.getAnimatable().getScale();
+                    //the deltaMovement of the animation should match the mobs deltaMovement
+                    double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
+                    //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+                    mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
+                    //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
+                    double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
+                    if (animationTargetSpeed > 0) {
+                        animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                    }
+                    if (animationSpeed > 2.75 || entity.isSprinting()) {
+                        //Choose sprint
+                        animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
+                        if (animationTargetSpeed > 0) {
+                            animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                        }
+                        addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
+                    } else {
+                        addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
+                    }
+                }
+            } else {
+                if (entity.isInWater()) {
+                    addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
+                } else {
+                    addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                }
+            }
+        }
+        setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
+        Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
+        if (newAnimation.isPresent()) {
+            controller.transitionLengthTicks = newAnimation.get().transitionLength;
+            if (loopType == null) {
+                loopType = newAnimation.get().loop ? LOOP : PLAY_ONCE;
+            }
+            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, loopType));
+        }
+        return PlayState.CONTINUE;
+    }
+
     public PlayState landPredicate(AnimationEvent<Prehistoric> event) {
         if (isBlocked()) return PlayState.STOP;
         AnimationController<Prehistoric> controller = event.getController();

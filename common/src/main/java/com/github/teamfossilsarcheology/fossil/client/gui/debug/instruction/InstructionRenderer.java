@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingDebug;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingRenderUtil;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.Pair;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
@@ -30,6 +31,7 @@ public class InstructionRenderer {
     public static Vec3 rulerEndPos;
 
     public static void render(PoseStack poseStack, MultiBufferSource buffer, float partialTicks, long finishNanoTime, Frustum frustum) {
+        RenderSystem.enableBlend();
         Minecraft mc = Minecraft.getInstance();
         if (InstructionTab.activeEntity != null) {
             List<Instruction> instructions = InstructionTab.INSTRUCTIONS.get(InstructionTab.activeEntity.getUUID()).instructions();

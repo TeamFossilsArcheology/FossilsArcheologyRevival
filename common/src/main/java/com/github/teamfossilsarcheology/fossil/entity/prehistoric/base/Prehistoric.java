@@ -185,8 +185,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         goalSelector.addGoal(Util.IMMOBILE, new DinoStayGoal(this));
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
-        if (aiAttackType() != PrehistoricEntityInfoAI.Attacking.NONE) {
-            goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal(this, 1, false));
+        if (aiAttackType() != Attacking.NONE && aiAttackType() != Attacking.JUMP) {
+            goalSelector.addGoal(Util.ATTACK + 1, new DelayedAttackGoal<>(this, 1, false));
         }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
@@ -1248,7 +1248,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public Map<String, ? extends AnimationInfo> getAllAnimations() {
-        if (Platform.getEnvironment() == Env.CLIENT) {
+        if (level.isClientSide) {
             return ClientAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();
         }
         return ServerAnimationInfoLoader.INSTANCE.getAnimations(animationLocation).animations();

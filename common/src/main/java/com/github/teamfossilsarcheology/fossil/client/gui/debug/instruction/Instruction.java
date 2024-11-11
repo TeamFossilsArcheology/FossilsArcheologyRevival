@@ -39,6 +39,8 @@ public abstract class Instruction {
                 case TELEPORT_TO -> TeleportTo.decodeTag(tag);
                 case ATTACH_TO -> AttachTo.decodeTag(tag);
                 case ATTACK -> Attack.decodeTag(tag);
+                case LEAP_ATTACK -> LeapAttack.decodeTag(tag);
+                case LEAP_LAND -> LeapLand.decodeTag(tag);
                 case PLAY_ANIM -> PlayAnim.decodeTag(tag);
                 case IDLE -> Idle.decodeTag(tag);
                 case SLEEP -> Sleep.decodeTag(tag);
@@ -202,6 +204,64 @@ public abstract class Instruction {
         }
     }
 
+    public static class LeapLand extends Instruction {
+        public final Vec3 location;
+        public final Vec3 locationAbove;
+
+        public LeapLand(Vec3 location, Vec3 locationAbove) {
+            super(Type.LEAP_LAND);
+            this.location = location;
+            this.locationAbove = locationAbove;
+        }
+
+        @Override
+        public CompoundTag encodeTag() {
+            CompoundTag tag = super.encodeTag();
+            tag.putDouble("LocationX", location.x);
+            tag.putDouble("LocationY", location.y);
+            tag.putDouble("LocationZ", location.z);
+            tag.putDouble("LocationAboveX", locationAbove.x);
+            tag.putDouble("LocationAboveY", locationAbove.y);
+            tag.putDouble("LocationAboveZ", locationAbove.z);
+            return tag;
+        }
+
+        protected static Instruction decodeTag(CompoundTag tag) {
+            return new LeapLand(new Vec3(tag.getDouble("LocationX"), tag.getDouble("LocationY"), tag.getDouble("LocationZ")),
+                    new Vec3(tag.getDouble("LocationAboveX"), tag.getDouble("LocationAboveY"), tag.getDouble("LocationAboveZ")));
+        }
+
+        @Override
+        public String toString() {
+            return type.name() + ": " + location;
+        }
+    }
+
+    public static class LeapAttack extends Instruction {
+        public final int targetId;
+
+        public LeapAttack(int targetId) {
+            super(Type.LEAP_ATTACK);
+            this.targetId = targetId;
+        }
+
+        @Override
+        public CompoundTag encodeTag() {
+            CompoundTag tag = super.encodeTag();
+            tag.putInt("TargetId", targetId);
+            return tag;
+        }
+
+        protected static Instruction decodeTag(CompoundTag tag) {
+            return new LeapAttack(tag.getInt("TargetId"));
+        }
+
+        @Override
+        public String toString() {
+            return type.name() + ": " + targetId;
+        }
+    }
+
     public static class PlayAnim extends Instruction {
         public final String name;
         public final String controller;
@@ -268,6 +328,6 @@ public abstract class Instruction {
     }
 
     public enum Type {
-        ATTACK, MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, ATTACH_TO, SLEEP;
+        ATTACK, MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, LEAP_ATTACK, LEAP_LAND, ATTACH_TO, SLEEP;
     }
 }
