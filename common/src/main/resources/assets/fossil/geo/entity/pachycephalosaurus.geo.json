@@ -167,6 +167,11 @@
 					"cubes": []
 				},
 				{
+					"name": "rider_pos",
+					"parent": "lowerBody",
+					"pivot": [0, 22.75, -2]
+				},
+				{
 					"name": "rightThigh",
 					"parent": "root",
 					"pivot": [-5, 18.825, 3.625],

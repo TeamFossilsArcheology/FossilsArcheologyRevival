@@ -156,15 +156,14 @@
 					"name": "osteoderm2",
 					"parent": "upperBody",
 					"pivot": [0, 18.2, -8.6],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [0, 18.2, -8.6], "size": [0, 1, 8], "uv": [0, 18]}
 					]
 				},
 				{
 					"name": "rider_pos",
-					"parent": "lowerBody",
-					"pivot": [0, 18, -3.3]
+					"parent": "upperBody",
+					"pivot": [0, 18.25, -3.3]
 				},
 				{
 					"name": "tail1",
@@ -212,7 +211,6 @@
 					"name": "osteoderm6",
 					"parent": "lowerBody",
 					"pivot": [0, 18.3, -1.8],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [0, 18.3, -1.8], "size": [0, 1, 10], "uv": [0, 17]}
 					]

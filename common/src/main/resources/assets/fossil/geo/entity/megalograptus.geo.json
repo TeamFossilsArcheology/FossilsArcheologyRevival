@@ -219,6 +219,11 @@
 					"name": "eat_pos",
 					"parent": "head",
 					"pivot": [0, 1, -8.1]
+				},
+				{
+					"name": "rider_pos",
+					"parent": "head",
+					"pivot": [0, 2, -4]
 				}
 			]
 		}

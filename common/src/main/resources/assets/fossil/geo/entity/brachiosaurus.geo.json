@@ -109,7 +109,6 @@
 					"name": "JawBottom",
 					"parent": "Head",
 					"pivot": [0, 12.52354, -39.32258],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1, 11.54613, -42.41999], "size": [2, 1, 4], "uv": [48, 12]}
 					]
@@ -192,6 +191,11 @@
 					]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "UpperBody",
+					"pivot": [0, 16, -7]
+				},
+				{
 					"name": "body1_hitbox",
 					"parent": "MidBody",
 					"pivot": [0, -0.7, 5.1],
@@ -264,7 +268,6 @@
 					"name": "rightHindFoot",
 					"parent": "BackThighRightChild",
 					"pivot": [3.9, 0.61635, 7.20998],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [1.9, -0.48365, 4.20998], "size": [4, 2, 4], "uv": [41, 2]}
 					]
@@ -291,14 +294,9 @@
 					"name": "leftHindFoot",
 					"parent": "BackThighLeftChild",
 					"pivot": [-3.9, 0.61635, 7.10998],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-5.9, -0.48365, 4.10998], "size": [4, 2, 4], "uv": [41, 2], "mirror": true}
 					]
-				},
-				{
-					"name": "rider_pos",
-					"pivot": [0, 24, -9]
 				}
 			]
 		}

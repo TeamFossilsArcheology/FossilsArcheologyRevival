@@ -308,6 +308,11 @@
 					]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "lowerBody",
+					"pivot": [0, 17, -7]
+				},
+				{
 					"name": "leftThigh",
 					"parent": "pitch_root",
 					"pivot": [3, 12.5, 4],

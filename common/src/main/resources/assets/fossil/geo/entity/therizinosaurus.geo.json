@@ -101,7 +101,6 @@
 					"name": "neckfluffL2",
 					"parent": "neck2",
 					"pivot": [1.3, 15.89379, -22.04124],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [0.3, 12.89379, -30.04124], "size": [1, 3, 9], "uv": [1, 1]}
 					]
@@ -137,7 +136,6 @@
 					"name": "lowerJaw",
 					"parent": "head",
 					"pivot": [0, 16.24748, -35.40132],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.5, 15.34748, -39.30132], "size": [3, 1, 4], "inflate": -0.1, "uv": [22, 3], "mirror": true}
 					]
@@ -301,6 +299,11 @@
 					"cubes": [
 						{"origin": [-3.5, 0.1, -13.025], "size": [0, 4, 4], "uv": [120, -4]}
 					]
+				},
+				{
+					"name": "rider_pos",
+					"parent": "upperBody",
+					"pivot": [0, 21, -6]
 				},
 				{
 					"name": "leftThigh",

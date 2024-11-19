@@ -109,7 +109,6 @@
 					"name": "leftLowerArmFeather",
 					"parent": "leftLowerArm",
 					"pivot": [3.8, 11.3, -9.9],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [3.3, 9.3, -9.9], "size": [1, 5, 4], "uv": [130, 31]}
 					]
@@ -154,7 +153,6 @@
 					"name": "rightLowerArmFeather",
 					"parent": "rightLowerArm",
 					"pivot": [-3.8, 11.3, -9.9],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-4.3, 9.3, -9.9], "size": [1, 5, 4], "uv": [130, 31], "mirror": true}
 					]
@@ -217,7 +215,6 @@
 					"name": "lowerJaw",
 					"parent": "head",
 					"pivot": [0.4, 38.9, -11.9],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-0.6, 37.9, -17.4], "size": [2, 1, 7], "uv": [192, 20]}
 					]
@@ -288,6 +285,11 @@
 					"cubes": []
 				},
 				{
+					"name": "rider_pos2",
+					"parent": "upperBody",
+					"pivot": [0, 25, -5]
+				},
+				{
 					"name": "tail1",
 					"parent": "lowerBody",
 					"pivot": [0.4, 24.4, 9.5],
@@ -309,7 +311,6 @@
 					"name": "tailCrest2",
 					"parent": "tail2",
 					"pivot": [0.4, 23.9, 18.5],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-2.6, 16.9, 17.5], "size": [6, 7, 14], "uv": [67, 68]}
 					]

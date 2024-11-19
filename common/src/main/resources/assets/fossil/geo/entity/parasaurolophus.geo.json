@@ -239,6 +239,11 @@
 					"cubes": [
 						{"origin": [4.5, 0.6, 6.6], "size": [4, 2, 5], "uv": [15, 64]}
 					]
+				},
+				{
+					"name": "rider_pos",
+					"parent": "lowerBody",
+					"pivot": [0, 25.75, -1]
 				}
 			]
 		}

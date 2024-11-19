@@ -124,6 +124,11 @@
 					]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "torso",
+					"pivot": [0, 8, 0]
+				},
+				{
 					"name": "legleft",
 					"parent": "body",
 					"pivot": [1.5, 7, 2],

@@ -7,8 +7,8 @@
 				"texture_width": 128,
 				"texture_height": 64,
 				"visible_bounds_width": 7,
-				"visible_bounds_height": 2.5,
-				"visible_bounds_offset": [0, 0.75, 0]
+				"visible_bounds_height": 3.5,
+				"visible_bounds_offset": [0, 1.25, 0]
 			},
 			"bones": [
 				{
@@ -118,7 +118,6 @@
 					"name": "lowerJaw",
 					"parent": "head",
 					"pivot": [0, 16.1, -22.13],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1, 14.1, -25.13], "size": [2, 2, 5], "uv": [49, 0]}
 					]
@@ -138,7 +137,6 @@
 					"name": "neckfluff",
 					"parent": "neck",
 					"pivot": [0, 16, -11.3],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-2, 12, -17.3], "size": [4, 1, 9], "uv": [32, 54]}
 					]
@@ -183,7 +181,6 @@
 					"name": "chestfluff",
 					"parent": "upperBody",
 					"pivot": [0, 10.5, -3.2],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-4, 8.5, -12.2], "size": [8, 2, 10], "uv": [60, 52]}
 					]
@@ -211,6 +208,11 @@
 					"parent": "tail1",
 					"pivot": [0, 11, 16.8],
 					"cubes": []
+				},
+				{
+					"name": "rider_pos",
+					"parent": "lowerBody",
+					"pivot": [0, 19, -3]
 				}
 			]
 		}

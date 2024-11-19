@@ -37,7 +37,6 @@
 					"name": "tailfan1",
 					"parent": "tail1",
 					"pivot": [0, 30.6, 11.8],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-4.5, 22.6, 9.8], "size": [9, 8, 11], "uv": [0, 34]}
 					]
@@ -75,7 +74,6 @@
 					"name": "part2",
 					"parent": "upperwingR2",
 					"pivot": [-5.5, 24.2, -8],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-6, 23.2, -9.5], "size": [1, 10, 15], "uv": [45, 31]}
 					]
@@ -93,7 +91,6 @@
 					"name": "part93",
 					"parent": "upperwingR",
 					"pivot": [5.5, 24.2, -8],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [5, 23.2, -9.5], "size": [1, 10, 15], "uv": [45, 31]}
 					]
@@ -156,7 +153,6 @@
 					"name": "lowerhook",
 					"parent": "Klowerjaw",
 					"pivot": [0, 38, -28.9],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1.5, 38, -31.9], "size": [3, 2, 3], "uv": [28, 0]}
 					]
@@ -207,6 +203,11 @@
 					"cubes": [
 						{"origin": [-0.9, 18.1, -19.2], "size": [3, 5, 9], "uv": [36, 90]}
 					]
+				},
+				{
+					"name": "rider_pos2",
+					"parent": "chest1",
+					"pivot": [0, 30, -4]
 				},
 				{
 					"name": "body_hitbox",

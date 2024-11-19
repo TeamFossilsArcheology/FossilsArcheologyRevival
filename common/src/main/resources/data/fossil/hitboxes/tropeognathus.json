@@ -2,7 +2,7 @@
 	"elements": [
 		{
 			"name": "rider_pos",
-			"pos": [0, 29, 6],
+			"pos": [0, 9, 4],
 			"ref": "rider_pos",
 			"is_anchor": true
 		}

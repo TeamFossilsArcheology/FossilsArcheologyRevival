@@ -66,7 +66,7 @@
 				{
 					"name": "head_hitbox",
 					"parent": "head",
-					"pivot": [0, -0.2, -21.4],
+					"pivot": [0, 0.3, -21.4],
 					"cubes": []
 				},
 				{
@@ -92,6 +92,11 @@
 					"parent": "upperBody",
 					"pivot": [0, -3, -4],
 					"cubes": []
+				},
+				{
+					"name": "rider_pos",
+					"parent": "upperBody",
+					"pivot": [0, 11, -4]
 				},
 				{
 					"name": "dorsalfin",
@@ -166,7 +171,7 @@
 				{
 					"name": "tail_hitbox",
 					"parent": "tail1",
-					"pivot": [0, 0.1, 14.45],
+					"pivot": [0, 1.1, 14.45],
 					"cubes": []
 				}
 			]

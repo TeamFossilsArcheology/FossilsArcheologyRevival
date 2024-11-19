@@ -246,6 +246,11 @@
 					"parent": "body",
 					"pivot": [-0.02, 4.1, 9.5],
 					"cubes": []
+				},
+				{
+					"name": "rider_pos",
+					"parent": "body",
+					"pivot": [0, 14.5, 3]
 				}
 			]
 		}

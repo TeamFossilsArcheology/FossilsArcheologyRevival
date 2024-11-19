@@ -250,6 +250,11 @@
 					]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "upperBody",
+					"pivot": [0, 25.25, -6]
+				},
+				{
 					"name": "BackThighRight",
 					"parent": "bone",
 					"pivot": [6, 13.92525, 7.54303],

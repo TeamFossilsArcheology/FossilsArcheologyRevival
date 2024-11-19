@@ -64,7 +64,6 @@
 					"name": "Lowerjaw",
 					"parent": "Head",
 					"pivot": [0, 16.4, -20.3],
-					"rotation": [0, 0, 0],
 					"cubes": [
 						{"origin": [-1, 14.4, -26.3], "size": [2, 2, 5], "uv": [44, 31]}
 					]
@@ -217,6 +216,11 @@
 					"cubes": [
 						{"origin": [-1, 15.9, 30.5], "size": [2, 3, 18], "uv": [71, 36]}
 					]
+				},
+				{
+					"name": "rider_pos",
+					"parent": "lowerBody",
+					"pivot": [0, 19.5, -4]
 				},
 				{
 					"name": "rightthigh",

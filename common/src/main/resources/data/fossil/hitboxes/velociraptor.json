@@ -17,6 +17,12 @@
 			"pos": [0, 10.4, -12.1],
 			"width": 8.2,
 			"height": 7
+		},
+		{
+			"name": "rider_pos",
+			"pos": [0, 15.7, 0.9],
+			"ref": "rider_pos",
+			"is_anchor": true
 		}
 	]
 }

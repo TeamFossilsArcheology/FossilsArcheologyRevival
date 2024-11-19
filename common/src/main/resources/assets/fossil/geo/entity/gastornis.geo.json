@@ -132,6 +132,11 @@
 					]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "chest1",
+					"pivot": [0, 29, -4]
+				},
+				{
 					"name": "body_hitbox",
 					"parent": "body1",
 					"pivot": [0, 1.05, 8.575],

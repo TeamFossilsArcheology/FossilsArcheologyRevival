@@ -293,6 +293,11 @@
 					]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "chest",
+					"pivot": [0, 21, -2]
+				},
+				{
 					"name": "upperlegR",
 					"parent": "basin",
 					"pivot": [-4, 20, 8.1],

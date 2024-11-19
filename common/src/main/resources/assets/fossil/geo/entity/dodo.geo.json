@@ -101,6 +101,11 @@
 					"pivot": [0, 13.9, -8.9]
 				},
 				{
+					"name": "rider_pos",
+					"parent": "torso",
+					"pivot": [0, 11, 1]
+				},
+				{
 					"name": "rightLeg",
 					"parent": "body",
 					"pivot": [1.5, 3, 3],
