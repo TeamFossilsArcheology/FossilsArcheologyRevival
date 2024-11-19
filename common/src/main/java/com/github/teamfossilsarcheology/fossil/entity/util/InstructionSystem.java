@@ -255,15 +255,33 @@ public class InstructionSystem extends AISystem {
 
     @Override
     public void load(CompoundTag tag) {
-        if (Version.debugEnabled() && !mob.level.isClientSide) {
-            instructions.clear();
+        if (Version.debugEnabled()) {
+            List<Instruction> newInstructions = new ObjectArrayList<>();
+            newInstructions.clear();
             ListTag saved = tag.getList("Instructions", Tag.TAG_COMPOUND);
             for (Tag savedTag : saved) {
-                instructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
+                newInstructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
             }
             shouldLoop = tag.getBoolean("InstructionsLoop");
-            if (!instructions.isEmpty()) start(instructions, shouldLoop);
-            syncWithClients();
+            if (!newInstructions.isEmpty()) start(newInstructions, shouldLoop);
+        }
+    }
+
+    public void saveAdditionalSpawnData(FriendlyByteBuf buf) {
+        CompoundTag tag = new CompoundTag();
+        saveAdditional(tag);
+        buf.writeNbt(tag);
+    }
+
+    public void loadAdditionalSpawnData(FriendlyByteBuf buf) {
+        List<Instruction> newInstructions = new ObjectArrayList<>();
+        CompoundTag tag = buf.readNbt();
+        if (tag != null) {
+            ListTag saved = tag.getList("Instructions", Tag.TAG_COMPOUND);
+            for (Tag savedTag : saved) {
+                newInstructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
+            }
+            InstructionTab.INSTRUCTIONS.put(mob.getUUID(), new InstructionTab.Pair(mob.getId(), newInstructions));
         }
     }
 }

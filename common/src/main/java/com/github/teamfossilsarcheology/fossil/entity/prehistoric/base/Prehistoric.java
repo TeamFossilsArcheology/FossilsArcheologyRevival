@@ -251,6 +251,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         buf.writeBoolean(getGender() == Gender.MALE);
         buf.writeInt(getAge());
         buf.writeFloat(getXRot());
+        instructionSystem.saveAdditionalSpawnData(buf);
     }
 
     @Override
@@ -263,6 +264,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         setAgeInTicks(buf.readInt());
         setXRot(buf.readFloat());
         refreshTexturePath();
+        instructionSystem.loadAdditionalSpawnData(buf);
     }
 
     @Override
