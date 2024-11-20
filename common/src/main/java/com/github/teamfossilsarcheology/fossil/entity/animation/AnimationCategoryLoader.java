@@ -19,7 +19,7 @@ import java.util.Map;
 public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
-    private Map<ResourceLocation, Map<AnimationCategory, AnimationHolder>> stuff = new Object2ObjectOpenHashMap<>();
+    private Map<ResourceLocation, Map<AnimationCategory, AnimationHolder>> animations = new Object2ObjectOpenHashMap<>();
     public static final AnimationCategoryLoader INSTANCE = new AnimationCategoryLoader(GSON);
     private static final AnimationHolder EMPTY = new AnimationHolder();
 
@@ -69,16 +69,16 @@ public class AnimationCategoryLoader extends SimpleJsonResourceReloadListener {
             }
             builder.put(path, map);
         }
-        stuff = builder.build();
+        animations = builder.build();
     }
 
     public Map<AnimationCategory, AnimationHolder> getAnimations(ResourceLocation path) {
-        return stuff.get(path);
+        return animations.get(path);
     }
 
     public AnimationHolder getAnimations(ResourceLocation path, AnimationCategory animationCategory) {
-        if (stuff.containsKey(path)) {
-            return stuff.get(path).get(animationCategory);
+        if (animations.containsKey(path)) {
+            return animations.get(path).get(animationCategory);
         }
         return EMPTY;
     }

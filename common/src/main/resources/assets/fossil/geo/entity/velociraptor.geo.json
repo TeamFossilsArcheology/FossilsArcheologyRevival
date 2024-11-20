@@ -19,6 +19,7 @@
 					"name": "lowerBody",
 					"parent": "bone",
 					"pivot": [0, 13.7, 4.1],
+					"rotation": [-5.22, 0, 0],
 					"cubes": [
 						{"origin": [-3.5, 8.14582, -2.05708], "size": [7, 8, 9], "inflate": 0.001, "uv": [66, 9]}
 					]
@@ -27,6 +28,7 @@
 					"name": "upperBody",
 					"parent": "lowerBody",
 					"pivot": [0, 14.04582, -2.55708],
+					"rotation": [7.83, 0, 0],
 					"cubes": [
 						{"origin": [-3, 8.84582, -8.05708], "size": [6, 7, 7], "uv": [98, 34]}
 					]
@@ -35,6 +37,7 @@
 					"name": "neck",
 					"parent": "upperBody",
 					"pivot": [0, 12.44582, -7.75708],
+					"rotation": [-75.65, 0, 0],
 					"cubes": [
 						{"origin": [-2, 10.44582, -16.75708], "size": [4, 5, 11], "uv": [1, 48]}
 					]
@@ -43,6 +46,7 @@
 					"name": "head",
 					"parent": "neck",
 					"pivot": [0.5, 14.24582, -15.98708],
+					"rotation": [83.48, 0, 0],
 					"cubes": [
 						{"origin": [-2.5, 11.24582, -19.98708], "size": [5, 5, 5], "uv": [1, 1]}
 					]
@@ -51,6 +55,7 @@
 					"name": "upperJaw",
 					"parent": "head",
 					"pivot": [0.5, 13.24582, -19.91708],
+					"rotation": [3.39, 0, 0],
 					"cubes": [
 						{"origin": [-1.5, 12.64582, -26.61708], "size": [3, 3, 7], "uv": [28, 0]}
 					]
@@ -229,6 +234,11 @@
 					"cubes": [
 						{"origin": [-3.5, 13.64582, 6.44292], "size": [7, 1, 6], "inflate": 0.0001, "uv": [46, 41]}
 					]
+				},
+				{
+					"name": "rider_pos",
+					"parent": "lowerBody",
+					"pivot": [0, 15.7, -0.9]
 				},
 				{
 					"name": "leftThigh",
