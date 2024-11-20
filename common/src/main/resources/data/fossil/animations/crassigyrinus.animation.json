@@ -33,10 +33,6 @@
       "loop": true,
       "animation_length": 4
     },
-    "animation.crassigyrinus.swim": {
-      "loop": true,
-      "animation_length": 12
-    },
     "animation.crassigyrinus.swim_fast": {
       "loop": true,
       "animation_length": 1

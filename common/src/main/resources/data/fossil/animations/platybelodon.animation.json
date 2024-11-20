@@ -7,7 +7,7 @@
         0.5
       ]
     },
-    "animation.platybelodon.drink": {
+    "animation.platybelodon.eat/drink": {
       "animation_length": 4
     },
     "animation.platybelodon.jump/fall": {

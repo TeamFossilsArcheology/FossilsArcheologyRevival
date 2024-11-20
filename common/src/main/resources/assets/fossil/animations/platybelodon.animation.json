@@ -109,7 +109,7 @@
 				}
 			}
 		},
-		"animation.platybelodon.drink": {
+		"animation.platybelodon.eat/drink": {
 			"animation_length": 4,
 			"bones": {
 				"jaw": {

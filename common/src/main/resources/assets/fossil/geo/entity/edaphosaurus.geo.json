@@ -154,7 +154,7 @@
 					]
 				},
 				{
-					"name": "upperlegL2",
+					"name": "upperlegR",
 					"parent": "hips",
 					"pivot": [-3.9, 6.7, 14.1],
 					"rotation": [7.83, -28.7, -7.83],
@@ -174,8 +174,8 @@
 					]
 				},
 				{
-					"name": "lowerlegL2",
-					"parent": "upperlegL2",
+					"name": "lowerlegR",
+					"parent": "upperlegR",
 					"pivot": [-7.4, 3.7, 14.1],
 					"cubes": [
 						{
@@ -194,8 +194,8 @@
 					]
 				},
 				{
-					"name": "feetL2",
-					"parent": "lowerlegL2",
+					"name": "feetR",
+					"parent": "lowerlegR",
 					"pivot": [-6.9, 2.7, 14.6],
 					"rotation": [-1.71, 44.35, 5.22],
 					"cubes": [
@@ -359,7 +359,7 @@
 					]
 				},
 				{
-					"name": "upperarmL2",
+					"name": "upperarmR",
 					"parent": "bodyUpper",
 					"pivot": [-4, 5.9, -7],
 					"rotation": [-5.22, 13.04, 0],
@@ -379,8 +379,8 @@
 					]
 				},
 				{
-					"name": "lowerarmL2",
-					"parent": "upperarmL2",
+					"name": "lowerarmR",
+					"parent": "upperarmR",
 					"pivot": [-7, 2.9, -7],
 					"cubes": [
 						{
@@ -398,8 +398,8 @@
 					]
 				},
 				{
-					"name": "handL2",
-					"parent": "lowerarmL2",
+					"name": "handR",
+					"parent": "lowerarmR",
 					"pivot": [-7, 1.9, -7],
 					"rotation": [7.83, 0, -0.74],
 					"cubes": [

@@ -30,6 +30,10 @@
     "animation.edaphosaurus.speak": {
       "animation_length": 2.3333
     },
+    "animation.edaphosaurus.swim": {
+      "loop": true,
+      "animation_length": 3.3
+    },
     "animation.edaphosaurus.walk": {
       "loop": true,
       "animation_length": 2.1667,

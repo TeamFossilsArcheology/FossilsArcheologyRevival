@@ -11,7 +11,7 @@
       "animation_length": 30.875
     },
     "animation.diplodocus.eat": {
-      "animation_length": 7.2917
+      "animation_length": 6.8333
     },
     "animation.diplodocus.jump/fall": {
       "loop": true,

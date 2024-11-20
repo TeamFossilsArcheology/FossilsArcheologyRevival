@@ -9,15 +9,16 @@
       "animation_length": 8
     },
     "animation.arthropleura.sleep/sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     },
     "animation.arthropleura.swim": {
       "loop": true,
-      "animation_length": 3
+      "animation_length": 6
     },
     "animation.arthropleura.walk/run": {
       "loop": true,
-      "animation_length": 8
+      "animation_length": 1.3333
     }
   },
   "geckolib_format_version": 2
