@@ -3,11 +3,11 @@
   "package": "com.github.teamfossilsarcheology.fossil.fabric.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
-    "AnimationProcessorMixin","DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor",
+    "AnimationProcessorMixin", "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor",
     "ScreenEffectRendererMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin",
+    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin",
     "ServerPlayerMixin"
   ],
   "injectors": {

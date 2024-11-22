@@ -6,9 +6,6 @@ import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.syncher.EntityDataAccessor;
-import net.minecraft.network.syncher.EntityDataSerializers;
-import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
@@ -28,7 +25,6 @@ import net.minecraft.world.phys.shapes.Shapes;
 import org.jetbrains.annotations.NotNull;
 
 public class TarSlime extends Slime {
-    private static final EntityDataAccessor<Integer> VEHICLE_ID = SynchedEntityData.defineId(TarSlime.class, EntityDataSerializers.INT);
 
     public TarSlime(EntityType<? extends TarSlime> entityType, Level level) {
         super(entityType, level);
@@ -36,12 +32,6 @@ public class TarSlime extends Slime {
 
     public static AttributeSupplier.Builder createAttributes() {
         return createMobAttributes().add(Attributes.ATTACK_DAMAGE);
-    }
-
-    @Override
-    protected void defineSynchedData() {
-        super.defineSynchedData();
-        entityData.define(VEHICLE_ID, -1);
     }
 
     @Override
@@ -112,20 +102,6 @@ public class TarSlime extends Slime {
     }
 
     @Override
-    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-        if (VEHICLE_ID.equals(key)) {
-            //Have to set this ourselves because the server won't send this info to the player that is the vehicle
-            Entity entity = level.getEntity(entityData.get(VEHICLE_ID));
-            if (entityData.get(VEHICLE_ID) == -1 || entity == null) {
-                stopRiding();
-            } else if (getVehicle() != entity) {
-                startRiding(entity);
-            }
-        }
-        super.onSyncedDataUpdated(key);
-    }
-
-    @Override
     public void rideTick() {
         super.rideTick();
         Entity vehicle = getVehicle();
@@ -157,24 +133,6 @@ public class TarSlime extends Slime {
         }
         if (random.nextInt(6) == 0) {
             startRiding(player);
-        }
-    }
-
-    @Override
-    public boolean startRiding(Entity vehicle) {
-        if (super.startRiding(vehicle)) {
-            entityData.set(VEHICLE_ID, vehicle.getId());
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public void stopRiding() {
-        Entity entity = getVehicle();
-        super.stopRiding();
-        if (entity != null && entity != getVehicle() && !level.isClientSide) {
-            entityData.set(VEHICLE_ID, -1);
         }
     }
 
