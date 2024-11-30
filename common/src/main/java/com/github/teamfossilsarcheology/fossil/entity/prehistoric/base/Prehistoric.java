@@ -790,7 +790,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             return false;
         }
         Prehistoric other = ((Prehistoric) otherAnimal);
-        return other.gender != gender && other.getMatingCooldown() <= 0 && (matingGoal.getPartner() == null || matingGoal.getPartner() == otherAnimal);
+        return other.gender != gender && other.getMatingCooldown() <= 0 && other.moodSystem.getMood() > 50 && (matingGoal.getPartner() == null || matingGoal.getPartner() == otherAnimal);
     }
 
     @Override
