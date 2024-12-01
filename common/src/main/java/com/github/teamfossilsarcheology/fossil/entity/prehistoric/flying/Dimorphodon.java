@@ -50,18 +50,18 @@ public class Dimorphodon extends PrehistoricFlying {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return ModSounds.PTERANODON_AMBIENT.get();
+        return ModSounds.COMPSOGNATHUS_AMBIENT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
-        return ModSounds.PTERANODON_HURT.get();
+        return ModSounds.COMPSOGNATHUS_HURT.get();
     }
 
     @Nullable
     @Override
     protected SoundEvent getDeathSound() {
-        return ModSounds.PTERANODON_DEATH.get();
+        return ModSounds.COMPSOGNATHUS_DEATH.get();
     }
 }
