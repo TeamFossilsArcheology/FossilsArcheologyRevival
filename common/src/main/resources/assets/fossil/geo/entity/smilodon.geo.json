@@ -12,12 +12,7 @@
 			},
 			"bones": [
 				{
-					"name": "bone",
-					"pivot": [0, 0, 0]
-				},
-				{
 					"name": "root",
-					"parent": "bone",
 					"pivot": [0, 24, 0]
 				},
 				{
@@ -291,11 +286,6 @@
 					"cubes": [
 						{"origin": [-4.5, 20, -10.4], "size": [6, 2, 12], "uv": [76, 10], "mirror": true}
 					]
-				},
-				{
-					"name": "rider_pos",
-					"parent": "chest",
-					"pivot": [0, 21, -2]
 				},
 				{
 					"name": "upperlegR",

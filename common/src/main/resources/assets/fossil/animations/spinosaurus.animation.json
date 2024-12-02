@@ -2121,6 +2121,116 @@
 				}
 			}
 		},
+		"animation.spinosaurus.sit": {
+			"loop": true,
+			"bones": {
+				"lowerBody": {
+					"rotation": {
+						"vector": ["10+math.sin(query.anim_time * 60) * 1", 0, 0]
+					},
+					"position": {
+						"vector": [0, -7, 0]
+					}
+				},
+				"tail1": {
+					"rotation": {
+						"vector": ["-5-math.sin(query.anim_time * 60) * 1", 7.43547, -0.98448]
+					}
+				},
+				"tail2": {
+					"rotation": {
+						"vector": [-4.80778, 1.79662, 5.29297]
+					}
+				},
+				"tail3": {
+					"rotation": {
+						"vector": [-1.15025, 15.14944, -3.7013]
+					}
+				},
+				"tail4": {
+					"rotation": {
+						"vector": [7.33978, 19.98015, -0.90956]
+					}
+				},
+				"rightUpperArm": {
+					"rotation": {
+						"vector": [-57.51625, 6.47658, 63.3984]
+					}
+				},
+				"rightLowerArm": {
+					"rotation": {
+						"vector": [-40.46888, 2.8236, 14.27574]
+					}
+				},
+				"neck": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time * 60) * 5", 0, "math.sin(query.anim_time * 120) * 2"]
+					}
+				},
+				"neck2": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time * 30) * 5", 0, 0]
+					}
+				},
+				"head": {
+					"rotation": {
+						"vector": ["-math.sin(query.anim_time * 60) * 5", 0, 0]
+					}
+				},
+				"leftUpperArm": {
+					"rotation": {
+						"vector": [-46.44208, -7.25375, -65.91827]
+					}
+				},
+				"leftLowerArm": {
+					"rotation": {
+						"vector": [-62.44081, -0.54094, -12.48848]
+					}
+				},
+				"leftThigh": {
+					"rotation": {
+						"vector": [-67.90511, -17.30261, 2.66207]
+					},
+					"position": {
+						"vector": [0, -7, 0]
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"vector": [-2.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0, -1]
+					}
+				},
+				"leftFoot": {
+					"rotation": {
+						"vector": [70, 0, 0]
+					}
+				},
+				"rightThigh": {
+					"rotation": {
+						"vector": [-57.46311, 12.49553, 0.33693]
+					},
+					"position": {
+						"vector": [0, -7, 0]
+					}
+				},
+				"rightLeg": {
+					"rotation": {
+						"vector": [-12.5, 0, 0]
+					},
+					"position": {
+						"vector": [0, 0, -1]
+					}
+				},
+				"rightFoot": {
+					"rotation": {
+						"vector": [72.5, 0, 0]
+					}
+				}
+			}
+		},
 		"animation.spinosaurus.swim_floating": {
 			"loop": true,
 			"animation_length": 2,
