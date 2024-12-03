@@ -35,10 +35,10 @@ Dafall, Indominator, MrDinosaurFan, TotallyNotAHobo
 Dipple_Effect
 
 ###### Builders
-Robberto08
+Robberto08, Toastloard
 
 ###### Other
-Thylaconical
+Thylaconical, Toastloard
 
 ## Past Fossils and Archeology Revival Contributors
 
