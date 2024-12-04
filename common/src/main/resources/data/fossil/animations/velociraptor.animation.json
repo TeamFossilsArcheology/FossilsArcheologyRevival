@@ -34,9 +34,15 @@
       "loop": "hold_on_last_frame",
       "animation_length": 0.7143
     },
+    "animation.velociraptor.latched": {
+      "animation_length": 1.0714
+    },
     "animation.velociraptor.leap": {
       "loop": "hold_on_last_frame",
-      "animation_length": 1
+      "animation_length": 1,
+      "action_delay": [
+        0.21
+      ]
     },
     "animation.velociraptor.run": {
       "loop": true,

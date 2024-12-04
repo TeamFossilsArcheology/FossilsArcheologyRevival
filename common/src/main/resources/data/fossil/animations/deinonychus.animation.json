@@ -31,12 +31,18 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.deinonychus.leap": {
-      "loop": "hold_on_last_frame",
-      "animation_length": 0.6993
-    },
     "animation.deinonychus.land": {
       "animation_length": 1.1161
+    },
+    "animation.deinonychus.latched": {
+      "animation_length": 1.5625
+    },
+    "animation.deinonychus.leap": {
+      "loop": "hold_on_last_frame",
+      "animation_length": 0.6993,
+      "action_delay": [
+        0.35
+      ]
     },
     "animation.deinonychus.run": {
       "loop": true,
