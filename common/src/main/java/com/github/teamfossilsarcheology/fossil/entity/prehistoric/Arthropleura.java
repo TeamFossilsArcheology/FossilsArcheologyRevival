@@ -183,7 +183,7 @@ public class Arthropleura extends Prehistoric {
 
     @Override
     protected float getSoundVolume() {
-        return isBee() ? super.getSoundVolume() * 2 : super.getSoundVolume();
+        return isBee() ? super.getSoundVolume() * 2 : super.getSoundVolume() * 0.75f;
     }
 
     @Override
