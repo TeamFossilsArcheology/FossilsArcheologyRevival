@@ -103,12 +103,11 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             addWidget(new Button(width - 115, 5, 90, 20, new TextComponent("Open Leap"), button -> {
                 closeLists();
                 addWidget(leapEntities);
+            }, (button, poseStack, i, j) -> {
+                debugScreen.renderTooltip(poseStack, new TextComponent("Won't save correctly when leaving the world"), i, j);
             }));
         }
         attackEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
-            Instruction instruction = new Instruction.Attack(entity1.getId());
-            instructions.addInstruction(instruction);
-            INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         });
         addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
             closeLists();

@@ -203,13 +203,13 @@ public class InstructionSystem extends AISystem {
         }
     }
 
-    public void start(List<Instruction> instructions, boolean loop) {
+    public void start(List<Instruction> instructions, boolean loop, boolean sync) {
         this.instructions.clear();
         this.instructions.addAll(instructions);
         mob.getNavigation().stop();
         index = -1;
         shouldLoop = loop;
-        syncWithClients();
+        if (sync) syncWithClients();
         mob.sleepSystem.setSleepDisabled(true);
         mob.sitSystem.setSittingDisabled(true);
         if (instructions.isEmpty()) {
@@ -263,7 +263,7 @@ public class InstructionSystem extends AISystem {
                 newInstructions.add(Instruction.decodeFromTag((CompoundTag) savedTag));
             }
             shouldLoop = tag.getBoolean("InstructionsLoop");
-            if (!newInstructions.isEmpty()) start(newInstructions, shouldLoop);
+            if (!newInstructions.isEmpty()) start(newInstructions, shouldLoop, false);
         }
     }
 

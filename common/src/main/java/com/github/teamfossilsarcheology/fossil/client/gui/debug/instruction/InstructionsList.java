@@ -352,9 +352,6 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         public boolean mouseClicked(double mouseX, double mouseY, int button) {
             if (button == 0) {
                 InstructionsList.this.selected = this;
-                if (instruction instanceof Instruction.Attack attack) {
-                    InstructionTab.highlightInstructionEntity = minecraft.level.getEntity(attack.targetId);
-                }
                 InstructionTab.highlightInstruction = instruction;
                 return true;
             } else {

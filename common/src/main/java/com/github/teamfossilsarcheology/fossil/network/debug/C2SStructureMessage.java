@@ -67,7 +67,7 @@ public class C2SStructureMessage {
             if (prehistoric instanceof PrehistoricSwimming swimming && !swimming.isAmphibious()) {
                 swimming.setNoAi(true);
             } else {
-                prehistoric.getInstructionSystem().start(instructions, true);
+                prehistoric.getInstructionSystem().start(instructions, true, true);
             }
             if (prehistoric instanceof PrehistoricFlying flying) {
                 flying.setNoAi(true);

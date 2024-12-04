@@ -54,7 +54,11 @@ public class InstructionRenderer {
                     Vec3 pos = attachTo.location;
                     LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.05, pos.y, pos.z - 0.05, pos.x + 0.05, pos.y + 0.05, pos.z + 0.05), 1, 0, 1, 1);
                     currentPos = attachTo.target;
-                } else if (instruction instanceof Instruction.Attack attack) {
+                } else if (instruction instanceof Instruction.LeapLand leapLand) {
+                    addPosition(poseStack, buffer, instruction, new BlockPos(leapLand.location), Color.GREEN);
+                    Vec3 pos = leapLand.locationAbove;
+                    LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.05, pos.y, pos.z - 0.05, pos.x + 0.05, pos.y + 0.05, pos.z + 0.05), 1, 0, 1, 1);
+                    currentPos = new BlockPos(leapLand.location);
                 } else if (instruction instanceof Instruction.PlayAnim playAnim) {
                 } else if (instruction instanceof Instruction.Idle idle) {
                     int stack = countAtPos.compute(currentPos, (blockPos, count) -> count == null ? 1 : count + 1);

@@ -38,7 +38,6 @@ public abstract class Instruction {
                 case MOVE_TO -> MoveTo.decodeTag(tag);
                 case TELEPORT_TO -> TeleportTo.decodeTag(tag);
                 case ATTACH_TO -> AttachTo.decodeTag(tag);
-                case ATTACK -> Attack.decodeTag(tag);
                 case LEAP_ATTACK -> LeapAttack.decodeTag(tag);
                 case LEAP_LAND -> LeapLand.decodeTag(tag);
                 case PLAY_ANIM -> PlayAnim.decodeTag(tag);
@@ -151,31 +150,6 @@ public abstract class Instruction {
         @Override
         public String toString() {
             return type.name() + ": " + target.getX() + " " + target.getY() + " " + target.getZ();
-        }
-    }
-
-    public static class Attack extends Instruction {
-        public final int targetId;
-
-        public Attack(int targetId) {
-            super(Type.ATTACK);
-            this.targetId = targetId;
-        }
-
-        @Override
-        public CompoundTag encodeTag() {
-            CompoundTag tag = super.encodeTag();
-            tag.putInt("TargetId", targetId);
-            return tag;
-        }
-
-        protected static Instruction decodeTag(CompoundTag tag) {
-            return new Attack(tag.getInt("TargetId"));
-        }
-
-        @Override
-        public String toString() {
-            return type.name() + ": " + targetId;
         }
     }
 
@@ -328,6 +302,6 @@ public abstract class Instruction {
     }
 
     public enum Type {
-        ATTACK, MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, LEAP_ATTACK, LEAP_LAND, ATTACH_TO, SLEEP;
+        MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, LEAP_ATTACK, LEAP_LAND, ATTACH_TO, SLEEP;
     }
 }
