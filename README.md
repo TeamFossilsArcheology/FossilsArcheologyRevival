@@ -17,7 +17,7 @@
 
 
 ## Wikis
-[User Wiki](http://fossils-archeology.wikia.com/) (outdated)
+[User Wiki](https://fossilsarcheology.wiki.gg/wiki/Fossils_and_Archeology_Wiki)
 
 [Developer Wiki](https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/wiki)
 
