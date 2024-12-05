@@ -475,6 +475,8 @@
   "enchantment.fossil.archeology.desc": "Increases the likelihood of getting archeology related items (especially relic scrap and scarab gems)",
   "enchantment.fossil.paleontology": "Paleontology",
   "enchantment.fossil.paleontology.desc": "Increases the likelihood of getting paleontology related items (especially fossils)",
+  "entity.minecraft.villager.fossil.paleontologist": "Paleontologist",
+  "entity.minecraft.villager.fossil.archeologist": "Archeologist",
   "entity.minecraft.villager.paleontologist": "Paleontologist",
   "entity.minecraft.villager.archeologist": "Archeologist",
   "entity.fossil.alligator_gar": "Alligator Gar",

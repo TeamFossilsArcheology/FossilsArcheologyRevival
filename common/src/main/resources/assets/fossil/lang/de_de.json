@@ -472,6 +472,8 @@
   "enchantment.fossil.archeology.desc": "Erhöht die Wahrscheinlichkeit, archäologiebezogene Gegenstände zu erhalten (insbesondere Reliktschrott und Skarabäen)",
   "enchantment.fossil.paleontology": "Paläontologie",
   "enchantment.fossil.paleontology.desc": "Erhöht die Wahrscheinlichkeit, paläontologische Gegenstände zu erhalten (insbesondere Fossilien)",
+  "entity.minecraft.villager.fossil.paleontologist": "Paläontologe",
+  "entity.minecraft.villager.fossil.archeologist": "Archäologe",
   "entity.minecraft.villager.paleontologist": "Paläontologe",
   "entity.minecraft.villager.archeologist": "Archäologe",
   "entity.fossil.alligator_gar": "Alligatorhecht",
