@@ -1,35 +1,24 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
-import com.fossil.fossil.client.renderer.entity.DebugEntityRenderer;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoLeapAtTargetGoal;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
-import com.mojang.math.Vector3d;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.RestrictSunGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.Vec3;
-import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.manager.AnimationData;
-import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.core.snapshot.BoneSnapshot;
-import software.bernie.geckolib3.geo.render.built.GeoBone;
 
 public class Velociraptor extends PrehistoricLeaping {
     public static final String LEAP = "animation.velociraptor.leap";
     public static final String CLIMB = "animation.velociraptor.climb";
+    public static final String RIDE = "animation.velociraptor.latched";
     public static final String LAND = "animation.velociraptor.land";
 
     public Velociraptor(EntityType<Velociraptor> entityType, Level level) {
@@ -75,7 +64,7 @@ public class Velociraptor extends PrehistoricLeaping {
 
     @Override
     public String getLeapAttackAnimationName() {
-        return CLIMB;
+        return RIDE;
     }
 
     @Nullable

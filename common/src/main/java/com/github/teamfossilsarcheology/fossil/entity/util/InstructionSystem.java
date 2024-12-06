@@ -1,27 +1,35 @@
 package com.github.teamfossilsarcheology.fossil.entity.util;
 
+import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.AISystem;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.InstructionMessage;
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,11 +37,12 @@ import java.util.List;
  * The instructions will be played in order and the mob will be unable to do anything else while this is running.
  */
 public class InstructionSystem extends AISystem {
-    private final List<Instruction> instructions = new ArrayList<>();
+    private final List<Instruction> instructions = new ObjectArrayList<>();
     private int index = -1;
     private boolean shouldLoop;
     private int tries;
     private long endTick;
+    private long delayTick;
     private boolean breachTargetReached;
     private boolean attached;
     private AnimationLogic.ActiveAnimationInfo activeAnim;
@@ -54,6 +63,7 @@ public class InstructionSystem extends AISystem {
     }
 
     private boolean tickRunning() {
+        boolean debug = false;
         Instruction current = instructions.get(index);
         if (mob.isHungry()) {
             mob.setHunger(mob.getMaxHunger());
@@ -83,6 +93,54 @@ public class InstructionSystem extends AISystem {
                 return true;
             }
             return false;
+        } else if (current instanceof Instruction.LeapLand leapLand) {
+            PrehistoricLeaping leaping = (PrehistoricLeaping) mob;
+            long currentTime = mob.level.getGameTime();
+            if (leaping.distanceToSqr(leapLand.location) < 30 && !leaping.getLeapSystem().hasLeapStarted()) {
+                ServerAnimationInfo animation = (ServerAnimationInfo) leaping.getLeapStartAnimation();
+                leaping.getLeapSystem().setLeapStarted(true);
+                //mob.setDeltaMovement(Vec3.ZERO);
+                mob.getNavigation().stop();
+                endTick = (long) (currentTime - 1 + animation.animation.animationLength);
+                delayTick = (long) (currentTime - 1 + animation.actionDelay);
+            }
+            if (delayTick > 0 && currentTime == delayTick) {
+                if (debug) System.out.println("Start jump for Land");
+                Vec3 offset = leapLand.locationAbove.subtract(mob.position()).normalize();
+                mob.setDeltaMovement(mob.getDeltaMovement().add(offset.x, offset.y + 0.1, offset.z));
+            } else if (mob.isOnGround() && endTick > 0 && currentTime >= endTick) {
+                leaping.getLeapSystem().setLeapStarted(false);
+                AnimationInfo animation = leaping.getLandAnimation();
+                mob.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animation, AnimationCategory.NONE, 0, 1);
+                return false;
+            } else if (mob.level.getBlockState(mob.blockPosition()).is(Blocks.ROSE_BUSH) && !leaping.getLeapSystem().isAttackRiding()) {
+                leaping.getLeapSystem().setAttackRiding(true);
+                leaping.getLeapSystem().setLeapStarted(false);
+            }
+            if (leaping.getLeapSystem().isAttackRiding()) {
+                mob.setDeltaMovement(Vec3.ZERO);
+            }
+            if (debug) System.out.println("Tick: " + mob.isOnGround() + " " + leaping.distanceToSqr(leapLand.location));
+            return true;
+        } else if (current instanceof Instruction.LeapAttack leapAttack) {
+            Entity target = mob.level.getEntity(leapAttack.targetId);
+            if (target != null) {
+                PrehistoricLeaping leaping = (PrehistoricLeaping) mob;
+                double jumpDistance = 30;
+                if (leaping.getLeapSystem().isLeaping()) {
+                    if (leaping.getLeapSystem().isLanding()) {
+                        delayTick = mob.level.getGameTime() + 25;
+                    }
+                } else if ( mob.isOnGround() && delayTick > 0 && delayTick >= mob.level.getGameTime()) {
+                    return false;
+                } else if (leaping.distanceToSqr(target) < jumpDistance && delayTick == 0) {
+                    leaping.getLeapSystem().setLeapTarget(target);
+                } else {
+                    mob.getNavigation().moveTo(target, 1);
+                    mob.lookAt(target, 120, 10);
+                }
+                return true;
+            }
         } else if (current instanceof Instruction.Idle idle) {
             return endTick >= mob.level.getGameTime();
         } else if (current instanceof Instruction.Sleep sleep) {
@@ -110,8 +168,6 @@ public class InstructionSystem extends AISystem {
                 }
                 return true;
             }
-        } else if (current instanceof Instruction.Attack attack) {
-
         }
         return false;
     }
@@ -167,6 +223,8 @@ public class InstructionSystem extends AISystem {
                 return;
             }
         }
+        endTick = 0;
+        delayTick = 0;
         Instruction current = instructions.get(index);
         if (current instanceof Instruction.MoveTo moveTo) {
             mob.getNavigation().moveTo(moveTo.target.getX(), moveTo.target.getY(), moveTo.target.getZ(), 1);
@@ -185,15 +243,26 @@ public class InstructionSystem extends AISystem {
                 Vec3 pos = new Vec3(attachTo.location.x + rad * face.getStepX(), attachTo.location.y, attachTo.location.z + rad * face.getStepZ());
                 meganeura.getAttachSystem().setAttachTarget(attachTo.target, face, pos);
             }
+        } else if (current instanceof Instruction.LeapLand leapLand) {
+            mob.getNavigation().moveTo(leapLand.location.x, leapLand.location.y, leapLand.location.z, 1);
+        } else if (current instanceof Instruction.LeapAttack leapAttack) {
+            Entity target = mob.level.getEntity(leapAttack.targetId);
+            if (target instanceof LivingEntity && mob instanceof PrehistoricLeaping leaping) {
+                mob.getNavigation().moveTo(target, 1);
+                mob.lookAt(target, 120, 10);
+                mob.setTarget(leaping);
+
+               // leaping.getLeapSystem().setLeapTarget(target);
+            }
         } else if (current instanceof Instruction.Idle idle) {
             endTick = mob.level.getGameTime() + idle.duration;
         } else if (current instanceof Instruction.PlayAnim playAnim) {
             if (playAnim.timeBased) {
                 animCount = mob.level.getGameTime() + playAnim.count * 20L;
-                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5, true);
+                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5,true);
             } else {
                 animCount = playAnim.count;
-                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5, false);
+                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5,false);
             }
         } else if (current instanceof Instruction.Sleep sleep) {
             endTick = mob.level.getGameTime() + sleep.duration;
@@ -208,6 +277,8 @@ public class InstructionSystem extends AISystem {
         this.instructions.addAll(instructions);
         mob.getNavigation().stop();
         index = -1;
+        endTick = 0;
+        delayTick = 0;
         shouldLoop = loop;
         if (sync) syncWithClients();
         mob.sleepSystem.setSleepDisabled(true);
@@ -217,6 +288,11 @@ public class InstructionSystem extends AISystem {
         } else {
             if (mob instanceof Meganeura meganeura) {
                 meganeura.getAttachSystem().stopAttaching();
+            }
+            if (mob instanceof PrehistoricLeaping leaping) {
+                leaping.getLeapSystem().stopLeap();
+                leaping.getLeapSystem().setAttackRiding(false);
+                leaping.stopRiding();
             }
             if (mob.isSleeping()) mob.sleepSystem.setSleeping(false);
             if (mob.sitSystem.isSitting()) mob.sitSystem.setSitting(false);

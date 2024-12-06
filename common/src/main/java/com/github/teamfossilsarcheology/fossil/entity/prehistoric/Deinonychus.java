@@ -27,7 +27,7 @@ public class Deinonychus extends PrehistoricLeaping {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(0, new DinoOtherLeapAtTargetGoal(this));
+        goalSelector.addGoal(Util.ATTACK, new DinoLeapAtTargetGoal(this));
         goalSelector.addGoal(5, new RestrictSunGoal(this));
     }
 

@@ -19,6 +19,7 @@ public class S2CSyncActiveAnimationMessage {
     private final String animationName;
     private final AnimationCategory category;
     private final double ticks;
+    private final double speed;
     private final boolean loop;
 
     public S2CSyncActiveAnimationMessage(FriendlyByteBuf buf) {
@@ -28,6 +29,7 @@ public class S2CSyncActiveAnimationMessage {
         String name = buf.readUtf();
         this.category = AnimationCategory.CATEGORIES.stream().filter(category1 -> category1.name().equals(name)).findFirst().orElse(AnimationCategory.NONE);
         this.ticks = buf.readDouble();
+        this.speed = buf.readDouble();
         this.loop = buf.readBoolean();
     }
 
@@ -37,6 +39,7 @@ public class S2CSyncActiveAnimationMessage {
         this.animationName = activeAnimationInfo.animationName();
         this.category = activeAnimationInfo.category();
         this.ticks = activeAnimationInfo.transitionLength();
+        this.speed = activeAnimationInfo.speed();
         this.loop = activeAnimationInfo.loop();
     }
 
@@ -46,6 +49,7 @@ public class S2CSyncActiveAnimationMessage {
         buf.writeUtf(animationName);
         buf.writeUtf(category.name());
         buf.writeDouble(ticks);
+        buf.writeDouble(speed);
         buf.writeBoolean(loop);
     }
 
@@ -57,7 +61,7 @@ public class S2CSyncActiveAnimationMessage {
                 if (prehistoric.getAllAnimations().containsKey(animationName)) {
                     double endTick = entity.level.getGameTime() + prehistoric.getAnimation(animationName).animation.animationLength;
                     AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.ActiveAnimationInfo(
-                            animationName, endTick, category, true, ticks, loop
+                            animationName, endTick, category, true, ticks, speed, loop
                     );
                     prehistoric.getAnimationLogic().addNextAnimation(controller, activeAnimationInfo);
                 }

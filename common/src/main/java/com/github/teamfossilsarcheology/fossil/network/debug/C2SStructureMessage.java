@@ -68,12 +68,21 @@ public class C2SStructureMessage {
                 swimming.setNoAi(true);
             } else {
                 prehistoric.getInstructionSystem().start(instructions, true, true);
+                //prehistoric.setNoAi(true);
             }
             if (prehistoric instanceof PrehistoricFlying flying) {
                 flying.setNoAi(true);
             }
             prehistoric.getInstructionSystem().syncWithClients();
             level.addFreshEntity(prehistoric);
+            /*
+            PrehistoricLeaping velociraptor = ModEntities.DEINONYCHUS.get().create(level);
+            velociraptor.moveTo(xOffset, 120, 0, 0, 0);
+            velociraptor.finalizeSpawn(level, level.getCurrentDifficultyAt(velociraptor.blockPosition()), MobSpawnType.SPAWN_EGG, null, null);
+            velociraptor.startAttackRiding(prehistoric);
+            velociraptor.startRiding(prehistoric, true);
+            level.addFreshEntity(velociraptor);
+            */
         }
     }
 }

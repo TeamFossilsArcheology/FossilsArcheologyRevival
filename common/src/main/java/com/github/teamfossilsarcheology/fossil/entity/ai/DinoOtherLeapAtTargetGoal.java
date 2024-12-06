@@ -28,7 +28,7 @@ public class DinoOtherLeapAtTargetGoal extends MeleeAttackGoal {
 
     @Override
     public boolean canContinueToUse() {
-        if (((PrehistoricLeaping) mob).isLeaping()) {
+        if (((PrehistoricLeaping) mob).getLeapSystem().hasLeapStarted()) {
             return false;
         }
         return super.canContinueToUse();
@@ -37,10 +37,10 @@ public class DinoOtherLeapAtTargetGoal extends MeleeAttackGoal {
     @Override
     protected void checkAndPerformAttack(LivingEntity enemy, double distToEnemySqr) {
         PrehistoricLeaping dino = (PrehistoricLeaping) mob;
-        if (dino.distanceToSqr(enemy) <= 20 && !dino.isLeaping()) {
+        if (dino.distanceToSqr(enemy) <= 20 && !dino.getLeapSystem().hasLeapStarted()) {
             dino.lookAt(enemy, 100, 100);
             dino.getNavigation().stop();
-            dino.startLeaping();
+            dino.startLeap(enemy);
         }
     }
 }

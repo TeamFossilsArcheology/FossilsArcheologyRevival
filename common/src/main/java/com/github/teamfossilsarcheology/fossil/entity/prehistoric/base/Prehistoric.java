@@ -36,8 +36,6 @@ import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
-import dev.architectury.platform.Platform;
-import dev.architectury.utils.Env;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -384,7 +382,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public double getPassengersRidingOffset() {
-        return getBbHeight() * 0.8 + 0.15;
+        return getBbHeight() * 0.85;
     }
 
     @Override
@@ -394,15 +392,15 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             yBodyRot = mob.yBodyRot;
         }
         Player rider = getRidingPlayer();
-        if (rider != null && isOwnedBy(rider) && getTarget() != rider) {
-            getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
-                rider.setPos(pos.x, pos.y + rider.getMyRidingOffset() * getScale(), pos.z);
-            }, () -> {
-                rider.setPos(getX(), getY() + getPassengersRidingOffset() + rider.getMyRidingOffset(), getZ());
-            });
-        }
+        getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
+            passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset() * getScale(), pos.z);
+        }, () -> {
+            passenger.setPos(getX(), getY() + getPassengersRidingOffset() + passenger.getMyRidingOffset(), getZ());
+        });
         if (passenger instanceof Velociraptor || passenger instanceof Deinonychus) {
             //TODO: Offset for leap attack
+            //double extraY = Math.min(getPassengersRidingOffset() * (getScale()) - 1D, 0.5D);
+            //passenger.setPos(this.getX(), this.getY() + extraY, this.getZ());
         }
     }
 

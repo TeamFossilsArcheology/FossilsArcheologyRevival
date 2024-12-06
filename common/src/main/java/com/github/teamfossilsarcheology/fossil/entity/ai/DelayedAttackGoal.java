@@ -169,9 +169,9 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
                     MessageHandler.SYNC_CHANNEL.sendToPlayers(List.of(player), new S2CActivateAttackBoxesMessage(mob, animationInfo.animation.animationLength));
                     doingHeavyAttack = true;
                 } else {
-                    attackDamageTick = (long) (currentTime + animationInfo.actionDelay);
+                    attackDamageTick = (long) (currentTime + animationInfo.actionDelay + 5);
                 }
-                attackEndTick = (long) (currentTime + animationInfo.animation.animationLength);
+                attackEndTick = (long) (currentTime + animationInfo.animation.animationLength + 5);
                 if (attackDamageTick > attackEndTick) attackDamageTick = attackEndTick;
             }
             if (attackDamageTick > 0 && currentTime == attackDamageTick) {

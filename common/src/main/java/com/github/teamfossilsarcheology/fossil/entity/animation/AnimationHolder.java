@@ -3,15 +3,14 @@ package com.github.teamfossilsarcheology.fossil.entity.animation;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import net.minecraft.world.entity.Mob;
 
-import java.util.NavigableMap;
-import java.util.Random;
-import java.util.TreeMap;
+import java.util.*;
 
 public class AnimationHolder {
     private final NavigableMap<Integer, AnimationInfo> animations = new TreeMap<>();
     private final NavigableMap<Integer, AnimationInfo> babyAnimations = new TreeMap<>();
     private final NavigableMap<Integer, AnimationInfo> waterAnimations = new TreeMap<>();
     private final NavigableMap<Integer, AnimationInfo> airAnimations = new TreeMap<>();
+    private final Set<String> lookup = new HashSet<>();
 
     public void add(AnimationInfo animation) {
         String name = animation.animation.animationName.toLowerCase();
@@ -34,6 +33,7 @@ public class AnimationHolder {
         } else {
             addAnimation(animations, animation, weight);
         }
+        lookup.add(animation.animation.animationName);
     }
 
     private static void addAnimation(NavigableMap<Integer, AnimationInfo> map, AnimationInfo animation, int weight) {
@@ -42,6 +42,10 @@ public class AnimationHolder {
         } else {
             map.put(weight, animation);
         }
+    }
+
+    public boolean hasAnimation(String animationName) {
+        return lookup.contains(animationName);
     }
 
     public AnimationInfo getRandomAnimation(Mob entity) {
@@ -56,6 +60,6 @@ public class AnimationHolder {
     }
 
     private static AnimationInfo getRandomAnimation(NavigableMap<Integer, AnimationInfo> map, Random random) {
-        return map.ceilingEntry((int) (random.nextDouble() * map.lastKey())).getValue();
+        return map.ceilingEntry(random.nextInt(map.lastKey())).getValue();
     }
 }
