@@ -61,13 +61,13 @@ public class PathingRenderer {
         if (pos2 != null) PathingRenderUtil.renderLineBox(poseStack, buffer, pos2);
 
         if (showHelpMenu) {
+            BlockPos targetPos = PathingDebug.getBlockHitResult(Minecraft.getInstance());
             if (pos1 != null) {
-                InstructionRenderUtil.renderWholeBox(poseStack, PathingDebug.getBlockHitResult(Minecraft.getInstance()),
-                        Color.ofRGBA(0, 0, 1, 0.5f), finishNanoTime);
+                InstructionRenderUtil.renderWholeBox(poseStack, targetPos, Color.ofRGBA(0, 0, 1, 0.5f), finishNanoTime);
             } else {
-                InstructionRenderUtil.renderWholeBox(poseStack, PathingDebug.getBlockHitResult(Minecraft.getInstance()),
-                        Color.ofRGBA(0, 1, 0, 0.5f), finishNanoTime);
+                InstructionRenderUtil.renderWholeBox(poseStack, targetPos, Color.ofRGBA(0, 1, 0, 0.5f), finishNanoTime);
             }
+            InstructionRenderUtil.renderFloatingText(poseStack, Minecraft.getInstance(), String.valueOf(PathingDebug.pickBlockOffset), Vec3.atCenterOf(targetPos).add(0, 0.5, 0));
         }
     }
 

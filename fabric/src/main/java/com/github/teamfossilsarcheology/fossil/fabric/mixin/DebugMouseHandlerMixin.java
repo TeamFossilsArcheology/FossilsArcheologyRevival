@@ -15,7 +15,7 @@ public class DebugMouseHandlerMixin {
 
     @Inject(method = "onScroll", at = @At("HEAD"), cancellable = true)
     private void debugCancelScroll(final long window, final double xScroll, final double yScroll, final CallbackInfo ci) {
-        if (PathingDebug.showHelpMenu) {
+        if (PathingDebug.showHelpMenu || InstructionTab.positionActive()) {
             PathingDebug.pickBlockOffset += (int) yScroll;
             ci.cancel();
         }

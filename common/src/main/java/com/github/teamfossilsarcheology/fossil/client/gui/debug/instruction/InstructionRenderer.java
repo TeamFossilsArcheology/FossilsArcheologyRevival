@@ -79,10 +79,12 @@ public class InstructionRenderer {
             }
         }
         if (InstructionTab.positionMode != Instruction.Type.IDLE) {
-            InstructionRenderUtil.renderWholeBox(poseStack, PathingDebug.getBlockHitResult(mc), Color.ofRGBA(1, 0, 0, 0.5f), finishNanoTime);
+            BlockPos targetPos = PathingDebug.getBlockHitResult(mc);
+            InstructionRenderUtil.renderWholeBox(poseStack, targetPos, Color.ofRGBA(1, 0, 0, 0.5f), finishNanoTime);
             if (InstructionTab.positionMode == Instruction.Type.TELEPORT_TO) {
-                InstructionRenderUtil.renderArrow(poseStack, Vec3.atBottomCenterOf(PathingDebug.getBlockHitResult(mc)).add(0, 1, 0), Color.ofRGBA(1, 0, 1, 0.5f), InstructionTab.teleportRotation);
+                InstructionRenderUtil.renderArrow(poseStack, Vec3.atBottomCenterOf(targetPos).add(0, 1, 0), Color.ofRGBA(1, 0, 1, 0.5f), InstructionTab.teleportRotation);
             }
+            InstructionRenderUtil.renderFloatingText(poseStack, Minecraft.getInstance(), String.valueOf(PathingDebug.pickBlockOffset), Vec3.atCenterOf(targetPos).add(0, 0.7, 0));
         }
         if (DebugScreen.rulerMode > 0) {
             Vec3 pos = PathingDebug.getHitResult(mc);

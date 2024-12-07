@@ -109,6 +109,9 @@ public class PathingDebug {
         Vec3 view = camera.getViewVector(1.0f);
         double range = 30;
         Vec3 end = eye.add(view.x * range, view.y * range, view.z * range);
+        if (!mc.level.getFluidState(new BlockPos(eye)).isEmpty()) {
+            eye = eye.add(view.scale(2));
+        }
         return camera.level.clip(new ClipContext(eye.add(view.scale(pickBlockOffset)), end, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, camera));
     }
 
