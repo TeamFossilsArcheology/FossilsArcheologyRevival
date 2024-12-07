@@ -1,64 +1,35 @@
 package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SForceAnimationMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.C2SRotationMessage;
-import com.mojang.blaze3d.platform.Lighting;
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Quaternion;
-import com.mojang.math.Vector3f;
+import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.components.Button;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib3.core.controller.AnimationController;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Consumer;
 
-public class AnimationTab extends DebugTab<Entity> {
+public class AnimationTab<T extends Mob & PrehistoricAnimatable<?>> extends DebugTab<T> {
     private float rotYBase;
     private float rotXBase;
-    private float scale = 15;
 
-    protected AnimationTab(DebugScreen debugScreen, Entity entity) {
-        super(debugScreen, entity);
-        if (entity != null) {
-            this.rotYBase = entity instanceof LivingEntity livingEntity ? livingEntity.yBodyRot : entity.getYRot();
-            this.rotXBase = entity.getXRot();
-        }
-    }
-
-    public static void renderEntityInDebug(int posX, int posY, Entity entity, float scale) {
-        float g = -entity.getXRot() / 20f;
-        PoseStack poseStack = RenderSystem.getModelViewStack();
-        poseStack.pushPose();
-        poseStack.translate(posX, posY, 1050);
-        poseStack.scale(1, 1, -1);
-        RenderSystem.applyModelViewMatrix();
-        PoseStack poseStack2 = new PoseStack();
-        poseStack2.translate(0.0, 0.0, 1000.0);
-        poseStack2.scale(scale, scale, scale);
-        Quaternion quaternion = Vector3f.ZP.rotationDegrees(180.0f);
-        Quaternion quaternion2 = Vector3f.XP.rotationDegrees(g * 20.0f);
-        quaternion.mul(quaternion2);
-        poseStack2.mulPose(quaternion);
-        Lighting.setupForEntityInInventory();
-        EntityRenderDispatcher entityRenderDispatcher = Minecraft.getInstance().getEntityRenderDispatcher();
-        quaternion2.conj();
-        entityRenderDispatcher.overrideCameraOrientation(quaternion2);
-        entityRenderDispatcher.setRenderShadow(false);
-        MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-        RenderSystem.runAsFancy(() -> entityRenderDispatcher.render(entity, 0.0, 0.0, 0.0, 0.0f, 1.0f, poseStack2, bufferSource, 0xF000F0));
-        bufferSource.endBatch();
-        entityRenderDispatcher.setRenderShadow(true);
-        poseStack.popPose();
-        RenderSystem.applyModelViewMatrix();
-        Lighting.setupFor3DItems();
+    protected AnimationTab(DebugScreen debugScreen, @NotNull T mob) {
+        super(debugScreen, mob);
+        this.rotYBase = mob.yBodyRot;
+        this.rotXBase = mob.getXRot();
     }
 
     @Override
@@ -90,14 +61,6 @@ public class AnimationTab extends DebugTab<Entity> {
                         entity.setXRot(newRot);
                     }
                 });
-        addWidget(
-                new DebugSlider(20, 30 + (yLeft++) * 30, width / 4, 20, new TextComponent("Scale: "), new TextComponent(""), 0, 100, scale, 5, 3,
-                        true) {
-                    @Override
-                    protected void applyValue() {
-                        scale = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
-                    }
-                });
         addWidget(new Button(20, 30 + (yLeft++) * 30, width / 6, 20, new TextComponent("Reset Rotation"), button -> {
             rotYBase = 0;
             rotXBase = 0;
@@ -106,23 +69,107 @@ public class AnimationTab extends DebugTab<Entity> {
         }, (button, poseStack, i, j) -> {
             debugScreen.renderTooltip(poseStack, new TextComponent("client side only"), i, j);
         }));
-        if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
-            List<String> controllers = prehistoric.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
-            addWidget(new AnimationList(width - width / 4, height, prehistoric.getAllAnimations(), controllers, false, minecraft, animationObject -> {
-                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(animationObject.controller(), entity.getId(), animationObject.name(), animationObject.transitionLength(), animationObject.loop()));
-            }));
-        }
+        Map<String, AnimationController> controllers = entity.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers();
+        addWidget(new AnimationList(width - width / 4 + 20, entity.getAllAnimations(), controllers, minecraft, animationObject -> {
+            MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SForceAnimationMessage(animationObject.controller(), entity.getId(), animationObject.name(), animationObject.speed(), animationObject.transitionLength(), animationObject.loop()));
+        }));
     }
 
     @Override
     public void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
-        if (entity != null) {
-           // renderEntityInDebug(70, 280, entity, scale);
-            drawString(poseStack, minecraft.font, new TextComponent("Rotation: " + entity.getYRot()), 20, 160, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Rotation Body: " + (entity instanceof LivingEntity livingEntity ? livingEntity.yBodyRot : entity.getYRot())), 20, 180, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("Start Animation:"), width - width / 4 + 20, 30, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Rotation: " + entity.getYRot()), 20, 160, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Rotation Body: " + entity.yBodyRot), 20, 180, 16777215);
+        drawString(poseStack, minecraft.font, new TextComponent("Rotation Head: " + entity.getYHeadRot()), 20, 200, 16777215);
+    }
+
+    private static class AnimationList extends AbstractAnimationList {
+        private final Map<String, AbstractWidget> pauseButtons = new HashMap<>();
+        private final Map<String, DebugSlider> pauseSliders = new HashMap<>();
+
+        public AnimationList(int x0, Map<String, ? extends AnimationInfo> animations, Map<String, AnimationController> controllers, Minecraft minecraft, Consumer<AnimationObject> function) {
+            super(x0, 250, 21, 120, animations, minecraft, function);
+            int buttonX = x0;
+            int buttonY = y0 - 110;
+            if (!controllers.isEmpty()) {
+                List<String> controllerNames = controllers.keySet().stream().toList();
+                currentControllerName = controllerNames.get(0);
+                addWidget(CycleOption.create("Controller", () -> controllerNames, TextComponent::new,
+                                options -> currentControllerName, (options, option, controller) -> {
+                                    //Only show pause button for active controller
+                                    removeWidget(pauseButtons.get(currentControllerName));
+                                    removeWidget(pauseSliders.get(currentControllerName));
+                                    addWidget(pauseButtons.get(controller));
+                                    addWidget(pauseSliders.get(controller));
+                                    currentControllerName = controller;
+                                })
+                        .createButton(Minecraft.getInstance().options, buttonX, buttonY, 200));
+                addWidget(new DebugSlider(buttonX, buttonY + 21, 99, 20, new TextComponent("Transition: "), new TextComponent(""), 0, 20, transitionLength, 1, 3, true) {
+                    @Override
+                    protected void applyValue() {
+                        transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                    }
+                });
+                addWidget(new DebugSlider(buttonX + 102, buttonY + 21, 99, 20, new TextComponent("Speed: "), new TextComponent(""), 0, 3, speed, 0.05, 3, true) {
+                    @Override
+                    protected void applyValue() {
+                        speed = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                    }
+                });
+                addWidget(CycleOption.createOnOff("Loop", options -> loop, (options, option, loop) -> this.loop = loop)
+                        .createButton(Minecraft.getInstance().options, buttonX, buttonY + 42, 99));
+
+                for (String controllerName : controllerNames) {
+                    if (controllers.get(controllerName) instanceof PausableAnimationController<?> pausableAnimationController) {
+                        var slider = createPauseSlider(pausableAnimationController, buttonX, buttonY);
+                        var button = CycleOption.createOnOff("Pause", options -> pausableAnimationController.isPaused(), (options, option, paused) -> {
+                            pausableAnimationController.pause(paused);
+                            //Only show the pause slider when paused
+                            slider.visible = paused;
+                            if (pausableAnimationController.getCurrentAnimation() != null) {
+                                //Update max value of pause slider
+                                slider.maxValue = pausableAnimationController.getCurrentAnimation().animationLength;
+                            }
+                            if (Boolean.TRUE.equals(paused)) {
+                                slider.setSliderValue(pausableAnimationController.getCurrentTick() / slider.maxValue, true);
+                            }
+                        }).createButton(Minecraft.getInstance().options, buttonX + 102, buttonY + 42, 99);
+                        pauseSliders.put(controllerName, slider);
+                        pauseButtons.put(controllerName, button);
+                        if (controllerName.equals(currentControllerName)) {
+                            addWidget(button);
+                            addWidget(slider);
+                        }
+                    }
+                }
+            }
+        }
+
+        private @NotNull DebugSlider createPauseSlider(PausableAnimationController<?> pausableAnimationController, int buttonX, int buttonY) {
+            double tick = pausableAnimationController.getCurrentTick();
+            double maxTick = tick;
+            if (pausableAnimationController.getCurrentAnimation() != null) {
+                maxTick = pausableAnimationController.getCurrentAnimation().animationLength - 1;
+            }
+            var slider = new DebugSlider(buttonX, buttonY + 63, 200, 20, new TextComponent("Time: "), new TextComponent(""), 0, maxTick,
+                    tick, 1, 3, true) {
+                @Override
+                protected void applyValue() {
+                    pausableAnimationController.overrideTick(stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                }
+            };
+            slider.visible = pausableAnimationController.isPaused();
+            return slider;
+        }
+
+        @Override
+        protected int getEntryLeftPos() {
+            return super.getEntryLeftPos() + width / 2;
+        }
+
+        @Override
+        protected int getScrollbarPosition() {
+            return super.getScrollbarPosition() + width / 2 - 4;
         }
     }
 }

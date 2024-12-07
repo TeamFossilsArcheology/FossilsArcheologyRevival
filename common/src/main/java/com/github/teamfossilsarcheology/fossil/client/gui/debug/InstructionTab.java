@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.EntityList;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.InstructionsList;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
@@ -10,10 +11,13 @@ import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.InstructionMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import net.minecraft.client.CycleOption;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TextComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -22,11 +26,12 @@ import net.minecraft.world.phys.BlockHitResult;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class InstructionTab extends DebugTab<Prehistoric> {
     public static final Map<UUID, Pair> INSTRUCTIONS = new Object2ObjectOpenHashMap<>();
     private InstructionsList instructions;
-    private AnimationList animations;
+    private AbstractAnimationList animations;
     private EntityList attackEntities;
     private EntityList leapEntities;
     public static Entity entityListHighlight;
@@ -109,14 +114,14 @@ public class InstructionTab extends DebugTab<Prehistoric> {
         }
         attackEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
         });
-        addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
+       /* addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
             closeLists();
             addWidget(attackEntities);
         }, (button, poseStack, i, j) -> {
             debugScreen.renderTooltip(poseStack, new TextComponent("Unused"), i, j);
-        }));
+        }));*/
         List<String> controllers = entity.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
-        animations = new AnimationList(width - 315, 300, entity.getAllAnimations(), controllers, true, minecraft, animationObject -> {
+        animations = new AnimationList(width - 315, entity.getAllAnimations(), controllers, minecraft, animationObject -> {
             Instruction instruction = new Instruction.PlayAnim(animationObject.name(), animationObject.controller(), animationObject.loop(), (int) animationObject.transitionLength());
             instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
@@ -186,5 +191,27 @@ public class InstructionTab extends DebugTab<Prehistoric> {
 
     public record Pair(int id, List<Instruction> instructions) {
 
+    }
+
+    private static class AnimationList extends AbstractAnimationList {
+
+        public AnimationList(int x0, Map<String, ? extends AnimationInfo> animations, List<String> controllers, Minecraft minecraft, Consumer<AnimationObject> function) {
+            super(x0, 300, 25, 60, animations, minecraft, function);
+            int buttonX = x0 + rowWidth + 15;
+            if (!controllers.isEmpty()) {
+                currentControllerName = controllers.get(0);
+                addWidget(CycleOption.create("", () -> controllers, TextComponent::new,
+                                options -> currentControllerName, (options, option, controller) -> currentControllerName = controller)
+                        .createButton(Minecraft.getInstance().options, buttonX, y0, 100));
+            }
+            addWidget(new DebugSlider(buttonX, y0 + 25, 100, 20, new TextComponent("Count: "), new TextComponent(""), 0, 20, transitionLength, 1, 3, true) {
+                @Override
+                protected void applyValue() {
+                    transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
+                }
+            });
+            addWidget(CycleOption.createOnOff("Time based", options -> loop, (options, option, loop) -> this.loop = loop)
+                    .createButton(Minecraft.getInstance().options, buttonX, y0 + 50, 100));
+        }
     }
 }

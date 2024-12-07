@@ -1270,10 +1270,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public void registerControllers(AnimationData data) {
-        var controller = new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate);
+        var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, animationLogic::landPredicate);
         registerEatingListeners(controller);
         data.addAnimationController(controller);
-        data.addAnimationController(new AnimationController<>(
+        data.addAnimationController(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, animationLogic::attackPredicate));
     }
 

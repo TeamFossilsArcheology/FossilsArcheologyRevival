@@ -6,6 +6,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMo
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -31,7 +32,6 @@ import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public abstract class PrehistoricSwimming extends Prehistoric implements SwimmingAnimal {
@@ -354,10 +354,10 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
 
     @Override
     public void registerControllers(AnimationData data) {
-        var controller = new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::waterPredicate);
+        var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::waterPredicate);
         registerEatingListeners(controller);
         data.addAnimationController(controller);
-        data.addAnimationController(new AnimationController<>(
+        data.addAnimationController(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::grabAttackPredicate));
     }
 

@@ -145,8 +145,8 @@ public class DebugScreen extends Screen {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
             }));
         }
-        if (entity instanceof PrehistoricAnimatable) {
-            tabs.add(new AnimationTab(this, entity));
+        if (entity instanceof Mob mob && mob instanceof PrehistoricAnimatable<?>) {
+            tabs.add(new AnimationTab(this, mob));
         }
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InstructionTab(this, prehistoric));

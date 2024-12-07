@@ -9,6 +9,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.FlightPathNa
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.FlyingSleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -41,7 +42,6 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 public abstract class PrehistoricFlying extends Prehistoric implements FlyingAnimal {
@@ -331,10 +331,10 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     @Override
     public void registerControllers(AnimationData data) {
-        var controller = new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::flyingPredicate);
+        var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::flyingPredicate);
         registerEatingListeners(controller);
         data.addAnimationController(controller);
-        data.addAnimationController(new AnimationController<>(
+        data.addAnimationController(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }
 

@@ -64,6 +64,11 @@ public class DebugSelectionList<E extends ContainerObjectSelectionList.Entry<E>>
         widgets.forEach(widget -> widget.render(poseStack, mouseX, mouseY, partialTick));
     }
 
+    protected <T extends Widget & GuiEventListener> void removeWidget(T widget) {
+        widgets.remove(widget);
+        renderables.remove(widget);
+    }
+
     protected <T extends Widget & GuiEventListener> T addWidget(T widget) {
         widgets.add(widget);
         renderables.add(widget);

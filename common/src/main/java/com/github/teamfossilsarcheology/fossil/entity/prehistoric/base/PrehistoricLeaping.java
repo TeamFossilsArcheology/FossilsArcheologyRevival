@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.LeapSystem;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.BlockParticleOption;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
 import java.util.List;
@@ -128,11 +128,11 @@ public abstract class PrehistoricLeaping extends Prehistoric {
 
     @Override
     public void registerControllers(AnimationData data) {
-        var controller = new AnimationController<>(
+        var controller = new PausableAnimationController<>(
                 this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::leapingPredicate);
         data.addAnimationController(controller);
         registerEatingListeners(controller);
-        data.addAnimationController(new AnimationController<>(
+        data.addAnimationController(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
         controller.registerParticleListener(event -> {
             if ("land".equals(event.effect) && isOnGround()) {

@@ -3,7 +3,6 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
@@ -19,34 +18,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
-public class AnimationList extends DebugSelectionList<AnimationList.AnimationEntry> {
+public class AbstractAnimationList extends DebugSelectionList<AbstractAnimationList.AnimationEntry> {
     private final Consumer<AnimationObject> consumer;
-    private String currentController;
-    private double transitionLength = 1;
-    private boolean loop;
+    protected String currentControllerName;
+    protected double speed = 1;
+    protected double transitionLength = 5;
+    protected boolean loop;
 
-    public AnimationList(int x0, int height, Map<String, ? extends AnimationInfo> animations, List<String> controllers, boolean instruction, Minecraft minecraft, Consumer<AnimationObject> function) {
-        super(minecraft, 100, 215, height, 60, height + 60, 25);
+    public AbstractAnimationList(int x0, int height, int itemHeight, int yOffset, Map<String, ? extends AnimationInfo> animations, Minecraft minecraft, Consumer<AnimationObject> function) {
+        super(minecraft, 100, 215, height, yOffset, height + 60, itemHeight);
         this.x0 = x0;
         this.x1 = x0 + width;
-        int buttonX = x0 + rowWidth + 15;
         List<String> sortedAnimations = animations.entrySet().stream().sorted(Map.Entry.comparingByKey()).map(Map.Entry::getKey).toList();
         sortedAnimations.forEach(animation -> addEntry(new AnimationEntry(animation)));
-        if (!controllers.isEmpty()) {
-            currentController = controllers.get(0);
-            addWidget(CycleOption.create("", () -> controllers, TextComponent::new,
-                            options -> currentController, (options, option, controller) -> currentController = controller)
-                    .createButton(Minecraft.getInstance().options, buttonX, y0, 100));
-        }
-        DebugSlider a = new DebugSlider(buttonX, y0 + 25, 100, 20, new TextComponent(instruction ? "Count: " : "Transition: "), new TextComponent(""), 0, 20, transitionLength, 1, 3, true) {
-            @Override
-            protected void applyValue() {
-                transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
-            }
-        };
-        addWidget(a);
-        addWidget(CycleOption.createOnOff(instruction ? "Time based" : "Loop", options -> loop, (options, option, loop) -> this.loop = loop)
-                .createButton(Minecraft.getInstance().options, buttonX, y0 + 50, 100));
         setRenderBackground(false);
         setRenderTopAndBottom(false);
         this.consumer = function;
@@ -54,13 +38,17 @@ public class AnimationList extends DebugSelectionList<AnimationList.AnimationEnt
 
     @Override
     protected @Nullable AnimationEntry getEntryAtPosition(double mouseX, double mouseY) {
-        int x1 = x0 + getRowWidth();
+        int x1 = getEntryLeftPos() + getRowWidth();
         int m = Mth.floor(mouseY - (double) y0) - headerHeight + (int) getScrollAmount() - 4;
         int n = m / itemHeight;
         if (mouseX < getScrollbarPosition() && mouseX >= x0 && mouseX <= x1 && n >= 0 && m >= 0 && n < getItemCount()) {
             return children().get(n);
         }
         return null;
+    }
+
+    protected int getEntryLeftPos() {
+        return x0;
     }
 
     @Override
@@ -75,7 +63,7 @@ public class AnimationList extends DebugSelectionList<AnimationList.AnimationEnt
             String[] split = animation.split("\\.");
             TextComponent display = new TextComponent(split.length > 0 ? StringUtils.capitalize(split[split.length - 1]) : "");
             changeButton = new Button(0, 0, 100, 20, display, button -> {
-                consumer.accept(new AnimationObject(animation, currentController, transitionLength, loop));
+                consumer.accept(new AnimationObject(animation, currentControllerName, speed, transitionLength, loop));
             });
         }
 
@@ -87,7 +75,7 @@ public class AnimationList extends DebugSelectionList<AnimationList.AnimationEnt
         @Override
         public void render(PoseStack poseStack, int index, int top, int left, int width, int height, int mouseX, int mouseY, boolean isMouseOver,
                            float partialTick) {
-            changeButton.x = x0;
+            changeButton.x = getEntryLeftPos();
             changeButton.y = top;
             changeButton.render(poseStack, mouseX, mouseY, partialTick);
         }
@@ -108,7 +96,7 @@ public class AnimationList extends DebugSelectionList<AnimationList.AnimationEnt
         }
     }
 
-    public record AnimationObject(String name, String controller, double transitionLength, boolean loop) {
+    public record AnimationObject(String name, String controller, double speed, double transitionLength, boolean loop) {
 
     }
 }

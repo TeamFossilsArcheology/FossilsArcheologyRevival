@@ -7,6 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMo
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
@@ -345,7 +346,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     @Override
     public void registerControllers(AnimationData data) {
         AnimationLogic<Prehistoric> animationLogic = getAnimationLogic();
-        var ctrl = new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, event -> {
+        var ctrl = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, event -> {
             AnimationController<Meganeura> controller = event.getController();
             if (animationLogic.tryNextAnimation(controller)) {
                 return PlayState.CONTINUE;
@@ -386,7 +387,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
         });
         registerEatingListeners(ctrl);
         data.addAnimationController(ctrl);
-        data.addAnimationController(new AnimationController<>(
+        data.addAnimationController(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }
 

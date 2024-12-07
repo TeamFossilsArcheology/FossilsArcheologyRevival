@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
@@ -25,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
@@ -208,7 +208,7 @@ public class Nautilus extends PrehistoricFish {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new AnimationController<>(this, AnimationLogic.IDLE_CTRL, 20, event -> {
+        data.addAnimationController(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 20, event -> {
             var ctrl = event.getController();
             if (shouldBeBeached()) {
                 ctrl.setAnimation(new AnimationBuilder().addAnimation(nextBeachedAnimation().animation.animationName));
@@ -221,7 +221,7 @@ public class Nautilus extends PrehistoricFish {
             }
             return PlayState.CONTINUE;
         }));
-        data.addAnimationController(new AnimationController<>(this, "Shell", 4, this::shellPredicate));
+        data.addAnimationController(new PausableAnimationController<>(this, "Shell", 4, this::shellPredicate));
     }
 
     private PlayState shellPredicate(AnimationEvent<Nautilus> event) {

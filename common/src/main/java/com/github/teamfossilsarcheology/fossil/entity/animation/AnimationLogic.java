@@ -5,12 +5,10 @@ import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncActiveAnimationMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.S2CCancelAnimationMessage;
-import dev.architectury.injectables.annotations.ExpectPlatform;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
-import org.apache.commons.lang3.NotImplementedException;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
@@ -87,10 +85,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      * @param transitionLength the length of the transition from the previous animation in ticks
      * @param loop             whether the animation should loop (until manually stopped because forced)
      */
-    public ActiveAnimationInfo forceAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category, double transitionLength, boolean loop) {
+    public ActiveAnimationInfo forceAnimation(String controller, AnimationInfo animationInfo, AnimationCategory category, double speed, double transitionLength, boolean loop) {
         if (animationInfo != null) {
-            ActiveAnimationInfo activeAnimationInfo = ActiveAnimationInfo.transition(animationInfo.animation.animationName,
-                    entity.level.getGameTime() + animationInfo.animation.animationLength, category, true, transitionLength, loop
+            ActiveAnimationInfo activeAnimationInfo = new ActiveAnimationInfo(animationInfo.animation.animationName,
+                    entity.level.getGameTime() + animationInfo.animation.animationLength, category, true, transitionLength, speed, loop
             );
             addNextAnimation(controller, activeAnimationInfo);
             if (!entity.level.isClientSide) {
@@ -258,15 +256,12 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
 
 
     /**
-     * Sets the animation speed without changing the current point in the animation
-     *
-     * @param animationSpeed the new animation speed
-     * @param animationTick  the current animation tick returned by event.getAnimationTick()
+     * @see PausableAnimationController#setAnimationSpeed(double, double)
      */
-    @ExpectPlatform
     public static void setAnimationSpeed(AnimationController<?> controller, double animationSpeed, double animationTick) {
-        //Has to be done this way because our common mixins/accessors break on forge
-        throw new NotImplementedException();
+        if (controller instanceof PausableAnimationController<?> pausableAnimationController) {
+            pausableAnimationController.setAnimationSpeed(animationSpeed, animationTick);
+        }
     }
 
     public boolean tryNextAnimation(AnimationController<?> controller) {
@@ -299,12 +294,12 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             PrehistoricLeaping entity = event.getAnimatable();
 
             if (entity.getLeapSystem().isAttackRiding()) {
-                controller.setAnimationSpeed(1);
+                setAnimationSpeed(controller, 1, event.getAnimationTick());
                 controller.transitionLengthTicks = 10;
                 controller.setAnimation(new AnimationBuilder().loop(entity.getLeapAttackAnimationName()));
                 return PlayState.CONTINUE;
             } else if (entity.getLeapSystem().hasLeapStarted() || entity.getLeapSystem().isLeapFlying()) {
-                controller.setAnimationSpeed(1);
+                setAnimationSpeed(controller, 1, event.getAnimationTick());
                 if (controller.getCurrentAnimation() != null && entity.getAnimations().get(AnimationCategory.FALL).hasAnimation(controller.getCurrentAnimation().animationName) && entity.isOnGround()) {
                     controller.transitionLengthTicks = 0;
                     controller.setAnimation(new AnimationBuilder().playOnce(entity.getLandAnimationName()));
@@ -313,7 +308,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 }
                 return PlayState.CONTINUE;
             } else if (entity.getLeapSystem().isLanding()) {
-                controller.setAnimationSpeed(1);
+                setAnimationSpeed(controller, 1, event.getAnimationTick());
                 controller.transitionLengthTicks = 0;
                 controller.setAnimation(new AnimationBuilder().playOnce(entity.getLandAnimationName()));
                 return PlayState.CONTINUE;
@@ -382,6 +377,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         double animationSpeed = 1;
         if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
             loopType = activeAnimation.get().loop ? LOOP : PLAY_ONCE;
+            animationSpeed = activeAnimation.get().speed;
         } else {
             if (event.getAnimatable().isWeak()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);

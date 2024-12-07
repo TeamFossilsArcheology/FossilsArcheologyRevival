@@ -161,7 +161,7 @@ public class InstructionSystem extends AISystem {
                 if (mob.getAnimationLogic().isAnimationDone(activeAnim)) {
                     animCount--;
                     if (animCount > 0) {
-                        activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5, false);
+                        activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 1, 5, false);
                     } else {
                         return false;
                     }
@@ -259,10 +259,10 @@ public class InstructionSystem extends AISystem {
         } else if (current instanceof Instruction.PlayAnim playAnim) {
             if (playAnim.timeBased) {
                 animCount = mob.level.getGameTime() + playAnim.count * 20L;
-                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5,true);
+                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 1, 5,true);
             } else {
                 animCount = playAnim.count;
-                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 5,false);
+                activeAnim = mob.getAnimationLogic().forceAnimation(playAnim.controller, mob.getAllAnimations().get(playAnim.name), AnimationCategory.IDLE, 1,5,false);
             }
         } else if (current instanceof Instruction.Sleep sleep) {
             endTick = mob.level.getGameTime() + sleep.duration;
