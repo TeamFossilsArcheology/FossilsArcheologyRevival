@@ -41,7 +41,11 @@ public class Parasaurolophus extends Prehistoric {
             return;
         }
         if ("Jackabird".equals(ChatFormatting.stripFormatting(getName().getString()))) {
-            textureLocation = FossilMod.location("textures/entity/parasaurolophus/parasaurolophus_jackabird.png");
+            if (isSleeping()) {
+                textureLocation = FossilMod.location("textures/entity/parasaurolophus/parasaurolophus_jackabird_sleeping.png");
+            } else {
+                textureLocation = FossilMod.location("textures/entity/parasaurolophus/parasaurolophus_jackabird.png");
+            }
             return;
         }
         super.refreshTexturePath();

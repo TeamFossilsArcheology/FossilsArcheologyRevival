@@ -103,13 +103,15 @@
     "category": "neutral",
     "sounds": [
       "fossil:prehistoric/allosaurus_ambient1",
-      "fossil:prehistoric/allosaurus_ambient2"
+      "fossil:prehistoric/allosaurus_ambient2",
+      "fossil:prehistoric/allosaurus_ambient3"
     ]
   },
   "allosaurus_hurt": {
     "category": "neutral",
     "sounds": [
-      "fossil:prehistoric/allosaurus_hurt1"
+      "fossil:prehistoric/allosaurus_hurt1",
+      "fossil:prehistoric/allosaurus_hurt2"
     ]
   },
   "allosaurus_death": {

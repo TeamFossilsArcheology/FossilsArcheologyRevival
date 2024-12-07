@@ -1,10 +1,12 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
+import net.minecraft.ChatFormatting;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -23,6 +25,22 @@ public class Stegosaurus extends Prehistoric {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
+    }
+
+    @Override
+    public void refreshTexturePath() {
+        if (!level.isClientSide) {
+            return;
+        }
+        if ("Esmeralda".equals(ChatFormatting.stripFormatting(getName().getString()))) {
+            if (isSleeping()) {
+                textureLocation = FossilMod.location("textures/entity/stegosaurus/stegosaurus_esmeralda_sleeping.png");
+            } else {
+                textureLocation = FossilMod.location("textures/entity/stegosaurus/stegosaurus_esmeralda.png");
+            }
+            return;
+        }
+        super.refreshTexturePath();
     }
 
     @Override
