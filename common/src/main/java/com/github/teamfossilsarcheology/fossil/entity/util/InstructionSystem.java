@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.AISystem;
@@ -71,6 +72,18 @@ public class InstructionSystem extends AISystem {
 
         if (current instanceof Instruction.MoveTo moveTo) {
             return tryUpdatePath(moveTo);
+        } else if (current instanceof Instruction.FlyTo flyTo) {
+            if (mob instanceof PrehistoricFlying flying) {
+                if (flying.isUsingStuckNavigation()) {
+                    return !flying.getNavigation().isDone();
+                }
+                return flying.getMoveControl().hasWanted();
+            }
+            return true;
+        } else if (current instanceof Instruction.FlyLand flyLand) {
+            if (mob instanceof PrehistoricFlying flying) {
+                return flying.isFlying();
+            }
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
             if (endTick < mob.level.getGameTime()) {
                 return false;
@@ -228,6 +241,14 @@ public class InstructionSystem extends AISystem {
         Instruction current = instructions.get(index);
         if (current instanceof Instruction.MoveTo moveTo) {
             mob.getNavigation().moveTo(moveTo.target.getX(), moveTo.target.getY(), moveTo.target.getZ(), 1);
+        } else if (current instanceof Instruction.FlyTo flyTo) {
+            if (mob instanceof PrehistoricFlying flying) {
+                flying.moveTo(Vec3.atCenterOf(flyTo.target), false, true);
+            }
+        } else if (current instanceof Instruction.FlyLand flyLand) {
+            if (mob instanceof PrehistoricFlying flying) {
+                flying.moveTo(Vec3.atCenterOf(flyLand.target), true, true);
+            }
         } else if (current instanceof Instruction.TeleportTo teleportTo) {
             mob.getNavigation().stop();
             mob.moveTo(teleportTo.target, teleportTo.rotation, mob.getXRot());

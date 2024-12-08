@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Inst
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.InstructionsList;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
@@ -100,6 +101,16 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         });
+        if (entity instanceof PrehistoricFlying) {
+            addWidget(new Button(220, 55, 100, 20, new TextComponent("Fly Builder"), button -> {
+                positionMode = Instruction.Type.FLY_TO;
+                debugScreen.onClose();
+            }));
+            addWidget(new Button(220, 80, 100, 20, new TextComponent("Land Builder"), button -> {
+                positionMode = Instruction.Type.FLY_LAND;
+                debugScreen.onClose();
+            }));
+        }
         if (entity instanceof PrehistoricLeaping) {
             addWidget(new Button(220, 55, 100, 20, new TextComponent("Leap Builder"), button -> {
                 positionMode = Instruction.Type.LEAP_LAND;
@@ -166,17 +177,23 @@ public class InstructionTab extends DebugTab<Prehistoric> {
 
     public static void addPosition(BlockHitResult hitResult) {
         if (activeEntity == null) return;
+        BlockPos target = hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
         if (positionMode == Instruction.Type.MOVE_TO) {
-            BlockPos target = hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.MoveTo(target));
+        } else if (positionMode == Instruction.Type.FLY_LAND) {
+            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.FlyLand(target));
         } else if (positionMode == Instruction.Type.TELEPORT_TO) {
-            BlockPos target = hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.TeleportTo(target, -teleportRotation + 180));
         } else if (positionMode == Instruction.Type.ATTACH_TO) {
-            BlockPos target = hitResult.getBlockPos();
+            target = hitResult.getBlockPos();
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.AttachTo(target, hitResult.getDirection(), hitResult.getLocation()));
         } else if (positionMode == Instruction.Type.LEAP_LAND) {
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.LeapLand(hitResult.getLocation(), hitResult.getLocation().add(0, 2, 0)));
+        }
+    }
+    public static void addFlyPosition(BlockPos target) {
+        if (positionMode == Instruction.Type.FLY_TO) {
+            INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.FlyTo(target));
         }
     }
 

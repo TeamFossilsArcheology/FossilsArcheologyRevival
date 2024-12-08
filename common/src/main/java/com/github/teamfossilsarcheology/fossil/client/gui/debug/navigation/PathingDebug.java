@@ -103,7 +103,7 @@ public class PathingDebug {
         return hitResult.getLocation();
     }
 
-    public static BlockHitResult getFullHitResult(Minecraft mc) {
+    public static BlockHitResult getOffsetHitResult(Minecraft mc) {
         Entity camera = mc.getCameraEntity();
         Vec3 eye = camera.getEyePosition();
         Vec3 view = camera.getViewVector(1.0f);
@@ -116,8 +116,15 @@ public class PathingDebug {
     }
 
     public static BlockPos getBlockHitResult(Minecraft mc) {
-        BlockHitResult hitResult = getFullHitResult(mc);
+        BlockHitResult hitResult = getOffsetHitResult(mc);
         return hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
+    }
+
+    public static BlockPos getAirHitResult(Minecraft mc) {
+        Entity camera = mc.getCameraEntity();
+        Vec3 eye = camera.getEyePosition();
+        Vec3 view = camera.getViewVector(1.0f);
+        return new BlockPos(eye.add(view.scale(pickBlockOffset+1)));
     }
 
     public static float getPathfindingMalus(BlockPathTypes nodeType) {

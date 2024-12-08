@@ -43,6 +43,12 @@ public class InstructionRenderer {
                 if (instruction instanceof Instruction.MoveTo moveTo) {
                     addPosition(poseStack, buffer, instruction, moveTo.target, Color.WHITE);
                     currentPos = moveTo.target;
+                } else if (instruction instanceof Instruction.FlyTo flyTo) {
+                    addPosition(poseStack, buffer, instruction, flyTo.target, Color.WHITE);
+                    currentPos = flyTo.target;
+                } else if (instruction instanceof Instruction.FlyLand flyLand) {
+                    addPosition(poseStack, buffer, instruction, flyLand.target, Color.WHITE);
+                    currentPos = flyLand.target;
                 } else if (instruction instanceof Instruction.TeleportTo teleportTo) {
                     if (frustum.isVisible(new AABB(teleportTo.target))) {
                         addPosition(poseStack, buffer, instruction, teleportTo.target, Color.PINK);
@@ -78,7 +84,11 @@ public class InstructionRenderer {
                 InstructionRenderUtil.renderDownArrow(poseStack, pos, Color.ofRGBA(1, 1, 0, 0.5f), Math.max(1, entity.getBbWidth()), finishNanoTime);
             }
         }
-        if (InstructionTab.positionMode != Instruction.Type.IDLE) {
+        if (InstructionTab.positionMode == Instruction.Type.FLY_TO) {
+            BlockPos targetPos = PathingDebug.getAirHitResult(mc);
+            InstructionRenderUtil.renderWholeBox(poseStack, targetPos, Color.ofRGBA(1, 0, 0, 0.5f), finishNanoTime);
+            InstructionRenderUtil.renderFloatingText(poseStack, Minecraft.getInstance(), String.valueOf(PathingDebug.pickBlockOffset), Vec3.atCenterOf(targetPos).add(0, 0.7, 0));
+        } else if (InstructionTab.positionMode != Instruction.Type.IDLE) {
             BlockPos targetPos = PathingDebug.getBlockHitResult(mc);
             InstructionRenderUtil.renderWholeBox(poseStack, targetPos, Color.ofRGBA(1, 0, 0, 0.5f), finishNanoTime);
             if (InstructionTab.positionMode == Instruction.Type.TELEPORT_TO) {

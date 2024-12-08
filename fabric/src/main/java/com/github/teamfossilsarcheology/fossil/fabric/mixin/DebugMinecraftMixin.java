@@ -78,8 +78,12 @@ public class DebugMinecraftMixin {
             DebugScreen.rulerMode = 0;
             InstructionRenderer.rulerStartPos = PathingDebug.getHitResult((Minecraft) (Object) this);
             cir.setReturnValue(false);
+        } else if (InstructionTab.positionMode == Instruction.Type.FLY_TO) {
+            BlockPos blockPos = PathingDebug.getAirHitResult((Minecraft) (Object) this);
+            InstructionTab.addFlyPosition(blockPos);
+            cir.setReturnValue(false);
         } else if (InstructionTab.positionActive()) {
-            BlockHitResult hitResult = PathingDebug.getFullHitResult((Minecraft) (Object) this);
+            BlockHitResult hitResult = PathingDebug.getOffsetHitResult((Minecraft) (Object) this);
             InstructionTab.addPosition(hitResult);
             cir.setReturnValue(false);
         } else if (PathingDebug.showHelpMenu) {

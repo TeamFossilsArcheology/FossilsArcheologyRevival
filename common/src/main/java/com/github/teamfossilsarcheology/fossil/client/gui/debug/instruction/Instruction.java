@@ -36,6 +36,8 @@ public abstract class Instruction {
             Type type = Type.valueOf(tag.getString("Type"));
             return switch (type) {
                 case MOVE_TO -> MoveTo.decodeTag(tag);
+                case FLY_TO -> FlyTo.decodeTag(tag);
+                case FLY_LAND -> FlyLand.decodeTag(tag);
                 case TELEPORT_TO -> TeleportTo.decodeTag(tag);
                 case ATTACH_TO -> AttachTo.decodeTag(tag);
                 case LEAP_ATTACK -> LeapAttack.decodeTag(tag);
@@ -145,6 +147,56 @@ public abstract class Instruction {
 
         protected static Instruction decodeTag(CompoundTag tag) {
             return new MoveTo(NbtUtils.readBlockPos(tag.getCompound("Target")));
+        }
+
+        @Override
+        public String toString() {
+            return type.name() + ": " + target.getX() + " " + target.getY() + " " + target.getZ();
+        }
+    }
+
+    public static class FlyTo extends Instruction {
+        public final BlockPos target;
+
+        public FlyTo(BlockPos target) {
+            super(Type.FLY_TO);
+            this.target = target;
+        }
+
+        @Override
+        public CompoundTag encodeTag() {
+            CompoundTag tag = super.encodeTag();
+            tag.put("Target", NbtUtils.writeBlockPos(target));
+            return tag;
+        }
+
+        protected static Instruction decodeTag(CompoundTag tag) {
+            return new FlyTo(NbtUtils.readBlockPos(tag.getCompound("Target")));
+        }
+
+        @Override
+        public String toString() {
+            return type.name() + ": " + target.getX() + " " + target.getY() + " " + target.getZ();
+        }
+    }
+
+    public static class FlyLand extends Instruction {
+        public final BlockPos target;
+
+        public FlyLand(BlockPos target) {
+            super(Type.FLY_LAND);
+            this.target = target;
+        }
+
+        @Override
+        public CompoundTag encodeTag() {
+            CompoundTag tag = super.encodeTag();
+            tag.put("Target", NbtUtils.writeBlockPos(target));
+            return tag;
+        }
+
+        protected static Instruction decodeTag(CompoundTag tag) {
+            return new FlyLand(NbtUtils.readBlockPos(tag.getCompound("Target")));
         }
 
         @Override
@@ -302,6 +354,6 @@ public abstract class Instruction {
     }
 
     public enum Type {
-        MOVE_TO, PLAY_ANIM, IDLE, TELEPORT_TO, LEAP_ATTACK, LEAP_LAND, ATTACH_TO, SLEEP;
+        MOVE_TO, FLY_TO, FLY_LAND, PLAY_ANIM, IDLE, TELEPORT_TO, LEAP_ATTACK, LEAP_LAND, ATTACH_TO, SLEEP;
     }
 }
