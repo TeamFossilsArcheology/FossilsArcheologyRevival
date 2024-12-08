@@ -1,10 +1,11 @@
 {
-  "parent": "fossil:block/orientable_with_back",
+  "parent": "minecraft:block/orientable_with_bottom",
   "textures": {
+    "bottom": "fossil:block/arch_table_bottom",
     "top": "fossil:block/arch_table_top_active",
-    "front": "fossil:block/arch_table_side1_active",
-    "side": "fossil:block/arch_table_side2",
-    "back": "fossil:block/arch_table_side1_active",
-    "bottom": "fossil:block/arch_table_bottom"
+    "front": "fossil:block/arch_table_side1",
+    "east": "fossil:block/arch_table_side2",
+    "south": "fossil:block/arch_table_side4",
+    "west": "fossil:block/arch_table_side3"
   }
 }
