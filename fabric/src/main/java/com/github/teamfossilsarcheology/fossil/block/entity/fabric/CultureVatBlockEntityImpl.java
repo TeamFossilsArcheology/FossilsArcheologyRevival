@@ -104,7 +104,7 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
         if (canProcess(fuel)) {
             if (isProcessing()) {
                 cookingProgress++;
-                if (cookingProgress >= CultureVatMenu.CULTIVATION_TIME) {
+                if (cookingProgress >= CultureVatMenu.CULTIVATION_DURATION) {
                     cookingProgress = 0;
                     createItem();
                 }

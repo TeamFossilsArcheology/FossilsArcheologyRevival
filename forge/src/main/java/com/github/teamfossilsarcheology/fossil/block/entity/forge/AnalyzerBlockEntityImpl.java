@@ -74,36 +74,33 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
         return new AnalyzerBlockEntityImpl(pos, state);
     }
 
-    private static int getFuelTime(ItemStack stack) {
-        return 100;
-    }
-
-    public static boolean isFuel(ItemStack stack) {
-        return getFuelTime(stack) > 0;
+    @Override
+    public ContainerData getDataAccess() {
+        return dataAccess;
     }
 
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
         boolean fueled = isProcessing();
         boolean dirty = false;
-        if (isProcessing()) {
-            --litTime;
-        }
 
         if (litTime == 0 && canProcess()) {
-            litDuration = litTime = 100;
+            litDuration = litTime = AnalyzerMenu.FUEL_TIME;
             dirty = true;
         }
         if (isProcessing() && canProcess()) {
             ++cookingProgress;
             energyStorage.extractEnergy(FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE), false);
-            if (cookingProgress == 200) {
+            if (cookingProgress == AnalyzerMenu.ANALYZE_DURATION) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;
             }
         } else {
             cookingProgress = 0;
+        }
+        if (isProcessing()) {
+            --litTime;
         }
         if (fueled != isProcessing()) {
             dirty = true;

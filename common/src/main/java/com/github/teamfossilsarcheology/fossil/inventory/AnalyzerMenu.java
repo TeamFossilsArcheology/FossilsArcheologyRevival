@@ -10,6 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 public class AnalyzerMenu extends AbstractContainerMenu {
+    public static final int ANALYZE_DURATION = 200;
+    public static final int FUEL_TIME = 100;
 
     private final Container container;
     private final ContainerData containerData;

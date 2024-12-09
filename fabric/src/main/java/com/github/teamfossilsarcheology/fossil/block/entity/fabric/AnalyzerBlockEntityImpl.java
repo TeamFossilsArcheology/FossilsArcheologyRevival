@@ -91,7 +91,7 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
         }
 
         if (litTime == 0 && canProcess()) {
-            litDuration = litTime = 100;
+            litDuration = litTime = AnalyzerMenu.FUEL_TIME;
             dirty = true;
         }
         if (isProcessing() && canProcess()) {
@@ -100,7 +100,7 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
                 energyStorage.amount -= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE);
                 dirty = true;
             }
-            if (cookingProgress == 200) {
+            if (cookingProgress == AnalyzerMenu.ANALYZE_DURATION) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;

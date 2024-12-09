@@ -9,6 +9,9 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.event.ModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.MammalCapProvider;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.FirstHatchCapProvider;
+import com.github.teamfossilsarcheology.fossil.forge.tests.BatchArgument;
+import com.github.teamfossilsarcheology.fossil.forge.tests.BatchTestCommand;
+import com.github.teamfossilsarcheology.fossil.forge.tests.RecipeTests;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncEntityInfoMessage;
@@ -17,6 +20,9 @@ import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
 import com.github.teamfossilsarcheology.fossil.world.effect.ComfyBedEffect;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
 import dev.architectury.platform.Platform;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.synchronization.ArgumentTypes;
+import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -25,6 +31,8 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
+import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.RegisterGameTestsEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.event.entity.player.PlayerSleepInBedEvent;
@@ -39,6 +47,20 @@ import java.util.List;
 
 @Mod.EventBusSubscriber(modid = FossilMod.MOD_ID)
 public class ForgeModEvents {
+
+
+    @SubscribeEvent
+    public static void registerTests(RegisterGameTestsEvent event) {
+        event.register(RecipeTests.class);
+    }
+
+    @SubscribeEvent
+    public static void registerCommands(RegisterCommandsEvent event) {
+        if (!ArgumentTypes.isTypeRegistered(BatchArgument.batch())) {
+            ArgumentTypes.register("batch", BatchArgument.class, new EmptyArgumentSerializer<>(BatchArgument::batch));
+        }
+        event.getDispatcher().register(Commands.literal(FossilMod.MOD_ID).then(BatchTestCommand.register()));
+    }
 
     @SubscribeEvent
     public static void addCustomTrades(VillagerTradesEvent event) {

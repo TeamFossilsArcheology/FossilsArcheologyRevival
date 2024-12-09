@@ -50,7 +50,7 @@ public class CultureVatScreen extends AbstractContainerScreen<CultureVatMenu> {
             blit(poseStack, x + 82, y + 36 + FUEL_HEIGHT - scaledProgress, 177, FUEL_HEIGHT - scaledProgress, FUEL_WIDTH, scaledProgress + 1);
         }
 
-        int scaledProgress = menu.getCultivationTime() * PROGRESS_WIDTH / CultureVatMenu.CULTIVATION_TIME;
+        int scaledProgress = menu.getCultivationTime() * PROGRESS_WIDTH / CultureVatMenu.CULTIVATION_DURATION;
         blit(poseStack, x + 78, y + 22, 176, FUEL_HEIGHT+ 2, scaledProgress, PROGRESS_HEIGHT);
         if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
             int energyProgress = 35 * menu.getStoredEnergy() / FossilConfig.getInt(FossilConfig.MACHINE_MAX_ENERGY);

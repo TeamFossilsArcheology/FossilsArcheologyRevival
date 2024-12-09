@@ -82,6 +82,15 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
     }
 
     @Override
+    public ContainerData getDataAccess() {
+        return dataAccess;
+    }
+
+    public void setFuel(ItemStack fuel) {
+        this.fuel = fuel;
+    }
+
+    @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
         boolean wasActive = cookingProgress > 0;
         boolean dirty = false;
@@ -104,7 +113,7 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
         if (canProcess(fuel)) {
             if (isProcessing()) {
                 cookingProgress++;
-                if (cookingProgress >= CultureVatMenu.CULTIVATION_TIME) {
+                if (cookingProgress >= CultureVatMenu.CULTIVATION_DURATION) {
                     cookingProgress = 0;
                     createItem();
                 }

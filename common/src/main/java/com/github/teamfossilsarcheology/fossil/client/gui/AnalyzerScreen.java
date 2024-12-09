@@ -40,7 +40,7 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
-        int progress = menu.getAnalyzeProgress() * 22 / 200;
+        int progress = menu.getAnalyzeProgress() * 22 / AnalyzerMenu.ANALYZE_DURATION;
         blit(poseStack, x + 80, y + 22, 177, 18, progress, 9);
         if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
             int energyProgress = 35 * menu.getStoredEnergy() / FossilConfig.getInt(FossilConfig.MACHINE_MAX_ENERGY);

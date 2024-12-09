@@ -59,6 +59,7 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
+
     public SifterBlockEntityImpl(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.SIFTER.get(), blockPos, blockState);
     }
@@ -68,28 +69,33 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
     }
 
     @Override
+    public ContainerData getDataAccess() {
+        return dataAccess;
+    }
+
+    @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
         boolean fueled = isProcessing();
         boolean dirty = false;
-        if (isProcessing()) {
-            --litTime;
-        }
 
         if (litTime == 0 && canProcess()) {
-            litDuration = litTime = 100;
+            litDuration = litTime = SifterMenu.FUEL_TIME;
             dirty = true;
         }
 
         if (isProcessing() && canProcess()) {
             ++cookingProgress;
 
-            if (cookingProgress == 200) {
+            if (cookingProgress == SifterMenu.SIFTER_DURATION) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;
             }
         } else {
             cookingProgress = 0;
+        }
+        if (isProcessing()) {
+            --litTime;
         }
 
         if (fueled != isProcessing()) {

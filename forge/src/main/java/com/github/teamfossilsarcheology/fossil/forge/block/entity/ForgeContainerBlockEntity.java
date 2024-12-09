@@ -8,6 +8,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.WorldlyContainer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.inventory.ContainerData;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -24,7 +25,7 @@ import javax.annotation.Nullable;
 public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer, Container {
     protected int litTime; //fuel goes from x to 0
     protected int litDuration; //fuel x
-    protected int cookingProgress; //item goes from 0 to x
+    public int cookingProgress; //item goes from 0 to x
     protected int cookingTotalTime; //item x
     LazyOptional<? extends IItemHandler>[] handlers = SidedInvWrapper.create(this, Direction.UP, Direction.DOWN, Direction.NORTH);
 
@@ -32,6 +33,7 @@ public abstract class ForgeContainerBlockEntity extends BaseContainerBlockEntity
         super(blockEntityType, blockPos, blockState);
     }
 
+    public abstract ContainerData getDataAccess();
 
     @Override
     public void load(CompoundTag tag) {

@@ -71,25 +71,25 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
     public void serverTick(Level level, BlockPos pos, BlockState state) {
         boolean fueled = isProcessing();
         boolean dirty = false;
-        if (isProcessing()) {
-            --litTime;
-        }
 
         if (litTime == 0 && canProcess()) {
-            litDuration = litTime = 100;
+            litDuration = litTime = SifterMenu.FUEL_TIME;
             dirty = true;
         }
 
         if (isProcessing() && canProcess()) {
             ++cookingProgress;
 
-            if (cookingProgress == 200) {
+            if (cookingProgress == SifterMenu.SIFTER_DURATION) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;
             }
         } else {
             cookingProgress = 0;
+        }
+        if (isProcessing()) {
+            --litTime;
         }
 
         if (fueled != isProcessing()) {
