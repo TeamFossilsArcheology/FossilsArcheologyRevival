@@ -2795,7 +2795,7 @@ d4fce051392e34a3ea83064f1f57b31a375dc66c data/fossil/recipes/scarab_pickaxe.json
 82640e88adf9ec1ce0f7d37b15553aa765ea0782 data/fossil/recipes/scarab_shovel.json
 320931a92ce5e7459a500b82f607ae64c63e4e81 data/fossil/recipes/scarab_sword.json
 b6ce5d3ad1f41665050e4a0927369ed4f6dd4c26 data/fossil/recipes/sifter.json
-6e4e1049d6d0a6ef515a0c23ae67cfe444a2d7b2 data/fossil/recipes/sifter/sifter_inputs.json
+b1fc1c24fe4fe3fb14d6f6f3dea675f96bb6bb76 data/fossil/recipes/sifter/sifter_inputs.json
 177f1a11e90b58de8b3129ca5a5f9cb681fe1f2f data/fossil/recipes/sigillaria_button.json
 deacfac38204ebc8927354b1131a2a5695e5596a data/fossil/recipes/sigillaria_door.json
 94c50bae1d7993552f6363c655b8699a686e2020 data/fossil/recipes/sigillaria_fence.json
@@ -2989,7 +2989,7 @@ be309a84eb640c90631d98e3906aa18ca049f0e3 data/fossil/tags/blocks/calamites_logs.
 11f5dca67dcdd1bfc822f8494fc9f08db94bbe23 data/fossil/tags/blocks/mood_bonus.json
 f1ad8b4f116dbdbf76d59146f196d2f79712aa3f data/fossil/tags/blocks/mutant_tree_logs.json
 07ddf71d4d8f03aa869b645a414a77df2934ad74 data/fossil/tags/blocks/palm_logs.json
-e3559cc10178502d0ff36ba45f24abec94c8d0a7 data/fossil/tags/blocks/plants.json
+baa28553a0a9de95a47d247ea057ca6e3320eb37 data/fossil/tags/blocks/plants.json
 c14bc2c851ae4f2d91784207659b2999abe97384 data/fossil/tags/blocks/sigillaria_logs.json
 7792735a57bdbe07196f9062ced049cc5b96fe71 data/fossil/tags/blocks/tempskya_logs.json
 947d131a060112ec3d5c15e53c7b01ceba384e0e data/fossil/tags/blocks/unbreakable.json
@@ -3026,7 +3026,7 @@ dce2b8515233f9bac90c7a0f6748c983be5ba55e data/fossil/tags/items/filter_dna.json
 af67688d6113b3c2aad5fa005c2da2d5ad92faa7 data/fossil/tags/items/filter_machines.json
 def49666bafd29271131ae49b513cfc0375e2296 data/fossil/tags/items/filter_meat.json
 7b6446e1b3803a3b081cb78a7c6f420574ba0812 data/fossil/tags/items/filter_other.json
-19c96a5cd29f5a654cb459896bceb1faa73f250a data/fossil/tags/items/filter_park.json
+073c7d9837f96d44fdf6bf28ddda59988d87c792 data/fossil/tags/items/filter_park.json
 afa2acc934d60e35c41ca37616d20a0fa8a6877f data/fossil/tags/items/filter_plants.json
 97603dc29a3f440609fa12a697997cc58b7e933b data/fossil/tags/items/filter_tools.json
 2c7b1b5e5a448658e2705260d0fe9601624a0586 data/fossil/tags/items/filter_trees.json

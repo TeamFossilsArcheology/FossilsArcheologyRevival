@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 
+import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
@@ -34,6 +35,11 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
         super(properties);
         this.shape = shape;
         this.registerDefaultState(this.stateDefinition.any().setValue(LAYER, 0));
+    }
+
+    @Override
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return super.mayPlaceOn(state, level, pos) || (state.is(Blocks.SAND) && defaultBlockState().is(ModBlockTags.PLANTABLE_ON_SAND));
     }
 
     @Override

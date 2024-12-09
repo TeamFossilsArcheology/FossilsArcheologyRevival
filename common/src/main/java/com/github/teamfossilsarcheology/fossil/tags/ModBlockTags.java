@@ -20,4 +20,5 @@ public class ModBlockTags {
     public static final TagKey<Block> UNBREAKABLE = TagKey.create(key, FossilMod.location("unbreakable"));
     public static final TagKey<Block> MOOD_BONUS = TagKey.create(key, FossilMod.location("mood_bonus"));
     public static final TagKey<Block> PLANTS = TagKey.create(key, FossilMod.location("plants"));
+    public static final TagKey<Block> PLANTABLE_ON_SAND = TagKey.create(key, FossilMod.location("plantable_on_sand"));
 }

@@ -1,9 +1,11 @@
 package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 
+import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -21,6 +23,11 @@ public class TallFlowerBlock extends DoublePlantBlock implements BonemealableBlo
     public TallFlowerBlock(Properties properties, VoxelShape shape) {
         super(properties);
         this.shape = shape;
+    }
+
+    @Override
+    protected boolean mayPlaceOn(BlockState state, BlockGetter level, BlockPos pos) {
+        return super.mayPlaceOn(state, level, pos) || (state.is(Blocks.SAND) && defaultBlockState().is(ModBlockTags.PLANTABLE_ON_SAND));
     }
 
     @Override

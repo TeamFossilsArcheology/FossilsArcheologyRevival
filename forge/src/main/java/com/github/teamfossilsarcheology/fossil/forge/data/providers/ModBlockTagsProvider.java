@@ -82,6 +82,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
             plants.add(info.getPlantBlock());
         }
+        tag(ModBlockTags.PLANTABLE_ON_SAND).add(PrehistoricPlantInfo.WELWITSCHIA.getPlantBlock(),
+                PrehistoricPlantInfo.BENNETTITALES_LARGE.getPlantBlock(), PrehistoricPlantInfo.BENNETTITALES_SMALL.getPlantBlock(),
+                PrehistoricPlantInfo.ZAMITES.getPlantBlock());
 
         addTag(ModBlockTags.UNBREAKABLE, ANCIENT_GLASS, BUBBLE_BLOWER, DENSE_SAND, FEEDER, REINFORCED_GLASS);
         tag(ModBlockTags.MOOD_BONUS).add(Blocks.CACTUS, Blocks.MOSS_BLOCK, Blocks.PUMPKIN, Blocks.CARVED_PUMPKIN,
