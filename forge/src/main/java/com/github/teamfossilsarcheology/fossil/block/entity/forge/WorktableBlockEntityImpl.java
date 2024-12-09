@@ -83,16 +83,12 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         return dataAccess;
     }
 
-    public void setFuel(ItemStack fuel) {
-        this.fuel = fuel;
-    }
-
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
         boolean wasActive = cookingProgress > 0;
         boolean dirty = false;
 
-        if (cookingProgress == 0 && fuel == ItemStack.EMPTY && canProcess()) {
+        if (cookingProgress == 0 && (fuel == ItemStack.EMPTY || !items.get(WorktableMenu.FUEL_SLOT_ID).sameItem(fuel)) && canProcess()) {
             ItemStack fuelStack = items.get(WorktableMenu.FUEL_SLOT_ID);
             litDuration = litTime = getItemFuelTime(fuelStack);
             fuel = fuelStack.copy();

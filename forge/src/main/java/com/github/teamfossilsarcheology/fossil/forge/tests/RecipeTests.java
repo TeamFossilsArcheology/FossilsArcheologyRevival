@@ -132,13 +132,12 @@ public class RecipeTests {
                 int fuelNeeded = recipe.getDuration() / ModRecipes.getCultureVatFuelValue(fuelItem);
                 long startTick = i * 3L;
                 helper.runAtTickTime(startTick, () -> {
-                    cultureVatEntity.setFuel(ItemStack.EMPTY);//TODO: Remove
                     cultureVatEntity.setItem(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelItem, fuelNeeded));
                     cultureVatEntity.setItem(CultureVatMenu.INPUT_SLOT_ID, new ItemStack(inputItem));
                 });
                 helper.runAtTickTime(startTick + 1, () -> dataAccess.set(2, CultureVatMenu.CULTIVATION_DURATION - 1));
                 helper.runAtTickTime(startTick + 2, () -> {
-                    if (!cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID).is(recipe.getResultItem().getItem())) {
+                    if (!cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem())) {
                         throw new GameTestAssertException("Output does not contain " + recipe.getResultItem().getItem() + " but instead " + cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID));
                     }
                     cultureVatEntity.setItem(CultureVatMenu.OUTPUT_SLOT_ID, ItemStack.EMPTY);
@@ -164,7 +163,7 @@ public class RecipeTests {
             ContainerData dataAccess = cultureVatEntity.getDataAccess();
             helper.runAtTickTime(1, () -> dataAccess.set(2, CultureVatMenu.CULTIVATION_DURATION - 10));
             helper.runAtTickTime(11, () -> {
-                if (!cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID).is(recipe.getResultItem().getItem())) {
+                if (!cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem())) {
                     throw new GameTestAssertException("Output does not contain " + recipe.getResultItem().getItem() + " but instead " + cultureVatEntity.getItem(CultureVatMenu.OUTPUT_SLOT_ID));
                 }
             });
@@ -252,6 +251,7 @@ public class RecipeTests {
         BlockEntity blockEntity = getBlockEntity(helper, WorktableBlock.class);
         if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
             var list = helper.getLevel().getRecipeManager().getAllRecipesFor(ModRecipes.WORKTABLE_TYPE.get());
+           // list = list.stream().filter(worktableRecipe -> worktableRecipe.getFuel().test(new ItemStack(ModItems.POTTERY_SHARD.get()))).toList();
             ContainerData dataAccess = worktableEntity.getDataAccess();
             for (int i = 0; i < list.size(); i++) {
                 var recipe = list.get(i);
@@ -260,7 +260,6 @@ public class RecipeTests {
                 int fuelNeeded = recipe.getDuration() / ModRecipes.getWorktableFuelValue(fuelItem);
                 long startTick = i * 3L;
                 helper.runAtTickTime(startTick, () -> {
-                    worktableEntity.setFuel(ItemStack.EMPTY);//TODO: Remove
                     worktableEntity.setItem(WorktableMenu.FUEL_SLOT_ID, new ItemStack(fuelItem, fuelNeeded));
                     worktableEntity.setItem(WorktableMenu.INPUT_SLOT_ID, new ItemStack(inputItem));
                 });
@@ -269,7 +268,7 @@ public class RecipeTests {
                     dataAccess.set(2, smeltTime - 1);
                 });
                 helper.runAtTickTime(startTick + 2, () -> {
-                    if (!worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID).is(recipe.getResultItem().getItem())) {
+                    if (!worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem())) {
                         throw new GameTestAssertException("Output does not contain " + recipe.getResultItem().getItem() + " but instead " + worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID));
                     }
                     worktableEntity.setItem(WorktableMenu.OUTPUT_SLOT_ID, ItemStack.EMPTY);
@@ -296,7 +295,7 @@ public class RecipeTests {
             int smeltTime = worktableEntity.timeToSmelt(new ItemStack(inputItem), new ItemStack(fuelItem));
             helper.runAtTickTime(1, () -> dataAccess.set(2, smeltTime - 10));
             helper.runAtTickTime(11, () -> {
-                if (!worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID).is(recipe.getResultItem().getItem())) {
+                if (!worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID).sameItem(recipe.getResultItem())) {
                     throw new GameTestAssertException("Output does not contain " + recipe.getResultItem().getItem() + " but instead " + worktableEntity.getItem(WorktableMenu.OUTPUT_SLOT_ID));
                 }
             });
@@ -372,7 +371,7 @@ public class RecipeTests {
                 int smeltTime = AnalyzerMenu.ANALYZE_DURATION;
                 helper.runAtTickTime(startTick + 1, () -> dataAccess.set(2, smeltTime - 1));
                 helper.runAtTickTime(startTick + 2, () -> {
-                    if (recipe.getWeightedOutputs().values().stream().noneMatch(itemStack -> itemStack.is(analyzerEntity.getItem(9).getItem()))) {
+                    if (recipe.getWeightedOutputs().values().stream().noneMatch(itemStack -> itemStack.sameItem(analyzerEntity.getItem(9)))) {
                         throw new GameTestAssertException("Output does not contain any results from " + recipe.getId() + " but instead " + analyzerEntity.getItem(9));
                     }
                     analyzerEntity.setItem(9, ItemStack.EMPTY);
@@ -450,7 +449,7 @@ public class RecipeTests {
                 helper.runAtTickTime(startTick, () -> sifterEntity.setItem(0, new ItemStack(inputItem)));
                 helper.runAtTickTime(startTick + 1, () -> dataAccess.set(2, SifterMenu.SIFTER_DURATION - 1));
                 helper.runAtTickTime(startTick + 2, () -> {
-                    if (recipe.getWeightedOutputs().values().stream().noneMatch(itemStack -> itemStack.is(sifterEntity.getItem(1).getItem()))) {
+                    if (recipe.getWeightedOutputs().values().stream().noneMatch(itemStack -> itemStack.sameItem(sifterEntity.getItem(1)))) {
                         throw new GameTestAssertException("Output does not contain any results from " + recipe.getId() + " but instead " + sifterEntity.getItem(1));
                     }
                     sifterEntity.setItem(1, ItemStack.EMPTY);
