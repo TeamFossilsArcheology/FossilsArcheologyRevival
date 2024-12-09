@@ -7,7 +7,9 @@
     "AnimationProcessorMixin", "DebugLevelRendererMixin", "DebugMinecraftMixin", "DebugMouseHandlerMixin", "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin",
     "TitleScreenMixin"
   ],
-  "mixins": ["AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin"],
+  "mixins": [
+    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

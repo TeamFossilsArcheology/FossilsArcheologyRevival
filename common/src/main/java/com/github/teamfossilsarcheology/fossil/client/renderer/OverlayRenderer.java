@@ -3,24 +3,21 @@ package com.github.teamfossilsarcheology.fossil.client.renderer;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
+import com.github.teamfossilsarcheology.fossil.material.ModFluids;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import com.mojang.math.Matrix4f;
 import com.mojang.math.Vector4f;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.material.Fluid;
 
 public class OverlayRenderer {
     private static final ResourceLocation ANCIENT_HELMET = FossilMod.location("textures/gui/ancient_helmet_blur.png");
     private static final ResourceLocation BONE_HELMET = FossilMod.location("textures/gui/bone_helmet_blur.png");
     private static final ResourceLocation TAR = FossilMod.location("textures/block/tar_still.png");
-    private static final TagKey<Fluid> TAR_FLUID = TagKey.create(Registry.FLUID_REGISTRY, FossilMod.location("tar"));
 
     public static void renderHelmet(int screenWidth, int screenHeight) {
         Minecraft mc = Minecraft.getInstance();
@@ -48,7 +45,7 @@ public class OverlayRenderer {
 
     public static void renderTar(PoseStack poseStack) {
         Minecraft mc = Minecraft.getInstance();
-        if (mc.player.isEyeInFluid(TAR_FLUID)) {
+        if (mc.player.isEyeInFluid(ModFluids.TAR_FLUID)) {
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
             RenderSystem.setShaderTexture(0, TAR);
             RenderSystem.enableBlend();

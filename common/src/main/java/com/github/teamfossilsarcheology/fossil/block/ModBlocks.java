@@ -51,7 +51,7 @@ public class ModBlocks {
             () -> new FeederBlock(Properties.of(Material.METAL).strength(3).requiresCorrectToolForDrops()));
 
     public static final RegistrySupplier<ArchitecturyLiquidBlock> TAR = registerBlockWithoutBlockItem("tar",
-            () -> TarBlock.get(ModFluids.TAR, Properties.copy(Blocks.WATER).isSuffocating(ModBlocks::always).isViewBlocking(ModBlocks::always)));
+            () -> TarBlock.get(ModFluids.TAR, Properties.copy(Blocks.WATER).isViewBlocking(ModBlocks::always)));
 
     public static final RegistrySupplier<AnuStatueBlock> ANU_STATUE = registerBlockWithCustomBlockItem("anu_statue",
             () -> new AnuStatueBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
