@@ -59,13 +59,11 @@ public class Parasaurolophus extends Prehistoric {
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-        if (SLEEPING.equals(key) && !level.isClientSide) {
-            setStanding(false);
-        }
-        if (SITTING.equals(key) && !level.isClientSide) {
-            setStanding(false);
-        }
-        if (DATA_CUSTOM_NAME.equals(key) && level.isClientSide) {
+        if (!level.isClientSide) {
+            if (SLEEPING.equals(key) || SITTING.equals(key)) {
+                setStanding(false);
+            }
+        } else if (DATA_CUSTOM_NAME.equals(key)) {
             refreshTexturePath();
         }
         super.onSyncedDataUpdated(key);

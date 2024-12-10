@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
@@ -7,6 +8,8 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
+import net.minecraft.ChatFormatting;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -33,6 +36,30 @@ public class Mosasaurus extends PrehistoricSwimming {
         super.registerGoals();
         //goalSelector.addGoal(Util.ATTACK + 1, new BreachAttackGoal(this, 1));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
+    }
+
+    @Override
+    public void refreshTexturePath() {
+        if (!level.isClientSide) {
+            return;
+        }
+        if ("Hope".equals(ChatFormatting.stripFormatting(getName().getString()))) {
+            if (isSleeping()) {
+                textureLocation = FossilMod.location("textures/entity/mosasaurus/mosasaurus_hope_sleeping.png");
+            } else {
+                textureLocation = FossilMod.location("textures/entity/mosasaurus/mosasaurus_hope.png");
+            }
+            return;
+        }
+        super.refreshTexturePath();
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (level.isClientSide && DATA_CUSTOM_NAME.equals(key)) {
+            refreshTexturePath();
+        }
+        super.onSyncedDataUpdated(key);
     }
 
     @Override
