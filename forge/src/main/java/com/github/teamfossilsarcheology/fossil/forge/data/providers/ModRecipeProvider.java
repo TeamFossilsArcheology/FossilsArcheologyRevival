@@ -234,15 +234,27 @@ public class ModRecipeProvider extends RecipeProvider {
         }
 
         if (machineRecipes) {
+            //with 19 plant seeds at 1% each
             MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> plantFossil = analyzed(PlANT_FOSSIL.get())
-                    .addOutput(Blocks.SAND, 35)
+                    .addOutput(Blocks.SAND, 25)
                     .addOutput(Blocks.CACTUS, 20)
+                    .addOutput(Blocks.POPPY, 1.5)
+                    .addOutput(Blocks.ALLIUM, 1.5)
+                    .addOutput(Blocks.DANDELION, 1.5)
+                    .addOutput(Blocks.OXEYE_DAISY, 1.5)
+                    .addOutput(Blocks.CORNFLOWER, 1.5)
+                    .addOutput(Blocks.AZURE_BLUET, 1.5)
+                    .addOutput(Blocks.FERN, 1.5)
+                    .addOutput(Blocks.GRASS, 1.5)
+                    .addOutput(Blocks.DEAD_BUSH, 3)
+                    .addOutput(Blocks.RED_MUSHROOM, 3)
+                    .addOutput(Blocks.BROWN_MUSHROOM, 3)
                     .addOutput(FERN_SEED_FOSSIL.get(), 5)
-                    .addOutput(CALAMITES_FOSSIL_SAPLING.get(), 2.5)
-                    .addOutput(CORDAITES_FOSSIL_SAPLING.get(), 2.5)
-                    .addOutput(PALM_FOSSIL_SAPLING.get(), 2.5)
-                    .addOutput(SIGILLARIA_FOSSIL_SAPLING.get(), 2.5)
-                    .addOutput(TEMPSKYA_FOSSIL_SAPLING.get(), 2.5);
+                    .addOutput(CALAMITES_FOSSIL_SAPLING.get(), 2)
+                    .addOutput(CORDAITES_FOSSIL_SAPLING.get(), 2)
+                    .addOutput(PALM_FOSSIL_SAPLING.get(), 2)
+                    .addOutput(SIGILLARIA_FOSSIL_SAPLING.get(), 2)
+                    .addOutput(TEMPSKYA_FOSSIL_SAPLING.get(), 2);
 
             double seedWeight = (100F - plantFossil.total) / (double) PrehistoricPlantInfo.plantsWithSeeds().size();
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
@@ -398,12 +410,13 @@ public class ModRecipeProvider extends RecipeProvider {
             worktable(ModItems.DIAMOND_JAVELIN, ModItems.DIAMOND_JAVELIN, ModItems.RELIC_SCRAP, consumer);
             worktable(ModItems.ANCIENT_JAVELIN, ModItems.ANCIENT_JAVELIN, ModItems.RELIC_SCRAP, consumer);
 
-
-            sifter(ModItemTags.SIFTER_INPUTS).addOutput(Blocks.SAND, 20d).addOutput(Items.POTATO, 15d).
-                    addOutput(Items.CARROT, 10d).addOutput(Items.BONE_MEAL, 20d).
-                    addOutput(ModBlocks.AMBER_CHUNK_DOMINICAN.get(), 1d).addOutput(ModItems.FERN_SEED_FOSSIL.get(), 10d).
-                    addOutput(ModItems.PlANT_FOSSIL.get(), 14d).addOutput(ModItems.BIO_FOSSIL.get(), 2d).
-                    addOutput(ModItems.POTTERY_SHARD.get(), 5d).save(consumer);
+            sifter(ModItemTags.SIFTER_INPUTS).addOutput(Blocks.SAND, 5d).addOutput(Items.POTATO, 15d).
+                    addOutput(Items.CARROT, 15d).addOutput(Items.BEETROOT, 5d).addOutput(Items.PUMPKIN_SEEDS, 2d).
+                    addOutput(Items.BONE_MEAL, 22d).addOutput(Items.IRON_NUGGET, 3d).addOutput(Items.GOLD_NUGGET, 3d).
+                    addOutput(ModBlocks.AMBER_CHUNK_DOMINICAN.get(), 1d).addOutput(ModItems.FERN_SEED_FOSSIL.get(), 5d).
+                    addOutput(Blocks.COBBLESTONE, 5d).
+                    addOutput(ModItems.PlANT_FOSSIL.get(), 2d).addOutput(ModItems.BIO_FOSSIL.get(), 2d).
+                    addOutput(ModItems.POTTERY_SHARD.get(), 5d).addOutput(Items.CLAY_BALL, 10d).save(consumer);
 
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
                 if (info.dnaItem != null && info.getDNAResult() != null) {

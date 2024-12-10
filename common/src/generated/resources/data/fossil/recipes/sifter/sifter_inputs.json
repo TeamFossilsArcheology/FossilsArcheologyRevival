@@ -9,12 +9,24 @@
       "weight": 1.0
     },
     {
+      "item": "minecraft:beetroot",
+      "weight": 5.0
+    },
+    {
       "item": "minecraft:bone_meal",
-      "weight": 20.0
+      "weight": 22.0
     },
     {
       "item": "minecraft:carrot",
+      "weight": 15.0
+    },
+    {
+      "item": "minecraft:clay_ball",
       "weight": 10.0
+    },
+    {
+      "item": "minecraft:cobblestone",
+      "weight": 5.0
     },
     {
       "item": "fossil:fossil_bio",
@@ -22,11 +34,19 @@
     },
     {
       "item": "fossil:fossil_plant",
-      "weight": 14.0
+      "weight": 2.0
     },
     {
       "item": "fossil:fossil_seed_fern",
-      "weight": 10.0
+      "weight": 5.0
+    },
+    {
+      "item": "minecraft:gold_nugget",
+      "weight": 3.0
+    },
+    {
+      "item": "minecraft:iron_nugget",
+      "weight": 3.0
     },
     {
       "item": "minecraft:potato",
@@ -37,8 +57,12 @@
       "weight": 5.0
     },
     {
+      "item": "minecraft:pumpkin_seeds",
+      "weight": 2.0
+    },
+    {
       "item": "minecraft:sand",
-      "weight": 20.0
+      "weight": 5.0
     }
   ]
 }

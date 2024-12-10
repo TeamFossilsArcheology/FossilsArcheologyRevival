@@ -14,6 +14,7 @@ import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.tags.ItemTags;
+import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.ItemLike;
@@ -70,8 +71,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         var filterPark = tag(ModItemTags.FILTER_PARK);
         addNullable(filterPark, BUBBLE_BLOWER, FEEDER, SKULL_STICK, STUNTED_ESSENCE, CHICKEN_ESSENCE,
                 WHIP, DINOPEDIA);
-        for (RegistrySupplier<ToyBallItem> toyBall : TOY_BALLS.values()) {
-            filterPark.add(toyBall.get());
+        for (DyeColor color : DyeColor.values()) {
+            filterPark.add(TOY_BALLS.get(color).get());
         }
         for (RegistrySupplier<ToyScratchingPostItem> toy : TOY_SCRATCHING_POSTS.values()) {
             filterPark.add(toy.get());
