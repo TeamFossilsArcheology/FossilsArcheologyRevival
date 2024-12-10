@@ -272,7 +272,7 @@
 						"vector": [-10, 0, 0]
 					},
 					"position": {
-						"vector": [0, 4, 0]
+						"vector": [0, 0, 0]
 					}
 				},
 				"bodyfront": {
@@ -318,7 +318,7 @@
 			"bones": {
 				"pitch_root": {
 					"position": {
-						"vector": [0, "query.is_in_water ? 4 : 0", 0]
+						"vector": [0, 0, 0]
 					}
 				},
 				"Tail": {
@@ -359,7 +359,7 @@
 			"bones": {
 				"pitch_root": {
 					"position": {
-						"vector": [0, 4, 0]
+						"vector": [0, 0, 0]
 					}
 				},
 				"bodyfront": {
@@ -395,7 +395,7 @@
 			"bones": {
 				"pitch_root": {
 					"position": {
-						"vector": [0, 4, 0]
+						"vector": [0, 0, 0]
 					}
 				},
 				"bodyfront": {

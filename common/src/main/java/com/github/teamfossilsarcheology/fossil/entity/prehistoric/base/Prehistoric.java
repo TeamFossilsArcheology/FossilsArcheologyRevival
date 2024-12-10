@@ -16,8 +16,6 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.*;
 import com.github.teamfossilsarcheology.fossil.entity.data.AI;
 import com.github.teamfossilsarcheology.fossil.entity.data.Attribute;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.Deinonychus;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.Velociraptor;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.AISystem;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.MoodSystem;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SitSystem;
@@ -391,17 +389,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (hasPassenger(passenger) && passenger instanceof Mob mob) {
             yBodyRot = mob.yBodyRot;
         }
-        Player rider = getRidingPlayer();
         getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
             passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset() * getScale(), pos.z);
         }, () -> {
             passenger.setPos(getX(), getY() + getPassengersRidingOffset() + passenger.getMyRidingOffset(), getZ());
         });
-        if (passenger instanceof Velociraptor || passenger instanceof Deinonychus) {
-            //TODO: Offset for leap attack
-            //double extraY = Math.min(getPassengersRidingOffset() * (getScale()) - 1D, 0.5D);
-            //passenger.setPos(this.getX(), this.getY() + extraY, this.getZ());
-        }
     }
 
     public double getJumpStrength() {
