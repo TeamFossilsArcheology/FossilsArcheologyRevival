@@ -23,10 +23,10 @@
 
 ## Current Fossils and Archeology Revival Contributors
 ###### Programmers
-[DarkPred](https://github.com/DarkPred),
+[DarkPred](https://github.com/DarkPred)
 
 ###### Texture/Model Artists
-DDinoDan, Dipple_Effect, Javaraptor, SealManVI, Totemaster
+[DDinoDan](https://www.instagram.com/ddinodan_/profilecard/), Dipple_Effect, Javaraptor, SealManVI, Totemaster
 
 ###### Animators
 Dafall, Indominator, MrDinosaurFan, TotallyNotAHobo
