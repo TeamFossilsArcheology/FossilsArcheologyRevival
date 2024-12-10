@@ -28,6 +28,8 @@ public class ServerEntityMixin {
     public void sendPassengersToPlayerIfPlayerIsVehicle(Consumer<Packet<?>> instance, Object t, Operation<Void> original) {
         if (entity instanceof ServerPlayer serverPlayer && fossilsArcheologyRevival$hasFAMobAsPassenger(serverPlayer.getPassengers())) {
             serverPlayer.connection.send((Packet<?>) t);
+        } else {
+            original.call(instance, t);
         }
     }
 
