@@ -55,10 +55,10 @@ public class ModBlocks {
 
     public static final RegistrySupplier<AnuStatueBlock> ANU_STATUE = registerBlockWithCustomBlockItem("anu_statue",
             () -> new AnuStatueBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
-            block -> AnuStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+            block -> AnuStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FA_BLOCK_TAB)));
     public static final RegistrySupplier<AnubiteStatueBlock> ANUBITE_STATUE = registerBlockWithCustomBlockItem("anubite_statue",
             () -> new AnubiteStatueBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)),
-            block -> AnubiteStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+            block -> AnubiteStatueBlockItem.get(block, new Item.Properties().tab(ModTabs.FA_BLOCK_TAB)));
     public static final RegistrySupplier<AnuBarrierOriginBlock> ANU_BARRIER_ORIGIN = registerBlockWithDebugItem("anu_barrier_origin",
             () -> new AnuBarrierOriginBlock(Properties.copy(Blocks.BARRIER)));
     public static final RegistrySupplier<AnuBarrierFaceBlock> ANU_BARRIER_FACE = registerBlockWithDebugItem("anu_barrier_face",
@@ -69,10 +69,10 @@ public class ModBlocks {
             () -> new HomePortal(Properties.copy(Blocks.NETHER_PORTAL)));
     public static final RegistrySupplier<AncientChestBlock> ANCIENT_CHEST = registerBlockWithCustomBlockItem("ancient_chest",
             () -> new AncientChestBlock(Properties.of(Material.WOOD).noOcclusion().strength(-1, 3600000)),
-            block -> AncientChestBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+            block -> AncientChestBlockItem.get(block, new Item.Properties().tab(ModTabs.FA_BLOCK_TAB)));
     public static final RegistrySupplier<Block> SARCOPHAGUS = registerBlockWithCustomBlockItem("sarcophagus",
             () -> new SarcophagusBlock(Properties.of(Material.STONE).noOcclusion().strength(-1, 60000000)
-                    .lightLevel(state -> state.getValue(SarcophagusBlock.LIT) ? 7 : 0)), block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+                    .lightLevel(state -> state.getValue(SarcophagusBlock.LIT) ? 7 : 0)), block -> SarcophagusBlockItem.get(block, new Item.Properties().tab(ModTabs.FA_BLOCK_TAB)));
     public static final RegistrySupplier<Block> FAKE_OBSIDIAN = registerBlockWithDebugItem("fake_obsidian",
             () -> new FakeObsidian(Properties.copy(Blocks.OBSIDIAN)));
     public static final RegistrySupplier<Block> OBSIDIAN_SPIKES = registerBlock("obsidian_spikes",
@@ -521,7 +521,7 @@ public class ModBlocks {
     }
 
     private static <T extends Block> RegistrySupplier<Item> registerBlockItem(String name, RegistrySupplier<T> block) {
-        return ModItems.ITEMS.register(name, () -> new CustomBlockItem(block.get(), new Item.Properties().tab(ModTabs.FABLOCKTAB)));
+        return ModItems.ITEMS.register(name, () -> new CustomBlockItem(block.get(), new Item.Properties().tab(ModTabs.FA_BLOCK_TAB)));
     }
 
     public static void register() {

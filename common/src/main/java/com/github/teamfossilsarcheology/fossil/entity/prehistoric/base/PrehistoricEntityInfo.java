@@ -176,14 +176,14 @@ public enum PrehistoricEntityInfo implements EntityInfo {
             registerItem("spawn_egg", info, properties -> new CustomSpawnEggItem(info), item -> info.spawnEggItem = item);
 
             if (info.bucketable) {
-                registerItem("bucket_item", info, properties -> new ArchitecturyMobBucketItem(info.entitySupplier, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FAITEMTAB)),
+                registerItem("bucket_item", info, properties -> new ArchitecturyMobBucketItem(info.entitySupplier, () -> Fluids.WATER, () -> SoundEvents.BUCKET_EMPTY_FISH, new Item.Properties().stacksTo(1).tab(ModTabs.FA_ITEM_TAB)),
                         item -> info.bucketItem = item);
             }
         }
     }
 
     private static void registerItem(String name, PrehistoricEntityInfo info, Function<Item.Properties, Item> item, Consumer<Item> listener) {
-        ModItems.ITEMS.register(name + "_" + info.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FAITEMTAB))).listen(listener);
+        ModItems.ITEMS.register(name + "_" + info.resourceName, () -> item.apply(new Item.Properties().tab(ModTabs.FA_ITEM_TAB))).listen(listener);
     }
 
     public static List<PrehistoricEntityInfo> getTimePeriodList(TimePeriod... periods) {

@@ -13,7 +13,7 @@ public class CustomSpawnEggItem extends ArchitecturySpawnEggItem {
     private final Component name;
 
     public CustomSpawnEggItem(PrehistoricEntityInfo info) {
-        super(info.entitySupplier, info.backgroundEggColor, info.highlightEggColor, new Item.Properties().tab(ModTabs.FAITEMTAB));
+        super(info.entitySupplier, info.backgroundEggColor, info.highlightEggColor, new Item.Properties().tab(ModTabs.FA_ITEM_TAB));
         this.name = new TranslatableComponent("item." + FossilMod.MOD_ID + ".spawn_egg_generic", info.displayName().get());
     }
 

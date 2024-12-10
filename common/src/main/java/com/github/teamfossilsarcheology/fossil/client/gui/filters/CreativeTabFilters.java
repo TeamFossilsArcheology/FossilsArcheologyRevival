@@ -82,9 +82,9 @@ public class CreativeTabFilters {
         });
         ClientGuiEvent.INIT_POST.register((screen, access) -> {
             if (screen instanceof CreativeModeInventoryScreen) {
-                tabs.put(ModTabs.FAITEMTAB.getId(), FilterTab.build(screen, entityItems, access));
-                tabs.put(ModTabs.FABLOCKTAB.getId(), FilterTab.build(screen, blocks, access));
-                tabs.put(ModTabs.FAPARKTAB.getId(), FilterTab.build(screen, items, access));
+                tabs.put(ModTabs.FA_ITEM_TAB.getId(), FilterTab.build(screen, entityItems, access));
+                tabs.put(ModTabs.FA_BLOCK_TAB.getId(), FilterTab.build(screen, blocks, access));
+                tabs.put(ModTabs.FA_PARK_TAB.getId(), FilterTab.build(screen, items, access));
                 activeTab = -1;
             }
         });

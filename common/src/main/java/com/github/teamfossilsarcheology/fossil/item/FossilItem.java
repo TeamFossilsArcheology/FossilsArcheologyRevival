@@ -29,7 +29,7 @@ public class FossilItem extends Item {
     private final @Nullable TimePeriod timePeriod;
 
     public FossilItem(@Nullable TimePeriod timePeriod) {
-        super(new Properties().tab(ModTabs.FAPARKTAB));
+        super(new Properties().tab(ModTabs.FA_PARK_TAB));
         this.timePeriod = timePeriod;
     }
 

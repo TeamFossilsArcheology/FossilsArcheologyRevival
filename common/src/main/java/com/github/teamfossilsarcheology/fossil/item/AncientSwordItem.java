@@ -16,7 +16,7 @@ import net.minecraft.world.level.ServerLevelAccessor;
 
 public class AncientSwordItem extends SwordItem {
     public AncientSwordItem(Tier tier, int damage, float attackSpeed) {
-        super(tier, damage, attackSpeed, new Item.Properties().tab(ModTabs.FAPARKTAB).durability(250));
+        super(tier, damage, attackSpeed, new Item.Properties().tab(ModTabs.FA_PARK_TAB).durability(250));
     }
 
     @Override
