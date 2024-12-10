@@ -84,15 +84,15 @@ public enum PrehistoricPlantInfo {
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
             if (info == CRATAEGUS) {
                 info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new CrataegusBushBlock(info));
-                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FA_ITEM_TAB).food(Foods.SWEET_BERRIES)));
+                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB).food(Foods.SWEET_BERRIES)));
                 info.registerPlantSeed(info.resourceName);
             } else if (info == EPHEDRA) {
                 info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new EphedraBushBlock(info.shape,  info));
-                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FA_ITEM_TAB).food(Foods.SWEET_BERRIES)));
+                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB).food(Foods.SWEET_BERRIES)));
                 info.registerPlantSeed(info.resourceName);
             } else if (info == VACCINIUM) {
                 info.plantBlock = ModBlocks.registerBlock(info.resourceName, () -> new VacciniumBushBlock(info.shape,  info));
-                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FA_ITEM_TAB).food(Foods.SWEET_BERRIES)));
+                info.berryItem = ModItems.ITEMS.register("berry_" + info.resourceName, () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB).food(Foods.SWEET_BERRIES)));
                 info.registerPlantSeed(info.resourceName);
             } else if (info.size == Size.SINGLE) {
                 info.plantBlock = ModBlocks.registerShortFlower(info.resourceName, info.shape);
@@ -124,9 +124,9 @@ public enum PrehistoricPlantInfo {
 
     private void registerPlantSeed(String name) {
         this.fossilizedPlantSeedItem = ModItems.ITEMS.register("fossil_seed_" + name,
-                () -> new Item(new Item.Properties().tab(ModTabs.FA_ITEM_TAB)));
+                () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB)));
         this.plantSeedItem = ModItems.ITEMS.register("seed_" + name,
-                () -> new FlowerSeedsItem(new Item.Properties().tab(ModTabs.FA_ITEM_TAB), this.plantBlock));
+                () -> new FlowerSeedsItem(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB), this.plantBlock));
     }
 
     public BushBlock getPlantBlock() {

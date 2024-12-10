@@ -46,10 +46,10 @@ public class FossilREIClientPlugin implements REIClientPlugin {
     @Override
     public void registerExclusionZones(ExclusionZones zones) {
         zones.register(CreativeModeInventoryScreen.class, screen -> {
-            if (screen.getSelectedTab() == ModTabs.FA_ITEM_TAB.getId() || screen.getSelectedTab() == ModTabs.FA_BLOCK_TAB.getId()) {
+            if (screen.getSelectedTab() == ModTabs.FA_MOB_ITEM_TAB.getId() || screen.getSelectedTab() == ModTabs.FA_BLOCK_TAB.getId()) {
                 int leftPos = (screen.width - 195) / 2;
                 int topPos = (screen.height - 136) / 2;
-                return List.of(new Rectangle(leftPos - 30, topPos, 30, 120), new Rectangle(leftPos + 200, topPos, 15, 90));
+                return List.of(new Rectangle(leftPos - 30, topPos, 30, 120), new Rectangle(leftPos + 200, topPos, 15, 120));
             }
             return new ArrayList<>();
         });

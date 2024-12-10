@@ -44,11 +44,7 @@ public class CreativeTabFilters {
         blocks.add(new Filter(FILTER_UNBREAKABLE, new ItemStack(ModBlocks.REINFORCED_GLASS.get())));
         blocks.add(new Filter(FILTER_MACHINES, new ItemStack(ModBlocks.ANALYZER.get())));
         blocks.add(new Filter(FILTER_BUILDING_BLOCKS, new ItemStack(ModBlocks.ANCIENT_STONE_BRICKS.get())));
-
-        NonNullList<Filter> items = NonNullList.create();
-        items.add(new Filter(FILTER_PARK, new ItemStack(ModItems.TOY_BALLS.get(DyeColor.RED).get())));
-        items.add(new Filter(FILTER_TOOLS, new ItemStack(ModItems.SCARAB_SWORD.get())));
-        items.add(new Filter(FILTER_MACHINES, new ItemStack(ModItems.BIO_FOSSIL.get())));
+        blocks.add(new Filter(FILTER_PARK, new ItemStack(ModItems.TOY_BALLS.get(DyeColor.RED).get())));
 
         ClientGuiEvent.RENDER_CONTAINER_BACKGROUND.register((screen, matrices, mouseX, mouseY, delta) -> {
             if (screen instanceof CreativeModeInventoryScreen creativeScreen && tabs.containsKey(creativeScreen.getSelectedTab())) {
@@ -82,9 +78,8 @@ public class CreativeTabFilters {
         });
         ClientGuiEvent.INIT_POST.register((screen, access) -> {
             if (screen instanceof CreativeModeInventoryScreen) {
-                tabs.put(ModTabs.FA_ITEM_TAB.getId(), FilterTab.build(screen, entityItems, access));
+                tabs.put(ModTabs.FA_MOB_ITEM_TAB.getId(), FilterTab.build(screen, entityItems, access));
                 tabs.put(ModTabs.FA_BLOCK_TAB.getId(), FilterTab.build(screen, blocks, access));
-                tabs.put(ModTabs.FA_PARK_TAB.getId(), FilterTab.build(screen, items, access));
                 activeTab = -1;
             }
         });

@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class WhipItem extends Item {
     public WhipItem() {
-        super(new Item.Properties().tab(ModTabs.FA_PARK_TAB));
+        super(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB));
     }
 
     @Override
