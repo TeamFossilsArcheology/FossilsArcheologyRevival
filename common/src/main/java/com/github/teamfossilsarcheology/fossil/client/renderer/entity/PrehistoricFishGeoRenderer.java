@@ -11,9 +11,8 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends GeoEntityRenderer<T> {
+public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends FixedGeoEntityRenderer<T> {
 
     public PrehistoricFishGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, String texture) {
         super(renderManager, new PrehistoricFishGeoModel<>(
@@ -40,12 +39,6 @@ public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends GeoEn
     public void render(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         this.shadowRadius = entity.getBbWidth() * 0.45F;
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
-    }
-
-    @Override
-    public boolean shouldShowName(T animatable) {
-        //Calling super.shouldShowName in fabric crashes the game because the method doesn't exist in GeoEntityRenderer
-        return false;
     }
 
     @Override

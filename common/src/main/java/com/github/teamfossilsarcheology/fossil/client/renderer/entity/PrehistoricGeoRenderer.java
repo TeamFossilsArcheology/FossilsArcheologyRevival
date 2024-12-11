@@ -16,11 +16,10 @@ import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib3.core.util.Color;
-import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 import java.util.function.Function;
 
-public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRenderer<T> {
+public class PrehistoricGeoRenderer<T extends Prehistoric> extends FixedGeoEntityRenderer<T> {
     private final Function<ResourceLocation, RenderType> renderType;
 
     /**
@@ -78,12 +77,6 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRend
                 poseStack.mulPose(Vector3f.ZP.rotationDegrees(180f));
             }
         }
-    }
-
-    @Override
-    public boolean shouldShowName(T animatable) {
-        //Calling super.shouldShowName in fabric crashes the game because the method doesn't exist in GeoEntityRenderer
-        return animatable.hasCustomName() && (animatable == entityRenderDispatcher.crosshairPickEntity || animatable.shouldShowName());
     }
 
     @Override
