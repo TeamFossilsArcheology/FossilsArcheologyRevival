@@ -1,0 +1,133 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.failuresaurus_sauropod",
+				"texture_width": 128,
+				"texture_height": 64,
+				"visible_bounds_width": 2,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "root",
+					"pivot": [0, 24, 0]
+				},
+				{
+					"name": "body1",
+					"parent": "root",
+					"pivot": [0, 4, 3],
+					"cubes": [
+						{"origin": [-4.5, 0, -1.5], "size": [9, 4, 9], "uv": [85, 1]}
+					]
+				},
+				{
+					"name": "body2",
+					"parent": "body1",
+					"pivot": [0, 4, 3],
+					"rotation": [0, 0, 5],
+					"cubes": [
+						{"origin": [-3.5, 3, -0.5], "size": [7, 4, 7], "uv": [50, 1]}
+					]
+				},
+				{
+					"name": "neck",
+					"parent": "body2",
+					"pivot": [0, 5, 5.3],
+					"rotation": [-35, 0, -10],
+					"cubes": [
+						{"origin": [-1.5, 5, -4.7], "size": [3, 2, 10], "uv": [30, 10]}
+					]
+				},
+				{
+					"name": "head",
+					"parent": "neck",
+					"pivot": [0, 4.8, -3.1],
+					"rotation": [-40, 0, 0],
+					"cubes": [
+						{"origin": [-2, 4.3, -7.1], "size": [4, 3, 4], "uv": [21, 8]}
+					]
+				},
+				{
+					"name": "snout",
+					"parent": "head",
+					"pivot": [0, 5.7, -6.6],
+					"rotation": [8, 0, 0],
+					"cubes": [
+						{"origin": [-1.5, 4.2, -9.6], "size": [3, 3, 3], "uv": [30, 1]}
+					]
+				},
+				{
+					"name": "lspines",
+					"parent": "head",
+					"pivot": [-2, 4.3, -3.1],
+					"cubes": [
+						{"origin": [-2, 2.3, -7.1], "size": [0, 2, 4], "uv": [16, 0]}
+					]
+				},
+				{
+					"name": "rspines",
+					"parent": "head",
+					"pivot": [2, 4.3, -3.1],
+					"cubes": [
+						{"origin": [2, 2.3, -7.1], "size": [0, 2, 4], "uv": [16, 0]}
+					]
+				},
+				{
+					"name": "lspines2",
+					"parent": "neck",
+					"pivot": [-1.5, 5, 5.3],
+					"cubes": [
+						{"origin": [-1.5, 3, -4.7], "size": [0, 2, 10], "uv": [28, 18]}
+					]
+				},
+				{
+					"name": "rspines2",
+					"parent": "neck",
+					"pivot": [1.5, 5, 5.3],
+					"cubes": [
+						{"origin": [1.5, 3, -4.7], "size": [0, 2, 10], "uv": [28, 18]}
+					]
+				},
+				{
+					"name": "rightthigh",
+					"parent": "root",
+					"pivot": [2.5, 2.5, 0.2],
+					"rotation": [-45, -30, 0],
+					"cubes": [
+						{"origin": [1, 1, -5.8], "size": [3, 3, 6], "uv": [60, 20], "mirror": true}
+					]
+				},
+				{
+					"name": "rightleg",
+					"parent": "rightthigh",
+					"pivot": [2.5, 2.5, -4.7],
+					"rotation": [-75, 0, 0],
+					"cubes": [
+						{"origin": [1.5, 1.5, -4.7], "size": [2, 2, 6], "uv": [80, 20], "mirror": true}
+					]
+				},
+				{
+					"name": "leftthigh",
+					"parent": "root",
+					"pivot": [-2.5, 2.5, 0.2],
+					"rotation": [-45, 30, 0],
+					"cubes": [
+						{"origin": [-4, 1, -5.8], "size": [3, 3, 6], "uv": [60, 20]}
+					]
+				},
+				{
+					"name": "leftleg",
+					"parent": "leftthigh",
+					"pivot": [-2.5, 2.5, -4.7],
+					"rotation": [-75, 0, 0],
+					"cubes": [
+						{"origin": [-3.5, 1.5, -4.7], "size": [2, 2, 6], "uv": [80, 20]}
+					]
+				}
+			]
+		}
+	]
+}

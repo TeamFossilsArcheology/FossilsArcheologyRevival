@@ -24,8 +24,8 @@ public class DinosaurEggRenderer extends LivingEntityRenderer<DinosaurEgg, Dinos
     private static final Map<String, ResourceLocation> TEXTURES = new Object2ObjectOpenHashMap<>();
     private static final ResourceLocation GOLDEN_EGG = FossilMod.location("textures/entity/egg/golden.png");
 
-    public DinosaurEggRenderer(EntityRendererProvider.Context context, DinosaurEggModel entityModel) {
-        super(context, entityModel, 0.25f);
+    public DinosaurEggRenderer(EntityRendererProvider.Context context) {
+        super(context, new DinosaurEggModel(), 0.25f);
     }
 
     @Override

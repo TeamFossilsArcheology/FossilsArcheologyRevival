@@ -13,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
 public class FriendlyPiglinRenderer extends HumanoidMobRenderer<FriendlyPiglin, FriendlyPiglinModel> implements RendererFabricFix {
     public static final ResourceLocation TEXTURE = new ResourceLocation("textures/entity/piglin/zombified_piglin.png");
 
-    public FriendlyPiglinRenderer(EntityRendererProvider.Context context, FriendlyPiglinModel model) {
-        super(context, model, 0.5f);
+    public FriendlyPiglinRenderer(EntityRendererProvider.Context context) {
+        super(context, new FriendlyPiglinModel(), 0.5f);
     }
 
     @Override

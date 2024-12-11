@@ -12,8 +12,8 @@ import net.minecraft.world.entity.Entity;
 import org.jetbrains.annotations.NotNull;
 
 public class AnuBossRenderer extends MobRenderer<AnuBoss, AnuBossModel> implements RendererFabricFix {
-    public AnuBossRenderer(EntityRendererProvider.Context context, AnuBossModel entityModel) {
-        super(context, entityModel, 0.5f);
+    public AnuBossRenderer(EntityRendererProvider.Context context) {
+        super(context, new AnuBossModel(), 0.5f);
         addLayer(new ItemInHandLayer<>(this));
         addLayer(new AnuBossGlowLayer(this));
     }

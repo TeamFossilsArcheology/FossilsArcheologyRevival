@@ -13,8 +13,8 @@ import org.jetbrains.annotations.NotNull;
 public class AnubiteRenderer extends MobRenderer<Anubite, AnubiteModel> implements RendererFabricFix {
     public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/anubite.png");
 
-    public AnubiteRenderer(EntityRendererProvider.Context context, AnubiteModel entityModel) {
-        super(context, entityModel, 0.3f);
+    public AnubiteRenderer(EntityRendererProvider.Context context) {
+        super(context, new AnubiteModel(), 0.3f);
     }
 
     @Override

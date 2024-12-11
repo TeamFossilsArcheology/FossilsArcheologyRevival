@@ -16,8 +16,8 @@ import org.jetbrains.annotations.NotNull;
 public class SentryPiglinRenderer extends HumanoidMobRenderer<SentryPiglin, SentryPiglinModel> implements RendererFabricFix {
     public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/sentry_piglin.png");
 
-    public SentryPiglinRenderer(EntityRendererProvider.Context context, SentryPiglinModel model) {
-        super(context, model, 0.5f);
+    public SentryPiglinRenderer(EntityRendererProvider.Context context) {
+        super(context, new SentryPiglinModel(), 0.5f);
         this.addLayer(new HumanoidArmorLayer<>(this, new HumanoidModel<>(context.bakeLayer(ModelLayers.PIGLIN_BRUTE_INNER_ARMOR)),
                 new HumanoidModel<>(context.bakeLayer(ModelLayers.PIGLIN_BRUTE_OUTER_ARMOR))));
     }

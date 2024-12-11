@@ -17,9 +17,9 @@ import org.jetbrains.annotations.NotNull;
 public class AnuDeadRenderer extends EntityRenderer<AnuDead> implements RendererFabricFix {
     private final AnuDeadModel model;
 
-    public AnuDeadRenderer(EntityRendererProvider.Context context, AnuDeadModel model) {
+    public AnuDeadRenderer(EntityRendererProvider.Context context) {
         super(context);
-        this.model = model;
+        this.model = new AnuDeadModel();
     }
 
     @Override

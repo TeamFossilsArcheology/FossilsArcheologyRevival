@@ -12,8 +12,8 @@ import org.jetbrains.annotations.NotNull;
 public class ToyTetheredLogRenderer extends ToyBaseRenderer<ToyTetheredLog> {
 
 
-    public ToyTetheredLogRenderer(EntityRendererProvider.Context context, ToyTetheredLogModel entityModel) {
-        super(context, entityModel, 0.4f);
+    public ToyTetheredLogRenderer(EntityRendererProvider.Context context) {
+        super(context, new ToyTetheredLogModel(), 0.4f);
     }
 
     @Override

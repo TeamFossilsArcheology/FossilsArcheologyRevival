@@ -1,0 +1,16 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "idle": {
+      "loop": true
+    },
+    "walk": {
+      "loop": true,
+      "animation_length": 0.75
+    },
+    "attack": {
+      "animation_length": 0.5
+    }
+  },
+  "geckolib_format_version": 2
+}

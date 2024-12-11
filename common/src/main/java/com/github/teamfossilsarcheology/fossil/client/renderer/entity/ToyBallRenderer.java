@@ -9,8 +9,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ToyBallRenderer extends ToyBaseRenderer<ToyBall> {
 
-    public ToyBallRenderer(EntityRendererProvider.Context context, ToyBallModel entityModel) {
-        super(context, entityModel, 0.3f);
+    public ToyBallRenderer(EntityRendererProvider.Context context) {
+        super(context, new ToyBallModel(), 0.3f);
     }
 
     @Override

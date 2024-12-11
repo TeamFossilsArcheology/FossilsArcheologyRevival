@@ -11,8 +11,8 @@ import org.jetbrains.annotations.NotNull;
 
 public class ToyScratchingPostRenderer extends ToyBaseRenderer<ToyScratchingPost> {
 
-    public ToyScratchingPostRenderer(EntityRendererProvider.Context context, ToyScratchingPostModel entityModel) {
-        super(context, entityModel, 0.4f);
+    public ToyScratchingPostRenderer(EntityRendererProvider.Context context) {
+        super(context, new ToyScratchingPostModel(), 0.4f);
     }
 
     @Override

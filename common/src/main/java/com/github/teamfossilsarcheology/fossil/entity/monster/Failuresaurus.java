@@ -1,6 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.entity.monster;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -31,12 +33,18 @@ import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
+import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.Collections;
 
-public class Failuresaurus extends Monster {
+public class Failuresaurus extends Monster implements IAnimatable {
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Failuresaurus.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<String> VARIANT = SynchedEntityData.defineId(Failuresaurus.class, EntityDataSerializers.STRING);
+    private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
 
     public Failuresaurus(EntityType<Failuresaurus> entityType, Level level) {
         super(entityType, level);
@@ -179,7 +187,19 @@ public class Failuresaurus extends Monster {
         return HumanoidArm.RIGHT;
     }
 
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, event -> {
+            return PlayState.CONTINUE;
+        }));
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return factory;
+    }
+
     public enum Variant {
-        DODO, FISH, FLYING, SAUROPOD, THERAPOD;
+        DODO, FISH, FLYING, SAUROPOD, THEROPOD
     }
 }

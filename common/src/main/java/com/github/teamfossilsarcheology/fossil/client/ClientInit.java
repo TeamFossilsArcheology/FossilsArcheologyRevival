@@ -10,7 +10,6 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.DebugScreen;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.PathingScreen;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.*;
 import com.github.teamfossilsarcheology.fossil.client.gui.filters.CreativeTabFilters;
-import com.github.teamfossilsarcheology.fossil.client.model.*;
 import com.github.teamfossilsarcheology.fossil.client.particle.*;
 import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
 import com.github.teamfossilsarcheology.fossil.client.renderer.blockentity.*;
@@ -229,7 +228,7 @@ public class ClientInit {
         registerTrilobite(ModEntities.LONCHODOMAS);
         registerTrilobite(ModEntities.SCOTOHARPES);
         registerTrilobite(ModEntities.WALLISEROPS);
-        EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, context -> new DinosaurEggRenderer(context, new DinosaurEggModel()));
+        EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, DinosaurEggRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWN_BIRD_EGG, ThrownItemRenderer::new);
 
         EntityRendererRegistry.register(ModEntities.ANUBITE, context -> new AnubiteRenderer(context, new AnubiteModel()));
@@ -237,15 +236,15 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.ANU_DEAD, context -> new AnuDeadRenderer(context, new AnuDeadModel()));
         EntityRendererRegistry.register(ModEntities.ANU_TOTEM, context -> new AnuTotemRenderer(context, new AnuTotemModel()));
         EntityRendererRegistry.register(ModEntities.FAILURESAURUS, FailuresaurusRenderer::new);
-        EntityRendererRegistry.register(ModEntities.SENTRY_PIGLIN, context -> new SentryPiglinRenderer(context, new SentryPiglinModel()));
+        EntityRendererRegistry.register(ModEntities.SENTRY_PIGLIN, SentryPiglinRenderer::new);
         EntityRendererRegistry.register(ModEntities.STONE_TABLET, StoneTabletRenderer::new);
         EntityRendererRegistry.register(ModEntities.TAR_SLIME, TarSlimeRenderer::new);
-        EntityRendererRegistry.register(ModEntities.TOY_BALL, context -> new ToyBallRenderer(context, new ToyBallModel()));
-        EntityRendererRegistry.register(ModEntities.TOY_TETHERED_LOG, context -> new ToyTetheredLogRenderer(context, new ToyTetheredLogModel()));
-        EntityRendererRegistry.register(ModEntities.TOY_SCRATCHING_POST, context -> new ToyScratchingPostRenderer(context, new ToyScratchingPostModel()));
+        EntityRendererRegistry.register(ModEntities.TOY_BALL, ToyBallRenderer::new);
+        EntityRendererRegistry.register(ModEntities.TOY_TETHERED_LOG, ToyTetheredLogRenderer::new);
+        EntityRendererRegistry.register(ModEntities.TOY_SCRATCHING_POST, ToyScratchingPostRenderer::new);
         EntityRendererRegistry.register(ModEntities.JAVELIN, JavelinRenderer::new);
         EntityRendererRegistry.register(ModEntities.ANCIENT_LIGHTNING_BOLT, LightningBoltRenderer::new);
-        EntityRendererRegistry.register(ModEntities.FRIENDLY_PIGLIN, context -> new FriendlyPiglinRenderer(context, new FriendlyPiglinModel()));
+        EntityRendererRegistry.register(ModEntities.FRIENDLY_PIGLIN, FriendlyPiglinRenderer::new);
         EntityRendererRegistry.register(ModEntities.SKELETON, SkeletonRenderer::new);
     }
 

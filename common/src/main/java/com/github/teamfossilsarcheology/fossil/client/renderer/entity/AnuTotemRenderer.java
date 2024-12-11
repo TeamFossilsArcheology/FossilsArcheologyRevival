@@ -21,8 +21,8 @@ import java.util.Random;
 public class AnuTotemRenderer extends MobRenderer<AnuTotem, AnuTotemModel> implements RendererFabricFix {
     private static final float HALF_SQRT_3 = (float) (Math.sqrt(3.0) / 2.0);
 
-    public AnuTotemRenderer(EntityRendererProvider.Context context, AnuTotemModel entityModel) {
-        super(context, entityModel, 0.5f);
+    public AnuTotemRenderer(EntityRendererProvider.Context context) {
+        super(context, new AnuTotemModel(), 0.5f);
         addLayer(new AnuTotemOverlayRenderer(this));
     }
 
