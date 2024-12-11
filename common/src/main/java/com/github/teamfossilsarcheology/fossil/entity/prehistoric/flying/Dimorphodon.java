@@ -46,7 +46,6 @@ public class Dimorphodon extends PrehistoricFlying {
         return getAllAnimations().get(TAKEOFF);
     }
 
-    //TODO: Sounds
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

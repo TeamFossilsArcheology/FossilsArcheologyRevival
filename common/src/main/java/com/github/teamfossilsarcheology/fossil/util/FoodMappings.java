@@ -50,7 +50,6 @@ public abstract class FoodMappings {
     }
 
     public static void addToMappings(EntityType<?> entity, int food, Diet diet) {
-        //TODO: Calculate based on bbwidth etc at runtime instead or maybe max health?
         switch (diet) {
             case CARNIVORE -> CARNIVORE_ENTITY_DIET.put(entity, food);
             case CARNIVORE_EGG -> CARNIVORE_EGG_ENTITY_DIET.put(entity, food);

@@ -43,6 +43,11 @@ public class Allosaurus extends Prehistoric {
         return 2;
     }
 
+    @Override
+    protected float getSoundVolume() {
+        return super.getSoundVolume() * 1.25f;
+    }
+
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

@@ -40,12 +40,6 @@ public class Aquilolamna extends PrehistoricSwimmingBucketable {
 
     @Nullable
     @Override
-    protected SoundEvent getAmbientSound() {
-        return isInWater() ? ModSounds.ICHTHYOSAURUS_AMBIENT.get() : ModSounds.ICHTHYOSAURUS_OUTSIDE.get();
-    }
-
-    @Nullable
-    @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
         return ModSounds.ICHTHYOSAURUS_HURT.get();
     }

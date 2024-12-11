@@ -46,12 +46,6 @@ public class Megalograptus extends PrehistoricSwimmingBucketable {
 
     @Nullable
     @Override
-    protected SoundEvent getAmbientSound() {
-        return ModSounds.MEGALOGRAPTUS_AMBIENT.get();
-    }
-
-    @Nullable
-    @Override
     protected SoundEvent getHurtSound(DamageSource damageSource) {
         return ModSounds.MEGALOGRAPTUS_HURT.get();
     }
