@@ -35,6 +35,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
@@ -147,6 +148,11 @@ public class Failuresaurus extends Monster implements IAnimatable {
     }
 
     @Override
+    protected int getCurrentSwingDuration() {
+        return 18;
+    }
+
+    @Override
     protected void jumpFromGround() {
 
     }
@@ -189,7 +195,17 @@ public class Failuresaurus extends Monster implements IAnimatable {
 
     @Override
     public void registerControllers(AnimationData data) {
-        data.addAnimationController(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, event -> {
+        data.addAnimationController(new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 0, event -> {
+            if (swinging) {
+                if (swingTime == 0) {
+                    event.getController().markNeedsReload();
+                }
+                event.getController().setAnimation(new AnimationBuilder().playOnce("attack"));
+            } else if (event.isMoving()) {
+                event.getController().setAnimation(new AnimationBuilder().loop("walk"));
+            } else {
+                event.getController().setAnimation(new AnimationBuilder().loop("idle"));
+            }
             return PlayState.CONTINUE;
         }));
     }

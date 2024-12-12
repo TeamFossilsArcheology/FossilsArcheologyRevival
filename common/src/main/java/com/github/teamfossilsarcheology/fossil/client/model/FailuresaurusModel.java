@@ -15,7 +15,7 @@ public class FailuresaurusModel extends AnimatedGeoModel<Failuresaurus> {
                     FossilMod.location("geo/entity/failuresaurus_" + variant.name().toLowerCase() + ".geo.json")));
     private final Map<String, ResourceLocation> textureLocations = Arrays.stream(Failuresaurus.Variant.values())
             .collect(Collectors.toMap(Enum::name, variant ->
-                    FossilMod.location("textures/entity/failuresaurus_" + variant.name().toLowerCase() + ".png")));
+                    FossilMod.location("textures/entity/failuresaurus/failuresaurus_" + variant.name().toLowerCase() + ".png")));
     private final Map<String, ResourceLocation> animationLocations = Arrays.stream(Failuresaurus.Variant.values())
             .collect(Collectors.toMap(Enum::name, variant ->
                     FossilMod.location("animations/failuresaurus_" + variant.name().toLowerCase() + ".animation.json")));
