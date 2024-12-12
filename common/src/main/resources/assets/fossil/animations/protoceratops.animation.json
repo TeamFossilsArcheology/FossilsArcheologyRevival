@@ -2490,6 +2490,26 @@
 					}
 				}
 			}
+		},
+		"animation.protoceratops.walkspeeddemo": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*0.5"]
+					}
+				}
+			}
+		},
+		"animation.protoceratops.runspeeddemo": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"position": {
+						"vector": [0, 0, "50-query.anim_time*16*1.5"]
+					}
+				}
+			}
 		}
 	},
 	"geckolib_format_version": 2
