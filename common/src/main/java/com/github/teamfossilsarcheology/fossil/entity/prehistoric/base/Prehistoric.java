@@ -41,12 +41,14 @@ import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
@@ -1117,14 +1119,35 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public void playAmbientSound() {
-        if (!isSleeping()) {
+        if (isSleeping() || level.isClientSide) {
+            return;
+        }
+        if (isUnderWater()) {
+            //Copy of playAmbientSound, but we filter out players that aren't also underwater
+            SoundEvent soundEvent = getAmbientSound();
+            if (soundEvent != null) {
+                float volume = getSoundVolume();
+                double radius = volume > 1 ? (double) (16 * volume) : 16;
+                var packet = new ClientboundSoundPacket(soundEvent, getSoundSource(), getX(), getY(), getZ(), volume, getVoicePitch());
+                for (ServerPlayer player : ((ServerLevel) level).getServer().getPlayerList().getPlayers()) {
+                    if (player.isUnderWater() && player.level.dimension() == level.dimension()) {
+                        double d = getX() - player.getX();
+                        double e = getY() - player.getY();
+                        double f = getZ() - player.getZ();
+                        if (d * d + e * e + f * f < radius * radius) {
+                            player.connection.send(packet);
+                        }
+                    }
+                }
+            }
+        } else {
             super.playAmbientSound();
         }
     }
 
     @Override
     public int getAmbientSoundInterval() {
-        return 200;
+        return 20;
     }
 
     @Override
