@@ -11,6 +11,7 @@ import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.MammalC
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.FirstHatchCapProvider;
 import com.github.teamfossilsarcheology.fossil.forge.tests.BatchArgument;
 import com.github.teamfossilsarcheology.fossil.forge.tests.BatchTestCommand;
+import com.github.teamfossilsarcheology.fossil.forge.tests.HopperTests;
 import com.github.teamfossilsarcheology.fossil.forge.tests.RecipeTests;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
@@ -52,6 +53,7 @@ public class ForgeModEvents {
     @SubscribeEvent
     public static void registerTests(RegisterGameTestsEvent event) {
         event.register(RecipeTests.class);
+        event.register(HopperTests.class);
     }
 
     @SubscribeEvent

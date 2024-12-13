@@ -237,7 +237,7 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
         if (index == CultureVatMenu.FUEL_SLOT_ID) {
             return ModRecipes.isCultureVatFuel(stack.getItem());
         }
-        return ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, items.get(CultureVatMenu.INPUT_SLOT_ID)), level) != null;
+        return ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, stack), level) != null;
     }
 
     @Override

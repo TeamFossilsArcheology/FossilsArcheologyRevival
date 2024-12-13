@@ -37,9 +37,9 @@ import net.minecraftforge.gametest.PrefixGameTestTemplate;
 public class RecipeTests {
     private static final BlockPos MACHINE_POS = new BlockPos(0, 1, 0);
 
-    private static BlockEntity getBlockEntity(GameTestHelper helper, Class<?> machineBlockClass) {
-        helper.assertBlock(MACHINE_POS, machineBlockClass::isInstance, "Machine block not found");
-        return helper.getBlockEntity(MACHINE_POS);
+    protected static BlockEntity getBlockEntity(BlockPos machinePos, GameTestHelper helper, Class<?> machineBlockClass) {
+        helper.assertBlock(machinePos, machineBlockClass::isInstance, "Machine block not found");
+        return helper.getBlockEntity(machinePos);
     }
 
     //if a fail happens on any tick before the last tick: retry else fail
@@ -54,7 +54,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "culture_vat", template = "culture_vat", timeoutTicks = 20)
     public static void cultureVatFuel(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, CultureVatBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, CultureVatBlock.class);
         if (blockEntity instanceof CultureVatBlockEntityImpl cultureVatEntity) {
             Item fuelItem = ModItems.BIO_GOO.get();
             Item inputItem = PrehistoricEntityInfo.ALLOSAURUS.dnaItem;
@@ -70,7 +70,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "culture_vat", template = "culture_vat", timeoutTicks = 20)
     public static void cultureVatInput(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, CultureVatBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, CultureVatBlock.class);
         if (blockEntity instanceof CultureVatBlockEntityImpl cultureVatEntity) {
             Item fuelItem = ModItems.BIO_GOO.get();
             Item inputItem = PrehistoricEntityInfo.ALLOSAURUS.dnaItem;
@@ -86,7 +86,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "culture_vat", template = "culture_vat", timeoutTicks = 5)
     public static void cultureVatData(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, CultureVatBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, CultureVatBlock.class);
         if (blockEntity instanceof CultureVatBlockEntityImpl cultureVatEntity) {
             Item fuelItem = ModItems.BIO_GOO.get();
             Item inputItem = PrehistoricEntityInfo.ALLOSAURUS.dnaItem;
@@ -121,7 +121,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "culture_vat", template = "culture_vat", timeoutTicks = 2000)
     public static void cultureVatRecipes(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, CultureVatBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, CultureVatBlock.class);
         if (blockEntity instanceof CultureVatBlockEntityImpl cultureVatEntity) {
             var list = helper.getLevel().getRecipeManager().getAllRecipesFor(ModRecipes.CULTURE_VAT_TYPE.get());
             ContainerData dataAccess = cultureVatEntity.getDataAccess();
@@ -152,7 +152,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "culture_vat", template = "culture_vat", timeoutTicks = 20)
     public static void cultureVatResult(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, CultureVatBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, CultureVatBlock.class);
         if (blockEntity instanceof CultureVatBlockEntityImpl cultureVatEntity) {
             Item fuelItem = ModItems.BIO_GOO.get();
             Item inputItem = PrehistoricEntityInfo.ALLOSAURUS.dnaItem;
@@ -176,7 +176,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "worktable", template = "worktable", timeoutTicks = 20)
     public static void worktableFuel(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, WorktableBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, WorktableBlock.class);
         if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
             Item fuelItem = ModItems.POTTERY_SHARD.get();
             Item inputItem = ModBlocks.KYLIX_VASE_DAMAGED.get().asItem();
@@ -192,7 +192,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "worktable", template = "worktable", timeoutTicks = 20)
     public static void worktableInput(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, WorktableBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, WorktableBlock.class);
         if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
             Item fuelItem = ModItems.POTTERY_SHARD.get();
             Item inputItem = ModBlocks.KYLIX_VASE_DAMAGED.get().asItem();
@@ -208,7 +208,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "worktable", template = "worktable", timeoutTicks = 5)
     public static void worktableData(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, WorktableBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, WorktableBlock.class);
         if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
             Item fuelItem = ModItems.POTTERY_SHARD.get();
             Item inputItem = ModBlocks.KYLIX_VASE_DAMAGED.get().asItem();
@@ -248,7 +248,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "worktable", template = "worktable", timeoutTicks = 2000)
     public static void worktableRecipes(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, WorktableBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, WorktableBlock.class);
         if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
             var list = helper.getLevel().getRecipeManager().getAllRecipesFor(ModRecipes.WORKTABLE_TYPE.get());
            // list = list.stream().filter(worktableRecipe -> worktableRecipe.getFuel().test(new ItemStack(ModItems.POTTERY_SHARD.get()))).toList();
@@ -283,7 +283,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "worktable", template = "worktable", timeoutTicks = 20)
     public static void worktableResult(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, WorktableBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, WorktableBlock.class);
         if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
             Item fuelItem = ModItems.POTTERY_SHARD.get();
             Item inputItem = ModBlocks.KYLIX_VASE_DAMAGED.get().asItem();
@@ -308,7 +308,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "analyzer", template = "analyzer", timeoutTicks = 20)
     public static void analyzerInput(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, AnalyzerBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, AnalyzerBlock.class);
         if (blockEntity instanceof AnalyzerBlockEntityImpl analyzerEntity) {
             Item inputItem = Blocks.WHITE_WOOL.asItem();
             analyzerEntity.setItem(0, new ItemStack(inputItem));
@@ -326,7 +326,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "analyzer", template = "analyzer", timeoutTicks = 5)
     public static void analyzerData(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, AnalyzerBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, AnalyzerBlock.class);
         if (blockEntity instanceof AnalyzerBlockEntityImpl analyzerEntity) {
             Item inputItem = Blocks.WHITE_WOOL.asItem();
             ContainerData dataAccess = analyzerEntity.getDataAccess();
@@ -359,7 +359,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "analyzer", template = "analyzer", timeoutTicks = 2000)
     public static void analyzerRecipes(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, AnalyzerBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, AnalyzerBlock.class);
         if (blockEntity instanceof AnalyzerBlockEntityImpl analyzerEntity) {
             var list = helper.getLevel().getRecipeManager().getAllRecipesFor(ModRecipes.ANALYZER_TYPE.get());
             ContainerData dataAccess = analyzerEntity.getDataAccess();
@@ -387,7 +387,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "sifter", template = "sifter", timeoutTicks = 20)
     public static void sifterInput(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, SifterBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, SifterBlock.class);
         if (blockEntity instanceof SifterBlockEntityImpl sifterEntity) {
             Item inputItem = Blocks.SAND.asItem();
             sifterEntity.setItem(0, new ItemStack(inputItem));
@@ -405,7 +405,7 @@ public class RecipeTests {
      */
     @GameTest(batch = "sifter", template = "sifter", timeoutTicks = 5)
     public static void sifterData(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, SifterBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, SifterBlock.class);
         if (blockEntity instanceof SifterBlockEntityImpl sifterEntity) {
             Item inputItem = Blocks.SAND.asItem();
             ContainerData dataAccess = sifterEntity.getDataAccess();
@@ -438,9 +438,9 @@ public class RecipeTests {
      */
     @GameTest(batch = "sifter", template = "sifter", timeoutTicks = 2000)
     public static void sifterRecipes(GameTestHelper helper) {
-        BlockEntity blockEntity = getBlockEntity(helper, SifterBlock.class);
+        BlockEntity blockEntity = getBlockEntity(MACHINE_POS, helper, SifterBlock.class);
         if (blockEntity instanceof SifterBlockEntityImpl sifterEntity) {
-            var list = helper.getLevel().getRecipeManager().getAllRecipesFor(ModRecipes.ANALYZER_TYPE.get());
+            var list = helper.getLevel().getRecipeManager().getAllRecipesFor(ModRecipes.SIFTER_TYPE.get());
             ContainerData dataAccess = sifterEntity.getDataAccess();
             for (int i = 0; i < list.size(); i++) {
                 var recipe = list.get(i);
