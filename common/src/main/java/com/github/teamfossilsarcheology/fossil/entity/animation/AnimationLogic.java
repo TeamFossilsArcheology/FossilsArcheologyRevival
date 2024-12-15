@@ -486,34 +486,32 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
         double animSpeed = 1;
         if (!event.getAnimatable().isTakingOff()) {
-            if (entity.isSleeping()) {
+            if (event.getAnimatable().isFlying()) {
+                if (entity.isSprinting()) {
+                    addActiveAnimation(controller.getName(), AnimationCategory.FLY_FAST);
+                } else {
+                    addActiveAnimation(controller.getName(), AnimationCategory.FLY);
+                }
+            } else if (entity.isSleeping()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
             } else if (event.getAnimatable().sitSystem.isSitting()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SIT);
             } else if (entity.isInWater()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
             } else if (event.isMoving()) {
-                if (event.getAnimatable().isFlying()) {
-                    if (entity.isSprinting()) {
-                        addActiveAnimation(controller.getName(), AnimationCategory.FLY_FAST);
-                    } else {
-                        addActiveAnimation(controller.getName(), AnimationCategory.FLY);
-                    }
-                } else {
-                    Animation animation = entity.nextWalkingAnimation().animation;
-                    addActiveAnimation(controller.getName(), animation, AnimationCategory.WALK, false);
-                    //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
-                    double scaleMult = 1 / event.getAnimatable().getScale();
-                    //the deltaMovement of the animation should match the mobs deltaMovement
-                    double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
-                    //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
-                    //TODO: Flying mob might need different limit
-                    mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
-                    //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
-                    double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), animation.animationName);
-                    if (animationTargetSpeed > 0) {
-                        animSpeed = scaleMult * mobSpeed / animationTargetSpeed;
-                    }
+                Animation animation = entity.nextWalkingAnimation().animation;
+                addActiveAnimation(controller.getName(), animation, AnimationCategory.WALK, false);
+                //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
+                double scaleMult = 1 / event.getAnimatable().getScale();
+                //the deltaMovement of the animation should match the mobs deltaMovement
+                double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
+                //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+                //TODO: Flying mob might need different limit
+                mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
+                //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
+                double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), animation.animationName);
+                if (animationTargetSpeed > 0) {
+                    animSpeed = scaleMult * mobSpeed / animationTargetSpeed;
                 }
             } else {
                 addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
