@@ -9,7 +9,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.WaterAnimal;
@@ -153,9 +152,6 @@ public abstract class FoodMappings {
         if (entity != null) {
             int mappingsPoints = getFoodAmount(entity.getType(), diet);
             if (mappingsPoints == 0 && FossilConfig.isEnabled(FossilConfig.DINOS_EAT_MODDED_MOBS)) {
-                if (entity.getAttribute(Attributes.ATTACK_DAMAGE) != null) {
-                    return 0;
-                }
                 int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
                 if (entity instanceof Animal && !isAquaticMob(entity)) {
                     if (diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCI_CARNIVORE) {

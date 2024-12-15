@@ -69,6 +69,7 @@ public class HuntingTargetGoal extends TargetGoal {
             return true;
         } else {
             //Calm and can hunt
+            //TODO: Maybe use attack damage to limit
             return FoodMappings.getMobFoodPoints(player, dino.data().diet()) > 0 && dino.getBbWidth() * dino.getTargetScale() >= player.getBbWidth();
         }
     }
