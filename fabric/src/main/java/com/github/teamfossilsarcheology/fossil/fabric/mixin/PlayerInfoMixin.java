@@ -1,4 +1,4 @@
-package com.github.teamfossilsarcheology.fossil.forge.mixin;
+package com.github.teamfossilsarcheology.fossil.fabric.mixin;
 
 import com.github.teamfossilsarcheology.fossil.client.FAPlayerCapes;
 import com.mojang.authlib.GameProfile;
