@@ -4,14 +4,13 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.InstructionTab;
 import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Instruction;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
-import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Meganeura;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.AISystem;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.LeapSystem;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.InstructionMessage;
 import com.github.teamfossilsarcheology.fossil.util.Version;
@@ -27,7 +26,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.navigation.GroundPathNavigation;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.phys.Vec3;
 
@@ -108,32 +106,15 @@ public class InstructionSystem extends AISystem {
             return false;
         } else if (current instanceof Instruction.LeapLand leapLand) {
             PrehistoricLeaping leaping = (PrehistoricLeaping) mob;
-            long currentTime = mob.level.getGameTime();
-            if (leaping.distanceToSqr(leapLand.location) < 30 && !leaping.getLeapSystem().hasLeapStarted()) {
-                ServerAnimationInfo animation = (ServerAnimationInfo) leaping.getLeapStartAnimation();
-                leaping.getLeapSystem().setLeapStarted(true);
-                //mob.setDeltaMovement(Vec3.ZERO);
-                mob.getNavigation().stop();
-                endTick = (long) (currentTime - 1 + animation.animation.animationLength);
-                delayTick = (long) (currentTime - 1 + animation.actionDelay);
-            }
-            if (delayTick > 0 && currentTime == delayTick) {
-                if (debug) System.out.println("Start jump for Land");
-                Vec3 offset = leapLand.locationAbove.subtract(mob.position()).normalize();
-                mob.setDeltaMovement(mob.getDeltaMovement().add(offset.x, offset.y + 0.1, offset.z));
-            } else if (mob.isOnGround() && endTick > 0 && currentTime >= endTick) {
-                leaping.getLeapSystem().setLeapStarted(false);
-                AnimationInfo animation = leaping.getLandAnimation();
-                mob.getAnimationLogic().triggerAnimation(AnimationLogic.IDLE_CTRL, animation, AnimationCategory.NONE, 0, 1);
+            if (leaping.getLeapSystem().isLeaping()) {
+                if (leaping.getLeapSystem().isLanding()) {
+                    delayTick = mob.level.getGameTime() + 25;
+                }
+            } else if ( mob.isOnGround() && delayTick > 0 && delayTick >= mob.level.getGameTime()) {
                 return false;
-            } else if (mob.level.getBlockState(mob.blockPosition()).is(Blocks.ROSE_BUSH) && !leaping.getLeapSystem().isAttackRiding()) {
-                leaping.getLeapSystem().setAttackRiding(true);
-                leaping.getLeapSystem().setLeapStarted(false);
+            } else if (leaping.distanceToSqr(leapLand.location) < LeapSystem.JUMP_DISTANCE && delayTick == 0) {
+                leaping.getLeapSystem().setBlockLeapTarget(leapLand.location);
             }
-            if (leaping.getLeapSystem().isAttackRiding()) {
-                mob.setDeltaMovement(Vec3.ZERO);
-            }
-            if (debug) System.out.println("Tick: " + mob.isOnGround() + " " + leaping.distanceToSqr(leapLand.location));
             return true;
         } else if (current instanceof Instruction.LeapAttack leapAttack) {
             Entity target = mob.level.getEntity(leapAttack.targetId);

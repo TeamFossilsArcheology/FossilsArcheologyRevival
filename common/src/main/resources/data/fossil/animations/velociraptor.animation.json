@@ -35,6 +35,7 @@
       "animation_length": 0.7143
     },
     "animation.velociraptor.latched": {
+      "loop": true,
       "animation_length": 1.0714
     },
     "animation.velociraptor.leap": {

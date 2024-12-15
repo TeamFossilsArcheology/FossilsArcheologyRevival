@@ -31,10 +31,8 @@
       "loop": true,
       "animation_length": 12
     },
-    "animation.deinonychus.land": {
-      "animation_length": 1.1161
-    },
     "animation.deinonychus.latched": {
+      "loop": true,
       "animation_length": 1.5625
     },
     "animation.deinonychus.leap": {
@@ -43,6 +41,9 @@
       "action_delay": [
         0.35
       ]
+    },
+    "animation.deinonychus.land": {
+      "animation_length": 1.1161
     },
     "animation.deinonychus.run": {
       "loop": true,

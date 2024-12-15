@@ -12,9 +12,11 @@ import net.minecraft.world.phys.Vec3;
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping.*;
 
 public class LeapSystem extends AISystem {
+    public static final int JUMP_DISTANCE = 30;
     private final PrehistoricLeaping mob;
     private final SynchedEntityData entityData;
     private Entity target;
+    private Vec3 blockTarget;
     private boolean leaping;
     private long jumpDelayTick = -1;
     private long landingDelayTick = -1;
@@ -28,40 +30,68 @@ public class LeapSystem extends AISystem {
 
     @Override
     public void serverTick() {
-        double jumpDistance = 30;
+        long currentTick = mob.level.getGameTime();
         if (!isLeaping() && target != null) {
             mob.lookAt(target, 100, 10);
-            if (mob.distanceToSqr(target) < jumpDistance) {
+            if (mob.distanceToSqr(target) < JUMP_DISTANCE) {
                 startLeap();
                 ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLeapStartAnimation();
-                jumpDelayTick = (long) (mob.level.getGameTime() + animation.actionDelay);
+                jumpDelayTick = (long) (currentTick + animation.actionDelay);
                 mob.setDeltaMovement(Vec3.ZERO);
             }
         }
-        //TODO: doesnt hit moving target that well
+        if (!isLeaping() && blockTarget != null) {
+            if (mob.distanceToSqr(blockTarget) < JUMP_DISTANCE) {
+                startLeap();
+                ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLeapStartAnimation();
+                jumpDelayTick = (long) (currentTick + animation.actionDelay);
+                mob.setDeltaMovement(Vec3.ZERO);
+            }
+        }
         if (isLeaping()) {
-            if (mob.level.getGameTime() == jumpDelayTick) {
-                Vec3 offset = target.position().subtract(mob.position()).normalize().add(0, target.getBbHeight() / 2.1, 0);
-                mob.setDeltaMovement(offset);
+            if (currentTick == jumpDelayTick) {
+                double y;
+                Vec3 offset;
+                if (target != null) {
+                    y = Math.min(target.getY() + target.getBbHeight() - mob.getY(), 5);
+                    offset = target.position().subtract(mob.position()).normalize();
+                    mob.setDeltaMovement(offset.x, -0.027 * Math.pow(y, 2) + 0.262 * y + 0.183, offset.z);
+                } else if (blockTarget != null) {
+                    y = Math.min(blockTarget.y - mob.getY(), 5);
+                    offset = blockTarget.subtract(mob.position()).normalize();
+                } else {
+                    //Shouldn't really happen
+                    y = 0;
+                    offset = mob.position();
+                }
+                mob.setDeltaMovement(offset.x, -0.027 * Math.pow(y, 2) + 0.262 * y + 0.183, offset.z);
                 setLeapStarted(false);
                 setLeapFlying(true);
                 landingDelayTick = jumpDelayTick + 5;
                 jumpDelayTick = -1;
             }
-            if (mob.isOnGround() && landingDelayTick != -1 && landingDelayTick <= mob.level.getGameTime()) {
+            if (mob.isOnGround() && landingDelayTick != -1 && landingDelayTick <= currentTick) {
                 ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLandAnimation();
-                landingEndTick = (long) (mob.level.getGameTime() + animation.animation.animationLength);
+                landingEndTick = (long) (currentTick + animation.animation.animationLength);
                 landingDelayTick = -1;
                 setLeapFlying(false);
                 setLanding(true);
             }
-            if (landingEndTick != -1 && landingEndTick <= mob.level.getGameTime()) {
+            if (landingEndTick != -1 && landingEndTick <= currentTick) {
                 setLanding(false);
                 setLeaping(false);
                 landingEndTick = -1;
             }
+            if (isAttackRiding() && mob.tickCount % 20 == 0 && target != null) {
+                target.hurt(DamageSource.mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+            }
+            if(!isLeapFlying() && !hasLeapStarted() && !isAttackRiding()) {
+                //failsafe
+                setLeaping(false);
+            }
             //Collision is handled in entity class
-
+            //TODO: Maybe check !isLeapFlying !isLeapStarted !isAttackRiding to disable isLeaping
+            //TODO: Stop attaching
         }
     }
 
@@ -117,8 +147,11 @@ public class LeapSystem extends AISystem {
     }
 
     private void setLeapFlying(boolean leapFlying) {
-        entityData.set(LEAP_FLYING, !leapFlying);
         entityData.set(LEAP_FLYING, leapFlying);
+    }
+
+    public void setBlockLeapTarget(Vec3 target) {
+        this.blockTarget = target;
     }
 
     public void setLeapTarget(Entity target) {
@@ -132,7 +165,6 @@ public class LeapSystem extends AISystem {
     }
 
     private void setLanding(boolean landing) {
-        entityData.set(LEAP_LANDING, !landing);
         entityData.set(LEAP_LANDING, landing);
     }
 
@@ -141,8 +173,6 @@ public class LeapSystem extends AISystem {
     }
 
     public void setAttackRiding(boolean attackRiding) {
-        //I'm to lazy figure out how to prevent server/client desync
-        entityData.set(LEAP_RIDING, !attackRiding);
         entityData.set(LEAP_RIDING, attackRiding);
     }
 
@@ -154,17 +184,19 @@ public class LeapSystem extends AISystem {
     }
 
     public void setLeapStarted(boolean value) {
-        entityData.set(LEAP_STARTED, !value);
         entityData.set(LEAP_STARTED, value);
     }
 
     @Override
     public void saveAdditional(CompoundTag tag) {
-
+        tag.putBoolean("AttackRiding", isAttackRiding());
     }
 
     @Override
     public void load(CompoundTag tag) {
-
+        if (tag.getBoolean("AttackRiding")) {
+            setAttackRiding(true);
+            setLeaping(true);
+        }
     }
 }

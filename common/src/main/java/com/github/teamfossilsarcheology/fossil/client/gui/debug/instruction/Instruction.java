@@ -331,6 +331,9 @@ public abstract class Instruction {
     public static class Idle extends Instruction {
         public final int duration;
 
+        /**
+         * @param duration in ticks
+         */
         public Idle(int duration) {
             super(Type.IDLE);
             this.duration = duration;

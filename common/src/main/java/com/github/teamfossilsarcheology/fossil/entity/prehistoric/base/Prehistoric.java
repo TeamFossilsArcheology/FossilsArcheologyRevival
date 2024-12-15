@@ -203,7 +203,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     protected void updateControlFlags() {
-        super.updateControlFlags();
         boolean enabled = !isSleeping() && !isWeak();
         goalSelector.setControlFlag(Goal.Flag.MOVE, enabled && !sitSystem.isSitting());
         goalSelector.setControlFlag(Goal.Flag.JUMP, enabled && !sitSystem.isSitting());
@@ -388,8 +387,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     @Override
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
-        if (hasPassenger(passenger) && passenger instanceof Mob mob) {
-            yBodyRot = mob.yBodyRot;
+        if (canBeControlledByRider() && passenger instanceof LivingEntity livingEntity) {
+            yBodyRot = livingEntity.yBodyRot;
         }
         getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
             passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset() * getScale(), pos.z);

@@ -106,10 +106,9 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
 
     @Override
     protected void updateControlFlags() {
-        super.updateControlFlags();
-        boolean bl = !attachSystem.isAttached();
-        goalSelector.setControlFlag(Goal.Flag.MOVE, bl);
-        goalSelector.setControlFlag(Goal.Flag.JUMP, bl);
+        boolean bl = !isSleeping() && !attachSystem.isAttached();
+        goalSelector.setControlFlag(Goal.Flag.MOVE, bl && !sitSystem.isSitting());
+        goalSelector.setControlFlag(Goal.Flag.JUMP, bl && !sitSystem.isSitting());
         goalSelector.setControlFlag(Goal.Flag.LOOK, bl);
     }
 

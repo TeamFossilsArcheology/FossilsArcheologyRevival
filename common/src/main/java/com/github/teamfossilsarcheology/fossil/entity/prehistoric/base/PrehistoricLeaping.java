@@ -15,6 +15,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,7 +23,7 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
-import java.util.List;
+import java.util.Objects;
 
 public abstract class PrehistoricLeaping extends Prehistoric {
     public static final EntityDataAccessor<Boolean> LEAPING = SynchedEntityData.defineId(PrehistoricLeaping.class, EntityDataSerializers.BOOLEAN);
@@ -42,6 +43,14 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     }
 
     @Override
+    protected void updateControlFlags() {
+        boolean bl = !leapSystem.isLeaping() && !isSleeping();
+        goalSelector.setControlFlag(Goal.Flag.MOVE, bl && !sitSystem.isSitting());
+        goalSelector.setControlFlag(Goal.Flag.JUMP, bl && !sitSystem.isSitting());
+        goalSelector.setControlFlag(Goal.Flag.LOOK, bl);
+    }
+
+    @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
         entityData.define(LEAPING, false);
@@ -55,8 +64,12 @@ public abstract class PrehistoricLeaping extends Prehistoric {
 
     @Override
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
-        if (LEAP_RIDING.equals(key) && level.isClientSide && !entityData.get(LEAP_RIDING)) {
-            stopRiding();
+        if (LEAP_RIDING.equals(key)) {
+            if (entityData.get(LEAP_RIDING) && entityData.get(LEAP_TARGET_ID) >= 0) {
+                startRiding(Objects.requireNonNull(level.getEntity(entityData.get(LEAP_TARGET_ID))), true);
+            } else {
+                stopRiding();
+            }
         }
         super.onSyncedDataUpdated(key);
     }
@@ -85,19 +98,6 @@ public abstract class PrehistoricLeaping extends Prehistoric {
     public void startLeap(Entity target) {
         leapSystem.setLeapStarted(true);
         entityData.set(LEAP_TARGET_ID, target.getId());
-    }
-
-    @Override
-    public void aiStep() {
-        super.aiStep();
-        if (level.isClientSide && getVehicle() == null) {
-            List<Entity> list = level.getEntities(this, this.getBoundingBox(), entity -> entity.getId() == entityData.get(LEAP_TARGET_ID));
-            if (!list.isEmpty()) {
-                startRiding(list.get(0), true);
-                getLeapSystem().setAttackRiding(true);
-                //TODO: Start countdown and if server didnt send attack ride in that time stop
-            }
-        }
     }
 
     @Override
