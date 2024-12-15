@@ -48,7 +48,7 @@ public class DebugMinecraftMixin {
         if (!Version.debugEnabled()) {
             return;
         }
-        if (DebugScreen.rulerMode == 2) {
+        if (DebugScreen.rulerMode > 0) {
             DebugScreen.rulerMode = 0;
             InstructionRenderer.rulerEndPos = PathingDebug.getHitResult((Minecraft) (Object) this);
             this.rightClickDelay = 4;
@@ -74,9 +74,13 @@ public class DebugMinecraftMixin {
         if (!Version.debugEnabled()) {
             return;
         }
-        if (DebugScreen.rulerMode == 1) {
-            DebugScreen.rulerMode = 2;
+        if (DebugScreen.rulerMode > 0) {
+            DebugScreen.rulerMode = 0;
             InstructionRenderer.rulerStartPos = PathingDebug.getHitResult((Minecraft) (Object) this);
+            cir.setReturnValue(false);
+        } else if (InstructionTab.positionMode == Instruction.Type.FLY_TO) {
+            BlockPos blockPos = PathingDebug.getAirHitResult((Minecraft) (Object) this);
+            InstructionTab.addFlyPosition(blockPos);
             cir.setReturnValue(false);
         } else if (InstructionTab.positionActive()) {
             BlockHitResult hitResult = PathingDebug.getOffsetHitResult((Minecraft) (Object) this);
@@ -98,7 +102,7 @@ public class DebugMinecraftMixin {
         if (!Version.debugEnabled()) {
             return;
         }
-        if (InstructionTab.positionActive() || PathingDebug.showHelpMenu || DebugScreen.rulerMode == 1) {
+        if (InstructionTab.positionActive() || PathingDebug.showHelpMenu || DebugScreen.rulerMode > 0) {
             ci.cancel();
         }
     }
