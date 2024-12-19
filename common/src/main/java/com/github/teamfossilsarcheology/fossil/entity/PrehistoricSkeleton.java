@@ -114,6 +114,8 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
                 if (!droppedBiofossil) {
                     if (info().timePeriod == TimePeriod.CENOZOIC) {
                         spawnAtLocation(ModItems.TAR_FOSSIL.get(), 1);
+                    } else if (info().timePeriod == TimePeriod.PALEOZOIC) {
+                        spawnAtLocation(ModItems.SHALE_FOSSIL.get(), 1);
                     } else {
                         spawnAtLocation(ModItems.BIO_FOSSIL.get(), 1);
                     }
