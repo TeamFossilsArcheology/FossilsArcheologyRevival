@@ -1,7 +1,5 @@
 package com.github.teamfossilsarcheology.fossil.fabric.mixin;
 
-import com.fossil.fossil.client.model.DebugEntityModel;
-import com.fossil.fossil.entity.DebugEntity;
 import com.github.teamfossilsarcheology.fossil.client.model.PrehistoricAnimatableModel;
 import com.github.teamfossilsarcheology.fossil.compat.geckolib.AnimationProcessorOverride;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;

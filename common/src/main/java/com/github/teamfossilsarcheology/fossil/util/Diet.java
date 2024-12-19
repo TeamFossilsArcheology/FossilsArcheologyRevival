@@ -29,8 +29,8 @@ public enum Diet implements DinopediaInfo {
         this.fearIndex = fearIndex;
     }
 
-    public int getFearIndex() {
-        return this.fearIndex;
+    public boolean isCarnivore() {
+        return fearIndex >= 2;
     }
 
     @Override

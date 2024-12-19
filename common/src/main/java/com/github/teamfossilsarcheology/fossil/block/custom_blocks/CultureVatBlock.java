@@ -5,6 +5,11 @@ import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.block.entity.CultureVatBlockEntity;
 import com.github.teamfossilsarcheology.fossil.block.entity.ModBlockEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
+import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
+import com.github.teamfossilsarcheology.fossil.entity.monster.Failuresaurus;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricMobType;
+import com.github.teamfossilsarcheology.fossil.inventory.CultureVatMenu;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.sounds.SoundEvents;
@@ -14,11 +19,13 @@ import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityTicker;
 import net.minecraft.world.level.block.entity.BlockEntityType;
@@ -30,6 +37,7 @@ import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -55,7 +63,7 @@ public class CultureVatBlock extends CustomEntityBlock {
         dropInventory(level, pos);
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
-        if (!level.isClientSide && blockEntity != null) {
+        if (!level.isClientSide && blockEntity instanceof BaseContainerBlockEntity container) {
             level.destroyBlock(pos, false);
             level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1, false);
             if (blockEntity.getBlockState().getValue(EMBRYO) == EmbryoType.PLANT) {
@@ -67,12 +75,6 @@ public class CultureVatBlock extends CustomEntityBlock {
             } else if (blockEntity.getBlockState().getValue(EMBRYO) == EmbryoType.TREE) {
                 level.setBlockAndUpdate(pos, ModBlocks.MUTANT_TREE_SAPLING.get().defaultBlockState());
             } else {
-                if (!level.dimensionType().ultraWarm()) {
-                    level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
-                    level.neighborChanged(pos, Blocks.WATER, pos);
-                } else {
-                    level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1, 1, false);
-                }
                 int random = level.random.nextInt(100);
                 LivingEntity entity;
                 if (random < 5) {
@@ -85,6 +87,28 @@ public class CultureVatBlock extends CustomEntityBlock {
                     entity = EntityType.MOOSHROOM.create(level);
                 } else {
                     entity = ModEntities.FAILURESAURUS.get().create(level);
+                    Item dnaItem = container.getItem(CultureVatMenu.INPUT_SLOT_ID).getItem();
+                    PrehistoricEntityInfo inputEntity = Arrays.stream(PrehistoricEntityInfo.values()).filter(info -> info.dnaItem == dnaItem).findFirst().orElse(null);
+                    if (inputEntity != null) {
+                        if (inputEntity == PrehistoricEntityInfo.DODO) {
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.DODO.name());
+                        } else if (inputEntity.mobType == PrehistoricMobType.BIRD) {
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.FLYING.name());
+                        } else if (inputEntity.mobType == PrehistoricMobType.FISH || inputEntity.mobType == PrehistoricMobType.DINOSAUR_FISH) {
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.FISH.name());
+                        } else if (EntityDataLoader.INSTANCE.getData(inputEntity.resourceName).diet().isCarnivore()) {
+                            //Let's ignore that this probably isn't scientifically accurate
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.SAUROPOD.name());
+                        } else {
+                            ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.THEROPOD.name());
+                        }
+                    }
+                }
+                if (!level.dimensionType().ultraWarm()) {
+                    level.setBlockAndUpdate(pos, Blocks.WATER.defaultBlockState());
+                    level.neighborChanged(pos, Blocks.WATER, pos);
+                } else {
+                    level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.LAVA_EXTINGUISH, SoundSource.BLOCKS, 1, 1, false);
                 }
                 entity.moveTo(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, level.random.nextFloat() * 360f, 0.0f);
                 level.addFreshEntity(entity);
