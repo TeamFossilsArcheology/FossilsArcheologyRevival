@@ -4,7 +4,9 @@ import com.github.teamfossilsarcheology.fossil.entity.data.Attribute;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
+import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleTypes;
@@ -155,5 +157,32 @@ public class Util {
     public static float clampTo360(double x) {
         //x mod y behaving the same way as Math.floorMod but with doubles
         return (float) (x - Math.floor(x / 360) * 360);
+    }
+
+
+    /**
+     * Returns the side of the given aabb closest to the edge of the block position
+     */
+    public static Pair<Direction, Double> getClosestSide(AABB bounding, BlockPos blockPos) {
+        //I'm sure there is a smarter way to do this but this is simple enough
+        AABB aabb = bounding.move(Vec3.atBottomCenterOf(blockPos).scale(-1));
+        double maxX = Math.abs(Math.abs(aabb.maxX) - 0.5);
+        double minZ = Math.abs(Math.abs(aabb.minZ) - 0.5);
+        double maxZ = Math.abs(Math.abs(aabb.maxZ) - 0.5);
+        double smallest = Math.abs(Math.abs(aabb.minX) - 0.5);
+        Direction dir = Direction.WEST;
+        if (maxX < smallest) {
+            smallest = maxX;
+            dir = Direction.EAST;
+        }
+        if (minZ < smallest) {
+            smallest = minZ;
+            dir = Direction.NORTH;
+        }
+        if (maxZ < smallest) {
+            smallest = maxZ;
+            dir = Direction.SOUTH;
+        }
+        return Pair.of(dir, smallest);
     }
 }

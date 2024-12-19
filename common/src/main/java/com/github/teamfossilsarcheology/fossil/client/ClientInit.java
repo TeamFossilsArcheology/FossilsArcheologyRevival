@@ -231,10 +231,10 @@ public class ClientInit {
         EntityRendererRegistry.register(ModEntities.DINOSAUR_EGG, DinosaurEggRenderer::new);
         EntityRendererRegistry.register(ModEntities.THROWN_BIRD_EGG, ThrownItemRenderer::new);
 
-        EntityRendererRegistry.register(ModEntities.ANUBITE, context -> new AnubiteRenderer(context, new AnubiteModel()));
-        EntityRendererRegistry.register(ModEntities.ANU_BOSS, context -> new AnuBossRenderer(context, new AnuBossModel()));
-        EntityRendererRegistry.register(ModEntities.ANU_DEAD, context -> new AnuDeadRenderer(context, new AnuDeadModel()));
-        EntityRendererRegistry.register(ModEntities.ANU_TOTEM, context -> new AnuTotemRenderer(context, new AnuTotemModel()));
+        EntityRendererRegistry.register(ModEntities.ANUBITE, AnubiteRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ANU_BOSS, AnuBossRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ANU_DEAD, AnuDeadRenderer::new);
+        EntityRendererRegistry.register(ModEntities.ANU_TOTEM, AnuTotemRenderer::new);
         EntityRendererRegistry.register(ModEntities.FAILURESAURUS, FailuresaurusRenderer::new);
         EntityRendererRegistry.register(ModEntities.SENTRY_PIGLIN, SentryPiglinRenderer::new);
         EntityRendererRegistry.register(ModEntities.STONE_TABLET, StoneTabletRenderer::new);

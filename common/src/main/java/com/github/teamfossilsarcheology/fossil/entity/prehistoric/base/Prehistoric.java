@@ -34,7 +34,9 @@ import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
+import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.Tag;
@@ -102,6 +104,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public static final EntityDataAccessor<Boolean> SITTING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     public static final EntityDataAccessor<Boolean> SLEEPING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Direction> CLIMBING_DIR = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.DIRECTION);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final List<AISystem> aiSystems = new ArrayList<>();
@@ -114,6 +117,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public final ResourceLocation animationLocation;
     private OrderType currentOrder = OrderType.WANDER;
     public ResourceLocation textureLocation;
+    public int climbTick;
+    public int prevClimbTick;
+    public Direction prevClimbDirection = Direction.UP;
     protected DinoMatingGoal matingGoal;
     protected float playerJumpPendingScale;
     private Gender gender = Gender.random(random);
@@ -220,6 +226,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         entityData.define(SITTING, false);
         entityData.define(SLEEPING, false);
         entityData.define(CLIMBING, false);
+        entityData.define(CLIMBING_DIR, Direction.UP);
         entityData.define(AGING_DISABLED, false);
 
         CompoundTag tag = new CompoundTag();
@@ -239,6 +246,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 refreshTexturePath();
             }
             updateAbilities();
+        } else if (CLIMBING_DIR.equals(key)) {
+            if (level.isClientSide && entityData.get(CLIMBING_DIR) != Direction.UP) {
+                //Store climb direction after climbing stopped to undo rotation
+                prevClimbDirection = entityData.get(CLIMBING_DIR);
+            }
         }
         super.onSyncedDataUpdated(key);
     }
@@ -271,6 +283,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         compound.putInt("MatingCooldown", getMatingCooldown());
         compound.putInt("Hunger", getHunger());
         compound.putBoolean("Fleeing", isFleeing());
+        compound.putBoolean("Climbing", isClimbing());
         compound.putInt("TicksClimbing", ticksClimbing);
         compound.putInt("ClimbingCooldown", climbingCooldown);
         compound.putByte("CurrentOrder", (byte) currentOrder.ordinal());
@@ -288,6 +301,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         setMatingCooldown(compound.getInt("MatingCooldown"));
         setHunger(compound.getInt("Hunger"));
         setFleeing(compound.getBoolean("Fleeing"));
+        setClimbing(compound.getBoolean("Climbing"));
         ticksClimbing = compound.getInt("TicksClimbing");
         climbingCooldown = compound.getInt("ClimbingCooldown");
         if (compound.contains("CurrentOrder", Tag.TAG_BYTE)) {
@@ -562,7 +576,15 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     @Override
     public void tick() {
         super.tick();
-        if (!level.isClientSide) {
+        if (level.isClientSide) {
+            //Used for smooth rotation
+            prevClimbTick = climbTick;
+            if (isClimbing()) {
+                climbTick = Math.min(5, climbTick + 1);
+            } else {
+                climbTick = Math.max(0, climbTick - 1);
+            }
+        } else {
             if (!isAgingDisabled() && canAgeUpNaturally()) {
                 setAgeInTicks(getAge() + 1);
             }
@@ -582,17 +604,23 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 if (isClimbing()) {
                     ticksClimbing++;
                     boolean onCooldown = ticksClimbing >= 100 || level.getBlockState(blockPosition().above()).getMaterial().isSolid();
-                    if (isSleeping() || sleepSystem.wantsToSleep() || onCooldown || !horizontalCollision) {
-                        setClimbing(false);
+                    if (!horizontalCollision || onCooldown) {
+                        stopClimbing();
                         ticksClimbing = 0;
                         if (onCooldown) {
                             climbingCooldown = 900;
                         }
+                    } else {
+                        Pair<Direction, Double> dir = Util.getClosestSide(getBoundingBox(), blockPosition());
+                        entityData.set(CLIMBING_DIR, dir.key());
+                        if (getDeltaMovement().horizontalDistance() < Mth.EPSILON) {
+                            //Climbing in corner
+                            setYRot(dir.key().toYRot());
+                        }
                     }
                 } else {
                     climbingCooldown--;
-                    //TODO: ticksClimbing==0 seems to be wrong
-                    if (ticksClimbing == 0 && climbingCooldown <= 0 && horizontalCollision && !sleepSystem.wantsToSleep() && !isSleeping()) {
+                    if (climbingCooldown <= 0 && horizontalCollision && !sleepSystem.wantsToSleep() && !isSleeping()) {
                         ticksClimbing = 0;
                         setClimbing(true);
                     }
@@ -695,6 +723,14 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     public void setClimbing(boolean climbing) {
         this.entityData.set(CLIMBING, climbing);
+    }
+    public void stopClimbing() {
+        setClimbing(false);
+        entityData.set(CLIMBING_DIR, Direction.UP);
+    }
+
+    public Direction getClimbingDirection() {
+        return entityData.get(CLIMBING_DIR);
     }
 
     public boolean isFleeing() {

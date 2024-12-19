@@ -60,6 +60,25 @@ public class PathingRenderer {
         if (pos1 != null) PathingRenderUtil.renderLineBox(poseStack, buffer, pos1);
         if (pos2 != null) PathingRenderUtil.renderLineBox(poseStack, buffer, pos2);
 
+        /*
+        //Climbing stuff debugging
+        Vec3 pos = getOffsetHitResult(Minecraft.getInstance()).getLocation();
+        double w = PathingScreen.bbWidth;
+        double h = PathingScreen.bbHeight;
+        AABB bounding = new AABB(pos.x - w/2, pos.y, pos.z -  w/2, pos.x +  w/2, pos.y + h, pos.z +  w/2);
+        LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), bounding, 1, 1, 1, 1);
+        LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), new AABB(pos.x - 0.05, pos.y, pos.z - 0.05, pos.x + 0.05, pos.y + 0.05, pos.z + 0.05), 1, 0, 1, 1);
+
+        AABB aabb = bounding.move(Vec3.atBottomCenterOf(new BlockPos(pos)).scale(-1)).move(pos);
+        LevelRenderer.renderLineBox(poseStack, buffer.getBuffer(RenderType.LINES), aabb, 0, 1, 0, 1);
+
+        Pair<Direction, Double> dir = Util.getClosestSide(bounding, new BlockPos(pos));
+        for (Direction direction : Direction.Plane.HORIZONTAL) {
+            Vec3 add = pos.add(direction.getStepX(), direction.getStepY()+1, direction.getStepZ());
+            if (dir.key() == direction) {
+                InstructionRenderUtil.renderFloatingText(poseStack, Minecraft.getInstance(), direction.name(), add);
+            }
+        }*/
         if (showHelpMenu) {
             BlockPos targetPos = PathingDebug.getBlockHitResult(Minecraft.getInstance());
             if (pos1 != null) {

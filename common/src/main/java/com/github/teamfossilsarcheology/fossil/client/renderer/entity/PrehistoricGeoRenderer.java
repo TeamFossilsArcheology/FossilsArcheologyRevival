@@ -13,6 +13,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib3.core.util.Color;
@@ -34,7 +35,20 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends FixedGeoEntit
     @Override
     public void render(T entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
         this.shadowRadius = entity.getBbWidth() * 0.45F;
+        poseStack.pushPose();
+        if (entity.getClimbingDirection() != Direction.UP || (entity.prevClimbDirection != Direction.UP && entity.climbTick > 0)) {
+            float progress = Mth.lerp(partialTick, entity.prevClimbTick, entity.climbTick) / 5f;
+            Direction dir = entity.getClimbingDirection() != Direction.UP ? entity.getClimbingDirection() : entity.prevClimbDirection;
+            float offset = entity.getBbWidth() / 2 * progress;
+            System.out.println(entity.getBbWidth() / 2);
+            System.out.println(entity.position());
+            System.out.println(entity.blockPosition().offset(dir.getNormal()));
+            poseStack.translate(dir.getStepX() * offset, 0.5 * progress, dir.getStepZ() * offset);
+            Direction dirRot = dir.getClockWise();
+            poseStack.mulPose(new Vector3f(dirRot.getStepX(), 0, dirRot.getStepZ()).rotationDegrees(90 * progress));
+        }
         super.render(entity, entityYaw, partialTick, poseStack, buffer, packedLight);
+        poseStack.popPose();
     }
 
     @Override
