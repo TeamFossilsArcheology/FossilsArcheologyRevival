@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
+import com.github.teamfossilsarcheology.fossil.entity.ai.control.PrehistoricLookControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
@@ -14,7 +15,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RenderShape;
@@ -164,7 +164,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         }
     }
 
-    class LeapLookControl extends LookControl {
+    class LeapLookControl extends PrehistoricLookControl {
 
         public LeapLookControl() {
             super(PrehistoricLeaping.this);

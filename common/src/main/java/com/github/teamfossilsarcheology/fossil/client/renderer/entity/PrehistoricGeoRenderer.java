@@ -40,9 +40,6 @@ public class PrehistoricGeoRenderer<T extends Prehistoric> extends FixedGeoEntit
             float progress = Mth.lerp(partialTick, entity.prevClimbTick, entity.climbTick) / 5f;
             Direction dir = entity.getClimbingDirection() != Direction.UP ? entity.getClimbingDirection() : entity.prevClimbDirection;
             float offset = entity.getBbWidth() / 2 * progress;
-            System.out.println(entity.getBbWidth() / 2);
-            System.out.println(entity.position());
-            System.out.println(entity.blockPosition().offset(dir.getNormal()));
             poseStack.translate(dir.getStepX() * offset, 0.5 * progress, dir.getStepZ() * offset);
             Direction dirRot = dir.getClockWise();
             poseStack.mulPose(new Vector3f(dirRot.getStepX(), 0, dirRot.getStepZ()).rotationDegrees(90 * progress));

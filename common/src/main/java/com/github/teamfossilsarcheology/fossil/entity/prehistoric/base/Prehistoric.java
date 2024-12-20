@@ -10,6 +10,7 @@ import com.github.teamfossilsarcheology.fossil.client.OptionalTextureLoader;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
+import com.github.teamfossilsarcheology.fossil.entity.ai.control.PrehistoricLookControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.PrehistoricPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.*;
@@ -134,6 +135,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         super(entityType, level);
         this.animationLocation = animationLocation;
         this.moveControl = new SmoothTurningMoveControl(this);
+        this.lookControl = new PrehistoricLookControl(this);
         this.setHunger(this.getMaxHunger() / 2);
         this.updateAbilities();
         refreshDimensions();
@@ -333,6 +335,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             setAgeInDays(((PrehistoricGroupData) spawnDataIn).ageInDays);
         }
         updateAbilities();
+        refreshDimensions();
         moodSystem.setPlayingCooldown(0);
         setMatingCooldown(24000);
         heal(getMaxHealth());
