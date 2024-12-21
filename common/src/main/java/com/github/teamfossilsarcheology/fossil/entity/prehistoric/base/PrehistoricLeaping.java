@@ -91,6 +91,11 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         return hurt;
     }
 
+    @Override
+    protected boolean canClimb() {
+        return !getLeapSystem().isLeaping() && super.canClimb();
+    }
+
     public LeapSystem getLeapSystem() {
         return leapSystem;
     }

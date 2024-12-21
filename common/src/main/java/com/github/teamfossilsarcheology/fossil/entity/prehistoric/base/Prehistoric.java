@@ -623,13 +623,17 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     }
                 } else {
                     climbingCooldown--;
-                    if (climbingCooldown <= 0 && horizontalCollision && !sleepSystem.wantsToSleep() && !isSleeping()) {
+                    if (canClimb()) {
                         ticksClimbing = 0;
                         setClimbing(true);
                     }
                 }
             }
         }
+    }
+
+    protected boolean canClimb() {
+        return climbingCooldown <= 0 && horizontalCollision && !sleepSystem.wantsToSleep() && !isSleeping();
     }
 
     private float scaleOverride = -1;

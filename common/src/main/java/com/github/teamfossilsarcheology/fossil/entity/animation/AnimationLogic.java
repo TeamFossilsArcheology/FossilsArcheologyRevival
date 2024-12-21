@@ -318,6 +318,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 addActiveAnimation(controller.getName(), AnimationCategory.SIT);
             } else if (entity.isClimbing()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
+                //TODO: Quick fix. Think of something better leater
+                animationSpeed = 2;
             } else if (event.isMoving()) {
                 if (entity.isInWater()) {
                     addActiveAnimation(controller.getName(), AnimationCategory.SWIM);

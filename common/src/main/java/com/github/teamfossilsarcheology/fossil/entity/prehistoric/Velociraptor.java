@@ -17,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 
 public class Velociraptor extends PrehistoricLeaping {
     public static final String LEAP = "animation.velociraptor.leap";
-    public static final String CLIMB = "animation.velociraptor.climb";
     public static final String RIDE = "animation.velociraptor.latched";
     public static final String LAND = "animation.velociraptor.land";
 

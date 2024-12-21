@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.phys.Vec3;
 
@@ -15,7 +16,7 @@ public class LeapSystem extends AISystem {
     public static final int JUMP_DISTANCE = 30;
     private final PrehistoricLeaping mob;
     private final SynchedEntityData entityData;
-    private Entity target;
+    private LivingEntity target;
     private Vec3 blockTarget;
     private boolean leaping;
     private long jumpDelayTick = -1;
@@ -31,7 +32,7 @@ public class LeapSystem extends AISystem {
     @Override
     public void serverTick() {
         long currentTick = mob.level.getGameTime();
-        if (!isLeaping() && target != null) {
+        if (!isLeaping() && target != null && target.isAlive()) {
             mob.lookAt(target, 100, 10);
             if (mob.distanceToSqr(target) < JUMP_DISTANCE) {
                 startLeap();
@@ -49,20 +50,27 @@ public class LeapSystem extends AISystem {
             }
         }
         if (isLeaping()) {
+            if (target != null && ((target.isVehicle() && mob.getVehicle() != target) || target.isDeadOrDying())) {
+                if (jumpDelayTick != -1) {
+                    blockTarget = target.position();
+                }
+                setAttackRiding(false);
+                setLeapTarget(null);
+            }
             if (currentTick == jumpDelayTick) {
                 double y;
                 Vec3 offset;
                 if (target != null) {
                     y = Math.min(target.getY() + target.getBbHeight() - mob.getY(), 5);
                     offset = target.position().subtract(mob.position()).normalize();
-                    mob.setDeltaMovement(offset.x, -0.027 * Math.pow(y, 2) + 0.262 * y + 0.183, offset.z);
+                    offset = offset.add(target.getDeltaMovement().x, 0, target.getDeltaMovement().z);
                 } else if (blockTarget != null) {
                     y = Math.min(blockTarget.y - mob.getY(), 5);
                     offset = blockTarget.subtract(mob.position()).normalize();
                 } else {
                     //Shouldn't really happen
                     y = 0;
-                    offset = mob.position();
+                    offset = Vec3.ZERO;
                 }
                 mob.setDeltaMovement(offset.x, -0.027 * Math.pow(y, 2) + 0.262 * y + 0.183, offset.z);
                 setLeapStarted(false);
@@ -81,17 +89,21 @@ public class LeapSystem extends AISystem {
                 setLanding(false);
                 setLeaping(false);
                 landingEndTick = -1;
+                setLeapTarget(null);
             }
-            if (isAttackRiding() && mob.tickCount % 20 == 0 && target != null) {
-                target.hurt(DamageSource.mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+            if (isAttackRiding() && target != null) {
+                if (mob.tickCount % 20 == 0) {
+                    target.hurt(DamageSource.mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
+                }
+                if (target.isDeadOrDying()) {
+                    setAttackRiding(false);
+                }
             }
-            if(!isLeapFlying() && !hasLeapStarted() && !isAttackRiding()) {
+            if(!isLeapFlying() && !hasLeapStarted() && !isLanding() && !isAttackRiding()) {
                 //failsafe
                 setLeaping(false);
             }
             //Collision is handled in entity class
-            //TODO: Maybe check !isLeapFlying !isLeapStarted !isAttackRiding to disable isLeaping
-            //TODO: Stop attaching
         }
     }
 
@@ -154,7 +166,7 @@ public class LeapSystem extends AISystem {
         this.blockTarget = target;
     }
 
-    public void setLeapTarget(Entity target) {
+    public void setLeapTarget(LivingEntity target) {
         this.target = target;
         entityData.set(LEAP_TARGET_ID, -2);
         entityData.set(LEAP_TARGET_ID, target == null ? -1 : target.getId());

@@ -118,7 +118,8 @@ public class InstructionSystem extends AISystem {
             return true;
         } else if (current instanceof Instruction.LeapAttack leapAttack) {
             Entity target = mob.level.getEntity(leapAttack.targetId);
-            if (target != null) {
+            if (target instanceof LivingEntity livingEntity) {
+                livingEntity.setHealth(livingEntity.getMaxHealth());
                 PrehistoricLeaping leaping = (PrehistoricLeaping) mob;
                 double jumpDistance = 30;
                 if (leaping.getLeapSystem().isLeaping()) {
@@ -128,7 +129,7 @@ public class InstructionSystem extends AISystem {
                 } else if ( mob.isOnGround() && delayTick > 0 && delayTick >= mob.level.getGameTime()) {
                     return false;
                 } else if (leaping.distanceToSqr(target) < jumpDistance && delayTick == 0) {
-                    leaping.getLeapSystem().setLeapTarget(target);
+                    leaping.getLeapSystem().setLeapTarget(livingEntity);
                 } else {
                     mob.getNavigation().moveTo(target, 1);
                     mob.lookAt(target, 120, 10);
