@@ -1185,7 +1185,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public int getAmbientSoundInterval() {
-        return 20;
+        return 200;
     }
 
     @Override
