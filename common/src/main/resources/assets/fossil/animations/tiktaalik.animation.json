@@ -4,11 +4,6 @@
 		"animation.tiktaalik.attack": {
 			"animation_length": 0.6667,
 			"bones": {
-				"pitch_root": {
-					"position": {
-						"vector": [0, "query.is_in_water ? 4 : 0", 0]
-					}
-				},
 				"bodyfront": {
 					"rotation": {
 						"0.0": {
@@ -103,9 +98,6 @@
 						"0.5": {
 							"vector": [0, 0, 0]
 						}
-					},
-					"position": {
-						"vector": [0, "query.is_in_water ? 4 : 0", 0]
 					}
 				},
 				"bodyfront": {
@@ -270,9 +262,6 @@
 				"pitch_root": {
 					"rotation": {
 						"vector": [-10, 0, 0]
-					},
-					"position": {
-						"vector": [0, 0, 0]
 					}
 				},
 				"bodyfront": {
@@ -316,11 +305,6 @@
 			"loop": true,
 			"animation_length": 4,
 			"bones": {
-				"pitch_root": {
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
 				"Tail": {
 					"rotation": {
 						"vector": [0, "12.5+math.sin(query.anim_time*90-90)*2.5", 0]
@@ -357,11 +341,6 @@
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
-				"pitch_root": {
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
 				"bodyfront": {
 					"rotation": {
 						"vector": [0, "math.sin(query.anim_time*180-45)*2.5", 0]
@@ -393,11 +372,6 @@
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
-				"pitch_root": {
-					"position": {
-						"vector": [0, 0, 0]
-					}
-				},
 				"bodyfront": {
 					"rotation": {
 						"vector": [0, "math.sin(query.anim_time*360-45)*2.5", 0]

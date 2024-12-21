@@ -8,9 +8,9 @@ import software.bernie.geckolib3.core.IAnimatable;
 import java.util.Map;
 
 public interface PrehistoricAnimatable<T extends Mob & PrehistoricAnimatable<T>> extends IAnimatable {
-    default AnimationInfo getRandomAnimation(AnimationCategory category, T mob) {
+    default AnimationInfo getRandomAnimation(AnimationCategory category) {
         var animations = getAnimations().get(category);
-        return animations.getRandomAnimation(mob);
+        return animations.getRandomAnimation((T) this);
     }
 
     Map<AnimationCategory, AnimationHolder> getAnimations();

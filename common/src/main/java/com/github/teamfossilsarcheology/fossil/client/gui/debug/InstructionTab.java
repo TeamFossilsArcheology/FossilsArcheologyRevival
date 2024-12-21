@@ -60,6 +60,15 @@ public class InstructionTab extends DebugTab<Prehistoric> {
         addWidget(new Button(5, 365, 50, 20, new TextComponent("Stop"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entity.getId(), true, List.of()));
         }));
+        addWidget(new Button(60, 365, 70, 20, new TextComponent("Stop All"), button -> {
+            for (Map.Entry<UUID, Pair> entry : INSTRUCTIONS.entrySet()) {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entry.getValue().id, true,List.of()));
+            }
+            debugScreen.onClose();
+            onClose();
+        }, (button, poseStack, i, j) -> {
+            debugScreen.renderTooltip(poseStack, new TextComponent("Stops Instruction for all mobs"), i, j);
+        }));
         addWidget(new Button(60, 340, 70, 20, new TextComponent("Start All"), button -> {
             for (Map.Entry<UUID, Pair> entry : INSTRUCTIONS.entrySet()) {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entry.getValue().id, true, entry.getValue().instructions));

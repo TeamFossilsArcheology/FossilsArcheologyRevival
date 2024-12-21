@@ -168,7 +168,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public boolean isAnimationDone(String controller) {
-        return getActiveAnimation(controller).filter(this::isAnimationDone).isPresent();
+        Optional<ActiveAnimationInfo> opt = getActiveAnimation(controller);
+        return opt.isEmpty() || isAnimationDone(opt.get());
     }
 
     public boolean isAnimationDone(ActiveAnimationInfo activeAnimation) {

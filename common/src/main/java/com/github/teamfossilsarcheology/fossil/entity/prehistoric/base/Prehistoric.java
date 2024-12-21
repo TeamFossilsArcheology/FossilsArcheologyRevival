@@ -1318,7 +1318,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public AnimationInfo getAnimation(AnimationCategory category) {
-        return getRandomAnimation(category, this);
+        return getRandomAnimation(category);
     }
 
     @Override

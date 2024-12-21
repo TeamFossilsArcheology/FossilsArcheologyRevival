@@ -1,6 +1,34 @@
 {
 	"elements": [
 		{
+			"name": "body",
+			"pos": [0, 0, 6.5],
+			"width": 17.4,
+			"height": 26.8,
+			"ref": "body_hitbox"
+		},
+		{
+			"name": "body2",
+			"pos": [0, 0, -11],
+			"width": 17.4,
+			"height": 26.8,
+			"ref": "body2_hitbox"
+		},
+		{
+			"name": "head",
+			"pos": [0, 17, 24.3],
+			"width": 13.4,
+			"height": 14.2,
+			"ref": "head_hitbox"
+		},
+		{
+			"name": "tail",
+			"pos": [0, 14.5, -28.25],
+			"width": 16,
+			"height": 11.6,
+			"ref": "tail_hitbox"
+		},
+		{
 			"name": "rider_pos",
 			"pos": [0, 25.75, 1],
 			"ref": "rider_pos",

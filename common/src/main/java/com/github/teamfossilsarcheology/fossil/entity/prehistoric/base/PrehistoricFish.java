@@ -203,7 +203,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
 
     @Override
     public AnimationInfo getAnimation(AnimationCategory category) {
-        return getRandomAnimation(category, this);
+        return getRandomAnimation(category);
     }
 
     @Override
