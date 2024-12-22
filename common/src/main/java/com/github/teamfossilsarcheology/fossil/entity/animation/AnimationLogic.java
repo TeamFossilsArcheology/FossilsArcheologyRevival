@@ -499,6 +499,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
             } else if (event.getAnimatable().sitSystem.isSitting()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SIT);
+            } else if (event.getAnimatable().isClimbing()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
             } else if (entity.isInWater()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
             } else if (event.isMoving()) {

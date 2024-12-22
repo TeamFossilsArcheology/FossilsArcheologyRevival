@@ -70,7 +70,10 @@
     },
     "animation.dimorphodon.takeoff": {
       "loop": "hold_on_last_frame",
-      "animation_length": 1.25
+      "animation_length": 1.25,
+      "action_delay": [
+        0.75
+      ]
     },
     "animation.dimorphodon.walk": {
       "loop": true,
