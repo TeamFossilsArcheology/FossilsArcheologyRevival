@@ -23,7 +23,7 @@ public class FlyingWanderGoal extends Goal {
     @Override
     public boolean canUse() {
         boolean debugLand = false;//TODO: Remove debug
-        if (dino.getCurrentOrder() != OrderType.WANDER || !dino.isAdult()) {
+        if (dino.isVehicle() || dino.getCurrentOrder() != OrderType.WANDER || !dino.isAdult()) {
             return false;
         }
         if (dino.isFlying()) {

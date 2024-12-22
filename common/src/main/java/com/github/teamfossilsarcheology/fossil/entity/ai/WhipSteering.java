@@ -28,6 +28,12 @@ public class WhipSteering {
         return lastSeenWhipTicks < FOLLOW_TIME_WITHOUT_WHIP;
     }
 
+    public void airTravel(Vec3 travelVector) {
+        dino.moveRelative(dino.getSpeed() * 0.5f, new Vec3(travelVector.x, 0, travelVector.z));
+        dino.move(MoverType.SELF, dino.getDeltaMovement());
+        dino.setDeltaMovement(dino.getDeltaMovement().scale(0.9f));
+    }
+
     public void slowWaterTravel(Vec3 travelVector) {
         boolean movement = Math.abs(travelVector.x) > 0 || Math.abs(travelVector.z) > 0;
         double downwardMovement = dino.getFluidHeight(FluidTags.WATER) > dino.getFluidJumpThreshold() * dino.getScale() ? 0 : -0.15;

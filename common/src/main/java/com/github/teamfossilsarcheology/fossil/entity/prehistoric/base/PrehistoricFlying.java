@@ -13,6 +13,8 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimatio
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.FlyingSleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
+import com.github.teamfossilsarcheology.fossil.network.C2SRiderForceFlyingMessage;
+import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -21,6 +23,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
@@ -145,6 +148,49 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     public boolean isUsingStuckNavigation() {
         return usingStuckNavigation;
+    }
+
+    @Override
+    public void travel(Vec3 travelVector) {
+        LivingEntity rider = (LivingEntity) getControllingPassenger();
+        if (rider == null || !canBeControlledByRider() || !steering.trySteering(rider)) {
+            super.travel(travelVector);
+            return;
+        }
+        setYRot(rider.getYRot());
+        yRotO = getYRot();
+        setXRot(rider.getXRot() * 0.5f);
+        setRot(getYRot(), getXRot());
+        yBodyRot = getYRot();
+        yHeadRot = getYRot();
+        float newStrafeMovement = rider.xxa * 0.5f;
+        float newForwardMovement = rider.zza;
+
+        if (playerJumpPendingScale > 0) {
+            if (!isTakingOff() && !isFlying()) {
+                MessageHandler.SYNC_CHANNEL.sendToServer(new C2SRiderForceFlyingMessage(getId(), true));
+            } else if (isFlying() && !level.isEmptyBlock(blockPosition().below())) {
+                MessageHandler.SYNC_CHANNEL.sendToServer(new C2SRiderForceFlyingMessage(getId(), false));
+            }
+            playerJumpPendingScale = 0;
+        }
+        if (isControlledByLocalInstance()) {
+            setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
+            Vec3 newMovement = new Vec3(newStrafeMovement, travelVector.y, newForwardMovement).scale(0.5);
+            if (isFlying()) {
+                //TODO: Fly up, down, land
+                steering.airTravel(newMovement);
+            } else {
+                super.travel(newMovement);
+            }
+        } else {
+            setDeltaMovement(Vec3.ZERO);
+        }
+    }
+
+    @Override
+    protected @NotNull MovementEmission getMovementEmission() {
+        return !isFlying() ? super.getMovementEmission() : MovementEmission.NONE;
     }
 
     @Override

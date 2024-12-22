@@ -405,10 +405,14 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public void positionRider(Entity passenger) {
         super.positionRider(passenger);
         if (canBeControlledByRider() && passenger instanceof LivingEntity livingEntity) {
-            yBodyRot = livingEntity.yBodyRot;
+            yBodyRot = livingEntity.yHeadRot;
         }
         getEntityHitboxData().getAnchorData().getAnchorPos("rider_pos").ifPresentOrElse(pos -> {
-            passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset() * getScale(), pos.z);
+            if (passenger instanceof Player) {
+                passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset() - 0.2, pos.z);
+            } else {
+                passenger.setPos(pos.x, pos.y + passenger.getMyRidingOffset(), pos.z);
+            }
         }, () -> {
             passenger.setPos(getX(), getY() + getPassengersRidingOffset() + passenger.getMyRidingOffset(), getZ());
         });

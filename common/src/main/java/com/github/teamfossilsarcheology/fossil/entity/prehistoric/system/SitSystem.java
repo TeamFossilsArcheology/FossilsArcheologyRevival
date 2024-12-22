@@ -40,7 +40,7 @@ public class SitSystem extends AISystem {
      * @return whether something is preventing the mob from sitting
      */
     protected boolean canSit() {
-        if (sittingDisabled || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW) {
+        if (sittingDisabled || mob.hasTarget() || mob.isVehicle() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW) {
             return false;
         }
         if ((mob.aiMovingType() == Moving.AQUATIC)) {
