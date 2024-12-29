@@ -210,6 +210,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
+    public double getFluidJumpThreshold() {
+        return 0.7 * getBbHeight();
+    }
+
+    @Override
     protected void updateControlFlags() {
         boolean enabled = !isSleeping() && !isWeak();
         goalSelector.setControlFlag(Goal.Flag.MOVE, enabled && !sitSystem.isSitting());

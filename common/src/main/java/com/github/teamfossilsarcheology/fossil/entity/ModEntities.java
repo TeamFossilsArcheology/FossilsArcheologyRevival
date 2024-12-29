@@ -37,7 +37,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Aquilolamna>> AQUILOLAMNA = registerDino("aquilolamna", Aquilolamna::new, 1.3f, 1);
     public static final RegistrySupplier<EntityType<Arthropleura>> ARTHROPLEURA = registerDino("arthropleura", Arthropleura::new, 2, 0.5f);
     public static final RegistrySupplier<EntityType<Brachiosaurus>> BRACHIOSAURUS = registerDino("brachiosaurus", Brachiosaurus::new, 0.95f, 1.3f);
-    public static final RegistrySupplier<EntityType<Ceratosaurus>> CERATOSAURUS = registerDino("ceratosaurus", Ceratosaurus::new, 0.65f, 1.3f);
+    public static final RegistrySupplier<EntityType<Ceratosaurus>> CERATOSAURUS = registerDino("ceratosaurus", Ceratosaurus::new, 0.65f, 1.2f);
     public static final RegistrySupplier<EntityType<Citipati>> CITIPATI = registerDino("citipati", Citipati::new, 1.15f, 1.5f);
     public static final RegistrySupplier<EntityType<Coelacanth>> COELACANTH = registerFish("coelacanth", Coelacanth::new, 2, 0.5f);
     public static final RegistrySupplier<EntityType<Compsognathus>> COMPSOGNATHUS = registerDino("compsognathus", Compsognathus::new, 1.1f, 0.8f);
