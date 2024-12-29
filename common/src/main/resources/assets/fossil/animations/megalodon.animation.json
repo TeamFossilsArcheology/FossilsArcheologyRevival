@@ -1567,7 +1567,7 @@
 				}
 			}
 		},
-		"animation.megalodon.ram_attack": {
+		"animation.megalodon.!ram_attack": {
 			"loop": true,
 			"animation_length": 2,
 			"bones": {
