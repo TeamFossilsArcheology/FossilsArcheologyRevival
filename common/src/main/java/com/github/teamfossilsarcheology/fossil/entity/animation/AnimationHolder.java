@@ -6,10 +6,10 @@ import net.minecraft.world.entity.Mob;
 import java.util.*;
 
 public class AnimationHolder {
-    private final NavigableMap<Integer, AnimationInfo> animations = new TreeMap<>();
-    private final NavigableMap<Integer, AnimationInfo> babyAnimations = new TreeMap<>();
-    private final NavigableMap<Integer, AnimationInfo> waterAnimations = new TreeMap<>();
-    private final NavigableMap<Integer, AnimationInfo> airAnimations = new TreeMap<>();
+    private final NavigableMap<Double, AnimationInfo> animations = new TreeMap<>();
+    private final NavigableMap<Double, AnimationInfo> babyAnimations = new TreeMap<>();
+    private final NavigableMap<Double, AnimationInfo> waterAnimations = new TreeMap<>();
+    private final NavigableMap<Double, AnimationInfo> airAnimations = new TreeMap<>();
     private final Set<String> lookup = new HashSet<>();
 
     public void add(AnimationInfo animation) {
@@ -36,7 +36,7 @@ public class AnimationHolder {
         lookup.add(animation.animation.animationName);
     }
 
-    private static void addAnimation(NavigableMap<Integer, AnimationInfo> map, AnimationInfo animation, int weight) {
+    private static void addAnimation(NavigableMap<Double, AnimationInfo> map, AnimationInfo animation, double weight) {
         if (!map.isEmpty()) {
             map.put(map.lastKey() + weight, animation);
         } else {
@@ -59,7 +59,7 @@ public class AnimationHolder {
         return getRandomAnimation(animations, entity.getRandom());
     }
 
-    private static AnimationInfo getRandomAnimation(NavigableMap<Integer, AnimationInfo> map, Random random) {
-        return map.ceilingEntry(random.nextInt(map.lastKey())).getValue();
+    private static AnimationInfo getRandomAnimation(NavigableMap<Double, AnimationInfo> map, Random random) {
+        return map.higherEntry(random.nextDouble(map.lastKey())).getValue();
     }
 }
