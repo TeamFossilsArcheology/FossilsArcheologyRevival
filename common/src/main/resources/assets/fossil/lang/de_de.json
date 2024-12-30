@@ -102,6 +102,7 @@
   "item.fossil.sac": "%ssack",
   "item.fossil.embryo": "%s Embryo",
   "item.fossil.essence_chicken": "Hühneressenz",
+  "item.fossil.essence_chicken.desc": "Lässt prähistorisches Tier altern, wenn es nicht zu hungrig ist",
   "item.fossil.essence_stunted": "Verkümmerte Essenz",
   "item.fossil.essence_stunted.desc": "Hemmt das Wachstum prähistorischer Tiere",
   "item.fossil.failuresaurus_flesh": "Fehlersaurierfleisch",

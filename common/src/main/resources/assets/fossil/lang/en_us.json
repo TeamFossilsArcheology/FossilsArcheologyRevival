@@ -102,6 +102,7 @@
   "item.fossil.sac": "%s Sac",
   "item.fossil.embryo": "%s Embryo",
   "item.fossil.essence_chicken": "Chicken Essence",
+  "item.fossil.essence_chicken.desc": "Can age a prehistoric animal if it's not too hungry",
   "item.fossil.essence_stunted": "Stunted Essence",
   "item.fossil.essence_stunted.desc": "Stunts prehistoric animal growth",
   "item.fossil.failuresaurus_flesh": "Failuresaurus Flesh",
