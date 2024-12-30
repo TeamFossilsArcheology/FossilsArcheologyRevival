@@ -7,10 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricAnimatable;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricDebug;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
-import com.github.teamfossilsarcheology.fossil.network.debug.C2SDisableAIMessage;
-import com.github.teamfossilsarcheology.fossil.network.debug.C2SDiscardMessage;
-import com.github.teamfossilsarcheology.fossil.network.debug.C2SSlowMessage;
-import com.github.teamfossilsarcheology.fossil.network.debug.C2SStructureMessage;
+import com.github.teamfossilsarcheology.fossil.network.debug.*;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
@@ -22,8 +19,10 @@ import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.TamableAnimal;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.Sheep;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ProjectileUtil;
 import net.minecraft.world.level.block.state.BlockState;
@@ -119,11 +118,18 @@ public class DebugScreen extends Screen {
         var builder = CycleButton.onOffBuilder();
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InfoTab(this, prehistoric));
-        } else if (entity instanceof PrehistoricSkeleton skeleton) {
+        } else if (entity instanceof TamableAnimal || entity instanceof AbstractHorse) {
+            addRenderableWidget(new Button(275, 55, 50, 20, new TextComponent("Tame"), button -> {
+                MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
+            }));
+        }
+        if (entity instanceof PrehistoricSkeleton skeleton) {
             tabs.add(new SkeletonEditTab(this, skeleton));
-        } else if (entity instanceof DinosaurEgg egg) {
+        }
+        if (entity instanceof DinosaurEgg egg) {
             tabs.add(new EggTab(this, egg));
-        } else if (entity instanceof Animal animal && ModCapabilities.hasEmbryo(animal)) {
+        }
+        if (entity instanceof Animal animal && ModCapabilities.hasEmbryo(animal)) {
             tabs.add(new EmbryoTab(this, animal));
         }
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {

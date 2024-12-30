@@ -83,6 +83,9 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
     public void serverTick(Level level, BlockPos pos, BlockState state) {
         boolean fueled = isProcessing();
         boolean dirty = false;
+        if (isProcessing()) {
+            --litTime;
+        }
 
         if (litTime == 0 && canProcess()) {
             litDuration = litTime = AnalyzerMenu.FUEL_TIME;
@@ -98,9 +101,6 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
             }
         } else {
             cookingProgress = 0;
-        }
-        if (isProcessing()) {
-            --litTime;
         }
         if (fueled != isProcessing()) {
             dirty = true;
