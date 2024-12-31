@@ -29,7 +29,7 @@ public record AnimationCategory(String name, @Nullable AnimationCategory backup,
     public static final AnimationCategory SWIM_FAST = register("swim_fast", SWIM, s -> s.contains("swim") && s.contains("fast"));
 
     public boolean canMapAnimation(String key) {
-        return predicate.test(key) && !key.contains("!");
+        return predicate.test(key) && !key.contains("!") && !key.contains("demo");
     }
 
     public static AnimationCategory register(String name, @Nullable AnimationCategory backup) {
