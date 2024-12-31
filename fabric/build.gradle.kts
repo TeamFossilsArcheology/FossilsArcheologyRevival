@@ -109,7 +109,8 @@ dependencies {
 
     //Optional
     modRuntimeOnly("curse.maven:modmenu-308702:4145213")
-    modImplementation("maven.modrinth:jade:MSJGBHIo")
+    modCompileOnly("maven.modrinth:jade:MSJGBHIo")
+    modRuntimeOnly("maven.modrinth:jade:MSJGBHIo")
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
     modCompileOnly("maven.modrinth:farmers-delight-fabric:$farmersDelightVersion")
 

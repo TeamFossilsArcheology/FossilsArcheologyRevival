@@ -25,6 +25,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FeederBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
+    public static final String MEAT = "Meat";
+    public static final String PLANT = "Plant";
     private static final int[] SLOTS_TOP = new int[]{0, 1};
     protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
     private int meat;
@@ -112,15 +114,15 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         super.load(tag);
         this.items = NonNullList.withSize(this.getContainerSize(), ItemStack.EMPTY);
         ContainerHelper.loadAllItems(tag, this.items);
-        this.meat = tag.getShort("Meat");
-        this.plant = tag.getShort("Plant");
+        this.meat = tag.getShort(MEAT);
+        this.plant = tag.getShort(PLANT);
     }
 
     @Override
     protected void saveAdditional(CompoundTag tag) {
         super.saveAdditional(tag);
-        tag.putShort("Meat", (short) this.meat);
-        tag.putShort("Plant", (short) this.plant);
+        tag.putShort(MEAT, (short) this.meat);
+        tag.putShort(PLANT, (short) this.plant);
         ContainerHelper.saveAllItems(tag, this.items);
     }
 
@@ -247,5 +249,13 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
 
     public void setPlant(int plant) {
         this.plant = plant;
+    }
+
+    public int getMeat() {
+        return meat;
+    }
+
+    public int getPlant() {
+        return plant;
     }
 }

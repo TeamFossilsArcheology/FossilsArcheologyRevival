@@ -681,6 +681,8 @@
   "filter.fossil.filter_unbreakable": "Unbreakable",
   "filter.fossil.filter_vases": "Vases",
   "filter.fossil.filter_park": "Park",
+  "fossil.jade.meat": "Meat: %s",
+  "fossil.jade.plant": "Plants: %s",
   "fossil.midnightconfig.title": "Fossils and Archeology: Revival Config",
   "fossil.midnightconfig.generate": "Generation Config",
   "fossil.midnightconfig.spawn": "Spawn Config",

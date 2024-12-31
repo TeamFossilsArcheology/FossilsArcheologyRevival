@@ -35,9 +35,11 @@ dependencies {
 
     // Geckolib 3.0 template uses forge one so... I guess this is ok?
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
+    modCompileOnly("com.github.darkpred.morehitboxes:morehitboxes-common-1.18.2:${moreHitboxesVersion}")
+
+    //Optional
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${reiVersion}")
     modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${reiVersion}")
-    modCompileOnly("com.github.darkpred.morehitboxes:morehitboxes-common-1.18.2:${moreHitboxesVersion}")
 }
 
 publishing {
