@@ -227,7 +227,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         super.defineSynchedData();
         entityData.define(EATING, false);
         entityData.define(MOOD, 0);
-        entityData.define(AGE_TICK, data().adultAgeDays() * 24000);
+        entityData.define(AGE_TICK, data().adultAgeInTicks());
         entityData.define(HUNGER, 0);
         entityData.define(FLEEING, false);
         entityData.define(SITTING, false);
@@ -659,7 +659,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (isAdult()) {
             return data().maxScale() * getGenderedScale();
         }
-        float step = (data().maxScale() - data().minScale()) / ((data().adultAgeDays() * 24000) + 1);
+        float step = (data().maxScale() - data().minScale()) / ((data().adultAgeInTicks()) + 1);
         return (data().minScale() + step * getAge()) * getGenderedScale();
     }
 
@@ -676,13 +676,13 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     public void updateAbilities() {
-        float scale = (data().minScale() + (data().maxScale() - data().minScale()) / (data().adultAgeDays() * 24000) * getAge());
+        float scale = (data().minScale() + (data().maxScale() - data().minScale()) / (data().adultAgeInTicks()) * getAge());
         scale = Math.min(scale, data().maxScale());
         if (level.isClientSide) {
             animationLogic.setAttributeSpeed(Util.calculateSpeed(data(), scale));
             return;
         }
-        double percent = Math.min(getAge() / data().adultAgeDays() * 24000, 1);
+        double percent = Math.min(getAge() / data().adultAgeInTicks(), 1);
 
         double healthDifference = getAttributeValue(Attributes.MAX_HEALTH);
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseHealth(), attributes().maxHealth())));

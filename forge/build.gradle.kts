@@ -41,22 +41,26 @@ dependencies {
         parchment("org.parchmentmc.data:parchment-${minecraftVersion}:$parchmentDate@zip")
     })
 
+    //Required
     forge("net.minecraftforge:forge:${minecraftVersion}-${forgeVersion}")
-    // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury-forge:${architecturyVersion}")
 
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionForge")) { isTransitive = false }
 
-    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modImplementation("software.bernie.geckolib:geckolib-forge-1.18:${geckoLibVersion}")
     modImplementation("com.github.glitchfiend:TerraBlender-forge:${minecraftVersion}-${terraBlenderVersion}")
     modImplementation("com.github.darkpred.morehitboxes:morehitboxes-forge-${minecraftVersion}:${moreHitboxesVersion}")
-    modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
-    modCompileOnly("maven.modrinth:farmers-delight:$farmersDelightVersion")
 
     annotationProcessor("io.github.llamalad7:mixinextras-common:0.4.1")?.let { compileOnly(it) }
     include("io.github.llamalad7:mixinextras-forge:0.4.1")?.let { implementation(it) }
+
+    //Optional
+    modImplementation("maven.modrinth:jade:L2um3gq1")
+    modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
+    modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
+    modCompileOnly("maven.modrinth:farmers-delight:$farmersDelightVersion")
+
 }
 
 loom {

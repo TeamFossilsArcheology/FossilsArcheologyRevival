@@ -36,7 +36,7 @@ public class InfoTab extends DebugTab<Prehistoric> {
 
     protected InfoTab(DebugScreen debugScreen, Prehistoric prehistoric) {
         super(debugScreen, prehistoric);
-        this.maxAgeInTicks = prehistoric.data().adultAgeDays() * 24000;
+        this.maxAgeInTicks = prehistoric.data().adultAgeInTicks();
         this.gender = prehistoric.getGender();
         this.ageInTicks = prehistoric.getAge();
         this.matingCooldown = prehistoric.getMatingCooldown();
@@ -62,7 +62,7 @@ public class InfoTab extends DebugTab<Prehistoric> {
                 int j = active ? 16777215 : 10526880;
                 EntityDataLoader.Data data = entity.data();
                 DecimalFormat format = new DecimalFormat("0.00");
-                float step = (data.maxScale() - data.minScale()) / ((data.adultAgeDays() * 24000) + 1);
+                float step = (data.maxScale() - data.minScale()) / ((data.adultAgeInTicks()) + 1);
                 String min = format.format(data.minScale() + step * minValue);
                 String max = format.format(data.minScale() + step * maxValue);
                 drawString(poseStack, minecraft.font, min, x, y - 8, j | Mth.ceil(alpha * 255.0F) << 24);
@@ -71,7 +71,7 @@ public class InfoTab extends DebugTab<Prehistoric> {
         };
         addWidget(new Button(275, 30, 150, 20, new TextComponent("Scale 1"), button -> {
             EntityDataLoader.Data data = entity.data();
-            ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeDays() * 24000 + 1)) / (data.maxScale() - data.minScale()));
+            ageInTicks = (int) (((1 - data.minScale()) * (data.adultAgeInTicks() + 1)) / (data.maxScale() - data.minScale()));
             ageSlider.setValue(ageInTicks);
         }));
         addWidget(new Button(275, 55, 50, 20, new TextComponent("Tame"), button -> {

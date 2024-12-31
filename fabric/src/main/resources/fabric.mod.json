@@ -30,6 +30,9 @@
     ],
     "rei_common": [
       "com.github.teamfossilsarcheology.fossil.compat.rei.FossilREICommonPlugin"
+    ],
+    "jade": [
+      "com.github.teamfossilsarcheology.fossil.fabric.compat.jade.FossilJadePluginFabric"
     ]
   },
   "mixins": [

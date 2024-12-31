@@ -88,5 +88,9 @@ public class EntityDataLoader extends SimpleJsonResourceReloadListener {
                         maxHunger, maxPopulation, canBeRidden, breaksBlocks);
             }
         }
+
+        public int adultAgeInTicks() {
+            return adultAgeDays * 24000;
+        }
     }
 }

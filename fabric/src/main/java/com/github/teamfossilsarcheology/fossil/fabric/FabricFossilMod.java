@@ -13,6 +13,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacanth;
 import com.github.teamfossilsarcheology.fossil.fabric.capabilities.FirstHatchComponent;
 import com.github.teamfossilsarcheology.fossil.fabric.capabilities.MammalComponent;
+import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricFossilRegion;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricModBiomes;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
@@ -30,6 +31,7 @@ import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.entity.animal.Animal;
@@ -67,6 +69,11 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (joined && Platform.getEnv() == EnvType.SERVER) {
                 MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
+            }
+        });
+        ServerLifecycleEvents.SERVER_STARTING.register(minecraftServer -> {
+            if (FabricLoader.getInstance().isModLoaded("farmersdelight")) {
+                FarmersDelightCompat.registerFoodMappings();
             }
         });
         ModBlockEntities.ANALYZER.listen(blockEntityType -> {

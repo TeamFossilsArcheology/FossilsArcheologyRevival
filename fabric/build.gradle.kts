@@ -47,6 +47,7 @@ val cardinalComponentsVersion: String by project
 val energyVersion: String by project
 val midnightConfigVersion: String by project
 val geckoLibVersion: String by project
+val farmersDelightVersion: String by project
 
 dependencies {
     "mappings"(loom.layered {
@@ -88,16 +89,14 @@ dependencies {
         })
     })
 
+    //Required
     modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
     modApi("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}+${minecraftVersion}")
-    // Remove the next line if you don't want to depend on the API
     modApi("dev.architectury:architectury-fabric:${architecturyVersion}")
     modApi("teamreborn:energy:${energyVersion}")
     include("teamreborn:energy:${energyVersion}")
-    modRuntimeOnly("curse.maven:modmenu-308702:4145213")
     modImplementation("maven.modrinth:Wd844r7Q:1.18.2-02")//Structurized Reborn
-    include("maven.modrinth:Wd844r7Q:1.18.2-02")
-    modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
+    include("maven.modrinth:Wd844r7Q:1.18.2-02")//Structurized Reborn
     modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:${geckoLibVersion}")
     modImplementation("com.github.glitchfiend:TerraBlender-fabric:${minecraftVersion}-${terraBlenderVersion}")
     modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinalComponentsVersion}")
@@ -108,22 +107,30 @@ dependencies {
     include("maven.modrinth:midnightlib:${midnightConfigVersion}")
     modImplementation("com.github.darkpred.morehitboxes:morehitboxes-fabric-${minecraftVersion}:${moreHitboxesVersion}")
 
+    //Optional
+    modRuntimeOnly("curse.maven:modmenu-308702:4145213")
+    modImplementation("maven.modrinth:jade:MSJGBHIo")
+    modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
+    modCompileOnly("maven.modrinth:farmers-delight-fabric:$farmersDelightVersion")
+
     //Dev only
-    /*modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
+    /*
+    modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
     modRuntimeOnly("curse.maven:worldedit-225608:3697298")
-    modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.18.2-1.7.0")//Smooth Boot
+    modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.18.2-1.7.0")
     modRuntimeOnly("curse.maven:commandstructures-565119:3733097")
     modRuntimeOnly("maven.modrinth:betterf3:qUyRV6XT")
     modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
+    //modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
+    //modRuntimeOnly("maven.modrinth:indium:1.0.7+mc1.18.2")
+    //runtimeOnly("org.joml:joml:1.10.4")
     modRuntimeOnly("maven.modrinth:modmenu:3.2.5")
     modRuntimeOnly("curse.maven:camerautils-510234:3667404")
     modRuntimeOnly("curse.maven:replay-775651:4262559")
     //modRuntimeOnly("maven.modrinth:6pku8gW1:zbBHXeFQ")//Energized Power
-    modRuntimeOnly("curse.maven:debugutils-783010:5337485")//Debug Utils
-    modRuntimeOnly("curse.maven:debugutils-783010:5337485")//Debug Utils
-    */
+    modRuntimeOnly("curse.maven:debugutils-783010:5337485")
     //modRuntimeOnly("com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0")
-
+    */
     common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
     shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }
 }
