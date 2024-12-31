@@ -78,18 +78,16 @@
 					"parent": "chest1",
 					"pivot": [5.5, 24.3, -8],
 					"rotation": [-56.82, 18.26, -10.43],
-					"mirror": true,
 					"cubes": [
-						{"origin": [4.5, 22.8, -10], "size": [2, 5, 9], "uv": [37, 29]}
+						{"origin": [4.5, 22.8, -10], "size": [2, 5, 9], "uv": [37, 29], "mirror": true}
 					]
 				},
 				{
 					"name": "part93",
 					"parent": "upperwingL",
 					"pivot": [5.5, 24.3, -8],
-					"mirror": true,
 					"cubes": [
-						{"origin": [5, 23.3, -9.5], "size": [1, 10, 15], "uv": [45, 31]}
+						{"origin": [5, 23.3, -9.5], "size": [1, 10, 15], "uv": [45, 31], "mirror": true}
 					]
 				},
 				{
