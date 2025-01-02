@@ -2382,27 +2382,6 @@
 				},
 				"0.2976": {
 					"effect": "land"
-				},
-				"0.3571": {
-					"effect": "land"
-				},
-				"0.4167": {
-					"effect": "land"
-				},
-				"0.4762": {
-					"effect": "land"
-				},
-				"0.5357": {
-					"effect": "land"
-				},
-				"0.5952": {
-					"effect": "land"
-				},
-				"0.6548": {
-					"effect": "land"
-				},
-				"0.7143": {
-					"effect": "land"
 				}
 			}
 		},
@@ -3988,6 +3967,22 @@
 					"position": {
 						"vector": [0, 0.4, 0]
 					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [2.78, 0, 0]
+					},
+					"position": {
+						"vector": [0, 2, 3]
+					}
+				},
+				"body_hitbox": {
+					"position": {
+						"vector": [0, 10, 0]
+					}
 				}
 			}
 		},
@@ -4118,6 +4113,31 @@
 				"rightFoot": {
 					"rotation": {
 						"vector": [80, 0, 0]
+					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [2.78, 0, 0]
+					},
+					"position": {
+						"vector": [-1, 3, 3]
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [0, 0, 0]
+					},
+					"position": {
+						"vector": [-3, 9, 2]
+					},
+					"scale": {
+						"vector": [1, 0.5, 1]
 					}
 				}
 			}

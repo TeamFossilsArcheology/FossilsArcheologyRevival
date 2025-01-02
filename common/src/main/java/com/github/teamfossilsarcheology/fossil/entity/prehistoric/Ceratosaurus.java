@@ -28,7 +28,7 @@ public class Ceratosaurus extends Prehistoric {
     @Override
     public @NotNull EntityDimensions getDimensions(Pose poseIn) {
         if (poseIn == Pose.SLEEPING) {
-            return super.getDimensions(poseIn).scale(1, 0.5f);
+            return super.getDimensions(poseIn).scale(1.3f, 0.5f);
         }
         return super.getDimensions(poseIn);
     }

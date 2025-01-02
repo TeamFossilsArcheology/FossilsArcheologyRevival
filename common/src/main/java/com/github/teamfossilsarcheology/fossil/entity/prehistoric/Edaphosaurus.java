@@ -35,6 +35,11 @@ public class Edaphosaurus extends Prehistoric {
         return Items.STICK;
     }
 
+    @Override
+    public double getFluidJumpThreshold() {
+        return 0.3 * getBbHeight();
+    }
+
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {

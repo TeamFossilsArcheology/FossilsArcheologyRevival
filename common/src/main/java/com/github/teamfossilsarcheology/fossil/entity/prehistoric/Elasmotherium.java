@@ -156,6 +156,11 @@ public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
     }
 
     @Override
+    public double getFluidJumpThreshold() {
+        return 0.35 * getBbHeight();
+    }
+
+    @Override
     public float getGenderedScale() {
         return getGender() == Gender.MALE ? 1.2f : super.getGenderedScale();
     }

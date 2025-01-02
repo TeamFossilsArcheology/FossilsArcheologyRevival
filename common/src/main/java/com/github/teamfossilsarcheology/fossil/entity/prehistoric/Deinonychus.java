@@ -17,7 +17,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class Deinonychus extends PrehistoricLeaping {
     public static final String LEAP = "animation.deinonychus.leap";
-    public static final String CLIMB = "animation.deinonychus.climb";
+    public static final String RIDE = "animation.deinonychus.latched";
     public static final String LAND = "animation.deinonychus.land";
 
     public Deinonychus(EntityType<Deinonychus> entityType, Level level) {
@@ -63,7 +63,7 @@ public class Deinonychus extends PrehistoricLeaping {
 
     @Override
     public String getLeapAttackAnimationName() {
-        return CLIMB;
+        return RIDE;
     }
 
     @Nullable

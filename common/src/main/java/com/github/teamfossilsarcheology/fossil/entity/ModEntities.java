@@ -60,8 +60,8 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Kelenken>> KELENKEN = registerDino("kelenken", Kelenken::new, 1.4f, 2f);
     public static final RegistrySupplier<EntityType<Liopleurodon>> LIOPLEURODON = registerDino("liopleurodon", Liopleurodon::new, 2.25f, 0.7f);
     public static final RegistrySupplier<EntityType<Mammoth>> MAMMOTH = registerDino("mammoth", Mammoth::new, 1.2f, 2f);
-    public static final RegistrySupplier<EntityType<Megalania>> MEGALANIA = registerDino("megalania", Megalania::new, 1.7f, 1.2f);
-    public static final RegistrySupplier<EntityType<Megaloceros>> MEGALOCEROS = registerDino("megaloceros", Megaloceros::new, 1.4f, 1.7f);
+    public static final RegistrySupplier<EntityType<Megalania>> MEGALANIA = registerDino("megalania", Megalania::new, 1.6f, 0.8f);
+    public static final RegistrySupplier<EntityType<Megaloceros>> MEGALOCEROS = registerDino("megaloceros", Megaloceros::new, 1f, 1.7f);
     public static final RegistrySupplier<EntityType<Megalodon>> MEGALODON = registerDino("megalodon", Megalodon::new, 2f, 1.1f);
     public static final RegistrySupplier<EntityType<Megalograptus>> MEGALOGRAPTUS = registerDino("megalograptus", Megalograptus::new, 2, 0.75f);
     public static final RegistrySupplier<EntityType<Meganeura>> MEGANEURA = registerDino("meganeura", Meganeura::new, 3f, 1.25f);
@@ -70,7 +70,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Ornitholestes>> ORNITHOLESTES = registerDino("ornitholestes", Ornitholestes::new, 2.25f, 1.9f);
     public static final RegistrySupplier<EntityType<Pachycephalosaurus>> PACHYCEPHALOSAURUS = registerDino("pachycephalosaurus", Pachycephalosaurus::new, 1, 1.5f);
     public static final RegistrySupplier<EntityType<Pachyrhinosaurus>> PACHYRHINOSAURUS = registerDino("pachyrhinosaurus", Pachyrhinosaurus::new, 1.4f, 1.5f);
-    public static final RegistrySupplier<EntityType<Parasaurolophus>> PARASAUROLOPHUS = registerDino("parasaurolophus", Parasaurolophus::new, 1.7f, 1.7f);
+    public static final RegistrySupplier<EntityType<Parasaurolophus>> PARASAUROLOPHUS = registerDino("parasaurolophus", Parasaurolophus::new, 1.3f, 1.7f);
     public static final RegistrySupplier<EntityType<Phorusrhacos>> PHORUSRHACOS = registerDino("phorusrhacos", Phorusrhacos::new, 1.2f, 2f);
     public static final RegistrySupplier<EntityType<Platybelodon>> PLATYBELODON = registerDino("platybelodon", Platybelodon::new, 1.5f, 1.9f);
     public static final RegistrySupplier<EntityType<Plesiosaurus>> PLESIOSAURUS = registerDino("plesiosaurus", Plesiosaurus::new, 1, 1);
