@@ -1,7 +1,7 @@
 {
   "ai": {
     "activity": "BOTH",
-    "attacking": "BASIC",
+    "attacking": "NONE",
     "climbing": "NONE",
     "moving": "AQUATIC",
     "response": "WATER_CALM",
@@ -16,8 +16,8 @@
     "speedMax": 0.2,
     "armorBase": 0.0,
     "armorMax": 0.0,
-    "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1.0
+    "knockBackResistanceBase": 0.0,
+    "knockBackResistanceMax": 0.5
   },
   "adultAgeDays": 7,
   "teenAgeDays": 3,

@@ -8,8 +8,8 @@
     "taming": "FEEDING"
   },
   "attributes": {
-    "damageBase": 1.0,
-    "damageMax": 4.0,
+    "damageBase": 0.0,
+    "damageMax": 1.0,
     "healthBase": 5.0,
     "healthMax": 30.0,
     "speedBase": 0.1,

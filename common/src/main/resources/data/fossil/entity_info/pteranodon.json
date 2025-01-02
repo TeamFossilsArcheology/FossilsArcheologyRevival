@@ -8,7 +8,7 @@
     "taming": "FEEDING"
   },
   "attributes": {
-    "damageBase": 2.0,
+    "damageBase": 0.5,
     "damageMax": 4.0,
     "healthBase": 6.0,
     "healthMax": 30.0,
@@ -17,7 +17,7 @@
     "armorBase": 0.0,
     "armorMax": 0.0,
     "knockBackResistanceBase": 0.0,
-    "knockBackResistanceMax": 0.0
+    "knockBackResistanceMax": 0.25
   },
   "adultAgeDays": 9,
   "teenAgeDays": 4,

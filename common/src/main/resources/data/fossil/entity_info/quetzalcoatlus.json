@@ -9,15 +9,15 @@
   },
   "attributes": {
     "damageBase": 2.0,
-    "damageMax": 4.0,
+    "damageMax": 8.0,
     "healthBase": 6.0,
-    "healthMax": 30.0,
+    "healthMax": 60.0,
     "speedBase": 0.15,
     "speedMax": 0.2,
     "armorBase": 0.0,
-    "armorMax": 0.0,
+    "armorMax": 2.0,
     "knockBackResistanceBase": 0.0,
-    "knockBackResistanceMax": 0.0
+    "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 9,
   "teenAgeDays": 4,

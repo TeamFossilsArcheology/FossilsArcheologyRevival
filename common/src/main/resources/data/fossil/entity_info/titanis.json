@@ -16,8 +16,8 @@
     "speedMax": 0.3,
     "armorBase": 0.0,
     "armorMax": 0.0,
-    "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1.0
+    "knockBackResistanceBase": 0.0,
+    "knockBackResistanceMax": 0.75
   },
   "adultAgeDays": 8,
   "teenAgeDays": 4,

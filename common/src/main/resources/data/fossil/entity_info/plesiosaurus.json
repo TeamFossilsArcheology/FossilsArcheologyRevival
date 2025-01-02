@@ -8,16 +8,16 @@
     "taming": "IMPRINTING"
   },
   "attributes": {
-    "damageBase": 2.0,
+    "damageBase": 1.0,
     "damageMax": 6.0,
-    "healthBase": 10.0,
+    "healthBase": 8.0,
     "healthMax": 30.0,
     "speedBase": 0.2,
     "speedMax": 0.3,
     "armorBase": 0.0,
     "armorMax": 0.0,
-    "knockBackResistanceBase": 0.5,
-    "knockBackResistanceMax": 1.0
+    "knockBackResistanceBase": 0.0,
+    "knockBackResistanceMax": 0.5
   },
   "adultAgeDays": 7,
   "teenAgeDays": 3,

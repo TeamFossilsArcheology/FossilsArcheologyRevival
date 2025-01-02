@@ -10,7 +10,7 @@
   "attributes": {
     "damageBase": 1.0,
     "damageMax": 1.0,
-    "healthBase": 6.0,
+    "healthBase": 1.0,
     "healthMax": 16.0,
     "speedBase": 0.2,
     "speedMax": 0.35,

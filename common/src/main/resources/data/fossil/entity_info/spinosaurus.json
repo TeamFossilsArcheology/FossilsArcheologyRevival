@@ -14,9 +14,9 @@
     "healthMax": 86.0,
     "speedBase": 0.25,
     "speedMax": 0.35,
-    "armorBase": 10.0,
-    "armorMax": 20.0,
-    "knockBackResistanceBase": 0.5,
+    "armorBase": 2.0,
+    "armorMax": 16.0,
+    "knockBackResistanceBase": 0.0,
     "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 12,

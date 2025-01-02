@@ -1,7 +1,7 @@
 {
   "ai": {
     "activity": "DIURNAL",
-    "attacking": "BASIC",
+    "attacking": "NONE",
     "climbing": "NONE",
     "moving": "WALK",
     "response": "SCARED",
@@ -16,7 +16,7 @@
     "speedMax": 0.3,
     "armorBase": 0.0,
     "armorMax": 0.0,
-    "knockBackResistanceBase": 0.5,
+    "knockBackResistanceBase": 0.0,
     "knockBackResistanceMax": 1.0
   },
   "adultAgeDays": 10,

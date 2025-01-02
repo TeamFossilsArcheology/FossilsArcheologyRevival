@@ -11,7 +11,7 @@
     "damageBase": 1.0,
     "damageMax": 1.0,
     "healthBase": 4.0,
-    "healthMax": 12.0,
+    "healthMax": 10.0,
     "speedBase": 0.25,
     "speedMax": 0.25,
     "armorBase": 0.0,
