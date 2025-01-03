@@ -89,16 +89,14 @@ public class HuntingTargetGoal extends TargetGoal {
         if (target instanceof Player player) {
             return !player.isCreative();
         }
-        boolean canTarget = false;
-        if (dino instanceof PrehistoricSwimming swimming) {
-            canTarget = target.isInWater() || swimming.canHuntMobsOnLand();
+        boolean canTarget = true;
+        if (dino instanceof PrehistoricSwimming swimming && (!target.isInWater() && !swimming.canHuntMobsOnLand())) {
+            canTarget = false;
         }
         boolean isFood = FoodMappings.getMobFoodPoints(target, dino.data().diet()) > 0;
         boolean smallEnough = dino.getBoundingBox().getSize() * dino.getTargetScale() >= target.getBoundingBox().getSize();
         //System.out.println(dino.info().name() + " " + target.getType().getDescriptionId() + " " + isFood + " " + smallEnough);
-        return (canTarget || isFood
-                && smallEnough)
-                && !target.getClass().equals(dino.getClass());
+        return canTarget && isFood && smallEnough && !target.getClass().equals(dino.getClass());
     }
 
     /**
