@@ -24,8 +24,8 @@
   "breaksBlocks": false,
   "canBeRidden": false,
   "diet": "HERBIVORE",
-  "maxHunger": 100,
-  "maxPopulation": 10,
+  "maxHunger": 125,
+  "maxPopulation": 7,
   "eggScale": 0.5,
   "scaleBase": 0.2,
   "scaleMax": 0.7

@@ -19,8 +19,8 @@
     "knockBackResistanceBase": 0.0,
     "knockBackResistanceMax": 0.0
   },
-  "adultAgeDays": 4,
-  "teenAgeDays": 2,
+  "adultAgeDays": 5,
+  "teenAgeDays": 3,
   "breaksBlocks": false,
   "canBeRidden": false,
   "diet": "PISCIVORE",

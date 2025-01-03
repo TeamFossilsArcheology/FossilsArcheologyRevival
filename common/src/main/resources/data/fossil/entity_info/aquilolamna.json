@@ -24,8 +24,8 @@
   "breaksBlocks": false,
   "canBeRidden": false,
   "diet": "PISCIVORE",
-  "maxHunger": 125,
-  "maxPopulation": 15,
+  "maxHunger": 115,
+  "maxPopulation": 10,
   "scaleBase": 0.3,
   "scaleMax": 0.9
 }
