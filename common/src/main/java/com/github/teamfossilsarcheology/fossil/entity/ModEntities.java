@@ -90,10 +90,10 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Triceratops>> TRICERATOPS = registerDino("triceratops", Triceratops::new, 0.8f, 1);
     public static final RegistrySupplier<EntityType<Tyrannosaurus>> TYRANNOSAURUS = registerDino("tyrannosaurus", Tyrannosaurus::new, 1.1f, 1.25f);
     public static final RegistrySupplier<EntityType<Velociraptor>> VELOCIRAPTOR = registerDino("velociraptor", Velociraptor::new, 1.6f, 1.5f);
-    public static final RegistrySupplier<EntityType<Dicranurus>> DICRANURUS = registerDino("dicranurus", Dicranurus::new, 1.1f, 0.8f);
-    public static final RegistrySupplier<EntityType<Lonchodomas>> LONCHODOMAS = registerDino("lonchodomas", Lonchodomas::new, 1.1f, 0.8f);
-    public static final RegistrySupplier<EntityType<Scotoharpes>> SCOTOHARPES = registerDino("scotoharpes", Scotoharpes::new, 1.1f, 0.8f);
-    public static final RegistrySupplier<EntityType<Walliserops>> WALLISEROPS = registerDino("walliserops", Walliserops::new, 1.1f, 0.8f);
+    public static final RegistrySupplier<EntityType<Dicranurus>> DICRANURUS = registerDino("dicranurus", Dicranurus::new, 0.8f, 0.3f);
+    public static final RegistrySupplier<EntityType<Lonchodomas>> LONCHODOMAS = registerDino("lonchodomas", Lonchodomas::new, 0.8f, 0.3f);
+    public static final RegistrySupplier<EntityType<Scotoharpes>> SCOTOHARPES = registerDino("scotoharpes", Scotoharpes::new, 0.8f, 0.3f);
+    public static final RegistrySupplier<EntityType<Walliserops>> WALLISEROPS = registerDino("walliserops", Walliserops::new, 0.8f, 0.3f);
 
     public static final RegistrySupplier<EntityType<DinosaurEgg>> DINOSAUR_EGG = ENTITIES.register(
             "dinosaur_egg", () -> EntityType.Builder.of(DinosaurEgg::new, MobCategory.CREATURE).sized(0.5F, 0.6F).build("dinosaur_egg"));
