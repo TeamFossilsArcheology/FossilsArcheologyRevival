@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricMoodType;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimming;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.swimming.Trilobite;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.goal.target.TargetGoal;
@@ -52,18 +53,15 @@ public class HuntingTargetGoal extends TargetGoal {
         }
         if (dino.isHungry()) {
             target = findHuntingTarget();
-            if (target != null) {
-                if (target instanceof Player player) {
-                    return canTargetPlayer(player);
-                }
-                return true;
-            }
+            return target != null;
         }
         return false;
     }
 
     private boolean canTargetPlayer(Player player) {
-        if (dino.moodSystem.getMoodFace() == PrehistoricMoodType.HAPPY || dino.moodSystem.getMoodFace() == PrehistoricMoodType.CONTENT) {
+        if (player.isCreative()) {
+            return false;
+        } else if (dino.moodSystem.getMoodFace() == PrehistoricMoodType.HAPPY || dino.moodSystem.getMoodFace() == PrehistoricMoodType.CONTENT) {
             return false;
         } else if (dino.moodSystem.getMoodFace() == PrehistoricMoodType.ANGRY || dino.moodSystem.getMoodFace() == PrehistoricMoodType.SAD) {
             return true;
@@ -87,7 +85,10 @@ public class HuntingTargetGoal extends TargetGoal {
 
     private boolean canTarget(LivingEntity target) {
         if (target instanceof Player player) {
-            return !player.isCreative();
+            return canTargetPlayer(player);
+        }
+        if (dino instanceof Trilobite && target instanceof Trilobite) {
+            return false;
         }
         boolean canTarget = true;
         if (dino instanceof PrehistoricSwimming swimming && (!target.isInWater() && !swimming.canHuntMobsOnLand())) {
