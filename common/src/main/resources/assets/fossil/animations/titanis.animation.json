@@ -1555,6 +1555,12 @@
 					}
 				},
 				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [2.88, 0, 0]
+					},
 					"position": {
 						"0.0": {
 							"vector": [0, 0, 0]
@@ -1886,12 +1892,8 @@
 		},
 		"animation.titanis.idle": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
-				"upperwingL": {
-					"rotation": {
-						"vector": ["math.sin(query.anim_time*90+90)*-2.5", 0, 0]
-					}
-				},
 				"tail1": {
 					"rotation": {
 						"vector": [0, "math.sin(query.anim_time*90)*-0.5", 0]
@@ -1918,6 +1920,11 @@
 					}
 				},
 				"upperwingR": {
+					"rotation": {
+						"vector": ["math.sin(query.anim_time*90+90)*-2.5", 0, 0]
+					}
+				},
+				"upperwingL": {
 					"rotation": {
 						"vector": ["math.sin(query.anim_time*90+90)*-2.5", 0, 0]
 					}
@@ -2522,6 +2529,12 @@
 					}
 				},
 				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-26.09, 0, 0]
+					},
 					"position": {
 						"vector": [0, 15, -1]
 					}
@@ -2608,6 +2621,12 @@
 					}
 				},
 				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [2.88, 0, 0]
+					},
 					"position": {
 						"vector": [0, 10, 4]
 					},
@@ -2616,6 +2635,12 @@
 					}
 				},
 				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-26.09, 0, 0]
+					},
 					"position": {
 						"vector": [0, 10, -11]
 					},

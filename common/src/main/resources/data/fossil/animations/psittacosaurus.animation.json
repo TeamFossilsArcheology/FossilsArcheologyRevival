@@ -14,7 +14,8 @@
       "animation_length": 3
     },
     "animation.psittacosaurus.jump/fall": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.psittacosaurus.idle": {
       "loop": true,
@@ -25,13 +26,16 @@
       "animation_length": 0.75
     },
     "animation.psittacosaurus.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.psittacosaurus.sleep": {
-      "loop": true
+      "loop": true,
+      "animation_length": 6
     },
     "animation.psittacosaurus.swim": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.psittacosaurus.walk": {
       "loop": true,

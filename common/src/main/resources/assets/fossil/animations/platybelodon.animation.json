@@ -1172,15 +1172,8 @@
 		},
 		"animation.platybelodon.swim": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
-				"bone": {
-					"rotation": {
-						"vector": ["-2.5+math.sin(query.anim_time*180)*3", "math.sin(query.anim_time*180-30)*-5", "math.sin(query.anim_time*90+60)*-3"]
-					},
-					"position": {
-						"vector": [0, "math.sin(query.anim_time*180+30)*-0.2", "math.sin(query.anim_time*90-60)*0.5"]
-					}
-				},
 				"armL": {
 					"rotation": {
 						"vector": ["20+math.sin(query.anim_time*180)*20", 0, 0]
@@ -1215,6 +1208,14 @@
 				"upperlegL": {
 					"rotation": {
 						"vector": ["-5+math.sin(query.anim_time*180-90)*-20", 0, 0]
+					}
+				},
+				"basin": {
+					"rotation": {
+						"vector": ["-2.5+math.sin(query.anim_time*180)*3", "math.sin(query.anim_time*180-30)*-5", "math.sin(query.anim_time*90+60)*-3"]
+					},
+					"position": {
+						"vector": [0, "math.sin(query.anim_time*180+30)*-0.2", "math.sin(query.anim_time*90-60)*0.5"]
 					}
 				}
 			}

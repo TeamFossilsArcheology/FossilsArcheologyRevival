@@ -18,7 +18,8 @@
       "animation_length": 2
     },
     "animation.kelenken.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     },
     "animation.kelenken.run": {
       "loop": true,
@@ -26,10 +27,12 @@
       "blocks_per_second": 4.1
     },
     "animation.kelenken.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.kelenken.sleep": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.kelenken.speak": {
       "animation_length": 1

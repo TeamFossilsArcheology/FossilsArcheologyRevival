@@ -1260,6 +1260,7 @@
 		},
 		"animation.mammoth.swim": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
 				"bone": {
 					"rotation": {

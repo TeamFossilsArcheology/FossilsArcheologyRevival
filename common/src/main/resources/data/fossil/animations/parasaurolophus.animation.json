@@ -11,7 +11,8 @@
       "animation_length": 9.1429
     },
     "animation.parasaurolophus.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 8
     },
     "animation.parasaurolophus.run": {
       "loop": true,
@@ -19,16 +20,20 @@
       "blocks_per_second": 4.0
     },
     "animation.parasaurolophus.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 8
     },
     "animation.parasaurolophus.sleep_adult": {
-      "loop": true
+      "loop": true,
+      "animation_length": 8
     },
     "animation.parasaurolophus.sleep_baby": {
-      "loop": true
+      "loop": true,
+      "animation_length": 8
     },
     "animation.parasaurolophus.stand": {
-      "loop": true
+      "loop": true,
+      "animation_length": 8
     },
     "animation.parasaurolophus.stand_up": {
       "animation_length": 2.5
@@ -41,15 +46,6 @@
       "loop": true,
       "animation_length": 2.6667,
       "blocks_per_second": 0.8
-    },
-    "animation.parasaurolophus.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.parasaurolophus.runspeeddemo": {
-      "loop": true
-    },
-    "animation.parasaurolophus.swimspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

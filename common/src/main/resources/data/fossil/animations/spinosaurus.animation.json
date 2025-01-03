@@ -37,7 +37,8 @@
       "animation_length": 4.4167
     },
     "animation.spinosaurus.sit": {
-      "loop": true
+      "loop": true,
+      "animation_length": 12
     },
     "animation.spinosaurus.swim_floating": {
       "loop": true,

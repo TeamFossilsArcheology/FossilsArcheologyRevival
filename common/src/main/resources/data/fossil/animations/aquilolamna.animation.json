@@ -1,27 +1,27 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "idle": {
+    "animation.aquilolamna.attack": {
+      "animation_length": 1
+    },
+    "animation.aquilolamna.beached": {
+      "loop": true,
+      "animation_length": 8
+    },
+    "animation.aquilolamna.eat": {
+      "animation_length": 1
+    },
+    "animation.aquilolamna.idle": {
       "loop": true,
       "animation_length": 10
     },
-    "swim": {
-      "loop": true
+    "animation.aquilolamna.sit/sleep": {
+      "loop": true,
+      "animation_length": 4
     },
-    "attack/eat": {
-      "animation_length": 1
-    },
-    "beached": {
-      "loop": true
-    },
-    "turn_right": {
-      "loop": "hold_on_last_frame"
-    },
-    "turn_left": {
-      "loop": "hold_on_last_frame"
-    },
-    "sit/sleep": {
-      "loop": true
+    "animation.aquilolamna.swim": {
+      "loop": true,
+      "animation_length": 2
     }
   },
   "geckolib_format_version": 2

@@ -2123,10 +2123,11 @@
 		},
 		"animation.spinosaurus.sit": {
 			"loop": true,
+			"animation_length": 12,
 			"bones": {
 				"lowerBody": {
 					"rotation": {
-						"vector": ["10+math.sin(query.anim_time * 60) * 1", 0, 0]
+						"vector": ["10+math.sin(query.anim_time*60)*1", 0, 0]
 					},
 					"position": {
 						"vector": [0, -7, 0]
@@ -2134,7 +2135,7 @@
 				},
 				"tail1": {
 					"rotation": {
-						"vector": ["-5-math.sin(query.anim_time * 60) * 1", 7.43547, -0.98448]
+						"vector": ["-5-math.sin(query.anim_time*60)*1", 7.43547, -0.98448]
 					}
 				},
 				"tail2": {
@@ -2164,17 +2165,17 @@
 				},
 				"neck": {
 					"rotation": {
-						"vector": ["math.sin(query.anim_time * 60) * 5", 0, "math.sin(query.anim_time * 120) * 2"]
+						"vector": ["math.sin(query.anim_time*60)*5", 0, "math.sin(query.anim_time*120)*2"]
 					}
 				},
 				"neck2": {
 					"rotation": {
-						"vector": ["math.sin(query.anim_time * 30) * 5", 0, 0]
+						"vector": ["math.sin(query.anim_time*30)*5", 0, 0]
 					}
 				},
 				"head": {
 					"rotation": {
-						"vector": ["-math.sin(query.anim_time * 60) * 5", 0, 0]
+						"vector": ["-math.sin(query.anim_time*60)*5", 0, 0]
 					}
 				},
 				"leftUpperArm": {

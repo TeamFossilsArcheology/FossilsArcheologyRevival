@@ -1,33 +1,33 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "attack": {
+    "animation.smilodon.attack": {
       "animation_length": 0.625,
       "action_delay": [
         0.38
       ]
     },
-    "eat": {
+    "animation.smilodon.eat": {
       "loop": true,
       "animation_length": 6.4286
     },
-    "idle": {
+    "animation.smilodon.idle": {
       "loop": true,
       "animation_length": 6.6667
     },
-    "sleep": {
+    "animation.smilodon.sleep": {
       "loop": true,
       "animation_length": 5.5556
     },
-    "sprint": {
+    "animation.smilodon.sprint": {
       "loop": true,
       "animation_length": 0.5
     },
-    "swim": {
+    "animation.smilodon.swim": {
       "loop": true,
       "animation_length": 2
     },
-    "walk": {
+    "animation.smilodon.walk": {
       "loop": true,
       "animation_length": 1.6667
     }

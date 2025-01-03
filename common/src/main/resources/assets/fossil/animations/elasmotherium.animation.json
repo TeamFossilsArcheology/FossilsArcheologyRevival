@@ -634,6 +634,7 @@
 		},
 		"animation.elasmotherium.swim": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
 				"upperlegL": {
 					"rotation": {

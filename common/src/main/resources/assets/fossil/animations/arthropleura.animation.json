@@ -227,6 +227,7 @@
 		},
 		"animation.arthropleura.sleep/sit": {
 			"loop": true,
+			"animation_length": 4,
 			"bones": {
 				"body": {
 					"position": {

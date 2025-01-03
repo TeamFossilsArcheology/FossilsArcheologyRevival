@@ -29,7 +29,8 @@
       "blocks_per_second": 1.0
     },
     "animation.elasmotherium.swim": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     },
     "animation.elasmotherium.walk": {
       "loop": true,

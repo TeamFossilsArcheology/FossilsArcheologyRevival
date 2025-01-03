@@ -34,7 +34,8 @@
       "animation_length": 2
     },
     "animation.platybelodon.swim": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     },
     "animation.platybelodon.walk": {
       "loop": true,

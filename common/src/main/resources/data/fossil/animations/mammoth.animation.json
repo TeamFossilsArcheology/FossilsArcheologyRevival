@@ -37,7 +37,8 @@
       "animation_length": 2
     },
     "animation.mammoth.swim": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     },
     "animation.mammoth.walk": {
       "loop": true,

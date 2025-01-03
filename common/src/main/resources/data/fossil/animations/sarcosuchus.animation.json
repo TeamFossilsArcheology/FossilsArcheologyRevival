@@ -15,14 +15,15 @@
     },
     "animation.sarcosuchus.idle": {
       "loop": true,
-      "animation_length": 10
+      "animation_length": 6
     },
     "animation.sarcosuchus.run": {
       "loop": true,
       "animation_length": 0.6667
     },
     "animation.sarcosuchus.sleep": {
-      "loop": true
+      "loop": true,
+      "animation_length": 10
     },
     "animation.sarcosuchus.swim": {
       "loop": true,

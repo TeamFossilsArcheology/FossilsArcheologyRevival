@@ -1971,6 +1971,7 @@
 		},
 		"animation.velociraptor.jump/fall": {
 			"loop": true,
+			"animation_length": 2,
 			"bones": {
 				"bone": {
 					"rotation": {

@@ -28,7 +28,8 @@
       "animation_length": 12
     },
     "animation.velociraptor.jump/fall": {
-      "loop": true
+      "loop": true,
+      "animation_length": 2
     },
     "animation.velociraptor.land": {
       "loop": "hold_on_last_frame",

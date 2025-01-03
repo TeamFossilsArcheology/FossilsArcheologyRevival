@@ -18,7 +18,8 @@
       "animation_length": 2
     },
     "animation.titanis.idle": {
-      "loop": true
+      "loop": true,
+      "animation_length": 4
     },
     "animation.titanis.run": {
       "loop": true,

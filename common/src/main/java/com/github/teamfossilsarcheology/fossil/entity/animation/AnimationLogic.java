@@ -12,7 +12,6 @@ import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 
@@ -173,7 +172,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     }
 
     public boolean isAnimationDone(ActiveAnimationInfo activeAnimation) {
-        return !activeAnimation.loop && entity.level.getGameTime() >= activeAnimation.endTick;
+        return entity.level.getGameTime() >= activeAnimation.endTick;
     }
 
     private boolean isBlocked() {
@@ -214,43 +213,36 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return PlayState.CONTINUE;
         }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        ILoopType loopType = null;
-
-        if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
-            loopType = activeAnimation.get().loop ? LOOP : PLAY_ONCE;
-            //event.getController().setAnimationSpeed(activeAnimation.get().speed);
-        } else {
-            if (event.getAnimatable().isBeached()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.BEACHED);
-            } else if (entity.isSleeping()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
-            } else if (event.isMoving()) {
-                //TODO: AnimSpeed for amphibians on land
-                if (entity.isInWater()) {
-                    if (entity.isSprinting()) {
-                        addActiveAnimation(controller.getName(), AnimationCategory.SWIM_FAST);
-                    } else {
-                        addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
-                    }
+        if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+            return PlayState.CONTINUE;
+        }
+        if (event.getAnimatable().isBeached()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.BEACHED);
+        } else if (entity.isSleeping()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
+        } else if (event.isMoving()) {
+            //TODO: AnimSpeed for amphibians on land
+            if (entity.isInWater()) {
+                if (entity.isSprinting()) {
+                    addActiveAnimation(controller.getName(), AnimationCategory.SWIM_FAST);
                 } else {
-                    if (entity.isSprinting()) {
-                        addActiveAnimation(controller.getName(), AnimationCategory.SPRINT);
-                    } else {
-                        addActiveAnimation(controller.getName(), AnimationCategory.WALK);
-                    }
+                    addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
                 }
-            } else if (event.getAnimatable().isWeak()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);
             } else {
-                addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                if (entity.isSprinting()) {
+                    addActiveAnimation(controller.getName(), AnimationCategory.SPRINT);
+                } else {
+                    addActiveAnimation(controller.getName(), AnimationCategory.WALK);
+                }
             }
+        } else if (event.getAnimatable().isWeak()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);
+        } else {
+            addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
         }
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
-            if (loopType == null) {
-                loopType = newAnimation.get().loop ? LOOP : PLAY_ONCE;
-            }
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, loopType));
+            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
@@ -278,93 +270,96 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return true;
     }
 
+    public boolean tryForcedAnimation(AnimationEvent<?> event, ActiveAnimationInfo activeAnimation) {
+        if (activeAnimation.forced && (activeAnimation.loop || !isAnimationDone(activeAnimation))) {
+            AnimationController<?> controller = event.getController();
+            setAnimationSpeed(controller, activeAnimation.speed, event.getAnimationTick());
+            controller.transitionLengthTicks = activeAnimation.transitionLength;
+            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.animationName, activeAnimation.loop ? LOOP : PLAY_ONCE));
+            return true;
+        }
+        return false;
+    }
+
     public PlayState leapingPredicate(AnimationEvent<PrehistoricLeaping> event) {
         AnimationController<PrehistoricLeaping> controller = event.getController();
         if (tryNextAnimation(controller)) {
             return PlayState.CONTINUE;
         }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        ILoopType loopType = null;
+        if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+            return PlayState.CONTINUE;
+        }
         double animationSpeed = 1;
-        if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
-            loopType = activeAnimation.get().loop ? LOOP : PLAY_ONCE;
-            if (activeAnimation.get().animationName.contains("land")) {
-                animationSpeed = activeAnimation.get().speed;
-            }
-        } else {
-            PrehistoricLeaping entity = event.getAnimatable();
+        PrehistoricLeaping entity = event.getAnimatable();
 
-            if (entity.getLeapSystem().isAttackRiding()) {
-                setAnimationSpeed(controller, 1, event.getAnimationTick());
-                controller.transitionLengthTicks = 10;
-                controller.setAnimation(new AnimationBuilder().loop(entity.getLeapAttackAnimationName()));
-                return PlayState.CONTINUE;
-            } else if (entity.getLeapSystem().hasLeapStarted() || entity.getLeapSystem().isLeapFlying()) {
-                setAnimationSpeed(controller, 1, event.getAnimationTick());
-                if (controller.getCurrentAnimation() != null && entity.getAnimations().get(AnimationCategory.FALL).hasAnimation(controller.getCurrentAnimation().animationName) && entity.isOnGround()) {
-                    controller.transitionLengthTicks = 0;
-                    controller.setAnimation(new AnimationBuilder().playOnce(entity.getLandAnimationName()));
-                } else {
-                    controller.setAnimation(new AnimationBuilder().playOnce(entity.getLeapStartAnimationName()).loop(entity.getAnimation(AnimationCategory.FALL).animation.animationName));
-                }
-                return PlayState.CONTINUE;
-            } else if (entity.getLeapSystem().isLanding()) {
-                setAnimationSpeed(controller, 1, event.getAnimationTick());
+        if (entity.getLeapSystem().isAttackRiding()) {
+            setAnimationSpeed(controller, 1, event.getAnimationTick());
+            controller.transitionLengthTicks = 10;
+            controller.setAnimation(new AnimationBuilder().loop(entity.getLeapAttackAnimationName()));
+            return PlayState.CONTINUE;
+        } else if (entity.getLeapSystem().hasLeapStarted() || entity.getLeapSystem().isLeapFlying()) {
+            setAnimationSpeed(controller, 1, event.getAnimationTick());
+            if (controller.getCurrentAnimation() != null && entity.getAnimations().get(AnimationCategory.FALL).hasAnimation(controller.getCurrentAnimation().animationName) && entity.isOnGround()) {
                 controller.transitionLengthTicks = 0;
                 controller.setAnimation(new AnimationBuilder().playOnce(entity.getLandAnimationName()));
-                return PlayState.CONTINUE;
-            } else if (entity.isSleeping()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
-            } else if (entity.sitSystem.isSitting()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.SIT);
-            } else if (entity.isClimbing()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
-                //TODO: Quick fix. Think of something better leater
-                animationSpeed = 2;
-            } else if (event.isMoving()) {
-                if (entity.isInWater()) {
-                    addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
-                } else {
-                    Animation walkAnim = entity.nextWalkingAnimation().animation;
-                    Animation sprintAnim = entity.nextSprintingAnimation().animation;
-                    //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
-                    double scaleMult = 1 / entity.getScale();
-                    //the deltaMovement of the animation should match the mobs deltaMovement
-                    double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
-                    //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
-                    mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
-                    //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
-                    double animationTargetSpeed = getAnimationTargetSpeed(entity, walkAnim.animationName);
+            } else {
+                controller.setAnimation(new AnimationBuilder().playOnce(entity.getLeapStartAnimationName()).loop(entity.getAnimation(AnimationCategory.FALL).animation.animationName));
+            }
+            return PlayState.CONTINUE;
+        } else if (entity.getLeapSystem().isLanding()) {
+            setAnimationSpeed(controller, 1, event.getAnimationTick());
+            controller.transitionLengthTicks = 0;
+            controller.setAnimation(new AnimationBuilder().playOnce(entity.getLandAnimationName()));
+            return PlayState.CONTINUE;
+        } else if (entity.isSleeping()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
+        } else if (entity.sitSystem.isSitting()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.SIT);
+        } else if (entity.isClimbing()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
+            //TODO: Quick fix. Think of something better leater
+            animationSpeed = 2;
+        } else if (event.isMoving()) {
+            if (entity.isInWater()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
+            } else {
+                Animation walkAnim = entity.nextWalkingAnimation().animation;
+                Animation sprintAnim = entity.nextSprintingAnimation().animation;
+                //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
+                double scaleMult = 1 / entity.getScale();
+                //the deltaMovement of the animation should match the mobs deltaMovement
+                double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
+                //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+                mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
+                //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
+                double animationTargetSpeed = getAnimationTargetSpeed(entity, walkAnim.animationName);
+                if (animationTargetSpeed > 0) {
+                    animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                }
+                if (animationSpeed > 2.75 || entity.isSprinting()) {
+                    //Choose sprint
+                    animationTargetSpeed = getAnimationTargetSpeed(entity, sprintAnim.animationName);
                     if (animationTargetSpeed > 0) {
                         animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
                     }
-                    if (animationSpeed > 2.75 || entity.isSprinting()) {
-                        //Choose sprint
-                        animationTargetSpeed = getAnimationTargetSpeed(entity, sprintAnim.animationName);
-                        if (animationTargetSpeed > 0) {
-                            animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
-                        }
-                        addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
-                    } else {
-                        addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
-                    }
-                }
-            } else {
-                if (entity.isInWater()) {
-                    addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
+                    addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
                 } else {
-                    addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                    addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
                 }
+            }
+        } else {
+            if (entity.isInWater()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
+            } else {
+                addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
             }
         }
         setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
             controller.transitionLengthTicks = newAnimation.get().transitionLength;
-            if (loopType == null) {
-                loopType = newAnimation.get().loop ? LOOP : PLAY_ONCE;
-            }
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, loopType));
+            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
@@ -376,57 +371,51 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             return PlayState.CONTINUE;
         }
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        ILoopType loopType = null;
+        if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+            return PlayState.CONTINUE;
+        }
         double animationSpeed = 1;
-        if (activeAnimation.isPresent() && activeAnimation.get().forced && !isAnimationDone(controller.getName())) {
-            loopType = activeAnimation.get().loop ? LOOP : PLAY_ONCE;
-            animationSpeed = activeAnimation.get().speed;
-        } else {
-            if (event.getAnimatable().isWeak()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);
-            } else if (entity.isSleeping()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
-            } else if (event.getAnimatable().sitSystem.isSitting()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.SIT);
-            } else if (entity.isInWater()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
-            } else if (event.isMoving()) {
-                Animation walkAnim = entity.nextWalkingAnimation().animation;
-                Animation sprintAnim = entity.nextSprintingAnimation().animation;
-                //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
-                double scaleMult = 1 / event.getAnimatable().getScale();
-                //the deltaMovement of the animation should match the mobs deltaMovement
-                double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
-                //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
-                mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
-                //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
-                double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
+        if (event.getAnimatable().isWeak()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);
+        } else if (entity.isSleeping()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
+        } else if (event.getAnimatable().sitSystem.isSitting()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.SIT);
+        } else if (entity.isInWater()) {
+            addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
+        } else if (event.isMoving()) {
+            Animation walkAnim = entity.nextWalkingAnimation().animation;
+            Animation sprintAnim = entity.nextSprintingAnimation().animation;
+            //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
+            double scaleMult = 1 / event.getAnimatable().getScale();
+            //the deltaMovement of the animation should match the mobs deltaMovement
+            double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
+            //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+            mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
+            //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
+            double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
+            if (animationTargetSpeed > 0) {
+                animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+            }
+            //TODO: entity.isSprinting needs rework
+            if (animationSpeed > 2.75 || entity.isSprinting()) {
+                //Choose sprint
+                animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
                 if (animationTargetSpeed > 0) {
                     animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
                 }
-                //TODO: entity.isSprinting needs rework
-                if (animationSpeed > 2.75 || entity.isSprinting()) {
-                    //Choose sprint
-                    animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
-                    if (animationTargetSpeed > 0) {
-                        animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
-                    }
-                    addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
-                } else {
-                    addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
-                }
+                addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
             } else {
-                addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
             }
+        } else {
+            addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
         }
         setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
             controller.transitionLengthTicks = newAnimation.get().transitionLength;
-            if (loopType == null) {
-                loopType = newAnimation.get().loop ? LOOP : PLAY_ONCE;
-            }
-            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, loopType));
+            controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
         }
         return PlayState.CONTINUE;
     }
@@ -483,8 +472,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         }
 
         Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
-        if (activeAnimation.isPresent() && activeAnimation.get().forced() && !isAnimationDone(controller.getName())) {
-            controller.setAnimation(new AnimationBuilder().addAnimation(activeAnimation.get().animationName(), activeAnimation.get().loop ? LOOP : PLAY_ONCE));
+        if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
             return PlayState.CONTINUE;
         }
         double animSpeed = 1;
