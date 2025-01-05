@@ -42,6 +42,14 @@ public class Quetzalcoatlus extends PrehistoricFlying {
     }
 
     @Override
+    public void aiStep() {
+        super.aiStep();
+        if (isInWater() && !isFlying()) {
+            setFlying(true);
+        }
+    }
+
+    @Override
     public boolean hasTakeOffAnimation() {
         return false;
     }
