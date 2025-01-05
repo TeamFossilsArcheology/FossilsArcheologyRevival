@@ -491,6 +491,9 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
             } else if (entity.isInWater()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
+            } else if (!entity.isOnGround() && !event.getAnimatable().isFlying()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.FLY);
+                animSpeed = 0.5;
             } else if (event.isMoving()) {
                 Animation animation = entity.nextWalkingAnimation().animation;
                 addActiveAnimation(controller.getName(), animation, AnimationCategory.WALK, false);

@@ -18,12 +18,12 @@ import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategoryLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ClientAnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.SkeletonGeoModelLoader;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
-import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFish;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.*;
 import com.github.teamfossilsarcheology.fossil.inventory.ModMenus;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
+import com.github.teamfossilsarcheology.fossil.network.C2SRiderForceFlyingMessage;
+import com.github.teamfossilsarcheology.fossil.network.C2SVerticalFlightMessage;
+import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.mojang.blaze3d.platform.InputConstants;
 import dev.architectury.event.EventResult;
@@ -67,6 +67,14 @@ public class ClientInit {
     public static KeyMapping debugAdvanceKey;
     public static KeyMapping debugReverseKey;
     public static KeyMapping debugHelpKey;
+
+    public static KeyMapping flyUpKey = new KeyMapping("key.fossil.fly_up", InputConstants.Type.KEYSYM, InputConstants.KEY_SPACE,
+            "category.fossil.controls");
+    public static KeyMapping flyDownKey = new KeyMapping("key.fossil.fly_down", InputConstants.Type.KEYSYM, InputConstants.KEY_LALT,
+            "category.fossil.controls");
+
+    private static boolean jumpLastTick;
+    private static int jumpTriggerTime;
 
 
     public static void immediate() {
@@ -153,6 +161,8 @@ public class ClientInit {
                 PathingRenderer.renderOverlay(poseStack);
             });
         }
+        KeyMappingRegistry.register(flyUpKey);
+        KeyMappingRegistry.register(flyDownKey);
         registerBlockRenderers();
         registerEventHandlers();
         MenuScreens.register(ModMenus.FEEDER.get(), FeederScreen::new);
@@ -281,6 +291,47 @@ public class ClientInit {
         ClientGuiEvent.RENDER_HUD.register((poseStack, v) -> {
             Minecraft mc = Minecraft.getInstance();
             OverlayRenderer.renderHelmet(mc.getWindow().getGuiScaledWidth(), mc.getWindow().getGuiScaledHeight());
+        });
+        ClientTickEvent.CLIENT_POST.register(instance -> {
+            Minecraft mc = Minecraft.getInstance();
+            if (mc.isPaused()) return;
+            if (mc.player != null && mc.player.getVehicle() instanceof PrehistoricFlying flying) {
+                if (!jumpLastTick && mc.options.keyJump.isDown()) {
+                    boolean isFlying = flying.isFlying();
+                    if (jumpTriggerTime == 0) {
+                        jumpTriggerTime = 7;
+                    } else {
+                        if (!flying.isTakingOff() && !isFlying) {
+                            MessageHandler.SYNC_CHANNEL.sendToServer(new C2SRiderForceFlyingMessage(flying.getId(), true));
+                        } else if (isFlying) {
+                            MessageHandler.SYNC_CHANNEL.sendToServer(new C2SRiderForceFlyingMessage(flying.getId(), false));
+                        }
+                    }
+                }
+                if (flying.isFlying()) {
+                    if (mc.player.input.jumping) {
+                        if (!flying.isFlyingUp()) {
+                            MessageHandler.SYNC_CHANNEL.sendToServer(C2SVerticalFlightMessage.flyUp(flying.getId()));
+                        }
+                        flying.setFlyingUp(true);
+                    } else if (flyDownKey.isDown()) {
+                        if (!flying.isFlyingDown()) {
+                            MessageHandler.SYNC_CHANNEL.sendToServer(C2SVerticalFlightMessage.flyDown(flying.getId()));
+                        }
+                        flying.setFlyingDown(true);
+                    } else {
+                        if (flying.isFlyingUp() || flying.isFlyingDown()) {
+                            MessageHandler.SYNC_CHANNEL.sendToServer(C2SVerticalFlightMessage.stop(flying.getId()));
+                        }
+                        flying.setFlyingUp(false);
+                        flying.setFlyingDown(false);
+                    }
+                }
+            }
+            if (jumpTriggerTime > 0) {
+                jumpTriggerTime--;
+            }
+            jumpLastTick = mc.options.keyJump.isDown();
         });
     }
 

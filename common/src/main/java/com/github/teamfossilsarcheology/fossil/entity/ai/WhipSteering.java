@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.InteractionHand;
@@ -29,9 +30,20 @@ public class WhipSteering {
     }
 
     public void airTravel(Vec3 travelVector) {
-        dino.moveRelative(dino.getSpeed() * 0.5f, new Vec3(travelVector.x, 0, travelVector.z));
-        dino.move(MoverType.SELF, dino.getDeltaMovement());
-        dino.setDeltaMovement(dino.getDeltaMovement().scale(0.9f));
+        Vec3 move = dino.getDeltaMovement().scale(0.5);
+        PrehistoricFlying flying = (PrehistoricFlying) dino;
+        if (travelVector.z > 0) {
+            Vec3 look = dino.getLookAngle();
+            dino.setDeltaMovement(move.add(dino.getSpeed() * 1 * look.x, look.y * 0.3, dino.getSpeed() * 1 * look.z));
+            dino.move(MoverType.SELF, dino.getDeltaMovement());
+        }
+        if (flying.isFlyingUp()) {
+            dino.setDeltaMovement(move.x, 0.25 * Math.min(flying.autoPitch, 0) / -70, move.z);
+            dino.move(MoverType.SELF, dino.getDeltaMovement());
+        } else if (flying.isFlyingDown()) {
+            dino.setDeltaMovement(move.x, -0.25 * Math.max(flying.autoPitch, 0) / 70, move.z);
+            dino.move(MoverType.SELF, dino.getDeltaMovement());
+        }
     }
 
     public void slowWaterTravel(Vec3 travelVector) {

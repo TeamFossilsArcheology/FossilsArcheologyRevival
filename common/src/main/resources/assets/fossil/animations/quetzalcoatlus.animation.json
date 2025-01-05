@@ -546,34 +546,12 @@
 			"loop": true,
 			"animation_length": 1.4286,
 			"bones": {
-				"pitch_root": {
+				"root": {
 					"rotation": {
-						"0.0": {
-							"vector": [22.5, 0, 0]
-						},
-						"0.5357": {
-							"vector": [25, 0, 0]
-						},
-						"0.9524": {
-							"vector": [10, 0, 0]
-						},
-						"1.4286": {
-							"vector": [22.5, 0, 0]
-						}
+						"vector": [22.5, 0, 0]
 					},
 					"position": {
-						"0.0": {
-							"vector": [0, 0, 0]
-						},
-						"0.5357": {
-							"vector": [0, 0, 0]
-						},
-						"0.9524": {
-							"vector": [0, 0, -5]
-						},
-						"1.4286": {
-							"vector": [0, 0, 0]
-						}
+						"vector": [0, -20, 0]
 					}
 				},
 				"tail": {
@@ -954,13 +932,18 @@
 							"vector": [88.89438, 46.75064, 6.06795]
 						}
 					}
+				},
+				"pitch_root": {
+					"rotation": {
+						"vector": ["rider_rot_x", 0, "rider_rot_z"]
+					}
 				}
 			}
 		},
 		"pose": {
 			"loop": true,
 			"bones": {
-				"pitch_root": {
+				"root": {
 					"rotation": {
 						"vector": [22.5, 0, 0]
 					}
@@ -1150,7 +1133,7 @@
 			"loop": true,
 			"animation_length": 1,
 			"bones": {
-				"pitch_root": {
+				"root": {
 					"rotation": {
 						"0.0": {
 							"vector": [-10.34527, -14.76689, 2.66399]
@@ -1524,7 +1507,7 @@
 			"loop": true,
 			"animation_length": 6.6667,
 			"bones": {
-				"pitch_root": {
+				"root": {
 					"rotation": {
 						"vector": [5, 0, 0]
 					},
@@ -5456,7 +5439,7 @@
 						"vector": [0, 12.5, 0]
 					}
 				},
-				"pitch_root": {
+				"root": {
 					"rotation": {
 						"vector": [0, 0, 0]
 					},

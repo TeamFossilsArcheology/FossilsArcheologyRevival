@@ -54,7 +54,7 @@ public class ToyBall extends ToyBase {
 
     private void pushBall(float yRot) {
         setRot(yRot, getXRot());
-        push(-Mth.sin((float) (getYRot() * Math.PI / 180)) * 0.5f, 0.1, Mth.cos((float) (getYRot() * Math.PI / 180)) * 0.5f);
+        push(-Mth.sin(getYRot() * Mth.DEG_TO_RAD) * 0.5f, 0.1, Mth.cos(getYRot() * Mth.DEG_TO_RAD) * 0.5f);
     }
 
     private void pushBall(Entity entity) {

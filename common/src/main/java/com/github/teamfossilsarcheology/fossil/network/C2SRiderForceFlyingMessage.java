@@ -43,6 +43,7 @@ public class C2SRiderForceFlyingMessage {
                             mob.setFlying(true);
                         }
                     } else {
+                        mob.setFlying(true);
                         mob.setFlying(false);
                     }
                 }

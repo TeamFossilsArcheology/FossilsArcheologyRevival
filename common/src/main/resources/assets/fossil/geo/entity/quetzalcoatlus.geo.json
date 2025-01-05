@@ -6,9 +6,9 @@
 				"identifier": "geometry.quetzalcoatlus",
 				"texture_width": 165,
 				"texture_height": 75,
-				"visible_bounds_width": 5,
-				"visible_bounds_height": 4.5,
-				"visible_bounds_offset": [0, 1.75, 0]
+				"visible_bounds_width": 7,
+				"visible_bounds_height": 5,
+				"visible_bounds_offset": [0, 1.5, 0]
 			},
 			"bones": [
 				{
@@ -16,8 +16,13 @@
 					"pivot": [0, 0, 0]
 				},
 				{
-					"name": "body",
+					"name": "root",
 					"parent": "pitch_root",
+					"pivot": [0, 0, 0]
+				},
+				{
+					"name": "body",
+					"parent": "root",
 					"pivot": [0, 26, 0],
 					"rotation": [-20.87, 0, 0],
 					"cubes": [
@@ -149,7 +154,7 @@
 				},
 				{
 					"name": "wing1L",
-					"parent": "pitch_root",
+					"parent": "root",
 					"pivot": [4, 25.3, 0.6],
 					"rotation": [-22.5, -0.74, -14.91],
 					"cubes": [
@@ -176,7 +181,7 @@
 				},
 				{
 					"name": "wing1R",
-					"parent": "pitch_root",
+					"parent": "root",
 					"pivot": [-4, 25.3, 0.6],
 					"rotation": [-22.5, 5.22, 14.93],
 					"cubes": [
@@ -203,7 +208,7 @@
 				},
 				{
 					"name": "Leg1R",
-					"parent": "pitch_root",
+					"parent": "root",
 					"pivot": [-2.5, 21.275, 7.925],
 					"rotation": [-13.09516, -0.2274, 2.60008],
 					"cubes": [
@@ -230,7 +235,7 @@
 				},
 				{
 					"name": "Leg1L",
-					"parent": "pitch_root",
+					"parent": "root",
 					"pivot": [2.5, 21.3, 7.75],
 					"rotation": [-12.58, 0, -2.61],
 					"cubes": [

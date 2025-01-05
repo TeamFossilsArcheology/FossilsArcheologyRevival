@@ -13,8 +13,6 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimatio
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.FlyingSleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.SleepSystem;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
-import com.github.teamfossilsarcheology.fossil.network.C2SRiderForceFlyingMessage;
-import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.nbt.CompoundTag;
@@ -22,6 +20,7 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.util.Mth;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -50,11 +49,18 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 public abstract class PrehistoricFlying extends Prehistoric implements FlyingAnimal {
     private static final EntityDataAccessor<Boolean> FLYING = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Boolean> TAKING_OFF = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
+    private static final EntityDataAccessor<Boolean> FLYING_UP = SynchedEntityData.defineId(PrehistoricFlying.class, EntityDataSerializers.BOOLEAN);
 
     private int flyingTicks = 0;
     private int groundTicks = 0;
     private long takeOffStartTick = 0;
     private boolean usingStuckNavigation;
+    private boolean flyingDown;
+    public float prevPitch;
+    public float currentPitch;
+    public float prevYaw;
+    public float autoPitch;
+    public float currentYaw;
 
     protected PrehistoricFlying(EntityType<? extends PrehistoricFlying> entityType, Level level) {
         super(entityType, level);
@@ -96,6 +102,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         super.defineSynchedData();
         entityData.define(FLYING, false);
         entityData.define(TAKING_OFF, false);
+        entityData.define(FLYING_UP, false);
     }
 
     @Override
@@ -132,6 +139,28 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         entityData.set(FLYING, flying);
     }
 
+    /**
+     * If the mob should fly up and look up while being ridden
+     */
+    public boolean isFlyingUp() {
+        return entityData.get(FLYING_UP);
+    }
+
+    public void setFlyingUp(boolean flyingUp) {
+        entityData.set(FLYING_UP, flyingUp);
+    }
+
+    /**
+     * If the mob should fly down and look down while being ridden
+     */
+    public boolean isFlyingDown() {
+        return flyingDown;
+    }
+
+    public void setFlyingDown(boolean flyingDown) {
+        this.flyingDown = flyingDown;
+    }
+
     public void doStuckNavigation(Vec3 target) {
         switchNavigator(true);
         getNavigation().moveTo(target.x, target.y, target.z, 1);
@@ -151,14 +180,18 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     }
 
     @Override
+    public boolean canJump() {
+        return false;
+    }
+
+    @Override
     public void travel(Vec3 travelVector) {
-        LivingEntity rider = (LivingEntity) getControllingPassenger();
-        if (rider == null || !canBeControlledByRider() || !steering.trySteering(rider)) {
+        if (!canBeControlledByRider()) {
             super.travel(travelVector);
             return;
         }
+        LivingEntity rider = (LivingEntity) getControllingPassenger();
         setYRot(rider.getYRot());
-        yRotO = getYRot();
         setXRot(rider.getXRot() * 0.5f);
         setRot(getYRot(), getXRot());
         yBodyRot = getYRot();
@@ -166,14 +199,6 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         float newStrafeMovement = rider.xxa * 0.5f;
         float newForwardMovement = rider.zza;
 
-        if (playerJumpPendingScale > 0) {
-            if (!isTakingOff() && !isFlying()) {
-                MessageHandler.SYNC_CHANNEL.sendToServer(new C2SRiderForceFlyingMessage(getId(), true));
-            } else if (isFlying() && !level.isEmptyBlock(blockPosition().below())) {
-                MessageHandler.SYNC_CHANNEL.sendToServer(new C2SRiderForceFlyingMessage(getId(), false));
-            }
-            playerJumpPendingScale = 0;
-        }
         if (isControlledByLocalInstance()) {
             setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
             Vec3 newMovement = new Vec3(newStrafeMovement, travelVector.y, newForwardMovement).scale(0.5);
@@ -191,6 +216,34 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
     @Override
     protected @NotNull MovementEmission getMovementEmission() {
         return !isFlying() ? super.getMovementEmission() : MovementEmission.NONE;
+    }
+
+    @Override
+    public void tick() {
+        super.tick();
+        if (level.isClientSide) {
+            Entity rider = getControllingPassenger();
+            if (rider != null) {
+                if (isFlyingUp()) {
+                    autoPitch = Mth.approach(autoPitch, -70, -5);
+                } else if (isFlyingDown()) {
+                    autoPitch = Mth.approach(autoPitch, 70, 5);
+                } else {
+                    autoPitch = Mth.approach(autoPitch, 0, -2);
+                }
+                prevPitch = currentPitch;
+                currentPitch = Mth.clamp(rider.xRotO + autoPitch, -70, 70);
+                prevYaw = currentYaw;
+                float yawDiff = yRotO - getYRot();
+                if (yawDiff > 1) {
+                    currentYaw = Mth.approach(currentYaw, 10, 3);
+                } else if (yawDiff < -1) {
+                    currentYaw = Mth.approach(currentYaw, -10, -3);
+                } else {
+                    currentYaw = Mth.approach(currentYaw, 0, 3);
+                }
+            }
+        }
     }
 
     @Override
@@ -225,6 +278,9 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             boolean debug = false;
             if (debug || flyingTicks > getMaxExhaustion()) {
                 moveTo(Vec3.atCenterOf(findLandPosition(true)), true, true);
+            }
+            if (isFlyingUp() && (!isFlying() || !isVehicle())) {
+                setFlyingUp(false);
             }
         }
     }
