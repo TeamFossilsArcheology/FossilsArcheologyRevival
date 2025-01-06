@@ -34,16 +34,15 @@ public class WhipSteering {
         PrehistoricFlying flying = (PrehistoricFlying) dino;
         if (travelVector.z > 0) {
             Vec3 look = dino.getLookAngle();
-            dino.setDeltaMovement(move.add(dino.getSpeed() * 1 * look.x, look.y * 0.3, dino.getSpeed() * 1 * look.z));
-            dino.move(MoverType.SELF, dino.getDeltaMovement());
+            move = move.add(dino.getSpeed() * look.x, look.y * 0.3, dino.getSpeed() * look.z);
         }
         if (flying.isFlyingUp()) {
-            dino.setDeltaMovement(move.x, 0.25 * Math.min(flying.autoPitch, 0) / -70, move.z);
-            dino.move(MoverType.SELF, dino.getDeltaMovement());
+            move = new Vec3(move.x, 0.25 * Math.min(flying.autoPitch, 0) / -70, move.z);
         } else if (flying.isFlyingDown()) {
-            dino.setDeltaMovement(move.x, -0.25 * Math.max(flying.autoPitch, 0) / 70, move.z);
-            dino.move(MoverType.SELF, dino.getDeltaMovement());
+            move = new Vec3(move.x, -0.25 * Math.max(flying.autoPitch, 0) / 70, move.z);
         }
+        dino.setDeltaMovement(move);
+        dino.move(MoverType.SELF, move);
     }
 
     public void slowWaterTravel(Vec3 travelVector) {
