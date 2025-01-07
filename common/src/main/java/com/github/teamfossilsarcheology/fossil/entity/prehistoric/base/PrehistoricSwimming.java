@@ -179,6 +179,10 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 timeInWater = 0;
                 timeOnLand++;
             }
+            if (isDoingGrabAttack() && !isVehicle()) {
+                //Failsafe
+                setDoingGrabAttack(false);
+            }
         } else {
             beached = !isAmphibious() && !isInWater() && isOnGround();
             if (beached) {
