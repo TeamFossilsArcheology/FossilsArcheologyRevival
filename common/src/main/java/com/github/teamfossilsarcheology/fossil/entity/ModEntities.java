@@ -46,7 +46,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<Deinonychus>> DEINONYCHUS = registerDino("deinonychus", Deinonychus::new, 1.2f, 1.3f);
     public static final RegistrySupplier<EntityType<Dilophosaurus>> DILOPHOSAURUS = registerDino("dilophosaurus", Dilophosaurus::new, 1.25f, 1.5f);
     public static final RegistrySupplier<EntityType<Dimetrodon>> DIMETRODON = registerDino("dimetrodon", Dimetrodon::new, 1.3f, 1.3f);
-    public static final RegistrySupplier<EntityType<Dimorphodon>> DIMORPHODON = registerDino("dimorphodon", Dimorphodon::new, 1.3f, 1.3f);
+    public static final RegistrySupplier<EntityType<Dimorphodon>> DIMORPHODON = registerDino("dimorphodon", Dimorphodon::new, 1.2f, 0.8f);
     public static final RegistrySupplier<EntityType<Diplocaulus>> DIPLOCAULUS = registerDino("diplocaulus", Diplocaulus::new, 1.5f, 0.9f);
     public static final RegistrySupplier<EntityType<Diplodocus>> DIPLODOCUS = registerDino("diplodocus", Diplodocus::new, 1.85f, 1.85f);
     public static final RegistrySupplier<EntityType<Dodo>> DODO = registerDino("dodo", Dodo::new, 1, 1);
