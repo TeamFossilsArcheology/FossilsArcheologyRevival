@@ -175,7 +175,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         return entity.level.getGameTime() >= activeAnimation.endTick;
     }
 
-    private boolean isBlocked() {
+    protected boolean isBlocked() {
         if (entity instanceof PrehistoricSwimming swimming && swimming.isDoingGrabAttack()) {
             return true;
         }

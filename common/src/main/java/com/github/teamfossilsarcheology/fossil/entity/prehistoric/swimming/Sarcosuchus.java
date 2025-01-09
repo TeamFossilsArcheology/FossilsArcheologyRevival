@@ -25,7 +25,7 @@ public class Sarcosuchus extends PrehistoricSwimming {
     @Override
     protected void registerGoals() {
         super.registerGoals();
-        goalSelector.addGoal(Util.WANDER + 1, new LeaveWaterGoal(this, 1));
+        goalSelector.addGoal(Util.WANDER + 1, new LeaveWaterGoal<>(this, 1));
         targetSelector.addGoal(1, new DinoOwnerHurtByTargetGoal(this));
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));

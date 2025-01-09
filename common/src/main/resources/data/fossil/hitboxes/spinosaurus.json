@@ -11,13 +11,15 @@
 			"name": "body1",
 			"pos": [0, 0, 0],
 			"width": 16,
-			"height": 20
+			"height": 20,
+			"ref": "body1_hitbox"
 		},
 		{
 			"name": "body2",
 			"pos": [0, 9, 15],
 			"width": 14,
-			"height": 14
+			"height": 14,
+			"ref": "body2_hitbox"
 		},
 		{
 			"name": "head",
