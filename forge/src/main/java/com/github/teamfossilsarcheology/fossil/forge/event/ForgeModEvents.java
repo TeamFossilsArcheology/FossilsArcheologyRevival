@@ -16,6 +16,7 @@ import com.github.teamfossilsarcheology.fossil.forge.tests.RecipeTests;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncEntityInfoMessage;
+import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.villager.ModTrades;
 import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
 import com.github.teamfossilsarcheology.fossil.world.effect.ComfyBedEffect;
@@ -52,16 +53,20 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void registerTests(RegisterGameTestsEvent event) {
-        event.register(RecipeTests.class);
-        event.register(HopperTests.class);
+        if (Version.debugEnabled()) {
+            event.register(RecipeTests.class);
+            event.register(HopperTests.class);
+        }
     }
 
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
-        if (!ArgumentTypes.isTypeRegistered(BatchArgument.batch())) {
-            ArgumentTypes.register("batch", BatchArgument.class, new EmptyArgumentSerializer<>(BatchArgument::batch));
+        if (Version.debugEnabled()) {
+            if (!ArgumentTypes.isTypeRegistered(BatchArgument.batch())) {
+                ArgumentTypes.register("batch", BatchArgument.class, new EmptyArgumentSerializer<>(BatchArgument::batch));
+            }
+            event.getDispatcher().register(Commands.literal(FossilMod.MOD_ID).then(BatchTestCommand.register()));
         }
-        event.getDispatcher().register(Commands.literal(FossilMod.MOD_ID).then(BatchTestCommand.register()));
     }
 
     @SubscribeEvent
