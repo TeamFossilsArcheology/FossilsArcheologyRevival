@@ -20,6 +20,7 @@ public class ModItemTags {
     public static final TagKey<Item> FOSSIL_SEEDS = TagKey.create(key, FossilMod.location("fossil_seeds"));
     public static final TagKey<Item> RESTORED_SEEDS = TagKey.create(key, FossilMod.location("restored_seeds"));
     public static final TagKey<Item> FOSSIL_SAPLINGS = TagKey.create(key, FossilMod.location("fossil_saplings"));
+    public static final TagKey<Item> FOSSILS = TagKey.create(key, FossilMod.location("fossils"));
     public static final TagKey<Item> FIGURINES = TagKey.create(key, FossilMod.location("figurines"));
     public static final TagKey<Item> BIRD_EGGS = TagKey.create(key, FossilMod.location("bird_eggs"));
     public static final TagKey<Item> DINO_EGGS = TagKey.create(key, FossilMod.location("dino_eggs"));

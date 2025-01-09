@@ -45,6 +45,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         copy(ModBlockTags.FIGURINES, ModItemTags.FIGURINES);
         copy(ModBlockTags.UNBREAKABLE, ModItemTags.FILTER_UNBREAKABLE);
         //Creative Tab Filters
+        addNullable(tag(ModItemTags.FOSSILS), BIO_FOSSIL, TAR_FOSSIL, SHALE_FOSSIL, PlANT_FOSSIL);
         tag(ModItemTags.FILTER_BONES).addTags(ModItemTags.ALL_BONES);
         tag(ModItemTags.FILTER_DNA).addTags(ModItemTags.DNA, ModItemTags.EMBRYOS);
         var filterEggs = tag(ModItemTags.FILTER_EGGS).addTags(ModItemTags.DINO_EGGS, ModItemTags.FISH_EGGS, ModItemTags.BIRD_EGGS);
