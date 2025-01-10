@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
+import com.github.teamfossilsarcheology.fossil.util.Diet;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -68,9 +69,11 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal<>(this, 1, false));
         }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
-        goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
+        if (data().diet() != Diet.PASSIVE) {
+            goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
+            goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
+            goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
+        }
         goalSelector.addGoal(Util.NEEDS + 3, new WaterPlayGoal<>(this, 1));
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal<>(this, 1));

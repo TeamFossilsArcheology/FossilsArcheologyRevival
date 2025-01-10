@@ -53,6 +53,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -80,6 +81,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -195,9 +197,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             goalSelector.addGoal(Util.ATTACK + 1, new DelayedAttackGoal<>(this, 1, false));
         }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
-        goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
-        goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
+        if (data().diet() != Diet.PASSIVE) {
+            goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
+            goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
+            goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
+        }
         goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, 1));
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new DinoWanderGoal(this, 1));
@@ -563,6 +567,12 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             }
             if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) && random.nextInt(500) == 0 && deathTime == 0) {
                 heal(1);
+            }
+            if (isOnGround() && data().diet() == Diet.PASSIVE) {
+                BlockState state = level.getBlockState(blockPosition().below());
+                if (state.is(BlockTags.SAND) || state.is(BlockTags.DIRT)) {
+                    setHunger(getHunger() + 10);
+                }
             }
 
             if (Version.debugEnabled()) {

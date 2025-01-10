@@ -19,7 +19,7 @@ public enum Diet implements DinopediaInfo {
     CARNIVORE_EGG(2),
     INSECTIVORE(0),
     PISCI_CARNIVORE(3),
-    NONE(0);
+    PASSIVE(0);
     private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase());
     private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase() + ".desc");
 
@@ -54,7 +54,7 @@ public enum Diet implements DinopediaInfo {
     public static class Deserializer implements JsonDeserializer<Diet> {
         @Override
         public Diet deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-            return Diet.valueOf(GsonHelper.getAsString(json.getAsJsonObject(), "diet", Diet.NONE.name()));
+            return Diet.valueOf(GsonHelper.getAsString(json.getAsJsonObject(), "diet", Diet.PASSIVE.name()));
         }
     }
 }

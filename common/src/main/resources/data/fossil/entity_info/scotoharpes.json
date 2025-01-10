@@ -23,7 +23,7 @@
   "teenAgeDays": 3,
   "breaksBlocks": false,
   "canBeRidden": false,
-  "diet": "PISCIVORE",
+  "diet": "PASSIVE",
   "maxHunger": 50,
   "maxPopulation": 15,
   "scaleBase": 0.25,
