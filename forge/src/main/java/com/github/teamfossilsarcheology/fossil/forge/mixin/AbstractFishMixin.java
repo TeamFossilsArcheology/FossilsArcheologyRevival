@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 public abstract class AbstractFishMixin {
 
     @Redirect(method = "aiStep", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/animal/AbstractFish;onGround:Z", opcode = Opcodes.GETFIELD))
-    private boolean addMultiPartOnTrackingStart(AbstractFish abstractFish) {
+    private boolean preventNautilusBounce(AbstractFish abstractFish) {
         //Prevent bouncing
         return abstractFish instanceof Nautilus ? false : abstractFish.isOnGround();
     }

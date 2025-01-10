@@ -47,6 +47,8 @@ public class FossilConfig {
     public static final String ANIMALS_FEAR_DINOS = "animalsFearDinos";
     public static final String FLYING_TARGET_MAX_HEIGHT = "flyingTargetMaxHeight";
     public static final String ANU_BLOCK_PLACING = "anuBlockPlacing";
+    public static final String ANUBITE_HAS_COOLDOWN = "anubiteHasCooldown";
+    public static final String ANUBITE_COOLDOWN = "anubiteCooldown";
 
     public static final String CUSTOM_MAIN_MENU = "customMainMenu";
     public static final String HELMET_OVERLAYS = "helmetOverlays";

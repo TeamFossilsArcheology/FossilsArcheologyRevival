@@ -101,6 +101,10 @@ public class FossilConfigImpl extends MidnightConfig {
     public static int flyingTargetMaxHeight = 128;
     @MidnightConfig.Entry
     public static boolean anuBlockPlacing = true;
+    @MidnightConfig.Entry
+    public static boolean anubiteHasCooldown = false;
+    @MidnightConfig.Entry(min = 1200, max = 1000000000)
+    public static int anubiteCooldown = 72000;
     @MidnightConfig.Comment
     public static MidnightConfig.Comment machine;
     @MidnightConfig.Entry(min = 1, max = 100)

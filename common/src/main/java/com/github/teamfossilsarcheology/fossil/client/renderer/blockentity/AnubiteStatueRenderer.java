@@ -30,6 +30,11 @@ public class AnubiteStatueRenderer implements BlockEntityRenderer<AnubiteStatueB
         poseStack.mulPose(Vector3f.ZP.rotationDegrees(180));
         poseStack.mulPose(Vector3f.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnubiteStatueBlock.FACING).getOpposite().toYRot()));
         var c = bufferSource.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
+        if (blockEntity.getBlockState().getValue(AnubiteStatueBlock.LIT)) {
+            anubiteModel.getChild("right_arm").xRot = -90;
+        } else{
+            anubiteModel.getChild("right_arm").xRot = 0;//TODO: Raise arm based on cooldown
+        }
         anubiteModel.render(poseStack, c, packedLight, packedOverlay);
         poseStack.popPose();
     }

@@ -54,6 +54,8 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.BooleanValue ANIMALS_FEAR_DINOS;
     public static final ForgeConfigSpec.IntValue FLYING_TARGET_MAX_HEIGHT;
     public static final ForgeConfigSpec.BooleanValue ANU_BLOCK_PLACING;
+    public static final ForgeConfigSpec.BooleanValue ANUBITE_HAS_COOLDOWN;
+    public static final ForgeConfigSpec.IntValue ANUBITE_COOLDOWN;
 
     public static final ForgeConfigSpec.BooleanValue CUSTOM_MAIN_MENU;
     public static final ForgeConfigSpec.BooleanValue HELMET_OVERLAYS;
@@ -114,6 +116,8 @@ public class ForgeConfig {
         DINOS_EAT_MODDED_MOBS = boolEntry("True if Dinosaurs can eat non-vanilla mobs", FossilConfig.DINOS_EAT_MODDED_MOBS, true);
         ANIMALS_FEAR_DINOS = boolEntry("True if vanilla animals should run away from dangerous Dinosaurs", FossilConfig.ANIMALS_FEAR_DINOS, true);
         ANU_BLOCK_PLACING = boolEntry("True if Anu should be able to place blocks", FossilConfig.ANU_BLOCK_PLACING, true);
+        ANUBITE_HAS_COOLDOWN = boolEntry("True if the Anubite should be able to spawn again after some time", FossilConfig.ANUBITE_HAS_COOLDOWN, false);
+        ANUBITE_COOLDOWN = intEntry("How long it takes for the Anubite to respawn, in ticks", FossilConfig.ANUBITE_COOLDOWN, 72000, 1200, 1000000000);
         BUILDER.pop();
         BUILDER.push("Machine Config");
         CULTURE_VAT_FAIL_CHANCE = intEntry("Percentage chance that the Culture Vat will break", FossilConfig.CULTURE_VAT_FAIL_CHANCE, 10, 0, 100);

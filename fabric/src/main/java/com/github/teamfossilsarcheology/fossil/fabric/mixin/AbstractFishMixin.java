@@ -11,7 +11,7 @@ import org.spongepowered.asm.mixin.injection.At;
 public abstract class AbstractFishMixin {
 
     @ModifyExpressionValue(method = "aiStep", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/animal/AbstractFish;onGround:Z", opcode = Opcodes.GETFIELD))
-    private boolean addMultiPartOnTrackingStart(boolean original) {
+    private boolean preventNautilusBounce(boolean original) {
         //Prevent bouncing
         return !(((AbstractFish) (Object) (this)) instanceof Nautilus) && original;
     }
