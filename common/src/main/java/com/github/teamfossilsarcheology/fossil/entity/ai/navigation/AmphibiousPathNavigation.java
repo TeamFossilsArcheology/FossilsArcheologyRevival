@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.ai.navigation;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
+import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.ai.navigation.WaterBoundPathNavigation;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.Path;
@@ -60,5 +61,13 @@ public class AmphibiousPathNavigation<T extends Prehistoric & SwimmingAnimal> ex
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean isStableDestination(BlockPos pos) {
+        if (((T) mob).isAmphibious()) {
+            return !level.isEmptyBlock(pos.below());
+        }
+        return super.isStableDestination(pos);
     }
 }
