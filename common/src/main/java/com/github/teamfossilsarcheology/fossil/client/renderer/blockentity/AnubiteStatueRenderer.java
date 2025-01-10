@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AnubiteStatueBlock;
 import com.github.teamfossilsarcheology.fossil.block.entity.AnubiteStatueBlockEntity;
 import com.github.teamfossilsarcheology.fossil.client.model.AnubiteModel;
+import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Vector3f;
 import net.minecraft.client.model.geom.ModelPart;
@@ -12,6 +13,7 @@ import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderer;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class AnubiteStatueRenderer implements BlockEntityRenderer<AnubiteStatueBlockEntity> {
     public static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/anubite_statue.png");
@@ -31,9 +33,10 @@ public class AnubiteStatueRenderer implements BlockEntityRenderer<AnubiteStatueB
         poseStack.mulPose(Vector3f.YP.rotationDegrees(blockEntity.getBlockState().getValue(AnubiteStatueBlock.FACING).getOpposite().toYRot()));
         var c = bufferSource.getBuffer(RenderType.entityCutoutNoCull(TEXTURE));
         if (blockEntity.getBlockState().getValue(AnubiteStatueBlock.LIT)) {
-            anubiteModel.getChild("right_arm").xRot = -90;
+            anubiteModel.getChild("right_arm").xRot = -130 * Mth.DEG_TO_RAD;
         } else{
-            anubiteModel.getChild("right_arm").xRot = 0;//TODO: Raise arm based on cooldown
+            anubiteModel.getChild("right_arm").xRot = Mth.lerp((float) blockEntity.getCooldown() / FossilConfig.getInt(FossilConfig.ANUBITE_COOLDOWN),
+                    -130, 0) * Mth.DEG_TO_RAD;
         }
         anubiteModel.render(poseStack, c, packedLight, packedOverlay);
         poseStack.popPose();

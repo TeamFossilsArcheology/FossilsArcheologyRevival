@@ -5,6 +5,10 @@ import com.github.teamfossilsarcheology.fossil.block.custom_blocks.SarcophagusBl
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ClientGamePacketListener;
+import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.player.Player;
@@ -12,12 +16,37 @@ import net.minecraft.world.level.Explosion;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class AnubiteStatueBlockEntity extends BlockEntity {
     private int cooldown;
 
     public AnubiteStatueBlockEntity(BlockPos blockPos, BlockState blockState) {
         super(ModBlockEntities.ANUBITE_STATUE.get(), blockPos, blockState);
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        tag.putInt("Cooldown", cooldown);
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        cooldown = tag.getInt("Cooldown");
+    }
+
+    @Override
+    public @NotNull CompoundTag getUpdateTag() {
+        return saveWithoutMetadata();
+    }
+
+    @Nullable
+    @Override
+    public Packet<ClientGamePacketListener> getUpdatePacket() {
+        return ClientboundBlockEntityDataPacket.create(this);
     }
 
     public static void serverTick(Level level, BlockPos pos, BlockState state, AnubiteStatueBlockEntity blockEntity) {
@@ -30,6 +59,7 @@ public class AnubiteStatueBlockEntity extends BlockEntity {
                     ModEntities.ANUBITE.get().spawn((ServerLevel) level, null, null, spawnPos, MobSpawnType.EVENT, false, false);
                     blockEntity.cooldown = FossilConfig.getInt(FossilConfig.ANUBITE_COOLDOWN);
                     level.setBlockAndUpdate(pos, state.setValue(SarcophagusBlock.LIT, false));
+                    blockEntity.setChanged();
                 }
             }
         } else {
@@ -45,7 +75,18 @@ public class AnubiteStatueBlockEntity extends BlockEntity {
             blockEntity.cooldown--;
             if (blockEntity.cooldown == 0) {
                 level.setBlockAndUpdate(pos, state.setValue(SarcophagusBlock.LIT, true));
+                blockEntity.setChanged();
             }
         }
+    }
+
+    public static void clientTick(Level level, BlockPos pos, BlockState state, AnubiteStatueBlockEntity blockEntity) {
+        if (blockEntity.cooldown > 0) {
+            blockEntity.cooldown--;
+        }
+    }
+
+    public int getCooldown() {
+        return cooldown;
     }
 }

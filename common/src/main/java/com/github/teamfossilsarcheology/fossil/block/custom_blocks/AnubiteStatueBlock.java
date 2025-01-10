@@ -45,7 +45,8 @@ public class AnubiteStatueBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState state, BlockEntityType<T> blockEntityType) {
-        return level.isClientSide ? null : createTickerHelper(blockEntityType, ModBlockEntities.ANUBITE_STATUE.get(), AnubiteStatueBlockEntity::serverTick);
+        return createTickerHelper(blockEntityType, ModBlockEntities.ANUBITE_STATUE.get(),
+                level.isClientSide ? AnubiteStatueBlockEntity::clientTick : AnubiteStatueBlockEntity::serverTick);
     }
 
     @Nullable

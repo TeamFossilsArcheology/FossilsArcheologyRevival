@@ -75,9 +75,7 @@ public class AnuBarrierBlockEntity extends BlockEntity {
 
     @Override
     public @NotNull CompoundTag getUpdateTag() {
-        CompoundTag tag = super.getUpdateTag();
-        saveAdditional(tag);
-        return tag;
+        return saveWithoutMetadata();
     }
 
     @Nullable
