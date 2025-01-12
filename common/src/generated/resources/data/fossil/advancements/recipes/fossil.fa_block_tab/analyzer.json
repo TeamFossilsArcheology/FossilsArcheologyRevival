@@ -6,14 +6,12 @@
     ]
   },
   "criteria": {
-    "has_bio_fossil": {
+    "has_fossil": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
-            "items": [
-              "fossil:fossil_bio"
-            ]
+            "tag": "fossil:fossils"
           }
         ]
       }
@@ -27,7 +25,7 @@
   },
   "requirements": [
     [
-      "has_bio_fossil",
+      "has_fossil",
       "has_the_recipe"
     ]
   ]

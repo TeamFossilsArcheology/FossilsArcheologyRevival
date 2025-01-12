@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:fossil_bio",
+    "fossil:fossil_tar",
+    "fossil:fossil_shale",
+    "fossil:fossil_plant"
+  ]
+}
