@@ -1,0 +1,41 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "fossil:fossil_dripstone"
+    }
+  ],
+  "results": [
+    {
+      "item": "fossil:fossil_bio",
+      "chance": 0.2
+    },
+    {
+      "item": "fossil:fossil_plant",
+      "chance": 0.1
+    },
+    {
+      "item": "fossil:relic_scrap",
+      "chance": 0.1
+    },
+    {
+      "item": "minecraft:bone",
+      "chance": 0.35
+    },
+    {
+      "item": "fossil:skull",
+      "chance": 0.125
+    },
+    {
+      "item": "minecraft:dripstone_block",
+      "chance": 0.125
+    }
+  ],
+  "processingTime": 250,
+  "conditions": [
+    {
+      "modid": "create",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

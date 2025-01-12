@@ -1,0 +1,41 @@
+{
+  "type": "create:crushing",
+  "ingredients": [
+    {
+      "item": "fossil:fossil_tuff"
+    }
+  ],
+  "results": [
+    {
+      "item": "fossil:fossil_shale",
+      "chance": 0.25
+    },
+    {
+      "item": "fossil:fossil_plant",
+      "chance": 0.05
+    },
+    {
+      "item": "fossil:relic_scrap",
+      "chance": 0.05
+    },
+    {
+      "item": "minecraft:bone",
+      "chance": 0.35
+    },
+    {
+      "item": "fossil:skull",
+      "chance": 0.125
+    },
+    {
+      "item": "minecraft:tuff",
+      "chance": 0.175
+    }
+  ],
+  "processingTime": 250,
+  "conditions": [
+    {
+      "modid": "create",
+      "type": "forge:mod_loaded"
+    }
+  ]
+}

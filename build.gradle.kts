@@ -72,6 +72,10 @@ allprojects {
                 includeGroup("maven.modrinth")
             }
         }
+        maven {
+            name = "tterrag maven"
+            setUrl("https://maven.tterrag.com/")
+        }
         maven(url = "https://maven.ladysnake.org/releases")
         maven(url = "https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
         maven(url = "https://dl.cloudsmith.io/public/darkpred-mods/more-hitboxes/maven/")

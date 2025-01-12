@@ -35,6 +35,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
@@ -441,6 +442,9 @@ public class ModRecipeProvider extends RecipeProvider {
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
                 cultureVat(info.getFossilizedPlantSeedItem(), info.getPlantSeedItem(), consumer);
             }
+        }
+        if (ModList.get().isLoaded("create")) {
+            FossilCreateRecipeProvider.buildCraftingRecipes(consumer);
         }
     }
 

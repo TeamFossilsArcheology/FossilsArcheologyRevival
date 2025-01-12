@@ -34,6 +34,9 @@ val terraBlenderVersion: String by rootProject
 val geckoLibVersion: String by project
 val carryOnVersion: String by project
 val farmersDelightVersion: String by project
+val createVersion: String by project
+val flywheelVersion: String by project
+val registrateVersion: String by project
 
 dependencies {
     "mappings"(loom.layered {
@@ -60,6 +63,10 @@ dependencies {
     modImplementation("me.shedaniel:RoughlyEnoughItems-forge:${reiVersion}")
     modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
     modCompileOnly("maven.modrinth:farmers-delight:$farmersDelightVersion")
+
+    modImplementation("com.simibubi.create:create-${minecraftVersion}:${createVersion}:slim") { isTransitive = false }
+    modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraftVersion}:${flywheelVersion}")
+    modImplementation("com.tterrag.registrate:Registrate:${registrateVersion}")
 
 }
 

@@ -87,6 +87,7 @@ public class ModBlockLootTables extends BlockLoot {
                     .when(ExplosionCondition.survivesExplosion())).setParamSet(LootContextParamSets.BLOCK));
         }
         //lol this is so bad but I like it
+        //All adds up to ~1095
         var defaultList = scarab(1).broken(5).skullBlock(34).mobFossil(BIO_FOSSIL,275).plant(110).relic(200).bone(440)
                 .group(6, 6, 3, 3, 3, 3, 3, 3);
         var archList1 = scarab(6).broken(9).skullBlock(64).mobFossil(BIO_FOSSIL,225).plant(85).relic(475).bone(200)
