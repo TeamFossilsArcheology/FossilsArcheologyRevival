@@ -811,9 +811,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             return;
         }
         if (tickCount % 120 == 0 || age > this.age + 120 || age < this.age - 120) {
+            this.age = age;
             entityData.set(AGE_TICK, age);
+        } else {
+            this.age = age;
         }
-        this.age = age;
     }
 
     public void grow(int ageInDays) {
