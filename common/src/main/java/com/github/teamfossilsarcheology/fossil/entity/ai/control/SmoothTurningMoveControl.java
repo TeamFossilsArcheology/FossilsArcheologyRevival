@@ -48,9 +48,25 @@ public class SmoothTurningMoveControl extends MoveControl {
             BlockPos blockPos = mob.blockPosition();
             BlockState blockState = mob.level.getBlockState(blockPos);
             VoxelShape voxelShape = blockState.getCollisionShape(mob.level, blockPos);
-            //horizontal speed * time until jump done
-            double jumpDistance = Math.max(0.5, Util.attributeToSpeed(mob.getSpeed()) * 0.4);
-            if (y > mob.maxUpStep && (horizontalDist < jumpDistance || mob.getDeltaMovement().horizontalDistance() < 2.5E-7) || !voxelShape.isEmpty() && mob.getY() < voxelShape.max(Direction.Axis.Y) + blockPos.getY() && !blockState.is(BlockTags.DOORS) && !blockState.is(BlockTags.FENCES)) {
+            boolean jump = false;
+            if (y > mob.maxUpStep) {
+                if (mob.getDeltaMovement().horizontalDistance() < Mth.EPSILON) {
+                    jump = true;
+                } else {
+                    //jumpDistance: horizontal speed * time until jump done
+                    double jumpDistance = Math.max(0.5, Util.attributeToSpeed(mob.getSpeed()) * 0.4);
+                    if (!mob.level.isEmptyBlock(new BlockPos(wantedX, wantedY - 1, wantedZ))) {//TODO: More tests
+                        jumpDistance += 1.3;
+                    }
+                    if (horizontalDist < jumpDistance) {
+                        jump = true;
+                    }
+                }
+            }
+            if (!jump && !voxelShape.isEmpty() && mob.getY() < voxelShape.max(Direction.Axis.Y) + blockPos.getY() && !blockState.is(BlockTags.DOORS) && !blockState.is(BlockTags.FENCES)) {
+                jump = true;
+            }
+            if (jump) {
                 mob.getJumpControl().jump();
                 operation = Operation.JUMPING;
             }
