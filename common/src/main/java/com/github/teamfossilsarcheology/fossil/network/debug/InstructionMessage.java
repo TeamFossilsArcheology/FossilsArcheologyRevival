@@ -44,7 +44,7 @@ public class InstructionMessage {
                             InstructionTab.INSTRUCTIONS.put(entity.getUUID(), new InstructionTab.Pair(entityId, instructions));
                         }
                     } else {
-                        prehistoric.getInstructionSystem().start(instructions, loop, true);
+                        prehistoric.getInstructionSystem().start(instructions, loop, !instructions.isEmpty());
                     }
                 }
             }
