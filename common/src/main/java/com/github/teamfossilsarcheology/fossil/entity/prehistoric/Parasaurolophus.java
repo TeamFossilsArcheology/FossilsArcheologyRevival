@@ -2,6 +2,9 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -15,13 +18,28 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.Animation;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+
+import java.util.Optional;
+
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
 
 public class Parasaurolophus extends Prehistoric {
     private static final EntityDataAccessor<Boolean> STANDING = SynchedEntityData.defineId(Parasaurolophus.class, EntityDataSerializers.BOOLEAN);
+    private final ParaAnimationLogic animationLogic = new ParaAnimationLogic(this);
+    private static final String STAND = "animation.parasaurolophus.stand";
+    private static final String STAND_UP = "animation.parasaurolophus.stand_up";
 
     private int ticksStanding;
 
@@ -33,6 +51,14 @@ public class Parasaurolophus extends Prehistoric {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
+    }
+
+    @Override
+    protected void updateControlFlags() {
+        boolean bl = !isSleeping();
+        goalSelector.setControlFlag(Goal.Flag.MOVE, bl && !sitSystem.isSitting() && !isStanding());
+        goalSelector.setControlFlag(Goal.Flag.JUMP, bl && !sitSystem.isSitting() && !isStanding());
+        goalSelector.setControlFlag(Goal.Flag.LOOK, bl);
     }
 
     @Override
@@ -143,5 +169,78 @@ public class Parasaurolophus extends Prehistoric {
     @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.PARASAUROLOPHUS_DEATH.get();
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        var controller = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, animationLogic::paraPredicate);
+        registerEatingListeners(controller);
+        data.addAnimationController(controller);
+        data.addAnimationController(new PausableAnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
+    }
+
+    static class ParaAnimationLogic extends AnimationLogic<Prehistoric> {
+
+        public ParaAnimationLogic(Parasaurolophus entity) {
+            super(entity);
+        }
+
+        public PlayState paraPredicate(AnimationEvent<Parasaurolophus> event) {
+            if (isBlocked()) return PlayState.STOP;
+            AnimationController<Parasaurolophus> controller = event.getController();
+            if (tryNextAnimation(controller)) {
+                return PlayState.CONTINUE;
+            }
+            Optional<ActiveAnimationInfo> activeAnimation = getActiveAnimation(controller.getName());
+            if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
+                return PlayState.CONTINUE;
+            }
+            if (event.getAnimatable().isStanding()) {
+                controller.setAnimation(new AnimationBuilder().playOnce(STAND_UP).loop(STAND));
+                return PlayState.CONTINUE;
+            }
+            double animationSpeed = 1;
+            if (entity.isSleeping()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.SLEEP);
+            } else if (event.getAnimatable().sitSystem.isSitting()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.SIT);
+            } else if (entity.isInWater()) {
+                addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
+            } else if (event.isMoving()) {
+                Animation walkAnim = entity.nextWalkingAnimation().animation;
+                Animation sprintAnim = entity.nextSprintingAnimation().animation;
+                //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
+                double scaleMult = 1 / event.getAnimatable().getScale();
+                //the deltaMovement of the animation should match the mobs deltaMovement
+                double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
+                //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+                mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
+                //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
+                double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
+                if (animationTargetSpeed > 0) {
+                    animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                }
+                if (animationSpeed > 2.75 || entity.isSprinting()) {
+                    //Choose sprint
+                    animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
+                    if (animationTargetSpeed > 0) {
+                        animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                    }
+                    addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
+                } else {
+                    addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
+                }
+            } else {
+                addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+            }
+            setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
+            Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
+            if (newAnimation.isPresent()) {
+                controller.transitionLengthTicks = newAnimation.get().transitionLength();
+                controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName(), newAnimation.get().loop() ? LOOP : PLAY_ONCE));
+            }
+            return PlayState.CONTINUE;
+        }
     }
 }

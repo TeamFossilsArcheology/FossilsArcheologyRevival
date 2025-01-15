@@ -34,7 +34,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
     /**
      * {@link net.minecraft.world.entity.ai.attributes.Attributes#MOVEMENT_SPEED} calculated for the animation speed calculation
      */
-    private double attributeSpeed;
+    protected double attributeSpeed;
 
     public AnimationLogic(T entity) {
         this.entity = entity;
