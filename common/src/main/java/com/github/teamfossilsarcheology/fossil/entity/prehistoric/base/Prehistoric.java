@@ -688,11 +688,12 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public void updateAbilities() {
         float scale = (data().minScale() + (data().maxScale() - data().minScale()) / (data().adultAgeInTicks()) * getAge());
         scale = Math.min(scale, data().maxScale());
+        double percent = Math.min(getAge() / data().adultAgeInTicks(), 1);
+        getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, attributes().baseKnockBackResistance(), attributes().maxKnockBackResistance()));
         if (level.isClientSide) {
             animationLogic.setAttributeSpeed(Util.calculateSpeed(data(), scale));
             return;
         }
-        double percent = Math.min(getAge() / data().adultAgeInTicks(), 1);
 
         double healthDifference = getAttributeValue(Attributes.MAX_HEALTH);
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseHealth(), attributes().maxHealth())));
@@ -701,7 +702,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseDamage(), attributes().maxDamage())));
         getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Util.calculateSpeed(data(), scale));
         getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, attributes().baseArmor(), attributes().maxArmor()));
-        getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, attributes().baseKnockBackResistance(), attributes().maxKnockBackResistance()));
     }
 
     public void breakBlock(float maxHardness) {
@@ -1251,6 +1251,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public void handleEntityEvent(byte id) {
+        float prev = animationSpeed;
         if (id == WHEAT_SEEDS_PARTICLES) {
             Util.spawnItemParticles(this, Items.WHEAT_SEEDS, 3);
         } else if (id == BREAD_PARTICLES) {
@@ -1264,6 +1265,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             Util.spawnParticles(this, ParticleTypes.HAPPY_VILLAGER, getAgeInDays());
         } else {
             super.handleEntityEvent(id);
+        }
+        if (prev != animationSpeed && getAttributeValue(Attributes.KNOCKBACK_RESISTANCE) >= 1) {
+            animationSpeed = 0;
         }
     }
 
