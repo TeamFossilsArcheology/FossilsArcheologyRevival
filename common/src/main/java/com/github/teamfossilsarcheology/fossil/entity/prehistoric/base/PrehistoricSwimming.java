@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveControl;
+import com.github.teamfossilsarcheology.fossil.entity.ai.control.PrehistoricLookControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
@@ -19,7 +20,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.control.LookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
@@ -122,7 +122,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     protected void switchNavigator(boolean onLand) {
         if (onLand) {
             moveControl = new SmoothTurningMoveControl(this);
-            lookControl = new LookControl(this);
+            lookControl = new PrehistoricLookControl(this);
             isLandNavigator = true;
         } else {
             moveControl = new CustomSwimMoveControl<>(this);

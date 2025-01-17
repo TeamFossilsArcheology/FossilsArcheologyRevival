@@ -128,7 +128,7 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
         double dist = mob.distanceToSqr(target);
         if (canUpdateMovement()) {
             ticksUntilNextPathRecalculation = Math.max(ticksUntilNextPathRecalculation - 1, 0);
-            mob.getLookControl().setLookAt(target, 60, 30);
+            mob.lookAt(target, 10, 30);
         } else {
             ticksUntilNextPathRecalculation = 15;
         }
