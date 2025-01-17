@@ -5,8 +5,10 @@ import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncActiveAnimationMessage;
 import com.github.teamfossilsarcheology.fossil.network.debug.S2CCancelAnimationMessage;
+import it.unimi.dsi.fastutil.objects.Object2FloatOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import software.bernie.geckolib3.core.PlayState;
@@ -30,6 +32,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      * Any animation in here will replace the active animation on the next tick
      */
     private final Map<String, ActiveAnimationInfo> nextAnimations = new Object2ObjectOpenHashMap<>();
+    private final Map<String, Float> prevAnimationSpeeds = new Object2FloatOpenHashMap<>();
     protected final T entity;
     /**
      * {@link net.minecraft.world.entity.ai.attributes.Attributes#MOVEMENT_SPEED} calculated for the animation speed calculation
@@ -337,15 +340,24 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 if (animationTargetSpeed > 0) {
                     animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
                 }
-                if (animationSpeed > 2.75 || entity.isSprinting()) {
-                    //Choose sprint
-                    animationTargetSpeed = getAnimationTargetSpeed(entity, sprintAnim.animationName);
-                    if (animationTargetSpeed > 0) {
-                        animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
-                    }
-                    addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
+                if (animationSpeed <= 0.1) {
+                    //The transition to idle works better than slowing down the animation
+                    addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
                 } else {
-                    addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
+                    if (animationSpeed < prevAnimationSpeeds.getOrDefault(controller.getName(), 0f) - Mth.EPSILON) {
+                        //Add some inertia to prevent sudden animation stops
+                        animationSpeed = Mth.approach(prevAnimationSpeeds.get(controller.getName()), (float)animationSpeed, 0.05f);
+                    }
+                    if (animationSpeed > 2.75 || entity.isSprinting()) {
+                        //Choose sprint
+                        animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
+                        if (animationTargetSpeed > 0) {
+                            animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                        }
+                        addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
+                    } else {
+                        addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
+                    }
                 }
             }
         } else {
@@ -384,6 +396,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         } else if (entity.isInWater()) {
             addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
         } else if (event.isMoving()) {
+            //TODO: Refactor. Used in multiple places.
             Animation walkAnim = entity.nextWalkingAnimation().animation;
             Animation sprintAnim = entity.nextSprintingAnimation().animation;
             //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
@@ -397,20 +410,30 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             if (animationTargetSpeed > 0) {
                 animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
             }
-            //TODO: entity.isSprinting needs rework
-            if (animationSpeed > 2.75 || entity.isSprinting()) {
-                //Choose sprint
-                animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
-                if (animationTargetSpeed > 0) {
-                    animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
-                }
-                addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
+            if (animationSpeed <= 0.1) {
+                //The transition to idle works better than slowing down the animation
+                addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
             } else {
-                addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
+                if (animationSpeed < prevAnimationSpeeds.getOrDefault(controller.getName(), 0f) - Mth.EPSILON) {
+                    //Add some inertia to prevent sudden animation stops
+                    animationSpeed = Mth.approach(prevAnimationSpeeds.get(controller.getName()), (float)animationSpeed, 0.05f);
+                }
+                //TODO: entity.isSprinting needs rework
+                if (animationSpeed > 2.75 || entity.isSprinting()) {
+                    //Choose sprint
+                    animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
+                    if (animationTargetSpeed > 0) {
+                        animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                    }
+                    addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
+                } else {
+                    addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
+                }
             }
         } else {
             addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
         }
+        prevAnimationSpeeds.put(controller.getName(), (float) animationSpeed);
         setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
@@ -496,7 +519,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 animSpeed = 0.5;
             } else if (event.isMoving()) {
                 Animation animation = entity.nextWalkingAnimation().animation;
-                addActiveAnimation(controller.getName(), animation, AnimationCategory.WALK, false);
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                 double scaleMult = 1 / event.getAnimatable().getScale();
                 //the deltaMovement of the animation should match the mobs deltaMovement
@@ -508,6 +530,15 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), animation.animationName);
                 if (animationTargetSpeed > 0) {
                     animSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                }
+                if (animSpeed <= 0.1) {
+                    addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                } else {
+                    if (animSpeed < prevAnimationSpeeds.getOrDefault(controller.getName(), 0f) - Mth.EPSILON) {
+                        //Add some inertia to prevent sudden animation stops
+                        animSpeed = Mth.approach(prevAnimationSpeeds.get(controller.getName()), (float)animSpeed, 0.05f);
+                    }
+                    addActiveAnimation(controller.getName(), animation, AnimationCategory.WALK, false);
                 }
             } else {
                 addActiveAnimation(controller.getName(), AnimationCategory.IDLE);

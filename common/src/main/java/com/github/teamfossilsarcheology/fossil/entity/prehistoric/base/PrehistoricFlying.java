@@ -225,11 +225,11 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             Entity rider = getControllingPassenger();
             if (rider != null) {
                 if (isFlyingUp()) {
-                    autoPitch = Mth.approach(autoPitch, -70, -5);
+                    autoPitch = Mth.approach(autoPitch, -70, 5);
                 } else if (isFlyingDown()) {
                     autoPitch = Mth.approach(autoPitch, 70, 5);
                 } else {
-                    autoPitch = Mth.approach(autoPitch, 0, -2);
+                    autoPitch = Mth.approach(autoPitch, 0, 2);
                 }
                 prevPitch = currentPitch;
                 currentPitch = Mth.clamp(rider.xRotO + autoPitch, -70, 70);
@@ -238,7 +238,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
                 if (yawDiff > 1) {
                     currentYaw = Mth.approach(currentYaw, 10, 3);
                 } else if (yawDiff < -1) {
-                    currentYaw = Mth.approach(currentYaw, -10, -3);
+                    currentYaw = Mth.approach(currentYaw, -10, 3);
                 } else {
                     currentYaw = Mth.approach(currentYaw, 0, 3);
                 }
