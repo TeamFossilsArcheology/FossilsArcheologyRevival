@@ -7,6 +7,7 @@ import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CActivateAttackBoxesMessage;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -126,43 +127,44 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
             return;
         }
         double dist = mob.distanceToSqr(target);
-        ticksUntilNextPathRecalculation = Math.max(ticksUntilNextPathRecalculation - 1, 0);
         if (canUpdateMovement()) {
-            mob.getLookControl().setLookAt(target, 30, 30);
+            ticksUntilNextPathRecalculation = Math.max(ticksUntilNextPathRecalculation - 1, 0);
+            mob.getLookControl().setLookAt(target, 60, 30);
         } else {
             ticksUntilNextPathRecalculation = 15;
         }
-        if (mob.level.getGameTime() <= attackEndTick && doingHeavyAttack) {
-            //Prevent movement
-        } else if ((followingTargetEvenIfNotSeen || mob.getSensing().hasLineOfSight(target)) && ticksUntilNextPathRecalculation <= 0 && (pathedTargetX == 0.0 && pathedTargetY == 0.0 && pathedTargetZ == 0.0 || target.distanceToSqr(pathedTargetX, pathedTargetY, pathedTargetZ) >= 1.0 || mob.getRandom().nextFloat() < 0.05f)) {
-            pathedTargetX = target.getX();
-            pathedTargetY = target.getY();
-            pathedTargetZ = target.getZ();
-            ticksUntilNextPathRecalculation = 4 + mob.getRandom().nextInt(7);
-            if (dist > 1024) {
-                ticksUntilNextPathRecalculation += 10;
-            } else if (dist > 256) {
-                ticksUntilNextPathRecalculation += 5;
+
+        boolean inRange = isInRange(target);
+        if (!inRange || target.getDeltaMovement().length() > Mth.EPSILON && target.getDeltaMovement().dot(target.position().subtract(mob.position())) > 0) {
+            //Not in range or moving away from mob
+            if (ticksUntilNextPathRecalculation <= 0 && (followingTargetEvenIfNotSeen || mob.getSensing().hasLineOfSight(target))) {
+                ticksUntilNextPathRecalculation = 4 + mob.getRandom().nextInt(7);
+                if (dist > 1024) {
+                    ticksUntilNextPathRecalculation += 10;
+                } else if (dist > 256) {
+                    ticksUntilNextPathRecalculation += 5;
+                }
+                if (!mob.getNavigation().moveTo(target, speedModifier)) {
+                    ticksUntilNextPathRecalculation += 15;
+                }
+                ticksUntilNextPathRecalculation = adjustedTickDelay(ticksUntilNextPathRecalculation);
             }
-            if (!mob.getNavigation().moveTo(target, speedModifier)) {
-                ticksUntilNextPathRecalculation += 15;
-            }
-            ticksUntilNextPathRecalculation = adjustedTickDelay(ticksUntilNextPathRecalculation);
         }
-        checkAndPerformAttack(target);
+
+        checkAndPerformAttack(target, inRange);
     }
 
     protected boolean canUpdateMovement() {
-        return true;
+        return !doingHeavyAttack || mob.level.getGameTime() > attackEndTick;
     }
 
     protected boolean isInRange(Entity attackTarget) {
         return Util.canReachPrey(mob, attackTarget);
     }
 
-    protected void checkAndPerformAttack(LivingEntity enemy) {
+    protected void checkAndPerformAttack(LivingEntity enemy, boolean inRange) {
         long currentTime = mob.level.getGameTime();
-        if (isInRange(enemy)) {
+        if (inRange) {
             if (currentTime > attackEndTick + 20) {
                 ServerAnimationInfo animationInfo = mob.startAttack();
                 if (animationInfo.usesAttackBox && enemy instanceof ServerPlayer player) {

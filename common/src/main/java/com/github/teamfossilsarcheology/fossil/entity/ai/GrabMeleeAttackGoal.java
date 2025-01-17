@@ -56,7 +56,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal<PrehistoricSwimming> 
     }
 
     @Override
-    protected void checkAndPerformAttack(LivingEntity enemy) {
+    protected void checkAndPerformAttack(LivingEntity enemy, boolean inRange) {
         long currentTime = mob.level.getGameTime();
         if (attackType == GRAB) {
             for (Entity passenger : mob.getPassengers()) {
@@ -71,13 +71,13 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal<PrehistoricSwimming> 
                 }
             }
         } else if (attackType == ATTACK) {
-            if (isInRange(enemy) && attackDamageTick > 0 && currentTime >= attackDamageTick) {
+            if (inRange && attackDamageTick > 0 && currentTime >= attackDamageTick) {
                 mob.attackTarget(enemy);
                 mob.destroyBoat(enemy);
                 attackDamageTick = -1;
                 attackType = -1;
             }
-        } else if (currentTime > attackEndTick + 20 && isInRange(enemy)) {
+        } else if (currentTime > attackEndTick + 20 && inRange) {
             //Is target smaller than 1 block (if prehistoric is adult)
             boolean tooBig = !Util.isEntitySmallerThan(enemy, mob.getScale() / mob.data().maxScale());
             if (tooBig || mob.getRandom().nextInt(5) > 0) {

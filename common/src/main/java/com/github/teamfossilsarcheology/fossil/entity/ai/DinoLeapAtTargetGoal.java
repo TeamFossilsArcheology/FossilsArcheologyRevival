@@ -3,7 +3,6 @@ package com.github.teamfossilsarcheology.fossil.entity.ai;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.LeapSystem;
-import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -47,16 +46,16 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
         return attackType == ATTACK || attackType == -1;
     }
 
-    protected void checkAndPerformAttack(LivingEntity enemy) {
+    protected void checkAndPerformAttack(LivingEntity enemy, boolean inRange) {
         long currentTime = mob.level.getGameTime();
         if (attackType == ATTACK) {
-            if (Util.canReachPrey(mob, enemy) && attackDamageTick > 0 && currentTime >= attackDamageTick) {
+            if (inRange && attackDamageTick > 0 && currentTime >= attackDamageTick) {
                 mob.attackTarget(enemy);
                 attackDamageTick = -1;
                 attackType = -1;
             }
         } else if (currentTime > attackEndTick + 20) {
-            if (mob.getRandom().nextInt(5) > 0 && isInRange(enemy)) {
+            if (mob.getRandom().nextInt(5) > 0 && inRange) {
                 attackType = ATTACK;
                 lastAttackType = attackType;
                 ServerAnimationInfo animation = mob.startAttack();
