@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.system;
 
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
+import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.damagesource.DamageSource;
@@ -62,7 +63,7 @@ public class LeapSystem extends AISystem {
                 Vec3 offset;
                 if (target != null) {
                     y = Math.min(target.getY() + target.getBbHeight() - mob.getY(), 5);
-                    offset = target.position().subtract(mob.position()).normalize();
+                    offset = Util.directionVecTo(mob, target).normalize();
                     offset = offset.add(target.getDeltaMovement().x, 0, target.getDeltaMovement().z);
                 } else if (blockTarget != null) {
                     y = Math.min(blockTarget.y - mob.getY(), 5);

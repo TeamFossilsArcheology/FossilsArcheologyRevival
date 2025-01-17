@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.entity.ai;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ServerAnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.system.LeapSystem;
+import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
@@ -72,7 +73,7 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
 
     public void doLeapMovement() {
         mob.lookAt(mob.getTarget(), 100, 100);
-        Vec3 offset = mob.getTarget().position().subtract(mob.position()).add(0, mob.getTarget().getBbHeight(), 0);
+        Vec3 offset = Util.directionVecTo(mob, mob.getTarget()).add(0, mob.getTarget().getBbHeight(), 0);
         mob.setDeltaMovement(offset.normalize());
     }
 }

@@ -159,6 +159,16 @@ public class Util {
         return (float) (x - Math.floor(x / 360) * 360);
     }
 
+    /**
+     * Returns the directional vector from start to end
+     */
+    public static Vec3 directionVecTo(Entity start, Entity end) {
+        return end.position().subtract(start.position());
+    }
+
+    public static boolean movingAwayFrom(Entity target, Entity start) {
+        return target.getDeltaMovement().length() > 0.2 && target.getDeltaMovement().dot(directionVecTo(start, target)) > 0;
+    }
 
     /**
      * Returns the side of the given aabb closest to the edge of the block position

@@ -58,7 +58,7 @@ public class ToyBall extends ToyBase {
     }
 
     private void pushBall(Entity entity) {
-        Vec3 offset = position().subtract(entity.position());
+        Vec3 offset = Util.directionVecTo(entity, this);
         double yawDiff = (Mth.atan2(offset.z, offset.x) * Mth.RAD_TO_DEG);
         pushBall(Util.yawToYRot(yawDiff));
     }

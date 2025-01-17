@@ -7,7 +7,6 @@ import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CActivateAttackBoxesMessage;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -135,7 +134,8 @@ public class DelayedAttackGoal<T extends Prehistoric> extends Goal {
         }
 
         boolean inRange = isInRange(target);
-        if (!inRange || target.getDeltaMovement().length() > Mth.EPSILON && target.getDeltaMovement().dot(target.position().subtract(mob.position())) > 0) {
+        boolean canRunAway = target instanceof Player || target.getLastHurtMob() != mob;
+        if (!inRange || (canRunAway && Util.movingAwayFrom(target, mob))) {
             //Not in range or moving away from mob
             if (ticksUntilNextPathRecalculation <= 0 && (followingTargetEvenIfNotSeen || mob.getSensing().hasLineOfSight(target))) {
                 ticksUntilNextPathRecalculation = 4 + mob.getRandom().nextInt(7);

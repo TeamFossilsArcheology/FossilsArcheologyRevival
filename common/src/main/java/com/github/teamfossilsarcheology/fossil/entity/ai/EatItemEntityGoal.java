@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategor
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
@@ -48,7 +49,7 @@ public class EatItemEntityGoal extends MoveToFoodGoal {
         if (Math.abs(entity.getY() - targetItem.getY()) > 3) {
             return false;
         }
-        return entity.position().subtract(targetItem.position()).horizontalDistance() <= acceptedDistance();
+        return Util.directionVecTo(targetItem, entity).horizontalDistance() <= acceptedDistance();
     }
 
     @Override
