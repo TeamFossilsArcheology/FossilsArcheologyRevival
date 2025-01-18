@@ -44,12 +44,6 @@
     "animation.protoceratops.idle": {
       "loop": true,
       "animation_length": 5
-    },
-    "animation.protoceratops.walkspeeddemo": {
-      "loop": true
-    },
-    "animation.protoceratops.runspeeddemo": {
-      "loop": true
     }
   },
   "geckolib_format_version": 2

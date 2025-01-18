@@ -219,6 +219,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
             return PlayState.CONTINUE;
         }
+        double animationSpeed = 1;
         if (event.getAnimatable().isBeached()) {
             addActiveAnimation(controller.getName(), AnimationCategory.BEACHED);
         } else if (entity.isSleeping()) {
@@ -232,10 +233,40 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
                 }
             } else {
-                if (entity.isSprinting()) {
-                    addActiveAnimation(controller.getName(), AnimationCategory.SPRINT);
+                Animation walkAnim = entity.nextWalkingAnimation().animation;
+                Animation sprintAnim = entity.nextSprintingAnimation().animation;
+                //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
+                double scaleMult = 1 / Mth.sqrt(event.getAnimatable().getScale());
+                animationSpeed = scaleMult;
+                //the deltaMovement of the animation should match the mobs deltaMovement
+                double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
+                //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+                mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
+                //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
+                double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
+                if (animationTargetSpeed > 0) {
+                    animationSpeed *= mobSpeed / animationTargetSpeed;
+                }
+                if (animationSpeed <= 0.1) {
+                    //The transition to idle works better than slowing down the animation
+                    addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
                 } else {
-                    addActiveAnimation(controller.getName(), AnimationCategory.WALK);
+                    if (animationSpeed < prevAnimationSpeeds.getOrDefault(controller.getName(), 0f) - Mth.EPSILON) {
+                        //Add some inertia to prevent sudden animation stops
+                        animationSpeed = Mth.approach(prevAnimationSpeeds.get(controller.getName()), (float)animationSpeed, 0.05f);
+                    }
+                    //TODO: entity.isSprinting needs rework
+                    if (animationSpeed > 2.75 || entity.isSprinting()) {
+                        //Choose sprint
+                        animationSpeed = scaleMult;
+                        animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
+                        if (animationTargetSpeed > 0) {
+                            animationSpeed *= mobSpeed / animationTargetSpeed;
+                        }
+                        addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
+                    } else {
+                        addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
+                    }
                 }
             }
         } else if (event.getAnimatable().isWeak()) {
@@ -243,6 +274,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         } else {
             addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
         }
+        prevAnimationSpeeds.put(controller.getName(), (float) animationSpeed);
+        setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
         Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
         if (newAnimation.isPresent()) {
             controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName, newAnimation.get().loop ? LOOP : PLAY_ONCE));
@@ -330,7 +363,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 Animation walkAnim = entity.nextWalkingAnimation().animation;
                 Animation sprintAnim = entity.nextSprintingAnimation().animation;
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
-                double scaleMult = 1 / entity.getScale();
+                double scaleMult = 1 / Mth.sqrt(event.getAnimatable().getScale());
+                animationSpeed = scaleMult;
                 //the deltaMovement of the animation should match the mobs deltaMovement
                 double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
                 //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
@@ -338,7 +372,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                 double animationTargetSpeed = getAnimationTargetSpeed(entity, walkAnim.animationName);
                 if (animationTargetSpeed > 0) {
-                    animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                    animationSpeed *= mobSpeed / animationTargetSpeed;
                 }
                 if (animationSpeed <= 0.1) {
                     //The transition to idle works better than slowing down the animation
@@ -350,9 +384,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     }
                     if (animationSpeed > 2.75 || entity.isSprinting()) {
                         //Choose sprint
+                        animationSpeed = scaleMult;
                         animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
                         if (animationTargetSpeed > 0) {
-                            animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                            animationSpeed *= mobSpeed / animationTargetSpeed;
                         }
                         addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
                     } else {
@@ -400,7 +435,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             Animation walkAnim = entity.nextWalkingAnimation().animation;
             Animation sprintAnim = entity.nextSprintingAnimation().animation;
             //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
-            double scaleMult = 1 / event.getAnimatable().getScale();
+            double scaleMult = 1 / Mth.sqrt(event.getAnimatable().getScale());
+            animationSpeed = scaleMult;
             //the deltaMovement of the animation should match the mobs deltaMovement
             double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
             //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
@@ -408,7 +444,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
             double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
             if (animationTargetSpeed > 0) {
-                animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                animationSpeed *= mobSpeed / animationTargetSpeed;
             }
             if (animationSpeed <= 0.1) {
                 //The transition to idle works better than slowing down the animation
@@ -421,9 +457,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 //TODO: entity.isSprinting needs rework
                 if (animationSpeed > 2.75 || entity.isSprinting()) {
                     //Choose sprint
+                    animationSpeed = scaleMult;
                     animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), sprintAnim.animationName);
                     if (animationTargetSpeed > 0) {
-                        animationSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                        animationSpeed *= mobSpeed / animationTargetSpeed;
                     }
                     addActiveAnimation(controller.getName(), sprintAnim, AnimationCategory.SPRINT, false);
                 } else {
@@ -520,7 +557,8 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             } else if (event.isMoving()) {
                 Animation animation = entity.nextWalkingAnimation().animation;
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
-                double scaleMult = 1 / event.getAnimatable().getScale();
+                double scaleMult = 1 / Mth.sqrt(event.getAnimatable().getScale());
+                animSpeed = scaleMult;
                 //the deltaMovement of the animation should match the mobs deltaMovement
                 double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
                 //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
@@ -529,7 +567,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                 double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), animation.animationName);
                 if (animationTargetSpeed > 0) {
-                    animSpeed = scaleMult * mobSpeed / animationTargetSpeed;
+                    animSpeed *= mobSpeed / animationTargetSpeed;
                 }
                 if (animSpeed <= 0.1) {
                     addActiveAnimation(controller.getName(), AnimationCategory.IDLE);

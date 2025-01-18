@@ -690,8 +690,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         scale = Math.min(scale, data().maxScale());
         double percent = Math.min(getAge() / data().adultAgeInTicks(), 1);
         getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, attributes().baseKnockBackResistance(), attributes().maxKnockBackResistance()));
+
+        double speed = Util.calculateSpeed(data(), scale);
         if (level.isClientSide) {
-            animationLogic.setAttributeSpeed(Util.calculateSpeed(data(), scale));
+            animationLogic.setAttributeSpeed(speed);
             return;
         }
 
@@ -700,7 +702,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         healthDifference = getAttributeValue(Attributes.MAX_HEALTH) - healthDifference;
         heal((float) healthDifference);
         getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseDamage(), attributes().maxDamage())));
-        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(Util.calculateSpeed(data(), scale));
+        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed);
         getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, attributes().baseArmor(), attributes().maxArmor()));
     }
 

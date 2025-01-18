@@ -44,7 +44,8 @@
     },
     "animation.triceratops.run": {
       "loop": true,
-      "animation_length": 1
+      "animation_length": 1,
+      "blocks_per_second": 1.5
     },
     "animation.triceratops.sit": {
       "loop": true,
@@ -71,7 +72,8 @@
     },
     "animation.triceratops.walk": {
       "loop": true,
-      "animation_length": 2
+      "animation_length": 2,
+      "blocks_per_second": 0.6
     }
   },
   "geckolib_format_version": 2

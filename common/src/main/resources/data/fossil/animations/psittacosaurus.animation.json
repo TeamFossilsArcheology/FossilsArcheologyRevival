@@ -23,7 +23,8 @@
     },
     "animation.psittacosaurus.run": {
       "loop": true,
-      "animation_length": 0.75
+      "animation_length": 0.75,
+      "blocks_per_second": 2.75
     },
     "animation.psittacosaurus.sit": {
       "loop": true,
@@ -39,7 +40,8 @@
     },
     "animation.psittacosaurus.walk": {
       "loop": true,
-      "animation_length": 1.4167
+      "animation_length": 1.4167,
+      "blocks_per_second": 1.0
     }
   },
   "geckolib_format_version": 2

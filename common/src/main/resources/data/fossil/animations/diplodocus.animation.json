@@ -23,7 +23,8 @@
     },
     "animation.diplodocus.run": {
       "loop": true,
-      "animation_length": 2.25
+      "animation_length": 2.25,
+      "blocks_per_second": 0.5
     },
     "animation.diplodocus.sit": {
       "loop": true,

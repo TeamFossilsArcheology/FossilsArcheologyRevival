@@ -32,7 +32,8 @@
     },
     "walk": {
       "loop": true,
-      "animation_length": 2.9583
+      "animation_length": 2.9583,
+      "blocks_per_second": 0.4
     }
   },
   "geckolib_format_version": 2

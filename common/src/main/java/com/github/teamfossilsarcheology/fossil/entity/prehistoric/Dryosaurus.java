@@ -1,8 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
 import com.github.teamfossilsarcheology.fossil.entity.ai.FleeBattleGoal;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
-import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
@@ -35,14 +33,6 @@ public class Dryosaurus extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return Items.STICK;
-    }
-
-    @Override
-    public AnimationInfo getAnimation(AnimationCategory category) {
-        if (category == AnimationCategory.WALK) {
-            return getAnimation(AnimationCategory.SPRINT);//Walk to slow
-        }
-        return super.getAnimation(category);
     }
 
     @Nullable

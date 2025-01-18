@@ -71,7 +71,7 @@
     "animation.therizinosaurus.walk": {
       "loop": true,
       "animation_length": 3,
-      "blocks_per_second": 0.78125
+      "blocks_per_second": 0.7
     },
     "animation.therizinosaurus.!walk_evil": {
       "loop": true,

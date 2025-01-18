@@ -19,7 +19,8 @@
     },
     "animation.dimetrodon.run": {
       "loop": true,
-      "animation_length": 1
+      "animation_length": 1,
+      "blocks_per_second": 1.0
     },
     "animation.dimetrodon.sleep/sit": {
       "loop": true,
@@ -34,7 +35,8 @@
     },
     "animation.dimetrodon.walk": {
       "loop": true,
-      "animation_length": 1.5
+      "animation_length": 1.5,
+      "blocks_per_second": 0.7
     }
   },
   "geckolib_format_version": 2

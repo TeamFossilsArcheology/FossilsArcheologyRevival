@@ -19,7 +19,8 @@
     },
     "animation.sarcosuchus.run": {
       "loop": true,
-      "animation_length": 0.6667
+      "animation_length": 0.6667,
+      "blocks_per_second": 2.0
     },
     "animation.sarcosuchus.sleep": {
       "loop": true,
@@ -31,7 +32,8 @@
     },
     "animation.sarcosuchus.walk": {
       "loop": true,
-      "animation_length": 2.8571
+      "animation_length": 2.8571,
+      "blocks_per_second": 0.5
     }
   },
   "geckolib_format_version": 2

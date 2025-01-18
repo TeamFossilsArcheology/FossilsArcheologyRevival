@@ -24,7 +24,8 @@
     },
     "animation.platybelodon.run": {
       "loop": true,
-      "animation_length": 1.625
+      "animation_length": 1.625,
+      "blocks_per_second": 1
     },
     "animation.platybelodon.sleep": {
       "loop": true,
@@ -39,7 +40,8 @@
     },
     "animation.platybelodon.walk": {
       "loop": true,
-      "animation_length": 3.3333
+      "animation_length": 3.3333,
+      "blocks_per_second": 0.5
     }
   },
   "geckolib_format_version": 2
