@@ -8,6 +8,7 @@ import net.minecraft.nbt.CompoundTag;
  */
 public abstract class AISystem {
     protected final Prehistoric mob;
+    protected boolean disabled;
 
     protected AISystem(Prehistoric mob) {
         this.mob = mob;
@@ -17,6 +18,14 @@ public abstract class AISystem {
 
     public void clientTick() {
 
+    }
+
+    public boolean isDisabled() {
+        return disabled;
+    }
+
+    public void setDisabled(boolean disabled) {
+        this.disabled = disabled;
     }
 
     /**

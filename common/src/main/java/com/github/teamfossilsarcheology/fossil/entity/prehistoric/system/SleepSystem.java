@@ -11,7 +11,6 @@ import net.minecraft.world.entity.Pose;
  */
 public class SleepSystem extends AISystem {
     private boolean sleepForced;
-    protected boolean sleepDisabled;
     private int ticksSlept;
     /**
      * Sleep cooldown for mobs with {@link PrehistoricEntityInfoAI.Activity#BOTH}
@@ -59,7 +58,7 @@ public class SleepSystem extends AISystem {
      * @return whether something is preventing the mob from sleeping
      */
     protected boolean canSleep() {
-        if (sleepDisabled || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() != OrderType.FOLLOW) {
+        if (isDisabled() || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() != OrderType.FOLLOW) {
             return false;
         }
         if ((mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC)) {
@@ -90,13 +89,6 @@ public class SleepSystem extends AISystem {
      */
     public void setSleepForced(boolean sleepForced) {
         this.sleepForced = sleepForced;
-    }
-
-    /**
-     * @param sleepDisabled if {@code true} the mob will not be able to start sleeping
-     */
-    public void setSleepDisabled(boolean sleepDisabled) {
-        this.sleepDisabled = sleepDisabled;
     }
 
     public void setSleeping(boolean sleeping) {

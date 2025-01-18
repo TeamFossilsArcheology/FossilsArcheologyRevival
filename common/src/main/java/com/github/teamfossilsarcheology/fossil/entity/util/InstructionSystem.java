@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.instruction.Inst
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPathNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.Parasaurolophus;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricLeaping;
@@ -66,6 +67,9 @@ public class InstructionSystem extends AISystem {
         Instruction current = instructions.get(index);
         if (mob.isHungry()) {
             mob.setHunger(mob.getMaxHunger());
+        }
+        if (mob instanceof Parasaurolophus parasaurolophus) {
+            parasaurolophus.setStanding(false);
         }
 
         if (current instanceof Instruction.MoveTo moveTo) {
@@ -269,7 +273,7 @@ public class InstructionSystem extends AISystem {
             }
         } else if (current instanceof Instruction.Sleep sleep) {
             endTick = mob.level.getGameTime() + sleep.duration;
-            mob.sleepSystem.setSleepDisabled(false);
+            mob.sleepSystem.setDisabled(false);
             mob.sleepSystem.setSleeping(true);
             mob.sleepSystem.setSleepForced(true);
         }
@@ -284,8 +288,8 @@ public class InstructionSystem extends AISystem {
         delayTick = 0;
         shouldLoop = loop;
         if (sync) syncWithClients();
-        mob.sleepSystem.setSleepDisabled(true);
-        mob.sitSystem.setSittingDisabled(true);
+        mob.sleepSystem.setDisabled(true);
+        mob.sitSystem.setDisabled(true);
         if (instructions.isEmpty()) {
             stop();
         } else {
@@ -311,8 +315,8 @@ public class InstructionSystem extends AISystem {
         mob.disableCustomAI((byte) 0, true);
         mob.disableCustomAI((byte) 1, false);
         mob.sleepSystem.setSleepForced(false);
-        mob.sleepSystem.setSleepDisabled(false);
-        mob.sitSystem.setSittingDisabled(false);
+        mob.sleepSystem.setDisabled(false);
+        mob.sitSystem.setDisabled(false);
     }
 
     public void syncWithClients() {

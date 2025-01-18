@@ -10,7 +10,6 @@ import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Pr
  * This system determines when a mob can and should sit
  */
 public class SitSystem extends AISystem {
-    protected boolean sittingDisabled;
     private int ticksSat;
     private int sitCooldown = 20 * 60 * 3;
 
@@ -40,7 +39,7 @@ public class SitSystem extends AISystem {
      * @return whether something is preventing the mob from sitting
      */
     protected boolean canSit() {
-        if (sittingDisabled || mob.hasTarget() || mob.isVehicle() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW) {
+        if (isDisabled() || mob.hasTarget() || mob.isVehicle() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW) {
             return false;
         }
         if ((mob.aiMovingType() == Moving.AQUATIC)) {
@@ -50,13 +49,6 @@ public class SitSystem extends AISystem {
         } else {
             return mob.isOnGround();
         }
-    }
-
-    /**
-     * @param sittingDisabled if {@code true} the mob will not be able to start sitting
-     */
-    public void setSittingDisabled(boolean sittingDisabled) {
-        this.sittingDisabled = sittingDisabled;
     }
 
     public boolean isSitting() {

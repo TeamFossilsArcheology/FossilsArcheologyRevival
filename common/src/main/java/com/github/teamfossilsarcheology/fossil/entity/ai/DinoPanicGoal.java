@@ -21,14 +21,14 @@ public class DinoPanicGoal extends PanicGoal {
     @Override
     public void start() {
         super.start();
-        ((Prehistoric)mob).sleepSystem.setSleepDisabled(true);
-        ((Prehistoric)mob).sitSystem.setSittingDisabled(true);
+        ((Prehistoric)mob).sleepSystem.setDisabled(true);
+        ((Prehistoric)mob).sitSystem.setDisabled(true);
     }
 
     @Override
     public void stop() {
         super.stop();
-        ((Prehistoric)mob).sleepSystem.setSleepDisabled(false);
-        ((Prehistoric)mob).sitSystem.setSittingDisabled(false);
+        ((Prehistoric)mob).sleepSystem.setDisabled(false);
+        ((Prehistoric)mob).sitSystem.setDisabled(false);
     }
 }

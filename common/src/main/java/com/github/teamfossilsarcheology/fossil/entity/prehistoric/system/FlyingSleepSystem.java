@@ -60,7 +60,7 @@ public class FlyingSleepSystem extends SleepSystem {
         if (PrehistoricSwimming.isOverWater(mob)) {
             return false;
         }
-        if (sleepDisabled || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.isInWater()) {
+        if (disabled || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.isInWater()) {
             return false;
         }
         return mob.getCurrentOrder() != OrderType.FOLLOW;
