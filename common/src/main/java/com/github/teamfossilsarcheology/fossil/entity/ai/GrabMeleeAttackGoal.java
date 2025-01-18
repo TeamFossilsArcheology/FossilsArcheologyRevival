@@ -79,7 +79,7 @@ public class GrabMeleeAttackGoal extends DelayedAttackGoal<PrehistoricSwimming> 
             }
         } else if (currentTime > attackEndTick + 20 && inRange) {
             //Is target smaller than 1 block (if prehistoric is adult)
-            boolean tooBig = !Util.isEntitySmallerThan(enemy, mob.getScale() / mob.data().maxScale());
+            boolean tooBig = !Util.isEntitySmallerThan(enemy, mob.grabTargetSize());
             if (tooBig || mob.getRandom().nextInt(5) > 0) {
                 attackType = ATTACK;
                 ServerAnimationInfo animationInfo = mob.startAttack();

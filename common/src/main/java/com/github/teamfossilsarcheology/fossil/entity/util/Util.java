@@ -61,11 +61,7 @@ public class Util {
     }
 
     public static boolean isEntitySmallerThan(Entity entity, float size) {
-        if (entity instanceof Prehistoric prehistoric) {
-            return prehistoric.getBbWidth() <= size;
-        } else {
-            return entity.getBbWidth() <= size;
-        }
+        return entity.getBbWidth() <= size;
     }
 
     public static boolean canBreak(Level level, BlockPos targetPos, float maxHardness) {

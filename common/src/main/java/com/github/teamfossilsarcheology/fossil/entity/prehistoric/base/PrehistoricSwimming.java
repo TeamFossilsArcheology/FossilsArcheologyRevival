@@ -232,6 +232,10 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
         }
     }
 
+    public float grabTargetSize() {
+        return getBbWidth() / 2;
+    }
+
     public void startGrabAttack(Entity target) {
         target.startRiding(this);
         setDoingGrabAttack(true);
