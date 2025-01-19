@@ -132,6 +132,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private int climbingCooldown = 0;
     private Vec3 eatPos;
     private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
+    protected double swimSpeed;
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -691,7 +692,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         double percent = Math.min(getAge() / data().adultAgeInTicks(), 1);
         getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, attributes().baseKnockBackResistance(), attributes().maxKnockBackResistance()));
 
-        double speed = Util.calculateSpeed(data(), scale);
+        double speed = Util.calculateSpeed(data(), scale, false);
         if (level.isClientSide) {
             animationLogic.setAttributeSpeed(speed);
             return;
@@ -703,6 +704,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         heal((float) healthDifference);
         getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseDamage(), attributes().maxDamage())));
         getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed);
+        swimSpeed = Util.calculateSpeed(data(), scale, true);
         getAttribute(Attributes.ARMOR).setBaseValue(Mth.lerp(percent, attributes().baseArmor(), attributes().maxArmor()));
     }
 
@@ -1089,7 +1091,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     sleepSystem.setSleeping(false);
                     setCurrentOrder(OrderType.WANDER);
                 } else if (getRidingPlayer() == player) {
-                    setSprinting(true);
+                    setSprinting(true);//TODO: Not needed
                     moodSystem.increaseMood(-5);
                 }
             } else if (FossilConfig.isEnabled(FossilConfig.WHIP_TO_TAME_DINO) && !isTame() && aiTameType() != Taming.AQUATIC_GEM && aiTameType() != Taming.GEM) {

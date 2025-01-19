@@ -11,7 +11,6 @@ public interface SwimmingAnimal {
 
     boolean canSwim();
 
-    //TODO: Do aquatic swim speed properly
     double swimSpeed();
 
     int timeInWater();

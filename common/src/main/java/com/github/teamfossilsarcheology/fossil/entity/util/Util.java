@@ -86,9 +86,12 @@ public class Util {
         return 23.55 * Mth.square(speed);
     }
 
-    public static double calculateSpeed(EntityDataLoader.Data data, float scale) {
+    public static double calculateSpeed(EntityDataLoader.Data data, float scale, boolean swim) {
         Attribute attributes = data.attributes();
-        double newSpeed = attributes.baseSpeed();
+        double baseSpeed = swim ? attributes.baseSwimSpeed() : attributes.baseSpeed();
+        double minSpeed = swim ? attributes.minSwimSpeed() : attributes.minSpeed();
+        double maxSpeed = swim ? attributes.maxSwimSpeed() : attributes.maxSpeed();
+        double newSpeed = baseSpeed;
         boolean minAbove1 = data.minScale() >= 1;
         boolean maxBelow1 = data.maxScale() <= 1;
         //baseSpeed is for scale=1
@@ -97,17 +100,17 @@ public class Util {
             float max = maxBelow1 ? data.maxScale() : 1;
             if (min != max) {
                 //Sets maxSpeed as upper limit if maxScale is below 1
-                newSpeed = Mth.lerp((scale - min) / (max - min), attributes.minSpeed(), maxBelow1 ? attributes.maxSpeed() : attributes.baseSpeed());
+                newSpeed = Mth.lerp((scale - min) / (max - min), minSpeed, maxBelow1 ? maxSpeed : baseSpeed);
             }
         } else {
             float min = data.minScale() < 1 ? 1 : data.minScale();
             float max = data.maxScale();
             if (max != min) {
                 //Sets minSpeed as lower limit if minScale is above 1
-                newSpeed = Mth.lerp((scale - min) / (max - min), minAbove1 ? attributes.minSpeed() : attributes.baseSpeed(), attributes.maxSpeed());
+                newSpeed = Mth.lerp((scale - min) / (max - min), minAbove1 ? minSpeed : baseSpeed, maxSpeed);
             } else {
                 //scale == maxScale == 1
-                newSpeed = attributes.maxSpeed();
+                newSpeed = maxSpeed;
             }
         }
         return newSpeed;

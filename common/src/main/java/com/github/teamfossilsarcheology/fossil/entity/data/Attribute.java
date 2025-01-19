@@ -9,17 +9,22 @@ import java.lang.reflect.Type;
 /**
  * Entity attributes ranges
  */
-public record Attribute(double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed, double minSpeed,
-                        double maxSpeed, double baseArmor, double maxArmor, double baseKnockBackResistance,
-                        double maxKnockBackResistance) {
+public record Attribute(double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed,
+                        double minSpeed, double maxSpeed, double baseSwimSpeed, double minSwimSpeed, double maxSwimSpeed,
+                        double baseArmor, double maxArmor, double baseKnockBackResistance, double maxKnockBackResistance) {
     public static Attribute readBuf(FriendlyByteBuf buf) {
-        return new Attribute(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble());
+        return new Attribute(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+                buf.readDouble(), buf.readDouble(), buf.readDouble());
     }
 
     public static void writeBuf(FriendlyByteBuf buf, Attribute attribute) {
-        buf.writeDouble(attribute.baseDamage).writeDouble(attribute.maxDamage).writeDouble(attribute.baseHealth).writeDouble(attribute.maxHealth)
-                .writeDouble(attribute.baseSpeed).writeDouble(attribute.minSpeed).writeDouble(attribute.maxSpeed).writeDouble(attribute.baseArmor)
-                .writeDouble(attribute.maxArmor).writeDouble(attribute.baseKnockBackResistance).writeDouble(attribute.maxKnockBackResistance);
+        buf.writeDouble(attribute.baseDamage).writeDouble(attribute.maxDamage)
+                .writeDouble(attribute.baseHealth).writeDouble(attribute.maxHealth)
+                .writeDouble(attribute.baseSpeed).writeDouble(attribute.minSpeed).writeDouble(attribute.maxSpeed)
+                .writeDouble(attribute.baseSwimSpeed).writeDouble(attribute.minSwimSpeed).writeDouble(attribute.maxSwimSpeed)
+                .writeDouble(attribute.baseArmor).writeDouble(attribute.maxArmor)
+                .writeDouble(attribute.baseKnockBackResistance).writeDouble(attribute.maxKnockBackResistance);
     }
 
     public static class Deserializer implements JsonDeserializer<Attribute> {
@@ -32,13 +37,17 @@ public record Attribute(double baseDamage, double maxDamage, double baseHealth, 
             double baseHealth = GsonHelper.getAsDouble(jsonobject, "healthBase");
             double maxHealth = GsonHelper.getAsDouble(jsonobject, "healthMax");
             double baseSpeed = GsonHelper.getAsDouble(jsonobject, "speedBase");
-            double minSpeed = jsonobject.get("speedMin") != null ? GsonHelper.getAsDouble(jsonobject, "speedMin") : baseSpeed;
+            double minSpeed = jsonobject.has("speedMin") ? GsonHelper.getAsDouble(jsonobject, "speedMin") : baseSpeed;
             double maxSpeed = GsonHelper.getAsDouble(jsonobject, "speedMax");
+            double baseSwimSpeed = jsonobject.has("swimSpeedBase") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedBase") : baseSpeed;
+            double minSwimSpeed = jsonobject.has("swimSpeedMin") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedMin") : minSpeed;
+            double maxSwimSpeed = jsonobject.has("swimSpeedMax") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedMax") : maxSpeed;
             double baseArmor = GsonHelper.getAsDouble(jsonobject, "armorBase");
             double maxArmor = GsonHelper.getAsDouble(jsonobject, "armorMax");
             double baseKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "knockBackResistanceBase");
             double maxKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "knockBackResistanceMax");
-            return new Attribute(baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, minSpeed, maxSpeed, baseArmor, maxArmor, baseKnockBackResistance, maxKnockBackResistance);
+            return new Attribute(baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, minSpeed, maxSpeed,
+                    baseSwimSpeed, minSwimSpeed, maxSwimSpeed, baseArmor, maxArmor, baseKnockBackResistance, maxKnockBackResistance);
         }
     }
 }
