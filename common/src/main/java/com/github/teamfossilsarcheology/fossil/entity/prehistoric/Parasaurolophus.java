@@ -30,6 +30,7 @@ import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 
+import java.util.EnumSet;
 import java.util.Optional;
 
 import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
@@ -41,8 +42,6 @@ public class Parasaurolophus extends Prehistoric {
     private static final String STAND = "animation.parasaurolophus.stand";
     private static final String STAND_UP = "animation.parasaurolophus.stand_up";
 
-    private int ticksStanding;
-
     public Parasaurolophus(EntityType<Parasaurolophus> entityType, Level level) {
         super(entityType, level);
     }
@@ -51,14 +50,7 @@ public class Parasaurolophus extends Prehistoric {
     protected void registerGoals() {
         super.registerGoals();
         goalSelector.addGoal(Util.IMMOBILE + 3, new FleeBattleGoal(this, 1));
-    }
-
-    @Override
-    protected void updateControlFlags() {
-        boolean bl = !isSleeping();
-        goalSelector.setControlFlag(Goal.Flag.MOVE, bl && !sitSystem.isSitting() && !isStanding());
-        goalSelector.setControlFlag(Goal.Flag.JUMP, bl && !sitSystem.isSitting() && !isStanding());
-        goalSelector.setControlFlag(Goal.Flag.LOOK, bl);
+        goalSelector.addGoal(Util.WANDER - 1, new ParaStandGoal());
     }
 
     @Override
@@ -87,6 +79,7 @@ public class Parasaurolophus extends Prehistoric {
     public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
         if (!level.isClientSide) {
             if (SLEEPING.equals(key) || SITTING.equals(key)) {
+                //Fallback
                 setStanding(false);
             }
         } else if (DATA_CUSTOM_NAME.equals(key)) {
@@ -120,24 +113,6 @@ public class Parasaurolophus extends Prehistoric {
     @Override
     public double getPassengersRidingOffset() {
         return super.getPassengersRidingOffset() + 0.4;
-    }
-
-    @Override
-    public void aiStep() {
-        super.aiStep();
-        if (isStanding()) {
-            ticksStanding++;
-        } else {
-            ticksStanding = 0;
-        }
-        if (!level.isClientSide) {
-            if (!isStanding() && !isImmobile() && random.nextInt(100) == 0) {
-                setStanding(true);
-            }
-            if (isStanding() && ticksStanding > 800 && random.nextInt(800) == 0) {
-                setStanding(false);
-            }
-        }
     }
 
     public boolean isStanding() {
@@ -178,6 +153,39 @@ public class Parasaurolophus extends Prehistoric {
         data.addAnimationController(controller);
         data.addAnimationController(new PausableAnimationController<>(
                 this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
+    }
+
+    class ParaStandGoal extends Goal {
+        private int cooldown;
+
+        public ParaStandGoal() {
+            setFlags(EnumSet.of(Flag.MOVE));
+        }
+
+        @Override
+        public boolean canUse() {
+            if (cooldown > tickCount || isInWater() || isImmobile()) {
+                return false;
+            }
+            return random.nextInt(100) == 0;
+        }
+
+        @Override
+        public boolean canContinueToUse() {
+            return !isInWater() && !isImmobile() && random.nextInt(reducedTickDelay(2000)) != 0;
+        }
+
+        @Override
+        public void start() {
+            cooldown = 0;
+            setStanding(true);
+        }
+
+        @Override
+        public void stop() {
+            cooldown = tickCount + (random.nextInt(120) + 10) * 20;
+            setStanding(false);
+        }
     }
 
     static class ParaAnimationLogic extends AnimationLogic<Prehistoric> {
