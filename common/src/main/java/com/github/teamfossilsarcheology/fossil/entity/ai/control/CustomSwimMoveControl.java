@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import net.minecraft.util.Mth;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 
 public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> extends SmoothSwimmingMoveControl {
@@ -15,7 +14,6 @@ public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> exten
         super(mob, 85, 10, 0.1f, 0.1f, true);
         this.mob = mob;
     }
-
 
     @Override
     public void tick() {
@@ -37,9 +35,9 @@ public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> exten
                     mob.yBodyRot = mob.getYRot();
                     mob.yHeadRot = mob.getYRot();
                 }
-                float i = (float) (speedModifier * mob.getAttributeValue(Attributes.MOVEMENT_SPEED)) * 1.5f;
                 if (mob.isInWater()) {
-                    mob.setSpeed(i * 0.1f);
+                    float i = (float) mob.swimSpeed();
+                    mob.setSpeed(i);
                     double horDist = Math.sqrt(x * x + z * z);
                     float k;
                     if (Math.abs(y) > 0.00001 || Math.abs(horDist) > 0.00001) {

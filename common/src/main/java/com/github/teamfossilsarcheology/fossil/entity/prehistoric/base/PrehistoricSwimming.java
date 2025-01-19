@@ -157,6 +157,11 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     }
 
     @Override
+    public double swimSpeed() {
+        return getAttributeValue(Attributes.MOVEMENT_SPEED);
+    }
+
+    @Override
     public boolean canBreatheUnderwater() {
         return true;
     }

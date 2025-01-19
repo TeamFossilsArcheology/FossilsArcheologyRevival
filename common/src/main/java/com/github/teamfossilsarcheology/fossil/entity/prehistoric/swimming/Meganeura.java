@@ -300,6 +300,11 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
     }
 
     @Override
+    public double swimSpeed() {
+        return 1;
+    }
+
+    @Override
     public PrehistoricEntityInfo info() {
         return PrehistoricEntityInfo.MEGANEURA;
     }
