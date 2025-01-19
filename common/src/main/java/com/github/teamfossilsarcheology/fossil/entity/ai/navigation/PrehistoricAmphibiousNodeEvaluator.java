@@ -5,10 +5,11 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.BlockGetter;
-import net.minecraft.world.level.pathfinder.BlockPathTypes;
-import net.minecraft.world.level.pathfinder.Node;
-import net.minecraft.world.level.pathfinder.Target;
-import net.minecraft.world.level.pathfinder.WalkNodeEvaluator;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.material.Fluids;
+import net.minecraft.world.level.pathfinder.*;
+import net.minecraft.world.phys.AABB;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,7 +19,64 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
 
     @Override
     public @NotNull Node getStart() {
-        return getNode(Mth.floor(mob.getBoundingBox().minX), Mth.floor(mob.getBoundingBox().minY + 0.5), Mth.floor(mob.getBoundingBox().minZ));
+        if (mob.isInWater()) {
+            return getNode(Mth.floor(mob.getBoundingBox().minX), Mth.floor(mob.getBoundingBox().minY + 0.5), Mth.floor(mob.getBoundingBox().minZ));
+        }
+        BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
+        int i = this.mob.getBlockY();
+        BlockState blockState = this.level.getBlockState(mutableBlockPos.set(this.mob.getX(), i, this.mob.getZ()));
+        if (!this.mob.canStandOnFluid(blockState.getFluidState())) {
+            if (this.canFloat() && this.mob.isInWater()) {
+                while (true) {
+                    if (!blockState.is(Blocks.WATER) && blockState.getFluidState() != Fluids.WATER.getSource(false)) {
+                        i--;
+                        break;
+                    }
+
+                    blockState = this.level.getBlockState(mutableBlockPos.set(this.mob.getX(), (++i), this.mob.getZ()));
+                }
+            } else if (this.mob.isOnGround()) {
+                i = Mth.floor(this.mob.getY() + 0.5);
+            } else {
+                BlockPos blockPos = this.mob.blockPosition();
+
+                while (
+                        (this.level.getBlockState(blockPos).isAir() || this.level.getBlockState(blockPos).isPathfindable(this.level, blockPos, PathComputationType.LAND))
+                                && blockPos.getY() > this.mob.level.getMinBuildHeight()
+                ) {
+                    blockPos = blockPos.below();
+                }
+
+                i = blockPos.above().getY();
+            }
+        } else {
+            while (this.mob.canStandOnFluid(blockState.getFluidState())) {
+                blockState = this.level.getBlockState(mutableBlockPos.set(this.mob.getX(), (double)(++i), this.mob.getZ()));
+            }
+            i--;
+        }
+
+        BlockPos blockPos = this.mob.blockPosition();
+        BlockPathTypes blockPathTypes = this.getCachedBlockType(this.mob, blockPos.getX(), i, blockPos.getZ());
+        if (this.mob.getPathfindingMalus(blockPathTypes) < 0.0F) {
+            AABB aABB = this.mob.getBoundingBox();
+            if (this.hasPositiveMalus(mutableBlockPos.set(aABB.minX, i, aABB.minZ))
+                    || this.hasPositiveMalus(mutableBlockPos.set(aABB.minX, i, aABB.maxZ))
+                    || this.hasPositiveMalus(mutableBlockPos.set(aABB.maxX, i, aABB.minZ))
+                    || this.hasPositiveMalus(mutableBlockPos.set(aABB.maxX, i, aABB.maxZ))) {
+                Node node = this.getNode(mutableBlockPos);
+                BlockPos nodePos = node.asBlockPos();
+                node.type = this.getCachedBlockType(this.mob, nodePos.getX(), nodePos.getY(), nodePos.getZ());
+                node.costMalus = this.mob.getPathfindingMalus(node.type);
+                return node;
+            }
+        }
+
+        Node node2 = this.getNode(blockPos.getX(), i, blockPos.getZ());
+        BlockPos node2Pos = node2.asBlockPos();
+        node2.type = this.getCachedBlockType(this.mob, node2Pos.getX(), node2Pos.getY(), node2Pos.getZ());
+        node2.costMalus = this.mob.getPathfindingMalus(node2.type);
+        return node2;
     }
 
     @Override

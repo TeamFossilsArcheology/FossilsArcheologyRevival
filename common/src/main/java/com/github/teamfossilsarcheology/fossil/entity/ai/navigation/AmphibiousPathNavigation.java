@@ -55,9 +55,16 @@ public class AmphibiousPathNavigation<T extends Prehistoric & SwimmingAnimal> ex
     private boolean tryShortcut(Path path, Vec3 entityPos, int pathLength, Vec3 base, Vec3 max) {
         for (int i = pathLength; --i > path.getNextNodeIndex(); ) {
             final Vec3 vec = path.getEntityPosAtNode(mob, i).subtract(entityPos);
-            if (NavUtil.isNoCollisionOnPath(vec, base, max, PathComputationType.WATER, mob, nodeEvaluator)) {
-                path.setNextNodeIndex(i);
-                return true;
+            if (mob.isInWater()) {
+                if (NavUtil.isNoCollisionOnPath(vec, base, max, PathComputationType.WATER, mob, nodeEvaluator)) {
+                    path.setNextNodeIndex(i);
+                    return true;
+                }
+            } else {
+                if (NavUtil.isNoCollisionOnPath(vec, base, max, PathComputationType.LAND, mob, nodeEvaluator)) {
+                    path.setNextNodeIndex(i);
+                    return true;
+                }
             }
         }
         return false;
