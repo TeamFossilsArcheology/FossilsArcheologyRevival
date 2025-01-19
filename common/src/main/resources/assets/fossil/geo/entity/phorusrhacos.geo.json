@@ -166,7 +166,7 @@
 					"cubes": []
 				},
 				{
-					"name": "upperwingR2",
+					"name": "upperwingR",
 					"parent": "chest1",
 					"pivot": [-5.5, 24.1, -8],
 					"rotation": [-56.82, -18.26, 10.43],
@@ -175,15 +175,15 @@
 					]
 				},
 				{
-					"name": "part2",
-					"parent": "upperwingR2",
+					"name": "lowerwingR",
+					"parent": "upperwingR",
 					"pivot": [-5.5, 24.1, -8],
 					"cubes": [
 						{"origin": [-6, 23.1, -9.5], "size": [1, 10, 15], "uv": [45, 31]}
 					]
 				},
 				{
-					"name": "upperwingR",
+					"name": "upperwingL",
 					"parent": "chest1",
 					"pivot": [5.5, 24.1, -8],
 					"rotation": [-56.82, 18.26, -10.43],
@@ -192,8 +192,8 @@
 					]
 				},
 				{
-					"name": "part93",
-					"parent": "upperwingR",
+					"name": "lowerwingL",
+					"parent": "upperwingL",
 					"pivot": [5.5, 24.1, -8],
 					"cubes": [
 						{"origin": [5, 23.1, -9.5], "size": [1, 10, 15], "uv": [45, 31], "mirror": true}

@@ -1676,7 +1676,7 @@
 					},
 					"position": {
 						"0.0": {
-							"vector": [0, "-12+math.sin(query.anim_time*90+45)*0.25", 0]
+							"vector": [0, "-8+math.sin(query.anim_time*90+45)*0.25", 0]
 						}
 					}
 				},
@@ -1842,7 +1842,7 @@
 					},
 					"position": {
 						"0.0": {
-							"vector": [0, "-12+math.sin(query.anim_time*90+45)*0.25", 0]
+							"vector": [0, "-8+math.sin(query.anim_time*90+45)*0.25", 0]
 						}
 					}
 				},
@@ -2248,7 +2248,7 @@
 						}
 					},
 					"position": {
-						"vector": [0, -13, 0]
+						"vector": [0, -8, 0]
 					}
 				},
 				"tail1": {
@@ -2452,7 +2452,7 @@
 						}
 					},
 					"position": {
-						"vector": [0, -13, 0]
+						"vector": [0, -8, 0]
 					}
 				},
 				"tail1": {

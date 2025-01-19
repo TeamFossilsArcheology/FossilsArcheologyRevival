@@ -11,35 +11,47 @@
       "animation_length": 3
     },
     "animation.gastornis.eat": {
-      "animation_length": 3
+      "animation_length": 4.4583
     },
-    "animation.gastornis.idle": {
+    "animation.gastornis.jump/fall_1": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 2
+    },
+    "animation.gastornis.jump/fall_2": {
+      "loop": true,
+      "animation_length": 2
+    },
+    "animation.gastornis.idle_1": {
+      "loop": true,
+      "animation_length": 4.6
+    },
+    "animation.gastornis.idle_2": {
+      "loop": true,
+      "animation_length": 4.6
     },
     "animation.gastornis.run": {
       "loop": true,
-      "animation_length": 1.75,
+      "animation_length": 0.9583,
       "blocks_per_second": 2.0
     },
     "animation.gastornis.sit": {
       "loop": true,
-      "animation_length": 6
+      "animation_length": 12
     },
     "animation.gastornis.sleep": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 24.0833
     },
     "animation.gastornis.speak": {
       "animation_length": 1
     },
     "animation.gastornis.swim": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 2
     },
     "animation.gastornis.walk": {
       "loop": true,
-      "animation_length": 3.25,
+      "animation_length": 2,
       "blocks_per_second": 0.825
     }
   },

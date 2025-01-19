@@ -13,13 +13,21 @@
     "animation.phorusrhacos.eat": {
       "animation_length": 4.4583
     },
-    "animation.phorusrhacos.jump/fall": {
+    "animation.phorusrhacos.jump/fall_1": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.phorusrhacos.idle": {
+    "animation.phorusrhacos.jump/fall_2": {
       "loop": true,
       "animation_length": 2
+    },
+    "animation.phorusrhacos.idle_1": {
+      "loop": true,
+      "animation_length": 4.6
+    },
+    "animation.phorusrhacos.idle_2": {
+      "loop": true,
+      "animation_length": 4.6
     },
     "animation.phorusrhacos.run": {
       "loop": true,
@@ -32,14 +40,14 @@
     },
     "animation.phorusrhacos.sleep": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 24.0833
     },
     "animation.phorusrhacos.speak": {
       "animation_length": 1
     },
     "animation.phorusrhacos.swim": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 2
     },
     "animation.phorusrhacos.walk": {
       "loop": true,

@@ -58,15 +58,6 @@
 					]
 				},
 				{
-					"name": "upperwingR",
-					"parent": "chest1",
-					"pivot": [-5.5, 21.46916, -9.28484],
-					"rotation": [-56.82, -20.5, 10.43],
-					"cubes": [
-						{"origin": [-6, 20.96916, -10.28484], "size": [1, 4, 6], "uv": [38, 29]}
-					]
-				},
-				{
 					"name": "neck1",
 					"parent": "chest1",
 					"pivot": [0, 24.26916, -12.08484],
@@ -121,6 +112,15 @@
 					"parent": "head1",
 					"pivot": [0, 17.9692, -24.3848],
 					"cubes": []
+				},
+				{
+					"name": "upperwingR",
+					"parent": "chest1",
+					"pivot": [-5.5, 21.46916, -9.28484],
+					"rotation": [-56.82, -20.5, 10.43],
+					"cubes": [
+						{"origin": [-6, 20.96916, -10.28484], "size": [1, 4, 6], "uv": [38, 29]}
+					]
 				},
 				{
 					"name": "upperwingL",

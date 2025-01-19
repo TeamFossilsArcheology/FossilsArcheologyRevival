@@ -13,13 +13,21 @@
     "animation.kelenken.eat": {
       "animation_length": 4.4583
     },
-    "animation.kelenken.jump/fall": {
+    "animation.kelenken.jump/fall_1": {
       "loop": true,
       "animation_length": 2
     },
-    "animation.kelenken.idle": {
+    "animation.kelenken.jump/fall_2": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 2
+    },
+    "animation.kelenken.idle_1": {
+      "loop": true,
+      "animation_length": 4.6
+    },
+    "animation.kelenken.idle_2": {
+      "loop": true,
+      "animation_length": 4.6
     },
     "animation.kelenken.run": {
       "loop": true,
@@ -32,14 +40,14 @@
     },
     "animation.kelenken.sleep": {
       "loop": true,
-      "animation_length": 12
+      "animation_length": 24.0833
     },
     "animation.kelenken.speak": {
       "animation_length": 1
     },
     "animation.kelenken.swim": {
       "loop": true,
-      "animation_length": 4
+      "animation_length": 2
     },
     "animation.kelenken.walk": {
       "loop": true,
