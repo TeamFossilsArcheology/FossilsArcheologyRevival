@@ -58,7 +58,7 @@ public class SleepSystem extends AISystem {
      * @return whether something is preventing the mob from sleeping
      */
     protected boolean canSleep() {
-        if (isDisabled() || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() != OrderType.FOLLOW) {
+        if (isDisabled() || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW) {
             return false;
         }
         if ((mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC)) {
