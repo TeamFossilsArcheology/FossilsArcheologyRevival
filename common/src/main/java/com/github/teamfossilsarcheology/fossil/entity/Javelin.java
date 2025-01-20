@@ -41,23 +41,23 @@ public class Javelin extends AbstractArrow {
 
     private static double getDamage(Tier tier, boolean ancient) {
         if (ancient) {
-            return 10;
+            return 5;
         } else if (tier instanceof Tiers tiers) {
             switch (tiers) {
                 case WOOD -> {
                     return 2;
                 }
                 case STONE -> {
-                    return 3;
+                    return 2.5;
                 }
                 case GOLD -> {
-                    return 5;
+                    return 3.5;
                 }
                 case IRON -> {
-                    return 4;
+                    return 3;
                 }
                 case DIAMOND -> {
-                    return 7;
+                    return 4;
                 }
             }
         }

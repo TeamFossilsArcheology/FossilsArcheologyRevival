@@ -89,7 +89,7 @@ public class JavelinItem extends TieredItem {
 
     @Override
     public int getEnchantmentValue() {
-        return 1;
+        return 0;
     }
 
     public static class JavelinProperties extends Item.Properties {
