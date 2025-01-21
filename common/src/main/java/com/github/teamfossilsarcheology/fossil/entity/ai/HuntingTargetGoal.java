@@ -51,7 +51,7 @@ public class HuntingTargetGoal extends TargetGoal {
         if (randomInterval > 0 && mob.getRandom().nextInt(randomInterval) != 0 || dino.isImmobile()) {
             return false;
         }
-        if (dino.isHungry()) {
+        if (dino.isHungry() && !dino.isBaby()) {
             target = findHuntingTarget();
             return target != null;
         }
