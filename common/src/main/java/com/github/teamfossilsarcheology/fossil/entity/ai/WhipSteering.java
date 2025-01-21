@@ -62,16 +62,16 @@ public class WhipSteering {
         dino.move(MoverType.SELF, dino.getDeltaMovement());
     }
 
-    public void waterTravel(Vec3 travelVector, Player rider, float playerJumpPendingScale) {
+    public void waterTravel(Vec3 travelVector, Player rider) {
         Vec3 look = rider.getLookAngle();
         boolean movement = Math.abs(travelVector.x) > 0 || Math.abs(travelVector.z) > 0;
-        double downwardMovement = playerJumpPendingScale <= 0 && look.y < -0.4 ? -0.3 : 0;
+        double downwardMovement = look.y < -0.4 ? -0.3 : 0;
         if (movement) {
             dino.setDeltaMovement(0, 0, 0);
         } else {
             dino.setDeltaMovement(dino.getDeltaMovement().x / 2, 0, dino.getDeltaMovement().z / 2);
         }
-        double upwardMovement = playerJumpPendingScale > 0 ? 0.3 : 0;
+        double upwardMovement = look.y > 0 ? 0.3 : 0;
         dino.moveRelative(dino.getSpeed(), new Vec3(travelVector.x, upwardMovement + downwardMovement, travelVector.z));
         dino.move(MoverType.SELF, dino.getDeltaMovement());
     }

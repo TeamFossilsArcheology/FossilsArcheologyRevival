@@ -21,6 +21,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
+import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
@@ -92,6 +93,14 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             return true;
         }
         return entity.level.getFluidState(entity.blockPosition().below(3)).is(FluidTags.WATER);
+    }
+
+    @Override
+    protected void updateControlFlags() {
+        boolean bl = !isBeached() && !isSleeping();
+        goalSelector.setControlFlag(Goal.Flag.MOVE, bl && !sitSystem.isSitting());
+        goalSelector.setControlFlag(Goal.Flag.JUMP, bl && !sitSystem.isSitting());
+        goalSelector.setControlFlag(Goal.Flag.LOOK, bl);
     }
 
     @Override
@@ -174,6 +183,8 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     @Override
     public void aiStep() {
         super.aiStep();
+        boolean wasBeached = beached;
+        beached = !isAmphibious() && !isInWater() && isOnGround();
         if (!level.isClientSide) {
             if (isInWater() && isLandNavigator) {
                 switchNavigator(false);
@@ -192,7 +203,9 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
                 setDoingGrabAttack(false);
             }
         } else {
-            beached = !isAmphibious() && !isInWater() && isOnGround();
+            if (wasBeached != beached) {
+                refreshTexturePath();
+            }
             if (beached) {
                 setXRot(0);
             }
@@ -302,7 +315,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
         float newForwardMovement = rider.zza;
         if (isControlledByLocalInstance()) {
             setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
-            steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (Player) rider, playerJumpPendingScale);
+            steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (Player) rider);
         } else {
             setDeltaMovement(Vec3.ZERO);
         }

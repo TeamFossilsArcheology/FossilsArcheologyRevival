@@ -203,7 +203,6 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             setSpeed((float) getAttributeValue(Attributes.MOVEMENT_SPEED));
             Vec3 newMovement = new Vec3(newStrafeMovement, travelVector.y, newForwardMovement).scale(0.5);
             if (isFlying()) {
-                //TODO: Fly up, down, land
                 steering.airTravel(newMovement);
             } else {
                 super.travel(newMovement);
