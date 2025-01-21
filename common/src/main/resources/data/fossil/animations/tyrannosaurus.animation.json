@@ -1,6 +1,20 @@
 {
   "format_version": "1.8.0",
   "animations": {
+    "animation.tyrannosaurus.!attack_heavy": {
+      "loop": true,
+      "animation_length": 2.5,
+      "action_delay": [
+        0.58
+      ]
+    },
+    "animation.tyrannosaurus.!attack_log": {
+      "loop": true,
+      "animation_length": 2.5,
+      "action_delay": [
+        0.58
+      ]
+    },
     "animation.tyrannosaurus.attack_normal_1": {
       "loop": true,
       "animation_length": 1.5,
@@ -13,20 +27,6 @@
       "animation_length": 1.5,
       "action_delay": [
         1
-      ]
-    },
-    "animation.tyrannosaurus.attack_heavy": {
-      "loop": true,
-      "animation_length": 2.5,
-      "action_delay": [
-        0.58
-      ]
-    },
-    "animation.tyrannosaurus.attack_log": {
-      "loop": true,
-      "animation_length": 2.5,
-      "action_delay": [
-        0.58
       ]
     },
     "animation.tyrannosaurus.call": {
@@ -52,10 +52,14 @@
       "loop": true,
       "animation_length": 12
     },
+    "animation.tyrannosaurus.knockout": {
+      "loop": true,
+      "animation_length": 4
+    },
     "animation.tyrannosaurus.run": {
       "loop": true,
       "animation_length": 1.5,
-      "blocks_per_second": 2.0
+      "blocks_per_second": 1.75
     },
     "animation.tyrannosaurus.!run_baby": {
       "loop": true,
@@ -88,7 +92,7 @@
     "animation.tyrannosaurus.walk": {
       "loop": true,
       "animation_length": 3,
-      "blocks_per_second": 0.75
+      "blocks_per_second": 0.5
     }
   },
   "geckolib_format_version": 2

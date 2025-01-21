@@ -16,9 +16,9 @@ public record AnimationCategory(String name, @Nullable AnimationCategory backup,
     public static final AnimationCategory ATTACK = register("attack", IDLE);
     public static final AnimationCategory EAT = register("eat", IDLE);
     public static final AnimationCategory BEACHED = register("beached", IDLE, 0, 5);
-    public static final AnimationCategory KNOCKOUT = register("knockout", IDLE, 0, 15);
     public static final AnimationCategory SLEEP = register("sleep", IDLE, 0.05f, 20);
     public static final AnimationCategory SIT = register("sit", SLEEP, 0.2f, 20);
+    public static final AnimationCategory KNOCKOUT = register("knockout", SLEEP, 0, 15);
 
     public static final AnimationCategory FLY = register("fly", IDLE, s -> s.contains("fly") && !s.contains("fast"));
     public static final AnimationCategory FLY_FAST = register("fly_fast", FLY, s -> s.contains("fly") && s.contains("fast"));
