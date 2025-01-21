@@ -3710,7 +3710,7 @@
 						"vector": [0, 0, -77.5]
 					},
 					"position": {
-						"vector": [0, -14, 0]
+						"vector": [-6, -14, 0]
 					}
 				},
 				"tail1": {
@@ -3841,6 +3841,48 @@
 				"leftLeg": {
 					"rotation": {
 						"vector": [0, 0, -2.5]
+					}
+				},
+				"tail_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [-4, 0, 0]
+					},
+					"position": {
+						"vector": [-5, 4, 3]
+					},
+					"scale": {
+						"vector": [1.4, 1, 1.4]
+					}
+				},
+				"head_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [5.09, 0, 0]
+					},
+					"position": {
+						"vector": [-4, 7, 0]
+					},
+					"scale": {
+						"vector": [1, 0.7, 1]
+					}
+				},
+				"body_hitbox": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": {
+						"vector": [3.48, 0, 0]
+					},
+					"position": {
+						"vector": [-4.75, 11, 0]
+					},
+					"scale": {
+						"vector": [1, 0.6, 1]
 					}
 				}
 			}

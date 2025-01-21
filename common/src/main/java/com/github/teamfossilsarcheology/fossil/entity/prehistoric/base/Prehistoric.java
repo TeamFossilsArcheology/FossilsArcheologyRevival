@@ -1146,7 +1146,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 builder.append("_female");
             }
         }
-        if (isSleeping()) builder.append("_sleeping");
+        if (isSleeping() || isWeak()) builder.append("_sleeping");
         builder.append(".png");
         textureLocation = FossilMod.location(builder.toString());
     }
