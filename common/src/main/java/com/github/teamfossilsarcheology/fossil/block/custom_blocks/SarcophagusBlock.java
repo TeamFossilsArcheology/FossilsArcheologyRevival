@@ -70,6 +70,7 @@ public class SarcophagusBlock extends BaseEntityBlock {
                 ItemStack itemStack = player.getItemInHand(hand);
                 if (itemStack.is(ModItems.SCARAB_GEM.get())) {
                     blockEntity.setState(SarcophagusBlockEntity.STATE_UNLOCKED);
+                    level.blockEvent(pos, blockState.getBlock(), SarcophagusBlockEntity.STATE_EVENT, blockEntity.getState());
                     level.setBlockAndUpdate(pos, blockState.setValue(SarcophagusBlock.LIT, true));
                     level.setBlockAndUpdate(pos.above(), level.getBlockState(pos.above()).setValue(SarcophagusBlock.LIT, true));
                     level.setBlockAndUpdate(pos.above(2), level.getBlockState(pos.above(2)).setValue(SarcophagusBlock.LIT, true));
@@ -83,6 +84,7 @@ public class SarcophagusBlock extends BaseEntityBlock {
             } else if (blockEntity.getState() == SarcophagusBlockEntity.STATE_UNLOCKED) {
                 blockEntity.setState(SarcophagusBlockEntity.STATE_OPENING);
                 blockEntity.setDoorTimer(1);
+                level.blockEvent(pos, blockState.getBlock(), SarcophagusBlockEntity.STATE_EVENT, blockEntity.getState());
                 if (!level.isClientSide) {
                     enableBarriers((ServerLevel) level, pos);
                 }

@@ -27,6 +27,7 @@ public class SarcophagusBlockEntity extends BlockEntity {
     public static final int STATE_UNLOCKED = 1;
     public static final int STATE_OPENING = 2;
     public static final int STATE_CLOSING = 3;
+    public static final int STATE_EVENT = 1;
     private int state;
     private int doorTimer;
 
@@ -57,6 +58,19 @@ public class SarcophagusBlockEntity extends BlockEntity {
     @Override
     public Packet<ClientGamePacketListener> getUpdatePacket() {
         return ClientboundBlockEntityDataPacket.create(this);
+    }
+
+    @Override
+    public boolean triggerEvent(int id, int type) {
+        if (id == STATE_EVENT) {
+            state = type;
+            if (type == STATE_OPENING) {
+                doorTimer = 1;
+            }
+            return true;
+        } else {
+            return super.triggerEvent(id, type);
+        }
     }
 
     private static void tick(Level level, BlockPos pos, BlockState state, SarcophagusBlockEntity blockEntity) {
@@ -114,7 +128,6 @@ public class SarcophagusBlockEntity extends BlockEntity {
 
     public void setState(int state) {
         this.state = state;
-        setChanged();
     }
 
     public int getDoorTimer() {

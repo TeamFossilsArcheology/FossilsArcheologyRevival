@@ -1,7 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.block.entity;
 
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AnubiteStatueBlock;
-import com.github.teamfossilsarcheology.fossil.block.custom_blocks.SarcophagusBlock;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import net.minecraft.core.BlockPos;
@@ -58,8 +57,7 @@ public class AnubiteStatueBlockEntity extends BlockEntity {
                     BlockPos spawnPos = pos.offset(state.getValue(AnubiteStatueBlock.FACING).getNormal());
                     ModEntities.ANUBITE.get().spawn((ServerLevel) level, null, null, spawnPos, MobSpawnType.EVENT, false, false);
                     blockEntity.cooldown = FossilConfig.getInt(FossilConfig.ANUBITE_COOLDOWN);
-                    level.setBlockAndUpdate(pos, state.setValue(SarcophagusBlock.LIT, false));
-                    blockEntity.setChanged();
+                    level.setBlockAndUpdate(pos, state.setValue(AnubiteStatueBlock.LIT, false));
                 }
             }
         } else {
@@ -74,8 +72,7 @@ public class AnubiteStatueBlockEntity extends BlockEntity {
         if (blockEntity.cooldown > 0) {
             blockEntity.cooldown--;
             if (blockEntity.cooldown == 0) {
-                level.setBlockAndUpdate(pos, state.setValue(SarcophagusBlock.LIT, true));
-                blockEntity.setChanged();
+                level.setBlockAndUpdate(pos, state.setValue(AnubiteStatueBlock.LIT, true));
             }
         }
     }
