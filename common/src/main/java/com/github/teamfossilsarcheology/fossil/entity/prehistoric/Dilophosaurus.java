@@ -1,8 +1,11 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
+import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
+import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
@@ -46,6 +49,29 @@ public class Dilophosaurus extends Prehistoric {
             return super.getDimensions(poseIn).scale(1, 0.5f);
         }
         return super.getDimensions(poseIn);
+    }
+
+    @Override
+    public void refreshTexturePath() {
+        if (!level.isClientSide) {
+            return;
+        }
+        StringBuilder builder = new StringBuilder();
+        builder.append("textures/entity/dilophosaurus/dilophosaurus");
+        if (FossilConfig.isEnabled(FossilConfig.FEATHERED_DILO)) {
+            builder.append("_feathered");
+        }
+        if (isBaby()) builder.append("_baby");
+        if (isAdult()) {
+            if (getGender() == Gender.MALE) {
+                builder.append("_male");
+            } else {
+                builder.append("_female");
+            }
+        }
+        if (isSleeping()) builder.append("_sleeping");
+        builder.append(".png");
+        textureLocation = FossilMod.location(builder.toString());
     }
 
     @Override

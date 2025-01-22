@@ -74,6 +74,10 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Comment
     public static MidnightConfig.Comment mob;
     @MidnightConfig.Entry
+    public static boolean featheredDilo = false;
+    @MidnightConfig.Entry
+    public static boolean featheredDryo = false;
+    @MidnightConfig.Entry
     public static boolean healingDinos = true;
     @MidnightConfig.Entry
     public static boolean enableHunger = true;

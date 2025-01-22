@@ -33,6 +33,8 @@ public class FossilConfig {
     public static final String SPAWN_TAR_SLIMES = "spawnTarSlimes";
     public static final String TAR_SLIMES_SPAWN_RATE = "tarSlimesSpawnRate";
 
+    public static final String FEATHERED_DILO = "featheredDilo";
+    public static final String FEATHERED_DRYO = "featheredDryo";
     public static final String HEALING_DINOS = "healingDinos";
     public static final String ENABLE_HUNGER = "enableHunger";
     public static final String ENABLE_STARVATION = "enableStarvation";

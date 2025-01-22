@@ -40,6 +40,8 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.BooleanValue SPAWN_TAR_SLIMES;
     public static final ForgeConfigSpec.IntValue TAR_SLIMES_SPAWN_RATE;
 
+    public static final ForgeConfigSpec.BooleanValue FEATHERED_DILO;
+    public static final ForgeConfigSpec.BooleanValue FEATHERED_DRYO;
     public static final ForgeConfigSpec.BooleanValue HEALING_DINOS;
     public static final ForgeConfigSpec.BooleanValue ENABLE_HUNGER;
     public static final ForgeConfigSpec.BooleanValue ENABLE_STARVATION;
@@ -102,6 +104,8 @@ public class ForgeConfig {
         STURGEON_SPAWN_WEIGHT = intEntry("Sturgeon Spawn Weight. Higher number = more common", FossilConfig.STURGEON_SPAWN_WEIGHT, 5, 0, 100000000);
         BUILDER.pop();
         BUILDER.push("Mob Config");
+        FEATHERED_DILO = boolEntry("True if Dilophosaurus should be feathered", FossilConfig.FEATHERED_DILO, false);
+        FEATHERED_DRYO = boolEntry("True if Dryosaurus should be feathered", FossilConfig.FEATHERED_DRYO, false);
         HEALING_DINOS = boolEntry("True if Dinosaurs can be healed by hand feeding it food", FossilConfig.HEALING_DINOS, true);
         ENABLE_HUNGER = boolEntry("True if Dinosaurs have hunger", FossilConfig.ENABLE_HUNGER, true);
         ENABLE_STARVATION = boolEntry("True if Dinosaurs can die of hunger", FossilConfig.ENABLE_STARVATION, false);
