@@ -982,7 +982,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         }
         boolean hurt = super.hurt(source, amount);
         if (hurt) {
-            if (getLastHurtByMob() instanceof Player player && getOwner() == player) {
+            if (getLastHurtByMob() instanceof Player player && getOwner() == player && moodSystem.getMoodFace() == PrehistoricMoodType.SAD) {
                 setOwnerUUID(null);
                 setTame(false);
                 moodSystem.increaseMood(-15);
@@ -1365,7 +1365,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         registerEatingListeners(controller);
         data.addAnimationController(controller);
         data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 5, animationLogic::attackPredicate));
+                this, AnimationLogic.ATTACK_CTRL, 0, animationLogic::attackPredicate));
     }
 
     protected void registerEatingListeners(AnimationController<? extends Prehistoric> controller) {
