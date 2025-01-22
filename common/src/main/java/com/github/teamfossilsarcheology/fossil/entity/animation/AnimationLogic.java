@@ -535,6 +535,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
         if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
             return PlayState.CONTINUE;
         }
+        controller.transitionLengthTicks = 5;
         double animSpeed = 1;
         if (!event.getAnimatable().isTakingOff()) {
             if (event.getAnimatable().isFlying()) {
@@ -551,8 +552,9 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
             } else if (entity.isInWater()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
-            } else if (!entity.isOnGround() && !event.getAnimatable().isFlying()) {
+            } else if (!entity.isOnGround() && !event.getAnimatable().isFlying() && entity.getDeltaMovement().y < 0) {
                 addActiveAnimation(controller.getName(), AnimationCategory.FLY);
+                controller.transitionLengthTicks = 10;
                 animSpeed = 0.5;
             } else if (event.isMoving()) {
                 Animation animation = entity.nextWalkingAnimation().animation;
