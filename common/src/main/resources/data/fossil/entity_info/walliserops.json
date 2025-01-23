@@ -3,7 +3,7 @@
     "activity": "BOTH",
     "attacking": "BASIC",
     "climbing": "NONE",
-    "moving": "SEMI_AQUATIC",
+    "moving": "AQUATIC",
     "response": "WATER_CALM",
     "taming": "IMPRINTING"
   },
