@@ -53,7 +53,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.DifficultyInstance;
@@ -81,7 +80,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
@@ -202,6 +200,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             goalSelector.addGoal(Util.NEEDS, new EatFromFeederGoal(this));
             goalSelector.addGoal(Util.NEEDS + 1, new EatItemEntityGoal(this));
             goalSelector.addGoal(Util.NEEDS + 2, new EatBlockGoal(this));
+        } else {
+            goalSelector.addGoal(Util.NEEDS, new PassiveFoodGoal(this));
         }
         goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, 1));
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
@@ -568,12 +568,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             }
             if (FossilConfig.isEnabled(FossilConfig.HEALING_DINOS) && random.nextInt(500) == 0 && deathTime == 0) {
                 heal(1);
-            }
-            if (isOnGround() && data().diet() == Diet.PASSIVE) {
-                BlockState state = level.getBlockState(blockPosition().below());
-                if (state.is(BlockTags.SAND) || state.is(BlockTags.DIRT)) {
-                    setHunger(getHunger() + 10);
-                }
             }
 
             if (Version.debugEnabled()) {
@@ -1377,6 +1371,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     case HERBIVORE -> Util.spawnItemParticles(level, Items.WHEAT_SEEDS, 4, aabb);
                     case OMNIVORE -> Util.spawnItemParticles(level, Items.BREAD, 4, aabb);
                     case PISCIVORE -> Util.spawnItemParticles(level, Items.COD, 4, aabb);
+                    case PASSIVE -> Util.spawnItemParticles(level, Items.GUNPOWDER, 4, aabb);
                     default -> Util.spawnItemParticles(level, Items.BEEF, 4, aabb);
                 }
             }

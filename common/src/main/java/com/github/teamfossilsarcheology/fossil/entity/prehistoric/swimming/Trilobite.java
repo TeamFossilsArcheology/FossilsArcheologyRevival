@@ -5,6 +5,9 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.DinoHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.TrilobitePathNavigation;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategory;
+import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
+import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
@@ -23,6 +26,15 @@ import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.manager.AnimationData;
+
+import java.util.Optional;
+
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.LOOP;
+import static software.bernie.geckolib3.core.builder.ILoopType.EDefaultLoopTypes.PLAY_ONCE;
 
 public abstract class Trilobite extends PrehistoricSwimmingBucketable {
 
@@ -84,6 +96,31 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
     @Override
     protected SoundEvent getDeathSound() {
         return ModSounds.ARTHROPLEURA_DEATH.get();
+    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        var ctrl = new PausableAnimationController<>(this, AnimationLogic.IDLE_CTRL, 5, event -> {
+            AnimationController<Trilobite> controller = event.getController();
+            if (getAnimationLogic().tryNextAnimation(controller)) {
+                return PlayState.CONTINUE;
+            }
+            Optional<AnimationLogic.ActiveAnimationInfo> activeAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+            if (activeAnimation.isPresent() && getAnimationLogic().tryForcedAnimation(event, activeAnimation.get())) {
+                return PlayState.CONTINUE;
+            }
+            if (event.isMoving()) {
+                getAnimationLogic().addActiveAnimation(controller.getName(), AnimationCategory.WALK);
+            } else {
+                getAnimationLogic().addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+            }
+            Optional<AnimationLogic.ActiveAnimationInfo> newAnimation = getAnimationLogic().getActiveAnimation(controller.getName());
+            newAnimation.ifPresent(activeAnimationInfo -> controller.setAnimation(new AnimationBuilder().addAnimation(
+                    activeAnimationInfo.animationName(), activeAnimationInfo.loop() ? LOOP : PLAY_ONCE)));
+            return PlayState.CONTINUE;
+        });
+        registerEatingListeners(ctrl);
+        data.addAnimationController(ctrl);
     }
 
     class TrilobiteMoveControl extends MoveControl {
