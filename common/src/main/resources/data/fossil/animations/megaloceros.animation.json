@@ -52,7 +52,7 @@
     "animation.megaloceros.walk": {
       "loop": true,
       "animation_length": 1.9,
-      "blocks_per_second": 0.5
+      "blocks_per_second": 0.75
     }
   },
   "geckolib_format_version": 2

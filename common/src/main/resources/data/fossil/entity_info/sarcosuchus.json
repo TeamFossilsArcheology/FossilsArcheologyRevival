@@ -13,7 +13,7 @@
     "healthBase": 10.0,
     "healthMax": 70.0,
     "speedBase": 0.15,
-    "speedMax": 0.23,
+    "speedMax": 0.2,
     "swimSpeedBase": 0.1,
     "swimSpeedMax": 0.15,
     "armorBase": 2.0,

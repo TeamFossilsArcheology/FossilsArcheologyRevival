@@ -40,7 +40,7 @@
     "animation.pachycephalosaurus.run": {
       "loop": true,
       "animation_length": 0.75,
-      "blocks_per_second": 2.7
+      "blocks_per_second": 3.0
     },
     "animation.pachycephalosaurus.sleep": {
       "loop": true,

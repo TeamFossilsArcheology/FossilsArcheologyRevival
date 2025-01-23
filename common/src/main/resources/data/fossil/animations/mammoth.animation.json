@@ -28,7 +28,7 @@
     "animation.mammoth.run": {
       "loop": true,
       "animation_length": 1.4167,
-      "blocks_per_second": 0.75
+      "blocks_per_second": 1.0
     },
     "animation.mammoth.rest/sleep": {
       "loop": true,

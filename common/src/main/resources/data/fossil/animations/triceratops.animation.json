@@ -73,7 +73,7 @@
     "animation.triceratops.walk": {
       "loop": true,
       "animation_length": 2,
-      "blocks_per_second": 0.6
+      "blocks_per_second": 0.5
     }
   },
   "geckolib_format_version": 2

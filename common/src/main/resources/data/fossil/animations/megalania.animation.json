@@ -30,7 +30,7 @@
     "animation.megalania.run": {
       "loop": true,
       "animation_length": 1.0417,
-      "blocks_per_second": 0.6
+      "blocks_per_second": 1.0
     },
     "animation.megalania.sleep": {
       "loop": true,
@@ -49,7 +49,7 @@
     "animation.megalania.walk": {
       "loop": true,
       "animation_length": 1.5,
-      "blocks_per_second": 0.41
+      "blocks_per_second": 0.6
     }
   },
   "geckolib_format_version": 2

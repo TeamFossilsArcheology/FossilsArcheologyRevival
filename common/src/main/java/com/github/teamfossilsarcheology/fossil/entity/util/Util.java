@@ -83,7 +83,7 @@ public class Util {
     }
 
     public static double attributeToSpeed(double speed) {
-        return 23.55 * Mth.square(speed);
+        return 30.7 * Mth.square(speed) + 6 * speed - 0.7;
     }
 
     public static double calculateSpeed(EntityDataLoader.Data data, float scale, boolean swim) {

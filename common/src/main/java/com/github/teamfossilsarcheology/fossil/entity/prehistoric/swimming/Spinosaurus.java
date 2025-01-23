@@ -23,6 +23,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.Animation;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
@@ -124,6 +125,7 @@ public class Spinosaurus extends PrehistoricSwimming {
             if (activeAnimation.isPresent() && tryForcedAnimation(event, activeAnimation.get())) {
                 return PlayState.CONTINUE;
             }
+            double animationSpeed = 1;
             if (event.getAnimatable().isBeached()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.BEACHED);
             } else if (entity.isSleeping()) {
@@ -140,7 +142,20 @@ public class Spinosaurus extends PrehistoricSwimming {
                         addActiveAnimation(controller.getName(), entity.getAnimation(SWIM_FLOATING).animation, AnimationCategory.SWIM, false);
                     }
                 } else {
-                    addActiveAnimation(controller.getName(), AnimationCategory.WALK);
+                    Animation walkAnim = entity.nextWalkingAnimation().animation;
+                    animationSpeed = 1 / event.getAnimatable().getScale();
+                    double f = entity.isOnGround() ? entity.level.getBlockState(entity.blockPosition().below()).getBlock().getFriction() * 0.91F : 0.91F;
+                    double mobSpeed = entity.getDeltaMovement().multiply(1/f, 0, 1/f).horizontalDistance() * 20;
+                    mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
+                    double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);
+                    if (animationTargetSpeed > 0) {
+                        animationSpeed *= mobSpeed / animationTargetSpeed;
+                    }
+                    if (animationSpeed <= 0.1) {
+                        addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                    }else {
+                        addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
+                    }
                 }
             } else if (event.getAnimatable().isWeak()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.KNOCKOUT);
@@ -155,6 +170,7 @@ public class Spinosaurus extends PrehistoricSwimming {
                     addActiveAnimation(controller.getName(), entity.getAnimation(IDLE).animation, AnimationCategory.IDLE, false);
                 }
             }
+            setAnimationSpeed(controller, animationSpeed, event.getAnimationTick());
             Optional<ActiveAnimationInfo> newAnimation = getActiveAnimation(controller.getName());
             if (newAnimation.isPresent()) {
                 controller.setAnimation(new AnimationBuilder().addAnimation(newAnimation.get().animationName(), newAnimation.get().loop() ? LOOP : PLAY_ONCE));

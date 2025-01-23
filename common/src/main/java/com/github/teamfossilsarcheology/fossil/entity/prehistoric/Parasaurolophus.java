@@ -221,8 +221,9 @@ public class Parasaurolophus extends Prehistoric {
                 //All animations were done at a scale of 1 -> Slow down animation if scale is bigger than 1
                 double scaleMult = 1 / event.getAnimatable().getScale();
                 //the deltaMovement of the animation should match the mobs deltaMovement
-                double mobSpeed = entity.getDeltaMovement().horizontalDistance() * 20;
-                //Limit mobSpeed to the mobs maximum natural movement speed (23.55 * maxSpeed^2)
+                double f = entity.isOnGround() ? entity.level.getBlockState(entity.blockPosition().below()).getBlock().getFriction() * 0.91F : 0.91F;
+                double mobSpeed = entity.getDeltaMovement().multiply(1/f, 0, 1/f).horizontalDistance() * 20;
+                //Limit mobSpeed to the mobs maximum natural movement speed
                 mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
                 //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
                 double animationTargetSpeed = getAnimationTargetSpeed(event.getAnimatable(), walkAnim.animationName);

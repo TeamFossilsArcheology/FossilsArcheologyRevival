@@ -21,7 +21,7 @@
     "animation.edaphosaurus.run": {
       "loop": true,
       "animation_length": 1,
-      "blocks_per_second": 0.4
+      "blocks_per_second": 0.8
     },
     "animation.edaphosaurus.sleep/sit": {
       "loop": true,

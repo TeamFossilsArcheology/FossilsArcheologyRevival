@@ -30,7 +30,7 @@
     "animation.ornitholestes.run": {
       "loop": true,
       "animation_length": 0.75,
-      "blocks_per_second": 3.25
+      "blocks_per_second": 3.5
     },
     "animation.ornitholestes.sit": {
       "loop": true,
