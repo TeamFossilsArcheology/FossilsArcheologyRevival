@@ -5,12 +5,12 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtByTargetGo
 import com.github.teamfossilsarcheology.fossil.entity.ai.DinoOwnerHurtTargetGoal;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
+import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -35,7 +35,7 @@ public class Aquilolamna extends PrehistoricSwimmingBucketable {
 
     @Override
     public Item getOrderItem() {
-        return Items.NAUTILUS_SHELL;
+        return ModItems.MAGIC_CONCH.get();
     }
 
     @Nullable

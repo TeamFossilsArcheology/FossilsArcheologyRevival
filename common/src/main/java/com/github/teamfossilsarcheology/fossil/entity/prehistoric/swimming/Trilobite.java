@@ -9,6 +9,7 @@ import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategor
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricSwimmingBucketable;
+import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
@@ -20,7 +21,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.MoveControl;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.Vec3;
@@ -83,7 +83,7 @@ public abstract class Trilobite extends PrehistoricSwimmingBucketable {
 
     @Override
     public Item getOrderItem() {
-        return Items.NAUTILUS_SHELL;
+        return ModItems.MAGIC_CONCH.get();
     }
 
     @Nullable
