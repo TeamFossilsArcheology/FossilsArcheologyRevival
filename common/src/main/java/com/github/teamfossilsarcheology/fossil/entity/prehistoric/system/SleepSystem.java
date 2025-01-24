@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.OrderType
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.Pose;
 
 /**
  * This system determines when a mob can and should sleep
@@ -95,10 +94,10 @@ public class SleepSystem extends AISystem {
         mob.getEntityData().set(Prehistoric.SLEEPING, sleeping);
         if (!sleeping) {
             cathermalSleepCooldown = 10000 + mob.getRandom().nextInt(6000);
-            mob.setPose(Pose.STANDING);
+            mob.updatePose();
         } else {
             ticksSlept = 0;
-            mob.setPose(Pose.SLEEPING);
+            mob.updatePose();
             mob.getNavigation().stop();
             mob.setDeltaMovement(0, mob.getDeltaMovement().y, 0);
             mob.hasImpulse = true;

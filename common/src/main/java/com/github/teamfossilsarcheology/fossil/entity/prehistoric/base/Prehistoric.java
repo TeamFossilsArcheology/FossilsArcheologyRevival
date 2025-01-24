@@ -336,6 +336,14 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         return getType().getDimensions().scale(getScale());
     }
 
+    protected Pose getTargetPose() {
+        return isSleeping() ? Pose.SLEEPING : Pose.STANDING;
+    }
+
+    public void updatePose() {
+        setPose(getTargetPose());
+    }
+
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor levelIn, DifficultyInstance difficultyIn, MobSpawnType reason, @Nullable SpawnGroupData spawnDataIn, @Nullable CompoundTag dataTag) {
         //Skip AgeableMob#finalizeSpawn

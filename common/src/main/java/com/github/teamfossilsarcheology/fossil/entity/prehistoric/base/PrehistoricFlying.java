@@ -23,6 +23,7 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Pose;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.BodyRotationControl;
@@ -130,6 +131,10 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         setFlying(compound.getBoolean("Flying"));
     }
 
+    protected Pose getTargetPose() {
+        return isFlying() ? Pose.FALL_FLYING : super.getTargetPose();
+    }
+
     @Override
     public boolean isFlying() {
         return entityData.get(FLYING);
@@ -137,6 +142,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
 
     public void setFlying(boolean flying) {
         entityData.set(FLYING, flying);
+        updatePose();
     }
 
     /**
