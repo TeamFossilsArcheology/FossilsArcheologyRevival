@@ -24,6 +24,7 @@ configurations {
 }
 
 val minecraftVersion: String by rootProject
+val modVersion: String by rootProject
 val forgeVersion: String by project
 val architecturyVersion: String by rootProject
 val archivesBaseName: String by rootProject
@@ -107,7 +108,7 @@ tasks {
     remapJar {
         inputFile.set(shadowJar.get().archiveFile)
         dependsOn(shadowJar)
-        archiveClassifier.set("forge")
+        archiveAppendix.set("forge-$minecraftVersion")
         archiveBaseName.set(archivesBaseName)
     }
 
@@ -123,10 +124,10 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
 modrinth {
     token = System.getenv("MODRINTH_TOKEN") ?: "no value"
     projectId = "IJY7IqPP"
-    versionNumber.set(project.version.toString())
+    versionNumber.set("$minecraftVersion-$modVersion-${project.name}")
     versionType.set("release")
     uploadFile.set(tasks.remapJar)
-    versionName = "${project.version} for Forge $minecraftVersion"
+    versionName = "$modVersion for Forge $minecraftVersion"
     debugMode = true
     dependencies {
         required.project("architectury-api")

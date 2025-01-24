@@ -17,6 +17,7 @@ import com.github.teamfossilsarcheology.fossil.network.*;
 import com.github.teamfossilsarcheology.fossil.network.debug.*;
 import com.github.teamfossilsarcheology.fossil.recipe.ModRecipes;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
+import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
@@ -61,17 +62,19 @@ public class FossilMod {
         ModVillagers.register();
         ModEvents.init();
 
-        MessageHandler.DEBUG_CHANNEL.register(C2SDisableAIMessage.class, C2SDisableAIMessage::write, C2SDisableAIMessage::new, C2SDisableAIMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(C2SDiscardMessage.class, C2SDiscardMessage::write, C2SDiscardMessage::new, C2SDiscardMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(C2SSlowMessage.class, C2SSlowMessage::write, C2SSlowMessage::new, C2SSlowMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(C2SForceAnimationMessage.class, C2SForceAnimationMessage::write, C2SForceAnimationMessage::new, C2SForceAnimationMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(C2SRotationMessage.class, C2SRotationMessage::write, C2SRotationMessage::new, C2SRotationMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(SyncDebugInfoMessage.class, SyncDebugInfoMessage::write, SyncDebugInfoMessage::new, SyncDebugInfoMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(C2STameMessage.class, C2STameMessage::write, C2STameMessage::new, C2STameMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(C2SStructureMessage.class, C2SStructureMessage::write, C2SStructureMessage::new, C2SStructureMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(InstructionMessage.class, InstructionMessage::write, InstructionMessage::new, InstructionMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(S2CCancelAnimationMessage.class, S2CCancelAnimationMessage::write, S2CCancelAnimationMessage::new, S2CCancelAnimationMessage::apply);
-        MessageHandler.DEBUG_CHANNEL.register(S2CMarkMessage.class, S2CMarkMessage::write, S2CMarkMessage::new, S2CMarkMessage::apply);
+        if (Version.debugEnabled()) {
+            MessageHandler.DEBUG_CHANNEL.register(C2SDisableAIMessage.class, C2SDisableAIMessage::write, C2SDisableAIMessage::new, C2SDisableAIMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(C2SDiscardMessage.class, C2SDiscardMessage::write, C2SDiscardMessage::new, C2SDiscardMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(C2SSlowMessage.class, C2SSlowMessage::write, C2SSlowMessage::new, C2SSlowMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(C2SForceAnimationMessage.class, C2SForceAnimationMessage::write, C2SForceAnimationMessage::new, C2SForceAnimationMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(C2SRotationMessage.class, C2SRotationMessage::write, C2SRotationMessage::new, C2SRotationMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(SyncDebugInfoMessage.class, SyncDebugInfoMessage::write, SyncDebugInfoMessage::new, SyncDebugInfoMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(C2STameMessage.class, C2STameMessage::write, C2STameMessage::new, C2STameMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(C2SStructureMessage.class, C2SStructureMessage::write, C2SStructureMessage::new, C2SStructureMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(InstructionMessage.class, InstructionMessage::write, InstructionMessage::new, InstructionMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(S2CCancelAnimationMessage.class, S2CCancelAnimationMessage::write, S2CCancelAnimationMessage::new, S2CCancelAnimationMessage::apply);
+            MessageHandler.DEBUG_CHANNEL.register(S2CMarkMessage.class, S2CMarkMessage::write, S2CMarkMessage::new, S2CMarkMessage::apply);
+        }
 
         MessageHandler.CAP_CHANNEL.register(S2CMammalCapMessage.class, S2CMammalCapMessage::write, S2CMammalCapMessage::new, S2CMammalCapMessage::apply);
         MessageHandler.SYNC_CHANNEL.register(S2CMusicMessage.class, S2CMusicMessage::write, S2CMusicMessage::new, S2CMusicMessage::apply);

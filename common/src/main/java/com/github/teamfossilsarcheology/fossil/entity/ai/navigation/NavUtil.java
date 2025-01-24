@@ -86,12 +86,34 @@ public class NavUtil {
     }
 
     private static boolean isCollisionAtColumn(int x, int minY, int z, int maxY, int stepY, PathComputationType type, Mob mob, BlockPos.MutableBlockPos pos, NodeEvaluator nodeEvaluator) {
-        for (int y = minY; y != maxY; y += stepY) {
-            BlockState block = mob.level.getBlockState(pos.set(x, y, z));
-            if (!block.isPathfindable(mob.level, pos, type)) {
+        if (type == PathComputationType.WATER) {
+            //This should help when the column is partially outside the water
+            boolean anyWater = false;
+            for (int y = minY; y != maxY; y += stepY) {
+                BlockState block = mob.level.getBlockState(pos.set(x, y, z));
+                if (block.isPathfindable(mob.level, pos, type)) {
+                    anyWater = true;
+                    break;
+                }
+            }
+            if (!anyWater) {
                 return true;
             }
+            for (int y = minY; y != maxY; y += stepY) {
+                BlockState block = mob.level.getBlockState(pos.set(x, y, z));
+                if (!block.isPathfindable(mob.level, pos, PathComputationType.WATER) && !block.isPathfindable(mob.level, pos, PathComputationType.LAND)) {
+                    return true;
+                }
+            }
+        } else {
+            for (int y = minY; y != maxY; y += stepY) {
+                BlockState block = mob.level.getBlockState(pos.set(x, y, z));
+                if (!block.isPathfindable(mob.level, pos, type)) {
+                    return true;
+                }
+            }
         }
+
         BlockPathTypes in = nodeEvaluator.getBlockPathType(mob.level, x, minY, z);
         float malus = mob.getPathfindingMalus(in);
         if (malus < 0.0F || malus >= 8.0F) {

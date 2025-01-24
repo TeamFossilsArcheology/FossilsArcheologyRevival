@@ -35,6 +35,7 @@ configurations {
 }
 
 val minecraftVersion: String by rootProject
+val modVersion: String by rootProject
 val fabricLoaderVersion: String by rootProject
 val fabricApiVersion: String by project
 val architecturyVersion: String by rootProject
@@ -151,7 +152,7 @@ tasks {
         injectAccessWidener.set(true)
         inputFile.set(shadowJar.get().archiveFile)
         dependsOn(shadowJar)
-        archiveClassifier.set("fabric")
+        archiveAppendix.set("fabric-$minecraftVersion")
         archiveBaseName.set(archivesBaseName)
     }
 
@@ -168,10 +169,10 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
 modrinth {
     token = System.getenv("MODRINTH_TOKEN") ?: "no value"
     projectId = "IJY7IqPP"
-    versionNumber.set(project.version.toString())
+    versionNumber.set("$minecraftVersion-$modVersion-${project.name}")
     versionType.set("release")
     uploadFile.set(tasks.remapJar)
-    versionName = "${project.version} for Fabric $minecraftVersion"
+    versionName = "$modVersion for Fabric $minecraftVersion"
     debugMode = true
     dependencies {
         required.project("fabric-api")
