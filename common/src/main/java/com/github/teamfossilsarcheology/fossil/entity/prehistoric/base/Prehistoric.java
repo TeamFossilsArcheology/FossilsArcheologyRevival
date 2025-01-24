@@ -184,7 +184,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public static AttributeSupplier.Builder createAttributes() {
         return Mob.createMobAttributes()
                 .add(Attributes.MAX_HEALTH, 20)
-                .add(Attributes.ATTACK_DAMAGE, 2)
+                .add(Attributes.ATTACK_DAMAGE, 0)
                 .add(Attributes.FLYING_SPEED, 0.4f);
     }
 
@@ -1247,11 +1247,14 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public boolean doHurtTarget(Entity target) {
-        // TODO Implement this properly, all dinosaurs may run away after attacking player if pvp is disabled
-        //Not to be affected: Compso, Lio, Megalodon, Mosa, Nautilus, Spino. Why? Who knows
-        // Should the check be based on size?
         boolean wasEffective = super.doHurtTarget(target);
-        if (!wasEffective) setFleeing(true);
+        if (wasEffective && target instanceof Prehistoric other) {
+            if (other.getHealth() <= other.getMaxHealth() / 2) {
+                other.setFleeing(other.getAttributeValue(Attributes.ATTACK_DAMAGE) < getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.8);
+            } else if (other.getAttributeValue(Attributes.ATTACK_DAMAGE) < getAttributeValue(Attributes.ATTACK_DAMAGE) * 0.5) {
+                other.setFleeing(true);
+            }
+        }
         return wasEffective;
     }
 
@@ -1330,7 +1333,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     public Response aiResponseType() {
-        return isBaby() ? Response.SCARED : ai().response();
+        if (isBaby() || isFleeing()) {
+            return Response.SCARED;
+        }
+        return ai().response();
     }
 
     public Taming aiTameType() {
