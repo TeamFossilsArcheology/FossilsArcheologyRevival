@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.ChatFormatting;
+import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
@@ -33,6 +34,14 @@ public class Psittacosaurus extends Prehistoric {
             return;
         }
         super.refreshTexturePath();
+    }
+
+    @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (level.isClientSide && DATA_CUSTOM_NAME.equals(key)) {
+            refreshTexturePath();
+        }
+        super.onSyncedDataUpdated(key);
     }
 
     @Override
