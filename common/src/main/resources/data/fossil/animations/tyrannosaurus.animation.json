@@ -59,7 +59,7 @@
     "animation.tyrannosaurus.run": {
       "loop": true,
       "animation_length": 1.5,
-      "blocks_per_second": 1.75
+      "blocks_per_second": 0.9
     },
     "animation.tyrannosaurus.!run_baby": {
       "loop": true,

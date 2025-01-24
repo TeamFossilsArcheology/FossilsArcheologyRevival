@@ -63,11 +63,11 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     @Override
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
-        goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, attributes().sprintMod()));
         if (aiAttackType() == PrehistoricEntityInfoAI.Attacking.GRAB) {
-            goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, 1, false));
+            goalSelector.addGoal(Util.ATTACK, new GrabMeleeAttackGoal(this, attributes().sprintMod(), false));
         } else if (aiAttackType() != PrehistoricEntityInfoAI.Attacking.NONE) {
-            goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal<>(this, 1, false));
+            goalSelector.addGoal(Util.ATTACK, new DelayedAttackGoal<>(this, attributes().sprintMod(), false));
         }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         if (data().diet() != Diet.PASSIVE) {

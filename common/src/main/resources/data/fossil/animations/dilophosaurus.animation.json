@@ -51,7 +51,7 @@
     "animation.dilophosaurus.run": {
       "loop": true,
       "animation_length": 0.75,
-      "blocks_per_second": 4.25
+      "blocks_per_second": 3.0
     },
     "animation.dilophosaurus.sit_1": {
       "loop": true,

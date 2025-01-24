@@ -23,7 +23,7 @@
     "animation.protoceratops.run": {
       "loop": true,
       "animation_length": 1,
-      "blocks_per_second": 1.5
+      "blocks_per_second": 1.0
     },
     "animation.protoceratops.sleep/sit": {
       "loop": true,

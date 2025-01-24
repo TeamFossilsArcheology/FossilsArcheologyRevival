@@ -256,7 +256,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                         //Add some inertia to prevent sudden animation stops
                         animationSpeed = Mth.approach(prevAnimationSpeeds.get(controller.getName()), (float)animationSpeed, 0.05f);
                     }
-                    //TODO: entity.isSprinting needs rework
                     if (animationSpeed > 2.75 || entity.isSprinting()) {
                         //Choose sprint
                         animationSpeed = scaleMult;
@@ -457,7 +456,6 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                     //Add some inertia to prevent sudden animation stops
                     animationSpeed = Mth.approach(prevAnimationSpeeds.get(controller.getName()), (float)animationSpeed, 0.05f);
                 }
-                //TODO: entity.isSprinting needs rework
                 if (animationSpeed > 2.75 || entity.isSprinting()) {
                     //Choose sprint
                     animationSpeed = scaleMult;

@@ -190,10 +190,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     protected void registerGoals() {
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(Util.IMMOBILE, new DinoStayGoal(this));
-        goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
+        goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, attributes().sprintMod()));
         goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
         if (aiAttackType() != Attacking.NONE && aiAttackType() != Attacking.JUMP) {
-            goalSelector.addGoal(Util.ATTACK + 1, new DelayedAttackGoal<>(this, 1, false));
+            goalSelector.addGoal(Util.ATTACK + 1, new DelayedAttackGoal<>(this, attributes().sprintMod(), false));
         }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         if (data().diet() != Diet.PASSIVE) {
@@ -203,7 +203,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         } else {
             goalSelector.addGoal(Util.NEEDS, new PassiveFoodGoal(this));
         }
-        goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, 1));
+        goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, attributes().sprintMod() - 0.15));
         goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8.0f));
@@ -545,7 +545,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        setSprinting(getMoveControl().getSpeedModifier() >= 1.25);
+        setSprinting(getMoveControl().getSpeedModifier() >= attributes().sprintMod());
     }
 
     @Override

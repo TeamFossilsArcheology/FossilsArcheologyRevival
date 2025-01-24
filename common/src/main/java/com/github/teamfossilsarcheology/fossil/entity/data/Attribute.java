@@ -9,11 +9,11 @@ import java.lang.reflect.Type;
 /**
  * Entity attributes ranges
  */
-public record Attribute(double baseDamage, double maxDamage, double baseHealth, double maxHealth, double baseSpeed,
+public record Attribute(double baseDamage, double maxDamage, double baseHealth, double maxHealth, double sprintMod, double baseSpeed,
                         double minSpeed, double maxSpeed, double baseSwimSpeed, double minSwimSpeed, double maxSwimSpeed,
                         double baseArmor, double maxArmor, double baseKnockBackResistance, double maxKnockBackResistance) {
     public static Attribute readBuf(FriendlyByteBuf buf) {
-        return new Attribute(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
+        return new Attribute(buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                 buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble(),
                 buf.readDouble(), buf.readDouble(), buf.readDouble());
     }
@@ -39,6 +39,7 @@ public record Attribute(double baseDamage, double maxDamage, double baseHealth, 
             double baseSpeed = GsonHelper.getAsDouble(jsonobject, "speedBase");
             double minSpeed = jsonobject.has("speedMin") ? GsonHelper.getAsDouble(jsonobject, "speedMin") : baseSpeed;
             double maxSpeed = GsonHelper.getAsDouble(jsonobject, "speedMax");
+            double sprintMod = jsonobject.has("sprintMod") ? GsonHelper.getAsDouble(jsonobject, "sprintMod") : 1.25;
             double baseSwimSpeed = jsonobject.has("swimSpeedBase") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedBase") : baseSpeed;
             double minSwimSpeed = jsonobject.has("swimSpeedMin") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedMin") : minSpeed;
             double maxSwimSpeed = jsonobject.has("swimSpeedMax") ? GsonHelper.getAsDouble(jsonobject, "swimSpeedMax") : maxSpeed;
@@ -46,7 +47,7 @@ public record Attribute(double baseDamage, double maxDamage, double baseHealth, 
             double maxArmor = GsonHelper.getAsDouble(jsonobject, "armorMax");
             double baseKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "knockBackResistanceBase");
             double maxKnockBackResistance = GsonHelper.getAsDouble(jsonobject, "knockBackResistanceMax");
-            return new Attribute(baseDamage, maxDamage, baseHealth, maxHealth, baseSpeed, minSpeed, maxSpeed,
+            return new Attribute(baseDamage, maxDamage, baseHealth, maxHealth, sprintMod, baseSpeed, minSpeed, maxSpeed,
                     baseSwimSpeed, minSwimSpeed, maxSwimSpeed, baseArmor, maxArmor, baseKnockBackResistance, maxKnockBackResistance);
         }
     }

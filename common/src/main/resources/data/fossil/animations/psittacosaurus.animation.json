@@ -24,7 +24,7 @@
     "animation.psittacosaurus.run": {
       "loop": true,
       "animation_length": 0.75,
-      "blocks_per_second": 2.75
+      "blocks_per_second": 1.4
     },
     "animation.psittacosaurus.sit": {
       "loop": true,

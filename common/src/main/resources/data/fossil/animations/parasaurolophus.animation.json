@@ -17,7 +17,7 @@
     "animation.parasaurolophus.run": {
       "loop": true,
       "animation_length": 1,
-      "blocks_per_second": 4.0
+      "blocks_per_second": 2.0
     },
     "animation.parasaurolophus.sit": {
       "loop": true,

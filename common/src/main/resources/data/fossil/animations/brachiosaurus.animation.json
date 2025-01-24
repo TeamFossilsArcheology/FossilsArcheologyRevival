@@ -35,7 +35,7 @@
     "animation.brachiosaurus.sprint": {
       "loop": true,
       "animation_length": 2.8333,
-      "blocks_per_second": 0.3375
+      "blocks_per_second": 0.15
     },
     "animation.brachiosaurus.swim": {
       "loop": true,

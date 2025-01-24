@@ -49,7 +49,7 @@
     "animation.velociraptor.run": {
       "loop": true,
       "animation_length": 0.75,
-      "blocks_per_second": 2.3
+      "blocks_per_second": 2.0
     },
     "animation.velociraptor.sit": {
       "loop": true,

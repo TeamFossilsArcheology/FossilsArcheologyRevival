@@ -27,7 +27,7 @@
     "animation.gallimimus.run": {
       "loop": true,
       "animation_length": 0.625,
-      "blocks_per_second": 5.55
+      "blocks_per_second": 3.2
     },
     "animation.gallimimus.sit": {
       "loop": true,

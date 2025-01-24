@@ -153,7 +153,10 @@ public class Spinosaurus extends PrehistoricSwimming {
                     }
                     if (animationSpeed <= 0.1) {
                         addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
-                    }else {
+                    } else {
+                        if (entity.isSprinting()) {
+                            animationSpeed *= 1.25;
+                        }
                         addActiveAnimation(controller.getName(), walkAnim, AnimationCategory.WALK, false);
                     }
                 }

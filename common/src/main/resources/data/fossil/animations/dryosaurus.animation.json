@@ -24,7 +24,7 @@
     "animation.dryosaurus.run": {
       "loop": true,
       "animation_length": 0.75,
-      "blocks_per_second": 3.15
+      "blocks_per_second": 2.8
     },
     "animation.dryosaurus.sit": {
       "loop": true,

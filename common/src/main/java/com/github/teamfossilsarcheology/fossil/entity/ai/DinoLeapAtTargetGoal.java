@@ -17,7 +17,7 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
     private long lastLeapTick = -1;
 
     public DinoLeapAtTargetGoal(PrehistoricLeaping dino) {
-        super(dino, 1.15, false);
+        super(dino, dino.attributes().sprintMod(), false);
         this.setFlags(EnumSet.of(Flag.JUMP, Flag.MOVE, Flag.LOOK));
     }
 
