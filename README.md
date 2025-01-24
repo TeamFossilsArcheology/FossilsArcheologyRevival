@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://i.imgur.com/DXDgsIo.png" alt="Banner"/>
+    <img src="https://imgur.com/G18YFWC" alt="Banner"/>
 </p>
 <p align="center">
     <a href="https://discord.gg/fossils-archaeology-revival-252498968695537664">
@@ -35,10 +35,10 @@ Dafall, Indominator, MrDinosaurFan, TotallyNotAHobo
 Dipple_Effect
 
 ###### Builders
-Robberto08, Toastloard
+Robberto08
 
 ###### Other
-Thylaconical, Toastloard
+Thylaconical
 
 ## Past Fossils and Archeology Revival Contributors
 
@@ -70,7 +70,7 @@ whitejoshman,
 Nanotyrano
 
 ###### Builders
-Robberto08
+Robberto08, Toastlord
 
 ###### Language Contributors
 Octo-Docto (Spanish),
