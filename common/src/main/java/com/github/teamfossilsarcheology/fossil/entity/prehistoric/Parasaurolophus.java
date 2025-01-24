@@ -152,7 +152,7 @@ public class Parasaurolophus extends Prehistoric {
         registerEatingListeners(controller);
         data.addAnimationController(controller);
         data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
+                this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::attackPredicate));
     }
 
     class ParaStandGoal extends Goal {

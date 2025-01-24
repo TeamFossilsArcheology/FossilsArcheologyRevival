@@ -392,7 +392,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
         registerEatingListeners(ctrl);
         data.addAnimationController(ctrl);
         data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
+                this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::attackPredicate));
     }
 
     class MeganeuraSleepSystem extends SleepSystem {

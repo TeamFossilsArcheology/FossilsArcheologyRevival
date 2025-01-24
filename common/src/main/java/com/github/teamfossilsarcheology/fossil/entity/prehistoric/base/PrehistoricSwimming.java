@@ -389,7 +389,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
         registerEatingListeners(controller);
         data.addAnimationController(controller);
         data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::grabAttackPredicate));
+                this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::grabAttackPredicate));
     }
 
     @Override

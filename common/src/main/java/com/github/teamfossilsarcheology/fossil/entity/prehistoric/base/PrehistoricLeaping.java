@@ -151,7 +151,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
             }
         });
         data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
+                this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::attackPredicate));
     }
 
     class LeapMoveControl extends SmoothTurningMoveControl {
