@@ -85,12 +85,14 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
 import java.util.*;
+import java.util.function.Consumer;
 
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.*;
 
@@ -752,6 +754,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public void setClimbing(boolean climbing) {
         this.entityData.set(CLIMBING, climbing);
     }
+
     public void stopClimbing() {
         setClimbing(false);
         entityData.set(CLIMBING_DIR, Direction.UP);
@@ -1366,7 +1369,10 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 this, AnimationLogic.ATTACK_CTRL, 0, animationLogic::attackPredicate));
     }
 
-    protected void registerEatingListeners(AnimationController<? extends Prehistoric> controller) {
+    /**
+     * Calls an additional particle listener
+     */
+    protected void registerEatingListeners(AnimationController<? extends IAnimatable> controller, Consumer<String> additional) {
         controller.registerParticleListener(event -> {
             if ("eat".equals(event.effect)) {
                 //TODO: Could use event.script + getScale to increase the aabb size
@@ -1379,6 +1385,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                     default -> Util.spawnItemParticles(level, Items.BEEF, 4, aabb);
                 }
             }
+            additional.accept(event.effect);
         });
         controller.registerSoundListener(event -> {
             if ("eat".equals(event.sound)) {
@@ -1387,6 +1394,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             if ("call".equals(event.sound)) {
                 playAmbientSound();
             }
+        });
+    }
+
+    protected void registerEatingListeners(AnimationController<? extends Prehistoric> controller) {
+        registerEatingListeners(controller, effect -> {
         });
     }
 

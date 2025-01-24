@@ -136,11 +136,8 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         var controller = new PausableAnimationController<>(
                 this, AnimationLogic.IDLE_CTRL, 5, getAnimationLogic()::leapingPredicate);
         data.addAnimationController(controller);
-        registerEatingListeners(controller);
-        data.addAnimationController(new PausableAnimationController<>(
-                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
-        controller.registerParticleListener(event -> {
-            if ("land".equals(event.effect) && isOnGround()) {
+        registerEatingListeners(controller, effect -> {
+            if ("land".equals(effect) && isOnGround()) {
                 BlockState below = level.getBlockState(new BlockPos(getX(), getY() - 0.2, getZ()));
                 if (below.getRenderShape() != RenderShape.INVISIBLE) {
                     Vec3 vec3 = getDeltaMovement();
@@ -153,6 +150,8 @@ public abstract class PrehistoricLeaping extends Prehistoric {
                 }
             }
         });
+        data.addAnimationController(new PausableAnimationController<>(
+                this, AnimationLogic.ATTACK_CTRL, 5, getAnimationLogic()::attackPredicate));
     }
 
     class LeapMoveControl extends SmoothTurningMoveControl {

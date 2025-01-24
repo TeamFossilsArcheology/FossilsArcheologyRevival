@@ -27,7 +27,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     protected static final int CLEAR_TICKS = 1200;
     private static final int GIVE_UP_TICKS = 1200;
     private static final int STAY_TICKS = 1200;
-    private static final int INTERVAL_TICKS = 200;
+    private static final int INTERVAL_TICKS = 160;
     public final double speedModifier;
     protected final Prehistoric entity;
     protected final int searchRange;
@@ -86,7 +86,6 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             dontStart = true;
         }
         if (dontStart) return false;
-        nextStartTick = nextStartTick();
 
         return findNearestBlock();
     }
@@ -115,6 +114,11 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         tryTicks = 0;
         stuckTicks = 0;
         lastStuckPos = null;
+    }
+
+    @Override
+    public void stop() {
+        nextStartTick = nextStartTick();
     }
 
     protected void moveMobToBlock() {
