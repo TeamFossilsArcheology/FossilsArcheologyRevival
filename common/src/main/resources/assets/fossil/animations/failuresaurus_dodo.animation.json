@@ -53,10 +53,25 @@
 		},
 		"walk": {
 			"loop": true,
+			"animation_length": 1.5,
 			"bones": {
 				"body1": {
+					"rotation": {
+						"0.0": {
+							"vector": [0, 0, 0]
+						},
+						"0.5": {
+							"vector": [0, 5, 0]
+						},
+						"1.0": {
+							"vector": [0, -7.5, 0]
+						},
+						"1.5": {
+							"vector": [0, 0, 0]
+						}
+					},
 					"scale": {
-						"vector": [1, 1, "1+math.abs(math.sin(query.anim_time*180)*0.1)"]
+						"vector": [1, 1, "1+math.abs(math.sin(query.anim_time*120)*0.1)"]
 					}
 				}
 			}

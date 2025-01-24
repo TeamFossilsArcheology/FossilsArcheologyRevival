@@ -100,7 +100,7 @@ public class ModEntities {
     public static final RegistrySupplier<EntityType<ThrownBirdEgg>> THROWN_BIRD_EGG = registerMisc("thrown_bird_egg", ThrownBirdEgg::new, 0.25f, 0.25f, 4, 10);
 
     public static final RegistrySupplier<EntityType<Failuresaurus>> FAILURESAURUS = ENTITIES.register("failuresaurus",
-            () -> EntityType.Builder.of(Failuresaurus::new, MobCategory.MONSTER).sized(1, 1).build("failuresaurus"));
+            () -> EntityType.Builder.of(Failuresaurus::new, MobCategory.MONSTER).sized(0.9f, 1).build("failuresaurus"));
     public static final RegistrySupplier<EntityType<TarSlime>> TAR_SLIME = ENTITIES.register("tar_slime",
             () -> EntityType.Builder.of(TarSlime::new, MobCategory.MONSTER).sized(2.04f, 2.04f).build("tar_slime"));
     public static final RegistrySupplier<EntityType<Anubite>> ANUBITE = ENTITIES.register("anubite",
