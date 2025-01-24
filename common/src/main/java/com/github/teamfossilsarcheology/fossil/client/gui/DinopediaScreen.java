@@ -85,6 +85,8 @@ public class DinopediaScreen extends Screen {
             scale = (int) (35 / entity.getBbWidth());
         } else if (entity instanceof DinosaurEgg) {
             scale = 110;
+        } else if (entity instanceof Quagga) {
+            scale = 35;
         }
         poseStack2.scale(scale, scale, scale);
         poseStack2.mulPose(Vector3f.ZP.rotationDegrees(180));
@@ -123,7 +125,7 @@ public class DinopediaScreen extends Screen {
                     }).createButton(Minecraft.getInstance().options, (width - 200) / 2, 10, 200));
         }
         backButton = addRenderableWidget(new DinopediaPageButton(leftPos + 10, topPos + ySize - 45, 200, 100, false, button -> pageBack()));
-        if (entity instanceof Prehistoric) {
+        if (entity instanceof Prehistoric || entity instanceof Quagga) {
             forwardButton = addRenderableWidget(
                     new DinopediaPageButton(leftPos + xSize - 43, topPos + ySize - 45, 200, 100, true, button -> pageForward()));
         }
@@ -369,6 +371,8 @@ public class DinopediaScreen extends Screen {
             name = ((Prehistoric) entity).info().resourceName;
         } else if (entity instanceof PrehistoricFish) {
             name = ((PrehistoricFish) entity).info().resourceName;
+        } else if (entity instanceof Quagga) {
+            name = "quagga";
         } else {
             return List.of();
         }

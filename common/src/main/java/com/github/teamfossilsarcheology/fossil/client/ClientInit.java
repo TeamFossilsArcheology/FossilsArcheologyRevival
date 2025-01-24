@@ -15,6 +15,7 @@ import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
 import com.github.teamfossilsarcheology.fossil.client.renderer.blockentity.*;
 import com.github.teamfossilsarcheology.fossil.client.renderer.entity.*;
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
+import com.github.teamfossilsarcheology.fossil.entity.Quagga;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategoryLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ClientAnimationInfoLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.SkeletonGeoModelLoader;
@@ -282,6 +283,8 @@ public class ClientInit {
                         Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
                     } else if (entity instanceof DinosaurEgg || entity instanceof Prehistoric) {
                         Minecraft.getInstance().setScreen(new DinopediaScreen((LivingEntity) entity));
+                    } else if (entity instanceof Quagga quagga) {
+                        Minecraft.getInstance().setScreen(new DinopediaScreen(quagga));
                     }
                     return EventResult.interruptTrue();
                 }

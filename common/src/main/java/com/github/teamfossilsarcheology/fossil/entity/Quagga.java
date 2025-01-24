@@ -1,15 +1,21 @@
 package com.github.teamfossilsarcheology.fossil.entity;
 
+import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.AgeableMob;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.AbstractChestedHorse;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class Quagga extends AbstractChestedHorse {
@@ -23,6 +29,15 @@ public class Quagga extends AbstractChestedHorse {
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(generateRandomMaxHealth());
         getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(generateRandomSpeed());
         getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(generateRandomJumpStrength());
+    }
+
+    @Override
+    public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
+        ItemStack itemStack = player.getItemInHand(hand);
+        if (itemStack.is(ModItems.DINOPEDIA.get())) {
+            return InteractionResult.sidedSuccess(this.level.isClientSide);
+        }
+        return super.mobInteract(player, hand);
     }
 
     @Override
