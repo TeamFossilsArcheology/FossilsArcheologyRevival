@@ -33,13 +33,13 @@ public class ModItems {
     public static final RegistrySupplier<Item> TAR_DROP = ITEMS.register("tar_drop",
             () -> new Item(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<RecordItem> MUSIC_DISC_BONES = ITEMS.register("music_disc_bones",
-            () -> CustomRecordItem.get(0, ModSounds.MUSIC_BONES, new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> CustomRecordItem.get(0, ModSounds.MUSIC_BONES, new Item.Properties().stacksTo(1).tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<RecordItem> MUSIC_DISC_ANU = ITEMS.register("music_disc_anu",
-            () -> CustomRecordItem.get(1, ModSounds.MUSIC_ANU, new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> CustomRecordItem.get(1, ModSounds.MUSIC_ANU, new Item.Properties().stacksTo(1).tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<RecordItem> MUSIC_DISC_SCARAB = ITEMS.register("music_disc_scarab",
-            () -> CustomRecordItem.get(2, ModSounds.MUSIC_SCARAB, new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> CustomRecordItem.get(2, ModSounds.MUSIC_SCARAB, new Item.Properties().stacksTo(1).tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<RecordItem> MUSIC_DISC_DISCOVERY = ITEMS.register("music_disc_discovery",
-            () -> CustomRecordItem.get(3, ModSounds.MUSIC_DISCOVERY, new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> CustomRecordItem.get(3, ModSounds.MUSIC_DISCOVERY, new Item.Properties().stacksTo(1).tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> BIO_FOSSIL = ITEMS.register("fossil_bio", () -> new FossilItem(TimePeriod.MESOZOIC));
     public static final RegistrySupplier<Item> PlANT_FOSSIL = ITEMS.register("fossil_plant", () -> new FossilItem(null));
     public static final RegistrySupplier<Item> SHALE_FOSSIL = ITEMS.register("fossil_shale", () -> new FossilItem(TimePeriod.PALEOZOIC));
