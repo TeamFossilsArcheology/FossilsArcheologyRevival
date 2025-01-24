@@ -53,6 +53,8 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
                 mob.attackTarget(enemy);
                 attackDamageTick = -1;
                 attackType = -1;
+            } else if (currentTime >= attackDamageTick + 20) {
+                attackType = -1;
             }
         } else if (currentTime > attackEndTick + 20) {
             int attack = -1;

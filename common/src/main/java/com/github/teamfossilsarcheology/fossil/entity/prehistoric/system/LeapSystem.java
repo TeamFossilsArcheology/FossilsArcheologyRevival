@@ -38,16 +38,24 @@ public class LeapSystem extends AISystem {
             mob.lookAt(target, 100, 10);
             if (mob.distanceToSqr(target) < JUMP_DISTANCE) {
                 startLeap();
-                ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLeapStartAnimation();
-                jumpDelayTick = (long) (currentTick + animation.actionDelay);
+                if (mob.hasLeapAnimation()) {
+                    ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLeapStartAnimation();
+                    jumpDelayTick = (long) (currentTick + animation.actionDelay);
+                } else {
+                    jumpDelayTick = currentTick + 2;
+                }
                 mob.setDeltaMovement(Vec3.ZERO);
             }
         }
         if (!isLeaping() && blockTarget != null) {
             if (mob.distanceToSqr(blockTarget) < JUMP_DISTANCE) {
                 startLeap();
-                ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLeapStartAnimation();
-                jumpDelayTick = (long) (currentTick + animation.actionDelay);
+                if (mob.hasLeapAnimation()) {
+                    ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLeapStartAnimation();
+                    jumpDelayTick = (long) (currentTick + animation.actionDelay);
+                } else {
+                    jumpDelayTick = currentTick + 2;
+                }
                 mob.setDeltaMovement(Vec3.ZERO);
             }
         }
@@ -81,8 +89,12 @@ public class LeapSystem extends AISystem {
                 jumpDelayTick = -1;
             }
             if (mob.isOnGround() && landingDelayTick != -1 && landingDelayTick <= currentTick) {
-                ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLandAnimation();
-                landingEndTick = (long) (currentTick + animation.animation.animationLength);
+                if (mob.hasLeapAnimation()) {
+                    ServerAnimationInfo animation = (ServerAnimationInfo) mob.getLandAnimation();
+                    landingEndTick = (long) (currentTick + animation.animation.animationLength);
+                } else {
+                    landingEndTick = currentTick + 2;
+                }
                 landingDelayTick = -1;
                 setLeapFlying(false);
                 setLanding(true);
@@ -137,7 +149,7 @@ public class LeapSystem extends AISystem {
     }
 
     public void tryAttackRiding(Entity target) {
-        if (target.getPassengers().isEmpty()) {
+        if (target.getPassengers().isEmpty() && mob.hasLeapAnimation()) {
             setLeapFlying(false);
             setAttackRiding(true);
         } else {

@@ -131,6 +131,10 @@ public abstract class PrehistoricLeaping extends Prehistoric {
 
     public abstract String getLeapAttackAnimationName();
 
+    public boolean hasLeapAnimation() {
+        return true;
+    }
+
     @Override
     public void registerControllers(AnimationData data) {
         var controller = new PausableAnimationController<>(
