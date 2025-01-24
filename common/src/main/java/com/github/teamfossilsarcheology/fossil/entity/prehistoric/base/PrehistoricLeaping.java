@@ -84,7 +84,7 @@ public abstract class PrehistoricLeaping extends Prehistoric {
         boolean hurt = super.hurt(source, amount);
         if (hurt && leapSystem.isAttackRiding() && getLastHurtByMob() != null && getLastHurtByMob() == getVehicle()) {
             if (random.nextInt(2) == 0) {
-                getLeapSystem().setAttackRiding(false);
+                getLeapSystem().stopAttackRiding();
                 stopRiding();
             }
         }

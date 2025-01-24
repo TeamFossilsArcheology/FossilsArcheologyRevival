@@ -14,7 +14,6 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
     private static final int LEAP = 1;
     private int attackType = -1;
     private int lastAttackType = -1;
-    private long lastLeapTick = -1;
 
     public DinoLeapAtTargetGoal(PrehistoricLeaping dino) {
         super(dino, dino.attributes().sprintMod(), false);
@@ -62,11 +61,11 @@ public class DinoLeapAtTargetGoal extends DelayedAttackGoal<PrehistoricLeaping> 
                 ServerAnimationInfo animation = mob.startAttack();
                 attackEndTick = (long) (currentTime + animation.animation.animationLength);
                 attackDamageTick = Math.min((long) (currentTime + animation.actionDelay), attackEndTick);
-            } else if ((lastAttackType != LEAP || currentTime > lastLeapTick + 60) && !enemy.isVehicle() && mob.distanceToSqr(enemy) < LeapSystem.JUMP_DISTANCE) {
+            } else if ((lastAttackType != LEAP || currentTime > mob.getLeapSystem().getLastLeapEndTick() + 60) && !enemy.isVehicle() && mob.distanceToSqr(enemy) < LeapSystem.JUMP_DISTANCE) {
                 attackType = LEAP;
                 lastAttackType = attackType;
                 mob.getLeapSystem().setLeapTarget(enemy);
-                lastLeapTick = currentTime;
+                mob.getLeapSystem().setLastLeapEndTick(currentTime);
             }
         }
     }

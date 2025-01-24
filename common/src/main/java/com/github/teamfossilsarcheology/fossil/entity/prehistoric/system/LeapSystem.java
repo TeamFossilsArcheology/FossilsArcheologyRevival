@@ -23,6 +23,7 @@ public class LeapSystem extends AISystem {
     private long jumpDelayTick = -1;
     private long landingDelayTick = -1;
     private long landingEndTick = -1;
+    private long lastLeapEndTick = -1;
 
     public LeapSystem(PrehistoricLeaping mob) {
         super(mob);
@@ -97,7 +98,7 @@ public class LeapSystem extends AISystem {
                     target.hurt(DamageSource.mobAttack(mob), (float) mob.getAttributeValue(Attributes.ATTACK_DAMAGE));
                 }
                 if (target.isDeadOrDying()) {
-                    setAttackRiding(false);
+                    stopAttackRiding();
                 }
             }
             if(!isLeapFlying() && !hasLeapStarted() && !isLanding() && !isAttackRiding()) {
@@ -144,6 +145,12 @@ public class LeapSystem extends AISystem {
         }
     }
 
+    public void stopAttackRiding() {
+        setLeaping(false);
+        setAttackRiding(false);
+        setLeapTarget(null);
+    }
+
     public boolean isLeaping() {
         return leaping;
     }
@@ -186,7 +193,18 @@ public class LeapSystem extends AISystem {
     }
 
     public void setAttackRiding(boolean attackRiding) {
+        if (entityData.get(LEAP_RIDING) && !attackRiding) {
+            lastLeapEndTick = mob.level.getGameTime();
+        }
         entityData.set(LEAP_RIDING, attackRiding);
+    }
+
+    public long getLastLeapEndTick() {
+        return lastLeapEndTick;
+    }
+
+    public void setLastLeapEndTick(long lastLeapEndTick) {
+        this.lastLeapEndTick = lastLeapEndTick;
     }
 
     /**

@@ -545,7 +545,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
-        setSprinting(getMoveControl().getSpeedModifier() >= attributes().sprintMod());
+        if (getMoveControl().hasWanted()) {
+            setSprinting(getMoveControl().getSpeedModifier() >= attributes().sprintMod());
+        } else {
+            setSprinting(false);
+        }
     }
 
     @Override
