@@ -11,7 +11,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.processor.IBone;
-import software.bernie.geckolib3.resource.GeckoLibCache;
 
 public class PrehistoricGeoModel<T extends Prehistoric> extends PrehistoricAnimatableModel<T> {
     private final ResourceLocation modelLocation;
@@ -42,8 +41,14 @@ public class PrehistoricGeoModel<T extends Prehistoric> extends PrehistoricAnima
             } else if (animatable instanceof PrehistoricFlying flying) {
                 IBone root = getAnimationProcessor().getBone("pitch_root");
                 if (root != null && animatable.getControllingPassenger() instanceof Player) {
-                    GeckoLibCache.getInstance().parser.setValue("rider_rot_x", () -> Mth.lerp(animationEvent.getPartialTick(), flying.prevPitch, flying.currentPitch));
-                    GeckoLibCache.getInstance().parser.setValue("rider_rot_z", () -> Mth.lerp(animationEvent.getPartialTick(), flying.prevYaw, flying.currentYaw));
+                    //TODO: I would prefer using the molang query but its very laggy
+                    //GeckoLibCache.getInstance().parser.setValue("rider_rot_x", () -> Mth.lerp(animationEvent.getPartialTick(), flying.prevPitch, flying.currentPitch));
+                    //GeckoLibCache.getInstance().parser.setValue("rider_rot_z", () -> Mth.lerp(animationEvent.getPartialTick(), flying.prevYaw, flying.currentYaw));
+
+                    float pitch = Mth.lerp(animationEvent.getPartialTick(), flying.prevPitch, flying.currentPitch);
+                    root.setRotationX(-pitch * Mth.DEG_TO_RAD + root.getRotationX());
+                    float yaw = Mth.lerp(animationEvent.getPartialTick(), flying.prevYaw, flying.currentYaw);
+                    root.setRotationZ(yaw * Mth.DEG_TO_RAD + root.getRotationZ());
                 }
             }
         }

@@ -25,13 +25,13 @@
         0.54
       ]
     },
-    "animation.stegosaurus.attack_front_strong_right": {
+    "animation.stegosaurus.!attack_front_strong_right": {
       "animation_length": 3,
       "action_delay": [
         1.5
       ]
     },
-    "animation.stegosaurus.attack_front_strong_left": {
+    "animation.stegosaurus.!attack_front_strong_left": {
       "animation_length": 3,
       "action_delay": [
         1.5

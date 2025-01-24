@@ -1361,7 +1361,7 @@
 				}
 			}
 		},
-		"animation.stegosaurus.attack_front_strong_right": {
+		"animation.stegosaurus.!attack_front_strong_right": {
 			"animation_length": 3,
 			"bones": {
 				"lowerBody": {
@@ -1814,7 +1814,7 @@
 				}
 			}
 		},
-		"animation.stegosaurus.attack_front_strong_left": {
+		"animation.stegosaurus.!attack_front_strong_left": {
 			"animation_length": 3,
 			"bones": {
 				"lowerBody": {
