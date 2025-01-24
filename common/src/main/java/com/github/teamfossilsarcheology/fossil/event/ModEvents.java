@@ -41,7 +41,7 @@ public class ModEvents {
     public static void init() {
         EntityEvent.ADD.register((entity, level) -> {
             if (entity instanceof PathfinderMob mob && isLivestock(mob) && FossilConfig.isEnabled(FossilConfig.ANIMALS_FEAR_DINOS)) {
-                mob.goalSelector.addGoal(1, new AnimalFearGoal(mob, Prehistoric.class, 12, 1.2, 1.5,
+                mob.goalSelector.addGoal(1, new AnimalFearGoal(mob, Prehistoric.class, 12, 1.15, 1.25,
                         living -> living instanceof Prehistoric prehistoric && prehistoric.data().diet().isCarnivore()));
             }
             return EventResult.pass();
