@@ -7,8 +7,8 @@
 				"texture_width": 165,
 				"texture_height": 75,
 				"visible_bounds_width": 7,
-				"visible_bounds_height": 5,
-				"visible_bounds_offset": [0, 1.5, 0]
+				"visible_bounds_height": 7,
+				"visible_bounds_offset": [0, 0.5, 0]
 			},
 			"bones": [
 				{
@@ -148,6 +148,18 @@
 					]
 				},
 				{
+					"name": "head1_hitbox",
+					"parent": "neck1",
+					"pivot": [0, 35, -7],
+					"cubes": []
+				},
+				{
+					"name": "head2_hitbox",
+					"parent": "neck1",
+					"pivot": [0, 53, -7],
+					"cubes": []
+				},
+				{
 					"name": "rider_pos",
 					"parent": "body",
 					"pivot": [0, 28, 2]
@@ -173,7 +185,7 @@
 				{
 					"name": "wing3L",
 					"parent": "wing2L",
-					"pivot": [3.3, -0.7, 3.7],
+					"pivot": [4.3, -0.7, 3.7],
 					"rotation": [-8.93, 2.24, 5.95],
 					"cubes": [
 						{"origin": [3.8, -1.2, -0.3], "size": [1, 30, 8], "uv": [55, 31], "mirror": true}
@@ -259,6 +271,12 @@
 					"cubes": [
 						{"origin": [0.9, -0.25, 2.75], "size": [3, 0, 7], "uv": [26, 32]}
 					]
+				},
+				{
+					"name": "body_hitbox",
+					"parent": "root",
+					"pivot": [0, 0, 0],
+					"cubes": []
 				}
 			]
 		}

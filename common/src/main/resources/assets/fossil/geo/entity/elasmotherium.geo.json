@@ -7,8 +7,8 @@
 				"texture_width": 192,
 				"texture_height": 128,
 				"visible_bounds_width": 4,
-				"visible_bounds_height": 3.5,
-				"visible_bounds_offset": [0, 1.25, 0]
+				"visible_bounds_height": 4.5,
+				"visible_bounds_offset": [0, 1.75, 0]
 			},
 			"bones": [
 				{
@@ -190,6 +190,12 @@
 					]
 				},
 				{
+					"name": "head_hitbox",
+					"parent": "neck1",
+					"pivot": [0, 15.4, -30.5],
+					"cubes": []
+				},
+				{
 					"name": "chesthair",
 					"parent": "chest",
 					"pivot": [0, 16.75, -8.7],
@@ -210,6 +216,18 @@
 					"name": "rider_pos",
 					"parent": "chest",
 					"pivot": [0, 29, -6]
+				},
+				{
+					"name": "body1_hitbox",
+					"parent": "chest",
+					"pivot": [0, -1.1, 6],
+					"cubes": []
+				},
+				{
+					"name": "body2_hitbox",
+					"parent": "chest",
+					"pivot": [0, 0.4, -10],
+					"cubes": []
 				}
 			]
 		}

@@ -1,6 +1,27 @@
 {
 	"elements": [
 		{
+			"name": "body1",
+			"pos": [0, 0, -8],
+			"width": 16,
+			"height": 30,
+			"ref": "body1_hitbox"
+		},
+		{
+			"name": "body2",
+			"pos": [0, 0, 8],
+			"width": 16,
+			"height": 30,
+			"ref": "body2_hitbox"
+		},
+		{
+			"name": "head",
+			"pos": [0, 6.5, 23],
+			"width": 14,
+			"height": 17.3,
+			"ref": "head_hitbox"
+		},
+		{
 			"name": "rider_pos",
 			"pos": [0, 29, 6],
 			"ref": "rider_pos",
