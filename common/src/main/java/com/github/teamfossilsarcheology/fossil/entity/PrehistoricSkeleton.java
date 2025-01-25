@@ -71,6 +71,16 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     }
 
     @Override
+    public float getYHeadRot() {
+        return getYRot();
+    }
+
+    @Override
+    public void setYHeadRot(float yHeadRot) {
+        setYRot(yHeadRot);
+    }
+
+    @Override
     protected @NotNull AABB makeBoundingBox() {
         return info().entityType().getDimensions().scale(getScale()).makeBoundingBox(position());
     }
