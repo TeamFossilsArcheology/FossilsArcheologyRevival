@@ -21,6 +21,7 @@ public record Attribute(double baseDamage, double maxDamage, double baseHealth, 
     public static void writeBuf(FriendlyByteBuf buf, Attribute attribute) {
         buf.writeDouble(attribute.baseDamage).writeDouble(attribute.maxDamage)
                 .writeDouble(attribute.baseHealth).writeDouble(attribute.maxHealth)
+                .writeDouble(attribute.sprintMod)
                 .writeDouble(attribute.baseSpeed).writeDouble(attribute.minSpeed).writeDouble(attribute.maxSpeed)
                 .writeDouble(attribute.baseSwimSpeed).writeDouble(attribute.minSwimSpeed).writeDouble(attribute.maxSwimSpeed)
                 .writeDouble(attribute.baseArmor).writeDouble(attribute.maxArmor)
