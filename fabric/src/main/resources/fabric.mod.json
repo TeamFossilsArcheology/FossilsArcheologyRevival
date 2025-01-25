@@ -45,7 +45,7 @@
     "geckolib3": ">=3.0.62",
     "terrablender": ">=1.2.0",
     "cardinal-components-base": ">=4.1.4",
-    "morehitboxes": ">=1.5.1"
+    "morehitboxes": ">=1.6.3"
   },
   "suggests": {
     "cloth_config": ">=6.3.81",
