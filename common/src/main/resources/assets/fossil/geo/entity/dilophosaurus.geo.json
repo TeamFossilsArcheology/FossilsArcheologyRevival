@@ -334,7 +334,7 @@
 				{
 					"name": "rider_pos",
 					"parent": "lowerBody",
-					"pivot": [0, 20.6, -6]
+					"pivot": [0, 20.6, 0]
 				}
 			]
 		}

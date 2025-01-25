@@ -164,7 +164,7 @@
 				{
 					"name": "rider_pos",
 					"parent": "upperBody",
-					"pivot": [0, 21.1, -5.75]
+					"pivot": [0, 21.1, 0.25]
 				},
 				{
 					"name": "tail1",

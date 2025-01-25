@@ -240,7 +240,7 @@
 				{
 					"name": "rider_pos",
 					"parent": "upperBody",
-					"pivot": [0, 25.25, -6]
+					"pivot": [0, 25.25, -1]
 				},
 				{
 					"name": "BackThighRight",

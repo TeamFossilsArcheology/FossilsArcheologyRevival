@@ -188,7 +188,7 @@
 				{
 					"name": "rider_pos",
 					"parent": "lowerBody",
-					"pivot": [0, 15.1, -3]
+					"pivot": [0, 15.1, 0]
 				},
 				{
 					"name": "leftFrontThigh",

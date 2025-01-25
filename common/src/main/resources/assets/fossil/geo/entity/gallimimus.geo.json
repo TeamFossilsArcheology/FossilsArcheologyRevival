@@ -285,11 +285,6 @@
 					"cubes": []
 				},
 				{
-					"name": "rider_pos2",
-					"parent": "upperBody",
-					"pivot": [0, 25, -5]
-				},
-				{
 					"name": "tail1",
 					"parent": "lowerBody",
 					"pivot": [0.4, 24.4, 9.5],
@@ -332,7 +327,7 @@
 				},
 				{
 					"name": "rider_pos",
-					"pivot": [0, 24, -3]
+					"pivot": [0, 24, -2]
 				}
 			]
 		}

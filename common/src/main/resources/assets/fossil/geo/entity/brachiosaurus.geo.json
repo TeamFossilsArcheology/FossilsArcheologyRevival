@@ -193,7 +193,7 @@
 				{
 					"name": "rider_pos",
 					"parent": "UpperBody",
-					"pivot": [0, 16, -7]
+					"pivot": [0, 16, -3]
 				},
 				{
 					"name": "body1_hitbox",

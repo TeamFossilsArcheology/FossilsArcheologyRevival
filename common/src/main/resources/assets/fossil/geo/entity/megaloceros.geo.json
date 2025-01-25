@@ -300,7 +300,7 @@
 				{
 					"name": "rider_pos",
 					"parent": "body",
-					"pivot": [0, 23, -5.7]
+					"pivot": [0, 23, -0.7]
 				}
 			]
 		}

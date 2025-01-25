@@ -22,7 +22,7 @@
 				{
 					"name": "rider_pos",
 					"parent": "body1",
-					"pivot": [0, 13.4, -5]
+					"pivot": [0, 13.4, 0]
 				},
 				{
 					"name": "chest1",

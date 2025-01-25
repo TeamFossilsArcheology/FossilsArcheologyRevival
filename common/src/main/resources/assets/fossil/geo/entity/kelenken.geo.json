@@ -202,7 +202,7 @@
 				{
 					"name": "rider_pos",
 					"parent": "chest1",
-					"pivot": [0, 30, -4]
+					"pivot": [0, 30, -2]
 				},
 				{
 					"name": "body_hitbox",
