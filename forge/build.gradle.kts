@@ -133,10 +133,7 @@ modrinth {
         required.project("architectury-api")
         required.project("geckolib")
         required.project("terrablender")
-        required.project("cardinal-components-api")
         required.project("more-hitboxes")
-        embedded.project("sructurized-reborn")
-        embedded.project("midnightlib")
     }
     changelog.set(rootProject.file("CHANGELOG.md").readText())
 }
@@ -151,8 +148,7 @@ tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
-    mainFile.addRequirement("architectury-api", "geckolib", "terrablender", "cardinal-components-api", "more-hitboxes")
-    mainFile.addEmbedded("midnightlib")
+    mainFile.addRequirement("architectury-api", "geckolib", "terrablender", "more-hitboxes")
 }
 
 tasks.named("publish") {
