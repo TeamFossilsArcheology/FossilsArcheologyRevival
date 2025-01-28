@@ -9,14 +9,11 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.sounds.SoundEvent;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -81,7 +78,7 @@ public class Pteranodon extends PrehistoricFlying {
 
     @Override
     public void onReachAirTarget(BlockPos target) {
-        if (level.getFluidState(target.below()).is(FluidTags.WATER) && isHungry()) {
+        /*if (level.getFluidState(target.below()).is(FluidTags.WATER) && isHungry()) {
             ItemStack stack;
             if (random.nextInt(2) == 0) {
                 stack = new ItemStack(Items.COD, 1);
@@ -102,7 +99,7 @@ public class Pteranodon extends PrehistoricFlying {
                     level.addParticle(ParticleTypes.HAPPY_VILLAGER, x, y, z, motionX, motionY, motionZ);
                 }
             }
-        }
+        }*/
     }
 
     @Override
