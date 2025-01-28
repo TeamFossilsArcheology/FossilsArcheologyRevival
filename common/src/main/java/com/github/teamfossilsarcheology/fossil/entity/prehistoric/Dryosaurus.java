@@ -39,7 +39,7 @@ public class Dryosaurus extends Prehistoric {
             builder.append("_feathered");
         }
         if (isBaby()) builder.append("_baby");
-        if (isAdult()) {
+        if (isTeen() || isAdult()) {
             if (getGender() == Gender.MALE) {
                 builder.append("_male");
             } else {
