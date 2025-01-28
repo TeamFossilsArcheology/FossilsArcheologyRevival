@@ -14,7 +14,7 @@ import java.util.Set;
 
 public class OptionalTextureLoader extends SimplePreparableReloadListener<Pair<Set<String>, Set<String>>> {
     public static final OptionalTextureLoader INSTANCE = new OptionalTextureLoader();
-    private static final String DIRECTORY = "textures/entity";
+    private static final String DIRECTORY = FossilMod.MOD_ID+"/textures/entity";
     private static final String PATH_SUFFIX = ".png";
     private static final int PATH_SUFFIX_LENGTH = PATH_SUFFIX.length();
     private final Set<String> babyTextures = new HashSet<>();
