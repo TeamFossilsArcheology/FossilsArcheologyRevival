@@ -100,6 +100,7 @@ public class Elasmotherium extends Prehistoric implements PrehistoricShearable {
 
     @Override
     public void feed(int foodAmount) {
+        super.feed(foodAmount);
         if (isSheared()) {
             woolRegenTicks += foodAmount;
             if (woolRegenTicks >= 125) {

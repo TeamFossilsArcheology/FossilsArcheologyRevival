@@ -117,6 +117,7 @@ public class Mammoth extends PrehistoricFlocking implements PrehistoricShearable
 
     @Override
     public void feed(int foodAmount) {
+        super.feed(foodAmount);
         if (isSheared()) {
             woolRegenTicks += foodAmount;
             if (woolRegenTicks >= 150) {
