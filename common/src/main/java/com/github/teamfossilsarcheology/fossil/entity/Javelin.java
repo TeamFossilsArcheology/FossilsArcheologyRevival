@@ -35,7 +35,7 @@ public class Javelin extends AbstractArrow {
             setTier(tiers);
         }
         entityData.set(ANCIENT, ancient);
-        setPierceLevel((byte) 16);
+        setPierceLevel((byte) 1);
         setBaseDamage(getDamage(tier, ancient));
     }
 
@@ -90,7 +90,7 @@ public class Javelin extends AbstractArrow {
     @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        setPierceLevel((byte) 16);
+        setPierceLevel((byte) 1);
     }
 
     @Override
