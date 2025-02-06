@@ -5,6 +5,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
+import java.util.Locale;
 
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfoAI.*;
 
@@ -14,7 +15,7 @@ import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Pr
 public record AI(Activity activity, Attacking attacking, Climbing climbing, Response response, Taming taming, Moving moving) {
     public static <T extends Enum<T>> T getInstance(Class<T> enumClass, JsonObject jsonObject, String fallback) {
         try {
-            return Enum.valueOf(enumClass, GsonHelper.getAsString(jsonObject, enumClass.getSimpleName().toLowerCase(), fallback).toUpperCase());
+            return Enum.valueOf(enumClass, GsonHelper.getAsString(jsonObject, enumClass.getSimpleName().toLowerCase(Locale.ENGLISH), fallback).toUpperCase());
         } catch (IllegalArgumentException e) {
             return Enum.valueOf(enumClass, fallback.toUpperCase());
         }

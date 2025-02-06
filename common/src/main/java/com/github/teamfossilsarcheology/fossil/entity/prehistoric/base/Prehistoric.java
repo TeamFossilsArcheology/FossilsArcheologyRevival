@@ -1128,7 +1128,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     private void sendOrderMessage(OrderType orderType) {
         if (getOwner() instanceof Player player) {
-            player.displayClientMessage(new TranslatableComponent("entity.fossil.order." + orderType.name().toLowerCase(), getName()), true);
+            player.displayClientMessage(new TranslatableComponent("entity.fossil.order." + orderType.name().toLowerCase(Locale.ENGLISH), getName()), true);
         }
     }
 
