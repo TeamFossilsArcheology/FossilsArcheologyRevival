@@ -10,8 +10,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
-public class StuntedEssenceItem extends Item {
-    public StuntedEssenceItem(Properties properties) {
+public class DescriptiveItem extends Item {
+    public DescriptiveItem(Properties properties) {
         super(properties);
     }
 

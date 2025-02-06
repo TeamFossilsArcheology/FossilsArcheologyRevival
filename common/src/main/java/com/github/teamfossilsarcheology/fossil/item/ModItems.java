@@ -82,9 +82,9 @@ public class ModItems {
             () -> new ArmorItem(ModArmorMaterials.BONE, EquipmentSlot.FEET, new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> WHIP = ITEMS.register("whip", WhipItem::new);
     public static final RegistrySupplier<Item> CHICKEN_ESSENCE = ITEMS.register("essence_chicken",
-            () -> new Item(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> new DescriptiveItem(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> STUNTED_ESSENCE = ITEMS.register("essence_stunted",
-            () -> new StuntedEssenceItem(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
+            () -> new DescriptiveItem(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> POTTERY_SHARD = ITEMS.register("pottery_shard",
             () -> new Item(new Item.Properties().tab(ModTabs.FA_OTHER_ITEM_TAB)));
     public static final RegistrySupplier<Item> BIO_GOO = ITEMS.register("bio_goo",
