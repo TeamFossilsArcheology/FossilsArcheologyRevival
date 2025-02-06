@@ -67,7 +67,7 @@ public class Therizinosaurus extends Prehistoric implements PrehistoricShearable
     @Override
     protected void defineSynchedData() {
         super.defineSynchedData();
-        entityData.define(SHEARED, true);
+        entityData.define(SHEARED, false);
     }
 
     @Override

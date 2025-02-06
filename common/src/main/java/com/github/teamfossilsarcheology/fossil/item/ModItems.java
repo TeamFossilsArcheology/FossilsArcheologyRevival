@@ -105,7 +105,7 @@ public class ModItems {
     public static final RegistrySupplier<Item> MAMMOTH_FUR = ITEMS.register("fur_mammoth",
             () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB)));
     public static final RegistrySupplier<Item> THERIZINOSAURUS_DOWN = ITEMS.register("fur_therizinosaurus",
-            () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB)));
+            () -> new Item(new Item.Properties()));
     public static final RegistrySupplier<Item> FAILURESAURUS_FLESH = ITEMS.register("failuresaurus_flesh",
             () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB)));
     public static final RegistrySupplier<Item> MAGIC_CONCH = ITEMS.register("magic_conch",
