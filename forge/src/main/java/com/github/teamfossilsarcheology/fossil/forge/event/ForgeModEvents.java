@@ -21,7 +21,6 @@ import com.github.teamfossilsarcheology.fossil.villager.ModTrades;
 import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
 import com.github.teamfossilsarcheology.fossil.world.effect.ComfyBedEffect;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
-import dev.architectury.platform.Platform;
 import net.minecraft.commands.Commands;
 import net.minecraft.commands.synchronization.ArgumentTypes;
 import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
@@ -30,7 +29,6 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.player.Player;
-import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.event.OnDatapackSyncEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
@@ -169,8 +167,6 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
-        if (Platform.getEnv() == Dist.DEDICATED_SERVER) {
-            MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
-        }
+        MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
     }
 }

@@ -23,11 +23,9 @@ import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerato
 import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacedFeatures;
 import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacementTypes;
 import com.github.teamfossilsarcheology.fossil.world.surfacerules.ModSurfaceRules;
-import dev.architectury.platform.Platform;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import eu.midnightdust.lib.config.MidnightConfig;
-import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
 import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
@@ -67,7 +65,7 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
         FabricModBiomes.register();
         ModRegistries.register();
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
-            if (joined && Platform.getEnv() == EnvType.SERVER) {
+            if (joined) {
                 MessageHandler.SYNC_CHANNEL.sendToPlayer(player, new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
             }
         });
