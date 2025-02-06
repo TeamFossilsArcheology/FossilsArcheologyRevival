@@ -8,7 +8,7 @@
         {
           "type": "minecraft:item",
           "weight": 95,
-          "name": "minecraft:nautilus_shell"
+          "name": "fossil:meat_nautilus"
         },
         {
           "type": "minecraft:item",

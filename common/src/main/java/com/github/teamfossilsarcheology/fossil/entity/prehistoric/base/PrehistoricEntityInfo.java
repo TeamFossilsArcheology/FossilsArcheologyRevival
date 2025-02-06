@@ -167,10 +167,11 @@ public enum PrehistoricEntityInfo implements EntityInfo {
                 registerItem("egg", info, properties -> new BirdEggItem(info, false), item -> info.birdEggItem = item);
                 registerItem("egg_item", info, properties -> new BirdEggItem(info, true), item -> info.cultivatedBirdEggItem = item);
             }
-            registerItem("meat", info, properties -> new MeatItem(info, false), item -> info.foodItem = item);
             if (info == NAUTILUS) {
-                registerItem("cooked", info, properties -> new MeatItem(info, true, 2), item -> info.cookedFoodItem = item);
+                registerItem("meat", info, properties -> new NautilusMeatItem(info), item -> info.foodItem = item);
+                registerItem("cooked", info, properties -> new NautilusMeatItem(info, 2), item -> info.cookedFoodItem = item);
             } else {
+                registerItem("meat", info, properties -> new MeatItem(info, false), item -> info.foodItem = item);
                 registerItem("cooked", info, properties -> new MeatItem(info, true), item -> info.cookedFoodItem = item);
             }
             registerItem("spawn_egg", info, properties -> new CustomSpawnEggItem(info), item -> info.spawnEggItem = item);
