@@ -29,9 +29,12 @@ public class ArtificialHoneycombItem extends Item {
                 Entity bee = EntityType.BEE.create(serverLevel);
                 if (bee instanceof Mob mob) {
                     ItemStack stack = context.getItemInHand();
-                    mob.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.SPAWN_EGG, new AgeableMob.AgeableMobGroupData(1), stack.getTag());
+                    AgeableMob.AgeableMobGroupData groupData = new AgeableMob.AgeableMobGroupData(1);
+                    groupData.increaseGroupSizeByOne();
+                    mob.finalizeSpawn(serverLevel, level.getCurrentDifficultyAt(mob.blockPosition()), MobSpawnType.SPAWN_EGG, groupData, stack.getTag());
                     mob.playAmbientSound();
-                    mob.moveTo(blockPos.getX() + 0.5, blockPos.getY() + 1, blockPos.getZ() + 0.5, Mth.wrapDegrees(level.random.nextFloat() * 360), 0.0F);
+                    mob.moveTo(blockPos.getX() + 0.5, blockPos.getY() + 1.0, blockPos.getZ() + 0.5, Mth.wrapDegrees(level.random.nextFloat() * 360), 0.0F);
+                    level.addFreshEntity(mob);
                     stack.shrink(1);
                     level.gameEvent(GameEvent.ENTITY_PLACE, blockPos);
                 }
