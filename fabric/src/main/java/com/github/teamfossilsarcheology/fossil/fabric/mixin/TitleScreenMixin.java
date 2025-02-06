@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.fabric.mixin;
 
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
+import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.Screen;
@@ -12,7 +13,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.Random;
@@ -34,7 +34,7 @@ public abstract class TitleScreenMixin extends Screen {
     }
 
     @Inject(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PanoramaRenderer;render(FF)V"))
-    protected void r(PoseStack poseStack, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
+    protected void renderCustomTitleScreen(PoseStack poseStack, int mouseX, int mouseY, float partialTick, CallbackInfo ci) {
         if (FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU)) {
             fossil$layerTick++;
             RenderSystem.setShader(GameRenderer::getPositionTexShader);
@@ -51,17 +51,13 @@ public abstract class TitleScreenMixin extends Screen {
         }
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PanoramaRenderer;render(FF)V"))
-    protected void removePanorama(PanoramaRenderer instance, float deltaT, float alpha) {
-        if (!FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU)) {
-            instance.render(deltaT, alpha);
-        }
+    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/PanoramaRenderer;render(FF)V"))
+    protected boolean removePanorama(PanoramaRenderer instance, float deltaT, float alpha) {
+        return !FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU);
     }
 
-    @Redirect(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/TitleScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIFFIIII)V"))
-    protected void removeOverlay(PoseStack poseStack, int a, int b, int c, int d, float e, float f, int g, int h, int i, int j) {
-        if (!FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU)) {
-            blit(poseStack, 0, 0, this.width, this.height, 0.0F, 0.0F, 16, 128, 16, 128);
-        }
+    @WrapWithCondition(method = "render", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/screens/TitleScreen;blit(Lcom/mojang/blaze3d/vertex/PoseStack;IIIIFFIIII)V"))
+    protected boolean removeOverlay(PoseStack poseStack, int a, int b, int c, int d, float e, float f, int g, int h, int i, int j) {
+        return !FossilConfig.isEnabled(FossilConfig.CUSTOM_MAIN_MENU);
     }
 }
