@@ -133,7 +133,7 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
         if (canProcess()) {
             ItemStack result = ModRecipes.getSifterRecipeForItem(new SimpleContainer(items.get(0)), level)
                     .assemble(this).copy();
-            for (int slot = 1; slot < 5; slot++) {
+            for (int slot = 1; slot <= 5; slot++) {
                 ItemStack stackInSlot = items.get(slot);
                 if (!stackInSlot.isEmpty()) {
                     if (stackInSlot.sameItem(result) && stackInSlot.getCount() + result.getCount() < 64) {
