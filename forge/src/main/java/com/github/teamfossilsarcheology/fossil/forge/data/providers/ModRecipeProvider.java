@@ -155,7 +155,7 @@ public class ModRecipeProvider extends RecipeProvider {
             ShapedRecipeBuilder.shaped(WORKTABLE.get()).define('L', Items.LEATHER).define('C', Blocks.CRAFTING_TABLE).pattern("L").pattern("C").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
             ShapedRecipeBuilder.shaped(DRUM.get()).define('L', Items.LEATHER).define('R', Items.REDSTONE).define('P', ItemTags.PLANKS).pattern("LLL").pattern("PRP").pattern("PPP").unlockedBy("has_crafting_table", RecipeProvider.has(Blocks.CRAFTING_TABLE)).save(consumer);
 
-            ShapelessRecipeBuilder.shapeless(DINOPEDIA.get()).requires(Items.BOOK).requires(BIO_FOSSIL.get()).unlockedBy("has_bio_fossil", RecipeProvider.has(BIO_FOSSIL.get())).save(consumer);
+            ShapelessRecipeBuilder.shapeless(DINOPEDIA.get()).requires(Items.BOOK).requires(ModItemTags.FOSSILS).unlockedBy("has_bio_fossil", RecipeProvider.has(BIO_FOSSIL.get())).save(consumer);
 
             ShapelessRecipeBuilder.shapeless(RAW_CHICKEN_SOUP.get()).requires(Items.BUCKET).requires(Items.CHICKEN).unlockedBy("has_chicken", RecipeProvider.has(Items.CHICKEN)).save(consumer);
             ShapelessRecipeBuilder.shapeless(SKULL_STICK.get()).requires(Items.STICK).requires(SKULL_BLOCK.get()).unlockedBy("has_skull_block", RecipeProvider.has(SKULL_BLOCK.get())).save(consumer);

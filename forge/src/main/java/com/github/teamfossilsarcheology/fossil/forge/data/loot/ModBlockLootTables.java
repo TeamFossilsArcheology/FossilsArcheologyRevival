@@ -54,6 +54,7 @@ public class ModBlockLootTables extends BlockLoot {
 
     @Override
     protected void addTables() {
+        FAKE_OBSIDIAN.ifPresent(block -> addCustom(block, createSingleItemTable(Blocks.OBSIDIAN)));
         AMBER_ORE.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block,
                 LootItem.lootTableItem(AMBER_CHUNK_MOSQUITO.get().asItem()).when(LootItemRandomChanceCondition.randomChance(0.05f))
                         .otherwise(LootItem.lootTableItem(AMBER_CHUNK.get().asItem()).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))));
