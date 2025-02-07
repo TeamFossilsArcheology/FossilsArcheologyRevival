@@ -90,46 +90,6 @@
                       "type": "minecraft:item",
                       "weight": 55,
                       "name": "fossil:fossil_plant"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_leg"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_arm"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_foot"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_skull"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_ribcage"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_vertebrae"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_unique"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_tail"
                     }
                   ]
                 },
@@ -166,12 +126,12 @@
                     },
                     {
                       "type": "minecraft:item",
-                      "weight": 110,
+                      "weight": 80,
                       "name": "fossil:skull"
                     },
                     {
                       "type": "minecraft:item",
-                      "weight": 162,
+                      "weight": 192,
                       "name": "fossil:fossil_shale"
                     },
                     {
@@ -188,46 +148,6 @@
                       "type": "minecraft:item",
                       "weight": 20,
                       "name": "fossil:fossil_plant"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_leg"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_arm"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_foot"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_skull"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_ribcage"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_vertebrae"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_unique"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_tail"
                     }
                   ]
                 },
@@ -264,12 +184,12 @@
                     },
                     {
                       "type": "minecraft:item",
-                      "weight": 144,
+                      "weight": 110,
                       "name": "fossil:skull"
                     },
                     {
                       "type": "minecraft:item",
-                      "weight": 70,
+                      "weight": 120,
                       "name": "fossil:fossil_shale"
                     },
                     {
@@ -286,46 +206,6 @@
                       "type": "minecraft:item",
                       "weight": 0,
                       "name": "fossil:fossil_plant"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_leg"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_arm"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_foot"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_skull"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_ribcage"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_vertebrae"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_unique"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_tail"
                     }
                   ]
                 },
@@ -383,46 +263,6 @@
                       "type": "minecraft:item",
                       "weight": 115,
                       "name": "fossil:fossil_plant"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 9,
-                      "name": "fossil:bones_leg"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 9,
-                      "name": "fossil:bones_arm"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 6,
-                      "name": "fossil:bones_foot"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 6,
-                      "name": "fossil:bones_skull"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 6,
-                      "name": "fossil:bones_ribcage"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 6,
-                      "name": "fossil:bones_vertebrae"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 6,
-                      "name": "fossil:bones_unique"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 6,
-                      "name": "fossil:bones_tail"
                     }
                   ]
                 },
@@ -478,48 +318,8 @@
                     },
                     {
                       "type": "minecraft:item",
-                      "weight": 145,
+                      "weight": 175,
                       "name": "fossil:fossil_plant"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 13,
-                      "name": "fossil:bones_leg"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 13,
-                      "name": "fossil:bones_arm"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 10,
-                      "name": "fossil:bones_foot"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 10,
-                      "name": "fossil:bones_skull"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 12,
-                      "name": "fossil:bones_ribcage"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 10,
-                      "name": "fossil:bones_vertebrae"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 10,
-                      "name": "fossil:bones_unique"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 10,
-                      "name": "fossil:bones_tail"
                     }
                   ]
                 },
@@ -575,48 +375,8 @@
                     },
                     {
                       "type": "minecraft:item",
-                      "weight": 175,
+                      "weight": 200,
                       "name": "fossil:fossil_plant"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 18,
-                      "name": "fossil:bones_leg"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 18,
-                      "name": "fossil:bones_arm"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 15,
-                      "name": "fossil:bones_foot"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 15,
-                      "name": "fossil:bones_skull"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 17,
-                      "name": "fossil:bones_ribcage"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 15,
-                      "name": "fossil:bones_vertebrae"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 15,
-                      "name": "fossil:bones_unique"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 15,
-                      "name": "fossil:bones_tail"
                     }
                   ]
                 },
@@ -661,46 +421,6 @@
                       "type": "minecraft:item",
                       "weight": 85,
                       "name": "fossil:fossil_plant"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 6,
-                      "name": "fossil:bones_leg"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 6,
-                      "name": "fossil:bones_arm"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_foot"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_skull"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_ribcage"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_vertebrae"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_unique"
-                    },
-                    {
-                      "type": "minecraft:dynamic",
-                      "weight": 3,
-                      "name": "fossil:bones_tail"
                     }
                   ]
                 }

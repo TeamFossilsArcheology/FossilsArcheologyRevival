@@ -94,20 +94,20 @@ public class ModBlockLootTables extends BlockLoot {
         }
         //lol this is so bad but I like it
         //All adds up to ~1095
-        var defaultList = scarab(1).broken(5).skullBlock(34).mobFossil(BIO_FOSSIL,275).plant(110).relic(200).bone(440)
+        var defaultList = scarab(1).broken(5).skullBlock(34).mobFossil(BIO_FOSSIL, 275).plant(110).relic(200).bone(440)
                 .group(6, 6, 3, 3, 3, 3, 3, 3);
-        var archList1 = scarab(6).broken(9).skullBlock(64).mobFossil(BIO_FOSSIL,225).plant(85).relic(475).bone(200)
+        var archList1 = scarab(6).broken(9).skullBlock(64).mobFossil(BIO_FOSSIL, 225).plant(85).relic(475).bone(200)
                 .group(3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 1));
-        var archList2 = scarab(11).broken(11).skullBlock(110).mobFossil(BIO_FOSSIL,132).plant(50).relic(715).bone(36).
+        var archList2 = scarab(11).broken(11).skullBlock(110).mobFossil(BIO_FOSSIL, 132).plant(50).relic(715).bone(36).
                 group(3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 2));
-        var archList3 = scarab(16).broken(13).skullBlock(144).mobFossil(BIO_FOSSIL,50).plant(20).relic(820).bone(0).
+        var archList3 = scarab(16).broken(13).skullBlock(144).mobFossil(BIO_FOSSIL, 50).plant(20).relic(820).bone(0).
                 group(3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 3));
 
-        var paleList1 = scarab(1).broken(5).skullBlock(55).mobFossil(BIO_FOSSIL,375).plant(145).relic(20).bone(440)
+        var paleList1 = scarab(1).broken(5).skullBlock(55).mobFossil(BIO_FOSSIL, 375).plant(145).relic(20).bone(440)
                 .group(9, 9, 6, 6, 6, 6, 6, 6).when(enchant(PALEONTOLOGY.get(), 1));
-        var paleList2 = scarab(1).broken(5).skullBlock(30).mobFossil(BIO_FOSSIL,470).plant(175).relic(0).bone(326)
+        var paleList2 = scarab(1).broken(5).skullBlock(30).mobFossil(BIO_FOSSIL, 470).plant(175).relic(0).bone(326)
                 .group(13, 13, 10, 10, 12, 10, 10, 10).when(enchant(PALEONTOLOGY.get(), 2));
-        var paleList3 = scarab(1).broken(5).skullBlock(36).mobFossil(BIO_FOSSIL,510).plant(205).relic(0).bone(210)
+        var paleList3 = scarab(1).broken(5).skullBlock(36).mobFossil(BIO_FOSSIL, 510).plant(205).relic(0).bone(210)
                 .group(18, 18, 15, 15, 17, 15, 15, 15).when(enchant(PALEONTOLOGY.get(), 3));
         var fossils = AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defaultList);
         CALCITE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, fossils))));
@@ -117,20 +117,20 @@ public class ModBlockLootTables extends BlockLoot {
         STONE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, fossils))));
 
         defaultList = scarab(1).broken(5).skullBlock(34).mobFossil(SHALE_FOSSIL, 300).plant(85).relic(200).bone(440)
-                .group( 6, 6, 3, 3, 3, 3, 3, 3);
+                .group();
         archList1 = scarab(6).broken(9).skullBlock(64).mobFossil(SHALE_FOSSIL, 255).plant(55).relic(475).bone(200)
-                .group(3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 1));
-        archList2 = scarab(11).broken(11).skullBlock(110).mobFossil(SHALE_FOSSIL, 162).plant(20).relic(715).bone(36).
-                group( 3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 2));
-        archList3 = scarab(16).broken(13).skullBlock(144).mobFossil(SHALE_FOSSIL, 70).plant(0).relic(820).bone(0).
-                group( 3, 3, 3, 3, 3, 3, 3, 3).when(enchant(ARCHEOLOGY.get(), 3));
+                .group().when(enchant(ARCHEOLOGY.get(), 1));
+        archList2 = scarab(11).broken(11).skullBlock(80).mobFossil(SHALE_FOSSIL, 192).plant(20).relic(715).bone(36).
+                group().when(enchant(ARCHEOLOGY.get(), 2));
+        archList3 = scarab(16).broken(13).skullBlock(110).mobFossil(SHALE_FOSSIL, 120).plant(0).relic(820).bone(0).
+                group().when(enchant(ARCHEOLOGY.get(), 3));
 
         paleList1 = scarab(1).broken(5).skullBlock(55).mobFossil(SHALE_FOSSIL, 405).plant(115).relic(20).bone(440)
-                .group( 9, 9, 6, 6, 6, 6, 6, 6).when(enchant(PALEONTOLOGY.get(), 1));
-        paleList2 = scarab(1).broken(5).skullBlock(30).mobFossil(SHALE_FOSSIL, 480).plant(145).relic(0).bone(326)
-                .group( 13, 13, 10, 10, 12, 10, 10, 10).when(enchant(PALEONTOLOGY.get(), 2));
-        paleList3 = scarab(1).broken(5).skullBlock(36).mobFossil(SHALE_FOSSIL, 540).plant(175).relic(0).bone(210)
-                .group( 18, 18, 15, 15, 17, 15, 15, 15).when(enchant(PALEONTOLOGY.get(), 3));
+                .group().when(enchant(PALEONTOLOGY.get(), 1));
+        paleList2 = scarab(1).broken(5).skullBlock(30).mobFossil(SHALE_FOSSIL, 480).plant(175).relic(0).bone(326)
+                .group().when(enchant(PALEONTOLOGY.get(), 2));
+        paleList3 = scarab(1).broken(5).skullBlock(36).mobFossil(SHALE_FOSSIL, 540).plant(200).relic(0).bone(210)
+                .group().when(enchant(PALEONTOLOGY.get(), 3));
         var deepSlateFossils = AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defaultList);
         DEEPSLATE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, deepSlateFossils))));
         TUFF_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, deepSlateFossils))));
@@ -210,18 +210,21 @@ public class ModBlockLootTables extends BlockLoot {
     }
 
     private EntryGroup.Builder group(int... weights) {
-        return EntryGroup.list(lootItem(SCARAB_GEM.get(), scarab), lootItem(BROKEN_SWORD.get(), broken),
+        EntryGroup.Builder builder = EntryGroup.list(lootItem(SCARAB_GEM.get(), scarab), lootItem(BROKEN_SWORD.get(), broken),
                 lootItem(BROKEN_HELMET.get(), broken), lootItem(SKULL_BLOCK.get(), skullBlock),
                 lootItem(mobFossilItem, mobFossil), lootItem(RELIC_SCRAP.get(), relic),
-                lootItem(Items.BONE, bone), lootItem(PlANT_FOSSIL.get(), plantFossil),
-                DynamicLoot.dynamicEntry(ModItemTags.LEG_BONES.location()).setWeight(weights[0]),
-                DynamicLoot.dynamicEntry(ModItemTags.ARM_BONES.location()).setWeight(weights[1]),
-                DynamicLoot.dynamicEntry(ModItemTags.FOOT_BONES.location()).setWeight(weights[2]),
-                DynamicLoot.dynamicEntry(ModItemTags.SKULL_BONES.location()).setWeight(weights[3]),
-                DynamicLoot.dynamicEntry(ModItemTags.RIBCAGE_BONES.location()).setWeight(weights[4]),
-                DynamicLoot.dynamicEntry(ModItemTags.VERTEBRAE_BONES.location()).setWeight(weights[5]),
-                DynamicLoot.dynamicEntry(ModItemTags.UNIQUE_BONES.location()).setWeight(weights[6]),
-                DynamicLoot.dynamicEntry(ModItemTags.TAIL_BONES.location()).setWeight(weights[7]));
+                lootItem(Items.BONE, bone), lootItem(PlANT_FOSSIL.get(), plantFossil));
+        if (weights.length == 8) {
+            builder.append(DynamicLoot.dynamicEntry(ModItemTags.LEG_BONES.location()).setWeight(weights[0]));
+            builder.append(DynamicLoot.dynamicEntry(ModItemTags.ARM_BONES.location()).setWeight(weights[1]));
+            builder.append(DynamicLoot.dynamicEntry(ModItemTags.FOOT_BONES.location()).setWeight(weights[2]));
+            builder.append(DynamicLoot.dynamicEntry(ModItemTags.SKULL_BONES.location()).setWeight(weights[3]));
+            builder.append(DynamicLoot.dynamicEntry(ModItemTags.RIBCAGE_BONES.location()).setWeight(weights[4]));
+            builder.append(DynamicLoot.dynamicEntry(ModItemTags.VERTEBRAE_BONES.location()).setWeight(weights[5]));
+            builder.append(DynamicLoot.dynamicEntry(ModItemTags.UNIQUE_BONES.location()).setWeight(weights[6]));
+            builder.append(DynamicLoot.dynamicEntry(ModItemTags.TAIL_BONES.location()).setWeight(weights[7]));
+        }
+        return builder;
     }
 
     private LootPoolSingletonContainer.Builder<?> lootItem(ItemLike item, int weight) {

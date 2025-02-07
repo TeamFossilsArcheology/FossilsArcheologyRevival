@@ -111,9 +111,9 @@ public class ModItems {
     public static final RegistrySupplier<Item> MAGIC_CONCH = ITEMS.register("magic_conch",
             () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB)));
     public static final RegistrySupplier<Item> RAW_CHICKEN_SOUP = ITEMS.register("chicken_soup_raw",
-            () -> new FoodBucketItem(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB).food(new FoodProperties.Builder().nutrition(4).saturationMod(2).build())));
+            () -> new FoodBucketItem(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB).craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(4).saturationMod(2).build())));
     public static final RegistrySupplier<Item> COOKED_CHICKEN_SOUP = ITEMS.register("chicken_soup_cooked",
-            () -> new FoodBucketItem(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));
+            () -> new FoodBucketItem(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB).craftRemainder(Items.BUCKET).food(new FoodProperties.Builder().nutrition(8).saturationMod(2).build())));
     public static final RegistrySupplier<Item> COOKED_EGG = ITEMS.register("cooked_egg",
             () -> new Item(new Item.Properties().tab(ModTabs.FA_MOB_ITEM_TAB).food(new FoodProperties.Builder().nutrition(4).saturationMod(2).build())));
     public static final RegistrySupplier<Item> ARTIFICIAL_HONEYCOMB = ITEMS.register("artificial_honeycomb",
