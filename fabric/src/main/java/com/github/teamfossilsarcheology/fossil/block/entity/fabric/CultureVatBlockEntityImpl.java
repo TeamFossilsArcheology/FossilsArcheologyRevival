@@ -14,6 +14,9 @@ import com.github.teamfossilsarcheology.fossil.tags.ModItemTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.player.Inventory;
@@ -79,6 +82,23 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
 
     public static int getItemFuelTime(ItemStack stack) {
         return ModRecipes.getCultureVatFuelValue(stack.getItem());
+    }
+
+    @Override
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        ListTag listTag = tag.getList("FuelItem", Tag.TAG_COMPOUND);
+        if (!listTag.isEmpty()) {
+            fuel = ItemStack.of(listTag.getCompound(0));
+        }
+    }
+
+    @Override
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        ListTag listTag = new ListTag();
+        listTag.add(fuel.save(new CompoundTag()));
+        tag.put("FuelItem", listTag);
     }
 
     @Override
