@@ -43,6 +43,13 @@
                       "chance": 0.05
                     }
                   ],
+                  "functions": [
+                    {
+                      "function": "minecraft:apply_bonus",
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops"
+                    }
+                  ],
                   "name": "fossil:amber_chunk_mosquito"
                 },
                 {

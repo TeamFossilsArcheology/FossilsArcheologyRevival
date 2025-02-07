@@ -55,9 +55,10 @@ public class ModBlockLootTables extends BlockLoot {
     @Override
     protected void addTables() {
         FAKE_OBSIDIAN.ifPresent(block -> addCustom(block, createSingleItemTable(Blocks.OBSIDIAN)));
+
         AMBER_ORE.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block,
-                LootItem.lootTableItem(AMBER_CHUNK_MOSQUITO.get().asItem()).when(LootItemRandomChanceCondition.randomChance(0.05f))
-                        .otherwise(LootItem.lootTableItem(AMBER_CHUNK.get().asItem()).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))));
+                LootItem.lootTableItem(AMBER_CHUNK_MOSQUITO.get()).when(LootItemRandomChanceCondition.randomChance(0.05f)).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))
+                        .otherwise(LootItem.lootTableItem(AMBER_CHUNK.get()).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))));
         ICED_DIRT.ifPresent(block -> addCustom(block, createSilkTouchOnlyTable(block)));
         PERMAFROST_BLOCK.ifPresent(block -> addCustom(block, multiple(20, FERN_SEED_FOSSIL.get(),
                 SKULL_BLOCK.get(), FROZEN_MEAT.get(), Items.BONE, Items.BOOK)));
@@ -104,14 +105,12 @@ public class ModBlockLootTables extends BlockLoot {
                 .group(13, 13, 10, 10, 12, 10, 10, 10).when(enchant(PALEONTOLOGY.get(), 2));
         var paleList3 = scarab(1).broken(5).skullBlock(36).mobFossil(BIO_FOSSIL,510).plant(205).relic(0).bone(210)
                 .group(18, 18, 15, 15, 17, 15, 15, 15).when(enchant(PALEONTOLOGY.get(), 3));
-        LootTable.Builder fossils = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defaultList)))
-                .setParamSet(LootContextParamSets.BLOCK);
-        addCustom(CALCITE_FOSSIL.get(), fossils);
-        addCustom(DRIPSTONE_FOSSIL.get(), fossils);
-        addCustom(RED_SANDSTONE_FOSSIL.get(), fossils);
-        addCustom(SANDSTONE_FOSSIL.get(), fossils);
-        addCustom(STONE_FOSSIL.get(), fossils);
+        var fossils = AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defaultList);
+        CALCITE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, fossils))));
+        DRIPSTONE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, fossils))));
+        RED_SANDSTONE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, fossils))));
+        SANDSTONE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, fossils))));
+        STONE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, fossils))));
 
         defaultList = scarab(1).broken(5).skullBlock(34).mobFossil(SHALE_FOSSIL, 300).plant(85).relic(200).bone(440)
                 .group( 6, 6, 3, 3, 3, 3, 3, 3);
@@ -128,12 +127,9 @@ public class ModBlockLootTables extends BlockLoot {
                 .group( 13, 13, 10, 10, 12, 10, 10, 10).when(enchant(PALEONTOLOGY.get(), 2));
         paleList3 = scarab(1).broken(5).skullBlock(36).mobFossil(SHALE_FOSSIL, 540).plant(175).relic(0).bone(210)
                 .group( 18, 18, 15, 15, 17, 15, 15, 15).when(enchant(PALEONTOLOGY.get(), 3));
-        var deepSlateFossils = LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1))
-                        .add(AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defaultList)))
-                .setParamSet(LootContextParamSets.BLOCK);
-        addCustom(DEEPSLATE_FOSSIL.get(), deepSlateFossils);
-        addCustom(TUFF_FOSSIL.get(), deepSlateFossils);
-
+        var deepSlateFossils = AlternativesEntry.alternatives(archList1, archList2, archList3, paleList1, paleList2, paleList3, defaultList);
+        DEEPSLATE_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, deepSlateFossils))));
+        TUFF_FOSSIL.ifPresent(block -> addCustom(block, createSilkTouchDispatchTable(block, applyExplosionCondition(block, deepSlateFossils))));
         BLOCKS.forEach(supplier -> supplier.ifPresent(block -> {
             if (block instanceof AbstractGlassBlock) {
                 dropWhenSilkTouch(block);
