@@ -697,7 +697,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public void updateAbilities() {
         float scale = (data().minScale() + (data().maxScale() - data().minScale()) / (data().adultAgeInTicks()) * getAge());
         scale = Math.min(scale, data().maxScale());
-        double percent = Math.min(getAge() / data().adultAgeInTicks(), 1);
+        double percent = Math.min((double) getAge() / data().adultAgeInTicks(), 1);
         getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(Mth.lerp(percent, attributes().baseKnockBackResistance(), attributes().maxKnockBackResistance()));
 
         double speed = Util.calculateSpeed(data(), scale, false);
@@ -889,8 +889,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             Entity hatchling;
             if (info().mobType == PrehistoricMobType.MAMMAL) {
                 hatchling = getType().create(level);
-            } else if (info().cultivatedBirdEggItem != null) {
-                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().cultivatedBirdEggItem));
+            } else if (info().birdEggItem != null) {
+                hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().birdEggItem));
             } else if (FossilConfig.isEnabled(FossilConfig.EGGS_LIKE_CHICKENS) || info().isViviparousAquatic()) {
                 hatchling = new ItemEntity(level, getX(), getY(), getZ(), new ItemStack(info().eggItem));
             } else {
@@ -1016,6 +1016,14 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
+    public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
+        if (player.getItemInHand(hand).is(ModItems.WHIP.get())) {
+            player.playSound(ModSounds.WHIP.get(), 1, 1);
+        }
+        return super.interactAt(player, vec, hand);
+    }
+
+    @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.isEmpty()) {
@@ -1092,7 +1100,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             }
         } else if (stack.is(ModItems.WHIP.get()) && aiTameType() != Taming.NONE && isAdult()) {
             if (isOwnedBy(player) && data().canBeRidden()) {
-                if (getRidingPlayer() == null && !level.isClientSide) {
+                if (!level.isClientSide && getRidingPlayer() == null) {
                     player.yBodyRot = this.yBodyRot;
                     player.setXRot(getXRot());
                     player.startRiding(this);
