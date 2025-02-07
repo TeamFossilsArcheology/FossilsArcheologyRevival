@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity;
 
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,10 +21,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Collections;
+import java.util.List;
 
 public class AnuDead extends LivingEntity {
     private static final int MAX_LIFESPAN = 5960;
+    private static final List<ItemStack> ARMOR = NonNullList.withSize(1, ItemStack.EMPTY);
 
     public AnuDead(EntityType<? extends LivingEntity> entityType, Level level) {
         super(entityType, level);
@@ -93,7 +95,8 @@ public class AnuDead extends LivingEntity {
 
     @Override
     public @NotNull Iterable<ItemStack> getArmorSlots() {
-        return Collections.emptyList();
+        //For compatibility with Ad Astra which can't handle an empty list here
+        return ARMOR;
     }
 
     @Override

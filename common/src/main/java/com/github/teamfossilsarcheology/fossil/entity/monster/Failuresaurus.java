@@ -40,8 +40,6 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
 
-import java.util.Collections;
-
 public class Failuresaurus extends Monster implements IAnimatable {
     private static final EntityDataAccessor<Byte> CLIMBING = SynchedEntityData.defineId(Failuresaurus.class, EntityDataSerializers.BYTE);
     private static final EntityDataAccessor<String> VARIANT = SynchedEntityData.defineId(Failuresaurus.class, EntityDataSerializers.STRING);
@@ -171,11 +169,6 @@ public class Failuresaurus extends Monster implements IAnimatable {
     @Override
     protected SoundEvent getDeathSound() {
         return SoundEvents.ZOMBIE_DEATH;
-    }
-
-    @Override
-    public @NotNull Iterable<ItemStack> getArmorSlots() {
-        return Collections.emptyList();
     }
 
     @Override

@@ -11,6 +11,7 @@ import com.mojang.logging.LogUtils;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.core.Holder;
+import net.minecraft.core.NonNullList;
 import net.minecraft.core.particles.ItemParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
@@ -40,7 +41,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.slf4j.Logger;
 
-import java.util.Collections;
+import java.util.List;
 
 public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public static final int TOTAL_HATCHING_TIME = 3000;
@@ -52,6 +53,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     private static final EntityDataAccessor<Boolean> GOLDEN_EGG = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.BOOLEAN);
     private static final Logger LOGGER = LogUtils.getLogger();
     private static final TranslatableComponent EGG_HATCHED = new TranslatableComponent("entity.fossil.dinosaur_egg.hatched");
+    private static final List<ItemStack> ARMOR = NonNullList.withSize(1, ItemStack.EMPTY);
 
     private float scaleOverride = -1;
 
@@ -258,7 +260,8 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
 
     @Override
     public @NotNull Iterable<ItemStack> getArmorSlots() {
-        return Collections.emptyList();
+        //For compatibility with Ad Astra which can't handle an empty list here
+        return ARMOR;
     }
 
     @Override

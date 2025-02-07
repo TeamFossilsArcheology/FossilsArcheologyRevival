@@ -163,6 +163,15 @@ public class Arthropleura extends Prehistoric {
         return Items.BONE;
     }
 
+    @Override
+    public boolean causeFallDamage(float distance, float damageMultiplier, DamageSource source) {
+        if (isBee()) {
+            return false;
+        } else {
+            return super.causeFallDamage(distance, damageMultiplier, source);
+        }
+    }
+
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
