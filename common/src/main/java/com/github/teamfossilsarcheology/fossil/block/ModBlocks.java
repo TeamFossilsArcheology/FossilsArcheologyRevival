@@ -141,11 +141,11 @@ public class ModBlocks {
 
     //Fossil Blocks
     public static final RegistrySupplier<Block> CALCITE_FOSSIL = registerBlock("fossil_calcite",
-            () -> new FossilBlock(Properties.copy(Blocks.CALCITE).strength(1.25f).requiresCorrectToolForDrops()));
+            () -> new FossilBlock(Properties.copy(Blocks.CALCITE).sound(SoundType.CALCITE).strength(1.25f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> DEEPSLATE_FOSSIL = registerBlock("fossil_deepslate",
-            () -> new FossilBlock(Properties.copy(Blocks.DEEPSLATE).strength(4, 7).requiresCorrectToolForDrops()));
+            () -> new FossilBlock(Properties.copy(Blocks.DEEPSLATE).sound(SoundType.DEEPSLATE).strength(4, 7).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> DRIPSTONE_FOSSIL = registerBlock("fossil_dripstone",
-            () -> new FossilBlock(Properties.copy(Blocks.DRIPSTONE_BLOCK).strength(3, 2).requiresCorrectToolForDrops()));
+            () -> new FossilBlock(Properties.copy(Blocks.DRIPSTONE_BLOCK).sound(SoundType.DRIPSTONE_BLOCK).strength(3, 2).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> RED_SANDSTONE_FOSSIL = registerBlock("fossil_red_sandstone",
             () -> new FossilBlock(Properties.copy(Blocks.RED_SANDSTONE).strength(1.6f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> SANDSTONE_FOSSIL = registerBlock("fossil_sandstone",
@@ -153,7 +153,7 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> STONE_FOSSIL = registerBlock("fossil_stone",
             () -> new FossilBlock(Properties.copy(Blocks.STONE).strength(3, 6).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> TUFF_FOSSIL = registerBlock("fossil_tuff",
-            () -> new FossilBlock(Properties.copy(Blocks.TUFF).strength(3, 6).requiresCorrectToolForDrops()));
+            () -> new FossilBlock(Properties.copy(Blocks.TUFF).sound(SoundType.TUFF).strength(3, 6).requiresCorrectToolForDrops()));
 
     public static final RegistrySupplier<Block> TARRED_DIRT = registerBlock("tarred_dirt",
             () -> new Block(Properties.copy(Blocks.DIRT)));

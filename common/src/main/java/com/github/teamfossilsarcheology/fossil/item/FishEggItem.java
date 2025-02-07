@@ -24,7 +24,9 @@ public class FishEggItem extends PrehistoricEntityItem {
         if (entity instanceof Mob mob) {
             ModTriggers.INCUBATE_EGG_TRIGGER.trigger(player, entity);
             entity.moveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, level.random.nextFloat() * 360, 0);
-            mob.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(-1), null);
+            if (mob instanceof Prehistoric) {
+                mob.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(-1), null);
+            }
             level.addFreshEntity(entity);
             return true;
         }
