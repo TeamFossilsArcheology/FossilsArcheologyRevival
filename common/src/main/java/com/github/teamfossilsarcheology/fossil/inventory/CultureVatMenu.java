@@ -81,16 +81,23 @@ public class CultureVatMenu extends AbstractContainerMenu {
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
-        int inventorySlots = 36;
         if (slot.hasItem()) {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
+            final int inventorySlots = 36;
+            final int worktableSlots = 3;
+            final int bottomRowEnd = inventorySlots + worktableSlots;
+            final int bottomRowStart = bottomRowEnd - 9;
             if (index == OUTPUT_SLOT_ID) {
                 if (!moveItemStackTo(current, 3, inventorySlots + 3, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index != INPUT_SLOT_ID && index != FUEL_SLOT_ID) {
-                if (ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), level) != null) {
+            } else if (index == INPUT_SLOT_ID || index == FUEL_SLOT_ID) {
+                if (!moveItemStackTo(current, 3, 39, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else {
+                if (ModRecipes.getCultureVatRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), player.level) != null) {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
@@ -98,13 +105,13 @@ public class CultureVatMenu extends AbstractContainerMenu {
                     if (!moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 3 && index < 30 && !moveItemStackTo(current, 30, inventorySlots + 3, false)) {
-                    return ItemStack.EMPTY;
-                } else if (index >= 30 && index < inventorySlots + 3 && !moveItemStackTo(current, 3, 30, false)) {
+                } else if (index < bottomRowStart) {
+                    if (!moveItemStackTo(current, bottomRowStart, bottomRowEnd, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index < bottomRowEnd && !moveItemStackTo(current, worktableSlots, bottomRowStart, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!moveItemStackTo(current, 3, inventorySlots + 3, false)) {
-                return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {
                 slot.set(ItemStack.EMPTY);

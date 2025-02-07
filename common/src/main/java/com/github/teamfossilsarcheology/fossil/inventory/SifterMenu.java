@@ -47,25 +47,26 @@ public class SifterMenu extends AbstractContainerMenu {
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
-        int inventorySlots = 36;
         if (slot.hasItem()) {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
-            if (index >= 1 && index <= 5) {
-                if (!moveItemStackTo(current, 6, inventorySlots + 6, true)) {
+            final int inventorySlots = 36;
+            final int sifterSlots = 5;
+            final int bottomRowEnd = inventorySlots + sifterSlots;
+            final int bottomRowStart = bottomRowEnd - 9;
+            if (index < sifterSlots) {
+                if (!moveItemStackTo(current, sifterSlots, bottomRowEnd, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index > 0) {
-                if (ModRecipes.getSifterRecipeForItem(new SimpleContainer(itemStack), player.level) != null) {
-                    if (!this.moveItemStackTo(current, 0, 1, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index < inventorySlots + 6 - 9 && !this.moveItemStackTo(current, inventorySlots + 6 - 9, inventorySlots + 6, false)) {
-                    return ItemStack.EMPTY;
-                } else if (index >= inventorySlots + 6 - 9 && index < inventorySlots + 6 && !this.moveItemStackTo(current, 6, inventorySlots + 6 - 9, false)) {
+            } else if (ModRecipes.getSifterRecipeForItem(new SimpleContainer(itemStack), player.level) != null) {
+                if (!moveItemStackTo(current, 0, sifterSlots, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!this.moveItemStackTo(current, 6, inventorySlots + 6, false)) {
+            } else if (index < bottomRowStart) {
+                if (!moveItemStackTo(current, bottomRowStart, bottomRowEnd, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index < bottomRowEnd && !moveItemStackTo(current, sifterSlots, bottomRowStart, false)) {
                 return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {

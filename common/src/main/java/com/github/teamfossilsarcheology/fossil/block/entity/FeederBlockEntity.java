@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
 public class FeederBlockEntity extends BaseContainerBlockEntity implements WorldlyContainer {
     public static final String MEAT = "Meat";
     public static final String PLANT = "Plant";
-    private static final int[] SLOTS_TOP = new int[]{0, 1};
+    private static final int[] SLOTS_TOP = new int[]{FeederMenu.MEAT_SLOT_ID, FeederMenu.PLANT_SLOT_ID};
     protected NonNullList<ItemStack> items = NonNullList.withSize(2, ItemStack.EMPTY);
     private int meat;
     private int plant;
@@ -74,28 +74,28 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         blockEntity.meat = Math.max(blockEntity.meat, 0);
         blockEntity.plant = Math.max(blockEntity.plant, 0);
         boolean dirty = false;
-        ItemStack itemStack = blockEntity.getItem(0);
-        if (!itemStack.isEmpty()) {
-            if (blockEntity.canPlaceItem(0, itemStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
-                int foodPoints = FoodMappings.getFoodAmount(itemStack.getItem(), Diet.CARNIVORE_EGG);
+        ItemStack foodStack = blockEntity.getItem(FeederMenu.MEAT_SLOT_ID);
+        if (!foodStack.isEmpty()) {
+            if (blockEntity.canPlaceItem(FeederMenu.MEAT_SLOT_ID, foodStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
+                int foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.CARNIVORE_EGG);
                 if (foodPoints == 0) {
-                    foodPoints = FoodMappings.getFoodAmount(itemStack.getItem(), Diet.PISCIVORE);
+                    foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.PISCIVORE);
                 }
                 if (foodPoints > 0) {
                     dirty = true;
                     blockEntity.meat += foodPoints;
-                    itemStack.shrink(1);
+                    foodStack.shrink(1);
                 }
             }
         }
-        itemStack = blockEntity.getItem(1);
-        if (!itemStack.isEmpty()) {
-            if (blockEntity.canPlaceItem(1, itemStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.plant < 10000) {
-                int foodPoints = FoodMappings.getFoodAmount(itemStack.getItem(), Diet.HERBIVORE);
+        foodStack = blockEntity.getItem(FeederMenu.PLANT_SLOT_ID);
+        if (!foodStack.isEmpty()) {
+            if (blockEntity.canPlaceItem(FeederMenu.PLANT_SLOT_ID, foodStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.plant < 10000) {
+                int foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.HERBIVORE);
                 if (foodPoints > 0) {
                     dirty = true;
                     blockEntity.plant += foodPoints;
-                    itemStack.shrink(1);
+                    foodStack.shrink(1);
                 }
             }
         }

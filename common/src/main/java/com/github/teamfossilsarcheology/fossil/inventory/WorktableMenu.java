@@ -70,11 +70,19 @@ public class WorktableMenu extends AbstractContainerMenu {
         if (slot.hasItem()) {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
+            final int inventorySlots = 36;
+            final int worktableSlots = 3;
+            final int bottomRowEnd = inventorySlots + worktableSlots;
+            final int bottomRowStart = bottomRowEnd - 9;
             if (index == OUTPUT_SLOT_ID) {
-                if (!moveItemStackTo(current, 3, 39, true)) {
+                if (!moveItemStackTo(current, worktableSlots, bottomRowEnd, true)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index != INPUT_SLOT_ID && index != FUEL_SLOT_ID) {
+            } else if (index == INPUT_SLOT_ID || index == FUEL_SLOT_ID) {
+                if (!moveItemStackTo(current, 3, 39, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else {
                 if (ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, itemStack), player.level) != null) {
                     if (!moveItemStackTo(current, INPUT_SLOT_ID, INPUT_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
@@ -83,13 +91,13 @@ public class WorktableMenu extends AbstractContainerMenu {
                     if (!moveItemStackTo(current, FUEL_SLOT_ID, FUEL_SLOT_ID + 1, false)) {
                         return ItemStack.EMPTY;
                     }
-                } else if (index >= 3 && index < 30 && !moveItemStackTo(current, 30, 39, false)) {
-                    return ItemStack.EMPTY;
-                } else if (index >= 30 && index < 39 && !moveItemStackTo(current, 3, 30, false)) {
+                } else if (index < bottomRowStart) {
+                    if (!moveItemStackTo(current, bottomRowStart, bottomRowEnd, false)) {
+                        return ItemStack.EMPTY;
+                    }
+                } else if (index < bottomRowEnd && !moveItemStackTo(current, worktableSlots, bottomRowStart, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!moveItemStackTo(current, 3, 39, false)) {
-                return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {
                 slot.set(ItemStack.EMPTY);

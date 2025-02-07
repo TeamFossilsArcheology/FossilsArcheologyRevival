@@ -48,25 +48,26 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     public @NotNull ItemStack quickMoveStack(Player player, int index) {
         ItemStack itemStack = ItemStack.EMPTY;
         Slot slot = slots.get(index);
-        int inventorySlots = 36;
         if (slot.hasItem()) {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
-            if (index >= 9 && index <= 12) {
-                if (!moveItemStackTo(current, 13, inventorySlots + 13, true)) {
+            final int inventorySlots = 36;
+            final int analyzerSlots = 13;
+            final int bottomRowEnd = inventorySlots + analyzerSlots;
+            final int bottomRowStart = bottomRowEnd - 9;
+            if (index < analyzerSlots) {
+                if (!moveItemStackTo(current, analyzerSlots, bottomRowEnd, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (index >= 13) {
-                if (ModRecipes.getAnalyzerRecipeForItem(new SimpleContainer(itemStack), player.level) != null) {
-                    if (!moveItemStackTo(current, 0, 9, false)) {
-                        return ItemStack.EMPTY;
-                    }
-                } else if (index >= 13 && index < inventorySlots + 13 - 9 && !moveItemStackTo(current, inventorySlots + 13 - 9, inventorySlots + 13, false)) {
-                    return ItemStack.EMPTY;
-                } else if (index >= inventorySlots + 13 - 9 && index < inventorySlots + 13 && !moveItemStackTo(current, 13, inventorySlots + 13 - 9, false)) {
+            } else if (ModRecipes.getAnalyzerRecipeForItem(new SimpleContainer(itemStack), player.level) != null) {
+                if (!moveItemStackTo(current, 0, 9, false)) {
                     return ItemStack.EMPTY;
                 }
-            } else if (!moveItemStackTo(current, 13, inventorySlots + 13, false)) {
+            } else if (index < bottomRowStart) {
+                if (!moveItemStackTo(current, bottomRowStart, bottomRowEnd, false)) {
+                    return ItemStack.EMPTY;
+                }
+            } else if (index < bottomRowEnd && !moveItemStackTo(current, analyzerSlots, bottomRowStart, false)) {
                 return ItemStack.EMPTY;
             }
             if (current.isEmpty()) {
