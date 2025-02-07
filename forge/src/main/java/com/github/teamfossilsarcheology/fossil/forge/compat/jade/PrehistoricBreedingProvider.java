@@ -13,8 +13,6 @@ public enum PrehistoricBreedingProvider implements IServerDataProvider<Entity> {
     @Override
     public void appendServerData(CompoundTag tag, ServerPlayer serverPlayer, Level level, Entity entity, boolean b) {
         int time = ((Prehistoric) entity).getMatingCooldown();
-        if (time > 0) {
-            tag.putInt("BreedingCD", time);
-        }
+        tag.putInt("BreedingCD", time);
     }
 }

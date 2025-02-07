@@ -50,7 +50,7 @@ public class Nautilus extends PrehistoricFish {
     }
 
     private static boolean getsScaredBy(Entity entity) {
-        if (entity instanceof Player player && !player.isCreative()) {
+        if (entity instanceof Player player && !player.isCreative() && !player.isSpectator()) {
             return true;
         }
         if (entity instanceof Prehistoric prehistoric) {
