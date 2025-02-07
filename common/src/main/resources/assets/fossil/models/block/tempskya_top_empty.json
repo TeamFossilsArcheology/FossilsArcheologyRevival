@@ -1,0 +1,8 @@
+{
+  "texture_size": [16, 16],
+  "textures": {
+    "particle": "fossil:block/plants/plant_tempskya_top"
+  },
+  "elements": [
+  ]
+}
