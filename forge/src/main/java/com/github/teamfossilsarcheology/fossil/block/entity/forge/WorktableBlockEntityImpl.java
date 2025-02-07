@@ -254,7 +254,6 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
         return ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(true, stack), getLevel()) != null;
     }
 
-
     @Override
     public int @NotNull [] getSlotsForFace(@NotNull Direction side) {
         return side == Direction.DOWN ? SLOTS_FOR_DOWN : (side == Direction.UP ? SLOTS_FOR_UP : SLOTS_FOR_SIDES);
