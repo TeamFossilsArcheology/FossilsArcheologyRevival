@@ -37,13 +37,13 @@ public class FossilFoodMappings {
         FoodMappings.addPlant(Items.PUMPKIN_SEEDS, 5);
         FoodMappings.addPlant(Items.BEETROOT_SEEDS, 5);
         LifecycleEvent.SERVER_LEVEL_LOAD.register(level -> {
-            Registry.BLOCK.getTag(BlockTags.LEAVES).get().stream().map(Holder::value).forEach(block -> {
+            Registry.BLOCK.getOrCreateTag(BlockTags.LEAVES).stream().map(Holder::value).forEach(block -> {
                 FoodMappings.addPlant(block, 20);
             });
-            Registry.BLOCK.getTag(BlockTags.FLOWERS).get().stream().map(Holder::value).forEach(block -> {
+            Registry.BLOCK.getOrCreateTag(BlockTags.FLOWERS).stream().map(Holder::value).forEach(block -> {
                 FoodMappings.addPlant(block, 5);
             });
-            Registry.BLOCK.getTag(BlockTags.SAPLINGS).get().stream().map(Holder::value).forEach(block -> {
+            Registry.BLOCK.getOrCreateTag(BlockTags.SAPLINGS).stream().map(Holder::value).forEach(block -> {
                 FoodMappings.addPlant(block, 15);
             });
         });
