@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.item.*;
 import com.github.teamfossilsarcheology.fossil.material.ModFluids;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.world.feature.tree.*;
+import com.mojang.datafixers.util.Pair;
 import dev.architectury.core.block.ArchitecturyLiquidBlock;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -377,6 +378,7 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> TEMPSKYA_LEAF = registerBlock("tempskya_leaf",
             () -> new TempskyaLeafBlock(Properties.of(Material.LEAVES).noCollission().noOcclusion().sound(SoundType.GRASS)));
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
+    public static final List<Pair<DyeColor, RegistrySupplier<VaseBlock>>> VASES_WITH_COLOR = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_RESTORED = registerVolute(VaseBlock.VaseVariant.RESTORED);
     public static final RegistrySupplier<VaseBlock> KYLIX_VASE_DAMAGED = registerKylix(VaseBlock.VaseVariant.DAMAGED);
@@ -406,9 +408,9 @@ public class ModBlocks {
 
     static {
         for (DyeColor color : DyeColor.values()) {
-            registerVase("amphora", color.getSerializedName(), AmphoraVaseBlock::new);
-            registerVase("kylix", color.getSerializedName(), KylixVaseBlock::new);
-            registerVase("volute", color.getSerializedName(), VoluteVaseBlock::new);
+            VASES_WITH_COLOR.add(new Pair<>(color, registerVase("amphora", color.getSerializedName(), AmphoraVaseBlock::new)));
+            VASES_WITH_COLOR.add(new Pair<>(color, registerVase("kylix", color.getSerializedName(), KylixVaseBlock::new)));
+            VASES_WITH_COLOR.add(new Pair<>(color, registerVase("volute", color.getSerializedName(), VoluteVaseBlock::new)));
         }
     }
 

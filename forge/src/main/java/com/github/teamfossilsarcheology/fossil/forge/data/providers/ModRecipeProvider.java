@@ -16,6 +16,7 @@ import com.github.teamfossilsarcheology.fossil.recipe.*;
 import com.github.teamfossilsarcheology.fossil.tags.ModItemTags;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
 import com.google.common.collect.Maps;
+import com.mojang.datafixers.util.Pair;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.Util;
 import net.minecraft.advancements.critereon.ItemPredicate;
@@ -165,21 +166,17 @@ public class ModRecipeProvider extends RecipeProvider {
             ShapedRecipeBuilder.shaped(AMPHORA_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PP").pattern("PP").pattern("PP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
             ShapedRecipeBuilder.shaped(KYLIX_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("PPP").pattern(" P ").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
             ShapedRecipeBuilder.shaped(VOLUTE_VASE_DAMAGED.get()).define('P', POTTERY_SHARD.get()).pattern("P P").pattern("P P").pattern("PPP").unlockedBy("has_pottery_shard", RecipeProvider.has(POTTERY_SHARD.get())).save(consumer);
-            for (RegistrySupplier<VaseBlock> vase : VASES) {
-                String name = vase.get().getRegistryName().getPath();
-                if (!name.contains("damaged") && !name.contains("restored")) {
-                    VaseBlock restored;
-                    if (vase.get() instanceof AmphoraVaseBlock) {
-                        restored = AMPHORA_VASE_RESTORED.get();
-                    } else if (vase.get() instanceof KylixVaseBlock) {
-                        restored = KYLIX_VASE_RESTORED.get();
-                    } else {
-                        restored = VOLUTE_VASE_RESTORED.get();
-                    }
-                    String[] split = name.split("_");
-                    DyeColor color = DyeColor.byName(split[split.length - 1], DyeColor.BLACK);
-                    ShapelessRecipeBuilder.shapeless(vase.get()).requires(restored).requires(DyeItem.byColor(color)).unlockedBy("has_restored_vase", RecipeProvider.has(restored)).save(consumer);
+            for (Pair<DyeColor, RegistrySupplier<VaseBlock>> pair : VASES_WITH_COLOR) {
+                VaseBlock vase = pair.getSecond().get();
+                VaseBlock restored;
+                if (vase instanceof AmphoraVaseBlock) {
+                    restored = AMPHORA_VASE_RESTORED.get();
+                } else if (vase instanceof KylixVaseBlock) {
+                    restored = KYLIX_VASE_RESTORED.get();
+                } else {
+                    restored = VOLUTE_VASE_RESTORED.get();
                 }
+                ShapelessRecipeBuilder.shapeless(vase).requires(restored).requires(DyeItem.byColor(pair.getFirst())).unlockedBy("has_restored_vase", RecipeProvider.has(restored)).save(consumer);
             }
 
             ShapelessRecipeBuilder.shapeless(DENSE_SAND.get()).requires(Blocks.SAND).requires(Items.QUARTZ).unlockedBy("has_sand", RecipeProvider.has(Blocks.SAND)).save(consumer);

@@ -291,7 +291,7 @@
 		},
 		"animation.edaphosaurus.idle": {
 			"loop": true,
-			"animation_length": 4,
+			"animation_length": 8,
 			"bones": {
 				"tail1": {
 					"rotation": {
