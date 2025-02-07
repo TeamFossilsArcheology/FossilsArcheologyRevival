@@ -216,9 +216,11 @@ public class DinopediaScreen extends Screen {
      */
     private void renderFirstPage(PoseStack poseStack, int mouseX, int mouseY) {
         int col = (157 << 16) | (126 << 8) | 103;
+        boolean drawLeftPage = true;
         if (entity instanceof Animal animal) {
             float embryoProgress = ModCapabilities.getEmbryoProgress(animal);
             if (embryoProgress > 0) {
+                drawLeftPage = false;
                 float quot = roundToHalf(embryoProgress / (FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION) + 1) * 100);
                 var progress = new TranslatableComponent("pedia.fossil.pregnantTime", quot);
                 font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 135, col);
@@ -231,7 +233,7 @@ public class DinopediaScreen extends Screen {
             }
         }
         renderFirstPageRight(poseStack, mouseX, mouseY);
-        if (entity instanceof Prehistoric dino) {
+        if (entity instanceof Prehistoric dino && drawLeftPage) {
             poseStack.pushPose();
             float scale = 1.5f;
             poseStack.scale(scale, scale, scale);
