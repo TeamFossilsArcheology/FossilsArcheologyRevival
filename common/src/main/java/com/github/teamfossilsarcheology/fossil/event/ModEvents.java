@@ -33,6 +33,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
+import java.util.Locale;
 import java.util.Random;
 
 public class ModEvents {
@@ -78,7 +79,7 @@ public class ModEvents {
     }
 
     private static boolean isBreakableInAnuLair(BlockState state) {
-        return state.getBlock().getDescriptionId().toLowerCase().contains("grave") || state.is(ModBlocks.FAKE_OBSIDIAN.get()) || state.is(BlockTags.FIRE);
+        return state.getBlock().getDescriptionId().toLowerCase(Locale.ROOT).contains("grave") || state.is(ModBlocks.FAKE_OBSIDIAN.get()) || state.is(BlockTags.FIRE);
     }
 
     private static boolean isLivestock(PathfinderMob mob) {

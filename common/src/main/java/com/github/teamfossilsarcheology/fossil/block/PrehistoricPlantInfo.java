@@ -61,12 +61,12 @@ public enum PrehistoricPlantInfo {
     PrehistoricPlantInfo(Size size, VoxelShape shape) {
         this.size = size;
         this.shape = shape;
-        this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
+        this.resourceName = this.name().toLowerCase(Locale.ROOT);
     }
 
     PrehistoricPlantInfo(Size size, PrehistoricPlantInfo tallPlant, String commonName, VoxelShape shape) {
         this.size = size;
-        this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
+        this.resourceName = this.name().toLowerCase(Locale.ROOT);
         this.tallPlant = tallPlant;
         this.commonName = commonName;
         this.shape = shape;
@@ -74,7 +74,7 @@ public enum PrehistoricPlantInfo {
 
     PrehistoricPlantInfo(Size size, VoxelShape shape, int berryAge, int maxAge) {
         this.size = size;
-        this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
+        this.resourceName = this.name().toLowerCase(Locale.ROOT);
         this.berryAge = berryAge;
         this.maxAge = maxAge;
         this.shape = shape;

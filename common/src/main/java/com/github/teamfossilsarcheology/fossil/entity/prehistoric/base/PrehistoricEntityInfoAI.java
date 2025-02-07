@@ -4,6 +4,8 @@ import com.github.teamfossilsarcheology.fossil.util.DinopediaInfo;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
+import java.util.Locale;
+
 /**
  * Many of these are unused
  * @see com.github.teamfossilsarcheology.fossil.entity.data.AI
@@ -15,8 +17,8 @@ public class PrehistoricEntityInfoAI {
 
     public enum Response implements DinopediaInfo {
         CALM, SCARED, TERRITORIAL, AGGRESSIVE, WATER_AGGRESSIVE, WATER_CALM;
-        private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase());
-        private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase() + ".desc");
+        private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase(Locale.ROOT));
+        private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.temperament." + name().toLowerCase(Locale.ROOT) + ".desc");
 
         @Override
         public Component getName() {
@@ -55,8 +57,8 @@ public class PrehistoricEntityInfoAI {
 
     public enum Activity implements DinopediaInfo {
         DIURNAL, NOCTURNAL, BOTH, NO_SLEEP;
-        private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase());
-        private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase() + ".desc");
+        private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase(Locale.ROOT));
+        private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.activity." + name().toLowerCase(Locale.ROOT) + ".desc");
 
         @Override
         public Component getName() {

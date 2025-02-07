@@ -60,7 +60,7 @@ public enum VanillaEntityInfo implements EntityInfo {
         this.entityType = entityType;
         this.mobType = mobType;
         this.diet = diet;
-        this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
+        this.resourceName = this.name().toLowerCase(Locale.ROOT);
         this.displayName = () -> new TranslatableComponent("entity.minecraft." + resourceName);
     }
 

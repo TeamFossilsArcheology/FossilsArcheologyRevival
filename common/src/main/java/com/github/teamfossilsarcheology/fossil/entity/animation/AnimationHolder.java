@@ -13,7 +13,7 @@ public class AnimationHolder {
     private final Set<String> lookup = new HashSet<>();
 
     public void add(AnimationInfo animation) {
-        String name = animation.animation.animationName.toLowerCase();
+        String name = animation.animation.animationName.toLowerCase(Locale.ROOT);
         String[] parts = name.split("_");
         int weight = 1;
         if (parts.length >= 3) {

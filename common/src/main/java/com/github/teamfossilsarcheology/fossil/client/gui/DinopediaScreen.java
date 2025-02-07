@@ -79,7 +79,7 @@ public class DinopediaScreen extends Screen {
         poseStack.scale(1, 1, -1);
         RenderSystem.applyModelViewMatrix();
         PoseStack poseStack2 = new PoseStack();
-        poseStack2.translate(0.0, 0.0, 1000.0);
+        poseStack2.translate(0.0, -10, 1000.0);
         int scale = 15;
         if (entity instanceof Prehistoric) {
             scale = (int) (35 / entity.getBbWidth());

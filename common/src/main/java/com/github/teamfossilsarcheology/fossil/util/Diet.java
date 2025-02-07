@@ -10,6 +10,7 @@ import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
+import java.util.Locale;
 
 public enum Diet implements DinopediaInfo {
     CARNIVORE(3),
@@ -20,8 +21,8 @@ public enum Diet implements DinopediaInfo {
     INSECTIVORE(0),
     PISCI_CARNIVORE(3),
     PASSIVE(0);
-    private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase());
-    private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase() + ".desc");
+    private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT));
+    private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT) + ".desc");
 
     private final int fearIndex;
 

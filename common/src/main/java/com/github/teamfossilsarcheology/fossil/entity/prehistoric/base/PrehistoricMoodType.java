@@ -5,6 +5,8 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
 
+import java.util.Locale;
+
 public enum PrehistoricMoodType implements DinopediaInfo {
     ANGRY(0, -71, ChatFormatting.DARK_RED),
     SAD(48, -36, ChatFormatting.GOLD),
@@ -23,11 +25,11 @@ public enum PrehistoricMoodType implements DinopediaInfo {
 
     @Override
     public Component getName() {
-        return new TranslatableComponent("pedia.fossil.mood." + name().toLowerCase()).withStyle(style -> style.withColor(color));
+        return new TranslatableComponent("pedia.fossil.mood." + name().toLowerCase(Locale.ROOT)).withStyle(style -> style.withColor(color));
     }
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("pedia.fossil.mood.desc." + name().toLowerCase()).withStyle(style -> style.withColor(ChatFormatting.GRAY));
+        return new TranslatableComponent("pedia.fossil.mood." + name().toLowerCase(Locale.ROOT) + ".desc").withStyle(style -> style.withColor(ChatFormatting.GRAY));
     }
 }

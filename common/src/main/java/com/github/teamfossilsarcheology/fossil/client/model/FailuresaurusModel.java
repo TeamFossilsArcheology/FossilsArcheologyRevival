@@ -13,13 +13,13 @@ import java.util.stream.Collectors;
 public class FailuresaurusModel extends AnimatedGeoModel<Failuresaurus> {
     private final Map<String, ResourceLocation> modelLocations = Arrays.stream(Failuresaurus.Variant.values())
             .collect(Collectors.toMap(Enum::name, variant ->
-                    FossilMod.location("geo/entity/failuresaurus_" + variant.name().toLowerCase(Locale.ENGLISH) + ".geo.json")));
+                    FossilMod.location("geo/entity/failuresaurus_" + variant.name().toLowerCase(Locale.ROOT) + ".geo.json")));
     private final Map<String, ResourceLocation> textureLocations = Arrays.stream(Failuresaurus.Variant.values())
             .collect(Collectors.toMap(Enum::name, variant ->
-                    FossilMod.location("textures/entity/failuresaurus/failuresaurus_" + variant.name().toLowerCase(Locale.ENGLISH) + ".png")));
+                    FossilMod.location("textures/entity/failuresaurus/failuresaurus_" + variant.name().toLowerCase(Locale.ROOT) + ".png")));
     private final Map<String, ResourceLocation> animationLocations = Arrays.stream(Failuresaurus.Variant.values())
             .collect(Collectors.toMap(Enum::name, variant ->
-                    FossilMod.location("animations/failuresaurus_" + variant.name().toLowerCase(Locale.ENGLISH) + ".animation.json")));
+                    FossilMod.location("animations/failuresaurus_" + variant.name().toLowerCase(Locale.ROOT) + ".animation.json")));
 
     public FailuresaurusModel() {
     }

@@ -135,7 +135,7 @@ public enum PrehistoricEntityInfo implements EntityInfo {
         this.entitySupplier = entity;
         this.mobType = mobType;
         this.timePeriod = timePeriod;
-        this.resourceName = this.name().toLowerCase(Locale.ENGLISH);
+        this.resourceName = this.name().toLowerCase(Locale.ROOT);
         this.displayName = () -> new TranslatableComponent("entity.fossil." + resourceName);
         this.backgroundEggColor = backgroundEggColor;
         this.highlightEggColor = highlightEggColor;
