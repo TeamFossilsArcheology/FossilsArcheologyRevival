@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.block.entity.FeederBlockEntity;
 import com.github.teamfossilsarcheology.fossil.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.Mth;
 import net.minecraft.world.*;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -76,6 +77,23 @@ public class FeederBlock extends BaseEntityBlock {
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
         builder.add(HERB, CARN, FACING);
+    }
+
+    @Override
+    public boolean hasAnalogOutputSignal(BlockState state) {
+        return true;
+    }
+
+    @Override
+    public int getAnalogOutputSignal(BlockState state, Level level, BlockPos pos) {
+        BlockEntity blockEntity = level.getBlockEntity(pos);
+        if (blockEntity instanceof FeederBlockEntity feeder) {
+            float f = (feeder.getMeat() + feeder.getPlant());
+            if (f > 0) {
+                return 1 + Mth.floor(f * 14);
+            }
+        }
+        return 0;
     }
 
     @Override
