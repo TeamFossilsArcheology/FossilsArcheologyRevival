@@ -41,6 +41,8 @@ public class FarmersDelightCompat {
         FoodMappings.addPlant(ModItems.STUFFED_PUMPKIN.get());
         FoodMappings.addPlant(ModItems.ROAST_CHICKEN.get());
         FoodMappings.addPlant(ModItems.ROAST_CHICKEN.get());
+        FoodMappings.addPlant(ModItems.CABBAGE_SEEDS.get(), 5);
+        FoodMappings.addPlant(ModItems.TOMATO_SEEDS.get(), 5);
 
         FoodMappings.addEgg(ModItems.FRIED_EGG.get());
         FoodMappings.addEgg(ModItems.EGG_SANDWICH.get());

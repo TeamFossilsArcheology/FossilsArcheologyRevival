@@ -14,7 +14,7 @@ import java.util.function.Supplier;
 public enum ModArmorMaterials implements ArmorMaterial {
     ANCIENT("ancient", 15, new int[]{2, 5, 6, 2}, 9, SoundEvents.ARMOR_EQUIP_CHAIN, 0.0f, 0.0f,
             () -> Ingredient.of(ModItems.SCARAB_GEM.get())),
-    BONE("bone", 25, new int[]{2, 7, 6, 2}, 15, SoundEvents.ARMOR_EQUIP_CHAIN, 0.0f, 0.0f, () -> Ingredient.of(Items.BONE));
+    BONE("bone", 25, new int[]{2, 5, 6, 2}, 15, SoundEvents.ARMOR_EQUIP_CHAIN, 0.0f, 0.0f, () -> Ingredient.of(Items.BONE));
 
     private static final int[] HEALTH_PER_SLOT;
 
