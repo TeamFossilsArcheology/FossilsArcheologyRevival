@@ -8,7 +8,7 @@
   "adapt_noise": true,
   "spawn_overrides": {},
   "config": {
-    "start_pool": "fossil:tar_site/start_small",
+    "start_pool": "fossil:tar_site/start_tent",
     "size": 3
   }
 }

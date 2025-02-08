@@ -27,7 +27,7 @@ public class TarFluid {
     private static void animateParticle(Level level, BlockPos pos, FluidState state, Random random) {
         if (random.nextInt(5) == 0 && level.isEmptyBlock(pos.above())) {
             double posX = pos.getX() + random.nextDouble();
-            double posY = pos.getY() + 1;
+            double posY = pos.getY() + 1.0;
             double posZ = pos.getZ() + random.nextDouble();
             double speedX = (random.nextDouble() - 0.5D) * 0.3D;
             double speedY = 0.3D * random.nextDouble() + 0.2D;
@@ -55,11 +55,6 @@ public class TarFluid {
 
         public Source(ArchitecturyFluidAttributes attributes) {
             super(attributes);
-        }
-
-        @Override
-        protected boolean canBeReplacedWith(FluidState state, BlockGetter level, BlockPos pos, Fluid fluid, Direction direction) {
-            return direction == Direction.DOWN && this.isSame(fluid);
         }
 
         @Override
@@ -93,12 +88,11 @@ public class TarFluid {
 
         @Override
         protected void animateTick(Level level, BlockPos pos, FluidState state, Random random) {
-            if (!state.getValue(FALLING)) {
-                if (random.nextInt(64) == 0) {
-                    level.playLocalSound((double) pos.getX() + 0.5, (double) pos.getY() + 0.5, (double) pos.getZ() + 0.5,
-                            ModSounds.TAR.get(), SoundSource.BLOCKS, 0.3f, random.nextFloat() * 0.4f + 0.8f, false);
-                }
+            if (Boolean.FALSE.equals(state.getValue(FALLING)) && random.nextInt(64) == 0) {
+                level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
+                        ModSounds.TAR.get(), SoundSource.BLOCKS, 0.3f, random.nextFloat() * 0.4f + 0.8f, false);
             }
+
             animateParticle(level, pos, state, random);
         }
 

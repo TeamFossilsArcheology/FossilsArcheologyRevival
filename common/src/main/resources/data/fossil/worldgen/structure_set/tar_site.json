@@ -1,6 +1,14 @@
 {
   "structures": [
     {
+      "structure": "fossil:tar_site_tent",
+      "weight": 3
+    },
+    {
+      "structure": "fossil:tar_site_tent_snowy",
+      "weight": 3
+    },
+    {
       "structure": "fossil:tar_site_small",
       "weight": 3
     },
@@ -19,8 +27,8 @@
   ],
   "placement": {
     "type": "minecraft:random_spread",
-    "spacing": 32,
-    "separation": 8,
+    "spacing": 4,
+    "separation": 2,
     "salt": 1151905941
   }
 }

@@ -1,5 +1,5 @@
 {
-  "name": "fossil:tar_site/tent_options_small",
+  "name": "fossil:tar_site/tent_options",
   "fallback": "minecraft:empty",
   "elements": [
     {
@@ -7,7 +7,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "fossil:sites/tar_tent_option_small_north",
+        "location": "fossil:sites/tar_tent_option_north",
         "processors": "minecraft:empty"
       }
     },
@@ -16,7 +16,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "fossil:sites/tar_tent_option_small_east",
+        "location": "fossil:sites/tar_tent_option_east",
         "processors": "minecraft:empty"
       }
     },
@@ -25,7 +25,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "fossil:sites/tar_tent_option_small_south",
+        "location": "fossil:sites/tar_tent_option_south",
         "processors": "minecraft:empty"
       }
     },
@@ -34,7 +34,7 @@
       "element": {
         "element_type": "minecraft:single_pool_element",
         "projection": "rigid",
-        "location": "fossil:sites/tar_tent_option_small_west",
+        "location": "fossil:sites/tar_tent_option_west",
         "processors": "minecraft:empty"
       }
     }

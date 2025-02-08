@@ -1,14 +1,13 @@
 {
   "type": "minecraft:village",
   "biomes": [
-    "minecraft:plains",
-    "minecraft:savanna",
-    "minecraft:meadow"
+    "minecraft:snowy_taiga",
+    "minecraft:snowy_plains"
   ],
   "adapt_noise": true,
   "spawn_overrides": {},
   "config": {
-    "start_pool": "fossil:tar_site/start_small",
+    "start_pool": "fossil:tar_site/start_tent_snowy",
     "size": 3
   }
 }
