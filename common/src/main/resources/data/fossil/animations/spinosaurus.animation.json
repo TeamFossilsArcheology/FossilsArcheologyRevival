@@ -36,7 +36,7 @@
     "animation.spinosaurus.grab": {
       "animation_length": 4.4167
     },
-    "animation.spinosaurus.sit": {
+    "animation.spinosaurus.sleep": {
       "loop": true,
       "animation_length": 12
     },

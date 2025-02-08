@@ -2126,7 +2126,7 @@
 				}
 			}
 		},
-		"animation.spinosaurus.sit": {
+		"animation.spinosaurus.sleep": {
 			"loop": true,
 			"animation_length": 12,
 			"bones": {
