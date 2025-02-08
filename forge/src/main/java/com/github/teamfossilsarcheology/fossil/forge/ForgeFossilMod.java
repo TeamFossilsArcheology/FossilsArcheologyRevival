@@ -61,7 +61,8 @@ public class ForgeFossilMod {
         modEventBus.addListener(this::onCommon);
         modEventBus.addListener(this::registerCaps);
         modEventBus.addListener(this::onModelRegistryEvent);
-        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, ForgeConfig.COMMON_SPEC);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ForgeConfig.CLIENT_SPEC);
         DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> ClientInit::immediate);
     }
 
