@@ -85,6 +85,10 @@ public class DinopediaBioLoader extends SimplePreparableReloadListener<Map<Strin
         englishFallback = fallbackBuilder.putAll(files.get(Language.DEFAULT)).build();
     }
 
+    public boolean hasFallback(String entityName) {
+        return englishFallback.containsKey(entityName);
+    }
+
     /**
      * Returns the text of a dinopedia bio in the currently selected language or in the fallback language
      */

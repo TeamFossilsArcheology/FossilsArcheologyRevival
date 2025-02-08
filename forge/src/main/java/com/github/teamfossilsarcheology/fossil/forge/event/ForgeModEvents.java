@@ -9,10 +9,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.event.ModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.MammalCapProvider;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.FirstHatchCapProvider;
-import com.github.teamfossilsarcheology.fossil.forge.tests.BatchArgument;
-import com.github.teamfossilsarcheology.fossil.forge.tests.BatchTestCommand;
-import com.github.teamfossilsarcheology.fossil.forge.tests.HopperTests;
-import com.github.teamfossilsarcheology.fossil.forge.tests.RecipeTests;
+import com.github.teamfossilsarcheology.fossil.forge.tests.*;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncEntityInfoMessage;
@@ -42,9 +39,11 @@ import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
 import java.util.List;
 
+@PrefixGameTestTemplate(value = false)
 @Mod.EventBusSubscriber(modid = FossilMod.MOD_ID)
 public class ForgeModEvents {
 
@@ -52,8 +51,9 @@ public class ForgeModEvents {
     @SubscribeEvent
     public static void registerTests(RegisterGameTestsEvent event) {
         if (Version.debugEnabled()) {
-            event.register(RecipeTests.class);
             event.register(HopperTests.class);
+            event.register(MiscTests.class);
+            event.register(RecipeTests.class);
         }
     }
 
