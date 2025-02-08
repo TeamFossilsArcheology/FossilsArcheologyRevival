@@ -167,7 +167,7 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
 }
 
 modrinth {
-    token = System.getenv("MODRINTH_TOKEN") ?: "no value"
+    token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
     projectId = "IJY7IqPP"
     versionNumber.set("$minecraftVersion-$modVersion-${project.name}")
     versionType.set("release")
@@ -179,8 +179,8 @@ modrinth {
         required.project("architectury-api")
         required.project("geckolib")
         required.project("terrablender")
-        required.project("cardinal-components-api")
         required.project("more-hitboxes")
+        embedded.project("cardinal-components-api")
         embedded.project("sructurized-reborn")
         embedded.project("midnightlib")
     }
@@ -190,14 +190,14 @@ modrinth {
 tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     group = "publishing"
     description = "Publishes jar to CurseForge"
-    apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "no value"
+    apiToken = project.property("CURSEFORGE_TOKEN") ?: "no value"
     debugMode = true
     val mainFile = upload(223908, tasks.remapJar)
     mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
-    mainFile.addRequirement("fabric-api", "architectury-api", "geckolib", "terrablender", "cardinal-components-api", "more-hitboxes")
-    mainFile.addEmbedded("midnightlib")
+    mainFile.addRequirement("fabric-api", "architectury-api", "geckolib", "terrablender", "more-hitboxes")
+    mainFile.addEmbedded("cardinal-components-api", "midnightlib")
 }
 
 tasks.named("publish") {

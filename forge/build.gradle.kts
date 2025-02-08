@@ -122,7 +122,7 @@ javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElement
     skip()
 }
 modrinth {
-    token = System.getenv("MODRINTH_TOKEN") ?: "no value"
+    token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
     projectId = "IJY7IqPP"
     versionNumber.set("$minecraftVersion-$modVersion-${project.name}")
     versionType.set("release")
@@ -141,7 +141,7 @@ modrinth {
 tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     group = "publishing"
     description = "Publishes jar to CurseForge"
-    apiToken = System.getenv("CURSEFORGE_TOKEN") ?: "no value"
+    apiToken = project.property("CURSEFORGE_TOKEN") ?: "no value"
     debugMode = true
     val mainFile = upload(223908, tasks.remapJar)
 
