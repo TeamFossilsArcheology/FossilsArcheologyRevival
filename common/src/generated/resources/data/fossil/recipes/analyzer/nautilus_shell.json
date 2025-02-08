@@ -5,8 +5,8 @@
   },
   "outputs": [
     {
-      "item": "fossil:cooked_nautilus",
-      "weight": 100
+      "item": "fossil:nautilus_dna",
+      "weight": 100.0
     }
   ]
 }

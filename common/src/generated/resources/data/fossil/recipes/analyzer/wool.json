@@ -5,6 +5,10 @@
   },
   "outputs": [
     {
+      "item": "fossil:goat_dna",
+      "weight": 10.0
+    },
+    {
       "item": "fossil:llama_dna",
       "weight": 13.0
     },
@@ -15,7 +19,7 @@
     {
       "item": "minecraft:string",
       "count": 3,
-      "weight": 60.0
+      "weight": 50.0
     }
   ]
 }

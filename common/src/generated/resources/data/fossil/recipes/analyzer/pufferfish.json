@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "minecraft:pufferfish"
+  },
+  "outputs": [
+    {
+      "item": "fossil:pufferfish_dna",
+      "weight": 100.0
+    }
+  ]
+}

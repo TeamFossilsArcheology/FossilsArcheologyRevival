@@ -40,7 +40,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         for (RegistrySupplier<FigurineBlock> figurine : FIGURINES) {
             figurines.add(figurine.get());
         }
-        tag(BlockTags.LOGS_THAT_BURN).addTags(ModBlockTags.ANCIENT_WOOD_LOGS, ModBlockTags.CALAMITES_LOGS, ModBlockTags.CORDAITES_LOGS, ModBlockTags.MUTANT_TREE_LOGS, ModBlockTags.PALM_LOGS, ModBlockTags.SIGILLARIA_LOGS, ModBlockTags.TEMPSKYA_LOGS);
+        addTag(BlockTags.LOGS_THAT_BURN, ModBlockTags.ANCIENT_WOOD_LOGS, ModBlockTags.CALAMITES_LOGS, ModBlockTags.CORDAITES_LOGS, ModBlockTags.MUTANT_TREE_LOGS, ModBlockTags.PALM_LOGS, ModBlockTags.SIGILLARIA_LOGS, ModBlockTags.TEMPSKYA_LOGS);
         addTag(BlockTags.PLANKS, ANCIENT_WOOD_PLANKS, CALAMITES_PLANKS, CORDAITES_PLANKS, MUTANT_TREE_PLANKS, PALM_PLANKS, SIGILLARIA_PLANKS, TEMPSKYA_PLANKS);
         addTag(BlockTags.WOODEN_BUTTONS, CALAMITES_BUTTON, CORDAITES_BUTTON, MUTANT_TREE_BUTTON, PALM_BUTTON, SIGILLARIA_BUTTON, TEMPSKYA_BUTTON);
         addTag(BlockTags.WOODEN_DOORS, CALAMITES_DOOR, CORDAITES_DOOR, MUTANT_TREE_DOOR, PALM_DOOR, SIGILLARIA_DOOR, TEMPSKYA_DOOR);
@@ -78,7 +78,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addTag(BlockTags.NEEDS_IRON_TOOL, CALCITE_FOSSIL, DEEPSLATE_FOSSIL, DRIPSTONE_FOSSIL, RED_SANDSTONE_FOSSIL, SANDSTONE_FOSSIL, STONE_FOSSIL, TUFF_FOSSIL, PERMAFROST_BLOCK, AMBER_ORE);
         addTag(BlockTags.NEEDS_STONE_TOOL, ANCIENT_GLASS, REINFORCED_GLASS, ICED_DIRT, PERMAFROST_BLOCK);
         addTag(BlockTags.REPLACEABLE_PLANTS, MUTANT_TREE_VINE);
-        var plants = tag(ModBlockTags.PLANTS).add(MUTANT_TREE_VINE.get());
+        var plants = addTag(ModBlockTags.PLANTS, MUTANT_TREE_VINE);
         for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
             plants.add(info.getPlantBlock());
         }
@@ -87,20 +87,25 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 PrehistoricPlantInfo.ZAMITES.getPlantBlock());
 
         addTag(ModBlockTags.UNBREAKABLE, ANCIENT_GLASS, BUBBLE_BLOWER, DENSE_SAND, FEEDER, REINFORCED_GLASS);
-        tag(ModBlockTags.MOOD_BONUS).add(Blocks.CACTUS, Blocks.MOSS_BLOCK, Blocks.PUMPKIN, Blocks.CARVED_PUMPKIN,
+        addTag(ModBlockTags.MOOD_BONUS, Blocks.CACTUS, Blocks.MOSS_BLOCK, Blocks.PUMPKIN, Blocks.CARVED_PUMPKIN,
                         Blocks.MELON, Blocks.BROWN_MUSHROOM, Blocks.RED_MUSHROOM, Blocks.GRASS, Blocks.FERN,
                         Blocks.VINE, Blocks.GLOW_LICHEN, Blocks.SUNFLOWER, Blocks.LILAC, Blocks.ROSE_BUSH, Blocks.PEONY,
-                        Blocks.TALL_GRASS, Blocks.LARGE_FERN, Blocks.HANGING_ROOTS)
-                .addTags(BlockTags.CROPS, BlockTags.LEAVES, BlockTags.SAPLINGS, BlockTags.SMALL_FLOWERS, ModBlockTags.PLANTS);
+                        Blocks.TALL_GRASS, Blocks.LARGE_FERN, Blocks.HANGING_ROOTS);
+        addTag(ModBlockTags.MOOD_BONUS, BlockTags.CROPS, BlockTags.LEAVES, BlockTags.SAPLINGS, BlockTags.SMALL_FLOWERS, ModBlockTags.PLANTS);
     }
 
     @SafeVarargs
-    private void addTag(TagKey<Block> tag, RegistrySupplier<? extends Block>... toAdd) {
-        tag(tag).add(Arrays.stream(toAdd).map(Supplier::get).toArray(Block[]::new));
+    private TagAppender<Block> addTag(TagKey<Block> key, TagKey<Block>... toAdd) {
+        return tag(key).addTags(toAdd);
     }
 
-    private void addTag(TagKey<Block> tag, RegistrySupplier<Block> toAdd) {
-        tag(tag).add(toAdd.get());
+    @SafeVarargs
+    private TagAppender<Block> addTag(TagKey<Block> key, RegistrySupplier<? extends Block>... toAdd) {
+        return tag(key).add(Arrays.stream(toAdd).filter(RegistrySupplier::isPresent).map(Supplier::get).toArray(Block[]::new));
+    }
+
+    private TagAppender<Block> addTag(TagKey<Block> key, Block... toAdd) {
+        return tag(key).add(Arrays.stream(toAdd).toArray(Block[]::new));
     }
 
     @Override

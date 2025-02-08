@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "minecraft:honeycomb"
+  },
+  "outputs": [
+    {
+      "item": "fossil:bee_dna",
+      "weight": 100.0
+    }
+  ]
+}

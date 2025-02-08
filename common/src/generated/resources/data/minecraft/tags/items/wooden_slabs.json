@@ -1,0 +1,12 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:ancient_wood_slab",
+    "fossil:calamites_slab",
+    "fossil:cordaites_slab",
+    "fossil:mutant_tree_slab",
+    "fossil:palm_slab",
+    "fossil:sigillaria_slab",
+    "fossil:tempskya_slab"
+  ]
+}

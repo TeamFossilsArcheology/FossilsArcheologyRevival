@@ -58,7 +58,7 @@ public class ModBlockLootTables extends BlockLoot {
                 LootItem.lootTableItem(AMBER_CHUNK_MOSQUITO.get()).when(LootItemRandomChanceCondition.randomChance(0.05f)).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE))
                         .otherwise(LootItem.lootTableItem(AMBER_CHUNK.get()).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE)))))));
         ICED_DIRT.ifPresent(block -> addCustom(block, createSilkTouchOnlyTable(block)));
-        PERMAFROST_BLOCK.ifPresent(block -> addCustom(block, multiple(20, FERN_SEED_FOSSIL.get(),
+        PERMAFROST_BLOCK.ifPresent(block -> addCustom(block, multiple(block, 20, FERN_SEED_FOSSIL.get(),
                 SKULL_BLOCK.get(), FROZEN_MEAT.get(), Items.BONE, Items.BOOK)));
 
         SLIME_TRAIL.ifPresent(block -> addCustom(block, randomItem(Items.SLIME_BALL, 0.33f)));
@@ -161,12 +161,12 @@ public class ModBlockLootTables extends BlockLoot {
         return LootTable.lootTable().withPool(LootPool.lootPool().setRolls(ConstantValue.exactly(1)).add(LootItem.lootTableItem(item).when(LootItemRandomChanceCondition.randomChance(chance))).when(ExplosionCondition.survivesExplosion())).setParamSet(LootContextParamSets.BLOCK);
     }
 
-    private LootTable.Builder multiple(int weight, ItemLike... items) {
-        LootPool.Builder loot = LootPool.lootPool().setRolls(ConstantValue.exactly(1));
+    private LootTable.Builder multiple(Block block, int weight, ItemLike... items) {
+        EntryGroup.Builder group = EntryGroup.list();
         for (ItemLike item : items) {
-            loot.add(LootItem.lootTableItem(item).setWeight(weight));
+            group.append(LootItem.lootTableItem(item).setWeight(weight));
         }
-        return LootTable.lootTable().withPool(loot.when(ExplosionCondition.survivesExplosion())).setParamSet(LootContextParamSets.BLOCK);
+        return createSilkTouchDispatchTable(block, applyExplosionCondition(block, group));
     }
 
     private LootItemCondition.Builder enchant(Enchantment enchantment, int value) {

@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "minecraft:cod"
+  },
+  "outputs": [
+    {
+      "item": "fossil:cod_dna",
+      "weight": 100.0
+    }
+  ]
+}

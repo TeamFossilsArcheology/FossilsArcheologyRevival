@@ -6,34 +6,63 @@
       "bonus_rolls": 0.0,
       "entries": [
         {
-          "type": "minecraft:item",
-          "weight": 20,
-          "name": "fossil:fossil_seed_fern"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 20,
-          "name": "fossil:skull"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 20,
-          "name": "fossil:frozen_meat"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 20,
-          "name": "minecraft:bone"
-        },
-        {
-          "type": "minecraft:item",
-          "weight": 20,
-          "name": "minecraft:book"
-        }
-      ],
-      "conditions": [
-        {
-          "condition": "minecraft:survives_explosion"
+          "type": "minecraft:alternatives",
+          "children": [
+            {
+              "type": "minecraft:item",
+              "conditions": [
+                {
+                  "condition": "minecraft:match_tool",
+                  "predicate": {
+                    "enchantments": [
+                      {
+                        "enchantment": "minecraft:silk_touch",
+                        "levels": {
+                          "min": 1
+                        }
+                      }
+                    ]
+                  }
+                }
+              ],
+              "name": "fossil:permafrost_block"
+            },
+            {
+              "type": "minecraft:group",
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                }
+              ],
+              "children": [
+                {
+                  "type": "minecraft:item",
+                  "weight": 20,
+                  "name": "fossil:fossil_seed_fern"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 20,
+                  "name": "fossil:skull"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 20,
+                  "name": "fossil:frozen_meat"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 20,
+                  "name": "minecraft:bone"
+                },
+                {
+                  "type": "minecraft:item",
+                  "weight": 20,
+                  "name": "minecraft:book"
+                }
+              ]
+            }
+          ]
         }
       ]
     }

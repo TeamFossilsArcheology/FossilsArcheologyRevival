@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "fossil:calamites_button",
+    "fossil:cordaites_button",
+    "fossil:mutant_tree_button",
+    "fossil:palm_button",
+    "fossil:sigillaria_button",
+    "fossil:tempskya_button"
+  ]
+}
