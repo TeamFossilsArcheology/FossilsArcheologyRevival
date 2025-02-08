@@ -8,7 +8,8 @@
     "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin"
+    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin",
+    "WalkNodeEvaluatorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

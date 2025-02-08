@@ -8,8 +8,9 @@
   ],
   "mixins": [
     "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin", "ServerEntityMixin",
-    "ServerPlayerMixin"
+    "ServerPlayerMixin", "WalkNodeEvaluatorMixin"
   ],
+  "plugin": "com.github.teamfossilsarcheology.fossil.fabric.FabricFossilMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   }

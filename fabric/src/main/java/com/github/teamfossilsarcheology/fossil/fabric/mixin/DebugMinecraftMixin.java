@@ -24,12 +24,13 @@ public class DebugMinecraftMixin {
 
     @Inject(method = "clearLevel(Lnet/minecraft/client/gui/screens/Screen;)V", at = @At(value = "HEAD"))
     public void clearDebugEntity(final CallbackInfo ci) {
-        if (Version.debugEnabled()) {
-            DebugScreen.entity = null;
-            InstructionTab.entityListHighlight = null;
-            InstructionTab.highlightInstructionEntity = null;
-            InstructionTab.activeEntity = null;
+        if (!Version.debugEnabled()) {
+            return;
         }
+        DebugScreen.entity = null;
+        InstructionTab.entityListHighlight = null;
+        InstructionTab.highlightInstructionEntity = null;
+        InstructionTab.activeEntity = null;
     }
 
     @Inject(method = "pickBlock", at = @At(value = "HEAD"), cancellable = true)
