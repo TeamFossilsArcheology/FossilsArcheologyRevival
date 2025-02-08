@@ -1,5 +1,5 @@
 <p align="center">
-    <img src="https://imgur.com/G18YFWC" alt="Banner"/>
+    <img src="https://i.imgur.com/G18YFWC.jpeg" alt="Banner"/>
 </p>
 <p align="center">
     <a href="https://discord.gg/fossils-archaeology-revival-252498968695537664">
