@@ -45,10 +45,7 @@ import java.util.List;
 
 public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public static final int TOTAL_HATCHING_TIME = 3000;
-    /**
-     * Dummy recipe that awards the player with a chance to get a golden egg
-     */
-    public static final ResourceLocation GOLDEN_EGG_RECIPE = FossilMod.location("golden_egg");
+    public static final ResourceLocation GOLDEN_EGG_ADV = FossilMod.location("fossil/all_eggs");
     private static final EntityDataAccessor<Integer> HATCHING_TIME = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> GOLDEN_EGG = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.BOOLEAN);
     private static final Logger LOGGER = LogUtils.getLogger();

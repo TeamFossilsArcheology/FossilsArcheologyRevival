@@ -36,6 +36,7 @@ import com.github.teamfossilsarcheology.fossil.util.Version;
 import dev.architectury.extensions.network.EntitySpawnExtension;
 import dev.architectury.networking.NetworkManager;
 import it.unimi.dsi.fastutil.Pair;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
@@ -70,7 +71,10 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.monster.Creeper;
+import net.minecraft.world.entity.monster.Ghast;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -896,9 +900,12 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             } else {
                 hatchling = ModEntities.DINOSAUR_EGG.get().create(level);
                 ((DinosaurEgg) hatchling).setPrehistoricEntityInfo(info());
-                //((ServerLevel)level).getServer().getAdvancements().getAdvancement(Fossil.location("all_eggs"));
-                if (getOwner() instanceof ServerPlayer player && player.getRecipeBook().contains(DinosaurEgg.GOLDEN_EGG_RECIPE)) {
-                    ((DinosaurEgg) hatchling).setGoldenEgg(random.nextFloat() < 0.05);
+
+                if (getOwner() instanceof ServerPlayer player) {
+                    Advancement adv = ((ServerLevel) level).getServer().getAdvancements().getAdvancement(DinosaurEgg.GOLDEN_EGG_ADV);
+                    if (adv != null && player.getAdvancements().getOrStartProgress(adv).isDone()) {
+                        ((DinosaurEgg) hatchling).setGoldenEgg(random.nextFloat() < 0.05);
+                    }
                 }
             }
             setTarget(null);
@@ -1169,6 +1176,20 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             return false;
         }
         return target.canBeSeenAsEnemy();
+    }
+
+    @Override
+    public boolean wantsToAttack(LivingEntity target, LivingEntity owner) {
+        if (target instanceof Creeper || target instanceof Ghast) {
+            return false;
+        } else if (target instanceof TamableAnimal tamableAnimal) {
+            return tamableAnimal.getOwner() != owner;
+        } else if (target instanceof Player && owner instanceof Player && !((Player) owner).canHarmPlayer((Player) target)) {
+            return false;
+        } else if (target instanceof AbstractHorse && ((AbstractHorse) target).isTamed()) {
+            return false;
+        }
+        return true;
     }
 
     public float getTargetScale() {

@@ -4,7 +4,9 @@ import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.DinosaurEgg;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricMobType;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.core.BlockPos;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.world.InteractionHand;
@@ -40,8 +42,11 @@ public class DinoEggItem extends PrehistoricEntityItem {
             if (egg == null) {
                 return false;
             }
-            if (player instanceof ServerPlayer serverPlayer && serverPlayer.getRecipeBook().contains(DinosaurEgg.GOLDEN_EGG_RECIPE)) {
-                egg.setGoldenEgg(true);
+            if (player instanceof ServerPlayer serverPlayer) {
+                Advancement adv = ((ServerLevel) level).getServer().getAdvancements().getAdvancement(DinosaurEgg.GOLDEN_EGG_ADV);
+                if (adv != null && serverPlayer.getAdvancements().getOrStartProgress(adv).isDone()) {
+                    egg.setGoldenEgg(level.getRandom().nextFloat() < 0.05);
+                }
             }
             egg.moveTo(x, y, z, 0, 0);
             egg.setPrehistoricEntityInfo(info);
