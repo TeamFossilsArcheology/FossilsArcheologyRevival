@@ -3090,6 +3090,7 @@ d3991e1c6d28ebf5a5ca740c7bca37514daa081a data/minecraft/tags/blocks/wooden_butto
 e85b1e87d8d56a65361912f7df623eb625cd36aa data/minecraft/tags/blocks/wooden_slabs.json
 36893d75dc20065c1d1002c9c3320269cc8f2f3b data/minecraft/tags/blocks/wooden_stairs.json
 bee5cba5f98c872b4cdc4863f1df13e8bd5da8b5 data/minecraft/tags/blocks/wooden_trapdoors.json
+16ea32e776f7e8ecb765cf38f94291679a5837cd data/minecraft/tags/entity_types/freeze_immune_entity_types.json
 f5091f335ef44cbfae9b3570a499c9dd3ba23c98 data/minecraft/tags/items/beds.json
 b1ced62e0f6341723907659b01d05e7acd126aa0 data/minecraft/tags/items/dirt.json
 5bfb811528237ccb2695d5a79d74c1cdbff7b65a data/minecraft/tags/items/leaves.json
