@@ -1,7 +1,9 @@
 package com.github.teamfossilsarcheology.fossil.event;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
+import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
+import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.Quagga;
 import com.github.teamfossilsarcheology.fossil.entity.ThrownBirdEgg;
@@ -11,25 +13,35 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInf
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEntityInfo;
+import com.github.teamfossilsarcheology.fossil.item.MammalEmbryoItem;
+import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.recipe.ModRecipes;
+import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.tags.ModEntityTypeTags;
 import com.github.teamfossilsarcheology.fossil.util.FossilFoodMappings;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
 import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.BlockEvent;
 import dev.architectury.event.events.common.EntityEvent;
+import dev.architectury.event.events.common.InteractionEvent;
 import dev.architectury.event.events.common.LifecycleEvent;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.DispenserBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -75,6 +87,42 @@ public class ModEvents {
                     DispenserBlock.registerBehavior(info.cultivatedBirdEggItem, ThrownBirdEgg.getProjectile(info, true));
                 }
             }
+        });
+        InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
+            ItemStack stack = player.getItemInHand(hand);
+            if (stack.getItem() instanceof MammalEmbryoItem embryoItem) {
+                if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && !animal.isBaby()) {
+                    if (ModCapabilities.hasEmbryo(animal)) {
+                        return EventResult.interruptFalse();
+                    }
+                    if (player instanceof ServerPlayer serverPlayer) {
+                        ModTriggers.IMPLANT_EMBRYO_TRIGGER.trigger(serverPlayer, stack);
+                        ModCapabilities.startPregnancy(animal, embryoItem.getInfo());
+                        if (!player.getAbilities().instabuild) {
+                            stack.shrink(1);
+                        }
+                    } else {
+                        Random random = player.getRandom();
+                        for (int i = 0; i < 7; i++) {
+                            double x = animal.getX() + random.nextFloat() * animal.getBbWidth() * 2 - animal.getBbWidth();
+                            double y = animal.getY() + 0.5 + random.nextFloat() * animal.getBbHeight();
+                            double z = animal.getZ() + random.nextFloat() * animal.getBbWidth() * 2 - animal.getBbWidth();
+                            player.level.addParticle(ParticleTypes.SMOKE, x, y, z, random.nextGaussian() * 0.02, random.nextGaussian() * 0.02, random.nextGaussian() * 0.02);
+                        }
+                    }
+                    return EventResult.interruptTrue();
+                }
+            } else if (stack.is(ModItems.WHIP.get())) {
+                if (!player.level.isClientSide && player.isPassenger() && player.getVehicle() == entity) {
+                    stack.hurtAndBreak(1, player, p -> p.broadcastBreakEvent(hand));
+                    player.awardStat(Stats.ITEM_USED.get(stack.getItem()));
+                    player.playSound(ModSounds.WHIP.get(), 1, 1);
+                    return EventResult.interruptTrue();
+                }
+                player.playSound(ModSounds.WHIP.get(), 1, 1);
+                return EventResult.pass();
+            }
+            return EventResult.pass();
         });
     }
 
@@ -124,7 +172,7 @@ public class ModEvents {
                     newEntity = parentHorse.getBreedOffspring(level, parentHorse);
                 }
             } else {
-                newEntity = newHorse.getBreedOffspring(level, newHorse);
+                newHorse.finalizeSpawn(level, level.getCurrentDifficultyAt(newHorse.blockPosition()), MobSpawnType.BREEDING, null, null);
             }
         }
         if (newEntity instanceof Quagga newQuagga) {

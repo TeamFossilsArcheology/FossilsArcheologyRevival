@@ -1016,14 +1016,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public InteractionResult interactAt(Player player, Vec3 vec, InteractionHand hand) {
-        if (player.getItemInHand(hand).is(ModItems.WHIP.get())) {
-            player.playSound(ModSounds.WHIP.get(), 1, 1);
-        }
-        return super.interactAt(player, vec, hand);
-    }
-
-    @Override
     public @NotNull InteractionResult mobInteract(Player player, InteractionHand hand) {
         ItemStack stack = player.getItemInHand(hand);
         if (stack.isEmpty()) {

@@ -22,6 +22,10 @@ public abstract class PrehistoricEntityItem extends Item {
         this.name = new TranslatableComponent("item." + FossilMod.MOD_ID + "." + category, info.displayName().get());
     }
 
+    public EntityInfo getInfo() {
+        return info;
+    }
+
     @Override
     public @NotNull Component getName(ItemStack stack) {
         return name;
