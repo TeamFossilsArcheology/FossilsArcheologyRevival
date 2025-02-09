@@ -604,7 +604,7 @@
 		},
 		"animation.megalania.idle": {
 			"loop": true,
-			"animation_length": 4,
+			"animation_length": 8,
 			"bones": {
 				"Neckbase": {
 					"rotation": {
