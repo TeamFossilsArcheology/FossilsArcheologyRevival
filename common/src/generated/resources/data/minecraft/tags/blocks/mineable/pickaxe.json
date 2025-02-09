@@ -13,6 +13,7 @@
     "fossil:fake_obsidian",
     "fossil:culture_vat",
     "fossil:analyzer",
+    "fossil:feeder",
     "fossil:skull",
     "fossil:skull_lantern",
     "fossil:bubble_blower",

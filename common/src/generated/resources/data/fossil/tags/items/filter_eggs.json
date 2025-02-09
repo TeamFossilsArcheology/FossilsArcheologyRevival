@@ -1,9 +1,7 @@
 {
   "replace": false,
   "values": [
-    "#fossil:dino_eggs",
-    "#fossil:fish_eggs",
-    "#fossil:bird_eggs",
+    "#fossil:all_eggs",
     "fossil:spawn_egg_anu_boss",
     "fossil:spawn_egg_failuresaurus",
     "fossil:spawn_egg_sentry_piglin",

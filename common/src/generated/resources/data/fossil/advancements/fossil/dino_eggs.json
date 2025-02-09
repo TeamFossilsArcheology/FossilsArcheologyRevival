@@ -21,7 +21,7 @@
       "conditions": {
         "items": [
           {
-            "tag": "fossil:dino_eggs"
+            "tag": "fossil:all_eggs"
           }
         ]
       }

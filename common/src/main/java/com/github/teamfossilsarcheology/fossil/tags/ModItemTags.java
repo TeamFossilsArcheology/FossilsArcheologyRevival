@@ -24,6 +24,7 @@ public class ModItemTags {
     public static final TagKey<Item> FIGURINES = TagKey.create(key, FossilMod.location("figurines"));
     public static final TagKey<Item> BIRD_EGGS = TagKey.create(key, FossilMod.location("bird_eggs"));
     public static final TagKey<Item> DINO_EGGS = TagKey.create(key, FossilMod.location("dino_eggs"));
+    public static final TagKey<Item> ALL_EGGS = TagKey.create(key, FossilMod.location("all_eggs"));
     public static final TagKey<Item> COOKABLE_EGGS = TagKey.create(key, FossilMod.location("cookable_eggs"));
     public static final TagKey<Item> SIFTER_INPUTS = TagKey.create(key, FossilMod.location("sifter_inputs"));
     public static final TagKey<Item> DNA = TagKey.create(key, FossilMod.location("dna"));

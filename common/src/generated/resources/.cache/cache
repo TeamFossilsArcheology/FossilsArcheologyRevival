@@ -1638,7 +1638,7 @@ e2a14fd1205d453ab99dcf4e64deb8ec39b0fcc1 data/fossil/advancements/fossil/ancient
 ca0fd26c2a182b3eb4941ca41341d6a2e3605918 data/fossil/advancements/fossil/break_fossil.json
 d60ecc0a66bd5466403fc96f4de66495fe25e434 data/fossil/advancements/fossil/broken_sword.json
 6c4c364dcadcbc6857600c21e690ec8fee975694 data/fossil/advancements/fossil/culture_vat.json
-7a1b5a029c2c07d8e75944cdefb68a950b6ea1b0 data/fossil/advancements/fossil/dino_eggs.json
+e83f26844d93c7c439ddfdc686530bca781f5818 data/fossil/advancements/fossil/dino_eggs.json
 0f1167b9e17a04eb03af326ff3d26c0cc9ee9014 data/fossil/advancements/fossil/dinopedia.json
 70e30beb41f73e0526fa8e8ce6c567288cbf40af data/fossil/advancements/fossil/dna.json
 b7bc7092fad0d398ee17eb162bc82ed349c5796f data/fossil/advancements/fossil/embryos.json
@@ -3009,6 +3009,7 @@ c14bc2c851ae4f2d91784207659b2999abe97384 data/fossil/tags/blocks/sigillaria_logs
 7792735a57bdbe07196f9062ced049cc5b96fe71 data/fossil/tags/blocks/tempskya_logs.json
 947d131a060112ec3d5c15e53c7b01ceba384e0e data/fossil/tags/blocks/unbreakable.json
 2b1fa1293f3357110606fdd222b53a1747d80929 data/fossil/tags/entity_types/livestock.json
+848e487b2171800c7e84125006126f662ef0f9ab data/fossil/tags/items/all_eggs.json
 e1ba26717f02bcd63507bd94b3dadf4748d4719f data/fossil/tags/items/ancient_wood_logs.json
 98991491e2929fba8d07c47027c08cd5b1a8447c data/fossil/tags/items/bird_eggs.json
 bacdf3441a2951e40b2f233a957c51b9566563de data/fossil/tags/items/bones_all.json
@@ -3037,7 +3038,7 @@ ff3aff475eddfa7e3638138dd0596774215c1521 data/fossil/tags/items/embryos.json
 874cb1f82b06d8cffe8040060cea855820fa43e2 data/fossil/tags/items/filter_buckets.json
 73c28626ac9474dea0afd7e7ff5f5f8964d3dcb8 data/fossil/tags/items/filter_building_blocks.json
 dce2b8515233f9bac90c7a0f6748c983be5ba55e data/fossil/tags/items/filter_dna.json
-14157cff696cb2d1560f1c4a6f3557a1e6fc1a5f data/fossil/tags/items/filter_eggs.json
+a86b237bbb465b97138fe14afa79f73e87848332 data/fossil/tags/items/filter_eggs.json
 af67688d6113b3c2aad5fa005c2da2d5ad92faa7 data/fossil/tags/items/filter_machines.json
 def49666bafd29271131ae49b513cfc0375e2296 data/fossil/tags/items/filter_meat.json
 7b6446e1b3803a3b081cb78a7c6f420574ba0812 data/fossil/tags/items/filter_other.json
@@ -3068,7 +3069,7 @@ d0e5c6d1657285a4b0969cb80e9b05d841b908ea data/minecraft/tags/blocks/fence_gates.
 629beb169f945e980193dc4405b976f9251ff570 data/minecraft/tags/blocks/logs_that_burn.json
 da20b4e941729738bd5679e4e8e094833caf17f7 data/minecraft/tags/blocks/mineable/axe.json
 5bfb811528237ccb2695d5a79d74c1cdbff7b65a data/minecraft/tags/blocks/mineable/hoe.json
-e4af4607eeff66a76e688a40db74915c890569fd data/minecraft/tags/blocks/mineable/pickaxe.json
+dd77bc866f0f65788fe5a422281308a8b2825073 data/minecraft/tags/blocks/mineable/pickaxe.json
 628b827d4b66149ddf20663716596e36f26d78b5 data/minecraft/tags/blocks/mineable/shovel.json
 8c47626d790c6e8924254d659bf8a98856916473 data/minecraft/tags/blocks/needs_diamond_tool.json
 00c30973d1ca199d9526feaf3e82f3e6205532dd data/minecraft/tags/blocks/needs_iron_tool.json

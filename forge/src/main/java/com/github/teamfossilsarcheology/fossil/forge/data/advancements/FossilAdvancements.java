@@ -68,7 +68,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
         Advancement failuresaurus = other(cultureVat, FAILURESAURUS_FLESH, "failuresaurus",
                 PlayerHurtEntityTrigger.TriggerInstance.playerHurtEntity(EntityPredicate.Builder.entity().of(ModEntities.FAILURESAURUS.get()).build()), consumer);
         Advancement embryo = tag(MAMMOTH.embryoItem, ModItemTags.EMBRYOS, cultureVat, consumer);
-        Advancement dinoEgg = tag(TRICERATOPS.eggItem, ModItemTags.DINO_EGGS, cultureVat, consumer);
+        Advancement dinoEgg = tag(TRICERATOPS.eggItem, ModItemTags.ALL_EGGS, cultureVat, consumer, "dino_eggs");
         Advancement dinopedia = simple(dinoEgg, consumer, DINOPEDIA);
 
         Advancement.Builder builder = Advancement.Builder.advancement().display(TYRANNOSAURUS.eggItem, title("all_eggs"),
@@ -126,13 +126,17 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
         return simple(parent, items[0].get().asItem().getRegistryName().getPath(), consumer, Arrays.stream(items).map(Supplier::get).toArray(ItemLike[]::new));
     }
 
-    private Advancement tag(ItemLike item, TagKey<Item> tag, Advancement parent, Consumer<Advancement> consumer) {
-        String key = tag.location().getPath();
+    private Advancement tag(ItemLike item, TagKey<Item> tag, Advancement parent, Consumer<Advancement> consumer, String key) {
         return Advancement.Builder.advancement().display(item, title(key), description(key),
                         null, FrameType.TASK, true, true, false)
                 .parent(parent)
                 .addCriterion("requirement", InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().of(tag).build()))
                 .save(consumer, FossilMod.MOD_ID + ":fossil/" + key);
+    }
+
+    private Advancement tag(ItemLike item, TagKey<Item> tag, Advancement parent, Consumer<Advancement> consumer) {
+        String key = tag.location().getPath();
+        return tag(item, tag, parent, consumer, key);
     }
 
     private TranslatableComponent title(String key) {

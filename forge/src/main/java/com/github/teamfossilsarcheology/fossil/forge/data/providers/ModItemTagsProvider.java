@@ -70,7 +70,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         addTag(ModItemTags.FOSSILS, BIO_FOSSIL, TAR_FOSSIL, SHALE_FOSSIL, PlANT_FOSSIL);
         addTag(ModItemTags.FILTER_BONES, ModItemTags.ALL_BONES);
         addTag(ModItemTags.FILTER_DNA, ModItemTags.DNA, ModItemTags.EMBRYOS);
-        addTag(ModItemTags.FILTER_EGGS, ModItemTags.DINO_EGGS, ModItemTags.FISH_EGGS, ModItemTags.BIRD_EGGS);
+        addTag(ModItemTags.FILTER_EGGS, ModItemTags.ALL_EGGS);
         var filterEggs = addTag(ModItemTags.FILTER_EGGS, ANU_BOSS_SPAWN_EGG, FAILURESAURUS_SPAWN_EGG, SENTRY_PIGLIN_SPAWN_EGG, TAR_SLIME_SPAWN_EGG, ARTIFICIAL_HONEYCOMB);
         addTag(ModItemTags.FILTER_MEAT, ModItemTags.UNCOOKED_MEAT);
         var filterMeat = addTag(ModItemTags.FILTER_MEAT, FAILURESAURUS_FLESH, COOKED_CHICKEN_SOUP, RAW_CHICKEN_SOUP, COOKED_EGG);
@@ -237,6 +237,7 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             }
         }
         addTag(ModItemTags.COOKABLE_EGGS, ModItemTags.DINO_EGGS).add(Items.EGG);
+        addTag(ModItemTags.ALL_EGGS, ModItemTags.DINO_EGGS, ModItemTags.FISH_EGGS, ModItemTags.BIRD_EGGS);
         addTag(ModItemTags.ALL_BONES, ModItemTags.ARM_BONES, ModItemTags.FOOT_BONES, ModItemTags.LEG_BONES, ModItemTags.RIBCAGE_BONES, ModItemTags.SKULL_BONES, ModItemTags.TAIL_BONES, ModItemTags.UNIQUE_BONES, ModItemTags.VERTEBRAE_BONES);
         addTag(ItemTags.MUSIC_DISCS, MUSIC_DISC_ANU, MUSIC_DISC_BONES, MUSIC_DISC_DISCOVERY, MUSIC_DISC_SCARAB);
 
