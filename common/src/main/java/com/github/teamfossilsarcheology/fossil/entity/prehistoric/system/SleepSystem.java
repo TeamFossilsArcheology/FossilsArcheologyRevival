@@ -28,7 +28,7 @@ public class SleepSystem extends AISystem {
         trySleeping();
         if (mob.isSleeping() && !sleepForced) {
             ticksSlept++;
-            if (ticksSlept > 100 && !wantsToSleep() && mob.getRandom().nextInt(100) == 0) {
+            if (ticksSlept > 100 && mob.getRandom().nextInt(100) == 0 && !wantsToSleep()) {
                 setSleeping(false);
             }
             if (!canSleep()) {
@@ -38,17 +38,18 @@ public class SleepSystem extends AISystem {
     }
 
     protected void trySleeping() {
-        if (!mob.isSleeping() && wantsToSleep() && canSleep()) {
-            if (mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH) {
-                if (mob.getRandom().nextInt(1200) == 0) {
-                    setSleeping(true);
-                    ticksSlept = 0;
-                }
-            } else if (mob.aiActivityType() != PrehistoricEntityInfoAI.Activity.NO_SLEEP) {
-                if (mob.getRandom().nextInt(200) == 0) {
-                    setSleeping(true);
-                    ticksSlept = 0;
-                }
+        if (mob.isSleeping()) {
+            return;
+        }
+        if (mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH) {
+            if (mob.getRandom().nextInt(1200) == 0 && wantsToSleep() && canSleep()) {
+                setSleeping(true);
+                ticksSlept = 0;
+            }
+        } else if (mob.aiActivityType() != PrehistoricEntityInfoAI.Activity.NO_SLEEP) {
+            if (mob.getRandom().nextInt(200) == 0 && wantsToSleep() && canSleep()) {
+                setSleeping(true);
+                ticksSlept = 0;
             }
         }
     }
@@ -57,7 +58,7 @@ public class SleepSystem extends AISystem {
      * @return whether something is preventing the mob from sleeping
      */
     protected boolean canSleep() {
-        if (isDisabled() || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW) {
+        if (isDisabled() || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW || mob.isVehicle()) {
             return false;
         }
         if ((mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC)) {
