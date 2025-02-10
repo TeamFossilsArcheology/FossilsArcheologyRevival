@@ -124,6 +124,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
      * @param controller the name of the controller the animation will play on
      * @param animation  the animation to play
      * @param category   the category of the animation
+     * @param keepActive whether the animation can only be replaced once it's done
      * @return {@code true} if the animation was successfully added
      */
     public boolean addActiveAnimation(String controller, Animation animation, AnimationCategory category, boolean keepActive) {
@@ -553,7 +554,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
                 addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
             } else if (entity.isInWater()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
-            } else if (!entity.isOnGround() && !event.getAnimatable().isFlying() && entity.getDeltaMovement().y < 0) {
+            } else if (!entity.isOnGround() && !event.getAnimatable().isFlying() && (entity.getY() - entity.yo) < -0.05) {
                 addActiveAnimation(controller.getName(), AnimationCategory.FLY);
                 controller.transitionLengthTicks = 10;
                 animSpeed = 0.5;
