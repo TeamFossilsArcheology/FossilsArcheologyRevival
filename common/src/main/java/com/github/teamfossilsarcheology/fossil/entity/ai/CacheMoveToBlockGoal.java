@@ -24,7 +24,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      * reset
      */
     public static final int STUCK_DISTANCE = 2;
-    protected static final int CLEAR_TICKS = 1200;
+    protected static final int CLEAR_TICKS = 400;
     private static final int GIVE_UP_TICKS = 1200;
     private static final int STAY_TICKS = 1200;
     private static final int INTERVAL_TICKS = 160;
@@ -73,21 +73,22 @@ public abstract class CacheMoveToBlockGoal extends Goal {
      */
     @Override
     public boolean canUse() {
-        boolean dontStart = false;
         if (clearTicks > 0) {
             clearTicks--;
             if (clearTicks == 0) {
                 avoidCache.clear();
             }
-            dontStart = true;
         }
         if (nextStartTick > 0) {
             nextStartTick--;
-            dontStart = true;
+            return false;
         }
-        if (dontStart) return false;
 
-        return findNearestBlock();
+        if (!findNearestBlock()) {
+            nextStartTick = 40;
+            return false;
+        }
+        return true;
     }
 
     /**
