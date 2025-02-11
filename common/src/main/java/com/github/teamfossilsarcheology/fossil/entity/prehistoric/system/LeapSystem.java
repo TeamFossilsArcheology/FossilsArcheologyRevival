@@ -60,6 +60,9 @@ public class LeapSystem extends AISystem {
             }
         }
         if (isLeaping()) {
+            if (target == null && blockTarget == null) {
+                stopLeap();
+            }
             if (target != null && ((target.isVehicle() && mob.getVehicle() != target) || target.isDeadOrDying())) {
                 if (jumpDelayTick != -1) {
                     blockTarget = target.position();
@@ -103,6 +106,7 @@ public class LeapSystem extends AISystem {
                 setLanding(false);
                 setLeaping(false);
                 landingEndTick = -1;
+                setBlockLeapTarget(null);
                 setLeapTarget(null);
             }
             if (isAttackRiding() && target != null) {
