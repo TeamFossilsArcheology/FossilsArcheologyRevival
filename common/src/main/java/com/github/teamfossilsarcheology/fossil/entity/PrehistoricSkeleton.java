@@ -1,5 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity;
 
+import com.github.darkpred.morehitboxes.api.HitboxData;
+import com.github.darkpred.morehitboxes.internal.HitboxDataLoader;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -8,7 +10,6 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
 import dev.architectury.networking.NetworkManager;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.nbt.Tag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -29,11 +30,14 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 import software.bernie.geckolib3.util.GeckoLibUtil;
+
+import java.util.List;
 
 import static com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo.*;
 
@@ -42,6 +46,9 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     private static final EntityDataAccessor<String> TYPE = SynchedEntityData.defineId(PrehistoricSkeleton.class, EntityDataSerializers.STRING);
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private boolean droppedBiofossil;
+    private float frustumWidthRadius;
+    private float frustumHeight;
+    private AABB cullingBounds = new AABB(0.0, 0.0, 0.0, 0.0, 0.0, 0.0);
     public ResourceLocation textureLocation;
     public ResourceLocation modelLocation;
 
@@ -59,9 +66,6 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     protected void readAdditionalSaveData(CompoundTag compound) {
         setAge(compound.getInt("Age"));
         entityData.set(TYPE, compound.getString("Type"));
-        if (compound.contains("Type", Tag.TAG_STRING)) {
-            entityData.set(TYPE, compound.getString("Type"));
-        }
     }
 
     @Override
@@ -146,6 +150,24 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
             refreshDimensions();
             refreshTexturePath();
         }
+        if (TYPE.equals(key) && level.isClientSide) {
+            List<HitboxData> hitboxesData = HitboxDataLoader.HITBOX_DATA.getHitboxes(FossilMod.location(info().resourceName));
+            float maxFrustumWidthRadius = 0;
+            float maxFrustumHeight = 0;
+            for (HitboxData hitboxData : hitboxesData) {
+                float w = hitboxData.getFrustumWidthRadius();
+                if (w > maxFrustumWidthRadius) {
+                    maxFrustumWidthRadius = w;
+                }
+                float h = hitboxData.getFrustumHeight();
+                if (h > maxFrustumHeight) {
+                    maxFrustumHeight = h;
+                }
+            }
+            frustumWidthRadius = maxFrustumWidthRadius;
+            frustumHeight = maxFrustumHeight;
+            makeBoundingBoxForCulling(frustumWidthRadius, frustumHeight);
+        }
     }
 
     private void refreshTexturePath() {
@@ -159,6 +181,24 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
         } else {
             modelLocation = FossilMod.location("geo/entity/" + name + ".geo.json");
         }
+    }
+
+    private void makeBoundingBoxForCulling(float frustumWidthRadius, float frustumHeight) {
+        float x = frustumWidthRadius * getScale();
+        float y = frustumHeight * getScale();
+        Vec3 pos = position();
+        cullingBounds = new AABB(pos.x - x, pos.y, pos.z - x, pos.x + x, pos.y + y, pos.z + x);
+    }
+
+    @Override
+    public @NotNull AABB getBoundingBoxForCulling() {
+        return cullingBounds;
+    }
+
+    @Override
+    public void setPos(double x, double y, double z) {
+        super.setPos(x, y, z);
+        makeBoundingBoxForCulling(frustumWidthRadius, frustumHeight);
     }
 
     @Override
