@@ -279,12 +279,12 @@ public class ClientInit {
         InteractionEvent.INTERACT_ENTITY.register((player, entity, hand) -> {
             if (player.getItemInHand(hand).is(ModItems.DINOPEDIA.get())) {
                 if (player.level.isClientSide) {
-                    if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.hasEmbryo(animal)) {
-                        Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
-                    } else if (entity instanceof DinosaurEgg || entity instanceof Prehistoric) {
-                        Minecraft.getInstance().setScreen(new DinopediaScreen((LivingEntity) entity));
-                    } else if (entity instanceof Quagga quagga) {
-                        Minecraft.getInstance().setScreen(new DinopediaScreen(quagga));
+                    if (entity instanceof LivingEntity livingEntity) {
+                        if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.hasEmbryo(animal)) {
+                            Minecraft.getInstance().setScreen(new DinopediaScreen(animal));
+                        } else if (entity instanceof DinosaurEgg || entity instanceof Prehistoric || entity instanceof PrehistoricFish || entity instanceof Quagga) {
+                            Minecraft.getInstance().setScreen(new DinopediaScreen(livingEntity));
+                        }
                     }
                     return EventResult.interruptTrue();
                 } else if (entity instanceof Animal animal && PrehistoricEntityInfo.isMammal(animal) && ModCapabilities.hasEmbryo(animal)) {

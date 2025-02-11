@@ -80,7 +80,7 @@ public class DinopediaScreen extends Screen {
         RenderSystem.applyModelViewMatrix();
         PoseStack poseStack2 = new PoseStack();
         poseStack2.translate(0.0, -10, 1000.0);
-        int scale = 15;
+        int scale = 25;
         if (entity instanceof Prehistoric) {
             scale = (int) (35 / entity.getBbWidth());
         } else if (entity instanceof DinosaurEgg) {
@@ -125,7 +125,7 @@ public class DinopediaScreen extends Screen {
                     }).createButton(Minecraft.getInstance().options, (width - 200) / 2, 10, 200));
         }
         backButton = addRenderableWidget(new DinopediaPageButton(leftPos + 10, topPos + ySize - 45, 200, 100, false, button -> pageBack()));
-        if (entity instanceof Prehistoric || entity instanceof Quagga) {
+        if (entity instanceof Prehistoric || entity instanceof Quagga || entity instanceof PrehistoricFish) {
             forwardButton = addRenderableWidget(
                     new DinopediaPageButton(leftPos + xSize - 43, topPos + ySize - 45, 200, 100, true, button -> pageForward()));
         }
@@ -146,7 +146,7 @@ public class DinopediaScreen extends Screen {
      * Moves the display forward one page
      */
     protected void pageForward() {
-        if (currentPage < MAX_PAGES - 1) {
+        if (currentPage < getMaxPages() - 1) {
             currentPage++;
         }
         updateButtonVisibility();
@@ -154,7 +154,7 @@ public class DinopediaScreen extends Screen {
 
     private void updateButtonVisibility() {
         if (forwardButton != null) {
-            forwardButton.visible = currentPage < MAX_PAGES - 1;
+            forwardButton.visible = currentPage < getMaxPages() - 1;
         }
         backButton.visible = currentPage > 0;
     }
@@ -190,14 +190,22 @@ public class DinopediaScreen extends Screen {
     private void renderForegroundLayer(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         if (currentPage == PAGE_1) {
             renderFirstPage(poseStack, mouseX, mouseY);
-        } else if (currentPage == PAGE_2) {
+        } else if (currentPage >= PAGE_2) {
             if (currentBio == null) {
                 currentBio = loadBio(entity);
+                updateButtonVisibility();
             }
             if (!currentBio.isEmpty()) {
                 renderPrehistoricBio(poseStack);
             }
         }
+    }
+
+    private int getMaxPages() {
+        if (currentBio == null) {
+            return MAX_PAGES;
+        }
+        return 2 + currentBio.size() / 42;
     }
 
     /**
@@ -378,7 +386,7 @@ public class DinopediaScreen extends Screen {
         } else {
             return List.of();
         }
-        String bio = DinopediaBioLoader.INSTANCE.getDinopediaBio(name);
+        final String bio = DinopediaBioLoader.INSTANCE.getDinopediaBio(name) + DinopediaBioLoader.INSTANCE.getDinopediaBio(name);
         StringSplitter stringSplitter = font.getSplitter();
         List<String> list = new ArrayList<>();
         stringSplitter.splitLines(bio, xSize / 2, Style.EMPTY, true, (style, i, j) -> {
@@ -394,11 +402,13 @@ public class DinopediaScreen extends Screen {
         poseStack.scale(scale, scale, scale);
         int right = 0;
         int left = 0;
-        for (int i = 0; i < currentBio.size(); i++) {
-            if (i <= 20) {
-                font.draw(poseStack, currentBio.get(i), getScaledX(true, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++left) / scale, 0x9D7E67);
+        int offset = currentPage - 1;
+        List<String> currentLines = currentBio.stream().skip(offset * 42L).limit(42).toList();;
+        for (int i = 0; i < currentLines.size(); i++) {
+            if (i <= 20) {//1344, 32 per line
+                font.draw(poseStack, currentLines.get(i), getScaledX(true, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++left) / scale, 0x9D7E67);
             } else {
-                font.draw(poseStack, currentBio.get(i), getScaledX(false, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++right) / scale, 0x9D7E67);
+                font.draw(poseStack, currentLines.get(i), getScaledX(false, xSize / 2, scale), (topPos + 10 + font.lineHeight * ++right) / scale, 0x9D7E67);
             }
         }
         poseStack.popPose();
