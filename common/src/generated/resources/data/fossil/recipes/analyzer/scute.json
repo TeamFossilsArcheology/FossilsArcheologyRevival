@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "minecraft:scute"
+  },
+  "outputs": [
+    {
+      "item": "fossil:turtle_dna",
+      "weight": 100.0
+    }
+  ]
+}

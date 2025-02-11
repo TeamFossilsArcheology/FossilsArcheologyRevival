@@ -107,4 +107,9 @@ public enum VanillaEntityInfo implements EntityInfo {
     public Supplier<Component> displayName() {
         return displayName;
     }
+
+    @Override
+    public Item dnaItem() {
+        return dnaItem;
+    }
 }

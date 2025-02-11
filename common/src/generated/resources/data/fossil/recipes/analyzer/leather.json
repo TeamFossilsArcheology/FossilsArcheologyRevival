@@ -6,15 +6,23 @@
   "outputs": [
     {
       "item": "fossil:cow_dna",
-      "weight": 60.0
+      "weight": 57.0
     },
     {
       "item": "fossil:donkey_dna",
       "weight": 10.0
     },
     {
+      "item": "fossil:hoglin_dna",
+      "weight": 5.0
+    },
+    {
       "item": "fossil:horse_dna",
-      "weight": 30.0
+      "weight": 27.0
+    },
+    {
+      "item": "fossil:mooshroom_dna",
+      "weight": 1.0
     }
   ]
 }

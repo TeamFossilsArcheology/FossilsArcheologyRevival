@@ -249,6 +249,11 @@ public enum PrehistoricEntityInfo implements EntityInfo {
         return displayName;
     }
 
+    @Override
+    public Item dnaItem() {
+        return dnaItem;
+    }
+
     public boolean hasBones() {
         return timePeriod != CURRENT && mobType != FISH && mobType != ARTHROPOD && this != MEGALODON && this != AQUILOLAMNA;
     }

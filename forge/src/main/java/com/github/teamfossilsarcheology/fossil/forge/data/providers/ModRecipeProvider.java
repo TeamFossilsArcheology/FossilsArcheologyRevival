@@ -6,6 +6,7 @@ import com.github.teamfossilsarcheology.fossil.block.PrehistoricPlantInfo;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.AmphoraVaseBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.KylixVaseBlock;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.VaseBlock;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.VanillaEntityInfo;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
@@ -39,8 +40,7 @@ import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraftforge.fml.ModList;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 
@@ -315,10 +315,18 @@ public class ModRecipeProvider extends RecipeProvider {
             MultiOutputAndSlotsRecipeBuilder<AnalyzerRecipeBuilder> tarFossil = analyzed(TAR_FOSSIL.get())
                     .addOutput(Items.BONE_MEAL, 15)
                     .addOutput(VOLCANIC_ROCK.get(), 30);
-            List<PrehistoricEntityInfo> tarFossilEntityList = PrehistoricEntityInfo.getTimePeriodList(TimePeriod.CENOZOIC);
-            double tarFossilDNAChance = 20 / (double) tarFossilEntityList.size();
-            for (PrehistoricEntityInfo info : tarFossilEntityList) {
-                tarFossil.addOutput(info.dnaItem, tarFossilDNAChance);
+            List<EntityInfo> tarFossilEntityList = new ArrayList<>(PrehistoricEntityInfo.getTimePeriodList(TimePeriod.CENOZOIC));
+            tarFossilEntityList.add(AXOLOTL);
+            tarFossilEntityList.add(BAT);
+            tarFossilEntityList.add(CAT);
+            tarFossilEntityList.add(DOLPHIN);
+            tarFossilEntityList.add(FOX);
+            tarFossilEntityList.add(OCELOT);
+            tarFossilEntityList.add(PANDA);
+            tarFossilEntityList.add(WOLF);
+            double tarFossilDNAChance = 25 / (double) tarFossilEntityList.size();
+            for (EntityInfo info : tarFossilEntityList) {
+                tarFossil.addOutput(info.dnaItem(), tarFossilDNAChance);
             }
             tarFossil.save(consumer);
 
@@ -354,31 +362,23 @@ public class ModRecipeProvider extends RecipeProvider {
                     .addOutput(Items.PORKCHOP, 15)
                     .addOutput(Items.CHICKEN, 15)
                     .addOutput(TAR_FOSSIL.get(), 20);
-            for (PrehistoricEntityInfo info : tarFossilEntityList) {
-                frozenMeat.addOutput(info.dnaItem, tarFossilDNAChance);
+            for (EntityInfo info : tarFossilEntityList) {
+                frozenMeat.addOutput(info.dnaItem(), tarFossilDNAChance);
             }
             frozenMeat.save(consumer);
             analyzed(AMBER_CHUNK_DOMINICAN.get()).addOutput(Items.SPIDER_EYE, 9).addOutput(Items.STRING, 10).addOutput(Blocks.DIRT, 25).addOutput(Blocks.GRAVEL, 25)
                     .addOutput(Items.WHEAT_SEEDS, 1).addOutput(Items.BEETROOT_SEEDS, 1).addOutput(Items.PUMPKIN_SEEDS, 1).addOutput(Items.MELON_SEEDS, 1)
                     .addOutput(CALAMITES_FOSSIL_SAPLING.get(), 1).addOutput(CORDAITES_FOSSIL_SAPLING.get(), 1).addOutput(PALM_FOSSIL_SAPLING.get(), 1).addOutput(SIGILLARIA_FOSSIL_SAPLING.get(), 1).addOutput(TEMPSKYA_FOSSIL_SAPLING.get(), 1).save(consumer);
-            //analyzed().addOutput(AXOLOTL.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(BAT.dnaItem, 100).save(consumer);
             analyzed(Items.HONEYCOMB).addOutput(BEE.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(CAT.dnaItem, 100).save(consumer);
             analyzed(Items.CHICKEN).addOutput(CHICKEN.dnaItem, 100).save(consumer);
             analyzed(Items.EGG).addOutput(CHICKEN.dnaItem, 100).save(consumer);
             analyzed(Items.FEATHER).addOutput(CHICKEN.dnaItem, 95).addOutput(PARROT.dnaItem, 5).save(consumer);
             analyzed(Items.COD).addOutput(COD.dnaItem, 100).save(consumer);
-            analyzed(Items.BEEF).addOutput(COW.dnaItem, 100).save(consumer);
-            analyzed(Items.LEATHER).addOutput(COW.dnaItem, 60).addOutput(DONKEY.dnaItem, 10).addOutput(HORSE.dnaItem, 30).save(consumer);
-            //analyzed().addOutput(DOLPHIN.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(FOX.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(GLOW_SQUID.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(HOGLIN.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(MOOSHROOM.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(OCELOT.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(PANDA.dnaItem, 100).save(consumer);
-            analyzed(Items.PORKCHOP).addOutput(PIG.dnaItem, 100).save(consumer);
+            analyzed(Items.BEEF).addOutput(COW.dnaItem, 99).addOutput(MOOSHROOM.dnaItem, 1).save(consumer);
+            analyzed(Items.LEATHER).addOutput(COW.dnaItem, 57).addOutput(DONKEY.dnaItem, 10).addOutput(HORSE.dnaItem, 27).addOutput(HOGLIN.dnaItem, 5).addOutput(MOOSHROOM.dnaItem, 1).save(consumer);
+            analyzed(Items.GLOW_INK_SAC).addOutput(GLOW_SQUID.dnaItem, 100).save(consumer);
+            //TODO: 1.19 adds goat horns analyzed(Items.GOAT_HORN).addOutput(GOAT.dnaItem, 100).save(consumer);
+            analyzed(Items.PORKCHOP).addOutput(PIG.dnaItem, 95).addOutput(HOGLIN.dnaItem, 5).save(consumer);
             analyzed(ItemTags.FISHES).addOutput(Items.PRISMARINE_CRYSTALS, 15).addOutput(Items.BONE_MEAL, 75).addOutput(POLAR_BEAR.dnaItem, 10).save(consumer);
             analyzed(Items.PUFFERFISH).addOutput(PUFFERFISH.dnaItem, 100).save(consumer);
             analyzed(Items.RABBIT).addOutput(RABBIT.dnaItem, 100).save(consumer);
@@ -387,11 +387,10 @@ public class ModRecipeProvider extends RecipeProvider {
             analyzed(Items.SALMON).addOutput(SALMON.dnaItem, 100).save(consumer);
             analyzed(Items.MUTTON).addOutput(SHEEP.dnaItem, 100).save(consumer);
             analyzed(ItemTags.WOOL).addOutput(Items.STRING, 3, 50).addOutput(SHEEP.dnaItem, 27).addOutput(LLAMA.dnaItem, 13).addOutput(GOAT.dnaItem, 10).save(consumer);
-            //analyzed().addOutput(SQUID.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(STRIDER.dnaItem, 100).save(consumer);
+            analyzed(Items.INK_SAC).addOutput(SQUID.dnaItem, 100).save(consumer);
+            analyzed(Items.STRING).addOutput(STRIDER.dnaItem, 100).save(consumer);
             analyzed(Items.TROPICAL_FISH).addOutput(TROPICAL_FISH.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(TURTLE.dnaItem, 100).save(consumer);
-            //analyzed().addOutput(WOLF.dnaItem, 100).save(consumer);
+            analyzed(Items.SCUTE).addOutput(TURTLE.dnaItem, 100).save(consumer);
 
             analyzed(RELIC_SCRAP.get()).addOutput(Blocks.GRAVEL, 30).addOutput(Items.FLINT, 18).addOutput(POTTERY_SHARD.get(), 4).addOutput(BROKEN_HELMET.get(), 4).addOutput(BROKEN_SWORD.get(), 4).addOutput(STONE_TABLET.get(), 30)
                     .addOutput(ANU_FIGURINE_DESTROYED.get(), 4).addOutput(ENDERMAN_FIGURINE_DESTROYED.get(), 4).addOutput(PIGLIN_FIGURINE_DESTROYED.get(), 4).addOutput(SKELETON_FIGURINE_DESTROYED.get(), 4).addOutput(STEVE_FIGURINE_DESTROYED.get(), 4).addOutput(ZOMBIE_FIGURINE_DESTROYED.get(), 4).save(consumer);

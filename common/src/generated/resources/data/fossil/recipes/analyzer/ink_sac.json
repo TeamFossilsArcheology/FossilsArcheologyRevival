@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "minecraft:ink_sac"
+  },
+  "outputs": [
+    {
+      "item": "fossil:squid_dna",
+      "weight": 100.0
+    }
+  ]
+}

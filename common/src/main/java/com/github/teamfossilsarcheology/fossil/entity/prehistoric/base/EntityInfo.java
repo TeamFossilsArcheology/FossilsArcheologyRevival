@@ -19,6 +19,8 @@ public interface EntityInfo {
 
     Supplier<Component> displayName();
 
+    Item dnaItem();
+
     static EntityInfo fromNbt(String name) throws IllegalArgumentException {
         //Somewhat cursed, but I want to separate vanilla and our mobs, and I am to lazy to do this properly
         EntityInfo toReturn;

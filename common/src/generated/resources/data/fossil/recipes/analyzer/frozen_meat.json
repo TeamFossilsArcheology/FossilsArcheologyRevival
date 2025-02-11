@@ -5,8 +5,20 @@
   },
   "outputs": [
     {
+      "item": "fossil:axolotl_dna",
+      "weight": 1.1904761904761905
+    },
+    {
+      "item": "fossil:bat_dna",
+      "weight": 1.1904761904761905
+    },
+    {
       "item": "minecraft:beef",
       "weight": 15.0
+    },
+    {
+      "item": "fossil:cat_dna",
+      "weight": 1.1904761904761905
     },
     {
       "item": "minecraft:chicken",
@@ -14,51 +26,67 @@
     },
     {
       "item": "fossil:dodo_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
+    },
+    {
+      "item": "fossil:dolphin_dna",
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:elasmotherium_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:fossil_tar",
       "weight": 20.0
     },
     {
+      "item": "fossil:fox_dna",
+      "weight": 1.1904761904761905
+    },
+    {
       "item": "fossil:gastornis_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:kelenken_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:mammoth_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:megalania_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:megaloceros_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:megalodon_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "minecraft:mutton",
       "weight": 15.0
     },
     {
+      "item": "fossil:ocelot_dna",
+      "weight": 1.1904761904761905
+    },
+    {
+      "item": "fossil:panda_dna",
+      "weight": 1.1904761904761905
+    },
+    {
       "item": "fossil:phorusrhacos_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:platybelodon_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "minecraft:porkchop",
@@ -66,15 +94,19 @@
     },
     {
       "item": "fossil:quagga_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:smilodon_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
     },
     {
       "item": "fossil:titanis_dna",
-      "weight": 1.5384615384615385
+      "weight": 1.1904761904761905
+    },
+    {
+      "item": "fossil:wolf_dna",
+      "weight": 1.1904761904761905
     }
   ]
 }

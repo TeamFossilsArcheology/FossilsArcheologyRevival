@@ -1,0 +1,12 @@
+{
+  "type": "fossil:analyzer",
+  "input": {
+    "item": "minecraft:string"
+  },
+  "outputs": [
+    {
+      "item": "fossil:strider_dna",
+      "weight": 100.0
+    }
+  ]
+}

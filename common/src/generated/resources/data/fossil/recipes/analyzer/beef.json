@@ -6,7 +6,11 @@
   "outputs": [
     {
       "item": "fossil:cow_dna",
-      "weight": 100.0
+      "weight": 99.0
+    },
+    {
+      "item": "fossil:mooshroom_dna",
+      "weight": 1.0
     }
   ]
 }

@@ -5,8 +5,12 @@
   },
   "outputs": [
     {
+      "item": "fossil:hoglin_dna",
+      "weight": 5.0
+    },
+    {
       "item": "fossil:pig_dna",
-      "weight": 100.0
+      "weight": 95.0
     }
   ]
 }
