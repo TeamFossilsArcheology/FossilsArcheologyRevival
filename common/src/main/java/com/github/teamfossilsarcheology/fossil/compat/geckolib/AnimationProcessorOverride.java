@@ -104,9 +104,9 @@ public class AnimationProcessorOverride {
 
                 // If there's any scale points for this bone
                 if (sXPoint != null && sYPoint != null && sZPoint != null) {
-                    bone.setScaleX(MathUtil.lerpValues(sXPoint, controller.easingType, controller.customEasingMethod) + (firstScale ? 0 : bone.getScaleX()));
-                    bone.setScaleY(MathUtil.lerpValues(sYPoint, controller.easingType, controller.customEasingMethod) + (firstScale ? 0 : bone.getScaleY()));
-                    bone.setScaleZ(MathUtil.lerpValues(sZPoint, controller.easingType, controller.customEasingMethod) + (firstScale ? 0 : bone.getScaleZ()));
+                    bone.setScaleX(MathUtil.lerpValues(sXPoint, controller.easingType, controller.customEasingMethod) * (firstScale ? 1 : bone.getScaleX()));
+                    bone.setScaleY(MathUtil.lerpValues(sYPoint, controller.easingType, controller.customEasingMethod) * (firstScale ? 1 : bone.getScaleY()));
+                    bone.setScaleZ(MathUtil.lerpValues(sZPoint, controller.easingType, controller.customEasingMethod) * (firstScale ? 1 : bone.getScaleZ()));
                     snapshot.scaleValueX = bone.getScaleX();
                     snapshot.scaleValueY = bone.getScaleY();
                     snapshot.scaleValueZ = bone.getScaleZ();
