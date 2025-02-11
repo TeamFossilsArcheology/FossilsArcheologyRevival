@@ -78,7 +78,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             goalSelector.addGoal(Util.NEEDS, new PassiveFoodGoal(this));
         }
         goalSelector.addGoal(Util.NEEDS + 3, new WaterPlayGoal<>(this, 1));
-        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 10, 2, false));
+        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 7, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new EnterWaterGoal<>(this, 1));
         goalSelector.addGoal(Util.WANDER + 2, new DinoRandomSwimGoal<>(this, 1));
         goalSelector.addGoal(Util.WANDER + 3, new AmphibiousWanderGoal(this, 1));
