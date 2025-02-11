@@ -17,7 +17,7 @@ import java.util.Map;
 public abstract class CustomTreeFeature extends Feature<NoneFeatureConfiguration> {
     private final Map<BlockPos, BlockState> placedLeaves = new LinkedHashMap<>();
 
-    public CustomTreeFeature() {
+    protected CustomTreeFeature() {
         super(NoneFeatureConfiguration.CODEC);
     }
 
@@ -27,7 +27,7 @@ public abstract class CustomTreeFeature extends Feature<NoneFeatureConfiguration
         if (placeTree(context)) {
             for (Map.Entry<BlockPos, BlockState> leaf : placedLeaves.entrySet()) {
                 if (context.level().getBlockState(leaf.getKey()).is(leaf.getValue().getBlock())) {
-                    FossilLeavesBlock.updateDistance(context.level(), leaf.getKey(), leaf.getValue());
+                    FossilLeavesBlock.updateInitialDistance(context.level(), leaf.getKey(), leaf.getValue());
                 }
             }
             return true;

@@ -2,14 +2,11 @@ package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 
 import dev.architectury.injectables.annotations.ExpectPlatform;
 import net.minecraft.core.BlockPos;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
-
-import java.util.Random;
 
 public class FossilLeavesBlock extends LeavesBlock {
     public FossilLeavesBlock(Properties properties) {
@@ -21,12 +18,7 @@ public class FossilLeavesBlock extends LeavesBlock {
         throw new AssertionError();
     }
 
-    @Override
-    public void tick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
-        updateDistance(level, pos, state);
-    }
-
-    public static void updateDistance(WorldGenLevel level, BlockPos pos, BlockState state) {
+    public static void updateInitialDistance(WorldGenLevel level, BlockPos pos, BlockState state) {
         if (!(state.getBlock() instanceof FossilLeavesBlock)) {
             return;
         }
