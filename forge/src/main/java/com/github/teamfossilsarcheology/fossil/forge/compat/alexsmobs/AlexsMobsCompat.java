@@ -20,6 +20,6 @@ public class AlexsMobsCompat {
 		FoodMappings.addFish(AMItemRegistry.COOKED_CATFISH.get());
 		FoodMappings.addFish(AMItemRegistry.FLYING_FISH.get());
 
-        FoodMappings.addPlant(AMItemRegistry.BANANA.get());
+		FoodMappings.addPlant(AMItemRegistry.BANANA.get());
 	}
 }
