@@ -60,9 +60,8 @@ public class S2CSyncActiveAnimationMessage {
             if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
                 if (prehistoric.getAllAnimations().containsKey(animationName)) {
                     double endTick = entity.level.getGameTime() + prehistoric.getAnimation(animationName).animation.animationLength;
-                    AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.ActiveAnimationInfo(
-                            animationName, endTick, category, true, ticks, speed, loop
-                    );
+                    AnimationLogic.ActiveAnimationInfo activeAnimationInfo = new AnimationLogic.Builder(animationName, endTick, category)
+                            .forced().transitionLength(ticks).speed(speed).loop(loop).build();
                     prehistoric.getAnimationLogic().addNextAnimation(controller, activeAnimationInfo);
                 }
             }
