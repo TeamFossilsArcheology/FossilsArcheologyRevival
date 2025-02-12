@@ -368,7 +368,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             animationSpeed = 2;
         } else if (event.isMoving()) {
             if (entity.isInWater()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.SWIM);
+                ActiveAnimationInfo info = addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
+                if (info != null) {
+                    additionalLogic.put(info, entity::isOnGround);
+                }
             } else {
                 Animation walkAnim = entity.nextWalkingAnimation().animation;
                 Animation sprintAnim = entity.nextSprintingAnimation().animation;
@@ -565,7 +568,10 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             } else if (event.getAnimatable().isClimbing()) {
                 addActiveAnimation(controller.getName(), AnimationCategory.CLIMB);
             } else if (entity.isInWater()) {
-                addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
+                ActiveAnimationInfo info = addActiveAnimation(controller.getName(), AnimationCategory.SWIM, true);
+                if (info != null) {
+                    additionalLogic.put(info, entity::isOnGround);
+                }
             } else if (!entity.isOnGround() && !event.getAnimatable().isFlying() && (entity.getY() - entity.yo) < -0.05) {
                 addActiveAnimation(controller.getName(), AnimationCategory.FLY);
                 controller.transitionLengthTicks = 10;
