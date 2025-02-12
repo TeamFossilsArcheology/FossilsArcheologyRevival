@@ -26,29 +26,29 @@ public class ModTrades {
     public static List<VillagerTrades.ItemListing> getArcheoList(int level) {
         List<VillagerTrades.ItemListing> list = new ArrayList<>();
         switch (level) {
-            case 1: {
+            case 1 -> {
                 list.add(new ItemsForEmeralds(ModItems.RELIC_SCRAP.get(), 3, 1, 8, 2));
                 list.add(new EmeraldForItems(ModItems.POTTERY_SHARD.get(), 2, 12, 10));
                 list.add(new ItemsForEmeralds(ModBlocks.WORKTABLE.get(), 2, 1, 12, 1));
             }
-            case 2: {
+            case 2 -> {
                 list.add(new ItemsForEmeralds(ModItems.STONE_TABLET.get(), 4, 1, 6, 2));
                 list.add(new ItemsForEmeralds(Items.BOOK, 4, 1, 10));
                 list.add(new ItemsForEmeralds(ModItems.WOODEN_JAVELIN.get(), 4, 1, 1));
             }
-            case 3: {
+            case 3 -> {
                 list.add(new ItemsForEmeralds(ModItems.STONE_JAVELIN.get(), 4, 1, 1));
-                list.add(new ItemsForEmeralds(ModItems.BROKEN_SWORD.get(), 4, 1, 2,4));
-                list.add(new ItemsForEmeralds(ModItems.BROKEN_HELMET.get(), 4, 1, 2,4));
+                list.add(new ItemsForEmeralds(ModItems.BROKEN_SWORD.get(), 4, 1, 2, 4));
+                list.add(new ItemsForEmeralds(ModItems.BROKEN_HELMET.get(), 4, 1, 2, 4));
                 list.add(new ItemsForEmeralds(ModBlocks.AMPHORA_VASE_DAMAGED.get(), 3, 1, 3, 2));
                 list.add(new ItemsForEmeralds(ModBlocks.VOLUTE_VASE_DAMAGED.get(), 3, 1, 3, 2));
             }
-            case 4: {
+            case 4 -> {
                 list.add(new ItemsForEmeralds(ModBlocks.KYLIX_VASE_DAMAGED.get(), 3, 1, 3, 2));
                 list.add(new ItemsForEmeralds(ModBlocks.ANCIENT_GLASS.get(), 4, 1, 12, 2));
                 list.add(new ItemsForEmeralds(ModBlocks.ANCIENT_WOOD_PLANKS.get(), 10, 4, 6, 3));
             }
-            case 5: {
+            case 5 -> {
                 list.add(new EnchantBookForEmeralds(ModEnchantments.ARCHEOLOGY.get(), 10));
                 list.add(new ItemsAndEmeraldsToItems(ModItems.BROKEN_HELMET.get(), 1, ModItems.ANCIENT_HELMET.get(), 1, 2, 10));
                 list.add(new ItemsAndEmeraldsToItems(ModItems.BROKEN_SWORD.get(), 1, ModItems.ANCIENT_SWORD.get(), 1, 2, 10));
@@ -61,25 +61,25 @@ public class ModTrades {
     public static List<VillagerTrades.ItemListing> getPaleoList(int level) {
         List<VillagerTrades.ItemListing> list = new ArrayList<>();
         switch (level) {
-            case 1: {
+            case 1 -> {
                 list.add(new ItemsForEmeralds(ModItems.BIO_FOSSIL.get(), 1, 1, 1));
                 list.add(new EmeraldForItems(ModBlocks.SKULL_BLOCK.get(), 2, 12, 7));
                 list.add(new EmeraldForItems(Items.BONE, 10, 12, 2));
             }
-            case 2: {
+            case 2 -> {
                 list.add(new ItemsForEmeralds(ModItems.TAR_DROP.get(), 2, 1, 2));
                 list.add(new ItemsForEmeralds(ModItems.PlANT_FOSSIL.get(), 2, 1, 2));
             }
-            case 3: {
+            case 3 -> {
                 list.add(new ItemsForEmeralds(ModItems.FROZEN_MEAT.get(), 3, 1, 2));
                 list.add(new ItemsForEmeralds(ModItems.TAR_FOSSIL.get(), 3, 1, 3));
             }
-            case 4: {
+            case 4 -> {
                 list.add(new ItemsForEmeralds(ModItems.CHICKEN_ESSENCE.get(), 3, 1, 3));
                 list.add(new ItemsForEmeralds(ModItems.FAILURESAURUS_FLESH.get(), 5, 1, 3));
                 list.add(new ItemsForEmeralds(ModBlocks.PERMAFROST_BLOCK.get(), 2, 1, 6, 1));
             }
-            case 5: {
+            case 5 -> {
                 list.add(new EnchantBookForEmeralds(ModEnchantments.PALEONTOLOGY.get(), 10));
                 list.add(new ItemsForEmeralds(ModItems.BONE_HELMET.get(), 3, 1, 2));
                 list.add(new ItemsForEmeralds(ModItems.BONE_CHESTPLATE.get(), 4, 1, 3));
