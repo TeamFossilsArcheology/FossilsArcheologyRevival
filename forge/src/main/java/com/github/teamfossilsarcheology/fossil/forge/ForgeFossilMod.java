@@ -77,7 +77,7 @@ public class ForgeFossilMod {
         event.enqueueWork(() -> {
             if (ModList.get().isLoaded("farmersdelight")) {
                 FarmersDelightCompat.registerFoodMappings();
-            }
+            }			
 			if (ModList.get().isLoaded("alexsmobs")) {
 				AlexsMobsCompat.registerFoodMappings();
 			}
