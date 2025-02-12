@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
+import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -68,11 +69,45 @@ public abstract class PrehistoricSwimmingBucketable extends PrehistoricSwimming 
     @Override
     public void saveToBucketTag(ItemStack bucket) {
         Bucketable.saveDefaultDataToBucketTag(this, bucket);
+        CompoundTag tag = bucket.getOrCreateTag();
+        if (getOwnerUUID() != null) {
+            tag.putUUID("Owner", getOwnerUUID());
+        }
+        moodSystem.saveAdditional(tag);
+        tag.putInt("MatingCooldown", getMatingCooldown());
+        tag.putInt("Hunger", getHunger());
+        tag.putBoolean("AgingDisabled", isAgingDisabled());
+        tag.putString("Gender", getGender().toString());
+        tag.putInt("Age", getAge());
     }
 
     @Override
     public void loadFromBucketTag(CompoundTag tag) {
         Bucketable.loadDefaultDataFromBucketTag(this, tag);
+        if (tag.contains("Owner")) {
+            try {
+                setOwnerUUID(tag.getUUID("Owner"));
+                setTame(true);
+            } catch (IllegalArgumentException e) {
+                setTame(false);
+            }
+        }
+        moodSystem.load(tag);
+        if (tag.contains("MatingCooldown")) {
+            setMatingCooldown(tag.getInt("MatingCooldown"));
+        }
+        if (tag.contains("Hunger")) {
+            setHunger(tag.getInt("Hunger"));
+        }
+        if (tag.contains("AgingDisabled")) {
+            setAgingDisabled(tag.getBoolean("AgingDisabled"));
+        }
+        if (tag.contains("Gender")) {
+            setGender(Gender.valueOf(tag.getString("Gender")));
+        }
+        if (tag.contains("Age")) {
+            setAgeInTicks(tag.getInt("Age"));
+        }
     }
 
     @Override

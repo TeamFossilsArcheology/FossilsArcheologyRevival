@@ -16,7 +16,7 @@ import net.minecraft.world.level.block.state.BlockState;
  * A mobs mood can determine how aggressive they are, whether they can breed or whether they can play
  */
 public class MoodSystem extends AISystem {
-    private int moodCheckCooldown = 0;
+    private int moodCheckCooldown = 100;
     private int playingCooldown;
     private ToyBase toyTarget;
 
@@ -150,11 +150,19 @@ public class MoodSystem extends AISystem {
     public void saveAdditional(CompoundTag tag) {
         tag.putInt("Mood", getMood());
         tag.putInt("PlayingCooldown", getPlayingCooldown());
+        tag.putInt("MoodCheckCooldown", moodCheckCooldown);
     }
 
     @Override
     public void load(CompoundTag tag) {
-        setMood(tag.getInt("Mood"));
-        setPlayingCooldown(tag.getInt("PlayingCooldown"));
+        if (tag.contains("Mood")) {
+            setMood(tag.getInt("Mood"));
+        }
+        if (tag.contains("PlayingCooldown")) {
+            setPlayingCooldown(tag.getInt("PlayingCooldown"));
+        }
+        if (tag.contains("MoodCheckCooldown")) {
+            moodCheckCooldown = tag.getInt("MoodCheckCooldown");
+        }
     }
 }
