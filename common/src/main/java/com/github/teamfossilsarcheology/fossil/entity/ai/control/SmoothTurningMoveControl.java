@@ -49,7 +49,7 @@ public class SmoothTurningMoveControl extends MoveControl {
             BlockState blockState = mob.level.getBlockState(blockPos);
             VoxelShape voxelShape = blockState.getCollisionShape(mob.level, blockPos);
             boolean jump = false;
-            if (y > mob.maxUpStep) {
+            if (y > mob.maxUpStep && y <= 1.5) {
                 if (mob.getDeltaMovement().horizontalDistance() < Mth.EPSILON) {
                     jump = true;
                 } else {
