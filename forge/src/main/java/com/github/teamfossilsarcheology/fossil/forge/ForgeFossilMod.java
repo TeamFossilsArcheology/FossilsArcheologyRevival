@@ -12,6 +12,7 @@ import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.IMammal
 import com.github.teamfossilsarcheology.fossil.forge.client.ClientModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.client.model.PlantModelLoader;
 import com.github.teamfossilsarcheology.fossil.forge.client.renderer.armor.ForgeAncientHelmetRenderer;
+import com.github.teamfossilsarcheology.fossil.forge.compat.alexsmobs.AlexsMobsCompat;
 import com.github.teamfossilsarcheology.fossil.forge.compat.carryon.CarryOnCompat;
 import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.forge.world.biome.ForgeFossilRegion;
@@ -77,6 +78,9 @@ public class ForgeFossilMod {
             if (ModList.get().isLoaded("farmersdelight")) {
                 FarmersDelightCompat.registerFoodMappings();
             }
+			if (ModList.get().isLoaded("alexsmobs")) {
+				AlexsMobsCompat.registerFoodMappings();
+			}
             ModPlacementTypes.register();
             ModTriggers.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
