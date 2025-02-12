@@ -196,6 +196,9 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             if (isInWater()) {
                 timeInWater++;
                 timeOnLand = 0;
+                if (isSleeping() && level.getBlockState(blockPosition().above()).isAir()) {
+                    setDeltaMovement(0, -0.05, 0);
+                }
             } else if (onGround) {
                 timeInWater = 0;
                 timeOnLand++;
