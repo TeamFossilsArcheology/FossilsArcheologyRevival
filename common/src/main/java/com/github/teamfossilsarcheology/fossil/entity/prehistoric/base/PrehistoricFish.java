@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.animation.*;
+import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -18,6 +19,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.animal.AbstractFish;
+import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -78,17 +80,38 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putInt("AbsoluteEggCooldown", absoluteEggCooldown);
+        compound.putInt("Age", age);
     }
 
     @Override
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         absoluteEggCooldown = compound.getInt("AbsoluteEggCooldown");
+        setAge(compound.getInt("Age"));
     }
 
     @Override
     public @NotNull ItemStack getBucketItemStack() {
         return new ItemStack(info().bucketItem);
+    }
+
+    @Override
+    public void saveToBucketTag(ItemStack bucket) {
+        super.saveToBucketTag(bucket);
+        CompoundTag tag = bucket.getOrCreateTag();
+        tag.putInt("AbsoluteEggCooldown", absoluteEggCooldown);
+        tag.putInt("Age", age);
+    }
+
+    @Override
+    public void loadFromBucketTag(CompoundTag tag) {
+        super.loadFromBucketTag(tag);
+        if (tag.contains("AbsoluteEggCooldown")) {
+            absoluteEggCooldown = tag.getInt("AbsoluteEggCooldown");
+        }
+        if (tag.contains("Age")) {
+            setAge(tag.getInt("Age"));
+        }
     }
 
     @Override
