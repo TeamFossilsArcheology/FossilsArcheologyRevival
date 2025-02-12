@@ -143,8 +143,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         this.animationLocation = animationLocation;
         this.moveControl = new SmoothTurningMoveControl(this);
         this.lookControl = new PrehistoricLookControl(this);
-        this.setHunger(this.getMaxHunger() / 2);
-        this.updateAbilities();
         refreshDimensions();
         if (this.getMobType() == MobType.WATER) {
             this.setPathfindingMalus(BlockPathTypes.WATER, -1.0F);
@@ -359,6 +357,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             setAgeInDays(((PrehistoricGroupData) spawnDataIn).ageInDays);
         }
         updateAbilities();
+        setHunger(getMaxHunger() / 2);
         refreshDimensions();
         moodSystem.setPlayingCooldown(0);
         setMatingCooldown(24000);
@@ -713,7 +712,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         double healthDifference = getAttributeValue(Attributes.MAX_HEALTH);
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseHealth(), attributes().maxHealth())));
         healthDifference = getAttributeValue(Attributes.MAX_HEALTH) - healthDifference;
-        heal((float) healthDifference);
+        if (healthDifference > 0) {
+            heal((float) healthDifference);
+        }
         getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(Math.round(Mth.lerp(percent, attributes().baseDamage(), attributes().maxDamage())));
         getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(speed);
         swimSpeed = Util.calculateSpeed(data(), scale, true);
