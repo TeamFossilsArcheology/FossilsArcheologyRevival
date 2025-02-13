@@ -9,8 +9,13 @@ import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.Difficulty;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
@@ -53,6 +58,25 @@ public class Megalania extends Prehistoric {
     @Override
     public Item getOrderItem() {
         return ModItems.SKULL_STICK.get();
+    }
+
+    @Override
+    public boolean doHurtTarget(Entity target) {
+        if (super.doHurtTarget(target)) {
+            if (target instanceof LivingEntity living) {
+                int i = 3;
+                if (level.getDifficulty() == Difficulty.NORMAL) {
+                    i = 10;
+                } else if (level.getDifficulty() == Difficulty.HARD) {
+                    i = 15;
+                }
+                living.addEffect(new MobEffectInstance(MobEffects.POISON, i * 20, 0), this);
+                living.addEffect(new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, i * 60, 0), this);
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
