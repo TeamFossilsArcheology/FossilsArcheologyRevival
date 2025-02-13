@@ -79,7 +79,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
             if (blockEntity.canPlaceItem(FeederMenu.MEAT_SLOT_ID, foodStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
                 int foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.CARNIVORE_EGG);
                 if (foodPoints == 0) {
-                    foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.PISCIVORE);
+                    foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.PISCI_CARNIVORE);
                 }
                 if (foodPoints > 0) {
                     dirty = true;
@@ -151,36 +151,34 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     }
 
     public boolean isEmpty(Diet diet) {
-        if (diet == Diet.CARNIVORE || diet == Diet.CARNIVORE_EGG || diet == Diet.PISCI_CARNIVORE || diet == Diet.PISCIVORE || diet == Diet.INSECTIVORE) {
+        boolean canEatMeat = diet.canEatMeat() || diet.canEatFish();
+        if (canEatMeat && !diet.canEatPlant()) {
             return meat == 0;
         }
-        if (diet == Diet.HERBIVORE) {
+        if (!canEatMeat && diet.canEatPlant()) {
             return plant == 0;
         }
-        return diet == Diet.OMNIVORE && meat == 0 && plant == 0;
+        return meat == 0 && plant == 0;
     }
 
     public void feedDinosaur(Prehistoric mob) {
         if (level != null) {
             int feedAmount = 0;
-            if (!isEmpty(mob.data().diet())) {
-                if (mob.data().diet() == Diet.CARNIVORE || mob.data().diet() == Diet.CARNIVORE_EGG || mob.data().diet() == Diet.PISCI_CARNIVORE || mob.data().diet() == Diet.PISCIVORE || mob.data().diet() == Diet.INSECTIVORE) {
+            Diet diet = mob.data().diet();
+            if (!isEmpty(diet)) {
+                boolean canEatMeat = diet.canEatMeat() || diet.canEatFish();
+                if (canEatMeat && !diet.canEatPlant()) {
                     meat--;
                     feedAmount++;
-                }
-                if (mob.data().diet() == Diet.HERBIVORE) {
+                } else if (!canEatMeat && diet.canEatPlant()) {
                     plant--;
                     feedAmount++;
-                }
-                if (mob.data().diet() == Diet.OMNIVORE) {
-                    if (meat == 0 && plant != 0) {
+                } else {
+                    if (meat != 0) {
+                        meat--;
+                        feedAmount++;
+                    } else if (plant != 0) {
                         plant--;
-                        feedAmount++;
-                    } else if (meat != 0 && plant == 0) {
-                        meat--;
-                        feedAmount++;
-                    } else if (meat != 0) {
-                        meat--;
                         feedAmount++;
                     }
                 }

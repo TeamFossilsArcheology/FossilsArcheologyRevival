@@ -1415,7 +1415,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 AABB aabb = eatPos == null ? getBoundingBoxForCulling() : new AABB(eatPos, eatPos);
                 switch (data().diet()) {
                     case HERBIVORE -> Util.spawnItemParticles(level, Items.WHEAT_SEEDS, 4, aabb);
-                    case OMNIVORE -> Util.spawnItemParticles(level, Items.BREAD, 4, aabb);
+                    case OMNIVORE -> Util.spawnItemParticles(level, Items.SWEET_BERRIES, 4, aabb);
                     case PISCIVORE -> Util.spawnItemParticles(level, Items.COD, 4, aabb);
                     case PASSIVE -> Util.spawnItemParticles(level, Items.GUNPOWDER, 4, aabb);
                     default -> Util.spawnItemParticles(level, Items.BEEF, 4, aabb);

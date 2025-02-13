@@ -13,25 +13,37 @@ import java.lang.reflect.Type;
 import java.util.Locale;
 
 public enum Diet implements DinopediaInfo {
-    CARNIVORE(3),
-    HERBIVORE(0),
-    OMNIVORE(1),
-    PISCIVORE(1),
-    CARNIVORE_EGG(2),
-    INSECTIVORE(0),
-    PISCI_CARNIVORE(3),
-    PASSIVE(0);
+    CARNIVORE(true, false, false),
+    HERBIVORE(false, true, true),
+    OMNIVORE(true, true, true),
+    PISCIVORE(false, true, false),
+    CARNIVORE_EGG(true, false, false),
+    INSECTIVORE(true, false, false),
+    PISCI_CARNIVORE(true, true, false),
+    PASSIVE(false, false, false);
     private final TranslatableComponent name = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT));
     private final TranslatableComponent description = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT) + ".desc");
 
-    private final int fearIndex;
+    private final boolean canEatMeat;
+    private final boolean canEatFish;
+    private final boolean canEatPlant;
 
-    Diet(int fearIndex) {
-        this.fearIndex = fearIndex;
+    Diet(boolean canEatMeat, boolean canEatFish, boolean canEatPlant) {
+        this.canEatMeat = canEatMeat;
+        this.canEatFish = canEatFish;
+        this.canEatPlant = canEatPlant;
     }
 
-    public boolean isCarnivore() {
-        return fearIndex >= 2;
+    public boolean canEatMeat() {
+        return canEatMeat;
+    }
+
+    public boolean canEatFish() {
+        return canEatFish;
+    }
+
+    public boolean canEatPlant() {
+        return canEatPlant;
     }
 
     @Override

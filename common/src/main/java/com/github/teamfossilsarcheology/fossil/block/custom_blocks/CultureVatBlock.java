@@ -97,7 +97,7 @@ public class CultureVatBlock extends CustomEntityBlock {
                             ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.FLYING.name());
                         } else if (inputEntity.mobType == PrehistoricMobType.FISH || inputEntity.mobType == PrehistoricMobType.DINOSAUR_FISH) {
                             ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.FISH.name());
-                        } else if (EntityDataLoader.INSTANCE.getData(inputEntity.resourceName).diet().isCarnivore()) {
+                        } else if (EntityDataLoader.INSTANCE.getData(inputEntity.resourceName).diet().canEatMeat()) {
                             //Let's ignore that this probably isn't scientifically accurate
                             ((Failuresaurus) entity).setVariant(Failuresaurus.Variant.SAUROPOD.name());
                         } else {

@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.util;
 
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.core.Registry;
@@ -150,15 +151,19 @@ public abstract class FoodMappings {
 
     public static int getMobFoodPoints(LivingEntity entity, Diet diet) {
         if (entity != null) {
-            int mappingsPoints = getFoodAmount(entity.getType(), diet);
-            if (mappingsPoints == 0 && FossilConfig.isEnabled(FossilConfig.DINOS_EAT_MODDED_MOBS)) {
-                int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
-                if (entity instanceof Animal && !isAquaticMob(entity)) {
-                    if (diet == Diet.OMNIVORE || diet == Diet.CARNIVORE || diet == Diet.PISCI_CARNIVORE) {
-                        return widthPoints;
-                    }
+            if (!FossilConfig.isEnabled(FossilConfig.DINOS_EAT_MODDED_MOBS)) {
+                String namespace = Registry.ENTITY_TYPE.getKey(entity.getType()).getNamespace();
+                if (!namespace.equals(FossilMod.MOD_ID) && !namespace.equals("minecraft")) {
+                    return 0;
                 }
-                if (diet == Diet.PISCIVORE || diet == Diet.PISCI_CARNIVORE) {
+            }
+            int mappingsPoints = getFoodAmount(entity.getType(), diet);
+            if (mappingsPoints == 0) {
+                int widthPoints = Math.round(entity.getBbWidth() * entity.getBbHeight() * 10);
+                if (diet.canEatMeat() && entity instanceof Animal && !isAquaticMob(entity)) {
+                    return widthPoints;
+                }
+                if (diet.canEatFish()) {
                     return isAquaticMob(entity) ? widthPoints : 0;
                 }
             }
