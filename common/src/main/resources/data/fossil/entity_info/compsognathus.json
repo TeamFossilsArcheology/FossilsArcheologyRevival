@@ -1,7 +1,7 @@
 {
   "ai": {
     "activity": "NOCTURNAL",
-    "attacking": "BASIC",
+    "attacking": "JUMP",
     "climbing": "NONE",
     "moving": "WALK",
     "response": "CALM",
