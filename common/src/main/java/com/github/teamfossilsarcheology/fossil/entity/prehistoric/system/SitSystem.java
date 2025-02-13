@@ -42,6 +42,9 @@ public class SitSystem extends AISystem {
         if (isDisabled() || mob.hasTarget() || mob.isVehicle() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW) {
             return false;
         }
+        if (mob.isDeadlyHungry()) {
+            return false;
+        }
         if ((mob.aiMovingType() == Moving.AQUATIC)) {
             return mob.isInWater();
         } else if (mob.aiMovingType() == Moving.SEMI_AQUATIC) {

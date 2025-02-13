@@ -61,6 +61,9 @@ public class SleepSystem extends AISystem {
         if (isDisabled() || mob.hasTarget() || mob.getLastHurtByMob() != null || mob.getCurrentOrder() == OrderType.FOLLOW || mob.isVehicle()) {
             return false;
         }
+        if (mob.isDeadlyHungry()) {
+            return false;
+        }
         if ((mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC)) {
             return mob.isInWater();
         } else if (mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC) {

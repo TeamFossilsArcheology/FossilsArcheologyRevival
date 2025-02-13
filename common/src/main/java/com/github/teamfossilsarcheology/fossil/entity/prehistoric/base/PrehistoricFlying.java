@@ -85,6 +85,9 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
         matingGoal = new DinoMatingGoal(this, 1);
         goalSelector.addGoal(Util.IMMOBILE + 1, new DinoPanicGoal(this, 1.5));
         goalSelector.addGoal(Util.IMMOBILE + 2, new FloatGoal(this));
+        if (aiAttackType() != PrehistoricEntityInfoAI.Attacking.NONE && aiAttackType() != PrehistoricEntityInfoAI.Attacking.JUMP) {
+            goalSelector.addGoal(Util.ATTACK + 1, new DelayedAttackGoal<>(this, attributes().sprintMod(), false));
+        }
         goalSelector.addGoal(Util.SLEEP + 2, matingGoal);
         goalSelector.addGoal(Util.NEEDS, new FlyingLandNearFoodGoal(this));
         goalSelector.addGoal(Util.NEEDS + 1, new FlyingEatFromFeederGoal(this));
