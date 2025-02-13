@@ -79,7 +79,7 @@ public class ForgeFossilMod {
                 FarmersDelightCompat.registerFoodMappings();
             }			
 			if (ModList.get().isLoaded("alexsmobs")) {
-				AlexsMobsCompat.registerFoodMappings();
+				AlexsMobsCompat.register();
 			}
             ModPlacementTypes.register();
             ModTriggers.register();
