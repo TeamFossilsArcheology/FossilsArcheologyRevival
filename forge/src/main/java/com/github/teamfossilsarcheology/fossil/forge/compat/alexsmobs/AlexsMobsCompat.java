@@ -60,6 +60,7 @@ public class AlexsMobsCompat {
 		FoodMappings.addMeat(AMEntityRegistry.ENDERGRADE.get(), 10);
 		FoodMappings.addMeat(AMEntityRegistry.MUNGUS.get(), 8);
 		FoodMappings.addMeat(AMEntityRegistry.BUNFUNGUS.get(), 40);
+		FoodMappings.addMeat(AMEntityRegistry.FROSTSTALKER.get(), 12);
 
 		FoodMappings.addFish(AMEntityRegistry.ALLIGATOR_SNAPPING_TURTLE.get(), 9);
 		FoodMappings.addFish(AMEntityRegistry.BLOBFISH.get(), 4);
