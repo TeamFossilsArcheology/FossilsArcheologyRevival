@@ -30,6 +30,10 @@ public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
             nextStartTick = 0;
             clearTicks = Math.min(clearTicks / 4, 1);
         }
+        if (entity.getLastHurtByMob() != null) {
+            //This should prevent mobs from eating dropped meat during combat
+            return false;
+        }
         return super.canUse();
     }
 
