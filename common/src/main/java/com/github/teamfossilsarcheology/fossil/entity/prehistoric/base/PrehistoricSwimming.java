@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.AmphibiousPa
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationInfo;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationLogic;
 import com.github.teamfossilsarcheology.fossil.entity.animation.PausableAnimationController;
+import com.github.teamfossilsarcheology.fossil.entity.damagesource.ModDamageSources;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
 import com.github.teamfossilsarcheology.fossil.util.Diet;
 import net.minecraft.nbt.CompoundTag;
@@ -17,7 +18,6 @@ import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
-import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
@@ -230,7 +230,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -40) {
                 setAirSupply(0);
-                hurt(DamageSource.DROWN, 2);
+                hurt(ModDamageSources.SUFFOCATE, 2);
             }
         } else {
             setAirSupply(500);

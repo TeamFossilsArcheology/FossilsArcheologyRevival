@@ -592,6 +592,8 @@
   "container.fossil.sifter": "Sifter",
   "container.fossil.analyzer": "Analyzer",
   "container.fossil.worktable": "Archeology Workbench",
+  "death.attack.fossil.aquatic_suffocate": "%1$s suffocated on land",
+  "death.attack.fossil.aquatic_suffocate.player": "%1$s suffocated on land whilst trying to escape %2$s",
   "pedia.fossil.activity": "Activity: %s",
   "pedia.fossil.activity.both": "Cathemeral",
   "pedia.fossil.activity.diurnal": "Diurnal",
