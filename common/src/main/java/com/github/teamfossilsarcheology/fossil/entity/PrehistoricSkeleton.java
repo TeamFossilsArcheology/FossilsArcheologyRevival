@@ -54,6 +54,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
 
     public PrehistoricSkeleton(EntityType<?> entityType, Level level) {
         super(entityType, level);
+        refreshTexturePath();//Won't be correct but should prevent crash in rare cases
     }
 
     @Override
@@ -170,7 +171,7 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
         }
     }
 
-    private void refreshTexturePath() {
+    public void refreshTexturePath() {
         if (!level.isClientSide) {
             return;
         }
