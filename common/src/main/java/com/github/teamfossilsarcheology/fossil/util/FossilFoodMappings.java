@@ -19,19 +19,23 @@ import static com.github.teamfossilsarcheology.fossil.util.FoodMappings.addMeatE
 
 public class FossilFoodMappings {
     public static void register() {
-        FoodMappings.addPlant(Items.SUGAR_CANE, 15);
-        FoodMappings.addPlant(Items.WHEAT, 13);
-        FoodMappings.addPlant(Items.MELON_SLICE);
         FoodMappings.addPlant(Items.APPLE);
-        FoodMappings.addPlant(Items.BEETROOT);
+        FoodMappings.addPlant(Items.BREAD);
+        FoodMappings.addPlant(Blocks.CAKE, 60);
+        FoodMappings.addPlant(Items.COOKIE);
+        FoodMappings.addPlant(Items.MELON_SLICE);
+        FoodMappings.addPlant(Items.DRIED_KELP);
+        FoodMappings.addPlant(Items.CARROT);
         FoodMappings.addPlant(Items.POTATO);
         FoodMappings.addPlant(Items.BAKED_POTATO);
-        FoodMappings.addPlant(Items.CAKE, 60);
-        FoodMappings.addPlant(Items.CARROT);
-        FoodMappings.addPlant(Items.COOKIE);
         FoodMappings.addPlant(Items.PUMPKIN_PIE);
+        FoodMappings.addPlant(Items.BEETROOT);
+        FoodMappings.addPlant(Items.SWEET_BERRIES);
+        FoodMappings.addPlant(Items.GLOW_BERRIES);
+        FoodMappings.addPlant(Items.SUGAR_CANE, 15);
+        FoodMappings.addPlant(Items.WHEAT, 13);
+        FoodMappings.addPlant(Items.CAKE, 60);
         FoodMappings.addPlant(Items.SUGAR, 7);
-        FoodMappings.addPlant(Items.BREAD);
         FoodMappings.addPlant(Items.WHEAT_SEEDS, 5);
         FoodMappings.addPlant(Items.MELON_SEEDS, 5);
         FoodMappings.addPlant(Items.PUMPKIN_SEEDS, 5);
@@ -47,7 +51,6 @@ public class FossilFoodMappings {
                 FoodMappings.addPlant(block, 15);
             });
         });
-        FoodMappings.addPlant(Blocks.CAKE, 60);
         FoodMappings.addPlant(Blocks.CARROTS, 20);
         FoodMappings.addPlant(Blocks.WHEAT, 13);
         FoodMappings.addPlant(Blocks.HAY_BLOCK, 90);
@@ -72,12 +75,12 @@ public class FossilFoodMappings {
         FoodMappings.addFish(Items.COOKED_COD);
         FoodMappings.addFish(Items.COOKED_SALMON);
 
-        FoodMappings.addMeat(Items.COOKED_BEEF);
-        FoodMappings.addMeat(Items.BEEF);
-        FoodMappings.addMeat(Items.COOKED_CHICKEN);
-        FoodMappings.addMeat(Items.CHICKEN);
         FoodMappings.addMeat(Items.PORKCHOP);
         FoodMappings.addMeat(Items.COOKED_PORKCHOP);
+        FoodMappings.addMeat(Items.BEEF);
+        FoodMappings.addMeat(Items.COOKED_BEEF);
+        FoodMappings.addMeat(Items.COOKED_CHICKEN);
+        FoodMappings.addMeat(Items.CHICKEN);
         FoodMappings.addMeat(ModItems.FAILURESAURUS_FLESH.get(), 15);
         FoodMappings.addMeat(Items.MUTTON);
         FoodMappings.addMeat(Items.COOKED_MUTTON);
