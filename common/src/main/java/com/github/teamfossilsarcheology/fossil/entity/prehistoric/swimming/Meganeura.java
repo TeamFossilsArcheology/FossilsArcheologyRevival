@@ -377,7 +377,11 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
                         }
                     }
                 } else {
-                    animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                    if (isFlying()) {
+                        animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.FLY);
+                    } else {
+                        animationLogic.addActiveAnimation(controller.getName(), AnimationCategory.IDLE);
+                    }
                 }
             }
             Optional<AnimationLogic.ActiveAnimationInfo> newAnimation = animationLogic.getActiveAnimation(controller.getName());
