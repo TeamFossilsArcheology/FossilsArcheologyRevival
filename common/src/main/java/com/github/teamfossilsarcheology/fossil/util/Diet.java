@@ -14,7 +14,7 @@ import java.util.Locale;
 
 public enum Diet implements DinopediaInfo {
     CARNIVORE(true, false, false),
-    HERBIVORE(false, true, true),
+    HERBIVORE(false, false, true),
     OMNIVORE(true, true, true),
     PISCIVORE(false, true, false),
     CARNIVORE_EGG(true, false, false),
