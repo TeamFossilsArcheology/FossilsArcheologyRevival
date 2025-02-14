@@ -137,6 +137,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private Vec3 eatPos;
     private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
     protected double swimSpeed;
+    private boolean useLowerFluidJumpThreshold;
 
     protected Prehistoric(EntityType<? extends Prehistoric> entityType, Level level, ResourceLocation animationLocation) {
         super(entityType, level);
@@ -216,11 +217,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         targetSelector.addGoal(2, new DinoOwnerHurtTargetGoal(this));
         targetSelector.addGoal(3, new DinoHurtByTargetGoal(this));
         targetSelector.addGoal(5, new HuntingTargetGoal(this));
-    }
-
-    @Override
-    public double getFluidJumpThreshold() {
-        return 0.7 * getBbHeight();
     }
 
     @Override
@@ -556,12 +552,28 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
+    public double getFluidJumpThreshold() {
+        if (useLowerFluidJumpThreshold) {
+            return super.getFluidJumpThreshold();
+        }
+        return 0.7 * getBbHeight();
+    }
+
+    private void setUseLowerFluidJumpThreshold(boolean b) {
+        this.useLowerFluidJumpThreshold = b;
+    }
+
+    @Override
     protected void customServerAiStep() {
         super.customServerAiStep();
         if (getMoveControl().hasWanted()) {
             setSprinting(getMoveControl().getSpeedModifier() >= attributes().sprintMod());
         } else {
             setSprinting(false);
+        }
+        if (isInWater() && horizontalCollision) {
+            //Needed because the lower threshold prevents jumping out of water
+            setUseLowerFluidJumpThreshold(true);
         }
     }
 
