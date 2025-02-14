@@ -2,7 +2,6 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.animation.*;
-import com.github.teamfossilsarcheology.fossil.util.Gender;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,7 +18,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingLookControl;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 import net.minecraft.world.entity.animal.AbstractFish;
-import net.minecraft.world.entity.animal.Bucketable;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -44,7 +42,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     private final ResourceLocation animationLocation;
     private final AnimationLogic<PrehistoricFish> animationLogic = new AnimationLogic<>(this);
 
-    private int absoluteEggCooldown = 0;
+    private int absoluteEggCooldown = random.nextInt(12000) + 12000;
     private int age;
 
     protected PrehistoricFish(EntityType<? extends PrehistoricFish> entityType, Level level) {
@@ -180,7 +178,7 @@ public abstract class PrehistoricFish extends AbstractFish implements Prehistori
     }
 
     private @Nullable PrehistoricFish getClosestMate() {
-        List<? extends PrehistoricFish> sameTypes = level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(2, 2, 2), fish -> fish != this && fish.getAge() > 0);
+        List<? extends PrehistoricFish> sameTypes = level.getEntitiesOfClass(getClass(), getBoundingBox().inflate(2, 2, 2), fish -> fish != this && fish.getAge() >= 0);
         double shortestDistance = Double.MAX_VALUE;
         PrehistoricFish other = null;
         for (PrehistoricFish sameType : sameTypes) {
