@@ -37,6 +37,9 @@ public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> exten
                 }
                 if (mob.isInWater()) {
                     float i = (float) mob.swimSpeed();
+                    if (horizontalDist < 4) {
+                        i *= 0.5f;
+                    }
                     mob.setSpeed(i);
                     double horDist = Math.sqrt(x * x + z * z);
                     float k;
