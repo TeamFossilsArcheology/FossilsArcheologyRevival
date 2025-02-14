@@ -2,8 +2,10 @@ package com.github.teamfossilsarcheology.fossil.world.feature;
 
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
@@ -34,15 +36,17 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
             if (center.getY() >= radiusHeight) {
                 layer++;//Only increase radius up to a specific width/height. Otherwise, the blocks would be set in inaccessible chunks
             }
+            final BlockState rock = ModBlocks.VOLCANIC_ROCK.get().defaultBlockState();
             for (float i = 0; i < layer * 0.5; i += 0.5f) {
                 for (float j = 0; j < 2 * Math.PI * i + random.nextInt(2); j += 0.5f) {
                     BlockPos stonePos = new BlockPos(Math.floor(center.getX() + Math.sin(j) * i + random.nextInt(2)), center.getY(),
                             Math.floor(center.getZ() + Math.cos(j) * i + random.nextInt(2)));
                     if (level.isEmptyBlock(stonePos) || level.getBlockState(stonePos).is(Blocks.WATER)) {
-                        level.setBlock(stonePos, ModBlocks.VOLCANIC_ROCK.get().defaultBlockState(), 18);
+                        level.setBlock(stonePos, rock, 18);
                     }
                 }
             }
+            final BlockState lava = Blocks.LAVA.defaultBlockState();
             boolean updateLava = center.getY() == stopHeight || first;
             for (float i = 0; i < (first ? 0.45f : Math.max(layer * 0.2, 1)); i += 0.5f) {
                 float extra = i == 0 ? 3 : 1;
@@ -50,9 +54,12 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
                     BlockPos lavaPos = new BlockPos(Math.floor(center.getX() + Math.sin(j) * extra + random.nextInt(2)), center.getY(),
                             Math.floor(center.getZ() + Math.cos(j) * extra + random.nextInt(2)));
                     if (updateLava) {
-                        level.setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 3);
+                        level.setBlock(lavaPos, lava, 3);
+                        Direction.Plane.HORIZONTAL.stream().map(direction -> lavaPos.offset(direction.getNormal()))
+                                .filter(fixPos -> level.getBlockState(fixPos).isAir())
+                                .forEach(fixPos -> level.setBlock(lavaPos, rock, 18));
                     } else {
-                        level.setBlock(lavaPos, Blocks.LAVA.defaultBlockState(), 18);
+                        level.setBlock(lavaPos, lava, 18);
                     }
                 }
                 first = false;
