@@ -22,7 +22,6 @@ public class Javelin extends AbstractArrow {
     private static final EntityDataAccessor<Integer> TIER_ID = SynchedEntityData.defineId(Javelin.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> ANCIENT = SynchedEntityData.defineId(Javelin.class, EntityDataSerializers.BOOLEAN);
     private int itemDamage;
-    private boolean lightning;
 
     public Javelin(EntityType<Javelin> type, Level level) {
         super(type, level);
@@ -35,7 +34,7 @@ public class Javelin extends AbstractArrow {
             setTier(tiers);
         }
         entityData.set(ANCIENT, ancient);
-        setPierceLevel((byte) 1);
+        setPierceLevel((byte) 16);
         setBaseDamage(getDamage(tier, ancient));
     }
 
@@ -72,25 +71,15 @@ public class Javelin extends AbstractArrow {
     }
 
     @Override
-    public void tick() {
-        if (isAncient() && inGround && !lightning) {
-            if (random.nextInt(100) < 30) {
-                if (level instanceof ServerLevel) {
-                    LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
-                    lightningBolt.moveTo(Vec3.atBottomCenterOf(blockPosition()));
-                    lightningBolt.setCause(getOwner() instanceof ServerPlayer ? (ServerPlayer) getOwner() : null);
-                    level.addFreshEntity(lightningBolt);
-                }
-            }
-            lightning = true;
-        }
-        super.tick();
-    }
-
-    @Override
     protected void onHitBlock(BlockHitResult result) {
         super.onHitBlock(result);
-        setPierceLevel((byte) 1);
+        setPierceLevel((byte) 16);
+        if (level instanceof ServerLevel && isAncient() && random.nextInt(100) < 30) {
+            LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
+            lightningBolt.moveTo(Vec3.atBottomCenterOf(blockPosition()));
+            lightningBolt.setCause(getOwner() instanceof ServerPlayer ? (ServerPlayer) getOwner() : null);
+            level.addFreshEntity(lightningBolt);
+        }
     }
 
     @Override
@@ -99,7 +88,7 @@ public class Javelin extends AbstractArrow {
     }
 
     public Tier getTier() {
-        if (!entityData.get(ANCIENT)) {
+        if (!isAncient()) {
             return Tiers.values()[entityData.get(TIER_ID)];
         }
         return Tiers.WOOD;
