@@ -207,7 +207,7 @@
 				{
 					"name": "body_hitbox",
 					"parent": "body1",
-					"pivot": [0, 0, 5],
+					"pivot": [0, 1, 10],
 					"cubes": []
 				},
 				{
