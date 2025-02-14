@@ -38,6 +38,9 @@ public class MeganeuraAttachSystem extends AISystem {
 
     @Override
     public void serverTick() {
+        if (tryTicks > 0) {
+            tryTicks++;
+        }
         if (mob.isBaby()) {
             attachCooldown = 150;
             return;
@@ -57,14 +60,10 @@ public class MeganeuraAttachSystem extends AISystem {
                     startAttaching();
                 }
             }
-            if (tryTicks > MAX_TRY_TICKS) {
-                stopAttaching();
-            }
         }
         if (isAttached()) {
             attachTicks++;
             mob.setDeltaMovement(Vec3.ZERO);
-        } else {
         }
         if (attachStarted() && targetBlockPos != null) {
             mob.setYRot(0);
@@ -85,6 +84,9 @@ public class MeganeuraAttachSystem extends AISystem {
                     stopAttaching();
                 }
             }
+        }
+        if (tryTicks > MAX_TRY_TICKS) {
+            stopAttaching();
         }
     }
 
@@ -112,7 +114,7 @@ public class MeganeuraAttachSystem extends AISystem {
      * This will set the target but will not yet start the approach. A random offset will be added to the target
      *
      * @param attachBlockPos the target block position
-     * @param attachFace the {@code Direction} of the target block face
+     * @param attachFace     the {@code Direction} of the target block face
      */
     public void setAttachTarget(BlockPos attachBlockPos, Direction attachFace) {
         //Pick a random point on the hit face, offset by half the mobs width
@@ -142,6 +144,7 @@ public class MeganeuraAttachSystem extends AISystem {
     public void startAttaching() {
         attachCooldown = 150;
         attachTicks = 0;
+        tryTicks = 0;
         setAttached(true);
         mob.setPos(targetLocation.x, mob.getY(), targetLocation.z);
         mob.setDeltaMovement(Vec3.ZERO);
@@ -154,6 +157,7 @@ public class MeganeuraAttachSystem extends AISystem {
         targetBlockPos = null;
         targetFace = null;
         targetLocation = null;
+        tryTicks = 0;
         this.attachCooldown = attachCooldown;
         setAttached(false);
         setAttachmentPos(Vec3.ZERO);
