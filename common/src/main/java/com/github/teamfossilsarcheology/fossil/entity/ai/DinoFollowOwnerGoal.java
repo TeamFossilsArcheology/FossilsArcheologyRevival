@@ -20,23 +20,28 @@ import java.util.EnumSet;
 public class DinoFollowOwnerGoal extends Goal {
     private final Prehistoric dino;
     private final double speedModifier;
+    private final double sprintModifier;
     private final float startDistanceSqr;
+    private final float sprintDistanceSqr;
     private final float stopDistanceSqr;
     private final float teleportDistanceSqr;
     private final boolean canFly;
+    private boolean shouldSprint;
     private LivingEntity owner;
     private float oldWaterCost;
     private int timeToRecalcPath;
 
-    public DinoFollowOwnerGoal(Prehistoric dino, double speedModifier, float startDistance, float stopDistance, boolean canFly) {
-        this(dino, speedModifier, startDistance, stopDistance, 18, canFly);
+    public DinoFollowOwnerGoal(Prehistoric dino, double sprintModifier, float startDistance, float stopDistance, boolean canFly) {
+        this(dino, sprintModifier, startDistance, stopDistance, 18, canFly);
     }
 
 
-    public DinoFollowOwnerGoal(Prehistoric dino, double speedModifier, float startDistance, float stopDistance, float teleportDistance, boolean canFly) {
+    public DinoFollowOwnerGoal(Prehistoric dino, double sprintModifier, float startDistance, float stopDistance, float teleportDistance, boolean canFly) {
         this.dino = dino;
-        this.speedModifier = speedModifier;
+        this.speedModifier = 1;
+        this.sprintModifier = sprintModifier;
         this.startDistanceSqr = startDistance * startDistance;
+        this.sprintDistanceSqr = startDistanceSqr + 3;
         this.stopDistanceSqr = stopDistance * stopDistance;
         this.teleportDistanceSqr = teleportDistance * teleportDistance;
         this.canFly = canFly;
@@ -70,6 +75,7 @@ public class DinoFollowOwnerGoal extends Goal {
         timeToRecalcPath = 0;
         oldWaterCost = dino.getPathfindingMalus(BlockPathTypes.WATER);
         dino.setPathfindingMalus(BlockPathTypes.WATER, 0);
+        shouldSprint = dino.distanceToSqr(owner) >= sprintDistanceSqr;
     }
 
     @Override
@@ -87,14 +93,14 @@ public class DinoFollowOwnerGoal extends Goal {
             return;
         }
         timeToRecalcPath = adjustedTickDelay(10);
+        if (dino.distanceToSqr(owner) >= sprintDistanceSqr) {
+            shouldSprint = true;
+        }
         if (!dino.isLeashed() && dino.distanceToSqr(owner) >= teleportDistanceSqr) {
             teleportToOwner();
             return;
         }
-        boolean move = dino.getNavigation().moveTo(owner, speedModifier);
-        if (move) {
-            return;
-        }
+        dino.getNavigation().moveTo(owner, shouldSprint ? sprintModifier : speedModifier);
     }
 
     private void teleportToOwner() {

@@ -209,7 +209,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             goalSelector.addGoal(Util.NEEDS, new PassiveFoodGoal(this));
         }
         goalSelector.addGoal(Util.NEEDS + 3, new PlayGoal(this, attributes().sprintMod() - 0.15));
-        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, 1, 7, 2, false));
+        goalSelector.addGoal(Util.WANDER, new DinoFollowOwnerGoal(this, attributes().sprintMod(), 7, 2, false));
         goalSelector.addGoal(Util.WANDER + 1, new DinoWanderGoal(this, 1));
         goalSelector.addGoal(Util.LOOK, new LookAtPlayerGoal(this, Player.class, 8.0f));
         goalSelector.addGoal(Util.LOOK + 1, new RandomLookAroundGoal(this));
