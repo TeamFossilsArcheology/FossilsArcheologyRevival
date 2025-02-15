@@ -13,6 +13,7 @@ import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.PrehistoricLookControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.SmoothTurningMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.PrehistoricPathNavigation;
+import com.github.teamfossilsarcheology.fossil.entity.ai.navigation.PrehistoricWallClimberNavigation;
 import com.github.teamfossilsarcheology.fossil.entity.animation.*;
 import com.github.teamfossilsarcheology.fossil.entity.data.AI;
 import com.github.teamfossilsarcheology.fossil.entity.data.Attribute;
@@ -373,7 +374,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     public boolean isImmobile() {
-        return super.isImmobile() || isWeak() || isSleeping();
+        //Sleeping and sitting are really only here for something like WallClimberNav which moves the mob even after it has been stopped
+        return super.isImmobile() || isWeak() || isSleeping() || sitSystem.isSitting();
     }
 
     @Override
@@ -1211,7 +1213,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     @Override
     protected @NotNull PathNavigation createNavigation(Level levelIn) {
-        return aiClimbType() == Climbing.ARTHROPOD ? new WallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
+        return aiClimbType() == Climbing.ARTHROPOD ? new PrehistoricWallClimberNavigation(this, levelIn) : new PrehistoricPathNavigation(this, levelIn);
     }
 
     protected @NotNull SleepSystem createSleepSystem() {
