@@ -394,7 +394,7 @@
 						"vector": [-17.51361, "-0.6468+math.sin(query.anim_time*90)*-2.5", "12.4149+math.sin(query.anim_time*180)*2.5"]
 					},
 					"position": {
-						"vector": ["math.sin(query.anim_time*90)*1", "5+math.sin(query.anim_time*180)*1", 0]
+						"vector": ["math.sin(query.anim_time*90)*1", "math.sin(query.anim_time*180)*1", 0]
 					}
 				},
 				"leftpectoral": {
@@ -430,11 +430,6 @@
 				"head": {
 					"rotation": {
 						"vector": [0, "-10+math.sin(query.anim_time*90+60)*5", "5+math.sin(query.anim_time*180-60)*-2.5"]
-					}
-				},
-				"pitch_root": {
-					"position": {
-						"vector": [0, 1, 0]
 					}
 				}
 			}
