@@ -14,7 +14,7 @@ public class SleepSystem extends AISystem {
     /**
      * Sleep cooldown for mobs with {@link PrehistoricEntityInfoAI.Activity#BOTH}
      */
-    private int cathermalSleepCooldown = 0;
+    private int cathermalSleepCooldown = 5000 + mob.getRandom().nextInt(3000);
 
     public SleepSystem(Prehistoric mob) {
         super(mob);
