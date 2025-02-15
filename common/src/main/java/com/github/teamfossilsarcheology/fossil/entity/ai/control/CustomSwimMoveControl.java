@@ -17,9 +17,7 @@ public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> exten
 
     @Override
     public void tick() {
-        mob.setNoGravity(false);
         if (operation == Operation.MOVE_TO && !mob.getNavigation().isDone()) {
-            if (mob.isInWater()) mob.setNoGravity(true);
             double x = wantedX - mob.getX();
             double y = wantedY - mob.getY();
             double z = wantedZ - mob.getZ();
@@ -56,7 +54,6 @@ public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> exten
                 }
             }
         } else {
-            if (mob.isInWater()) mob.setNoGravity(true);
             mob.setSpeed(0);
             mob.setXxa(0);
             mob.setYya(0);
