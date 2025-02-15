@@ -35,7 +35,7 @@ public class FossilItem extends Item {
 
     @Override
     public @NotNull InteractionResult useOn(UseOnContext context) {
-        if (timePeriod == null || context.getClickedFace() == Direction.DOWN) {
+        if (timePeriod == null) {
             return InteractionResult.FAIL;
         }
         Level level = context.getLevel();
@@ -51,7 +51,7 @@ public class FossilItem extends Item {
             return InteractionResult.FAIL;
         }
         if (level instanceof ServerLevel serverLevel) {
-            PrehistoricSkeleton fossil = ModEntities.SKELETON.get().create(serverLevel, null, null, context.getPlayer(), blockPos, MobSpawnType.SPAWN_EGG, true, true);
+            PrehistoricSkeleton fossil = ModEntities.SKELETON.get().create(serverLevel, null, null, context.getPlayer(), blockPos, MobSpawnType.SPAWN_EGG, true, false);
             if (fossil == null) {
                 return InteractionResult.FAIL;
             }

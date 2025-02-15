@@ -203,11 +203,6 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
     }
 
     @Override
-    public boolean canBeCollidedWith() {
-        return true;
-    }
-
-    @Override
     public boolean isPickable() {
         return true;
     }
