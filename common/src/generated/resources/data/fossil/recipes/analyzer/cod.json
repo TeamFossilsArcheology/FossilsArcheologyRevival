@@ -6,7 +6,11 @@
   "outputs": [
     {
       "item": "fossil:cod_dna",
-      "weight": 100.0
+      "weight": 90.0
+    },
+    {
+      "item": "fossil:polar_bear_dna",
+      "weight": 10.0
     }
   ]
 }

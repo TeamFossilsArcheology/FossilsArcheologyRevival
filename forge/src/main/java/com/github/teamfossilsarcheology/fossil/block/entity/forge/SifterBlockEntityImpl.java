@@ -32,12 +32,6 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
         public int get(int index) {
             switch (index) {
                 case 0 -> {
-                    return litTime;
-                }
-                case 1 -> {
-                    return litDuration;
-                }
-                case 2 -> {
                     return cookingProgress;
                 }
             }
@@ -47,15 +41,13 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0 -> litTime = value;
-                case 1 -> litDuration = value;
-                case 2 -> cookingProgress = value;
+                case 0 -> cookingProgress = value;
             }
         }
 
         @Override
         public int getCount() {
-            return 3;
+            return 1;
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(6, ItemStack.EMPTY);
@@ -75,32 +67,21 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
 
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
-        boolean fueled = isProcessing();
+        boolean wasProcessing = cookingProgress > 0;
         boolean dirty = false;
 
-        if (litTime == 0 && canProcess()) {
-            litDuration = litTime = SifterMenu.FUEL_TIME;
-            dirty = true;
-        }
-
-        if (isProcessing() && canProcess()) {
-            ++cookingProgress;
-
-            if (cookingProgress == SifterMenu.SIFTER_DURATION) {
+        if (canProcess()) {
+            cookingProgress++;
+            if (cookingProgress >= SifterMenu.SIFTER_DURATION) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;
             }
-        } else {
-            cookingProgress = 0;
-        }
-        if (isProcessing()) {
-            --litTime;
         }
 
-        if (fueled != isProcessing()) {
+        if (wasProcessing != cookingProgress > 0) {
             dirty = true;
-            state = state.setValue(SifterBlock.ACTIVE, isProcessing());
+            state = state.setValue(SifterBlock.ACTIVE, cookingProgress > 0);
             level.setBlock(pos, state, 3);
         }
 

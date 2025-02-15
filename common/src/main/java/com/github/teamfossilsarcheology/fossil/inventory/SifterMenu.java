@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class SifterMenu extends AbstractContainerMenu {
     public static final int SIFTER_DURATION = 200;
-    public static final int FUEL_TIME = 100;
 
     private final Container container;
     private final ContainerData containerData;
@@ -40,7 +39,7 @@ public class SifterMenu extends AbstractContainerMenu {
     }
 
     public int getSiftProgress() {
-        return containerData.get(2);
+        return containerData.get(0);
     }
 
     @Override

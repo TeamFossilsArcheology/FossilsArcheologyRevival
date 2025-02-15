@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
@@ -85,55 +86,39 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
 
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
-        boolean wasActive = cookingProgress > 0;
+        boolean wasProcessing = cookingProgress > 0;
         boolean dirty = false;
+        if (litTime > 0) {
+            --litTime;
+        }
 
-        if (cookingProgress == 0 && (fuel == ItemStack.EMPTY || !items.get(WorktableMenu.FUEL_SLOT_ID).sameItem(fuel)) && canProcess()) {
+        if (canProcess() && (litTime == 0 || (litTime > 0 && !canProcess(fuel)))) {
             ItemStack fuelStack = items.get(WorktableMenu.FUEL_SLOT_ID);
             litDuration = litTime = getItemFuelTime(fuelStack);
             fuel = fuelStack.copy();
-            dirty = true;
-
-            if (!fuelStack.isEmpty()) {
-                if (fuelStack.getItem().hasCraftingRemainingItem()) {
+            if (litTime > 0) {
+                dirty = true;
+                fuelStack.shrink(1);
+                if (fuelStack.isEmpty()) {
                     items.set(WorktableMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
-                } else {
-                    fuelStack.shrink(1);
                 }
             }
         }
 
-        if (canProcess(fuel) && isProcessing()) {
+        if (litTime > 0 && canProcess(fuel)) {
             cookingProgress++;
-            if (cookingProgress == cookingTotalTime) {
+            if (cookingProgress >= cookingTotalTime) {
                 cookingProgress = 0;
                 cookingTotalTime = timeToSmelt(items.get(WorktableMenu.INPUT_SLOT_ID), fuel);
                 createItem();
                 dirty = true;
             }
-        } else if (cookingProgress != 0) {
-            cookingProgress = 0;
+        }
+        if (litTime == 0 && cookingProgress > 0) {
+            cookingProgress = Mth.clamp(cookingProgress - 2, 0, cookingTotalTime);
         }
 
-        if (isProcessing()) {
-            --litTime;
-        }
-        if (!isProcessing() && fuel != ItemStack.EMPTY && canProcess()) {
-            ItemStack fuelStack = items.get(WorktableMenu.FUEL_SLOT_ID);
-            litDuration = litTime = getItemFuelTime(fuelStack);
-            fuel = fuelStack.copy();
-            dirty = true;
-
-            if (!fuelStack.isEmpty()) {
-                if (fuelStack.getItem().hasCraftingRemainingItem()) {
-                    items.set(WorktableMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
-                } else {
-                    fuelStack.shrink(1);
-                }
-            }
-        }
-
-        if (wasActive != cookingProgress > 0) {
+        if (wasProcessing != cookingProgress > 0) {
             dirty = true;
             state = state.setValue(WorktableBlock.ACTIVE, cookingProgress > 0);
             level.setBlock(pos, state, 3);
@@ -187,16 +172,6 @@ public class WorktableBlockEntityImpl extends ForgeContainerBlockEntity implemen
                 items.set(WorktableMenu.INPUT_SLOT_ID, ItemStack.EMPTY);
             }
         }
-    }
-
-    private int getItemBurnTime(ItemStack possibleFuel) {
-        if (!possibleFuel.isEmpty()) {
-            WorktableRecipe recipeWorktable = ModRecipes.getWorktableRecipeForItem(new WithFuelRecipe.ContainerWithAnyFuel(items.get(WorktableMenu.INPUT_SLOT_ID), possibleFuel), level);
-            if (recipeWorktable != null) {
-                return getItemFuelTime(possibleFuel);
-            }
-        }
-        return 0;
     }
 
     public int timeToSmelt(ItemStack input, ItemStack fuel) {

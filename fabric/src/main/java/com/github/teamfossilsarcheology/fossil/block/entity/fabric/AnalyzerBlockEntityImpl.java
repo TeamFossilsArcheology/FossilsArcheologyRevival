@@ -13,6 +13,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -34,15 +35,9 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
         public int get(int index) {
             switch (index) {
                 case 0 -> {
-                    return litTime;
-                }
-                case 1 -> {
-                    return litDuration;
-                }
-                case 2 -> {
                     return cookingProgress;
                 }
-                case 3 -> {
+                case 1 -> {
                     return (int) energyStorage.amount;
                 }
             }
@@ -52,15 +47,13 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
         @Override
         public void set(int index, int value) {
             switch (index) {
-                case 0 -> litTime = value;
-                case 1 -> litDuration = value;
-                case 2 -> cookingProgress = value;
+                case 0 -> cookingProgress = value;
             }
         }
 
         @Override
         public int getCount() {
-            return 4;
+            return 2;
         }
     };
     protected NonNullList<ItemStack> items = NonNullList.withSize(13, ItemStack.EMPTY);
@@ -74,45 +67,35 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
         return new AnalyzerBlockEntityImpl(pos, state);
     }
 
-    private static int getFuelTime(ItemStack stack) {
-        return 100;
-    }
-
-    public static boolean isFuel(ItemStack stack) {
-        return getFuelTime(stack) > 0;
-    }
-
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
-        boolean fueled = isProcessing();
-        boolean dirty = false;
-        if (isProcessing()) {
-            --litTime;
-        }
-
-        if (litTime == 0 && canProcess()) {
-            litDuration = litTime = AnalyzerMenu.FUEL_TIME;
-            dirty = true;
-        }
-        if (isProcessing() && canProcess()) {
-            ++cookingProgress;
-            if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
-                energyStorage.amount -= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE);
-                dirty = true;
+        if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) && energyStorage.getAmount() <= 0) {
+            if (cookingProgress > 0) {
+                cookingProgress = Mth.clamp(cookingProgress - 2, 0, AnalyzerMenu.ANALYZE_DURATION);
             }
-            if (cookingProgress == AnalyzerMenu.ANALYZE_DURATION) {
+            return;
+        }
+        boolean wasProcessing = cookingProgress > 0;
+        boolean dirty = false;
+
+        if (canProcess()) {
+            cookingProgress++;
+            if (cookingProgress >= AnalyzerMenu.ANALYZE_DURATION) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;
             }
-        } else {
-            cookingProgress = 0;
+            if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
+                energyStorage.amount -= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE);
+            }
         }
-        if (fueled != isProcessing()) {
+
+        if (wasProcessing != cookingProgress > 0) {
             dirty = true;
-            state = state.setValue(AnalyzerBlock.ACTIVE, isProcessing());
+            state = state.setValue(AnalyzerBlock.ACTIVE, cookingProgress > 0);
             level.setBlock(pos, state, 3);
         }
+
         if (dirty) {
             setChanged(level, pos, state);
         }
@@ -181,10 +164,6 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
     @Override
     public NonNullList<ItemStack> getItems() {
         return items;
-    }
-
-    public int getIngredientsSize() {
-        return SLOTS_FOR_UP.length;
     }
 
     @Override

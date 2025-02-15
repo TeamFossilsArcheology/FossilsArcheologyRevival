@@ -93,19 +93,19 @@ public class RecipeTests {
             cultureVatEntity.setItem(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelItem));
             ContainerData dataAccess = cultureVatEntity.getDataAccess();
             helper.runAtTickTime(0, () -> {
-                if (dataAccess.get(0) > 0) {
+                if (dataAccess.get(0) != 0) {
                     throw new GameTestAssertException("LitTime should be 0 but is " + dataAccess.get(0));
-                } else if (dataAccess.get(1) > 0) {
+                } else if (dataAccess.get(1) != 0) {
                     throw new GameTestAssertException("LitDuration should be 0 but is " + dataAccess.get(1));
-                } else if (dataAccess.get(2) > 0) {
+                } else if (dataAccess.get(2) != 0) {
                     throw new GameTestAssertException("CookingProgress should be 0 but is " + dataAccess.get(2));
                 }
                 cultureVatEntity.setItem(CultureVatMenu.INPUT_SLOT_ID, new ItemStack(inputItem));
             });
             int fuelTime = ModRecipes.getCultureVatFuelValue(fuelItem);
             helper.runAtTickTime(1, () -> {
-                if (dataAccess.get(0) != fuelTime - 1) {
-                    throw new GameTestAssertException("LitTime should be " + (fuelTime - 1) + " but is " + dataAccess.get(0));
+                if (dataAccess.get(0) != fuelTime) {
+                    throw new GameTestAssertException("LitTime should be " + fuelTime + " but is " + dataAccess.get(0));
                 } else if (dataAccess.get(1) != fuelTime) {
                     throw new GameTestAssertException("LitDuration should be " + fuelTime + " but is " + dataAccess.get(1));
                 } else if (dataAccess.get(2) != 1) {
@@ -215,13 +215,13 @@ public class RecipeTests {
             worktableEntity.setItem(WorktableMenu.FUEL_SLOT_ID, new ItemStack(fuelItem));
             ContainerData dataAccess = worktableEntity.getDataAccess();
             helper.runAtTickTime(0, () -> {
-                if (dataAccess.get(0) > 0) {
+                if (dataAccess.get(0) != 0) {
                     throw new GameTestAssertException("LitTime should be 0 but is " + dataAccess.get(0));
-                } else if (dataAccess.get(1) > 0) {
+                } else if (dataAccess.get(1) != 0) {
                     throw new GameTestAssertException("LitDuration should be 0 but is " + dataAccess.get(1));
-                } else if (dataAccess.get(2) > 0) {
+                } else if (dataAccess.get(2) != 0) {
                     throw new GameTestAssertException("CookingProgress should be 0 but is " + dataAccess.get(2));
-                } else if (dataAccess.get(3) > 0) {
+                } else if (dataAccess.get(3) != 0) {
                     throw new GameTestAssertException("CookingTotalTime should be 0 but is " + dataAccess.get(3));
                 }
                 worktableEntity.setItem(WorktableMenu.INPUT_SLOT_ID, new ItemStack(inputItem));
@@ -229,8 +229,8 @@ public class RecipeTests {
             int fuelTime = ModRecipes.getWorktableFuelValue(fuelItem);
             int smeltTime = worktableEntity.timeToSmelt(new ItemStack(inputItem), new ItemStack(fuelItem));
             helper.runAtTickTime(1, () -> {
-                if (dataAccess.get(0) != fuelTime - 1) {
-                    throw new GameTestAssertException("LitTime should be " + (fuelTime - 1) + " but is " + dataAccess.get(0));
+                if (dataAccess.get(0) != fuelTime) {
+                    throw new GameTestAssertException("LitTime should be " + fuelTime + " but is " + dataAccess.get(0));
                 } else if (dataAccess.get(1) != fuelTime) {
                     throw new GameTestAssertException("LitDuration should be " + fuelTime + " but is " + dataAccess.get(1));
                 } else if (dataAccess.get(2) != 1) {
@@ -314,7 +314,7 @@ public class RecipeTests {
             analyzerEntity.setItem(0, new ItemStack(inputItem));
             helper.assertContainerContains(MACHINE_POS, inputItem);
             helper.runAtTickTime(1, () -> {
-                analyzerEntity.getDataAccess().set(2, AnalyzerMenu.ANALYZE_DURATION - 1);
+                analyzerEntity.getDataAccess().set(0, AnalyzerMenu.ANALYZE_DURATION - 1);
                 helper.assertContainerContains(MACHINE_POS, inputItem);
             });
             helper.runAtTickTime(2, () -> helper.succeedIf(() -> assertContainerDoesNotContain(helper, MACHINE_POS, inputItem)));
@@ -331,22 +331,13 @@ public class RecipeTests {
             Item inputItem = Blocks.WHITE_WOOL.asItem();
             ContainerData dataAccess = analyzerEntity.getDataAccess();
             helper.runAtTickTime(0, () -> {
-                if (dataAccess.get(0) > 0) {
-                    throw new GameTestAssertException("LitTime should be 0 but is " + dataAccess.get(0));
-                } else if (dataAccess.get(1) > 0) {
-                    throw new GameTestAssertException("LitDuration should be 0 but is " + dataAccess.get(1));
-                } else if (dataAccess.get(2) > 0) {
-                    throw new GameTestAssertException("CookingProgress should be 0 but is " + dataAccess.get(2));
+                if (dataAccess.get(0) != 0) {
+                    throw new GameTestAssertException("CookingProgress should be 0 but is " + dataAccess.get(0));
                 }
                 analyzerEntity.setItem(0, new ItemStack(inputItem));
             });
-            int fuelTime = AnalyzerMenu.FUEL_TIME;
             helper.runAtTickTime(1, () -> {
-                if (dataAccess.get(0) != fuelTime - 1) {
-                    throw new GameTestAssertException("LitTime should be " + (fuelTime - 1) + " but is " + dataAccess.get(0));
-                } else if (dataAccess.get(1) != fuelTime) {
-                    throw new GameTestAssertException("LitDuration should be " + fuelTime + " but is " + dataAccess.get(1));
-                } else if (dataAccess.get(2) != 1) {
+                if (dataAccess.get(0) != 1) {
                     throw new GameTestAssertException("CookingProgress should be 1 but is " + dataAccess.get(2));
                 }
             });
@@ -369,7 +360,7 @@ public class RecipeTests {
                 long startTick = i * 3L;
                 helper.runAtTickTime(startTick, () -> analyzerEntity.setItem(0, new ItemStack(inputItem)));
                 int smeltTime = AnalyzerMenu.ANALYZE_DURATION;
-                helper.runAtTickTime(startTick + 1, () -> dataAccess.set(2, smeltTime - 1));
+                helper.runAtTickTime(startTick + 1, () -> dataAccess.set(0, smeltTime - 1));
                 helper.runAtTickTime(startTick + 2, () -> {
                     if (recipe.getWeightedOutputs().values().stream().noneMatch(itemStack -> itemStack.sameItem(analyzerEntity.getItem(9)))) {
                         throw new GameTestAssertException("Output does not contain any results from " + recipe.getId() + " but instead " + analyzerEntity.getItem(9));
@@ -393,7 +384,7 @@ public class RecipeTests {
             sifterEntity.setItem(0, new ItemStack(inputItem));
             helper.assertContainerContains(MACHINE_POS, inputItem);
             helper.runAtTickTime(1, () -> {
-                sifterEntity.getDataAccess().set(2, SifterMenu.SIFTER_DURATION - 1);
+                sifterEntity.getDataAccess().set(0, SifterMenu.SIFTER_DURATION - 1);
                 helper.assertContainerContains(MACHINE_POS, inputItem);
             });
             helper.runAtTickTime(2, () -> helper.succeedIf(() -> assertContainerDoesNotContain(helper, MACHINE_POS, inputItem)));
@@ -410,23 +401,14 @@ public class RecipeTests {
             Item inputItem = Blocks.SAND.asItem();
             ContainerData dataAccess = sifterEntity.getDataAccess();
             helper.runAtTickTime(0, () -> {
-                if (dataAccess.get(0) > 0) {
-                    throw new GameTestAssertException("LitTime should be 0 but is " + dataAccess.get(0));
-                } else if (dataAccess.get(1) > 0) {
-                    throw new GameTestAssertException("LitDuration should be 0 but is " + dataAccess.get(1));
-                } else if (dataAccess.get(2) > 0) {
-                    throw new GameTestAssertException("CookingProgress should be 0 but is " + dataAccess.get(2));
+                if (dataAccess.get(0) != 0) {
+                    throw new GameTestAssertException("CookingProgress should be 0 but is " + dataAccess.get(0));
                 }
                 sifterEntity.setItem(0, new ItemStack(inputItem));
             });
-            int fuelTime = SifterMenu.FUEL_TIME;
             helper.runAtTickTime(1, () -> {
-                if (dataAccess.get(0) != fuelTime - 1) {
-                    throw new GameTestAssertException("LitTime should be " + (fuelTime - 1) + " but is " + dataAccess.get(0));
-                } else if (dataAccess.get(1) != fuelTime) {
-                    throw new GameTestAssertException("LitDuration should be " + fuelTime + " but is " + dataAccess.get(1));
-                } else if (dataAccess.get(2) != 1) {
-                    throw new GameTestAssertException("CookingProgress should be 1 but is " + dataAccess.get(2));
+                if (dataAccess.get(0) != 1) {
+                    throw new GameTestAssertException("CookingProgress should be 1 but is " + dataAccess.get(0));
                 }
             });
             helper.runAtTickTime(2, helper::succeed);
@@ -447,7 +429,7 @@ public class RecipeTests {
                 Item inputItem = recipe.getInput().getItems()[0].getItem();
                 long startTick = i * 3L;
                 helper.runAtTickTime(startTick, () -> sifterEntity.setItem(0, new ItemStack(inputItem)));
-                helper.runAtTickTime(startTick + 1, () -> dataAccess.set(2, SifterMenu.SIFTER_DURATION - 1));
+                helper.runAtTickTime(startTick + 1, () -> dataAccess.set(0, SifterMenu.SIFTER_DURATION - 1));
                 helper.runAtTickTime(startTick + 2, () -> {
                     if (recipe.getWeightedOutputs().values().stream().noneMatch(itemStack -> itemStack.sameItem(sifterEntity.getItem(1)))) {
                         throw new GameTestAssertException("Output does not contain any results from " + recipe.getId() + " but instead " + sifterEntity.getItem(1));

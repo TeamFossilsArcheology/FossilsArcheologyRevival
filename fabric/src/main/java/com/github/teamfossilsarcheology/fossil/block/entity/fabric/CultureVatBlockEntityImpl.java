@@ -19,9 +19,11 @@ import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerData;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -103,60 +105,55 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
 
     @Override
     public void serverTick(Level level, BlockPos pos, BlockState state) {
-        boolean wasActive = cookingProgress > 0;
+        if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) && energyStorage.getAmount() <= 0) {
+            if (cookingProgress > 0) {
+                cookingProgress = Mth.clamp(cookingProgress - 2, 0, CultureVatMenu.CULTIVATION_DURATION);
+            }
+            return;
+        }
+        boolean wasFueled = litTime > 0;
+        boolean wasProcessing = cookingProgress > 0;
         boolean dirty = false;
-
-        if (cookingProgress == 0 && fuel == ItemStack.EMPTY && canProcess()) {
-            ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
-            litDuration = litTime = getItemFuelTime(fuelStack);
-            fuel = fuelStack.copy();
-            dirty = true;
-
-            if (!fuelStack.isEmpty()) {
-                if (fuelStack.getItem().hasCraftingRemainingItem()) {
-                    items.set(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
-                } else {
-                    fuelStack.shrink(1);
-                }
-            }
-        }
-
-        if (canProcess(fuel)) {
-            if (isProcessing()) {
-                cookingProgress++;
-                if (cookingProgress >= CultureVatMenu.CULTIVATION_DURATION) {
-                    cookingProgress = 0;
-                    createItem();
-                }
-            }
-        } else if (cookingProgress != 0) {
-            cookingProgress = 0;
-        }
-
-        if (isProcessing()) {
-            if (!FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) || energyStorage.getAmount() > 0) {
+        if (litTime > 0) {
+            if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY)) {
                 energyStorage.amount -= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE);
-                --litTime;
             }
+            --litTime;
         }
-        if (!isProcessing() && fuel != ItemStack.EMPTY) {
+
+        if (canProcess() && (litTime == 0 || (litTime > 0 && !canProcess(fuel)))) {
             ItemStack fuelStack = items.get(CultureVatMenu.FUEL_SLOT_ID);
             litDuration = litTime = getItemFuelTime(fuelStack);
             fuel = fuelStack.copy();
-            dirty = true;
-
-            if (!fuelStack.isEmpty()) {
-                if (fuelStack.getItem().hasCraftingRemainingItem()) {
+            if (litTime > 0) {
+                dirty = true;
+                fuelStack.shrink(1);
+                if (fuelStack.isEmpty()) {
                     items.set(CultureVatMenu.FUEL_SLOT_ID, new ItemStack(fuelStack.getItem().getCraftingRemainingItem()));
-                } else {
-                    fuelStack.shrink(1);
                 }
             }
         }
 
-        if (wasActive != cookingProgress > 0) {
+        if (litTime > 0 && canProcess(fuel)) {
+            cookingProgress++;
+            if (cookingProgress >= CultureVatMenu.CULTIVATION_DURATION) {
+                cookingProgress = 0;
+                createItem();
+                dirty = true;
+            }
+        }
+        if (litTime == 0 && cookingProgress > 0) {
+            cookingProgress = Mth.clamp(cookingProgress - 2, 0, CultureVatMenu.CULTIVATION_DURATION);
+        }
+
+        if (wasFueled != litTime > 0) {
             dirty = true;
-            state = state.setValue(CultureVatBlock.ACTIVE, cookingProgress > 0);
+            state = state.setValue(CultureVatBlock.ACTIVE, litTime > 0);
+            level.setBlock(pos, state, 3);
+        }
+
+        if (wasProcessing != cookingProgress > 0) {
+            dirty = true;
             state = state.setValue(CultureVatBlock.EMBRYO, getDNAType());
             level.setBlock(pos, state, 3);
         }
@@ -172,16 +169,17 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
 
     public CultureVatBlock.EmbryoType getDNAType() {
         ItemStack input = items.get(CultureVatMenu.INPUT_SLOT_ID);
-        if (!input.isEmpty()) {
-            if (input.is(ModItemTags.FOSSIL_SAPLINGS)) {
-                return CultureVatBlock.EmbryoType.TREE;
-            } else if (input.is(ModItemTags.DNA_PLANTS)) {
-                return CultureVatBlock.EmbryoType.PLANT;
-            } else if (input.is(ModItemTags.DNA_LIMBLESS)) {
-                return CultureVatBlock.EmbryoType.LIMBLESS;
-            } else if (input.is(ModItemTags.DNA_INSECTS)) {
-                return CultureVatBlock.EmbryoType.INSECT;
-            }
+        if (input.isEmpty()) {
+            return CultureVatBlock.EmbryoType.NONE;
+        }
+        if (input.is(ModItemTags.FOSSIL_SAPLINGS)) {
+            return CultureVatBlock.EmbryoType.TREE;
+        } else if (input.is(ModItemTags.DNA_PLANTS)) {
+            return CultureVatBlock.EmbryoType.PLANT;
+        } else if (input.is(ModItemTags.DNA_LIMBLESS)) {
+            return CultureVatBlock.EmbryoType.LIMBLESS;
+        } else if (input.is(ModItemTags.DNA_INSECTS)) {
+            return CultureVatBlock.EmbryoType.INSECT;
         }
         return CultureVatBlock.EmbryoType.GENERIC;
     }

@@ -11,7 +11,6 @@ import org.jetbrains.annotations.NotNull;
 
 public class AnalyzerMenu extends AbstractContainerMenu {
     public static final int ANALYZE_DURATION = 200;
-    public static final int FUEL_TIME = 100;
 
     private final Container container;
     private final ContainerData containerData;
@@ -86,11 +85,11 @@ public class AnalyzerMenu extends AbstractContainerMenu {
     }
 
     public int getAnalyzeProgress() {
-        return containerData.get(2);
+        return containerData.get(0);
     }
 
     public int getStoredEnergy() {
-        return containerData.get(3);
+        return containerData.get(1);
     }
 
     @Override

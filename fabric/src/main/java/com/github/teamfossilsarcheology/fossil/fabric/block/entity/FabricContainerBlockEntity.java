@@ -43,10 +43,6 @@ public abstract class FabricContainerBlockEntity extends BaseContainerBlockEntit
         ContainerHelper.saveAllItems(tag, getItems());
     }
 
-    protected boolean isProcessing() {
-        return litTime > 0;
-    }
-
     protected abstract boolean canProcess();
 
     protected abstract void createItem();
