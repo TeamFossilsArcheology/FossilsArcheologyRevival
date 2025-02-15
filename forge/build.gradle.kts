@@ -41,7 +41,9 @@ val registrateVersion: String by project
 
 dependencies {
     "mappings"(loom.layered {
-        officialMojangMappings()
+        officialMojangMappings() {
+            nameSyntheticMembers = true
+        }
         parchment("org.parchmentmc.data:parchment-${minecraftVersion}:$parchmentDate@zip")
     })
 
