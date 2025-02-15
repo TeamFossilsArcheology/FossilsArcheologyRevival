@@ -6,6 +6,10 @@
 - Comparator signals for all machines
 - Improved tar sites
 - Mammoths and Elasmotherium are now immune to freezing
+- Added more analyzer recipes for vanilla dna
+- Megalania now has venom again
+- Aquatics now have a different death message if they suffocate on land
+- Mobs will now sprint to catch up with their owner
 
 ### Fixed
 - Crashes for users with certain system languages
@@ -31,6 +35,9 @@
 - Incorrect bird eggs being dropped after breeding
 - Bone leggings armor value being too high
 - Fish eggs not working for vanilla fish
+- Aquatic mobs often swimming in circles and being able to fly when sleeping
+- Prehistoric fish not being able to breed
+- Some mobs shortly after being spawned
 - Tempskya top and leaf drops
 - Toyballs not being consumed when placed
 - Egg advancement not triggering on some eggs
@@ -38,15 +45,38 @@
 - Artificial honeycomb not spawning bee or baby bee
 - Mammoth and Elasmotherium shearing not working
 - Nautilus hiding from spectators
-- Animations for edaphosaurus, megalania, spinosaurus, falling flying mobs
-- Textures for ceratosaurus, gallimimus, paleo/archeo villagers, palm doors
+- Animations for edaphosaurus, megalania, spinosaurus, sleeping aquatic mobs, falling flying mobs, quetz
+- Textures for ceratosaurus, gallimimus, platybelodon, paleo/archeo villagers, palm doors
+- Hitboxes for Ankylosaurus, Kelenken and Phorusrhacos
 - Tamed mobs attacking each other
+- Meganeura sometimes standing in the air or attaching poorly to blocks
 - Mobs being able to sleep while the player is riding them
+- Some mobs being able to move while sleeping/sitting
+- Leap attack not stopping in some cases even if target is already dead
 - Loot table of the home portal referencing non-existing item
-
+- Fossil sites attached to villager houses missing fossil blocks
+- Feeding goals not running often enough
+- Some animations breaking if played together
+- Teen textures never being used
+- The culling bounds of fossil skeletons not matching the model
+- Bucketable mobs losing all info when being put into a bucket
+- Some other info not being saved across world loads
+- Small mobs getting stuck if they can't reach their target
+- Swim animations ending too late
+- Villager trades not changing with levels
+- Very hungry mobs not waking up before taking damage
+- Flying mobs not being able to attack
+- Some mobs not being able to hunt each other
+- Smilodon and Compsognathus not being able to attack
+- Mobs eating during combat
+- Volcano cone lava generation
+- Non-aquatic mobs having a hard time leaving the water
+- Javelins stuck in the ground spawning lightning on world load
+- Sentry Piglin spawning without a weapon
 
 
 ### Mod compatibility
 - Fixed a crash due to incompatibility with Ad Astra
 - Fixed visual bug with Jade breeding cooldown
 - Added farmers delight seeds as valid food
+- Added Alex Mobs food and mobs to food mappings (thanks xayler4!)
