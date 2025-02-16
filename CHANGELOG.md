@@ -10,10 +10,12 @@
 - Megalania now has venom again
 - Aquatics now have a different death message if they suffocate on land
 - Mobs will now sprint to catch up with their owner
+- Sounds now have subtitles
+- Updated Dutch, German, Japanese, Korean, Polish, Portuguese, Russian and Spanish translations
 
 ### Fixed
 - Crashes for users with certain system languages
-- Crashes for users joining a LAN world
+- Crashes for users joining a LAN or Essential world
 - Crashes when generating villager houses
 - Crash when spawning certain mobs on Ad Astra worlds
 - Incorrect stats for baby & teen mobs
@@ -59,6 +61,7 @@
 - Some animations breaking if played together
 - Teen textures never being used
 - The culling bounds of fossil skeletons not matching the model
+- Some issues with fossil skeleton placement
 - Bucketable mobs losing all info when being put into a bucket
 - Some other info not being saved across world loads
 - Small mobs getting stuck if they can't reach their target
@@ -73,6 +76,7 @@
 - Non-aquatic mobs having a hard time leaving the water
 - Javelins stuck in the ground spawning lightning on world load
 - Sentry Piglin spawning without a weapon
+- Lighting spawned by the ancient sword being able to hurt the player
 
 
 ### Mod compatibility
