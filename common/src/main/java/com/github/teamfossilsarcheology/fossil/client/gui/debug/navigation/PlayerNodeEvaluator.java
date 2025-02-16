@@ -341,7 +341,7 @@ public class PlayerNodeEvaluator {
             if (PathingDebug.getPathfindingMalus(blockPathTypes3) < 0) {
                 return blockPathTypes3;
             }
-            if (!(PathingDebug.getPathfindingMalus(blockPathTypes3) >= PathingDebug.getPathfindingMalus(blockPathTypes2))) continue;
+            if (PathingDebug.getPathfindingMalus(blockPathTypes3) < PathingDebug.getPathfindingMalus(blockPathTypes2)) continue;
             blockPathTypes2 = blockPathTypes3;
         }
         if (blockPathTypes == BlockPathTypes.OPEN && PathingDebug.getPathfindingMalus(blockPathTypes2) == 0 && xSize <= 1) {

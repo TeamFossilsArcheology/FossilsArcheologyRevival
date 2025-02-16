@@ -1,5 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.ai.navigation;
 
+import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.PathingDebug;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import com.google.common.collect.Maps;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -19,69 +21,78 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
 
     @Override
     public @NotNull Node getStart() {
-        if (mob.isInWater()) {
-            return getNode(Mth.floor(mob.getBoundingBox().minX), Mth.floor(mob.getBoundingBox().minY + 0.5), Mth.floor(mob.getBoundingBox().minZ));
+        if (mob.isInWater() || (mob instanceof SwimmingAnimal swimmingAnimal && !swimmingAnimal.isAmphibious())) {
+            return super.getNode(Mth.floor(mob.getBoundingBox().minX), Mth.floor(mob.getBoundingBox().minY + 0.5), Mth.floor(mob.getBoundingBox().minZ));
         }
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        int i = this.mob.getBlockY();
-        BlockState blockState = this.level.getBlockState(mutableBlockPos.set(this.mob.getX(), i, this.mob.getZ()));
-        if (!this.mob.canStandOnFluid(blockState.getFluidState())) {
-            if (this.canFloat() && this.mob.isInWater()) {
-                while (true) {
-                    if (!blockState.is(Blocks.WATER) && blockState.getFluidState() != Fluids.WATER.getSource(false)) {
-                        i--;
-                        break;
-                    }
-
-                    blockState = this.level.getBlockState(mutableBlockPos.set(this.mob.getX(), (++i), this.mob.getZ()));
-                }
-            } else if (this.mob.isOnGround()) {
-                i = Mth.floor(this.mob.getY() + 0.5);
+        int i = mob.getBlockY();
+        BlockState blockState = level.getBlockState(mutableBlockPos.set(mob.getX(), i, mob.getZ()));
+        if (!mob.canStandOnFluid(blockState.getFluidState())) {
+            if (this.mob.isOnGround()) {
+                i = Mth.floor(mob.getY() + 0.5);
             } else {
-                BlockPos blockPos = this.mob.blockPosition();
+                BlockPos blockPos = mob.blockPosition();
 
-                while (
-                        (this.level.getBlockState(blockPos).isAir() || this.level.getBlockState(blockPos).isPathfindable(this.level, blockPos, PathComputationType.LAND))
-                                && blockPos.getY() > this.mob.level.getMinBuildHeight()
-                ) {
+                while ((level.getBlockState(blockPos).isAir() || level.getBlockState(blockPos).isPathfindable(level, blockPos, PathComputationType.LAND))
+                                && blockPos.getY() > mob.level.getMinBuildHeight()) {
                     blockPos = blockPos.below();
                 }
 
                 i = blockPos.above().getY();
             }
         } else {
-            while (this.mob.canStandOnFluid(blockState.getFluidState())) {
-                blockState = this.level.getBlockState(mutableBlockPos.set(this.mob.getX(), (double)(++i), this.mob.getZ()));
+            while (mob.canStandOnFluid(blockState.getFluidState())) {
+                blockState = level.getBlockState(mutableBlockPos.set(mob.getX(), ++i, mob.getZ()));
             }
             i--;
         }
 
-        BlockPos blockPos = this.mob.blockPosition();
-        BlockPathTypes blockPathTypes = this.getCachedBlockType(this.mob, blockPos.getX(), i, blockPos.getZ());
-        if (this.mob.getPathfindingMalus(blockPathTypes) < 0.0F) {
-            AABB aABB = this.mob.getBoundingBox();
-            if (this.hasPositiveMalus(mutableBlockPos.set(aABB.minX, i, aABB.minZ))
-                    || this.hasPositiveMalus(mutableBlockPos.set(aABB.minX, i, aABB.maxZ))
-                    || this.hasPositiveMalus(mutableBlockPos.set(aABB.maxX, i, aABB.minZ))
-                    || this.hasPositiveMalus(mutableBlockPos.set(aABB.maxX, i, aABB.maxZ))) {
-                Node node = this.getNode(mutableBlockPos);
+        BlockPos blockPos = mob.blockPosition();
+        BlockPathTypes blockPathTypes = getCachedBlockType(mob, blockPos.getX(), i, blockPos.getZ());
+        if (mob.getPathfindingMalus(blockPathTypes) < 0.0F) {
+            AABB aABB = mob.getBoundingBox();
+            if (hasPositiveMalus(mutableBlockPos.set(aABB.minX, i, aABB.minZ))
+                    || hasPositiveMalus(mutableBlockPos.set(aABB.minX, i, aABB.maxZ))
+                    || hasPositiveMalus(mutableBlockPos.set(aABB.maxX, i, aABB.minZ))
+                    || hasPositiveMalus(mutableBlockPos.set(aABB.maxX, i, aABB.maxZ))) {
+                Node node = getNode(mutableBlockPos);
                 BlockPos nodePos = node.asBlockPos();
-                node.type = this.getCachedBlockType(this.mob, nodePos.getX(), nodePos.getY(), nodePos.getZ());
-                node.costMalus = this.mob.getPathfindingMalus(node.type);
+                node.type = getCachedBlockType(mob, nodePos.getX(), nodePos.getY(), nodePos.getZ());
+                node.costMalus = mob.getPathfindingMalus(node.type);
                 return node;
             }
         }
 
-        Node node2 = this.getNode(blockPos.getX(), i, blockPos.getZ());
+        Node node2 = getNode(blockPos.getX(), i, blockPos.getZ());
         BlockPos node2Pos = node2.asBlockPos();
-        node2.type = this.getCachedBlockType(this.mob, node2Pos.getX(), node2Pos.getY(), node2Pos.getZ());
-        node2.costMalus = this.mob.getPathfindingMalus(node2.type);
+        node2.type = getCachedBlockType(mob, node2Pos.getX(), node2Pos.getY(), node2Pos.getZ());
+        node2.costMalus = mob.getPathfindingMalus(node2.type);
         return node2;
     }
 
     @Override
     public @NotNull Target getGoal(double x, double y, double z) {
-        return new Target(getNode(Mth.floor(x), Mth.floor(y + 0.5), Mth.floor(z)));
+        return new Target(super.getNode(Mth.floor(x), Mth.floor(y + 0.5), Mth.floor(z)));
+    }
+
+    @Override
+    @Nullable
+    protected Node getNode(int x, int y, int z) {
+        if (isAmphibious()) {
+            return super.getNode(x, y, z);
+        }
+        float f;
+        Node node = null;
+        BlockPathTypes blockPathTypes = getCachedBlockType(mob, x, y, z);
+        if ((blockPathTypes == BlockPathTypes.WATER || blockPathTypes == BlockPathTypes.WATER_BORDER) && (f = PathingDebug.getPathfindingMalus(blockPathTypes)) >= 0.0f) {
+            node = super.getNode(x, y, z);
+            node.type = blockPathTypes;
+            node.costMalus = Math.max(node.costMalus, f);
+            if (level.getFluidState(new BlockPos(x, y, z)).isEmpty()) {
+                node.costMalus += 8.0f;
+            }
+        }
+        return node;
     }
 
     @Override
@@ -90,7 +101,7 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
         int y = node.y;
         int z = node.z;
         BlockPathTypes type = getCachedBlockType(mob, x, y, z);
-        if (type == BlockPathTypes.WATER) {
+        if (type == BlockPathTypes.WATER || type == BlockPathTypes.WATER_BORDER) {
             //SwimNodeEvaluator code
             int i = 0;
             EnumMap<Direction, Node> map = Maps.newEnumMap(Direction.class);
@@ -139,6 +150,9 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
 
     @Override
     protected boolean isAmphibious() {
+        if (mob instanceof SwimmingAnimal swimmingAnimal) {
+            return swimmingAnimal.isAmphibious();
+        }
         return true;
     }
 
@@ -147,12 +161,15 @@ public class PrehistoricAmphibiousNodeEvaluator extends WalkNodeEvaluator {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         BlockPathTypes type = getBlockPathTypeRaw(level, mutableBlockPos.set(x, y, z));
         if (type == BlockPathTypes.WATER) {
-            for (Direction direction : Direction.values()) {
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
                 BlockPathTypes neighbourType = getBlockPathTypeRaw(level, mutableBlockPos.set(x, y, z).move(direction));
                 if (neighbourType != BlockPathTypes.BLOCKED) continue;
                 return BlockPathTypes.WATER_BORDER;
             }
             return BlockPathTypes.WATER;
+        }
+        if (!isAmphibious()) {
+            return BlockPathTypes.BLOCKED;
         }
         return getBlockPathTypeStatic(level, mutableBlockPos);
     }

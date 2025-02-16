@@ -32,7 +32,27 @@ public class AmphNodeEvaluator extends PlayerNodeEvaluator {
 
     @Override
     public @NotNull Target getGoal(double x, double y, double z) {
-        return new Target(getNode(Mth.floor(x), Mth.floor(y + 0.5), Mth.floor(z)));
+        return new Target(super.getNode(Mth.floor(x), Mth.floor(y + 0.5), Mth.floor(z)));
+    }
+
+    @Override
+    @Nullable
+    protected Node getNode(int x, int y, int z) {
+        if (isAmphibious()) {
+            return super.getNode(x, y, z);
+        }
+        float f;
+        Node node = null;
+        BlockPathTypes blockPathTypes = getCachedBlockType(player, x, y, z);
+        if (blockPathTypes == BlockPathTypes.WATER && (f = PathingDebug.getPathfindingMalus(blockPathTypes)) >= 0.0f) {
+            node = super.getNode(x, y, z);
+            node.type = blockPathTypes;
+            node.costMalus = Math.max(node.costMalus, f);
+            if (this.level.getFluidState(new BlockPos(x, y, z)).isEmpty()) {
+                node.costMalus += 8.0f;
+            }
+        }
+        return node;
     }
 
     @Override
@@ -41,7 +61,7 @@ public class AmphNodeEvaluator extends PlayerNodeEvaluator {
         int y = node.y;
         int z = node.z;
         BlockPathTypes type = getCachedBlockType(player, x, y, z);
-        if (type == BlockPathTypes.WATER) {
+        if (type == BlockPathTypes.WATER || type == BlockPathTypes.WATER_BORDER) {
             //SwimNodeEvaluator code
             int i = 0;
             EnumMap<Direction, Node> map = Maps.newEnumMap(Direction.class);
@@ -90,7 +110,7 @@ public class AmphNodeEvaluator extends PlayerNodeEvaluator {
 
     @Override
     protected boolean isAmphibious() {
-        return true;
+        return true;//Set to false to test purely aquatic mobs
     }
 
     @Override
@@ -98,12 +118,15 @@ public class AmphNodeEvaluator extends PlayerNodeEvaluator {
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
         BlockPathTypes type = getBlockPathTypeRaw(level, mutableBlockPos.set(x, y, z));
         if (type == BlockPathTypes.WATER) {
-            for (Direction direction : Direction.values()) {
+            for (Direction direction : Direction.Plane.HORIZONTAL) {
                 BlockPathTypes neighbourType = getBlockPathTypeRaw(level, mutableBlockPos.set(x, y, z).move(direction));
                 if (neighbourType != BlockPathTypes.BLOCKED) continue;
                 return BlockPathTypes.WATER_BORDER;
             }
             return BlockPathTypes.WATER;
+        }
+        if (!isAmphibious()) {
+            return BlockPathTypes.BLOCKED;
         }
         return getBlockPathTypeStatic(level, mutableBlockPos);
     }

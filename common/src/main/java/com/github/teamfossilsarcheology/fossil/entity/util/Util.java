@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.entity.util;
 import com.github.teamfossilsarcheology.fossil.entity.data.Attribute;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
+import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import it.unimi.dsi.fastutil.Pair;
 import net.minecraft.core.BlockPos;
@@ -77,9 +78,13 @@ public class Util {
     }
 
     public static boolean canSeeFood(Prehistoric dino, BlockPos position) {
-        Vec3 target = new Vec3(position.getX() + 0.5, position.getY() + 0.5, position.getZ() + 0.5);
-        BlockHitResult rayTrace = dino.getLevel().clip(new ClipContext(dino.position(), target, ClipContext.Block.OUTLINE, ClipContext.Fluid.NONE, dino));
-        return rayTrace.getType() != HitResult.Type.MISS;
+        Vec3 target = new Vec3(position.getX() + 0.5, position.getY(), position.getZ() + 0.5);
+        ClipContext.Fluid fluid = ClipContext.Fluid.NONE;
+        if (!(dino instanceof SwimmingAnimal)) {
+            fluid = ClipContext.Fluid.ANY;
+        }
+        BlockHitResult rayTrace = dino.getLevel().clip(new ClipContext(dino.getEyePosition(), target, ClipContext.Block.COLLIDER, fluid, dino));
+        return rayTrace.getType() != HitResult.Type.MISS && position.equals(rayTrace.getBlockPos());
     }
 
     public static double attributeToSpeed(double speed) {

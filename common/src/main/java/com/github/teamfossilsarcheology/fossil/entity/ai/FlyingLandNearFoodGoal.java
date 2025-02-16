@@ -43,6 +43,11 @@ public class FlyingLandNearFoodGoal extends MoveToFoodGoal {
     }
 
     @Override
+    protected boolean createPath() {
+        return targetPos != null;
+    }
+
+    @Override
     protected void moveMobToBlock() {
         dino.moveTo(targetPos, true, true);
     }

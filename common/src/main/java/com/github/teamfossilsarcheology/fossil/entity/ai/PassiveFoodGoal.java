@@ -43,6 +43,11 @@ public class PassiveFoodGoal extends MoveToFoodGoal {
     }
 
     @Override
+    protected boolean createPath() {
+        return true;
+    }
+
+    @Override
     protected void moveMobToBlock() {
 
     }

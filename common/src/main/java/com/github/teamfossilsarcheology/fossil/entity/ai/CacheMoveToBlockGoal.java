@@ -88,7 +88,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             nextStartTick = 40;
             return false;
         }
-        return true;
+        return createPath();
     }
 
     /**
@@ -122,12 +122,16 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         nextStartTick = nextStartTick();
     }
 
-    protected void moveMobToBlock() {
+    protected boolean createPath() {
         var old = entity.getAttribute(Attributes.FOLLOW_RANGE).getBaseValue();
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(32);
         path = entity.getNavigation().createPath(getMoveToTarget().getX() + 0.5d, getMoveToTarget().getY(), getMoveToTarget().getZ() + 0.5d, 1);
         entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(old);
-        entity.getNavigation().moveTo(path, speedModifier);
+        return path != null;
+    }
+
+    protected void moveMobToBlock() {
+         entity.getNavigation().moveTo(path, speedModifier);
     }
 
     public double acceptedDistance() {
@@ -172,6 +176,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
             reachedTarget = false;
             ++tryTicks;
             if (shouldRecalculatePath()) {
+                if (!createPath()) return;
                 moveMobToBlock();
             }
         }
