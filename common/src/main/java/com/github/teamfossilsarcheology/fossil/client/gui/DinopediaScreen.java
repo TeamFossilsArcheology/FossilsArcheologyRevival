@@ -386,7 +386,7 @@ public class DinopediaScreen extends Screen {
         } else {
             return List.of();
         }
-        final String bio = DinopediaBioLoader.INSTANCE.getDinopediaBio(name) + DinopediaBioLoader.INSTANCE.getDinopediaBio(name);
+        final String bio = DinopediaBioLoader.INSTANCE.getDinopediaBio(name);
         StringSplitter stringSplitter = font.getSplitter();
         List<String> list = new ArrayList<>();
         stringSplitter.splitLines(bio, xSize / 2, Style.EMPTY, true, (style, i, j) -> {
