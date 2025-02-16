@@ -40,6 +40,20 @@ Robberto08
 ###### Other
 Thylaconical
 
+###### Language Contributors
+Roda (Chinese Traditional),
+Wietse Dekker (Dutch),
+DarkPred (German),
+EnderPro, Deter (Spanish),
+Aguu21, Luisito2 (Spanish Argentinia),
+Deter (Spanish Chile),
+Yamazaki (Japanese),
+SaitoYang (Korean),
+Kubar0207, AdrianBrzek (Polish),
+MiguelPinto (Portuguese),
+Capivara, Presinha, MiguelPinto, Kodii (Portuguese Brazilian),
+B0berchek, Eviort (Russian)
+
 ## Past Fossils and Archeology Revival Contributors
 
 ###### Programmers
