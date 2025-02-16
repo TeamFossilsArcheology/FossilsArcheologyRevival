@@ -88,6 +88,8 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.phys.shapes.Shapes;
+import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib3.core.IAnimatable;
@@ -327,6 +329,31 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             setGender(Gender.FEMALE);
         } else {
             setGender(Gender.MALE);
+        }
+    }
+
+    @Override
+    public void refreshDimensions() {
+        EntityDimensions oldDimensions = dimensions;
+        Pose pose = getPose();
+        EntityDimensions newDimensions = getDimensions(pose);
+        dimensions = newDimensions;
+        eyeHeight = getEyeHeight(pose, newDimensions);
+        reapplyPosition();
+        if (!firstTick && !noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
+            Vec3 vec3 = position().add(0.0, oldDimensions.height / 2.0, 0.0);
+            double wDiff = Math.max(0.0, newDimensions.width - oldDimensions.width) + 1.0E-6;
+            double hDiff = Math.max(0.0, newDimensions.height - oldDimensions.height) + 1.0E-6;
+            VoxelShape voxelShape = Shapes.create(AABB.ofSize(vec3, wDiff, hDiff, wDiff));
+            var opt = level.findFreePosition(this, voxelShape, vec3, newDimensions.width, newDimensions.height, newDimensions.width);
+            if (opt.isPresent()) {
+                setPos(opt.get().add(0.0, (-newDimensions.height) / 2.0, 0.0));
+            } else {
+                //This should prevent mobs from phasing throughs blocks while growing up
+                dimensions = oldDimensions;
+                eyeHeight = getEyeHeight(pose, oldDimensions);
+                reapplyPosition();
+            }
         }
     }
 

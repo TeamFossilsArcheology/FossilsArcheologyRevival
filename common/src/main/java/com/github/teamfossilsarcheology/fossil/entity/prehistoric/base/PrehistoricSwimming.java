@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.entity.ai.*;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.CustomSwimMoveControl;
 import com.github.teamfossilsarcheology.fossil.entity.ai.control.PrehistoricLookControl;
@@ -233,6 +234,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             setAirSupply(airSupply - 1);
             if (getAirSupply() == -40) {
                 setAirSupply(0);
+                FossilMod.LOGGER.info("{} is suffocating. isInWater: {} blockstate: {} fluidstate: {} pos: {} age: {}", info(), isInWater(), level.getBlockState(blockPosition()), level.getFluidState(blockPosition()), position(), getAge());
                 hurt(ModDamageSources.SUFFOCATE, 2);
             }
         } else {
