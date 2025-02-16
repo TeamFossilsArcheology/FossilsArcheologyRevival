@@ -43,7 +43,7 @@ public class Ichthyosaurus extends PrehistoricSwimmingBucketable {
     @Nullable
     @Override
     protected SoundEvent getAmbientSound() {
-        return isInWater() ? ModSounds.ICHTHYOSAURUS_AMBIENT.get() : ModSounds.ICHTHYOSAURUS_OUTSIDE.get();
+        return isInWater() ? ModSounds.ICHTHYOSAURUS_AMBIENT.get() : ModSounds.ICHTHYOSAURUS_AMBIENT_OUTSIDE.get();
     }
 
     @Nullable

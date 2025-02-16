@@ -28,12 +28,12 @@ public class ModTrades {
         switch (level) {
             case 1 -> {
                 list.add(new ItemsForEmeralds(ModItems.RELIC_SCRAP.get(), 3, 1, 8, 2));
-                list.add(new EmeraldForItems(ModItems.POTTERY_SHARD.get(), 2, 12, 10));
+                list.add(new EmeraldForItems(ModItems.POTTERY_SHARD.get(), 2, 12, 6));
                 list.add(new ItemsForEmeralds(ModBlocks.WORKTABLE.get(), 2, 1, 12, 1));
             }
             case 2 -> {
                 list.add(new ItemsForEmeralds(ModItems.STONE_TABLET.get(), 4, 1, 6, 2));
-                list.add(new ItemsForEmeralds(Items.BOOK, 4, 1, 10));
+                list.add(new ItemsForEmeralds(Items.BOOK, 4, 1, 6));
                 list.add(new ItemsForEmeralds(ModItems.WOODEN_JAVELIN.get(), 4, 1, 1));
             }
             case 3 -> {
@@ -63,7 +63,7 @@ public class ModTrades {
         switch (level) {
             case 1 -> {
                 list.add(new ItemsForEmeralds(ModItems.BIO_FOSSIL.get(), 1, 1, 1));
-                list.add(new EmeraldForItems(ModBlocks.SKULL_BLOCK.get(), 2, 12, 7));
+                list.add(new EmeraldForItems(ModBlocks.SKULL_BLOCK.get(), 2, 12, 4));
                 list.add(new EmeraldForItems(Items.BONE, 10, 12, 2));
             }
             case 2 -> {
@@ -78,6 +78,7 @@ public class ModTrades {
                 list.add(new ItemsForEmeralds(ModItems.CHICKEN_ESSENCE.get(), 3, 1, 3));
                 list.add(new ItemsForEmeralds(ModItems.FAILURESAURUS_FLESH.get(), 5, 1, 3));
                 list.add(new ItemsForEmeralds(ModBlocks.PERMAFROST_BLOCK.get(), 2, 1, 6, 1));
+                list.add(new ItemsForEmeralds(ModItems.SHALE_FOSSIL.get(), 3, 1, 3));
             }
             case 5 -> {
                 list.add(new EnchantBookForEmeralds(ModEnchantments.PALEONTOLOGY.get(), 10));
