@@ -7,6 +7,8 @@ assignees: DarkPred
 
 ---
 
+**Note: Exit code 1 means nothing. Make sure to attach a proper crash report. See [Here](https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/wiki/How-to-get-log-files) if you don't know where to find logs**
+
 **Describe the bug**
 A clear and concise description of what the bug is.
 
