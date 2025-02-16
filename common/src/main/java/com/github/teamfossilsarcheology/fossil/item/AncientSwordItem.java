@@ -38,7 +38,7 @@ public class AncientSwordItem extends SwordItem {
                     piglin.sendMessageToOwner(FriendlyPiglin.SUMMONED);
                     target.discard();
                     level.addFreshEntity(piglin);
-                    LightningBolt lightningBolt = EntityType.LIGHTNING_BOLT.create(level);
+                    LightningBolt lightningBolt = ModEntities.ANCIENT_LIGHTNING_BOLT.get().create(level);
                     lightningBolt.moveTo(target.position());
                     lightningBolt.setCause(player);
                     level.addFreshEntity(lightningBolt);

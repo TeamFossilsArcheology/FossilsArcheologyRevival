@@ -9,11 +9,13 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LightningBolt;
 import net.minecraft.world.entity.OwnableEntity;
 import net.minecraft.world.entity.animal.Pig;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.GameRules;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
@@ -114,6 +116,9 @@ public class AncientLightningBolt extends LightningBolt {
 
     private void spawnFire(int extraIgnitions) {
         if (visualOnly || level.isClientSide || !level.getGameRules().getBoolean(GameRules.RULE_DOFIRETICK)) {
+            return;
+        }
+        if (cause != null && !cause.hasEffect(MobEffects.FIRE_RESISTANCE)) {
             return;
         }
         BlockPos blockPos = blockPosition();
