@@ -88,7 +88,7 @@ public class MoodSystem extends AISystem {
         } else {
             overallMoodAddition -= 50;
         }
-        if (mob.getNearbySpeciesMembers(40).size() <= mob.data().maxPopulation()) {
+        if (mob.getNearbySpeciesMembers(40).size() < mob.data().maxPopulation()) {
             overallMoodAddition += 50;
         } else {
             overallMoodAddition -= 50;

@@ -29,8 +29,8 @@ public class DinoMatingGoal extends Goal {
             return false;
         }
         List<? extends Prehistoric> sameTypes = male.getNearbySpeciesMembers(64);
-        if (sameTypes.size() > male.data().maxPopulation()) {
-            male.setMatingCooldown(male.getRandom().nextInt(6000) + 6000);
+        if (sameTypes.size() + 1 >= male.data().maxPopulation()) {
+            male.setMatingCooldown(male.getRandom().nextInt(5000) + 5000);
             return false;
         }
         double shortestDistance = Double.MAX_VALUE;
