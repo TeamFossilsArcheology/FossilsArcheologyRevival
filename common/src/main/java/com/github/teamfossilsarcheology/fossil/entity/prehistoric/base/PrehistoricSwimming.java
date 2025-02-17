@@ -222,6 +222,11 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
     }
 
     @Override
+    public void calculateEntityAnimation(LivingEntity livingEntity, boolean isFlying) {
+        super.calculateEntityAnimation(livingEntity, isInWater());
+    }
+
+    @Override
     protected float tickHeadTurn(float yRot, float animStep) {
         if (isBeached()) {
             return animStep;
