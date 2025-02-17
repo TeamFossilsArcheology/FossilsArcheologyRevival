@@ -148,7 +148,7 @@ tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     apiToken = project.property("CURSEFORGE_TOKEN") ?: "no value"
     debugMode = true
     val mainFile = upload(223908, tasks.remapJar)
-
+    mainFile.displayName = "$modVersion for Forge $minecraftVersion"
     mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
