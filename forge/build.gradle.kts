@@ -68,6 +68,7 @@ dependencies {
     modCompileOnly("maven.modrinth:carry-on:$carryOnVersion")
     modCompileOnly("maven.modrinth:farmers-delight:$farmersDelightVersion")
     modCompileOnly("maven.modrinth:alexs-mobs:$alexsMobsVersion")
+    modCompileOnly("curse.maven:radium-570017:3707226")
 
     modImplementation("com.simibubi.create:create-${minecraftVersion}:${createVersion}:slim") { isTransitive = false }
     modImplementation("com.jozufozu.flywheel:flywheel-forge-${minecraftVersion}:${flywheelVersion}")
@@ -150,6 +151,7 @@ tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     val mainFile = upload(223908, tasks.remapJar)
     mainFile.displayName = "$modVersion for Forge $minecraftVersion"
     mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
+    mainFile.addEnvironment("Forge")
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
     mainFile.addRequirement("architectury-api", "geckolib", "terrablender", "more-hitboxes")

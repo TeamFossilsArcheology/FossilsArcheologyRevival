@@ -17,12 +17,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(WalkNodeEvaluator.class)
 public abstract class WalkNodeEvaluatorMixin {
 
-    @Inject(method = "getBlockPathTypeRaw", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/material/FluidState;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 0), cancellable = true)
-    private static void addTarAsDangerousPath(BlockGetter level, BlockPos pos, CallbackInfoReturnable<BlockPathTypes> cir, @Local FluidState fluidState) {
-        if (level.getFluidState(pos).is(ModFluids.TAR.get())) {
-            cir.setReturnValue(BlockPathTypes.LAVA);
-        }
-    }
     @Inject(method = "isBurningBlock", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/state/BlockState;is(Lnet/minecraft/tags/TagKey;)Z", ordinal = 0), cancellable = true)
     private static void addTarAsDangerousPath(BlockState state, CallbackInfoReturnable<Boolean> cir) {
         if (state.is(ModBlocks.TAR.get())) {
