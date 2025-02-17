@@ -11,8 +11,6 @@ public class FossilConfig {
     public static final String HELL_SHIP_SEPARATION = "hellShipSeparation";
     public static final String GENERATE_MOAI = "generateMoai";
     public static final String MOAI_RARITY = "moaiRarity";
-    public static final String GENERATE_TAR_PITS = "generateTarPits";
-    public static final String TAR_PIT_RARITY = "tarPitRarity";
     public static final String GENERATE_TEMPLE = "generateTemple";
     public static final String GENERATE_FOSSILS = "generateFossils";
     public static final String FOSSIL_ORE_RARITY = "fossilOreRarity";

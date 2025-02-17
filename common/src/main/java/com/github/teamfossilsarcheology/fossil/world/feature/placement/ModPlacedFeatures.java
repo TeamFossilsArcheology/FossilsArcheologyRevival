@@ -52,9 +52,6 @@ public class ModPlacedFeatures {
                 RarityFilter.onAverageOnceEvery(30), PlacementUtils.HEIGHTMAP_TOP_SOLID, BiomeFilter.biome());
         ventVolcano = PlacementUtils.register("volcano_vent", ModConfiguredFeatures.VOLCANO_VENT,
                 CountPlacement.of(1), InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE, BiomeFilter.biome());
-        var tarPitPlaced = PlacementUtils.register("tar_pit_placed", ModConfiguredFeatures.TAR_PIT,
-                new LazyRarityFilter(FossilConfig.TAR_PIT_RARITY),
-                InSquarePlacement.spread(), PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
         var moaiStatuePlaced = PlacementUtils.register("moai_statue", ModConfiguredFeatures.MOAI_STATUE, BiomeFilter.biome(),
                 new LazyRarityFilter(FossilConfig.MOAI_RARITY), InSquarePlacement.spread(),
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
@@ -85,9 +82,6 @@ public class ModPlacedFeatures {
             }
             mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, oreAmber);
             mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, oreAmberBuried);
-            if (FossilConfig.isEnabled(FossilConfig.GENERATE_TAR_PITS) && mutable.getCategory() == Biome.BiomeCategory.SWAMP) {
-                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.LAKES, tarPitPlaced);
-            }
             if (FossilConfig.isEnabled(FossilConfig.GENERATE_MOAI) && mutable.getCategory() == Biome.BiomeCategory.BEACH && mutable.getClimateProperties().getTemperature() > 0.2) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.SURFACE_STRUCTURES, moaiStatuePlaced);
             }

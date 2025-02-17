@@ -19,8 +19,6 @@ public class ForgeConfig {
     public static final ForgeConfigSpec.IntValue HELL_SHIP_SEPARATION;
     public static final ForgeConfigSpec.BooleanValue GENERATE_MOAI;
     public static final ForgeConfigSpec.IntValue MOAI_RARITY;
-    public static final ForgeConfigSpec.BooleanValue GENERATE_TAR_PITS;
-    public static final ForgeConfigSpec.IntValue Tar_PIT_RARITY;
     public static final ForgeConfigSpec.BooleanValue GENERATE_TEMPLE;
     public static final ForgeConfigSpec.BooleanValue GENERATE_FOSSILS;
     public static final ForgeConfigSpec.IntValue FOSSIL_ORE_RARITY;
@@ -84,13 +82,11 @@ public class ForgeConfig {
         GENERATE_VOLCANIC_ROCK = COMMON.boolEntry("True if Volcanic Rock is to generate naturally", FossilConfig.GENERATE_VOLCANIC_ROCK, true);
         GENERATE_AZTEC_WEAPON_SHOPS = COMMON.boolEntry("True if Aztec Weapon Shops are to generate naturally", FossilConfig.GENERATE_AZTEC_WEAPON_SHOPS, true);
         GENERATE_MOAI = COMMON.boolEntry("True if Moai Statues are to generate naturally", FossilConfig.GENERATE_MOAI, true);
-        GENERATE_TAR_PITS = COMMON.boolEntry("True if Tar Pits are to generate naturally. This only affects the small tar lakes without tent", FossilConfig.GENERATE_TAR_PITS, true);
         GENERATE_VOLCANO_BIOME = COMMON.boolEntry("True if Volcano Biomes are to generate naturally", FossilConfig.GENERATE_VOLCANO_BIOME, true);
         FOSSIL_ORE_RARITY = COMMON.intEntry("Rarity of Fossil ore. Higher number = more tries per chunk", FossilConfig.FOSSIL_ORE_RARITY, 13, 1, 500);
         PERMAFROST_RARITY = COMMON.intEntry("Rarity of Permafrost. Higher number = more tries per chunk", FossilConfig.PERMAFROST_RARITY, 7, 1, 500);
         HELL_SHIP_SPACING = COMMON.intEntry("Maximum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SPACING, 24, 1, 100000000);
         HELL_SHIP_SEPARATION = COMMON.intEntry("Minimum number of chunks between Ship Structures", FossilConfig.HELL_SHIP_SEPARATION, 5, 1, 100000000);
-        Tar_PIT_RARITY = COMMON.intEntry("Rarity of Tar Pits. Higher number = more rare", FossilConfig.TAR_PIT_RARITY, 900, 1, 100000000);
         MOAI_RARITY = COMMON.intEntry("Rarity of Moai Statues. Higher number = more rare", FossilConfig.MOAI_RARITY, 400, 1, 100000000);
         VOLCANO_BIOME_RARITY = COMMON.intEntry("Volcano Biome Weight. Higher number = more common", FossilConfig.VOLCANO_BIOME_RARITY, 7, 1, 10000);
         COMMON.builder.pop();

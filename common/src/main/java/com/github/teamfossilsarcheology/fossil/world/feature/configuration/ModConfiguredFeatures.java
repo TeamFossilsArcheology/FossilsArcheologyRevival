@@ -53,9 +53,6 @@ public class ModConfiguredFeatures {
             NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredStructureFeature<?, ?>> HELL_BOAT = register(createKey("hell_boat"), ModStructures.HELL_BOAT.feature()
             .configured(new RangeConfiguration(ConstantHeight.of(VerticalAnchor.absolute(30))), BiomeTags.IS_NETHER));
-    public static final Holder<ConfiguredFeature<LakeFeature.Configuration, ?>> TAR_PIT = register("tar_pit", Feature.LAKE,
-            new LakeFeature.Configuration(BlockStateProvider.simple(ModBlocks.TAR.get()),
-                    BlockStateProvider.simple(Blocks.STONE)));
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> MOAI_STATUE = register("moai_statue",
             ModFeatures.MOAI_STATUE.feature(), NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> ASH_DISK = register("ash_disk",

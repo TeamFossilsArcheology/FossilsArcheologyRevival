@@ -30,10 +30,6 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Entry(min = 1, max = 1000000)
     public static int moaiRarity = 400;
     @MidnightConfig.Entry
-    public static boolean generateTarPits = true;
-    @MidnightConfig.Entry(min = 1, max = 1000000)
-    public static int tarPitRarity = 100;
-    @MidnightConfig.Entry
     public static boolean generateTemple = true;
     @MidnightConfig.Entry
     public static boolean generateFossils = true;
