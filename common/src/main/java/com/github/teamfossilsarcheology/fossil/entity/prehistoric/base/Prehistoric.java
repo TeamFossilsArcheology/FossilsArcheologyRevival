@@ -340,7 +340,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         dimensions = newDimensions;
         eyeHeight = getEyeHeight(pose, newDimensions);
         reapplyPosition();
-        if (!firstTick && !noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
+        if (!noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
             Vec3 vec3 = position().add(0.0, oldDimensions.height / 2.0, 0.0);
             double wDiff = Math.max(0.0, newDimensions.width - oldDimensions.width) + 1.0E-6;
             double hDiff = Math.max(0.0, newDimensions.height - oldDimensions.height) + 1.0E-6;
