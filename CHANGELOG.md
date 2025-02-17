@@ -18,7 +18,9 @@
 - Crashes for users joining a LAN or Essential world
 - Crashes when generating villager houses
 - Crash when spawning certain mobs on Ad Astra worlds
+- Mobs being able to phase through blocks (hopefully)
 - Incorrect stats for baby & teen mobs
+- Mobs trying to path towards unreachable feeders
 - Silktouch not working on fossil and permafrost blocks
 - Vanilla wood recipes not working with our wood types
 - Sifters not using 5th slot
@@ -77,6 +79,10 @@
 - Javelins stuck in the ground spawning lightning on world load
 - Sentry Piglin spawning without a weapon
 - Lighting spawned by the ancient sword being able to hurt the player
+- Incorrect failuresaurus variants being spawned
+- Current population size not being calculated correctly
+- Aquatic mobs not playing their swimming animations in some cases
+- Quaggas not having a chest textures
 
 
 ### Mod compatibility

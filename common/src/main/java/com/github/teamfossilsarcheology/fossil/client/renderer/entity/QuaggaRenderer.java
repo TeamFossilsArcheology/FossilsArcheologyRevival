@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.client.renderer.entity;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.client.renderer.RendererFabricFix;
 import com.github.teamfossilsarcheology.fossil.entity.Quagga;
+import net.minecraft.client.model.ChestedHorseModel;
 import net.minecraft.client.model.HorseModel;
 import net.minecraft.client.model.geom.builders.CubeDeformation;
 import net.minecraft.client.model.geom.builders.LayerDefinition;
@@ -16,7 +17,7 @@ public class QuaggaRenderer extends AbstractHorseRenderer<Quagga, HorseModel<Qua
     private static final ResourceLocation TEXTURE = FossilMod.location("textures/entity/quagga/quagga_saddled.png");
 
     public QuaggaRenderer(EntityRendererProvider.Context context) {
-        super(context, new HorseModel<>(LayerDefinition.create(HorseModel.createBodyMesh(CubeDeformation.NONE), 64, 64).bakeRoot()), 1.1f);
+        super(context, new ChestedHorseModel<>(ChestedHorseModel.createBodyLayer().bakeRoot()), 1.1f);
     }
 
     @Override
