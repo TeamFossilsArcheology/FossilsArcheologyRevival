@@ -143,11 +143,11 @@ public class NavUtil {
         return Mth.floor(coord + step * EPSILON);
     }
 
-    public static boolean isAt(Entity mob, Path path, float threshold) {
+    public static boolean isAt(Entity mob, Path path, float threshold, float verticalThreshold) {
         final Vec3 pathPos = path.getNextEntityPos(mob);
         return Math.abs(mob.getX() - pathPos.x) < threshold
                 && Math.abs(mob.getZ() - pathPos.z) < threshold
-                && Math.abs(mob.getY() - pathPos.y) <= 1.0D;
+                && Math.abs(mob.getY() - pathPos.y) <= verticalThreshold;
     }
 
     public static boolean atElevationChange(Entity mob, Path path) {

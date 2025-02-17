@@ -58,7 +58,7 @@ public class PrehistoricPathNavigation extends GroundPathNavigation {
         final Vec3 base = entityPos.add(-mob.getBbWidth() * 0.5F, 0, -mob.getBbWidth() * 0.5F);
         final Vec3 max = base.add(mob.getBbWidth(), mob.getBbHeight(), mob.getBbWidth());
         if (!tryShortcut(path, new Vec3(mob.getX(), mob.getY(), mob.getZ()), pathLength, base, max)) {
-            if (NavUtil.isAt(mob, path, 0.5F) || NavUtil.atElevationChange(mob, path) && NavUtil.isAt(mob, path, mob.getBbWidth() * 0.75F)) {
+            if (NavUtil.isAt(mob, path, 0.5F, 1) || NavUtil.atElevationChange(mob, path) && NavUtil.isAt(mob, path, mob.getBbWidth() * 0.75F, 1)) {
                 mob.getLookControl().setLookAt(path.getNextEntityPos(mob));
                 path.advance();
             }
