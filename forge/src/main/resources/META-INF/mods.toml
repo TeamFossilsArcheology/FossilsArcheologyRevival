@@ -59,7 +59,7 @@ side = "BOTH"
 [[dependencies.${modId}]]
 modId = "morehitboxes"
 mandatory = true
-versionRange = "[1.7.2,)"
+versionRange = "[1.7.3,)"
 ordering = "AFTER"
 side = "BOTH"
 
