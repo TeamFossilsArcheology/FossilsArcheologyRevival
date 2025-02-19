@@ -1,5 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.client;
 
+import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -25,7 +26,7 @@ import java.util.Map;
 public class DinopediaBioLoader extends SimplePreparableReloadListener<Map<String, Map<String, String>>> {
     public static final DinopediaBioLoader INSTANCE = new DinopediaBioLoader();
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final String DIRECTORY = "dinopedia";
+    private static final String DIRECTORY = FossilMod.MOD_ID + "/dinopedia";
     private static final String PATH_SUFFIX = ".txt";
     private static final int PATH_SUFFIX_LENGTH = PATH_SUFFIX.length();
     private ImmutableMap<String, String> englishFallback = ImmutableMap.of();

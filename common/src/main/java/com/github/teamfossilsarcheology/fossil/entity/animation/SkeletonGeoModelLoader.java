@@ -23,7 +23,7 @@ import java.util.Map;
  */
 public class SkeletonGeoModelLoader extends SimplePreparableReloadListener<Map<ResourceLocation, GeoModel>> {
     public static final SkeletonGeoModelLoader INSTANCE = new SkeletonGeoModelLoader();
-    private static final String DIRECTORY = "geo/entity";
+    private static final String DIRECTORY = FossilMod.MOD_ID + "geo/entity";
     private static final String PATH_SUFFIX = ".json";
     private Map<ResourceLocation, GeoModel> geoModels = ImmutableMap.of();
 

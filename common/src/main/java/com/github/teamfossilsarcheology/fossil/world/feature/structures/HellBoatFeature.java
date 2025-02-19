@@ -31,21 +31,17 @@ public class HellBoatFeature extends StructureFeature<RangeConfiguration> {
     private static void generatePieces(StructurePiecesBuilder builder, PieceGenerator.Context<RangeConfiguration> context) {
         BlockPos origin = context.chunkPos().getMiddleBlockPosition(0);
         NoiseColumn noiseColumn = context.chunkGenerator().getBaseColumn(origin.getX(), origin.getZ(), context.heightAccessor());
-        FossilMod.LOGGER.debug("Hellboat: Trying to place at " + origin.atY(30));
         if (noiseColumn.getBlock(31).getBlock() != Blocks.LAVA) {
-            FossilMod.LOGGER.debug("Hellboat: No Lava");
             return;
         }
         for (int i = 32; i < 50; i++) {
             Block block = noiseColumn.getBlock(i).getBlock();
             if (block != Blocks.AIR && block != Blocks.CAVE_AIR) {
-                FossilMod.LOGGER.debug("Hellboat: No Air");
                 return;
             }
         }
         WorldgenRandom worldgenRandom = new WorldgenRandom(new LegacyRandomSource(0L));
         Rotation rotation = Rotation.getRandom(worldgenRandom);
-        FossilMod.LOGGER.debug("Hellboat: Placed");
         builder.addPiece(new HellBoatPiece(context.structureManager(), origin.atY(30), rotation));
     }
 

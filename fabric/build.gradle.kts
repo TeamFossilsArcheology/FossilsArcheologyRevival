@@ -195,6 +195,7 @@ tasks.register<TaskPublishCurseForge>("publishCurseForge") {
     val mainFile = upload(223908, tasks.remapJar)
     mainFile.displayName = "$modVersion for Fabric $minecraftVersion"
     mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
+    mainFile.addEnvironment("Fabric")
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
     mainFile.addRequirement("fabric-api", "architectury-api", "geckolib", "terrablender-fabric", "more-hitboxes")

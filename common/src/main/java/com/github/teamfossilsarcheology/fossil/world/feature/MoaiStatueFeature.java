@@ -32,7 +32,6 @@ public class MoaiStatueFeature extends Feature<NoneFeatureConfiguration> {
                 pos = pos.atY(floorHeight);
             }
         }
-        FossilMod.LOGGER.info("Placed moai: " + pos);
 
         BlockState bricks = ModBlocks.ANCIENT_STONE_BRICKS.get().defaultBlockState();
         BlockState stairs = ModBlocks.ANCIENT_STONE_STAIRS.get().defaultBlockState();
