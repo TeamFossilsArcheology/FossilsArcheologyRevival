@@ -28,6 +28,7 @@ public abstract class FoodMappings {
     private static final Map<ItemLike, Integer> PISCIVORE_DIET = new Object2IntOpenHashMap<>();
     private static final Map<ItemLike, Integer> PISCI_CARNIVORE_DIET = new Object2IntOpenHashMap<>();
     private static final Map<ItemLike, Integer> INSECTIVORE_DIET = new Object2IntOpenHashMap<>();
+    private static final Map<ItemLike, Integer> PASSIVE_DIET = new Object2IntOpenHashMap<>();
     private static final Map<EntityType<?>, Integer> CARNIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
     private static final Map<EntityType<?>, Integer> CARNIVORE_EGG_ENTITY_DIET = new Object2IntOpenHashMap<>();
     private static final Map<EntityType<?>, Integer> HERBIVORE_ENTITY_DIET = new Object2IntOpenHashMap<>();
@@ -90,6 +91,9 @@ public abstract class FoodMappings {
             }
             case INSECTIVORE -> {
                 return INSECTIVORE_DIET;
+            }
+            case PASSIVE -> {
+                return PASSIVE_DIET;
             }
         }
         return CARNIVORE_DIET;
