@@ -219,7 +219,7 @@ public class ClientInit {
         registerDino(ModEntities.PLATYBELODON, "platybelodon", RenderType::entityCutout);
         registerDino(ModEntities.PLESIOSAURUS, "plesiosaurus", RenderType::entityCutout);
         registerDino(ModEntities.PROTOCERATOPS, "protoceratops", RenderType::entityCutout);
-        registerDino(ModEntities.PSITTACOSAURUS, "psittacosaurus", RenderType::entityCutout);
+        registerDino(ModEntities.PSITTACOSAURUS, "psittacosaurus");
         registerDino(ModEntities.PTERANODON, "pteranodon");
         EntityRendererRegistry.register(ModEntities.QUAGGA, QuaggaRenderer::new);
         registerDino(ModEntities.QUETZALCOATLUS, "quetzalcoatlus");
