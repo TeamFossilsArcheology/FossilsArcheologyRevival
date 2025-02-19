@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_compsognathus_meat": {
+    "has_meat_compsognathus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_compsognathus_meat",
+      "has_meat_compsognathus",
       "has_the_recipe"
     ]
   ]

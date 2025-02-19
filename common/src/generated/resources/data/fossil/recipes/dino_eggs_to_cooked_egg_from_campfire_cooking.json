@@ -4,6 +4,6 @@
     "tag": "fossil:cookable_eggs"
   },
   "result": "fossil:cooked_egg",
-  "experience": 1.0,
+  "experience": 0.7,
   "cookingtime": 600
 }

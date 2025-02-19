@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_psittacosaurus_meat": {
+    "has_meat_psittacosaurus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_psittacosaurus_meat",
+      "has_meat_psittacosaurus",
       "has_the_recipe"
     ]
   ]

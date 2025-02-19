@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_kelenken_meat": {
+    "has_meat_kelenken": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_kelenken_meat",
+      "has_meat_kelenken",
       "has_the_recipe"
     ]
   ]

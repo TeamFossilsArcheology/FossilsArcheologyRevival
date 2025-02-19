@@ -17,6 +17,7 @@ import com.github.teamfossilsarcheology.fossil.forge.compat.carryon.CarryOnCompa
 import com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.forge.world.biome.ForgeFossilRegion;
 import com.github.teamfossilsarcheology.fossil.item.forge.AncientHelmetItemImpl;
+import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacementTypes;
@@ -54,7 +55,7 @@ public class ForgeFossilMod {
 
         FossilMod.init();
 
-        if (ModList.get().isLoaded("carryon")) {
+        if (ModList.get().isLoaded(ModConstants.CARRY_ON)) {
             MinecraftForge.EVENT_BUS.register(CarryOnCompat.class);
         }
 
@@ -75,10 +76,10 @@ public class ForgeFossilMod {
 
     public void onCommon(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
-            if (ModList.get().isLoaded("farmersdelight")) {
+            if (ModList.get().isLoaded(ModConstants.FARMERS)) {
                 FarmersDelightCompat.registerFoodMappings();
-            }			
-			if (ModList.get().isLoaded("alexsmobs")) {
+            }
+			if (ModList.get().isLoaded(ModConstants.ALEXS_MOBS)) {
 				AlexsMobsCompat.register();
 			}
             ModPlacementTypes.register();

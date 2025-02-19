@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.forge.event;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.capabilities.ModCapabilities;
 import com.github.teamfossilsarcheology.fossil.capabilities.forge.ModCapabilitiesImpl;
+import com.github.teamfossilsarcheology.fossil.compat.farmers.FarmersDelightCompat;
 import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.data.EntityDataLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricEntityInfo;
@@ -13,6 +14,7 @@ import com.github.teamfossilsarcheology.fossil.forge.tests.*;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncEntityInfoMessage;
+import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.villager.ModTrades;
 import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
@@ -38,6 +40,7 @@ import net.minecraftforge.event.entity.player.SleepingTimeCheckEvent;
 import net.minecraftforge.event.village.VillagerTradesEvent;
 import net.minecraftforge.eventbus.api.Event;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.gametest.PrefixGameTestTemplate;
 
@@ -168,5 +171,8 @@ public class ForgeModEvents {
     @SubscribeEvent
     public static void onDatapackSyncEvent(OnDatapackSyncEvent event) {
         MessageHandler.SYNC_CHANNEL.sendToPlayer(event.getPlayer(), new S2CSyncEntityInfoMessage(EntityDataLoader.INSTANCE.getEntities()));
+        if (ModList.get().isLoaded(ModConstants.FARMERS)) {
+            FarmersDelightCompat.removeConflictingRecipes(event.getPlayer().server);
+        }
     }
 }

@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_crassigyrinus_meat": {
+    "has_meat_crassigyrinus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_crassigyrinus_meat",
+      "has_meat_crassigyrinus",
       "has_the_recipe"
     ]
   ]

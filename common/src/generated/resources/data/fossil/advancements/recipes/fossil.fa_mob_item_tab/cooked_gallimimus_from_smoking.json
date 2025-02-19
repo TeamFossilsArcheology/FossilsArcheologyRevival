@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_gallimimus_meat": {
+    "has_meat_gallimimus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_gallimimus_meat",
+      "has_meat_gallimimus",
       "has_the_recipe"
     ]
   ]

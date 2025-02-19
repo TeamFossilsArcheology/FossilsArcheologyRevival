@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_scotoharpes_meat": {
+    "has_meat_scotoharpes": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_scotoharpes_meat",
+      "has_meat_scotoharpes",
       "has_the_recipe"
     ]
   ]

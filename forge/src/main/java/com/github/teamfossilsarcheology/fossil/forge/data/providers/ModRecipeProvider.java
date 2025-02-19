@@ -15,6 +15,7 @@ import com.github.teamfossilsarcheology.fossil.item.ToyScratchingPostItem;
 import com.github.teamfossilsarcheology.fossil.item.ToyTetheredLogItem;
 import com.github.teamfossilsarcheology.fossil.recipe.*;
 import com.github.teamfossilsarcheology.fossil.tags.ModItemTags;
+import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
 import com.google.common.collect.Maps;
 import com.mojang.datafixers.util.Pair;
@@ -87,11 +88,12 @@ public class ModRecipeProvider extends RecipeProvider {
         if (cookingRecipes) {
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
                 if (info.foodItem != null && info.cookedFoodItem != null) {
-                    fullCooking(info.foodItem, info.cookedFoodItem, info.resourceName, consumer, "_meat", 1.5f);
+                    fullCooking(info.foodItem, info.cookedFoodItem, consumer, 1.5f);
                 }
             }
             fullOre(DENSE_SAND.get(), REINFORCED_GLASS.get(), consumer, 3);
-            fullCooking(ModItemTags.COOKABLE_EGGS, COOKED_EGG.get(), "dino_egg", consumer, "", 1);
+            fullCooking(Items.EGG, COOKED_EGG.get(), "egg_to_cooked_egg", consumer, 0.35f);
+            fullCooking(ModItemTags.COOKABLE_EGGS, COOKED_EGG.get(), "dino_eggs_to_cooked_egg", consumer, 0.7f);
         }
         if (craftingRecipes) {
             ToyBallItem white = TOY_BALLS.get(DyeColor.WHITE).get();
@@ -459,7 +461,7 @@ public class ModRecipeProvider extends RecipeProvider {
                 cultureVat(info.getFossilizedPlantSeedItem(), info.getPlantSeedItem(), consumer);
             }
         }
-        if (ModList.get().isLoaded("create")) {
+        if (ModList.get().isLoaded(ModConstants.CREATE)) {
             FossilCreateRecipeProvider.buildCraftingRecipes(consumer);
         }
     }
@@ -514,28 +516,29 @@ public class ModRecipeProvider extends RecipeProvider {
 
     }
 
-    private void fullCooking(TagKey<Item> ingredient, Item result, String resourceName, Consumer<FinishedRecipe> consumer, String suffix, float exp) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), result, exp, 200)
-                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
-                .save(consumer);
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ingredient), result, exp, 600)
-                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
-                .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_campfire_cooking");
-        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ingredient), result, exp, 100)
-                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
-                .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_smoking");
+    private static void fullCooking(Ingredient ingredient, ItemPredicate predicate, ItemLike result, String ingredientName, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
+        ResourceLocation resultLocation = FossilMod.location(resultName);
+        var furnace = SimpleCookingRecipeBuilder.smelting(ingredient, result, exp, 200)
+                .unlockedBy("has_" + ingredientName, inventoryTrigger(predicate));
+        var campfire = SimpleCookingRecipeBuilder.campfireCooking(ingredient, result, exp, 600)
+                .unlockedBy("has_" + ingredientName, inventoryTrigger(predicate));
+        var smoker = SimpleCookingRecipeBuilder.smoking(ingredient, result, exp, 100)
+                .unlockedBy("has_" + ingredientName, inventoryTrigger(predicate));
+        furnace.save(consumer, resultLocation);
+        campfire.save(consumer, resultLocation + "_from_campfire_cooking");
+        smoker.save(consumer, resultLocation + "_from_smoking");
     }
 
-    private void fullCooking(ItemLike ingredient, ItemLike result, String resourceName, Consumer<FinishedRecipe> consumer, String suffix, float exp) {
-        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ingredient), result, exp, 200)
-                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
-                .save(consumer);
-        SimpleCookingRecipeBuilder.campfireCooking(Ingredient.of(ingredient), result, exp, 600)
-                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
-                .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_campfire_cooking");
-        SimpleCookingRecipeBuilder.smoking(Ingredient.of(ingredient), result, exp, 100)
-                .unlockedBy("has_" + resourceName + suffix, inventoryTrigger(ItemPredicate.Builder.item().of(ingredient).build()))
-                .save(consumer, RecipeBuilder.getDefaultRecipeId(result) + "_from_smoking");
+    private static void fullCooking(TagKey<Item> ingredient, ItemLike result, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
+        fullCooking(Ingredient.of(ingredient), ItemPredicate.Builder.item().of(ingredient).build(), result, ingredient.location().getPath(), resultName, consumer, exp);
+    }
+
+    private static void fullCooking(ItemLike ingredient, ItemLike result, String resultName, Consumer<FinishedRecipe> consumer, float exp) {
+        fullCooking(Ingredient.of(ingredient), ItemPredicate.Builder.item().of(ingredient).build(), result, RecipeBuilder.getDefaultRecipeId(ingredient).getPath(), resultName, consumer, exp);
+    }
+
+    private static void fullCooking(ItemLike ingredient, ItemLike result, Consumer<FinishedRecipe> consumer, float exp) {
+        fullCooking(ingredient, result, RecipeBuilder.getDefaultRecipeId(result).getPath(), consumer, exp);
     }
 
     private void fullOre(ItemLike ingredient, ItemLike result, Consumer<FinishedRecipe> consumer, float exp) {

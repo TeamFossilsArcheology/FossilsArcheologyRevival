@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_edaphosaurus_meat": {
+    "has_meat_edaphosaurus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_edaphosaurus_meat",
+      "has_meat_edaphosaurus",
       "has_the_recipe"
     ]
   ]

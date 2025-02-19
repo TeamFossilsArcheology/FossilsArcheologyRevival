@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_quetzalcoatlus_meat": {
+    "has_meat_quetzalcoatlus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_quetzalcoatlus_meat",
+      "has_meat_quetzalcoatlus",
       "has_the_recipe"
     ]
   ]

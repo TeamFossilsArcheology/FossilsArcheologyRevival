@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_tyrannosaurus_meat": {
+    "has_meat_tyrannosaurus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_tyrannosaurus_meat",
+      "has_meat_tyrannosaurus",
       "has_the_recipe"
     ]
   ]

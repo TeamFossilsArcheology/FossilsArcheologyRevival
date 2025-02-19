@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_confuciusornis_meat": {
+    "has_meat_confuciusornis": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_confuciusornis_meat",
+      "has_meat_confuciusornis",
       "has_the_recipe"
     ]
   ]

@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "rewards": {
+    "recipes": [
+      "fossil:dino_eggs_to_cooked_egg_from_smoking"
+    ]
+  },
+  "criteria": {
+    "has_cookable_eggs": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "tag": "fossil:cookable_eggs"
+          }
+        ]
+      }
+    },
+    "has_the_recipe": {
+      "trigger": "minecraft:recipe_unlocked",
+      "conditions": {
+        "recipe": "fossil:dino_eggs_to_cooked_egg_from_smoking"
+      }
+    }
+  },
+  "requirements": [
+    [
+      "has_cookable_eggs",
+      "has_the_recipe"
+    ]
+  ]
+}

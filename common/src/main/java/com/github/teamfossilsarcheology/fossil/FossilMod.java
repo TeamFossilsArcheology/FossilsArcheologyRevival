@@ -24,16 +24,16 @@ import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures;
 import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructures;
 import com.github.teamfossilsarcheology.fossil.world.feature.village.ModVillages;
-import com.mojang.logging.LogUtils;
 import dev.architectury.registry.ReloadListenerRegistry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class FossilMod {
     public static final String MOD_ID = "fossil";
-    public static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogManager.getLogger("Fossils Archeology");
 
     public static ResourceLocation location(String path) {
         return new ResourceLocation(MOD_ID, path);

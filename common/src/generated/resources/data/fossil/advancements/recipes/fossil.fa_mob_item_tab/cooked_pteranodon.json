@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_pteranodon_meat": {
+    "has_meat_pteranodon": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_pteranodon_meat",
+      "has_meat_pteranodon",
       "has_the_recipe"
     ]
   ]

@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_stegosaurus_meat": {
+    "has_meat_stegosaurus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_stegosaurus_meat",
+      "has_meat_stegosaurus",
       "has_the_recipe"
     ]
   ]

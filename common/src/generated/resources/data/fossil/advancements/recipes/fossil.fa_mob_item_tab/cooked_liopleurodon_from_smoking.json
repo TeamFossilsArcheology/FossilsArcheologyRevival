@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_liopleurodon_meat": {
+    "has_meat_liopleurodon": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_liopleurodon_meat",
+      "has_meat_liopleurodon",
       "has_the_recipe"
     ]
   ]

@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_quagga_meat": {
+    "has_meat_quagga": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_quagga_meat",
+      "has_meat_quagga",
       "has_the_recipe"
     ]
   ]

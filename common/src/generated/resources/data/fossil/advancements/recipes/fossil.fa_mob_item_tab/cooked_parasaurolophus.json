@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_parasaurolophus_meat": {
+    "has_meat_parasaurolophus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_parasaurolophus_meat",
+      "has_meat_parasaurolophus",
       "has_the_recipe"
     ]
   ]

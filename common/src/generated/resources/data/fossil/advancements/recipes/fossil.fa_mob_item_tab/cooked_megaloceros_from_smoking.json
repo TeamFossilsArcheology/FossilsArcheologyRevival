@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_megaloceros_meat": {
+    "has_meat_megaloceros": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_megaloceros_meat",
+      "has_meat_megaloceros",
       "has_the_recipe"
     ]
   ]

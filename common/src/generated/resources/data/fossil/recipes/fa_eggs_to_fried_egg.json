@@ -1,0 +1,22 @@
+{
+  "type": "forge:conditional",
+  "recipes": [
+    {
+      "conditions": [
+        {
+          "modid": "farmersdelight",
+          "type": "forge:mod_loaded"
+        }
+      ],
+      "recipe": {
+        "type": "minecraft:smelting",
+        "ingredient": {
+          "tag": "fossil:dino_eggs"
+        },
+        "result": "farmersdelight:fried_egg",
+        "experience": 0.5,
+        "cookingtime": 200
+      }
+    }
+  ]
+}

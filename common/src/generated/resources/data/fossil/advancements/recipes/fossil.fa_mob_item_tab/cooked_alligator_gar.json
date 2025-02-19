@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_alligator_gar_meat": {
+    "has_meat_alligator_gar": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_alligator_gar_meat",
+      "has_meat_alligator_gar",
       "has_the_recipe"
     ]
   ]

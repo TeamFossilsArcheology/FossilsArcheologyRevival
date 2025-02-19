@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_citipati_meat": {
+    "has_meat_citipati": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_citipati_meat",
+      "has_meat_citipati",
       "has_the_recipe"
     ]
   ]

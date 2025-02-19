@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_dilophosaurus_meat": {
+    "has_meat_dilophosaurus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_dilophosaurus_meat",
+      "has_meat_dilophosaurus",
       "has_the_recipe"
     ]
   ]

@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_dimetrodon_meat": {
+    "has_meat_dimetrodon": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_dimetrodon_meat",
+      "has_meat_dimetrodon",
       "has_the_recipe"
     ]
   ]

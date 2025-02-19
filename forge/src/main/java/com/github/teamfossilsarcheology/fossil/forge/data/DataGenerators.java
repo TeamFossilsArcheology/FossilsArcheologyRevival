@@ -2,9 +2,11 @@ package com.github.teamfossilsarcheology.fossil.forge.data;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.forge.data.providers.*;
+import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.tags.BlockTagsProvider;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.forge.event.lifecycle.GatherDataEvent;
 
@@ -23,5 +25,8 @@ public class DataGenerators {
         generator.addProvider(new ModLootProvider(generator));
         generator.addProvider(new ModRecipeProvider(generator));
         generator.addProvider(new ModAdvancements(generator, event.getExistingFileHelper()));
+        if (ModList.get().isLoaded(ModConstants.FARMERS)) {
+            generator.addProvider(new FossilFarmersRecipeProvider(generator));
+        }
     }
 }

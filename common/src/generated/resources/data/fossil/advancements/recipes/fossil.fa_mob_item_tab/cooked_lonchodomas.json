@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_lonchodomas_meat": {
+    "has_meat_lonchodomas": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_lonchodomas_meat",
+      "has_meat_lonchodomas",
       "has_the_recipe"
     ]
   ]

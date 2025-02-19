@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_sarcosuchus_meat": {
+    "has_meat_sarcosuchus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_sarcosuchus_meat",
+      "has_meat_sarcosuchus",
       "has_the_recipe"
     ]
   ]

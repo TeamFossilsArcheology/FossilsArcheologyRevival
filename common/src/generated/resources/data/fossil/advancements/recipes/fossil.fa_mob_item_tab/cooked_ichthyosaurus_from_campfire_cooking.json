@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_ichthyosaurus_meat": {
+    "has_meat_ichthyosaurus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_ichthyosaurus_meat",
+      "has_meat_ichthyosaurus",
       "has_the_recipe"
     ]
   ]

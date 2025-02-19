@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_megalograptus_meat": {
+    "has_meat_megalograptus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_megalograptus_meat",
+      "has_meat_megalograptus",
       "has_the_recipe"
     ]
   ]

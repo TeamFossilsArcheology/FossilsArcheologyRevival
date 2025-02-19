@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_coelacanth_meat": {
+    "has_meat_coelacanth": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_coelacanth_meat",
+      "has_meat_coelacanth",
       "has_the_recipe"
     ]
   ]

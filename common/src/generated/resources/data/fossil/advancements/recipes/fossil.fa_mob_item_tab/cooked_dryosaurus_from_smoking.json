@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_dryosaurus_meat": {
+    "has_meat_dryosaurus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_dryosaurus_meat",
+      "has_meat_dryosaurus",
       "has_the_recipe"
     ]
   ]

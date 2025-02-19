@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_allosaurus_meat": {
+    "has_meat_allosaurus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_allosaurus_meat",
+      "has_meat_allosaurus",
       "has_the_recipe"
     ]
   ]

@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_henodus_meat": {
+    "has_meat_henodus": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_henodus_meat",
+      "has_meat_henodus",
       "has_the_recipe"
     ]
   ]

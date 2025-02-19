@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_arthropleura_meat": {
+    "has_meat_arthropleura": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_arthropleura_meat",
+      "has_meat_arthropleura",
       "has_the_recipe"
     ]
   ]

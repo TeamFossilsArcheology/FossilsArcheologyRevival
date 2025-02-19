@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_sturgeon_meat": {
+    "has_meat_sturgeon": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_sturgeon_meat",
+      "has_meat_sturgeon",
       "has_the_recipe"
     ]
   ]

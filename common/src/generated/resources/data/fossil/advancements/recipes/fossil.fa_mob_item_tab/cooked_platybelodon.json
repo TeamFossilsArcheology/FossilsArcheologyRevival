@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_platybelodon_meat": {
+    "has_meat_platybelodon": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_platybelodon_meat",
+      "has_meat_platybelodon",
       "has_the_recipe"
     ]
   ]

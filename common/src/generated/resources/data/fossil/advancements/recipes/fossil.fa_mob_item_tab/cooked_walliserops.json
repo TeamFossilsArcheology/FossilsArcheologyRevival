@@ -6,7 +6,7 @@
     ]
   },
   "criteria": {
-    "has_walliserops_meat": {
+    "has_meat_walliserops": {
       "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
@@ -27,7 +27,7 @@
   },
   "requirements": [
     [
-      "has_walliserops_meat",
+      "has_meat_walliserops",
       "has_the_recipe"
     ]
   ]
