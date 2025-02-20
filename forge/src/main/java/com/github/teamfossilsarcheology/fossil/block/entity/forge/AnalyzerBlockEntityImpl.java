@@ -115,27 +115,21 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
         if (FossilConfig.isEnabled(FossilConfig.MACHINES_REQUIRE_ENERGY) && energyStorage.getEnergyStored() <= FossilConfig.getInt(FossilConfig.MACHINE_ENERGY_USAGE)) {
             return false;
         }
-        int spaceIndex = -1;
         rawIndex = -1;
-        boolean flag = false;
         for (int slot = 0; slot < 9; ++slot) {
             if (!items.get(slot).isEmpty() && isAnalyzable(items.get(slot))) {
                 rawIndex = slot;
-                flag = true;
                 break;
             }
         }
-        if (rawIndex == -1 || !flag) {
-            return false;
-        } else {
-            for (int slot = 12; slot > 8; --slot) {
+        if (rawIndex != -1) {
+            for (int slot = 9; slot < 13; slot++) {
                 if (items.get(slot).isEmpty()) {
-                    spaceIndex = slot;
-                    break;
+                    return true;
                 }
             }
-            return spaceIndex != -1 && rawIndex != -1;
         }
+        return false;
     }
 
     @Override
@@ -153,16 +147,21 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
             if (!output.isEmpty()) {
                 for (int slot = 9; slot < 13; slot++) {
                     ItemStack itemStack = items.get(slot);
+                    if (itemStack.sameItem(output) && itemStack.getCount() + output.getCount() < 64) {
+                        itemStack.setCount(itemStack.getCount() + output.getCount());
+                        input.shrink(1);
+                        return;
+                    }
+                }
+                for (int slot = 9; slot < 13; slot++) {
+                    ItemStack itemStack = items.get(slot);
                     if (itemStack.isEmpty()) {
                         items.set(slot, output);
-                        break;
-                    } else if (itemStack.sameItem(output) && itemStack.getCount() + output.getCount() < 64) {
-                        itemStack.setCount(itemStack.getCount() + output.getCount());
-                        break;
+                        input.shrink(1);
+                        return;
                     }
                 }
             }
-            input.shrink(1);
         }
     }
 
