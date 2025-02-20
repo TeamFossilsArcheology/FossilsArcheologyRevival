@@ -155,6 +155,11 @@ public class Parasaurolophus extends Prehistoric {
                 this, AnimationLogic.ATTACK_CTRL, 0, getAnimationLogic()::attackPredicate));
     }
 
+    @Override
+    public AnimationLogic<Prehistoric> getAnimationLogic() {
+        return animationLogic;
+    }
+
     class ParaStandGoal extends Goal {
         private int cooldown;
 

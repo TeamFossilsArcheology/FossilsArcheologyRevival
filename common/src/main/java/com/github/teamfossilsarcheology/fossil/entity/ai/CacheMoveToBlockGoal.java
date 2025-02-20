@@ -135,7 +135,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     protected void moveMobToBlock() {
-         entity.getNavigation().moveTo(path, speedModifier);
+         entity.getNavigation().moveTo(path, calculateSpeedModifier());
     }
 
     public double acceptedDistance() {
