@@ -1217,6 +1217,9 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (target instanceof Player && level.getDifficulty() == Difficulty.PEACEFUL) {
             return false;
         }
+        if (isTame() && target instanceof TamableAnimal tamableAnimal && tamableAnimal.getOwner() == getOwner()) {
+            return false;
+        }
         return target.canBeSeenAsEnemy();
     }
 
@@ -1224,8 +1227,6 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public boolean wantsToAttack(LivingEntity target, LivingEntity owner) {
         if (target instanceof Creeper || target instanceof Ghast) {
             return false;
-        } else if (target instanceof TamableAnimal tamableAnimal) {
-            return tamableAnimal.getOwner() != owner;
         } else if (target instanceof Player && owner instanceof Player && !((Player) owner).canHarmPlayer((Player) target)) {
             return false;
         } else if (target instanceof AbstractHorse && ((AbstractHorse) target).isTamed()) {
