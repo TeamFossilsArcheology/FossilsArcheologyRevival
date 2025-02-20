@@ -67,7 +67,7 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
 
         if (canProcess()) {
             cookingProgress++;
-            if (cookingProgress >= SifterMenu.SIFTER_DURATION) {
+            if (cookingProgress >= 20) {
                 cookingProgress = 0;
                 createItem();
                 dirty = true;
@@ -123,7 +123,7 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
             for (int slot = 1; slot <= 5; slot++) {
                 ItemStack stackInSlot = items.get(slot);
                 if (stackInSlot.isEmpty()) {
-                    stackInSlot.grow(result.getCount());
+                    items.set(slot, result);
                     if (items.get(0).getCount() > 1) {
                         items.get(0).shrink(1);
                     } else {

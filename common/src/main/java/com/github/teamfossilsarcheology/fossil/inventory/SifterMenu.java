@@ -50,7 +50,7 @@ public class SifterMenu extends AbstractContainerMenu {
             ItemStack current = slot.getItem();
             itemStack = current.copy();
             final int inventorySlots = 36;
-            final int sifterSlots = 5;
+            final int sifterSlots = 6;
             final int bottomRowEnd = inventorySlots + sifterSlots;
             final int bottomRowStart = bottomRowEnd - 9;
             if (index < sifterSlots) {

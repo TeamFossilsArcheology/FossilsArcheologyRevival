@@ -129,7 +129,7 @@ public class SifterBlockEntityImpl extends ForgeContainerBlockEntity implements 
             for (int slot = 1; slot <= 5; slot++) {
                 ItemStack stackInSlot = items.get(slot);
                 if (stackInSlot.isEmpty()) {
-                    stackInSlot.grow(result.getCount());
+                    items.set(slot, result);
                     if (items.get(0).getCount() > 1) {
                         items.get(0).shrink(1);
                     } else {
