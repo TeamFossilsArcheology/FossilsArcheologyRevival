@@ -26,6 +26,7 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.Items;
@@ -333,6 +334,7 @@ public abstract class PrehistoricSwimming extends Prehistoric implements Swimmin
             steering.waterTravel(new Vec3(newStrafeMovement, travelVector.y, newForwardMovement), (Player) rider);
         } else {
             setDeltaMovement(Vec3.ZERO);
+            calculateEntityAnimation(this, this instanceof FlyingAnimal);
         }
     }
 

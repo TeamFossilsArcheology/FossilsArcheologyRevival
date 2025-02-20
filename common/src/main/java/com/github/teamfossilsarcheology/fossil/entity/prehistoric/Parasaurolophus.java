@@ -172,7 +172,7 @@ public class Parasaurolophus extends Prehistoric {
 
         @Override
         public boolean canContinueToUse() {
-            return !isInWater() && !isImmobile() && random.nextInt(reducedTickDelay(2000)) != 0;
+            return !isVehicle() && !isInWater() && !isImmobile() && random.nextInt(reducedTickDelay(2000)) != 0;
         }
 
         @Override

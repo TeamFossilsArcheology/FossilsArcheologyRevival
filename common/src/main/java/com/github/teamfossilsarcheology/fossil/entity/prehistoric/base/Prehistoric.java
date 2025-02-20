@@ -70,8 +70,8 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.LookAtPlayerGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.navigation.PathNavigation;
-import net.minecraft.world.entity.ai.navigation.WallClimberNavigation;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.FlyingAnimal;
 import net.minecraft.world.entity.animal.horse.AbstractHorse;
 import net.minecraft.world.entity.item.ItemEntity;
 import net.minecraft.world.entity.monster.Creeper;
@@ -549,6 +549,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             }
         } else {
             setDeltaMovement(Vec3.ZERO);
+            calculateEntityAnimation(this, this instanceof FlyingAnimal);
         }
         if (isOnGround()) {
             playerJumpPendingScale = 0;
