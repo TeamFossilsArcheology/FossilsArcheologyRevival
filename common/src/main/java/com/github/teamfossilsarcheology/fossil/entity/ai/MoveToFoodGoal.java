@@ -47,4 +47,12 @@ public abstract class MoveToFoodGoal extends CacheMoveToBlockGoal {
         }
         return super.canContinueToUse();
     }
+
+    @Override
+    protected double calculateSpeedModifier() {
+        if (entity.isDeadlyHungry()) {
+            return entity.attributes().sprintMod();
+        }
+        return super.calculateSpeedModifier();
+    }
 }

@@ -130,6 +130,10 @@ public abstract class CacheMoveToBlockGoal extends Goal {
         return path != null;
     }
 
+    protected double calculateSpeedModifier() {
+        return speedModifier;
+    }
+
     protected void moveMobToBlock() {
          entity.getNavigation().moveTo(path, speedModifier);
     }
