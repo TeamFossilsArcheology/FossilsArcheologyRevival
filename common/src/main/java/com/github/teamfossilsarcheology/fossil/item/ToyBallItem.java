@@ -54,7 +54,7 @@ public class ToyBallItem extends Item {
                     return InteractionResultHolder.fail(itemStack);
                 }
                 entity.setColor(color);
-                entity.moveTo(hitResult.getLocation().x, hitResult.getLocation().y, hitResult.getLocation().z, 0, 0);
+                entity.moveTo(Vec3.atBottomCenterOf(hitResult.getBlockPos().relative(hitResult.getDirection())));
                 level.addFreshEntity(entity);
                 itemStack.shrink(1);
             }

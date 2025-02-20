@@ -117,7 +117,7 @@ public class PathingDebug {
 
     public static BlockPos getBlockHitResult(Minecraft mc) {
         BlockHitResult hitResult = getOffsetHitResult(mc);
-        return hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
+        return hitResult.getBlockPos().relative(hitResult.getDirection());
     }
 
     public static BlockPos getAirHitResult(Minecraft mc) {

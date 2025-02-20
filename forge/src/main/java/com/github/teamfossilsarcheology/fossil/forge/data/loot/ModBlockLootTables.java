@@ -68,7 +68,7 @@ public class ModBlockLootTables extends BlockLoot {
         MUTANT_TREE_LEAVES.ifPresent(block -> addCustom(block, createSilkTouchOrShearsDispatchTable(block, applyExplosionCondition(block, LootItem.lootTableItem(Items.STICK)))));
         PALM_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, PALM_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
         SIGILLARIA_LEAVES.ifPresent(block -> addCustom(block, createLeavesDrops(block, SIGILLARIA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
-        TEMPSKYA_LEAF.ifPresent(block -> addCustom(block, createLeavesDrops(block, TEMPSKYA_SAPLING.get(), 0.05f, 0.0625f, 0.083333336f, 0.1f)));
+        TEMPSKYA_LEAF.ifPresent(block -> addCustom(block, createLeavesDrops(block, TEMPSKYA_SAPLING.get(), 0.3f, 0.375f, 0.5f, 0.6f)));
 
         TEMPSKYA_TOP.ifPresent(block -> {
             var condition = LootItem.lootTableItem(block).when(LootItemBlockStatePropertyCondition.hasBlockStateProperties(block)

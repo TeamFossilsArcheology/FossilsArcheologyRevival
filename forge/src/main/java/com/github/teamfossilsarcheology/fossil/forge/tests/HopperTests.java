@@ -57,7 +57,7 @@ public class HopperTests {
         if (blockEntity instanceof CultureVatBlockEntityImpl cultureVatEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             for (int i = 0; i < 4; i++) {
-                BlockPos sidePos = MACHINE_POS.offset(directions[i].getNormal());
+                BlockPos sidePos = MACHINE_POS.relative(directions[i]);
                 helper.setBlock(sidePos, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, directions[i].getOpposite()));
                 BlockEntity hopper = RecipeTests.getBlockEntity(sidePos, helper, HopperBlock.class);
                 if (hopper instanceof HopperBlockEntity hopperBlockEntity) {
@@ -120,7 +120,7 @@ public class HopperTests {
         if (blockEntity instanceof WorktableBlockEntityImpl worktableEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             for (int i = 0; i < 4; i++) {
-                BlockPos sidePos = MACHINE_POS.offset(directions[i].getNormal());
+                BlockPos sidePos = MACHINE_POS.relative(directions[i]);
                 helper.setBlock(sidePos, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, directions[i].getOpposite()));
                 BlockEntity hopper = RecipeTests.getBlockEntity(sidePos, helper, HopperBlock.class);
                 if (hopper instanceof HopperBlockEntity hopperBlockEntity) {
@@ -184,7 +184,7 @@ public class HopperTests {
         if (blockEntity instanceof AnalyzerBlockEntityImpl analyzerEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             for (int i = 0; i < 4; i++) {
-                BlockPos sidePos = MACHINE_POS.offset(directions[i].getNormal());
+                BlockPos sidePos = MACHINE_POS.relative(directions[i]);
                 helper.setBlock(sidePos, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, directions[i].getOpposite()));
                 BlockEntity hopper = RecipeTests.getBlockEntity(sidePos, helper, HopperBlock.class);
                 if (hopper instanceof HopperBlockEntity hopperBlockEntity) {
@@ -247,7 +247,7 @@ public class HopperTests {
         if (blockEntity instanceof SifterBlockEntityImpl sifterEntity) {
             helper.assertContainerEmpty(MACHINE_POS);
             for (int i = 0; i < 4; i++) {
-                BlockPos sidePos = MACHINE_POS.offset(directions[i].getNormal());
+                BlockPos sidePos = MACHINE_POS.relative(directions[i]);
                 helper.setBlock(sidePos, Blocks.HOPPER.defaultBlockState().setValue(HopperBlock.FACING, directions[i].getOpposite()));
                 BlockEntity hopper = RecipeTests.getBlockEntity(sidePos, helper, HopperBlock.class);
                 if (hopper instanceof HopperBlockEntity hopperBlockEntity) {

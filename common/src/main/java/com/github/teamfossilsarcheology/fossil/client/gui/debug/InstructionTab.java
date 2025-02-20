@@ -186,7 +186,7 @@ public class InstructionTab extends DebugTab<Prehistoric> {
 
     public static void addPosition(BlockHitResult hitResult) {
         if (activeEntity == null) return;
-        BlockPos target = hitResult.getBlockPos().offset(hitResult.getDirection().getNormal());
+        BlockPos target = hitResult.getBlockPos().relative(hitResult.getDirection());
         if (positionMode == Instruction.Type.MOVE_TO) {
             INSTRUCTIONS.get(activeEntity.getUUID()).instructions.add(new Instruction.MoveTo(target));
         } else if (positionMode == Instruction.Type.FLY_LAND) {
