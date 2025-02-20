@@ -82,7 +82,13 @@ public class SleepSystem extends AISystem {
         if (mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.DIURNAL) {
             return !mob.level.isDay();
         } else if (mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.NOCTURNAL) {
-            return mob.level.isDay() && !mob.level.canSeeSky(mob.blockPosition().above());
+            if (!mob.level.isDay()) {
+                return false;
+            }
+            if (mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.AQUATIC || mob.aiMovingType() == PrehistoricEntityInfoAI.Moving.SEMI_AQUATIC) {
+                return mob.isInWater() || !mob.level.canSeeSky(mob.blockPosition().above());
+            }
+            return !mob.level.canSeeSky(mob.blockPosition().above());
         }
         return mob.aiActivityType() == PrehistoricEntityInfoAI.Activity.BOTH && ticksSlept <= 4000 && cathermalSleepCooldown == 0;
     }
