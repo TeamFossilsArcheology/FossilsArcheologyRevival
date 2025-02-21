@@ -61,13 +61,9 @@ public class CultureVatBlock extends CustomEntityBlock {
         for (Player player : nearby) {
             player.displayClientMessage(new TranslatableComponent("culture_vat.outBreak"), false);
         }
-        dropIron(level, pos);
-        dropInventory(level, pos);
 
         BlockEntity blockEntity = level.getBlockEntity(pos);
         if (!level.isClientSide && blockEntity instanceof BaseContainerBlockEntity container) {
-            level.destroyBlock(pos, false);
-            level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1, false);
             if (blockEntity.getBlockState().getValue(EMBRYO) == EmbryoType.PLANT) {
                 BlockState blockState = PrehistoricPlantInfo.MUTANT_PLANT.getPlantBlock().defaultBlockState();
                 level.setBlockAndUpdate(pos, blockState);
@@ -115,6 +111,10 @@ public class CultureVatBlock extends CustomEntityBlock {
                 entity.moveTo(pos.getX() + 0.5d, pos.getY() + 0.5d, pos.getZ() + 0.5d, level.random.nextFloat() * 360f, 0.0f);
                 level.addFreshEntity(entity);
             }
+            dropIron(level, pos);
+            dropInventory(level, pos);
+            level.destroyBlock(pos, false);
+            level.playLocalSound(pos.getX(), pos.getY(), pos.getZ(), SoundEvents.GLASS_BREAK, SoundSource.BLOCKS, 1, 1, false);
             level.removeBlockEntity(pos);
         }
     }
