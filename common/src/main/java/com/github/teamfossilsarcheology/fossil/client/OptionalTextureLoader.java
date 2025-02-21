@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
 import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
@@ -14,9 +15,8 @@ import java.util.Set;
 
 public class OptionalTextureLoader extends SimplePreparableReloadListener<Pair<Set<String>, Set<String>>> {
     public static final OptionalTextureLoader INSTANCE = new OptionalTextureLoader();
-    private static final String DIRECTORY = FossilMod.MOD_ID + "textures/entity";
+    private static final String DIRECTORY = "textures/entity";
     private static final String PATH_SUFFIX = ".png";
-    private static final int PATH_SUFFIX_LENGTH = PATH_SUFFIX.length();
     private final Set<String> babyTextures = new HashSet<>();
     private final Set<String> teenTextures = new HashSet<>();
 
@@ -25,20 +25,17 @@ public class OptionalTextureLoader extends SimplePreparableReloadListener<Pair<S
     protected @NotNull Pair<Set<String>, Set<String>> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
         ImmutableSet.Builder<String> babySetBuilder = ImmutableSet.builder();
         ImmutableSet.Builder<String> teenSetBuilder = ImmutableSet.builder();
-        int i = DIRECTORY.length() + 1;
-
-        for (ResourceLocation resourceLocation : resourceManager.listResources(DIRECTORY, string -> string.endsWith(PATH_SUFFIX))) {
-            if (!resourceLocation.getNamespace().equals(FossilMod.MOD_ID)) {
-                continue;
+        resourceManager.listPacks().filter(packResources -> packResources.getNamespaces(PackType.CLIENT_RESOURCES).contains(FossilMod.MOD_ID)).forEach(packResources -> {
+            for (ResourceLocation resourceLocation : packResources.getResources(PackType.CLIENT_RESOURCES, FossilMod.MOD_ID, DIRECTORY, Integer.MAX_VALUE, s -> s.endsWith(PATH_SUFFIX))) {
+                String path = resourceLocation.getPath();
+                String entityName = path.split("/")[2];
+                if (path.contains("baby")) {
+                    babySetBuilder.add(entityName);
+                } else if (path.contains("teen")) {
+                    teenSetBuilder.add(entityName);
+                }
             }
-            String path = resourceLocation.getPath();
-            String entityName = path.split("/")[2];
-            if (path.contains("baby")) {
-                babySetBuilder.add(entityName);
-            } else if (path.contains("teen")) {
-                teenSetBuilder.add(entityName);
-            }
-        }
+        });
         return Pair.of(babySetBuilder.build(), teenSetBuilder.build());
     }
 
