@@ -56,6 +56,9 @@ public class S2CSyncActiveAnimationMessage {
     public void apply(Supplier<NetworkManager.PacketContext> contextSupplier) {
         if (contextSupplier.get().getEnvironment() == Env.SERVER) return;
         contextSupplier.get().queue(() -> {
+            if (contextSupplier.get().getPlayer() == null) {//Can happen on world load
+                return;
+            }
             Entity entity = contextSupplier.get().getPlayer().level.getEntity(entityId);
             if (entity instanceof PrehistoricAnimatable<?> prehistoric) {
                 if (prehistoric.getAllAnimations().containsKey(animationName)) {

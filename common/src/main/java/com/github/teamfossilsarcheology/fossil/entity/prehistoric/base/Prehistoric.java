@@ -116,6 +116,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private static final EntityDataAccessor<Boolean> CLIMBING = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
     private static final EntityDataAccessor<Direction> CLIMBING_DIR = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.DIRECTION);
     private static final EntityDataAccessor<Boolean> AGING_DISABLED = SynchedEntityData.defineId(Prehistoric.class, EntityDataSerializers.BOOLEAN);
+    private static final int GROW_UP_INTERVAL = 120;
     private final AnimationFactory factory = GeckoLibUtil.createFactory(this);
     private final List<AISystem> aiSystems = new ArrayList<>();
     public final MoodSystem moodSystem = registerSystem(new MoodSystem(this));
@@ -138,7 +139,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     private int ticksClimbing = 0;
     private int climbingCooldown = 0;
     private Vec3 eatPos;
-    private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this);
+    private final EntityHitboxData<Prehistoric> hitboxData = EntityHitboxDataFactory.create(this, false, true);
     protected double swimSpeed;
     private boolean useLowerFluidJumpThreshold;
 
@@ -235,7 +236,8 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         super.defineSynchedData();
         entityData.define(EATING, false);
         entityData.define(MOOD, 0);
-        entityData.define(AGE_TICK, data().adultAgeInTicks());
+        //Quick fix to ensure adults also update AGE_TICK on spawn (which call refreshDimensions)
+        entityData.define(AGE_TICK, data().adultAgeInTicks() - 1);
         entityData.define(HUNGER, 0);
         entityData.define(FLEEING, false);
         entityData.define(SITTING, false);
@@ -312,7 +314,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     public void readAdditionalSaveData(CompoundTag compound) {
         super.readAdditionalSaveData(compound);
         aiSystems.forEach(system -> system.load(compound));
-        setAgeInTicks(compound.getInt("Age"));
+        int savedAge = compound.getInt("Age");
+        //When the mob was saved the position + bb were still calculated with savedAge - savedAge % GROW_UP_INTERVAL
+        //However on world load the mob calls refreshDimensions and if we were to use savedAge here the bb  would be
+        // ever so slightly offset and potentially inside a block and the mob would ignore collision for that block
+        setAgeInTicks(savedAge - savedAge % GROW_UP_INTERVAL);
         setMatingCooldown(compound.getInt("MatingCooldown"));
         setHunger(compound.getInt("Hunger"));
         setFleeing(compound.getBoolean("Fleeing"));
@@ -340,20 +346,24 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         dimensions = newDimensions;
         eyeHeight = getEyeHeight(pose, newDimensions);
         reapplyPosition();
-        if (!noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
+        if (!firstTick && !noPhysics && (newDimensions.width > oldDimensions.width || newDimensions.height > oldDimensions.height)) {
             Vec3 vec3 = position().add(0.0, oldDimensions.height / 2.0, 0.0);
             double wDiff = Math.max(0.0, newDimensions.width - oldDimensions.width) + 1.0E-6;
             double hDiff = Math.max(0.0, newDimensions.height - oldDimensions.height) + 1.0E-6;
             VoxelShape voxelShape = Shapes.create(AABB.ofSize(vec3, wDiff, hDiff, wDiff));
+            //Quite slow for very large mobs and borderline unusable if wDiff and hDiff are also very large (0 -> max)
             var opt = level.findFreePosition(this, voxelShape, vec3, newDimensions.width, newDimensions.height, newDimensions.width);
             if (opt.isPresent()) {
                 setPos(opt.get().add(0.0, (-newDimensions.height) / 2.0, 0.0));
             } else {
-                //This should prevent mobs from phasing throughs blocks while growing up
+                //This should prevent mobs from phasing through blocks while growing up
                 dimensions = oldDimensions;
                 eyeHeight = getEyeHeight(pose, oldDimensions);
                 reapplyPosition();
             }
+        }
+        for (MultiPart<?> part : getEntityHitboxData().getCustomParts()) {
+            part.getEntity().refreshDimensions();
         }
     }
 
@@ -870,7 +880,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         if (isAgingDisabled()) {
             return;
         }
-        if (tickCount % 120 == 0 || age > this.age + 120 || age < this.age - 120) {
+        if (tickCount % GROW_UP_INTERVAL == 0 || age > this.age + GROW_UP_INTERVAL || age < this.age - GROW_UP_INTERVAL) {
             this.age = age;
             entityData.set(AGE_TICK, age);
         } else {
