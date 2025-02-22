@@ -50,7 +50,7 @@ public class SmoothTurningMoveControl extends MoveControl {
             VoxelShape voxelShape = blockState.getCollisionShape(mob.level, blockPos);
             boolean jump = false;
             if (y > mob.maxUpStep && y <= 1.5) {
-                if (mob.getDeltaMovement().horizontalDistance() < Mth.EPSILON) {
+                if (mob.horizontalCollision) {
                     jump = true;
                 } else {
                     //jumpDistance: horizontal speed * time until jump done

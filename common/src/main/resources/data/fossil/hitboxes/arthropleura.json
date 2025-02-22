@@ -1,15 +1,21 @@
 {
 	"elements": [
 		{
+			"name": "head",
+			"pos": [0, 0, 13],
+			"width": 8,
+			"height": 5
+		},
+		{
 			"name": "body1",
-			"pos": [0, 0, 9],
-			"width": 18,
+			"pos": [0, 0, 3],
+			"width": 16,
 			"height": 5
 		},
 		{
 			"name": "body2",
-			"pos": [0, 0, -9],
-			"width": 18,
+			"pos": [0, 0, -13],
+			"width": 16,
 			"height": 5
 		},
 		{
