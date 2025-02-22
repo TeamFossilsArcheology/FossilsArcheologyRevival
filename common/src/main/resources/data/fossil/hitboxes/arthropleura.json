@@ -1,6 +1,18 @@
 {
 	"elements": [
 		{
+			"name": "body1",
+			"pos": [0, 0, 9],
+			"width": 18,
+			"height": 5
+		},
+		{
+			"name": "body2",
+			"pos": [0, 0, -9],
+			"width": 18,
+			"height": 5
+		},
+		{
 			"name": "rider_pos",
 			"pos": [0, 3.5, -1],
 			"ref": "rider_pos",

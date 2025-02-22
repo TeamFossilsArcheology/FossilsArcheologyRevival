@@ -516,11 +516,6 @@
 					"position": {
 						"vector": [0, "0+math.clamp(math.cos(query.anim_time*90*3*2-90)*0.2,0,2)", "0+math.sin(query.anim_time*90*3*2+90)*0.1"]
 					}
-				},
-				"bone": {
-					"position": {
-						"vector": [0, 2, 0]
-					}
 				}
 			}
 		},
