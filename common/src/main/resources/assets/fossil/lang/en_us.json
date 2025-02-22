@@ -582,6 +582,7 @@
   "entity.fossil.toy_tethered_log": "Tethered Log",
   "entity.fossil.toy_scratching_post": "Scratching Post",
   "entity.fossil.thrown_bird_egg": "Bird Egg",
+  "entity.fossil.flying.disabled": "Flying has been disabled on this server",
   "itemGroup.fossil.fa_block_tab": "Fossil Revival Blocks",
   "itemGroup.fossil.fa_mob_item_tab": "Fossil Revival Mob Items",
   "itemGroup.fossil.fa_other_item_tab": "Fossil Revival Other Items",

@@ -4,12 +4,14 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Supplier;
 
 public class C2SRiderForceFlyingMessage {
+    private static final TranslatableComponent FLYING_DISABLED = new TranslatableComponent("entity.fossil.flying.disabled");
     private final int entityId;
     private final boolean flying;
 
@@ -33,7 +35,9 @@ public class C2SRiderForceFlyingMessage {
         contextSupplier.get().queue(() -> {
             Player player = contextSupplier.get().getPlayer();
             Entity entity = player.level.getEntity(entityId);
-            if (entity instanceof PrehistoricFlying mob) {
+            if (player.getServer() != null && !player.getServer().isFlightAllowed()) {
+                player.displayClientMessage(FLYING_DISABLED, false);
+            } else if (entity instanceof PrehistoricFlying mob) {
                 Entity rider = entity.getControllingPassenger();
                 if (rider != null && rider.getId() == player.getId()) {
                     if (flying) {
