@@ -376,7 +376,8 @@ public class ModBlocks {
     public static final RegistrySupplier<Block> TEMPSKYA_TOP = registerBlock("tempskya_top",
             () -> new TempskyaTopBlock(Properties.of(Material.PLANT).noOcclusion().sound(SoundType.GRASS)));
     public static final RegistrySupplier<Block> TEMPSKYA_LEAF = registerBlock("tempskya_leaf",
-            () -> new TempskyaLeafBlock(Properties.of(Material.LEAVES).noCollission().noOcclusion().sound(SoundType.GRASS)));
+            () -> new TempskyaLeafBlock(Properties.of(Material.LEAVES).noCollission().noOcclusion()
+                    .isSuffocating(ModBlocks::never).isViewBlocking(ModBlocks::never).sound(SoundType.GRASS)));
     public static final List<RegistrySupplier<VaseBlock>> VASES = new ArrayList<>();
     public static final List<Pair<DyeColor, RegistrySupplier<VaseBlock>>> VASES_WITH_COLOR = new ArrayList<>();
     public static final RegistrySupplier<VaseBlock> VOLUTE_VASE_DAMAGED = registerVolute(VaseBlock.VaseVariant.DAMAGED);
