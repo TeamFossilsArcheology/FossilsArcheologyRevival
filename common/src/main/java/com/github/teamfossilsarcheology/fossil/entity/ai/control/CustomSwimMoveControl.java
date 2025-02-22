@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.entity.ai.control;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import com.github.teamfossilsarcheology.fossil.entity.util.Util;
+import net.minecraft.core.BlockPos;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.ai.control.SmoothSwimmingMoveControl;
 
@@ -51,6 +52,9 @@ public class CustomSwimMoveControl<T extends Prehistoric & SwimmingAnimal> exten
                     float l = Mth.sin(mob.getXRot() * Mth.DEG_TO_RAD);
                     mob.zza = k * i;
                     mob.yya = -l * i;
+                    if (mob.isAmphibious() && mob.level.getFluidState(new BlockPos(wantedX, wantedY, wantedZ)).isEmpty()) {
+                        mob.getJumpControl().jump();
+                    }
                 }
             }
         } else {
