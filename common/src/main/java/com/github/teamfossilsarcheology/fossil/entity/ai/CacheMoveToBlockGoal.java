@@ -123,10 +123,8 @@ public abstract class CacheMoveToBlockGoal extends Goal {
     }
 
     protected boolean createPath() {
-        var old = entity.getAttribute(Attributes.FOLLOW_RANGE).getBaseValue();
-        entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(32);
-        path = entity.getNavigation().createPath(getMoveToTarget().getX() + 0.5d, getMoveToTarget().getY(), getMoveToTarget().getZ() + 0.5d, 1);
-        entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(old);
+        //Needs to be this one because it will otherwise move to the target one block up
+        path = entity.getNavigation().createPath(getMoveToTarget(), 1, 32);
         return path != null;
     }
 
@@ -140,7 +138,7 @@ public abstract class CacheMoveToBlockGoal extends Goal {
 
     public double acceptedDistance() {
         if (entity.getEntityHitboxData().hasCustomParts()) {
-            return entity.getEntityHitboxData().getHeadRadius() * entity.getScale() + 1;
+            return entity.getEntityHitboxData().getHeadRadius() * entity.getScale() + 0.7;
         }
         return entity.getBbWidth() / 2 + 1;
     }

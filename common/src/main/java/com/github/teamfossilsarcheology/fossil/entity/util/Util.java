@@ -84,7 +84,7 @@ public class Util {
             fluid = ClipContext.Fluid.ANY;
         }
         BlockHitResult rayTrace = dino.getLevel().clip(new ClipContext(dino.getEyePosition(), target, ClipContext.Block.COLLIDER, fluid, dino));
-        return rayTrace.getType() != HitResult.Type.MISS && position.equals(rayTrace.getBlockPos());
+        return position.equals(rayTrace.getBlockPos());
     }
 
     public static double attributeToSpeed(double speed) {
