@@ -237,6 +237,6 @@ public class WorktableBlockEntityImpl extends FabricContainerBlockEntity impleme
 
     @Override
     public boolean canTakeItemThroughFace(int slot, @NotNull ItemStack stack, @NotNull Direction direction) {
-        return direction != Direction.DOWN || slot != WorktableMenu.FUEL_SLOT_ID;
+        return direction != Direction.UP && slot == WorktableMenu.OUTPUT_SLOT_ID;
     }
 }

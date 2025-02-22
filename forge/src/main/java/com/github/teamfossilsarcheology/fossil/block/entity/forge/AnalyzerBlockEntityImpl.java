@@ -206,6 +206,6 @@ public class AnalyzerBlockEntityImpl extends ForgeEnergyContainerBlockEntity imp
 
     @Override
     public boolean canTakeItemThroughFace(int slot, @NotNull ItemStack stack, @NotNull Direction direction) {
-        return direction != Direction.DOWN || slot >= SLOTS_FOR_DOWN[0];
+        return direction != Direction.UP && slot >= SLOTS_FOR_DOWN[0];
     }
 }

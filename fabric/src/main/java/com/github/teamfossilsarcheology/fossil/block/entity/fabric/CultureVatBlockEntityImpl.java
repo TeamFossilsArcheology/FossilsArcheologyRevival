@@ -240,11 +240,16 @@ public class CultureVatBlockEntityImpl extends FabricEnergyContainerBlockEntity 
 
     @Override
     public void setItem(int slot, @NotNull ItemStack stack) {
+        ItemStack current = items.get(slot);
+        boolean sameItems = !stack.isEmpty() && stack.sameItem(current) && ItemStack.tagMatches(stack, current);
         items.set(slot, stack);
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());
         }
-        setChanged();
+        if (slot == CultureVatMenu.INPUT_SLOT_ID && !sameItems) {
+            cookingProgress = 0;
+            setChanged();
+        }
     }
 
     @Override

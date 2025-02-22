@@ -146,7 +146,7 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
                 dirty = true;
             }
         }
-        if (litTime == 0 && cookingProgress > 0) {
+        if (litTime == 0 && cookingProgress > 0 || litTime > 0 && cookingProgress > 0 && !canProcess(fuel)) {
             cookingProgress = Mth.clamp(cookingProgress - 2, 0, CultureVatMenu.CULTIVATION_DURATION);
         }
 
@@ -244,11 +244,16 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
 
     @Override
     public void setItem(int slot, ItemStack stack) {
+        ItemStack current = items.get(slot);
+        boolean sameItems = !stack.isEmpty() && stack.sameItem(current) && ItemStack.tagMatches(stack, current);
         items.set(slot, stack);
         if (stack.getCount() > getMaxStackSize()) {
             stack.setCount(getMaxStackSize());
         }
-        setChanged();
+        if (slot == CultureVatMenu.INPUT_SLOT_ID && !sameItems) {
+            cookingProgress = 0;
+            setChanged();
+        }
     }
 
     @Override
@@ -274,6 +279,6 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
 
     @Override
     public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
-        return direction != Direction.DOWN || index != CultureVatMenu.FUEL_SLOT_ID;
+        return direction != Direction.UP && index == CultureVatMenu.OUTPUT_SLOT_ID;
     }
 }

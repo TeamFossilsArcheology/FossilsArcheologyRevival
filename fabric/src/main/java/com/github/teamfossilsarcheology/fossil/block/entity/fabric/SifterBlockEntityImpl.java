@@ -176,6 +176,6 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
 
     @Override
     public boolean canTakeItemThroughFace(int index, @NotNull ItemStack stack, @NotNull Direction direction) {
-        return direction != Direction.DOWN || index >= SLOTS_FOR_DOWN[0];
+        return direction != Direction.UP && index >= SLOTS_FOR_DOWN[0];
     }
 }

@@ -76,7 +76,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         boolean dirty = false;
         ItemStack foodStack = blockEntity.getItem(FeederMenu.MEAT_SLOT_ID);
         if (!foodStack.isEmpty()) {
-            if (blockEntity.canPlaceItem(FeederMenu.MEAT_SLOT_ID, foodStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
+            if (blockEntity.ticksExisted % 5 == 0 && blockEntity.meat < 10000) {
                 int foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.CARNIVORE_EGG);
                 if (foodPoints == 0) {
                     foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.PISCI_CARNIVORE);
@@ -90,7 +90,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
         }
         foodStack = blockEntity.getItem(FeederMenu.PLANT_SLOT_ID);
         if (!foodStack.isEmpty()) {
-            if (blockEntity.canPlaceItem(FeederMenu.PLANT_SLOT_ID, foodStack) && blockEntity.ticksExisted % 5 == 0 && blockEntity.plant < 10000) {
+            if (blockEntity.ticksExisted % 5 == 0 && blockEntity.plant < 10000) {
                 int foodPoints = FoodMappings.getFoodAmount(foodStack.getItem(), Diet.HERBIVORE);
                 if (foodPoints > 0) {
                     dirty = true;
@@ -227,6 +227,16 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
     }
 
     @Override
+    public boolean canPlaceItem(int index, ItemStack stack) {
+        if (index == FeederMenu.MEAT_SLOT_ID) {
+            return FoodMappings.getFoodAmount(stack.getItem(), Diet.CARNIVORE_EGG) > 0 || FoodMappings.getFoodAmount(stack.getItem(), Diet.PISCI_CARNIVORE) > 0;
+        } else if (index == FeederMenu.PLANT_SLOT_ID) {
+            return FoodMappings.getFoodAmount(stack.getItem(), Diet.HERBIVORE) > 0;
+        }
+        return false;
+    }
+
+    @Override
     public int @NotNull [] getSlotsForFace(Direction side) {
         return side != Direction.DOWN ? SLOTS_TOP : new int[]{};
     }
@@ -238,7 +248,7 @@ public class FeederBlockEntity extends BaseContainerBlockEntity implements World
 
     @Override
     public boolean canTakeItemThroughFace(int index, ItemStack stack, Direction direction) {
-        return direction != Direction.DOWN;
+        return false;
     }
 
     public void setMeat(int meat) {
