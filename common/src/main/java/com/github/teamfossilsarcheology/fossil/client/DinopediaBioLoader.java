@@ -6,10 +6,8 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
 import net.minecraft.locale.Language;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
@@ -24,16 +22,14 @@ import java.util.Map;
 /**
  * Loads dinopedia bio entries for the currently selected language and fallback language
  */
-public class DinopediaBioLoader extends SimplePreparableReloadListener<Map<String, Map<String, String>>> {
+public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<String, String>>> {
     public static final DinopediaBioLoader INSTANCE = new DinopediaBioLoader();
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final String DIRECTORY = "dinopedia";
-    private static final String PATH_SUFFIX = ".txt";
-    private static final int PATH_SUFFIX_LENGTH = PATH_SUFFIX.length();
     private ImmutableMap<String, String> englishFallback = ImmutableMap.of();
     private ImmutableMap<String, String> dinopediaTexts = ImmutableMap.of();
 
     public DinopediaBioLoader() {
+        super(FossilMod.MOD_ID, "dinopedia", ".txt");
     }
 
     @Override
@@ -41,26 +37,24 @@ public class DinopediaBioLoader extends SimplePreparableReloadListener<Map<Strin
         ImmutableMap.Builder<String, Map<String, String>> mapBuilder = ImmutableMap.builder();
         ImmutableMap.Builder<String, String> selectedLangBuilder = ImmutableMap.builder();
         ImmutableMap.Builder<String, String> fallbackLangBuilder = ImmutableMap.builder();
-        int i = DIRECTORY.length() + 1;
+        int i = directory.length() + 1;
         String selectedLang = Minecraft.getInstance().options.languageCode;
-        resourceManager.listPacks().filter(packResources -> packResources.getNamespaces(PackType.CLIENT_RESOURCES).contains(FossilMod.MOD_ID)).forEach(packResources -> {
-            for (ResourceLocation resourceLocation : packResources.getResources(PackType.CLIENT_RESOURCES, FossilMod.MOD_ID, DIRECTORY, Integer.MAX_VALUE, s -> s.endsWith(PATH_SUFFIX))) {
-                String path = resourceLocation.getPath();
-                ResourceLocation locationWithLang = new ResourceLocation(resourceLocation.getNamespace(), path.substring(i, path.length() - PATH_SUFFIX_LENGTH));
-                try {
-                    String[] dinoInfo = locationWithLang.getPath().split("/");
-                    if (Language.DEFAULT.equals(dinoInfo[0])) {
-                        fallbackLangBuilder.put(dinoInfo[1], readFile(resourceManager, resourceLocation));
-                    }
-                    if (!selectedLang.equals(dinoInfo[0])) {
-                        continue;
-                    }
-                    selectedLangBuilder.put(dinoInfo[1], readFile(resourceManager, resourceLocation));
-                } catch (IOException | IllegalArgumentException exception) {
-                    LOGGER.error("Couldn't parse data file {} from {}", locationWithLang, resourceLocation, exception);
+        for (ResourceLocation resourceLocation : listResources(resourceManager)) {
+            String path = resourceLocation.getPath();
+            ResourceLocation locationWithLang = new ResourceLocation(resourceLocation.getNamespace(), path.substring(i, path.length() - suffix.length()));
+            try {
+                String[] dinoInfo = locationWithLang.getPath().split("/");
+                if (Language.DEFAULT.equals(dinoInfo[0])) {
+                    fallbackLangBuilder.put(dinoInfo[1], readFile(resourceManager, resourceLocation));
                 }
+                if (!selectedLang.equals(dinoInfo[0])) {
+                    continue;
+                }
+                selectedLangBuilder.put(dinoInfo[1], readFile(resourceManager, resourceLocation));
+            } catch (IOException | IllegalArgumentException exception) {
+                LOGGER.error("Couldn't parse data file {} from {}", locationWithLang, resourceLocation, exception);
             }
-        });
+        }
         mapBuilder.put(selectedLang, selectedLangBuilder.build());
         if (!selectedLang.equals(Language.DEFAULT)) {
             mapBuilder.put(Language.DEFAULT, fallbackLangBuilder.build());

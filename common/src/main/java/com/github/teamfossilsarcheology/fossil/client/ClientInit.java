@@ -18,7 +18,6 @@ import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.entity.Quagga;
 import com.github.teamfossilsarcheology.fossil.entity.animation.AnimationCategoryLoader;
 import com.github.teamfossilsarcheology.fossil.entity.animation.ClientAnimationInfoLoader;
-import com.github.teamfossilsarcheology.fossil.entity.animation.SkeletonGeoModelLoader;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.*;
 import com.github.teamfossilsarcheology.fossil.inventory.ModMenus;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;

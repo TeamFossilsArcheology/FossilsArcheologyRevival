@@ -1,12 +1,10 @@
-package com.github.teamfossilsarcheology.fossil.entity.animation;
+package com.github.teamfossilsarcheology.fossil.client;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.google.common.collect.ImmutableMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraft.server.packs.resources.SimplePreparableReloadListener;
 import net.minecraft.util.profiling.ProfilerFiller;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib3.file.AnimationFileLoader;
@@ -22,30 +20,27 @@ import java.util.Map;
 /**
  * Loads different instances of the geo models to prevent the skeletons from playing geckolib animations
  */
-public class SkeletonGeoModelLoader extends SimplePreparableReloadListener<Map<ResourceLocation, GeoModel>> {
+public class SkeletonGeoModelLoader extends ClientResourceLoader<Map<ResourceLocation, GeoModel>> {
     public static final SkeletonGeoModelLoader INSTANCE = new SkeletonGeoModelLoader();
-    private static final String DIRECTORY = "geo/entity";
-    private static final String PATH_SUFFIX = ".json";
     private Map<ResourceLocation, GeoModel> geoModels = ImmutableMap.of();
 
     public SkeletonGeoModelLoader() {
+        super(FossilMod.MOD_ID, "geo/entity", ".json");
     }
 
     @Override
     protected @NotNull Map<ResourceLocation, GeoModel> prepare(ResourceManager resourceManager, ProfilerFiller profiler) {
         Map<ResourceLocation, GeoModel> map = new Object2ObjectOpenHashMap<>();
-        resourceManager.listPacks().filter(packResources -> packResources.getNamespaces(PackType.CLIENT_RESOURCES).contains(FossilMod.MOD_ID)).forEach(packResources -> {
-            for (ResourceLocation resourceLocation : packResources.getResources(PackType.CLIENT_RESOURCES, FossilMod.MOD_ID, DIRECTORY, Integer.MAX_VALUE, s -> s.endsWith(PATH_SUFFIX))) {
-                try {
-                    RawGeoModel rawModel = Converter.fromJsonString(AnimationFileLoader.getResourceAsString(resourceLocation, resourceManager));
-                    RawGeometryTree rawGeometryTree = RawGeometryTree.parseHierarchy(rawModel);
-                    map.put(resourceLocation, GeoBuilder.getGeoBuilder(FossilMod.MOD_ID).constructGeoModel(rawGeometryTree));
-                } catch (IOException e) {
-                    FossilMod.LOGGER.error(String.format("Error parsing %s", resourceLocation), e);
-                    throw new RuntimeException(e);
-                }
+        for (ResourceLocation resourceLocation : listResources(resourceManager)) {
+            try {
+                RawGeoModel rawModel = Converter.fromJsonString(AnimationFileLoader.getResourceAsString(resourceLocation, resourceManager));
+                RawGeometryTree rawGeometryTree = RawGeometryTree.parseHierarchy(rawModel);
+                map.put(resourceLocation, GeoBuilder.getGeoBuilder(FossilMod.MOD_ID).constructGeoModel(rawGeometryTree));
+            } catch (IOException e) {
+                FossilMod.LOGGER.error(String.format("Error parsing %s", resourceLocation), e);
+                throw new RuntimeException(e);
             }
-        });
+        }
         return map;
     }
 
