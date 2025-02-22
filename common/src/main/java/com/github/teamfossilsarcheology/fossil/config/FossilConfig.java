@@ -20,6 +20,7 @@ public class FossilConfig {
     public static final String GENERATE_VOLCANO_BIOME = "generateVolcanoBiome";
     public static final String VOLCANO_BIOME_RARITY = "volcanoBiomeRarity";
 
+    public static final String FISH_ARE_PERSISTENT = "fishArePersistent";
     public static final String SPAWN_ALLIGATOR_GAR = "spawnAlligatorGar";
     public static final String ALLIGATOR_GAR_SPAWN_WEIGHT = "alligatorGarSpawnWeight";
     public static final String SPAWN_COELACANTH = "spawnCoelacanth";

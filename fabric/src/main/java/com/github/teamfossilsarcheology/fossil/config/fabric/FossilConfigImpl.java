@@ -48,6 +48,8 @@ public class FossilConfigImpl extends MidnightConfig {
     @MidnightConfig.Comment
     public static MidnightConfig.Comment spawn;
     @MidnightConfig.Entry
+    public static boolean fishArePersistent = true;
+    @MidnightConfig.Entry
     public static boolean spawnAlligatorGar = true;
     @MidnightConfig.Entry(min = 0, max = 1000000)
     public static int alligatorGarSpawnWeight = 4;

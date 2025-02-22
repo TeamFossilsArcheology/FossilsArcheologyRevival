@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.item;
 
 import com.github.teamfossilsarcheology.fossil.advancements.ModTriggers;
+import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.EntityInfo;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import net.minecraft.core.BlockPos;
@@ -26,6 +27,9 @@ public class FishEggItem extends PrehistoricEntityItem {
             entity.moveTo(pos.getX() + 0.5, pos.getY() + 1, pos.getZ() + 0.5, level.random.nextFloat() * 360, 0);
             if (mob instanceof Prehistoric) {
                 mob.finalizeSpawn(level, level.getCurrentDifficultyAt(entity.blockPosition()), MobSpawnType.BREEDING, new Prehistoric.PrehistoricGroupData(-1), null);
+            }
+            if (FossilConfig.isEnabled(FossilConfig.FISH_ARE_PERSISTENT)) {
+                mob.setPersistenceRequired();
             }
             level.addFreshEntity(entity);
             return true;

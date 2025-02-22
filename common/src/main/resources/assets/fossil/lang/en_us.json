@@ -881,6 +881,8 @@
   "fossil.midnightconfig.spawnNautilus.tooltip": "True if Nautilus are to spawn naturally in oceans",
   "fossil.midnightconfig.spawnCoelacanth": "Spawn Coelacanth",
   "fossil.midnightconfig.spawnCoelacanth.tooltip": "True if Coelacanths are to spawn naturally in oceans",
+  "fossil.midnightconfig.fishArePersistent": "Player fish never despawn",
+  "fossil.midnightconfig.fishArePersistent.tooltip": "True if fish spawned via fish egg item should never despawn",
   "fossil.midnightconfig.spawnAlligatorGar": "Spawn Alligator Gar",
   "fossil.midnightconfig.spawnAlligatorGar.tooltip": "True if Alligator Gars are to spawn naturally in swamps",
   "fossil.midnightconfig.spawnSturgeon": "Spawn Sturgeon",

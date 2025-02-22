@@ -8,6 +8,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import com.github.teamfossilsarcheology.fossil.util.Gender;
 import com.github.teamfossilsarcheology.fossil.util.Version;
+import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -43,6 +44,14 @@ public class Dodo extends Prehistoric {
     }
 
     @Override
+    public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+        if (level.isClientSide && DATA_CUSTOM_NAME.equals(key)) {
+            refreshTexturePath();
+        }
+        super.onSyncedDataUpdated(key);
+    }
+
+    @Override
     protected void registerGoals() {
         super.registerGoals();
     }
@@ -56,6 +65,8 @@ public class Dodo extends Prehistoric {
         builder.append("textures/entity/dodo/dodo");
         if (getVariant() == Variant.FESTIVE) {
             builder.append("_festive");
+        }  else if ("Steve".equals(ChatFormatting.stripFormatting(getName().getString()))) {
+            builder.append("_steve");
         } else {
             if (isBaby()) builder.append("_baby");
             if (isTeen() || isAdult()) {
