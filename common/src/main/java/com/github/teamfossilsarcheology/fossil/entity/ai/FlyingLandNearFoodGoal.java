@@ -66,7 +66,7 @@ public class FlyingLandNearFoodGoal extends MoveToFoodGoal {
                 .map(Map.Entry::getKey)
                 .min(Comparator.comparingInt(pos -> pos.distManhattan(mobPos)));
         if (target.isPresent()) {
-            targetPos = Vec3.atCenterOf(target.get());
+            targetPos = Vec3.atCenterOf(target.get()).add(0, 1, 0);
             return true;
         }
         return false;
