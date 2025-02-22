@@ -153,20 +153,25 @@ public class PrehistoricSkeleton extends Entity implements IAnimatable {
         }
         if (TYPE.equals(key) && level.isClientSide) {
             List<HitboxData> hitboxesData = HitboxDataLoader.HITBOX_DATA.getHitboxes(FossilMod.location(info().resourceName));
-            float maxFrustumWidthRadius = 0;
-            float maxFrustumHeight = 0;
-            for (HitboxData hitboxData : hitboxesData) {
-                float w = hitboxData.getFrustumWidthRadius();
-                if (w > maxFrustumWidthRadius) {
-                    maxFrustumWidthRadius = w;
+            if (hitboxesData != null) {
+                float maxFrustumWidthRadius = 0;
+                float maxFrustumHeight = 0;
+                for (HitboxData hitboxData : hitboxesData) {
+                    float w = hitboxData.getFrustumWidthRadius();
+                    if (w > maxFrustumWidthRadius) {
+                        maxFrustumWidthRadius = w;
+                    }
+                    float h = hitboxData.getFrustumHeight();
+                    if (h > maxFrustumHeight) {
+                        maxFrustumHeight = h;
+                    }
                 }
-                float h = hitboxData.getFrustumHeight();
-                if (h > maxFrustumHeight) {
-                    maxFrustumHeight = h;
-                }
+                frustumWidthRadius = maxFrustumWidthRadius;
+                frustumHeight = maxFrustumHeight;
+            } else {
+                frustumWidthRadius = getBbWidth();
+                frustumHeight = getBbHeight();
             }
-            frustumWidthRadius = maxFrustumWidthRadius;
-            frustumHeight = maxFrustumHeight;
             makeBoundingBoxForCulling(frustumWidthRadius, frustumHeight);
         }
     }
