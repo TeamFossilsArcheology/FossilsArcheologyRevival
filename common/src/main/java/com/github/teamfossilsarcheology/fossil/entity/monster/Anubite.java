@@ -199,6 +199,7 @@ public class Anubite extends PathfinderMob {
         public void tick() {
             if (anubite.getTarget() == null) {
                 super.setTarget(null);
+                return;
             }
             if (pendingTarget != null) {
                 if (--aggroTime <= 0) {
@@ -207,15 +208,15 @@ public class Anubite extends PathfinderMob {
                     super.start();
                 }
             } else {
-                if (target != null && !anubite.isPassenger()) {
+                if (target != null) {
                     if (anubite.shouldAttackPlayer(target)) {
                         if (target.distanceToSqr(anubite) > 45 && anubite.random.nextInt(55) == 0) {
                             anubite.teleportRandomly();
                         }
                         teleportTime = 0;
+                    } else if (target.distanceToSqr(anubite) > 256 && teleportTime++ >= 30 && anubite.teleportTowards(target)) {
+                        teleportTime = 0;
                     }
-                } else if (target.distanceToSqr(anubite) > 256 && teleportTime++ >= 30 && anubite.teleportTowards(target)) {
-                    teleportTime = 0;
                 }
             }
         }
