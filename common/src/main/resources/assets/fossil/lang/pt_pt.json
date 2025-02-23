@@ -263,7 +263,6 @@
   "fossil.midnightconfig.generatePermafrost.tooltip": "\"True\" para que os Blocos de Permafrost serem gerados naturalmente",
   "fossil.midnightconfig.generateVolcanicRock.tooltip": "\"True\" para que as Rochas Vulcânicas serem geradas Naturalmente",
   "fossil.midnightconfig.generateMoai.tooltip": "\"True\" para que as Estátuas Moai serem geradas naturalmente",
-  "fossil.midnightconfig.generateTarPits.tooltip": "\"True\" para que as poças de crude serem geradas naturalmente.\nIsto afeta apenas as poças menores sem tendas.",
   "fossil.midnightconfig.generateVolcanoBiome.tooltip": "\"True\" para que Biomas de Vulcão serem gerados naturalmente",
   "fossil.midnightconfig.fossilOreRarity": "Raridade dos Blocos com Fósseis",
   "fossil.midnightconfig.fossilOreRarity.tooltip": "Raridade dos Blocos com Fósseis. Maior o número = maior quantidade por chunk",
