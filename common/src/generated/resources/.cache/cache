@@ -3117,9 +3117,9 @@ e85b1e87d8d56a65361912f7df623eb625cd36aa data/minecraft/tags/blocks/wooden_slabs
 bee5cba5f98c872b4cdc4863f1df13e8bd5da8b5 data/minecraft/tags/blocks/wooden_trapdoors.json
 16ea32e776f7e8ecb765cf38f94291679a5837cd data/minecraft/tags/entity_types/freeze_immune_entity_types.json
 f5091f335ef44cbfae9b3570a499c9dd3ba23c98 data/minecraft/tags/items/beds.json
+335d47c614bc9036d13b6b89e3bb4caa48ae0824 data/minecraft/tags/items/creeper_drop_music_discs.json
 b1ced62e0f6341723907659b01d05e7acd126aa0 data/minecraft/tags/items/dirt.json
 5bfb811528237ccb2695d5a79d74c1cdbff7b65a data/minecraft/tags/items/leaves.json
-335d47c614bc9036d13b6b89e3bb4caa48ae0824 data/minecraft/tags/items/music_discs.json
 76753755480b59de9869d6055460bdb4220923b4 data/minecraft/tags/items/planks.json
 14acb6a1e1f0d83d2db3d851310f3b3f93c63285 data/minecraft/tags/items/rails.json
 d5e7a157d66fea4faa3c5278aa4a8ddac4183645 data/minecraft/tags/items/saplings.json

@@ -457,6 +457,7 @@ public class AnimationLogic<T extends Mob & PrehistoricAnimatable<T>> {
             //the deltaMovement of the animation should match the mobs deltaMovement
             double f = entity.isOnGround() ? entity.level.getBlockState(entity.blockPosition().below()).getBlock().getFriction() * 0.91F : 0.91F;
             double mobSpeed = entity.getDeltaMovement().multiply(1 / f, 0, 1 / f).horizontalDistance() * 20;
+            //TODO: use old diff with old pos instead. This wont work on other clients
             //Limit mobSpeed to the mobs maximum natural movement speed
             mobSpeed = Math.min(Util.attributeToSpeed(attributeSpeed), mobSpeed);
             //All animations were done for a specific movespeed -> Slow down animation if mobSpeed is slower than that speed
