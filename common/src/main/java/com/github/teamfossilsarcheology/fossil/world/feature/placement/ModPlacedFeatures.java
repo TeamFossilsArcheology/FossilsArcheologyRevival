@@ -56,9 +56,15 @@ public class ModPlacedFeatures {
                 new LazyRarityFilter(FossilConfig.MOAI_RARITY), InSquarePlacement.spread(),
                 PlacementUtils.HEIGHTMAP_WORLD_SURFACE);
 
-        var fossilBlockPlaced = PlacementUtils.register("fossil_block_placed", ModOreFeatures.FOSSIL_BLOCK,
+        var upperFossilBlockPlaced = PlacementUtils.register("fossil_block_placed_upper", ModOreFeatures.FOSSIL_BLOCK,
                 commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
-                        HeightRangePlacement.triangle(VerticalAnchor.aboveBottom(-0), VerticalAnchor.aboveBottom(128))));
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(81), VerticalAnchor.top())));
+        var middleFossilBlockPlaced = PlacementUtils.register("fossil_block_placed_middle", ModOreFeatures.FOSSIL_BLOCK,
+                commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
+                        HeightRangePlacement.triangle(VerticalAnchor.absolute(0), VerticalAnchor.absolute(80))));
+        var deepFossilBlockPlaced = PlacementUtils.register("fossil_block_placed_deep", ModOreFeatures.FOSSIL_BLOCK,
+                commonOrePlacement(FossilConfig.FOSSIL_ORE_RARITY, // VeinsPerChunk
+                        HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(0))));
 
         var volcanicRockPlaced = PlacementUtils.register("volcanic_rock_placed", ModOreFeatures.VOLCANIC_ROCK,
                 commonOrePlacement(2, HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(0))));
@@ -72,7 +78,9 @@ public class ModPlacedFeatures {
                 commonOrePlacement(5, HeightRangePlacement.triangle(VerticalAnchor.absolute(-10), VerticalAnchor.absolute(80))));
         BiomeModifications.addProperties((context, mutable) -> {
             if (FossilConfig.isEnabled(FossilConfig.GENERATE_FOSSILS)) {
-                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, fossilBlockPlaced);
+                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, upperFossilBlockPlaced);
+                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, middleFossilBlockPlaced);
+                mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, deepFossilBlockPlaced);
             }
             if (FossilConfig.isEnabled(FossilConfig.GENERATE_VOLCANIC_ROCK)) {
                 mutable.getGenerationProperties().addFeature(GenerationStep.Decoration.UNDERGROUND_ORES, volcanicRockPlaced);

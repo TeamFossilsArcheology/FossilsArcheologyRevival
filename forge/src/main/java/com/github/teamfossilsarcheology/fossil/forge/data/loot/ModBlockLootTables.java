@@ -145,9 +145,9 @@ public class ModBlockLootTables extends BlockLoot {
 
     private LootPoolSingletonContainer.Builder<?> fossilReference(String location, LootItemCondition.Builder condition) {
         if (condition == null) {
-            return LootTableReference.lootTableReference(FossilMod.location(location)).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE));
+            return LootTableReference.lootTableReference(FossilMod.location(location));
         }
-        return LootTableReference.lootTableReference(FossilMod.location(location)).when(condition).apply(ApplyBonusCount.addOreBonusCount(Enchantments.BLOCK_FORTUNE));
+        return LootTableReference.lootTableReference(FossilMod.location(location)).when(condition);
     }
 
     private LootItemCondition.Builder enchant(Enchantment enchantment, int value) {

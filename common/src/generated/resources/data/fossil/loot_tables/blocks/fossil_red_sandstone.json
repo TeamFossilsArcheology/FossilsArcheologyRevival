@@ -56,13 +56,6 @@
                       }
                     }
                   ],
-                  "functions": [
-                    {
-                      "function": "minecraft:apply_bonus",
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops"
-                    }
-                  ],
                   "name": "fossil:regular_fossil_arch_1"
                 },
                 {
@@ -78,13 +71,6 @@
                           }
                         ]
                       }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:apply_bonus",
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops"
                     }
                   ],
                   "name": "fossil:regular_fossil_arch_2"
@@ -104,13 +90,6 @@
                       }
                     }
                   ],
-                  "functions": [
-                    {
-                      "function": "minecraft:apply_bonus",
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops"
-                    }
-                  ],
                   "name": "fossil:regular_fossil_arch_3"
                 },
                 {
@@ -126,13 +105,6 @@
                           }
                         ]
                       }
-                    }
-                  ],
-                  "functions": [
-                    {
-                      "function": "minecraft:apply_bonus",
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops"
                     }
                   ],
                   "name": "fossil:regular_fossil_paleo_1"
@@ -152,13 +124,6 @@
                       }
                     }
                   ],
-                  "functions": [
-                    {
-                      "function": "minecraft:apply_bonus",
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops"
-                    }
-                  ],
                   "name": "fossil:regular_fossil_paleo_2"
                 },
                 {
@@ -176,24 +141,10 @@
                       }
                     }
                   ],
-                  "functions": [
-                    {
-                      "function": "minecraft:apply_bonus",
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops"
-                    }
-                  ],
                   "name": "fossil:regular_fossil_paleo_3"
                 },
                 {
                   "type": "minecraft:loot_table",
-                  "functions": [
-                    {
-                      "function": "minecraft:apply_bonus",
-                      "enchantment": "minecraft:fortune",
-                      "formula": "minecraft:ore_drops"
-                    }
-                  ],
                   "name": "fossil:regular_fossil"
                 }
               ]

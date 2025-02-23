@@ -5,6 +5,7 @@
 - Added a config option that (by default) prevents fish spawned via fish egg item from despawning 
 - Added custom hitboxes for athropleura. No more wide :(
 - 20% of fossils on the volcano surface will now be stone fossils
+- Changed fossil block generation. Deep fossil spread is more uniform from y=-64 to y=0 and low fossils are now most common around y=40
 - Added bonus drops to fossil blocks when using a fortune enchantment
 
 ### Fixed
