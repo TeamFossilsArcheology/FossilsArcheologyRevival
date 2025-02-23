@@ -422,7 +422,7 @@ public abstract class PrehistoricFlying extends Prehistoric implements FlyingAni
             double targetY = getY() + (double) ((random.nextFloat() * 2 - heightMod) * 16);
             double targetZ = getZ() + (double) ((random.nextFloat() * 2 - 1) * 16);
             Vec3 pos = new Vec3(targetX, targetY, targetZ);
-            BlockHitResult result = level.clip(new ClipContext(position(), pos, ClipContext.Block.COLLIDER, ClipContext.Fluid.ANY, this));
+            BlockHitResult result = level.clip(new ClipContext(position(), pos, ClipContext.Block.COLLIDER, isInWater() ? ClipContext.Fluid.NONE : ClipContext.Fluid.ANY, this));
             results[i] = result;
             BlockPos.MutableBlockPos mutable = result.getBlockPos().mutable();
             while (!level.getFluidState(mutable).isEmpty()) {

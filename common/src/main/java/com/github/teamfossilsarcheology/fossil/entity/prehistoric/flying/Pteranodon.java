@@ -59,24 +59,6 @@ public class Pteranodon extends PrehistoricFlying {
     }
 
     @Override
-    public @Nullable Vec3 generateAirTarget() {
-        isHungry();
-        if (false) {
-            BlockPos groundPos = blockPosition();
-            while (groundPos.getY() > 3 && level.isEmptyBlock(groundPos)) {
-                groundPos = groundPos.below();
-            }
-            for (int i = 0; i < 10; i++) {
-                BlockPos checkForWaterPos = groundPos.offset(random.nextInt(16) - 8, 0, random.nextInt(16) - 8);
-                if (level.getFluidState(checkForWaterPos).is(FluidTags.WATER)) {
-                    return Vec3.atCenterOf(checkForWaterPos.above());
-                }
-            }
-        }
-        return super.generateAirTarget();
-    }
-
-    @Override
     public void onReachAirTarget(BlockPos target) {
         /*if (level.getFluidState(target.below()).is(FluidTags.WATER) && isHungry()) {
             ItemStack stack;
