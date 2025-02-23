@@ -39,7 +39,7 @@
               ],
               "children": [
                 {
-                  "type": "minecraft:group",
+                  "type": "minecraft:loot_table",
                   "conditions": [
                     {
                       "condition": "minecraft:match_tool",
@@ -53,51 +53,17 @@
                       }
                     }
                   ],
-                  "children": [
+                  "functions": [
                     {
-                      "type": "minecraft:item",
-                      "weight": 6,
-                      "name": "fossil:scarab_gem"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 9,
-                      "name": "fossil:broken_sword"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 9,
-                      "name": "fossil:broken_helmet"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 64,
-                      "name": "fossil:skull"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 255,
-                      "name": "fossil:fossil_shale"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 475,
-                      "name": "fossil:relic_scrap"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 200,
-                      "name": "minecraft:bone"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 55,
-                      "name": "fossil:fossil_plant"
+                      "function": "minecraft:apply_bonus",
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops"
                     }
-                  ]
+                  ],
+                  "name": "fossil:deep_fossil_arch_1"
                 },
                 {
-                  "type": "minecraft:group",
+                  "type": "minecraft:loot_table",
                   "conditions": [
                     {
                       "condition": "minecraft:match_tool",
@@ -111,51 +77,17 @@
                       }
                     }
                   ],
-                  "children": [
+                  "functions": [
                     {
-                      "type": "minecraft:item",
-                      "weight": 11,
-                      "name": "fossil:scarab_gem"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 11,
-                      "name": "fossil:broken_sword"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 11,
-                      "name": "fossil:broken_helmet"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 80,
-                      "name": "fossil:skull"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 192,
-                      "name": "fossil:fossil_shale"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 715,
-                      "name": "fossil:relic_scrap"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 36,
-                      "name": "minecraft:bone"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 20,
-                      "name": "fossil:fossil_plant"
+                      "function": "minecraft:apply_bonus",
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops"
                     }
-                  ]
+                  ],
+                  "name": "fossil:deep_fossil_arch_2"
                 },
                 {
-                  "type": "minecraft:group",
+                  "type": "minecraft:loot_table",
                   "conditions": [
                     {
                       "condition": "minecraft:match_tool",
@@ -169,51 +101,17 @@
                       }
                     }
                   ],
-                  "children": [
+                  "functions": [
                     {
-                      "type": "minecraft:item",
-                      "weight": 16,
-                      "name": "fossil:scarab_gem"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 13,
-                      "name": "fossil:broken_sword"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 13,
-                      "name": "fossil:broken_helmet"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 110,
-                      "name": "fossil:skull"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 120,
-                      "name": "fossil:fossil_shale"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 820,
-                      "name": "fossil:relic_scrap"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 0,
-                      "name": "minecraft:bone"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 0,
-                      "name": "fossil:fossil_plant"
+                      "function": "minecraft:apply_bonus",
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops"
                     }
-                  ]
+                  ],
+                  "name": "fossil:deep_fossil_arch_3"
                 },
                 {
-                  "type": "minecraft:group",
+                  "type": "minecraft:loot_table",
                   "conditions": [
                     {
                       "condition": "minecraft:match_tool",
@@ -227,50 +125,17 @@
                       }
                     }
                   ],
-                  "children": [
+                  "functions": [
                     {
-                      "type": "minecraft:item",
-                      "name": "fossil:scarab_gem"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 5,
-                      "name": "fossil:broken_sword"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 5,
-                      "name": "fossil:broken_helmet"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 55,
-                      "name": "fossil:skull"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 405,
-                      "name": "fossil:fossil_shale"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 20,
-                      "name": "fossil:relic_scrap"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 440,
-                      "name": "minecraft:bone"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 115,
-                      "name": "fossil:fossil_plant"
+                      "function": "minecraft:apply_bonus",
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops"
                     }
-                  ]
+                  ],
+                  "name": "fossil:deep_fossil_paleo_1"
                 },
                 {
-                  "type": "minecraft:group",
+                  "type": "minecraft:loot_table",
                   "conditions": [
                     {
                       "condition": "minecraft:match_tool",
@@ -284,50 +149,17 @@
                       }
                     }
                   ],
-                  "children": [
+                  "functions": [
                     {
-                      "type": "minecraft:item",
-                      "name": "fossil:scarab_gem"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 5,
-                      "name": "fossil:broken_sword"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 5,
-                      "name": "fossil:broken_helmet"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 30,
-                      "name": "fossil:skull"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 480,
-                      "name": "fossil:fossil_shale"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 0,
-                      "name": "fossil:relic_scrap"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 326,
-                      "name": "minecraft:bone"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 175,
-                      "name": "fossil:fossil_plant"
+                      "function": "minecraft:apply_bonus",
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops"
                     }
-                  ]
+                  ],
+                  "name": "fossil:deep_fossil_paleo_2"
                 },
                 {
-                  "type": "minecraft:group",
+                  "type": "minecraft:loot_table",
                   "conditions": [
                     {
                       "condition": "minecraft:match_tool",
@@ -341,91 +173,25 @@
                       }
                     }
                   ],
-                  "children": [
+                  "functions": [
                     {
-                      "type": "minecraft:item",
-                      "name": "fossil:scarab_gem"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 5,
-                      "name": "fossil:broken_sword"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 5,
-                      "name": "fossil:broken_helmet"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 36,
-                      "name": "fossil:skull"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 540,
-                      "name": "fossil:fossil_shale"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 0,
-                      "name": "fossil:relic_scrap"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 210,
-                      "name": "minecraft:bone"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 200,
-                      "name": "fossil:fossil_plant"
+                      "function": "minecraft:apply_bonus",
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops"
                     }
-                  ]
+                  ],
+                  "name": "fossil:deep_fossil_paleo_3"
                 },
                 {
-                  "type": "minecraft:group",
-                  "children": [
+                  "type": "minecraft:loot_table",
+                  "functions": [
                     {
-                      "type": "minecraft:item",
-                      "name": "fossil:scarab_gem"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 5,
-                      "name": "fossil:broken_sword"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 5,
-                      "name": "fossil:broken_helmet"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 34,
-                      "name": "fossil:skull"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 300,
-                      "name": "fossil:fossil_shale"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 200,
-                      "name": "fossil:relic_scrap"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 440,
-                      "name": "minecraft:bone"
-                    },
-                    {
-                      "type": "minecraft:item",
-                      "weight": 85,
-                      "name": "fossil:fossil_plant"
+                      "function": "minecraft:apply_bonus",
+                      "enchantment": "minecraft:fortune",
+                      "formula": "minecraft:ore_drops"
                     }
-                  ]
+                  ],
+                  "name": "fossil:deep_fossil"
                 }
               ]
             }

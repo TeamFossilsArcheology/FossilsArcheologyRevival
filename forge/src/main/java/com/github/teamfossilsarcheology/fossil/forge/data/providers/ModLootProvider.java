@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.forge.data.providers;
 
 import com.github.teamfossilsarcheology.fossil.forge.data.loot.ModBlockLootTables;
 import com.github.teamfossilsarcheology.fossil.forge.data.loot.ModEntityLootTables;
+import com.github.teamfossilsarcheology.fossil.forge.data.loot.ModGenericLootTables;
 import com.google.common.collect.ImmutableList;
 import com.mojang.datafixers.util.Pair;
 import net.minecraft.data.DataGenerator;
@@ -23,7 +24,10 @@ import java.util.function.Supplier;
 public class ModLootProvider extends LootTableProvider {
 
     private final List<Pair<Supplier<Consumer<BiConsumer<ResourceLocation, LootTable.Builder>>>, LootContextParamSet>>
-            lootTables = ImmutableList.of(Pair.of(ModBlockLootTables::new, LootContextParamSets.BLOCK), Pair.of(ModEntityLootTables::new, LootContextParamSets.ENTITY));
+            lootTables = ImmutableList.of(
+            Pair.of(ModBlockLootTables::new, LootContextParamSets.BLOCK),
+            Pair.of(ModEntityLootTables::new, LootContextParamSets.ENTITY),
+            Pair.of(ModGenericLootTables::new, LootContextParamSets.ALL_PARAMS));
 
     public ModLootProvider(DataGenerator dataGeneratorIn) {
         super(dataGeneratorIn);
