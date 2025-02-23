@@ -3022,6 +3022,7 @@ c14bc2c851ae4f2d91784207659b2999abe97384 data/fossil/tags/blocks/sigillaria_logs
 7792735a57bdbe07196f9062ced049cc5b96fe71 data/fossil/tags/blocks/tempskya_logs.json
 947d131a060112ec3d5c15e53c7b01ceba384e0e data/fossil/tags/blocks/unbreakable.json
 2b1fa1293f3357110606fdd222b53a1747d80929 data/fossil/tags/entity_types/livestock.json
+40f99ad15681ee83d368835a1510906deb95d0e6 data/fossil/tags/entity_types/mammal.json
 848e487b2171800c7e84125006126f662ef0f9ab data/fossil/tags/items/all_eggs.json
 e1ba26717f02bcd63507bd94b3dadf4748d4719f data/fossil/tags/items/ancient_wood_logs.json
 98991491e2929fba8d07c47027c08cd5b1a8447c data/fossil/tags/items/bird_eggs.json

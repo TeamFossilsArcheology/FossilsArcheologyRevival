@@ -109,7 +109,6 @@ dependencies {
     modImplementation("com.github.darkpred.morehitboxes:morehitboxes-fabric-${minecraftVersion}:${moreHitboxesVersion}")
 
     //Optional
-    modRuntimeOnly("curse.maven:modmenu-308702:4145213")
     modCompileOnly("maven.modrinth:jade:MSJGBHIo")
     modRuntimeOnly("maven.modrinth:jade:MSJGBHIo")
     modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")

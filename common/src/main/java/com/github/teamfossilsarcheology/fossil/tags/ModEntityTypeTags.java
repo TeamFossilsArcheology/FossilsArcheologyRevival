@@ -9,4 +9,5 @@ import net.minecraft.world.entity.EntityType;
 public class ModEntityTypeTags {
     private static final ResourceKey<Registry<EntityType<?>>> key = Registry.ENTITY_TYPE_REGISTRY;
     public static final TagKey<EntityType<?>> LIVESTOCK = TagKey.create(key, FossilMod.location("livestock"));
+    public static final TagKey<EntityType<?>> MAMMAL = TagKey.create(key, FossilMod.location("mammal"));
 }

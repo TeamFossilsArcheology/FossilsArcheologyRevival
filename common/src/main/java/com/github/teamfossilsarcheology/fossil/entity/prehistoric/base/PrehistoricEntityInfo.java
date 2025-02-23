@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 
 import com.github.teamfossilsarcheology.fossil.entity.ModEntities;
 import com.github.teamfossilsarcheology.fossil.item.*;
+import com.github.teamfossilsarcheology.fossil.tags.ModEntityTypeTags;
 import com.github.teamfossilsarcheology.fossil.util.TimePeriod;
 import dev.architectury.core.item.ArchitecturyMobBucketItem;
 import dev.architectury.registry.registries.RegistrySupplier;
@@ -208,16 +209,16 @@ public enum PrehistoricEntityInfo implements EntityInfo {
     }
 
     public static boolean isMammal(Mob mob) {
+        if (mob.getType().is(ModEntityTypeTags.MAMMAL)) {
+            return true;
+        }
         String className = "";
         try {
             className = mob.getClass().getSimpleName();
         } catch (Exception e) {
             System.out.println(e);
         }
-        return !className.isEmpty() && (mob instanceof Cow || mob instanceof Sheep || mob instanceof Pig || mob instanceof Chicken
-                || mob instanceof Rabbit || mob instanceof AbstractHorse || mob instanceof Prehistoric prehistoric &&
-                prehistoric.info().mobType == MAMMAL || mob instanceof PolarBear || mob instanceof Wolf || mob instanceof Ocelot
-                || mob instanceof Bat || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig")
+        return !className.isEmpty() && (mob instanceof AbstractHorse || className.contains("Cow") || className.contains("Sheep") || className.contains("Pig")
                 || className.contains("Rabbit") || className.contains("Goat") || className.contains("Ferret") || className.contains("Hedgehog")
                 || className.contains("Sow") || className.contains("Hog"));
     }
