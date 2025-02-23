@@ -18,6 +18,7 @@ import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricFossilRe
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricModBiomes;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CSyncEntityInfoMessage;
+import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacedFeatures;
@@ -70,7 +71,7 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
             }
         });
         ServerLifecycleEvents.SERVER_STARTING.register(minecraftServer -> {
-            if (FabricLoader.getInstance().isModLoaded("farmersdelight")) {
+            if (FabricLoader.getInstance().isModLoaded(ModConstants.FARMERS)) {
                 FarmersDelightCompat.registerFoodMappings();
             }
         });
