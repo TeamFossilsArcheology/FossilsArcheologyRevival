@@ -94,6 +94,7 @@ public class PrehistoricPathFinder extends PathFinder {
         }
         Optional<PatchedPath> path = set.stream().map(target -> reconstructPath(target, targetPos.get(target), false))
                 .min(Comparator.comparingDouble(PatchedPath::getDistToTarget).thenComparingInt(PatchedPath::getNodeCount));
+        profiler.pop();
         return path.orElse(null);
     }
 

@@ -155,9 +155,7 @@ public class ToyBall extends ToyBase {
         }
         setDeltaMovement(x, y, z);
         travel();
-        level.getProfiler().push("push");
         pushEntities();
-        level.getProfiler().pop();
     }
 
     private void travel() {
