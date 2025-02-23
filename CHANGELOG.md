@@ -1,92 +1,37 @@
 ### Added
-- Nautilus meat now returns a nautilus shell when eaten
-- Dinopedia can now be crafted with any fossil
-- Better support for dinopedia bios in other languages
-- Deepslate fossils no longer drop bones
-- Comparator signals for all machines
-- Improved tar sites
-- Mammoths and Elasmotherium are now immune to freezing
-- Added more analyzer recipes for vanilla dna
-- Megalania now has venom again
-- Aquatics now have a different death message if they suffocate on land
-- Mobs will now sprint to catch up with their owner
-- Sounds now have subtitles
-- Updated Dutch, German, Japanese, Korean, Polish, Portuguese, Russian and Spanish translations
+- Very hungry mobs (<25%) will now run towards their food
+- Increased tempskya sapling drop rate to account for the fewer leaves
+- Added more translations for Bulgarian, Spanish, French, Hungarian, Italian, Japanese, Korean, Dutch, Polish, Portuguese, Russian and Swedish
+- Added a config option that (by default) prevents fish spawned via fish egg item from despawning 
+- Added custom hitboxes for athropleura. No more wide :(
+- 20% of fossils on the volcano surface will now be stone fossils
+- Added bonus drops to fossil blocks when using a fortune enchantment
 
 ### Fixed
-- Crashes for users with certain system languages
-- Crashes for users joining a LAN or Essential world
-- Crashes when generating villager houses
-- Crash when spawning certain mobs on Ad Astra worlds
+- Crashes when other mods have invalid file names
+- Possible crash when anubite can't find a target
+- Crashes for some fossil entities
+- Lag spikes for very large mobs
+- Mobs not being able to find plant blocks without collision
+- Mobs not pathing properly to blocks (including feeder)
 - Mobs being able to phase through blocks (hopefully)
-- Incorrect stats for baby & teen mobs
-- Mobs trying to path towards unreachable feeders
-- Silktouch not working on fossil and permafrost blocks
-- Vanilla wood recipes not working with our wood types
-- Sifters not using 5th slot
-- Feeder being able to duplicate items and not dropping when destroyed
-- Culture vats not saving correctly on world/chunk reload
-- Worktables not working correctly on fabric
-- Some vases not being craftable
-- Chicken soup not returning an empty bucket as crafting remainder
-- Dinopedia screen for pregnant prehistoric mammals
-- Dinopedia bio not working for pteranodon and prehistoric fish
-- Tar source blocks being destroyed by flowing tar
-- Tar blocks not being considered as a dangerous path
-- Fossil blocks not using their correct sounds
-- Some chests in the hell boat structures not spawning correctly
-- Whip not playing sounds when hitting entities
-- Incorrect bird eggs being dropped after breeding
-- Bone leggings armor value being too high
-- Fish eggs not working for vanilla fish
-- Aquatic mobs often swimming in circles and being able to fly when sleeping
-- Prehistoric fish not being able to breed
-- Some mobs shortly after being spawned
-- Tempskya top and leaf drops
-- Toyballs not being consumed when placed
-- Egg advancement not triggering on some eggs
-- Jade breeding cooldown being displayed incorrectly when at 0
-- Artificial honeycomb not spawning bee or baby bee
-- Mammoth and Elasmotherium shearing not working
-- Nautilus hiding from spectators
-- Animations for edaphosaurus, megalania, spinosaurus, sleeping aquatic mobs, falling flying mobs, quetz
-- Textures for ceratosaurus, gallimimus, platybelodon, paleo/archeo villagers, palm doors
-- Hitboxes for Ankylosaurus, Kelenken and Phorusrhacos
-- Tamed mobs attacking each other
-- Meganeura sometimes standing in the air or attaching poorly to blocks
-- Mobs being able to sleep while the player is riding them
-- Some mobs being able to move while sleeping/sitting
-- Leap attack not stopping in some cases even if target is already dead
-- Loot table of the home portal referencing non-existing item
-- Fossil sites attached to villager houses missing fossil blocks
-- Feeding goals not running often enough
-- Some animations breaking if played together
-- Teen textures never being used
-- The culling bounds of fossil skeletons not matching the model
-- Some issues with fossil skeleton placement
-- Bucketable mobs losing all info when being put into a bucket
-- Some other info not being saved across world loads
-- Small mobs getting stuck if they can't reach their target
-- Swim animations ending too late
-- Villager trades not changing with levels
-- Very hungry mobs not waking up before taking damage
-- Flying mobs not being able to attack
-- Some mobs not being able to hunt each other
-- Smilodon and Compsognathus not being able to attack
-- Mobs eating during combat
-- Volcano cone lava generation
-- Non-aquatic mobs having a hard time leaving the water
-- Javelins stuck in the ground spawning lightning on world load
-- Sentry Piglin spawning without a weapon
-- Lighting spawned by the ancient sword being able to hurt the player
-- Incorrect failuresaurus variants being spawned
-- Current population size not being calculated correctly
-- Aquatic mobs not playing their swimming animations in some cases
-- Quaggas not having a chest textures
+- Psittacosaurus texture being wrong
+- Incorrect item list being shown for mobs that are self-feeding
+- Sarcosuchus using incorrect idle animation when in water
+- Sifter quickstacking not working correctly
+- Sifter and analyzer output slots not filling up correctly
+- Culture vats not resetting properly when switching input items
+- Machines not interacting correctly with hoppers (and things like create funnels)
+- Nocturnal aquatic mobs sleeping too rarely
+- Toy balls being able to be placed in walls
+- Parasaurolophus being able to stand up while riding (which breaks animation)
+- Riding animations not running for other players in multiplayer
+- Trilobites not floating down to sea floor
+- Culture vats only spawning the dodo variant when spawning a failuresaurus
+- Some aquatic mobs being too slow or too fast in the water
+- Some flying mobs getting stuck in water
 
 
 ### Mod compatibility
-- Fixed a crash due to incompatibility with Ad Astra
-- Fixed visual bug with Jade breeding cooldown
-- Added farmers delight seeds as valid food
-- Added Alex Mobs food and mobs to food mappings (thanks xayler4!)
+- Fixed crash with Radium Reforged 
+- Farmer's Delight fried egg now has priority in recipes over fa cooked egg
