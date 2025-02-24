@@ -1,8 +1,7 @@
 @file:Suppress("UnstableApiUsage")
 
+
 import net.fabricmc.loom.api.LoomGradleExtensionAPI
-import java.text.SimpleDateFormat
-import java.util.*
 
 plugins {
     id("architectury-plugin") version "3.4-SNAPSHOT"
@@ -98,9 +97,9 @@ allprojects {
             options.encoding = "UTF-8" // Use the UTF-8 charset for Java compilation
         }
         val props = mapOf(
-            "minecraftVersion" to minecraftVersion, "minecraftVersionRange" to minecraftVersionRange,
-            "modId" to modId, "modName" to modName, "modLicense" to modLicense, "modVersion" to modVersion,
-            "modDescription" to modDescription, "modAuthors" to modAuthors, "fabricModAuthors" to modAuthors.split(", ").map { "\"" + it + "\"" }
+                "minecraftVersion" to minecraftVersion, "minecraftVersionRange" to minecraftVersionRange,
+                "modId" to modId, "modName" to modName, "modLicense" to modLicense, "modVersion" to modVersion,
+                "modDescription" to modDescription, "modAuthors" to modAuthors, "fabricModAuthors" to modAuthors.split(", ").map { "\"" + it + "\"" }
         )
 
         processResources {
