@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
-import com.ncpbails.alexsmobs.item.ModItems;
+import com.ncpbails.alexsdelight.item.ModItems;
 
 public class AlexDelightCompat {
     public static void registerFoodMappings() {

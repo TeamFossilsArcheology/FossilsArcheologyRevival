@@ -24,7 +24,7 @@ public class EndDelightCompat {
         FoodMappings.addMeat(ModItem.DriedEnderMiteMeat.get());
         FoodMappings.addMeat(ModItem.EndBarbecueStick.get());
         FoodMappings.addMeat(ModItem.EnderCongee.get());
-        FoodMappings.addPlant(ModItem.EnderSauce.get());
+        FoodMappings.addPlant(ModItem.ChorusSauce.get());
         FoodMappings.addPlant(ModItem.EndMixedSalad.get());
         FoodMappings.addEgg(ModItem.FriedDragonEgg.get());
         FoodMappings.addMeat(ModItem.GrilledShulker.get());

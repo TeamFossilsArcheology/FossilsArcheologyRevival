@@ -4,7 +4,6 @@ import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlaced
 import net.minecraft.data.worldgen.BiomeDefaultFeatures;
 import net.minecraft.util.Mth;
 import net.minecraft.world.level.biome.Biome;
-import net.minecraft.world.level.biome.Biome.BiomeCategory;
 import net.minecraft.world.level.biome.Biome.Precipitation;
 import net.minecraft.world.level.biome.BiomeGenerationSettings;
 import net.minecraft.world.level.biome.BiomeSpecialEffects;
@@ -18,10 +17,10 @@ public class ModOverworldBiomes {
         return Mth.hsvToRgb(0.62222224f - i * 0.05f, 0.5f + i * 0.1f, 1.0f);
     }
 
-    private static Biome biome(Precipitation precipitation, BiomeCategory biomeCategory, float temperature, float downfall, int waterColor,
+    private static Biome biome(Precipitation precipitation, float temperature, float downfall, int waterColor,
                                int waterFogColor, int fogColor, int skyColor, MobSpawnSettings.Builder spawnBuilder,
                                BiomeGenerationSettings.Builder biomeBuilder) {
-        return new Biome.BiomeBuilder().precipitation(precipitation).biomeCategory(biomeCategory).temperature(temperature).downfall(downfall)
+        return new Biome.BiomeBuilder().precipitation(precipitation).temperature(temperature).downfall(downfall)
                 .specialEffects(new BiomeSpecialEffects.Builder().waterColor(waterColor).waterFogColor(waterFogColor).fogColor(fogColor).skyColor(
                         skyColor).build())
                 .mobSpawnSettings(spawnBuilder.build())
@@ -38,7 +37,7 @@ public class ModOverworldBiomes {
         biomeBuilder.addFeature(GenerationStep.Decoration.UNDERGROUND_STRUCTURES, ModPlacedFeatures.FOSSIL_VOLCANO);
         biomeBuilder.addFeature(GenerationStep.Decoration.LOCAL_MODIFICATIONS, ModPlacedFeatures.coneVolcano());
 
-        return biome(Biome.Precipitation.NONE, Biome.BiomeCategory.DESERT, 2, 0, 0x981010, 0x4c0808, 0x504040, calculateSkyColor(2),
+        return biome(Biome.Precipitation.NONE, 2, 0, 0x981010, 0x4c0808, 0x504040, calculateSkyColor(2),
                 new MobSpawnSettings.Builder(), biomeBuilder);
     }
 }

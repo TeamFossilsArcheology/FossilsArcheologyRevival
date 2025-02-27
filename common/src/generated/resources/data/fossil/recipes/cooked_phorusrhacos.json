@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
   "ingredient": {
     "item": "fossil:meat_phorusrhacos"
   },
-  "result": "fossil:cooked_phorusrhacos",
-  "experience": 1.5,
-  "cookingtime": 200
+  "result": "fossil:cooked_phorusrhacos"
 }

@@ -1,8 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
-import com.farmersrespite.core.registry.FRBlocks;
-import com.farmersrespite.core.registry.FRItems;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import umpaz.farmersrespite.common.registry.FRBlocks;
+import umpaz.farmersrespite.common.registry.FRItems;
 import vectorwing.farmersdelight.common.block.PieBlock;
 
 import static com.github.teamfossilsarcheology.fossil.forge.compat.farmers.FarmersDelightCompat.getPieValue;

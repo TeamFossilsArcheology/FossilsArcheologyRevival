@@ -2,7 +2,6 @@ package com.github.teamfossilsarcheology.fossil.recipe;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import dev.architectury.core.AbstractRecipeSerializer;
 import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -12,6 +11,7 @@ import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
@@ -84,13 +84,14 @@ public abstract class WithFuelRecipe implements Recipe<WithFuelRecipe.ContainerW
             super(items);
             this.anyFuel = anyFuel;
         }
+
         public ContainerWithAnyFuel(ItemStack input, ItemStack fuel) {
             super(input, fuel);
             this.anyFuel = false;
         }
     }
 
-    public static class WithFuelRecipeSerializer<T extends WithFuelRecipe> extends AbstractRecipeSerializer<T> {
+    public static class WithFuelRecipeSerializer<T extends WithFuelRecipe> implements RecipeSerializer<T> {
         protected final Constructor<T> constructor;
 
         protected WithFuelRecipeSerializer(Constructor<T> constructor) {

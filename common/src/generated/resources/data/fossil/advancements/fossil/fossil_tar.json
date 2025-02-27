@@ -1,23 +1,7 @@
 {
   "parent": "fossil:fossil/tar_drop",
-  "display": {
-    "icon": {
-      "item": "fossil:fossil_tar"
-    },
-    "title": {
-      "translate": "advancements.fossil.fossil_tar.title"
-    },
-    "description": {
-      "translate": "advancements.fossil.fossil_tar.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "fossil_tar": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,7 +10,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fossil.fossil_tar.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fossil:fossil_tar"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fossil.fossil_tar.title"
     }
   },
   "requirements": [

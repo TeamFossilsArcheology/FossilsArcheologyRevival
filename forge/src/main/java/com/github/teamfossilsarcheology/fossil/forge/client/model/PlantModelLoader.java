@@ -4,16 +4,11 @@ import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockMode
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel.PlantBlockElement;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel.PlantBlockElementFace;
 import com.github.teamfossilsarcheology.fossil.client.model.block.PlantBlockModel.PlantBlockFaceUV;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonDeserializationContext;
-import com.google.gson.JsonObject;
-import net.minecraft.server.packs.resources.ResourceManager;
-import net.minecraftforge.client.model.IModelLoader;
-import org.jetbrains.annotations.NotNull;
+import com.google.gson.*;
+import net.minecraftforge.client.model.geometry.IGeometryLoader;
 
 
-public class PlantModelLoader implements IModelLoader<PlantModelGeometry> {
+public class PlantModelLoader implements IGeometryLoader<PlantModelGeometry> {
     static final Gson GSON = new GsonBuilder()
             .registerTypeAdapter(PlantBlockModel.class, new PlantBlockModel.Deserializer())
             .registerTypeAdapter(PlantBlockElement.class, new PlantBlockElement.Deserializer())
@@ -21,12 +16,7 @@ public class PlantModelLoader implements IModelLoader<PlantModelGeometry> {
             .registerTypeAdapter(PlantBlockFaceUV.class, new PlantBlockFaceUV.Deserializer()).create();
 
     @Override
-    public @NotNull PlantModelGeometry read(JsonDeserializationContext context, JsonObject jsonObject) {
+    public PlantModelGeometry read(JsonObject jsonObject, JsonDeserializationContext jsonDeserializationContext) throws JsonParseException {
         return new PlantModelGeometry(GSON.getAdapter(PlantBlockModel.class).fromJsonTree(jsonObject));
-    }
-
-    @Override
-    public void onResourceManagerReload(@NotNull ResourceManager resourceManager) {
-
     }
 }

@@ -6,7 +6,6 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.GsonHelper;
 
 import java.lang.reflect.Type;
@@ -21,8 +20,8 @@ public enum Diet implements DinopediaInfo {
     INSECTIVORE(true, false, false),
     PISCI_CARNIVORE(true, true, false),
     PASSIVE(false, false, false);
-    private final Component name = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT));
-    private final Component description = new TranslatableComponent("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT) + ".desc");
+    private final Component name = Component.translatable("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT));
+    private final Component description = Component.translatable("pedia.fossil.diet." + name().toLowerCase(Locale.ROOT) + ".desc");
 
     private final boolean canEatMeat;
     private final boolean canEatFish;

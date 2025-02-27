@@ -2,7 +2,6 @@
   "type": "minecraft:block",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -29,23 +28,6 @@
             },
             {
               "type": "minecraft:alternatives",
-              "conditions": [
-                {
-                  "condition": "minecraft:survives_explosion"
-                },
-                {
-                  "condition": "minecraft:survives_explosion"
-                },
-                {
-                  "condition": "minecraft:survives_explosion"
-                },
-                {
-                  "condition": "minecraft:survives_explosion"
-                },
-                {
-                  "condition": "minecraft:survives_explosion"
-                }
-              ],
               "children": [
                 {
                   "type": "minecraft:loot_table",
@@ -153,11 +135,29 @@
                   "type": "minecraft:loot_table",
                   "name": "fossil:regular_fossil"
                 }
+              ],
+              "conditions": [
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:survives_explosion"
+                },
+                {
+                  "condition": "minecraft:survives_explosion"
+                }
               ]
             }
           ]
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

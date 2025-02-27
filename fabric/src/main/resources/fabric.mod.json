@@ -1,15 +1,15 @@
 {
   "schemaVersion": 1,
-  "id": "${modId}",
-  "version": "${modVersion}",
-  "name": "${modName}",
-  "description": "${modDescription}",
+  "id": "${mod_id}",
+  "version": "${mod_version}",
+  "name": "${mod_name}",
+  "description": "${mod_description}",
   "contact": {
     "homepage": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival",
     "sources": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival",
     "issues": "https://github.com/TeamFossilsArcheology/FossilsArcheologyRevival/issues"
   },
-  "license": "${modLicense}",
+  "license": "${mod_license}",
   "icon": "fossils.png",
   "environment": "*",
   "entrypoints": {
@@ -40,16 +40,17 @@
   ],
   "depends": {
     "fabric": "*",
-    "minecraft": ">=${minecraftVersion}",
-    "architectury": ">=4.9.83",
-    "geckolib3": ">=3.0.62",
-    "terrablender": ">=1.2.0",
-    "cardinal-components-base": ">=4.1.4",
+    "minecraft": "~${minecraft_version_range_lower}",
+    "java": ">=${java_version}",
+    "architectury": ">=6.6",
+    "geckolib3": ">=3.1",
+    "terrablender": ">=2",
+    "cardinal-components-base": ">=5",
     "morehitboxes": ">=1.9.1"
   },
   "suggests": {
     "cloth_config": ">=6.3.81",
-    "roughlyenoughitems": ">=8.3.495",
+    "roughlyenoughitems": ">=9.2",
     "oceansdelight": ">=1.0.0",
     "ends_delight": ">=1.2.1",
     "farmersrespite": ">=1.0.0",
@@ -66,5 +67,5 @@
       "fossil:first_hatch"
     ]
   },
-  "authors": ${fabricModAuthors}
+  "authors": ${fabric_mod_authors}
 }

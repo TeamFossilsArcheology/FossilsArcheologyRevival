@@ -1,9 +1,9 @@
 {
   "type": "minecraft:campfire_cooking",
+  "cookingtime": 600,
+  "experience": 1.5,
   "ingredient": {
     "item": "fossil:meat_pachycephalosaurus"
   },
-  "result": "fossil:cooked_pachycephalosaurus",
-  "experience": 1.5,
-  "cookingtime": 600
+  "result": "fossil:cooked_pachycephalosaurus"
 }

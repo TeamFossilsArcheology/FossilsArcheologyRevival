@@ -1,9 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "BSB",
-    "B B"
-  ],
   "key": {
     "B": {
       "item": "minecraft:bone"
@@ -12,6 +8,10 @@
       "tag": "fossil:bones_skull"
     }
   },
+  "pattern": [
+    "BSB",
+    "B B"
+  ],
   "result": {
     "item": "fossil:bone_helmet"
   }

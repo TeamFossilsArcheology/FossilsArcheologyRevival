@@ -2,28 +2,28 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "fossil:customize_to_dinosaur",
-              "entity": "this"
+              "entity": "this",
+              "function": "fossil:customize_to_dinosaur"
             },
             {
-              "function": "minecraft:looting_enchant",
               "count": {
                 "type": "minecraft:uniform",
-                "min": 0.0,
-                "max": 2.0
-              }
+                "max": 2.0,
+                "min": 0.0
+              },
+              "function": "minecraft:looting_enchant"
             }
           ],
           "name": "fossil:meat_meganeura"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

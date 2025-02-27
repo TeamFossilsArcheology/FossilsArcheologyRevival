@@ -5,7 +5,6 @@ import me.shedaniel.rei.api.client.gui.Renderer;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 public class AnalyzerCategory extends MultiOutputCategory {
 
@@ -16,7 +15,7 @@ public class AnalyzerCategory extends MultiOutputCategory {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("category.fossil.rei.analyzer");
+        return Component.translatable("category.fossil.rei.analyzer");
     }
 
     @Override

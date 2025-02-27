@@ -6,6 +6,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.LivingEntity;
@@ -27,8 +28,6 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Random;
 
 public abstract class TallBerryBushBlock extends DoublePlantBlock implements BonemealableBlock {
     private final PrehistoricPlantInfo info;
@@ -57,11 +56,6 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
     protected abstract int getCreateUpperAge();
 
     @Override
-    public BlockBehaviour.@NotNull OffsetType getOffsetType() {
-        return OffsetType.NONE;
-    }
-
-    @Override
     public void setPlacedBy(Level level, BlockPos pos, BlockState state, LivingEntity placer, ItemStack stack) {
     }
 
@@ -79,7 +73,7 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
     }
 
     @Override
-    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, Random random) {
+    public void randomTick(BlockState state, ServerLevel level, BlockPos pos, RandomSource random) {
         int i = state.getValue(ageProperty());
         if (i < info.maxAge && random.nextInt(5) == 0 && level.getRawBrightness(pos.above(), 0) >= 9) {
             updateAge(level, pos, state, i + 1);
@@ -136,12 +130,12 @@ public abstract class TallBerryBushBlock extends DoublePlantBlock implements Bon
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, Random random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, Random random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         updateAge(level, pos, state, state.getValue(ageProperty()) + 1);
     }
 }

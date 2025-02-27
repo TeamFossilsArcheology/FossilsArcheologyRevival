@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -19,7 +20,7 @@ public class GrowableFlowerBlock extends ShortFlowerBlock {
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, Random random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         level.setBlock(pos, tallFlower.get().defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.LOWER), 2);
         level.setBlock(pos.above(), tallFlower.get().defaultBlockState().setValue(TallFlowerBlock.HALF, DoubleBlockHalf.UPPER), 2);
     }

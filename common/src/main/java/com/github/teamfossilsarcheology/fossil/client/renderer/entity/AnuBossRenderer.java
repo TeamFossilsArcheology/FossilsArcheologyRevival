@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
 public class AnuBossRenderer extends MobRenderer<AnuBoss, AnuBossModel> implements RendererFabricFix {
     public AnuBossRenderer(EntityRendererProvider.Context context) {
         super(context, new AnuBossModel(), 0.5f);
-        addLayer(new ItemInHandLayer<>(this));
+        addLayer(new ItemInHandLayer<>(this, context.getItemInHandRenderer()));
         addLayer(new AnuBossGlowLayer(this));
     }
 

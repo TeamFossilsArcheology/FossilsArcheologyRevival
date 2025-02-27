@@ -17,7 +17,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -50,7 +50,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     private static final EntityDataAccessor<Integer> HATCHING_TIME = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.INT);
     private static final EntityDataAccessor<Boolean> GOLDEN_EGG = SynchedEntityData.defineId(DinosaurEgg.class, EntityDataSerializers.BOOLEAN);
     private static final Logger LOGGER = LogUtils.getLogger();
-    private static final Component EGG_HATCHED = new TranslatableComponent("entity.fossil.dinosaur_egg.hatched");
+    private static final Component EGG_HATCHED = Component.translatable("entity.fossil.dinosaur_egg.hatched");
     private static final List<ItemStack> ARMOR = NonNullList.withSize(1, ItemStack.EMPTY);
 
     private float scaleOverride = -1;
@@ -141,7 +141,7 @@ public class DinosaurEgg extends LivingEntity implements EntitySpawnExtension {
     public boolean isTooCold() {
         Holder<Biome> biome = level.getBiome(blockPosition());
         level.updateSkyBrightness();
-        float light = level.getBrightness(blockPosition());
+        float light = level.getLightLevelDependentMagicValue(blockPosition());
         if (biome.value().warmEnoughToRain(blockPosition())) {
             return light < 0.5f;
         } else {

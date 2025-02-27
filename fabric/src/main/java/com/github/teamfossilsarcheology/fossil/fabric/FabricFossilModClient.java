@@ -12,6 +12,7 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import com.github.teamfossilsarcheology.fossil.world.effect.ComfyBedEffect;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
+import com.mojang.blaze3d.platform.Window;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.model.ModelLoadingRegistry;
 import net.fabricmc.fabric.api.client.rendering.v1.BuiltinItemRendererRegistry;
@@ -23,6 +24,7 @@ import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.effect.MobEffectInstance;
 import software.bernie.geckolib3.renderers.geo.GeoArmorRenderer;
+import software.bernie.shadowed.eliotlash.mclib.math.functions.limit.Min;
 
 import java.util.Optional;
 
@@ -42,8 +44,8 @@ public class FabricFossilModClient implements ClientModInitializer {
             registry.register(FossilMod.location("block/tar_flowing"));
         });
         HudRenderCallback.EVENT.register((matrixStack, tickDelta) -> {
-            Minecraft mc = Minecraft.getInstance();
-            OverlayRenderer.renderHelmet(mc.getWindow().getGuiScaledWidth(), mc.getWindow().getGuiScaledHeight());
+            Window window = Minecraft.getInstance().getWindow();
+            OverlayRenderer.renderHelmet(window.getGuiScaledWidth(), window.getGuiScaledHeight());
         });
         EntitySleepEvents.ALLOW_SLEEP_TIME.register((player, sleepingPos, vanillaResult) -> {
             if (ComfyBedEffect.canApply(Optional.of(sleepingPos), player.level)) {

@@ -11,10 +11,9 @@ import net.minecraft.server.level.WorldGenRegion;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.LevelHeightAccessor;
 import net.minecraft.world.level.NoiseColumn;
-import net.minecraft.world.level.StructureFeatureManager;
+import net.minecraft.world.level.StructureManager;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.biome.BiomeManager;
-import net.minecraft.world.level.biome.Climate;
 import net.minecraft.world.level.biome.FixedBiomeSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -22,6 +21,7 @@ import net.minecraft.world.level.chunk.ChunkAccess;
 import net.minecraft.world.level.chunk.ChunkGenerator;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.Heightmap;
+import net.minecraft.world.level.levelgen.RandomState;
 import net.minecraft.world.level.levelgen.blending.Blender;
 import net.minecraft.world.level.levelgen.structure.StructureSet;
 import net.minecraft.world.level.levelgen.structure.placement.ConcentricRingsStructurePlacement;
@@ -37,22 +37,22 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     public static final Codec<AnuLairChunkGenerator> CODEC =
             RecordCodecBuilder.create(instance -> AnuLairChunkGenerator.commonCodec(instance)
                     .and(RegistryOps.retrieveRegistry(Registry.BIOME_REGISTRY)
-                            .forGetter((source) -> source.biomes))
+                            .forGetter(source -> source.biomes))
                     .apply(instance, instance.stable(AnuLairChunkGenerator::new)));
 
     private final Registry<Biome> biomes;
 
     public AnuLairChunkGenerator(Registry<StructureSet> registry, Registry<Biome> registry2) {
-        super(registry, Optional.empty(), new FixedBiomeSource(registry2.getOrCreateHolder(ModBiomes.ANU_LAIR_KEY)));
+        super(registry, Optional.empty(), new FixedBiomeSource(registry2.getOrCreateHolderOrThrow(ModBiomes.ANU_LAIR_KEY)));
         biomes = registry2;
     }
 
     private void generatePositions() {
         //Bit of a hack but this way we can ensure a fixed position for the castle without having to place it ourselves
-        StructureSet structureSet = structureSets.get(ModStructures.ANU_CASTLE.location());
+        StructureSet structureSet = structureSets.get(ModStructures.ANU_CASTLE_KEY.location());
         if (structureSet != null) {
             for (StructureSet.StructureSelectionEntry structure : structureSet.structures()) {
-                placementsForFeature.computeIfAbsent(structure.structure().value(), configuredStructureFeature -> new ArrayList<>()).add(structureSet.placement());
+                placementsForStructure.computeIfAbsent(structure.structure().value(), configuredStructureFeature -> new ArrayList<>()).add(structureSet.placement());
             }
             if (structureSet.placement() instanceof ConcentricRingsStructurePlacement placement) {
                 ringPositions.put(placement, CompletableFuture.completedFuture(List.of(new ChunkPos(0, 0))));
@@ -61,7 +61,7 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void ensureStructuresGenerated() {
+    public void ensureStructuresGenerated(RandomState random) {
         if (!hasGeneratedPositions) {
             generatePositions();
             hasGeneratedPositions = true;
@@ -69,7 +69,7 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public void addDebugScreenInfo(List<String> info, BlockPos pos) {
+    public void addDebugScreenInfo(List<String> info, RandomState random, BlockPos pos) {
 
     }
 
@@ -79,22 +79,12 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public @NotNull ChunkGenerator withSeed(long seed) {
-        return this;
-    }
-
-    @Override
-    public Climate.@NotNull Sampler climateSampler() {
-        return Climate.empty();
-    }
-
-    @Override
-    public void applyCarvers(WorldGenRegion level, long seed, BiomeManager biomeManager, StructureFeatureManager structureFeatureManager, ChunkAccess chunk, GenerationStep.Carving step) {
+    public void applyCarvers(WorldGenRegion level, long seed, RandomState random, BiomeManager biomeManager, StructureManager structureManager, ChunkAccess chunk, GenerationStep.Carving step) {
 
     }
 
     @Override
-    public void buildSurface(WorldGenRegion level, StructureFeatureManager structureFeatureManager, ChunkAccess chunk) {
+    public void buildSurface(WorldGenRegion level, StructureManager structureFeatureManager, RandomState random, ChunkAccess chunk) {
         BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
         int chunkX = chunk.getPos().x;
         int chunkZ = chunk.getPos().z;
@@ -208,7 +198,7 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public @NotNull CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, StructureFeatureManager structureFeatureManager, ChunkAccess chunk) {
+    public @NotNull CompletableFuture<ChunkAccess> fillFromNoise(Executor executor, Blender blender, RandomState random, StructureManager structureManager, ChunkAccess chunk) {
         return CompletableFuture.completedFuture(chunk);
     }
 
@@ -223,12 +213,12 @@ public class AnuLairChunkGenerator extends ChunkGenerator {
     }
 
     @Override
-    public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level) {
+    public int getBaseHeight(int x, int z, Heightmap.Types type, LevelHeightAccessor level, RandomState random) {
         return 0;//Only used in generation but we have no generation
     }
 
     @Override
-    public @NotNull NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor level) {
+    public @NotNull NoiseColumn getBaseColumn(int x, int z, LevelHeightAccessor level, RandomState random) {
         return new NoiseColumn(level.getMinBuildHeight(), new BlockState[0]);
     }
 }

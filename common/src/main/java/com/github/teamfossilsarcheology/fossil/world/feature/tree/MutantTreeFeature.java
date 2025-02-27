@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.VineBlock;
@@ -107,19 +108,19 @@ public class MutantTreeFeature extends CustomTreeFeature {
 
     //Copied from LeaveVineDecorator
     private void placeVine(WorldGenLevel level, BlockState state, List<BlockPos> leafPositions) {
-        Random random = level.getRandom();
+        RandomSource random = level.getRandom();
         leafPositions.forEach(blockPos -> {
             BlockPos pos;
-            if (random.nextInt(4) == 0 && Feature.isAir(level, pos = blockPos.west())) {
+            if (random.nextInt(4) == 0 && isAir(level, pos = blockPos.west())) {
                 placeHangingVine(level, pos, VineBlock.EAST, state);
             }
-            if (random.nextInt(4) == 0 && Feature.isAir(level, pos = blockPos.east())) {
+            if (random.nextInt(4) == 0 && isAir(level, pos = blockPos.east())) {
                 placeHangingVine(level, pos, VineBlock.WEST, state);
             }
-            if (random.nextInt(4) == 0 && Feature.isAir(level, pos = blockPos.north())) {
+            if (random.nextInt(4) == 0 && isAir(level, pos = blockPos.north())) {
                 placeHangingVine(level, pos, VineBlock.SOUTH, state);
             }
-            if (random.nextInt(4) == 0 && Feature.isAir(level, pos = blockPos.south())) {
+            if (random.nextInt(4) == 0 && isAir(level, pos = blockPos.south())) {
                 placeHangingVine(level, pos, VineBlock.NORTH, state);
             }
         });
@@ -127,7 +128,7 @@ public class MutantTreeFeature extends CustomTreeFeature {
     private void placeHangingVine(WorldGenLevel level, BlockPos pos, BooleanProperty sideProperty, BlockState state) {
         level.setBlock(pos, state.setValue(sideProperty, true), 19);
         pos = pos.below();
-        for (int i = 4; Feature.isAir(level, pos) && i > 0; --i) {
+        for (int i = 4; isAir(level, pos) && i > 0; --i) {
             level.setBlock(pos, state.setValue(sideProperty, true), 19);
             pos = pos.below();
         }

@@ -11,7 +11,7 @@ import net.minecraft.client.gui.components.Widget;
 import net.minecraft.client.gui.components.events.AbstractContainerEventHandler;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.renderer.GameRenderer;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.phys.Vec3;
@@ -55,7 +55,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
         this.minecraft = minecraft;
         this.instructions = pair.instructions();
         instructions.forEach(instruction -> children.add(new InstructionEntry(instruction, minecraft)));
-        removeButton = new Button(x0, y1 + 5, 70, 20, new TextComponent("Remove item"), button -> {
+        removeButton = new Button(x0, y1 + 5, 70, 20, Component.literal("Remove item"), button -> {
             if (selected != null) {
                 instructions.remove(children.indexOf(selected));
                 children.remove(selected);
@@ -65,7 +65,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
                 }
             }
         });
-        upButton = new Button(x0 + 110, y1 + 5, 20, 20, new TextComponent(""), button -> {
+        upButton = new Button(x0 + 110, y1 + 5, 20, 20, Component.literal(""), button -> {
             int i = children.indexOf(selected);
             if (i != 0) {
                 Collections.swap(children, i, i - 1);
@@ -82,7 +82,7 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
                 RenderSystem.setShader(GameRenderer::getPositionTexShader);
             }
         };
-        downButton = new Button(x0 + 80, y1 + 5, 20, 20, new TextComponent(""), button -> {
+        downButton = new Button(x0 + 80, y1 + 5, 20, 20, Component.literal(""), button -> {
             int i = children.indexOf(selected);
             if (i != children.size() - 1) {
                 Collections.swap(children, i, i + 1);
@@ -325,9 +325,9 @@ public class InstructionsList extends AbstractContainerEventHandler implements W
 
         public void render(PoseStack poseStack, int top, int left, boolean isMouseOver) {
             if (isMouseOver) {
-                drawString(poseStack, minecraft.font, new TextComponent(instruction.toString()), left + 4, top + 4, Integer.parseUnsignedInt("a8a2a2", 16));
+                drawString(poseStack, minecraft.font, Component.literal(instruction.toString()), left + 4, top + 4, Integer.parseUnsignedInt("a8a2a2", 16));
             } else {
-                drawString(poseStack, minecraft.font, new TextComponent(instruction.toString()), left + 4, top + 4, Integer.parseUnsignedInt("ffffff", 16));
+                drawString(poseStack, minecraft.font, Component.literal(instruction.toString()), left + 4, top + 4, Integer.parseUnsignedInt("ffffff", 16));
             }
         }
 

@@ -8,7 +8,9 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.event.ModEvents;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.mammal.MammalCapProvider;
 import com.github.teamfossilsarcheology.fossil.forge.capabilities.player.FirstHatchCapProvider;
-import com.github.teamfossilsarcheology.fossil.forge.tests.*;
+import com.github.teamfossilsarcheology.fossil.forge.tests.HopperTests;
+import com.github.teamfossilsarcheology.fossil.forge.tests.MiscTests;
+import com.github.teamfossilsarcheology.fossil.forge.tests.RecipeTests;
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.S2CMammalCapMessage;
 import com.github.teamfossilsarcheology.fossil.util.Version;
@@ -16,9 +18,6 @@ import com.github.teamfossilsarcheology.fossil.villager.ModTrades;
 import com.github.teamfossilsarcheology.fossil.villager.ModVillagers;
 import com.github.teamfossilsarcheology.fossil.world.effect.ComfyBedEffect;
 import com.github.teamfossilsarcheology.fossil.world.effect.ModEffects;
-import net.minecraft.commands.Commands;
-import net.minecraft.commands.synchronization.ArgumentTypes;
-import net.minecraft.commands.synchronization.EmptyArgumentSerializer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
@@ -54,12 +53,12 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void registerCommands(RegisterCommandsEvent event) {
-        if (Version.debugEnabled()) {
+        /*if (Version.debugEnabled()) {
             if (!ArgumentTypes.isTypeRegistered(BatchArgument.batch())) {
                 ArgumentTypes.register("batch", BatchArgument.class, new EmptyArgumentSerializer<>(BatchArgument::batch));
             }
             event.getDispatcher().register(Commands.literal(FossilMod.MOD_ID).then(BatchTestCommand.register()));
-        }
+        }*/
     }
 
     @SubscribeEvent
@@ -82,8 +81,8 @@ public class ForgeModEvents {
     }
 
     @SubscribeEvent
-    public static void onLivingUpdate(LivingEvent.LivingUpdateEvent event) {
-        if (event.getEntityLiving() instanceof Animal animal) {
+    public static void onLivingUpdate(LivingEvent.LivingTickEvent event) {
+        if (event.getEntity() instanceof Animal animal) {
             int currentProgress = ModCapabilities.getEmbryoProgress(animal);
             if (currentProgress == 0) {
                 return;
@@ -116,7 +115,7 @@ public class ForgeModEvents {
     public static void onPlayerClone(PlayerEvent.Clone event) {
         event.getOriginal().reviveCaps();
         ModCapabilitiesImpl.getFirstHatchCap(event.getOriginal()).ifPresent(originalCap -> {
-            ModCapabilitiesImpl.getFirstHatchCap(event.getPlayer()).ifPresent(newCap -> {
+            ModCapabilitiesImpl.getFirstHatchCap(event.getEntity()).ifPresent(newCap -> {
                 newCap.setHatchedDinosaur(originalCap.hasHatchedDinosaur());
             });
         });
@@ -125,7 +124,7 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void onPlayerStartTracking(PlayerEvent.StartTracking event) {
-        ServerPlayer serverPlayer = (ServerPlayer) event.getPlayer();
+        ServerPlayer serverPlayer = (ServerPlayer) event.getEntity();
         if (event.getTarget() instanceof Animal animal) {
             ModCapabilitiesImpl.getMammalCap(animal).ifPresent(iMammalCap -> MessageHandler.CAP_CHANNEL.sendToPlayers(List.of(serverPlayer),
                     new S2CMammalCapMessage(animal, iMammalCap.getEmbryoProgress(), iMammalCap.getEmbryo())));
@@ -134,28 +133,28 @@ public class ForgeModEvents {
 
     @SubscribeEvent
     public static void allowDaySleep(PlayerSleepInBedEvent event) {
-        if (ComfyBedEffect.canApply(event.getOptionalPos(), event.getPlayer().getLevel())) {
+        if (ComfyBedEffect.canApply(event.getOptionalPos(), event.getEntity().getLevel())) {
             event.setResult(Event.Result.ALLOW);
         }
     }
 
     @SubscribeEvent
     public static void allowDaySleep(SleepingTimeCheckEvent event) {
-        if (ComfyBedEffect.canApply(event.getSleepingLocation(), event.getPlayer().getLevel())) {
+        if (ComfyBedEffect.canApply(event.getSleepingLocation(), event.getEntity().getLevel())) {
             event.setResult(Event.Result.ALLOW);
         }
     }
 
     @SubscribeEvent
     public static void addComfyBedEffect(PlayerWakeUpEvent event) {
-        if (ComfyBedEffect.canApply(event.getPlayer().getSleepingPos(), event.getPlayer().getLevel())) {
-            event.getPlayer().addEffect(new MobEffectInstance(ModEffects.COMFY_BED.get(), 24000, 0));
+        if (ComfyBedEffect.canApply(event.getEntity().getSleepingPos(), event.getEntity().getLevel())) {
+            event.getEntity().addEffect(new MobEffectInstance(ModEffects.COMFY_BED.get(), 24000, 0));
         }
     }
 
     @SubscribeEvent
     public static void addComfyBedEffect(LivingEvent.LivingVisibilityEvent event) {
-        if (event.getEntityLiving().hasEffect(ModEffects.COMFY_BED.get())) {
+        if (event.getEntity().hasEffect(ModEffects.COMFY_BED.get())) {
             event.modifyVisibility(0.5);
         }
     }

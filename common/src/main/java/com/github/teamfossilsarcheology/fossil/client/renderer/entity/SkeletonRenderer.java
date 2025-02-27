@@ -60,7 +60,7 @@ public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implem
         setCurrentModelRenderCycle(EModelRenderCycle.INITIAL);
         poseStack.pushPose();
         dispatchedMat = poseStack.last().pose().copy();
-        GeoModel model = geoModel.getModel(geoModel.getModelLocation(animatable));
+        GeoModel model = geoModel.getModel(geoModel.getModelResource(animatable));
         poseStack.translate(0, 0.01f, 0);
         RenderSystem.setShaderTexture(0, getTextureLocation(animatable));
 
@@ -164,7 +164,7 @@ public class SkeletonRenderer extends EntityRenderer<PrehistoricSkeleton> implem
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(PrehistoricSkeleton entity) {
-        return geoModel.getTextureLocation(entity);
+        return geoModel.getTextureResource(entity);
     }
 
     @Override

@@ -14,7 +14,6 @@ import me.shedaniel.rei.api.client.registry.display.DisplayCategory;
 import me.shedaniel.rei.api.common.category.CategoryIdentifier;
 import me.shedaniel.rei.api.common.util.EntryStacks;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
@@ -34,7 +33,7 @@ public class WorktableCategory implements DisplayCategory<WorktableDisplay> {
 
     @Override
     public Component getTitle() {
-        return new TranslatableComponent("category.fossil.rei.worktable");
+        return Component.translatable("category.fossil.rei.worktable");
     }
 
     @Override

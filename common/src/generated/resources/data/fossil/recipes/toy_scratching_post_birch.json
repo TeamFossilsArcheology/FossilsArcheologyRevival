@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "S": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "tag": "minecraft:wool"
+    },
+    "X": {
+      "item": "minecraft:birch_slab"
+    }
+  },
   "pattern": [
     "WWW",
     "WSW",
     " X "
   ],
-  "key": {
-    "S": {
-      "item": "minecraft:stick"
-    },
-    "X": {
-      "item": "minecraft:birch_slab"
-    },
-    "W": {
-      "tag": "minecraft:wool"
-    }
-  },
   "result": {
     "item": "fossil:toy_scratching_post_birch"
   }

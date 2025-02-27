@@ -4,7 +4,7 @@ import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.entity.FeederBlockEntity;
 import net.minecraft.ChatFormatting;
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.level.Level;
@@ -22,11 +22,11 @@ public enum FeederStatusProvider implements IBlockComponentProvider, IServerData
     @Override
     public void appendTooltip(ITooltip tooltip, BlockAccessor accessor, IPluginConfig iPluginConfig) {
         if (accessor.getServerData().contains(FeederBlockEntity.MEAT)) {
-            tooltip.add(new TranslatableComponent("fossil.jade.meat", accessor.getServerData().getInt(FeederBlockEntity.MEAT))
+            tooltip.add(Component.translatable("fossil.jade.meat", accessor.getServerData().getInt(FeederBlockEntity.MEAT))
                     .withStyle(ChatFormatting.RED));
         }
         if (accessor.getServerData().contains(FeederBlockEntity.PLANT)) {
-            tooltip.add(new TranslatableComponent("fossil.jade.plant", accessor.getServerData().getInt(FeederBlockEntity.PLANT))
+            tooltip.add(Component.translatable("fossil.jade.plant", accessor.getServerData().getInt(FeederBlockEntity.PLANT))
                     .withStyle(ChatFormatting.GREEN));
         }
     }

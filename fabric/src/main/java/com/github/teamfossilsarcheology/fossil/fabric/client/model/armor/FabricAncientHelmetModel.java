@@ -8,17 +8,17 @@ import software.bernie.geckolib3.model.AnimatedGeoModel;
 public class FabricAncientHelmetModel extends AnimatedGeoModel<AncientHelmetItemImpl> {
 
     @Override
-    public ResourceLocation getModelLocation(AncientHelmetItemImpl object) {
+    public ResourceLocation getModelResource(AncientHelmetItemImpl object) {
         return AncientHelmetItem.MODEL;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(AncientHelmetItemImpl object) {
+    public ResourceLocation getTextureResource(AncientHelmetItemImpl object) {
         return AncientHelmetItem.TEXTURE;
     }
 
     @Override
-    public ResourceLocation getAnimationFileLocation(AncientHelmetItemImpl animatable) {
+    public ResourceLocation getAnimationResource(AncientHelmetItemImpl animatable) {
         return null;
     }
 }

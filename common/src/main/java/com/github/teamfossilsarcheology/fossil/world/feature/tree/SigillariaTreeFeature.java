@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.world.feature.tree;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -17,7 +18,7 @@ public class SigillariaTreeFeature extends CustomTreeFeature {
         //Redo this correctly after 1.18
         WorldGenLevel level = context.level();
         BlockPos pos = context.origin();
-        Random random = context.random();
+        RandomSource random = context.random();
         int treeHeight = random.nextInt(7) + 15;
         int m = getMaxFreeTreeHeight(level, treeHeight, pos);
         if (m < treeHeight) {
@@ -60,7 +61,7 @@ public class SigillariaTreeFeature extends CustomTreeFeature {
         return true;
     }
 
-    private void genCone(WorldGenLevel level, BlockPos pos, float size, float height, Random random) {
+    private void genCone(WorldGenLevel level, BlockPos pos, float size, float height, RandomSource random) {
         BlockState log = ModBlocks.SIGILLARIA_LOG.get().defaultBlockState();
         BlockState leaves = ModBlocks.SIGILLARIA_LEAVES.get().defaultBlockState();
         float f = (size + height + size) * 0.333f + 0.5f;

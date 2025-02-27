@@ -7,7 +7,7 @@
     }
   ],
   "result": {
-    "item": "fossil:mutant_tree_planks",
-    "count": 4
+    "count": 4,
+    "item": "fossil:mutant_tree_planks"
   }
 }

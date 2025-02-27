@@ -1,10 +1,5 @@
 {
   "type": "minecraft:crafting_shaped",
-  "pattern": [
-    "  S",
-    " TS",
-    "T S"
-  ],
   "key": {
     "S": {
       "item": "minecraft:string"
@@ -13,6 +8,11 @@
       "item": "minecraft:stick"
     }
   },
+  "pattern": [
+    "  S",
+    " TS",
+    "T S"
+  ],
   "result": {
     "item": "fossil:whip"
   }

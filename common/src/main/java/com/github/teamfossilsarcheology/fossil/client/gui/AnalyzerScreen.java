@@ -8,7 +8,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -56,7 +55,7 @@ public class AnalyzerScreen extends AbstractContainerScreen<AnalyzerMenu> {
             int x = (width - imageWidth) / 2;
             int y = (height - imageHeight) / 2;
             if (mouseX > x + 81 && mouseX < x + 101 && mouseY > y + 35 && mouseY < y + 70) {
-                renderTooltip(poseStack, new TextComponent(menu.getStoredEnergy() + " E"), mouseX, mouseY);
+                renderTooltip(poseStack, Component.literal(menu.getStoredEnergy() + " E"), mouseX, mouseY);
             }
         }
     }

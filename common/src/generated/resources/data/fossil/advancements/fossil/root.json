@@ -1,23 +1,6 @@
 {
-  "display": {
-    "icon": {
-      "item": "fossil:fossil_bio"
-    },
-    "title": {
-      "translate": "advancements.fossil.root.title"
-    },
-    "description": {
-      "translate": "advancements.fossil.root.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": false,
-    "hidden": false,
-    "background": "fossil:textures/block/ancient_stone_bricks.png"
-  },
   "criteria": {
     "requirement": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,7 +9,24 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": false,
+    "background": "fossil:textures/block/ancient_stone_bricks.png",
+    "description": {
+      "translate": "advancements.fossil.root.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fossil:fossil_bio"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fossil.root.title"
     }
   },
   "requirements": [

@@ -5,7 +5,7 @@ import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraftforge.client.IItemRenderProperties;
+import net.minecraftforge.client.extensions.common.IClientItemExtensions;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Consumer;
@@ -15,10 +15,10 @@ public class SarcophagusBlockItemImpl {
         return new BlockItem(block, properties) {
 
             @Override
-            public void initializeClient(@NotNull Consumer<IItemRenderProperties> consumer) {
-                consumer.accept(new IItemRenderProperties() {
+            public void initializeClient(@NotNull Consumer<IClientItemExtensions> consumer) {
+                consumer.accept(new IClientItemExtensions() {
                     @Override
-                    public BlockEntityWithoutLevelRenderer getItemStackRenderer() {
+                    public BlockEntityWithoutLevelRenderer getCustomRenderer() {
                         return CustomItemRenderer.INSTANCE;
                     }
                 });

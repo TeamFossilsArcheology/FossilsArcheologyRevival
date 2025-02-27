@@ -1,11 +1,11 @@
 {
   "type": "fossil:culture_vat",
-  "input": {
-    "item": "fossil:fossil_sapling_cordaites"
-  },
+  "duration": 6000,
   "fuel": {
     "item": "fossil:bio_goo"
   },
-  "result": "fossil:cordaites_sapling",
-  "duration": 6000
+  "input": {
+    "item": "fossil:fossil_sapling_cordaites"
+  },
+  "result": "fossil:cordaites_sapling"
 }

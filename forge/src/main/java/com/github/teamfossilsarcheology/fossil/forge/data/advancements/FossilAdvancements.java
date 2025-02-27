@@ -14,11 +14,13 @@ import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.advancements.*;
 import net.minecraft.advancements.critereon.*;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -32,8 +34,8 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
     @Override
     public void accept(Consumer<Advancement> consumer) {
         Advancement root = Advancement.Builder.advancement().display(BIO_FOSSIL.get(),
-                        new TranslatableComponent("advancements.fossil.root.title"),
-                        new TranslatableComponent("advancements.fossil.root.description"),
+                        Component.translatable("advancements.fossil.root.title"),
+                        Component.translatable("advancements.fossil.root.description"),
                         FossilMod.location("textures/block/ancient_stone_bricks.png"), FrameType.TASK, true, false, false)
                 .addCriterion("requirement", InventoryChangeTrigger.TriggerInstance.hasItems(Blocks.CRAFTING_TABLE))
                 .save(consumer, FossilMod.MOD_ID + ":fossil/root");
@@ -77,7 +79,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
                 .parent(dinoEgg).rewards(AdvancementRewards.Builder.experience(1000));
         for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
             if (info.eggItem != null || info.cultivatedBirdEggItem != null) {
-                builder.addCriterion(info.entityType().getRegistryName().getPath(), IncubateEggTrigger.TriggerInstance.incubateEgg(info.entityType()));
+                builder.addCriterion(key(info.entityType()).getPath(), IncubateEggTrigger.TriggerInstance.incubateEgg(info.entityType()));
             }
         }
         builder.save(consumer, FossilMod.MOD_ID + ":fossil/all_eggs");
@@ -87,11 +89,12 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
                 .parent(embryo).rewards(AdvancementRewards.Builder.experience(500));
         for (PrehistoricEntityInfo info : values()) {
             if (info.embryoItem != null) {
-                builder.addCriterion(info.embryoItem.getRegistryName().getPath(), ImplantEmbryoTrigger.TriggerInstance.implantEmbryo(info.embryoItem));
+                builder.addCriterion(key(info.embryoItem).getPath(), ImplantEmbryoTrigger.TriggerInstance.implantEmbryo(info.embryoItem));
             }
-        }for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
+        }
+        for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
             if (info.embryoItem != null) {
-                builder.addCriterion(info.embryoItem.getRegistryName().getPath(), ImplantEmbryoTrigger.TriggerInstance.implantEmbryo(info.embryoItem));
+                builder.addCriterion(key(info.embryoItem).getPath(), ImplantEmbryoTrigger.TriggerInstance.implantEmbryo(info.embryoItem));
             }
         }
         builder.save(consumer, FossilMod.MOD_ID + ":fossil/all_embryos");
@@ -112,7 +115,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
                         null, FrameType.TASK, true, true, false)
                 .parent(parent).requirements(RequirementsStrategy.OR);
         for (int i = 0; i < items.length; i++) {
-            builder.addCriterion(items[i].asItem().getRegistryName().getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(items[i]));
+            builder.addCriterion(key(items[i].asItem()).getPath(), InventoryChangeTrigger.TriggerInstance.hasItems(items[i]));
         }
         return builder.save(consumer, FossilMod.MOD_ID + ":fossil/" + key);
     }
@@ -124,7 +127,7 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
 
     @SafeVarargs
     private Advancement simple(Advancement parent, Consumer<Advancement> consumer, RegistrySupplier<? extends ItemLike>... items) {
-        return simple(parent, items[0].get().asItem().getRegistryName().getPath(), consumer, Arrays.stream(items).map(Supplier::get).toArray(ItemLike[]::new));
+        return simple(parent, key(items[0].get().asItem()).getPath(), consumer, Arrays.stream(items).map(Supplier::get).toArray(ItemLike[]::new));
     }
 
     private Advancement tag(ItemLike item, TagKey<Item> tag, Advancement parent, Consumer<Advancement> consumer, String key) {
@@ -141,10 +144,18 @@ public class FossilAdvancements implements Consumer<Consumer<Advancement>> {
     }
 
     private Component title(String key) {
-        return new TranslatableComponent(String.format("advancements.%s.%s.title", FossilMod.MOD_ID, key));
+        return Component.translatable(String.format("advancements.%s.%s.title", FossilMod.MOD_ID, key));
     }
 
     private Component description(String key) {
-        return new TranslatableComponent(String.format("advancements.%s.%s.description", FossilMod.MOD_ID, key));
+        return Component.translatable(String.format("advancements.%s.%s.description", FossilMod.MOD_ID, key));
+    }
+
+    private ResourceLocation key(Item item) {
+        return ForgeRegistries.ITEMS.getKey(item);
+    }
+
+    private ResourceLocation key(EntityType<?> entityType) {
+        return ForgeRegistries.ENTITY_TYPES.getKey(entityType);
     }
 }

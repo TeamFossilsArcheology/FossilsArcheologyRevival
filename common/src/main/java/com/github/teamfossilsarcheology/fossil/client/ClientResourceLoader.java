@@ -23,7 +23,7 @@ public abstract class ClientResourceLoader<T> extends SimplePreparableReloadList
      */
     protected Collection<ResourceLocation> listResources(ResourceManager resourceManager) {
         return resourceManager.listPacks().filter(packResources -> packResources.getNamespaces(PackType.CLIENT_RESOURCES).contains(modId))
-                .flatMap(packResources -> packResources.getResources(PackType.CLIENT_RESOURCES, modId, directory, Integer.MAX_VALUE, s -> s.endsWith(suffix)).stream())
+                .flatMap(packResources -> packResources.getResources(PackType.CLIENT_RESOURCES, modId, directory, s -> s.getPath().endsWith(suffix)).stream())
                 .distinct().toList();
     }
 }

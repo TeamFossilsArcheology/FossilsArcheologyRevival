@@ -1,7 +1,6 @@
 package com.github.teamfossilsarcheology.fossil.item;
 
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.TooltipFlag;
@@ -17,6 +16,6 @@ public class DescriptiveItem extends Item {
 
     @Override
     public void appendHoverText(ItemStack stack, @Nullable Level level, List<Component> tooltipComponents, TooltipFlag isAdvanced) {
-        tooltipComponents.add(new TranslatableComponent(getDescriptionId() + ".desc"));
+        tooltipComponents.add(Component.translatable(getDescriptionId() + ".desc"));
     }
 }

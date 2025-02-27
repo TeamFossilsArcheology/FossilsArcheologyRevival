@@ -1,0 +1,6 @@
+{
+  "type": "fossil:treasure_room",
+  "biomes": "fossil:treasure_room",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

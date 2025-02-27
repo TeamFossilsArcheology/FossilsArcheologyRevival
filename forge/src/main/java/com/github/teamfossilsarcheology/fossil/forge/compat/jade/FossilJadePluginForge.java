@@ -4,7 +4,10 @@ import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.FeederBlock;
 import com.github.teamfossilsarcheology.fossil.block.entity.FeederBlockEntity;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
-import mcp.mobius.waila.api.*;
+import snownee.jade.api.IWailaClientRegistration;
+import snownee.jade.api.IWailaCommonRegistration;
+import snownee.jade.api.IWailaPlugin;
+import snownee.jade.api.WailaPlugin;
 
 @WailaPlugin
 public class FossilJadePluginForge implements IWailaPlugin {
@@ -17,7 +20,7 @@ public class FossilJadePluginForge implements IWailaPlugin {
 
     @Override
     public void registerClient(IWailaClientRegistration registration) {
-        registration.registerComponentProvider(FeederStatusProvider.INSTANCE, TooltipPosition.BODY, FeederBlock.class);
+        registration.registerBlockComponent(FeederStatusProvider.INSTANCE, FeederBlock.class);
         registration.hideTarget(ModBlocks.ANU_BARRIER_FACE.get());
         registration.hideTarget(ModBlocks.ANU_BARRIER_ORIGIN.get());
     }

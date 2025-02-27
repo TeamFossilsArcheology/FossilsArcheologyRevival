@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 3.0,
   "ingredient": {
     "item": "fossil:dense_sand"
   },
-  "result": "fossil:reinforced_glass",
-  "experience": 3.0,
-  "cookingtime": 200
+  "result": "fossil:reinforced_glass"
 }

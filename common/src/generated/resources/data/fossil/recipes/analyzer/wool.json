@@ -17,8 +17,8 @@
       "weight": 27.0
     },
     {
-      "item": "minecraft:string",
       "count": 3,
+      "item": "minecraft:string",
       "weight": 50.0
     }
   ]

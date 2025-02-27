@@ -9,13 +9,14 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.*;
 import com.mojang.blaze3d.vertex.PoseStack;
-import net.minecraft.client.CycleOption;
+import com.mojang.serialization.Codec;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.CycleButton;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Mob;
@@ -34,6 +35,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
 
 public class DebugScreen extends Screen {
     private static final List<PathInfo> pathTargets = new ArrayList<>();
@@ -46,9 +48,10 @@ public class DebugScreen extends Screen {
     private DebugTab<? extends Entity> currentTab;
     private double speedMod = 0.5;
     public static int rulerMode;
+
     //TODO: Embryo, etc helper
     public DebugScreen(@Nullable Entity newEntity) {
-        super(new TextComponent("Debug Screen"));
+        super(Component.literal("Debug Screen"));
         entity = newEntity;
         if (newEntity == null || !newEntity.isAlive()) {
             entity = null;
@@ -119,7 +122,7 @@ public class DebugScreen extends Screen {
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InfoTab(this, prehistoric));
         } else if (entity instanceof TamableAnimal || entity instanceof AbstractHorse) {
-            addRenderableWidget(new Button(275, 55, 50, 20, new TextComponent("Tame"), button -> {
+            addRenderableWidget(new Button(275, 55, 50, 20, Component.literal("Tame"), button -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2STameMessage(entity.getId()));
             }));
         }
@@ -134,20 +137,20 @@ public class DebugScreen extends Screen {
         }
         if (entity instanceof Mob mob && entity instanceof PrehistoricDebug prehistoric) {
             builder.withInitialValue(mob.isNoAi());
-            disableAI = builder.create(width / 2 - 225, height - 95, 130, 20, new TextComponent("Disable AI"), (cycleButton, object) -> {
+            disableAI = builder.create(width / 2 - 225, height - 95, 130, 20, Component.literal("Disable AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 0));
             });
             this.addRenderableWidget(disableAI);
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableGoalAI"));
-            this.addRenderableWidget(builder.create(width / 2 - 225, height - 70, 130, 20, new TextComponent("Disable Goal AI"), (cycleButton, object) -> {
+            this.addRenderableWidget(builder.create(width / 2 - 225, height - 70, 130, 20, Component.literal("Disable Goal AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 1));
             }));
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableMoveAI"));
-            this.addRenderableWidget(builder.create(width / 2 - 225, height - 45, 130, 20, new TextComponent("Disable Move AI"), (cycleButton, object) -> {
+            this.addRenderableWidget(builder.create(width / 2 - 225, height - 45, 130, 20, Component.literal("Disable Move AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 2));
             }));
             builder.withInitialValue(prehistoric.getDebugTag().getBoolean("disableLookAI"));
-            this.addRenderableWidget(builder.create(width / 2 - 225, height - 22, 130, 20, new TextComponent("Disable Look AI"), (cycleButton, object) -> {
+            this.addRenderableWidget(builder.create(width / 2 - 225, height - 22, 130, 20, Component.literal("Disable Look AI"), (cycleButton, object) -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDisableAIMessage(entity.getId(), (Boolean) cycleButton.getValue(), (byte) 3));
             }));
         }
@@ -157,64 +160,65 @@ public class DebugScreen extends Screen {
         if (entity instanceof Prehistoric prehistoric) {
             tabs.add(new InstructionTab(this, prehistoric));
         }
-        addRenderableWidget(new Button(width / 2 - 91, height - 95, 91, 20, new TextComponent("Ruler"), button -> {
+        addRenderableWidget(new Button(width / 2 - 91, height - 95, 91, 20, Component.literal("Ruler"), button -> {
             rulerMode = 1;
             onClose();
             if (currentTab != null) currentTab.onClose();
         }, (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, new TextComponent("Measure length. Left click for 1st pos. Right click for 2nd pos"), i, j);
+            renderTooltip(poseStack, Component.literal("Measure length. Left click for 1st pos. Right click for 2nd pos"), i, j);
         }));
-        addRenderableWidget(new Button(width / 2 - 91, height - 70, 91, 20, new TextComponent("Discard All"), button -> {
+        addRenderableWidget(new Button(width / 2 - 91, height - 70, 91, 20, Component.literal("Discard All"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(-1));
             if (currentTab != null) currentTab.onClose();
         }, (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, new TextComponent("Kills all non-player entities"), i, j);
+            renderTooltip(poseStack, Component.literal("Kills all non-player entities"), i, j);
         }));
         if (entity != null) {
-            addRenderableWidget(new Button(width / 2, height - 70, 91, 20, new TextComponent("Discard This"), button -> {
+            addRenderableWidget(new Button(width / 2, height - 70, 91, 20, Component.literal("Discard This"), button -> {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SDiscardMessage(entity.getId()));
                 if (currentTab != null) currentTab.onClose();
             }));
         }
-        addRenderableWidget(new Button(width / 2 + 95, height - 70, 59, 20, new TextComponent("Slow Self"), button -> {
+        addRenderableWidget(new Button(width / 2 + 95, height - 70, 59, 20, Component.literal("Slow Self"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SSlowMessage(speedMod));
         }, (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, new TextComponent("If clicked multiply your walkspeed by the value on the right"), i, j);
+            renderTooltip(poseStack, Component.literal("If clicked multiply your walkspeed by the value on the right"), i, j);
         }));
-        addRenderableWidget(new DebugSlider(width / 2 + 154, height - 70, 65, 20, new TextComponent("Mod: "), new TextComponent(""), 0.1, 1, speedMod, 0.05, 2, true) {
+        addRenderableWidget(new DebugSlider(width / 2 + 154, height - 70, 65, 20, Component.literal("Mod: "), Component.literal(""), 0.1, 1, speedMod, 0.05, 2, true) {
             @Override
             protected void applyValue() {
                 speedMod = (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
             }
         });
         builder.withInitialValue(showPaths);
-        addRenderableWidget(builder.create(width / 2 - 91, height - 45, 91, 20, new TextComponent("Show Paths"), (cycleButton, object) -> {
+        addRenderableWidget(builder.create(width / 2 - 91, height - 45, 91, 20, Component.literal("Show Paths"), (cycleButton, object) -> {
             showPaths = (boolean) cycleButton.getValue();
         }));
-        addRenderableWidget(new Button(width / 2, height - 45, 91, 20, new TextComponent("Clear Paths"), button -> clearPaths(), (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, new TextComponent("Mostly unused"), i, j);
+        addRenderableWidget(new Button(width / 2, height - 45, 91, 20, Component.literal("Clear Paths"), button -> clearPaths(), (button, poseStack, i, j) -> {
+            renderTooltip(poseStack, Component.literal("Mostly unused"), i, j);
         }));
-        addRenderableWidget(new Button(width / 2 + 95, height - 45, 125, 20, new TextComponent("Spawn Test Structure"), button -> {
+        addRenderableWidget(new Button(width / 2 + 95, height - 45, 125, 20, Component.literal("Spawn Test Structure"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new C2SStructureMessage(true));
         }, (button, poseStack, i, j) -> {
-            renderTooltip(poseStack, new TextComponent("Spawns a big structure at 0,79,0 with every mob"), i, j);
+            renderTooltip(poseStack, Component.literal("Spawns a big structure at 0,79,0 with every mob"), i, j);
         }));
         if (!tabs.isEmpty()) {
             tabs.forEach(tab -> tab.init(width, height));
             Collections.rotate(tabs, -tabShift);
             currentTab = tabs.get(0);
-            addRenderableWidget(CycleOption.create("Tab", () -> tabs, debugTab -> new TextComponent(debugTab.getClass().getSimpleName()),
-                    options -> currentTab, (options, option, tab) -> {
-                        tab.onOpen();
-                        addWidget(tab);
-                        removeWidget(currentTab);
-                        currentTab.onClose();
-                        currentTab = tab;
-                    }).createButton(Minecraft.getInstance().options, width / 2, 60, 100));
-            addRenderableWidget(new Button(width / 2, 35, 100, 20, new TextComponent("Set default"), button -> {
+            addRenderableWidget(DebugScreen.cycleInstance("Tab", tabs, currentTab,
+                            (c, value) -> Component.literal(value.getClass().getSimpleName()), tab -> {
+                                tab.onOpen();
+                                addWidget(tab);
+                                removeWidget(currentTab);
+                                currentTab.onClose();
+                                currentTab = tab;
+                            })
+                    .createButton(Minecraft.getInstance().options, width / 2, 60, 100));
+            addRenderableWidget(new Button(width / 2, 35, 100, 20, Component.literal("Set default"), button -> {
                 tabShift += tabs.indexOf(currentTab);
             }, (button, poseStack, i, j) -> {
-                renderTooltip(poseStack, new TextComponent("Sets the current tab as default tab when opening screen"), i, j);
+                renderTooltip(poseStack, Component.literal("Sets the current tab as default tab when opening screen"), i, j);
             }));
             addWidget(currentTab);
             currentTab.onOpen();
@@ -228,8 +232,8 @@ public class DebugScreen extends Screen {
             currentTab.render(poseStack, mouseX, mouseY, partialTick);
         }
         if (entity instanceof Sheep sheep) {
-            drawString(poseStack, minecraft.font, new TextComponent("yRot: " + sheep.getYRot()), 275, 15, 16777215);
-            drawString(poseStack, minecraft.font, new TextComponent("yRotHead: " + sheep.getYHeadRot()), 275, 35, 16777215);
+            drawString(poseStack, minecraft.font, Component.literal("yRot: " + sheep.getYRot()), 275, 15, 16777215);
+            drawString(poseStack, minecraft.font, Component.literal("yRotHead: " + sheep.getYHeadRot()), 275, 35, 16777215);
         }
         /*Player player = Minecraft.getInstance().player;
         float x = 1;
@@ -247,18 +251,22 @@ public class DebugScreen extends Screen {
         var targetA = Mth.cos((targetYaw)* Mth.DEG_TO_RAD);
         var targetB = 0;
         var targetC = Mth.sin((targetYaw)* Mth.DEG_TO_RAD);
-        drawString(poseStack, minecraft.font, new TextComponent("xRot: " + player.getXRot()), 175, 15, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("yRotCopy: " + yRotCopy), 175, 35, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("yawCopy: " + yawCopy), 175, 65, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("targetYaw: " + targetYaw), 175, 95, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("a: " + a), 175, 125, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("b: " + b), 175, 155, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("c: " + c), 175, 185, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("targetA: " + (targetA - a)), 175, 215, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("newYaw: " + (targetA - a)), 175, 245, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("targetC: " + (targetC - c)), 175, 275, 16777215);*/
+        drawString(poseStack, minecraft.font, Component.literal("xRot: " + player.getXRot()), 175, 15, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("yRotCopy: " + yRotCopy), 175, 35, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("yawCopy: " + yawCopy), 175, 65, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("targetYaw: " + targetYaw), 175, 95, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("a: " + a), 175, 125, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("b: " + b), 175, 155, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("c: " + c), 175, 185, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("targetA: " + (targetA - a)), 175, 215, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("newYaw: " + (targetA - a)), 175, 245, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("targetC: " + (targetC - c)), 175, 275, 16777215);*/
     }
 
     record PathInfo(BlockPos targetPos, BlockState blockState, boolean below) {
+    }
+
+    public static <T> OptionInstance<T> cycleInstance(String caption, List<T> list, T initial, OptionInstance.CaptionBasedToString<T> valueName, Consumer<T> onClick) {
+        return new OptionInstance<>(caption, OptionInstance.noTooltip(), valueName, new OptionInstance.Enum<>(list, Codec.INT.xmap(list::get, list::indexOf)), initial, onClick);
     }
 }

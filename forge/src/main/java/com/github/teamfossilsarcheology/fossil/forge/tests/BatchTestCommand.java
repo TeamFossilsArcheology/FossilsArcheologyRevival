@@ -10,7 +10,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
 import net.minecraft.gametest.framework.*;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.level.levelgen.Heightmap;
@@ -84,11 +84,11 @@ public class BatchTestCommand {
     }
 
     private static void say(CommandSourceStack source, String message) {
-        source.sendSuccess(new TextComponent(message), false);
+        source.sendSuccess(Component.literal(message), false);
     }
 
     private static void say(ServerLevel serverLevel, String message, ChatFormatting formatting) {
-        serverLevel.getPlayers((arg) -> true).forEach((arg2) -> arg2.sendMessage(new TextComponent(formatting + message), Util.NIL_UUID));
+        serverLevel.getPlayers(arg -> true).forEach(arg2 -> arg2.sendSystemMessage(Component.literal(formatting + message)));
     }
 
     static void showTestSummaryIfAllDone(ServerLevel serverLevel, MultipleTestTracker tracker) {

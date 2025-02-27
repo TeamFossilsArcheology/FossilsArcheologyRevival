@@ -1,35 +1,7 @@
 {
   "parent": "fossil:fossil/root",
-  "display": {
-    "icon": {
-      "item": "fossil:broken_sword"
-    },
-    "title": {
-      "translate": "advancements.fossil.broken_sword.title"
-    },
-    "description": {
-      "translate": "advancements.fossil.broken_sword.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "broken_sword": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "fossil:broken_sword"
-            ]
-          }
-        ]
-      }
-    },
     "broken_helmet": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -38,7 +10,35 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "broken_sword": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:broken_sword"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fossil.broken_sword.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fossil:broken_sword"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fossil.broken_sword.title"
     }
   },
   "requirements": [

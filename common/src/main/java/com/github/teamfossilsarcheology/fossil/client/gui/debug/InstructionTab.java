@@ -12,12 +12,12 @@ import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.network.debug.InstructionMessage;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
-import net.minecraft.client.CycleOption;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.OptionInstance;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -52,54 +52,54 @@ public class InstructionTab extends DebugTab<Prehistoric> {
         super.init(width, height);
         instructions = addWidget(new InstructionsList(INSTRUCTIONS.computeIfAbsent(entity.getUUID(), id -> new Pair(entity.getId(), new ArrayList<>())), minecraft));
 
-        addWidget(new Button(5, 340, 50, 20, new TextComponent("Start"), button -> {
+        addWidget(new Button(5, 340, 50, 20, Component.literal("Start"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
             debugScreen.onClose();
             onClose();
         }));
-        addWidget(new Button(5, 365, 50, 20, new TextComponent("Stop"), button -> {
+        addWidget(new Button(5, 365, 50, 20, Component.literal("Stop"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entity.getId(), true, List.of()));
         }));
-        addWidget(new Button(60, 365, 70, 20, new TextComponent("Stop All"), button -> {
+        addWidget(new Button(60, 365, 70, 20, Component.literal("Stop All"), button -> {
             for (Map.Entry<UUID, Pair> entry : INSTRUCTIONS.entrySet()) {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entry.getValue().id, true,List.of()));
             }
             debugScreen.onClose();
             onClose();
         }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, new TextComponent("Stops Instruction for all mobs"), i, j);
+            debugScreen.renderTooltip(poseStack, Component.literal("Stops Instruction for all mobs"), i, j);
         }));
-        addWidget(new Button(60, 340, 70, 20, new TextComponent("Start All"), button -> {
+        addWidget(new Button(60, 340, 70, 20, Component.literal("Start All"), button -> {
             for (Map.Entry<UUID, Pair> entry : INSTRUCTIONS.entrySet()) {
                 MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entry.getValue().id, true, entry.getValue().instructions));
             }
             debugScreen.onClose();
             onClose();
         }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, new TextComponent("Starts Instruction for all mobs"), i, j);
+            debugScreen.renderTooltip(poseStack, Component.literal("Starts Instruction for all mobs"), i, j);
         }));
-        addWidget(new Button(135, 340, 50, 20, new TextComponent("Debug"), button -> {
+        addWidget(new Button(135, 340, 50, 20, Component.literal("Debug"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new InstructionMessage(entity.getId(), true, INSTRUCTIONS.get(entity.getUUID()).instructions));
         }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, new TextComponent("Starts Instruction without closing the debug menu"), i, j);
+            debugScreen.renderTooltip(poseStack, Component.literal("Starts Instruction without closing the debug menu"), i, j);
         }));
-        addWidget(new Button(220, 5, 100, 20, new TextComponent("Walk Builder"), button -> {
+        addWidget(new Button(220, 5, 100, 20, Component.literal("Walk Builder"), button -> {
             positionMode = Instruction.Type.MOVE_TO;
             debugScreen.onClose();
             //TODO: Custom icons next to crosshair for walk/teleport
         }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, new TextComponent("Left click to place, Right click to cancel"), i, j);
+            debugScreen.renderTooltip(poseStack, Component.literal("Left click to place, Right click to cancel"), i, j);
         }));
 
-        addWidget(new Button(220, 30, 100, 20, new TextComponent("Teleport Builder"), button -> {
+        addWidget(new Button(220, 30, 100, 20, Component.literal("Teleport Builder"), button -> {
             positionMode = Instruction.Type.TELEPORT_TO;
             teleportRotation = 0;
             debugScreen.onClose();
         }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, new TextComponent("Left click to place, Right click to cancel, Mousewheel to rotate"), i, j);
+            debugScreen.renderTooltip(poseStack, Component.literal("Left click to place, Right click to cancel, Mousewheel to rotate"), i, j);
         }));
         if (entity instanceof Meganeura) {
-            addWidget(new Button(220, 55, 100, 20, new TextComponent("Attach Builder"), button -> {
+            addWidget(new Button(220, 55, 100, 20, Component.literal("Attach Builder"), button -> {
                 positionMode = Instruction.Type.ATTACH_TO;
                 debugScreen.onClose();
             }));
@@ -111,34 +111,34 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         });
         if (entity instanceof PrehistoricFlying) {
-            addWidget(new Button(220, 55, 100, 20, new TextComponent("Fly Builder"), button -> {
+            addWidget(new Button(220, 55, 100, 20, Component.literal("Fly Builder"), button -> {
                 positionMode = Instruction.Type.FLY_TO;
                 debugScreen.onClose();
             }));
-            addWidget(new Button(220, 80, 100, 20, new TextComponent("Land Builder"), button -> {
+            addWidget(new Button(220, 80, 100, 20, Component.literal("Land Builder"), button -> {
                 positionMode = Instruction.Type.FLY_LAND;
                 debugScreen.onClose();
             }));
         }
         if (entity instanceof PrehistoricLeaping) {
-            addWidget(new Button(220, 55, 100, 20, new TextComponent("Leap Builder"), button -> {
+            addWidget(new Button(220, 55, 100, 20, Component.literal("Leap Builder"), button -> {
                 positionMode = Instruction.Type.LEAP_LAND;
                 debugScreen.onClose();
             }));
-            addWidget(new Button(width - 115, 5, 90, 20, new TextComponent("Open Leap"), button -> {
+            addWidget(new Button(width - 115, 5, 90, 20, Component.literal("Open Leap"), button -> {
                 closeLists();
                 addWidget(leapEntities);
             }, (button, poseStack, i, j) -> {
-                debugScreen.renderTooltip(poseStack, new TextComponent("Won't save correctly when leaving the world"), i, j);
+                debugScreen.renderTooltip(poseStack, Component.literal("Won't save correctly when leaving the world"), i, j);
             }));
         }
         attackEntities = new EntityList(width - 315, 200, 300, list, minecraft, entity1 -> {
         });
-       /* addWidget(new Button(width - 315, 5, 90, 20, new TextComponent("Open Attack"), button -> {
+       /* addWidget(new Button(width - 315, 5, 90, 20, Component.literal("Open Attack"), button -> {
             closeLists();
             addWidget(attackEntities);
         }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, new TextComponent("Unused"), i, j);
+            debugScreen.renderTooltip(poseStack, Component.literal("Unused"), i, j);
         }));*/
         List<String> controllers = entity.getFactory().getOrCreateAnimationData(entity.getId()).getAnimationControllers().keySet().stream().toList();
         animations = new AnimationList(width - 315, entity.getAllAnimations(), controllers, minecraft, animationObject -> {
@@ -146,21 +146,21 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         });
-        addWidget(new Button(width - 215, 5, 90, 20, new TextComponent("Open Animations"), button -> {
+        addWidget(new Button(width - 215, 5, 90, 20, Component.literal("Open Animations"), button -> {
             closeLists();
             addWidget(animations);
         }, (button, poseStack, i, j) -> {
-            debugScreen.renderTooltip(poseStack, new TextComponent("Stops and plays animation x times or for x seconds"), i, j);
+            debugScreen.renderTooltip(poseStack, Component.literal("Stops and plays animation x times or for x seconds"), i, j);
         }));
 
-        EditBox zPosInput = addWidget(new EditBox(minecraft.font, 325, 30, 30, 20, new TextComponent("")));
+        EditBox zPosInput = addWidget(new EditBox(minecraft.font, 325, 30, 30, 20, Component.literal("")));
         zPosInput.setValue(new DecimalFormat("##", DecimalFormatSymbols.getInstance(Locale.US)).format(5));
-        addWidget(new Button(325, 5, 70, 20, new TextComponent("Add Idle"), button -> {
+        addWidget(new Button(325, 5, 70, 20, Component.literal("Add Idle"), button -> {
             Instruction instruction = new Instruction.Idle(Integer.parseInt(zPosInput.getValue()) * 20);
             instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
         }));
-        addWidget(new Button(400, 5, 70, 20, new TextComponent("Add Sleep"), button -> {
+        addWidget(new Button(400, 5, 70, 20, Component.literal("Add Sleep"), button -> {
             Instruction instruction = new Instruction.Sleep(Integer.parseInt(zPosInput.getValue()) * 20);
             instructions.addInstruction(instruction);
             INSTRUCTIONS.get(entity.getUUID()).instructions.add(instruction);
@@ -226,17 +226,17 @@ public class InstructionTab extends DebugTab<Prehistoric> {
             int buttonX = x0 + rowWidth + 15;
             if (!controllers.isEmpty()) {
                 currentControllerName = controllers.get(0);
-                addWidget(CycleOption.create("", () -> controllers, TextComponent::new,
-                                options -> currentControllerName, (options, option, controller) -> currentControllerName = controller)
+                addWidget(DebugScreen.cycleInstance("", controllers, currentControllerName,
+                                (c, value) -> Component.literal(value), controller -> this.currentControllerName = controller)
                         .createButton(Minecraft.getInstance().options, buttonX, y0, 100));
             }
-            addWidget(new DebugSlider(buttonX, y0 + 25, 100, 20, new TextComponent("Count: "), new TextComponent(""), 0, 20, transitionLength, 1, 3, true) {
+            addWidget(new DebugSlider(buttonX, y0 + 25, 100, 20, Component.literal("Count: "), Component.literal(""), 0, 20, transitionLength, 1, 3, true) {
                 @Override
                 protected void applyValue() {
                     transitionLength = (float) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
                 }
             });
-            addWidget(CycleOption.createOnOff("Time based", options -> loop, (options, option, loop) -> this.loop = loop)
+            addWidget(OptionInstance.createBoolean("Time based", loop, newLoop -> this.loop = newLoop)
                     .createButton(Minecraft.getInstance().options, buttonX, y0 + 50, 100));
         }
     }

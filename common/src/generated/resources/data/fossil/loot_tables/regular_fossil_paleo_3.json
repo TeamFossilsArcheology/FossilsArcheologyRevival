@@ -1,7 +1,6 @@
 {
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -13,82 +12,83 @@
             },
             {
               "type": "minecraft:item",
-              "weight": 5,
-              "name": "fossil:broken_sword"
+              "name": "fossil:broken_sword",
+              "weight": 5
             },
             {
               "type": "minecraft:item",
-              "weight": 5,
-              "name": "fossil:broken_helmet"
+              "name": "fossil:broken_helmet",
+              "weight": 5
             },
             {
               "type": "minecraft:item",
-              "weight": 36,
-              "name": "fossil:skull"
+              "name": "fossil:skull",
+              "weight": 36
             },
             {
               "type": "minecraft:item",
-              "weight": 510,
-              "name": "fossil:fossil_bio"
+              "name": "fossil:fossil_bio",
+              "weight": 510
             },
             {
               "type": "minecraft:item",
-              "weight": 0,
-              "name": "fossil:relic_scrap"
+              "name": "fossil:relic_scrap",
+              "weight": 0
             },
             {
               "type": "minecraft:item",
-              "weight": 210,
-              "name": "minecraft:bone"
+              "name": "minecraft:bone",
+              "weight": 210
             },
             {
               "type": "minecraft:item",
-              "weight": 205,
-              "name": "fossil:fossil_plant"
+              "name": "fossil:fossil_plant",
+              "weight": 205
             },
             {
               "type": "minecraft:dynamic",
-              "weight": 18,
-              "name": "fossil:bones_leg"
+              "name": "fossil:bones_leg",
+              "weight": 18
             },
             {
               "type": "minecraft:dynamic",
-              "weight": 18,
-              "name": "fossil:bones_arm"
+              "name": "fossil:bones_arm",
+              "weight": 18
             },
             {
               "type": "minecraft:dynamic",
-              "weight": 15,
-              "name": "fossil:bones_foot"
+              "name": "fossil:bones_foot",
+              "weight": 15
             },
             {
               "type": "minecraft:dynamic",
-              "weight": 15,
-              "name": "fossil:bones_skull"
+              "name": "fossil:bones_skull",
+              "weight": 15
             },
             {
               "type": "minecraft:dynamic",
-              "weight": 17,
-              "name": "fossil:bones_ribcage"
+              "name": "fossil:bones_ribcage",
+              "weight": 17
             },
             {
               "type": "minecraft:dynamic",
-              "weight": 15,
-              "name": "fossil:bones_vertebrae"
+              "name": "fossil:bones_vertebrae",
+              "weight": 15
             },
             {
               "type": "minecraft:dynamic",
-              "weight": 15,
-              "name": "fossil:bones_unique"
+              "name": "fossil:bones_unique",
+              "weight": 15
             },
             {
               "type": "minecraft:dynamic",
-              "weight": 15,
-              "name": "fossil:bones_tail"
+              "name": "fossil:bones_tail",
+              "weight": 15
             }
           ]
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

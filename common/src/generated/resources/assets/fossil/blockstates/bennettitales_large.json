@@ -1,10 +1,10 @@
 {
   "variants": {
-    "half=upper": {
-      "model": "fossil:block/plants/bennettitales_large_2"
-    },
     "half=lower": {
       "model": "fossil:block/plants/bennettitales_large_1"
+    },
+    "half=upper": {
+      "model": "fossil:block/plants/bennettitales_large_2"
     }
   }
 }

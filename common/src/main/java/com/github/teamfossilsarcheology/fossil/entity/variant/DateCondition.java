@@ -4,6 +4,7 @@ import com.google.gson.*;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.GsonHelper;
+import net.minecraft.util.RandomSource;
 
 import java.lang.reflect.Type;
 import java.time.LocalDate;
@@ -38,7 +39,7 @@ public class DateCondition extends VariantCondition {
      * @param now the date that will be compared to. Only month and day will be checked
      * @return {@code true} if the date matches and the random check succeeds
      */
-    public boolean test(Random random, ZonedDateTime now) {
+    public boolean test(RandomSource random, ZonedDateTime now) {
         if (random.nextDouble() > chance) {
             return false;
         }

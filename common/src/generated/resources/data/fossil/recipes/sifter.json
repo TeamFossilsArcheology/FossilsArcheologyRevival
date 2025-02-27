@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "I": {
+      "item": "minecraft:iron_bars"
+    },
+    "P": {
+      "tag": "minecraft:planks"
+    },
+    "S": {
+      "item": "minecraft:string"
+    }
+  },
   "pattern": [
     "SPS",
     "PIP",
     "PSP"
   ],
-  "key": {
-    "I": {
-      "item": "minecraft:iron_bars"
-    },
-    "S": {
-      "item": "minecraft:string"
-    },
-    "P": {
-      "tag": "minecraft:planks"
-    }
-  },
   "result": {
     "item": "fossil:sifter"
   }

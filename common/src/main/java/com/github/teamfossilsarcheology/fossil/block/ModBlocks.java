@@ -89,8 +89,8 @@ public class ModBlocks {
 
     public static final RegistrySupplier<Block> SHELL = registerBlock("shell",
             () -> new ShellBlock(Properties.of(Material.STONE).strength(1).requiresCorrectToolForDrops().noOcclusion()));
-    public static final RegistrySupplier<OreBlock> AMBER_ORE = registerBlock("amber_ore",
-            () -> new OreBlock(Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
+    public static final RegistrySupplier<DropExperienceBlock> AMBER_ORE = registerBlock("amber_ore",
+            () -> new DropExperienceBlock(Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops()));
     public static final RegistrySupplier<Block> AMBER_BLOCK = registerBlock("amber_block",
             () -> new Block(Properties.of(Material.STONE).strength(3f).requiresCorrectToolForDrops().noOcclusion()
                     .isViewBlocking(ModBlocks::never)));
@@ -480,7 +480,7 @@ public class ModBlocks {
     }
 
     public static RegistrySupplier<TallFlowerBlock> registerTallFlower(String name, VoxelShape shape) {
-        return registerBlock(name, () -> new TallFlowerBlock(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS), shape));
+        return registerBlock(name, () -> new TallFlowerBlock(shape));
     }
 
     public static RegistrySupplier<FourTallFlowerBlock> registerFourTallFlower(String name, VoxelShape shape) {

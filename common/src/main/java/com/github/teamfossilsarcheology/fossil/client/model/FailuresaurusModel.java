@@ -25,17 +25,17 @@ public class FailuresaurusModel extends AnimatedGeoModel<Failuresaurus> {
     }
 
     @Override
-    public ResourceLocation getModelLocation(Failuresaurus failuresaurus) {
+    public ResourceLocation getModelResource(Failuresaurus failuresaurus) {
         return modelLocations.get(failuresaurus.getVariant());
     }
 
     @Override
-    public ResourceLocation getTextureLocation(Failuresaurus failuresaurus) {
+    public ResourceLocation getTextureResource(Failuresaurus failuresaurus) {
         return textureLocations.get(failuresaurus.getVariant());
     }
 
     @Override
-    public ResourceLocation getAnimationFileLocation(Failuresaurus failuresaurus) {
+    public ResourceLocation getAnimationResource(Failuresaurus failuresaurus) {
         return animationLocations.get(failuresaurus.getVariant());
     }
 }

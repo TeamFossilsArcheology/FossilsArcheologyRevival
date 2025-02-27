@@ -11,8 +11,9 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
-public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends FixedGeoEntityRenderer<T> {
+public class PrehistoricFishGeoRenderer<T extends PrehistoricFish> extends GeoEntityRenderer<T> {
 
     public PrehistoricFishGeoRenderer(EntityRendererProvider.Context renderManager, String model, String animation, String texture) {
         super(renderManager, new PrehistoricFishGeoModel<>(

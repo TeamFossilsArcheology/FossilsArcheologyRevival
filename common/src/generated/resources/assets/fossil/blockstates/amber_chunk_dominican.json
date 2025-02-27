@@ -1,5 +1,8 @@
 {
   "variants": {
+    "facing=east": {
+      "model": "fossil:block/amber_chunk_dominican"
+    },
     "facing=north": {
       "model": "fossil:block/amber_chunk_dominican",
       "y": 270
@@ -11,9 +14,6 @@
     "facing=west": {
       "model": "fossil:block/amber_chunk_dominican",
       "y": 180
-    },
-    "facing=east": {
-      "model": "fossil:block/amber_chunk_dominican"
     }
   }
 }

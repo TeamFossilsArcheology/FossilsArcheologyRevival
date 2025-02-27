@@ -14,12 +14,12 @@ public class SkeletonModel extends GeoModelProvider<PrehistoricSkeleton> {
     }
 
     @Override
-    public ResourceLocation getModelLocation(PrehistoricSkeleton entity) {
+    public ResourceLocation getModelResource(PrehistoricSkeleton entity) {
         return entity.modelLocation;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(PrehistoricSkeleton entity) {
+    public ResourceLocation getTextureResource(PrehistoricSkeleton entity) {
         return entity.textureLocation;
     }
 }

@@ -116,7 +116,7 @@ public class ToyBall extends ToyBase {
     private void aiStep() {
         if (isControlledByLocalInstance()) {
             lerpSteps = 0;
-            setPacketCoordinates(getX(), getY(), getZ());
+            syncPacketPositionCodec(getX(), getY(), getZ());
         }
         if (lerpSteps > 0) {
             double d = getX() + (lerpX - getX()) / (double) lerpSteps;

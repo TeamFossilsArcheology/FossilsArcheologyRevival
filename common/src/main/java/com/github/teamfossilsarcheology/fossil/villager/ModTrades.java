@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.enchantment.ModEnchantments;
 import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.npc.VillagerTrades;
 import net.minecraft.world.item.EnchantedBookItem;
@@ -122,7 +123,7 @@ public class ModTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(Entity trader, Random random) {
+        public MerchantOffer getOffer(Entity trader, RandomSource random) {
             ItemStack itemStack = new ItemStack(this.item, this.cost);
             return new MerchantOffer(itemStack, new ItemStack(Items.EMERALD, emeraldCount), this.maxUses, this.villagerXp, this.priceMultiplier);
         }
@@ -162,7 +163,7 @@ public class ModTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(Entity trader, Random random) {
+        public MerchantOffer getOffer(Entity trader, RandomSource random) {
             return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCost), new ItemStack(this.itemStack.getItem(), this.numberOfItems), this.maxUses, this.villagerXp, this.priceMultiplier);
         }
     }
@@ -194,7 +195,7 @@ public class ModTrades {
 
         @Override
         @Nullable
-        public MerchantOffer getOffer(Entity trader, Random random) {
+        public MerchantOffer getOffer(Entity trader, RandomSource random) {
             return new MerchantOffer(new ItemStack(Items.EMERALD, this.emeraldCost), new ItemStack(this.fromItem.getItem(), this.fromCount), new ItemStack(this.toItem.getItem(), this.toCount), this.maxUses, this.villagerXp, this.priceMultiplier);
         }
     }
@@ -209,7 +210,7 @@ public class ModTrades {
         }
 
         @Override
-        public MerchantOffer getOffer(Entity trader, Random random) {
+        public MerchantOffer getOffer(Entity trader, RandomSource random) {
             int level = Mth.nextInt(random, enchantment.getMinLevel(), enchantment.getMaxLevel());
             ItemStack itemStack = EnchantedBookItem.createForEnchantment(new EnchantmentInstance(enchantment, level));
             int cost = 2 + random.nextInt(5 + level * 10) + 3 * level;

@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.world.feature;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
@@ -20,7 +21,7 @@ public class VolcanoConeFeature extends Feature<NoneFeatureConfiguration> {
     @Override
     public boolean place(FeaturePlaceContext<NoneFeatureConfiguration> context) {
         WorldGenLevel level = context.level();
-        Random random = context.random();
+        RandomSource random = context.random();
         BlockPos blockPos = context.origin();
         while (level.isEmptyBlock(blockPos) && blockPos.getY() > level.getMinBuildHeight() + 2) {
             blockPos = blockPos.below();

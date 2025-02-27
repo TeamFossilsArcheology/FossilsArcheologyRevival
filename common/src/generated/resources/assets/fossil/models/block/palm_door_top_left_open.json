@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_left_open",
+  "textures": {
+    "bottom": "fossil:block/palm_door_bottom",
+    "top": "fossil:block/palm_door_top"
+  }
+}

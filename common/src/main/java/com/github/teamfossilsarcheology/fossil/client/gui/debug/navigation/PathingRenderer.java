@@ -10,8 +10,7 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.level.PathNavigationRegion;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.pathfinder.BlockPathTypes;
@@ -220,22 +219,22 @@ public class PathingRenderer {
         poseStack.pushPose();
         float yPosition = (float) (0.2 * mc.getWindow().getGuiScaledHeight());
         /*if (PathingDebug.pathNavigation1 != null) {
-            mc.font.drawShadow(poseStack, new TextComponent("zza: " + PathingDebug.pathNavigation1.moveControl.zza), 2, yPosition, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TextComponent("yRot: " + PathingDebug.pathNavigation1.moveControl.yRot), 2, yPosition + 20, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TextComponent("jump: " + PathingDebug.pathNavigation1.moveControl.jump), 2, yPosition + 40, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TextComponent("speed: " + PathingDebug.pathNavigation1.moveControl.speed), 2, yPosition + 60, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TextComponent("op: " + PathingDebug.pathNavigation1.moveControl.operation.name()), 2, yPosition + 80, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TextComponent("move: " + PathingDebug.pathNavigation1.moveControl.move.toString()), 2, yPosition + 100, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("zza: " + PathingDebug.pathNavigation1.moveControl.zza), 2, yPosition, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("yRot: " + PathingDebug.pathNavigation1.moveControl.yRot), 2, yPosition + 20, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("jump: " + PathingDebug.pathNavigation1.moveControl.jump), 2, yPosition + 40, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("speed: " + PathingDebug.pathNavigation1.moveControl.speed), 2, yPosition + 60, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("op: " + PathingDebug.pathNavigation1.moveControl.operation.name()), 2, yPosition + 80, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("move: " + PathingDebug.pathNavigation1.moveControl.move.toString()), 2, yPosition + 100, 0xEEEBF0);
         }*/
         if (showHelpMenu) {
             float xPos = (float) (0.7 * mc.getWindow().getGuiScaledWidth());
-            mc.font.drawShadow(poseStack, new TranslatableComponent("Open Screen: %s", ClientInit.pathingScreenKey.getTranslatedKeyMessage()), xPos, yPosition + 120, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TextComponent("Set pos 1: Left click"), xPos, yPosition + 140, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TextComponent("Set pos 2: Right click"), xPos, yPosition + 160, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TextComponent("Set sweep pos: Middle mouse"), xPos, yPosition + 180, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TranslatableComponent("Repath: %s", ClientInit.debugRepathKey.getTranslatedKeyMessage()), xPos, yPosition + 200, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TranslatableComponent("Advance: %s", ClientInit.debugAdvanceKey.getTranslatedKeyMessage()), xPos, yPosition + 220, 0xEEEBF0);
-            mc.font.drawShadow(poseStack, new TranslatableComponent("Reverse: %s", ClientInit.debugReverseKey.getTranslatedKeyMessage()), xPos, yPosition + 240, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.translatable("Open Screen: %s", ClientInit.pathingScreenKey.getTranslatedKeyMessage()), xPos, yPosition + 120, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("Set pos 1: Left click"), xPos, yPosition + 140, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("Set pos 2: Right click"), xPos, yPosition + 160, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.literal("Set sweep pos: Middle mouse"), xPos, yPosition + 180, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.translatable("Repath: %s", ClientInit.debugRepathKey.getTranslatedKeyMessage()), xPos, yPosition + 200, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.translatable("Advance: %s", ClientInit.debugAdvanceKey.getTranslatedKeyMessage()), xPos, yPosition + 220, 0xEEEBF0);
+            mc.font.drawShadow(poseStack, Component.translatable("Reverse: %s", ClientInit.debugReverseKey.getTranslatedKeyMessage()), xPos, yPosition + 240, 0xEEEBF0);
         }
         poseStack.popPose();
     }

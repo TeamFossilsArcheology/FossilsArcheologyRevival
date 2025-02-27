@@ -46,7 +46,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundSoundPacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -593,7 +593,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
         playerJumpPendingScale = jumpPower >= 90 ? 1.0f : 0.4f + 0.4f * jumpPower / 90.0f;
     }
 
-    @Override
+   // @Override
     public boolean canBeControlledByRider() {
         return data().canBeRidden() && getControllingPassenger() instanceof LivingEntity rider && isOwnedBy(rider);
     }
@@ -830,7 +830,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    protected int getExperienceReward(Player player) {
+    public int getExperienceReward() {
         float base = 6 * getBbWidth() * (data().diet() == Diet.HERBIVORE ? 1 : 2)
                 * (aiTameType() == Taming.GEM ? 2 : 1)
                 * (aiAttackType() == Attacking.BASIC ? 1 : 1.25f);
@@ -1142,13 +1142,16 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
     }
 
     @Override
-    public void killed(ServerLevel level, LivingEntity killedEntity) {
-        super.killed(level, killedEntity);
-        if (data().diet() != Diet.HERBIVORE) {
-            feed(FoodMappings.getMobFoodPoints(killedEntity, data().diet()));
-            heal(FoodMappings.getMobFoodPoints(killedEntity, data().diet()) / 10f);
-            moodSystem.increaseMood(25);
+    public boolean wasKilled(ServerLevel level, LivingEntity killedEntity) {
+        if (super.wasKilled(level, killedEntity)) {
+            if (data().diet() != Diet.HERBIVORE) {
+                feed(FoodMappings.getMobFoodPoints(killedEntity, data().diet()));
+                heal(FoodMappings.getMobFoodPoints(killedEntity, data().diet()) / 10f);
+                moodSystem.increaseMood(25);
+            }
+            return true;
         }
+        return false;
     }
 
     @Override
@@ -1162,7 +1165,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 setOwnerUUID(null);
                 setTame(false);
                 moodSystem.increaseMood(-15);
-                player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.betrayed", getName()), true);
+                player.displayClientMessage(Component.translatable("entity.fossil.situation.betrayed", getName()), true);
             }
 
             if (amount > 0) {
@@ -1207,11 +1210,11 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             //Grow up with chicken essence
             if (!level.isClientSide) {
                 if (isAdult()) {
-                    player.displayClientMessage(new TranslatableComponent("prehistoric.essence_fail_adult"), true);
+                    player.displayClientMessage(Component.translatable("prehistoric.essence_fail_adult"), true);
                     return InteractionResult.PASS;
                 }
                 if (isDeadlyHungry()) {
-                    player.displayClientMessage(new TranslatableComponent("prehistoric.essence_fail_hungry"), true);
+                    player.displayClientMessage(Component.translatable("prehistoric.essence_fail_hungry"), true);
                     return InteractionResult.PASS;
                 }
                 if (!player.getAbilities().instabuild) {
@@ -1248,7 +1251,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                         heal(3);
                     }
                     if (getHunger() >= getMaxHunger() && isTame()) {
-                        player.displayClientMessage(new TranslatableComponent("entity.fossil.situation.full", getName()), true);
+                        player.displayClientMessage(Component.translatable("entity.fossil.situation.full", getName()), true);
                     }
                     if (aiTameType() == Taming.FEEDING && !isTame() && random.nextInt(10) == 1) {
                         tame(player);
@@ -1274,7 +1277,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
                 if (!level.isClientSide) {
                     moodSystem.increaseMood(-5);
                     if (random.nextInt(5) == 0) {
-                        player.displayClientMessage(new TranslatableComponent("entity.fossil.prehistoric.tamed", info().displayName.get()), true);
+                        player.displayClientMessage(Component.translatable("entity.fossil.prehistoric.tamed", info().displayName.get()), true);
                         moodSystem.increaseMood(-25);
                         tame(player);
                     }
@@ -1295,7 +1298,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
 
     private void sendOrderMessage(OrderType orderType) {
         if (getOwner() instanceof Player player) {
-            player.displayClientMessage(new TranslatableComponent("entity.fossil.order." + orderType.name().toLowerCase(Locale.ROOT), getName()), true);
+            player.displayClientMessage(Component.translatable("entity.fossil.order." + orderType.name().toLowerCase(Locale.ROOT), getName()), true);
         }
     }
 
@@ -1391,7 +1394,7 @@ public abstract class Prehistoric extends TamableAnimal implements GeckoLibMulti
             if (soundEvent != null) {
                 float volume = getSoundVolume();
                 double radius = volume > 1 ? (double) (16 * volume) : 16;
-                var packet = new ClientboundSoundPacket(soundEvent, getSoundSource(), getX(), getY(), getZ(), volume, getVoicePitch());
+                var packet = new ClientboundSoundPacket(soundEvent, getSoundSource(), getX(), getY(), getZ(), volume, getVoicePitch(), level.threadSafeRandom.nextLong());
                 for (ServerPlayer player : ((ServerLevel) level).getServer().getPlayerList().getPlayers()) {
                     if (player.isUnderWater() && player.level.dimension() == level.dimension()) {
                         double d = getX() - player.getX();

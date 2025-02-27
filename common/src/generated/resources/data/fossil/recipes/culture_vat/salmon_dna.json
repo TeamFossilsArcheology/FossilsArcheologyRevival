@@ -1,11 +1,11 @@
 {
   "type": "fossil:culture_vat",
-  "input": {
-    "item": "fossil:salmon_dna"
-  },
+  "duration": 6000,
   "fuel": {
     "item": "fossil:bio_goo"
   },
-  "result": "fossil:egg_item_salmon",
-  "duration": 6000
+  "input": {
+    "item": "fossil:salmon_dna"
+  },
+  "result": "fossil:egg_item_salmon"
 }

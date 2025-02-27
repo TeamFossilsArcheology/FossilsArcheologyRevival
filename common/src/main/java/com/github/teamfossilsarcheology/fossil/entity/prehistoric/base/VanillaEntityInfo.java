@@ -3,7 +3,6 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 import com.github.teamfossilsarcheology.fossil.item.*;
 import com.github.teamfossilsarcheology.fossil.util.Diet;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
@@ -61,7 +60,7 @@ public enum VanillaEntityInfo implements EntityInfo {
         this.mobType = mobType;
         this.diet = diet;
         this.resourceName = this.name().toLowerCase(Locale.ROOT);
-        this.displayName = () -> new TranslatableComponent("entity.minecraft." + resourceName);
+        this.displayName = () -> Component.translatable("entity.minecraft." + resourceName);
     }
 
     public static void register() {

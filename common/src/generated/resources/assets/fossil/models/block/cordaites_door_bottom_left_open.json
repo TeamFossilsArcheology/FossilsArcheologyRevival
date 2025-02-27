@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_left_open",
+  "textures": {
+    "bottom": "fossil:block/cordaites_door_bottom",
+    "top": "fossil:block/cordaites_door_top"
+  }
+}

@@ -8,7 +8,6 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 
@@ -66,7 +65,7 @@ public class CultureVatScreen extends AbstractContainerScreen<CultureVatMenu> {
             int cx = (width - imageWidth) / 2;
             int cy = (height - imageHeight) / 2;
             if (x > cx + 114 && x < cx + 134 && y > cy + 44 && y < cy + 79) {
-                renderTooltip(poseStack, new TextComponent(menu.getStoredEnergy() + " E"), x, y);
+                renderTooltip(poseStack, Component.literal(menu.getStoredEnergy() + " E"), x, y);
             }
         }
     }

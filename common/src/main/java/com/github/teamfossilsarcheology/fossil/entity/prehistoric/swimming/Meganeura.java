@@ -23,6 +23,7 @@ import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -450,7 +451,7 @@ public class Meganeura extends Prehistoric implements FlyingAnimal, SwimmingAnim
         @Override
         protected @Nullable Vec3 getPosition() {
             if (meganeura.attachSystem.getAttachCooldown() == 0) {
-                Random random = meganeura.random;
+                RandomSource random = meganeura.random;
                 Level level = mob.level;
                 for (int i = 0; i < 5; i++) {
                     BlockPos blockPos = mob.blockPosition().offset(random.nextInt(16) - 8, random.nextInt(10) - 2, random.nextInt(16) - 8);

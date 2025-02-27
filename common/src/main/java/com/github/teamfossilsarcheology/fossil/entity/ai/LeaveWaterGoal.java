@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.entity.ai;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistoric;
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.level.Level;
 
@@ -48,7 +49,7 @@ public class LeaveWaterGoal<T extends Prehistoric & SwimmingAnimal> extends Goal
     }
 
     private boolean findPossibleShelter() {
-        Random random = dino.getRandom();
+        RandomSource random = dino.getRandom();
         Level level = dino.level;
         BlockPos original = dino.blockPosition();
         BlockPos.MutableBlockPos mutable = original.mutable();

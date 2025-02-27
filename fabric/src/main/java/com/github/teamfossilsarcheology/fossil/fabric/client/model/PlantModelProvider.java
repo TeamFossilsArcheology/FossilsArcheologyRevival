@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
+import java.util.Optional;
 
 public class PlantModelProvider implements ModelResourceProvider {
     static final Gson GSON = new GsonBuilder()
@@ -36,19 +37,17 @@ public class PlantModelProvider implements ModelResourceProvider {
     @Override
     public @Nullable UnbakedModel loadModelResource(ResourceLocation location, ModelProviderContext context) {
         if (location.getNamespace().equals(FossilMod.MOD_ID)) {
-            try {
-                try (Resource resource = resourceManager.getResource(FossilMod.location("models/"+location.getPath()+".json"))) {
-                    try (InputStream inputStream = resource.getInputStream(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
-                        JsonObject jsonObject = GsonHelper.fromJson(GSON, reader, JsonElement.class).getAsJsonObject();
-                        if (jsonObject.has("loader") && jsonObject.get("loader").getAsString().equals(PlantBlockModel.LOADER.toString())) {
-                            return new FabricPlantUnbakedModel(GSON.getAdapter(PlantBlockModel.class).fromJsonTree(jsonObject));
-                        }
-                    } catch (JsonParseException | IOException | IllegalArgumentException exception) {
-                        FossilMod.LOGGER.error("Couldn't parse data file {}: {}", location, exception);
-                    }
+            Optional<Resource> opt = resourceManager.getResource(FossilMod.location("models/" + location.getPath() + ".json"));
+            if (opt.isEmpty()) {
+                return null;
+            }
+            try (InputStream inputStream = opt.get().open(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));) {
+                JsonObject jsonObject = GsonHelper.fromJson(GSON, reader, JsonElement.class).getAsJsonObject();
+                if (jsonObject.has("loader") && jsonObject.get("loader").getAsString().equals(PlantBlockModel.LOADER.toString())) {
+                    return new FabricPlantUnbakedModel(GSON.getAdapter(PlantBlockModel.class).fromJsonTree(jsonObject));
                 }
-            } catch (IOException exception) {
-                //Fossil.LOGGER.error("Couldn't get Resource {}: {}", location, exception);
+            } catch (JsonParseException | IOException | IllegalArgumentException exception) {
+                FossilMod.LOGGER.error("Couldn't parse data file {}: {}", location, exception);
             }
         }
         return null;

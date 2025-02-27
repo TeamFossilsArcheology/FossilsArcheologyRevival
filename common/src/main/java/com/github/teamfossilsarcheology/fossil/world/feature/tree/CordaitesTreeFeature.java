@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.world.feature.tree;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -50,7 +51,7 @@ public class CordaitesTreeFeature extends CustomTreeFeature {
         return level.isEmptyBlock(pos) || level.getBlockState(pos).getMaterial().isReplaceable() || level.getBlockState(pos).getMaterial() == Material.LEAVES;
     }
 
-    private void placeBranch(WorldGenLevel level, Random random, BlockPos pos, Direction direction, int length) {
+    private void placeBranch(WorldGenLevel level, RandomSource random, BlockPos pos, Direction direction, int length) {
         BlockState log = ModBlocks.CORDAITES_LOG.get().defaultBlockState();
         BlockState leaves = ModBlocks.CORDAITES_LEAVES.get().defaultBlockState();
         int yOffset = 0;

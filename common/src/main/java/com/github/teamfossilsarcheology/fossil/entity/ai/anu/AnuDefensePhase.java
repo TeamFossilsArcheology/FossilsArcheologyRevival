@@ -11,11 +11,12 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
@@ -34,9 +35,9 @@ import java.util.List;
 import java.util.Random;
 
 public class AnuDefensePhase extends AbstractAnuPhaseInstance {
-    private static final Component ANU_COMBAT_BRUTES = new TranslatableComponent("entity.fossil.anu.brutes");
-    private static final Component ANU_COMBAT_ARCHERS = new TranslatableComponent("entity.fossil.anu.archers");
-    private static final Component ANU_COMBAT_BLAZES = new TranslatableComponent("entity.fossil.anu.blazes");
+    private static final Component ANU_COMBAT_BRUTES = Component.translatable("entity.fossil.anu.brutes");
+    private static final Component ANU_COMBAT_ARCHERS = Component.translatable("entity.fossil.anu.archers");
+    private static final Component ANU_COMBAT_BLAZES = Component.translatable("entity.fossil.anu.blazes");
 
     public AnuDefensePhase(AnuBoss anuBoss) {
         super(anuBoss);
@@ -89,7 +90,7 @@ public class AnuDefensePhase extends AbstractAnuPhaseInstance {
 
     private void spawnStructures() {
         Level level = anu.level;
-        Random random = anu.getRandom();
+        RandomSource random = anu.getRandom();
         List<Player> players = level.getNearbyPlayers(TargetingConditions.DEFAULT, anu, arenaBounds);
         boolean summonSpikes = random.nextInt(250) == 0;
         boolean summonDefenses = random.nextInt(600) == 0 && anu.getSpawnPos().distanceTo(anu.position()) > 5;

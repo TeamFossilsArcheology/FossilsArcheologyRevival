@@ -1,20 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
   "group": "wooden_fence",
+  "key": {
+    "#": {
+      "item": "minecraft:stick"
+    },
+    "W": {
+      "item": "fossil:cordaites_planks"
+    }
+  },
   "pattern": [
     "W#W",
     "W#W"
   ],
-  "key": {
-    "W": {
-      "item": "fossil:cordaites_planks"
-    },
-    "#": {
-      "item": "minecraft:stick"
-    }
-  },
   "result": {
-    "item": "fossil:cordaites_fence",
-    "count": 3
+    "count": 3,
+    "item": "fossil:cordaites_fence"
   }
 }

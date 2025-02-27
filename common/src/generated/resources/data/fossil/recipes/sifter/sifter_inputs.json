@@ -42,15 +42,15 @@
     },
     {
       "item": "minecraft:gold_nugget",
-      "weight": 4.0
+      "weight": 3.0
     },
     {
       "item": "minecraft:iron_nugget",
-      "weight": 4.0
+      "weight": 3.0
     },
     {
       "item": "minecraft:melon_seeds",
-      "weight": 3.0
+      "weight": 4.0
     },
     {
       "item": "minecraft:potato",
@@ -62,7 +62,7 @@
     },
     {
       "item": "minecraft:pumpkin_seeds",
-      "weight": 3.0
+      "weight": 4.0
     },
     {
       "item": "minecraft:sand",

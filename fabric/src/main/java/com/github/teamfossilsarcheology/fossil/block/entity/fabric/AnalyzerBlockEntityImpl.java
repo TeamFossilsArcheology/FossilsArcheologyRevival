@@ -12,7 +12,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
@@ -167,7 +166,7 @@ public class AnalyzerBlockEntityImpl extends FabricEnergyContainerBlockEntity im
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("container.fossil.analyzer");
+        return Component.translatable("container.fossil.analyzer");
     }
 
     @Override

@@ -8,7 +8,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import org.jetbrains.annotations.NotNull;
@@ -50,7 +50,7 @@ public class EntityList extends ContainerObjectSelectionList<EntityList.EntityEn
         EntityEntry(Entity entity) {
             this.entity = entity;
             String display = String.format(Locale.ROOT, "%s[%d]", entity.getClass().getSimpleName(), entity.getId());
-            changeButton = new Button(0, 0, 200, 20, new TextComponent(display), button -> {
+            changeButton = new Button(0, 0, 200, 20, Component.literal(display), button -> {
                 consumer.accept(entity);
             });
         }

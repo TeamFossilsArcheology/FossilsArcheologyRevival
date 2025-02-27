@@ -2,7 +2,6 @@ package com.github.teamfossilsarcheology.fossil.client.gui.debug;
 
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
 import net.minecraft.util.Mth;
 import org.lwjgl.glfw.GLFW;
 
@@ -20,7 +19,7 @@ public class DebugSlider extends AbstractSliderButton {
 
     DebugSlider(int x, int y, int width, int height, Component prefix, Component suffix, double minValue, double maxValue, double currentValue,
                 double stepSize, int precision, boolean drawString) {
-        super(x, y, width, height, new TextComponent(""), 0D);
+        super(x, y, width, height, Component.literal(""), 0D);
         this.prefix = prefix;
         this.suffix = suffix;
         this.minValue = minValue;
@@ -134,9 +133,9 @@ public class DebugSlider extends AbstractSliderButton {
     @Override
     protected void updateMessage() {
         if (this.drawString) {
-            this.setMessage(new TextComponent("").append(prefix).append(this.getValueString()).append(suffix));
+            this.setMessage(Component.literal("").append(prefix).append(this.getValueString()).append(suffix));
         } else {
-            this.setMessage(new TextComponent(""));
+            this.setMessage(Component.literal(""));
         }
     }
 

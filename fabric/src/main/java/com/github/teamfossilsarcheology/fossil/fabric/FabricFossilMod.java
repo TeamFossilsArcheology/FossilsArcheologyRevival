@@ -13,20 +13,21 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.fish.Coelacant
 import com.github.teamfossilsarcheology.fossil.fabric.capabilities.FirstHatchComponent;
 import com.github.teamfossilsarcheology.fossil.fabric.capabilities.MammalComponent;
 import com.github.teamfossilsarcheology.fossil.fabric.compat.farmers.FarmersDelightCompat;
+import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricBiomeModifiers;
 import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricFossilRegion;
-import com.github.teamfossilsarcheology.fossil.fabric.world.biome.FabricModBiomes;
+import com.github.teamfossilsarcheology.fossil.network.MessageHandler;
 import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacedFeatures;
 import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacementTypes;
+import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructureType;
 import com.github.teamfossilsarcheology.fossil.world.surfacerules.ModSurfaceRules;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentFactoryRegistry;
 import dev.onyxstudios.cca.api.v3.entity.EntityComponentInitializer;
 import eu.midnightdust.lib.config.MidnightConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.event.lifecycle.v1.ServerLifecycleEvents;
-import net.fabricmc.fabric.mixin.object.builder.SpawnRestrictionAccessor;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.SpawnPlacements;
@@ -50,16 +51,17 @@ public class FabricFossilMod implements ModInitializer, TerraBlenderApi, EntityC
         initialized = true;
         MidnightConfig.init(FossilMod.MOD_ID, FossilConfigImpl.class);
         FossilMod.init();
-        SpawnRestrictionAccessor.callRegister(ModEntities.ALLIGATOR_GAR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
-        SpawnRestrictionAccessor.callRegister(ModEntities.COELACANTH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Coelacanth::canCoelacanthSpawn);
-        SpawnRestrictionAccessor.callRegister(ModEntities.NAUTILUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
-        SpawnRestrictionAccessor.callRegister(ModEntities.STURGEON.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
+        ModStructureType.register();
+        FabricBiomeModifiers.init();
+        SpawnPlacements.register(ModEntities.ALLIGATOR_GAR.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
+        SpawnPlacements.register(ModEntities.COELACANTH.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, Coelacanth::canCoelacanthSpawn);
+        SpawnPlacements.register(ModEntities.NAUTILUS.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
+        SpawnPlacements.register(ModEntities.STURGEON.get(), SpawnPlacements.Type.IN_WATER, Heightmap.Types.MOTION_BLOCKING_NO_LEAVES, PrehistoricFish::canSpawn);
         Registry.register(Registry.CHUNK_GENERATOR, FossilMod.location("treasure_room"), TreasureChunkGenerator.CODEC);
         Registry.register(Registry.CHUNK_GENERATOR, FossilMod.location("anu_lair"), AnuLairChunkGenerator.CODEC);
         ModPlacementTypes.register();
         ModTriggers.register();
         ModPlacedFeatures.register();
-        FabricModBiomes.register();
         ModRegistries.register();
         ServerLifecycleEvents.SYNC_DATA_PACK_CONTENTS.register((player, joined) -> {
             if (joined) {

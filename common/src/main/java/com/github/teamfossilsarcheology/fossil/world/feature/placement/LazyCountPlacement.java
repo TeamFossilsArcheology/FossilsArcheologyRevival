@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.config.FossilConfig;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.PlacementModifierType;
 import net.minecraft.world.level.levelgen.placement.RepeatingPlacement;
@@ -29,7 +30,7 @@ public class LazyCountPlacement extends RepeatingPlacement {
     }
 
     @Override
-    protected int count(Random random, BlockPos pos) {
+    protected int count(RandomSource random, BlockPos pos) {
         return FossilConfig.getInt(configEntry);
     }
 

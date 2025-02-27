@@ -5,6 +5,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.LevelSimulatedReader;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -55,12 +56,16 @@ public abstract class CustomTreeFeature extends Feature<NoneFeatureConfiguration
             for (int k = -j; k <= j; ++k) {
                 for (int l = -j; l <= j; ++l) {
                     mutableBlockPos.setWithOffset(topPosition, k, i, l);
-                    if (TreeFeature.isFree(level, mutableBlockPos) && !isVine(level, mutableBlockPos)) continue;
+                    if (TreeFeature.validTreePos(level, mutableBlockPos) && !isVine(level, mutableBlockPos)) continue;
                     return i - 2;
                 }
             }
         }
         return trunkHeight;
+    }
+
+    protected boolean isAir(WorldGenLevel level, BlockPos blockPos) {
+        return level.isStateAtPosition(blockPos, BlockBehaviour.BlockStateBase::isAir);
     }
 
     private static boolean isVine(LevelSimulatedReader level, BlockPos pos) {

@@ -30,9 +30,4 @@ public class TempskyaTopBlock extends DoublePlantBlock {
         }
         return SHAPE;
     }
-
-    @Override
-    public @NotNull OffsetType getOffsetType() {
-        return OffsetType.NONE;
-    }
 }

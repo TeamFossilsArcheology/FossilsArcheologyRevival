@@ -1,0 +1,60 @@
+{
+  "precipitation": "none",
+  "carvers": {},
+  "downfall": 0,
+  "effects": {
+    "fog_color": 5259328,
+    "sky_color": 7254527,
+    "water_color": 9965584,
+    "water_fog_color": 4982792
+  },
+  "features": [
+    [],
+    [
+      "fossil:volcano_lake_lava"
+    ],
+    [
+      "fossil:volcano_cone"
+    ],
+    [
+      "fossil:volcano_fossil"
+    ],
+    [
+      "fossil:volcano_ash_disk",
+      "fossil:volcano_magma_disk",
+      "fossil:volcano_vent"
+    ],
+    [],
+    [
+      "minecraft:ore_coal_upper",
+      "minecraft:ore_coal_lower",
+      "minecraft:ore_iron_upper",
+      "minecraft:ore_iron_middle",
+      "minecraft:ore_iron_small",
+      "minecraft:ore_gold",
+      "minecraft:ore_gold_lower",
+      "minecraft:ore_redstone",
+      "minecraft:ore_redstone_lower",
+      "minecraft:ore_diamond",
+      "minecraft:ore_diamond_large",
+      "minecraft:ore_diamond_buried",
+      "minecraft:ore_lapis",
+      "minecraft:ore_lapis_buried",
+      "minecraft:ore_copper",
+      "minecraft:underwater_magma"
+    ]
+  ],
+  "has_precipitation": false,
+  "spawn_costs": {},
+  "spawners": {
+    "ambient": [],
+    "axolotls": [],
+    "creature": [],
+    "misc": [],
+    "monster": [],
+    "underground_water_creature": [],
+    "water_ambient": [],
+    "water_creature": []
+  },
+  "temperature": 2
+}

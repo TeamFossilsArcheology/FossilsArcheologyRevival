@@ -15,17 +15,17 @@ public class PrehistoricFishGeoModel<T extends PrehistoricFish> extends Prehisto
     }
 
     @Override
-    public ResourceLocation getModelLocation(T object) {
+    public ResourceLocation getModelResource(T object) {
         return modelLocation;
     }
 
     @Override
-    public ResourceLocation getTextureLocation(T object) {
+    public ResourceLocation getTextureResource(T object) {
         return textureLocation;
     }
 
     @Override
-    public ResourceLocation getAnimationFileLocation(T animatable) {
+    public ResourceLocation getAnimationResource(T animatable) {
         return animationLocation;
     }
 }

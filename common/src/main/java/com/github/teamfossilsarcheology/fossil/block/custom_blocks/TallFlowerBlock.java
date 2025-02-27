@@ -3,25 +3,26 @@ package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.BonemealableBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
+import net.minecraft.world.level.material.Material;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Random;
-
 public class TallFlowerBlock extends DoublePlantBlock implements BonemealableBlock {
     private final VoxelShape shape;
 
-    public TallFlowerBlock(Properties properties, VoxelShape shape) {
-        super(properties);
+    public TallFlowerBlock(VoxelShape shape) {
+        super(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS));
         this.shape = shape;
     }
 
@@ -34,7 +35,7 @@ public class TallFlowerBlock extends DoublePlantBlock implements BonemealableBlo
     public @NotNull VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
         Vec3 vec3 = state.getOffset(level, pos);
         if (state.getValue(HALF) == DoubleBlockHalf.UPPER) {
-            return shape.move(vec3.x, vec3.y-1, vec3.z);
+            return shape.move(vec3.x, vec3.y - 1, vec3.z);
         }
         return shape.move(vec3.x, vec3.y, vec3.z);
     }
@@ -45,12 +46,12 @@ public class TallFlowerBlock extends DoublePlantBlock implements BonemealableBlo
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, Random random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, Random random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         int maxTries = random.nextInt(2);
         int tries = 0;
         int timeout = 0;

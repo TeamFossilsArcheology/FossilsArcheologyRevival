@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top_left_open",
+  "textures": {
+    "bottom": "fossil:block/mutant_tree_door_bottom",
+    "top": "fossil:block/mutant_tree_door_top"
+  }
+}

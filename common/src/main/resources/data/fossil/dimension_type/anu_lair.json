@@ -14,5 +14,7 @@
   "effects": "minecraft:the_end",
   "infiniburn": "#minecraft:infiniburn_overworld",
   "min_y": 0,
-  "height": 256
+  "height": 256,
+  "monster_spawn_light_level": 0,
+  "monster_spawn_block_light_limit": 0
 }

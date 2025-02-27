@@ -22,14 +22,14 @@ import com.github.teamfossilsarcheology.fossil.util.ModConstants;
 import com.github.teamfossilsarcheology.fossil.world.chunk.AnuLairChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.chunk.TreasureChunkGenerator;
 import com.github.teamfossilsarcheology.fossil.world.feature.placement.ModPlacementTypes;
+import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructureType;
 import com.github.teamfossilsarcheology.fossil.world.surfacerules.ModSurfaceRules;
 import dev.architectury.platform.forge.EventBuses;
 import net.minecraft.core.Registry;
 import net.minecraft.world.entity.SpawnPlacements;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.RegisterCapabilitiesEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -71,7 +71,6 @@ public class ForgeFossilMod {
     }
 
     public void onClient(FMLClientSetupEvent event) {
-        ClientModEvents.registerOverlays();
         ClientInit.later();
         GeoArmorRenderer.registerArmorRenderer(AncientHelmetItemImpl.class, ForgeAncientHelmetRenderer::new);
     }
@@ -84,6 +83,7 @@ public class ForgeFossilMod {
             if (ModList.get().isLoaded(ModConstants.ALEXS_MOBS)) {
                 AlexsMobsCompat.register();
             }
+            ModStructureType.register();
             ModPlacementTypes.register();
             ModTriggers.register();
             Regions.register(new ForgeFossilRegion("overworld", RegionType.OVERWORLD, 4));
@@ -97,8 +97,8 @@ public class ForgeFossilMod {
         });
     }
 
-    private void onModelRegistryEvent(ModelRegistryEvent event) {
-        ModelLoaderRegistry.registerLoader(PlantBlockModel.LOADER, new PlantModelLoader());
+    private void onModelRegistryEvent(ModelEvent.RegisterGeometryLoaders event) {
+        event.register(PlantBlockModel.LOADER.getPath(), new PlantModelLoader());
     }
 
     private void registerCaps(RegisterCapabilitiesEvent event) {

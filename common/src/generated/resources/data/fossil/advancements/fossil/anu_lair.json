@@ -1,26 +1,26 @@
 {
   "parent": "fossil:fossil/figurines",
+  "criteria": {
+    "requirement": {
+      "conditions": {
+        "to": "fossil:anu_lair"
+      },
+      "trigger": "minecraft:changed_dimension"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "fossil:anu_statue"
-    },
-    "title": {
-      "translate": "advancements.fossil.anu_lair.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.fossil.anu_lair.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fossil:anu_statue"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "requirement": {
-      "trigger": "minecraft:changed_dimension",
-      "conditions": {
-        "to": "fossil:anu_lair"
-      }
+    "title": {
+      "translate": "advancements.fossil.anu_lair.title"
     }
   },
   "requirements": [

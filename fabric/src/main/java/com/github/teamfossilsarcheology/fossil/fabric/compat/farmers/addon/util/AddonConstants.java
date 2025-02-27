@@ -10,12 +10,14 @@ public class AddonConstants {
     private static final Map<String, Runnable> SUPPORTED_ADDONS = new HashMap<>();
 
     static {
+        register("brewinandchewin", BrewinAndChewinCompat::registerFoodMappings);
         register("casualness_delight", CasualnessDelightCompat::registerFoodMappings);
         register("culturaldelights", CulturalDelightCompat::registerFoodMappings);
         register("coffee_delight", CoffeeDelightCompat::registerFoodMappings);
         register("ends_delight", EndDelightCompat::registerFoodMappings);
         register("expandeddelight", ExpandedDelightCompat::registerFoodMappings);
         register("farmersrespite", FarmerRespiteCompat::registerFoodMappings);
+        register("festive_delight", FestiveDelightCompat::registerFoodMappings);
         register("nethersdelight", NetherDelightCompat::registerFoodMappings);
         register("oceansdelight", OceanDelightCompat::registerFoodMappings);
         register("pineapple_delight", PineappleDelightCompat::registerFoodMappings);

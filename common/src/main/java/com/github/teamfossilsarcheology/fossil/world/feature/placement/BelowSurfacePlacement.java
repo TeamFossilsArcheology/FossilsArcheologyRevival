@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraft.world.level.levelgen.placement.PlacementContext;
 import net.minecraft.world.level.levelgen.placement.PlacementModifier;
@@ -31,7 +32,7 @@ public class BelowSurfacePlacement extends PlacementModifier {
     }
 
     @Override
-    public Stream<BlockPos> getPositions(PlacementContext context, Random random, BlockPos pos) {
+    public Stream<BlockPos> getPositions(PlacementContext context, RandomSource random, BlockPos pos) {
         int j = pos.getZ();
         int i = pos.getX();
         int k = context.getHeight(this.heightmap, i, j) - (5 + random.nextInt(12));

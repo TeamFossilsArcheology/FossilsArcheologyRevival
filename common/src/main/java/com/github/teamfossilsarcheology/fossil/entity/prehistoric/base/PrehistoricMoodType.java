@@ -3,7 +3,6 @@ package com.github.teamfossilsarcheology.fossil.entity.prehistoric.base;
 import com.github.teamfossilsarcheology.fossil.util.DinopediaInfo;
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 
 import java.util.Locale;
 
@@ -25,11 +24,11 @@ public enum PrehistoricMoodType implements DinopediaInfo {
 
     @Override
     public Component getName() {
-        return new TranslatableComponent("pedia.fossil.mood." + name().toLowerCase(Locale.ROOT)).withStyle(style -> style.withColor(color));
+        return Component.translatable("pedia.fossil.mood." + name().toLowerCase(Locale.ROOT)).withStyle(style -> style.withColor(color));
     }
 
     @Override
     public Component getDescription() {
-        return new TranslatableComponent("pedia.fossil.mood." + name().toLowerCase(Locale.ROOT) + ".desc").withStyle(style -> style.withColor(ChatFormatting.GRAY));
+        return Component.translatable("pedia.fossil.mood." + name().toLowerCase(Locale.ROOT) + ".desc").withStyle(style -> style.withColor(ChatFormatting.GRAY));
     }
 }

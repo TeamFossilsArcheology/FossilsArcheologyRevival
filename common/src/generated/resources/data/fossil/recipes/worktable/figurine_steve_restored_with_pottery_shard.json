@@ -1,11 +1,11 @@
 {
   "type": "fossil:worktable",
-  "input": {
-    "item": "fossil:figurine_steve_restored"
-  },
+  "duration": 300,
   "fuel": {
     "item": "fossil:pottery_shard"
   },
-  "result": "fossil:figurine_steve_pristine",
-  "duration": 300
+  "input": {
+    "item": "fossil:figurine_steve_restored"
+  },
+  "result": "fossil:figurine_steve_pristine"
 }

@@ -9,8 +9,8 @@ public class BubbleParticle extends RisingParticle {
     protected BubbleParticle(ClientLevel clientLevel, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
         super(clientLevel, x, y, z, xSpeed, ySpeed, zSpeed);
         this.setSize(0.02f, 0.02f);
-        this.quadSize *= random.nextFloat(0.6f);
-        this.lifetime = (int) (18 / (random.nextDouble(0.4) + 0.2));
+        this.quadSize *= random.nextFloat() * 0.6f;
+        this.lifetime = (int) (18 / (random.nextDouble() * 0.4 + 0.2));
     }
 
     @Override

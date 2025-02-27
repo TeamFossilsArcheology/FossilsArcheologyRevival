@@ -1,30 +1,30 @@
 {
   "parent": "fossil:fossil/analyzer",
-  "display": {
-    "icon": {
-      "item": "fossil:triceratops_dna"
-    },
-    "title": {
-      "translate": "advancements.fossil.dna.title"
-    },
-    "description": {
-      "translate": "advancements.fossil.dna.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "requirement": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
             "tag": "fossil:dna"
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fossil.dna.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fossil:triceratops_dna"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fossil.dna.title"
     }
   },
   "requirements": [

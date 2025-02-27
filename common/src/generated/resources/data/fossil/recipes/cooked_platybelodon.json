@@ -1,9 +1,9 @@
 {
   "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 1.5,
   "ingredient": {
     "item": "fossil:meat_platybelodon"
   },
-  "result": "fossil:cooked_platybelodon",
-  "experience": 1.5,
-  "cookingtime": 200
+  "result": "fossil:cooked_platybelodon"
 }

@@ -13,9 +13,9 @@ public class VolcanoVentAshParticle extends TextureSheetParticle {
     protected VolcanoVentAshParticle(ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
         super(level, x, y, z, xSpeed, ySpeed, zSpeed);
         xd *= 0.10000000149011612;
-        yd = level.random.nextDouble(1) + 0.2;
+        yd = level.random.nextDouble() + 0.2;
         zd *= 0.10000000149011612;
-        yEnd = y + 6 + level.random.nextDouble(4);
+        yEnd = y + 6 + level.random.nextDouble() * 4;
         lifetime = 120;
         hasPhysics = false;
     }
@@ -31,8 +31,8 @@ public class VolcanoVentAshParticle extends TextureSheetParticle {
         if (reached || y >= yEnd) {
             yd *= 0.9f;
             if (!reached) {
-                xd += (level.random.nextInt(3) - 1) * (0.05 + level.random.nextDouble(0.05));
-                zd += (level.random.nextInt(3) - 1) * (0.05 + level.random.nextDouble(0.05));
+                xd += (level.random.nextInt(3) - 1) * (0.05 + level.random.nextDouble() * 0.05);
+                zd += (level.random.nextInt(3) - 1) * (0.05 + level.random.nextDouble() * 0.05);
             }
             reached = true;
         }

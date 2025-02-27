@@ -5,14 +5,14 @@ import dev.architectury.networking.NetworkManager;
 import dev.architectury.utils.Env;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.function.Supplier;
 
 public class C2SRiderForceFlyingMessage {
-    private static final Component FLYING_DISABLED = new TranslatableComponent("entity.fossil.flying.disabled");
+    private static final Component FLYING_DISABLED = Component.translatable("entity.fossil.flying.disabled");
     private final int entityId;
     private final boolean flying;
 

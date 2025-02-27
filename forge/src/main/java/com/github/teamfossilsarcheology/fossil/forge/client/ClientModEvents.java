@@ -6,9 +6,9 @@ import com.github.teamfossilsarcheology.fossil.client.gui.debug.navigation.Pathi
 import com.github.teamfossilsarcheology.fossil.client.renderer.OverlayRenderer;
 import com.github.teamfossilsarcheology.fossil.util.Version;
 import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.RenderBlockOverlayEvent;
-import net.minecraftforge.client.gui.ForgeIngameGui;
-import net.minecraftforge.client.gui.OverlayRegistry;
+import net.minecraftforge.client.event.RegisterGuiOverlaysEvent;
+import net.minecraftforge.client.event.RenderBlockScreenEffectEvent;
+import net.minecraftforge.client.gui.overlay.VanillaGuiOverlay;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 
@@ -16,15 +16,16 @@ import net.minecraftforge.fml.common.Mod;
 public class ClientModEvents {
 
     @SubscribeEvent
-    public static void tarOverlay(RenderBlockOverlayEvent event) {
-        if (event.getOverlayType() == RenderBlockOverlayEvent.OverlayType.BLOCK && event.getBlockState().is(ModBlocks.TAR.get())) {
+    public static void tarOverlay(RenderBlockScreenEffectEvent event) {
+        if (event.getOverlayType() == RenderBlockScreenEffectEvent.OverlayType.BLOCK && event.getBlockState().is(ModBlocks.TAR.get())) {
             event.setCanceled(true);
             OverlayRenderer.renderTar(event.getPoseStack());
         }
     }
 
-    public static void registerOverlays() {
-        OverlayRegistry.registerOverlayAbove(ForgeIngameGui.HELMET_ELEMENT, "fossil_helmets",
-                (gui, poseStack, partialTick, screenWidth, screenHeight) -> OverlayRenderer.renderHelmet(screenWidth, screenHeight));
+    @SubscribeEvent
+    public static void onRegisterGuiOverlaysEvent(RegisterGuiOverlaysEvent event) {
+        event.registerAbove(VanillaGuiOverlay.HELMET.id(), "fossil_helmets", (gui, poseStack, partialTick, screenWidth, screenHeight) ->
+                OverlayRenderer.renderHelmet(screenWidth, screenHeight));
     }
 }

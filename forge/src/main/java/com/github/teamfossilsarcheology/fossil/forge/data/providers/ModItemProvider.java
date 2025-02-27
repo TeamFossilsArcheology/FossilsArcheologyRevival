@@ -17,6 +17,7 @@ import net.minecraftforge.client.model.generators.ItemModelBuilder;
 import net.minecraftforge.client.model.generators.ItemModelProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.Objects;
 
@@ -36,18 +37,18 @@ public class ModItemProvider extends ItemModelProvider {
         if (toyItems) {
             for (RegistrySupplier<ToyBallItem> toy : ModItems.TOY_BALLS.values()) {
                 var item = toy.get();
-                var resourceLocation = new ResourceLocation(item.getRegistryName().getNamespace(), "item/" + item.getRegistryName().getPath());
-                builder(resourceLocation, item.getRegistryName());
+                var resourceLocation = new ResourceLocation(key(item).getNamespace(), "item/" + key(item).getPath());
+                builder(resourceLocation, key(item));
             }
             for (RegistrySupplier<ToyScratchingPostItem> toy : ModItems.TOY_SCRATCHING_POSTS.values()) {
                 var item = toy.get();
-                var resourceLocation = new ResourceLocation(item.getRegistryName().getNamespace(), "item/" + item.getRegistryName().getPath());
-                builder(resourceLocation, item.getRegistryName());
+                var resourceLocation = new ResourceLocation(key(item).getNamespace(), "item/" + key(item).getPath());
+                builder(resourceLocation, key(item));
             }
             for (RegistrySupplier<ToyTetheredLogItem> toy : ModItems.TOY_TETHERED_LOGS.values()) {
                 var item = toy.get();
-                var resourceLocation = new ResourceLocation(item.getRegistryName().getNamespace(), "item/" + item.getRegistryName().getPath());
-                builder(resourceLocation, item.getRegistryName());
+                var resourceLocation = new ResourceLocation(key(item).getNamespace(), "item/" + key(item).getPath());
+                builder(resourceLocation, key(item));
             }
         }
 
@@ -55,69 +56,69 @@ public class ModItemProvider extends ItemModelProvider {
         if (dinoItems) {
             for (PrehistoricEntityInfo info : PrehistoricEntityInfo.values()) {
                 if (info.dnaItem != null) {
-                    dnaItem(Objects.requireNonNull(info.dnaItem.getRegistryName()));
+                    dnaItem(Objects.requireNonNull(key(info.dnaItem)));
                 }
                 if (info.foodItem != null) {
-                    foodItem(Objects.requireNonNull(info.foodItem.getRegistryName()), info, "meat");
+                    foodItem(Objects.requireNonNull(key(info.foodItem)), info, "meat");
                 }
                 if (info.cookedFoodItem != null) {
-                    foodItem(Objects.requireNonNull(info.cookedFoodItem.getRegistryName()), info, "cooked");
+                    foodItem(Objects.requireNonNull(key(info.cookedFoodItem)), info, "cooked");
                 }
                 if (info.eggItem != null) {
-                    eggItem(info.eggItem.getRegistryName());
+                    eggItem(key(info.eggItem));
                 }
                 if (info.birdEggItem != null) {
-                    eggItem(info.birdEggItem.getRegistryName());
+                    eggItem(key(info.birdEggItem));
                 }
                 if (info.cultivatedBirdEggItem != null) {
-                    eggItem(info.cultivatedBirdEggItem.getRegistryName());
+                    eggItem(key(info.cultivatedBirdEggItem));
                 }
                 if (info.embryoItem != null) {
-                    embyroItem(info.embryoItem.getRegistryName());
+                    embyroItem(key(info.embryoItem));
                 }
                 if (info.spawnEggItem != null) {
                     spawnEggItem(info.spawnEggItem);
                 }
                 if (info.armBoneItem != null) {
-                    boneItem(Objects.requireNonNull(info.armBoneItem.getRegistryName()), info, "arm_bone");
+                    boneItem(Objects.requireNonNull(key(info.armBoneItem)), info, "arm_bone");
                 }
                 if (info.footBoneItem != null) {
-                    boneItem(Objects.requireNonNull(info.footBoneItem.getRegistryName()), info, "foot");
+                    boneItem(Objects.requireNonNull(key(info.footBoneItem)), info, "foot");
                 }
                 if (info.legBoneItem != null) {
-                    boneItem(Objects.requireNonNull(info.legBoneItem.getRegistryName()), info, "leg_bone");
+                    boneItem(Objects.requireNonNull(key(info.legBoneItem)), info, "leg_bone");
                 }
                 if (info.ribcageBoneItem != null) {
-                    boneItem(Objects.requireNonNull(info.ribcageBoneItem.getRegistryName()), info, "ribcage");
+                    boneItem(Objects.requireNonNull(key(info.ribcageBoneItem)), info, "ribcage");
                 }
                 if (info.skullBoneItem != null) {
-                    boneItem(Objects.requireNonNull(info.skullBoneItem.getRegistryName()), info, "skull");
+                    boneItem(Objects.requireNonNull(key(info.skullBoneItem)), info, "skull");
                 }
                 if (info.tailBoneItem != null) {
-                    boneItem(Objects.requireNonNull(info.tailBoneItem.getRegistryName()), info, "tail");
+                    boneItem(Objects.requireNonNull(key(info.tailBoneItem)), info, "tail");
                 }
                 if (info.uniqueBoneItem != null) {
-                    boneItem(Objects.requireNonNull(info.uniqueBoneItem.getRegistryName()), info, "unique");
+                    boneItem(Objects.requireNonNull(key(info.uniqueBoneItem)), info, "unique");
                 }
                 if (info.vertebraeBoneItem != null) {
-                    boneItem(Objects.requireNonNull(info.vertebraeBoneItem.getRegistryName()), info, "vertebrae");
+                    boneItem(Objects.requireNonNull(key(info.vertebraeBoneItem)), info, "vertebrae");
                 }
                 if (info.bucketItem != null) {
-                    basicItem(info.bucketItem.getRegistryName());
+                    basicItem(key(info.bucketItem));
                 }
             }
             for (VanillaEntityInfo info : VanillaEntityInfo.values()) {
                 if (info.dnaItem != null) {
-                    dnaItem(Objects.requireNonNull(info.dnaItem.getRegistryName()));
+                    dnaItem(Objects.requireNonNull(key(info.dnaItem)));
                 }
                 if (info.eggItem != null) {
-                    eggItem(info.eggItem.getRegistryName());
+                    eggItem(key(info.eggItem));
                 }
                 if (info.cultivatedBirdEggItem != null) {
-                    eggItem(info.cultivatedBirdEggItem.getRegistryName());
+                    eggItem(key(info.cultivatedBirdEggItem));
                 }
                 if (info.embryoItem != null) {
-                    embyroItem(info.embryoItem.getRegistryName());
+                    embyroItem(key(info.embryoItem));
                 }
             }
 
@@ -130,19 +131,19 @@ public class ModItemProvider extends ItemModelProvider {
             basicItem(ModItems.MAMMOTH_FUR.get());
             basicItem(ModItems.THERIZINOSAURUS_DOWN.get());
             basicItem(ModItems.MAGIC_CONCH.get());
-            eggItem(ModItems.ARTIFICIAL_HONEYCOMB.get().getRegistryName());
+            eggItem(key(ModItems.ARTIFICIAL_HONEYCOMB.get()));
         }
         if (plantItems) {
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.values()) {
                 if (info.berryItem != null) {
-                    var resourceLocation = new ResourceLocation(info.berryItem.get().getRegistryName().getNamespace(), "item/" + info.berryItem.get().getRegistryName().getPath());
-                    builder(resourceLocation, info.berryItem.get().getRegistryName());
+                    var resourceLocation = new ResourceLocation(key(info.berryItem.get()).getNamespace(), "item/" + key(info.berryItem.get()).getPath());
+                    builder(resourceLocation, key(info.berryItem.get()));
                 }
             }
             for (PrehistoricPlantInfo info : PrehistoricPlantInfo.plantsWithSeeds()) {
                 if (info != MUTANT_PLANT) {
-                    plantSeedItem(info.getPlantSeedItem().getRegistryName());
-                    plantSeedItem(info.getFossilizedPlantSeedItem().getRegistryName());
+                    plantSeedItem(key(info.getPlantSeedItem()));
+                    plantSeedItem(key(info.getFossilizedPlantSeedItem()));
                 }
             }
             basicItem(ModItems.CALAMITES_FOSSIL_SAPLING.get());
@@ -168,9 +169,9 @@ public class ModItemProvider extends ItemModelProvider {
     }
 
     public void plantBlockItem(Block block, String suffix) {
-        ResourceLocation resourceLocation = new ResourceLocation(block.getRegistryName().getNamespace(),
-                "block/plants/plant_" + block.getRegistryName().getPath() + suffix);
-        builder(resourceLocation, block.getRegistryName());
+        ResourceLocation resourceLocation = new ResourceLocation(key(block).getNamespace(),
+                "block/plants/plant_" + key(block).getPath() + suffix);
+        builder(resourceLocation, key(block));
     }
 
     public void dnaItem(ResourceLocation item) {
@@ -194,7 +195,7 @@ public class ModItemProvider extends ItemModelProvider {
     }
 
     public void spawnEggItem(Item item) {
-        getBuilder(item.getRegistryName().getPath()).parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
+        getBuilder(key(item).getPath()).parent(new ModelFile.UncheckedModelFile("item/template_spawn_egg"));
     }
 
     public void embyroItem(ResourceLocation item) {
@@ -228,5 +229,13 @@ public class ModItemProvider extends ItemModelProvider {
         return getBuilder(item.toString())
                 .parent(new ModelFile.UncheckedModelFile("item/generated"))
                 .texture("layer0", resourceLocation);
+    }
+
+    private ResourceLocation key(Item item) {
+        return ForgeRegistries.ITEMS.getKey(item);
+    }
+
+    private ResourceLocation key(Block block) {
+        return ForgeRegistries.BLOCKS.getKey(block);
     }
 }

@@ -1,8 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
+import com.baisylia.culturaldelights.block.ModBlocks;
+import com.baisylia.culturaldelights.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
-import com.ncpbails.culturaldelights.block.ModBlocks;
-import com.ncpbails.culturaldelights.item.ModItems;
 
 import java.util.Objects;
 
@@ -21,7 +21,6 @@ public class CulturalDelightCompat {
         FoodMappings.addPlant(ModItems.CUT_EGGPLANT.get());
         FoodMappings.addPlant(ModItems.SMOKED_EGGPLANT.get());
         FoodMappings.addPlant(ModItems.SMOKED_TOMATO.get());
-        FoodMappings.addPlant(ModItems.SMOKED_CORN.get());
         FoodMappings.addPlant(ModItems.SMOKED_CUT_EGGPLANT.get());
         FoodMappings.addPlant(ModItems.SMOKED_WHITE_EGGPLANT.get());
         FoodMappings.addPlant(ModItems.WHITE_EGGPLANT.get());
@@ -38,7 +37,7 @@ public class CulturalDelightCompat {
         FoodMappings.addPlant(ModItems.HEARTY_SALAD.get());
         FoodMappings.addMeat(ModItems.BEEF_BURRITO.get());
         FoodMappings.addMeat(ModItems.MUTTON_SANDWICH.get());
-        FoodMappings.addPlant(ModItems.FRIED_EGGPLANT_PASTA.get());
+        FoodMappings.addPlant(ModItems.EGGPLANT_PARMESAN.get());
         FoodMappings.addPlant(ModItems.EGGPLANT_BURGER.get()); //This has no meat in it so I consider it a plant.
         FoodMappings.addPlant(ModItems.CREAMED_CORN.get());
         FoodMappings.addPlant(ModItems.CORN_COB.get());

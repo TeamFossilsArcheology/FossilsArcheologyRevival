@@ -3,10 +3,10 @@ package com.github.teamfossilsarcheology.fossil.villager;
 import com.github.teamfossilsarcheology.fossil.FossilMod;
 import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.google.common.collect.ImmutableSet;
-import dev.architectury.event.events.common.LifecycleEvent;
 import dev.architectury.registry.registries.DeferredRegister;
 import dev.architectury.registry.registries.RegistrySupplier;
 import net.minecraft.core.Registry;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
@@ -22,7 +22,6 @@ public class ModVillagers {
     public static final DeferredRegister<VillagerProfession> PROFESSIONS = DeferredRegister.create(FossilMod.MOD_ID,
             Registry.VILLAGER_PROFESSION_REGISTRY);
 
-
     public static final RegistrySupplier<PoiType> ARCHEOLOGIST_POI = register("archeologist_poi", ModBlocks.WORKTABLE);
     public static final RegistrySupplier<VillagerProfession> ARCHEOLOGIST = register("archeologist", ARCHEOLOGIST_POI, SoundEvents.VILLAGER_WORK_FISHERMAN);
     public static final RegistrySupplier<PoiType> PALEONTOLOGIST_POI = register("paleontologist_poi", ModBlocks.ANALYZER);
@@ -31,10 +30,6 @@ public class ModVillagers {
     public static void register() {
         POI_TYPES.register();
         PROFESSIONS.register();
-        LifecycleEvent.SETUP.register(() -> {
-            PoiType.registerBlockStates(ARCHEOLOGIST_POI.get());
-            PoiType.registerBlockStates(PALEONTOLOGIST_POI.get());
-        });
     }
 
     private static RegistrySupplier<PoiType> register(String name, RegistrySupplier<Block> block) {
@@ -42,11 +37,12 @@ public class ModVillagers {
     }
 
     private static RegistrySupplier<PoiType> register(String name, RegistrySupplier<Block> block, int maxTickets, int validRange) {
-        return POI_TYPES.register(name, () -> new PoiType(name, getBlockStates(block), maxTickets, validRange));
+        return POI_TYPES.register(name, () -> new PoiType(getBlockStates(block), maxTickets, validRange));
     }
 
     private static RegistrySupplier<VillagerProfession> register(String name, RegistrySupplier<PoiType> jobSite, @Nullable SoundEvent workSound) {
-        return PROFESSIONS.register(name, () -> new VillagerProfession(name, jobSite.get(), ImmutableSet.of(), ImmutableSet.of(), workSound));
+        return PROFESSIONS.register(name, () -> new VillagerProfession(name, holder -> holder.is(jobSite.getId()), holder -> holder.is(jobSite.getId()),
+                ImmutableSet.of(), ImmutableSet.of(), workSound));
     }
 
     private static Set<BlockState> getBlockStates(RegistrySupplier<Block> block) {

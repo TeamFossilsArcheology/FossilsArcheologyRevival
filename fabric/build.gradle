@@ -1,19 +1,9 @@
-@file:Suppress("UnstableApiUsage")
-
-
 import net.darkhax.curseforgegradle.TaskPublishCurseForge
-import net.fabricmc.loom.api.mappings.layered.MappingContext
-import net.fabricmc.loom.api.mappings.layered.MappingLayer
-import net.fabricmc.loom.api.mappings.layered.MappingsNamespace
-import net.fabricmc.loom.configuration.providers.mappings.intermediary.IntermediaryMappingLayer
-import net.fabricmc.mappingio.MappingVisitor
-import net.fabricmc.mappingio.tree.MappingTreeView
-import net.fabricmc.mappingio.tree.MemoryMappingTree
 
 plugins {
-    id("com.github.johnrengelman.shadow")
-    id("com.modrinth.minotaur")
-    id("net.darkhax.curseforgegradle")
+    id "com.github.johnrengelman.shadow"
+    id "com.modrinth.minotaur"
+    id "net.darkhax.curseforgegradle"
 }
 
 architectury {
@@ -22,171 +12,120 @@ architectury {
 }
 
 loom {
-    accessWidenerPath.set(project(":common").loom.accessWidenerPath)
+    accessWidenerPath = project(":common").loom.accessWidenerPath
 }
-
-val common: Configuration by configurations.creating
-val shadowCommon: Configuration by configurations.creating
 
 configurations {
-    compileClasspath.get().extendsFrom(common)
-    runtimeClasspath.get().extendsFrom(common)
-    named("developmentFabric").get().extendsFrom(common)
+    common {
+        canBeResolved = true
+        canBeConsumed = false
+    }
+    compileClasspath.extendsFrom common
+    runtimeClasspath.extendsFrom common
+    developmentFabric.extendsFrom common
+
+    // Files in this configuration will be bundled into your mod using the Shadow plugin.
+    // Don't use the `shadow` configuration from the plugin itself as it's meant for excluding files.
+    shadowBundle {
+        canBeResolved = true
+        canBeConsumed = false
+    }
 }
 
-val minecraftVersion: String by rootProject
-val modVersion: String by rootProject
-val fabricLoaderVersion: String by rootProject
-val fabricApiVersion: String by project
-val architecturyVersion: String by rootProject
-val archivesBaseName: String by rootProject
-val parchmentDate: String by rootProject
-val reiVersion: String by rootProject
-val moreHitboxesVersion: String by rootProject
-val terraBlenderVersion: String by rootProject
-val cardinalComponentsVersion: String by project
-val energyVersion: String by project
-val midnightConfigVersion: String by project
-val geckoLibVersion: String by project
-val farmersDelightVersion: String by project
-
 dependencies {
-    "mappings"(loom.layered {
+    mappings loom.layered() {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-${minecraftVersion}:$parchmentDate@zip")
-
-        addLayer(object : MappingsSpec<MappingLayer> {
-            val getClasses = MappingTreeView::class.java.getDeclaredMethod("getClasses")
-                    .apply { isAccessible = true }
-            val getMethods = MappingTreeView.ClassMappingView::class.java.getDeclaredMethod("getMethods")
-                    .apply { isAccessible = true }
-            val getName = MappingTreeView.ElementMappingView::class.java.getDeclaredMethod("getName", String::class.java)
-                    .apply { isAccessible = true }
-            val entryClass = Class.forName("net.fabricmc.mappingio.tree.MemoryMappingTree\$Entry")
-            val srcNameField = entryClass.getDeclaredField("srcName")
-                    .apply { isAccessible = true }
-
-            val METHOD_NAME_MAP = mapOf("getTextureLocation" to "_getTextureLocation")
-            override fun createLayer(context: MappingContext?): MappingLayer {
-                return object : MappingLayer {
-                    override fun visit(mappingVisitor: MappingVisitor?) {
-                        val memoryMappingTree = mappingVisitor as MemoryMappingTree
-                        (getClasses(memoryMappingTree) as Collection<*>).forEach { classEntry ->
-                            (getMethods(classEntry) as Collection<*>).forEach { methodEntry ->
-                                METHOD_NAME_MAP[getName(methodEntry, MappingsNamespace.NAMED.toString())]?.let {
-                                    srcNameField[methodEntry] = it
-                                }
-                            }
-                        }
-                    }
-
-                    override fun getSourceNamespace() = MappingsNamespace.NAMED
-
-                    override fun dependsOn() = listOf(IntermediaryMappingLayer::class.java)
-                }
-            }
-
-            override fun hashCode() = METHOD_NAME_MAP.hashCode()
-        })
-    })
+        parchment("org.parchmentmc.data:parchment-$parchment_mc_version:$parchment_date@zip")
+    }
 
     //Required
-    modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
-    modApi("net.fabricmc.fabric-api:fabric-api:${fabricApiVersion}+${minecraftVersion}")
-    modApi("dev.architectury:architectury-fabric:${architecturyVersion}")
-    modApi("teamreborn:energy:${energyVersion}")
-    include("teamreborn:energy:${energyVersion}")
-    modImplementation("maven.modrinth:Wd844r7Q:1.18.2-02")//Structurized Reborn
-    include("maven.modrinth:Wd844r7Q:1.18.2-02")//Structurized Reborn
-    modImplementation("software.bernie.geckolib:geckolib-fabric-1.18:${geckoLibVersion}")
-    modImplementation("com.github.glitchfiend:TerraBlender-fabric:${minecraftVersion}-${terraBlenderVersion}")
-    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinalComponentsVersion}")
-    modImplementation("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
-    include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:${cardinalComponentsVersion}")
-    include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:${cardinalComponentsVersion}")
-    modImplementation("maven.modrinth:midnightlib:${midnightConfigVersion}")
-    include("maven.modrinth:midnightlib:${midnightConfigVersion}")
-    modImplementation("com.github.darkpred.morehitboxes:morehitboxes-fabric-${minecraftVersion}:1.9.1")
+    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
+    modApi "net.fabricmc.fabric-api:fabric-api:$fabric_api_version+$minecraft_version"
+    modApi "dev.architectury:architectury-fabric:$architectury_version"
+    modApi include("teamreborn:energy:$energy_version")
+    modImplementation include("maven.modrinth:sructurized-reborn:1.19-01")//Structurized Reborneborn
+    modImplementation "software.bernie.geckolib:geckolib-fabric-1.19:$gecko_lib_version"
+    modImplementation "com.github.glitchfiend:TerraBlender-fabric:$minecraft_version-$terra_blender_version"
+    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:$cardinal_components_version")
+    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:$cardinal_components_version")
+    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-base:$cardinal_components_version")
+    modImplementation include("dev.onyxstudios.cardinal-components-api:cardinal-components-entity:$cardinal_components_version")
+    modImplementation include("maven.modrinth:midnightlib:$midnight_lib_version")
+    modImplementation "com.github.darkpred.morehitboxes:morehitboxes-fabric-$minecraft_version:1.9.1"
 
     //Optional
-    modCompileOnly("maven.modrinth:jade:MSJGBHIo")
-    modRuntimeOnly("maven.modrinth:jade:MSJGBHIo")
-    modImplementation("me.shedaniel:RoughlyEnoughItems-fabric:${reiVersion}")
-    modCompileOnly("maven.modrinth:farmers-delight-fabric:$farmersDelightVersion")
+    modCompileOnly "maven.modrinth:jade:$jade_version_fabric"
+    modRuntimeOnly "maven.modrinth:jade:$jade_version_fabric"
+    modImplementation "me.shedaniel:RoughlyEnoughItems-fabric:$rei_version"
+    modCompileOnly "maven.modrinth:farmers-delight-fabric:$farmers_delight_version_fabric"
 
     //FD addons
-    modCompileOnly("maven.modrinth:oceans-delight:1.0.0")
-    modCompileOnly("curse.maven:nethers-delight-fabric-701831:4291741") //1.18.2 2.0.0
-    modCompileOnly("maven.modrinth:biomesyougo:1.5.1")
-    modCompileOnly("maven.modrinth:ends-delight:1.18.2-beta-1.0")
-    modCompileOnly("curse.maven:farmers-respite-fabric-811003:4344002") //1.18.2 1.0.0
-    modCompileOnly("maven.modrinth:pineapple-delight:o28puzf2") //1.18.2 1.0.13
-    modCompileOnly("curse.maven:cultural-delights-fabric-807107:4329072") //1.18.2 0.14.7
-    modCompileOnly("curse.maven:coffee-delight-835597:4626094") //1.18.2 1.3
-    modCompileOnly("maven.modrinth:casualness-delight:1.18.2-0.4")
-    modCompileOnly("curse.maven:expanded-delight-620770:4362782") //1.18.2 0.1.9.2
-
+    modCompileOnly "maven.modrinth:oceans-delight:fabric-1.0.2-1.19.2"
+    modCompileOnly "curse.maven:nethers-delight-fabric-701831:4353098" //1.19.2 1.0.1
+    modCompileOnly "maven.modrinth:biomesyougo:b3yqYAnG" //1.19.2-2.0.1.6
+    modCompileOnly "maven.modrinth:ends-delight:VQxr0ozB" //1.19.2-2.0
+    modCompileOnly "maven.modrinth:cultural-delights-fabric:0.14.12+1.19.2"
+    modCompileOnly "maven.modrinth:pineapple-delight:1.0.9"
+    modCompileOnly "maven.modrinth:festive-delight:pJ5h6NXI" //1.19.2-1.1.0
+    modCompileOnly "maven.modrinth:coffee-delight:IOftAwJN" //1.19.2 1.4
+    modCompileOnly "maven.modrinth:casualness-delight:1.19.2-0.4"
+    modCompileOnly "maven.modrinth:brewin-and-chewin-fabric:fabric-2.3.1+1.19.2"
+    modCompileOnly "curse.maven:farmers-respite-fabric-811003:4658852" //1.19.2-2.2.5
+    modCompileOnly "curse.maven:expanded-delight-620770:4409058" //1.19.2 0.2.5.2
 
     //Dev only
     /*
-    modRuntimeOnly("maven.modrinth:auth-me:3.1.0")
-    modRuntimeOnly("curse.maven:hugestructureblocks-474114:3647042")
-    modRuntimeOnly("curse.maven:worldedit-225608:3697298")
-    modRuntimeOnly("curse.maven:cyanide-543444:3811794")
-    modRuntimeOnly("maven.modrinth:smoothboot-fabric:1.18.2-1.7.0")
-    modRuntimeOnly("curse.maven:commandstructures-565119:3733097")
-    modRuntimeOnly("maven.modrinth:betterf3:qUyRV6XT")
-    modRuntimeOnly("maven.modrinth:lazydfu:0.1.2")
-    //modRuntimeOnly("maven.modrinth:sodium:mc1.18.2-0.4.1")
-    //modRuntimeOnly("maven.modrinth:indium:1.0.7+mc1.18.2")
-    //runtimeOnly("org.joml:joml:1.10.4")
-    modRuntimeOnly("maven.modrinth:modmenu:3.2.5")
-    modRuntimeOnly("curse.maven:camerautils-510234:3667404")
-    //modRuntimeOnly("curse.maven:replay-775651:4262559")
-    //modRuntimeOnly("maven.modrinth:6pku8gW1:zbBHXeFQ")//Energized Power
-    modRuntimeOnly("curse.maven:debugutils-783010:5337485")
-    //modRuntimeOnly("com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0")
+    modRuntimeOnly("maven.modrinth:auth-me:4.2.0")
+    modRuntimeOnly "maven.modrinth:huge-structure-blocks:1.0.6"
+    //modRuntimeOnly "curse.maven:worldedit-225608:3697298"
+    modRuntimeOnly "maven.modrinth:smoothboot-fabric:1.19-1.7.1"
+    modRuntimeOnly "curse.maven:commandstructures-565119:4050783"
+    modRuntimeOnly "maven.modrinth:betterf3:4.0.1"
+    modRuntimeOnly "maven.modrinth:lazydfu:0.1.3"
+    //modRuntimeOnly "maven.modrinth:sodium:mc1.19.2-0.4.4"
+    //modRuntimeOnly "maven.modrinth:indium:1.0.9+mc1.19.2
+    //runtimeOnly "org.joml:joml:1.10.4"
+    modRuntimeOnly "maven.modrinth:modmenu:4.2.0-beta.2"
+    modRuntimeOnly "maven.modrinth:camera-utils:fabric-1.19.2-1.0.14"
+    //modRuntimeOnly "maven.modrinth:replaymod:1.19.2-2.6.20"
+    //modRuntimeOnly "maven.modrinth:energized-power:1.19.2-2.12.4-fabric")/Energized Power
+    //modRuntimeOnly "maven.modrinth:debugutils:1.19.4-1.0.3"
+    //modRuntimeOnly "com.github.darkpred.extended_structure_blocks:extended-structure-blocks-fabric:${minecraftVersion}-0.4.0"
     */
-    common(project(path = ":common", configuration = "namedElements")) { isTransitive = false }
-    shadowCommon(project(path = ":common", configuration = "transformProductionFabric")) { isTransitive = false }
+    common(project(path: ":common", configuration: "namedElements")) { transitive false }
+    shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
+}
+shadowJar {
+    configurations = [project.configurations.shadowBundle]
+    archiveClassifier = 'dev-shadow'
 }
 
-tasks {
-    processResources {
-        from(project(":common").sourceSets.main.get().resources)
-    }
-
-    shadowJar {
-        configurations = listOf(shadowCommon)
-        archiveClassifier.set("fabric-dev-shadow")
-        archiveBaseName.set(archivesBaseName)
-    }
-
-    remapJar {
-        injectAccessWidener.set(true)
-        inputFile.set(shadowJar.get().archiveFile)
-        dependsOn(shadowJar)
-        archiveAppendix.set("fabric-$minecraftVersion")
-        archiveBaseName.set(archivesBaseName)
-    }
-
-    jar {
-        archiveClassifier.set("dev")
-    }
+remapJar {
+    injectAccessWidener = true
+    inputFile.set shadowJar.archiveFile
+    dependsOn shadowJar
+    archiveAppendix = "fabric-$minecraft_version"
 }
 
-val javaComponent = components["java"] as AdhocComponentWithVariants
-javaComponent.withVariantsFromConfiguration(configurations["shadowRuntimeElements"]) {
-    skip()
+sourcesJar {
+    def commonSources = project(":common").sourcesJar
+    dependsOn commonSources
+    from commonSources.archiveFile.map { zipTree(it) }
+}
+
+components.java {
+    withVariantsFromConfiguration(project.configurations.shadowRuntimeElements) {
+        skip()
+    }
 }
 
 modrinth {
     token = "${project.property("MODRINTH_TOKEN") ?: "no value"}"
     projectId = "IJY7IqPP"
-    versionNumber.set("$minecraftVersion-$modVersion-${project.name}")
-    versionType.set("release")
-    uploadFile.set(tasks.remapJar)
-    versionName = "$modVersion for Fabric $minecraftVersion"
+    versionNumber = "$minecraft_version-$mod_version-${project.name}"
+    versionType = "release"
+    uploadFile = tasks.remapJar
+    versionName = "$mod_version for Fabric $minecraft_version"
     debugMode = true
     dependencies {
         required.project("fabric-api")
@@ -198,18 +137,18 @@ modrinth {
         embedded.project("sructurized-reborn")
         embedded.project("midnightlib")
     }
-    changelog.set(rootProject.file("CHANGELOG.md").readText())
+    changelog = rootProject.file("CHANGELOG.md").text
 }
 
-tasks.register<TaskPublishCurseForge>("publishCurseForge") {
+tasks.register('publishCurseForge', TaskPublishCurseForge) {
     group = "publishing"
     description = "Publishes jar to CurseForge"
     apiToken = project.property("CURSEFORGE_TOKEN") ?: "no value"
     debugMode = true
-    val mainFile = upload(223908, tasks.remapJar)
-    mainFile.displayName = "$modVersion for Fabric $minecraftVersion"
-    mainFile.changelog = rootProject.file("CHANGELOG.md").readText()
+    def mainFile = upload(223908, tasks.remapJar)
     mainFile.addEnvironment("Fabric")
+    mainFile.displayName = "$mod_version for Fabric $minecraft_version"
+    mainFile.changelog = rootProject.file("CHANGELOG.md").text
     mainFile.changelogType = "markdown"
     mainFile.releaseType = "release"
     mainFile.addRequirement("fabric-api", "architectury-api", "geckolib", "terrablender-fabric", "more-hitboxes")

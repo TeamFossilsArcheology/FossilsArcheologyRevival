@@ -1,11 +1,11 @@
 {
   "type": "fossil:worktable",
-  "input": {
-    "item": "fossil:figurine_piglin_destroyed"
-  },
+  "duration": 300,
   "fuel": {
     "item": "fossil:pottery_shard"
   },
-  "result": "fossil:figurine_piglin_restored",
-  "duration": 300
+  "input": {
+    "item": "fossil:figurine_piglin_destroyed"
+  },
+  "result": "fossil:figurine_piglin_restored"
 }

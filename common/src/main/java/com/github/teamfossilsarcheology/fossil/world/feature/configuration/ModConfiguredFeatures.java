@@ -1,24 +1,16 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.configuration;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
-import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.world.feature.ModFeatures;
-import com.github.teamfossilsarcheology.fossil.world.feature.structures.ModStructures;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
-import net.minecraft.data.BuiltinRegistries;
 import net.minecraft.data.worldgen.features.FeatureUtils;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.BiomeTags;
 import net.minecraft.util.valueproviders.UniformInt;
-import net.minecraft.world.level.block.Blocks;
-import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.*;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RangeConfiguration;
-import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
-import net.minecraft.world.level.levelgen.heightproviders.ConstantHeight;
 
 /**
  * Calling this class before the mod blocks have been initialized will cause a crash at the moment
@@ -51,8 +43,7 @@ public class ModConfiguredFeatures {
             NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> TEMPSKYA_TREE = register("tempskya_tree", ModFeatures.TEMPSKYA_TREE.feature(),
             NoneFeatureConfiguration.INSTANCE);
-    public static final Holder<ConfiguredStructureFeature<?, ?>> HELL_BOAT = register(createKey("hell_boat"), ModStructures.HELL_BOAT.feature()
-            .configured(new RangeConfiguration(ConstantHeight.of(VerticalAnchor.absolute(30))), BiomeTags.IS_NETHER));
+
     public static final Holder<ConfiguredFeature<NoneFeatureConfiguration, ?>> MOAI_STATUE = register("moai_statue",
             ModFeatures.MOAI_STATUE.feature(), NoneFeatureConfiguration.INSTANCE);
     public static final Holder<ConfiguredFeature<AshDiskConfiguration, ?>> ASH_DISK = register("ash_disk",
@@ -68,11 +59,7 @@ public class ModConfiguredFeatures {
         return FeatureUtils.register(FossilMod.MOD_ID + ":" + name, feature, config);
     }
 
-    private static <FC extends FeatureConfiguration, F extends StructureFeature<FC>> Holder<ConfiguredStructureFeature<?, ?>> register(ResourceKey<ConfiguredStructureFeature<?, ?>> id, ConfiguredStructureFeature<FC, F> configuredStructureFeature) {
-        return BuiltinRegistries.register(BuiltinRegistries.CONFIGURED_STRUCTURE_FEATURE, id, configuredStructureFeature);
-    }
-
-    private static ResourceKey<ConfiguredStructureFeature<?, ?>> createKey(String name) {
-        return ResourceKey.create(Registry.CONFIGURED_STRUCTURE_FEATURE_REGISTRY, FossilMod.location(name));
+    private static ResourceKey<ConfiguredFeature<?, ?>> createKey(String name) {
+        return ResourceKey.create(Registry.CONFIGURED_FEATURE_REGISTRY, FossilMod.location(name));
     }
 }

@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.item.ModItems;
 import com.github.teamfossilsarcheology.fossil.sounds.ModSounds;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -25,10 +26,10 @@ public class Quagga extends AbstractChestedHorse {
     }
 
     @Override
-    protected void randomizeAttributes() {
-        getAttribute(Attributes.MAX_HEALTH).setBaseValue(generateRandomMaxHealth());
-        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(generateRandomSpeed());
-        getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(generateRandomJumpStrength());
+    protected void randomizeAttributes(RandomSource random) {
+        getAttribute(Attributes.MAX_HEALTH).setBaseValue(generateRandomMaxHealth(random));
+        getAttribute(Attributes.MOVEMENT_SPEED).setBaseValue(generateRandomSpeed(random));
+        getAttribute(Attributes.JUMP_STRENGTH).setBaseValue(generateRandomJumpStrength(random));
     }
 
     @Override

@@ -8,7 +8,7 @@
     "ParticleAccessor", "PlayerInfoMixin", "TerrainParticleMixin", "TitleScreenMixin"
   ],
   "mixins": [
-    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "LivingEntityMixin", "MobMixin", "NaturalSpawnerMixin", "PathNodeDefaultsMixin",
+    "AbstractFishMixin", "AnimationControllerAccessor", "ExplosionMixin", "JigsawPlacementMixin", "MobMixin", "NaturalSpawnerMixin", "PathNodeDefaultsMixin",
     "ServerEntityMixin", "WalkNodeEvaluatorMixin", "WalkNodeEvaluatorMixinOpt"
   ],
   "plugin": "com.github.teamfossilsarcheology.fossil.forge.ForgeFossilMixinPlugin",

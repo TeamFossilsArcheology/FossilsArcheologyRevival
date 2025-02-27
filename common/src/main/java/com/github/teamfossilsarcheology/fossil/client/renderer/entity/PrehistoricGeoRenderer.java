@@ -17,10 +17,11 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import software.bernie.geckolib3.core.util.Color;
+import software.bernie.geckolib3.renderers.geo.GeoEntityRenderer;
 
 import java.util.function.Function;
 
-public class PrehistoricGeoRenderer<T extends Prehistoric> extends FixedGeoEntityRenderer<T> {
+public class PrehistoricGeoRenderer<T extends Prehistoric> extends GeoEntityRenderer<T> {
     private final Function<ResourceLocation, RenderType> renderType;
 
     /**

@@ -1,11 +1,11 @@
 {
   "type": "fossil:worktable",
-  "input": {
-    "item": "fossil:broken_sword"
-  },
+  "duration": 3000,
   "fuel": {
     "item": "fossil:relic_scrap"
   },
-  "result": "fossil:ancient_sword",
-  "duration": 3000
+  "input": {
+    "item": "fossil:broken_sword"
+  },
+  "result": "fossil:ancient_sword"
 }

@@ -18,6 +18,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Loads dinopedia bio entries for the currently selected language and fallback language
@@ -63,8 +64,9 @@ public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<Str
     }
 
     private String readFile(ResourceManager resourceManager, ResourceLocation resourceLocation) throws IOException {
-        try (Resource resource = resourceManager.getResource(resourceLocation)) {
-            try (InputStream inputStream = resource.getInputStream(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
+        Optional<Resource> opt = resourceManager.getResource(resourceLocation);
+        if (opt.isPresent()) {
+            try (InputStream inputStream = opt.get().open(); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
                 StringBuilder builder = new StringBuilder();
                 String line;
                 while ((line = reader.readLine()) != null) {
@@ -72,6 +74,8 @@ public class DinopediaBioLoader extends ClientResourceLoader<Map<String, Map<Str
                 }
                 return builder.toString();
             }
+        } else {
+            throw new IllegalArgumentException("Couldn't find resource " + resourceLocation + " in resource manager");
         }
     }
 

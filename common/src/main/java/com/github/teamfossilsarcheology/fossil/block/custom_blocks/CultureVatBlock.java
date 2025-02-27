@@ -11,7 +11,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricMobType;
 import com.github.teamfossilsarcheology.fossil.inventory.CultureVatMenu;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.StringRepresentable;
@@ -59,7 +59,7 @@ public class CultureVatBlock extends CustomEntityBlock {
     public void onFailedCultivation(Level level, BlockPos pos) {
         List<Player> nearby = level.getEntitiesOfClass(Player.class, new AABB(pos.offset(-50, -50, -50), pos.offset(50, 50, 50)));
         for (Player player : nearby) {
-            player.displayClientMessage(new TranslatableComponent("culture_vat.outBreak"), false);
+            player.displayClientMessage(Component.translatable("culture_vat.outBreak"), false);
         }
 
         BlockEntity blockEntity = level.getBlockEntity(pos);

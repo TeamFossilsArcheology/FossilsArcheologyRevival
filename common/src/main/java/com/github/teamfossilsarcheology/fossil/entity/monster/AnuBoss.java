@@ -15,7 +15,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -24,6 +24,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.BossEvent;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.damagesource.DamageSource;
@@ -58,13 +59,13 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     public static final int ARENA_RADIUS = 25;
     public static final EntityDataAccessor<Integer> DATA_PHASE = SynchedEntityData.defineId(AnuBoss.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Boolean> WEAK = SynchedEntityData.defineId(AnuBoss.class, EntityDataSerializers.BOOLEAN);
-    private static final Component SPAWN_1 = new TranslatableComponent("entity.fossil.anu.hello");
-    private static final Component SPAWN_2 = new TranslatableComponent("entity.fossil.anu.fewBeaten");
-    private static final Component ANU_COMBAT_SWORD = new TranslatableComponent("entity.fossil.anu.draw");
-    private static final Component ANU_COMBAT_BOW = new TranslatableComponent("entity.fossil.anu.coward");
-    private static final Component ANU_COMBAT_FIST = new TranslatableComponent("entity.fossil.anu.fist");
-    private static final Component ANU_COMBAT_ANCIENT = new TranslatableComponent("entity.fossil.anu.ancient");
-    private static final Component ANU_DEATH = new TranslatableComponent("entity.fossil.anu.death");
+    private static final Component SPAWN_1 = Component.translatable("entity.fossil.anu.hello");
+    private static final Component SPAWN_2 = Component.translatable("entity.fossil.anu.fewBeaten");
+    private static final Component ANU_COMBAT_SWORD = Component.translatable("entity.fossil.anu.draw");
+    private static final Component ANU_COMBAT_BOW = Component.translatable("entity.fossil.anu.coward");
+    private static final Component ANU_COMBAT_FIST = Component.translatable("entity.fossil.anu.fist");
+    private static final Component ANU_COMBAT_ANCIENT = Component.translatable("entity.fossil.anu.ancient");
+    private static final Component ANU_DEATH = Component.translatable("entity.fossil.anu.death");
     private static final int SONG_LENGTH = 4041;
     private final ServerBossEvent bossEvent = (ServerBossEvent) new ServerBossEvent(getDisplayName(), BossEvent.BossBarColor.RED, BossEvent.BossBarOverlay.PROGRESS).setDarkenScreen(true);
     private Vec3 spawnPosition = Vec3.ZERO;
@@ -84,7 +85,7 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
         return createMobAttributes().add(Attributes.FOLLOW_RANGE, 40).add(Attributes.MAX_HEALTH, 600).add(Attributes.MOVEMENT_SPEED, 0.35).add(Attributes.ATTACK_DAMAGE);
     }
 
-    public static Component getRandomGreeting(Random random) {
+    public static Component getRandomGreeting(RandomSource random) {
         return random.nextInt(2) == 0 ? SPAWN_1 : SPAWN_2;
     }
 
@@ -298,13 +299,13 @@ public class AnuBoss extends PathfinderMob implements RangedAttackMob {
     @Nullable
     @Override
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
-        populateDefaultEquipmentSlots(difficulty);
+        populateDefaultEquipmentSlots(level.getRandom(), difficulty);
         spawnPosition = position();
         return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+    protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
         setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(ModItems.ANCIENT_SWORD.get()));
     }
 

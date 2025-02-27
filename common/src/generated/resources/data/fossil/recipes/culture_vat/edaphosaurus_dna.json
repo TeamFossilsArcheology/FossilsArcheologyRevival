@@ -1,11 +1,11 @@
 {
   "type": "fossil:culture_vat",
-  "input": {
-    "item": "fossil:edaphosaurus_dna"
-  },
+  "duration": 6000,
   "fuel": {
     "item": "fossil:bio_goo"
   },
-  "result": "fossil:egg_item_edaphosaurus",
-  "duration": 6000
+  "input": {
+    "item": "fossil:edaphosaurus_dna"
+  },
+  "result": "fossil:egg_item_edaphosaurus"
 }

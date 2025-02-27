@@ -1,8 +1,8 @@
 {
   "type": "minecraft:stonecutting",
+  "count": 2,
   "ingredient": {
     "item": "fossil:volcanic_bricks"
   },
-  "result": "fossil:volcanic_brick_slab",
-  "count": 2
+  "result": "fossil:volcanic_brick_slab"
 }

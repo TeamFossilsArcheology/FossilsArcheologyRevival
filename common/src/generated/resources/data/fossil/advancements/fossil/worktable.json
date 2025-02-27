@@ -1,23 +1,7 @@
 {
   "parent": "fossil:fossil/broken_sword",
-  "display": {
-    "icon": {
-      "item": "fossil:worktable"
-    },
-    "title": {
-      "translate": "advancements.fossil.worktable.title"
-    },
-    "description": {
-      "translate": "advancements.fossil.worktable.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
     "worktable": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -26,7 +10,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fossil.worktable.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fossil:worktable"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fossil.worktable.title"
     }
   },
   "requirements": [

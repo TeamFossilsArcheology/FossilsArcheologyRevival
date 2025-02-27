@@ -10,6 +10,7 @@ import dev.architectury.core.fluid.ArchitecturyFluidAttributes;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.Difficulty;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.MobSpawnType;
@@ -24,7 +25,7 @@ import java.util.Random;
 
 public class TarFluid {
 
-    private static void animateParticle(Level level, BlockPos pos, FluidState state, Random random) {
+    private static void animateParticle(Level level, BlockPos pos, FluidState state, RandomSource random) {
         if (random.nextInt(5) == 0 && level.isEmptyBlock(pos.above())) {
             double posX = pos.getX() + random.nextDouble();
             double posY = pos.getY() + 1.0;
@@ -64,7 +65,7 @@ public class TarFluid {
         }
 
         @Override
-        protected void animateTick(Level level, BlockPos pos, FluidState state, Random random) {
+        protected void animateTick(Level level, BlockPos pos, FluidState state, RandomSource random) {
             animateParticle(level, pos, state, random);
         }
     }
@@ -87,7 +88,7 @@ public class TarFluid {
         }
 
         @Override
-        protected void animateTick(Level level, BlockPos pos, FluidState state, Random random) {
+        protected void animateTick(Level level, BlockPos pos, FluidState state, RandomSource random) {
             if (Boolean.FALSE.equals(state.getValue(FALLING)) && random.nextInt(64) == 0) {
                 level.playLocalSound(pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5,
                         ModSounds.TAR.get(), SoundSource.BLOCKS, 0.3f, random.nextFloat() * 0.4f + 0.8f, false);

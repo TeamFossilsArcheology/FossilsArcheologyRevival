@@ -1,35 +1,7 @@
 {
   "parent": "fossil:fossil/root",
-  "display": {
-    "icon": {
-      "item": "fossil:relic_scrap"
-    },
-    "title": {
-      "translate": "advancements.fossil.break_fossil.title"
-    },
-    "description": {
-      "translate": "advancements.fossil.break_fossil.description"
-    },
-    "frame": "task",
-    "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
   "criteria": {
-    "relic_scrap": {
-      "trigger": "minecraft:inventory_changed",
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "fossil:relic_scrap"
-            ]
-          }
-        ]
-      }
-    },
     "fossil_bio": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -38,10 +10,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "fossil_plant": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -50,10 +22,10 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "fossil_shale": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -62,10 +34,22 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "relic_scrap": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "fossil:relic_scrap"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
     },
     "skull": {
-      "trigger": "minecraft:inventory_changed",
       "conditions": {
         "items": [
           {
@@ -74,7 +58,23 @@
             ]
           }
         ]
-      }
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "announce_to_chat": true,
+    "description": {
+      "translate": "advancements.fossil.break_fossil.description"
+    },
+    "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fossil:relic_scrap"
+    },
+    "show_toast": true,
+    "title": {
+      "translate": "advancements.fossil.break_fossil.title"
     }
   },
   "requirements": [

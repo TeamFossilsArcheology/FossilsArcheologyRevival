@@ -10,7 +10,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -142,7 +141,7 @@ public class SifterBlockEntityImpl extends FabricContainerBlockEntity implements
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("container.fossil.sifter");
+        return Component.translatable("container.fossil.sifter");
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.github.teamfossilsarcheology.fossil.recipe;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import dev.architectury.core.AbstractRecipeSerializer;
 import net.minecraft.core.NonNullList;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
@@ -12,6 +11,7 @@ import net.minecraft.world.Container;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.ShapedRecipe;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -84,7 +84,7 @@ public abstract class MultiOutputAndSlotsRecipe implements Recipe<Container> {
         return id;
     }
 
-    public static class Serializer<T extends MultiOutputAndSlotsRecipe> extends AbstractRecipeSerializer<T> {
+    public static class Serializer<T extends MultiOutputAndSlotsRecipe> implements RecipeSerializer<T> {
         protected final Constructor<T> constructor;
 
         protected Serializer(Constructor<T> constructor) {

@@ -92,7 +92,7 @@ public class TarSlime extends Slime {
         }
         setRemoved(reason);
         if (reason == RemovalReason.KILLED) {
-            gameEvent(GameEvent.ENTITY_KILLED);
+            gameEvent(GameEvent.ENTITY_DIE);
         }
     }
 

@@ -30,11 +30,11 @@ import net.minecraft.core.BlockSource;
 import net.minecraft.core.dispenser.DefaultDispenseItemBehavior;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.stats.Stats;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.animal.Animal;
@@ -48,10 +48,9 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Locale;
-import java.util.Random;
 
 public class ModEvents {
-    private static final Component ANU_BREAK_BLOCK = new TranslatableComponent("entity.fossil.anu.break_block");
+    private static final Component ANU_BREAK_BLOCK = Component.translatable("entity.fossil.anu.break_block");
 
     public static void init() {
         EntityEvent.ADD.register((entity, level) -> {
@@ -119,7 +118,7 @@ public class ModEvents {
                             stack.shrink(1);
                         }
                     } else {
-                        Random random = player.getRandom();
+                        RandomSource random = player.getRandom();
                         for (int i = 0; i < 7; i++) {
                             double x = animal.getX() + random.nextFloat() * animal.getBbWidth() * 2 - animal.getBbWidth();
                             double y = animal.getY() + 0.5 + random.nextFloat() * animal.getBbHeight();
@@ -164,7 +163,7 @@ public class ModEvents {
     }
 
     public static void growEntity(EntityInfo embryo, LivingEntity parent) {
-        Random random = parent.level.random;
+        RandomSource random = parent.level.random;
         if (parent.level.isClientSide) {
             for (int i = 0; i < 7; ++i) {
                 double d = random.nextGaussian() * 0.02;

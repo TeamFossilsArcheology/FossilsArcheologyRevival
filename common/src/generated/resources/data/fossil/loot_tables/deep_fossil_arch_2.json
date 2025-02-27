@@ -1,7 +1,6 @@
 {
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
@@ -9,47 +8,48 @@
           "children": [
             {
               "type": "minecraft:item",
-              "weight": 11,
-              "name": "fossil:scarab_gem"
+              "name": "fossil:scarab_gem",
+              "weight": 11
             },
             {
               "type": "minecraft:item",
-              "weight": 11,
-              "name": "fossil:broken_sword"
+              "name": "fossil:broken_sword",
+              "weight": 11
             },
             {
               "type": "minecraft:item",
-              "weight": 11,
-              "name": "fossil:broken_helmet"
+              "name": "fossil:broken_helmet",
+              "weight": 11
             },
             {
               "type": "minecraft:item",
-              "weight": 80,
-              "name": "fossil:skull"
+              "name": "fossil:skull",
+              "weight": 80
             },
             {
               "type": "minecraft:item",
-              "weight": 192,
-              "name": "fossil:fossil_shale"
+              "name": "fossil:fossil_shale",
+              "weight": 192
             },
             {
               "type": "minecraft:item",
-              "weight": 715,
-              "name": "fossil:relic_scrap"
+              "name": "fossil:relic_scrap",
+              "weight": 715
             },
             {
               "type": "minecraft:item",
-              "weight": 36,
-              "name": "minecraft:bone"
+              "name": "minecraft:bone",
+              "weight": 36
             },
             {
               "type": "minecraft:item",
-              "weight": 20,
-              "name": "fossil:fossil_plant"
+              "name": "fossil:fossil_plant",
+              "weight": 20
             }
           ]
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

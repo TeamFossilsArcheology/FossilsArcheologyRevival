@@ -1,20 +1,20 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "C": {
+      "item": "fossil:chicken_soup_cooked"
+    },
+    "G": {
+      "item": "minecraft:glass_bottle"
+    }
+  },
   "pattern": [
     "GGG",
     "GCG",
     "GGG"
   ],
-  "key": {
-    "G": {
-      "item": "minecraft:glass_bottle"
-    },
-    "C": {
-      "item": "fossil:chicken_soup_cooked"
-    }
-  },
   "result": {
-    "item": "fossil:essence_chicken",
-    "count": 8
+    "count": 8,
+    "item": "fossil:essence_chicken"
   }
 }

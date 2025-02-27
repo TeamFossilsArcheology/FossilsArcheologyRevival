@@ -3,6 +3,7 @@ package com.github.teamfossilsarcheology.fossil.block.custom_blocks;
 import com.github.teamfossilsarcheology.fossil.tags.ModBlockTags;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -30,7 +31,7 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
     private final VoxelShape shape;
 
     public FourTallFlowerBlock(VoxelShape shape) {
-        super(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS));
+        super(Properties.of(Material.PLANT).noCollission().noOcclusion().sound(SoundType.GRASS).offsetType(OffsetType.XZ));
         this.shape = shape;
         this.registerDefaultState(this.stateDefinition.any().setValue(LAYER, 0));
     }
@@ -118,22 +119,17 @@ public class FourTallFlowerBlock extends BushBlock implements BonemealableBlock 
     }
 
     @Override
-    public BlockBehaviour.@NotNull OffsetType getOffsetType() {
-        return BlockBehaviour.OffsetType.XZ;
-    }
-
-    @Override
     public boolean isValidBonemealTarget(BlockGetter level, BlockPos pos, BlockState state, boolean isClient) {
         return true;
     }
 
     @Override
-    public boolean isBonemealSuccess(Level level, Random random, BlockPos pos, BlockState state) {
+    public boolean isBonemealSuccess(Level level, RandomSource random, BlockPos pos, BlockState state) {
         return true;
     }
 
     @Override
-    public void performBonemeal(ServerLevel level, Random random, BlockPos pos, BlockState state) {
+    public void performBonemeal(ServerLevel level, RandomSource random, BlockPos pos, BlockState state) {
         int maxTries = random.nextInt(3);
         int tries = 0;
         int timeout = 0;

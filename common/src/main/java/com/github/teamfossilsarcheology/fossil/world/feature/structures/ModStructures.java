@@ -1,31 +1,51 @@
 package com.github.teamfossilsarcheology.fossil.world.feature.structures;
 
 import com.github.teamfossilsarcheology.fossil.FossilMod;
+import com.github.teamfossilsarcheology.fossil.tags.ModBiomeTags;
 import dev.architectury.injectables.annotations.ExpectPlatform;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.levelgen.feature.StructureFeature;
-import net.minecraft.world.level.levelgen.feature.configurations.FeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.JigsawConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.NoneFeatureConfiguration;
-import net.minecraft.world.level.levelgen.feature.configurations.RangeConfiguration;
+import net.minecraft.core.Holder;
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.Registry;
+import net.minecraft.data.BuiltinRegistries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.BiomeTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.levelgen.GenerationStep;
+import net.minecraft.world.level.levelgen.VerticalAnchor;
+import net.minecraft.world.level.levelgen.heightproviders.UniformHeight;
+import net.minecraft.world.level.levelgen.structure.Structure;
+import net.minecraft.world.level.levelgen.structure.TerrainAdjustment;
+
+import java.util.Map;
 
 public class ModStructures {
-    public static final Tuple<JigsawConfiguration, CastleFeature> ANU_CASTLE = createStructure("anu_castle", new CastleFeature());
-    public static final Tuple<JigsawConfiguration, ConfigurableStructureFeature> CONFIGURABLE_STRUCTURE =
-            createStructure("configurable_structure", new ConfigurableStructureFeature());
-    public static final Tuple<RangeConfiguration, HellBoatFeature> HELL_BOAT = createStructure("hell_boat", new HellBoatFeature());
-    public static final Tuple<NoneFeatureConfiguration, TreasureRoomFeature> TREASURE_ROOM = createStructure("treasure_room", new TreasureRoomFeature());
+    public static final ResourceKey<Structure> ANU_CASTLE_KEY = createKey("anu_castle");
+    public static final ResourceKey<Structure> HELL_BOAT_KEY = createKey("hell_boat.json");
+    public static final ResourceKey<Structure> TREASURE_ROOM_KEY = createKey("treasure_room");
 
-    private static <C extends FeatureConfiguration, F extends StructureFeature<C>> Tuple<C, F> createStructure(String name, F feature) {
-        return new Tuple<>(FossilMod.location(name), feature);
+    private static ResourceKey<Structure> createKey(String name) {
+        return ResourceKey.create(Registry.STRUCTURE_REGISTRY, FossilMod.location(name));
     }
 
-    @ExpectPlatform
+    private static HolderSet<Biome> biomes(TagKey<Biome> key) {
+        return BuiltinRegistries.BIOME.getOrCreateTag(key);
+    }
+
+    private static Holder<Structure> register(ResourceKey<Structure> key, Structure structure) {
+        return BuiltinRegistries.register(BuiltinRegistries.STRUCTURES, key, structure);
+    }
+
+    public static final Holder<Structure> ANU_CASTLE = register(ANU_CASTLE_KEY, new AnuCastleStructure(
+            new Structure.StructureSettings(biomes(ModBiomeTags.HAS_ANU_CASTLE), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE)));
+
+    public static final Holder<Structure> HELL_BOAT = register(HELL_BOAT_KEY, new HellBoatStructure(
+                    new Structure.StructureSettings(biomes(BiomeTags.IS_NETHER), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE),
+                    UniformHeight.of(VerticalAnchor.absolute(30), VerticalAnchor.absolute(30))));
+
+    public static final Holder<Structure> TREASURE_ROOM = register(TREASURE_ROOM_KEY, new TreasureRoomStructure(
+            new Structure.StructureSettings(biomes(ModBiomeTags.HAS_TREASURE_ROOM), Map.of(), GenerationStep.Decoration.SURFACE_STRUCTURES, TerrainAdjustment.NONE)));
+
     public static void register() {
-    }
-
-    public record Tuple<C extends FeatureConfiguration, F extends StructureFeature<C>>(ResourceLocation location,
-                                                                                       F feature) {
-
     }
 }

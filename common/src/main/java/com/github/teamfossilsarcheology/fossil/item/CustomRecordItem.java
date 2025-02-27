@@ -10,7 +10,7 @@ import org.apache.commons.lang3.NotImplementedException;
 public class CustomRecordItem {
 
     @ExpectPlatform
-    public static RecordItem get(int analogOutput, RegistrySupplier<SoundEvent> sound, Item.Properties properties) {
+    public static RecordItem get(int analogOutput, RegistrySupplier<SoundEvent> sound, Item.Properties properties, int lengthInSeconds) {
         throw new NotImplementedException();
     }
 }

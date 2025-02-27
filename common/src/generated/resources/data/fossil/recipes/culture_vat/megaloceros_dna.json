@@ -1,11 +1,11 @@
 {
   "type": "fossil:culture_vat",
-  "input": {
-    "item": "fossil:megaloceros_dna"
-  },
+  "duration": 6000,
   "fuel": {
     "item": "fossil:bio_goo"
   },
-  "result": "fossil:syringe_megaloceros",
-  "duration": 6000
+  "input": {
+    "item": "fossil:megaloceros_dna"
+  },
+  "result": "fossil:syringe_megaloceros"
 }

@@ -59,8 +59,8 @@ public class DebugSelectionList<E extends ContainerObjectSelectionList.Entry<E>>
     }
 
     @Override
-    protected void renderList(PoseStack poseStack, int x, int y, int mouseX, int mouseY, float partialTick) {
-        super.renderList(poseStack, x, y, mouseX, mouseY, partialTick);
+    protected void renderList(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+        super.renderList(poseStack, mouseX, mouseY, partialTick);
         widgets.forEach(widget -> widget.render(poseStack, mouseX, mouseY, partialTick));
     }
 

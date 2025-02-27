@@ -1,57 +1,27 @@
-@file:Suppress("UnstableApiUsage")
-
-val enabledPlatforms: String by rootProject
-val fabricLoaderVersion: String by rootProject
-val architecturyVersion: String by rootProject
-val archivesBaseName: String by rootProject
-val parchmentDate: String by rootProject
-val moreHitboxesVersion: String by rootProject
-val reiVersion: String by rootProject
-
 architectury {
-    common(enabledPlatforms.split(","))
-}
-
-repositories {
-    flatDir {
-        dirs("lib")
-    }
+    common enabled_platforms.split(',')
 }
 
 loom {
-    accessWidenerPath.set(file("src/main/resources/fossil.accesswidener"))
+    accessWidenerPath = file("src/main/resources/fossil.accesswidener")
 }
 
 dependencies {
-    "mappings"(loom.layered {
+    mappings loom.layered() {
         officialMojangMappings()
-        parchment("org.parchmentmc.data:parchment-1.18.2:$parchmentDate@zip")
-    })
-    // We depend on fabric loader here to use the fabric @Environment annotations and get the mixin dependencies
-    // Do NOT use other classes from fabric loader
-    modImplementation("net.fabricmc:fabric-loader:${fabricLoaderVersion}")
+        parchment("org.parchmentmc.data:parchment-$parchment_mc_version:$parchment_date@zip")
+    }
+    // We depend on Fabric Loader here to use the Fabric @Environment annotations,
+    // which get remapped to the correct annotations on each platform.
+    // Do NOT use other classes from Fabric Loader.
+    modImplementation "net.fabricmc:fabric-loader:$fabric_loader_version"
     // Remove the next line if you don't want to depend on the API
-    modApi("dev.architectury:architectury:${architecturyVersion}")
+    modApi "dev.architectury:architectury:$architectury_version"
 
-    // Geckolib 3.0 template uses forge one so... I guess this is ok?
-    modImplementation("software.bernie.geckolib:geckolib-forge-1.18:3.0.57")
-    modCompileOnly("com.github.darkpred.morehitboxes:morehitboxes-common-1.18.2:${moreHitboxesVersion}")
+    modCompileOnly "software.bernie.geckolib:geckolib-forge-1.19:$gecko_lib_version"
+    modCompileOnly "com.github.darkpred.morehitboxes:morehitboxes-common-$minecraft_version:$more_hitboxes_version"
 
     //Optional
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-api:${reiVersion}")
-    modCompileOnly("me.shedaniel:RoughlyEnoughItems-default-plugin:${reiVersion}")
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenCommon") {
-            artifactId = archivesBaseName
-            from(components["java"])
-        }
-    }
-
-    // See https://docs.gradle.org/current/userguide/publishing_maven.html for information on how to set up publishing.
-    repositories {
-        // Add repositories to publish to here.
-    }
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-api:$rei_version"
+    modCompileOnly "me.shedaniel:RoughlyEnoughItems-default-plugin:$rei_version"
 }

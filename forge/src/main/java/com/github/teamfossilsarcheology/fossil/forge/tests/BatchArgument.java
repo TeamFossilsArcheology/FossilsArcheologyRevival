@@ -12,7 +12,7 @@ import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.SharedSuggestionProvider;
 import net.minecraft.gametest.framework.GameTestRegistry;
 import net.minecraft.gametest.framework.TestFunction;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
@@ -33,7 +33,7 @@ public class BatchArgument implements ArgumentType<String> {
         if (optional.isPresent()) {
             return string;
         } else {
-            Message message = new TextComponent("No such batch: " + string);
+            Message message = Component.literal("No such batch: " + string);
             throw new CommandSyntaxException(new SimpleCommandExceptionType(message), message);
         }
     }

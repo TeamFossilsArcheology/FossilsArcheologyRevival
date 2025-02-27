@@ -2,6 +2,7 @@ package com.github.teamfossilsarcheology.fossil.forge.mixin;
 
 import com.github.teamfossilsarcheology.fossil.entity.monster.AnuBoss;
 import com.github.teamfossilsarcheology.fossil.world.dimension.ModDimensions;
+import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.Explosion;
@@ -20,13 +21,13 @@ import java.util.List;
 public class ExplosionMixin {
     @Shadow
     @Final
-    private List<BlockPos> toBlow;
+    private ObjectArrayList<BlockPos> toBlow;
 
     @Shadow
     @Final
     private Level level;
 
-    @Inject(method = "explode", at = @At(value = "INVOKE", target = "Ljava/util/List;addAll(Ljava/util/Collection;)Z", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
+    @Inject(method = "explode", at = @At(value = "INVOKE", target = "Lit/unimi/dsi/fastutil/objects/ObjectArrayList;addAll(Ljava/util/Collection;)Z", shift = At.Shift.AFTER), locals = LocalCapture.CAPTURE_FAILSOFT)
     public void doNotAddMultiPart(CallbackInfo ci) {
         if (level.dimension() == ModDimensions.ANU_LAIR && level instanceof ServerLevel serverLevel) {
             AnuBoss.AnuLair anuLair = serverLevel.getDataStorage().get(c -> new AnuBoss.AnuLair(), "anu_lair");

@@ -1,5 +1,4 @@
 {
-  "replace": false,
   "values": [
     "fossil:bubble_blower",
     "fossil:feeder",
@@ -31,6 +30,7 @@
     "fossil:toy_scratching_post_warped",
     "fossil:toy_scratching_post_jungle",
     "fossil:toy_scratching_post_dark_oak",
+    "fossil:toy_scratching_post_mangrove",
     "fossil:toy_scratching_post_spruce",
     "fossil:toy_tethered_log_crimson",
     "fossil:toy_tethered_log_birch",
@@ -39,6 +39,7 @@
     "fossil:toy_tethered_log_warped",
     "fossil:toy_tethered_log_jungle",
     "fossil:toy_tethered_log_dark_oak",
+    "fossil:toy_tethered_log_mangrove",
     "fossil:toy_tethered_log_spruce"
   ]
 }

@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.monster;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -29,7 +30,7 @@ public class SentryPiglin extends PiglinBrute {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+    protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
         setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.IRON_SWORD));
     }
 
@@ -38,8 +39,8 @@ public class SentryPiglin extends PiglinBrute {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason, @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
         SpawnGroupData spawnGroupData = super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
         ((GroundPathNavigation) getNavigation()).setCanOpenDoors(true);
-        populateDefaultEquipmentSlots(difficulty);
-        populateDefaultEquipmentEnchantments(difficulty);
+        populateDefaultEquipmentSlots(level.getRandom(), difficulty);
+        populateDefaultEquipmentEnchantments(random, difficulty);
         return spawnGroupData;
     }
 }

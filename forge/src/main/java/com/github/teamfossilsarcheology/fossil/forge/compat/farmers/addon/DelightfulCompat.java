@@ -1,8 +1,8 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
-import net.brdle.delightful.common.block.DelightfulBlocks;
-import net.brdle.delightful.common.item.DelightfulItems;
+import net.brnbrd.delightful.common.block.DelightfulBlocks;
+import net.brnbrd.delightful.common.item.DelightfulItems;
 import net.minecraftforge.fml.ModList;
 import vectorwing.farmersdelight.common.block.PieBlock;
 

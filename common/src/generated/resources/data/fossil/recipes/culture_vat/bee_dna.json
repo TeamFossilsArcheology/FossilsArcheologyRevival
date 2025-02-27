@@ -1,11 +1,11 @@
 {
   "type": "fossil:culture_vat",
-  "input": {
-    "item": "fossil:bee_dna"
-  },
+  "duration": 6000,
   "fuel": {
     "item": "fossil:bio_goo"
   },
-  "result": "fossil:artificial_honeycomb",
-  "duration": 6000
+  "input": {
+    "item": "fossil:bee_dna"
+  },
+  "result": "fossil:artificial_honeycomb"
 }

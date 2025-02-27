@@ -29,8 +29,6 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.Style;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.LivingEntity;
@@ -65,14 +63,14 @@ public class DinopediaScreen extends Screen {
                     GameProfile gameProfile = new GameProfile(key, null);
                     gameProfile = Minecraft.getInstance().getMinecraftSessionService().fillProfileProperties(gameProfile, true);
                     if (gameProfile.isComplete()) {
-                        return new TextComponent(gameProfile.getName());
+                        return Component.literal(gameProfile.getName());
                     }
-                    return new TextComponent("Invalid User");
+                    return Component.literal("Invalid User");
                 }
             });
-    private static final Component STUNTED_GROWTH = new TranslatableComponent("pedia.fossil.condition.stunted");
-    private static final Component SHEARED = new TranslatableComponent("pedia.fossil.condition.sheared");
-    private static final Component NOT_SHEARED = new TranslatableComponent("pedia.fossil.condition.not_sheared");
+    private static final Component STUNTED_GROWTH = Component.translatable("pedia.fossil.condition.stunted");
+    private static final Component SHEARED = Component.translatable("pedia.fossil.condition.sheared");
+    private static final Component NOT_SHEARED = Component.translatable("pedia.fossil.condition.not_sheared");
     private static final int MOOD_FACE_WIDTH = 16;
     private static final int MOOD_FACE_HEIGHT = 15;
     private static final int MOOD_BAR_WIDTH = 206;
@@ -92,7 +90,7 @@ public class DinopediaScreen extends Screen {
     private int currentPage;
 
     public DinopediaScreen(LivingEntity entity) {
-        super(new TextComponent(""));
+        super(Component.literal(""));
         this.entity = entity;
     }
 
@@ -247,12 +245,12 @@ public class DinopediaScreen extends Screen {
             if (embryoProgress > 0) {
                 drawLeftPage = false;
                 float quot = roundToHalf(embryoProgress / (FossilConfig.getInt(FossilConfig.PREGNANCY_DURATION) + 1) * 100);
-                var progress = new TranslatableComponent("pedia.fossil.pregnantTime", quot);
+                var progress = Component.translatable("pedia.fossil.pregnantTime", quot);
                 font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 135, col);
                 poseStack.pushPose();
                 float scale = 1.5f;
                 poseStack.scale(scale, scale, scale);
-                TranslatableComponent name = new TranslatableComponent("pedia.fossil.pregnant", entity.getType().getDescription());
+                Component name = Component.translatable("pedia.fossil.pregnant", entity.getType().getDescription());
                 font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
                 poseStack.popPose();
             }
@@ -267,54 +265,54 @@ public class DinopediaScreen extends Screen {
             poseStack.popPose();
             int x = leftPos + 30;
             int y = topPos + 85;
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.age", dino.getAgeInDays()), x, y + 20, col);
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.health", entity.getHealth() + "/" + entity.getMaxHealth()), x, y + 30, col);
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x, y + 40, col);
+            font.draw(poseStack, Component.translatable("pedia.fossil.age", dino.getAgeInDays()), x, y + 20, col);
+            font.draw(poseStack, Component.translatable("pedia.fossil.health", entity.getHealth() + "/" + entity.getMaxHealth()), x, y + 30, col);
+            font.draw(poseStack, Component.translatable("pedia.fossil.hunger", dino.getHunger() + "/" + dino.getMaxHunger()), x, y + 40, col);
             var dietText = dino.data().diet().getName();
             renderHoverInfo(poseStack, x, y + 50, mouseX, mouseY, dietText, dino.data().diet().getDescription());
             var tempText = dino.aiResponseType().getName();
             renderHoverInfo(poseStack, x, y + 60, mouseX, mouseY, tempText, dino.aiResponseType().getDescription());
             font.draw(poseStack, dino.getGender().getName(), x, y + 70, col);
             if (dino.getOwnerUUID() == null) {
-                font.draw(poseStack, new TranslatableComponent("pedia.fossil.untamed"), x, y + 80, col);
+                font.draw(poseStack, Component.translatable("pedia.fossil.untamed"), x, y + 80, col);
             } else {
                 try {
-                    font.draw(poseStack, new TranslatableComponent("pedia.fossil.owner", USERNAMES.get(dino.getOwnerUUID())), x, y + 80, col);
+                    font.draw(poseStack, Component.translatable("pedia.fossil.owner", USERNAMES.get(dino.getOwnerUUID())), x, y + 80, col);
                 } catch (ExecutionException e) {
-                    font.draw(poseStack, new TranslatableComponent("pedia.fossil.owner", "Invalid User"), x, y + 80, col);
+                    font.draw(poseStack, Component.translatable("pedia.fossil.owner", "Invalid User"), x, y + 80, col);
                 }
             }
             var order = dino.getCurrentOrder();
             renderHoverInfo(poseStack, x, y + 90, mouseX, mouseY, order.getName(), order.getDescription());
 
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.order.item", new TranslatableComponent(dino.getOrderItem().getDescriptionId())), x, y + 100, col);
+            font.draw(poseStack, Component.translatable("pedia.fossil.order.item", Component.translatable(dino.getOrderItem().getDescriptionId())), x, y + 100, col);
 
             var activity = dino.aiActivityType();
             renderHoverInfo(poseStack, x, y + 110, mouseX, mouseY, activity.getName(), activity.getDescription());
 
-            font.draw(poseStack, new TranslatableComponent("pedia.fossil.population", dino.data().maxPopulation()), x, y + 120, col);
+            font.draw(poseStack, Component.translatable("pedia.fossil.population", dino.data().maxPopulation()), x, y + 120, col);
         } else if (entity instanceof DinosaurEgg egg) {
             poseStack.pushPose();
             float scale = 1.5f;
             poseStack.scale(scale, scale, scale);
-            var name = new TranslatableComponent("pedia.fossil.egg", egg.getPrehistoricEntityInfo().displayName.get());
+            var name = Component.translatable("pedia.fossil.egg", egg.getPrehistoricEntityInfo().displayName.get());
             font.draw(poseStack, name, getScaledX(true, font.width(name), scale), (topPos + 85) / scale, (66 << 16) | (48 << 8) | 36);
             poseStack.popPose();
             int time = Mth.floor((float) egg.getHatchingTime() / egg.getTotalHatchingTime() * 100);
-            var progress = new TranslatableComponent("pedia.fossil.egg.time", Math.max(time, 0));
+            var progress = Component.translatable("pedia.fossil.egg.time", Math.max(time, 0));
             font.draw(poseStack, progress, getScaledX(true, font.width(progress), 1), topPos + 120, (157 << 16) | (126 << 8) | 103);
 
             Component status;
             if (egg.isInWater()) {
-                status = new TranslatableComponent("pedia.fossil.egg.status.wet").withStyle(style -> style.withColor(ChatFormatting.AQUA));
+                status = Component.translatable("pedia.fossil.egg.status.wet").withStyle(style -> style.withColor(ChatFormatting.AQUA));
             } else {
                 if (egg.isTooCold()) {
-                    status = new TranslatableComponent("pedia.fossil.egg.status.cold").withStyle(style -> style.withColor(ChatFormatting.BLUE));
+                    status = Component.translatable("pedia.fossil.egg.status.cold").withStyle(style -> style.withColor(ChatFormatting.BLUE));
                 } else {
-                    status = new TranslatableComponent("pedia.fossil.egg.status.warm").withStyle(style -> style.withColor(ChatFormatting.GOLD));
+                    status = Component.translatable("pedia.fossil.egg.status.warm").withStyle(style -> style.withColor(ChatFormatting.GOLD));
                 }
             }
-            status = new TranslatableComponent("pedia.fossil.egg.status", status);
+            status = Component.translatable("pedia.fossil.egg.status", status);
             font.draw(poseStack, status, getScaledX(true, font.width(status), 1), topPos + 140, (157 << 16) | (126 << 8) | 103);
         } else if (entity instanceof PrehistoricFish || entity instanceof Quagga) {
             poseStack.pushPose();
@@ -367,8 +365,8 @@ public class DinopediaScreen extends Screen {
             x = (int) (x * scale);
             y = (int) (y * scale);
             if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + MOOD_BAR_WIDTH * scale && mouseY < y + MOOD_BAR_HEIGHT * scale) {
-                var mood = new TextComponent(String.valueOf(moodSystem.getMood())).withStyle(style -> style.withColor(moodSystem.getMoodFace().color));
-                toolTipList.add(new TranslatableComponent("pedia.fossil.mood_status", mood));
+                var mood = Component.literal(String.valueOf(moodSystem.getMood())).withStyle(style -> style.withColor(moodSystem.getMoodFace().color));
+                toolTipList.add(Component.translatable("pedia.fossil.mood_status", mood));
             }
 
             poseStack.pushPose();
@@ -417,14 +415,14 @@ public class DinopediaScreen extends Screen {
                     x += 16;
                     itemRenderer.renderAndDecorateItem(new ItemStack(Items.DEBUG_STICK), x, y);
                     if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
-                        toolTipList.add(new TextComponent(String.format("Disabled AI: %b, Goal: %b, Move: %b, Look: %b", dino.isNoAi(), tag.getBoolean("disableGoalAI"), tag.getBoolean("disableMoveAI"), tag.getBoolean("disableLookAI"))));
+                        toolTipList.add(Component.literal(String.format("Disabled AI: %b, Goal: %b, Move: %b, Look: %b", dino.isNoAi(), tag.getBoolean("disableGoalAI"), tag.getBoolean("disableMoveAI"), tag.getBoolean("disableLookAI"))));
                     }
                 }
                 if (!dino.getVariantId().isBlank()) {
                     x += 16;
                     itemRenderer.renderAndDecorateItem(new ItemStack(Items.RED_DYE), x, y);
                     if (toolTipList.isEmpty() && mouseX >= x && mouseY >= y && mouseX < x + renderSize && mouseY < y + renderSize) {
-                        toolTipList.add(new TextComponent("Variant: " + dino.getVariantId()));
+                        toolTipList.add(Component.literal("Variant: " + dino.getVariantId()));
                     }
                 }
             }
@@ -480,7 +478,7 @@ public class DinopediaScreen extends Screen {
         private final boolean isForward;
 
         public DinopediaPageButton(int x, int y, int width, int height, boolean isForward, OnPress onPress) {
-            super(x, y, width, height, new TextComponent(""), onPress);
+            super(x, y, width, height, Component.literal(""), onPress);
             this.isForward = isForward;
         }
 

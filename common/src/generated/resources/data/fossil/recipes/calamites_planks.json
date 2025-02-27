@@ -7,7 +7,7 @@
     }
   ],
   "result": {
-    "item": "fossil:calamites_planks",
-    "count": 4
+    "count": 4,
+    "item": "fossil:calamites_planks"
   }
 }

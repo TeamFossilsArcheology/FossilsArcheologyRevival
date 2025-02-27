@@ -1,24 +1,24 @@
 {
   "parent": "fossil:fossil/anu_lair",
+  "criteria": {
+    "requirement": {
+      "conditions": {},
+      "trigger": "fossil:open_sarcophagus"
+    }
+  },
   "display": {
-    "icon": {
-      "item": "fossil:sarcophagus"
-    },
-    "title": {
-      "translate": "advancements.fossil.sarcophagus.title"
-    },
+    "announce_to_chat": true,
     "description": {
       "translate": "advancements.fossil.sarcophagus.description"
     },
     "frame": "task",
+    "hidden": false,
+    "icon": {
+      "item": "fossil:sarcophagus"
+    },
     "show_toast": true,
-    "announce_to_chat": true,
-    "hidden": false
-  },
-  "criteria": {
-    "requirement": {
-      "trigger": "fossil:open_sarcophagus",
-      "conditions": {}
+    "title": {
+      "translate": "advancements.fossil.sarcophagus.title"
     }
   },
   "requirements": [

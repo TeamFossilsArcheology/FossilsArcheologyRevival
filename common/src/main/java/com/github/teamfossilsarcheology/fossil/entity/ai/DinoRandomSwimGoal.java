@@ -5,6 +5,7 @@ import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.Prehistor
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.SwimmingAnimal;
 import net.minecraft.core.BlockPos;
 import net.minecraft.tags.FluidTags;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.ai.behavior.BehaviorUtils;
 import net.minecraft.world.entity.ai.goal.RandomSwimmingGoal;
 import net.minecraft.world.phys.Vec3;
@@ -39,7 +40,7 @@ public class DinoRandomSwimGoal<T extends Prehistoric & SwimmingAnimal> extends 
             return targetPos;
         }
         BlockPos.MutableBlockPos mutableBlockPos = new BlockPos.MutableBlockPos();
-        Random random = dino.getRandom();
+        RandomSource random = dino.getRandom();
         if (dino.getTarget() == null || dino.getTarget().isDeadOrDying()) {
             for (int i = 0; i < 20; i++) {
                 mutableBlockPos.setWithOffset(dino.blockPosition(), random.nextInt(16) - 7, random.nextInt(8) - 4, random.nextInt(16) - 7);

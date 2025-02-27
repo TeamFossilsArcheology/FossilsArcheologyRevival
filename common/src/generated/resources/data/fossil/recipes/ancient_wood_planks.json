@@ -7,7 +7,7 @@
     }
   ],
   "result": {
-    "item": "fossil:ancient_wood_planks",
-    "count": 4
+    "count": 4,
+    "item": "fossil:ancient_wood_planks"
   }
 }

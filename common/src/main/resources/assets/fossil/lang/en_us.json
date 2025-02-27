@@ -679,6 +679,7 @@
   "category.fossil.rei.sifter": "Sifting",
   "category.fossil.rei.worktable": "Repairing",
   "category.fossil.controls": "Fossils and Archeology",
+  "config.jade.plugin_fossil.feeder_status": "Feeder Status",
   "key.fossil.fly_up": "Fly up",
   "key.fossil.fly_down": "Fly down",
   "filter.fossil.figurines": "Figurines",

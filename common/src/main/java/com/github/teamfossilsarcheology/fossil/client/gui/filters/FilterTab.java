@@ -12,8 +12,6 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TextComponent;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -96,7 +94,7 @@ public class FilterTab {
         private final boolean left;
 
         public FilterButton(Screen screen, int i, int j, boolean left, Filter filter, OnPress onPress) {
-            super(i, j, 32, 28, TextComponent.EMPTY, onPress);
+            super(i, j, 32, 28, Component.empty(), onPress);
             this.screen = screen;
             this.left = left;
             this.filter = filter;
@@ -136,7 +134,7 @@ public class FilterTab {
         public Filter(TagKey<Item> tag, ItemStack icon) {
             this.tag = tag;
             this.icon = icon;
-            this.tooltip = new TranslatableComponent("filter.fossil." + tag.location().getPath());
+            this.tooltip = Component.translatable("filter.fossil." + tag.location().getPath());
         }
     }
 }

@@ -1,21 +1,21 @@
 {
   "type": "minecraft:crafting_shaped",
+  "key": {
+    "B": {
+      "item": "minecraft:bone"
+    },
+    "R": {
+      "tag": "fossil:bones_ribcage"
+    },
+    "V": {
+      "tag": "fossil:bones_vertebrae"
+    }
+  },
   "pattern": [
     "B B",
     " V ",
     "BRB"
   ],
-  "key": {
-    "B": {
-      "item": "minecraft:bone"
-    },
-    "V": {
-      "tag": "fossil:bones_vertebrae"
-    },
-    "R": {
-      "tag": "fossil:bones_ribcage"
-    }
-  },
   "result": {
     "item": "fossil:bone_chestplate"
   }

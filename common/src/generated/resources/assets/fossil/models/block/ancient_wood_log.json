@@ -1,7 +1,7 @@
 {
   "parent": "minecraft:block/cube_column",
   "textures": {
-    "side": "fossil:block/ancient_wood_log",
-    "end": "fossil:block/ancient_wood_log_top"
+    "end": "fossil:block/ancient_wood_log_top",
+    "side": "fossil:block/ancient_wood_log"
   }
 }

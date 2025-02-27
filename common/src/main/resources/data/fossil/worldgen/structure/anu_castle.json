@@ -1,0 +1,6 @@
+{
+  "type": "fossil:anu_castle",
+  "biomes": "fossil:anu_lair",
+  "spawn_overrides": {},
+  "step": "surface_structures"
+}

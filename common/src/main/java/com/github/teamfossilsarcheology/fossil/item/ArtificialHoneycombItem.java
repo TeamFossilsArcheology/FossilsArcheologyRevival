@@ -35,7 +35,7 @@ public class ArtificialHoneycombItem extends DescriptiveItem {
                     mob.moveTo(blockPos.getX() + 0.5, blockPos.getY() + 1.0, blockPos.getZ() + 0.5, Mth.wrapDegrees(level.random.nextFloat() * 360), 0.0F);
                     level.addFreshEntity(mob);
                     stack.shrink(1);
-                    level.gameEvent(GameEvent.ENTITY_PLACE, blockPos);
+                    mob.gameEvent(GameEvent.ENTITY_PLACE, context.getPlayer());
                 }
             }
             return InteractionResult.sidedSuccess(level.isClientSide);

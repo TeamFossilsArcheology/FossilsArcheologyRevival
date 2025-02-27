@@ -1,6 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.entity.animation;
 
 import com.github.teamfossilsarcheology.fossil.entity.prehistoric.base.PrehistoricFlying;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Mob;
 
 import java.util.*;
@@ -59,7 +60,7 @@ public class AnimationHolder {
         return getRandomAnimation(animations, entity.getRandom());
     }
 
-    private static AnimationInfo getRandomAnimation(NavigableMap<Double, AnimationInfo> map, Random random) {
-        return map.higherEntry(random.nextDouble(map.lastKey())).getValue();
+    private static AnimationInfo getRandomAnimation(NavigableMap<Double, AnimationInfo> map, RandomSource random) {
+        return map.higherEntry(random.nextDouble() * map.lastKey()).getValue();
     }
 }

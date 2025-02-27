@@ -4,6 +4,7 @@ import com.github.teamfossilsarcheology.fossil.block.ModBlocks;
 import com.github.teamfossilsarcheology.fossil.block.custom_blocks.TempskyaLeafBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.WorldGenLevel;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.levelgen.feature.FeaturePlaceContext;
@@ -18,7 +19,7 @@ public class TempskyaTreeFeature extends CustomTreeFeature {
         //Redo this correctly after 1.18
         WorldGenLevel level = context.level();
         BlockPos pos = context.origin();
-        Random random = context.random();
+        RandomSource random = context.random();
         int treeHeight = random.nextInt(4) + 2;
         int m = getMaxFreeTreeHeight(level, treeHeight + 2, pos);
         if (m < treeHeight + 2) {

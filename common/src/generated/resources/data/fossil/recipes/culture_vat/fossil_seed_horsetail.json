@@ -1,11 +1,11 @@
 {
   "type": "fossil:culture_vat",
-  "input": {
-    "item": "fossil:fossil_seed_horsetail"
-  },
+  "duration": 6000,
   "fuel": {
     "item": "fossil:bio_goo"
   },
-  "result": "fossil:seed_horsetail",
-  "duration": 6000
+  "input": {
+    "item": "fossil:fossil_seed_horsetail"
+  },
+  "result": "fossil:seed_horsetail"
 }

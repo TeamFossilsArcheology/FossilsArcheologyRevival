@@ -1,11 +1,11 @@
 {
   "type": "fossil:culture_vat",
-  "input": {
-    "item": "fossil:ankylosaurus_dna"
-  },
+  "duration": 6000,
   "fuel": {
     "item": "fossil:bio_goo"
   },
-  "result": "fossil:egg_item_ankylosaurus",
-  "duration": 6000
+  "input": {
+    "item": "fossil:ankylosaurus_dna"
+  },
+  "result": "fossil:egg_item_ankylosaurus"
 }

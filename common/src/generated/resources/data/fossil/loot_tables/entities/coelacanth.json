@@ -2,20 +2,20 @@
   "type": "minecraft:entity",
   "pools": [
     {
-      "rolls": 1.0,
       "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
           "functions": [
             {
-              "function": "fossil:customize_to_dinosaur",
-              "entity": "this"
+              "entity": "this",
+              "function": "fossil:customize_to_dinosaur"
             }
           ],
           "name": "fossil:meat_coelacanth"
         }
-      ]
+      ],
+      "rolls": 1.0
     }
   ]
 }

@@ -7,7 +7,7 @@
     }
   ],
   "result": {
-    "item": "fossil:palm_planks",
-    "count": 4
+    "count": 4,
+    "item": "fossil:palm_planks"
   }
 }

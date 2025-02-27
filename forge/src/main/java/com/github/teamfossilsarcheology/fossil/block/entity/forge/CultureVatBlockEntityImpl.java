@@ -18,7 +18,6 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -234,7 +233,7 @@ public class CultureVatBlockEntityImpl extends ForgeEnergyContainerBlockEntity i
 
     @Override
     protected @NotNull Component getDefaultName() {
-        return new TranslatableComponent("container.fossil.culture_vat");
+        return Component.translatable("container.fossil.culture_vat");
     }
 
     @Override

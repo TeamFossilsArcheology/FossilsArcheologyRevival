@@ -3,10 +3,11 @@ package com.github.teamfossilsarcheology.fossil.entity.monster;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,8 +35,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class FriendlyPiglin extends TamableAnimal {
-    public static final Component KILLED = new TranslatableComponent("entity.fossil.friendly_piglin.kill");
-    public static final Component SUMMONED = new TranslatableComponent("entity.fossil.friendly_piglin.summon");
+    public static final Component KILLED = Component.translatable("entity.fossil.friendly_piglin.kill");
+    public static final Component SUMMONED = Component.translatable("entity.fossil.friendly_piglin.summon");
 
     public FriendlyPiglin(EntityType<? extends TamableAnimal> entityType, Level level) {
         super(entityType, level);
@@ -50,7 +51,7 @@ public class FriendlyPiglin extends TamableAnimal {
     public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType reason,
                                         @Nullable SpawnGroupData spawnData, @Nullable CompoundTag dataTag) {
         getAttribute(Attributes.MAX_HEALTH).setBaseValue(isTame() ? 25 : 20);
-        populateDefaultEquipmentSlots(difficulty);
+        populateDefaultEquipmentSlots(level.getRandom(), difficulty);
         return super.finalizeSpawn(level, difficulty, reason, spawnData, dataTag);
     }
 
@@ -77,16 +78,19 @@ public class FriendlyPiglin extends TamableAnimal {
     @Override
     public void aiStep() {
         updateSwingTime();
-        if (level.getBrightness(blockPosition()) > 0.5F) {
+        if (level.getLightLevelDependentMagicValue(blockPosition()) > 0.5F) {
             noActionTime += 2;
         }
         super.aiStep();
     }
 
     @Override
-    public void killed(ServerLevel level, LivingEntity killedEntity) {
-        super.killed(level, killedEntity);
-        sendMessageToOwner(KILLED);
+    public boolean wasKilled(ServerLevel level, LivingEntity killedEntity) {
+        boolean bl = super.wasKilled(level, killedEntity);
+        if (bl) {
+            sendMessageToOwner(KILLED);
+        }
+        return bl;
     }
 
     public void sendMessageToOwner(Component component) {
@@ -176,7 +180,7 @@ public class FriendlyPiglin extends TamableAnimal {
             if (stack.is(Items.GOLD_NUGGET) && getHealth() < getMaxHealth()) {
                 usePlayerItem(player, hand, stack);
                 heal(2);
-                gameEvent(GameEvent.MOB_INTERACT, eyeBlockPosition());
+                gameEvent(GameEvent.ENTITY_INTERACT, player);
                 return InteractionResult.SUCCESS;
             }
             if (isOwnedBy(player)) {
@@ -191,7 +195,7 @@ public class FriendlyPiglin extends TamableAnimal {
     }
 
     @Override
-    protected void populateDefaultEquipmentSlots(DifficultyInstance difficulty) {
+    protected void populateDefaultEquipmentSlots(RandomSource random, DifficultyInstance difficulty) {
         setItemSlot(EquipmentSlot.MAINHAND, new ItemStack(Items.GOLDEN_SWORD));
     }
 

@@ -12,7 +12,7 @@ import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ContainerObjectSelectionList;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.narration.NarratableEntry;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
@@ -35,7 +35,7 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
     protected void init(int width, int height) {
         DebugSlider ageSlider;
         super.init(width, height);
-        ageSlider = new DebugSlider(20, 30, 150, 20, new TextComponent("Age: "), new TextComponent(""), 0, maxAge, age, 1, 0, true) {
+        ageSlider = new DebugSlider(20, 30, 150, 20, Component.literal("Age: "), Component.literal(""), 0, maxAge, age, 1, 0, true) {
             @Override
             protected void applyValue() {
                 age = (int) (stepSize * Math.round(Mth.lerp(value, minValue, maxValue) / stepSize));
@@ -43,7 +43,7 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
         };
         addWidget(ageSlider);
         addWidget(new ModelsList());
-        addWidget(new Button(20, 210, 150, 20, new TextComponent("Set Info"), button -> {
+        addWidget(new Button(20, 210, 150, 20, Component.literal("Set Info"), button -> {
             MessageHandler.DEBUG_CHANNEL.sendToServer(new SyncDebugInfoMessage(entity.getId(), info.name(), age, 0, 0, 0, 0, 0));
             ageSlider.maxValue = EntityDataLoader.INSTANCE.getData(info.resourceName).adultAgeDays();
             age = (int) Math.min(age, ageSlider.maxValue);
@@ -54,8 +54,8 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
     @Override
     protected void render(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
         super.render(poseStack, mouseX, mouseY, partialTick);
-        drawString(poseStack, minecraft.font, new TextComponent("Age: " + entity.getAge()), 175, 35, 16777215);
-        drawString(poseStack, minecraft.font, new TextComponent("Type: " + entity.info().name()), 175, 185, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("Age: " + entity.getAge()), 175, 35, 16777215);
+        drawString(poseStack, minecraft.font, Component.literal("Type: " + entity.info().name()), 175, 185, 16777215);
     }
 
     private class ModelsList extends ContainerObjectSelectionList<ModelsList.ModelEntry> {
@@ -81,8 +81,8 @@ public class SkeletonEditTab extends DebugTab<PrehistoricSkeleton> {
             private final Button changeButton;
 
             ModelEntry(String text) {
-                changeButton = new Button(0, 0, 200, 20, new TextComponent(text), button -> {
-                    SkeletonEditTab.this.info = PrehistoricEntityInfo.valueOf(button.getMessage().getContents());
+                changeButton = new Button(0, 0, 200, 20, Component.literal(text), button -> {
+                    SkeletonEditTab.this.info = PrehistoricEntityInfo.valueOf(button.getMessage().getString());
                 });
             }
 

@@ -1,7 +1,7 @@
 package com.github.teamfossilsarcheology.fossil.forge.compat.farmers.addon;
 
-import com.brewinandchewin.core.registry.BCItems;
 import com.github.teamfossilsarcheology.fossil.util.FoodMappings;
+import umpaz.brewinandchewin.common.registry.BCItems;
 
 public class BrewinAndChewinCompat {
     public static void registerFoodMappings() {
